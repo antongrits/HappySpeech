@@ -60,3 +60,63 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# Build / DerivedData
+build/
+DerivedData/
+*.xcuserstate
+*.xcresult
+
+# Swift Package Manager
+.swiftpm/
+Package.resolved
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python (workshop tooling)
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Workshop (datasets, training, large models) — never commit
+_workshop/
+tmp/
+logs/
+screenshots/
+
+# Original design sources — kept local only
+happyspeech-design/
+
+# Secrets
+.env
+.env.*
+GoogleService-Info.plist.local
+secrets/
+*.p8
+*.p12
+*.cer
+*.mobileprovision
+
+# Firebase local
+.firebase/
+firebase-debug.log
+
+# Coverage
+coverage.json
+
