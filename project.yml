@@ -1,0 +1,154 @@
+name: HappySpeech
+options:
+  bundleIdPrefix: ru.happyspeech
+  deploymentTarget:
+    iOS: "17.0"
+  xcodeVersion: "16.0"
+  defaultConfig: Debug
+  generateEmptyDirectories: true
+  groupSortPosition: top
+  settingPresets: none
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    ENABLE_STRICT_CONCURRENCY: complete
+    SWIFT_STRICT_CONCURRENCY: complete
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+    PRODUCT_BUNDLE_IDENTIFIER: ru.happyspeech.app
+    DEVELOPMENT_TEAM: ""
+    ENABLE_BITCODE: NO
+    DEBUG_INFORMATION_FORMAT: dwarf-with-dsym
+    SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD: NO
+    ENABLE_USER_SCRIPT_SANDBOXING: NO
+  configs:
+    Debug:
+      SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
+      ONLY_ACTIVE_ARCH: YES
+    Release:
+      SWIFT_OPTIMIZATION_LEVEL: "-O"
+      VALIDATE_PRODUCT: YES
+
+packages:
+  RealmSwift:
+    url: https://github.com/realm/realm-swift
+    from: "20.0.0"
+  FirebaseSDK:
+    url: https://github.com/firebase/firebase-ios-sdk
+    from: "11.0.0"
+  WhisperKit:
+    url: https://github.com/argmaxinc/WhisperKit
+    from: "0.9.0"
+  SnapshotTesting:
+    url: https://github.com/pointfreeco/swift-snapshot-testing
+    from: "1.17.0"
+  Lottie:
+    url: https://github.com/airbnb/lottie-ios
+    from: "4.5.0"
+
+targets:
+  HappySpeech:
+    type: application
+    platform: iOS
+    sources:
+      - path: HappySpeech
+        excludes:
+          - Resources/**
+        type: group
+      - path: HappySpeech/Resources
+        type: group
+        buildPhase: resources
+    plist:
+      path: HappySpeech/Resources/Info.plist
+      properties:
+        CFBundleName: HappySpeech
+        CFBundleDisplayName: HappySpeech
+        CFBundleIdentifier: ru.happyspeech.app
+        CFBundleVersion: "1"
+        CFBundleShortVersionString: "1.0.0"
+        UILaunchScreen:
+          UIColorName: LaunchBackground
+        NSMicrophoneUsageDescription: "Приложению нужен микрофон для записи речи ребёнка."
+        NSCameraUsageDescription: "Приложению нужна камера для AR-упражнений артикуляции."
+        NSFaceIDUsageDescription: "Face ID используется для быстрой аутентификации родителя."
+        UIBackgroundModes:
+          - audio
+        UIRequiredDeviceCapabilities:
+          - arm64
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        ITSAppUsesNonExemptEncryption: false
+        NSUserTrackingUsageDescription: ""
+        CFBundleLocalizations:
+          - ru
+          - en
+        CFBundleDevelopmentRegion: ru
+        UISupportsDocumentBrowser: false
+    entitlements:
+      path: HappySpeech/Resources/HappySpeech.entitlements
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ru.happyspeech.app
+        INFOPLIST_FILE: HappySpeech/Resources/Info.plist
+        CODE_SIGN_ENTITLEMENTS: HappySpeech/Resources/HappySpeech.entitlements
+        PRODUCT_NAME: HappySpeech
+    dependencies:
+      - package: RealmSwift
+        product: RealmSwift
+      - package: FirebaseSDK
+        product: FirebaseAuth
+      - package: FirebaseSDK
+        product: FirebaseFirestore
+      - package: FirebaseSDK
+        product: FirebaseStorage
+      - package: FirebaseSDK
+        product: FirebaseAppCheck
+      - package: WhisperKit
+        product: WhisperKit
+      - package: Lottie
+        product: Lottie
+    scheme:
+      testTargets:
+        - HappySpeechTests
+        - HappySpeechUITests
+      gatherCoverageData: true
+
+  HappySpeechTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - HappySpeechTests
+    plist:
+      path: HappySpeechTests/Info.plist
+      properties:
+        CFBundleIdentifier: ru.happyspeech.tests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ru.happyspeech.tests
+        INFOPLIST_FILE: HappySpeechTests/Info.plist
+        PRODUCT_NAME: HappySpeechTests
+    dependencies:
+      - target: HappySpeech
+      - package: SnapshotTesting
+        product: SnapshotTesting
+    scheme:
+      gatherCoverageData: true
+
+  HappySpeechUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - HappySpeechUITests
+    plist:
+      path: HappySpeechUITests/Info.plist
+      properties:
+        CFBundleIdentifier: ru.happyspeech.uitests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ru.happyspeech.uitests
+        INFOPLIST_FILE: HappySpeechUITests/Info.plist
+        TEST_TARGET_NAME: HappySpeech
+        PRODUCT_NAME: HappySpeechUITests
+    dependencies:
+      - target: HappySpeech
