@@ -47,6 +47,12 @@ packages:
   Lottie:
     url: https://github.com/airbnb/lottie-ios
     from: "4.5.0"
+  GoogleSignIn:
+    url: https://github.com/google/GoogleSignIn-iOS
+    from: "7.1.0"
+  RiveRuntime:
+    url: https://github.com/rive-app/rive-ios
+    from: "6.0.0"
 
 targets:
   HappySpeech:
@@ -89,6 +95,11 @@ targets:
           - en
         CFBundleDevelopmentRegion: ru
         UISupportsDocumentBrowser: false
+        CFBundleURLTypes:
+          - CFBundleTypeRole: Editor
+            CFBundleURLName: ru.happyspeech.googlesignin
+            CFBundleURLSchemes:
+              - com.googleusercontent.apps.PLACEHOLDER-REVERSED-CLIENT-ID
     entitlements:
       path: HappySpeech/Resources/HappySpeech.entitlements
     settings:
@@ -112,6 +123,12 @@ targets:
         product: WhisperKit
       - package: Lottie
         product: Lottie
+      - package: GoogleSignIn
+        product: GoogleSignIn
+      - package: GoogleSignIn
+        product: GoogleSignInSwift
+      - package: RiveRuntime
+        product: RiveRuntime
     scheme:
       testTargets:
         - HappySpeechTests

@@ -5,36 +5,28 @@ import SwiftUI
 struct ChildHomeView: View {
     let childId: String
 
-    @State private var interactor: ChildHomeInteractor
+    @State private var viewModel = ChildHomeViewModel()
+    @State private var interactor: ChildHomeInteractor?
+    @State private var router: ChildHomeRouter?
+
     @Environment(AppCoordinator.self) private var coordinator
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     init(childId: String) {
         self.childId = childId
-        self._interactor = State(initialValue: ChildHomeInteractor())
     }
 
     var body: some View {
         ZStack {
-            // Background
             kidBackground
 
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
-                    // Top greeting + streak
                     greetingSection
-
-                    // Mascot Lyalya
                     mascotSection
-
-                    // Daily mission card
                     dailyMissionSection
-
-                    // Quick actions
                     quickActionsSection
-
-                    // Recent progress
                     progressSection
 
                     Spacer(minLength: SpacingTokens.sp16)
@@ -42,14 +34,32 @@ struct ChildHomeView: View {
                 .padding(.horizontal, SpacingTokens.screenEdge)
             }
 
-            // Parent button (top-right)
             parentButton
         }
-        .onAppear {
-            Task { await interactor.fetchChildData(id: childId) }
+        .onAppear { bootstrap() }
+        .task {
+            await interactor?.fetchChildData(.init(childId: childId))
         }
         .environment(\.circuitContext, .kid)
-        .loadingOverlay(interactor.viewModel.isLoading)
+        .loadingOverlay(viewModel.isLoading)
+    }
+
+    // MARK: - Wiring
+
+    private func bootstrap() {
+        guard interactor == nil else { return }
+        let presenter = ChildHomePresenter()
+        let interactor = ChildHomeInteractor(
+            childRepository: container.childRepository,
+            sessionRepository: container.sessionRepository
+        )
+        interactor.presenter = presenter
+        presenter.viewModel = viewModel
+        let router = ChildHomeRouter()
+        router.coordinator = coordinator
+        self.interactor = interactor
+        self.router = router
+        ActiveChildStore.shared.set(childId)
     }
 
     // MARK: - Sections
@@ -57,16 +67,12 @@ struct ChildHomeView: View {
     private var kidBackground: some View {
         ZStack {
             LinearGradient(
-                colors: [
-                    Color(hex: "#FFF4EC"),
-                    Color(hex: "#FFF0E8")
-                ],
+                colors: [ColorTokens.Kid.bgSoft, ColorTokens.Kid.bgSofter],
                 startPoint: .top,
                 endPoint: .bottom
             )
             .ignoresSafeArea()
 
-            // Decorative clouds
             CloudDecoration()
         }
     }
@@ -74,20 +80,21 @@ struct ChildHomeView: View {
     private var greetingSection: some View {
         HStack {
             VStack(alignment: .leading, spacing: 2) {
-                Text(String(localized: "Привет,"))
+                Text(String(localized: "child.home.greeting"))
                     .font(TypographyTokens.body())
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
 
-                Text(interactor.viewModel.childName)
+                Text(viewModel.childName.isEmpty
+                     ? String(localized: "child.default.name")
+                     : viewModel.childName)
                     .font(TypographyTokens.title(24))
                     .foregroundStyle(ColorTokens.Kid.ink)
             }
 
             Spacer()
 
-            // Streak indicator
-            if interactor.viewModel.currentStreak > 0 {
-                StreakBadge(streak: interactor.viewModel.currentStreak)
+            if viewModel.currentStreak > 0 {
+                StreakBadge(streak: viewModel.currentStreak)
             }
         }
         .padding(.top, SpacingTokens.pageTop)
@@ -96,12 +103,9 @@ struct ChildHomeView: View {
 
     private var mascotSection: some View {
         VStack(spacing: SpacingTokens.sp2) {
-            HSMascotView(
-                mood: interactor.viewModel.mascotMood,
-                size: 140
-            )
+            HSMascotView(mood: viewModel.mascotMood, size: 140)
 
-            if let phrase = interactor.viewModel.mascotPhrase {
+            if let phrase = viewModel.mascotPhrase {
                 Text(phrase)
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
@@ -115,18 +119,15 @@ struct ChildHomeView: View {
 
     private var dailyMissionSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-            Text(String(localized: "Задание на сегодня"))
+            Text(String(localized: "child.home.daily.section"))
                 .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .textCase(.uppercase)
                 .tracking(1)
 
-            DailyMissionCard(
-                mission: interactor.viewModel.dailyMission,
-                onTap: {
-                    coordinator.navigate(to: .childHome(childId: childId))
-                }
-            )
+            DailyMissionCard(mission: viewModel.dailyMission) {
+                router?.routeToLesson(childId: childId, template: "listenAndChoose")
+            }
         }
         .padding(.top, SpacingTokens.sp2)
     }
@@ -137,35 +138,35 @@ struct ChildHomeView: View {
             spacing: SpacingTokens.sp3
         ) {
             QuickActionTile(
-                title: String(localized: "Карта звуков"),
+                title: String(localized: "child.home.action.worldmap"),
                 icon: "map.fill",
                 color: ColorTokens.Brand.sky
             ) {
-                // Navigate to WorldMap
+                router?.routeToWorldMap(childId: childId, sound: viewModel.dailyMission.targetSound)
             }
 
             QuickActionTile(
-                title: String(localized: "AR-зеркало"),
+                title: String(localized: "child.home.action.ar"),
                 icon: "camera.fill",
                 color: ColorTokens.Brand.lilac
             ) {
-                // Navigate to AR
+                router?.routeToARZone()
             }
 
             QuickActionTile(
-                title: String(localized: "Наклейки"),
+                title: String(localized: "child.home.action.rewards"),
                 icon: "star.fill",
                 color: ColorTokens.Brand.butter
             ) {
-                // Navigate to Rewards
+                router?.routeToRewards(childId: childId)
             }
 
             QuickActionTile(
-                title: String(localized: "Достижения"),
+                title: String(localized: "child.home.action.achievements"),
                 icon: "trophy.fill",
                 color: ColorTokens.Brand.mint
             ) {
-                // Navigate to Achievements
+                router?.routeToRewards(childId: childId)
             }
         }
         .padding(.top, SpacingTokens.sp5)
@@ -173,14 +174,14 @@ struct ChildHomeView: View {
 
     private var progressSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-            Text(String(localized: "Прогресс по звукам"))
+            Text(String(localized: "child.home.progress.section"))
                 .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .textCase(.uppercase)
                 .tracking(1)
                 .padding(.top, SpacingTokens.sp5)
 
-            ForEach(interactor.viewModel.soundProgress, id: \.sound) { item in
+            ForEach(viewModel.soundProgress) { item in
                 SoundProgressRow(item: item)
             }
         }
@@ -191,7 +192,7 @@ struct ChildHomeView: View {
             HStack {
                 Spacer()
                 Button {
-                    coordinator.navigate(to: .parentHome)
+                    router?.routeToParentHome()
                 } label: {
                     Image(systemName: "person.2.fill")
                         .font(.system(size: 16))
@@ -202,7 +203,7 @@ struct ChildHomeView: View {
                                 .kidTileShadow()
                         )
                 }
-                .accessibilityLabel(String(localized: "Профиль родителя"))
+                .accessibilityLabel(String(localized: "child.home.a11y.parent.button"))
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.top, SpacingTokens.sp2)
@@ -232,14 +233,13 @@ private struct CloudDecoration: View {
     }
 }
 
-struct DailyMissionCard: View {
-    let mission: ChildHomeViewModel.DailyMission
+private struct DailyMissionCard: View {
+    let mission: ChildHomeModels.DailyMission
     let onTap: () -> Void
 
     var body: some View {
         Button(action: onTap) {
             HStack(spacing: SpacingTokens.sp4) {
-                // Sound icon
                 ZStack {
                     RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
                         .fill(ColorTokens.Brand.primary.opacity(0.15))
@@ -254,10 +254,14 @@ struct DailyMissionCard: View {
                     Text(mission.title)
                         .font(TypographyTokens.headline(16))
                         .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
 
                     Text(mission.subtitle)
                         .font(TypographyTokens.body(13))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
 
                     HSProgressBar(value: mission.progress, style: .kid, tint: ColorTokens.Brand.primary)
                         .frame(height: 10)
@@ -279,7 +283,8 @@ struct DailyMissionCard: View {
         }
         .buttonStyle(.plain)
         .tapFeedback()
-        .accessibilityLabel("\(mission.title). \(mission.subtitle). Нажмите для начала.")
+        .accessibilityLabel(Text("\(mission.title). \(mission.subtitle)"))
+        .accessibilityHint(Text(String(localized: "child.home.daily.a11y.hint")))
     }
 }
 
@@ -296,15 +301,14 @@ private struct QuickActionTile: View {
                     .font(.system(size: 26))
                     .foregroundStyle(color)
                     .frame(width: 52, height: 52)
-                    .background(
-                        Circle().fill(color.opacity(0.12))
-                    )
+                    .background(Circle().fill(color.opacity(0.12)))
 
                 Text(title)
                     .font(TypographyTokens.body(13))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
                     .ctaTextStyle()
             }
             .frame(maxWidth: .infinity)
@@ -328,28 +332,29 @@ private struct StreakBadge: View {
         HStack(spacing: 4) {
             Image(systemName: "flame.fill")
                 .font(.system(size: 14))
-                .foregroundStyle(Color.orange)
+                .foregroundStyle(ColorTokens.Semantic.warning)
             Text("\(streak)")
                 .font(.system(size: 14, weight: .bold, design: .rounded))
-                .foregroundStyle(Color.orange)
+                .foregroundStyle(ColorTokens.Semantic.warning)
         }
         .padding(.horizontal, SpacingTokens.sp3)
         .padding(.vertical, SpacingTokens.sp2)
-        .background(
-            Capsule().fill(Color.orange.opacity(0.12))
-        )
-        .accessibilityLabel("\(streak) дней подряд")
+        .background(Capsule().fill(ColorTokens.Semantic.warning.opacity(0.12)))
+        .accessibilityLabel(Text(String.localizedStringWithFormat(
+            String(localized: "child.home.streak.a11y"),
+            streak
+        )))
     }
 }
 
 private struct SoundProgressRow: View {
-    let item: ChildHomeViewModel.SoundProgress
+    let item: ChildHomeModels.SoundProgressItem
 
     var body: some View {
         HStack(spacing: SpacingTokens.sp3) {
             Text(item.sound)
                 .font(.system(size: 20, weight: .black, design: .rounded))
-                .foregroundStyle(item.color)
+                .foregroundStyle(ColorTokens.SoundFamilyColors.hue(for: item.accent))
                 .frame(width: 36)
 
             VStack(alignment: .leading, spacing: 3) {
@@ -358,80 +363,28 @@ private struct SoundProgressRow: View {
                         .font(TypographyTokens.body(13))
                         .foregroundStyle(ColorTokens.Kid.ink)
                     Spacer()
-                    Text("\(Int(item.rate * 100))%")
+                    Text(formatPercent(item.rate))
                         .font(TypographyTokens.mono(12))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                 }
-                HSProgressBar(value: item.rate, style: .kid, tint: item.color)
-                    .frame(height: 8)
+                HSProgressBar(
+                    value: item.rate,
+                    style: .kid,
+                    tint: ColorTokens.SoundFamilyColors.hue(for: item.accent)
+                )
+                .frame(height: 8)
             }
         }
         .padding(.vertical, SpacingTokens.sp2)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("Звук \(item.sound). \(item.stageName). \(Int(item.rate * 100)) процентов.")
-    }
-}
-
-// MARK: - ViewModel
-
-struct ChildHomeViewModel {
-    var childName: String = "Ребёнок"
-    var currentStreak: Int = 0
-    var mascotMood: MascotMood = .idle
-    var mascotPhrase: String? = nil
-    var isLoading: Bool = false
-    var dailyMission: DailyMission = .placeholder
-    var soundProgress: [SoundProgress] = []
-
-    struct DailyMission {
-        let targetSound: String
-        let title: String
-        let subtitle: String
-        let progress: Double
-
-        static let placeholder = DailyMission(
-            targetSound: "Р",
-            title: "Звук Р в словах",
-            subtitle: "Этап 3 из 10 · Слова с Р в начале",
-            progress: 0.45
-        )
+        .accessibilityLabel(Text(String.localizedStringWithFormat(
+            String(localized: "child.home.sound.row.a11y"),
+            item.sound, item.stageName, Int(item.rate * 100)
+        )))
     }
 
-    struct SoundProgress: Identifiable {
-        var id: String { sound }
-        let sound: String
-        let stageName: String
-        let rate: Double
-        let color: Color
-    }
-}
-
-// MARK: - Interactor
-
-@Observable
-@MainActor
-final class ChildHomeInteractor {
-    var viewModel = ChildHomeViewModel()
-
-    func fetchChildData(id: String) async {
-        viewModel.isLoading = true
-        defer { viewModel.isLoading = false }
-
-        // In production: fetch from ChildRepository
-        viewModel.childName = "Миша"
-        viewModel.currentStreak = 5
-        viewModel.mascotMood = .happy
-        viewModel.mascotPhrase = "Отличная работа, Миша! Сегодня мы тренируем звук Р 🎉"
-        viewModel.dailyMission = ChildHomeViewModel.DailyMission(
-            targetSound: "Р",
-            title: "Звук Р в словах",
-            subtitle: "Этап 4 · Слова с Р в начале",
-            progress: 0.45
-        )
-        viewModel.soundProgress = [
-            .init(sound: "Р", stageName: "Слова", rate: 0.45, color: ColorTokens.Brand.primary),
-            .init(sound: "Ш", stageName: "Слоги", rate: 0.70, color: ColorTokens.Brand.lilac),
-        ]
+    private func formatPercent(_ rate: Double) -> String {
+        "\(Int(rate * 100))%"
     }
 }
 
@@ -440,5 +393,5 @@ final class ChildHomeInteractor {
 #Preview("Child Home") {
     ChildHomeView(childId: "preview-child-1")
         .environment(AppCoordinator())
-        
+        .environment(AppContainer.preview())
 }

@@ -1,0 +1,753 @@
+{
+  "sourceLanguage" : "ru",
+  "strings" : {
+    "offline.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нет подключения к интернету"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No internet connection"
+          }
+        }
+      }
+    },
+    "offline.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приложение работает офлайн. Занятия доступны. Данные синхронизируются автоматически, когда интернет появится."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The app works offline. Lessons are available. Data will sync automatically when you are back online."
+          }
+        }
+      }
+    },
+    "offline.continue" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продолжить без интернета"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue offline"
+          }
+        }
+      }
+    },
+    "offline.retry" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проверить подключение"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check connection"
+          }
+        }
+      }
+    },
+    "offline.retrying" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проверяем…"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Checking…"
+          }
+        }
+      }
+    },
+    "pending.sync.badge" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%d ожидает синхронизации"
+                }
+              },
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%d ожидают синхронизации"
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%d ожидают синхронизации"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%d ожидают синхронизации"
+                }
+              }
+            }
+          }
+        },
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%d pending sync"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%d pending sync"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "auth.landing.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добро пожаловать!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome!"
+          }
+        }
+      }
+    },
+    "auth.landing.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Войдите, чтобы следить за прогрессом ребёнка"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in to track your child's progress"
+          }
+        }
+      }
+    },
+    "auth.signin.cta" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Войти через эл. почту"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in with email"
+          }
+        }
+      }
+    },
+    "auth.signup.cta" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать аккаунт"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create account"
+          }
+        }
+      }
+    },
+    "auth.google.cta" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Войти через Google"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in with Google"
+          }
+        }
+      }
+    },
+    "auth.google.soon" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вход через Google — скоро"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Google sign-in — coming soon"
+          }
+        }
+      }
+    },
+    "auth.demo.cta" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Попробовать демо"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Try demo"
+          }
+        }
+      }
+    },
+    "auth.email.placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Электронная почта"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email"
+          }
+        }
+      }
+    },
+    "auth.password.placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пароль"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Password"
+          }
+        }
+      }
+    },
+    "auth.name.placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваше имя"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your name"
+          }
+        }
+      }
+    },
+    "auth.role.parent" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Родитель"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parent"
+          }
+        }
+      }
+    },
+    "auth.role.specialist" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Логопед"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Specialist"
+          }
+        }
+      }
+    },
+    "auth.forgot.password" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Забыли пароль?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forgot password?"
+          }
+        }
+      }
+    },
+    "auth.forgot.reset" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отправить ссылку для сброса"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send reset link"
+          }
+        }
+      }
+    },
+    "auth.forgot.sent" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мы отправили письмо со ссылкой. Проверьте почту."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We've sent you a link. Check your email."
+          }
+        }
+      }
+    },
+    "auth.verify.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подтвердите почту"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verify your email"
+          }
+        }
+      }
+    },
+    "auth.verify.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мы отправили письмо на %@. Откройте его и перейдите по ссылке, чтобы активировать аккаунт."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "We've sent a message to %@. Open it and follow the link to activate your account."
+          }
+        }
+      }
+    },
+    "auth.verify.resend" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отправить снова"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resend"
+          }
+        }
+      }
+    },
+    "auth.verify.check" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Я подтвердил"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I've verified"
+          }
+        }
+      }
+    },
+    "auth.error.generic" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка входа"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign-in error"
+          }
+        }
+      }
+    },
+    "auth.error.ok" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Понятно"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Got it"
+          }
+        }
+      }
+    },
+    "auth.validation.password.short" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пароль должен быть не короче 8 символов"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Password must be at least 8 characters"
+          }
+        }
+      }
+    },
+    "auth.validation.email.invalid" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проверьте адрес электронной почты"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check your email address"
+          }
+        }
+      }
+    },
+    "auth.validation.name.empty" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Укажите ваше имя"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please enter your name"
+          }
+        }
+      }
+    },
+    "auth.delete.cta" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить аккаунт"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete account"
+          }
+        }
+      }
+    },
+    "auth.haveAccount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уже есть аккаунт?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Already have an account?"
+          }
+        }
+      }
+    },
+    "auth.noAccount" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нет аккаунта?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No account yet?"
+          }
+        }
+      }
+    },
+    "auth.signIn" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Войти"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in"
+          }
+        }
+      }
+    },
+    "child.home.greeting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Привет," } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Hello," } }
+      }
+    },
+    "child.default.name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "дружок" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "friend" } }
+      }
+    },
+    "child.home.daily.section" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Задание дня" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Daily mission" } }
+      }
+    },
+    "child.home.daily.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Тренируем звук «%@»" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Practicing sound \"%@\"" } }
+      }
+    },
+    "child.home.daily.a11y.hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Нажмите, чтобы начать занятие" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tap to start the lesson" } }
+      }
+    },
+    "child.home.action.worldmap" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Карта мира" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "World map" } }
+      }
+    },
+    "child.home.action.ar" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "AR-зеркало" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "AR mirror" } }
+      }
+    },
+    "child.home.action.rewards" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Награды" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Rewards" } }
+      }
+    },
+    "child.home.action.achievements" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Достижения" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Achievements" } }
+      }
+    },
+    "child.home.progress.section" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Мой прогресс" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "My progress" } }
+      }
+    },
+    "child.home.a11y.parent.button" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Открыть кабинет родителя" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open parent area" } }
+      }
+    },
+    "child.home.streak.a11y" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Серия занятий: %d дней подряд" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Streak: %d days in a row" } }
+      }
+    },
+    "child.home.sound.row.a11y" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Звук %@, этап %@, %d процентов" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sound %@, stage %@, %d percent" } }
+      }
+    },
+    "child.home.mascot.phrase" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "%@, готов тренировать «%@»?" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%@, ready to practice \"%@\"?" } }
+      }
+    },
+    "stage.isolated" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Изолированный звук" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Isolated sound" } }
+      }
+    },
+    "stage.syllable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Слоги" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Syllables" } }
+      }
+    },
+    "stage.wordInit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Слова" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Words" } }
+      }
+    },
+    "stage.phrase" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Фразы" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Phrases" } }
+      }
+    },
+    "stage.story" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Рассказ" } },
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Story" } }
+      }
+    }
+  },
+  "version" : "1.0"
+}

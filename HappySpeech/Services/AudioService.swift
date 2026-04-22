@@ -96,8 +96,10 @@ public struct RouteStepItem: Sendable {
 // MARK: - SyncService Protocol
 
 public protocol SyncService: Sendable {
-    var pendingCount: Int { get }
-    var isSyncing: Bool { get }
+    /// Current count of queued items awaiting upload. Asynchronous to support actor-isolated conformers.
+    func pendingCount() async -> Int
+    /// Whether a drain pass is currently in flight.
+    func isSyncing() async -> Bool
     func drainQueue() async throws
     func enqueue(operation: SyncOperation) async throws
 }

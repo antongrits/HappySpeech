@@ -3,9 +3,9 @@ import SwiftUI
 // MARK: - OfflineStateView
 
 struct OfflineStateView: View {
-    @State private var pendingCount = 3
-    @State private var isRetrying = false
+    @State private var viewModel = OfflineStateViewModelHolder()
     @Environment(AppCoordinator.self) private var coordinator
+    @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
@@ -15,40 +15,44 @@ struct OfflineStateView: View {
             VStack(spacing: 0) {
                 Spacer()
 
-                // Illustration
                 illustrationSection
 
                 Spacer()
 
-                // Info
                 infoSection
 
-                // Actions
                 actionsSection
                     .padding(.horizontal, SpacingTokens.screenEdge)
                     .padding(.bottom, SpacingTokens.sp16)
             }
         }
+        .onAppear { bootstrap() }
+        .task {
+            await viewModel.interactor?.fetch(.init())
+        }
     }
+
+    // MARK: - Sections
 
     private var illustrationSection: some View {
         ZStack {
             Circle()
-                .fill(Color.orange.opacity(0.08))
+                .fill(ColorTokens.Semantic.warning.opacity(0.08))
                 .frame(width: 200, height: 200)
 
             VStack(spacing: SpacingTokens.sp3) {
                 Image(systemName: "wifi.slash")
                     .font(.system(size: 72, weight: .thin))
-                    .foregroundStyle(Color.orange.opacity(0.6))
+                    .foregroundStyle(ColorTokens.Semantic.warning.opacity(0.6))
 
-                if pendingCount > 0 {
-                    Text(pendingBadgeText)
+                if viewModel.pendingCount > 0 {
+                    Text(viewModel.pendingBadgeText)
                         .font(.system(size: 12, weight: .semibold))
                         .foregroundStyle(.white)
                         .padding(.horizontal, SpacingTokens.sp3)
                         .padding(.vertical, SpacingTokens.sp1)
-                        .background(Capsule().fill(Color.orange))
+                        .background(Capsule().fill(ColorTokens.Semantic.warning))
+                        .accessibilityLabel(viewModel.pendingBadgeText)
                 }
             }
         }
@@ -56,12 +60,12 @@ struct OfflineStateView: View {
 
     private var infoSection: some View {
         VStack(spacing: SpacingTokens.sp3) {
-            Text(String(localized: "Нет подключения к интернету"))
+            Text(String(localized: "offline.title"))
                 .font(TypographyTokens.title(22))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
 
-            Text(String(localized: "Приложение работает офлайн. Занятия доступны. Данные синхронизируются автоматически, когда интернет появится."))
+            Text(String(localized: "offline.body"))
                 .font(TypographyTokens.body())
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
@@ -72,41 +76,90 @@ struct OfflineStateView: View {
 
     private var actionsSection: some View {
         VStack(spacing: SpacingTokens.sp3) {
-            // Continue offline
             HSButton(
-                String(localized: "Продолжить без интернета"),
+                String(localized: "offline.continue"),
                 style: .primary,
                 icon: "arrow.right"
             ) {
-                coordinator.navigate(to: .childHome(childId: "preview-child-1"))
+                continueOffline()
             }
+            .lineLimit(nil)
+            .minimumScaleFactor(0.85)
 
-            // Retry connection
             HSButton(
-                isRetrying
-                    ? String(localized: "Проверяем...")
-                    : String(localized: "Проверить подключение"),
+                viewModel.isRetrying
+                    ? String(localized: "offline.retrying")
+                    : String(localized: "offline.retry"),
                 style: .secondary,
-                icon: isRetrying ? nil : "arrow.clockwise",
-                isLoading: isRetrying
+                icon: viewModel.isRetrying ? nil : "arrow.clockwise",
+                isLoading: viewModel.isRetrying
             ) {
                 retryConnection()
             }
+            .lineLimit(nil)
+            .minimumScaleFactor(0.85)
         }
     }
 
-    private var pendingBadgeText: String {
-        "\(pendingCount) ожидают синхронизации"
+    // MARK: - Wiring
+
+    private func bootstrap() {
+        guard viewModel.interactor == nil else { return }
+        let interactor = OfflineStateInteractor(
+            childRepository: container.childRepository,
+            syncService: container.syncService,
+            networkMonitor: container.networkMonitor
+        )
+        let presenter = OfflineStatePresenter()
+        let router = OfflineStateRouter()
+        router.coordinator = coordinator
+        interactor.presenter = presenter
+        presenter.viewModel = viewModel
+        viewModel.interactor = interactor
+        viewModel.router = router
+    }
+
+    private func continueOffline() {
+        if let childId = viewModel.activeChildId {
+            viewModel.router?.routeToActiveChild(childId: childId)
+        } else {
+            viewModel.router?.routeToAuth()
+        }
     }
 
     private func retryConnection() {
-        isRetrying = true
-        Task {
+        viewModel.isRetrying = true
+        Task { [weak viewModel] in
             try? await Task.sleep(for: .seconds(2))
             await MainActor.run {
-                isRetrying = false
+                viewModel?.isRetrying = false
+                Task { await viewModel?.interactor?.fetch(.init()) }
             }
         }
+    }
+}
+
+// MARK: - ViewModel holder
+
+@MainActor
+@Observable
+final class OfflineStateViewModelHolder: OfflineStateDisplayLogic {
+    var activeChildId: String?
+    var pendingCount: Int = 0
+    var pendingBadgeText: String = ""
+    var isRetrying: Bool = false
+
+    var interactor: OfflineStateInteractor?
+    var router: OfflineStateRouter?
+
+    func displayFetch(_ viewModel: OfflineStateModels.Fetch.ViewModel) {
+        self.activeChildId = viewModel.activeChildId
+        self.pendingCount = viewModel.pendingCount
+        self.pendingBadgeText = viewModel.pendingBadgeText
+    }
+
+    func displayUpdate(_ viewModel: OfflineStateModels.Update.ViewModel) {
+        self.isRetrying = viewModel.isRetrying
     }
 }
 
@@ -115,4 +168,5 @@ struct OfflineStateView: View {
 #Preview("Offline State") {
     OfflineStateView()
         .environment(AppCoordinator())
+        .environment(AppContainer.preview())
 }
