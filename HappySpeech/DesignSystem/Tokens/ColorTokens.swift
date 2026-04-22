@@ -108,6 +108,51 @@ public enum ColorTokens {
             public static let bg   = Color("SoundVowelsBg")
         }
     }
+
+    // MARK: - Game Colors
+
+    /// Each game template has a dedicated accent colour shown on its tile/header.
+    public enum Games {
+        /// ListenAndChoose — teal
+        public static let listenAndChoose  = Color("GameListenAndChoose")
+        /// RepeatAfterModel — coral
+        public static let repeatAfterModel = Color("GameRepeatAfterModel")
+        /// Memory — lilac
+        public static let memory           = Color("GameMemory")
+        /// Breathing exercises — soft green
+        public static let breathing        = Color("GameBreathing")
+        /// Rhythm games — gold
+        public static let rhythm           = Color("GameRhythm")
+        /// Sorting — orange
+        public static let sorting          = Color("GameSorting")
+        /// PuzzleReveal — blue-teal
+        public static let puzzle           = Color("GamePuzzle")
+        /// AR activities — purple
+        public static let arGames          = Color("GameAR")
+    }
+
+    // MARK: - Feedback Colors
+
+    /// Used in game feedback overlays, tile borders, and result screens.
+    public enum Feedback {
+        /// Correct answer — green
+        public static let correct   = Color("FeedbackCorrect")
+        /// Incorrect answer — soft coral (never harsh red — child-friendly)
+        public static let incorrect = Color("FeedbackIncorrect")
+        /// Neutral / no answer yet — light grey-blue
+        public static let neutral   = Color("FeedbackNeutral")
+        /// Excellent score (>90%) — gold
+        public static let excellent = Color("FeedbackExcellent")
+    }
+
+    // MARK: - Session Colors
+
+    /// Used in SessionShell progress indicators and fatigue-detection UI.
+    public enum Session {
+        public static let progressBar        = Color("SessionProgressBar")
+        public static let progressBackground = Color("SessionProgressBackground")
+        public static let fatigueWarning     = Color("SessionFatigueWarning")
+    }
 }
 
 // MARK: - Convenience Extension for SoundFamily

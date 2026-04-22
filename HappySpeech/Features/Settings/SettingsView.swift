@@ -5,6 +5,7 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(ThemeManager.self) private var themeManager
     @Environment(AppCoordinator.self) private var coordinator
+    @Environment(AppContainer.self) private var container
     @State private var showDeleteAlert = false
     @State private var notificationsEnabled = true
     @State private var notificationHour = 18
@@ -99,13 +100,25 @@ struct SettingsView: View {
 
             // Sign out
             Button {
-                // Sign out action
+                signOut()
             } label: {
                 Label(String(localized: "Выйти из аккаунта"), systemImage: "rectangle.portrait.and.arrow.right")
                     .foregroundStyle(ColorTokens.Parent.ink)
             }
         } header: {
             Text(String(localized: "Аккаунт"))
+        }
+    }
+
+    // MARK: - Actions
+
+    private func signOut() {
+        do {
+            try container.authService.signOut()
+            coordinator.dismissSheet()
+            coordinator.navigate(to: .auth)
+        } catch {
+            HSLogger.auth.error("Settings sign-out failed: \(error.localizedDescription, privacy: .public)")
         }
     }
 
@@ -187,4 +200,5 @@ private struct PrivacyPolicyView: View {
     SettingsView()
         .environment(ThemeManager())
         .environment(AppCoordinator())
+        .environment(AppContainer.preview())
 }

@@ -389,24 +389,199 @@ private struct RawItem: Decodable {
 
 // MARK: - LiveAdaptivePlannerService
 
-/// Rule-based adaptive planner: returns a 3–5 step daily route derived from
-/// (soundTarget × stage × fatigueLevel). Deterministic — stable across app launches.
+/// Data-driven adaptive planner.
+///
+/// Обязанности:
+///   1. Прочитать профиль ребёнка и 5–10 последних сессий.
+///   2. Для каждого `targetSound` собрать SM-2 state (`SoundProgressState`).
+///   3. Выбрать звук с максимальным приоритетом повторения (самый просроченный).
+///   4. Оценить уровень усталости (fatigue) из `consecutiveWrong` и времени суток.
+///   5. Собрать маршрут через `composeRoute()` с учётом stage и fatigue.
+///   6. Ограничить суммарную длительность максимумом по возрасту.
+///
+/// Если репозитории не переданы (тестовое поведение) — возвращает fallback маршрут.
 public final class LiveAdaptivePlannerService: AdaptivePlannerService, @unchecked Sendable {
 
-    public init() {}
+    private let childRepository: (any ChildRepository)?
+    private let sessionRepository: (any SessionRepository)?
+
+    public init(
+        childRepository: (any ChildRepository)? = nil,
+        sessionRepository: (any SessionRepository)? = nil
+    ) {
+        self.childRepository = childRepository
+        self.sessionRepository = sessionRepository
+    }
+
+    // MARK: buildDailyRoute
 
     public func buildDailyRoute(for childId: String) async throws -> AdaptiveRoute {
-        // In production the planner reads the child profile from repository.
-        // For now we return a conservative default route for sound [С], stage wordInit, fatigue fresh.
-        let fatigue: FatigueLevel = .fresh
-        let steps = Self.composeRoute(soundTarget: "С", stage: .wordInit, fatigue: fatigue)
-        let total = steps.reduce(0) { $0 + $1.durationTargetSec }
-        HSLogger.app.info("AdaptiveRoute childId=\(childId, privacy: .private) steps=\(steps.count) total=\(total)s")
-        return AdaptiveRoute(steps: steps, maxDurationSec: min(total, 600), fatigueLevel: fatigue)
+        guard let childRepository, let sessionRepository else {
+            // Fallback: backward-compatible поведение (нет DI — возвращаем безопасный маршрут).
+            let fatigue: FatigueLevel = .fresh
+            let steps = Self.composeRoute(soundTarget: "С", stage: .wordInit, fatigue: fatigue)
+            let total = steps.reduce(0) { $0 + $1.durationTargetSec }
+            HSLogger.planner.info(
+                "AdaptiveRoute (fallback) childId=\(childId, privacy: .private) steps=\(steps.count) total=\(total)s"
+            )
+            return AdaptiveRoute(steps: steps, maxDurationSec: min(total, 600), fatigueLevel: fatigue)
+        }
+
+        let profile = try await childRepository.fetch(id: childId)
+        let recentSessions = (try? await sessionRepository.fetchRecent(childId: childId, limit: 10)) ?? []
+
+        let targets = profile.targetSounds.isEmpty ? ["С"] : profile.targetSounds
+        let states = targets.map { sound in
+            SoundProgressAggregator.aggregate(soundTarget: sound, sessions: recentSessions)
+        }
+
+        let primary = Self.selectPrimaryState(from: states) ?? SoundProgressState(
+            soundTarget: targets[0],
+            stage: .isolated
+        )
+
+        let now = Date()
+        let hour = Calendar.current.component(.hour, from: now)
+        let fatigue = Self.computeFatigue(state: primary, hour: hour)
+
+        let steps = Self.composeRoute(soundTarget: primary.soundTarget, stage: primary.stage, fatigue: fatigue)
+        let stepsTotal = steps.reduce(0) { $0 + $1.durationTargetSec }
+        let cap = Self.sessionMaxSec(for: profile.age)
+        let maxDuration = min(stepsTotal, cap)
+
+        HSLogger.planner.info(
+            """
+            AdaptiveRoute childId=\(childId, privacy: .private) \
+            sound=\(primary.soundTarget, privacy: .public) \
+            stage=\(primary.stage.rawValue, privacy: .public) \
+            fatigue=\(fatigue.rawValue) \
+            EF=\(String(format: "%.2f", primary.easinessFactor), privacy: .public) \
+            overdue=\(primary.overdueDays(now: now)) \
+            steps=\(steps.count) total=\(stepsTotal)s cap=\(cap)s
+            """
+        )
+
+        if primary.needsSpecialistReview {
+            HSLogger.planner.warning(
+                "Low EF (\(String(format: "%.2f", primary.easinessFactor), privacy: .public)) for sound=\(primary.soundTarget, privacy: .public) — recommend specialist review"
+            )
+        }
+
+        return AdaptiveRoute(steps: steps, maxDurationSec: maxDuration, fatigueLevel: fatigue)
     }
 
     public func recordCompletion(sessionId: String, route: AdaptiveRoute) async throws {
-        HSLogger.app.info("Route completed session=\(sessionId, privacy: .private) steps=\(route.steps.count)")
+        HSLogger.planner.info("Route completed session=\(sessionId, privacy: .private) steps=\(route.steps.count)")
+    }
+
+    // MARK: recordSessionResult
+
+    public func recordSessionResult(
+        childId: String,
+        soundTarget: String,
+        qualityScore: SM2Quality
+    ) async throws {
+        guard let childRepository, let sessionRepository else {
+            HSLogger.planner.notice("recordSessionResult: repositories not wired, skipping persistence")
+            return
+        }
+
+        let profile = try await childRepository.fetch(id: childId)
+        let recent = (try? await sessionRepository.fetchRecent(childId: childId, limit: 20)) ?? []
+        let state = SoundProgressAggregator.aggregate(soundTarget: soundTarget, sessions: recent)
+
+        let result = SM2Engine.calculate(
+            quality: qualityScore,
+            currentEF: state.easinessFactor,
+            repetitions: state.repetitions,
+            lastInterval: max(1, state.lastIntervalDays)
+        )
+
+        // EF мапится в progressSummary как нормализованный показатель уверенности 0…1
+        // (EF диапазон ~1.3…3.0 → сдвиг и масштаб).
+        let normalized = Self.normalize(ef: result.easinessFactor)
+        try await childRepository.updateProgress(
+            childId: profile.id,
+            sound: soundTarget,
+            rate: normalized
+        )
+
+        HSLogger.planner.info(
+            """
+            SM-2 updated childId=\(childId, privacy: .private) \
+            sound=\(soundTarget, privacy: .public) \
+            q=\(qualityScore.rawValue) \
+            EF=\(String(format: "%.2f", result.easinessFactor), privacy: .public) \
+            interval=\(result.intervalDays)d \
+            reps=\(result.repetitions) \
+            needsSpecialist=\(result.needsSpecialistReview)
+            """
+        )
+    }
+
+    // MARK: shouldTakeBreak
+
+    public func shouldTakeBreak(
+        consecutiveWrong: Int,
+        sessionDurationSec: Int,
+        childAge: Int
+    ) -> Bool {
+        if consecutiveWrong >= 3 { return true }
+        let cap = Self.sessionMaxSec(for: childAge)
+        if Double(sessionDurationSec) > Double(cap) * 0.9 { return true }
+        return false
+    }
+
+    // MARK: - Helpers
+
+    /// Допустимый максимум длительности сессии (секунды) по возрасту ребёнка.
+    /// Основано на `ResearchDocs/fatigue-and-session-rules.md`:
+    ///   • 5 лет → 5–8 минут (берём верхнюю границу — 480 с)
+    ///   • 6–7 лет → 10–12 минут (720 с)
+    ///   • 8+ → 15–20 минут (1200 с)
+    static func sessionMaxSec(for age: Int) -> Int {
+        switch age {
+        case ..<6:  return 480   // 8 мин
+        case 6...7: return 720   // 12 мин
+        default:    return 1200  // 20 мин
+        }
+    }
+
+    /// Нормализует EF (1.3…3.0) в диапазон 0…1 для `progressSummary`.
+    static func normalize(ef: Double) -> Double {
+        let minEF = SM2Engine.minimumEF       // 1.3
+        let maxEF = 3.0
+        let clamped = min(maxEF, max(minEF, ef))
+        return (clamped - minEF) / (maxEF - minEF)
+    }
+
+    /// Выбирает звук с наивысшим приоритетом повтора.
+    /// Приоритет = (overdueDays, -EF, -repetitions).
+    static func selectPrimaryState(from states: [SoundProgressState]) -> SoundProgressState? {
+        states.max { lhs, rhs in
+            let lo = lhs.overdueDays()
+            let ro = rhs.overdueDays()
+            if lo != ro { return lo < ro }
+            if lhs.easinessFactor != rhs.easinessFactor { return lhs.easinessFactor > rhs.easinessFactor }
+            return lhs.repetitions > rhs.repetitions
+        }
+    }
+
+    /// Оценивает уровень усталости по consecutiveWrong и времени суток.
+    /// Правила:
+    ///   • consecutiveWrong >= 3 → .tired
+    ///   • consecutiveWrong >= 2 → .normal
+    ///   • Вечер (21:00–06:00) и не-новый ребёнок → как минимум .normal
+    static func computeFatigue(state: SoundProgressState, hour: Int) -> FatigueLevel {
+        var level: FatigueLevel = .fresh
+        if state.consecutiveWrong >= 3 { level = .tired }
+        else if state.consecutiveWrong >= 2 { level = .normal }
+
+        let isLateHour = hour >= 21 || hour < 6
+        if isLateHour, level == .fresh, state.lastReviewDate != nil {
+            level = .normal
+        }
+        return level
     }
 
     // MARK: - Rule-based matrix

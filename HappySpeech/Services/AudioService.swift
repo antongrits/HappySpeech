@@ -76,6 +76,22 @@ public struct ContentItem: Sendable, Identifiable {
 public protocol AdaptivePlannerService: Sendable {
     func buildDailyRoute(for childId: String) async throws -> AdaptiveRoute
     func recordCompletion(sessionId: String, route: AdaptiveRoute) async throws
+
+    /// Применить SM-2 к результату сессии для конкретного звука и сохранить новые параметры.
+    /// Если `SoundProgressState` ещё не существует для этого `(childId, soundTarget)` — создаёт стартовое.
+    func recordSessionResult(
+        childId: String,
+        soundTarget: String,
+        qualityScore: SM2Quality
+    ) async throws
+
+    /// Подсказка UI: стоит ли сделать паузу / завершить сессию.
+    /// Вычисляется синхронно, без I/O — можно звать прямо из Interactor'а.
+    func shouldTakeBreak(
+        consecutiveWrong: Int,
+        sessionDurationSec: Int,
+        childAge: Int
+    ) -> Bool
 }
 
 public struct AdaptiveRoute: Sendable {

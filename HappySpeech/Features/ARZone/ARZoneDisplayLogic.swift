@@ -4,6 +4,6 @@ import Foundation
 
 @MainActor
 protocol ARZoneDisplayLogic: AnyObject {
-    func displayFetch(_ viewModel: ARZoneModels.Fetch.ViewModel)
-    func displayUpdate(_ viewModel: ARZoneModels.Update.ViewModel)
+    func displayLoadGames(_ viewModel: ARZoneModels.LoadGames.ViewModel)
+    func displaySelectGame(_ viewModel: ARZoneModels.SelectGame.ViewModel)
 }

@@ -3,8 +3,9 @@ import SwiftUI
 // MARK: - ParentHomeView
 
 struct ParentHomeView: View {
-    @State private var interactor = ParentHomeInteractor()
+    @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
+    @State private var scene: ParentHomeScene?
     @State private var selectedTab: ParentTab = .dashboard
 
     enum ParentTab: String, CaseIterable {
@@ -35,19 +36,57 @@ struct ParentHomeView: View {
         }
         .tint(ColorTokens.Parent.accent)
         .environment(\.circuitContext, .parent)
-        .onAppear {
-            Task { await interactor.fetchData() }
+        .task {
+            if scene == nil {
+                scene = ParentHomeScene(
+                    childRepository: container.childRepository,
+                    sessionRepository: container.sessionRepository
+                )
+            }
+            await scene?.interactor.fetchData(.init(preferredChildId: nil))
         }
     }
 
     @ViewBuilder
     private func tabContent(for tab: ParentTab) -> some View {
-        switch tab {
-        case .dashboard:  ParentDashboardTab(viewModel: interactor.viewModel, coordinator: coordinator)
-        case .sessions:   ParentSessionsTab(sessions: interactor.viewModel.recentSessions)
-        case .analytics:  ParentAnalyticsTab(progress: interactor.viewModel.soundProgress)
-        case .settings:   SettingsView()
+        if let viewModel = scene?.viewModel {
+            switch tab {
+            case .dashboard:  ParentDashboardTab(viewModel: viewModel, coordinator: coordinator)
+            case .sessions:   ParentSessionsTab(sessions: viewModel.recentSessions)
+            case .analytics:  ParentAnalyticsTab(progress: viewModel.soundProgress)
+            case .settings:   SettingsView()
+            }
+        } else {
+            ProgressView()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(ColorTokens.Parent.bg)
         }
+    }
+}
+
+// MARK: - Scene (VIP container)
+
+@MainActor
+final class ParentHomeScene {
+    let interactor: ParentHomeInteractor
+    let presenter: ParentHomePresenter
+    let viewModel: ParentHomeViewModel
+
+    init(
+        childRepository: any ChildRepository,
+        sessionRepository: any SessionRepository
+    ) {
+        let viewModel = ParentHomeViewModel()
+        let presenter = ParentHomePresenter()
+        let interactor = ParentHomeInteractor(
+            childRepository: childRepository,
+            sessionRepository: sessionRepository
+        )
+        presenter.viewModel = viewModel
+        interactor.presenter = presenter
+        self.viewModel = viewModel
+        self.presenter = presenter
+        self.interactor = interactor
     }
 }
 
@@ -152,7 +191,7 @@ private struct ParentDashboardTab: View {
         )
     }
 
-    private func lastSessionCard(_ session: ParentHomeViewModel.SessionSummary) -> some View {
+    private func lastSessionCard(_ session: ParentHomeModels.SessionSummary) -> some View {
         HSCard(style: .elevated) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
                 HStack {
@@ -281,7 +320,7 @@ private struct ParentDashboardTab: View {
 // MARK: - Sessions Tab
 
 private struct ParentSessionsTab: View {
-    let sessions: [ParentHomeViewModel.SessionSummary]
+    let sessions: [ParentHomeModels.SessionSummary]
 
     var body: some View {
         NavigationStack {
@@ -309,7 +348,7 @@ private struct ParentSessionsTab: View {
 }
 
 private struct SessionRow: View {
-    let session: ParentHomeViewModel.SessionSummary
+    let session: ParentHomeModels.SessionSummary
 
     var body: some View {
         HStack(spacing: SpacingTokens.sp3) {
@@ -351,7 +390,7 @@ private struct SessionRow: View {
 // MARK: - Analytics Tab
 
 private struct ParentAnalyticsTab: View {
-    let progress: [ParentHomeViewModel.SoundProgress]
+    let progress: [ParentHomeModels.SoundProgress]
 
     var body: some View {
         NavigationStack {
@@ -371,7 +410,7 @@ private struct ParentAnalyticsTab: View {
 }
 
 private struct SoundProgressCard: View {
-    let item: ParentHomeViewModel.SoundProgress
+    let item: ParentHomeModels.SoundProgress
 
     var body: some View {
         HSCard(style: .elevated) {
@@ -441,84 +480,10 @@ private struct ParentStatCard: View {
     }
 }
 
-// MARK: - ViewModel & Interactor
-
-struct ParentHomeViewModel {
-    var childId: String = "preview-child-1"
-    var childName: String = "Миша"
-    var childAge: Int = 6
-    var targetSoundsText: String = "Р, Ш"
-    var greeting: String = "Добрый день"
-    var currentStreak: Int = 5
-    var totalSessionMinutes: Int = 112
-    var overallRate: Double = 0.68
-    var lastSession: SessionSummary? = nil
-    var homeTask: String? = nil
-    var recommendations: [String] = []
-    var recentSessions: [SessionSummary] = []
-    var soundProgress: [SoundProgress] = []
-
-    struct SessionSummary: Identifiable {
-        let id: String
-        let targetSound: String
-        let templateName: String
-        let dateText: String
-        let durationText: String
-        let totalAttempts: Int
-        let correctAttempts: Int
-        let successRate: Double
-        var resultText: String { "\(correctAttempts)/\(totalAttempts)" }
-    }
-
-    struct SoundProgress: Identifiable {
-        var id: String { sound }
-        let sound: String
-        let familyName: String
-        let currentStage: String
-        let overallRate: Double
-    }
-}
-
-@Observable
-@MainActor
-final class ParentHomeInteractor {
-    var viewModel = ParentHomeViewModel()
-
-    func fetchData() async {
-        viewModel.childName = "Миша"
-        viewModel.childAge = 6
-        viewModel.targetSoundsText = "Р, Ш"
-        viewModel.greeting = "Добрый день"
-        viewModel.currentStreak = 5
-        viewModel.totalSessionMinutes = 112
-        viewModel.overallRate = 0.68
-        viewModel.lastSession = .init(
-            id: "s1",
-            targetSound: "Р",
-            templateName: "Слушай и выбирай",
-            dateText: "Сегодня",
-            durationText: "8 мин",
-            totalAttempts: 12,
-            correctAttempts: 9,
-            successRate: 0.75
-        )
-        viewModel.homeTask = "Повторите дома: ворона, гараж, огород."
-        viewModel.recommendations = [
-            "Уделите 10 минут звуку Р каждый день.",
-            "Слова с Р в середине пока даются трудно — используйте упражнение «Повторяй за мной».",
-        ]
-        viewModel.soundProgress = [
-            .init(sound: "Р", familyName: "Сонорные", currentStage: "Слова", overallRate: 0.45),
-            .init(sound: "Ш", familyName: "Шипящие", currentStage: "Слоги", overallRate: 0.72),
-        ]
-        viewModel.recentSessions = [viewModel.lastSession!]
-    }
-}
-
 // MARK: - Preview
 
 #Preview("Parent Home") {
     ParentHomeView()
         .environment(AppCoordinator())
-        
+        .environment(AppContainer.preview())
 }
