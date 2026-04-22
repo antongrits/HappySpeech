@@ -1,57 +1,101 @@
 import SwiftUI
-import AuthenticationServices
 
 // MARK: - AuthSignInView
 
 struct AuthSignInView: View {
-    @State private var viewModel = AuthSignInViewModel()
+
     @Environment(AppCoordinator.self) private var coordinator
-    @Environment(\.colorScheme) private var colorScheme
+    @Environment(AppContainer.self) private var container
+
+    @State private var scene: AuthScene?
+    @State private var email: String = ""
+    @State private var password: String = ""
+    @FocusState private var focusedField: Field?
+
+    private enum Field: Hashable { case email, password }
 
     var body: some View {
         ZStack {
-            // Background
             ColorTokens.Kid.bg.ignoresSafeArea()
 
-            // Decorative top arc
             topDecoration
 
             VStack(spacing: 0) {
-                // Header
                 headerSection
 
-                Spacer()
-
-                // Welcome content
-                centerContent
-
-                Spacer()
-
-                // Auth buttons
-                authButtonsSection
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: SpacingTokens.sp5) {
+                        welcomeSection
+                        formSection
+                        authButtonsSection
+                        footerLinks
+                    }
                     .padding(.horizontal, SpacingTokens.screenEdge)
-                    .padding(.bottom, SpacingTokens.sp16)
+                    .padding(.top, SpacingTokens.sp6)
+                    .padding(.bottom, SpacingTokens.sp12)
+                }
             }
         }
-        .loadingOverlay(viewModel.isLoading)
-        .alert(isPresented: Binding(
-            get: { viewModel.errorMessage != nil },
-            set: { if !$0 { viewModel.errorMessage = nil } }
-        )) {
-            Alert(
-                title: Text(String(localized: "Ошибка входа")),
-                message: Text(viewModel.errorMessage ?? ""),
-                dismissButton: .default(Text(String(localized: "Понятно")))
-            )
+        .loadingOverlay(scene?.state.isLoading ?? false)
+        .alert(
+            scene?.state.error?.title ?? String(localized: "Ошибка"),
+            isPresented: Binding(
+                get: { scene?.state.error != nil },
+                set: { if !$0 { scene?.state.dismissError() } }
+            ),
+            actions: {
+                Button(String(localized: "Понятно"), role: .cancel) {}
+            },
+            message: {
+                Text(scene?.state.error?.message ?? "")
+            }
+        )
+        .task {
+            if scene == nil {
+                scene = AuthScene(authService: container.authService)
+            }
         }
-        .onChange(of: viewModel.isAuthenticated) { _, isAuth in
-            if isAuth {
-                coordinator.navigate(to: .roleSelect)
+        .onChange(of: scene?.state.signInViewModel != nil) { _, didSignIn in
+            if didSignIn, let vm = scene?.state.signInViewModel {
+                handleAuthenticationSuccess(requiresVerification: vm.requiresEmailVerification)
+            }
+        }
+        .onChange(of: scene?.state.googleSignInViewModel != nil) { _, didSignIn in
+            if didSignIn {
+                handleAuthenticationSuccess(requiresVerification: false)
             }
         }
     }
 
-    // MARK: - Sections
+    // MARK: - Actions
+
+    private func handleAuthenticationSuccess(requiresVerification: Bool) {
+        if requiresVerification {
+            coordinator.navigate(to: .verifyEmail)
+        } else {
+            coordinator.navigate(to: .roleSelect)
+        }
+    }
+
+    private func signIn() {
+        guard let scene else { return }
+        focusedField = nil
+        scene.state.beginLoading()
+        Task {
+            await scene.interactor.signIn(.init(email: email, password: password))
+        }
+    }
+
+    private func signInWithGoogle() {
+        guard let scene else { return }
+        focusedField = nil
+        scene.state.beginLoading()
+        Task {
+            await scene.interactor.signInWithGoogle(.init())
+        }
+    }
+
+    // MARK: - Layout
 
     private var topDecoration: some View {
         GeometryReader { geo in
@@ -67,8 +111,8 @@ struct AuthSignInView: View {
                             endPoint: .bottomTrailing
                         )
                     )
-                    .frame(width: geo.size.width * 1.3, height: 360)
-                    .offset(x: -geo.size.width * 0.15, y: -80)
+                    .frame(width: geo.size.width * 1.3, height: 320)
+                    .offset(x: -geo.size.width * 0.15, y: -100)
             }
         }
         .ignoresSafeArea()
@@ -76,67 +120,103 @@ struct AuthSignInView: View {
 
     private var headerSection: some View {
         VStack(spacing: SpacingTokens.sp3) {
-            HSMascotView(mood: .happy, size: 130)
-                .padding(.top, SpacingTokens.sp16 + SpacingTokens.sp10)
+            HSMascotView(mood: .happy, size: 110)
+                .padding(.top, SpacingTokens.sp16)
 
             Text("HappySpeech")
-                .font(TypographyTokens.kidDisplay(32))
+                .font(TypographyTokens.kidDisplay(30))
                 .foregroundStyle(.white)
                 .shadow(color: .black.opacity(0.15), radius: 4, y: 2)
         }
     }
 
-    private var centerContent: some View {
-        VStack(spacing: SpacingTokens.sp3) {
-            Text(String(localized: "Добро пожаловать!"))
+    private var welcomeSection: some View {
+        VStack(spacing: SpacingTokens.sp2) {
+            Text(String(localized: "С возвращением!"))
                 .font(TypographyTokens.title(24))
                 .foregroundStyle(ColorTokens.Kid.ink)
 
             Text(String(localized: "Войдите, чтобы следить за прогрессом ребёнка"))
-                .font(TypographyTokens.body())
+                .font(TypographyTokens.body(14))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, SpacingTokens.sp8)
+        }
+    }
+
+    private var formSection: some View {
+        VStack(spacing: SpacingTokens.sp3) {
+            authTextField(
+                title: String(localized: "Эл. почта"),
+                text: $email,
+                icon: "envelope",
+                keyboard: .emailAddress,
+                contentType: .emailAddress,
+                isSecure: false,
+                field: .email
+            )
+            .submitLabel(.next)
+            .onSubmit { focusedField = .password }
+
+            authTextField(
+                title: String(localized: "Пароль"),
+                text: $password,
+                icon: "lock",
+                keyboard: .default,
+                contentType: .password,
+                isSecure: true,
+                field: .password
+            )
+            .submitLabel(.go)
+            .onSubmit(signIn)
         }
     }
 
     private var authButtonsSection: some View {
         VStack(spacing: SpacingTokens.sp3) {
-            // Sign in with Apple
-            SignInWithAppleButton { request in
-                request.requestedScopes = [.fullName, .email]
-            } onCompletion: { result in
-                Task { await viewModel.handleAppleSignIn(result: result) }
+            HSButton(String(localized: "Войти"), style: .primary, icon: "arrow.right") {
+                signIn()
             }
-            .signInWithAppleButtonStyle(colorScheme == .dark ? .white : .black)
-            .frame(height: 56)
-            .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.button, style: .continuous))
+            .disabled(email.isEmpty || password.isEmpty)
+            .opacity((email.isEmpty || password.isEmpty) ? 0.6 : 1)
 
-            // Email sign-in
-            HSButton(
-                String(localized: "Войти через эл. почту"),
-                style: .secondary,
-                icon: "envelope"
-            ) {
-                coordinator.present(sheet: .settings) // TODO: replace with email auth sheet
+            HStack {
+                Rectangle().fill(ColorTokens.Kid.line).frame(height: 1)
+                Text(String(localized: "или"))
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Kid.inkSoft)
+                Rectangle().fill(ColorTokens.Kid.line).frame(height: 1)
             }
+            .padding(.vertical, SpacingTokens.sp1)
 
-            // Registration
+            HSButton(String(localized: "Войти через Google"), style: .secondary, icon: "globe") {
+                signInWithGoogle()
+            }
+        }
+    }
+
+    private var footerLinks: some View {
+        VStack(spacing: SpacingTokens.sp3) {
             Button {
-                // Navigate to registration
+                coordinator.navigate(to: .forgotPassword)
+            } label: {
+                Text(String(localized: "Забыли пароль?"))
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+            }
+
+            Button {
+                coordinator.navigate(to: .signUp)
             } label: {
                 HStack(spacing: 4) {
                     Text(String(localized: "Нет аккаунта?"))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    Text(String(localized: "Создать"))
+                    Text(String(localized: "Зарегистрироваться"))
                         .foregroundStyle(ColorTokens.Brand.primary)
                         .fontWeight(.semibold)
                 }
                 .font(TypographyTokens.body(14))
             }
-            .padding(.top, SpacingTokens.sp2)
 
-            // Demo mode
             Button {
                 coordinator.navigate(to: .demoMode)
             } label: {
@@ -148,34 +228,54 @@ struct AuthSignInView: View {
             .padding(.top, SpacingTokens.sp1)
         }
     }
-}
 
-// MARK: - AuthSignInViewModel
+    // MARK: - Components
 
-@Observable
-@MainActor
-final class AuthSignInViewModel {
-    var isLoading: Bool = false
-    var isAuthenticated: Bool = false
-    var errorMessage: String?
+    @ViewBuilder
+    private func authTextField(
+        title: String,
+        text: Binding<String>,
+        icon: String,
+        keyboard: UIKeyboardType,
+        contentType: UITextContentType?,
+        isSecure: Bool,
+        field: Field
+    ) -> some View {
+        HStack(spacing: SpacingTokens.sp3) {
+            Image(systemName: icon)
+                .font(.system(size: 16))
+                .foregroundStyle(ColorTokens.Kid.inkSoft)
+                .frame(width: 24)
 
-    func handleAppleSignIn(result: Result<ASAuthorization, any Error>) async {
-        isLoading = true
-        defer { isLoading = false }
-
-        switch result {
-        case .success(let auth):
-            guard let credential = auth.credential as? ASAuthorizationAppleIDCredential else {
-                errorMessage = AppError.authSignInFailed("Неверный тип учётных данных").localizedDescription
-                return
+            Group {
+                if isSecure {
+                    SecureField(title, text: text)
+                } else {
+                    TextField(title, text: text)
+                        .keyboardType(keyboard)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
+                }
             }
-            HSLogger.auth.info("Apple Sign In: \(credential.user)")
-            isAuthenticated = true
-
-        case .failure(let error):
-            if (error as? ASAuthorizationError)?.code == .canceled { return }
-            errorMessage = AppError.authSignInFailed(error.localizedDescription).localizedDescription
+            .font(TypographyTokens.body(16))
+            .foregroundStyle(ColorTokens.Kid.ink)
+            .textContentType(contentType)
+            .focused($focusedField, equals: field)
         }
+        .padding(.horizontal, SpacingTokens.sp4)
+        .frame(height: 52)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                .fill(ColorTokens.Kid.surface)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                .strokeBorder(
+                    focusedField == field ? ColorTokens.Brand.primary : ColorTokens.Kid.line,
+                    lineWidth: focusedField == field ? 1.5 : 1
+                )
+        )
+        .accessibilityLabel(title)
     }
 }
 
@@ -184,4 +284,5 @@ final class AuthSignInViewModel {
 #Preview("Auth Sign In") {
     AuthSignInView()
         .environment(AppCoordinator())
+        .environment(AppContainer.preview())
 }

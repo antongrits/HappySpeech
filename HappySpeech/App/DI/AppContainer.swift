@@ -17,6 +17,7 @@ public final class AppContainer {
     public let childRepository: any ChildRepository
     public let sessionRepository: any SessionRepository
     public let themeManager: ThemeManager
+    public let authService: any AuthService
 
     // Services (lazy-init via closures to avoid startup latency)
     private var _audioService: (any AudioService)?
@@ -37,6 +38,8 @@ public final class AppContainer {
     private var _networkClient: NetworkClient?
     private var _claudeAPIClient: (any ClaudeAPIClientProtocol)?
     private var _offlineQueueManager: OfflineQueueManager?
+    // SoundService — lazy, не требует изменения init
+    private var _soundService: (any SoundServiceProtocol)?
 
     // Factory closures (injected at init)
     private let audioServiceFactory: () -> any AudioService
@@ -65,6 +68,7 @@ public final class AppContainer {
         childRepository: any ChildRepository,
         sessionRepository: any SessionRepository,
         themeManager: ThemeManager,
+        authService: any AuthService,
         audioServiceFactory: @escaping () -> any AudioService,
         asrServiceFactory: @escaping () -> any ASRService,
         syncServiceFactory: @escaping () -> any SyncService,
@@ -88,6 +92,7 @@ public final class AppContainer {
         self.childRepository = childRepository
         self.sessionRepository = sessionRepository
         self.themeManager = themeManager
+        self.authService = authService
         self.audioServiceFactory = audioServiceFactory
         self.asrServiceFactory = asrServiceFactory
         self.syncServiceFactory = syncServiceFactory
@@ -199,6 +204,11 @@ public final class AppContainer {
         if _offlineQueueManager == nil { _offlineQueueManager = offlineQueueManagerFactory() }
         return _offlineQueueManager!
     }
+
+    public var soundService: any SoundServiceProtocol {
+        if _soundService == nil { _soundService = LiveSoundService() }
+        return _soundService!
+    }
 }
 
 // MARK: - Factory Methods
@@ -226,6 +236,7 @@ public extension AppContainer {
             childRepository: childRepo,
             sessionRepository: sessionRepo,
             themeManager: theme,
+            authService: LiveAuthService(),
             audioServiceFactory: { LiveAudioService() },
             asrServiceFactory: { LiveASRService() },
             syncServiceFactory: { sharedSyncService },
@@ -237,7 +248,12 @@ public extension AppContainer {
             localLLMServiceFactory: { sharedLocalLLM },
             arServiceFactory: { LiveARService() },
             contentServiceFactory: { LiveContentService() },
-            adaptivePlannerServiceFactory: { LiveAdaptivePlannerService() },
+            adaptivePlannerServiceFactory: {
+                LiveAdaptivePlannerService(
+                    childRepository: childRepo,
+                    sessionRepository: sessionRepo
+                )
+            },
             llmDecisionServiceFactory: {
                 LiveLLMDecisionService(
                     inferenceActor: sharedInferenceActor,
@@ -281,6 +297,7 @@ public extension AppContainer {
             childRepository: childRepo,
             sessionRepository: sessionRepo,
             themeManager: theme,
+            authService: MockAuthService(),
             audioServiceFactory: { MockAudioService() },
             asrServiceFactory: { MockASRService() },
             syncServiceFactory: { sharedSyncService },

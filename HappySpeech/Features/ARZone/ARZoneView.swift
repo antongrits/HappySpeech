@@ -1,183 +1,220 @@
-import SwiftUI
 import ARKit
-import RealityKit
+import SwiftUI
 
-// MARK: - ARZoneView
+// MARK: - ARZoneView (Clean Swift: View)
 
-/// AR Zone entry — hosts face tracking exercises.
 struct ARZoneView: View {
+
     @Environment(AppContainer.self) private var container
-    @State private var selectedScenario: ARScenario = .mirror
+    @Environment(AppCoordinator.self) private var coordinator
+
+    @State private var interactor: ARZoneInteractor?
+    @State private var presenter: ARZonePresenter?
+    @State private var router: ARZoneRouter?
+    @State private var viewModelHolder = ARZoneDisplay()
 
     var body: some View {
-        NavigationStack {
-            List(ARScenario.allCases, id: \.self) { scenario in
-                NavigationLink(value: scenario) {
-                    ARScenarioRow(scenario: scenario)
+        NavigationStack(path: $viewModelHolder.path) {
+            ScrollView {
+                VStack(alignment: .leading, spacing: SpacingTokens.large) {
+                    header
+                    if !viewModelHolder.cards.isEmpty {
+                        gamesGrid
+                    } else {
+                        ProgressView()
+                            .frame(maxWidth: .infinity)
+                            .padding(.top, SpacingTokens.xxLarge)
+                    }
+                    unsupportedNotice
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.top, SpacingTokens.medium)
+                .padding(.bottom, SpacingTokens.xxxLarge)
+            }
+            .navigationTitle(Text("ar.zone.title"))
+            .navigationBarTitleDisplayMode(.large)
+            .background(ColorTokens.Kid.bg.ignoresSafeArea())
+            .navigationDestination(for: ARGameDestination.self) { destination in
+                ARZoneView.destinationView(for: destination)
+            }
+        }
+        .onAppear { bootstrap() }
+        .task {
+            interactor?.loadGames(.init())
+        }
+    }
+
+    // MARK: - Sections
+
+    private var header: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
+            Text("ar.zone.greeting")
+                .font(TypographyTokens.title(26))
+                .foregroundStyle(ColorTokens.Kid.ink)
+            Text("ar.zone.subtitle")
+                .font(TypographyTokens.body())
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+        }
+    }
+
+    private var gamesGrid: some View {
+        LazyVGrid(
+            columns: [
+                GridItem(.flexible(), spacing: SpacingTokens.small),
+                GridItem(.flexible(), spacing: SpacingTokens.small)
+            ],
+            spacing: SpacingTokens.small
+        ) {
+            ForEach(viewModelHolder.cards) { card in
+                Button {
+                    interactor?.selectGame(.init(gameId: card.id))
+                } label: {
+                    ARGameCardView(card: card)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(Text(card.title))
+                .accessibilityHint(Text(card.subtitle))
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var unsupportedNotice: some View {
+        if !viewModelHolder.isARSupported {
+            HStack(alignment: .top, spacing: SpacingTokens.small) {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .foregroundStyle(ColorTokens.Semantic.warning)
+                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                    Text("ar.zone.unsupportedTitle")
+                        .font(TypographyTokens.headline())
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                    Text("ar.zone.unsupportedBody")
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
                 }
             }
-            .navigationTitle("AR-упражнения")
-            .navigationDestination(for: ARScenario.self) { scenario in
-                ARSessionView(scenario: scenario)
-            }
+            .padding(SpacingTokens.regular)
+            .background(ColorTokens.Semantic.warningBg)
+            .cornerRadius(RadiusTokens.md)
+        }
+    }
+
+    // MARK: - Wiring
+
+    private func bootstrap() {
+        guard interactor == nil else { return }
+        let interactor = ARZoneInteractor()
+        let presenter = ARZonePresenter()
+        let router = ARZoneRouter()
+
+        interactor.presenter = presenter
+        presenter.viewModel = viewModelHolder
+        router.coordinator = coordinator
+        router.onNavigateLocal = { [weak viewModelHolder] destination in
+            viewModelHolder?.path.append(destination)
+        }
+
+        self.interactor = interactor
+        self.presenter = presenter
+        self.router = router
+    }
+
+    // MARK: - Destination factory
+
+    @ViewBuilder
+    static func destinationView(for destination: ARGameDestination) -> some View {
+        switch destination {
+        case .arMirror:        ARMirrorView()
+        case .butterflyCatch:  ButterflyCatchView()
+        case .holdThePose:     HoldThePoseView()
+        case .mimicLyalya:     MimicLyalyaView()
+        case .breathingGame:   BreathingARView()
+        case .soundAndFace:    SoundAndFaceView()
+        case .poseSequence:    PoseSequenceView()
+        case .arStoryQuest:    ARStoryQuestView()
         }
     }
 }
 
-// MARK: - ARScenario
+// MARK: - ARZoneDisplay (Observable view-state)
 
-enum ARScenario: String, CaseIterable, Hashable {
-    case mirror          = "ar-mirror"
-    case butterfly       = "butterfly"
-    case holdPose        = "hold-pose"
-    case copyFace        = "copy-face"
-    case breathing       = "breathing"
-    case warmup          = "warmup"
-    case readinessCheck  = "readiness-check"
-    case threePoses      = "three-poses"
-    case bestScores      = "best-scores"
-    case results         = "ar-results"
+@Observable
+@MainActor
+final class ARZoneDisplay: ARZoneDisplayLogic {
+    var cards: [ARGameCard] = []
+    var isARSupported: Bool = true
+    var path: [ARGameDestination] = []
 
-    var displayName: String {
-        switch self {
-        case .mirror:         return "Зеркало"
-        case .butterfly:      return "Бабочка"
-        case .holdPose:       return "Удержи позу"
-        case .copyFace:       return "Повтори лицо"
-        case .breathing:      return "Дыхание"
-        case .warmup:         return "Разминка"
-        case .readinessCheck: return "Готовность"
-        case .threePoses:     return "3 позы"
-        case .bestScores:     return "Рекорды"
-        case .results:        return "Результаты"
-        }
+    func displayLoadGames(_ viewModel: ARZoneModels.LoadGames.ViewModel) {
+        self.cards = viewModel.cards
+        self.isARSupported = viewModel.isARSupported
     }
 
-    var icon: String {
-        switch self {
-        case .mirror:         return "face.smiling"
-        case .butterfly:      return "bird"
-        case .holdPose:       return "stopwatch"
-        case .copyFace:       return "person.fill.viewfinder"
-        case .breathing:      return "lungs"
-        case .warmup:         return "flame"
-        case .readinessCheck: return "checkmark.shield"
-        case .threePoses:     return "list.number"
-        case .bestScores:     return "trophy"
-        case .results:        return "chart.bar"
-        }
+    func displaySelectGame(_ viewModel: ARZoneModels.SelectGame.ViewModel) {
+        path.append(viewModel.destination)
     }
 }
 
-// MARK: - ARScenarioRow
+// MARK: - ARGameCardView
 
-private struct ARScenarioRow: View {
-    let scenario: ARScenario
+private struct ARGameCardView: View {
+    let card: ARGameCard
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        HStack(spacing: SpacingTokens.medium) {
-            Image(systemName: scenario.icon)
-                .font(.title2)
-                .foregroundStyle(.tint)
-                .frame(width: 36)
-            VStack(alignment: .leading) {
-                Text(scenario.displayName)
-                    .font(TypographyTokens.body())
-            }
-        }
-        .padding(.vertical, SpacingTokens.small)
-    }
-}
-
-// MARK: - ARSessionView (stub — ARKit integrated per scenario)
-
-struct ARSessionView: View {
-    let scenario: ARScenario
-    @State private var isARSupported: Bool = ARFaceTrackingConfiguration.isSupported
-
-    var body: some View {
-        Group {
-            if isARSupported {
-                ARViewRepresentable(scenario: scenario)
-                    .ignoresSafeArea()
-                    .overlay(alignment: .top) {
-                        AROverlayBar(scenario: scenario)
-                    }
-            } else {
-                ContentUnavailableView(
-                    "AR недоступен",
-                    systemImage: "arkit",
-                    description: Text("Для AR-упражнений нужна камера TrueDepth (Face ID)")
-                )
-            }
-        }
-        .navigationTitle(scenario.displayName)
-        .navigationBarTitleDisplayMode(.inline)
-    }
-}
-
-// MARK: - ARViewRepresentable
-
-struct ARViewRepresentable: UIViewRepresentable {
-    let scenario: ARScenario
-
-    func makeUIView(context: Context) -> ARSCNView {
-        let arView = ARSCNView(frame: .zero)
-        arView.automaticallyUpdatesLighting = true
-        arView.delegate = context.coordinator
-        return arView
-    }
-
-    func updateUIView(_ uiView: ARSCNView, context: Context) {
-        guard ARFaceTrackingConfiguration.isSupported else { return }
-        let config = ARFaceTrackingConfiguration()
-        config.isLightEstimationEnabled = true
-        uiView.session.run(config, options: [.resetTracking])
-    }
-
-    func makeCoordinator() -> ARCoordinator {
-        ARCoordinator(scenario: scenario)
-    }
-}
-
-// MARK: - ARCoordinator
-
-final class ARCoordinator: NSObject, ARSCNViewDelegate {
-    let scenario: ARScenario
-    init(scenario: ARScenario) { self.scenario = scenario }
-
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        guard anchor is ARFaceAnchor else { return nil }
-        return SCNNode()
-    }
-
-    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
-        guard let faceAnchor = anchor as? ARFaceAnchor else { return }
-        // Per-scenario face tracking logic goes here
-        _ = faceAnchor.blendShapes
-    }
-}
-
-// MARK: - AROverlayBar
-
-private struct AROverlayBar: View {
-    let scenario: ARScenario
-    @Environment(\.dismiss) private var dismiss
-
-    var body: some View {
-        HStack {
-            Button(action: { dismiss() }) {
-                Image(systemName: "xmark.circle.fill")
-                    .font(.title2)
+        let colors = ARCardPalette.gradient(for: card.accentColorIndex)
+        VStack(alignment: .leading, spacing: SpacingTokens.small) {
+            HStack {
+                Image(systemName: card.iconName)
+                    .font(.system(size: 30, weight: .medium))
                     .foregroundStyle(.white)
-                    .padding()
+                Spacer()
+                difficultyDots
             }
-            Spacer()
-            Text(scenario.displayName)
-                .font(TypographyTokens.headline())
-                .foregroundStyle(.white)
-            Spacer()
+            Spacer(minLength: SpacingTokens.tiny)
+            VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                Text(card.title)
+                    .font(TypographyTokens.headline(16))
+                    .foregroundStyle(.white)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                HStack(spacing: SpacingTokens.micro) {
+                    Image(systemName: "clock")
+                        .font(.caption2)
+                    Text("\(card.estimatedMinutes) мин")
+                        .font(TypographyTokens.body(12))
+                }
+                .foregroundStyle(.white.opacity(0.85))
+            }
         }
-        .background(.ultraThinMaterial)
+        .padding(SpacingTokens.regular)
+        .frame(maxWidth: .infinity, minHeight: 150, alignment: .topLeading)
+        .background(
+            LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing)
+        )
+        .cornerRadius(RadiusTokens.lg)
+        .shadow(
+            color: colors.first?.opacity(0.3) ?? .black.opacity(0.15),
+            radius: reduceMotion ? 0 : 8,
+            x: 0, y: 4
+        )
     }
+
+    private var difficultyDots: some View {
+        HStack(spacing: 3) {
+            ForEach(0..<3, id: \.self) { i in
+                Circle()
+                    .fill(i < card.difficulty ? Color.white : Color.white.opacity(0.35))
+                    .frame(width: 6, height: 6)
+            }
+        }
+    }
+}
+
+// MARK: - Preview
+
+#Preview {
+    ARZoneView()
+        .environment(AppContainer.preview())
+        .environment(AppCoordinator())
 }

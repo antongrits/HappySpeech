@@ -155,8 +155,16 @@ public final class MockContentService: ContentService, @unchecked Sendable {
 // MARK: MockAdaptivePlannerService
 
 public final class MockAdaptivePlannerService: AdaptivePlannerService, @unchecked Sendable {
-    public func buildDailyRoute(for childId: String) async throws -> AdaptiveRoute {
-        AdaptiveRoute(
+    public var route: AdaptiveRoute
+    public var fatigue: FatigueLevel
+    public var recordedQualities: [(childId: String, soundTarget: String, quality: SM2Quality)] = []
+    public var forcedBreak: Bool = false
+
+    public init(
+        route: AdaptiveRoute? = nil,
+        fatigue: FatigueLevel = .fresh
+    ) {
+        let defaultRoute = AdaptiveRoute(
             steps: [
                 RouteStepItem(templateType: .listenAndChoose, targetSound: "Р",
                               stage: .wordInit, difficulty: 2, wordCount: 10, durationTargetSec: 180),
@@ -164,11 +172,32 @@ public final class MockAdaptivePlannerService: AdaptivePlannerService, @unchecke
                               stage: .wordInit, difficulty: 2, wordCount: 8, durationTargetSec: 240)
             ],
             maxDurationSec: 600,
-            fatigueLevel: .fresh
+            fatigueLevel: fatigue
         )
+        self.route = route ?? defaultRoute
+        self.fatigue = fatigue
     }
 
+    public func buildDailyRoute(for childId: String) async throws -> AdaptiveRoute { route }
+
     public func recordCompletion(sessionId: String, route: AdaptiveRoute) async throws {}
+
+    public func recordSessionResult(
+        childId: String,
+        soundTarget: String,
+        qualityScore: SM2Quality
+    ) async throws {
+        recordedQualities.append((childId, soundTarget, qualityScore))
+    }
+
+    public func shouldTakeBreak(
+        consecutiveWrong: Int,
+        sessionDurationSec: Int,
+        childAge: Int
+    ) -> Bool {
+        if forcedBreak { return true }
+        return consecutiveWrong >= 3
+    }
 }
 
 // MARK: MockClaudeAPIClient
@@ -185,6 +214,160 @@ public struct MockClaudeAPIClient: ClaudeAPIClientProtocol {
     ) async throws -> String {
         if circuit == .kid { throw AppError.notAllowedInChildCircuit }
         return "Mock Claude response for \(messages.count) message(s)."
+    }
+}
+
+// MARK: MockAuthService
+
+public final class MockAuthService: AuthService, @unchecked Sendable {
+
+    // Configurable behaviour
+    public var shouldFail: Bool = false
+    public var shouldReturnUnverifiedEmail: Bool = false
+    public var simulatedDelayNanoseconds: UInt64 = 0
+
+    // In-memory state
+    nonisolated(unsafe) private var _currentUser: AuthUser?
+    nonisolated(unsafe) private var listeners: [UUID: @Sendable (AuthUser?) -> Void] = [:]
+    private let lock = NSLock()
+
+    public init(initialUser: AuthUser? = nil) {
+        self._currentUser = initialUser
+    }
+
+    public var currentUser: AuthUser? {
+        lock.lock(); defer { lock.unlock() }
+        return _currentUser
+    }
+
+    public func signIn(email: String, password: String) async throws -> AuthUser {
+        try await simulateDelay()
+        if shouldFail { throw AppError.authInvalidCredential }
+        let user = AuthUser(
+            uid: "mock-uid-\(email.hashValue)",
+            email: email,
+            displayName: "Mock User",
+            isAnonymous: false,
+            isEmailVerified: !shouldReturnUnverifiedEmail
+        )
+        setUser(user)
+        return user
+    }
+
+    public func signUp(email: String, password: String, displayName: String) async throws -> AuthUser {
+        try await simulateDelay()
+        if shouldFail { throw AppError.authEmailAlreadyInUse }
+        let user = AuthUser(
+            uid: "mock-signup-\(email.hashValue)",
+            email: email,
+            displayName: displayName,
+            isAnonymous: false,
+            isEmailVerified: false
+        )
+        setUser(user)
+        return user
+    }
+
+    public func sendPasswordReset(email: String) async throws {
+        try await simulateDelay()
+        if shouldFail { throw AppError.authUserNotFound }
+    }
+
+    public func sendEmailVerification() async throws {
+        try await simulateDelay()
+        if shouldFail { throw AppError.authSignInFailed("mock verification fail") }
+    }
+
+    public func reloadCurrentUser() async throws -> AuthUser? {
+        try await simulateDelay()
+        return currentUser
+    }
+
+    public func signInWithGoogle() async throws -> AuthUser {
+        try await simulateDelay()
+        if shouldFail { throw AppError.authGoogleCancelled }
+        let user = AuthUser(
+            uid: "mock-google-uid",
+            email: "mock.google@example.com",
+            displayName: "Mock Google User",
+            isAnonymous: false,
+            isEmailVerified: true
+        )
+        setUser(user)
+        return user
+    }
+
+    public func signInAnonymously() async throws -> AuthUser {
+        try await simulateDelay()
+        if shouldFail { throw AppError.authSignInFailed("mock anon fail") }
+        let user = AuthUser(
+            uid: "mock-anon-\(UUID().uuidString.prefix(8))",
+            email: nil,
+            displayName: nil,
+            isAnonymous: true,
+            isEmailVerified: false
+        )
+        setUser(user)
+        return user
+    }
+
+    public func linkAnonymousWithEmail(email: String, password: String) async throws -> AuthUser {
+        try await simulateDelay()
+        if shouldFail { throw AppError.authEmailAlreadyInUse }
+        let linked = AuthUser(
+            uid: currentUser?.uid ?? "mock-linked-uid",
+            email: email,
+            displayName: currentUser?.displayName,
+            isAnonymous: false,
+            isEmailVerified: false
+        )
+        setUser(linked)
+        return linked
+    }
+
+    public func signOut() throws {
+        if shouldFail { throw AppError.authSignOutFailed }
+        setUser(nil)
+    }
+
+    public func deleteAccount() async throws {
+        try await simulateDelay()
+        if shouldFail { throw AppError.authSignInFailed("mock delete fail") }
+        setUser(nil)
+    }
+
+    @discardableResult
+    public func addAuthStateListener(_ listener: @escaping @Sendable (AuthUser?) -> Void) -> Any {
+        let id = UUID()
+        lock.lock()
+        listeners[id] = listener
+        let snapshot = _currentUser
+        lock.unlock()
+        listener(snapshot)
+        return id
+    }
+
+    public func removeAuthStateListener(_ handle: Any) {
+        guard let id = handle as? UUID else { return }
+        lock.lock()
+        listeners.removeValue(forKey: id)
+        lock.unlock()
+    }
+
+    // MARK: - Helpers
+
+    private func setUser(_ user: AuthUser?) {
+        lock.lock()
+        _currentUser = user
+        let callbacks = Array(listeners.values)
+        lock.unlock()
+        for listener in callbacks { listener(user) }
+    }
+
+    private func simulateDelay() async throws {
+        if simulatedDelayNanoseconds > 0 {
+            try await Task.sleep(nanoseconds: simulatedDelayNanoseconds)
+        }
     }
 }
 
