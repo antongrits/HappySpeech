@@ -2,7 +2,7 @@
 name: backend-developer
 description: Backend-разработчик для HappySpeech — Firebase Firestore/Auth/Storage/Functions/Rules. Используй для деплоя правил безопасности, Cloud Functions, индексов, верификации схемы БД, настройки App Check, работы с Firebase MCP.
 tools: Read, Write, Edit, Glob, Grep, Bash
-model: claude-opus-4-7
+model: claude-sonnet-4-6
 effortLevel: high
 ---
 
