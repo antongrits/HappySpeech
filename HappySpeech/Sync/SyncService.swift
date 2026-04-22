@@ -21,17 +21,13 @@ public struct SyncQueueItemDTO: Sendable, Equatable, Identifiable {
 
 /// Drains the Realm `SyncQueueItem` table by uploading to Firebase.
 /// Retries with exponential backoff (max 3 attempts per item).
-public final class LiveSyncService: SyncService, @unchecked Sendable {
+///
+/// Implemented as an `actor` so the internal `_pendingCount` / `_isSyncing`
+/// state is serialised by the Swift runtime — no data races possible.
+public actor LiveSyncService: SyncService {
 
-    public var pendingCount: Int {
-        get { _pendingCount }
-    }
-    public var isSyncing: Bool {
-        get { _isSyncing }
-    }
-
-    nonisolated(unsafe) private var _pendingCount: Int = 0
-    nonisolated(unsafe) private var _isSyncing: Bool = false
+    private var _pendingCount: Int = 0
+    private var _isSyncing: Bool = false
 
     private let realmActor: RealmActor
     private let networkMonitor: any NetworkMonitorService
@@ -40,6 +36,11 @@ public final class LiveSyncService: SyncService, @unchecked Sendable {
         self.realmActor = realmActor
         self.networkMonitor = networkMonitor
     }
+
+    // MARK: - Protocol surface
+
+    public func pendingCount() async -> Int { _pendingCount }
+    public func isSyncing() async -> Bool { _isSyncing }
 
     // MARK: - Enqueue
 
