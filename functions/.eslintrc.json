@@ -1,0 +1,19 @@
+{
+  "env": {
+    "es2022": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module"
+  },
+  "extends": ["eslint:recommended", "google"],
+  "rules": {
+    "quotes": ["error", "single", { "avoidEscape": true }],
+    "indent": ["error", 2],
+    "max-len": ["warn", { "code": 120 }],
+    "require-jsdoc": "off",
+    "valid-jsdoc": "off",
+    "object-curly-spacing": ["error", "always"]
+  }
+}

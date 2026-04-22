@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "happyspeech-prod",
+    "dev": "happyspeech-dev",
+    "staging": "happyspeech-staging"
+  },
+  "targets": {},
+  "etags": {}
+}

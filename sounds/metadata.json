@@ -1,0 +1,258 @@
+{
+  "generated_by": "sound-curator",
+  "date": "2026-04-22",
+  "project": "HappySpeech",
+  "total_sounds": 20,
+  "categories": {
+    "ui": {
+      "source": "scipy_synthesis",
+      "license": "public_domain",
+      "license_url": "N/A — own code synthesis",
+      "commercial_use": true,
+      "attribution_required": false,
+      "sounds": [
+        {
+          "name": "app_startup",
+          "file": "app_startup.wav",
+          "path": "/Users/antongric/Downloads/sounds/ui/processed/app_startup.wav",
+          "duration_s": 0.87,
+          "sample_rate": 44100,
+          "rms": 0.1585,
+          "peak": 0.2861,
+          "approved": true,
+          "copyright_verified": true
+        },
+        {
+          "name": "card_flip",
+          "file": "card_flip.wav",
+          "path": "/Users/antongric/Downloads/sounds/ui/processed/card_flip.wav",
+          "duration_s": 0.15,
+          "sample_rate": 44100,
+          "rms": 0.1585,
+          "peak": 0.6482,
+          "approved": true,
+          "copyright_verified": true
+        },
+        {
+          "name": "drag_drop",
+          "file": "drag_drop.wav",
+          "path": "/Users/antongric/Downloads/sounds/ui/processed/drag_drop.wav",
+          "duration_s": 0.2,
+          "sample_rate": 44100,
+          "rms": 0.1585,
+          "peak": 0.5898,
+          "approved": true,
+          "copyright_verified": true
+        },
+        {
+          "name": "error_gentle",
+          "file": "error_gentle.wav",
+          "path": "/Users/antongric/Downloads/sounds/ui/processed/error_gentle.wav",
+          "duration_s": 0.36,
+          "sample_rate": 44100,
+          "rms": 0.1585,
+          "peak": 0.3152,
+          "approved": true,
+          "copyright_verified": true
+        },
+        {
+          "name": "session_complete",
+          "file": "session_complete.wav",
+          "path": "/Users/antongric/Downloads/sounds/ui/processed/session_complete.wav",
+          "duration_s": 1.59,
+          "sample_rate": 44100,
+          "rms": 0.1585,
+          "peak": 0.3064,
+          "approved": true,
+          "copyright_verified": true
+        },
+        {
+          "name": "star_earn",
+          "file": "star_earn.wav",
+          "path": "/Users/antongric/Downloads/sounds/ui/processed/star_earn.wav",
+          "duration_s": 0.45,
+          "sample_rate": 44100,
+          "rms": 0.1585,
+          "peak": 0.2867,
+          "approved": true,
+          "copyright_verified": true
+        },
+        {
+          "name": "sticker_unlock",
+          "file": "sticker_unlock.wav",
+          "path": "/Users/antongric/Downloads/sounds/ui/processed/sticker_unlock.wav",
+          "duration_s": 0.54,
+          "sample_rate": 44100,
+          "rms": 0.1585,
+          "peak": 0.6163,
+          "approved": true,
+          "copyright_verified": true
+        },
+        {
+          "name": "tap_almost",
+          "file": "tap_almost.wav",
+          "path": "/Users/antongric/Downloads/sounds/ui/processed/tap_almost.wav",
+          "duration_s": 0.3,
+          "sample_rate": 44100,
+          "rms": 0.1585,
+          "peak": 0.3559,
+          "approved": true,
+          "copyright_verified": true
+        },
+        {
+          "name": "tap_correct",
+          "file": "tap_correct.wav",
+          "path": "/Users/antongric/Downloads/sounds/ui/processed/tap_correct.wav",
+          "duration_s": 0.32,
+          "sample_rate": 44100,
+          "rms": 0.1585,
+          "peak": 0.2813,
+          "approved": true,
+          "copyright_verified": true
+        },
+        {
+          "name": "tap_soft",
+          "file": "tap_soft.wav",
+          "path": "/Users/antongric/Downloads/sounds/ui/processed/tap_soft.wav",
+          "duration_s": 0.05,
+          "sample_rate": 44100,
+          "rms": 0.1585,
+          "peak": 0.7342,
+          "approved": true,
+          "copyright_verified": true
+        },
+        {
+          "name": "timer_tick",
+          "file": "timer_tick.wav",
+          "path": "/Users/antongric/Downloads/sounds/ui/processed/timer_tick.wav",
+          "duration_s": 0.05,
+          "sample_rate": 44100,
+          "rms": 0.1585,
+          "peak": 0.7769,
+          "approved": true,
+          "copyright_verified": true
+        }
+      ],
+      "count": 11
+    },
+    "animals": {
+      "source": "tangoflux_ai",
+      "license": "ai_generated_commercial_free",
+      "license_url": "https://huggingface.co/declare-lab/TangoFlux",
+      "commercial_use": true,
+      "attribution_required": false,
+      "sounds": [
+        {
+          "name": "bird_chirp",
+          "file": "bird_chirp.wav",
+          "path": "/Users/antongric/Downloads/sounds/animals/processed/bird_chirp.wav",
+          "duration_s": 2.0,
+          "sample_rate": 44100,
+          "rms": 0.0955,
+          "peak": 0.95,
+          "approved": true,
+          "copyright_verified": true
+        },
+        {
+          "name": "cat_meow",
+          "file": "cat_meow.wav",
+          "path": "/Users/antongric/Downloads/sounds/animals/processed/cat_meow.wav",
+          "duration_s": 2.0,
+          "sample_rate": 44100,
+          "rms": 0.1395,
+          "peak": 0.95,
+          "approved": true,
+          "copyright_verified": true
+        },
+        {
+          "name": "cow_moo",
+          "file": "cow_moo.wav",
+          "path": "/Users/antongric/Downloads/sounds/animals/processed/cow_moo.wav",
+          "duration_s": 3.0,
+          "sample_rate": 44100,
+          "rms": 0.1585,
+          "peak": 0.938,
+          "approved": true,
+          "copyright_verified": true
+        },
+        {
+          "name": "dog_bark",
+          "file": "dog_bark.wav",
+          "path": "/Users/antongric/Downloads/sounds/animals/processed/dog_bark.wav",
+          "duration_s": 2.0,
+          "sample_rate": 44100,
+          "rms": 0.1196,
+          "peak": 0.95,
+          "approved": true,
+          "copyright_verified": true
+        },
+        {
+          "name": "frog_croak",
+          "file": "frog_croak.wav",
+          "path": "/Users/antongric/Downloads/sounds/animals/processed/frog_croak.wav",
+          "duration_s": 2.0,
+          "sample_rate": 44100,
+          "rms": 0.1301,
+          "peak": 0.95,
+          "approved": true,
+          "copyright_verified": true
+        },
+        {
+          "name": "horse_neigh",
+          "file": "horse_neigh.wav",
+          "path": "/Users/antongric/Downloads/sounds/animals/processed/horse_neigh.wav",
+          "duration_s": 3.0,
+          "sample_rate": 44100,
+          "rms": 0.0594,
+          "peak": 0.9499,
+          "approved": true,
+          "copyright_verified": true
+        },
+        {
+          "name": "lion_roar",
+          "file": "lion_roar.wav",
+          "path": "/Users/antongric/Downloads/sounds/animals/processed/lion_roar.wav",
+          "duration_s": 3.0,
+          "sample_rate": 44100,
+          "rms": 0.1585,
+          "peak": 0.2472,
+          "approved": true,
+          "copyright_verified": true
+        }
+      ],
+      "count": 7
+    },
+    "ambient": {
+      "source": "tangoflux_ai",
+      "license": "ai_generated_commercial_free",
+      "license_url": "https://huggingface.co/declare-lab/TangoFlux",
+      "commercial_use": true,
+      "attribution_required": false,
+      "sounds": [
+        {
+          "name": "rain_light",
+          "file": "rain_light.wav",
+          "path": "/Users/antongric/Downloads/sounds/ambient/processed/rain_light.wav",
+          "duration_s": 5.0,
+          "sample_rate": 44100,
+          "rms": 0.099,
+          "peak": 0.95,
+          "approved": true,
+          "copyright_verified": true
+        },
+        {
+          "name": "wind_gentle",
+          "file": "wind_gentle.wav",
+          "path": "/Users/antongric/Downloads/sounds/ambient/processed/wind_gentle.wav",
+          "duration_s": 4.0,
+          "sample_rate": 44100,
+          "rms": 0.0848,
+          "peak": 0.95,
+          "approved": true,
+          "copyright_verified": true
+        }
+      ],
+      "count": 2
+    }
+  }
+}
