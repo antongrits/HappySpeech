@@ -1,8 +1,15 @@
 rules_version = '2';
 
 // HappySpeech Firebase Storage Security Rules
-// Version 1.0 - 2026-04-22
-// Contract source: .claude/team/api-contracts.md section 4
+// Version 1.1 - 2026-04-22 (M1 — sprint backend-dev-infra)
+// Contract source: .claude/team/api-contracts.md section 4 + M1.3 plan
+//
+// Changes v1.1:
+//   - isAdmin() now honours custom claim `request.auth.token.admin == true`
+//     (Firestore role fallback kept)
+//   - shared content tree expanded: /audio/{ui,lyalya,content,refs}, /illustrations, /3d, /animations, /models
+//   - /exports/{uid}/** owner-only (read+delete); writes only by admin (Cloud Function)
+//   - /uploads/users/{uid}/** owner write with size and mime validation
 
 service firebase.storage {
   match /b/{bucket}/o {
@@ -21,8 +28,13 @@ service firebase.storage {
 
     function isAdmin() {
       return isSignedIn()
-        && firestore.exists(/databases/(default)/documents/users/$(request.auth.uid))
-        && firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
+        && (
+          (request.auth.token.admin == true)
+          || (
+            firestore.exists(/databases/(default)/documents/users/$(request.auth.uid))
+            && firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin'
+          )
+        );
     }
 
     function isSpecialist() {
@@ -31,65 +43,110 @@ service firebase.storage {
         && firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'specialist';
     }
 
+    // Max 20 MB per audio upload; audio/* only.
     function isValidAudio() {
-      // Max 20MB per recording; m4a/wav/mp3/aac only
       return request.resource.size < 20 * 1024 * 1024
-        && (request.resource.contentType.matches('audio/.*'));
+        && request.resource.contentType.matches('audio/.*');
     }
 
+    // Max 10 MB user upload (image or audio).
+    function isValidUserUpload() {
+      return request.resource.size < 10 * 1024 * 1024
+        && (
+          request.resource.contentType.matches('image/(png|jpeg|jpg|webp)')
+          || request.resource.contentType.matches('audio/.*')
+        );
+    }
+
+    // Max 5 MB per image; png/jpg/webp only.
     function isValidImage() {
-      // Max 5MB per image; png/jpg only
       return request.resource.size < 5 * 1024 * 1024
         && request.resource.contentType.matches('image/(png|jpeg|jpg|webp)');
     }
 
     // ------------------------------------------------------------------
-    // /content/{contentPackFile}
-    // Downloadable content packs (shared across all users)
+    // Shared read-only content (all signed-in users can read, admin writes)
     // ------------------------------------------------------------------
 
-    match /content/{contentPackFile=**} {
+    // UI sounds
+    match /audio/ui/{file=**} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // Mascot "Ляля" voice lines
+    match /audio/lyalya/{file=**} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // Content audio per sound (word prompts etc.)
+    match /audio/content/{sound}/{file=**} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // Reference pronunciations (teacher model voice)
+    match /audio/refs/{sound}/{file=**} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // Generic /audio/** fallback — read-only for authenticated.
+    match /audio/{path=**} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // ML models (WhisperKit, local LLM)
+    match /models/{path=**} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // Illustrations
+    match /illustrations/{category}/{file=**} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // 3D models (USDZ etc.)
+    match /3d/{file=**} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // Animations (Rive, Lottie)
+    match /animations/{file=**} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // Downloadable content packs
+    match /content/{path=**} {
       allow read: if isSignedIn();
       allow write: if isAdmin();
     }
 
     // ------------------------------------------------------------------
-    // /models/{modelFile}
-    // ML model distribution (read-only for clients)
+    // Per-user private storage
     // ------------------------------------------------------------------
 
-    match /models/{modelFile=**} {
-      allow read: if isSignedIn();
-      allow write: if isAdmin();
-    }
-
-    // ------------------------------------------------------------------
-    // /users/{userId}/avatars/{fileName}
-    // Parent profile avatars
-    // ------------------------------------------------------------------
-
+    // User avatars
     match /users/{userId}/avatars/{fileName} {
       allow read: if isOwner(userId) || isAdmin();
       allow write: if isOwner(userId) && isValidImage();
       allow delete: if isOwner(userId) || isAdmin();
     }
 
-    // ------------------------------------------------------------------
-    // /users/{userId}/children/{childId}/avatars/{fileName}
-    // Child profile avatars (optional pre-made only)
-    // ------------------------------------------------------------------
-
+    // Child avatars
     match /users/{userId}/children/{childId}/avatars/{fileName} {
       allow read: if isOwner(userId) || isAdmin();
       allow write: if isOwner(userId) && isValidImage();
       allow delete: if isOwner(userId) || isAdmin();
     }
 
-    // ------------------------------------------------------------------
-    // /users/{userId}/children/{childId}/attempts/{attemptId}/audio.m4a
-    // Child attempt recordings — parent read only (COPPA-sensitive)
-    // ------------------------------------------------------------------
-
+    // Child attempt recordings (COPPA-sensitive — parent-only)
     match /users/{userId}/children/{childId}/recordings/{attemptId}/{fileName} {
       allow read: if isOwner(userId) || isAdmin();
       allow write: if isOwner(userId) && isValidAudio();
@@ -102,14 +159,24 @@ service firebase.storage {
       allow delete: if isOwner(userId) || isAdmin();
     }
 
-    // ------------------------------------------------------------------
-    // /users/{userId}/exports/{fileName}
-    // Parent-requested data exports (parent-only)
-    // ------------------------------------------------------------------
-
+    // Parent-requested exports (GDPR) — written by Cloud Functions, owner reads/deletes.
     match /users/{userId}/exports/{fileName} {
       allow read: if isOwner(userId) || isAdmin();
-      allow write: if isAdmin(); // Generated by Cloud Functions only
+      allow write: if isAdmin();
+      allow delete: if isOwner(userId) || isAdmin();
+    }
+
+    // Alias path used by some clients — same semantics
+    match /exports/{userId}/{file=**} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow write: if isAdmin();
+      allow delete: if isOwner(userId) || isAdmin();
+    }
+
+    // General user uploads (avatars, screenshots, etc.) — <10MB, image/audio only
+    match /uploads/users/{userId}/{file=**} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow write: if isOwner(userId) && isValidUserUpload();
       allow delete: if isOwner(userId) || isAdmin();
     }
 
