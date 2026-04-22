@@ -12,6 +12,9 @@ enum AppRoute: Hashable {
     case parentHome
     case specialistHome
     case auth
+    case signUp
+    case forgotPassword
+    case verifyEmail
     case settings
     case offlineState
     case permissionFlow(PermissionType)
@@ -47,6 +50,48 @@ final class AppCoordinator {
     var presentedSheet: AppSheet?
     var isShowingOfflineBanner: Bool = false
     var offlinePendingCount: Int = 0
+
+    /// Latest auth snapshot. Updated by `bindAuthState(_:)`.
+    private(set) var authUser: AuthUser?
+    private var authHandle: Any?
+    private weak var boundAuthService: (any AuthService)?
+
+    // MARK: - Auth wiring
+
+    /// Attaches an auth-state listener. Call once at app bootstrap.
+    /// When the user signs in/out, root route is switched between `.auth` and role-select / home.
+    func bindAuthState(_ service: any AuthService) {
+        // Remove previous binding if any.
+        if let previousHandle = authHandle, let previousService = boundAuthService {
+            previousService.removeAuthStateListener(previousHandle)
+        }
+        boundAuthService = service
+        authHandle = service.addAuthStateListener { [weak self] user in
+            Task { @MainActor [weak self] in
+                self?.handleAuthChange(user)
+            }
+        }
+    }
+
+    private func handleAuthChange(_ user: AuthUser?) {
+        authUser = user
+        HSLogger.auth.info("authState changed: \(user == nil ? "nil" : "uid=\(user?.uid ?? "?", privacy: .private)")")
+
+        // Don't interrupt splash transition or in-progress onboarding.
+        switch currentRoute {
+        case .splash, .onboarding, .permissionFlow:
+            return
+        default:
+            break
+        }
+
+        if user == nil {
+            // Signed out — go back to auth screen.
+            navigate(to: .auth)
+        }
+        // Note: successful sign-in transitions are driven explicitly by Auth feature
+        // (coordinator.navigate(to: .roleSelect)) so that verify-email flow can intervene.
+    }
 
     // MARK: - Navigation
 
@@ -168,6 +213,15 @@ struct AppCoordinatorView: View {
 
         case .auth:
             AuthSignInView()
+
+        case .signUp:
+            AuthSignUpView()
+
+        case .forgotPassword:
+            AuthForgotPasswordView()
+
+        case .verifyEmail:
+            AuthVerifyEmailView()
 
         case .settings:
             SettingsView()

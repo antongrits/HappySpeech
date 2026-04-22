@@ -1,3 +1,4 @@
+import ARKit
 import Foundation
 import OSLog
 
@@ -5,8 +6,8 @@ import OSLog
 
 @MainActor
 protocol ARZoneBusinessLogic: AnyObject {
-    func fetch(_ request: ARZoneModels.Fetch.Request)
-    func update(_ request: ARZoneModels.Update.Request)
+    func loadGames(_ request: ARZoneModels.LoadGames.Request)
+    func selectGame(_ request: ARZoneModels.SelectGame.Request)
 }
 
 // MARK: - ARZoneInteractor
@@ -16,17 +17,22 @@ final class ARZoneInteractor: ARZoneBusinessLogic {
 
     var presenter: (any ARZonePresentationLogic)?
 
-    private let logger = Logger(subsystem: "ru.happyspeech", category: "ARZone")
+    // MARK: - loadGames
 
-    // MARK: - fetch
-    func fetch(_ request: ARZoneModels.Fetch.Request) {
-        let response = ARZoneModels.Fetch.Response()
-        presenter?.presentFetch(response)
+    func loadGames(_ request: ARZoneModels.LoadGames.Request) {
+        let games = ARGameCatalog.all
+        let response = ARZoneModels.LoadGames.Response(games: games)
+        presenter?.presentLoadGames(response)
+        HSLogger.ar.debug("ARZone loaded \(games.count) games")
     }
 
-    // MARK: - update
-    func update(_ request: ARZoneModels.Update.Request) {
-        let response = ARZoneModels.Update.Response()
-        presenter?.presentUpdate(response)
+    // MARK: - selectGame
+
+    func selectGame(_ request: ARZoneModels.SelectGame.Request) {
+        guard let game = ARGameCatalog.game(id: request.gameId) else {
+            HSLogger.ar.error("Unknown AR game id: \(request.gameId)")
+            return
+        }
+        presenter?.presentSelectGame(ARZoneModels.SelectGame.Response(game: game))
     }
 }

@@ -11,6 +11,13 @@ public enum AppError: LocalizedError, Equatable {
     case authSignOutFailed
     case authUserNotFound
     case authTokenExpired
+    case authEmailAlreadyInUse
+    case authWeakPassword
+    case authNetworkError
+    case authGoogleCancelled
+    case authEmailNotVerified
+    case authInvalidCredential
+    case authConfigurationMissing
 
     // MARK: - Network
     case networkUnavailable
@@ -81,6 +88,20 @@ public enum AppError: LocalizedError, Equatable {
             return "Пользователь не найден."
         case .authTokenExpired:
             return "Сессия истекла. Войдите снова."
+        case .authEmailAlreadyInUse:
+            return "Пользователь с такой почтой уже существует."
+        case .authWeakPassword:
+            return "Пароль слишком простой. Минимум 6 символов."
+        case .authNetworkError:
+            return "Проблемы с сетью. Проверьте подключение и повторите."
+        case .authGoogleCancelled:
+            return "Вход через Google отменён."
+        case .authEmailNotVerified:
+            return "Почта не подтверждена. Проверьте входящие письма."
+        case .authInvalidCredential:
+            return "Неверный email или пароль."
+        case .authConfigurationMissing:
+            return "Сервис аутентификации не настроен."
 
         case .networkUnavailable:
             return "Нет интернета. Данные сохранены и будут синхронизированы позже."
