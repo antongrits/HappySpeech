@@ -1,0 +1,104 @@
+{
+  "id": "sound_s_v1",
+  "soundTarget": "С",
+  "group": "свистящие",
+  "version": 1,
+  "description": "Коррекция звука [С] — подготовка, изолированный звук, слоги, слова (начальная / средняя / конечная позиция), фразы.",
+  "stages": {
+    "prep": {
+      "stageId": "prep",
+      "note": "Артикуляционная гимнастика перед постановкой.",
+      "items": [
+        { "id": "s-prep-0", "word": "заборчик", "hint": "Улыбнись — покажи зубки.", "difficulty": 1 },
+        { "id": "s-prep-1", "word": "лопатка", "hint": "Широкий расслабленный язычок.", "difficulty": 1 },
+        { "id": "s-prep-2", "word": "чистим-зубки", "hint": "Кончиком языка по нижним зубам.", "difficulty": 1 },
+        { "id": "s-prep-3", "word": "желобок", "hint": "Сделай язычком желобок посередине.", "difficulty": 2 }
+      ]
+    },
+    "isolated": {
+      "stageId": "isolated",
+      "note": "Изолированный звук [С] — насос, ветерок, струйка.",
+      "items": [
+        { "id": "s-iso-0", "word": "ссс-насос", "hint": "Тяни ссс как насос качает шину.", "difficulty": 1 },
+        { "id": "s-iso-1", "word": "ссс-ветер", "hint": "Ветерок холодный: сссс.", "difficulty": 1 },
+        { "id": "s-iso-2", "word": "ссс-струйка", "hint": "Тонкая струйка воздуха.", "difficulty": 2 },
+        { "id": "s-iso-3", "word": "ссс-чайник", "hint": "Чайник шипит тоненько: сссс.", "difficulty": 2 },
+        { "id": "s-iso-4", "word": "ссс-мяч", "hint": "Мячик сдувается: ссссс.", "difficulty": 2 },
+        { "id": "s-iso-5", "word": "ссс-водичка", "hint": "Тоненькая струйка водички: сссс.", "difficulty": 2 },
+        { "id": "s-iso-6", "word": "ссс-комар", "hint": "Маленький комарик поёт: сссс (но мягче).", "difficulty": 3 },
+        { "id": "s-iso-7", "word": "ссс-долго", "hint": "Тяни звук как можно дольше на одном выдохе.", "difficulty": 3 }
+      ]
+    },
+    "syllable": {
+      "stageId": "syllable",
+      "note": "Слоги прямые и обратные.",
+      "items": [
+        { "id": "s-syl-0", "word": "са", "difficulty": 1 },
+        { "id": "s-syl-1", "word": "со", "difficulty": 1 },
+        { "id": "s-syl-2", "word": "су", "difficulty": 1 },
+        { "id": "s-syl-3", "word": "сы", "difficulty": 1 },
+        { "id": "s-syl-4", "word": "ас", "difficulty": 2 },
+        { "id": "s-syl-5", "word": "ос", "difficulty": 2 },
+        { "id": "s-syl-6", "word": "ус", "difficulty": 2 },
+        { "id": "s-syl-7", "word": "ыс", "difficulty": 2 }
+      ]
+    },
+    "wordInit": {
+      "stageId": "wordInit",
+      "note": "[С] в начале слова.",
+      "items": [
+        { "id": "s-wi-0", "word": "сом", "difficulty": 1 },
+        { "id": "s-wi-1", "word": "сок", "difficulty": 1 },
+        { "id": "s-wi-2", "word": "сани", "difficulty": 1 },
+        { "id": "s-wi-3", "word": "сад", "difficulty": 1 },
+        { "id": "s-wi-4", "word": "сова", "difficulty": 2 },
+        { "id": "s-wi-5", "word": "салат", "difficulty": 2 },
+        { "id": "s-wi-6", "word": "собака", "difficulty": 2 },
+        { "id": "s-wi-7", "word": "самолёт", "difficulty": 3 }
+      ]
+    },
+    "wordMed": {
+      "stageId": "wordMed",
+      "note": "[С] в середине слова.",
+      "items": [
+        { "id": "s-wm-0", "word": "коса", "difficulty": 1 },
+        { "id": "s-wm-1", "word": "оса", "difficulty": 1 },
+        { "id": "s-wm-2", "word": "весна", "difficulty": 2 },
+        { "id": "s-wm-3", "word": "колесо", "difficulty": 2 },
+        { "id": "s-wm-4", "word": "посуда", "difficulty": 2 }
+      ]
+    },
+    "wordFinal": {
+      "stageId": "wordFinal",
+      "note": "[С] в конце слова.",
+      "items": [
+        { "id": "s-wf-0", "word": "нос", "difficulty": 1 },
+        { "id": "s-wf-1", "word": "лес", "difficulty": 1 },
+        { "id": "s-wf-2", "word": "лис", "difficulty": 2 },
+        { "id": "s-wf-3", "word": "пёс", "difficulty": 2 },
+        { "id": "s-wf-4", "word": "кокос", "difficulty": 2 }
+      ]
+    },
+    "phrase": {
+      "stageId": "phrase",
+      "note": "Короткие фразы со звуком [С].",
+      "items": [
+        { "id": "s-ph-0", "word": "сухой сок", "difficulty": 1 },
+        { "id": "s-ph-1", "word": "сова в сосне", "difficulty": 2 },
+        { "id": "s-ph-2", "word": "синий сарафан", "difficulty": 2 },
+        { "id": "s-ph-3", "word": "соня спит сладко", "difficulty": 3 },
+        { "id": "s-ph-4", "word": "Саня сел в сани", "difficulty": 3 },
+        { "id": "s-ph-5", "word": "сосны у реки", "difficulty": 3 }
+      ]
+    }
+  },
+  "templateCompatibility": {
+    "prep": ["articulation-imitation", "breathing", "rhythm", "ar-activity"],
+    "isolated": ["repeat-after-model", "listen-and-choose", "sorting", "ar-activity"],
+    "syllable": ["listen-and-choose", "sorting", "repeat-after-model", "bingo", "rhythm"],
+    "wordInit": ["listen-and-choose", "repeat-after-model", "drag-and-match", "memory", "bingo", "sound-hunter", "puzzle-reveal", "visual-acoustic", "minimal-pairs"],
+    "wordMed": ["listen-and-choose", "repeat-after-model", "drag-and-match", "memory"],
+    "wordFinal": ["listen-and-choose", "repeat-after-model", "minimal-pairs"],
+    "phrase": ["story-completion", "drag-and-match", "repeat-after-model", "sorting", "minimal-pairs"]
+  }
+}

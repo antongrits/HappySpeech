@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "HappySpeech Content Pack",
+  "description": "Declarative pack describing exercises for a single sound across correction stages.",
+  "type": "object",
+  "required": ["id", "soundTarget", "group", "version", "stages"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^sound_[a-z]+_v[0-9]+$" },
+    "soundTarget": { "type": "string", "description": "Cyrillic letter, e.g. 'С', 'Ш', 'Р'." },
+    "group": {
+      "type": "string",
+      "enum": ["свистящие", "шипящие", "соноры", "заднеязычные"]
+    },
+    "version": { "type": "integer", "minimum": 1 },
+    "description": { "type": "string" },
+    "stages": {
+      "type": "object",
+      "description": "Map of stageId -> StageDefinition. stageId matches CorrectionStage raw value.",
+      "patternProperties": {
+        "^(prep|isolated|syllable|wordInit|wordMed|wordFinal|phrase|sentence|story|diff)$": {
+          "$ref": "#/definitions/Stage"
+        }
+      },
+      "additionalProperties": false
+    },
+    "templateCompatibility": {
+      "type": "object",
+      "description": "Optional override: stageId -> allowed template ids."
+    }
+  },
+  "definitions": {
+    "Stage": {
+      "type": "object",
+      "required": ["stageId", "items"],
+      "properties": {
+        "stageId": { "type": "string" },
+        "note": { "type": "string" },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/Item" },
+          "minItems": 1
+        }
+      }
+    },
+    "Item": {
+      "type": "object",
+      "required": ["id", "word", "difficulty"],
+      "properties": {
+        "id": { "type": "string" },
+        "word": { "type": "string" },
+        "imageAsset": { "type": ["string", "null"] },
+        "audioAsset": { "type": ["string", "null"] },
+        "hint": { "type": ["string", "null"] },
+        "difficulty": { "type": "integer", "minimum": 1, "maximum": 5 }
+      }
+    }
+  }
+}

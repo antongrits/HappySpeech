@@ -1,0 +1,257 @@
+rules_version = '2';
+
+// HappySpeech Firestore Security Rules
+// Version 1.0 - 2026-04-22
+// Contract source: .claude/team/api-contracts.md
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ------------------------------------------------------------------
+    // Helpers
+    // ------------------------------------------------------------------
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function hasRole(role) {
+      return isSignedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == role;
+    }
+
+    function isAdmin() {
+      return hasRole('admin');
+    }
+
+    function isParent() {
+      return hasRole('parent');
+    }
+
+    function isSpecialist() {
+      return hasRole('specialist');
+    }
+
+    function specialistLinkedToChild(childId) {
+      return isSignedIn()
+        && isSpecialist()
+        && childId in get(/databases/$(database)/documents/specialists/$(request.auth.uid)).data.linkedChildIds;
+    }
+
+    function hasFields(data, fields) {
+      return data.keys().hasAll(fields);
+    }
+
+    function isValidTimestamp(value) {
+      return value is timestamp;
+    }
+
+    function isValidString(value, maxLen) {
+      return value is string && value.size() > 0 && value.size() <= maxLen;
+    }
+
+    // ------------------------------------------------------------------
+    // /users/{userId}
+    // ------------------------------------------------------------------
+
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isOwner(userId)
+        && hasFields(request.resource.data, ['uid', 'email', 'role', 'createdAt'])
+        && request.resource.data.uid == userId
+        && request.resource.data.role in ['parent', 'specialist', 'admin']
+        && isValidString(request.resource.data.email, 254)
+        && isValidTimestamp(request.resource.data.createdAt);
+      allow update: if isOwner(userId)
+        && request.resource.data.uid == resource.data.uid
+        && request.resource.data.role == resource.data.role;
+      allow delete: if isOwner(userId) || isAdmin();
+
+      // ------------------------------------------------------------------
+      // /users/{userId}/children/{childId}
+      // ------------------------------------------------------------------
+
+      match /children/{childId} {
+        allow read: if isOwner(userId)
+          || isAdmin()
+          || specialistLinkedToChild(childId);
+
+        allow create: if isOwner(userId)
+          && hasFields(request.resource.data, ['id', 'name', 'age', 'createdAt'])
+          && isValidString(request.resource.data.name, 50)
+          && request.resource.data.age is int
+          && request.resource.data.age >= 5
+          && request.resource.data.age <= 8
+          && isValidTimestamp(request.resource.data.createdAt);
+
+        allow update: if (isOwner(userId) || specialistLinkedToChild(childId))
+          && request.resource.data.id == resource.data.id
+          && request.resource.data.age is int
+          && request.resource.data.age >= 5
+          && request.resource.data.age <= 8;
+
+        allow delete: if isOwner(userId) || isAdmin();
+
+        // ------------------------------------------------------------------
+        // /users/{userId}/children/{childId}/sessions/{sessionId}
+        // ------------------------------------------------------------------
+
+        match /sessions/{sessionId} {
+          allow read: if isOwner(userId)
+            || isAdmin()
+            || specialistLinkedToChild(childId);
+
+          allow create: if (isOwner(userId) || specialistLinkedToChild(childId))
+            && hasFields(request.resource.data, [
+              'id', 'childId', 'date', 'templateType',
+              'targetSound', 'stage', 'durationSeconds',
+              'totalAttempts', 'correctAttempts'
+            ])
+            && request.resource.data.durationSeconds is int
+            && request.resource.data.durationSeconds > 0
+            && request.resource.data.totalAttempts is int
+            && request.resource.data.totalAttempts >= 0
+            && request.resource.data.correctAttempts is int
+            && request.resource.data.correctAttempts >= 0
+            && request.resource.data.correctAttempts <= request.resource.data.totalAttempts
+            && isValidString(request.resource.data.templateType, 64)
+            && isValidString(request.resource.data.targetSound, 8)
+            && isValidString(request.resource.data.stage, 32);
+
+          // Sessions are immutable once written, except specialist can add annotations
+          allow update: if (isAdmin() || specialistLinkedToChild(childId))
+            && request.resource.data.id == resource.data.id
+            && request.resource.data.childId == resource.data.childId;
+
+          allow delete: if isOwner(userId) || isAdmin();
+
+          // ------------------------------------------------------------------
+          // /users/{userId}/children/{childId}/sessions/{sessionId}/attempts/{attemptId}
+          // ------------------------------------------------------------------
+
+          match /attempts/{attemptId} {
+            allow read: if isOwner(userId)
+              || isAdmin()
+              || specialistLinkedToChild(childId);
+
+            allow create: if (isOwner(userId) || specialistLinkedToChild(childId))
+              && hasFields(request.resource.data, [
+                'id', 'word', 'asrTranscript', 'asrScore',
+                'pronunciationScore', 'isCorrect', 'timestamp'
+              ])
+              && request.resource.data.asrScore is number
+              && request.resource.data.asrScore >= 0.0
+              && request.resource.data.asrScore <= 1.0
+              && request.resource.data.pronunciationScore is number
+              && request.resource.data.pronunciationScore >= 0.0
+              && request.resource.data.pronunciationScore <= 1.0
+              && request.resource.data.isCorrect is bool
+              && isValidString(request.resource.data.word, 64)
+              && isValidTimestamp(request.resource.data.timestamp);
+
+            // Specialist can override score (manualScore field)
+            allow update: if (isAdmin() || specialistLinkedToChild(childId))
+              && request.resource.data.id == resource.data.id
+              && request.resource.data.manualScore is number
+              && request.resource.data.manualScore >= -1.0
+              && request.resource.data.manualScore <= 1.0;
+
+            allow delete: if isOwner(userId) || isAdmin();
+          }
+        }
+
+        // ------------------------------------------------------------------
+        // /users/{userId}/children/{childId}/progress/{soundTarget}
+        // ------------------------------------------------------------------
+
+        match /progress/{soundTarget} {
+          // Progress is computed server-side by Cloud Functions
+          // Clients can only read; writes come from admin SDK (functions)
+          allow read: if isOwner(userId)
+            || isAdmin()
+            || specialistLinkedToChild(childId);
+          allow write: if isAdmin();
+        }
+
+        // ------------------------------------------------------------------
+        // /users/{userId}/children/{childId}/plans/{planId}
+        // ------------------------------------------------------------------
+
+        match /plans/{planId} {
+          allow read: if isOwner(userId)
+            || isAdmin()
+            || specialistLinkedToChild(childId);
+          allow create, update: if (isOwner(userId) || specialistLinkedToChild(childId))
+            && hasFields(request.resource.data, ['id', 'childId', 'date'])
+            && isValidTimestamp(request.resource.data.date);
+          allow delete: if isOwner(userId) || isAdmin();
+        }
+
+        // ------------------------------------------------------------------
+        // /users/{userId}/children/{childId}/reports/{reportId}
+        // ------------------------------------------------------------------
+
+        match /reports/{reportId} {
+          allow read: if isOwner(userId)
+            || isAdmin()
+            || specialistLinkedToChild(childId);
+          // Reports are generated by Cloud Functions only
+          allow write: if isAdmin();
+        }
+      }
+    }
+
+    // ------------------------------------------------------------------
+    // /contentPacks/{packId}
+    // ------------------------------------------------------------------
+
+    match /contentPacks/{packId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // ------------------------------------------------------------------
+    // /exercises/{exerciseId}
+    // ------------------------------------------------------------------
+
+    match /exercises/{exerciseId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // ------------------------------------------------------------------
+    // /content/{contentId}
+    // ------------------------------------------------------------------
+
+    match /content/{contentId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // ------------------------------------------------------------------
+    // /specialists/{specialistId}
+    // ------------------------------------------------------------------
+
+    match /specialists/{specialistId} {
+      allow read: if isOwner(specialistId) || isAdmin();
+      allow create: if isOwner(specialistId)
+        && hasFields(request.resource.data, ['uid', 'email', 'createdAt'])
+        && request.resource.data.uid == specialistId;
+      allow update: if isOwner(specialistId) || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ------------------------------------------------------------------
+    // Default deny for anything else
+    // ------------------------------------------------------------------
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

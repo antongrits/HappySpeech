@@ -1,0 +1,73 @@
+disabled_rules:
+  - trailing_whitespace
+
+opt_in_rules:
+  - empty_count
+  - force_unwrapping
+  - implicitly_unwrapped_optional
+  - operator_usage_whitespace
+  - sorted_imports
+  - vertical_whitespace_closing_braces
+
+excluded:
+  - .build
+  - DerivedData
+  - Pods
+  - vendor
+  - HappySpeech/Resources
+
+line_length:
+  warning: 160
+  error: 200
+  ignores_function_declarations: true
+  ignores_comments: true
+  ignores_urls: true
+
+file_length:
+  warning: 600
+  error: 900
+
+type_body_length:
+  warning: 400
+  error: 600
+
+function_body_length:
+  warning: 60
+  error: 100
+
+identifier_name:
+  min_length: 2
+  max_length: 60
+  excluded:
+    - id
+    - db
+    - i
+    - j
+    - k
+    - r
+    - g
+    - b
+    - a
+
+type_name:
+  min_length: 3
+  max_length: 60
+
+custom_rules:
+  no_print:
+    name: "No print"
+    regex: '\bprint\s*\('
+    message: "Use HSLogger instead of print()"
+    severity: error
+
+  no_todo_in_code:
+    name: "No TODO comments in code"
+    regex: '\/\/\s*(TODO|FIXME|HACK|XXX):'
+    message: "Track tasks in backlog.md, not in code comments"
+    severity: warning
+
+  no_debug_ui_text:
+    name: "No debug text in UI"
+    regex: '"(TODO|placeholder|PLACEHOLDER|debug|DEBUG|test string)"'
+    message: "No debug text in production UI"
+    severity: error
