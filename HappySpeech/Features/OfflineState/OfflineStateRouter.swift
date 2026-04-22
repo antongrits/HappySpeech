@@ -5,6 +5,8 @@ import SwiftUI
 @MainActor
 protocol OfflineStateRoutingLogic {
     func routeBack()
+    func routeToActiveChild(childId: String)
+    func routeToAuth()
 }
 
 // MARK: - OfflineStateRouter
@@ -16,5 +18,13 @@ final class OfflineStateRouter: OfflineStateRoutingLogic {
 
     func routeBack() {
         coordinator?.pop()
+    }
+
+    func routeToActiveChild(childId: String) {
+        coordinator?.navigate(to: .childHome(childId: childId))
+    }
+
+    func routeToAuth() {
+        coordinator?.navigate(to: .auth)
     }
 }

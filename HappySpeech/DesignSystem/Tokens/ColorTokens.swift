@@ -23,6 +23,8 @@ public enum ColorTokens {
         public static let butter     = Color("BrandButter")
         /// Warmth on cards
         public static let rose       = Color("BrandRose")
+        /// Achievement gold — rewards, home-task highlight
+        public static let gold       = Color("BrandGold")
     }
 
     // MARK: - Kid Circuit (warm cream world)
@@ -30,6 +32,8 @@ public enum ColorTokens {
     public enum Kid {
         public static let bg         = Color("KidBg")
         public static let bgDeep     = Color("KidBgDeep")
+        public static let bgSoft     = Color("KidBgSoft")
+        public static let bgSofter   = Color("KidBgSofter")
         public static let surface    = Color("KidSurface")
         public static let surfaceAlt = Color("KidSurfaceAlt")
         public static let ink        = Color("KidInk")

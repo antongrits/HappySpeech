@@ -38,12 +38,17 @@ public final class MockASRService: ASRService, @unchecked Sendable {
 
 // MARK: MockSyncService
 
-public final class MockSyncService: SyncService, @unchecked Sendable {
-    public var pendingCount: Int = 0
-    public var isSyncing: Bool = false
+public actor MockSyncService: SyncService {
+    private var _pendingCount: Int = 0
+    private var _isSyncing: Bool = false
+
+    public init() {}
+
+    public func pendingCount() async -> Int { _pendingCount }
+    public func isSyncing() async -> Bool { _isSyncing }
 
     public func drainQueue() async throws {}
-    public func enqueue(operation: SyncOperation) async throws { pendingCount += 1 }
+    public func enqueue(operation: SyncOperation) async throws { _pendingCount += 1 }
 }
 
 // MARK: MockAnalyticsService
