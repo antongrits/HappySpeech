@@ -1,8 +1,20 @@
 rules_version = '2';
 
 // HappySpeech Firestore Security Rules
-// Version 1.0 - 2026-04-22
-// Contract source: .claude/team/api-contracts.md
+// Version 1.1 - 2026-04-22 (M1 — sprint backend-dev-infra)
+// Contract source: .claude/team/api-contracts.md + M1.3 plan
+//
+// Changes v1.1:
+//   - isAdmin() now checks custom claim `request.auth.token.admin == true`
+//     (was: /users/{uid}.role == 'admin' — kept as fallback)
+//   - isOwnerParent() helper — specialist reads child only if linked AND
+//     parent granted consent via /users/{uid}/children/{cid}.consent.specialistRead == true
+//   - added /users/{uid}/children/{cid}/rewards/{rewardId}
+//   - added /users/{uid}/children/{cid}/routes/{dateStr}
+//   - added /users/{uid}/children/{cid}/weekly_reports/{dateStr}
+//   - added /specialists/{sid}/assignments/{assignmentId}
+//   - added /content/packs/{packId} and /content/manifest
+//   - added /audits/{auditId} — append-only audit log, admin read
 
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -19,14 +31,22 @@ service cloud.firestore {
       return isSignedIn() && request.auth.uid == userId;
     }
 
+    // Admin — primary source: custom claim. Fallback: users/{uid}.role == 'admin'.
+    function isAdmin() {
+      return isSignedIn()
+        && (
+          (request.auth.token.admin == true)
+          || (
+            exists(/databases/$(database)/documents/users/$(request.auth.uid))
+            && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'
+          )
+        );
+    }
+
     function hasRole(role) {
       return isSignedIn()
         && exists(/databases/$(database)/documents/users/$(request.auth.uid))
         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == role;
-    }
-
-    function isAdmin() {
-      return hasRole('admin');
     }
 
     function isParent() {
@@ -40,7 +60,17 @@ service cloud.firestore {
     function specialistLinkedToChild(childId) {
       return isSignedIn()
         && isSpecialist()
+        && exists(/databases/$(database)/documents/specialists/$(request.auth.uid))
         && childId in get(/databases/$(database)/documents/specialists/$(request.auth.uid)).data.linkedChildIds;
+    }
+
+    // Specialist may read a child only if linked AND the parent has explicitly
+    // granted consent (child doc must have consent.specialistRead == true).
+    function isOwnerParent(userId, childId) {
+      return isSignedIn()
+        && specialistLinkedToChild(childId)
+        && exists(/databases/$(database)/documents/users/$(userId)/children/$(childId))
+        && get(/databases/$(database)/documents/users/$(userId)/children/$(childId)).data.consent.specialistRead == true;
     }
 
     function hasFields(data, fields) {
@@ -79,7 +109,7 @@ service cloud.firestore {
       match /children/{childId} {
         allow read: if isOwner(userId)
           || isAdmin()
-          || specialistLinkedToChild(childId);
+          || isOwnerParent(userId, childId);
 
         allow create: if isOwner(userId)
           && hasFields(request.resource.data, ['id', 'name', 'age', 'createdAt'])
@@ -89,7 +119,7 @@ service cloud.firestore {
           && request.resource.data.age <= 8
           && isValidTimestamp(request.resource.data.createdAt);
 
-        allow update: if (isOwner(userId) || specialistLinkedToChild(childId))
+        allow update: if (isOwner(userId) || isOwnerParent(userId, childId))
           && request.resource.data.id == resource.data.id
           && request.resource.data.age is int
           && request.resource.data.age >= 5
@@ -104,9 +134,9 @@ service cloud.firestore {
         match /sessions/{sessionId} {
           allow read: if isOwner(userId)
             || isAdmin()
-            || specialistLinkedToChild(childId);
+            || isOwnerParent(userId, childId);
 
-          allow create: if (isOwner(userId) || specialistLinkedToChild(childId))
+          allow create: if (isOwner(userId) || isOwnerParent(userId, childId))
             && hasFields(request.resource.data, [
               'id', 'childId', 'date', 'templateType',
               'targetSound', 'stage', 'durationSeconds',
@@ -124,7 +154,7 @@ service cloud.firestore {
             && isValidString(request.resource.data.stage, 32);
 
           // Sessions are immutable once written, except specialist can add annotations
-          allow update: if (isAdmin() || specialistLinkedToChild(childId))
+          allow update: if (isAdmin() || isOwnerParent(userId, childId))
             && request.resource.data.id == resource.data.id
             && request.resource.data.childId == resource.data.childId;
 
@@ -137,9 +167,9 @@ service cloud.firestore {
           match /attempts/{attemptId} {
             allow read: if isOwner(userId)
               || isAdmin()
-              || specialistLinkedToChild(childId);
+              || isOwnerParent(userId, childId);
 
-            allow create: if (isOwner(userId) || specialistLinkedToChild(childId))
+            allow create: if (isOwner(userId) || isOwnerParent(userId, childId))
               && hasFields(request.resource.data, [
                 'id', 'word', 'asrTranscript', 'asrScore',
                 'pronunciationScore', 'isCorrect', 'timestamp'
@@ -155,7 +185,7 @@ service cloud.firestore {
               && isValidTimestamp(request.resource.data.timestamp);
 
             // Specialist can override score (manualScore field)
-            allow update: if (isAdmin() || specialistLinkedToChild(childId))
+            allow update: if (isAdmin() || isOwnerParent(userId, childId))
               && request.resource.data.id == resource.data.id
               && request.resource.data.manualScore is number
               && request.resource.data.manualScore >= -1.0
@@ -167,14 +197,13 @@ service cloud.firestore {
 
         // ------------------------------------------------------------------
         // /users/{userId}/children/{childId}/progress/{soundTarget}
+        // Computed server-side — clients read only.
         // ------------------------------------------------------------------
 
         match /progress/{soundTarget} {
-          // Progress is computed server-side by Cloud Functions
-          // Clients can only read; writes come from admin SDK (functions)
           allow read: if isOwner(userId)
             || isAdmin()
-            || specialistLinkedToChild(childId);
+            || isOwnerParent(userId, childId);
           allow write: if isAdmin();
         }
 
@@ -185,8 +214,8 @@ service cloud.firestore {
         match /plans/{planId} {
           allow read: if isOwner(userId)
             || isAdmin()
-            || specialistLinkedToChild(childId);
-          allow create, update: if (isOwner(userId) || specialistLinkedToChild(childId))
+            || isOwnerParent(userId, childId);
+          allow create, update: if (isOwner(userId) || isOwnerParent(userId, childId))
             && hasFields(request.resource.data, ['id', 'childId', 'date'])
             && isValidTimestamp(request.resource.data.date);
           allow delete: if isOwner(userId) || isAdmin();
@@ -194,43 +223,60 @@ service cloud.firestore {
 
         // ------------------------------------------------------------------
         // /users/{userId}/children/{childId}/reports/{reportId}
+        // Generated by Cloud Functions — clients read only.
         // ------------------------------------------------------------------
 
         match /reports/{reportId} {
           allow read: if isOwner(userId)
             || isAdmin()
-            || specialistLinkedToChild(childId);
-          // Reports are generated by Cloud Functions only
+            || isOwnerParent(userId, childId);
           allow write: if isAdmin();
         }
+
+        // ------------------------------------------------------------------
+        // /users/{userId}/children/{childId}/weekly_reports/{dateStr}
+        // Generated by scheduled Cloud Function sendWeeklyReport.
+        // Clients read only, admin writes.
+        // ------------------------------------------------------------------
+
+        match /weekly_reports/{dateStr} {
+          allow read: if isOwner(userId)
+            || isAdmin()
+            || isOwnerParent(userId, childId);
+          allow write: if isAdmin();
+        }
+
+        // ------------------------------------------------------------------
+        // /users/{userId}/children/{childId}/rewards/{rewardId}
+        // ------------------------------------------------------------------
+
+        match /rewards/{rewardId} {
+          allow read: if isOwner(userId)
+            || isAdmin()
+            || isOwnerParent(userId, childId);
+          allow create: if isOwner(userId)
+            && hasFields(request.resource.data, ['id', 'type', 'earnedAt'])
+            && isValidString(request.resource.data.type, 64)
+            && isValidTimestamp(request.resource.data.earnedAt);
+          allow update: if isOwner(userId)
+            && request.resource.data.id == resource.data.id;
+          allow delete: if isOwner(userId) || isAdmin();
+        }
+
+        // ------------------------------------------------------------------
+        // /users/{userId}/children/{childId}/routes/{dateStr}
+        // Daily adaptive route — produced client-side.
+        // ------------------------------------------------------------------
+
+        match /routes/{dateStr} {
+          allow read: if isOwner(userId)
+            || isAdmin()
+            || isOwnerParent(userId, childId);
+          allow create, update: if isOwner(userId)
+            && hasFields(request.resource.data, ['dateStr', 'childId', 'items']);
+          allow delete: if isOwner(userId) || isAdmin();
+        }
       }
-    }
-
-    // ------------------------------------------------------------------
-    // /contentPacks/{packId}
-    // ------------------------------------------------------------------
-
-    match /contentPacks/{packId} {
-      allow read: if isSignedIn();
-      allow write: if isAdmin();
-    }
-
-    // ------------------------------------------------------------------
-    // /exercises/{exerciseId}
-    // ------------------------------------------------------------------
-
-    match /exercises/{exerciseId} {
-      allow read: if isSignedIn();
-      allow write: if isAdmin();
-    }
-
-    // ------------------------------------------------------------------
-    // /content/{contentId}
-    // ------------------------------------------------------------------
-
-    match /content/{contentId} {
-      allow read: if isSignedIn();
-      allow write: if isAdmin();
     }
 
     // ------------------------------------------------------------------
@@ -244,6 +290,59 @@ service cloud.firestore {
         && request.resource.data.uid == specialistId;
       allow update: if isOwner(specialistId) || isAdmin();
       allow delete: if isAdmin();
+
+      // ----------------------------------------------------------------
+      // /specialists/{sid}/assignments/{assignmentId}
+      // Parent-granted access link: specialist ↔ child.
+      // Parent creates; specialist and admin can read; specialist cannot modify.
+      // ----------------------------------------------------------------
+
+      match /assignments/{assignmentId} {
+        allow read: if isOwner(specialistId) || isAdmin();
+        // Only admin can create/update/delete — assignments are issued by
+        // Cloud Function after parent confirms consent.
+        allow write: if isAdmin();
+      }
+    }
+
+    // ------------------------------------------------------------------
+    // /content/* — shared content (packs, exercises, words, manifest)
+    // Public read for authenticated users, admin write.
+    // ------------------------------------------------------------------
+
+    match /content/packs/{packId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    match /content/manifest {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    match /contentPacks/{packId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    match /exercises/{exerciseId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    match /content/{contentId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+
+    // ------------------------------------------------------------------
+    // /audits/{auditId} — append-only audit log (admin-only read).
+    // Created by Cloud Functions only; never read/written by clients.
+    // ------------------------------------------------------------------
+
+    match /audits/{auditId} {
+      allow read: if isAdmin();
+      allow write: if isAdmin();
     }
 
     // ------------------------------------------------------------------
