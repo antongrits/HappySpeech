@@ -1,0 +1,11 @@
+{
+  "project_name": "HappySpeech",
+  "description": "iOS речевое терапевтическое приложение для детей 5-8 лет. Стек: Swift 5.9+, SwiftUI, Firebase, Core ML, iOS 17+. Архитектура: MVVM+DI, Clean Swift, SPM. Целевая аудитория: дети с нарушениями речи (дислалия, ОНР, ЗРР) + их родители.",
+  "knowledge_base": ".claude/team/knowledge-base.md",
+  "extra_windows": [
+    {
+      "name": "SPEECH",
+      "agents": ["speech-methodologist", "speech-analyst", "speech-content-curator", "sound-curator"]
+    }
+  ]
+}

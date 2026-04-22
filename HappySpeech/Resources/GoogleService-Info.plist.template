@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+    HappySpeech — GoogleService-Info.plist TEMPLATE
+    =================================================
+
+    DO NOT commit the real GoogleService-Info.plist to git.
+    This template shows the required keys and their format only.
+
+    HOW TO GET THE REAL FILE:
+      1.  Open https://console.firebase.google.com/
+      2.  Select project (or create one): "happyspeech-prod"
+      3.  Project Settings (gear icon) → "Your apps" → "iOS"
+      4.  If no iOS app is registered:
+            - Click "Add app" → iOS
+            - Apple bundle ID: com.happyspeech.app  (or your bundle id from project.yml)
+            - App nickname: HappySpeech iOS
+            - App Store ID: leave empty for now
+      5.  Click "Register app"
+      6.  Download "GoogleService-Info.plist"
+      7.  Place the downloaded file at:
+            HappySpeech/Resources/GoogleService-Info.plist
+          (same directory as this template)
+      8.  Make sure it is added to the Xcode target "HappySpeech" (Target Membership checked)
+      9.  Verify .gitignore contains:
+            HappySpeech/Resources/GoogleService-Info.plist
+          so the real file is never committed.
+
+    RECOMMENDED: use separate Firebase projects for dev / staging / prod.
+      - happyspeech-dev       → local development
+      - happyspeech-staging   → TestFlight
+      - happyspeech-prod      → App Store
+    Select the active project with:
+      firebase use dev     (or staging / default)
+
+    CI / CD:
+      Store the real plist content in CI secrets (Base64) and decode it
+      into HappySpeech/Resources/GoogleService-Info.plist at build time.
+-->
+<plist version="1.0">
+<dict>
+    <key>API_KEY</key>
+    <string>REPLACE_WITH_API_KEY_FROM_FIREBASE_CONSOLE</string>
+    <key>GCM_SENDER_ID</key>
+    <string>REPLACE_WITH_SENDER_ID</string>
+    <key>PLIST_VERSION</key>
+    <string>1</string>
+    <key>BUNDLE_ID</key>
+    <string>com.happyspeech.app</string>
+    <key>PROJECT_ID</key>
+    <string>happyspeech-prod</string>
+    <key>STORAGE_BUCKET</key>
+    <string>happyspeech-prod.appspot.com</string>
+    <key>IS_ADS_ENABLED</key>
+    <false/>
+    <key>IS_ANALYTICS_ENABLED</key>
+    <false/>
+    <key>IS_APPINVITE_ENABLED</key>
+    <false/>
+    <key>IS_GCM_ENABLED</key>
+    <true/>
+    <key>IS_SIGNIN_ENABLED</key>
+    <true/>
+    <key>GOOGLE_APP_ID</key>
+    <string>REPLACE_WITH_APP_ID</string>
+</dict>
+</plist>
