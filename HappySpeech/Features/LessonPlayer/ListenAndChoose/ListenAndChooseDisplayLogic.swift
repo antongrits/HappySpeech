@@ -1,9 +1,7 @@
 import Foundation
 
-// MARK: - ListenAndChooseDisplayLogic
-
 @MainActor
 protocol ListenAndChooseDisplayLogic: AnyObject {
-    func displayLoadSession(_ viewModel: ListenAndChooseModels.LoadSession.ViewModel)
+    func displayLoadRound(_ viewModel: ListenAndChooseModels.LoadRound.ViewModel)
     func displaySubmitAttempt(_ viewModel: ListenAndChooseModels.SubmitAttempt.ViewModel)
 }

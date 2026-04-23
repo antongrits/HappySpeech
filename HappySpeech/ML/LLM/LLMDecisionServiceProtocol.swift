@@ -33,7 +33,7 @@ public protocol LLMDecisionServiceProtocol: AnyObject, Sendable {
     func pickEncouragementPhrase(context: AttemptContext) async -> EncouragementDecisionOutcome
 
     /// 5. Reward message when a milestone / streak unlocks a sticker.
-    func pickReward(streak: Int, sessionType: SessionType) async -> RewardDecisionOutcome
+    func pickReward(streak: Int, sessionType: LLMSessionType) async -> RewardDecisionOutcome
 
     /// 6. Decide whether the session should end early (fatigue-aware).
     func decideFinishSession(fatigueLevel: Double, attempts: Int) async -> FinishDecisionOutcome
@@ -245,7 +245,7 @@ public enum DecisionCircuit: String, Sendable {
     case kid, parent, specialist
 }
 
-public enum SessionType: String, Sendable {
+public enum LLMSessionType: String, Sendable {
     case daily, freePlay, homework, arZone, demo
 }
 

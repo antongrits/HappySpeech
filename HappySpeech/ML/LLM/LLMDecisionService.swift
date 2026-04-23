@@ -196,7 +196,7 @@ public final class LiveLLMDecisionService: LLMDecisionServiceProtocol, @unchecke
 
     // MARK: - 5. Reward
 
-    public func pickReward(streak: Int, sessionType: SessionType) async -> RewardDecisionOutcome {
+    public func pickReward(streak: Int, sessionType: LLMSessionType) async -> RewardDecisionOutcome {
         let start = Date()
         let reward = rules.pickReward(streak: streak, sessionType: sessionType)
         let meta = makeMeta(start: start, source: .ruleBased, usedFallback: false)

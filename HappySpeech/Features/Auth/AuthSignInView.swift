@@ -116,37 +116,47 @@ struct AuthSignInView: View {
             }
         }
         .ignoresSafeArea()
+        .accessibilityHidden(true)
     }
 
     private var headerSection: some View {
         VStack(spacing: SpacingTokens.sp3) {
             HSMascotView(mood: .happy, size: 110)
                 .padding(.top, SpacingTokens.sp16)
+                .accessibilityHidden(true)
 
             Text("HappySpeech")
                 .font(TypographyTokens.kidDisplay(30))
                 .foregroundStyle(.white)
                 .shadow(color: .black.opacity(0.15), radius: 4, y: 2)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .accessibilityAddTraits(.isHeader)
         }
     }
 
     private var welcomeSection: some View {
         VStack(spacing: SpacingTokens.sp2) {
-            Text(String(localized: "С возвращением!"))
+            Text(String(localized: "auth.welcome.back"))
                 .font(TypographyTokens.title(24))
                 .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .accessibilityAddTraits(.isHeader)
 
-            Text(String(localized: "Войдите, чтобы следить за прогрессом ребёнка"))
+            Text(String(localized: "auth.landing.subtitle"))
                 .font(TypographyTokens.body(14))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
         }
     }
 
     private var formSection: some View {
         VStack(spacing: SpacingTokens.sp3) {
             authTextField(
-                title: String(localized: "Эл. почта"),
+                title: String(localized: "auth.email.label"),
                 text: $email,
                 icon: "envelope",
                 keyboard: .emailAddress,
@@ -156,9 +166,11 @@ struct AuthSignInView: View {
             )
             .submitLabel(.next)
             .onSubmit { focusedField = .password }
+            .accessibilityLabel(String(localized: "accessibility.email_field"))
+            .accessibilityHint(String(localized: "accessibility.email_field.hint"))
 
             authTextField(
-                title: String(localized: "Пароль"),
+                title: String(localized: "auth.password.label"),
                 text: $password,
                 icon: "lock",
                 keyboard: .default,
@@ -168,29 +180,35 @@ struct AuthSignInView: View {
             )
             .submitLabel(.go)
             .onSubmit(signIn)
+            .accessibilityLabel(String(localized: "accessibility.password_field"))
+            .accessibilityHint(String(localized: "accessibility.password_field.hint"))
         }
     }
 
     private var authButtonsSection: some View {
         VStack(spacing: SpacingTokens.sp3) {
-            HSButton(String(localized: "Войти"), style: .primary, icon: "arrow.right") {
+            HSButton(String(localized: "auth.signIn"), style: .primary, icon: "arrow.right") {
                 signIn()
             }
             .disabled(email.isEmpty || password.isEmpty)
             .opacity((email.isEmpty || password.isEmpty) ? 0.6 : 1)
+            .accessibilityLabel(String(localized: "accessibility.sign_in_button"))
+            .accessibilityHint(String(localized: "accessibility.sign_in_button.hint"))
 
             HStack {
                 Rectangle().fill(ColorTokens.Kid.line).frame(height: 1)
-                Text(String(localized: "или"))
+                Text(String(localized: "auth.or"))
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Kid.inkSoft)
                 Rectangle().fill(ColorTokens.Kid.line).frame(height: 1)
             }
             .padding(.vertical, SpacingTokens.sp1)
+            .accessibilityHidden(true)
 
-            HSButton(String(localized: "Войти через Google"), style: .secondary, icon: "globe") {
+            HSButton(String(localized: "auth.google.cta"), style: .secondary, icon: "globe") {
                 signInWithGoogle()
             }
+            .accessibilityLabel(String(localized: "accessibility.google_sign_in"))
         }
     }
 
@@ -199,33 +217,42 @@ struct AuthSignInView: View {
             Button {
                 coordinator.navigate(to: .forgotPassword)
             } label: {
-                Text(String(localized: "Забыли пароль?"))
+                Text(String(localized: "auth.forgot.password"))
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Brand.primary)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
             }
+            .accessibilityLabel(String(localized: "accessibility.forgot_password"))
 
             Button {
                 coordinator.navigate(to: .signUp)
             } label: {
                 HStack(spacing: 4) {
-                    Text(String(localized: "Нет аккаунта?"))
+                    Text(String(localized: "auth.noAccount"))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    Text(String(localized: "Зарегистрироваться"))
+                    Text(String(localized: "auth.register.cta"))
                         .foregroundStyle(ColorTokens.Brand.primary)
                         .fontWeight(.semibold)
                 }
                 .font(TypographyTokens.body(14))
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
             }
+            .accessibilityLabel(String(localized: "accessibility.go_to_signup"))
 
             Button {
                 coordinator.navigate(to: .demoMode)
             } label: {
-                Text(String(localized: "Попробовать без входа"))
+                Text(String(localized: "auth.tryWithoutLogin"))
                     .font(TypographyTokens.body(13))
                     .foregroundStyle(ColorTokens.Kid.inkSoft)
                     .underline()
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
             }
             .padding(.top, SpacingTokens.sp1)
+            .accessibilityLabel(String(localized: "accessibility.demo_mode"))
         }
     }
 

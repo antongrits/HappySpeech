@@ -1,21 +1,60 @@
 import Foundation
 
 // MARK: - ListenAndChoose VIP Models
-// Backlog: see backlog.md for implementation tickets
 
 enum ListenAndChooseModels {
 
-    // MARK: - LoadSession
-    enum LoadSession {
-        struct Request { var sessionId: String = "" }
-        struct Response { var items: [String] = [] }
-        struct ViewModel { var displayItems: [String] = [] }
+    // MARK: LoadRound
+    enum LoadRound {
+        struct Request {
+            let soundTarget: String
+            let difficulty: Int
+        }
+        struct Response {
+            let targetWord: String
+            let options: [OptionItem]
+            let correctIndex: Int
+            let audioAsset: String?
+        }
+        struct ViewModel {
+            let targetWord: String
+            let options: [OptionViewModel]
+            let correctIndex: Int
+            let instructionText: String
+        }
+
+        struct OptionItem: Sendable {
+            let id: String
+            let word: String
+            let imageAsset: String?
+        }
+        struct OptionViewModel: Identifiable, Equatable {
+            let id: String
+            let word: String
+            let imageSystemName: String
+        }
     }
 
-    // MARK: - SubmitAttempt
+    // MARK: SubmitAttempt
     enum SubmitAttempt {
-        struct Request { var selectedWord: String = ""; var audioURL: URL? = nil }
-        struct Response { var isCorrect: Bool = false; var score: Double = 0 }
-        struct ViewModel { var feedbackText: String = ""; var isCorrect: Bool = false }
+        struct Request {
+            let selectedIndex: Int
+            let correctIndex: Int
+            let attemptsUsed: Int
+        }
+        struct Response {
+            let isCorrect: Bool
+            let isFinalAttempt: Bool
+            let score: Float
+            let shouldRevealAnswer: Bool
+            let correctIndex: Int
+        }
+        struct ViewModel {
+            let isCorrect: Bool
+            let feedbackText: String
+            let shouldRevealAnswer: Bool
+            let correctIndex: Int
+            let finalScore: Float?
+        }
     }
 }
