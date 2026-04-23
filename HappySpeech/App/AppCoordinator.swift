@@ -164,25 +164,33 @@ enum AppSheet: Identifiable, Hashable {
 /// Root view wired to AppCoordinator — switches between top-level screens.
 struct AppCoordinatorView: View {
     @Bindable var coordinator: AppCoordinator
+    @Environment(AppContainer.self) private var container
 
     var body: some View {
-        ZStack(alignment: .top) {
-            // Main content
-            mainContent
-                .animation(MotionTokens.page, value: coordinator.currentRoute)
+        // Wrap the entire navigation stack in the guided-tour container so the
+        // spotlight + coach-mark overlay renders on top of whichever screen is
+        // currently active. Individual screens register spotlight anchors via
+        // `.spotlightAnchor(key:)` at strategic points (mascot, daily mission,
+        // quick actions, etc).
+        GuidedTourContainer(coordinator: container.guidedTourCoordinator) {
+            ZStack(alignment: .top) {
+                // Main content
+                mainContent
+                    .animation(MotionTokens.page, value: coordinator.currentRoute)
 
-            // Offline banner (global)
-            if coordinator.isShowingOfflineBanner {
-                HSOfflineBanner(
-                    pendingCount: coordinator.offlinePendingCount,
-                    onRetry: { Task { /* trigger sync */ } }
-                )
-                .transition(.move(edge: .top).combined(with: .opacity))
-                .zIndex(100)
+                // Offline banner (global)
+                if coordinator.isShowingOfflineBanner {
+                    HSOfflineBanner(
+                        pendingCount: coordinator.offlinePendingCount,
+                        onRetry: { Task { /* trigger sync */ } }
+                    )
+                    .transition(.move(edge: .top).combined(with: .opacity))
+                    .zIndex(100)
+                }
             }
-        }
-        .sheet(item: $coordinator.presentedSheet) { sheet in
-            sheetContent(for: sheet)
+            .sheet(item: $coordinator.presentedSheet) { sheet in
+                sheetContent(for: sheet)
+            }
         }
     }
 
