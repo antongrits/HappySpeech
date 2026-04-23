@@ -288,6 +288,26 @@ struct SessionShellBinder: View {
             RhythmView(activity: activity) { score in
                 Task { await onComplete(activity.id, score) }
             }
+        case .puzzleReveal:
+            PuzzleRevealView(activity: activity) { score in
+                Task { await onComplete(activity.id, score) }
+            }
+        case .storyCompletion:
+            StoryCompletionView(activity: activity) { score in
+                Task { await onComplete(activity.id, score) }
+            }
+        case .narrativeQuest:
+            NarrativeQuestView(activity: activity) { score in
+                Task { await onComplete(activity.id, score) }
+            }
+        case .articulationImitation:
+            ArticulationImitationView(activity: activity) { score in
+                Task { await onComplete(activity.id, score) }
+            }
+        case .visualAcoustic:
+            VisualAcousticView(activity: activity) { score in
+                Task { await onComplete(activity.id, score) }
+            }
         default:
             placeholderGame(for: activity)
         }
