@@ -256,7 +256,7 @@ public extension AppContainer {
             syncServiceFactory: { sharedSyncService },
             analyticsServiceFactory: { LocalAnalyticsService() },
             hapticServiceFactory: { LiveHapticService() },
-            notificationServiceFactory: { LiveNotificationService() },
+            notificationServiceFactory: { NotificationServiceLive() },
             networkMonitorFactory: { sharedNetworkMonitor },
             pronunciationServiceFactory: { LivePronunciationScorerService() },
             localLLMServiceFactory: { sharedLocalLLM },

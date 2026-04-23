@@ -2,7 +2,6 @@ import Foundation
 import AVFoundation
 import UIKit
 import OSLog
-import UserNotifications
 
 // MARK: - LiveAudioService
 // AVAudioEngine is used on main thread — @unchecked Sendable.
@@ -139,45 +138,6 @@ public final class LiveHapticService: HapticService, @unchecked Sendable {
         DispatchQueue.main.async {
             UISelectionFeedbackGenerator().selectionChanged()
         }
-    }
-}
-
-// MARK: - LiveNotificationService
-
-public final class LiveNotificationService: NotificationService, @unchecked Sendable {
-    nonisolated(unsafe) private let center = UNUserNotificationCenter.current()
-
-    public func requestPermission() async -> Bool {
-        do {
-            return try await center.requestAuthorization(options: [.alert, .sound, .badge])
-        } catch {
-            HSLogger.app.error("Notification permission error: \(error)")
-            return false
-        }
-    }
-
-    public func scheduleDailyReminder(at hour: Int, minute: Int) async throws {
-        let content = UNMutableNotificationContent()
-        content.title = String(localized: "Время заниматься!")
-        content.body = String(localized: "Ляля ждёт тебя для новых упражнений")
-        content.sound = .default
-
-        var components = DateComponents()
-        components.hour = hour
-        components.minute = minute
-
-        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
-        let request = UNNotificationRequest(
-            identifier: "hs.daily.reminder",
-            content: content,
-            trigger: trigger
-        )
-        try await center.add(request)
-        HSLogger.app.info("Daily reminder scheduled at \(hour):\(String(format: "%02d", minute))")
-    }
-
-    public func cancelAllReminders() async {
-        center.removePendingNotificationRequests(withIdentifiers: ["hs.daily.reminder"])
     }
 }
 
