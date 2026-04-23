@@ -16,6 +16,7 @@ import SwiftUI
 // tests to `assertSnapshot(matching: view, as: .image(...))`.
 // ==================================================================================
 
+@MainActor
 final class DesignSystemSnapshotTests: XCTestCase {
 
     // MARK: - Device matrix
@@ -34,7 +35,6 @@ final class DesignSystemSnapshotTests: XCTestCase {
 
     // MARK: - Helpers
 
-    @MainActor
     private func render<V: View>(_ view: V, size: CGSize, style: UIUserInterfaceStyle) -> UIImage {
         let sized = view.frame(width: size.width, height: size.height)
         let host = UIHostingController(rootView: sized)
@@ -56,7 +56,6 @@ final class DesignSystemSnapshotTests: XCTestCase {
         return dir.appendingPathComponent("\(device)_\(appearance).png")
     }
 
-    @MainActor
     private func record<V: View>(_ view: V, component: String) throws {
         for device in devices {
             for (name, style) in appearances {
