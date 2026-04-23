@@ -65,3 +65,6 @@ functions/.runtimeconfig.json
 __pycache__/
 venv/
 .venv/
+
+# Content audio (>10MB, stored in Firebase Storage — do not commit)
+HappySpeech/Resources/Audio/Content/
