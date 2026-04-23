@@ -34,7 +34,7 @@ enum SessionShellModels {
         struct Response {
             let nextActivity: SessionActivity?
             let isSessionComplete: Bool
-            let earnedReward: RewardItem?
+            let earnedReward: SessionReward?
             let fatigueDetected: Bool
         }
         struct ViewModel {
@@ -94,10 +94,10 @@ enum SessionType: String, Sendable {
     case homeworkTask
 }
 
-struct RewardItem: Sendable, Equatable {
+struct SessionReward: Sendable, Equatable {
     let kind: Kind
     enum Kind: String, Sendable { case star, badge, sticker }
-    static let star = RewardItem(kind: .star)
+    static let star = SessionReward(kind: .star)
 }
 
 struct RewardViewModel: Sendable, Equatable {

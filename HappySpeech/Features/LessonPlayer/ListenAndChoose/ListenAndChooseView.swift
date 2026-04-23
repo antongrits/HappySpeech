@@ -9,7 +9,7 @@ import OSLog
 /// `onComplete` closure that receives the final score [0.0 – 1.0]. The game
 /// auto-loads a round on appear, handles up to 3 attempts per round, and then
 /// calls `onComplete` once the round is finished.
-struct ListenAndChooseView: View, ListenAndChooseDisplayLogic {
+struct ListenAndChooseView: View {
 
     // MARK: Input
 
@@ -21,7 +21,7 @@ struct ListenAndChooseView: View, ListenAndChooseDisplayLogic {
     @State private var interactor: (any ListenAndChooseBusinessLogic)?
     @State private var presenter: ListenAndChoosePresenter?
     @State private var router: ListenAndChooseRouter?
-    @Environment(\.appContainer) private var container
+    @Environment(AppContainer.self) private var container
 
     // MARK: State
 
@@ -190,7 +190,24 @@ struct ListenAndChooseView: View, ListenAndChooseDisplayLogic {
             contentService: container.contentService
         )
         interactorInstance.presenter = presenterInstance
-        presenterInstance.display = self // struct cannot be weak; see Adapter note below
+        // Use a class-bound bridge because SwiftUI struct can't conform to
+        // AnyObject protocols. The bridge forwards display callbacks into
+        // `@State` via closures.
+        let bridge = ListenAndChooseDisplayBridge(
+            onLoad: { new in vm = new },
+            onAttempt: { result in
+                feedbackText = result.feedbackText
+                feedbackIsCorrect = result.isCorrect
+                revealAnswer = result.shouldRevealAnswer
+                if let finalScore = result.finalScore {
+                    Task { @MainActor in
+                        try? await Task.sleep(for: .milliseconds(800))
+                        onComplete(finalScore)
+                    }
+                }
+            }
+        )
+        presenterInstance.display = bridge
 
         presenter = presenterInstance
         router = routerInstance
@@ -231,15 +248,6 @@ struct ListenAndChooseView: View, ListenAndChooseDisplayLogic {
         )
     }
 
-    // MARK: ListenAndChooseDisplayLogic (ignored — see Adapter in bootstrap())
-
-    nonisolated func displayLoadRound(_ viewModel: ListenAndChooseModels.LoadRound.ViewModel) {
-        // Not used — SwiftUI struct cannot serve as a class-bound protocol target.
-        // The presenter is instead connected via `ListenAndChooseDisplayBridge` below.
-    }
-    nonisolated func displaySubmitAttempt(_ viewModel: ListenAndChooseModels.SubmitAttempt.ViewModel) {
-        // See above.
-    }
 }
 
 // MARK: - Bridge

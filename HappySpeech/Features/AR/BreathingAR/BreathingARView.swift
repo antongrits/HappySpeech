@@ -81,12 +81,15 @@ struct BreathingARView: View {
     }
 
     private func observe(service: any ARSessionService) {
-        Task { @MainActor [weak self] in
+        // SwiftUI View is a value type — capture the @State-backed interactor
+        // directly. No weak self required (no retain cycle risk on structs).
+        let capturedInteractor = interactor
+        Task { @MainActor in
             for await frame in service.blendshapeStream {
-                guard let self else { break }
+                guard capturedInteractor != nil else { break }
                 // Амплитуда микрофона подтягивается из AudioService; в M0 заменена mock-значением.
                 let mic = Float.random(in: 0.1...0.5) * (frame.cheekPuff > 0.2 ? 1.0 : 0.3)
-                self.interactor?.updateFrame(.init(blendshapes: frame, micAmplitude: mic))
+                capturedInteractor?.updateFrame(.init(blendshapes: frame, micAmplitude: mic))
             }
         }
     }
