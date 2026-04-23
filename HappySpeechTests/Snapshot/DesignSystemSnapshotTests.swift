@@ -34,8 +34,10 @@ final class DesignSystemSnapshotTests: XCTestCase {
 
     // MARK: - Helpers
 
+    @MainActor
     private func render<V: View>(_ view: V, size: CGSize, style: UIUserInterfaceStyle) -> UIImage {
-        let host = UIHostingController(rootView: view.frame(width: size.width, height: size.height))
+        let sized = view.frame(width: size.width, height: size.height)
+        let host = UIHostingController(rootView: sized)
         host.overrideUserInterfaceStyle = style
         host.view.frame = CGRect(origin: .zero, size: size)
         host.view.layoutIfNeeded()
@@ -54,6 +56,7 @@ final class DesignSystemSnapshotTests: XCTestCase {
         return dir.appendingPathComponent("\(device)_\(appearance).png")
     }
 
+    @MainActor
     private func record<V: View>(_ view: V, component: String) throws {
         for device in devices {
             for (name, style) in appearances {
