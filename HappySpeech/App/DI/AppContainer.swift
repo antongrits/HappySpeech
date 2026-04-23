@@ -209,6 +209,20 @@ public final class AppContainer {
         if _soundService == nil { _soundService = LiveSoundService() }
         return _soundService!
     }
+
+    // MARK: - GuidedTour
+
+    private var _guidedTourCoordinator: GuidedTourCoordinator?
+
+    /// Lazy global guided-tour coordinator. Single instance per AppContainer so the
+    /// 11-step tour state survives navigation between ChildHome / ParentHome / Settings.
+    /// Internal visibility — only consumed by feature views within the app target.
+    var guidedTourCoordinator: GuidedTourCoordinator {
+        if _guidedTourCoordinator == nil {
+            _guidedTourCoordinator = GuidedTourCoordinator(soundService: soundService)
+        }
+        return _guidedTourCoordinator!
+    }
 }
 
 // MARK: - Factory Methods

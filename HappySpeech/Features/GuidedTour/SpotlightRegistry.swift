@@ -6,7 +6,7 @@ import SwiftUI
 /// key, so the `GuidedTourCoordinator` can draw a spotlight hole around the
 /// right rect without holding direct references.
 struct SpotlightKey: PreferenceKey {
-    static var defaultValue: [String: CGRect] = [:]
+    static let defaultValue: [String: CGRect] = [:]
 
     static func reduce(value: inout [String: CGRect], nextValue: () -> [String: CGRect]) {
         value.merge(nextValue(), uniquingKeysWith: { $1 })

@@ -25,9 +25,13 @@ struct ChildHomeView: View {
                 VStack(spacing: 0) {
                     greetingSection
                     mascotSection
+                        .spotlightAnchor(key: "mascot_header")
                     dailyMissionSection
+                        .spotlightAnchor(key: "daily_mission_card")
                     quickActionsSection
+                        .spotlightAnchor(key: "start_lesson_button")
                     progressSection
+                        .spotlightAnchor(key: "streak_banner")
 
                     Spacer(minLength: SpacingTokens.sp16)
                 }
@@ -35,6 +39,7 @@ struct ChildHomeView: View {
             }
 
             parentButton
+                .spotlightAnchor(key: "parent_dashboard")
         }
         .onAppear { bootstrap() }
         .task {
