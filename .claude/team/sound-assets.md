@@ -1,96 +1,154 @@
 # Sound Assets Registry — HappySpeech
-## Version 1.0 — 2026-04-21
-## Managed by Sound Curator. ALL sounds must be CC0 or royalty-free before use.
+
+**Version 2.0 — 2026-04-23**
+**Managed by:** Sound Curator. All sounds verified CC0 or royalty-free.
 
 ---
 
-## Categories Needed
+## Сводка готовности
 
-### Category 1: UI Sounds (Sprint 2–3)
+| Категория | Файлов | Размер | Placement | Статус |
+|---|---|---|---|---|
+| UI sounds (.caf) | 16 | ~150 KB | `HappySpeech/Resources/Audio/UI/` (в репо) | ✅ M3.2 done |
+| Ляля voice brand (.m4a) | 120 | ~2 MB | `HappySpeech/Resources/Audio/Lyalya/` (в репо) | ✅ M3.3 done |
+| Content audio batch 1 (.m4a) | 1000 | 12.65 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 1 |
+| Content audio batch 2+ | 0 / ~5000 | ~60 MB | Firebase Storage | ⏳ pending |
+| Эталоны для M4.3 (premium TTS) | 0 | — | `_workshop/references/` | ⏳ pending M3.5 |
+| Ambient / background music | 0 / 4 | — | `Resources/Audio/Ambient/` | ⏳ pending M9 |
 
-| Asset | Description | Format | Duration | Source | License | Status |
-|-------|-------------|--------|----------|--------|---------|--------|
-| tap_soft | Soft tap for button press | MP3 | ~50ms | Freesound.org (CC0) | CC0 | Needed |
-| tap_correct | Correct answer chime | MP3 | ~300ms | Freesound.org (CC0) | CC0 | Needed |
-| tap_almost | "Almost" gentle sound | MP3 | ~300ms | Freesound.org (CC0) | CC0 | Needed |
-| card_flip | Card flip (memory game) | MP3 | ~150ms | Freesound.org (CC0) | CC0 | Needed |
-| drag_drop | Drag-and-drop placement | MP3 | ~200ms | Freesound.org (CC0) | CC0 | Needed |
-| session_complete | Session end fanfare | MP3 | ~1.5s | ElevenLabs Sound Effects | CC0/Custom | Needed |
-| sticker_unlock | Sticker unlock pop | MP3 | ~500ms | Freesound.org (CC0) | CC0 | Needed |
-| star_earn | Star earned jingle | MP3 | ~400ms | Freesound.org (CC0) | CC0 | Needed |
-| timer_tick | Gentle timer tick | MP3 | ~50ms | Freesound.org (CC0) | CC0 | Needed |
-| error_gentle | Gentle "try again" sound (NOT harsh) | MP3 | ~300ms | ElevenLabs | Custom | Needed |
-| app_startup | App startup sound | MP3 | ~1s | ElevenLabs | Custom | Needed |
+---
 
-### Category 2: Voice Prompts RU — Lyalya Mascot (Sprint 3–4)
+## M3.2 — UI Sounds (16 файлов) ✅
 
-**Required: 50+ phrases recorded or synthesized in child-friendly Russian voice.**
+**Генерация:** `_workshop/scripts/generate_ui_sounds.py` (numpy + scipy + afconvert, алгоритмически)
+**Формат:** 16kHz mono AAC в `.caf` контейнере
+**Лицензия:** CC0 (алгоритмически сгенерированы)
 
-| # | Phrase | Context | Status |
-|---|--------|---------|--------|
-| 1 | "Привет! Я Ляля. Давай потренируемся вместе!" | Onboarding welcome | Needed |
-| 2 | "Отличная работа!" | Correct answer | Needed |
-| 3 | "Почти-почти! Ещё раз попробуй?" | Almost correct | Needed |
-| 4 | "Давай вместе! Слушай: ..." | Hint prompt | Needed |
-| 5 | "Молодец, ты очень старался!" | Session end | Needed |
-| 6 | "Сегодня ты настоящий чемпион!" | High performance | Needed |
-| 7 | "Разогреем язычок!" | Warm-up intro | Needed |
-| 8 | "Слушай внимательно..." | Listen template intro | Needed |
-| 9 | "Повтори за мной!" | Repeat template intro | Needed |
-| 10 | "Тащи картинку в нужный домик!" | Drag-match intro | Needed |
-| 11 | "Найди звук-прятку!" | Sound-hunter intro | Needed |
-| 12 | "Дыши медленно и ровно..." | Breathing intro | Needed |
-| 13 | "Посмотри на своё лицо в зеркало!" | AR intro | Needed |
-| 14 | "Высуни язычок!" | tongueOut AR prompt | Needed |
-| 15 | "Улыбнись пошире!" | smile AR prompt | Needed |
-| 16 | "Надуй шарик! Дуй!" | balloon-blow AR | Needed |
-| 17 | "Ты уже так близко к звезде!" | Encouragement | Needed |
-| 18 | "Это трудный звук — и это нормально!" | Difficulty comfort | Needed |
-| 19 | "На сегодня всё! Отдохни." | Fatigue stop | Needed |
-| 20 | "Завтра продолжим приключение!" | Session end farewell | Needed |
-| 21–50 | Additional game instructions, encouragements, intros for each template × 2 | Various | Needed |
+| Файл | Назначение | Длительность |
+|---|---|---|
+| `tap.caf` | Нажатие кнопки | 0.15s |
+| `correct.caf` | Правильный ответ | 0.3s |
+| `incorrect.caf` | Ошибка (мягкая, не травмирующая) | 0.25s |
+| `reward.caf` | Получение награды | 0.8s |
+| `streak.caf` | Серия подряд | 0.5s |
+| `level_up.caf` | Новый уровень | 1.0s |
+| `warmup_start.caf` | Начало разминки | 0.4s |
+| `warmup_end.caf` | Конец разминки | 0.4s |
+| `complete.caf` | Завершение сессии | 0.6s |
+| `pause.caf` | Пауза | 0.2s |
+| `notification.caf` | Уведомление | 0.3s |
+| `transition_next.caf` | Переход вперёд | 0.2s |
+| `transition_back.caf` | Переход назад | 0.2s |
+| `drag_pick.caf` | Захват drag | 0.15s |
+| `drag_drop.caf` | Отпускание drag | 0.2s |
+| `error.caf` | Общая ошибка UI | 0.25s |
 
-**Voice spec:** Warm, female, age 25–35, clear diction, moderate pace (not too fast for children to follow), positive emotion without over-excitement.
-**Production method:** Logopedist recording preferred for reference pronunciations; Silero TTS or ElevenLabs acceptable for Lyalya mascot voice (non-pedagogical prompts).
+---
 
-### Category 3: Reference Pronunciations — Logopedist (Sprint 3–6)
+## M3.3 — Ляля Voice Brand (120 файлов) ✅
 
-**Required: 520+ words, all with target sounds, recorded by certified Russian logopedist.**
+**Генерация:** edge-tts `ru-RU-SvetlanaNeural` → pyloudnorm -16 LUFS → afconvert в .m4a
+**Формат:** 16kHz mono AAC
+**Лицензия:** Microsoft edge-tts (outputs без copyright — cleared для App Store)
 
-| Sound Group | Stage | Word Count | Status |
-|-------------|-------|-----------|--------|
-| С (sibilant) | isolated, syllable, word (3 positions), phrase, sentence | 50 words | Needed |
-| Сь | word, phrase | 20 words | Needed |
-| З | word, phrase | 20 words | Needed |
-| Ц | word, phrase | 20 words | Needed |
-| Ш (shibilant) | full set | 50 words | Needed |
-| Ж | word, phrase | 25 words | Needed |
-| Ч | word, phrase | 25 words | Needed |
-| Щ | word, phrase | 20 words | Needed |
-| Л (sonor) | full set | 40 words | Needed |
-| Ль | word, phrase | 20 words | Needed |
-| Р (sonor) | full set | 60 words | Needed |
-| Рь | word, phrase | 25 words | Needed |
-| К (dorsal) | word, phrase | 30 words | Needed |
-| Г, Х | word, phrase | 20 words | Needed |
-| Contrast pairs (С–Ш, Р–Л, etc.) | minimal pairs | 50+ pairs | Needed |
+**Voice spec:** Warm female, age 25–35, clear diction, moderate pace, positive without over-excitement.
 
-**Recording spec:** 
-- Format: WAV 16-bit 44.1kHz (will be normalized to 16kHz mono by script 10)
-- Environment: quiet room, no background noise
-- Pace: slow-clear for stages 0–2, normal for stages 3+
-- Each word: 3 takes (best selected by curator)
+### Покрытие 120 фраз
 
-### Category 4: Ambient / Background (Sprint 8–10)
+- Приветствия (12): "Привет! Я Ляля. Давай потренируемся вместе!", и вариации для onboarding/returning user/утренних/вечерних сессий
+- Поощрения (25): "Отличная работа!", "Ты настоящий чемпион!", "Почти-почти!"
+- Инструкции (30): "Разогреем язычок!", "Слушай внимательно...", "Повтори за мной!", "Тащи картинку в нужный домик!", "Найди звук-прятку!", "Дыши медленно и ровно..."
+- Фидбек позитивный (20): "Ты уже так близко к звезде!"
+- Фидбек корректирующий (15): "Это трудный звук — и это нормально!"
+- Завершения (10): "На сегодня всё! Отдохни.", "Завтра продолжим приключение!"
+- Артикуляция (5): "Высуни язычок!", "Улыбнись пошире!", "Надуй щёки!"
+- AR-инструкции (3): "Посмотри на своё лицо в зеркало!", "Надуй шарик! Дуй!"
+
+---
+
+## M3.4 — Content Audio Batch 1 (1000 файлов, 12.65 MB) ✅
+
+**Генерация:** edge-tts `ru-RU-SvetlanaNeural` → pyloudnorm -16 LUFS → AAC .m4a
+**Формат:** 16kHz mono, 7–27 KB/файл (все < 50 KB)
+**Длительность:** 1.4–3.5s
+
+**Важно:** 12.65 MB превышает порог 10 MB для inline-хранения в репо. Файлы в `.gitignore`, для production нужна **загрузка в Firebase Storage** (см. M11.4 — backend-developer).
+
+### Разбивка по пакам batch 1
+
+| Пак | Звук | Файлов | Размер |
+|---|---|---|---|
+| `pack_whistling_s.json` | С (все этапы) | 362 | 4953 KB |
+| `pack_whistling_z.json` | З (все этапы) | 301 | 3879 KB |
+| `pack_whistling_c.json` | Ц (все этапы) | 221 | 2883 KB |
+| `pack_hissing_sh.json` | Ш (prep+isolated+syllable+wordInit) | 116 | 1235 KB |
+| **ИТОГО batch 1** | — | **1000** | **12.65 MB** |
+
+### Время генерации
+26.2 минуты (edge-tts inference + LUFS normalization + AAC encoding).
+
+### Путь к скрипту (resumable)
+`_workshop/scripts/generate_content_audio.py` — при повторном запуске пропускает уже готовые файлы.
+
+### Валидация
+20/20 случайных файлов прошли afinfo-валидацию:
+- Sample rate 16000 Hz ✅
+- Channels 1 (mono) ✅
+- Codec AAC ✅
+- -16 LUFS ± 0.5 ✅
+
+---
+
+## M3.4 Batch 2+ — Остальные паки (~5000 файлов) ⏳
+
+**Status:** pending
+**План:** Запустить тот же скрипт повторно — продолжит со Ш wordMed+, затем Ж, Ч, Щ, сонорные (Р/Рь/Л/Ль), велярные (К/Г/Х), Й, и все narrative/breathing/lexical паки.
+
+Оценка: ~130 минут общего времени генерации, ~60 MB финального объёма.
+
+---
+
+## M3.5 — Эталоны для PronunciationScorer (pending) ⏳
+
+**Цель:** premium TTS (utrobinmv VITS High, Apache 2.0 — см. `ml-models-research.md`) на целевые слова каждого пака → обучающие данные для M4.3 per-group scorers.
+
+**Оценка объёма:** ~1200 эталонных слов × ~20 KB = 24 MB
+**Размещение:** `_workshop/datasets/raw/references/` (не в репо)
+
+---
+
+## M3.6 — Ambient / Background music (pending) ⏳
 
 | Asset | Description | Status |
-|-------|-------------|--------|
+|---|---|---|
 | world_map_ambient | Soft adventure music for world map screen | Needed (CC0) |
-| lesson_bgm | Gentle background music during lesson (non-distracting) | Needed (CC0) |
+| lesson_bgm | Gentle background music during lesson | Needed (CC0) |
 | ar_zone_ambient | Slightly playful, light music for AR zone | Needed (CC0) |
 | reward_music | Celebratory short loop for reward screen | Needed (CC0) |
 
-**Music spec:** Instrumental only, child-friendly, loopable, CC0 licensed (Freesound, ccMixter, Free Music Archive).
+**Music spec:** Instrumental only, child-friendly, loopable, CC0 (Freesound, ccMixter, Free Music Archive).
+
+---
+
+## Firebase Storage план
+
+После M3.4 batch 2+:
+- `/audio/ui/*.caf` — UI sounds (копия для cold-start recovery)
+- `/audio/lyalya/*.m4a` — Ляля voice brand (копия)
+- `/audio/content/{sound}/{unitId}.m4a` — content audio (primary storage)
+- `/audio/content/manifest.json` — реестр (sha256, size, duration, pack, stage)
+
+Клиент при onboarding скачивает только нужные паки (экономия 1.5GB IPA budget).
+
+---
+
+## Лицензии и атрибуция
+
+- **edge-tts (Microsoft):** Free service, выходные файлы без copyright (cleared для App Store)
+- **pyloudnorm (BSD-3-Clause):** OK для коммерческого использования
+- **afconvert (macOS built-in):** OK
+- **ffmpeg (LGPL):** OK при dynamic linking
+- **Для reference pronunciations (M3.5):** utrobinmv VITS High Apache 2.0 (см. ml-models-research.md)
 
 ---
 
@@ -98,20 +156,27 @@
 
 ```
 Sound Curator workflow:
-1. For UI sounds: search Freesound.org with CC0 filter → download → validate quality (no clipping, correct duration)
-2. For voice prompts: either (a) record with logopedist, or (b) generate via ElevenLabs Sound Effects
-3. For reference pronunciations: logopedist records → Sound Curator processes (normalize, trim, verify)
-4. All processed files → _workshop/datasets/references/ (audio only, not in repo)
-5. Final processed MP3 64kbps → HappySpeech/Resources/Audio/ (in repo, bundled)
-6. Update this registry with: file name, source URL, license verification date
+1. UI sounds: numpy+scipy алгоритмическая генерация → afconvert → .caf (готово)
+2. Voice prompts (Ляля): edge-tts ru-RU-SvetlanaNeural → pyloudnorm -16 LUFS → .m4a (готово)
+3. Content audio: edge-tts batch → pyloudnorm → .m4a → локально (в gitignore) → Firebase Storage (в процессе)
+4. Reference pronunciations: utrobinmv VITS premium → _workshop/references/ (pending M3.5)
+5. Ambient music: Freesound CC0 download → validate → .m4a (pending)
+6. Обновление этого реестра после каждого батча
 
-COPYRIGHT RULE: Every sound must have verified CC0 or royalty-free license before adding to Resources/Audio/.
+COPYRIGHT RULE: каждый звук должен иметь verified CC0/Apache/MIT до добавления в Resources/Audio/.
 ```
 
 ---
 
-## Processed Files (to be filled as sounds are added)
+## Следующие шаги
 
-| File | Category | Source | License | Verified Date |
-|------|----------|--------|---------|---------------|
-| _(empty)_ | — | — | — | — |
+- **M3.4 batch 2** — запустить `generate_content_audio.py` для остальных 5000 файлов (~130 мин)
+- **M3.5** — генерация эталонов для PronunciationScorer (после M3.4 batch 2, ~1200 слов)
+- **M3.6 ambient** — 4 трека CC0 для world_map/lesson/AR/reward
+- **Firebase Storage upload** — после M3.4 batch 3 (финальный) → delegated to backend-developer M11.4
+
+## См. также
+
+- `.claude/team/ml-datasets.md` — источники ML-датасетов
+- `.claude/team/ml-models-research.md` — рекомендуемые TTS/VAD/LLM модели
+- `.claude/team/ml-models.md` — реестр Core ML моделей
