@@ -260,6 +260,18 @@ struct SessionShellBinder: View {
             BreathingView(activity: activity) { score in
                 Task { await onComplete(activity.id, score) }
             }
+        case .minimalPairs:
+            MinimalPairsView(activity: activity) { score in
+                Task { await onComplete(activity.id, score) }
+            }
+        case .soundHunter:
+            SoundHunterView(activity: activity) { score in
+                Task { await onComplete(activity.id, score) }
+            }
+        case .memory:
+            MemoryView(activity: activity) { score in
+                Task { await onComplete(activity.id, score) }
+            }
         default:
             placeholderGame(for: activity)
         }
