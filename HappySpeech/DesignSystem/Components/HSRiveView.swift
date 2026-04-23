@@ -65,8 +65,8 @@ public struct HSRiveView: View {
 
     public var body: some View {
         Group {
-            if riveModel.isLoaded {
-                riveModel.viewModel.view()
+            if riveModel.isLoaded, let vm = riveModel.viewModel {
+                vm.view()
                     .onChange(of: mood) { _, newMood in
                         guard !reduceMotion else { return }
                         riveModel.setMood(newMood)
@@ -98,35 +98,34 @@ final class RiveModel: ObservableObject {
 
     @Published private(set) var isLoaded = false
 
-    let viewModel: RiveViewModel
+    // Опциональный — создаётся только если .riv найден в бандле.
+    // RiveViewModel.init бросает `try!` краш при невалидном артборде,
+    // поэтому инициализируем его ТОЛЬКО после проверки Bundle.main.url.
+    private(set) var viewModel: RiveViewModel?
     private var blinkTimer: Timer?
 
     init(fileName: String, stateMachine: String) {
-        self.viewModel = RiveViewModel(
-            fileName: fileName,
-            stateMachineName: stateMachine
-        )
-        validateLoad(fileName: fileName)
-    }
-
-    private func validateLoad(fileName: String) {
-        // Проверяем наличие ресурса в бандле
-        if Bundle.main.url(forResource: fileName, withExtension: "riv") != nil {
-            isLoaded = true
+        guard Bundle.main.url(forResource: fileName, withExtension: "riv") != nil else {
+            // Файл отсутствует — остаёмся в isLoaded = false, viewModel = nil
+            return
         }
+        // Файл найден — создаём RiveViewModel (может упасть если файл невалиден)
+        let vm = RiveViewModel(fileName: fileName, stateMachineName: stateMachine)
+        self.viewModel = vm
+        self.isLoaded = true
     }
 
     func setMood(_ mood: MascotMood) {
-        try? viewModel.setInput("mood", value: Double(mood.rivIndex))
+        try? viewModel?.setInput("mood", value: Double(mood.rivIndex))
     }
 
     func setMouthOpen(_ value: Float) {
         let clamped = min(max(value, 0), 1)
-        try? viewModel.setInput("mouthOpen", value: Double(clamped))
+        try? viewModel?.setInput("mouthOpen", value: Double(clamped))
     }
 
     func triggerBlink() {
-        try? viewModel.triggerInput("blink")
+        try? viewModel?.triggerInput("blink")
     }
 
     func startBlinkTimer() {

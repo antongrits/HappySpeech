@@ -1463,7 +1463,7 @@
 		FAB56AF2330A49BCD5C2F3F3 /* ARActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298B3E99BC696683FB992B24 /* ARActivityView.swift */; };
 		FAEA530AD9C2C30016C34A55 /* RuleBasedDecisionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D115FE86DB7DA709069DF98 /* RuleBasedDecisionService.swift */; };
 		FB0D428E8780F3F8929377A8 /* s-wi-33.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FD75BC4F45802FD6C561C69F /* s-wi-33.m4a */; };
-		FB2196F2F93CE718B19633A3 /* lyalya.riv in Resources */ = {isa = PBXBuildFile; fileRef = 03C8687F3BD284CC48CCF907 /* lyalya.riv */; };
+
 		FB504FD625C7069995F89310 /* z-diff-20.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E0ED0694B3E30F0C13F73E64 /* z-diff-20.m4a */; };
 		FB5E3165D1DFAB07CF7B107F /* ScreeningRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81CE90EC6F0E1B54CB2D039 /* ScreeningRouter.swift */; };
 		FB8B2D0C951B1FD0F62D75EA /* z-wm-33.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4B0EC10E0078AC2E2B729EAF /* z-wm-33.m4a */; };
@@ -1534,7 +1534,7 @@
 		0315B19745D2A7E7F95646FA /* DragAndMatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndMatchView.swift; sourceTree = "<group>"; };
 		036F8C2825A92D0926B64864 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		0370CA771E70D0DBE4EB347D /* z-iso-7.m4a */ = {isa = PBXFileReference; path = "z-iso-7.m4a"; sourceTree = "<group>"; };
-		03C8687F3BD284CC48CCF907 /* lyalya.riv */ = {isa = PBXFileReference; path = lyalya.riv; sourceTree = "<group>"; };
+
 		04651A6C56DF88ECC1CCE20A /* PoseSequenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseSequenceView.swift; sourceTree = "<group>"; };
 		0485717434D848F912720257 /* ARActivityModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARActivityModels.swift; sourceTree = "<group>"; };
 		04AFC929AC307ABAC68FB909 /* c-wm-10.m4a */ = {isa = PBXFileReference; path = "c-wm-10.m4a"; sourceTree = "<group>"; };
@@ -5064,7 +5064,6 @@
 		B6C977B08BB9016363F75E3B /* Animations */ = {
 			isa = PBXGroup;
 			children = (
-				03C8687F3BD284CC48CCF907 /* lyalya.riv */,
 			);
 			path = Animations;
 			sourceTree = "<group>";
@@ -5820,7 +5819,7 @@
 				DD7B8F621AA7BFC472A62C7C /* fatigue-and-session-rules.md in Resources */,
 				F8C55B0524EDF203820F9525 /* incorrect.caf in Resources */,
 				292F0ACF75F4C52B2E8872C6 /* level_up.caf in Resources */,
-				FB2196F2F93CE718B19633A3 /* lyalya.riv in Resources */,
+
 				C7ECF35145DCA9455A3BA6A8 /* lyalya_artic_01.m4a in Resources */,
 				27766F099B298F102C36B11D /* lyalya_artic_02.m4a in Resources */,
 				70D06C68382775C562875218 /* lyalya_artic_03.m4a in Resources */,

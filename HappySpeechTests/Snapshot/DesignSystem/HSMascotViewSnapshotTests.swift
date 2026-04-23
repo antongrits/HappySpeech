@@ -15,6 +15,7 @@ import SwiftUI
 //
 // Пересоздать референсы: удали __Snapshots__/HSMascotView/ и перезапусти тесты.
 
+@MainActor
 final class HSMascotViewSnapshotTests: XCTestCase {
 
     // MARK: - Configuration
@@ -50,7 +51,6 @@ final class HSMascotViewSnapshotTests: XCTestCase {
 
     // MARK: - Helpers
 
-    @MainActor
     private func record(mood: MascotMood) throws {
         try record(
             view: HSMascotView(mood: mood, size: 160),
@@ -58,7 +58,6 @@ final class HSMascotViewSnapshotTests: XCTestCase {
         )
     }
 
-    @MainActor
     private func record<V: View>(view: V, name: String) throws {
         for (styleName, style) in appearances {
             let image = render(view, style: style)
@@ -85,7 +84,6 @@ final class HSMascotViewSnapshotTests: XCTestCase {
         }
     }
 
-    @MainActor
     private func render<V: View>(_ view: V, style: UIUserInterfaceStyle) -> UIImage {
         let hosted = view
             .frame(width: renderSize.width, height: renderSize.height)
