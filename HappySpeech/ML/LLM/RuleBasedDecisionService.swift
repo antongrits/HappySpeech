@@ -114,7 +114,7 @@ public struct RuleBasedDecisionService: Sendable {
 
     // MARK: - 5. Reward
 
-    public func pickReward(streak: Int, sessionType: SessionType) -> Reward {
+    public func pickReward(streak: Int, sessionType: LLMSessionType) -> Reward {
         let stickerId = Self.stickerPool[streak % Self.stickerPool.count]
         let title: String
         let subtitle: String

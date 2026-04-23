@@ -193,14 +193,15 @@ struct ARMirrorView: View {
     }
 
     private func startFrameStream(service: any ARSessionService) {
-        Task { @MainActor [weak self] in
+        let interactor = self.interactor
+        let display = self.display
+        Task { @MainActor in
             for await frame in service.blendshapeStream {
-                guard let self else { break }
-                self.display.lipSymmetry = frame.lipSymmetry
-                self.interactor?.updateFrame(.init(blendshapes: frame))
-                if self.display.shouldAdvance {
-                    self.display.shouldAdvance = false
-                    self.interactor?.advanceToNextExercise()
+                display.lipSymmetry = frame.lipSymmetry
+                interactor?.updateFrame(.init(blendshapes: frame))
+                if display.shouldAdvance {
+                    display.shouldAdvance = false
+                    interactor?.advanceToNextExercise()
                 }
             }
         }

@@ -88,11 +88,12 @@ struct ButterflyCatchView: View {
     }
 
     private func observe(service: any ARSessionService) {
-        Task { @MainActor [weak self] in
+        let interactor = self.interactor
+        let display = self.display
+        Task { @MainActor in
             for await frame in service.blendshapeStream {
-                guard let self else { break }
-                for butterfly in self.display.butterflies.values {
-                    self.interactor?.scoreAttempt(.init(
+                for butterfly in display.butterflies.values {
+                    interactor?.scoreAttempt(.init(
                         butterflyId: butterfly.id,
                         blendshapes: frame
                     ))

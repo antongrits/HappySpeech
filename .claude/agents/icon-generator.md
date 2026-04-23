@@ -3,6 +3,7 @@ name: icon-generator
 description: Генератор иконок, иллюстраций и инфографики для HappySpeech — App Icon (все размеры, 3 appearance: Any/Dark/Tint), иконки экранов, иллюстрации для уроков, маркетинговые материалы. Использует FLUX.1-schnell через HF Inference API. Spawned by CTO или designer.
 tools: Read, Write, Edit, Bash
 model: claude-sonnet-4-6
+effort: low
 ---
 
 # Icon & Illustration Generator для HappySpeech

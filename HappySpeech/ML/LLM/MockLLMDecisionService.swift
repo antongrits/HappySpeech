@@ -70,7 +70,7 @@ public final class MockLLMDecisionService: LLMDecisionServiceProtocol, @unchecke
 
     // MARK: - 5
 
-    public func pickReward(streak: Int, sessionType: SessionType) async -> RewardDecisionOutcome {
+    public func pickReward(streak: Int, sessionType: LLMSessionType) async -> RewardDecisionOutcome {
         callLog.append("reward")
         let reward = rules.pickReward(streak: streak, sessionType: sessionType)
         return RewardDecisionOutcome(reward: reward, meta: meta(.ruleBased, false))

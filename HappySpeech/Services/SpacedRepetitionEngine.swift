@@ -251,8 +251,16 @@ public struct SoundProgressState: Sendable, Codable, Equatable {
 /// Чистая функциональная логика — без I/O.
 public enum SoundProgressAggregator {
 
+    /// Накопленные SM-2 параметры из истории сессий.
+    private struct AccumulatedSM2 {
+        let ef: Double
+        let repetitions: Int
+        let intervalDays: Int
+        let lastReview: Date?
+    }
+
     /// Сформировать состояние по одному звуку из отсортированных сессий.
-    /// Сессии должны быть отсортированы от новой к старой.
+    /// Сессии могут быть в любом порядке — функция сама упорядочит их хронологически.
     public static func aggregate(
         soundTarget: String,
         sessions: [SessionDTO],
@@ -261,54 +269,75 @@ public enum SoundProgressAggregator {
         let soundSessions = sessions.filter { $0.targetSound == soundTarget }
 
         guard !soundSessions.isEmpty else {
-            // Звук ещё не отрабатывали — стартовые значения.
-            return SoundProgressState(
-                soundTarget: soundTarget,
-                stage: .isolated
-            )
+            return SoundProgressState(soundTarget: soundTarget, stage: .isolated)
         }
 
-        // Последние 10 attempts (по всем сессиям этого звука, свежие первыми).
-        let recentAttempts = soundSessions
-            .flatMap(\.attempts)
-            .sorted { $0.timestamp > $1.timestamp }
-            .prefix(10)
+        let recentAttempts = recentAttempts(from: soundSessions, limit: 10)
+        let rate = successRate(recentAttempts: recentAttempts, fallbackSessions: soundSessions)
+        let streaks = consecutiveStreaks(from: recentAttempts)
+        let stage = latestStage(from: soundSessions)
+        let accumulated = accumulate(sessions: soundSessions)
 
-        let recentArray = Array(recentAttempts)
-        let correct = recentArray.filter(\.isCorrect).count
-        let rate: Double = recentArray.isEmpty
-            ? (soundSessions.first?.successRate ?? 0)
-            : Double(correct) / Double(recentArray.count)
+        return SoundProgressState(
+            soundTarget: soundTarget,
+            stage: stage,
+            easinessFactor: accumulated.ef,
+            repetitions: accumulated.repetitions,
+            lastIntervalDays: accumulated.intervalDays,
+            lastReviewDate: accumulated.lastReview,
+            successRate: rate,
+            consecutiveCorrect: streaks.correct,
+            consecutiveWrong: streaks.wrong,
+            needsSpecialistReview: accumulated.ef < SM2Engine.specialistReviewEFThreshold
+        )
+    }
 
-        // Consecutive streaks — от самого свежего attempt.
-        var consecutiveCorrect = 0
-        var consecutiveWrong = 0
-        for attempt in recentArray {
+    private static func recentAttempts(from sessions: [SessionDTO], limit: Int) -> [AttemptDTO] {
+        Array(
+            sessions
+                .flatMap(\.attempts)
+                .sorted { $0.timestamp > $1.timestamp }
+                .prefix(limit)
+        )
+    }
+
+    private static func successRate(recentAttempts: [AttemptDTO], fallbackSessions: [SessionDTO]) -> Double {
+        guard !recentAttempts.isEmpty else {
+            return fallbackSessions.first?.successRate ?? 0
+        }
+        let correct = recentAttempts.filter(\.isCorrect).count
+        return Double(correct) / Double(recentAttempts.count)
+    }
+
+    private static func consecutiveStreaks(from recentAttempts: [AttemptDTO]) -> (correct: Int, wrong: Int) {
+        var correct = 0
+        var wrong = 0
+        for attempt in recentAttempts {
             if attempt.isCorrect {
-                if consecutiveWrong > 0 { break }
-                consecutiveCorrect += 1
+                if wrong > 0 { break }
+                correct += 1
             } else {
-                if consecutiveCorrect > 0 { break }
-                consecutiveWrong += 1
+                if correct > 0 { break }
+                wrong += 1
             }
         }
+        return (correct, wrong)
+    }
 
-        // Текущий этап — из последней сессии.
-        let latestSession = soundSessions.max(by: { $0.date < $1.date })
-        let stage = CorrectionStage(rawValue: latestSession?.stage ?? "") ?? .isolated
+    private static func latestStage(from sessions: [SessionDTO]) -> CorrectionStage {
+        let latest = sessions.max(by: { $0.date < $1.date })
+        return CorrectionStage(rawValue: latest?.stage ?? "") ?? .isolated
+    }
 
-        // Проходим по сессиям от старой к новой, накапливая SM-2 state.
-        let chronological = soundSessions.sorted { $0.date < $1.date }
+    private static func accumulate(sessions: [SessionDTO]) -> AccumulatedSM2 {
+        let chronological = sessions.sorted { $0.date < $1.date }
         var ef = SM2Engine.defaultEF
         var reps = 0
         var interval = 0
         var lastReview: Date?
 
         for session in chronological {
-            let quality = SM2Quality.fromSuccessRate(
-                session.successRate,
-                hadFatigue: session.fatigueDetected
-            )
+            let quality = SM2Quality.fromSuccessRate(session.successRate, hadFatigue: session.fatigueDetected)
             let result = SM2Engine.calculate(
                 quality: quality,
                 currentEF: ef,
@@ -322,17 +351,6 @@ public enum SoundProgressAggregator {
             lastReview = session.date
         }
 
-        return SoundProgressState(
-            soundTarget: soundTarget,
-            stage: stage,
-            easinessFactor: ef,
-            repetitions: reps,
-            lastIntervalDays: interval,
-            lastReviewDate: lastReview,
-            successRate: rate,
-            consecutiveCorrect: consecutiveCorrect,
-            consecutiveWrong: consecutiveWrong,
-            needsSpecialistReview: ef < SM2Engine.specialistReviewEFThreshold
-        )
+        return AccumulatedSM2(ef: ef, repetitions: reps, intervalDays: interval, lastReview: lastReview)
     }
 }
