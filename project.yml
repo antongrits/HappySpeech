@@ -152,24 +152,12 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: ru.happyspeech.tests
         INFOPLIST_FILE: HappySpeechTests/Info.plist
         PRODUCT_NAME: HappySpeechTests
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/HappySpeech.app/HappySpeech"
     dependencies:
       - target: HappySpeech
       - package: SnapshotTesting
         product: SnapshotTesting
-      - package: RealmSwift
-        product: RealmSwift
-      - package: FirebaseSDK
-        product: FirebaseAuth
-      - package: FirebaseSDK
-        product: FirebaseFirestore
-      - package: FirebaseSDK
-        product: FirebaseStorage
-      - package: FirebaseSDK
-        product: FirebaseAppCheck
-      - package: GoogleSignIn
-        product: GoogleSignIn
-      - package: WhisperKit
-        product: WhisperKit
     scheme:
       gatherCoverageData: true
 

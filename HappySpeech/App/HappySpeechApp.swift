@@ -10,8 +10,11 @@ struct HappySpeechApp: App {
 
     // MARK: - Init
     init() {
-        // Firebase must be configured before any Firebase-dependent service is constructed.
-        if FirebaseApp.app() == nil {
+        // Skip Firebase bootstrap in unit-test runs: XCTest hosts the app binary
+        // into the xctest bundle and any missing GoogleService-Info.plist triggers
+        // NSException SIGABRT before tests can start.
+        let isTesting = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+        if !isTesting, FirebaseApp.app() == nil {
             FirebaseApp.configure()
             HSLogger.app.info("FirebaseApp.configure() called")
         }
