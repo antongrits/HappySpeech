@@ -9,12 +9,6 @@
             "state": "translated",
             "value": "Нет подключения к интернету"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No internet connection"
-          }
         }
       }
     },
@@ -25,12 +19,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Приложение работает офлайн. Занятия доступны. Данные синхронизируются автоматически, когда интернет появится."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The app works offline. Lessons are available. Data will sync automatically when you are back online."
           }
         }
       }
@@ -43,12 +31,6 @@
             "state": "translated",
             "value": "Продолжить без интернета"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Continue offline"
-          }
         }
       }
     },
@@ -60,12 +42,6 @@
             "state": "translated",
             "value": "Проверить подключение"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Check connection"
-          }
         }
       }
     },
@@ -76,12 +52,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Проверяем…"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Checking…"
           }
         }
       }
@@ -118,24 +88,6 @@
               }
             }
           }
-        },
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%d pending sync"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%d pending sync"
-                }
-              }
-            }
-          }
         }
       }
     },
@@ -146,12 +98,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Добро пожаловать!"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Welcome!"
           }
         }
       }
@@ -164,12 +110,6 @@
             "state": "translated",
             "value": "Войдите, чтобы следить за прогрессом ребёнка"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sign in to track your child's progress"
-          }
         }
       }
     },
@@ -180,12 +120,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Войти через эл. почту"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sign in with email"
           }
         }
       }
@@ -198,12 +132,6 @@
             "state": "translated",
             "value": "Создать аккаунт"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Create account"
-          }
         }
       }
     },
@@ -214,12 +142,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Войти через Google"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sign in with Google"
           }
         }
       }
@@ -232,12 +154,6 @@
             "state": "translated",
             "value": "Вход через Google — скоро"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Google sign-in — coming soon"
-          }
         }
       }
     },
@@ -248,12 +164,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Попробовать демо"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Try demo"
           }
         }
       }
@@ -266,12 +176,6 @@
             "state": "translated",
             "value": "Электронная почта"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Email"
-          }
         }
       }
     },
@@ -282,12 +186,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Пароль"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Password"
           }
         }
       }
@@ -300,12 +198,6 @@
             "state": "translated",
             "value": "Ваше имя"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Your name"
-          }
         }
       }
     },
@@ -316,12 +208,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Родитель"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Parent"
           }
         }
       }
@@ -334,12 +220,6 @@
             "state": "translated",
             "value": "Логопед"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Specialist"
-          }
         }
       }
     },
@@ -350,12 +230,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Забыли пароль?"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Forgot password?"
           }
         }
       }
@@ -368,12 +242,6 @@
             "state": "translated",
             "value": "Отправить ссылку для сброса"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Send reset link"
-          }
         }
       }
     },
@@ -384,12 +252,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Мы отправили письмо со ссылкой. Проверьте почту."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "We've sent you a link. Check your email."
           }
         }
       }
@@ -402,12 +264,6 @@
             "state": "translated",
             "value": "Подтвердите почту"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Verify your email"
-          }
         }
       }
     },
@@ -418,12 +274,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Мы отправили письмо на %@. Откройте его и перейдите по ссылке, чтобы активировать аккаунт."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "We've sent a message to %@. Open it and follow the link to activate your account."
           }
         }
       }
@@ -436,12 +286,6 @@
             "state": "translated",
             "value": "Отправить снова"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Resend"
-          }
         }
       }
     },
@@ -452,12 +296,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Я подтвердил"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "I've verified"
           }
         }
       }
@@ -470,12 +308,6 @@
             "state": "translated",
             "value": "Ошибка входа"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sign-in error"
-          }
         }
       }
     },
@@ -486,12 +318,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Понятно"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Got it"
           }
         }
       }
@@ -504,12 +330,6 @@
             "state": "translated",
             "value": "Пароль должен быть не короче 8 символов"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Password must be at least 8 characters"
-          }
         }
       }
     },
@@ -520,12 +340,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Проверьте адрес электронной почты"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Check your email address"
           }
         }
       }
@@ -538,12 +352,6 @@
             "state": "translated",
             "value": "Укажите ваше имя"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Please enter your name"
-          }
         }
       }
     },
@@ -554,12 +362,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Удалить аккаунт"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delete account"
           }
         }
       }
@@ -572,12 +374,6 @@
             "state": "translated",
             "value": "Уже есть аккаунт?"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Already have an account?"
-          }
         }
       }
     },
@@ -588,12 +384,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Нет аккаунта?"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No account yet?"
           }
         }
       }
@@ -606,12 +396,6 @@
             "state": "translated",
             "value": "Войти"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sign in"
-          }
         }
       }
     },
@@ -622,12 +406,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "С возвращением!"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Welcome back!"
           }
         }
       }
@@ -640,12 +418,6 @@
             "state": "translated",
             "value": "Войти"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sign In"
-          }
         }
       }
     },
@@ -656,12 +428,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Создать аккаунт"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Create account"
           }
         }
       }
@@ -674,12 +440,6 @@
             "state": "translated",
             "value": "Создайте аккаунт, чтобы сохранить прогресс ребёнка"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Create an account to save your child's progress"
-          }
         }
       }
     },
@@ -690,12 +450,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Эл. почта"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Email"
           }
         }
       }
@@ -708,12 +462,6 @@
             "state": "translated",
             "value": "Пароль"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Password"
-          }
         }
       }
     },
@@ -724,12 +472,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Пароль (мин. 6 символов)"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Password (min. 6 characters)"
           }
         }
       }
@@ -742,12 +484,6 @@
             "state": "translated",
             "value": "Повторите пароль"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Repeat password"
-          }
         }
       }
     },
@@ -758,12 +494,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Имя"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Name"
           }
         }
       }
@@ -776,12 +506,6 @@
             "state": "translated",
             "value": "Зарегистрироваться"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sign up"
-          }
         }
       }
     },
@@ -792,12 +516,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Попробовать без входа"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Try without signing in"
           }
         }
       }
@@ -810,12 +528,6 @@
             "state": "translated",
             "value": "или"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "or"
-          }
         }
       }
     },
@@ -826,12 +538,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Пароли не совпадают"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Passwords don't match"
           }
         }
       }
@@ -844,12 +550,6 @@
             "state": "translated",
             "value": "Повторите пароль в обоих полях."
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Please enter the same password in both fields."
-          }
         }
       }
     },
@@ -860,12 +560,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Назад"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Back"
           }
         }
       }
@@ -878,12 +572,6 @@
             "state": "translated",
             "value": "Поле электронной почты"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Email field"
-          }
         }
       }
     },
@@ -894,12 +582,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Введите адрес вашей электронной почты"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Enter your email address"
           }
         }
       }
@@ -912,12 +594,6 @@
             "state": "translated",
             "value": "Поле пароля"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Password field"
-          }
         }
       }
     },
@@ -928,12 +604,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Введите пароль, минимум шесть символов"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Enter a password, at least six characters"
           }
         }
       }
@@ -946,12 +616,6 @@
             "state": "translated",
             "value": "Поле повторения пароля"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Repeat password field"
-          }
         }
       }
     },
@@ -962,12 +626,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Введите тот же пароль ещё раз"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Enter the same password again"
           }
         }
       }
@@ -980,12 +638,6 @@
             "state": "translated",
             "value": "Поле имени"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Name field"
-          }
         }
       }
     },
@@ -996,12 +648,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Введите ваше имя"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Enter your name"
           }
         }
       }
@@ -1014,12 +660,6 @@
             "state": "translated",
             "value": "Войти в аккаунт"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sign in to account"
-          }
         }
       }
     },
@@ -1030,12 +670,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Проверит данные и откроет главный экран"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Validates and opens the home screen"
           }
         }
       }
@@ -1048,12 +682,6 @@
             "state": "translated",
             "value": "Создать новый аккаунт"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Create new account"
-          }
         }
       }
     },
@@ -1064,12 +692,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Создаст аккаунт и отправит письмо подтверждения"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Creates an account and sends a verification email"
           }
         }
       }
@@ -1082,12 +704,6 @@
             "state": "translated",
             "value": "Войти через аккаунт Google"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sign in with Google account"
-          }
         }
       }
     },
@@ -1098,12 +714,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Открыть демо-режим без аккаунта"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Open demo mode without account"
           }
         }
       }
@@ -1116,12 +726,6 @@
             "state": "translated",
             "value": "Восстановить пароль"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Reset password"
-          }
         }
       }
     },
@@ -1132,12 +736,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Перейти к созданию аккаунта"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Go to account creation"
           }
         }
       }
@@ -1150,12 +748,6 @@
             "state": "translated",
             "value": "Перейти ко входу в аккаунт"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Go to sign in"
-          }
         }
       }
     },
@@ -1166,12 +758,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Маскот HappySpeech"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "HappySpeech mascot"
           }
         }
       }
@@ -1184,12 +770,6 @@
             "state": "translated",
             "value": "Привет,"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hello,"
-          }
         }
       }
     },
@@ -1200,12 +780,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "дружок"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "friend"
           }
         }
       }
@@ -1218,12 +792,6 @@
             "state": "translated",
             "value": "Задание дня"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Daily mission"
-          }
         }
       }
     },
@@ -1234,12 +802,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Тренируем звук «%@»"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Practicing sound \"%@\""
           }
         }
       }
@@ -1252,12 +814,6 @@
             "state": "translated",
             "value": "Нажмите, чтобы начать занятие"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tap to start the lesson"
-          }
         }
       }
     },
@@ -1268,12 +824,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Карта мира"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "World map"
           }
         }
       }
@@ -1286,12 +836,6 @@
             "state": "translated",
             "value": "AR-зеркало"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "AR mirror"
-          }
         }
       }
     },
@@ -1302,12 +846,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Награды"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rewards"
           }
         }
       }
@@ -1320,12 +858,6 @@
             "state": "translated",
             "value": "Достижения"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Achievements"
-          }
         }
       }
     },
@@ -1336,12 +868,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Быстрая игра"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Quick play"
           }
         }
       }
@@ -1354,12 +880,6 @@
             "state": "translated",
             "value": "Мой прогресс"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "My progress"
-          }
         }
       }
     },
@@ -1371,12 +891,6 @@
             "state": "translated",
             "value": "Открыть кабинет родителя"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Open parent area"
-          }
         }
       }
     },
@@ -1387,12 +901,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Серия занятий: %d дней подряд"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Streak: %d days in a row"
           }
         }
       }
@@ -1429,24 +937,6 @@
               }
             }
           }
-        },
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%d day in a row"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%d days in a row"
-                }
-              }
-            }
-          }
         }
       }
     },
@@ -1457,12 +947,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Звук %@, этап %@, %d процентов"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sound %@, stage %@, %d percent"
           }
         }
       }
@@ -1475,12 +959,6 @@
             "state": "translated",
             "value": "%@, готов тренировать «%@»?"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@, ready to practice \"%@\"?"
-          }
         }
       }
     },
@@ -1491,12 +969,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Прогресс"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Progress"
           }
         }
       }
@@ -1509,12 +981,6 @@
             "state": "translated",
             "value": "Обзор"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Overview"
-          }
         }
       }
     },
@@ -1525,12 +991,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Занятия"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sessions"
           }
         }
       }
@@ -1543,12 +1003,6 @@
             "state": "translated",
             "value": "Аналитика"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Analytics"
-          }
         }
       }
     },
@@ -1559,12 +1013,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Настройки"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Settings"
           }
         }
       }
@@ -1577,12 +1025,6 @@
             "state": "translated",
             "value": "Переключиться на детский режим"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Switch to kid mode"
-          }
         }
       }
     },
@@ -1593,12 +1035,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Результат занятия"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Session result"
           }
         }
       }
@@ -1611,12 +1047,6 @@
             "state": "translated",
             "value": "Попыток"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Attempts"
-          }
         }
       }
     },
@@ -1627,12 +1057,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Занятий пока нет"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No sessions yet"
           }
         }
       }
@@ -1645,12 +1069,6 @@
             "state": "translated",
             "value": "Начните первое занятие вместе с ребёнком"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Start the first lesson with your child"
-          }
         }
       }
     },
@@ -1661,12 +1079,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Начать занятие"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Start a lesson"
           }
         }
       }
@@ -1679,12 +1091,6 @@
             "state": "translated",
             "value": "Дней подряд"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Day streak"
-          }
         }
       }
     },
@@ -1695,12 +1101,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Минут всего"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Total minutes"
           }
         }
       }
@@ -1713,12 +1113,6 @@
             "state": "translated",
             "value": "Средний результат"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Average result"
-          }
         }
       }
     },
@@ -1729,12 +1123,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Домашнее задание"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Home task"
           }
         }
       }
@@ -1747,12 +1135,6 @@
             "state": "translated",
             "value": "Рекомендации"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Recommendations"
-          }
         }
       }
     },
@@ -1763,12 +1145,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "История занятий"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Session history"
           }
         }
       }
@@ -1781,12 +1157,6 @@
             "state": "translated",
             "value": "Занятий ещё не было"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No sessions yet"
-          }
         }
       }
     },
@@ -1797,12 +1167,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "История занятий появится здесь после первого сеанса"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Session history will appear here after the first session"
           }
         }
       }
@@ -1815,12 +1179,6 @@
             "state": "translated",
             "value": "Аналитика"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Analytics"
-          }
         }
       }
     },
@@ -1831,12 +1189,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld лет · %@"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld years · %@"
           }
         }
       }
@@ -1873,24 +1225,6 @@
               }
             }
           }
-        },
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%d session today"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%d sessions today"
-                }
-              }
-            }
-          }
         }
       }
     },
@@ -1901,12 +1235,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Отчёт за неделю"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Weekly report"
           }
         }
       }
@@ -1919,12 +1247,6 @@
             "state": "translated",
             "value": "Настройки"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Settings"
-          }
         }
       }
     },
@@ -1935,12 +1257,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Внешний вид"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Appearance"
           }
         }
       }
@@ -1953,12 +1269,6 @@
             "state": "translated",
             "value": "Уведомления"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Notifications"
-          }
         }
       }
     },
@@ -1969,12 +1279,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Аккаунт"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Account"
           }
         }
       }
@@ -1987,12 +1291,6 @@
             "state": "translated",
             "value": "Поддержка"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Support"
-          }
         }
       }
     },
@@ -2003,12 +1301,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Данные"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Data"
           }
         }
       }
@@ -2021,12 +1313,6 @@
             "state": "translated",
             "value": "Тема оформления"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Appearance theme"
-          }
         }
       }
     },
@@ -2037,12 +1323,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Тема: %@"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Theme: %@"
           }
         }
       }
@@ -2055,12 +1335,6 @@
             "state": "translated",
             "value": "Напоминания о занятиях"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Lesson reminders"
-          }
         }
       }
     },
@@ -2071,12 +1345,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Время напоминания"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Reminder time"
           }
         }
       }
@@ -2089,12 +1357,6 @@
             "state": "translated",
             "value": "Синхронизация"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sync"
-          }
         }
       }
     },
@@ -2105,12 +1367,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Выйти из аккаунта"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sign out"
           }
         }
       }
@@ -2123,12 +1379,6 @@
             "state": "translated",
             "value": "Справка и поддержка"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Help and support"
-          }
         }
       }
     },
@@ -2139,12 +1389,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Раздел помощи"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Help section"
           }
         }
       }
@@ -2157,12 +1401,6 @@
             "state": "translated",
             "value": "Политика конфиденциальности"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Privacy policy"
-          }
         }
       }
     },
@@ -2173,12 +1411,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Конфиденциальность"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Privacy"
           }
         }
       }
@@ -2191,12 +1423,6 @@
             "state": "translated",
             "value": "HappySpeech не передаёт данные третьим лицам и не использует рекламные сети. Все данные хранятся на устройстве и синхронизируются только с вашим аккаунтом Firebase."
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "HappySpeech does not share data with third parties and does not use advertising networks. All data is stored on-device and syncs only with your Firebase account."
-          }
         }
       }
     },
@@ -2207,12 +1433,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Версия приложения"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "App version"
           }
         }
       }
@@ -2225,12 +1445,6 @@
             "state": "translated",
             "value": "Удалить все данные ребёнка"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delete all child data"
-          }
         }
       }
     },
@@ -2241,12 +1455,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Удаление необратимо. Все записи занятий и прогресс будут удалены с устройства и из облака."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Deletion is irreversible. All session records and progress will be removed from the device and cloud."
           }
         }
       }
@@ -2259,12 +1467,6 @@
             "state": "translated",
             "value": "Удалить все данные?"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delete all data?"
-          }
         }
       }
     },
@@ -2275,12 +1477,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Это действие нельзя отменить. Все данные о занятиях и прогрессе будут удалены."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "This action cannot be undone. All session and progress data will be deleted."
           }
         }
       }
@@ -2293,12 +1489,6 @@
             "state": "translated",
             "value": "Модели распознавания"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Recognition models"
-          }
         }
       }
     },
@@ -2309,12 +1499,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Удалить аккаунт"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delete account"
           }
         }
       }
@@ -2327,12 +1511,6 @@
             "state": "translated",
             "value": "Как в системе"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "System"
-          }
         }
       }
     },
@@ -2343,12 +1521,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Светлая"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Light"
           }
         }
       }
@@ -2361,12 +1533,6 @@
             "state": "translated",
             "value": "Тёмная"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dark"
-          }
         }
       }
     },
@@ -2377,12 +1543,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Пауза"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pause"
           }
         }
       }
@@ -2395,12 +1555,6 @@
             "state": "translated",
             "value": "Продолжить"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Resume"
-          }
         }
       }
     },
@@ -2411,12 +1565,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Пропустить"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Skip"
           }
         }
       }
@@ -2429,12 +1577,6 @@
             "state": "translated",
             "value": "Пора отдохнуть"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Time for a break"
-          }
         }
       }
     },
@@ -2445,12 +1587,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ребёнок устал. Лучше закончить занятие и продолжить позже."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The child is tired. Better to finish the lesson and continue later."
           }
         }
       }
@@ -2463,12 +1599,6 @@
             "state": "translated",
             "value": "Продолжить ещё немного"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Continue a bit more"
-          }
         }
       }
     },
@@ -2479,12 +1609,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Закончить"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Finish"
           }
         }
       }
@@ -2497,12 +1621,6 @@
             "state": "translated",
             "value": "Слушай и выбери правильную картинку"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Listen and choose the correct picture"
-          }
         }
       }
     },
@@ -2513,12 +1631,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Повтори за Лялей"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Repeat after Lyalya"
           }
         }
       }
@@ -2531,12 +1643,6 @@
             "state": "translated",
             "value": "Правильно!"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Correct!"
-          }
         }
       }
     },
@@ -2547,12 +1653,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Отлично!"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Excellent!"
           }
         }
       }
@@ -2565,12 +1665,6 @@
             "state": "translated",
             "value": "Попробуй ещё"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Try again"
-          }
         }
       }
     },
@@ -2581,12 +1675,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ещё раз"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Once more"
           }
         }
       }
@@ -2599,12 +1687,6 @@
             "state": "translated",
             "value": "Загрузка…"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Loading…"
-          }
         }
       }
     },
@@ -2615,12 +1697,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Что-то пошло не так. Попробуйте ещё раз."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Something went wrong. Please try again."
           }
         }
       }
@@ -2633,12 +1709,6 @@
             "state": "translated",
             "value": "Ошибка"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Error"
-          }
         }
       }
     },
@@ -2649,12 +1719,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Повторить"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Retry"
           }
         }
       }
@@ -2667,12 +1731,6 @@
             "state": "translated",
             "value": "Отмена"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cancel"
-          }
         }
       }
     },
@@ -2680,12 +1738,6 @@
       "extractionState": "manual",
       "localizations": {
         "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "OK"
-          }
-        },
-        "en": {
           "stringUnit": {
             "state": "translated",
             "value": "OK"
@@ -2701,12 +1753,6 @@
             "state": "translated",
             "value": "Готово"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Done"
-          }
         }
       }
     },
@@ -2717,12 +1763,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Далее"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Next"
           }
         }
       }
@@ -2735,12 +1775,6 @@
             "state": "translated",
             "value": "Назад"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Back"
-          }
         }
       }
     },
@@ -2751,12 +1785,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Пропустить"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Skip"
           }
         }
       }
@@ -2769,12 +1797,6 @@
             "state": "translated",
             "value": "Удалить"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Delete"
-          }
         }
       }
     },
@@ -2785,12 +1807,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Сохранить"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Save"
           }
         }
       }
@@ -2803,12 +1819,6 @@
             "state": "translated",
             "value": "Закрыть"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Close"
-          }
         }
       }
     },
@@ -2819,12 +1829,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Понятно"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Got it"
           }
         }
       }
@@ -2837,12 +1841,6 @@
             "state": "translated",
             "value": "Изолированный звук"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Isolated sound"
-          }
         }
       }
     },
@@ -2853,12 +1851,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Слоги"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Syllables"
           }
         }
       }
@@ -2871,12 +1863,6 @@
             "state": "translated",
             "value": "Слова"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Words"
-          }
         }
       }
     },
@@ -2887,12 +1873,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Фразы"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Phrases"
           }
         }
       }
@@ -2905,24 +1885,12 @@
             "state": "translated",
             "value": "Рассказ"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Story"
-          }
         }
       }
     },
     "tour.skip": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Skip"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -2934,12 +1902,6 @@
     "tour.next": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Next"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -2951,12 +1913,6 @@
     "tour.done": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Done"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -2968,12 +1924,6 @@
     "tour.a11y.hint": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tap Next to continue"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -2985,12 +1935,6 @@
     "tour.welcome.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hi! I'm Lyalya"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3002,12 +1946,6 @@
     "tour.welcome.body": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "I'll help you speak beautifully. Let me show you around."
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3019,12 +1957,6 @@
     "tour.child_home.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Your home"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3036,12 +1968,6 @@
     "tour.child_home.body": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "This is where each day begins — your daily mission is ready."
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3053,12 +1979,6 @@
     "tour.streak.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Streak"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3070,12 +1990,6 @@
     "tour.streak.body": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "You earn a flame for every day you practice. Don't miss a day!"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3087,12 +2001,6 @@
     "tour.start_lesson.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Start a lesson"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3104,12 +2012,6 @@
     "tour.start_lesson.body": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tap here to start learning through games."
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3121,12 +2023,6 @@
     "tour.listen_game.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Listen and choose"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3138,12 +2034,6 @@
     "tour.listen_game.body": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Listen to the sound, then pick the right picture."
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3155,12 +2045,6 @@
     "tour.record.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Your voice"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3172,12 +2056,6 @@
     "tour.record.body": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Press and say the word — I'll listen and help."
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3189,12 +2067,6 @@
     "tour.reward.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Your reward"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3206,12 +2078,6 @@
     "tour.reward.body": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "You earn stickers that fill up your album."
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3223,12 +2089,6 @@
     "tour.ar_zone.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "AR games"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3240,12 +2100,6 @@
     "tour.ar_zone.body": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Show your tongue to the mirror and catch butterflies!"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3257,12 +2111,6 @@
     "tour.parent_home.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "For parents"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3274,12 +2122,6 @@
     "tour.parent_home.body": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Parents see your progress and tips from speech therapists."
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3291,12 +2133,6 @@
     "tour.settings.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Settings"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3308,12 +2144,6 @@
     "tour.settings.body": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Theme, sounds, text size — you can change it all."
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3325,12 +2155,6 @@
     "tour.done.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "All set!"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3342,12 +2166,6 @@
     "tour.done.body": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Now you know everything. Let's start practicing!"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3359,12 +2177,6 @@
     "screening.block.articulation": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Articulation gymnastics"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3376,12 +2188,6 @@
     "screening.block.word": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Word pronunciation"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3393,12 +2199,6 @@
     "screening.block.minimal_pairs": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Minimal pair discrimination"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3410,12 +2210,6 @@
     "screening.block.breathing": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Breathing"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3427,12 +2221,6 @@
     "screening.verdict.normal": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Normal"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3444,12 +2232,6 @@
     "screening.verdict.monitor": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Monitor"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3461,12 +2243,6 @@
     "screening.verdict.intervention": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Needs intervention"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3478,12 +2254,6 @@
     "screening.prompt.listen": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Listen to reference"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3495,12 +2265,6 @@
     "screening.score.wrong": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3512,12 +2276,6 @@
     "screening.score.partial": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Almost"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3529,12 +2287,6 @@
     "screening.score.good": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Good"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3546,12 +2298,6 @@
     "screening.score.perfect": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Perfect"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3563,12 +2309,6 @@
     "screening.block.next": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Next block"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3580,12 +2320,6 @@
     "screening.continue": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Continue"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3597,12 +2331,6 @@
     "screening.summary.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Screening summary"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3614,12 +2342,6 @@
     "screening.summary.done": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Done"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3631,12 +2353,6 @@
     "screening.summary.all_normal": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "All sounds in range. You can start with playful lessons."
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3648,12 +2364,6 @@
     "program.block.warmup": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Warm-up"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3665,12 +2375,6 @@
     "program.block.articulationGymnastics": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Articulation gymnastics"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3682,12 +2386,6 @@
     "program.block.breathing": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Breathing"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3699,12 +2397,6 @@
     "program.block.isolatedSound": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Isolated sound"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3716,12 +2408,6 @@
     "program.block.syllables": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Syllables"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3733,12 +2419,6 @@
     "program.block.wordsInitial": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Words (initial)"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3750,12 +2430,6 @@
     "program.block.wordsMedial": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Words (medial)"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3767,12 +2441,6 @@
     "program.block.wordsFinal": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Words (final)"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3784,12 +2452,6 @@
     "program.block.minimalPairs": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Minimal pairs"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3801,12 +2463,6 @@
     "program.block.phrases": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Phrases"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3818,12 +2474,6 @@
     "program.block.narrativeQuest": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Narrative quest"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3835,12 +2485,6 @@
     "program.block.phonemic": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Phonemic awareness"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3852,12 +2496,6 @@
     "program.block.breakRest": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Break"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3869,12 +2507,6 @@
     "program.block.coolDown": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cool-down"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3886,12 +2518,6 @@
     "program.editor.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Daily program"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3903,12 +2529,6 @@
     "program.editor.cancel": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cancel"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3920,12 +2540,6 @@
     "program.editor.save": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Save"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3937,12 +2551,6 @@
     "program.editor.duration": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Duration"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3954,12 +2562,6 @@
     "program.editor.minutes": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "min"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3971,12 +2573,6 @@
     "program.editor.min": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "min"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -3988,12 +2584,6 @@
     "program.editor.invalid": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Check the setup"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4005,12 +2595,6 @@
     "reports.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Reports"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4022,12 +2606,6 @@
     "reports.range.last30": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Last 30 days"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4039,12 +2617,6 @@
     "reports.stage.isolated": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Isolated sound"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4056,12 +2628,6 @@
     "reports.stage.syllables": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Syllables"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4073,12 +2639,6 @@
     "reports.stage.words": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Words"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4090,12 +2650,6 @@
     "reports.stage.phrases": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Phrases"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4107,12 +2661,6 @@
     "reports.stage.unknown": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Unknown"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4124,12 +2672,6 @@
     "minimal_pairs.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Find the pair"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4141,12 +2683,6 @@
     "minimal_pairs.listen_again": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Listen again"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4158,12 +2694,6 @@
     "minimal_pairs.correct": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Correct!"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4175,12 +2705,6 @@
     "minimal_pairs.try_again": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Try again"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4192,12 +2716,6 @@
     "sound_hunter.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Find the sound"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4209,12 +2727,6 @@
     "sound_hunter.tap_to_toggle": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tap to toggle"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4226,12 +2738,6 @@
     "sound_hunter.check": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Check"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4243,12 +2749,6 @@
     "sound_hunter.continue": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Continue"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4260,12 +2760,6 @@
     "memory.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Find pairs"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4277,12 +2771,6 @@
     "memory.card_back": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Card"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4294,12 +2782,6 @@
     "drag.position.initial": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Beginning"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4311,12 +2793,6 @@
     "drag.position.medial": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Middle"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4328,12 +2804,6 @@
     "drag.position.final": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "End"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4345,12 +2815,6 @@
     "drag.subtitle": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tap word, then tap a slot"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4362,12 +2826,6 @@
     "drag.check": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Done"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4379,12 +2837,6 @@
     "sorting.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sort into groups"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4396,12 +2848,6 @@
     "sorting.tap_to_move": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tap to move"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4413,12 +2859,6 @@
     "sorting.right": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No target sound"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4430,12 +2870,6 @@
     "sorting.check": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Check"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4447,12 +2881,6 @@
     "bingo.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sound bingo"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4464,12 +2892,6 @@
     "bingo.finish": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Done"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4481,12 +2903,6 @@
     "rhythm.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Repeat the rhythm"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4498,12 +2914,6 @@
     "rhythm.your_turn": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Your turn"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4515,12 +2925,6 @@
     "rhythm.next": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Next"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4532,12 +2936,6 @@
     "rhythm.done": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Finish"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4549,12 +2947,6 @@
     "puzzle.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Unlock the puzzle"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4566,12 +2958,6 @@
     "puzzle.complete": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Puzzle complete!"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4583,12 +2969,6 @@
     "puzzle.say_it": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "I said it"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4600,12 +2980,6 @@
     "puzzle.skip": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Skip"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4617,12 +2991,6 @@
     "story.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Finish the story"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4634,12 +3002,6 @@
     "story.correct": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nice!"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4651,12 +3013,6 @@
     "story.wrong": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Not quite"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4668,12 +3024,6 @@
     "quest.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Quest with Lyalya"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4685,12 +3035,6 @@
     "quest.said_it": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Said it"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4702,12 +3046,6 @@
     "quest.skip": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Skip"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4719,12 +3057,6 @@
     "quest.end": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "The end"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4736,12 +3068,6 @@
     "articulation.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Articulation gym"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4753,12 +3079,6 @@
     "articulation.got_it": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Got it"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4770,12 +3090,6 @@
     "articulation.try_later": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Try later"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4787,12 +3101,6 @@
     "articulation.finished": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Done!"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4804,12 +3112,6 @@
     "visual.title": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Your voice"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4821,12 +3123,6 @@
     "visual.reference": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Reference"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4838,12 +3134,6 @@
     "visual.you": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "You"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4855,12 +3145,6 @@
     "visual.record": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Record"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4872,12 +3156,6 @@
     "visual.stop": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Stop"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
@@ -4889,12 +3167,6 @@
     "visual.done": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Done"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",

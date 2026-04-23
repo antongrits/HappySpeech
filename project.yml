@@ -92,7 +92,6 @@ targets:
         NSUserTrackingUsageDescription: ""
         CFBundleLocalizations:
           - ru
-          - en
         CFBundleDevelopmentRegion: ru
         UISupportsDocumentBrowser: false
         CFBundleURLTypes:
