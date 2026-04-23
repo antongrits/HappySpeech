@@ -2,7 +2,7 @@
 name: ios-developer
 description: iOS-разработчик для HappySpeech — полный цикл iOS-разработки. Используй для любых iOS-задач проекта: реализация фич по Clean Swift VIP, UI по дизайн-спеке, интеграция WhisperKit/ARKit/Firebase/MLX, исправление багов, accessibility-аудит, сборка и загрузка в TestFlight.
 tools: Read, Write, Edit, Glob, Grep, Bash
-model: claude-sonnet-4-6
+model: claude-opus-4-7
 effort: xhigh
 ---
 
