@@ -12,21 +12,21 @@ import OSLog
 /// SwiftUI views directly.
 @MainActor
 @Observable
-public final class GuidedTourCoordinator {
+final class GuidedTourCoordinator {
 
     // MARK: - State
 
     /// All steps (currently 11 — see `TourSteps.all`).
-    public private(set) var steps: [TourStep]
+    private(set) var steps: [TourStep]
 
     /// Index of the currently displayed step; `nil` when the tour is idle.
-    public private(set) var currentIndex: Int?
+    private(set) var currentIndex: Int?
 
     /// `true` while the tour overlay is on screen.
-    public private(set) var isActive: Bool = false
+    private(set) var isActive: Bool = false
 
     /// `true` once the user finished or dismissed the tour in this install.
-    public private(set) var hasCompleted: Bool
+    private(set) var hasCompleted: Bool
 
     // MARK: - Dependencies
 
@@ -40,7 +40,7 @@ public final class GuidedTourCoordinator {
 
     // MARK: - Init
 
-    public init(
+    init(
         soundService: any SoundServiceProtocol,
         steps: [TourStep] = TourSteps.all,
         defaults: UserDefaults = .standard
@@ -53,17 +53,17 @@ public final class GuidedTourCoordinator {
 
     // MARK: - Derived
 
-    public var currentStep: TourStep? {
+    var currentStep: TourStep? {
         guard let index = currentIndex, steps.indices.contains(index) else { return nil }
         return steps[index]
     }
 
-    public var progressFraction: Double {
+    var progressFraction: Double {
         guard !steps.isEmpty, let index = currentIndex else { return 0 }
         return Double(index + 1) / Double(steps.count)
     }
 
-    public var isOnLastStep: Bool {
+    var isOnLastStep: Bool {
         guard let index = currentIndex else { return false }
         return index == steps.count - 1
     }
@@ -71,7 +71,7 @@ public final class GuidedTourCoordinator {
     // MARK: - Intents
 
     /// Starts the tour from the first step. No-op if already active.
-    public func start(force: Bool = false) {
+    func start(force: Bool = false) {
         guard !isActive else { return }
         if hasCompleted && !force {
             logger.debug("tour already completed, skipping auto-start")
@@ -82,7 +82,7 @@ public final class GuidedTourCoordinator {
         enter(stepIndex: 0)
     }
 
-    public func next() {
+    func next() {
         cancelAutoAdvance()
         guard let index = currentIndex else { return }
         if index + 1 >= steps.count {
@@ -92,12 +92,12 @@ public final class GuidedTourCoordinator {
         }
     }
 
-    public func skip() {
+    func skip() {
         logger.info("tour skipped at index=\(self.currentIndex ?? -1, privacy: .public)")
         complete()
     }
 
-    public func resetForTesting() {
+    func resetForTesting() {
         defaults.removeObject(forKey: Self.completionKey)
         hasCompleted = false
         isActive = false

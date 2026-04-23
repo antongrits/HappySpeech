@@ -198,18 +198,28 @@ public protocol SoundServiceProtocol: Sendable {
 
 // MARK: - LiveSoundService
 
-/// Производственная реализация. Actor для потокобезопасного доступа к AVAudioPlayer.
-public actor LiveSoundService: SoundServiceProtocol {
+/// Производственная реализация. Использует NSLock вместо actor, потому что
+/// `SoundServiceProtocol.playUISound` — `nonisolated`, а `isMuted: Bool { get }`
+/// должен быть синхронно читаемым из любого контекста. Actor-изоляция не
+/// подходит для такого контракта (getter требовал бы `async`).
+///
+/// Внутреннее состояние (`uiPlayerCache`, `lyalyaPlayer`, `isMuted`) защищено
+/// единым `lock`. AVAudioPlayer / AVPlayer сами по себе потокобезопасны для
+/// `play()` / `currentTime`, но мутация словаря-кэша требует синхронизации.
+public final class LiveSoundService: SoundServiceProtocol, @unchecked Sendable {
 
     private let logger = Logger(subsystem: "com.happyspeech", category: "SoundService")
+    private let lock = NSLock()
 
-    // AVAudioPlayer cache: имя файла → плеер
+    // Guarded by `lock`
     private var uiPlayerCache: [String: AVAudioPlayer] = [:]
-
-    // Lyalya воспроизводится через AVPlayer (поддерживает M4A из bundle)
     private var lyalyaPlayer: AVPlayer?
+    private var _isMuted: Bool = false
 
-    private(set) public var isMuted: Bool = false
+    public var isMuted: Bool {
+        lock.lock(); defer { lock.unlock() }
+        return _isMuted
+    }
 
     public init() {
         configureAudioSession()
@@ -217,27 +227,16 @@ public actor LiveSoundService: SoundServiceProtocol {
 
     // MARK: - Public API
 
-    nonisolated public func playUISound(_ sound: UISound) {
-        Task { await _playUISound(sound) }
-    }
-
-    nonisolated public func playLyalya(_ phrase: LyalyaPhrase) {
-        Task { await _playLyalya(phrase) }
-    }
-
-    public func setMuted(_ muted: Bool) {
-        isMuted = muted
-    }
-
-    // MARK: - Private implementation
-
-    private func _playUISound(_ sound: UISound) {
+    public func playUISound(_ sound: UISound) {
         guard !isMuted else { return }
 
         let filename = sound.rawValue
-        let cacheKey = filename
 
-        if let cached = uiPlayerCache[cacheKey] {
+        lock.lock()
+        let cached = uiPlayerCache[filename]
+        lock.unlock()
+
+        if let cached {
             cached.currentTime = 0
             cached.play()
             return
@@ -248,7 +247,7 @@ public actor LiveSoundService: SoundServiceProtocol {
             withExtension: "caf",
             subdirectory: "Audio/UI"
         ) else {
-            logger.warning("UI sound not found: \(filename).caf in Audio/UI/")
+            logger.warning("UI sound not found: \(filename, privacy: .public).caf in Audio/UI/")
             return
         }
 
@@ -256,13 +255,15 @@ public actor LiveSoundService: SoundServiceProtocol {
             let player = try AVAudioPlayer(contentsOf: url)
             player.prepareToPlay()
             player.play()
-            uiPlayerCache[cacheKey] = player
+            lock.lock()
+            uiPlayerCache[filename] = player
+            lock.unlock()
         } catch {
-            logger.error("Failed to play UI sound \(filename): \(error.localizedDescription)")
+            logger.error("Failed to play UI sound \(filename, privacy: .public): \(error.localizedDescription, privacy: .public)")
         }
     }
 
-    private func _playLyalya(_ phrase: LyalyaPhrase) {
+    public func playLyalya(_ phrase: LyalyaPhrase) {
         guard !isMuted else { return }
 
         let filename = "lyalya_\(phrase.rawValue)"
@@ -272,12 +273,21 @@ public actor LiveSoundService: SoundServiceProtocol {
             withExtension: "m4a",
             subdirectory: "Audio/Lyalya"
         ) else {
-            logger.warning("Lyalya phrase not found: \(filename).m4a in Audio/Lyalya/")
+            logger.warning("Lyalya phrase not found: \(filename, privacy: .public).m4a")
             return
         }
 
-        lyalyaPlayer = AVPlayer(url: url)
-        lyalyaPlayer?.play()
+        let player = AVPlayer(url: url)
+        lock.lock()
+        lyalyaPlayer = player
+        lock.unlock()
+        player.play()
+    }
+
+    public func setMuted(_ muted: Bool) {
+        lock.lock()
+        _isMuted = muted
+        lock.unlock()
     }
 
     // MARK: - Audio session
@@ -288,7 +298,7 @@ public actor LiveSoundService: SoundServiceProtocol {
             try session.setCategory(.ambient, mode: .default, options: [.mixWithOthers])
             try session.setActive(true)
         } catch {
-            logger.error("Failed to configure AVAudioSession: \(error.localizedDescription)")
+            logger.error("Failed to configure AVAudioSession: \(error.localizedDescription, privacy: .public)")
         }
     }
 }

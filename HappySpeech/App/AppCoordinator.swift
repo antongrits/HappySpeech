@@ -75,7 +75,8 @@ final class AppCoordinator {
 
     private func handleAuthChange(_ user: AuthUser?) {
         authUser = user
-        HSLogger.auth.info("authState changed: \(user == nil ? "nil" : "uid=\(user?.uid ?? "?", privacy: .private)")")
+        let uidLabel = user.map { "uid=\($0.uid)" } ?? "nil"
+        HSLogger.auth.info("authState changed: \(uidLabel, privacy: .private)")
 
         // Don't interrupt splash transition or in-progress onboarding.
         switch currentRoute {

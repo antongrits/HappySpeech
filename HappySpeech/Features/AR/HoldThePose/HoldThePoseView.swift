@@ -80,9 +80,10 @@ struct HoldThePoseView: View {
     }
 
     private func observe(service: any ARSessionService) {
-        Task { @MainActor [weak self] in
+        let capturedInteractor = interactor
+        Task { @MainActor in
             for await frame in service.blendshapeStream {
-                self?.interactor?.updateFrame(.init(blendshapes: frame))
+                capturedInteractor?.updateFrame(.init(blendshapes: frame))
             }
         }
     }

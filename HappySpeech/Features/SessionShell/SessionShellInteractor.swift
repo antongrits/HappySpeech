@@ -108,7 +108,7 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         }()
         currentIndex += 1
 
-        let reward: RewardItem? = request.score >= 0.8 ? .star : nil
+        let reward: SessionReward? = request.score >= 0.8 ? .star : nil
 
         let response = SessionShellModels.CompleteActivity.Response(
             nextActivity: fatigueDetected ? nil : nextActivity,
