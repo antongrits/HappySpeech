@@ -155,9 +155,15 @@ public final class MockContentService: ContentService, @unchecked Sendable {
 // MARK: MockAdaptivePlannerService
 
 public final class MockAdaptivePlannerService: AdaptivePlannerService, @unchecked Sendable {
+    public struct RecordedQuality: Sendable, Equatable {
+        public let childId: String
+        public let soundTarget: String
+        public let quality: SM2Quality
+    }
+
     public var route: AdaptiveRoute
     public var fatigue: FatigueLevel
-    public var recordedQualities: [(childId: String, soundTarget: String, quality: SM2Quality)] = []
+    public var recordedQualities: [RecordedQuality] = []
     public var forcedBreak: Bool = false
 
     public init(
@@ -187,7 +193,7 @@ public final class MockAdaptivePlannerService: AdaptivePlannerService, @unchecke
         soundTarget: String,
         qualityScore: SM2Quality
     ) async throws {
-        recordedQualities.append((childId, soundTarget, qualityScore))
+        recordedQualities.append(RecordedQuality(childId: childId, soundTarget: soundTarget, quality: qualityScore))
     }
 
     public func shouldTakeBreak(

@@ -320,7 +320,7 @@ actor LivePronunciationScorer: PronunciationScorerProtocol {
         let mfcc = try MFCCExtractor.extract(from: buffer)
 
         let input = try MLDictionaryFeatureProvider(dictionary: ["mfcc": mfcc])
-        let output = try model.prediction(from: input)
+        let output = try await model.prediction(from: input)
 
         return try Self.parseOutput(output, group: group)
     }

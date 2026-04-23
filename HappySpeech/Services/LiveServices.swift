@@ -417,57 +417,79 @@ public final class LiveAdaptivePlannerService: AdaptivePlannerService, @unchecke
 
     public func buildDailyRoute(for childId: String) async throws -> AdaptiveRoute {
         guard let childRepository, let sessionRepository else {
-            // Fallback: backward-compatible поведение (нет DI — возвращаем безопасный маршрут).
-            let fatigue: FatigueLevel = .fresh
-            let steps = Self.composeRoute(soundTarget: "С", stage: .wordInit, fatigue: fatigue)
-            let total = steps.reduce(0) { $0 + $1.durationTargetSec }
-            HSLogger.planner.info(
-                "AdaptiveRoute (fallback) childId=\(childId, privacy: .private) steps=\(steps.count) total=\(total)s"
-            )
-            return AdaptiveRoute(steps: steps, maxDurationSec: min(total, 600), fatigueLevel: fatigue)
+            return fallbackRoute(for: childId)
         }
 
         let profile = try await childRepository.fetch(id: childId)
         let recentSessions = (try? await sessionRepository.fetchRecent(childId: childId, limit: 10)) ?? []
-
         let targets = profile.targetSounds.isEmpty ? ["С"] : profile.targetSounds
+
         let states = targets.map { sound in
             SoundProgressAggregator.aggregate(soundTarget: sound, sessions: recentSessions)
         }
-
-        let primary = Self.selectPrimaryState(from: states) ?? SoundProgressState(
-            soundTarget: targets[0],
-            stage: .isolated
-        )
+        let primary = Self.selectPrimaryState(from: states)
+            ?? SoundProgressState(soundTarget: targets[0], stage: .isolated)
 
         let now = Date()
         let hour = Calendar.current.component(.hour, from: now)
         let fatigue = Self.computeFatigue(state: primary, hour: hour)
-
         let steps = Self.composeRoute(soundTarget: primary.soundTarget, stage: primary.stage, fatigue: fatigue)
         let stepsTotal = steps.reduce(0) { $0 + $1.durationTargetSec }
         let cap = Self.sessionMaxSec(for: profile.age)
         let maxDuration = min(stepsTotal, cap)
 
-        HSLogger.planner.info(
-            """
-            AdaptiveRoute childId=\(childId, privacy: .private) \
-            sound=\(primary.soundTarget, privacy: .public) \
-            stage=\(primary.stage.rawValue, privacy: .public) \
-            fatigue=\(fatigue.rawValue) \
-            EF=\(String(format: "%.2f", primary.easinessFactor), privacy: .public) \
-            overdue=\(primary.overdueDays(now: now)) \
-            steps=\(steps.count) total=\(stepsTotal)s cap=\(cap)s
-            """
+        logPlannedRoute(
+            PlannedRouteLog(
+                childId: childId,
+                primary: primary,
+                fatigue: fatigue,
+                now: now,
+                stepsCount: steps.count,
+                stepsTotal: stepsTotal,
+                cap: cap
+            )
         )
 
-        if primary.needsSpecialistReview {
+        return AdaptiveRoute(steps: steps, maxDurationSec: maxDuration, fatigueLevel: fatigue)
+    }
+
+    private func fallbackRoute(for childId: String) -> AdaptiveRoute {
+        let fatigue: FatigueLevel = .fresh
+        let steps = Self.composeRoute(soundTarget: "С", stage: .wordInit, fatigue: fatigue)
+        let total = steps.reduce(0) { $0 + $1.durationTargetSec }
+        HSLogger.planner.info(
+            "AdaptiveRoute (fallback) childId=\(childId, privacy: .private) steps=\(steps.count) total=\(total)s"
+        )
+        return AdaptiveRoute(steps: steps, maxDurationSec: min(total, 600), fatigueLevel: fatigue)
+    }
+
+    private struct PlannedRouteLog {
+        let childId: String
+        let primary: SoundProgressState
+        let fatigue: FatigueLevel
+        let now: Date
+        let stepsCount: Int
+        let stepsTotal: Int
+        let cap: Int
+    }
+
+    private func logPlannedRoute(_ log: PlannedRouteLog) {
+        let ef = String(format: "%.2f", log.primary.easinessFactor)
+        let overdue = log.primary.overdueDays(now: log.now)
+        HSLogger.planner.info(
+            """
+            AdaptiveRoute childId=\(log.childId, privacy: .private) \
+            sound=\(log.primary.soundTarget, privacy: .public) \
+            stage=\(log.primary.stage.rawValue, privacy: .public) \
+            fatigue=\(log.fatigue.rawValue) EF=\(ef, privacy: .public) \
+            overdue=\(overdue) steps=\(log.stepsCount) total=\(log.stepsTotal)s cap=\(log.cap)s
+            """
+        )
+        if log.primary.needsSpecialistReview {
             HSLogger.planner.warning(
-                "Low EF (\(String(format: "%.2f", primary.easinessFactor), privacy: .public)) for sound=\(primary.soundTarget, privacy: .public) — recommend specialist review"
+                "Low EF (\(ef, privacy: .public)) for sound=\(log.primary.soundTarget, privacy: .public) — recommend specialist review"
             )
         }
-
-        return AdaptiveRoute(steps: steps, maxDurationSec: maxDuration, fatigueLevel: fatigue)
     }
 
     public func recordCompletion(sessionId: String, route: AdaptiveRoute) async throws {

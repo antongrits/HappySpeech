@@ -40,13 +40,3 @@ final class EmailAuthWorker {
         guard password.count >= 6 else { throw AppError.authWeakPassword }
     }
 }
-
-// MARK: - Email validation
-
-private extension String {
-    /// Minimal email sanity check. Server validation is authoritative.
-    var isValidEmail: Bool {
-        let pattern = #"^[^\s@]+@[^\s@]+\.[^\s@]+$"#
-        return range(of: pattern, options: .regularExpression) != nil
-    }
-}
