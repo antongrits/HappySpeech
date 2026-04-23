@@ -272,6 +272,22 @@ struct SessionShellBinder: View {
             MemoryView(activity: activity) { score in
                 Task { await onComplete(activity.id, score) }
             }
+        case .dragAndMatch:
+            DragAndMatchView(activity: activity) { score in
+                Task { await onComplete(activity.id, score) }
+            }
+        case .sorting:
+            SortingView(activity: activity) { score in
+                Task { await onComplete(activity.id, score) }
+            }
+        case .bingo:
+            BingoView(activity: activity) { score in
+                Task { await onComplete(activity.id, score) }
+            }
+        case .rhythm:
+            RhythmView(activity: activity) { score in
+                Task { await onComplete(activity.id, score) }
+            }
         default:
             placeholderGame(for: activity)
         }
