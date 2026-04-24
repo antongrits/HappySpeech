@@ -1,5 +1,5 @@
 # ML Models Registry — HappySpeech
-## Version 2.2 — 2026-04-24
+## Version 2.3 — 2026-04-24
 ## Managed by ML Trainer. Updated when model is converted and validated.
 
 ---
@@ -10,11 +10,12 @@
 |----|-----------|------|---------|-----------------|------|--------|---------|
 | M-001 | WhisperKit large-v3-turbo | Russian ASR — primary | MIT | ~600 MB | via WhisperKit SPM (download on first run) | Planned (S5) | WhisperKit tiny |
 | M-002 | WhisperKit tiny (Russian) | Russian ASR — fallback | MIT | ~150 MB | via WhisperKit SPM | Planned (S5) | AVSpeechRecognizer (online) |
-| M-003 | Silero VAD (energy stub) | Voice Activity Detection | MIT | 0.008 MB | Resources/Models/SileroVAD.mlpackage | DEPLOYED (stub) | AmplitudeVAD (Swift actor) |
+| M-003 | SileroVAD CNN | Voice Activity Detection | Proprietary | 0.073 MB | Resources/Models/SileroVAD.mlpackage | DEPLOYED (M4.4 real CNN) | AmplitudeVAD (Swift actor) |
 | M-004a | PronunciationScorer_whistling | Binary scoring: С,З,Ц | Proprietary | 0.10 MB | Resources/Models/PronunciationScorer_whistling.mlpackage | DEPLOYED (retrained M4.3) | MockPronunciationScorer |
 | M-004b | PronunciationScorer_hissing | Binary scoring: Ш,Ж,Ч,Щ | Proprietary | 0.10 MB | Resources/Models/PronunciationScorer_hissing.mlpackage | DEPLOYED (retrained M4.3) | MockPronunciationScorer |
 | M-004c | PronunciationScorer_sonants | Binary scoring: Р,Л | Proprietary | 0.10 MB | Resources/Models/PronunciationScorer_sonants.mlpackage | DEPLOYED (retrained M4.3) | MockPronunciationScorer |
 | M-004d | PronunciationScorer_velar | Binary scoring: К,Г,Х | Proprietary | 0.10 MB | Resources/Models/PronunciationScorer_velar.mlpackage | DEPLOYED (retrained M4.3) | MockPronunciationScorer |
+| M-006 | SoundClassifier | 4-class sound classification: speech/noise/silence/breathing | Proprietary | 0.128 MB | Resources/Models/SoundClassifier.mlpackage | DEPLOYED (M4.5) | MockAudioAnalysisService |
 | M-005 | Qwen2.5-1.5B-Instruct (MLX Swift) | Structured decisions: parent summary, route planner, micro-story | Apache 2.0 | ~950 MB | Downloaded on first run via mlx-community | Planned (S11) | Rule-based templates |
 
 ---
@@ -42,15 +43,28 @@
 - **Latency:** < 200ms for 3-second utterance on iPhone 12+
 - **Notes:** Used as fallback if GigaAM unavailable or not yet downloaded
 
-### M-003: Silero VAD
+### M-003: SileroVAD CNN — M4.4
 
-- **Source:** Silero AI (https://github.com/snakers4/silero-vad)
-- **Integration:** Core ML .mlpackage (converted from ONNX)
-- **Input:** 16kHz mono PCM audio chunks (512 samples)
-- **Output:** Speech probability 0.0–1.0 per chunk
-- **Threshold:** 0.5 (configurable in AudioService)
-- **Latency:** < 5ms per chunk
-- **Conversion script:** `_workshop/scripts/convert_silero_coreml.py` (pending)
+- **Задача:** Voice Activity Detection — speech vs noise/silence на 32ms чанках
+- **Путь:** HappySpeech/Resources/Models/SileroVAD.mlpackage
+- **Архитектура:** 1D Depthwise-separable CNN — Conv1d(1→16, k=25) + Conv1d(16→32, k=11) + Conv1d(32→64, k=7) + Conv1d(64→64, k=3) + AdaptiveAvgPool + Linear(64→1) + Sigmoid
+- **Параметров:** 33,249
+- **Вход:** audio_chunk [1, 1, 512] — 32ms @ 16kHz raw PCM float32
+- **Выход:** speech_prob [1, 1] — вероятность речи (0.0–1.0)
+- **Датасет:** Content Audio (5277 files) + correct/ (1159 files) = speech; синтетический белый/розовый шум = noise; 24,000 чанков
+- **Баланс:** 50% speech / 50% noise (12,000 / 12,000)
+- **Train/Val/Test split:** 75%/15%/10% (18,000 / 3,600 / 2,400)
+- **Эпохи:** 30, best epoch: 25
+- **Device:** MPS (Apple Silicon M-серия)
+- **Accuracy:** 99.9% | Precision: 100.0% | Recall: 99.8% | F1: 99.9%
+- **Размер:** 0.073 MB (73 KB)
+- **Верификация CoreML:** diff=0.002098 < 0.01 (OK)
+- **Latency:** < 2ms per chunk (iPhone 12+, оценочно)
+- **Threshold:** 0.5 (configurable в LiveSileroVAD.swift)
+- **Тренировочный скрипт:** `_workshop/scripts/train_silero_vad_cnn.py`
+- **Дата:** 2026-04-24
+- **Статус:** production
+- **Замена:** заменяет energy stub (8KB → 73KB, реальная CNN vs амплитудный порог)
 
 ### M-004: PronunciationScorer (custom CNN)
 
@@ -132,6 +146,30 @@
 - **Latency:** < 5ms (iPhone 12+, оценочно)
 - **Дата:** 2026-04-24
 - **Статус:** production
+
+### M-006: SoundClassifier — M4.5
+
+- **Задача:** 4-классовая классификация звука: speech / noise / silence / breathing
+- **Путь:** HappySpeech/Resources/Models/SoundClassifier.mlpackage
+- **Архитектура:** 2D-CNN на Log Mel-спектрограмме — Conv2d(1→16) + Conv2d(16→32) + Conv2d(32→64) + Conv2d(64→64) + AdaptiveAvgPool2d + Dropout(0.3) + Linear(64→4)
+- **Параметров:** 60,836
+- **Вход:** logmel [1, 1, 64, 64] — Log Mel-spectrogram, 1 секунда @ 16kHz (n_mels=64, n_frames=64)
+- **Выход:** classLabel (String) + classProbability (Dictionary) — CreateML-совместимый формат
+- **Классы:** speech=0, noise=1, silence=2, breathing=3
+- **Датасет:** Content Audio (speech, 1500 образцов) + синтетический шум/тишина/дыхание
+- **Баланс:** speech=1500, noise=1500, silence=750, breathing=750 (4,500 total)
+- **Train/Val/Test split:** 75%/15%/10% (3,375 / 675 / 450)
+- **Эпохи:** 30, best epoch: 5
+- **Device:** MPS (Apple Silicon M-серия)
+- **Accuracy:** 85.8% | Macro F1: 85.2%
+- **Per-class F1:** speech=1.000, noise=0.775, silence=0.632, breathing=1.000
+- **Размер:** 0.128 MB (128 KB)
+- **Latency:** < 10ms (iPhone 12+, оценочно)
+- **Swift интеграция:** AudioAnalysisService.swift (LiveAudioAnalysisService actor)
+- **Тренировочный скрипт:** `_workshop/scripts/train_sound_classifier.py`
+- **Дата:** 2026-04-24
+- **Статус:** production
+- **Назначение:** pre-filter перед WhisperKit — запускать ASR только при classLabel=speech
 
 ### M-005: Qwen2.5-1.5B-Instruct (MLX Swift)
 
