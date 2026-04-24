@@ -8,9 +8,15 @@ enum ARZoneModels {
     // MARK: - LoadGames
     enum LoadGames {
         struct Request {}
-        struct Response { let games: [ARGame] }
+        struct Response {
+            let games: [ARGame]
+            let instructions: [InstructionCatalog.Seed]
+        }
         struct ViewModel {
             let cards: [ARGameCard]
+            let instructionSteps: [InstructionStep]
+            let mascotState: LyalyaAnimation
+            let phase: ARZonePhase
             let isARSupported: Bool
         }
     }
@@ -21,6 +27,74 @@ enum ARZoneModels {
         struct Response { let game: ARGame }
         struct ViewModel { let destination: ARGameDestination }
     }
+}
+
+// MARK: - ARZonePhase
+
+/// Фаза отображения ARZone-экрана.
+/// `.loading` — 3D Ляля ещё грузится (первые ~300 мс),
+/// `.ready` — всё отрисовано, карточки готовы,
+/// `.unsupported` — устройство не поддерживает ARFaceTracking.
+public enum ARZonePhase: Sendable, Hashable {
+    case loading
+    case ready
+    case unsupported
+}
+
+// MARK: - InstructionStep
+
+/// Шаг инструкции для входа в AR-зону.
+/// Показывается на экране входа в AR-зону (3 шага: поднеси лицо → включи звук → следуй за Лялей).
+public struct InstructionStep: Sendable, Identifiable, Hashable {
+    public let id: String
+    public let number: Int
+    public let title: String
+    public let body: String
+    public let icon: String           // SF Symbol
+    public let tintIndex: Int         // 0…5 → ARCardPalette
+}
+
+// MARK: - InstructionCatalog
+
+/// Источник правды по статичным шагам инструкции.
+/// Тексты подтягиваются через `String(localized:)` в Presenter.
+enum InstructionCatalog {
+
+    struct Seed: Sendable, Hashable {
+        let id: String
+        let number: Int
+        let titleKey: String
+        let bodyKey: String
+        let icon: String
+        let tintIndex: Int
+    }
+
+    static let seeds: [Seed] = [
+        Seed(
+            id: "step-1",
+            number: 1,
+            titleKey: "ar.zone.step1.title",
+            bodyKey: "ar.zone.step1.body",
+            icon: "face.dashed",
+            tintIndex: 0
+        ),
+        Seed(
+            id: "step-2",
+            number: 2,
+            titleKey: "ar.zone.step2.title",
+            bodyKey: "ar.zone.step2.body",
+            icon: "speaker.wave.2.fill",
+            tintIndex: 2
+        ),
+        Seed(
+            id: "step-3",
+            number: 3,
+            titleKey: "ar.zone.step3.title",
+            bodyKey: "ar.zone.step3.body",
+            icon: "sparkles",
+            tintIndex: 4
+        )
+    ]
 }
 
 // MARK: - ARGame (domain model)

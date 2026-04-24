@@ -29,9 +29,29 @@ final class ARZonePresenter: ARZonePresentationLogic {
                 destination: game.destination
             )
         }
+
+        let steps = response.instructions.map { seed in
+            InstructionStep(
+                id: seed.id,
+                number: seed.number,
+                title: String(localized: String.LocalizationValue(seed.titleKey)),
+                body: String(localized: String.LocalizationValue(seed.bodyKey)),
+                icon: seed.icon,
+                tintIndex: seed.tintIndex
+            )
+        }
+
+        let isSupported = ARFaceTrackingConfiguration.isSupported
+        let phase: ARZonePhase = isSupported ? .ready : .unsupported
+        // Приветственное состояние маскота — на входе машет ребёнку лапой.
+        let mascotState: LyalyaAnimation = isSupported ? .waving : .sad
+
         let vm = ARZoneModels.LoadGames.ViewModel(
             cards: cards,
-            isARSupported: ARFaceTrackingConfiguration.isSupported
+            instructionSteps: steps,
+            mascotState: mascotState,
+            phase: phase,
+            isARSupported: isSupported
         )
         viewModel?.displayLoadGames(vm)
     }

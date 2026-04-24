@@ -21,9 +21,13 @@ final class ARZoneInteractor: ARZoneBusinessLogic {
 
     func loadGames(_ request: ARZoneModels.LoadGames.Request) {
         let games = ARGameCatalog.all
-        let response = ARZoneModels.LoadGames.Response(games: games)
+        let instructions = InstructionCatalog.seeds
+        let response = ARZoneModels.LoadGames.Response(
+            games: games,
+            instructions: instructions
+        )
         presenter?.presentLoadGames(response)
-        HSLogger.ar.debug("ARZone loaded \(games.count) games")
+        HSLogger.ar.debug("ARZone loaded \(games.count) games, \(instructions.count) steps")
     }
 
     // MARK: - selectGame
