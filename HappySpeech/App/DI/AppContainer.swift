@@ -34,7 +34,8 @@ public final class AppContainer {
     private var _adaptivePlannerService: (any AdaptivePlannerService)?
     private var _llmDecisionService: (any LLMDecisionServiceProtocol)?
     private var _llmDecisionLogRepository: (any LLMDecisionLogRepository)?
-    private var _llmDownloadManager: LLMModelDownloadManager?
+    private var _llmModelManager: (any LLMModelManagerProtocol)?
+    private var _whisperKitModelManager: (any WhisperKitModelManagerProtocol)?
     private var _networkClient: NetworkClient?
     private var _claudeAPIClient: (any ClaudeAPIClientProtocol)?
     private var _offlineQueueManager: OfflineQueueManager?
@@ -56,7 +57,8 @@ public final class AppContainer {
     private let adaptivePlannerServiceFactory: () -> any AdaptivePlannerService
     private let llmDecisionServiceFactory: () -> any LLMDecisionServiceProtocol
     private let llmDecisionLogRepositoryFactory: () -> any LLMDecisionLogRepository
-    private let llmDownloadManagerFactory: @MainActor () -> LLMModelDownloadManager
+    private let llmModelManagerFactory: () -> any LLMModelManagerProtocol
+    private let whisperKitModelManagerFactory: () -> any WhisperKitModelManagerProtocol
     private let networkClientFactory: () -> NetworkClient
     private let claudeAPIClientFactory: () -> any ClaudeAPIClientProtocol
     private let offlineQueueManagerFactory: @MainActor () -> OfflineQueueManager
