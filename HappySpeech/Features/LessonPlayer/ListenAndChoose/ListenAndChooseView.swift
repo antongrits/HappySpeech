@@ -64,24 +64,60 @@ struct ListenAndChooseView: View {
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
 
-            Button {
-                playSample(targetWord: vm.targetWord)
-            } label: {
-                HStack(spacing: SpacingTokens.small) {
-                    Image(systemName: isPlayingSample ? "speaker.wave.3.fill" : "play.circle.fill")
-                        .font(.system(size: 28, weight: .semibold))
-                    Text(String(localized: "Прослушать"))
-                        .font(TypographyTokens.body(17))
+            HStack(spacing: SpacingTokens.regular) {
+                Button {
+                    playSample(targetWord: vm.targetWord)
+                } label: {
+                    HStack(spacing: SpacingTokens.small) {
+                        Image(systemName: isPlayingSample ? "speaker.wave.3.fill" : "play.circle.fill")
+                            .font(.system(size: 28, weight: .semibold))
+                        Text(String(localized: "Прослушать"))
+                            .font(TypographyTokens.body(17))
+                    }
+                    .foregroundStyle(.white)
+                    .padding(.vertical, SpacingTokens.small)
+                    .padding(.horizontal, SpacingTokens.large)
+                    .background(
+                        Capsule().fill(ColorTokens.Brand.primary)
+                    )
                 }
-                .foregroundStyle(.white)
-                .padding(.vertical, SpacingTokens.small)
-                .padding(.horizontal, SpacingTokens.large)
-                .background(
-                    Capsule().fill(ColorTokens.Brand.primary)
-                )
+                .accessibilityLabel(String(localized: "Прослушать слово \(vm.targetWord)"))
+                .accessibilityAddTraits(.isButton)
+
+                Button {
+                    interactor?.replayCurrentWord(ListenAndChooseModels.ReplayWord.Request())
+                    container.hapticService.selection()
+                } label: {
+                    HStack(spacing: SpacingTokens.small) {
+                        Image(systemName: "arrow.counterclockwise")
+                            .font(.system(size: 18, weight: .semibold))
+                        Text(String(localized: "Повтори"))
+                            .font(TypographyTokens.body(14))
+                    }
+                    .foregroundStyle(ColorTokens.Kid.inkSoft)
+                    .padding(.vertical, SpacingTokens.small)
+                    .padding(.horizontal, SpacingTokens.regular)
+                    .overlay(
+                        Capsule().strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
+                    )
+                }
+                .accessibilityLabel(String(localized: "Повторить слово ещё раз"))
+                .accessibilityAddTraits(.isButton)
             }
-            .accessibilityLabel(String(localized: "Прослушать слово \(vm.targetWord)"))
-            .accessibilityAddTraits(.isButton)
+
+            if let progress = vm.progressText {
+                Text(progress)
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Kid.inkSoft)
+            }
+
+            if let hint = vm.hintText {
+                Text(hint)
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Kid.inkSoft)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, SpacingTokens.regular)
+            }
         }
     }
 

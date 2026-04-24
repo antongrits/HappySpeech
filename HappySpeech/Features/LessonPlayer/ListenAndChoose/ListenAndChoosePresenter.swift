@@ -23,11 +23,27 @@ final class ListenAndChoosePresenter: ListenAndChoosePresentationLogic {
                 imageSystemName: Self.imageSymbol(for: item.word)
             )
         }
+        let instruction: String = response.isRetry
+            ? String(localized: "Давай попробуем ещё раз!")
+            : String(localized: "Слушай внимательно и выбери картинку")
+
+        let progressText: String?
+        if response.totalQuestions > 1 {
+            progressText = String(
+                localized: "Вопрос \(response.questionNumber) из \(response.totalQuestions)"
+            )
+        } else {
+            progressText = nil
+        }
+
         let vm = ListenAndChooseModels.LoadRound.ViewModel(
             targetWord: response.targetWord,
             options: options,
             correctIndex: response.correctIndex,
-            instructionText: String(localized: "Слушай внимательно и выбери картинку")
+            instructionText: instruction,
+            hintText: response.hint,
+            progressText: progressText,
+            isRetry: response.isRetry
         )
         display?.displayLoadRound(vm)
     }
@@ -35,6 +51,9 @@ final class ListenAndChoosePresenter: ListenAndChoosePresentationLogic {
     func presentSubmitAttempt(_ response: ListenAndChooseModels.SubmitAttempt.Response) {
         let feedback: String = {
             if response.isCorrect {
+                if response.currentStreak >= 3 {
+                    return String(localized: "Отлично! \(response.currentStreak) подряд!")
+                }
                 return String(localized: "Правильно!")
             }
             if response.shouldRevealAnswer {
@@ -43,12 +62,18 @@ final class ListenAndChoosePresenter: ListenAndChoosePresentationLogic {
             return String(localized: "Попробуй ещё раз")
         }()
 
+        let streakText: String? = response.isCorrect && response.currentStreak >= 3
+            ? String(localized: "Серия: \(response.currentStreak)")
+            : nil
+
         let vm = ListenAndChooseModels.SubmitAttempt.ViewModel(
             isCorrect: response.isCorrect,
             feedbackText: feedback,
             shouldRevealAnswer: response.shouldRevealAnswer,
             correctIndex: response.correctIndex,
-            finalScore: (response.isCorrect || response.shouldRevealAnswer) ? response.score : nil
+            finalScore: (response.isCorrect || response.shouldRevealAnswer) ? response.score : nil,
+            streakText: streakText,
+            hintText: response.hint
         )
         display?.displaySubmitAttempt(vm)
     }
@@ -65,6 +90,13 @@ final class ListenAndChoosePresenter: ListenAndChoosePresentationLogic {
         case "ш", "w": return "leaf"
         case "л", "l": return "moon"
         case "к", "k": return "key"
+        case "з", "z": return "umbrella"
+        case "ц", "c": return "flower"
+        case "ж", "j": return "bolt"
+        case "ч":      return "clock"
+        case "щ":      return "bubbles.and.sparkles"
+        case "г", "g": return "mountain.2"
+        case "х", "h": return "house"
         default:       return "star"
         }
     }
