@@ -419,6 +419,7 @@
 		3CBAD406DDF1BF2DA67B7AE4 /* c-wm-21.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CC38096D5E1D9AE69869AE83 /* c-wm-21.m4a */; };
 		3CBFA9387A9F01270F638100 /* c-wf-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9FAB0F53E3FCF1F2FB065168 /* c-wf-8.m4a */; };
 		3CCFB73893BB728F5DE2745B /* lyalya_session_end_02.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1F823A765C0046F0583E822C /* lyalya_session_end_02.m4a */; };
+		3CE657ABF3E707D994AE074B /* SyncServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E65767FF108F1ADE357BEF /* SyncServiceTests.swift */; };
 		3D1DF6FF80E8C4D9D8BC89E4 /* z-syl-13.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9227BD0AE8553B5D82E0DE68 /* z-syl-13.m4a */; };
 		3D4B5D34A56A5387F25CF48A /* lyalya_greeting_11.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FF6B99335C0A10A9AF987B94 /* lyalya_greeting_11.m4a */; };
 		3D4CD0550617BFFC86315900 /* c-diff-14.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0D95D4C5A79E977BDD324249 /* c-diff-14.m4a */; };
@@ -690,6 +691,7 @@
 		6BE544BCA65062D68B9F2A2C /* z-wm-11.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3D746A523F819A0E3174ACA8 /* z-wm-11.m4a */; };
 		6CAB96CE657C15CB148A0890 /* z-wi-31.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C63D62B9E236FDD1B1C4C199 /* z-wi-31.m4a */; };
 		6CE53379CF9F451D7BBE0AFF /* OnboardingFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF82818EDF6A238C75F986F /* OnboardingFlowView.swift */; };
+		6CECD011F856C6AD6102A078 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 335A137F49EA44DFF31428AB /* RealmSwift */; };
 		6D42AE653A5F956E58AA651F /* s-sen-10.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 36C11C356CAA6E14F8488FE2 /* s-sen-10.m4a */; };
 		6D5AB8492A85F5D77E757121 /* c-ph-26.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BD7A84534685B75EAF2D1184 /* c-ph-26.m4a */; };
 		6D6C4BA1868040D9B76DA193 /* RepeatAfterModelPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FC91B4AA8A39CA1203593F /* RepeatAfterModelPresenter.swift */; };
@@ -1728,6 +1730,7 @@
 		148C33C5B6C5D824053B551D /* pack_lexical.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pack_lexical.json; sourceTree = "<group>"; };
 		1493428673FB9C3A22564412 /* z-wf-31.m4a */ = {isa = PBXFileReference; path = "z-wf-31.m4a"; sourceTree = "<group>"; };
 		14ABE8678D0C214366D805A7 /* GuidedTourTipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidedTourTipView.swift; sourceTree = "<group>"; };
+		14E65767FF108F1ADE357BEF /* SyncServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncServiceTests.swift; sourceTree = "<group>"; };
 		15492FE4DE4B3D8A69303885 /* SortingModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingModels.swift; sourceTree = "<group>"; };
 		154AFF97E60F39AB69B2B359 /* SpecialistModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialistModels.swift; sourceTree = "<group>"; };
 		155EE0CF4F62E1915D50D6A3 /* ProgramEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramEditorView.swift; sourceTree = "<group>"; };
@@ -3165,6 +3168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2847699326E3B4CF53253A97 /* SnapshotTesting in Frameworks */,
+				6CECD011F856C6AD6102A078 /* RealmSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5427,6 +5431,7 @@
 				FAA882DF0FA0C8B522E021A6 /* MockRepositoryTests.swift */,
 				B7CEB879873995A9CF77F575 /* SoundServiceTests.swift */,
 				66AF0C5720F5324DB99263BE /* SpacedRepetitionEngineTests.swift */,
+				14E65767FF108F1ADE357BEF /* SyncServiceTests.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -5719,6 +5724,7 @@
 			name = HappySpeechTests;
 			packageProductDependencies = (
 				63EBD6BBBD1D80E61F1C9071 /* SnapshotTesting */,
+				335A137F49EA44DFF31428AB /* RealmSwift */,
 			);
 			productName = HappySpeechTests;
 			productReference = D4017849D75AEA9F7FBF922A /* HappySpeechTests.xctest */;
@@ -7045,6 +7051,7 @@
 				AC3B326BA781E72B1ADBB42D /* SessionShellInteractorTests.swift in Sources */,
 				ACD1F44A0DBF2CF20A855595 /* SoundServiceTests.swift in Sources */,
 				4483DD898EA1E091C9107EBA /* SpacedRepetitionEngineTests.swift in Sources */,
+				3CE657ABF3E707D994AE074B /* SyncServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7433,6 +7440,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = HappySpeechTests/Info.plist;
+				OTHER_LDFLAGS = "-Wl,-w";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.happyspeech.tests;
 				PRODUCT_NAME = HappySpeechTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HappySpeech.app/HappySpeech";
@@ -7486,6 +7494,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = HappySpeechTests/Info.plist;
+				OTHER_LDFLAGS = "-Wl,-w";
 				PRODUCT_BUNDLE_IDENTIFIER = ru.happyspeech.tests;
 				PRODUCT_NAME = HappySpeechTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HappySpeech.app/HappySpeech";
@@ -7640,6 +7649,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3AEA6A22AE57EA7322BAE8E6 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
+		};
+		335A137F49EA44DFF31428AB /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0B7C17FBABCA193DF672CE68 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		63EBD6BBBD1D80E61F1C9071 /* SnapshotTesting */ = {
 			isa = XCSwiftPackageProductDependency;

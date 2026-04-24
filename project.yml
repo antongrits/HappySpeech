@@ -153,10 +153,13 @@ targets:
         PRODUCT_NAME: HappySpeechTests
         BUNDLE_LOADER: "$(TEST_HOST)"
         TEST_HOST: "$(BUILT_PRODUCTS_DIR)/HappySpeech.app/HappySpeech"
+        OTHER_LDFLAGS: "-Wl,-w"
     dependencies:
       - target: HappySpeech
       - package: SnapshotTesting
         product: SnapshotTesting
+      - package: RealmSwift
+        product: RealmSwift
     scheme:
       gatherCoverageData: true
 
