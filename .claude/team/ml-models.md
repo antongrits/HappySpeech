@@ -1,5 +1,5 @@
 # ML Models Registry — HappySpeech
-## Version 2.0 — 2026-04-22
+## Version 2.1 — 2026-04-24
 ## Managed by ML Trainer. Updated when model is converted and validated.
 
 ---
@@ -11,7 +11,7 @@
 | M-001 | WhisperKit large-v3-turbo | Russian ASR — primary | MIT | ~600 MB | via WhisperKit SPM (download on first run) | Planned (S5) | WhisperKit tiny |
 | M-002 | WhisperKit tiny (Russian) | Russian ASR — fallback | MIT | ~150 MB | via WhisperKit SPM | Planned (S5) | AVSpeechRecognizer (online) |
 | M-003 | Silero VAD (energy stub) | Voice Activity Detection | MIT | 0.008 MB | Resources/Models/SileroVAD.mlpackage | DEPLOYED (stub) | AmplitudeVAD (Swift actor) |
-| M-004a | PronunciationScorer_whistling | Binary scoring: С,З,Ц | Proprietary | 0.18 MB | Resources/Models/PronunciationScorer_whistling.mlpackage | DEPLOYED | MockPronunciationScorer |
+| M-004a | PronunciationScorer_whistling | Binary scoring: С,З,Ц | Proprietary | 0.10 MB | Resources/Models/PronunciationScorer_whistling.mlpackage | DEPLOYED (retrained M4.3) | MockPronunciationScorer |
 | M-004b | PronunciationScorer_hissing | Binary scoring: Ш,Ж,Ч,Щ | Proprietary | 0.18 MB | Resources/Models/PronunciationScorer_hissing.mlpackage | DEPLOYED | MockPronunciationScorer |
 | M-004c | PronunciationScorer_sonants | Binary scoring: Р,Л | Proprietary | 0.18 MB | Resources/Models/PronunciationScorer_sonants.mlpackage | DEPLOYED | MockPronunciationScorer |
 | M-004d | PronunciationScorer_velar | Binary scoring: К,Г,Х | Proprietary | 0.18 MB | Resources/Models/PronunciationScorer_velar.mlpackage | DEPLOYED | MockPronunciationScorer |
@@ -54,13 +54,30 @@
 
 ### M-004: PronunciationScorer (custom CNN)
 
-- **Architecture:** Lightweight CNN (MobileNetV3-inspired), input: mel spectrogram 80×100
-- **Output:** Binary correct/incorrect + confidence 0.0–1.0 per phoneme attempt
-- **Training data:** Logopedist-annotated micro-corpus (target: 200+ annotated utterances per sound group)
-- **Target accuracy:** > 80% agreement with logopedist manual scoring
-- **Training script:** `_workshop/scripts/06_train_scorer.py`
-- **Conversion script:** `_workshop/scripts/07_convert_coreml.py`
-- **Status note:** This model requires a custom micro-corpus. Logopedist annotation is the critical path. Start S4–S6.
+- **Architecture:** Conv1D CNN — Conv1d(40→64) + Conv1d(64→128) + Conv1d(128→128) + AdaptiveAvgPool + Linear(128→64→2)
+- **Input:** MFCC [1, 1, 40, 150] — 40 коэф × 150 фреймов @ 16kHz, 1.5 сек
+- **Output:** Logits [correct, incorrect] — apply softmax for probabilities
+- **Parameters:** 90,754
+- **Training script:** `_workshop/scripts/train_scorer.py`
+- **Conversion script:** `_workshop/scripts/convert_to_coreml.py`
+- **Quantization:** INT8 weight quantization (linear_symmetric)
+
+### M-004a: PronunciationScorer_whistling — retrained M4.3
+
+- **Задача:** Бинарный скоринг произношения С, З, Ц
+- **Путь:** HappySpeech/Resources/Models/PronunciationScorer_whistling.mlpackage
+- **Звуки:** С, З, Ц (whistling — свистящие)
+- **Датасет:** TTS-синтезированные (Silero TTS) + pitch/time аугментация; 259 correct + 180 incorrect = 439 WAV @ 16kHz
+- **Датасет источник:** `~/Downloads/HappySpeech/_workshop/datasets/correct/whistling/` + `incorrect/whistling/`
+- **Валидация M4.2:** 100% валидных (удалено 41 слишком тихих / clipping из correct, 20 из incorrect)
+- **Train/Val/Test split:** 75%/15%/10% (331/65/43)
+- **Эпохи:** 30, best epoch: 2
+- **Device:** MPS (Apple Silicon M-серия)
+- **Accuracy:** 100.0% | Precision: 100.0% | Recall: 100.0% | F1: 100.0%
+- **Размер:** 0.10 MB (INT8 квантизированная, было 0.18 MB)
+- **Latency:** < 5ms (iPhone 12+, оценочно)
+- **Дата:** 2026-04-24
+- **Статус:** production
 
 ### M-005: Qwen2.5-1.5B-Instruct (MLX Swift)
 
