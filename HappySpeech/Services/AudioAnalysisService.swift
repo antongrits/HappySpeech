@@ -177,17 +177,9 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
             // Мощность спектра через vDSP
             let halfN    = nFft / 2 + 1
             var power    = [Float](repeating: 0, count: halfN)
-            frame.withUnsafeBufferPointer { frameBuf in
-                power.withUnsafeMutableBufferPointer { powerBuf in
-                    var dspSplit = DSPSplitComplex(
-                        realp: powerBuf.baseAddress!,
-                        imagp: powerBuf.baseAddress!.advanced(by: halfN / 2)
-                    )
-                    // Упрощённый вариант: считаем RMS-приближение через квадраты
-                    for k in 0 ..< halfN {
-                        power[k] = frameBuf[k] * frameBuf[k]
-                    }
-                }
+            let frameCopy = Array(frame)
+            for k in 0 ..< halfN {
+                power[k] = frameCopy[k] * frameCopy[k]
             }
 
             // Применяем Mel-фильтрбанк
@@ -267,7 +259,7 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
         }
 
         let input = try MLDictionaryFeatureProvider(dictionary: ["logmel": multiArray])
-        let output = try model.prediction(from: input)
+        let output = try await model.prediction(from: input)
 
         // Разбираем classLabel и classProbability
         var predictedClass = SoundClass.noise
@@ -275,8 +267,7 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
         var probs = [SoundClass: Float]()
 
         if let labelFeature = output.featureValue(for: "classLabel"),
-           let label = labelFeature.stringValue,
-           let sc = SoundClass(rawValue: label) {
+           let sc = SoundClass(rawValue: labelFeature.stringValue) {
             predictedClass = sc
         }
 

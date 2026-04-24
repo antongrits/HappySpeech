@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: - RuleBasedDecisionService
 // ==================================================================================
-// Deterministic, dependency-free fallback for all 12 decision points.
+// Deterministic, dependency-free fallback for all 25 decision points.
 // No ML, no network. Produces valid outputs even when the LLM is absent.
 // Used:
 //   1. As the ultimate fallback inside LiveLLMDecisionService.
@@ -504,5 +504,433 @@ public struct RuleBasedDecisionService: Sendable {
         "Начинайте занятие с любимой игры — настройтесь позитивно.",
         "Подбадривайте: «Я слышу, как ты стараешься!».",
         "Не сравнивайте с другими детьми — только с его вчерашним «я»."
+    ]
+
+    // MARK: - 13. Warm-up selection
+
+    public func selectWarmUp(context: WarmUpContext) -> (activityName: String, instructions: String, durationSeconds: Int) {
+        let pool = Self.warmUpPool
+        let idx = stableIndex(seed: context.targetSound + "\(context.sessionNumber)", upperBound: pool.count)
+        let (name, instructions) = pool[idx]
+        // 5–6 лет — 90 сек; 7+ — 120 сек
+        let duration = context.age <= 6 ? 90 : 120
+        return (name, instructions.replacingOccurrences(of: "{name}", with: context.childName), duration)
+    }
+
+    // MARK: - 14. Word set
+
+    public func generateWordSet(sound: String, stage: CorrectionStage, count: Int) -> (words: [String], rationale: String) {
+        let family = soundFamily(for: sound)
+        let base = Self.wordPools[family] ?? Self.wordPools[.whistling] ?? []
+        let normalizedCount = max(1, min(count, base.count))
+        // Deterministic rotation by stage + sound so calls are reproducible.
+        let startIndex = stableIndex(seed: sound + stage.rawValue, upperBound: max(1, base.count))
+        var result: [String] = []
+        for i in 0..<normalizedCount {
+            result.append(base[(startIndex + i) % base.count])
+        }
+        let rationale = "Подобраны \(normalizedCount) слов со звуком «\(sound)» для этапа \(stage.displayName)."
+        return (result, rationale)
+    }
+
+    // MARK: - 15. Minimal pairs
+
+    public func generateMinimalPairs(targetSound: String, confusionSound: String, count: Int) -> [MinimalPairItem] {
+        let key = "\(targetSound.uppercased())-\(confusionSound.uppercased())"
+        let pool = Self.minimalPairPools[key] ?? Self.defaultMinimalPairs(target: targetSound, foil: confusionSound)
+        let normalized = max(1, min(count, pool.count))
+        let startIndex = stableIndex(seed: key, upperBound: max(1, pool.count))
+        var result: [MinimalPairItem] = []
+        for i in 0..<normalized {
+            let pair = pool[(startIndex + i) % pool.count]
+            result.append(MinimalPairItem(target: pair.0, foil: pair.1))
+        }
+        return result
+    }
+
+    // MARK: - 16. Narrative quest step
+
+    public func narrativeQuestStep(questState: NarrativeQuestState) -> (narration: String, targetWord: String, hint: String, isLastStep: Bool) {
+        let total = max(1, questState.totalSteps)
+        let step = max(1, min(questState.currentStep, total))
+        let isLast = step >= total
+        let family = soundFamily(for: questState.targetSound)
+        let words = fallbackWords(for: family)
+        let targetWord = words[(step - 1) % words.count]
+        let stepTemplates = Self.narrativeStepTemplates
+        let idx = stableIndex(seed: questState.questId + "\(step)", upperBound: stepTemplates.count)
+        let template = stepTemplates[idx]
+        let narration = template
+            .replacingOccurrences(of: "{name}", with: questState.childName)
+            .replacingOccurrences(of: "{step}", with: "\(step)")
+            .replacingOccurrences(of: "{total}", with: "\(total)")
+            .replacingOccurrences(of: "{word}", with: targetWord)
+        let hint = isLast
+            ? "Это последний шаг — давай произнесём «\(targetWord)» особенно чётко!"
+            : "Скажи слово «\(targetWord)» чётко и иди дальше."
+        return (narration, targetWord, hint, isLast)
+    }
+
+    // MARK: - 17. Child greeting
+
+    public func pickChildGreeting(childName: String, timeOfDay: TimeOfDay, streakDays: Int) -> (phrase: String, emoji: String) {
+        let streakHint: String
+        switch streakDays {
+        case 0:     streakHint = "Начинаем новое приключение!"
+        case 1...2: streakHint = "Рад тебя видеть снова!"
+        case 3...6: streakHint = "Серия \(streakDays) — так держать!"
+        default:    streakHint = "Серия \(streakDays) — ты настоящий чемпион!"
+        }
+        let base: String
+        let emoji: String
+        switch timeOfDay {
+        case .morning:
+            base = "Доброе утро, \(childName)! Готов заниматься?"
+            emoji = "☀️"
+        case .afternoon:
+            base = "Привет, \(childName)! Давай поиграем со звуками."
+            emoji = "🌤"
+        case .evening:
+            base = "Добрый вечер, \(childName)! Немного занятий перед сном."
+            emoji = "🌙"
+        }
+        return ("\(base) \(streakHint)", emoji)
+    }
+
+    // MARK: - 18. Celebration
+
+    public func generateCelebration(event: CelebrationEvent) -> (message: String, animationHint: String) {
+        switch event {
+        case .milestoneReached(let milestone):
+            return ("Поздравляем! Ты достиг цели: \(milestone). Ты молодец!", "confetti")
+        case .streakAchieved(let days):
+            return ("Невероятно — \(days) занятий подряд! Ляля гордится тобой.", "fireworks")
+        case .newSoundUnlocked(let sound):
+            return ("Открыт новый звук «\(sound)»! Готовимся к новым играм.", "sparkle-unlock")
+        case .perfectSession:
+            return ("Идеальная сессия! Все задания выполнены без ошибок.", "stars-shower")
+        }
+    }
+
+    // MARK: - 19. Rest recommendation
+
+    public func recommendRest(sessionDuration: TimeInterval, fatigueLevel: FatigueLevel) -> (shouldRest: Bool, suggestedBreakMinutes: Int, message: String) {
+        let longSession = sessionDuration > 1200  // > 20 мин
+        let mediumSession = sessionDuration > 600 // > 10 мин
+        switch fatigueLevel {
+        case .tired:
+            return (true, 20, "Ты хорошо поработал — пора отдохнуть 15–20 минут. Попей воды и вернёмся позже.")
+        case .normal where longSession:
+            return (true, 10, "Сделаем небольшую паузу на 10 минут — и можно продолжить.")
+        case .normal:
+            return (false, 0, "Можно продолжать — ты в хорошей форме.")
+        case .fresh where longSession:
+            return (true, 5, "Небольшой отдых 5 минут не помешает.")
+        case .fresh where mediumSession:
+            return (false, 0, "Всё отлично — можно ещё позаниматься.")
+        case .fresh:
+            return (false, 0, "Ты в отличной форме — продолжаем!")
+        }
+    }
+
+    // MARK: - 20. Playful transition
+
+    public func playfulTransition(fromActivity: TemplateType, toActivity: TemplateType) -> String {
+        let pool = Self.transitionPhrases
+        let idx = stableIndex(seed: fromActivity.rawValue + toActivity.rawValue, upperBound: pool.count)
+        return pool[idx]
+            .replacingOccurrences(of: "{from}", with: fromActivity.displayName)
+            .replacingOccurrences(of: "{to}", with: toActivity.displayName)
+    }
+
+    // MARK: - 21. Surprise fun fact
+
+    public func generateSurpriseFact(topic: String, childAge: Int) -> String {
+        let pool = childAge <= 6 ? Self.funFactsYounger : Self.funFactsOlder
+        let idx = stableIndex(seed: topic, upperBound: pool.count)
+        return pool[idx].replacingOccurrences(of: "{topic}", with: topic)
+    }
+
+    // MARK: - 22. Weekly report
+
+    public func generateWeeklyReport(weeks: [WeekSummaryInput]) -> (summary: String, highlights: [String], recommendations: [String]) {
+        guard !weeks.isEmpty else {
+            return (
+                "За выбранный период нет данных о занятиях.",
+                [],
+                ["Проведите хотя бы одну сессию, чтобы получить отчёт."]
+            )
+        }
+        let totalSessions = weeks.reduce(0) { $0 + $1.sessionsCount }
+        let avgScore = weeks.reduce(0.0) { $0 + $1.averageScore } / Double(weeks.count)
+        let avgPct = Int((avgScore * 100).rounded())
+        let totalDelta = weeks.reduce(0.0) { $0 + $1.improvementDelta }
+        let soundsUnique = Set(weeks.flatMap { $0.soundsPracticed }).sorted().joined(separator: ", ")
+
+        let summary = "За \(weeks.count) нед. проведено \(totalSessions) сессий, средний успех \(avgPct)%. Отработаны звуки: \(soundsUnique.isEmpty ? "—" : soundsUnique)."
+
+        var highlights: [String] = []
+        highlights.append("Всего сессий: \(totalSessions).")
+        highlights.append("Средний результат: \(avgPct)%.")
+        if totalDelta > 0 {
+            highlights.append("Прогресс вырос на +\(Int((totalDelta * 100).rounded())) п.п.")
+        } else if totalDelta < 0 {
+            highlights.append("Прогресс немного просел — стоит внимательнее отнестись к режиму.")
+        } else {
+            highlights.append("Стабильный результат без просадок.")
+        }
+
+        var recs: [String] = []
+        if totalSessions < 5 {
+            recs.append("Старайтесь проводить минимум 5 коротких сессий в неделю.")
+        }
+        if avgScore < 0.6 {
+            recs.append("Упростите задания и больше времени уделяйте разминке.")
+        } else if avgScore >= 0.85 {
+            recs.append("Переходите на следующий этап — материал освоен.")
+        } else {
+            recs.append("Продолжайте текущий план — результат стабильный.")
+        }
+        recs.append("Чередуйте активные и пассивные задания, чтобы избежать усталости.")
+
+        return (summary, highlights, recs)
+    }
+
+    // MARK: - 23. Parent tip
+
+    public func generateParentTip(profile: ChildProfileInput, currentStage: CorrectionStage) -> (tip: String, exerciseSuggestion: String) {
+        let tipPool = Self.parentTipsByStage[currentStage] ?? Self.parentTips
+        let tipIdx = stableIndex(seed: profile.id + currentStage.rawValue, upperBound: tipPool.count)
+        let sound = profile.targetSounds.first ?? "С"
+        let tip = tipPool[tipIdx].replacingOccurrences(of: "{sound}", with: sound)
+
+        let exercisePool = Self.exerciseSuggestionsByStage[currentStage] ?? [
+            "Короткое повторение слов со звуком «{sound}» — по 3 раза перед зеркалом."
+        ]
+        let exIdx = stableIndex(seed: profile.id + "ex" + currentStage.rawValue, upperBound: exercisePool.count)
+        let exercise = exercisePool[exIdx].replacingOccurrences(of: "{sound}", with: sound)
+
+        return (tip, exercise)
+    }
+
+    // MARK: - 24. Anxiety detection
+
+    public func detectAnxiety(sessionMetrics: SessionMetricsInput) -> (score: Double, signals: [String], recommendation: String) {
+        // Weighted heuristic — every component is clamped so the total stays in [0, 1].
+        let errorComponent = min(0.5, sessionMetrics.errorRate * 0.5)
+        let pauseComponent = min(0.25, Double(sessionMetrics.pauseCount) * 0.05)
+        let pauseDurationComponent = min(0.15, sessionMetrics.averagePauseDuration / 20.0)
+        let rateVarianceComponent = min(0.10, sessionMetrics.speechRateVariance * 0.1)
+        let rawScore = errorComponent + pauseComponent + pauseDurationComponent + rateVarianceComponent
+        let score = max(0.0, min(1.0, rawScore))
+
+        var signals: [String] = []
+        if sessionMetrics.errorRate > 0.4 {
+            signals.append("Высокий уровень ошибок (\(Int((sessionMetrics.errorRate * 100).rounded()))%)")
+        }
+        if sessionMetrics.pauseCount >= 5 {
+            signals.append("Много пауз (\(sessionMetrics.pauseCount))")
+        }
+        if sessionMetrics.averagePauseDuration > 3 {
+            signals.append("Длинные паузы (\(Int(sessionMetrics.averagePauseDuration)) сек в среднем)")
+        }
+        if sessionMetrics.speechRateVariance > 0.5 {
+            signals.append("Неровный темп речи")
+        }
+
+        let recommendation: String
+        switch score {
+        case 0.6...:
+            recommendation = "Похоже, ребёнок нервничает. Сделайте паузу, переключитесь на любимую игру и вернитесь позже."
+        case 0.35..<0.6:
+            recommendation = "Заметно напряжение. Снизьте сложность и добавьте больше поддержки."
+        default:
+            recommendation = "Эмоциональное состояние стабильное — можно продолжать."
+        }
+        return (score, signals, recommendation)
+    }
+
+    // MARK: - 25. Goal adjustment
+
+    public func suggestGoalAdjustment(progress: ProgressTrendInput) -> (currentGoal: String, suggestedGoal: String, rationale: String) {
+        let lastRate = progress.weeklySuccessRates.last ?? 0
+        let trendUp: Bool
+        if progress.weeklySuccessRates.count >= 2 {
+            let prev = progress.weeklySuccessRates[progress.weeklySuccessRates.count - 2]
+            trendUp = lastRate > prev
+        } else {
+            trendUp = false
+        }
+        let mainSound = progress.soundsAttempted.first ?? progress.stagnantSounds.first ?? "С"
+        let currentGoal = "Освоить звук «\(mainSound)» на уровне слов."
+
+        if progress.stagnantSounds.count >= 2 {
+            let stagnant = progress.stagnantSounds.prefix(2).joined(separator: ", ")
+            let suggested = "Сделать паузу с «\(stagnant)» и переключиться на поддерживающие упражнения."
+            return (currentGoal, suggested, "Звуки \(stagnant) не прогрессируют — стоит дать им отдохнуть.")
+        }
+        if lastRate >= 0.85 && trendUp {
+            let suggested = "Перейти к этапу предложений со звуком «\(mainSound)»."
+            return (currentGoal, suggested, "Успех стабильно выше 85% — можно усложнять.")
+        }
+        if lastRate < 0.5 {
+            let suggested = "Упростить до слоговых упражнений со звуком «\(mainSound)»."
+            return (currentGoal, suggested, "Успех ниже 50% — нужно вернуться на предыдущий этап.")
+        }
+        return (currentGoal, currentGoal, "Прогресс ровный — продолжаем текущий план.")
+    }
+
+    // MARK: - Static pools for 13–25
+
+    static let warmUpPool: [(String, String)] = [
+        ("Артикуляционная гимнастика", "Подготовим язычок: «заборчик», «лопатка», «часики» — по 5 раз, {name}."),
+        ("Дыхательная разминка", "Глубокий вдох носом и медленный выдох ртом — три раза, {name}."),
+        ("Разминка щёк и губ", "«Надуй шарик» и «улыбка-трубочка» — по 5 повторов."),
+        ("Язычок-путешественник", "Пусть язычок прогуляется по зубкам: сверху, снизу, влево, вправо.")
+    ]
+
+    static let wordPools: [SoundFamily: [String]] = [
+        .whistling: ["сом", "сок", "сад", "санки", "самолёт", "сова", "стол", "сумка", "сыр", "слон"],
+        .hissing:   ["шар", "шапка", "шуба", "школа", "шишка", "шарф", "шмель", "шкаф", "шум", "шина"],
+        .sonorant:  ["рыба", "рак", "радуга", "ракета", "рубашка", "лампа", "лодка", "луна", "лиса", "лыжи"],
+        .velar:     ["кот", "кит", "куст", "кофта", "камень", "гусь", "гора", "гриб", "хлеб", "хвост"]
+    ]
+
+    static let minimalPairPools: [String: [(String, String)]] = [
+        "С-Ш": [("сок", "шок"), ("крыса", "крыша"), ("миска", "мишка"), ("усы", "уши"), ("каска", "кашка")],
+        "Ш-С": [("шок", "сок"), ("крыша", "крыса"), ("мишка", "миска"), ("уши", "усы"), ("кашка", "каска")],
+        "Р-Л": [("рак", "лак"), ("рожки", "ложки"), ("рама", "лама"), ("роза", "лоза"), ("игра", "игла")],
+        "Л-Р": [("лак", "рак"), ("ложки", "рожки"), ("лама", "рама"), ("лоза", "роза"), ("игла", "игра")],
+        "З-С": [("коза", "коса"), ("зуб", "суп"), ("зал", "сал"), ("роза", "роса"), ("лиза", "лиса")],
+        "С-З": [("коса", "коза"), ("суп", "зуб"), ("сал", "зал"), ("роса", "роза"), ("лиса", "лиза")],
+        "Ч-Т": [("чай", "тай"), ("чесать", "тесать"), ("мяч", "мят"), ("ночь", "нот"), ("туча", "тута")],
+        "Ж-Ш": [("жар", "шар"), ("лужа", "луша"), ("жить", "шить"), ("лыжи", "лыши"), ("кожа", "коша")]
+    ]
+
+    static func defaultMinimalPairs(target: String, foil: String) -> [(String, String)] {
+        [
+            ("\(target.lowercased())ок", "\(foil.lowercased())ок"),
+            ("\(target.lowercased())ам", "\(foil.lowercased())ам"),
+            ("\(target.lowercased())ый", "\(foil.lowercased())ый")
+        ]
+    }
+
+    static let narrativeStepTemplates: [String] = [
+        "{name}, шаг {step} из {total}. Герой подошёл к слову «{word}» — произнеси его, чтобы идти дальше.",
+        "На пути появилось слово «{word}». Скажи его чётко, {name}, чтобы открыть дверь.",
+        "{name}, мы почти у цели (шаг {step}/{total}). Произнеси «{word}» — и герой соберёт ещё один предмет.",
+        "Волшебное слово «{word}» ждёт тебя, {name}. Скажи его — и тропинка осветится."
+    ]
+
+    static let transitionPhrases: [String] = [
+        "Отлично! А теперь давай попробуем кое-что новое!",
+        "Было здорово с «{from}» — теперь переключимся на «{to}».",
+        "Супер! Следующая игра уже ждёт тебя.",
+        "Поехали дальше — впереди новое задание!",
+        "Ух ты! Посмотрим, что теперь приготовила Ляля.",
+        "Закончили с «{from}» — пора открыть «{to}»."
+    ]
+
+    static let funFactsYounger: [String] = [
+        "А знаешь, что звук «{topic}» любят повторять воробьи, когда умываются?",
+        "Оказывается, «{topic}» — это любимый звук маленьких мышат!",
+        "Представь: «{topic}» звучит даже в шорохе листьев осенью.",
+        "Говорят, когда произносишь «{topic}» три раза подряд, улыбаются облака.",
+        "Весёлый факт: «{topic}» помогает воздушным шарикам летать выше!"
+    ]
+
+    static let funFactsOlder: [String] = [
+        "Интересно: звук «{topic}» встречается почти в каждом русском слове о природе.",
+        "А знаешь, что «{topic}» учёные называют «звуком ветра» из-за воздушного потока?",
+        "Любопытный факт: «{topic}» правильно произносят только после тренировки язычка.",
+        "Оказывается, «{topic}» помогает развивать дикцию даже у взрослых актёров.",
+        "Факт: «{topic}» — один из первых звуков, которые учат космонавты для чёткой связи."
+    ]
+
+    static let parentTipsByStage: [CorrectionStage: [String]] = [
+        .prep: [
+            "Перед занятием сделайте 2 минуты артикуляционной гимнастики.",
+            "Используйте зеркало — ребёнок должен видеть свой язычок.",
+            "Начинайте с тёплой воды для губ — это расслабляет мышцы."
+        ],
+        .isolated: [
+            "Отрабатывайте изолированный звук «{sound}» по 1–2 минуты за раз.",
+            "Хвалите даже маленький прогресс — это важно на этом этапе."
+        ],
+        .syllable: [
+            "Слоги проговаривайте медленно: «{sound}а-{sound}о-{sound}у».",
+            "Пойте слоги — это помогает удерживать звук."
+        ],
+        .wordInit: [
+            "Выбирайте слова, где «{sound}» стоит в начале — так легче.",
+            "Повторяйте 5–7 слов по кругу, но не больше 10 минут за раз."
+        ],
+        .wordMed: [
+            "Средняя позиция сложнее — делайте паузы и не спешите.",
+            "Используйте ритм: хлопайте в ладоши на ударном слоге."
+        ],
+        .wordFinal: [
+            "Звук «{sound}» в конце слова часто проглатывают — следите за чёткостью.",
+            "Произнесите слово, потом поиграйте: «Что здесь слышно?»."
+        ],
+        .phrase: [
+            "Короткие словосочетания проговаривайте целиком, не разбивая.",
+            "Добавьте игру «эхо» — повторяйте друг за другом."
+        ],
+        .sentence: [
+            "Читайте вслух простые предложения со звуком «{sound}».",
+            "Сочиняйте вместе короткие истории про любимую игрушку."
+        ],
+        .story: [
+            "Пересказывайте мультфильмы — ребёнок сам вспомнит нужные слова.",
+            "Играйте в «сочини историю» по очереди — по предложению."
+        ],
+        .diff: [
+            "Сравнивайте пары слов: «мишка—миска», «крыша—крыса».",
+            "Играйте в «что услышал?» — называйте слово, ребёнок показывает картинку."
+        ]
+    ]
+
+    static let exerciseSuggestionsByStage: [CorrectionStage: [String]] = [
+        .prep: [
+            "Упражнение «часики» и «лопатка» — по 30 секунд.",
+            "«Надуй шарик щеками» — 5 раз перед зеркалом."
+        ],
+        .isolated: [
+            "Произнесите звук «{sound}» 10 раз с паузами.",
+            "Пойте звук «{sound}» на разной громкости."
+        ],
+        .syllable: [
+            "Повторите: {sound}а, {sound}о, {sound}у, {sound}ы — по 3 раза.",
+            "Хлопайте в ладоши на каждый слог со звуком «{sound}»."
+        ],
+        .wordInit: [
+            "5 слов со звуком «{sound}» в начале — по 3 повтора.",
+            "Игра «найди слово» — выберите предметы в комнате."
+        ],
+        .wordMed: [
+            "5 слов со звуком «{sound}» в середине — медленно и чётко.",
+            "«Раздели слово на слоги» — прохлопайте каждое."
+        ],
+        .wordFinal: [
+            "5 слов со звуком «{sound}» в конце — с акцентом на последний слог.",
+            "«Что звучит в конце?» — ребёнок отвечает, вы показываете картинку."
+        ],
+        .phrase: [
+            "Повторите 3 словосочетания по 3 раза — спокойно и чётко.",
+            "Игра «добавь слово» — ребёнок дополняет фразу."
+        ],
+        .sentence: [
+            "Прочитайте 3 простых предложения — потом ребёнок повторяет.",
+            "Сочините 3 предложения про любимого героя со звуком «{sound}»."
+        ],
+        .story: [
+            "Короткий рассказ (3–4 предложения) — перескажите вместе.",
+            "Игра «сказочник» — придумайте сказку, по одной фразе каждый."
+        ],
+        .diff: [
+            "5 минимальных пар — назовите и покажите разницу.",
+            "«Что услышал?» — ребёнок показывает нужную картинку."
+        ]
     ]
 }
