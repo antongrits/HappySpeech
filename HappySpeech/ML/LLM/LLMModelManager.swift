@@ -154,7 +154,7 @@ public actor LLMModelManager: LLMModelManagerProtocol {
         // Если для `qwen15b` уже скачано (через primaryLLM на этапе инициализации) — no-op.
         if await isModelInstalled(pack) {
             HSLogger.llm.info("LLM pack \(pack.rawValue) already installed")
-            emit(.completed(pack: convertToWhisperStatePlaceholder(pack: pack, progress: 1.0)))
+            emitLLM(.completed(pack: .tiny))
             return
         }
 
@@ -285,14 +285,6 @@ public actor LLMModelManager: LLMModelManagerProtocol {
         progressContinuation?.yield(state)
     }
 
-    private func emit(_ state: ModelDownloadState) {
-        progressContinuation?.yield(state)
-    }
-
-    /// Не создаёт состояния; оставлен для совместимости сигнатуры `emit`.
-    private func convertToWhisperStatePlaceholder(pack: LLMModelPack, progress: Double) -> ModelDownloadState {
-        .completed(pack: .tiny)
-    }
 }
 
 // MARK: - Legacy alias

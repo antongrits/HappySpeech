@@ -85,7 +85,8 @@ public final class AppContainer {
         adaptivePlannerServiceFactory: @escaping () -> any AdaptivePlannerService,
         llmDecisionServiceFactory: @escaping () -> any LLMDecisionServiceProtocol,
         llmDecisionLogRepositoryFactory: @escaping () -> any LLMDecisionLogRepository,
-        llmDownloadManagerFactory: @escaping @MainActor () -> LLMModelDownloadManager,
+        llmModelManagerFactory: @escaping () -> any LLMModelManagerProtocol,
+        whisperKitModelManagerFactory: @escaping () -> any WhisperKitModelManagerProtocol,
         networkClientFactory: @escaping () -> NetworkClient,
         claudeAPIClientFactory: @escaping () -> any ClaudeAPIClientProtocol,
         offlineQueueManagerFactory: @escaping @MainActor () -> OfflineQueueManager
@@ -109,7 +110,8 @@ public final class AppContainer {
         self.adaptivePlannerServiceFactory = adaptivePlannerServiceFactory
         self.llmDecisionServiceFactory = llmDecisionServiceFactory
         self.llmDecisionLogRepositoryFactory = llmDecisionLogRepositoryFactory
-        self.llmDownloadManagerFactory = llmDownloadManagerFactory
+        self.llmModelManagerFactory = llmModelManagerFactory
+        self.whisperKitModelManagerFactory = whisperKitModelManagerFactory
         self.networkClientFactory = networkClientFactory
         self.claudeAPIClientFactory = claudeAPIClientFactory
         self.offlineQueueManagerFactory = offlineQueueManagerFactory
@@ -187,9 +189,14 @@ public final class AppContainer {
         return _llmDecisionLogRepository!
     }
 
-    public var llmDownloadManager: LLMModelDownloadManager {
-        if _llmDownloadManager == nil { _llmDownloadManager = llmDownloadManagerFactory() }
-        return _llmDownloadManager!
+    public var llmModelManager: any LLMModelManagerProtocol {
+        if _llmModelManager == nil { _llmModelManager = llmModelManagerFactory() }
+        return _llmModelManager!
+    }
+
+    public var whisperKitModelManager: any WhisperKitModelManagerProtocol {
+        if _whisperKitModelManager == nil { _whisperKitModelManager = whisperKitModelManagerFactory() }
+        return _whisperKitModelManager!
     }
 
     public var networkClient: NetworkClient {
@@ -279,8 +286,11 @@ public extension AppContainer {
                 )
             },
             llmDecisionLogRepositoryFactory: { sharedLLMLogRepo },
-            llmDownloadManagerFactory: {
-                LLMModelDownloadManager(localLLM: sharedLocalLLM, networkMonitor: sharedNetworkMonitor)
+            llmModelManagerFactory: {
+                LLMModelManager(primaryLLM: sharedLocalLLM, networkMonitor: sharedNetworkMonitor)
+            },
+            whisperKitModelManagerFactory: {
+                WhisperKitModelManagerLive(networkMonitor: sharedNetworkMonitor)
             },
             networkClientFactory: { sharedNetworkClient },
             claudeAPIClientFactory: {
@@ -328,9 +338,8 @@ public extension AppContainer {
             adaptivePlannerServiceFactory: { MockAdaptivePlannerService() },
             llmDecisionServiceFactory: { MockLLMDecisionService() },
             llmDecisionLogRepositoryFactory: { InMemoryLLMDecisionLogRepository() },
-            llmDownloadManagerFactory: {
-                LLMModelDownloadManager(localLLM: sharedLocalLLM, networkMonitor: sharedNetworkMonitor)
-            },
+            llmModelManagerFactory: { MockLLMModelManager() },
+            whisperKitModelManagerFactory: { MockWhisperKitModelManager() },
             networkClientFactory: { sharedNetworkClient },
             claudeAPIClientFactory: { MockClaudeAPIClient() },
             offlineQueueManagerFactory: {

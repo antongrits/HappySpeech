@@ -1279,6 +1279,149 @@
         }
       }
     },
+    "modelManager.error.cancelled": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загрузка отменена"
+          }
+        }
+      }
+    },
+    "modelManager.error.cellularNotAllowed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Модель слишком большая для сотовой сети. Подключитесь к Wi-Fi."
+          }
+        }
+      }
+    },
+    "modelManager.error.integrityCheckFailed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Файлы модели повреждены. Попробуйте скачать заново."
+          }
+        }
+      }
+    },
+    "modelManager.error.notConnected": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нет подключения к интернету"
+          }
+        }
+      }
+    },
+    "modelManager.error.notEnoughSpace": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Недостаточно свободного места на устройстве"
+          }
+        }
+      }
+    },
+    "modelManager.error.packInUse": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нельзя удалить модель — она сейчас используется"
+          }
+        }
+      }
+    },
+    "modelManager.llm.pack.qwen15b.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Стандартный (900 МБ)"
+          }
+        }
+      }
+    },
+    "modelManager.llm.pack.qwen15b.tier": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для детских игр"
+          }
+        }
+      }
+    },
+    "modelManager.llm.pack.qwen3b.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Расширенный (1.8 ГБ)"
+          }
+        }
+      }
+    },
+    "modelManager.llm.pack.qwen3b.tier": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для аналитики родителей"
+          }
+        }
+      }
+    },
+    "modelManager.whisperkit.pack.base.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Улучшенный (290 МБ)"
+          }
+        }
+      }
+    },
+    "modelManager.whisperkit.pack.small.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Точный (780 МБ)"
+          }
+        }
+      }
+    },
+    "modelManager.whisperkit.pack.tiny.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Быстрый (150 МБ)"
+          }
+        }
+      }
+    },
     "notifications.daily.body": {
       "extractionState": "manual",
       "localizations": {
