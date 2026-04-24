@@ -105,7 +105,22 @@
         { "id": "g-wi-31", "word": "голова",    "difficulty": 2 },
         { "id": "g-wi-32", "word": "горка",     "difficulty": 2 },
         { "id": "g-wi-33", "word": "гармонь",   "difficulty": 3 },
-        { "id": "g-wi-34", "word": "горячий",   "difficulty": 3 }
+        { "id": "g-wi-34", "word": "горячий",   "difficulty": 3 },
+        { "id": "g-wi-35", "word": "гиацинт",   "difficulty": 4 },
+        { "id": "g-wi-36", "word": "гирлянда",  "difficulty": 4 },
+        { "id": "g-wi-37", "word": "гладиатор", "difficulty": 4 },
+        { "id": "g-wi-38", "word": "горбатый",  "difficulty": 3 },
+        { "id": "g-wi-39", "word": "горсть",    "difficulty": 3 },
+        { "id": "g-wi-40", "word": "горница",   "difficulty": 4 },
+        { "id": "g-wi-41", "word": "готовить",  "difficulty": 3 },
+        { "id": "g-wi-42", "word": "гоголь-моголь", "difficulty": 4 },
+        { "id": "g-wi-43", "word": "гимназия",  "difficulty": 4 },
+        { "id": "g-wi-44", "word": "гнать",     "difficulty": 3 },
+        { "id": "g-wi-45", "word": "гнилой",    "difficulty": 3 },
+        { "id": "g-wi-46", "word": "говядина",  "difficulty": 3 },
+        { "id": "g-wi-47", "word": "гобелен",   "difficulty": 4 },
+        { "id": "g-wi-48", "word": "горчить",   "difficulty": 3 },
+        { "id": "g-wi-49", "word": "грядка",    "difficulty": 3 }
       ]
     },
     "wordMed": {
@@ -141,7 +156,17 @@
         { "id": "g-wm-26", "word": "рубаха",    "difficulty": 3 },
         { "id": "g-wm-27", "word": "сапоги",    "difficulty": 3 },
         { "id": "g-wm-28", "word": "вдруг",     "difficulty": 3 },
-        { "id": "g-wm-29", "word": "угол",      "difficulty": 2 }
+        { "id": "g-wm-29", "word": "угол",      "difficulty": 2 },
+        { "id": "g-wm-30", "word": "игра",      "difficulty": 2 },
+        { "id": "g-wm-31", "word": "агат",      "difficulty": 3 },
+        { "id": "g-wm-32", "word": "глагол",    "difficulty": 3 },
+        { "id": "g-wm-33", "word": "сугроб",    "difficulty": 3 },
+        { "id": "g-wm-34", "word": "разгон",    "difficulty": 3 },
+        { "id": "g-wm-35", "word": "поганка",   "difficulty": 3 },
+        { "id": "g-wm-36", "word": "горбатый",  "difficulty": 3 },
+        { "id": "g-wm-37", "word": "дорогой",   "difficulty": 3 },
+        { "id": "g-wm-38", "word": "пирога",    "difficulty": 3 },
+        { "id": "g-wm-39", "word": "могила",    "difficulty": 3 }
       ]
     },
     "wordFinal": {
@@ -198,7 +223,18 @@
         { "id": "g-ph-21", "word": "загадка для детей",          "difficulty": 3 },
         { "id": "g-ph-22", "word": "сапог на ноге",              "difficulty": 2 },
         { "id": "g-ph-23", "word": "флаг на корабле",            "difficulty": 3 },
-        { "id": "g-ph-24", "word": "бегемот в воде",             "difficulty": 2 }
+        { "id": "g-ph-24", "word": "бегемот в воде",             "difficulty": 2 },
+        { "id": "g-ph-25", "word": "гречка с горохом",           "difficulty": 2 },
+        { "id": "g-ph-26", "word": "гусь на лугу",               "difficulty": 2 },
+        { "id": "g-ph-27", "word": "горячий горшок на плите",    "difficulty": 3 },
+        { "id": "g-ph-28", "word": "гитара Гены",                "difficulty": 3 },
+        { "id": "g-ph-29", "word": "голубое гнездо грача",       "difficulty": 3 },
+        { "id": "g-ph-30", "word": "галоп галопом",              "difficulty": 3 },
+        { "id": "g-ph-31", "word": "горилла гуляет",             "difficulty": 2 },
+        { "id": "g-ph-32", "word": "гребни гор",                 "difficulty": 3 },
+        { "id": "g-ph-33", "word": "гусеничный трактор",         "difficulty": 3 },
+        { "id": "g-ph-34", "word": "глухой голос",               "difficulty": 3 },
+        { "id": "g-ph-35", "word": "гармония и гармонь",         "difficulty": 3 }
       ]
     },
     "sentence": {
@@ -219,7 +255,17 @@
         { "id": "g-sen-11", "word": "Гречка с маслом очень вкусная.",               "difficulty": 3 },
         { "id": "g-sen-12", "word": "Горилла — большая и сильная обезьяна.",        "difficulty": 4 },
         { "id": "g-sen-13", "word": "По дороге в гору едет вагон.",                 "difficulty": 4 },
-        { "id": "g-sen-14", "word": "Гена загадал загадку другу.",                  "difficulty": 4 }
+        { "id": "g-sen-14", "word": "Гена загадал загадку другу.",                  "difficulty": 4 },
+        { "id": "g-sen-15", "word": "Гусь переплыл большое озеро.",                "difficulty": 3 },
+        { "id": "g-sen-16", "word": "Грибники нашли гриб в горах.",               "difficulty": 4 },
+        { "id": "g-sen-17", "word": "Голубые горы стоят вдали.",                  "difficulty": 3 },
+        { "id": "g-sen-18", "word": "Гречневая каша готова.",                      "difficulty": 2 },
+        { "id": "g-sen-19", "word": "Гарик и Глеб играли в гараже.",              "difficulty": 4 },
+        { "id": "g-sen-20", "word": "Голосистый гусь гонит гусят.",               "difficulty": 4 },
+        { "id": "g-sen-21", "word": "Горилла грустит в зоопарке.",                "difficulty": 3 },
+        { "id": "g-sen-22", "word": "Грузовик едет по дороге в гору.",            "difficulty": 4 },
+        { "id": "g-sen-23", "word": "Гусеница ела листья на грядке.",             "difficulty": 4 },
+        { "id": "g-sen-24", "word": "Голубь гулял по набережной.",                "difficulty": 3 }
       ]
     },
     "diff": {
@@ -242,6 +288,25 @@
         { "id": "g-diff-13", "word": "горох — порох",   "hint": "Горох — овощ. Порох — взрывается. Разные слова!", "difficulty": 3 },
         { "id": "g-diff-14", "word": "гора — горка — горочка","hint": "Одно слово, три формы. Везде слышим Г!", "difficulty": 4 }
       ]
+    },
+    "story": {
+      "stageId": "story",
+      "note": "Короткие тексты и рассказы со звуком [Г]/[Г'].",
+      "items": [
+        { "id": "g-st-0",  "word": "Гусь и гусята",             "hint": "Гусь вёл гусят на луг. Гусята гуляли и клевали траву. Гусь гоготал.", "difficulty": 3 },
+        { "id": "g-st-1",  "word": "Гроза в горах",             "hint": "В горах гремел гром. Гром гремел громко. Горы гудели.", "difficulty": 3 },
+        { "id": "g-st-2",  "word": "Где грибы?",                "hint": "Гена пошёл в лес. Он глядел под горку. Там был гриб!", "difficulty": 3 },
+        { "id": "g-st-3",  "word": "Голубь на горе",            "hint": "На горе сидел голубь. Голубь гулил. Гора была голубой от неба.", "difficulty": 3 },
+        { "id": "g-st-4",  "word": "Горошины в горшке",         "hint": "В горшке варился горох. Горошины прыгали. Горячий пар шёл вверх.", "difficulty": 3 },
+        { "id": "g-st-5",  "word": "Гитарист Гена",             "hint": "Гена играл на гитаре. Он играл громко и гордо. Гости хлопали.", "difficulty": 4 },
+        { "id": "g-st-6",  "word": "Горилла в гостях",          "hint": "Горилла пришла в гости. Горилла дала гостям груши. Гости обрадовались.", "difficulty": 4 },
+        { "id": "g-st-7",  "word": "Гусеница на грядке",        "hint": "Гусеница ползла по грядке. Она грызла горох и гречиху.", "difficulty": 4 },
+        { "id": "g-st-8",  "word": "Глеб и глобус",             "hint": "Глеб смотрел на глобус. Он нашёл горы и города. Глеб улыбнулся.", "difficulty": 4 },
+        { "id": "g-st-9",  "word": "Бегемот и гора",            "hint": "Бегемот хотел залезть на гору. Но он был большой. Гора была крутая.", "difficulty": 4 },
+        { "id": "g-st-10", "word": "Голос в горах",             "hint": "«Го-го-го!» — крикнул Гена. Горы ответили: «Го-го-го!» Это эхо.", "difficulty": 3 },
+        { "id": "g-st-11", "word": "Гречка и горох",            "hint": "Мама сварила гречку. Папа принёс горох. Вместе — гречка с горохом!", "difficulty": 3 },
+        { "id": "g-st-12", "word": "Гром и молния",             "hint": "Гром — это звук. Молния — это свет. Сначала видим, потом слышим гром.", "difficulty": 4 }
+      ]
     }
   },
   "templateCompatibility": {
@@ -253,6 +318,7 @@
     "wordFinal": ["listen-and-choose", "repeat-after-model", "minimal-pairs", "sorting"],
     "phrase":    ["story-completion", "drag-and-match", "repeat-after-model", "sorting", "minimal-pairs"],
     "sentence":  ["repeat-after-model", "story-completion", "narrative-quest"],
-    "diff":      ["minimal-pairs", "listen-and-choose", "sorting", "drag-and-match"]
+    "diff":      ["minimal-pairs", "listen-and-choose", "sorting", "drag-and-match"],
+    "story":     ["narrative-quest", "story-completion", "repeat-after-model"]
   }
 }
