@@ -14,7 +14,7 @@
 | Content audio batch 1 (.m4a) | 1000 | 12.65 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 1 |
 | Content audio batch 2 (.m4a) | 1028 | 11.1 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 2 |
 | Content audio batch 3 (.m4a) | 681 | 8.36 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 3 |
-| Content audio batch 4+ | 0 / ~3300 | ~40 MB | Firebase Storage | ⏳ pending |
+| Content audio batch 4 (.m4a) | 2568 | 40.09 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 4 |
 | Эталоны для M4.3 (premium TTS) | 0 | — | `_workshop/references/` | ⏳ pending M3.5 |
 | Ambient / background music | 0 / 4 | — | `Resources/Audio/Ambient/` | ⏳ pending M9 |
 
@@ -158,12 +158,40 @@
 
 ---
 
-## M3.4 Batch 4+ — Остальные паки (~3300 файлов) ⏳
+## M3.4 Batch 4 — Ж/Ч/Щ/Й + Lexical/Breathing/Narrative/ArticulationGym/Phonemic/DiffWhistHiss (2568 файлов, 40.09 MB) ✅
 
-**Status:** pending
-**План:** Ж, Ч, Щ, Й, и все narrative/breathing/lexical паки.
+**Дата:** 2026-04-24
+**Генерация:** `_workshop/scripts/generate_batch4_audio.py` — edge-tts `ru-RU-SvetlanaNeural` → pyloudnorm -16 LUFS → AAC .m4a
+**Формат:** 16kHz mono AAC, 8–24 KB/файл (все < 50 KB)
+**Длительность:** 1.4–3.5s
+**Время генерации:** 70.3 минут
+**Ошибок:** 0 (2568/2568 сгенерированы)
 
-Оценка: ~80 минут общего времени генерации, ~40 MB финального объёма.
+### Разбивка по пакам batch 4
+
+| Пак | Звук/категория | Файлов | Размер |
+|---|---|---|---|
+| `sound_zh_pack.json` | Ж (все этапы) | 268 | 3344 KB |
+| `sound_ch_pack.json` | Ч (все этапы) | 350 | 4661 KB |
+| `sound_shch_pack.json` | Щ (все этапы) | 300 | 4026 KB |
+| `sound_y_pack.json` | Й (все этапы) | 250 | 3482 KB |
+| `pack_lexical.json` | Лексический пак | 350 | 5420 KB |
+| `pack_breathing.json` | Дыхательные упражнения | 300 | 5139 KB |
+| `pack_narrative.json` | Нарративные задания | 200 | 4325 KB |
+| `pack_articulation_gymnastics.json` | Артикуляционная гимнастика | 150 | 2832 KB |
+| `pack_general_phonemic.json` | Фонематический слух | 196 | 4367 KB |
+| `pack_diff_whistling_hissing.json` | Дифференциация свистящих/шипящих | 204 | 3457 KB |
+| **ИТОГО batch 4** | — | **2568** | **40.09 MB** |
+
+### Валидация (10 случайных файлов)
+- Sample rate 16000 Hz ✅
+- Channels 1 (mono) ✅
+- Codec AAC (.m4a) ✅
+- Размер < 50 KB ✅ (диапазон 8–24 KB)
+- 2568/2568 файлов сгенерированы, 0 ошибок ✅
+
+### Путь к скрипту (resumable)
+`_workshop/scripts/generate_batch4_audio.py` — при повторном запуске пропускает уже готовые файлы.
 
 ---
 
@@ -230,7 +258,7 @@ COPYRIGHT RULE: каждый звук должен иметь verified CC0/Apach
 ## Следующие шаги
 
 - **M3.4 batch 3** — ✅ DONE — велярные К/Г/Х (681 файл, 8.36 MB, 17 мин)
-- **M3.4 batch 4** — запустить аналогичный скрипт для Ж/Ч/Щ/Й + lexical/narrative паки (~80 мин)
+- **M3.4 batch 4** — ✅ DONE — Ж/Ч/Щ/Й + lexical/breathing/narrative/gymn/phonemic/diffWH (2568 файлов, 40.09 MB, 70 мин)
 - **M3.5** — генерация эталонов для PronunciationScorer (после M3.4 batch 2, ~1200 слов)
 - **M3.6 ambient** — 4 трека CC0 для world_map/lesson/AR/reward
 - **Firebase Storage upload** — после M3.4 batch 3 (финальный) → delegated to backend-developer M11.4
