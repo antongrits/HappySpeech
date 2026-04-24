@@ -79,11 +79,11 @@ public actor LiveSyncService: SyncService {
     // MARK: - Sync state stream
 
     /// Shared continuation for `syncState`. Stream is `.bufferingNewest(1)` — late subscribers
-    /// get the last emitted value, not the full history. `nonisolated(unsafe)` is safe here
-    /// because the continuation is only mutated once (inside `init`) and only read via the
-    /// public `nonisolated` getter.
-    nonisolated(unsafe) private var stateContinuation: AsyncStream<SyncState>.Continuation?
-    nonisolated(unsafe) private let _syncState: AsyncStream<SyncState>
+    /// get the last emitted value, not the full history. Both the continuation and the stream
+    /// are immutable `let`s assigned in `init`; `AsyncStream` and its `Continuation` are
+    /// `Sendable` and thread-safe, so plain `nonisolated` is sufficient (no `unsafe`).
+    nonisolated private let stateContinuation: AsyncStream<SyncState>.Continuation
+    nonisolated private let _syncState: AsyncStream<SyncState>
 
     public nonisolated var syncState: AsyncStream<SyncState> { _syncState }
 
@@ -92,7 +92,7 @@ public actor LiveSyncService: SyncService {
         networkMonitor: any NetworkMonitorService,
         policy: SyncPolicy = .default,
         sleeper: @escaping @Sendable (Double) async -> Void = { seconds in
-            try? await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
+            try? await Task.sleep(for: .seconds(seconds))
         }
     ) {
         self.realmActor = realmActor
@@ -110,10 +110,16 @@ public actor LiveSyncService: SyncService {
         self.stateContinuation = stream.continuation
         // Seed the stream so late subscribers immediately see `.idle`.
         stream.continuation.yield(.idle)
+
+        // Hydrate `_pendingCount` asynchronously from Realm so that UI consumers
+        // get the real backlog size on cold start (not 0 by default).
+        Task { [weak self] in
+            await self?.hydratePendingCount()
+        }
     }
 
     deinit {
-        stateContinuation?.finish()
+        stateContinuation.finish()
     }
 
     // MARK: - Protocol surface
@@ -125,7 +131,19 @@ public actor LiveSyncService: SyncService {
     /// from any context (including `deinit`) without hops. Internally it's cheap — just
     /// forwards to the `AsyncStream.Continuation`.
     nonisolated private func publish(_ state: SyncState) {
-        stateContinuation?.yield(state)
+        stateContinuation.yield(state)
+    }
+
+    /// Считает текущее число «висящих» элементов (`syncedAt == nil`) в Realm и
+    /// кладёт результат в `_pendingCount`. Вызывается из `init` чтобы UI не
+    /// видел 0 на холодном старте, если на диске уже лежит очередь.
+    private func hydratePendingCount() async {
+        let flags = await realmActor.asyncFetchMapped(SyncQueueItem.self) { item in
+            item.syncedAt == nil
+        }
+        let count = flags.lazy.filter { $0 }.count
+        _pendingCount = count
+        HSLogger.sync.info("Hydrated pendingCount=\(count) from Realm")
     }
 
     // MARK: - Enqueue
@@ -144,7 +162,7 @@ public actor LiveSyncService: SyncService {
             realm.add(item)
         }
         _pendingCount += 1
-        HSLogger.sync.info("Enqueued \(op) for \(entityType):\(entityId)")
+        HSLogger.sync.info("Enqueued \(op) for \(entityType):\(entityId, privacy: .private)")
     }
 
     // MARK: - Drain
@@ -197,15 +215,13 @@ public actor LiveSyncService: SyncService {
     }
 
     /// Хук для background sync: вызывать при переходе приложения в foreground.
-    /// Проверяет сеть и мягко дренит очередь (без throw — ошибки логируются).
+    /// Проверяет сеть и мягко дренит очередь. `drainQueue()` помечен `throws` ради
+    /// протокольной совместимости, но на практике ловит все свои ошибки внутри
+    /// `drain(item:)` и логирует их — сюда `throw` не долетает. Используем `try?`
+    /// как маркер «ошибки здесь допустимы и уже залогированы ниже».
     public func syncOnAppForeground() async {
         guard isOnlineForSync() else { return }
-        do {
-            try await drainQueue()
-        } catch {
-            HSLogger.sync.error("Foreground sync failed: \(error.localizedDescription)")
-            publish(.failed(message: error.localizedDescription))
-        }
+        try? await drainQueue()
     }
 
     // MARK: - Full-snapshot resync
@@ -272,7 +288,11 @@ public actor LiveSyncService: SyncService {
                 age: profile.age,
                 totalSessionMinutes: profile.totalSessionMinutes,
                 currentStreak: profile.currentStreak,
-                lastSessionAt: profile.lastSessionAt
+                lastSessionAt: profile.lastSessionAt,
+                // Schema note: `ChildProfile` пока не хранит `updatedAt`, поэтому
+                // фиксируем момент сбора snapshot'а. Когда модель получит явное
+                // поле изменения — заменить на `profile.updatedAt`.
+                updatedAt: Date()
             )
         }.filter { $0.parentId == userId }
 
@@ -338,7 +358,7 @@ public actor LiveSyncService: SyncService {
     }
 
     /// Exponential-backoff retry helper. Performs up to `maxAttempts` attempts, doubling
-    /// the delay between each (`delay`, `delay*2`, `delay*4`, …) but never exceeding
+    /// the delay between each (`base`, `base*2`, `base*4`, …) but never exceeding
     /// `policy.maxDelaySec`. On final failure rethrows the last error.
     private func performWithRetry<T: Sendable>(
         maxAttempts: Int,
@@ -354,7 +374,7 @@ public actor LiveSyncService: SyncService {
                 attempt += 1
                 lastError = error
                 guard attempt < maxAttempts else { break }
-                let wait = min(delay * pow(2.0, Double(attempt - 1)), policy.maxDelaySec)
+                let wait = backoffDelay(attempt: attempt, base: delay, cap: policy.maxDelaySec)
                 HSLogger.sync.info(
                     "Retry attempt \(attempt)/\(maxAttempts) after \(String(format: "%.1f", wait))s — \(error.localizedDescription)"
                 )
@@ -365,17 +385,35 @@ public actor LiveSyncService: SyncService {
         throw lastError
     }
 
+    /// Единая формула экспоненциальной задержки для всех retry-механизмов сервиса:
+    /// `base * 2^(attempt-1)`, ограниченная `cap`. `attempt` — 1-based (первая
+    /// повторная попытка = 1). Для `attempt <= 0` возвращает 0.
+    private func backoffDelay(attempt: Int, base: Double, cap: Double) -> Double {
+        guard attempt > 0 else { return 0 }
+        let raw = base * pow(2.0, Double(attempt - 1))
+        return min(raw, cap)
+    }
+
     /// Firestore batch write. Stub until `import FirebaseFirestore` is wired at module level
     /// — builds correct document shapes (`users/{uid}/children/{cid}` etc.), validates JSON
     /// serialisability, simulates network latency. Server-side merge-by-max is enforced by
     /// `functions/src/progress.js` Cloud Function + `setData(merge: true)` on the client.
+    ///
+    /// Пока это заглушка, но контракт с реальным Firestore-бэкендом уже моделируется:
+    /// пустой `userId` трактуется как серверный reject (non-2xx) и пробрасывается как
+    /// `SyncError.remoteRejected` — именно его UI будет показывать при отказах вида
+    /// `PERMISSION_DENIED` / `UNAUTHENTICATED`, когда Firebase SDK будет подключён.
     private func performFirestoreBatchWrite(
         userId: String,
         children: [ChildProfileSnapshot],
         sessions: [SessionSnapshot],
         progress: [ProgressEntrySnapshot]
     ) async throws {
-        let childDocs = children.map { $0.firestoreDict(parentId: userId) }
+        guard !userId.isEmpty else {
+            throw SyncError.remoteRejected("empty userId")
+        }
+
+        let childDocs = children.map { $0.firestoreDict() }
         let sessionDocs = sessions.map { $0.firestoreDict(parentId: userId) }
         let progressDocs = progress.map { $0.firestoreDict(parentId: userId) }
 
@@ -384,7 +422,7 @@ public actor LiveSyncService: SyncService {
                 throw SyncError.invalidPayload
             }
         }
-        try await Task.sleep(nanoseconds: 120_000_000)
+        try await Task.sleep(for: .milliseconds(120))
         let cCount = childDocs.count
         let sCount = sessionDocs.count
         let pCount = progressDocs.count
@@ -411,9 +449,13 @@ public actor LiveSyncService: SyncService {
 
         // Экспоненциальная задержка перед повторной отправкой — 0 на первой попытке.
         if item.retryCount > 0 {
-            let delay = exponentialBackoff(retry: item.retryCount)
+            let delay = backoffDelay(
+                attempt: item.retryCount,
+                base: policy.baseDelaySec,
+                cap: policy.maxDelaySec
+            )
             HSLogger.sync.info(
-                "Retry #\(item.retryCount) for \(entityId) — waiting \(String(format: "%.1f", delay))s"
+                "Retry #\(item.retryCount) for \(entityId, privacy: .private) — waiting \(String(format: "%.1f", delay))s"
             )
             await sleeper(delay)
         }
@@ -426,7 +468,7 @@ public actor LiveSyncService: SyncService {
                 }
             }
             _pendingCount = max(0, _pendingCount - 1)
-            HSLogger.sync.debug("Synced \(entityType):\(entityId)")
+            HSLogger.sync.debug("Synced \(entityType):\(entityId, privacy: .private)")
         } catch {
             let message = error.localizedDescription
             await realmActor.asyncWrite { realm in
@@ -435,15 +477,8 @@ public actor LiveSyncService: SyncService {
                     live.lastErrorMessage = message
                 }
             }
-            HSLogger.sync.error("Sync failed for \(entityId) (\(entityType)): \(message)")
+            HSLogger.sync.error("Sync failed for \(entityId, privacy: .private) (\(entityType)): \(message)")
         }
-    }
-
-    /// `base * 2^(retry-1)`, capped by `maxDelaySec`.
-    func exponentialBackoff(retry: Int) -> Double {
-        guard retry > 0 else { return 0 }
-        let raw = policy.baseDelaySec * pow(2.0, Double(retry - 1))
-        return min(raw, policy.maxDelaySec)
     }
 
     // MARK: - Upload + conflict resolution
@@ -487,8 +522,10 @@ public actor LiveSyncService: SyncService {
     }
 
     private func performNetworkUpload(entityType: String, entityId: String, payload: String) async throws {
-        try await Task.sleep(nanoseconds: 100_000_000)
-        HSLogger.sync.debug("Uploaded \(entityType):\(entityId) payload=\(payload.count) bytes")
+        try await Task.sleep(for: .milliseconds(100))
+        HSLogger.sync.debug(
+            "Uploaded \(entityType):\(entityId, privacy: .private) payload=\(payload.count) bytes"
+        )
     }
 
     // MARK: - Helpers
