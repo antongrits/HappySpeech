@@ -132,6 +132,145 @@ public final class MockLLMDecisionService: LLMDecisionServiceProtocol, @unchecke
         return CustomPhraseOutcome(phrase: phrase, meta: meta(.ruleBased, false))
     }
 
+    // MARK: - 13. Warm-up
+
+    public func selectWarmUp(context: WarmUpContext) async -> WarmUpDecisionOutcome {
+        callLog.append("warmUp")
+        let result = rules.selectWarmUp(context: context)
+        return WarmUpDecisionOutcome(
+            activityName: result.activityName,
+            instructions: result.instructions,
+            durationSeconds: result.durationSeconds,
+            meta: meta(.ruleBased, false)
+        )
+    }
+
+    // MARK: - 14. Word set
+
+    public func generateWordSet(sound: String, stage: CorrectionStage, count: Int) async -> WordSetDecisionOutcome {
+        callLog.append("wordSet")
+        let result = rules.generateWordSet(sound: sound, stage: stage, count: count)
+        return WordSetDecisionOutcome(words: result.words, rationale: result.rationale, meta: meta(source(), usedFallback: useFallbackFlag))
+    }
+
+    // MARK: - 15. Minimal pairs
+
+    public func generateMinimalPairs(targetSound: String, confusionSound: String, count: Int) async -> MinimalPairsDecisionOutcome {
+        callLog.append("minimalPairs")
+        let pairs = rules.generateMinimalPairs(targetSound: targetSound, confusionSound: confusionSound, count: count)
+        return MinimalPairsDecisionOutcome(pairs: pairs, meta: meta(.ruleBased, false))
+    }
+
+    // MARK: - 16. Narrative quest step
+
+    public func narrativeQuestStep(questState: NarrativeQuestState) async -> NarrativeStepDecisionOutcome {
+        callLog.append("narrativeStep")
+        let step = rules.narrativeQuestStep(questState: questState)
+        return NarrativeStepDecisionOutcome(
+            narration: step.narration,
+            targetWord: step.targetWord,
+            hint: step.hint,
+            isLastStep: step.isLastStep,
+            meta: meta(source(), usedFallback: useFallbackFlag)
+        )
+    }
+
+    // MARK: - 17. Child greeting
+
+    public func pickChildGreeting(childName: String, timeOfDay: TimeOfDay, streakDays: Int) async -> GreetingDecisionOutcome {
+        callLog.append("greeting")
+        let result = rules.pickChildGreeting(childName: childName, timeOfDay: timeOfDay, streakDays: streakDays)
+        return GreetingDecisionOutcome(phrase: result.phrase, emoji: result.emoji, meta: meta(.ruleBased, false))
+    }
+
+    // MARK: - 18. Celebration
+
+    public func generateCelebration(event: CelebrationEvent) async -> CelebrationDecisionOutcome {
+        callLog.append("celebration")
+        let result = rules.generateCelebration(event: event)
+        return CelebrationDecisionOutcome(message: result.message, animationHint: result.animationHint, meta: meta(.ruleBased, false))
+    }
+
+    // MARK: - 19. Rest
+
+    public func recommendRest(sessionDuration: TimeInterval, fatigueLevel: FatigueLevel) async -> RestDecisionOutcome {
+        callLog.append("rest")
+        let result = rules.recommendRest(sessionDuration: sessionDuration, fatigueLevel: fatigueLevel)
+        return RestDecisionOutcome(
+            shouldRest: result.shouldRest,
+            suggestedBreakMinutes: result.suggestedBreakMinutes,
+            message: result.message,
+            meta: meta(.ruleBased, false)
+        )
+    }
+
+    // MARK: - 20. Transition
+
+    public func playfulTransition(fromActivity: TemplateType, toActivity: TemplateType) async -> TransitionDecisionOutcome {
+        callLog.append("transition")
+        let phrase = rules.playfulTransition(fromActivity: fromActivity, toActivity: toActivity)
+        return TransitionDecisionOutcome(phrase: phrase, meta: meta(.ruleBased, false))
+    }
+
+    // MARK: - 21. Surprise fact
+
+    public func generateSurpriseFact(topic: String, childAge: Int) async -> SurpriseFactDecisionOutcome {
+        callLog.append("surpriseFact")
+        let fact = rules.generateSurpriseFact(topic: topic, childAge: childAge)
+        return SurpriseFactDecisionOutcome(fact: fact, meta: meta(source(), usedFallback: useFallbackFlag))
+    }
+
+    // MARK: - 22. Weekly report
+
+    public func generateWeeklyReport(weeks: [WeekSummaryInput]) async -> WeeklyReportDecisionOutcome {
+        callLog.append("weeklyReport")
+        let result = rules.generateWeeklyReport(weeks: weeks)
+        return WeeklyReportDecisionOutcome(
+            summary: result.summary,
+            highlights: result.highlights,
+            recommendations: result.recommendations,
+            meta: meta(source(), usedFallback: useFallbackFlag)
+        )
+    }
+
+    // MARK: - 23. Parent tip
+
+    public func generateParentTip(profile: ChildProfileInput, currentStage: CorrectionStage) async -> ParentTipDecisionOutcome {
+        callLog.append("parentTip")
+        let result = rules.generateParentTip(profile: profile, currentStage: currentStage)
+        return ParentTipDecisionOutcome(
+            tip: result.tip,
+            exerciseSuggestion: result.exerciseSuggestion,
+            meta: meta(source(), usedFallback: useFallbackFlag)
+        )
+    }
+
+    // MARK: - 24. Anxiety detection
+
+    public func detectAnxiety(sessionMetrics: SessionMetricsInput) async -> AnxietyDecisionOutcome {
+        callLog.append("anxiety")
+        let result = rules.detectAnxiety(sessionMetrics: sessionMetrics)
+        return AnxietyDecisionOutcome(
+            anxietyScore: result.score,
+            signals: result.signals,
+            recommendation: result.recommendation,
+            meta: meta(.ruleBased, false)
+        )
+    }
+
+    // MARK: - 25. Goal adjustment
+
+    public func suggestGoalAdjustment(progress: ProgressTrendInput) async -> GoalAdjustmentDecisionOutcome {
+        callLog.append("goalAdjustment")
+        let result = rules.suggestGoalAdjustment(progress: progress)
+        return GoalAdjustmentDecisionOutcome(
+            currentGoal: result.currentGoal,
+            suggestedGoal: result.suggestedGoal,
+            rationale: result.rationale,
+            meta: meta(source(), usedFallback: useFallbackFlag)
+        )
+    }
+
     // MARK: - helpers
 
     private func source() -> LLMDecisionSource {
