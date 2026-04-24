@@ -3,7 +3,7 @@ import SwiftUI
 // MARK: - DragAndMatchRoutingLogic
 
 @MainActor
-protocol DragAndMatchRoutingLogic {
+protocol DragAndMatchRoutingLogic: AnyObject {
     func routeToSessionComplete()
     func routeBack()
 }

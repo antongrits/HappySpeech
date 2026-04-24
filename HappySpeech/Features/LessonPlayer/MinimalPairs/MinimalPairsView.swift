@@ -3,251 +3,461 @@ import OSLog
 
 // MARK: - MinimalPairsView
 //
-// "Минимальные пары" — один из самых важных логопедических шаблонов для
-// дифференциации похожих звуков (С/Ш, Р/Л, К/Г, Ц/Ч …). Ребёнок слышит
-// целевое слово, видит пару картинок и выбирает нужную.
+// «Минимальные пары» — экран из трёх фаз:
+//   1. loading   — прогресс-индикатор при подготовке раундов
+//   2. round     — prompt + speaker + две emoji-карточки (target vs foil)
+//   3. feedback  — зелёный/красный overlay с текстом, auto-dismiss через 1.5 c
+//   4. completed — звёзды + счёт + кнопка «Завершить»
 //
-// Производственный UX:
-//   1. Карточки picture-tile 2×1 — большие tap-targets.
-//   2. Play-эталон автоматически на появлении + кнопка "послушать ещё раз".
-//   3. После правильного ответа — feedback 0.7 сек → onComplete(score).
-//   4. Три попытки на пару, каждый промах снижает итоговый score на 0.25.
-//   5. Accessibility: VoiceOver-метки + Reduced Motion.
+// View не содержит бизнес-логики. Через @State хранит триаду
+// interactor/presenter/display (Display — @Observable store). Все действия
+// проксируются в Interactor.
 
 struct MinimalPairsView: View {
 
-    let activity: SessionActivity
+    // MARK: Inputs
+
+    /// Целевой фонетический контраст ("Р-Л", "С-Ш", ""). Пустая строка — любой.
+    let soundContrast: String
+    /// Имя ребёнка для приветствия в completed-фазе.
+    let childName: String
+    /// Коллбек в SessionShell со итоговым скором 0…1.
     let onComplete: (Float) -> Void
+
+    // MARK: Environment
 
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    @State private var pair: Pair = Self.defaultPair(for: "С")
-    @State private var roundIndex: Int = 0
-    @State private var attemptsUsed: Int = 0
-    @State private var selectedIndex: Int?
-    @State private var isCorrectSelection: Bool?
+    // MARK: State
 
-    private let totalRounds = 4
-    private let logger = Logger(subsystem: "ru.happyspeech", category: "MinimalPairs")
+    @State private var display: MinimalPairsDisplay
+    @State private var interactor: MinimalPairsInteractor
+    @State private var presenter: MinimalPairsPresenter
+
+    private let logger = Logger(subsystem: "ru.happyspeech", category: "MinimalPairsView")
+
+    // MARK: - Convenience init
+
+    @MainActor
+    init(
+        soundContrast: String,
+        childName: String,
+        onComplete: @escaping (Float) -> Void
+    ) {
+        self.soundContrast = soundContrast
+        self.childName = childName
+        self.onComplete = onComplete
+
+        let interactor = MinimalPairsInteractor()
+        let presenter = MinimalPairsPresenter()
+        interactor.presenter = presenter
+        _interactor = State(initialValue: interactor)
+        _presenter = State(initialValue: presenter)
+        _display = State(initialValue: MinimalPairsDisplay())
+    }
+
+    /// SessionShell-совместимый init — принимает `SessionActivity`.
+    @MainActor
+    init(activity: SessionActivity, onComplete: @escaping (Float) -> Void) {
+        let contrast = Self.contrast(for: activity.soundTarget)
+        self.init(soundContrast: contrast, childName: "", onComplete: onComplete)
+    }
+
+    // MARK: - Body
 
     var body: some View {
-        VStack(spacing: SpacingTokens.large) {
-            header
-            listenButton
-            optionRow
-            feedbackView
-            Spacer()
+        ZStack {
+            ColorTokens.Kid.bg.ignoresSafeArea()
+            content
         }
-        .padding(SpacingTokens.screenEdge)
-        .onAppear {
-            pair = Self.defaultPair(for: activity.soundTarget)
-            playReference()
+        .task {
+            bindPresenter()
+            await interactor.loadSession(.init(
+                soundContrast: soundContrast,
+                childName: childName
+            ))
+            await interactor.startRound(.init(roundIndex: 0))
+        }
+        .onChange(of: display.pendingFinalScore) { _, newValue in
+            if let score = newValue {
+                logger.info("onComplete score=\(score, privacy: .public)")
+                onComplete(score)
+            }
         }
         .accessibilityElement(children: .contain)
+        .accessibilityLabel(
+            String(localized: "Минимальные пары. Слушай слово и выбирай правильную картинку.")
+        )
     }
 
     // MARK: - Subviews
 
-    private var header: some View {
-        VStack(spacing: SpacingTokens.small) {
-            Text(String(localized: "minimal_pairs.title"))
-                .font(TypographyTokens.title(22))
-                .foregroundStyle(ColorTokens.Kid.ink)
-            Text("\(roundIndex + 1) / \(totalRounds)")
-                .font(TypographyTokens.caption())
+    @ViewBuilder
+    private var content: some View {
+        switch display.phase {
+        case .loading:
+            loadingView
+        case .round, .feedback:
+            roundView
+        case .completed:
+            completedView
+        }
+    }
+
+    private var loadingView: some View {
+        VStack(spacing: SpacingTokens.medium) {
+            ProgressView()
+                .scaleEffect(1.4)
+                .tint(ColorTokens.Brand.primary)
+            Text(String(localized: "Готовим игру…"))
+                .font(TypographyTokens.body())
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
         }
+        .accessibilityLabel(String(localized: "Загрузка"))
     }
 
-    private var listenButton: some View {
-        HSButton(
-            String(localized: "minimal_pairs.listen_again"),
-            style: .secondary,
-            action: playReference
+    // MARK: Round
+
+    private var roundView: some View {
+        VStack(spacing: SpacingTokens.large) {
+            progressHeader
+            promptBlock
+            optionsRow
+            Spacer(minLength: 0)
+        }
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .padding(.top, SpacingTokens.large)
+        .overlay(alignment: .bottom) {
+            if display.phase == .feedback {
+                feedbackOverlay
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .padding(.bottom, SpacingTokens.xLarge)
+            }
+        }
+        .animation(
+            reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.85),
+            value: display.phase
         )
-        .frame(maxWidth: 260)
     }
 
-    private var optionRow: some View {
+    private var progressHeader: some View {
+        VStack(spacing: SpacingTokens.tiny) {
+            Text(display.progressLabel)
+                .font(TypographyTokens.caption(13))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .monospacedDigit()
+            ProgressView(
+                value: roundProgress,
+                total: 1.0
+            )
+            .progressViewStyle(.linear)
+            .tint(ColorTokens.Brand.primary)
+            .frame(maxWidth: 260)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(String(localized: "Прогресс сессии"))
+        .accessibilityValue(display.progressLabel)
+    }
+
+    private var promptBlock: some View {
+        HStack(spacing: SpacingTokens.small) {
+            Button(action: replayWord) {
+                Image(systemName: "speaker.wave.2.fill")
+                    .font(.system(size: 22, weight: .semibold))
+                    .foregroundStyle(.white)
+                    .frame(width: 52, height: 52)
+                    .background(
+                        Circle().fill(ColorTokens.Brand.primary)
+                    )
+                    .shadow(color: .black.opacity(0.12), radius: 6, y: 3)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(String(localized: "Повторить слово"))
+            .accessibilityHint(String(localized: "Нажмите, чтобы услышать слово ещё раз"))
+
+            Text(display.promptText)
+                .font(TypographyTokens.headline(18))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .padding(SpacingTokens.cardPad)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                .fill(ColorTokens.Kid.surface)
+        )
+    }
+
+    private var optionsRow: some View {
         HStack(spacing: SpacingTokens.medium) {
-            optionCard(index: 0, word: pair.left, symbol: pair.leftSymbol)
-            optionCard(index: 1, word: pair.right, symbol: pair.rightSymbol)
+            if let pair = display.currentPair {
+                if pair.targetIsLeft {
+                    optionCard(
+                        word: pair.targetWord,
+                        emoji: pair.targetEmoji,
+                        isTarget: true
+                    )
+                    optionCard(
+                        word: pair.foilWord,
+                        emoji: pair.foilEmoji,
+                        isTarget: false
+                    )
+                } else {
+                    optionCard(
+                        word: pair.foilWord,
+                        emoji: pair.foilEmoji,
+                        isTarget: false
+                    )
+                    optionCard(
+                        word: pair.targetWord,
+                        emoji: pair.targetEmoji,
+                        isTarget: true
+                    )
+                }
+            }
         }
     }
 
-    private func optionCard(index: Int, word: String, symbol: String) -> some View {
-        Button(action: { choose(index: index) }) {
+    private func optionCard(word: String, emoji: String, isTarget: Bool) -> some View {
+        Button {
+            selectOption(isTarget: isTarget)
+        } label: {
             VStack(spacing: SpacingTokens.small) {
-                Image(systemName: symbol)
-                    .font(.system(size: 52, weight: .medium))
-                    .foregroundStyle(ColorTokens.Brand.primary)
+                Text(emoji)
+                    .font(.system(size: 72))
+                    .accessibilityHidden(true)
                 Text(word)
-                    .font(TypographyTokens.title(20))
+                    .font(TypographyTokens.title(22))
                     .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
             }
             .frame(maxWidth: .infinity)
-            .frame(height: 180)
+            .frame(height: 200)
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                    .fill(cardFill(for: index))
+                    .fill(cardFill(isTarget: isTarget))
                     .shadow(color: .black.opacity(0.08), radius: 8, y: 4)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                    .strokeBorder(cardStroke(isTarget: isTarget), lineWidth: 3)
             )
         }
         .buttonStyle(.plain)
-        .disabled(isCorrectSelection != nil)
+        .disabled(display.isAnswered)
         .accessibilityLabel(word)
+        .accessibilityHint(String(localized: "Нажмите, если это правильная картинка"))
     }
 
-    @ViewBuilder
-    private var feedbackView: some View {
-        if let isCorrect = isCorrectSelection {
-            Text(isCorrect
-                 ? String(localized: "minimal_pairs.correct")
-                 : String(localized: "minimal_pairs.try_again"))
+    // MARK: Feedback
+
+    private var feedbackOverlay: some View {
+        HStack(spacing: SpacingTokens.small) {
+            Image(systemName: display.correct ? "checkmark.circle.fill" : "xmark.circle.fill")
+                .font(.system(size: 24, weight: .bold))
+            Text(display.feedbackText)
                 .font(TypographyTokens.headline(17))
-                .foregroundStyle(isCorrect ? .green : .orange)
-                .transition(.opacity)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
         }
+        .padding(.horizontal, SpacingTokens.large)
+        .padding(.vertical, SpacingTokens.medium)
+        .foregroundStyle(.white)
+        .background(
+            Capsule().fill(
+                display.correct
+                    ? ColorTokens.Feedback.correct
+                    : ColorTokens.Feedback.incorrect
+            )
+        )
+        .shadow(color: .black.opacity(0.16), radius: 10, y: 4)
+        .accessibilityLabel(display.feedbackText)
     }
 
-    // MARK: - Styling
+    // MARK: Completed
 
-    private func cardFill(for index: Int) -> Color {
-        guard let selected = selectedIndex, selected == index,
-              let correct = isCorrectSelection else {
-            return ColorTokens.Kid.surface
+    private var completedView: some View {
+        VStack(spacing: SpacingTokens.large) {
+            Spacer()
+            starsRow
+            Text(display.scoreLabel)
+                .font(TypographyTokens.title(28))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .monospacedDigit()
+            Text(display.completionMessage)
+                .font(TypographyTokens.body(17))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .padding(.horizontal, SpacingTokens.xLarge)
+            Spacer()
+            HSButton(
+                String(localized: "Завершить"),
+                style: .primary
+            ) {
+                finalize()
+            }
+            .frame(maxWidth: 320)
+            .padding(.bottom, SpacingTokens.large)
         }
-        return correct ? Color.green.opacity(0.18) : Color.orange.opacity(0.18)
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel(String(localized: "Раунд завершён"))
+    }
+
+    private var starsRow: some View {
+        HStack(spacing: SpacingTokens.small) {
+            ForEach(0..<3, id: \.self) { idx in
+                Image(systemName: idx < display.starsEarned ? "star.fill" : "star")
+                    .font(.system(size: 44, weight: .semibold))
+                    .foregroundStyle(
+                        idx < display.starsEarned
+                            ? ColorTokens.Brand.butter
+                            : ColorTokens.Kid.line
+                    )
+                    .scaleEffect(idx < display.starsEarned ? 1.0 : 0.85)
+                    .animation(
+                        reduceMotion ? nil : .spring(response: 0.5, dampingFraction: 0.65).delay(Double(idx) * 0.12),
+                        value: display.starsEarned
+                    )
+            }
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(
+            String(localized: "Получено звёзд: \(display.starsEarned) из 3")
+        )
+    }
+
+    // MARK: - Styling helpers
+
+    private func cardFill(isTarget: Bool) -> Color {
+        guard display.isAnswered,
+              let selected = display.selectedIsTarget
+        else { return ColorTokens.Kid.surface }
+        let cardIsSelected = (selected == isTarget)
+        if !cardIsSelected { return ColorTokens.Kid.surface }
+        return display.correct
+            ? ColorTokens.Feedback.correct.opacity(0.18)
+            : ColorTokens.Feedback.incorrect.opacity(0.18)
+    }
+
+    private func cardStroke(isTarget: Bool) -> Color {
+        guard display.isAnswered,
+              let selected = display.selectedIsTarget
+        else { return .clear }
+        let cardIsSelected = (selected == isTarget)
+        if !cardIsSelected { return .clear }
+        return display.correct
+            ? ColorTokens.Feedback.correct
+            : ColorTokens.Feedback.incorrect
     }
 
     // MARK: - Actions
 
-    private func playReference() {
+    private func bindPresenter() {
+        presenter.viewModel = display
+    }
+
+    private func selectOption(isTarget: Bool) {
+        guard !display.isAnswered else { return }
+        display.selectedIsTarget = isTarget
         container.soundService.playUISound(.tap)
-    }
-
-    private func choose(index: Int) {
-        guard isCorrectSelection == nil else { return }
-        attemptsUsed += 1
-        selectedIndex = index
-        let correct = index == pair.correctIndex
-        isCorrectSelection = correct
-
-        container.soundService.playUISound(correct ? .correct : .incorrect)
-        container.hapticService.notification(correct ? .success : .warning)
-
-        Task { @MainActor in
-            try? await Task.sleep(for: .milliseconds(reduceMotion ? 400 : 800))
-            if correct || attemptsUsed >= 3 {
-                advanceRound(correctOnThisPair: correct)
-            } else {
-                isCorrectSelection = nil
-                selectedIndex = nil
-            }
+        Task {
+            await interactor.selectOption(.init(selectedIsTarget: isTarget))
         }
     }
 
-    private func advanceRound(correctOnThisPair: Bool) {
-        roundIndex += 1
-        attemptsUsed = 0
-        isCorrectSelection = nil
-        selectedIndex = nil
-
-        if roundIndex >= totalRounds {
-            // Aggregate across rounds: correct on first attempt = 1.0,
-            // any retry docks 0.25.
-            let attemptsPenalty = Float(attemptsUsed) * 0.25
-            let score: Float = correctOnThisPair
-                ? max(0.25, 1.0 - attemptsPenalty)
-                : 0.25
-            logger.info("finished score=\(score, privacy: .public)")
-            onComplete(score)
-        } else {
-            pair = Self.pair(for: activity.soundTarget, round: roundIndex)
-            playReference()
-        }
+    private func replayWord() {
+        container.soundService.playUISound(.tap)
+        Task { await interactor.replayCurrentWord() }
     }
 
-    // MARK: - Pair catalogue
-
-    struct Pair: Equatable, Hashable {
-        let left: String
-        let leftSymbol: String
-        let right: String
-        let rightSymbol: String
-        let correctIndex: Int
+    private func finalize() {
+        guard display.pendingFinalScore == nil else { return }
+        let correct = Float(display.correctCount)
+        let total = Float(max(display.answeredCount, 1))
+        let score = correct / total
+        container.soundService.playUISound(.complete)
+        display.pendingFinalScore = score
     }
 
-    static func defaultPair(for sound: String) -> Pair {
-        pair(for: sound, round: 0)
+    // MARK: - Helpers
+
+    /// Визуальный прогресс раунда для линейного ProgressView.
+    private var roundProgress: Double {
+        guard display.totalRounds > 0 else { return 0 }
+        let parts = display.progressLabel.split(separator: "/")
+        guard let first = parts.first,
+              let current = Int(first.trimmingCharacters(in: .whitespaces))
+        else { return 0 }
+        return Double(current) / Double(display.totalRounds)
     }
 
-    /// Canonical word pairs (source: Коноваленко "Дифференциация звуков").
-    /// Each target "sound" describes the pair discrimination ("С/Ш", "Р/Л", etc).
-    static func pair(for sound: String, round: Int) -> Pair {
-        switch sound {
-        case "С/Ш", "С":
-            let pairs: [Pair] = [
-                Pair(left: "миска", leftSymbol: "fork.knife",
-                     right: "мишка", rightSymbol: "pawprint.fill",
-                     correctIndex: 0),
-                Pair(left: "усы",   leftSymbol: "mustache",
-                     right: "уши",  rightSymbol: "ear.fill",
-                     correctIndex: 0),
-                Pair(left: "кассы",  leftSymbol: "cart.fill",
-                     right: "каши",  rightSymbol: "bowl.fill",
-                     correctIndex: 1),
-                Pair(left: "сутки", leftSymbol: "clock.fill",
-                     right: "шутки",rightSymbol: "face.smiling",
-                     correctIndex: 0),
-            ]
-            return pairs[round % pairs.count]
-        case "Р/Л", "Р":
-            let pairs: [Pair] = [
-                Pair(left: "рак",   leftSymbol: "tortoise.fill",
-                     right: "лак",  rightSymbol: "paintbrush.pointed.fill",
-                     correctIndex: 0),
-                Pair(left: "рама",  leftSymbol: "square.fill",
-                     right: "лама", rightSymbol: "hare.fill",
-                     correctIndex: 1),
-                Pair(left: "рожки", leftSymbol: "triangle.fill",
-                     right: "ложки",rightSymbol: "fork.knife",
-                     correctIndex: 0),
-                Pair(left: "играй", leftSymbol: "gamecontroller.fill",
-                     right: "иглай",rightSymbol: "needle",
-                     correctIndex: 0),
-            ]
-            return pairs[round % pairs.count]
-        case "К/Г", "К":
-            let pairs: [Pair] = [
-                Pair(left: "кот",   leftSymbol: "pawprint",
-                     right: "год",  rightSymbol: "calendar",
-                     correctIndex: 0),
-                Pair(left: "кол",   leftSymbol: "line.diagonal",
-                     right: "гол",  rightSymbol: "soccerball.inverse",
-                     correctIndex: 1),
-                Pair(left: "купи",  leftSymbol: "cart",
-                     right: "губи", rightSymbol: "mouth.fill",
-                     correctIndex: 0),
-                Pair(left: "коза",  leftSymbol: "hare.fill",
-                     right: "коса", rightSymbol: "scissors",
-                     correctIndex: 1),
-            ]
-            return pairs[round % pairs.count]
-        default:
-            // Fallback — C/Ш pair as safe default.
-            return pair(for: "С/Ш", round: round)
+    // MARK: - Contrast inference
+
+    /// Преобразует `soundTarget` из SessionActivity в фонетический контраст.
+    private static func contrast(for sound: String) -> String {
+        switch sound.uppercased() {
+        case "С", "С/Ш":   return "С-Ш"
+        case "Ш":           return "С-Ш"
+        case "Р", "Р/Л":   return "Р-Л"
+        case "Л":           return "Р-Л"
+        case "К", "К/Г":   return "К-Г"
+        case "Г":           return "К-Г"
+        case "З", "З/Ж":   return "З-Ж"
+        case "Ж":           return "З-Ж"
+        default:            return ""
         }
     }
 }
 
-#Preview {
+// MARK: - Display: DisplayLogic adapter
+
+extension MinimalPairsDisplay: MinimalPairsDisplayLogic {
+
+    func displayLoadSession(_ viewModel: MinimalPairsModels.LoadSession.ViewModel) {
+        totalRounds = viewModel.totalRounds
+        greeting = viewModel.greeting
+    }
+
+    func displayStartRound(_ viewModel: MinimalPairsModels.StartRound.ViewModel) {
+        currentPair = viewModel.pair
+        progressLabel = viewModel.progressLabel
+        promptText = viewModel.promptText
+        isAnswered = false
+        selectedIsTarget = nil
+        feedbackText = ""
+        phase = .round
+    }
+
+    func displaySelectOption(_ viewModel: MinimalPairsModels.SelectOption.ViewModel) {
+        correct = viewModel.correct
+        feedbackText = viewModel.feedbackText
+        correctAnswer = viewModel.correctAnswer
+        isAnswered = true
+        phase = .feedback
+        answeredCount += 1
+        if viewModel.correct { correctCount += 1 }
+    }
+
+    func displayCompleteSession(_ viewModel: MinimalPairsModels.CompleteSession.ViewModel) {
+        starsEarned = viewModel.starsEarned
+        scoreLabel = viewModel.scoreLabel
+        completionMessage = viewModel.message
+        phase = .completed
+    }
+}
+
+// MARK: - Preview
+
+#Preview("Round") {
     MinimalPairsView(
-        activity: SessionActivity(
-            id: "preview", gameType: .minimalPairs, lessonId: "l1",
-            soundTarget: "С/Ш", difficulty: 1, isCompleted: false, score: nil
-        ),
+        soundContrast: "Р-Л",
+        childName: "Саша",
         onComplete: { _ in }
     )
     .environment(AppContainer.preview())

@@ -1,14 +1,16 @@
 import SwiftUI
 
 // MARK: - MinimalPairsRoutingLogic
+//
+// Минимальный роутер — экран всегда возвращается к SessionShell через
+// замыкание `onComplete(score)`. Отдельный роутер оставлен для соответствия
+// Clean Swift VIP и будущего расширения (например, exit-confirm sheet).
 
 @MainActor
-protocol MinimalPairsRoutingLogic {
+protocol MinimalPairsRoutingLogic: AnyObject {
     func routeToSessionComplete()
     func routeBack()
 }
-
-// MARK: - MinimalPairsRouter
 
 @MainActor
 final class MinimalPairsRouter: MinimalPairsRoutingLogic {
