@@ -7,7 +7,7 @@ import OSLog
 // MLC/llama.cpp engines are not reentrant — only ONE inference may run at a time.
 // The actor guarantees FIFO ordering and prevents GPU/ANE contention crashes.
 //
-// The actor does NOT own model lifecycle — that's LLMModelDownloadManager.
+// The actor does NOT own model lifecycle — that's LLMModelManager.
 // It only holds a reference to the underlying LocalLLMService (SPI into the engine).
 // ==================================================================================
 
