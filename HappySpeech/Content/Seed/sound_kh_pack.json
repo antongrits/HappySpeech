@@ -18,7 +18,13 @@
         { "id": "kh-prep-6",  "word": "кашель без голоса",   "hint": "Тихонько кашляни без голоса: кх-кх. Чувствуй корень языка.", "difficulty": 2 },
         { "id": "kh-prep-7",  "word": "горбик",              "hint": "Открой рот, подними спинку языка горбом вверх. Подержи 5 секунд.", "difficulty": 2 },
         { "id": "kh-prep-8",  "word": "маляр",               "hint": "Широким языком 'красим потолок' — проводи вперёд-назад по нёбу.", "difficulty": 2 },
-        { "id": "kh-prep-9",  "word": "вдох-выдох медленно", "hint": "Глубокий вдох носом — медленный выдох ртом. Три раза.", "difficulty": 1 }
+        { "id": "kh-prep-9",  "word": "вдох-выдох медленно", "hint": "Глубокий вдох носом — медленный выдох ртом. Три раза.", "difficulty": 1 },
+        { "id": "kh-prep-10", "word": "зевота",               "hint": "Широко зевни — рот открыт, нёбо поднялось. Чувствуй горло.", "difficulty": 1 },
+        { "id": "kh-prep-11", "word": "лопатка",              "hint": "Широкий расслабленный язык на нижней губе. Держи 5 секунд.", "difficulty": 1 },
+        { "id": "kh-prep-12", "word": "свеча не тушится",     "hint": "Подыши на ладонь — тепло. На свечу только слабый ток: не задуй!", "difficulty": 2 },
+        { "id": "kh-prep-13", "word": "горбик большой",       "hint": "Спинка языка высоко к нёбу — держи и дыши: ха-а.", "difficulty": 2 },
+        { "id": "kh-prep-14", "word": "хрустим",              "hint": "Медленно произноси: к-х, к-х, к-х. Слышишь корень языка?", "difficulty": 3 },
+        { "id": "kh-prep-15", "word": "шёпот-вздох",         "hint": "Шёпотом говорим: ха-а — как вздох облегчения.", "difficulty": 2 }
       ]
     },
     "isolated": {
@@ -35,7 +41,8 @@
         { "id": "kh-iso-7",  "word": "х тихо-громко",      "hint": "Начни тихо: х... всё громче: х! х! Х!", "difficulty": 3 },
         { "id": "kh-iso-8",  "word": "х ритм 3-3",         "hint": "Три удара — пауза — три удара: ххх — пауза — ххх.", "difficulty": 3 },
         { "id": "kh-iso-9",  "word": "пар изо рта",        "hint": "На морозе изо рта идёт пар: ха — и видишь облачко.", "difficulty": 2 },
-        { "id": "kh-iso-10", "word": "ха долго",           "hint": "Тяни на одном выдохе: хааааа — как можно дольше.", "difficulty": 3 }
+        { "id": "kh-iso-10", "word": "ха долго",           "hint": "Тяни на одном выдохе: хааааа — как можно дольше.", "difficulty": 3 },
+        { "id": "kh-iso-11", "word": "хь-мягко",          "hint": "Мягкий Х': хье-хьи-хью. Слышишь разницу с твёрдым?", "difficulty": 3 }
       ]
     },
     "syllable": {
@@ -65,7 +72,13 @@
         { "id": "kh-syl-20", "word": "хя",      "difficulty": 2 },
         { "id": "kh-syl-21", "word": "хю",      "difficulty": 2 },
         { "id": "kh-syl-22", "word": "ха-хо-ху","difficulty": 3 },
-        { "id": "kh-syl-23", "word": "ах-ох-ух","difficulty": 3 }
+        { "id": "kh-syl-23", "word": "ах-ох-ух","difficulty": 3 },
+        { "id": "kh-syl-24", "word": "хи-хи",   "difficulty": 1 },
+        { "id": "kh-syl-25", "word": "хе-хе",   "difficulty": 1 },
+        { "id": "kh-syl-26", "word": "аха",     "difficulty": 2 },
+        { "id": "kh-syl-27", "word": "охо",     "difficulty": 2 },
+        { "id": "kh-syl-28", "word": "уху",     "difficulty": 2 },
+        { "id": "kh-syl-29", "word": "ха-хи-хе","difficulty": 3 }
       ]
     },
     "wordInit": {
@@ -96,7 +109,22 @@
         { "id": "kh-wi-21", "word": "холодный",  "difficulty": 3 },
         { "id": "kh-wi-22", "word": "хмурый",    "difficulty": 3 },
         { "id": "kh-wi-23", "word": "хрустеть",  "difficulty": 3 },
-        { "id": "kh-wi-24", "word": "хрупкий",   "difficulty": 3 }
+        { "id": "kh-wi-24", "word": "хрупкий",   "difficulty": 3 },
+        { "id": "kh-wi-25", "word": "хохолок",   "difficulty": 2 },
+        { "id": "kh-wi-26", "word": "хлопок",    "difficulty": 2 },
+        { "id": "kh-wi-27", "word": "халат",     "difficulty": 2 },
+        { "id": "kh-wi-28", "word": "хоккей",    "difficulty": 2 },
+        { "id": "kh-wi-29", "word": "хлопья",    "difficulty": 2 },
+        { "id": "kh-wi-30", "word": "хохлатка",  "difficulty": 3 },
+        { "id": "kh-wi-31", "word": "хвалить",   "difficulty": 2 },
+        { "id": "kh-wi-32", "word": "хватать",   "difficulty": 2 },
+        { "id": "kh-wi-33", "word": "хворост",   "difficulty": 3 },
+        { "id": "kh-wi-34", "word": "хлопнуть",  "difficulty": 2 },
+        { "id": "kh-wi-35", "word": "хмель",     "difficulty": 3 },
+        { "id": "kh-wi-36", "word": "хитрец",    "difficulty": 3 },
+        { "id": "kh-wi-37", "word": "ходить",    "difficulty": 1 },
+        { "id": "kh-wi-38", "word": "хохотать",  "difficulty": 2 },
+        { "id": "kh-wi-39", "word": "хулить",    "difficulty": 3 }
       ]
     },
     "wordMed": {
@@ -127,7 +155,22 @@
         { "id": "kh-wm-21", "word": "черепаха",  "difficulty": 4 },
         { "id": "kh-wm-22", "word": "пастуха",   "difficulty": 3 },
         { "id": "kh-wm-23", "word": "хихикать",  "difficulty": 4 },
-        { "id": "kh-wm-24", "word": "монах",     "difficulty": 3 }
+        { "id": "kh-wm-24", "word": "монах",     "difficulty": 3 },
+        { "id": "kh-wm-25", "word": "мухомор",   "difficulty": 3 },
+        { "id": "kh-wm-26", "word": "охота",     "difficulty": 2 },
+        { "id": "kh-wm-27", "word": "охотник",   "difficulty": 3 },
+        { "id": "kh-wm-28", "word": "пастух",    "difficulty": 2 },
+        { "id": "kh-wm-29", "word": "лихой",     "difficulty": 2 },
+        { "id": "kh-wm-30", "word": "тихий",     "difficulty": 2 },
+        { "id": "kh-wm-31", "word": "сухой",     "difficulty": 2 },
+        { "id": "kh-wm-32", "word": "плохой",    "difficulty": 2 },
+        { "id": "kh-wm-33", "word": "глухой",    "difficulty": 3 },
+        { "id": "kh-wm-34", "word": "лихо",      "difficulty": 2 },
+        { "id": "kh-wm-35", "word": "ахнуть",    "difficulty": 2 },
+        { "id": "kh-wm-36", "word": "охнуть",    "difficulty": 2 },
+        { "id": "kh-wm-37", "word": "ухаживать", "difficulty": 4 },
+        { "id": "kh-wm-38", "word": "стихать",   "difficulty": 3 },
+        { "id": "kh-wm-39", "word": "трухлявый", "difficulty": 4 }
       ]
     },
     "wordFinal": {
@@ -153,7 +196,17 @@
         { "id": "kh-wf-16", "word": "грех",      "difficulty": 3 },
         { "id": "kh-wf-17", "word": "смех",      "difficulty": 2 },
         { "id": "kh-wf-18", "word": "орех",      "difficulty": 2 },
-        { "id": "kh-wf-19", "word": "успех",     "difficulty": 3 }
+        { "id": "kh-wf-19", "word": "успех",     "difficulty": 3 },
+        { "id": "kh-wf-20", "word": "пастух",    "difficulty": 2 },
+        { "id": "kh-wf-21", "word": "гарнах",    "difficulty": 3 },
+        { "id": "kh-wf-22", "word": "воздух",    "difficulty": 2 },
+        { "id": "kh-wf-23", "word": "лопух",     "difficulty": 2 },
+        { "id": "kh-wf-24", "word": "пастух",    "difficulty": 2 },
+        { "id": "kh-wf-25", "word": "грех",      "difficulty": 2 },
+        { "id": "kh-wf-26", "word": "сухо",      "difficulty": 1 },
+        { "id": "kh-wf-27", "word": "лихо",      "difficulty": 2 },
+        { "id": "kh-wf-28", "word": "тихо",      "difficulty": 1 },
+        { "id": "kh-wf-29", "word": "плохо",     "difficulty": 1 }
       ]
     },
     "phrase": {
@@ -179,7 +232,29 @@
         { "id": "kh-ph-16", "word": "поход в горы",                "difficulty": 3 },
         { "id": "kh-ph-17", "word": "монах в храме",               "difficulty": 3 },
         { "id": "kh-ph-18", "word": "хвост петуха",                "difficulty": 2 },
-        { "id": "kh-ph-19", "word": "духи на полке",               "difficulty": 2 }
+        { "id": "kh-ph-19", "word": "духи на полке",               "difficulty": 2 },
+        { "id": "kh-ph-20", "word": "хохолок на голове",            "difficulty": 3 },
+        { "id": "kh-ph-21", "word": "тихий ход",                    "difficulty": 2 },
+        { "id": "kh-ph-22", "word": "сухой хлеб",                   "difficulty": 2 },
+        { "id": "kh-ph-23", "word": "воздух свежий",                "difficulty": 2 },
+        { "id": "kh-ph-24", "word": "охота за грибами",             "difficulty": 3 },
+        { "id": "kh-ph-25", "word": "хитрый хомяк",                 "difficulty": 2 },
+        { "id": "kh-ph-26", "word": "хоккей на льду",               "difficulty": 2 },
+        { "id": "kh-ph-27", "word": "халат у врача",                "difficulty": 2 },
+        { "id": "kh-ph-28", "word": "мухомор в лесу",               "difficulty": 2 },
+        { "id": "kh-ph-29", "word": "хворост для костра",           "difficulty": 3 },
+        { "id": "kh-ph-30", "word": "хлопья снега",                 "difficulty": 2 },
+        { "id": "kh-ph-31", "word": "тихая охота",                  "difficulty": 3 },
+        { "id": "kh-ph-32", "word": "сухой мох",                    "difficulty": 2 },
+        { "id": "kh-ph-33", "word": "пастух на лугу",               "difficulty": 2 },
+        { "id": "kh-ph-34", "word": "хоровод детей",                "difficulty": 2 },
+        { "id": "kh-ph-35", "word": "хвост у белки",                "difficulty": 1 },
+        { "id": "kh-ph-36", "word": "горох в огороде",              "difficulty": 2 },
+        { "id": "kh-ph-37", "word": "орех на ладони",               "difficulty": 2 },
+        { "id": "kh-ph-38", "word": "успех в учёбе",                "difficulty": 3 },
+        { "id": "kh-ph-39", "word": "хитрый прищур",                "difficulty": 3 },
+        { "id": "kh-ph-40", "word": "хрупкое стекло",               "difficulty": 3 },
+        { "id": "kh-ph-41", "word": "лёгкий воздух",                "difficulty": 2 }
       ]
     },
     "sentence": {
@@ -200,7 +275,32 @@
         { "id": "kh-sen-11", "word": "Хирург работает в больнице.",                  "difficulty": 4 },
         { "id": "kh-sen-12", "word": "Монах жил в старом храме.",                   "difficulty": 4 },
         { "id": "kh-sen-13", "word": "Хулиган громко хохотал во дворе.",            "difficulty": 4 },
-        { "id": "kh-sen-14", "word": "Хруст снега слышен в тишине.",               "difficulty": 4 }
+        { "id": "kh-sen-14", "word": "Хруст снега слышен в тишине.",               "difficulty": 4 },
+        { "id": "kh-sen-15", "word": "Хомяк живёт в норе.",                         "difficulty": 2 },
+        { "id": "kh-sen-16", "word": "Хвост кошки пушистый.",                       "difficulty": 2 },
+        { "id": "kh-sen-17", "word": "Пастух пасёт коров на лугу.",                 "difficulty": 3 },
+        { "id": "kh-sen-18", "word": "В лесу нашли большой мухомор.",               "difficulty": 3 },
+        { "id": "kh-sen-19", "word": "Хоккеист ударил шайбу клюшкой.",              "difficulty": 3 },
+        { "id": "kh-sen-20", "word": "Воздух после дождя свежий и чистый.",          "difficulty": 3 },
+        { "id": "kh-sen-21", "word": "Тихий ход поезда убаюкивает.",                "difficulty": 3 },
+        { "id": "kh-sen-22", "word": "Орехи спрятаны в кармане халата.",             "difficulty": 3 },
+        { "id": "kh-sen-23", "word": "Ха-ха-ха — смеялся весёлый хомяк.",           "difficulty": 2 },
+        { "id": "kh-sen-24", "word": "Хитрый лис украл хлеб из корзины.",           "difficulty": 3 },
+        { "id": "kh-sen-25", "word": "Горох варится в большом горшке.",              "difficulty": 2 },
+        { "id": "kh-sen-26", "word": "На хоккее болельщики хлопают громко.",         "difficulty": 4 },
+        { "id": "kh-sen-27", "word": "Художник нарисовал красивый пейзаж.",          "difficulty": 3 },
+        { "id": "kh-sen-28", "word": "Хохолок у птицы яркий и пушистый.",           "difficulty": 3 },
+        { "id": "kh-sen-29", "word": "Слух у совы намного лучше, чем у людей.",      "difficulty": 4 },
+        { "id": "kh-sen-30", "word": "Хоровод водили вокруг большой ёлки.",          "difficulty": 3 },
+        { "id": "kh-sen-31", "word": "Хворост для костра лежит у дерева.",           "difficulty": 3 },
+        { "id": "kh-sen-32", "word": "Мох покрыл старые камни у реки.",              "difficulty": 3 },
+        { "id": "kh-sen-33", "word": "Пух вылетел из подушки.",                      "difficulty": 2 },
+        { "id": "kh-sen-34", "word": "Хмурое небо говорит о дожде.",                "difficulty": 3 },
+        { "id": "kh-sen-35", "word": "Холодный ветер дует с севера.",                "difficulty": 3 },
+        { "id": "kh-sen-36", "word": "Охотник тихо ходит по лесу.",                 "difficulty": 3 },
+        { "id": "kh-sen-37", "word": "Петух громко хлопает крыльями.",               "difficulty": 3 },
+        { "id": "kh-sen-38", "word": "Успех приходит к тем, кто старается.",         "difficulty": 4 },
+        { "id": "kh-sen-39", "word": "Хлопья снега падают медленно и тихо.",         "difficulty": 4 }
       ]
     }
   },

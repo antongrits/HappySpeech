@@ -122,7 +122,12 @@
         { "id": "c-wi-31", "word": "цыкнуть",    "difficulty": 3 },
         { "id": "c-wi-32", "word": "цвести",     "difficulty": 3 },
         { "id": "c-wi-33", "word": "цементный",  "difficulty": 4 },
-        { "id": "c-wi-34", "word": "цепляться",  "difficulty": 4 }
+        { "id": "c-wi-34", "word": "цепляться",  "difficulty": 4 },
+        { "id": "c-wi-35", "word": "цыган",      "difficulty": 3 },
+        { "id": "c-wi-36", "word": "цепко",      "difficulty": 3 },
+        { "id": "c-wi-37", "word": "целить",     "difficulty": 3 },
+        { "id": "c-wi-38", "word": "цирюльник",  "difficulty": 4 },
+        { "id": "c-wi-39", "word": "цокать",     "difficulty": 2 }
       ]
     },
     "wordMed": {
@@ -163,7 +168,12 @@
         { "id": "c-wm-31", "word": "умница",     "difficulty": 3 },
         { "id": "c-wm-32", "word": "пшеница",    "difficulty": 4 },
         { "id": "c-wm-33", "word": "рукавица",   "difficulty": 4 },
-        { "id": "c-wm-34", "word": "чулан",      "difficulty": 3 }
+        { "id": "c-wm-34", "word": "чулан",      "difficulty": 3 },
+        { "id": "c-wm-35", "word": "пуговица",   "difficulty": 3 },
+        { "id": "c-wm-36", "word": "решётца",    "difficulty": 3 },
+        { "id": "c-wm-37", "word": "больница",   "difficulty": 3 },
+        { "id": "c-wm-38", "word": "тигрица",    "difficulty": 3 },
+        { "id": "c-wm-39", "word": "сестрица",   "difficulty": 3 }
       ]
     },
     "wordFinal": {
@@ -194,7 +204,12 @@
         { "id": "c-wf-21", "word": "горец",      "difficulty": 3 },
         { "id": "c-wf-22", "word": "жнец",       "difficulty": 3 },
         { "id": "c-wf-23", "word": "скворец",    "difficulty": 3 },
-        { "id": "c-wf-24", "word": "страдалец",  "difficulty": 4 }
+        { "id": "c-wf-24", "word": "страдалец",  "difficulty": 4 },
+        { "id": "c-wf-25", "word": "беглец",     "difficulty": 3 },
+        { "id": "c-wf-26", "word": "пловец",     "difficulty": 2 },
+        { "id": "c-wf-27", "word": "юнец",       "difficulty": 3 },
+        { "id": "c-wf-28", "word": "мудрец",     "difficulty": 3 },
+        { "id": "c-wf-29", "word": "борец",      "difficulty": 2 }
       ]
     },
     "phrase": {
@@ -230,7 +245,29 @@
         { "id": "c-ph-26", "word": "блюдце с чаем",             "difficulty": 3 },
         { "id": "c-ph-27", "word": "цвет неба",                 "difficulty": 2 },
         { "id": "c-ph-28", "word": "наконец пришёл",            "difficulty": 3 },
-        { "id": "c-ph-29", "word": "скворец прилетел",          "difficulty": 3 }
+        { "id": "c-ph-29", "word": "скворец прилетел",          "difficulty": 3 },
+        { "id": "c-ph-30", "word": "цыплёнок пищит",           "difficulty": 2 },
+        { "id": "c-ph-31", "word": "цирковые артисты",         "difficulty": 3 },
+        { "id": "c-ph-32", "word": "цветок на подоконнике",    "difficulty": 2 },
+        { "id": "c-ph-33", "word": "отец и сын",               "difficulty": 2 },
+        { "id": "c-ph-34", "word": "яйцо на завтрак",          "difficulty": 2 },
+        { "id": "c-ph-35", "word": "цапля у воды",             "difficulty": 2 },
+        { "id": "c-ph-36", "word": "больница в городе",        "difficulty": 2 },
+        { "id": "c-ph-37", "word": "цветущий сад",             "difficulty": 2 },
+        { "id": "c-ph-38", "word": "сестрица и братец",        "difficulty": 3 },
+        { "id": "c-ph-39", "word": "цифры на часах",           "difficulty": 2 },
+        { "id": "c-ph-40", "word": "курица во дворе",          "difficulty": 2 },
+        { "id": "c-ph-41", "word": "беглец из цирка",          "difficulty": 3 },
+        { "id": "c-ph-42", "word": "цепь у забора",            "difficulty": 2 },
+        { "id": "c-ph-43", "word": "умный молодец",            "difficulty": 2 },
+        { "id": "c-ph-44", "word": "мудрец в горах",           "difficulty": 3 },
+        { "id": "c-ph-45", "word": "лисица в лесу",            "difficulty": 2 },
+        { "id": "c-ph-46", "word": "синица зимой",             "difficulty": 2 },
+        { "id": "c-ph-47", "word": "дворец у моря",            "difficulty": 2 },
+        { "id": "c-ph-48", "word": "пловец в бассейне",        "difficulty": 3 },
+        { "id": "c-ph-49", "word": "кольцо маме",              "difficulty": 2 },
+        { "id": "c-ph-50", "word": "цветочная поляна",         "difficulty": 3 },
+        { "id": "c-ph-51", "word": "тигрица с тигрятами",      "difficulty": 3 }
       ]
     },
     "sentence": {
@@ -256,7 +293,27 @@
         { "id": "c-sen-16", "word": "Цена на цветы невысокая.",                 "difficulty": 4 },
         { "id": "c-sen-17", "word": "Танцор выступает на сцене.",               "difficulty": 4 },
         { "id": "c-sen-18", "word": "Цирк приехал в наш город.",                "difficulty": 3 },
-        { "id": "c-sen-19", "word": "Умница и молодец — ты справился!",         "difficulty": 3 }
+        { "id": "c-sen-19", "word": "Умница и молодец — ты справился!",         "difficulty": 3 },
+        { "id": "c-sen-20", "word": "Цыплёнок жёлтый и пушистый.",              "difficulty": 2 },
+        { "id": "c-sen-21", "word": "Лисица рыжая живёт в лесу.",               "difficulty": 2 },
+        { "id": "c-sen-22", "word": "Синица прилетела к кормушке.",              "difficulty": 3 },
+        { "id": "c-sen-23", "word": "Отец принёс домой цветы.",                  "difficulty": 2 },
+        { "id": "c-sen-24", "word": "Цирк приехал в наш город надолго.",         "difficulty": 3 },
+        { "id": "c-sen-25", "word": "Курица с цыплятами гуляет во дворе.",       "difficulty": 3 },
+        { "id": "c-sen-26", "word": "В больнице работает много врачей.",          "difficulty": 3 },
+        { "id": "c-sen-27", "word": "Цветок на подоконнике расцвёл.",             "difficulty": 3 },
+        { "id": "c-sen-28", "word": "Скворец поёт громко на ветке.",              "difficulty": 3 },
+        { "id": "c-sen-29", "word": "Пловец прыгнул в воду.",                    "difficulty": 2 },
+        { "id": "c-sen-30", "word": "Цапля стоит неподвижно у реки.",            "difficulty": 3 },
+        { "id": "c-sen-31", "word": "Кольцо упало на пол и покатилось.",         "difficulty": 3 },
+        { "id": "c-sen-32", "word": "Мудрец дал мудрый совет.",                  "difficulty": 3 },
+        { "id": "c-sen-33", "word": "На улице мороз — надень рукавицы.",          "difficulty": 3 },
+        { "id": "c-sen-34", "word": "Беглец спрятался в лесу.",                  "difficulty": 3 },
+        { "id": "c-sen-35", "word": "Цифры нужно учить в школе.",                "difficulty": 3 },
+        { "id": "c-sen-36", "word": "Тигрица охраняет своих тигрят.",             "difficulty": 3 },
+        { "id": "c-sen-37", "word": "Сестрица помогла братцу.",                  "difficulty": 3 },
+        { "id": "c-sen-38", "word": "Цветущая яблоня стоит в саду.",              "difficulty": 3 },
+        { "id": "c-sen-39", "word": "Молодец — это похвала за хорошую работу.",   "difficulty": 4 }
       ]
     },
     "diff": {
@@ -277,7 +334,29 @@
         { "id": "c-diff-11", "word": "чашка — цашка",   "hint": "Чашка — посуда, цашка — нет.", "difficulty": 2 },
         { "id": "c-diff-12", "word": "чайник — цайник",  "hint": "Чайник кипятит воду, цайник — нет.", "difficulty": 2 },
         { "id": "c-diff-13", "word": "мяч — мяц",       "hint": "Мяч — игра, мяц — нет.", "difficulty": 2 },
-        { "id": "c-diff-14", "word": "цветок — чветок",  "hint": "Цветок растёт, чветок — нет.", "difficulty": 2 }
+        { "id": "c-diff-14", "word": "цветок — чветок",  "hint": "Цветок растёт, чветок — нет.", "difficulty": 2 },
+        { "id": "c-diff-15", "word": "цапля — сапля",    "hint": "Цапля — птица, сапля — нет.", "difficulty": 2 },
+        { "id": "c-diff-16", "word": "огурец — огурес",  "hint": "Огурец — овощ, огурес — нет.", "difficulty": 2 },
+        { "id": "c-diff-17", "word": "яйцо — яйсо",      "hint": "Яйцо — настоящее, яйсо — нет.", "difficulty": 2 },
+        { "id": "c-diff-18", "word": "курица — куриса",   "hint": "Курица — птица, куриса — нет.", "difficulty": 2 },
+        { "id": "c-diff-19", "word": "синица — синиса",   "hint": "Синица — птица, синиса — нет.", "difficulty": 2 },
+        { "id": "c-diff-20", "word": "кольцо — кольчо",   "hint": "Кольцо — с Ц. Кольчо — нет.", "difficulty": 3 },
+        { "id": "c-diff-21", "word": "блюдце — блюдче",   "hint": "Блюдце — с Ц. Блюдче — нет.", "difficulty": 3 },
+        { "id": "c-diff-22", "word": "цирк — сирк",       "hint": "Цирк — с Ц, сирк — нет.", "difficulty": 2 },
+        { "id": "c-diff-23", "word": "отец — отеч",       "hint": "Отец — с Ц, отеч — нет.", "difficulty": 2 },
+        { "id": "c-diff-24", "word": "цепь — чепь",       "hint": "Цепь — с Ц, чепь — нет.", "difficulty": 2 },
+        { "id": "c-diff-25", "word": "конец — конеч",     "hint": "Конец — с Ц, конеч — нет.", "difficulty": 2 },
+        { "id": "c-diff-26", "word": "улица — улича",     "hint": "Улица — с Ц, улича — нет.", "difficulty": 2 },
+        { "id": "c-diff-27", "word": "цветок — чветок",   "hint": "Цветок — с Ц в начале.", "difficulty": 2 },
+        { "id": "c-diff-28", "word": "лисица — лисича",   "hint": "Лисица — с Ц, лисича — нет.", "difficulty": 3 },
+        { "id": "c-diff-29", "word": "скворец — скворес", "hint": "Скворец — с Ц, скворес — нет.", "difficulty": 3 },
+        { "id": "c-diff-30", "word": "танец — танес",     "hint": "Танец — с Ц, танес — нет.", "difficulty": 2 },
+        { "id": "c-diff-31", "word": "молодец — молодеч", "hint": "Молодец — с Ц, молодеч — нет.", "difficulty": 2 },
+        { "id": "c-diff-32", "word": "мудрец — мудреч",   "hint": "Мудрец — с Ц, мудреч — нет.", "difficulty": 3 },
+        { "id": "c-diff-33", "word": "певец — певеч",     "hint": "Певец — с Ц, певеч — нет.", "difficulty": 2 },
+        { "id": "c-diff-34", "word": "цифра — сифра",     "hint": "Цифра — с Ц, сифра — нет.", "difficulty": 2 },
+        { "id": "c-diff-35", "word": "цирюльник — сирюльник","hint": "Цирюльник — с Ц, сирюльник — нет.", "difficulty": 3 },
+        { "id": "c-diff-36", "word": "птица — птиса",     "hint": "Птица — с Ц, птиса — нет.", "difficulty": 2 }
       ]
     }
   },

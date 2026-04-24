@@ -134,7 +134,17 @@
         { "id": "ch-wi-46", "word": "чудотворный",  "imageAsset": null,                "audioAsset": null, "difficulty": 5 },
         { "id": "ch-wi-47", "word": "чернозём",     "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
         { "id": "ch-wi-48", "word": "чертополох",   "imageAsset": null,                "audioAsset": null, "difficulty": 4 },
-        { "id": "ch-wi-49", "word": "чистоплотный", "imageAsset": null,                "audioAsset": null, "difficulty": 5 }
+        { "id": "ch-wi-49", "word": "чистоплотный", "imageAsset": null,                "audioAsset": null, "difficulty": 5 },
+        { "id": "ch-wi-50", "word": "чайник",       "imageAsset": "img_chainik2",      "audioAsset": null, "difficulty": 1 },
+        { "id": "ch-wi-51", "word": "чаша",         "imageAsset": "img_chasha",        "audioAsset": null, "difficulty": 1 },
+        { "id": "ch-wi-52", "word": "чабрец",       "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "ch-wi-53", "word": "чайная",       "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "ch-wi-54", "word": "чаще",         "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "ch-wi-55", "word": "чернеть",      "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "ch-wi-56", "word": "честный",      "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "ch-wi-57", "word": "чихать",       "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "ch-wi-58", "word": "чирикать",     "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "ch-wi-59", "word": "чудак",        "imageAsset": null,                "audioAsset": null, "difficulty": 2 }
       ]
     },
     "wordMed": {
@@ -185,7 +195,19 @@
         { "id": "ch-wm-41", "word": "источник",     "imageAsset": null,                "audioAsset": null, "difficulty": 4 },
         { "id": "ch-wm-42", "word": "плачущий",     "imageAsset": null,                "audioAsset": null, "difficulty": 4 },
         { "id": "ch-wm-43", "word": "кричащий",     "imageAsset": null,                "audioAsset": null, "difficulty": 4 },
-        { "id": "ch-wm-44", "word": "дощечка",      "imageAsset": null,                "audioAsset": null, "difficulty": 3 }
+        { "id": "ch-wm-44", "word": "дощечка",      "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "ch-wm-45", "word": "речка",        "imageAsset": "img_rechka",        "audioAsset": null, "difficulty": 1 },
+        { "id": "ch-wm-46", "word": "дочери",       "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "ch-wm-47", "word": "ночлег",       "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "ch-wm-48", "word": "покачаться",   "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "ch-wm-49", "word": "птичка",       "imageAsset": "img_ptichka",       "audioAsset": null, "difficulty": 1 },
+        { "id": "ch-wm-50", "word": "рычать",       "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "ch-wm-51", "word": "мечтать",      "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "ch-wm-52", "word": "прочитать",    "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "ch-wm-53", "word": "ночёвка",      "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "ch-wm-54", "word": "качалка",      "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "ch-wm-55", "word": "дачница",      "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "ch-wm-56", "word": "ачкастый",     "imageAsset": null,                "audioAsset": null, "difficulty": 3 }
       ]
     },
     "wordFinal": {
@@ -221,7 +243,17 @@
         { "id": "ch-wf-26", "word": "куча",         "imageAsset": null,                "audioAsset": null, "difficulty": 1 },
         { "id": "ch-wf-27", "word": "пуча",         "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
         { "id": "ch-wf-28", "word": "зодчий",       "imageAsset": null,                "audioAsset": null, "difficulty": 4 },
-        { "id": "ch-wf-29", "word": "значач",       "imageAsset": null,                "audioAsset": null, "difficulty": 4 }
+        { "id": "ch-wf-29", "word": "значач",       "imageAsset": null,                "audioAsset": null, "difficulty": 4 },
+        { "id": "ch-wf-30", "word": "мач",          "imageAsset": null,                "audioAsset": null, "difficulty": 1 },
+        { "id": "ch-wf-31", "word": "обруч",        "imageAsset": "img_obruch",        "audioAsset": null, "difficulty": 2 },
+        { "id": "ch-wf-32", "word": "плачь",        "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "ch-wf-33", "word": "горяч",        "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "ch-wf-34", "word": "трубач",       "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "ch-wf-35", "word": "скрипач",      "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "ch-wf-36", "word": "ткач",         "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "ch-wf-37", "word": "силач",        "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "ch-wf-38", "word": "рыбач",        "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "ch-wf-39", "word": "удач",         "imageAsset": null,                "audioAsset": null, "difficulty": 2 }
       ]
     },
     "phrase": {
@@ -267,7 +299,27 @@
         { "id": "ch-ph-36", "word": "учительница объясняет",  "difficulty": 4 },
         { "id": "ch-ph-37", "word": "чечевичный суп",         "difficulty": 4 },
         { "id": "ch-ph-38", "word": "черновик написан",       "difficulty": 4 },
-        { "id": "ch-ph-39", "word": "чудное утро",            "difficulty": 3 }
+        { "id": "ch-ph-39", "word": "чудное утро",            "difficulty": 3 },
+        { "id": "ch-ph-40", "word": "чистая речка",           "difficulty": 2 },
+        { "id": "ch-ph-41", "word": "маленькая птичка",       "difficulty": 2 },
+        { "id": "ch-ph-42", "word": "горячий обед",           "difficulty": 2 },
+        { "id": "ch-ph-43", "word": "честный мальчик",        "difficulty": 2 },
+        { "id": "ch-ph-44", "word": "чёрная туча над лесом",  "difficulty": 3 },
+        { "id": "ch-ph-45", "word": "обруч катится",          "difficulty": 2 },
+        { "id": "ch-ph-46", "word": "скрипач играет",         "difficulty": 3 },
+        { "id": "ch-ph-47", "word": "читать книгу вслух",     "difficulty": 2 },
+        { "id": "ch-ph-48", "word": "качели скрипят",         "difficulty": 2 },
+        { "id": "ch-ph-49", "word": "ночью светит луна",      "difficulty": 3 },
+        { "id": "ch-ph-50", "word": "чайка над морем",        "difficulty": 2 },
+        { "id": "ch-ph-51", "word": "черепаха в траве",       "difficulty": 2 },
+        { "id": "ch-ph-52", "word": "горячая печка",          "difficulty": 2 },
+        { "id": "ch-ph-53", "word": "мечтать о море",         "difficulty": 3 },
+        { "id": "ch-ph-54", "word": "чудесный подарок",       "difficulty": 2 },
+        { "id": "ch-ph-55", "word": "ночной поезд",           "difficulty": 3 },
+        { "id": "ch-ph-56", "word": "четыре кирпича",         "difficulty": 3 },
+        { "id": "ch-ph-57", "word": "ключ в замке",           "difficulty": 2 },
+        { "id": "ch-ph-58", "word": "больной врач",           "difficulty": 2 },
+        { "id": "ch-ph-59", "word": "чашка молока",           "difficulty": 1 }
       ]
     },
     "sentence": {
@@ -298,7 +350,22 @@
         { "id": "ch-sen-21", "word": "Свеча горит в тёмной комнате.",                "difficulty": 4 },
         { "id": "ch-sen-22", "word": "Четыре чашки стоят на столе.",                 "difficulty": 3 },
         { "id": "ch-sen-23", "word": "Черновик лежит рядом с ручкой.",               "difficulty": 4 },
-        { "id": "ch-sen-24", "word": "Чебурашка — добрый и чудесный герой.",         "difficulty": 4 }
+        { "id": "ch-sen-24", "word": "Чебурашка — добрый и чудесный герой.",         "difficulty": 4 },
+        { "id": "ch-sen-25", "word": "Ночью чёрная кошка сидит на печке.",           "difficulty": 3 },
+        { "id": "ch-sen-26", "word": "Птичка чирикает на ветке.",                    "difficulty": 2 },
+        { "id": "ch-sen-27", "word": "Мальчик чихнул и засмеялся.",                  "difficulty": 2 },
+        { "id": "ch-sen-28", "word": "Речка течёт через лес.",                       "difficulty": 2 },
+        { "id": "ch-sen-29", "word": "Врач лечит и помогает детям.",                 "difficulty": 2 },
+        { "id": "ch-sen-30", "word": "Трубач играет на трубе в оркестре.",           "difficulty": 3 },
+        { "id": "ch-sen-31", "word": "Ключ лежит в кармане куртки.",                 "difficulty": 3 },
+        { "id": "ch-sen-32", "word": "Чайка кричит над синим морем.",                "difficulty": 3 },
+        { "id": "ch-sen-33", "word": "Чемодан очень тяжёлый.",                       "difficulty": 2 },
+        { "id": "ch-sen-34", "word": "Обруч катится по дорожке.",                    "difficulty": 2 },
+        { "id": "ch-sen-35", "word": "Чистая вода течёт в речке.",                   "difficulty": 2 },
+        { "id": "ch-sen-36", "word": "Мяч упал и покатился под скамейку.",           "difficulty": 3 },
+        { "id": "ch-sen-37", "word": "Скрипач играет красивую музыку.",              "difficulty": 3 },
+        { "id": "ch-sen-38", "word": "Черника растёт в тёмном лесу.",                "difficulty": 3 },
+        { "id": "ch-sen-39", "word": "Дочка читает маме сказку вслух.",              "difficulty": 3 }
       ]
     },
     "diff": {
@@ -324,7 +391,22 @@
         { "id": "ch-df-16", "word": "пчела — пцела",   "hint": "Пчела — с ЧЕ.", "difficulty": 3 },
         { "id": "ch-df-17", "word": "ночка — ношка",   "hint": "Ночка — с Ч.", "difficulty": 3 },
         { "id": "ch-df-18", "word": "луч — луш",       "hint": "Луч — с Ч.", "difficulty": 2 },
-        { "id": "ch-df-19", "word": "мяч — мяш",       "hint": "Мяч — с Ч.", "difficulty": 2 }
+        { "id": "ch-df-19", "word": "мяч — мяш",       "hint": "Мяч — с Ч.", "difficulty": 2 },
+        { "id": "ch-df-20", "word": "речка — решка",   "hint": "Речка — с Ч. Оба слова есть!", "difficulty": 2 },
+        { "id": "ch-df-21", "word": "тачка — ташка",   "hint": "Тачка — с Ч в середине.", "difficulty": 2 },
+        { "id": "ch-df-22", "word": "кочан — кошан",   "hint": "Кочан (капусты) — с Ч.", "difficulty": 3 },
+        { "id": "ch-df-23", "word": "чулок — шулок",   "hint": "Чулок — настоящее слово, с Ч.", "difficulty": 2 },
+        { "id": "ch-df-24", "word": "ручей — рушей",   "hint": "Ручей — с Ч в середине.", "difficulty": 2 },
+        { "id": "ch-df-25", "word": "обруч — обруш",   "hint": "Обруч — с Ч на конце.", "difficulty": 2 },
+        { "id": "ch-df-26", "word": "чёрный — щёрный", "hint": "Чёрный — правильно, с Ч!", "difficulty": 3 },
+        { "id": "ch-df-27", "word": "чесать — щесать", "hint": "Чесать — с Ч в начале.", "difficulty": 3 },
+        { "id": "ch-df-28", "word": "яйцо — яйчо",     "hint": "Яйцо — с Ц на конце.", "difficulty": 2 },
+        { "id": "ch-df-29", "word": "цапля — чапля",   "hint": "Цапля — с Ц в начале.", "difficulty": 2 },
+        { "id": "ch-df-30", "word": "огурец — огуреч", "hint": "Огурец — с Ц на конце.", "difficulty": 3 },
+        { "id": "ch-df-31", "word": "пальчик — пальщик","hint": "Пальчик — с Ч в середине.", "difficulty": 2 },
+        { "id": "ch-df-32", "word": "лечить — лещить", "hint": "Лечить — с Ч в середине.", "difficulty": 3 },
+        { "id": "ch-df-33", "word": "силач — силаш",   "hint": "Силач — с Ч на конце.", "difficulty": 2 },
+        { "id": "ch-df-34", "word": "скрипач — скрипаш","hint": "Скрипач — с Ч на конце.", "difficulty": 3 }
       ]
     }
   },
