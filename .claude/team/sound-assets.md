@@ -12,7 +12,8 @@
 | UI sounds (.caf) | 16 | ~150 KB | `HappySpeech/Resources/Audio/UI/` (в репо) | ✅ M3.2 done |
 | Ляля voice brand (.m4a) | 120 | ~2 MB | `HappySpeech/Resources/Audio/Lyalya/` (в репо) | ✅ M3.3 done |
 | Content audio batch 1 (.m4a) | 1000 | 12.65 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 1 |
-| Content audio batch 2+ | 0 / ~5000 | ~60 MB | Firebase Storage | ⏳ pending |
+| Content audio batch 2 (.m4a) | 1028 | 11.1 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 2 |
+| Content audio batch 3+ | 0 / ~4000 | ~50 MB | Firebase Storage | ⏳ pending |
 | Эталоны для M4.3 (premium TTS) | 0 | — | `_workshop/references/` | ⏳ pending M3.5 |
 | Ambient / background music | 0 / 4 | — | `Resources/Audio/Ambient/` | ⏳ pending M9 |
 
@@ -99,12 +100,40 @@
 
 ---
 
-## M3.4 Batch 2+ — Остальные паки (~5000 файлов) ⏳
+## M3.4 Batch 2 — Сонорные Р/Л (1028 файлов, 11.1 MB) ✅
+
+**Дата:** 2026-04-24
+**Генерация:** `_workshop/scripts/generate_sonants_audio.py` — edge-tts `ru-RU-SvetlanaNeural` → pyloudnorm -16 LUFS → AAC .m4a
+**Формат:** 16kHz mono, 5–45 KB/файл (все < 50 KB)
+**Длительность:** 1.0–3.5s
+
+### Разбивка по пакам batch 2
+
+| Пак | Звук | Этапы | Файлов | Размер |
+|---|---|---|---|---|
+| `sound_r_pack.json` | Р/Р' (все этапы) | prep, isolated, syllable, wordInit, wordMed, wordFinal, phrase, sentence, story, diff | 500 | 5.1 MB |
+| `sound_l_pack.json` | Л/Л' (все этапы) | prep, isolated, syllable, wordInit, wordMed, wordFinal, phrase, sentence, story, diff | 328 | 3.3 MB |
+| `sound_diff_rl_pack.json` | Р/Л дифференциация | prep, isolated, syllable, wordInit, wordMed, phrase, sentence, diff | 200 | 2.7 MB |
+| **ИТОГО batch 2** | — | — | **1028** | **11.1 MB** |
+
+### Валидация (5 случайных файлов)
+- Sample rate 16000 Hz ✅
+- Channels 1 (mono) ✅
+- Codec AAC (.m4a) ✅
+- Размер < 50 KB ✅ (0 нарушений)
+- Все 1028 файлов сгенерированы, 0 пропущено ✅
+
+### Путь к скрипту (resumable)
+`_workshop/scripts/generate_sonants_audio.py` — при повторном запуске пропускает уже готовые файлы.
+
+---
+
+## M3.4 Batch 3+ — Остальные паки (~4000 файлов) ⏳
 
 **Status:** pending
-**План:** Запустить тот же скрипт повторно — продолжит со Ш wordMed+, затем Ж, Ч, Щ, сонорные (Р/Рь/Л/Ль), велярные (К/Г/Х), Й, и все narrative/breathing/lexical паки.
+**План:** Запустить аналогичный скрипт для Ж, Ч, Щ, велярные (К/Г/Х), Й, и все narrative/breathing/lexical паки.
 
-Оценка: ~130 минут общего времени генерации, ~60 MB финального объёма.
+Оценка: ~100 минут общего времени генерации, ~50 MB финального объёма.
 
 ---
 
@@ -170,7 +199,7 @@ COPYRIGHT RULE: каждый звук должен иметь verified CC0/Apach
 
 ## Следующие шаги
 
-- **M3.4 batch 2** — запустить `generate_content_audio.py` для остальных 5000 файлов (~130 мин)
+- **M3.4 batch 3** — запустить аналогичный скрипт для Ж/Ч/Щ/К/Г/Х/Й + lexical/narrative паки (~100 мин)
 - **M3.5** — генерация эталонов для PronunciationScorer (после M3.4 batch 2, ~1200 слов)
 - **M3.6 ambient** — 4 трека CC0 для world_map/lesson/AR/reward
 - **Firebase Storage upload** — после M3.4 batch 3 (финальный) → delegated to backend-developer M11.4
