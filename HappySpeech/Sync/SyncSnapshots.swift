@@ -29,8 +29,12 @@ struct ChildProfileSnapshot: Sendable {
     let totalSessionMinutes: Int
     let currentStreak: Int
     let lastSessionAt: Date?
+    /// Момент создания snapshot'а. В будущем, когда `ChildProfile` получит
+    /// явное поле `updatedAt`, это значение должно заполняться из Realm —
+    /// сейчас используется `Date()` на месте сбора snapshot'а как приближение.
+    let updatedAt: Date
 
-    func firestoreDict(parentId: String) -> [String: Any] {
+    func firestoreDict() -> [String: Any] {
         var dict: [String: Any] = [
             "id": id,
             "parentId": parentId,
@@ -38,7 +42,7 @@ struct ChildProfileSnapshot: Sendable {
             "age": age,
             "totalSessionMinutes": totalSessionMinutes,
             "currentStreak": currentStreak,
-            "updatedAt": Date().timeIntervalSince1970
+            "updatedAt": updatedAt.timeIntervalSince1970
         ]
         if let lastSessionAt {
             dict["lastSessionAt"] = lastSessionAt.timeIntervalSince1970
