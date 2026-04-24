@@ -42,6 +42,9 @@ public final class AppContainer {
     // SoundService — lazy, не требует изменения init
     private var _soundService: (any SoundServiceProtocol)?
 
+    // FaceAnalysisService — lazy, не требует изменения init
+    private var _faceAnalysisService: (any FaceAnalysisService)?
+
     // Factory closures (injected at init)
     private let audioServiceFactory: () -> any AudioService
     private let asrServiceFactory: () -> any ASRService
@@ -217,6 +220,11 @@ public final class AppContainer {
     public var soundService: any SoundServiceProtocol {
         if _soundService == nil { _soundService = LiveSoundService() }
         return _soundService!
+    }
+
+    public var faceAnalysisService: any FaceAnalysisService {
+        if _faceAnalysisService == nil { _faceAnalysisService = LiveFaceAnalysisService() }
+        return _faceAnalysisService!
     }
 
     // MARK: - GuidedTour

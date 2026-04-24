@@ -224,6 +224,43 @@
 
 ---
 
+---
+
+## M5.3 Vision ML Stack (2026-04-24)
+
+### VNDetectFaceLandmarksRequest
+- Type: Apple Vision framework (no .mlpackage — встроен в iOS SDK)
+- Points: 76 (constellation .constellation76Points, iOS 13+)
+- iOS requirement: 13+ (используется на 17+)
+- Swift integration: `LiveFaceAnalysisService.analyzeFaceLandmarks(pixelBuffer:)`
+- Output: `FaceLandmarkResult` — allPoints, mouthPoints, leftEyePoints, rightEyePoints, jawPoints, boundingBox, confidence
+- Status: production
+
+### LipSymmetryAnalyzer (vDSP)
+- Type: Pure vDSP computation (no ML model)
+- Algorithm: vDSP_minv/maxv для экстракции bbox губ + нормализованное отклонение центра
+- Output: `LipSymmetryResult` — symmetryScore (0–1), leftCorner, rightCorner, mouthOpenRatio, isOpen
+- Swift integration: `LiveFaceAnalysisService.analyzeLipSymmetry(landmarks:)`
+- Status: production
+
+### AirStreamDetector (RMS via vDSP)
+- Type: vDSP_rmsqv энергетический детектор (no ML model)
+- Threshold: normalized RMS 0.05–0.7 (типичный выдох, reference = 0.15)
+- Output: `FaceAirStreamResult` — rmsLevel, isBreathing, confidence
+- Swift integration: `LiveFaceAnalysisService.detectAirStream(buffer:)`
+- Note: Отличается от `AirStreamDetector` в Services/ — тот работает с FaceBlendshapes+micAmplitude (AR-режим), этот — с AVAudioPCMBuffer (non-AR режим)
+- Status: production
+
+### TonguePostureClassifier
+- Type: Rule-based classifier (no ML model) — на blendshapes из ARKit
+- Postures: neutral, cupShape, shoveling, mushroom, painter, smile, pucker, tongueUp, tongueDown, tongueLeft, tongueRight
+- Swift integration: `TonguePostureClassifier.classify(_:)` + `confidence(_:for:)`
+- Path: HappySpeech/ML/TonguePostureClassifier.swift
+- Note: Реальная rule-based реализация (не stub); future v2 — Core ML CNN через MediaPipe Face Mesh
+- Status: production (rule-based), v2 planned
+
+---
+
 ## Validation Benchmarks (to be filled after S10)
 
 | Model | Metric | Target | Actual | Device | Date |

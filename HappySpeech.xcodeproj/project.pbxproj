@@ -3428,6 +3428,7 @@
 		916249D097A9FDE4CC97857C /* y-wf-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F8D5C19E7F74CDE6E0BAEC27 /* y-wf-6.m4a */; };
 		9162E7E8E9BA64029509BBCB /* y-syl-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7F16E2302DEB2DCB5788AE4C /* y-syl-8.m4a */; };
 		9166F991349EA025D462609E /* AirStreamDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A862A003BFA3A3AC1BD3448A /* AirStreamDetector.swift */; };
+		F06091FC97C346A9AB45B0C1 /* FaceAnalysisService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25937A80496A47409DB7B53D /* FaceAnalysisService.swift */; };
 		917344A791547672522DA77A /* c-prep-12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7BBF4B28804883B289999B47 /* c-prep-12.m4a */; };
 		917B919F7ACC11EBE45255D3 /* kh-sen-15.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D5D8B83F1DE601DC537F1BBB /* kh-sen-15.m4a */; };
 		918913C424212AA3A8B355B2 /* l-ph-4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5A90486D7130B5F6CF38B30A /* l-ph-4.m4a */; };
@@ -10035,6 +10036,7 @@
 		A85CA5EAEE974EF2DA555F69 /* l-sen-3.m4a */ = {isa = PBXFileReference; path = "l-sen-3.m4a"; sourceTree = "<group>"; };
 		A85FF2A9C9B0B5A1DFA2F5BD /* ag-012.m4a */ = {isa = PBXFileReference; path = "ag-012.m4a"; sourceTree = "<group>"; };
 		A862A003BFA3A3AC1BD3448A /* AirStreamDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirStreamDetector.swift; sourceTree = "<group>"; };
+		25937A80496A47409DB7B53D /* FaceAnalysisService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceAnalysisService.swift; sourceTree = "<group>"; };
 		A86C381EF614C3828CAED7F6 /* kh-sen-20.m4a */ = {isa = PBXFileReference; path = "kh-sen-20.m4a"; sourceTree = "<group>"; };
 		A87EC84B8DB4C9A0328B5F2B /* br-042.m4a */ = {isa = PBXFileReference; path = "br-042.m4a"; sourceTree = "<group>"; };
 		A889A1CEC482353ED4A9F9E6 /* s-iso-10.m4a */ = {isa = PBXFileReference; path = "s-iso-10.m4a"; sourceTree = "<group>"; };
@@ -12694,6 +12696,7 @@
 			children = (
 				A862A003BFA3A3AC1BD3448A /* AirStreamDetector.swift */,
 				B4173F62C51F1821EFF34D1F /* ARSessionService.swift */,
+				25937A80496A47409DB7B53D /* FaceAnalysisService.swift */,
 				292EE5C0B310A1D47B2F4806 /* AudioAnalysisService.swift */,
 				1669AC3C06DA42F0D51F7D2A /* AudioService.swift */,
 				DF006D9CCB45EC4F1E84D1AF /* AuthService.swift */,
@@ -24977,6 +24980,7 @@
 				F7E038E9DDFA1013EEA19716 /* ASRServiceLive.swift in Sources */,
 				D19296C854A04A66DAA711E0 /* AccessibilityModifiers.swift in Sources */,
 				9166F991349EA025D462609E /* AirStreamDetector.swift in Sources */,
+				F06091FC97C346A9AB45B0C1 /* FaceAnalysisService.swift in Sources */,
 				15E4ADCCBB55B9158EFF8B1B /* AnalyticsService.swift in Sources */,
 				E0863DC0AA3AB013D2178E7A /* AppContainer.swift in Sources */,
 				53648D5DF5896F6FABB017EE /* AppCoordinator.swift in Sources */,
