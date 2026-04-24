@@ -18,7 +18,13 @@
         { "id": "y-prep-6",  "word": "маляр",             "hint": "Широким языком 'красим' нёбо — проводи вперёд-назад по твёрдому нёбу.", "difficulty": 2 },
         { "id": "y-prep-7",  "word": "лопатка",           "hint": "Широкий расслабленный язычок на нижней губе. Держи 5 секунд.", "difficulty": 1 },
         { "id": "y-prep-8",  "word": "иголочка",          "hint": "Острый кончик языка — вытяни вперёд не касаясь губ.", "difficulty": 2 },
-        { "id": "y-prep-9",  "word": "заборчик",          "hint": "Улыбнись широко — покажи все зубки. Держи 5 секунд.", "difficulty": 1 }
+        { "id": "y-prep-9",  "word": "заборчик",          "hint": "Улыбнись широко — покажи все зубки. Держи 5 секунд.", "difficulty": 1 },
+        { "id": "y-prep-10", "word": "вкусное варенье",  "hint": "Лижем верхнюю губу — как котёнок. Язык широкий.", "difficulty": 1 },
+        { "id": "y-prep-11", "word": "чередование",      "hint": "Улыбка — трубочка — улыбка. 5 раз быстро.", "difficulty": 2 },
+        { "id": "y-prep-12", "word": "пружина-язык",     "hint": "Язык к нёбу — быстро вниз — опять вверх. Вверх-вниз 10 раз.", "difficulty": 2 },
+        { "id": "y-prep-13", "word": "спинка-горкой",    "hint": "Средняя часть языка горбом вверх, кончик внизу. Держи 5 секунд.", "difficulty": 3 },
+        { "id": "y-prep-14", "word": "молоточек",        "hint": "Кончиком языка стучим за верхними зубами: та-та-та-та.", "difficulty": 2 },
+        { "id": "y-prep-15", "word": "трубочка-улыбка",  "hint": "Трубочка — широкая улыбка. Быстро, 10 раз подряд.", "difficulty": 2 }
       ]
     },
     "isolated": {
@@ -32,7 +38,11 @@
         { "id": "y-iso-4",  "word": "й в конце",          "hint": "Май: ма-й. Слышишь Й в конце?", "difficulty": 2 },
         { "id": "y-iso-5",  "word": "й-й-й как скрип",   "hint": "Й звучит как скрип двери: й-й-й. Повтори три раза.", "difficulty": 2 },
         { "id": "y-iso-6",  "word": "й тихо-громко",     "hint": "Тихо: й... Потом громче: й! Й! Й!", "difficulty": 3 },
-        { "id": "y-iso-7",  "word": "й ритм 2-2",        "hint": "Два удара — пауза: йй — пауза — йй.", "difficulty": 3 }
+        { "id": "y-iso-7",  "word": "й ритм 2-2",        "hint": "Два удара — пауза: йй — пауза — йй.", "difficulty": 3 },
+        { "id": "y-iso-8",  "word": "й в слове ель",    "hint": "Ель начинается с Й+Э. Скажи медленно: й-э-ль.", "difficulty": 2 },
+        { "id": "y-iso-9",  "word": "й-а, й-о, й-у",   "hint": "Чередуй: й-а, й-о, й-у, й-э. Это — я, ё, ю, е!", "difficulty": 2 },
+        { "id": "y-iso-10", "word": "й тихо-быстро",   "hint": "Медленно: й-й-й... Потом быстрее: йй-йй-йй!", "difficulty": 3 },
+        { "id": "y-iso-11", "word": "й в конце слова", "hint": "Скажи слово «чай»: ча-й. Слышишь Й на конце?", "difficulty": 2 }
       ]
     },
     "syllable": {
@@ -54,7 +64,21 @@
         { "id": "y-syl-12", "word": "ой-уй",    "difficulty": 2 },
         { "id": "y-syl-13", "word": "ай-ой-уй", "difficulty": 3 },
         { "id": "y-syl-14", "word": "май",      "difficulty": 2 },
-        { "id": "y-syl-15", "word": "рай",      "difficulty": 2 }
+        { "id": "y-syl-15", "word": "рай",      "difficulty": 2 },
+        { "id": "y-syl-16", "word": "бой",      "difficulty": 2 },
+        { "id": "y-syl-17", "word": "рой",      "difficulty": 2 },
+        { "id": "y-syl-18", "word": "дай",      "difficulty": 1 },
+        { "id": "y-syl-19", "word": "лей",      "difficulty": 2 },
+        { "id": "y-syl-20", "word": "вей",      "difficulty": 2 },
+        { "id": "y-syl-21", "word": "куй",      "difficulty": 2 },
+        { "id": "y-syl-22", "word": "дуй",      "difficulty": 2 },
+        { "id": "y-syl-23", "word": "ай-ай-ай", "difficulty": 1 },
+        { "id": "y-syl-24", "word": "ой-ой-ой", "difficulty": 1 },
+        { "id": "y-syl-25", "word": "уй-уй-уй", "difficulty": 2 },
+        { "id": "y-syl-26", "word": "ай-ой",    "difficulty": 2 },
+        { "id": "y-syl-27", "word": "ой-эй",    "difficulty": 2 },
+        { "id": "y-syl-28", "word": "ай-ой-эй", "difficulty": 3 },
+        { "id": "y-syl-29", "word": "йа-йо-йу", "difficulty": 3 }
       ]
     },
     "wordInit": {
@@ -85,7 +109,22 @@
         { "id": "y-wi-21", "word": "яхтсмен",   "difficulty": 4 },
         { "id": "y-wi-22", "word": "ягуар",     "difficulty": 3 },
         { "id": "y-wi-23", "word": "ящик",      "difficulty": 2 },
-        { "id": "y-wi-24", "word": "ящерица",   "difficulty": 3 }
+        { "id": "y-wi-24", "word": "ящерица",   "difficulty": 3 },
+        { "id": "y-wi-25", "word": "ель",       "difficulty": 1 },
+        { "id": "y-wi-26", "word": "ёрш",       "difficulty": 1 },
+        { "id": "y-wi-27", "word": "юла",       "difficulty": 1 },
+        { "id": "y-wi-28", "word": "яркость",   "difficulty": 3 },
+        { "id": "y-wi-29", "word": "ягнята",    "difficulty": 3 },
+        { "id": "y-wi-30", "word": "юный",      "difficulty": 2 },
+        { "id": "y-wi-31", "word": "ёлочка",    "difficulty": 2 },
+        { "id": "y-wi-32", "word": "яблоня",    "difficulty": 2 },
+        { "id": "y-wi-33", "word": "юбилей",    "difficulty": 3 },
+        { "id": "y-wi-34", "word": "яхта",      "difficulty": 2 },
+        { "id": "y-wi-35", "word": "ястреб",    "difficulty": 3 },
+        { "id": "y-wi-36", "word": "яичница",   "difficulty": 3 },
+        { "id": "y-wi-37", "word": "ёкать",     "difficulty": 3 },
+        { "id": "y-wi-38", "word": "юмор",      "difficulty": 3 },
+        { "id": "y-wi-39", "word": "яснее",     "difficulty": 3 }
       ]
     },
     "wordMed": {
@@ -116,7 +155,22 @@
         { "id": "y-wm-21", "word": "змейка",    "difficulty": 3 },
         { "id": "y-wm-22", "word": "лайка",     "difficulty": 2 },
         { "id": "y-wm-23", "word": "зайчик",    "difficulty": 2 },
-        { "id": "y-wm-24", "word": "пайка",     "difficulty": 3 }
+        { "id": "y-wm-24", "word": "пайка",     "difficulty": 3 },
+        { "id": "y-wm-25", "word": "зайчонок", "difficulty": 2 },
+        { "id": "y-wm-26", "word": "чайный",   "difficulty": 2 },
+        { "id": "y-wm-27", "word": "раёк",     "difficulty": 3 },
+        { "id": "y-wm-28", "word": "чайная",   "difficulty": 2 },
+        { "id": "y-wm-29", "word": "попугай",  "difficulty": 2 },
+        { "id": "y-wm-30", "word": "урожай",   "difficulty": 3 },
+        { "id": "y-wm-31", "word": "трамвай",  "difficulty": 2 },
+        { "id": "y-wm-32", "word": "самолёт",  "difficulty": 2 },
+        { "id": "y-wm-33", "word": "бойкий",   "difficulty": 3 },
+        { "id": "y-wm-34", "word": "тайник",   "difficulty": 3 },
+        { "id": "y-wm-35", "word": "хозяйка",  "difficulty": 3 },
+        { "id": "y-wm-36", "word": "бойница",  "difficulty": 4 },
+        { "id": "y-wm-37", "word": "пайщик",   "difficulty": 4 },
+        { "id": "y-wm-38", "word": "гайка",    "difficulty": 2 },
+        { "id": "y-wm-39", "word": "кайма",    "difficulty": 3 }
       ]
     },
     "wordFinal": {
@@ -142,7 +196,17 @@
         { "id": "y-wf-16", "word": "клей",      "difficulty": 2 },
         { "id": "y-wf-17", "word": "шалфей",    "difficulty": 4 },
         { "id": "y-wf-18", "word": "кофей",     "difficulty": 3 },
-        { "id": "y-wf-19", "word": "жонглёй",   "difficulty": 4 }
+        { "id": "y-wf-19", "word": "жонглёй",   "difficulty": 4 },
+        { "id": "y-wf-20", "word": "трамвай",   "difficulty": 2 },
+        { "id": "y-wf-21", "word": "урожай",    "difficulty": 2 },
+        { "id": "y-wf-22", "word": "попугай",   "difficulty": 2 },
+        { "id": "y-wf-23", "word": "самовар",   "difficulty": 3 },
+        { "id": "y-wf-24", "word": "трамплин",  "difficulty": 3 },
+        { "id": "y-wf-25", "word": "линей",     "difficulty": 2 },
+        { "id": "y-wf-26", "word": "клей",      "difficulty": 1 },
+        { "id": "y-wf-27", "word": "реквием",   "difficulty": 4 },
+        { "id": "y-wf-28", "word": "батарей",   "difficulty": 3 },
+        { "id": "y-wf-29", "word": "гарнизон",  "difficulty": 4 }
       ]
     },
     "phrase": {
@@ -168,7 +232,29 @@
         { "id": "y-ph-16", "word": "соловей в саду",              "difficulty": 3 },
         { "id": "y-ph-17", "word": "яркая юбка",                  "difficulty": 2 },
         { "id": "y-ph-18", "word": "копейка на полу",             "difficulty": 2 },
-        { "id": "y-ph-19", "word": "ёж с иголками",               "difficulty": 2 }
+        { "id": "y-ph-19", "word": "ёж с иголками",               "difficulty": 2 },
+        { "id": "y-ph-20", "word": "яйцо в гнезде",               "difficulty": 2 },
+        { "id": "y-ph-21", "word": "трамвай едет",                "difficulty": 2 },
+        { "id": "y-ph-22", "word": "ягнёнок на лугу",             "difficulty": 2 },
+        { "id": "y-ph-23", "word": "ёлка в лесу",                 "difficulty": 1 },
+        { "id": "y-ph-24", "word": "юный спортсмен",              "difficulty": 3 },
+        { "id": "y-ph-25", "word": "яхта в море",                 "difficulty": 2 },
+        { "id": "y-ph-26", "word": "зайчик под кустом",           "difficulty": 2 },
+        { "id": "y-ph-27", "word": "майка с полосками",           "difficulty": 2 },
+        { "id": "y-ph-28", "word": "чайка над волной",            "difficulty": 3 },
+        { "id": "y-ph-29", "word": "чай с лимоном",               "difficulty": 2 },
+        { "id": "y-ph-30", "word": "урожай яблок",                "difficulty": 2 },
+        { "id": "y-ph-31", "word": "ячмень в поле",               "difficulty": 3 },
+        { "id": "y-ph-32", "word": "январь холодный",             "difficulty": 3 },
+        { "id": "y-ph-33", "word": "яркий свет",                  "difficulty": 2 },
+        { "id": "y-ph-34", "word": "ёж в листьях",                "difficulty": 2 },
+        { "id": "y-ph-35", "word": "юрта в степи",                "difficulty": 3 },
+        { "id": "y-ph-36", "word": "попугай в клетке",            "difficulty": 2 },
+        { "id": "y-ph-37", "word": "лейка для цветов",            "difficulty": 2 },
+        { "id": "y-ph-38", "word": "юла на столе",                "difficulty": 1 },
+        { "id": "y-ph-39", "word": "соловей поёт",                "difficulty": 2 },
+        { "id": "y-ph-40", "word": "якорь на дне",                "difficulty": 2 },
+        { "id": "y-ph-41", "word": "ягуар в прыжке",              "difficulty": 3 }
       ]
     },
     "sentence": {
@@ -189,7 +275,32 @@
         { "id": "y-sen-11", "word": "Юнга помогает морякам на корабле.",            "difficulty": 4 },
         { "id": "y-sen-12", "word": "В январе выпало много снега.",                 "difficulty": 4 },
         { "id": "y-sen-13", "word": "Ёжик нашёл яблоко под ёлкой.",               "difficulty": 4 },
-        { "id": "y-sen-14", "word": "Яркая юбка лежит на скамейке.",               "difficulty": 4 }
+        { "id": "y-sen-14", "word": "Яркая юбка лежит на скамейке.",               "difficulty": 4 },
+        { "id": "y-sen-15", "word": "Ёжик катит яблоко на спине.",                  "difficulty": 3 },
+        { "id": "y-sen-16", "word": "Яйцо лежит в гнезде на ветке.",               "difficulty": 2 },
+        { "id": "y-sen-17", "word": "Трамвай едет по улице.",                       "difficulty": 2 },
+        { "id": "y-sen-18", "word": "Попугай кричит: «Привет! Привет!»",           "difficulty": 3 },
+        { "id": "y-sen-19", "word": "Зайчик сидит под кустом.",                    "difficulty": 2 },
+        { "id": "y-sen-20", "word": "Ягнёнок бегает по лугу.",                     "difficulty": 2 },
+        { "id": "y-sen-21", "word": "Соловей поёт красиво в саду.",                "difficulty": 3 },
+        { "id": "y-sen-22", "word": "Яхта плывёт по синему морю.",                 "difficulty": 3 },
+        { "id": "y-sen-23", "word": "Чай с лимоном согревает в мороз.",            "difficulty": 3 },
+        { "id": "y-sen-24", "word": "Урожай яблок в этом году большой.",           "difficulty": 3 },
+        { "id": "y-sen-25", "word": "Юный художник рисует ёлку.",                  "difficulty": 3 },
+        { "id": "y-sen-26", "word": "Якорь держит лодку у берега.",                "difficulty": 3 },
+        { "id": "y-sen-27", "word": "Яркие огни украшают ёлочку.",                 "difficulty": 3 },
+        { "id": "y-sen-28", "word": "Ёж нашёл яблоко и яблоню.",                  "difficulty": 3 },
+        { "id": "y-sen-29", "word": "Маша поливает яблоню из лейки.",              "difficulty": 3 },
+        { "id": "y-sen-30", "word": "Чайка кричит над морем.",                     "difficulty": 2 },
+        { "id": "y-sen-31", "word": "Майка намокла под дождём.",                   "difficulty": 2 },
+        { "id": "y-sen-32", "word": "Январь — самый холодный месяц.",              "difficulty": 4 },
+        { "id": "y-sen-33", "word": "Ягуар прыгнул высоко.",                       "difficulty": 3 },
+        { "id": "y-sen-34", "word": "В музее стоят красивые картины.",             "difficulty": 3 },
+        { "id": "y-sen-35", "word": "Воробей клюёт зёрна на скамейке.",           "difficulty": 3 },
+        { "id": "y-sen-36", "word": "Юная певица поёт красивую песню.",            "difficulty": 4 },
+        { "id": "y-sen-37", "word": "Юнга смотрит в подзорную трубу.",             "difficulty": 4 },
+        { "id": "y-sen-38", "word": "Зайчонок прыгнул в ямку под ёлкой.",         "difficulty": 4 },
+        { "id": "y-sen-39", "word": "Ёлочка украшена яркими игрушками.",           "difficulty": 4 }
       ]
     }
   },
