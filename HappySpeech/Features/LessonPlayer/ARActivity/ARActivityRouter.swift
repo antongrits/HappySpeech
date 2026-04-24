@@ -3,23 +3,40 @@ import SwiftUI
 // MARK: - ARActivityRoutingLogic
 
 @MainActor
-protocol ARActivityRoutingLogic {
-    func routeToSessionComplete()
-    func routeBack()
+protocol ARActivityRoutingLogic: AnyObject {
+    func routeToARMirror()
+    func routeToARStoryQuest()
+    func dismiss()
 }
 
 // MARK: - ARActivityRouter
-
+//
+// ARActivity не использует `AppCoordinator.navigate(...)`, потому что
+// дочерние AR-экраны открываются как `fullScreenCover` поверх SessionShell.
+// Router держит коллбеки, которые View-слой привязывает к собственным
+// `@State` флагам showARMirror / showARStoryQuest, а также коллбек
+// завершения (score, stars) для передачи в родительский `onComplete`.
 @MainActor
 final class ARActivityRouter: ARActivityRoutingLogic {
 
-    weak var coordinator: AppCoordinator?
+    /// Показать ARMirrorView (артикуляционное зеркало).
+    var onRouteToMirror: (() -> Void)?
+    /// Показать ARStoryQuestView (нарративный квест).
+    var onRouteToStoryQuest: (() -> Void)?
+    /// Закрыть ARActivity и вернуться в SessionShell.
+    var onDismiss: (() -> Void)?
+    /// Упражнение завершено: (score, stars).
+    var onCompleted: ((Float, Int) -> Void)?
 
-    func routeToSessionComplete() {
-        coordinator?.navigate(to: .sessionComplete)
+    func routeToARMirror() {
+        onRouteToMirror?()
     }
 
-    func routeBack() {
-        coordinator?.pop()
+    func routeToARStoryQuest() {
+        onRouteToStoryQuest?()
+    }
+
+    func dismiss() {
+        onDismiss?()
     }
 }
