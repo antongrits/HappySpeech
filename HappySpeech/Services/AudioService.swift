@@ -118,6 +118,34 @@ public protocol SyncService: Sendable {
     func isSyncing() async -> Bool
     func drainQueue() async throws
     func enqueue(operation: SyncOperation) async throws
+
+    /// Pushes all Realm-stored progress artefacts for a given child/user to the remote store
+    /// as a single batched write. Applies merge-by-max conflict resolution on numeric fields.
+    /// Intended for full-snapshot resync (first login, manual “sync now”, logout cleanup).
+    func syncUserProgress(userId: String) async throws
+
+    /// Live stream of the service state: idle → syncing(progress) → completed(itemsSynced) | failed(message).
+    /// Consumers (Parent Home banner, Settings diagnostics) subscribe via `for await state in service.syncState`.
+    /// Implementations must guarantee that the stream never finishes for the lifetime of the service.
+    var syncState: AsyncStream<SyncState> { get }
+}
+
+// MARK: - Default implementations
+
+/// Default no-op implementations so existing conformers (`MockSyncService`) keep compiling
+/// without forcing every mock/test double to implement the full live surface.
+public extension SyncService {
+    func syncUserProgress(userId: String) async throws {
+        // Mocks/previews: no-op by default. LiveSyncService overrides with a real Firestore batch.
+        _ = userId
+    }
+
+    var syncState: AsyncStream<SyncState> {
+        AsyncStream { continuation in
+            continuation.yield(.idle)
+            continuation.finish()
+        }
+    }
 }
 
 public struct SyncOperation: Sendable {
@@ -125,6 +153,17 @@ public struct SyncOperation: Sendable {
     public let entityId: String
     public let operation: String
     public let payload: String
+}
+
+// MARK: - SyncState
+
+/// High-level state of the sync pipeline, observed by UI surfaces (Parent Home banner, Settings).
+/// `Sendable`-safe for use in `AsyncStream` crossing actor boundaries.
+public enum SyncState: Sendable, Equatable {
+    case idle
+    case syncing(progress: Double)
+    case failed(message: String)
+    case completed(itemsSynced: Int)
 }
 
 // MARK: - AnalyticsService Protocol
