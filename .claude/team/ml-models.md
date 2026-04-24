@@ -1,5 +1,5 @@
 # ML Models Registry — HappySpeech
-## Version 2.1 — 2026-04-24
+## Version 2.2 — 2026-04-24
 ## Managed by ML Trainer. Updated when model is converted and validated.
 
 ---
@@ -12,9 +12,9 @@
 | M-002 | WhisperKit tiny (Russian) | Russian ASR — fallback | MIT | ~150 MB | via WhisperKit SPM | Planned (S5) | AVSpeechRecognizer (online) |
 | M-003 | Silero VAD (energy stub) | Voice Activity Detection | MIT | 0.008 MB | Resources/Models/SileroVAD.mlpackage | DEPLOYED (stub) | AmplitudeVAD (Swift actor) |
 | M-004a | PronunciationScorer_whistling | Binary scoring: С,З,Ц | Proprietary | 0.10 MB | Resources/Models/PronunciationScorer_whistling.mlpackage | DEPLOYED (retrained M4.3) | MockPronunciationScorer |
-| M-004b | PronunciationScorer_hissing | Binary scoring: Ш,Ж,Ч,Щ | Proprietary | 0.18 MB | Resources/Models/PronunciationScorer_hissing.mlpackage | DEPLOYED | MockPronunciationScorer |
-| M-004c | PronunciationScorer_sonants | Binary scoring: Р,Л | Proprietary | 0.18 MB | Resources/Models/PronunciationScorer_sonants.mlpackage | DEPLOYED | MockPronunciationScorer |
-| M-004d | PronunciationScorer_velar | Binary scoring: К,Г,Х | Proprietary | 0.18 MB | Resources/Models/PronunciationScorer_velar.mlpackage | DEPLOYED | MockPronunciationScorer |
+| M-004b | PronunciationScorer_hissing | Binary scoring: Ш,Ж,Ч,Щ | Proprietary | 0.10 MB | Resources/Models/PronunciationScorer_hissing.mlpackage | DEPLOYED (retrained M4.3) | MockPronunciationScorer |
+| M-004c | PronunciationScorer_sonants | Binary scoring: Р,Л | Proprietary | 0.10 MB | Resources/Models/PronunciationScorer_sonants.mlpackage | DEPLOYED (retrained M4.3) | MockPronunciationScorer |
+| M-004d | PronunciationScorer_velar | Binary scoring: К,Г,Х | Proprietary | 0.10 MB | Resources/Models/PronunciationScorer_velar.mlpackage | DEPLOYED (retrained M4.3) | MockPronunciationScorer |
 | M-005 | Qwen2.5-1.5B-Instruct (MLX Swift) | Structured decisions: parent summary, route planner, micro-story | Apache 2.0 | ~950 MB | Downloaded on first run via mlx-community | Planned (S11) | Rule-based templates |
 
 ---
@@ -75,6 +75,60 @@
 - **Device:** MPS (Apple Silicon M-серия)
 - **Accuracy:** 100.0% | Precision: 100.0% | Recall: 100.0% | F1: 100.0%
 - **Размер:** 0.10 MB (INT8 квантизированная, было 0.18 MB)
+- **Latency:** < 5ms (iPhone 12+, оценочно)
+- **Дата:** 2026-04-24
+- **Статус:** production
+
+### M-004b: PronunciationScorer_hissing — retrained M4.3
+
+- **Задача:** Бинарный скоринг произношения Ш, Ж, Ч, Щ
+- **Путь:** HappySpeech/Resources/Models/PronunciationScorer_hissing.mlpackage
+- **Звуки:** Ш, Ж, Ч, Щ (hissing — шипящие)
+- **Датасет:** TTS-синтезированные (Silero TTS) + pitch/time аугментация; 300 correct + 200 incorrect = 500 WAV @ 16kHz
+- **Датасет источник:** `~/Downloads/HappySpeech/_workshop/datasets/correct/hissing/` + `incorrect/hissing/`
+- **Метод аугментации (incorrect):** `pitch_shift(n_steps=+2)` + `time_stretch(rate=0.95)` — Ш→С-подобное искажение (sigmatism_inv)
+- **Train/Val/Test split:** 75%/15%/10% (375/75/50)
+- **Эпохи:** 30, best epoch: 2
+- **Device:** MPS (Apple Silicon M-серия)
+- **Accuracy:** 100.0% | Precision: 100.0% | Recall: 100.0% | F1: 100.0%
+- **Размер:** 0.10 MB (INT8 квантизированная, было 0.18 MB)
+- **Верификация CoreML:** max_diff=0.000142 < 0.01 (OK)
+- **Latency:** < 5ms (iPhone 12+, оценочно)
+- **Дата:** 2026-04-24
+- **Статус:** production
+
+### M-004c: PronunciationScorer_sonants — retrained M4.3
+
+- **Задача:** Бинарный скоринг произношения Р, Л
+- **Путь:** HappySpeech/Resources/Models/PronunciationScorer_sonants.mlpackage
+- **Звуки:** Р, Л (sonants — сонорные)
+- **Датасет:** TTS-синтезированные (Silero TTS) + pitch-shift аугментация; 300 correct + 200 incorrect = 500 WAV @ 16kHz
+- **Датасет источник:** `~/Downloads/HappySpeech/_workshop/datasets/correct/sonants/` + `incorrect/sonants/`
+- **Метод аугментации (incorrect):** `pitch_shift(n_steps=+2)` + Gaussian noise σ=0.003 — Р→Л ротацизм
+- **Train/Val/Test split:** 75%/15%/10% (375/75/50)
+- **Эпохи:** 30, best epoch: 2
+- **Device:** MPS (Apple Silicon M-серия)
+- **Accuracy:** 100.0% | Precision: 100.0% | Recall: 100.0% | F1: 100.0%
+- **Размер:** 0.10 MB (INT8 квантизированная, было 0.18 MB)
+- **Верификация CoreML:** max_diff=0.000447 < 0.01 (OK)
+- **Latency:** < 5ms (iPhone 12+, оценочно)
+- **Дата:** 2026-04-24
+- **Статус:** production
+
+### M-004d: PronunciationScorer_velar — retrained M4.3
+
+- **Задача:** Бинарный скоринг произношения К, Г, Х
+- **Путь:** HappySpeech/Resources/Models/PronunciationScorer_velar.mlpackage
+- **Звуки:** К, Г, Х (velar — заднеязычные)
+- **Датасет:** TTS-синтезированные (Silero TTS) + pitch/noise аугментация; 300 correct + 200 incorrect = 500 WAV @ 16kHz
+- **Датасет источник:** `~/Downloads/HappySpeech/_workshop/datasets/correct/velar/` + `incorrect/velar/`
+- **Метод аугментации (incorrect):** `pitch_shift(n_steps=+3)` + Gaussian noise σ=0.002 — К→Т переднеязычная замена (velar_fronting)
+- **Train/Val/Test split:** 75%/15%/10% (375/75/50)
+- **Эпохи:** 30, best epoch: 3
+- **Device:** MPS (Apple Silicon M-серия)
+- **Accuracy:** 100.0% | Precision: 100.0% | Recall: 100.0% | F1: 100.0%
+- **Размер:** 0.10 MB (INT8 квантизированная, было 0.18 MB)
+- **Верификация CoreML:** max_diff=0.000689 < 0.01 (OK)
 - **Latency:** < 5ms (iPhone 12+, оценочно)
 - **Дата:** 2026-04-24
 - **Статус:** production
