@@ -309,6 +309,171 @@ public final class LiveLLMDecisionService: LLMDecisionServiceProtocol, @unchecke
         return CustomPhraseOutcome(phrase: phrase, meta: meta)
     }
 
+    // MARK: - 13. Warm-up (kid circuit — on-device or rules only)
+
+    public func selectWarmUp(context: WarmUpContext) async -> WarmUpDecisionOutcome {
+        let start = Date()
+        let result = rules.selectWarmUp(context: context)
+        let meta = makeMeta(start: start, source: .ruleBased, usedFallback: false)
+        logDecision(kind: "warmUp", meta: meta, output: result.activityName, childId: nil)
+        return WarmUpDecisionOutcome(
+            activityName: result.activityName,
+            instructions: result.instructions,
+            durationSeconds: result.durationSeconds,
+            meta: meta
+        )
+    }
+
+    // MARK: - 14. Word set (kid circuit — on-device or rules only)
+
+    public func generateWordSet(sound: String, stage: CorrectionStage, count: Int) async -> WordSetDecisionOutcome {
+        let start = Date()
+        let result = rules.generateWordSet(sound: sound, stage: stage, count: count)
+        let meta = makeMeta(start: start, source: .ruleBased, usedFallback: false)
+        logDecision(kind: "wordSet", meta: meta, output: "\(result.words.count)w:\(sound)", childId: nil)
+        return WordSetDecisionOutcome(words: result.words, rationale: result.rationale, meta: meta)
+    }
+
+    // MARK: - 15. Minimal pairs (kid circuit — rules only)
+
+    public func generateMinimalPairs(targetSound: String, confusionSound: String, count: Int) async -> MinimalPairsDecisionOutcome {
+        let start = Date()
+        let pairs = rules.generateMinimalPairs(targetSound: targetSound, confusionSound: confusionSound, count: count)
+        let meta = makeMeta(start: start, source: .ruleBased, usedFallback: false)
+        logDecision(kind: "minimalPairs", meta: meta, output: "\(pairs.count)p:\(targetSound)-\(confusionSound)", childId: nil)
+        return MinimalPairsDecisionOutcome(pairs: pairs, meta: meta)
+    }
+
+    // MARK: - 16. Narrative quest step (kid circuit — rules only for now)
+
+    public func narrativeQuestStep(questState: NarrativeQuestState) async -> NarrativeStepDecisionOutcome {
+        let start = Date()
+        let step = rules.narrativeQuestStep(questState: questState)
+        let meta = makeMeta(start: start, source: .ruleBased, usedFallback: false)
+        logDecision(kind: "narrativeStep", meta: meta, output: "step:\(questState.currentStep)/\(questState.totalSteps)", childId: nil)
+        return NarrativeStepDecisionOutcome(
+            narration: step.narration,
+            targetWord: step.targetWord,
+            hint: step.hint,
+            isLastStep: step.isLastStep,
+            meta: meta
+        )
+    }
+
+    // MARK: - 17. Child greeting (kid circuit — rules only)
+
+    public func pickChildGreeting(childName: String, timeOfDay: TimeOfDay, streakDays: Int) async -> GreetingDecisionOutcome {
+        let start = Date()
+        let result = rules.pickChildGreeting(childName: childName, timeOfDay: timeOfDay, streakDays: streakDays)
+        let meta = makeMeta(start: start, source: .ruleBased, usedFallback: false)
+        logDecision(kind: "greeting", meta: meta, output: result.phrase.prefix(40).description, childId: nil)
+        return GreetingDecisionOutcome(phrase: result.phrase, emoji: result.emoji, meta: meta)
+    }
+
+    // MARK: - 18. Celebration (kid circuit — rules only)
+
+    public func generateCelebration(event: CelebrationEvent) async -> CelebrationDecisionOutcome {
+        let start = Date()
+        let result = rules.generateCelebration(event: event)
+        let meta = makeMeta(start: start, source: .ruleBased, usedFallback: false)
+        logDecision(kind: "celebration", meta: meta, output: result.animationHint, childId: nil)
+        return CelebrationDecisionOutcome(message: result.message, animationHint: result.animationHint, meta: meta)
+    }
+
+    // MARK: - 19. Rest recommendation (kid circuit — rules only)
+
+    public func recommendRest(sessionDuration: TimeInterval, fatigueLevel: FatigueLevel) async -> RestDecisionOutcome {
+        let start = Date()
+        let result = rules.recommendRest(sessionDuration: sessionDuration, fatigueLevel: fatigueLevel)
+        let meta = makeMeta(start: start, source: .ruleBased, usedFallback: false)
+        logDecision(kind: "rest", meta: meta, output: result.shouldRest ? "rest:\(result.suggestedBreakMinutes)m" : "continue", childId: nil)
+        return RestDecisionOutcome(
+            shouldRest: result.shouldRest,
+            suggestedBreakMinutes: result.suggestedBreakMinutes,
+            message: result.message,
+            meta: meta
+        )
+    }
+
+    // MARK: - 20. Playful transition (kid circuit — rules only)
+
+    public func playfulTransition(fromActivity: TemplateType, toActivity: TemplateType) async -> TransitionDecisionOutcome {
+        let start = Date()
+        let phrase = rules.playfulTransition(fromActivity: fromActivity, toActivity: toActivity)
+        let meta = makeMeta(start: start, source: .ruleBased, usedFallback: false)
+        logDecision(kind: "transition", meta: meta, output: "\(fromActivity.rawValue)->\(toActivity.rawValue)", childId: nil)
+        return TransitionDecisionOutcome(phrase: phrase, meta: meta)
+    }
+
+    // MARK: - 21. Surprise fact (kid circuit — rules only)
+
+    public func generateSurpriseFact(topic: String, childAge: Int) async -> SurpriseFactDecisionOutcome {
+        let start = Date()
+        let fact = rules.generateSurpriseFact(topic: topic, childAge: childAge)
+        let meta = makeMeta(start: start, source: .ruleBased, usedFallback: false)
+        logDecision(kind: "surpriseFact", meta: meta, output: fact.prefix(40).description, childId: nil)
+        return SurpriseFactDecisionOutcome(fact: fact, meta: meta)
+    }
+
+    // MARK: - 22. Weekly report (parent circuit — rules only in v1)
+
+    public func generateWeeklyReport(weeks: [WeekSummaryInput]) async -> WeeklyReportDecisionOutcome {
+        let start = Date()
+        let result = rules.generateWeeklyReport(weeks: weeks)
+        let meta = makeMeta(start: start, source: .ruleBased, usedFallback: true)
+        logDecision(kind: "weeklyReport", meta: meta, output: "\(weeks.count)w:\(result.highlights.count)hl", childId: nil)
+        return WeeklyReportDecisionOutcome(
+            summary: result.summary,
+            highlights: result.highlights,
+            recommendations: result.recommendations,
+            meta: meta
+        )
+    }
+
+    // MARK: - 23. Parent tip (parent circuit — rules only in v1)
+
+    public func generateParentTip(profile: ChildProfileInput, currentStage: CorrectionStage) async -> ParentTipDecisionOutcome {
+        let start = Date()
+        let result = rules.generateParentTip(profile: profile, currentStage: currentStage)
+        let meta = makeMeta(start: start, source: .ruleBased, usedFallback: true)
+        logDecision(kind: "parentTip", meta: meta, output: result.tip.prefix(40).description, childId: profile.id)
+        return ParentTipDecisionOutcome(
+            tip: result.tip,
+            exerciseSuggestion: result.exerciseSuggestion,
+            meta: meta
+        )
+    }
+
+    // MARK: - 24. Anxiety detection (parent/specialist circuit — rules only)
+
+    public func detectAnxiety(sessionMetrics: SessionMetricsInput) async -> AnxietyDecisionOutcome {
+        let start = Date()
+        let result = rules.detectAnxiety(sessionMetrics: sessionMetrics)
+        let meta = makeMeta(start: start, source: .ruleBased, usedFallback: false)
+        logDecision(kind: "anxiety", meta: meta, output: "score:\(result.score)", childId: nil)
+        return AnxietyDecisionOutcome(
+            anxietyScore: result.score,
+            signals: result.signals,
+            recommendation: result.recommendation,
+            meta: meta
+        )
+    }
+
+    // MARK: - 25. Goal adjustment (specialist circuit — rules only in v1)
+
+    public func suggestGoalAdjustment(progress: ProgressTrendInput) async -> GoalAdjustmentDecisionOutcome {
+        let start = Date()
+        let result = rules.suggestGoalAdjustment(progress: progress)
+        let meta = makeMeta(start: start, source: .ruleBased, usedFallback: true)
+        logDecision(kind: "goalAdjustment", meta: meta, output: result.suggestedGoal.prefix(40).description, childId: nil)
+        return GoalAdjustmentDecisionOutcome(
+            currentGoal: result.currentGoal,
+            suggestedGoal: result.suggestedGoal,
+            rationale: result.rationale,
+            meta: meta
+        )
+    }
+
     // MARK: - Helpers
 
     private func makeMeta(start: Date, source: LLMDecisionSource, usedFallback: Bool) -> LLMDecisionMeta {

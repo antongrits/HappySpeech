@@ -2,11 +2,10 @@ import Foundation
 
 // MARK: - LLMDecisionServiceProtocol
 // ==================================================================================
-// Central "brain" of HappySpeech — 12 decision points across the app.
-// Every method:
-//   1. Tries an on-device LLM (Qwen2.5-1.5B via MLC) when the model is downloaded.
-//   2. Falls back to the HF Inference API (Vikhr-Nemo-12B) — parent/specialist circuits only.
-//   3. Falls back to a fully deterministic RuleBasedDecisionService — always available.
+// Central "brain" of HappySpeech — 25 decision points across the app.
+//   Tier A (on-device Qwen2.5-1.5B via MLC)       — kid + adult circuits.
+//   Tier B (HF Inference API, Vikhr-Nemo-12B/3B)  — parent/specialist only (never kid).
+//   Tier C (RuleBasedDecisionService)             — always available, ultimate fallback.
 // All methods are `async` and return a result type (never throws) so the caller
 // always has something usable. Latency budgets (master-plan v2 §19.5) are enforced
 // inside LiveLLMDecisionService — if the LLM misses the budget, rule-based kicks in.
@@ -18,7 +17,7 @@ public protocol LLMDecisionServiceProtocol: AnyObject, Sendable {
     var isOnDeviceModelReady: Bool { get async }
     var downloadProgress: Double { get async }
 
-    // MARK: Decision Points (12)
+    // MARK: Decision Points (25)
 
     /// 1. Adaptive daily route for a child profile.
     func adaptiveRoutePlan(context: RoutePlanContext) async -> RouteDecisionOutcome
@@ -55,6 +54,49 @@ public protocol LLMDecisionServiceProtocol: AnyObject, Sendable {
 
     /// 12. Generate an ad-hoc phrase from a template (warmup, parent tip, homework).
     func generateCustomPhrase(template: PhraseTemplate, context: [String: String]) async -> CustomPhraseOutcome
+
+    // --- Tier A: kid-facing (on-device or rules only, never HF) ---
+
+    /// 13. Select next warm-up activity for the session start.
+    func selectWarmUp(context: WarmUpContext) async -> WarmUpDecisionOutcome
+
+    /// 14. Generate a word set for the current sound and correction stage.
+    func generateWordSet(sound: String, stage: CorrectionStage, count: Int) async -> WordSetDecisionOutcome
+
+    /// 15. Generate a minimal-pair set (e.g. Р–Л, С–Ш) for differentiation work.
+    func generateMinimalPairs(targetSound: String, confusionSound: String, count: Int) async -> MinimalPairsDecisionOutcome
+
+    /// 16. Generate the next step of a multi-step narrative quest.
+    func narrativeQuestStep(questState: NarrativeQuestState) async -> NarrativeStepDecisionOutcome
+
+    /// 17. Pick child greeting — time-of-day and streak aware.
+    func pickChildGreeting(childName: String, timeOfDay: TimeOfDay, streakDays: Int) async -> GreetingDecisionOutcome
+
+    /// 18. Generate a celebration message (milestone, streak, new sound, perfect session).
+    func generateCelebration(event: CelebrationEvent) async -> CelebrationDecisionOutcome
+
+    /// 19. Recommend rest after a session (duration and fatigue aware).
+    func recommendRest(sessionDuration: TimeInterval, fatigueLevel: FatigueLevel) async -> RestDecisionOutcome
+
+    /// 20. Generate a playful transition phrase between activities.
+    func playfulTransition(fromActivity: TemplateType, toActivity: TemplateType) async -> TransitionDecisionOutcome
+
+    /// 21. Generate a surprise fun fact about a sound / animal / topic.
+    func generateSurpriseFact(topic: String, childAge: Int) async -> SurpriseFactDecisionOutcome
+
+    // --- Tier B: adult-facing (parent/specialist — may use HF) ---
+
+    /// 22. Generate a weekly progress report for a parent.
+    func generateWeeklyReport(weeks: [WeekSummaryInput]) async -> WeeklyReportDecisionOutcome
+
+    /// 23. Generate a tip for the parent on how to practice at home.
+    func generateParentTip(profile: ChildProfileInput, currentStage: CorrectionStage) async -> ParentTipDecisionOutcome
+
+    /// 24. Detect anxiety / stress signal from session metrics.
+    func detectAnxiety(sessionMetrics: SessionMetricsInput) async -> AnxietyDecisionOutcome
+
+    /// 25. Suggest a long-term goal adjustment based on progress trend.
+    func suggestGoalAdjustment(progress: ProgressTrendInput) async -> GoalAdjustmentDecisionOutcome
 }
 
 // MARK: - Decision Points — Input Types
@@ -501,6 +543,304 @@ public struct CustomPhraseOutcome: Sendable {
 
     public init(phrase: String, meta: LLMDecisionMeta) {
         self.phrase = phrase
+        self.meta = meta
+    }
+}
+
+// MARK: - Decision Points 13–25 — Input Types
+
+public enum TimeOfDay: String, Sendable, Codable {
+    case morning, afternoon, evening
+}
+
+public struct WarmUpContext: Sendable {
+    public let childName: String
+    public let targetSound: String
+    public let sessionNumber: Int
+    public let age: Int
+
+    public init(childName: String, targetSound: String, sessionNumber: Int, age: Int) {
+        self.childName = childName
+        self.targetSound = targetSound
+        self.sessionNumber = sessionNumber
+        self.age = age
+    }
+}
+
+public struct NarrativeQuestState: Sendable {
+    public let questId: String
+    public let currentStep: Int
+    public let totalSteps: Int
+    public let collectedItems: [String]
+    public let childName: String
+    public let targetSound: String
+
+    public init(
+        questId: String,
+        currentStep: Int,
+        totalSteps: Int,
+        collectedItems: [String],
+        childName: String,
+        targetSound: String
+    ) {
+        self.questId = questId
+        self.currentStep = currentStep
+        self.totalSteps = totalSteps
+        self.collectedItems = collectedItems
+        self.childName = childName
+        self.targetSound = targetSound
+    }
+}
+
+public enum CelebrationEvent: Sendable {
+    case milestoneReached(milestone: String)
+    case streakAchieved(days: Int)
+    case newSoundUnlocked(sound: String)
+    case perfectSession
+}
+
+public struct WeekSummaryInput: Sendable {
+    public let weekNumber: Int
+    public let sessionsCount: Int
+    public let averageScore: Double
+    public let soundsPracticed: [String]
+    public let improvementDelta: Double
+
+    public init(
+        weekNumber: Int,
+        sessionsCount: Int,
+        averageScore: Double,
+        soundsPracticed: [String],
+        improvementDelta: Double
+    ) {
+        self.weekNumber = weekNumber
+        self.sessionsCount = sessionsCount
+        self.averageScore = averageScore
+        self.soundsPracticed = soundsPracticed
+        self.improvementDelta = improvementDelta
+    }
+}
+
+public struct SessionMetricsInput: Sendable {
+    public let pauseCount: Int
+    public let averagePauseDuration: TimeInterval
+    public let errorRate: Double
+    public let sessionDuration: TimeInterval
+    public let speechRateVariance: Double
+
+    public init(
+        pauseCount: Int,
+        averagePauseDuration: TimeInterval,
+        errorRate: Double,
+        sessionDuration: TimeInterval,
+        speechRateVariance: Double
+    ) {
+        self.pauseCount = pauseCount
+        self.averagePauseDuration = averagePauseDuration
+        self.errorRate = errorRate
+        self.sessionDuration = sessionDuration
+        self.speechRateVariance = speechRateVariance
+    }
+}
+
+public struct ProgressTrendInput: Sendable {
+    public let soundsAttempted: [String]
+    public let weeklySuccessRates: [Double]
+    public let stagnantSounds: [String]
+    public let childAge: Int
+
+    public init(
+        soundsAttempted: [String],
+        weeklySuccessRates: [Double],
+        stagnantSounds: [String],
+        childAge: Int
+    ) {
+        self.soundsAttempted = soundsAttempted
+        self.weeklySuccessRates = weeklySuccessRates
+        self.stagnantSounds = stagnantSounds
+        self.childAge = childAge
+    }
+}
+
+// MARK: - Decision Points 13–25 — Output Types
+
+public struct WarmUpDecisionOutcome: Sendable {
+    public let activityName: String
+    public let instructions: String
+    public let durationSeconds: Int
+    public let meta: LLMDecisionMeta
+
+    public init(activityName: String, instructions: String, durationSeconds: Int, meta: LLMDecisionMeta) {
+        self.activityName = activityName
+        self.instructions = instructions
+        self.durationSeconds = durationSeconds
+        self.meta = meta
+    }
+}
+
+public struct WordSetDecisionOutcome: Sendable {
+    public let words: [String]
+    public let rationale: String
+    public let meta: LLMDecisionMeta
+
+    public init(words: [String], rationale: String, meta: LLMDecisionMeta) {
+        self.words = words
+        self.rationale = rationale
+        self.meta = meta
+    }
+}
+
+public struct MinimalPairItem: Sendable, Codable, Equatable {
+    public let target: String
+    public let foil: String
+
+    public init(target: String, foil: String) {
+        self.target = target
+        self.foil = foil
+    }
+}
+
+public struct MinimalPairsDecisionOutcome: Sendable {
+    public let pairs: [MinimalPairItem]
+    public let meta: LLMDecisionMeta
+
+    public init(pairs: [MinimalPairItem], meta: LLMDecisionMeta) {
+        self.pairs = pairs
+        self.meta = meta
+    }
+}
+
+public struct NarrativeStepDecisionOutcome: Sendable {
+    public let narration: String
+    public let targetWord: String
+    public let hint: String
+    public let isLastStep: Bool
+    public let meta: LLMDecisionMeta
+
+    public init(
+        narration: String,
+        targetWord: String,
+        hint: String,
+        isLastStep: Bool,
+        meta: LLMDecisionMeta
+    ) {
+        self.narration = narration
+        self.targetWord = targetWord
+        self.hint = hint
+        self.isLastStep = isLastStep
+        self.meta = meta
+    }
+}
+
+public struct GreetingDecisionOutcome: Sendable {
+    public let phrase: String
+    public let emoji: String
+    public let meta: LLMDecisionMeta
+
+    public init(phrase: String, emoji: String, meta: LLMDecisionMeta) {
+        self.phrase = phrase
+        self.emoji = emoji
+        self.meta = meta
+    }
+}
+
+public struct CelebrationDecisionOutcome: Sendable {
+    public let message: String
+    public let animationHint: String
+    public let meta: LLMDecisionMeta
+
+    public init(message: String, animationHint: String, meta: LLMDecisionMeta) {
+        self.message = message
+        self.animationHint = animationHint
+        self.meta = meta
+    }
+}
+
+public struct RestDecisionOutcome: Sendable {
+    public let shouldRest: Bool
+    public let suggestedBreakMinutes: Int
+    public let message: String
+    public let meta: LLMDecisionMeta
+
+    public init(shouldRest: Bool, suggestedBreakMinutes: Int, message: String, meta: LLMDecisionMeta) {
+        self.shouldRest = shouldRest
+        self.suggestedBreakMinutes = suggestedBreakMinutes
+        self.message = message
+        self.meta = meta
+    }
+}
+
+public struct TransitionDecisionOutcome: Sendable {
+    public let phrase: String
+    public let meta: LLMDecisionMeta
+
+    public init(phrase: String, meta: LLMDecisionMeta) {
+        self.phrase = phrase
+        self.meta = meta
+    }
+}
+
+public struct SurpriseFactDecisionOutcome: Sendable {
+    public let fact: String
+    public let meta: LLMDecisionMeta
+
+    public init(fact: String, meta: LLMDecisionMeta) {
+        self.fact = fact
+        self.meta = meta
+    }
+}
+
+public struct WeeklyReportDecisionOutcome: Sendable {
+    public let summary: String
+    public let highlights: [String]
+    public let recommendations: [String]
+    public let meta: LLMDecisionMeta
+
+    public init(summary: String, highlights: [String], recommendations: [String], meta: LLMDecisionMeta) {
+        self.summary = summary
+        self.highlights = highlights
+        self.recommendations = recommendations
+        self.meta = meta
+    }
+}
+
+public struct ParentTipDecisionOutcome: Sendable {
+    public let tip: String
+    public let exerciseSuggestion: String
+    public let meta: LLMDecisionMeta
+
+    public init(tip: String, exerciseSuggestion: String, meta: LLMDecisionMeta) {
+        self.tip = tip
+        self.exerciseSuggestion = exerciseSuggestion
+        self.meta = meta
+    }
+}
+
+public struct AnxietyDecisionOutcome: Sendable {
+    /// Anxiety score in the [0.0, 1.0] range.
+    public let anxietyScore: Double
+    public let signals: [String]
+    public let recommendation: String
+    public let meta: LLMDecisionMeta
+
+    public init(anxietyScore: Double, signals: [String], recommendation: String, meta: LLMDecisionMeta) {
+        self.anxietyScore = anxietyScore
+        self.signals = signals
+        self.recommendation = recommendation
+        self.meta = meta
+    }
+}
+
+public struct GoalAdjustmentDecisionOutcome: Sendable {
+    public let currentGoal: String
+    public let suggestedGoal: String
+    public let rationale: String
+    public let meta: LLMDecisionMeta
+
+    public init(currentGoal: String, suggestedGoal: String, rationale: String, meta: LLMDecisionMeta) {
+        self.currentGoal = currentGoal
+        self.suggestedGoal = suggestedGoal
+        self.rationale = rationale
         self.meta = meta
     }
 }
