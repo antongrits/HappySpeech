@@ -210,6 +210,336 @@
         }
       }
     },
+    "ar.game.arMirror.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Смотри в зеркало и повторяй артикуляцию вместе с Лялей."
+          }
+        }
+      }
+    },
+    "ar.game.arMirror.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AR-зеркало"
+          }
+        }
+      }
+    },
+    "ar.game.arStoryQuest.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оживи историю — сыграй роль героя и произнеси реплики."
+          }
+        }
+      }
+    },
+    "ar.game.arStoryQuest.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AR-квест"
+          }
+        }
+      }
+    },
+    "ar.game.breathingAR.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дыши глубоко и раздувай паруса — тренировка выдоха."
+          }
+        }
+      }
+    },
+    "ar.game.breathingAR.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дыхание"
+          }
+        }
+      }
+    },
+    "ar.game.butterflyCatch.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лови бабочек улыбкой — тренируй губы."
+          }
+        }
+      }
+    },
+    "ar.game.butterflyCatch.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поймай бабочку"
+          }
+        }
+      }
+    },
+    "ar.game.holdThePose.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Держи позу языка — медленно считай до пяти."
+          }
+        }
+      }
+    },
+    "ar.game.holdThePose.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удержи позу"
+          }
+        }
+      }
+    },
+    "ar.game.mimicLyalya.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторяй за Лялей её смешные гримаски."
+          }
+        }
+      }
+    },
+    "ar.game.mimicLyalya.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повтори за Лялей"
+          }
+        }
+      }
+    },
+    "ar.game.poseSequence.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пройди цепочку артикуляционных поз по порядку."
+          }
+        }
+      }
+    },
+    "ar.game.poseSequence.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Цепочка поз"
+          }
+        }
+      }
+    },
+    "ar.game.soundAndFace.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Произнеси звук и удержи правильную артикуляцию."
+          }
+        }
+      }
+    },
+    "ar.game.soundAndFace.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук и лицо"
+          }
+        }
+      }
+    },
+    "ar.zone.activitiesSection": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AR-игры"
+          }
+        }
+      }
+    },
+    "ar.zone.greeting": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добро пожаловать в AR-зону!"
+          }
+        }
+      }
+    },
+    "ar.zone.instructions.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как играть"
+          }
+        }
+      }
+    },
+    "ar.zone.mascot.accessibility": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Маскот Ляля машет крыльями и приветствует тебя"
+          }
+        }
+      }
+    },
+    "ar.zone.step1.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Держи телефон на уровне глаз, чтобы камера видела твоё лицо."
+          }
+        }
+      }
+    },
+    "ar.zone.step1.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поднеси лицо"
+          }
+        }
+      }
+    },
+    "ar.zone.step2.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проверь, что звук на телефоне не выключен — Ляля будет говорить."
+          }
+        }
+      }
+    },
+    "ar.zone.step2.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Включи звук"
+          }
+        }
+      }
+    },
+    "ar.zone.step3.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторяй за Лялей движения и звуки — у тебя всё получится!"
+          }
+        }
+      }
+    },
+    "ar.zone.step3.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Следуй за Лялей"
+          }
+        }
+      }
+    },
+    "ar.zone.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выбери весёлую игру — и тренируйся вместе с Лялей через камеру."
+          }
+        }
+      }
+    },
+    "ar.zone.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AR-зона"
+          }
+        }
+      }
+    },
+    "ar.zone.unsupportedBody": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для AR-игр нужен iPhone с передней камерой TrueDepth. Открой эти игры на другом устройстве или выбери обычные."
+          }
+        }
+      }
+    },
+    "ar.zone.unsupportedTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AR не поддерживается"
+          }
+        }
+      }
+    },
     "articulation.finished": {
       "extractionState": "manual",
       "localizations": {
