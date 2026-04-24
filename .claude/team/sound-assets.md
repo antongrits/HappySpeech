@@ -13,7 +13,8 @@
 | Ляля voice brand (.m4a) | 120 | ~2 MB | `HappySpeech/Resources/Audio/Lyalya/` (в репо) | ✅ M3.3 done |
 | Content audio batch 1 (.m4a) | 1000 | 12.65 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 1 |
 | Content audio batch 2 (.m4a) | 1028 | 11.1 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 2 |
-| Content audio batch 3+ | 0 / ~4000 | ~50 MB | Firebase Storage | ⏳ pending |
+| Content audio batch 3 (.m4a) | 681 | 8.36 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 3 |
+| Content audio batch 4+ | 0 / ~3300 | ~40 MB | Firebase Storage | ⏳ pending |
 | Эталоны для M4.3 (premium TTS) | 0 | — | `_workshop/references/` | ⏳ pending M3.5 |
 | Ambient / background music | 0 / 4 | — | `Resources/Audio/Ambient/` | ⏳ pending M9 |
 
@@ -128,12 +129,41 @@
 
 ---
 
-## M3.4 Batch 3+ — Остальные паки (~4000 файлов) ⏳
+## M3.4 Batch 3 — Велярные К/Г/Х (681 файл, 8.36 MB) ✅
+
+**Дата:** 2026-04-24
+**Генерация:** `_workshop/scripts/generate_velar_audio.py` — edge-tts `ru-RU-SvetlanaNeural` → pyloudnorm -16 LUFS → AAC .m4a
+**Формат:** 16kHz mono, 8–45 KB/файл (все < 50 KB)
+**Длительность:** 1.5–3.6s
+**Время генерации:** 17.0 минут
+
+### Разбивка по пакам batch 3
+
+| Пак | Звук | Этапы | Файлов | Размер |
+|---|---|---|---|---|
+| `sound_k_pack.json` | К/К' (все этапы) | prep, isolated, syllable, wordInit, wordMed, wordFinal, phrase, sentence, diff | 247 | 2919 KB |
+| `sound_g_pack.json` | Г/Г' (все этапы) | prep, isolated, syllable, wordInit, wordMed, wordFinal, phrase, sentence, diff | 184 | 2270 KB |
+| `sound_kh_pack.json` | Х/Х' (все этапы) | prep, isolated, syllable, wordInit, wordMed, wordFinal, phrase, sentence | 250 | 3358 KB |
+| **ИТОГО batch 3** | — | — | **681** | **8.36 MB** |
+
+### Валидация (7 случайных файлов)
+- Sample rate 16000 Hz ✅
+- Channels 1 (mono) ✅
+- Codec AAC (.m4a) ✅
+- Размер < 50 KB ✅ (0 нарушений)
+- 681/681 файлов сгенерированы ✅
+
+### Путь к скрипту (resumable)
+`_workshop/scripts/generate_velar_audio.py` — при повторном запуске пропускает уже готовые файлы.
+
+---
+
+## M3.4 Batch 4+ — Остальные паки (~3300 файлов) ⏳
 
 **Status:** pending
-**План:** Запустить аналогичный скрипт для Ж, Ч, Щ, велярные (К/Г/Х), Й, и все narrative/breathing/lexical паки.
+**План:** Ж, Ч, Щ, Й, и все narrative/breathing/lexical паки.
 
-Оценка: ~100 минут общего времени генерации, ~50 MB финального объёма.
+Оценка: ~80 минут общего времени генерации, ~40 MB финального объёма.
 
 ---
 
@@ -199,7 +229,8 @@ COPYRIGHT RULE: каждый звук должен иметь verified CC0/Apach
 
 ## Следующие шаги
 
-- **M3.4 batch 3** — запустить аналогичный скрипт для Ж/Ч/Щ/К/Г/Х/Й + lexical/narrative паки (~100 мин)
+- **M3.4 batch 3** — ✅ DONE — велярные К/Г/Х (681 файл, 8.36 MB, 17 мин)
+- **M3.4 batch 4** — запустить аналогичный скрипт для Ж/Ч/Щ/Й + lexical/narrative паки (~80 мин)
 - **M3.5** — генерация эталонов для PronunciationScorer (после M3.4 batch 2, ~1200 слов)
 - **M3.6 ambient** — 4 трека CC0 для world_map/lesson/AR/reward
 - **Firebase Storage upload** — после M3.4 batch 3 (финальный) → delegated to backend-developer M11.4
