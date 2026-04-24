@@ -21,7 +21,10 @@
         { "id": "shch-prep-9",  "word": "гармошка",           "hint": "Язык у нёба — двигаем нижней челюстью.",        "imageAsset": null, "audioAsset": null, "difficulty": 3 },
         { "id": "shch-prep-10", "word": "качели",             "hint": "Язык вверх к носу — вниз к подбородку.",        "imageAsset": null, "audioAsset": null, "difficulty": 2 },
         { "id": "shch-prep-11", "word": "трубочка",           "hint": "Губы вытягиваем трубочкой вперёд.",             "imageAsset": null, "audioAsset": null, "difficulty": 1 },
-        { "id": "shch-prep-12", "word": "щётка",              "hint": "Языком чистим нёбо — как щёткой!",             "imageAsset": null, "audioAsset": null, "difficulty": 2 }
+        { "id": "shch-prep-12", "word": "щётка",              "hint": "Языком чистим нёбо — как щёткой!",             "imageAsset": null, "audioAsset": null, "difficulty": 2 },
+        { "id": "shch-prep-13", "word": "иголочка",           "hint": "Острый язык вытягиваем вперёд между зубами.",   "imageAsset": null, "audioAsset": null, "difficulty": 2 },
+        { "id": "shch-prep-14", "word": "горбик",             "hint": "Средняя часть языка горбом к нёбу — держи.",    "imageAsset": null, "audioAsset": null, "difficulty": 3 },
+        { "id": "shch-prep-15", "word": "парус-щётка",        "hint": "Кончик языка у верхних зубов — дуй теплом.",    "imageAsset": null, "audioAsset": null, "difficulty": 3 }
       ]
     },
     "isolated": {
@@ -37,7 +40,9 @@
         { "id": "shch-iso-6",  "word": "щщ-прерывисто", "hint": "Щ-Щ-Щ отдельными толчками.",            "imageAsset": null, "audioAsset": null, "difficulty": 3 },
         { "id": "shch-iso-7",  "word": "щщ-трава",      "hint": "Трава шелестит у реки: щщщщщ.",         "imageAsset": null, "audioAsset": null, "difficulty": 2 },
         { "id": "shch-iso-8",  "word": "щщ-волна",      "hint": "Волна набегает: щщщ — тихо-тихо.",      "imageAsset": null, "audioAsset": null, "difficulty": 3 },
-        { "id": "shch-iso-9",  "word": "щщ-лес",        "hint": "В густом лесу: щщщщ — кругом листья.", "imageAsset": null, "audioAsset": null, "difficulty": 2 }
+        { "id": "shch-iso-9",  "word": "щщ-лес",        "hint": "В густом лесу: щщщщ — кругом листья.", "imageAsset": null, "audioAsset": null, "difficulty": 2 },
+        { "id": "shch-iso-10", "word": "щщ-пар",        "hint": "Горячий пар поднимается: щщщ — тихо.", "imageAsset": null, "audioAsset": null, "difficulty": 3 },
+        { "id": "shch-iso-11", "word": "щщ-ритм",       "hint": "Отбиваем: Щ — Щ — ЩЩЩ — пауза!",    "imageAsset": null, "audioAsset": null, "difficulty": 3 }
       ]
     },
     "syllable": {
@@ -68,7 +73,12 @@
         { "id": "shch-syl-21", "word": "ащ-ащ",   "difficulty": 2 },
         { "id": "shch-syl-22", "word": "ущ-ущ",   "difficulty": 2 },
         { "id": "shch-syl-23", "word": "ща-щи",   "difficulty": 1 },
-        { "id": "shch-syl-24", "word": "щи-щу",   "difficulty": 1 }
+        { "id": "shch-syl-24", "word": "щи-щу",   "difficulty": 1 },
+        { "id": "shch-syl-25", "word": "ащ-ощ",   "difficulty": 2 },
+        { "id": "shch-syl-26", "word": "ощ-ущ",   "difficulty": 2 },
+        { "id": "shch-syl-27", "word": "ища",     "difficulty": 2 },
+        { "id": "shch-syl-28", "word": "ащи",     "difficulty": 2 },
+        { "id": "shch-syl-29", "word": "ще-ща-щи","difficulty": 2 }
       ]
     },
     "wordInit": {
@@ -114,7 +124,17 @@
         { "id": "shch-wi-36", "word": "щепкой",      "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
         { "id": "shch-wi-37", "word": "щебетунья",   "imageAsset": null,                "audioAsset": null, "difficulty": 4 },
         { "id": "shch-wi-38", "word": "щёлочный",    "imageAsset": null,                "audioAsset": null, "difficulty": 4 },
-        { "id": "shch-wi-39", "word": "щипком",      "imageAsset": null,                "audioAsset": null, "difficulty": 3 }
+        { "id": "shch-wi-39", "word": "щипком",      "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "shch-wi-40", "word": "щелчок",      "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "shch-wi-41", "word": "щепка",       "imageAsset": "img_shchepka",      "audioAsset": null, "difficulty": 2 },
+        { "id": "shch-wi-42", "word": "щебет",       "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "shch-wi-43", "word": "щетинка",     "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "shch-wi-44", "word": "щедро",       "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "shch-wi-45", "word": "щёлкнуть",    "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "shch-wi-46", "word": "щупальце",    "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "shch-wi-47", "word": "щетина",      "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "shch-wi-48", "word": "щекотно",     "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "shch-wi-49", "word": "щепоть",      "imageAsset": null,                "audioAsset": null, "difficulty": 3 }
       ]
     },
     "wordMed": {
@@ -155,7 +175,22 @@
         { "id": "shch-wm-31", "word": "пощёчина",     "imageAsset": null,                "audioAsset": null, "difficulty": 4 },
         { "id": "shch-wm-32", "word": "заросли",      "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
         { "id": "shch-wm-33", "word": "ящик-мусора",  "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
-        { "id": "shch-wm-34", "word": "пищать",       "imageAsset": null,                "audioAsset": null, "difficulty": 2 }
+        { "id": "shch-wm-34", "word": "пищать",       "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "shch-wm-35", "word": "роща",         "imageAsset": "img_roshcha2",      "audioAsset": null, "difficulty": 1 },
+        { "id": "shch-wm-36", "word": "вещество",     "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "shch-wm-37", "word": "пищевой",      "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "shch-wm-38", "word": "общаться",     "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "shch-wm-39", "word": "прощение",     "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "shch-wm-40", "word": "ещё раз",      "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "shch-wm-41", "word": "тощий кот",    "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "shch-wm-42", "word": "ощутить",      "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "shch-wm-43", "word": "прощаться",    "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "shch-wm-44", "word": "расщелина",    "imageAsset": null,                "audioAsset": null, "difficulty": 4 },
+        { "id": "shch-wm-45", "word": "ищущий",       "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "shch-wm-46", "word": "лощёный",      "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "shch-wm-47", "word": "дощечка",      "imageAsset": null,                "audioAsset": null, "difficulty": 2 },
+        { "id": "shch-wm-48", "word": "точёный",      "imageAsset": null,                "audioAsset": null, "difficulty": 3 },
+        { "id": "shch-wm-49", "word": "площадка",     "imageAsset": null,                "audioAsset": null, "difficulty": 2 }
       ]
     },
     "wordFinal": {
@@ -181,7 +216,17 @@
         { "id": "shch-wf-16", "word": "плющ",         "imageAsset": "img_plyushch",     "audioAsset": null, "difficulty": 3 },
         { "id": "shch-wf-17", "word": "овощ",         "imageAsset": "img_ovoshch",      "audioAsset": null, "difficulty": 2 },
         { "id": "shch-wf-18", "word": "тащить",       "imageAsset": null,               "audioAsset": null, "difficulty": 2 },
-        { "id": "shch-wf-19", "word": "тёщ",          "imageAsset": null,               "audioAsset": null, "difficulty": 3 }
+        { "id": "shch-wf-19", "word": "тёщ",          "imageAsset": null,               "audioAsset": null, "difficulty": 3 },
+        { "id": "shch-wf-20", "word": "лещ",          "imageAsset": "img_leshch2",      "audioAsset": null, "difficulty": 1 },
+        { "id": "shch-wf-21", "word": "хрящ",         "imageAsset": null,               "audioAsset": null, "difficulty": 2 },
+        { "id": "shch-wf-22", "word": "плющ",         "imageAsset": "img_plyushch2",    "audioAsset": null, "difficulty": 2 },
+        { "id": "shch-wf-23", "word": "хвощ",         "imageAsset": null,               "audioAsset": null, "difficulty": 2 },
+        { "id": "shch-wf-24", "word": "клещ",         "imageAsset": null,               "audioAsset": null, "difficulty": 2 },
+        { "id": "shch-wf-25", "word": "прыщ",         "imageAsset": null,               "audioAsset": null, "difficulty": 2 },
+        { "id": "shch-wf-26", "word": "обобщить",     "imageAsset": null,               "audioAsset": null, "difficulty": 3 },
+        { "id": "shch-wf-27", "word": "вещь",         "imageAsset": null,               "audioAsset": null, "difficulty": 1 },
+        { "id": "shch-wf-28", "word": "помощь",       "imageAsset": null,               "audioAsset": null, "difficulty": 2 },
+        { "id": "shch-wf-29", "word": "мощь",         "imageAsset": null,               "audioAsset": null, "difficulty": 2 }
       ]
     },
     "phrase": {
@@ -217,7 +262,29 @@
         { "id": "shch-ph-26", "word": "ящерица на камне",        "difficulty": 3 },
         { "id": "shch-ph-27", "word": "ищем клад",               "difficulty": 3 },
         { "id": "shch-ph-28", "word": "щавель в корзине",        "difficulty": 3 },
-        { "id": "shch-ph-29", "word": "горячий борщ",            "difficulty": 2 }
+        { "id": "shch-ph-29", "word": "горячий борщ",            "difficulty": 2 },
+        { "id": "shch-ph-30", "word": "щенок играет",            "difficulty": 1 },
+        { "id": "shch-ph-31", "word": "густая чаща",             "difficulty": 2 },
+        { "id": "shch-ph-32", "word": "хищный волк",             "difficulty": 2 },
+        { "id": "shch-ph-33", "word": "ящик с вещами",           "difficulty": 2 },
+        { "id": "shch-ph-34", "word": "щека у малыша",           "difficulty": 2 },
+        { "id": "shch-ph-35", "word": "борщ с капустой",         "difficulty": 2 },
+        { "id": "shch-ph-36", "word": "роща у реки",             "difficulty": 2 },
+        { "id": "shch-ph-37", "word": "прощальный машет",        "difficulty": 3 },
+        { "id": "shch-ph-38", "word": "плащ на крючке",          "difficulty": 2 },
+        { "id": "shch-ph-39", "word": "щебет птиц",              "difficulty": 2 },
+        { "id": "shch-ph-40", "word": "щука поймалась",          "difficulty": 2 },
+        { "id": "shch-ph-41", "word": "пещера в горе",           "difficulty": 3 },
+        { "id": "shch-ph-42", "word": "свежие овощи на столе",   "difficulty": 2 },
+        { "id": "shch-ph-43", "word": "щедрый дедушка",          "difficulty": 2 },
+        { "id": "shch-ph-44", "word": "помощник в огороде",      "difficulty": 3 },
+        { "id": "shch-ph-45", "word": "вещи в чемодане",         "difficulty": 2 },
+        { "id": "shch-ph-46", "word": "клещ на листке",          "difficulty": 3 },
+        { "id": "shch-ph-47", "word": "защита от дождя",         "difficulty": 3 },
+        { "id": "shch-ph-48", "word": "щетинка у ёжика",         "difficulty": 2 },
+        { "id": "shch-ph-49", "word": "ящерица на заборе",       "difficulty": 2 },
+        { "id": "shch-ph-50", "word": "мощный лев",              "difficulty": 2 },
+        { "id": "shch-ph-51", "word": "овощной суп",             "difficulty": 2 }
       ]
     },
     "sentence": {
@@ -243,7 +310,22 @@
         { "id": "shch-sen-16", "word": "Борщ варится с овощами.",                      "difficulty": 3 },
         { "id": "shch-sen-17", "word": "Ищейка нашла след в роще.",                    "difficulty": 4 },
         { "id": "shch-sen-18", "word": "Щенок щекочет нас лапками.",                   "difficulty": 4 },
-        { "id": "shch-sen-19", "word": "Помощник папы — сильный и щедрый.",            "difficulty": 4 }
+        { "id": "shch-sen-19", "word": "Помощник папы — сильный и щедрый.",            "difficulty": 4 },
+        { "id": "shch-sen-20", "word": "Щенок бегает по площадке.",                   "difficulty": 2 },
+        { "id": "shch-sen-21", "word": "Ящерица греется на солнечном камне.",          "difficulty": 3 },
+        { "id": "shch-sen-22", "word": "В пещере темно и прохладно.",                  "difficulty": 3 },
+        { "id": "shch-sen-23", "word": "Щука — хищная рыба.",                         "difficulty": 2 },
+        { "id": "shch-sen-24", "word": "Мы собрали вещи в ящик.",                     "difficulty": 2 },
+        { "id": "shch-sen-25", "word": "Щётка стоит в стакане.",                      "difficulty": 2 },
+        { "id": "shch-sen-26", "word": "Птицы щебечут в берёзовой роще.",              "difficulty": 3 },
+        { "id": "shch-sen-27", "word": "Дедушка угостил нас щавелевым супом.",         "difficulty": 3 },
+        { "id": "shch-sen-28", "word": "Мама надела тёплый плащ и взяла зонт.",        "difficulty": 4 },
+        { "id": "shch-sen-29", "word": "Щедрый человек всегда помогает друзьям.",      "difficulty": 4 },
+        { "id": "shch-sen-30", "word": "В ящике лежат овощи из огорода.",              "difficulty": 3 },
+        { "id": "shch-sen-31", "word": "Хищный зверь прячется в чаще леса.",          "difficulty": 3 },
+        { "id": "shch-sen-32", "word": "Щенок нашёл щель и пролез через забор.",       "difficulty": 4 },
+        { "id": "shch-sen-33", "word": "Мальчик помог маме нести вещи.",               "difficulty": 3 },
+        { "id": "shch-sen-34", "word": "Борщ варится на медленном огне.",               "difficulty": 3 }
       ]
     },
     "diff": {
@@ -264,7 +346,17 @@
         { "id": "shch-df-11", "word": "щенок — ченок",   "hint": "Щенок — с Щ.", "difficulty": 2 },
         { "id": "shch-df-12", "word": "щетина — четина", "hint": "Щетина — с Щ.", "difficulty": 3 },
         { "id": "shch-df-13", "word": "щипать — чипать", "hint": "Щипать — с Щ.", "difficulty": 3 },
-        { "id": "shch-df-14", "word": "щель — чель",     "hint": "Щель — с Щ.", "difficulty": 3 }
+        { "id": "shch-df-14", "word": "щель — чель",     "hint": "Щель — с Щ.", "difficulty": 3 },
+        { "id": "shch-df-15", "word": "борщ — борч",     "hint": "Борщ — с Щ на конце.", "difficulty": 2 },
+        { "id": "shch-df-16", "word": "плащ — плач",     "hint": "Плащ — одежда, с Щ. Плач — слёзы, с Ч.", "difficulty": 3 },
+        { "id": "shch-df-17", "word": "ящик — ячик",     "hint": "Ящик — с Щ в середине.", "difficulty": 2 },
+        { "id": "shch-df-18", "word": "мощь — мочь",     "hint": "Мощь — с Щ. Мочь — с Ч. Оба слова есть!", "difficulty": 3 },
+        { "id": "shch-df-19", "word": "хищный — хичный", "hint": "Хищный — с Щ в середине.", "difficulty": 3 },
+        { "id": "shch-df-20", "word": "роща — роча",     "hint": "Роща — лес, с Щ.", "difficulty": 3 },
+        { "id": "shch-df-21", "word": "вещи — вечи",     "hint": "Вещи — с Щ в середине.", "difficulty": 2 },
+        { "id": "shch-df-22", "word": "пища — пича",     "hint": "Пища — еда, с Щ.", "difficulty": 2 },
+        { "id": "shch-df-23", "word": "щенок — шенок",   "hint": "Щенок — с Щ в начале.", "difficulty": 2 },
+        { "id": "shch-df-24", "word": "щётка — шётка",   "hint": "Щётка — с Щ в начале.", "difficulty": 2 }
       ]
     }
   },
