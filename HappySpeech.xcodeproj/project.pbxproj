@@ -1891,6 +1891,7 @@
 		4FEAFB6B4AA4AEB806677B46 /* zh-wm-41.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1C0117D271B1D4A909CA69C5 /* zh-wm-41.m4a */; };
 		4FEE404AC9DF23122BE6377B /* kh-wf-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 512311A51F4E0ECCD414F5AE /* kh-wf-6.m4a */; };
 		4FF8EA4CC3696A4A25E03700 /* l-ph-37.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A3A38966AF8EAF52BBD23380 /* l-ph-37.m4a */; };
+		4FFB02634C5822D738ED81F6 /* ARStoryQuestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642722964429D4E4462BC393 /* ARStoryQuestRouter.swift */; };
 		50042D61A1C072E8DC8E8CDC /* l-st-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7C0F9B98CC69BFB35EF0337A /* l-st-8.m4a */; };
 		5034175257EF97AB389DB49D /* kh-prep-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA37F41ADA740406ACAE0E28 /* kh-prep-8.m4a */; };
 		5043AB9920F5CA548A212225 /* lyalya_story_08.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 59FC37EA910D7B4099F0FBD1 /* lyalya_story_08.m4a */; };
@@ -2864,6 +2865,7 @@
 		7C40A6F939A521B63DD45C61 /* s-diff-7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7085425A01D2E0CB9B55C299 /* s-diff-7.m4a */; };
 		7C7199AAFFE3BEFDCFB33244 /* shch-wi-17.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D228C8F449C870605287076B /* shch-wi-17.m4a */; };
 		7C767062A6835ADDBC7865C8 /* rl-wi-24.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8CC523CD23A6873CA4DE2984 /* rl-wi-24.m4a */; };
+		7C8760D9E17F27409E57145C /* ARStoryQuestPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020A43715AF78B449621B95C /* ARStoryQuestPresenter.swift */; };
 		7CA34A2C4B9BE9BCF470B10D /* narr-dl-19.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 96522D97186409697F9BDEC5 /* narr-dl-19.m4a */; };
 		7CB5674C75BBC72285EEDE57 /* MockWhisperKitModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526DFC0AFD703BCA91557469 /* MockWhisperKitModelManager.swift */; };
 		7CB9C9E669C89E9DDCB41EA4 /* r-diff-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 81DDA9559433C46FBF700651 /* r-diff-6.m4a */; };
@@ -3489,6 +3491,7 @@
 		9784C0B412FACEAB8748DF70 /* c-syl-12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3CA423C543455DD73CA7A2D6 /* c-syl-12.m4a */; };
 		978661480FEC79FCFE052D46 /* ScreeningScoringEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D8E6C164D6DC27259DBF30 /* ScreeningScoringEngineTests.swift */; };
 		9791F90331132F56E0F6DC5B /* ARMirrorInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D29770EF1128CE98AA8CE6 /* ARMirrorInteractor.swift */; };
+		9799E957C2072D29FD7B821F /* ARStoryQuestInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4C7D300C26088E425309DC /* ARStoryQuestInteractor.swift */; };
 		97A3EFD52D0C2DB1CAC2EC35 /* narr-ms-11.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3F9DD9D02FB2D00A33D9B21 /* narr-ms-11.m4a */; };
 		97AD7EEB5BB36CC3886F35FF /* l-wi-11.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 897E62AD637CDFFF7D8EB6BD /* l-wi-11.m4a */; };
 		97C4B2936D0D9D8FB815E7B7 /* lex-hf-1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C492EDFA20020734BB7A7FBF /* lex-hf-1.m4a */; };
@@ -5470,6 +5473,7 @@
 		EF5AF3CA6D21C0516D3FD0F5 /* ReportsDocumentFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F20EF1735C1BDFC6F6C49B /* ReportsDocumentFormatter.swift */; };
 		EF66EAE5A8F94C99F84D34F9 /* rl-diff-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8497DEEDDBE825E74879967F /* rl-diff-0.m4a */; };
 		EF6AD181BA920F627E19481F /* c-wi-21.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9685D4062606898AB9B35E9D /* c-wi-21.m4a */; };
+		EF8A4183D26808F607564901 /* ARStoryQuestModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91287672E0AE450137578DE3 /* ARStoryQuestModels.swift */; };
 		EF8F22A60780AA042EB3C6F8 /* PoseSequenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04651A6C56DF88ECC1CCE20A /* PoseSequenceView.swift */; };
 		EF96FB13EA3AF134F8893436 /* s-syl-41.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 337F0A4BCA8865172F2E4796 /* s-syl-41.m4a */; };
 		EF9AAD4F5C82CCECE76C9CE2 /* l-wi-41.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3A5DDD00CF17DD11CC6E5FB0 /* l-wi-41.m4a */; };
@@ -5917,6 +5921,7 @@
 		01E57D712C13DAF086A561BB /* zh-df-1.m4a */ = {isa = PBXFileReference; path = "zh-df-1.m4a"; sourceTree = "<group>"; };
 		01E6FF196BEB7BD0D9A172EA /* ch-df-7.m4a */ = {isa = PBXFileReference; path = "ch-df-7.m4a"; sourceTree = "<group>"; };
 		01F7C5DCD68E84676591EB14 /* s-syl-3.m4a */ = {isa = PBXFileReference; path = "s-syl-3.m4a"; sourceTree = "<group>"; };
+		020A43715AF78B449621B95C /* ARStoryQuestPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARStoryQuestPresenter.swift; sourceTree = "<group>"; };
 		020F738CD4702ABDB048C8A3 /* lyalya_hint_21.m4a */ = {isa = PBXFileReference; path = lyalya_hint_21.m4a; sourceTree = "<group>"; };
 		021D9285DE81D0AAB2EBF722 /* s-wf-15.m4a */ = {isa = PBXFileReference; path = "s-wf-15.m4a"; sourceTree = "<group>"; };
 		021DB153F72BC64B9CED51A3 /* y-syl-10.m4a */ = {isa = PBXFileReference; path = "y-syl-10.m4a"; sourceTree = "<group>"; };
@@ -8149,6 +8154,7 @@
 		63F00EEB8BDD1ABCC20266BA /* y-wf-15.m4a */ = {isa = PBXFileReference; path = "y-wf-15.m4a"; sourceTree = "<group>"; };
 		63F27B05CF6671B001EE2003 /* r-iso-17.m4a */ = {isa = PBXFileReference; path = "r-iso-17.m4a"; sourceTree = "<group>"; };
 		64100505E39F7D217C8499BF /* PronunciationScorer_velar.mlpackage */ = {isa = PBXFileReference; path = PronunciationScorer_velar.mlpackage; sourceTree = "<group>"; };
+		642722964429D4E4462BC393 /* ARStoryQuestRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARStoryQuestRouter.swift; sourceTree = "<group>"; };
 		642942EE00093BDE4E3F2E19 /* zh-iso-8.m4a */ = {isa = PBXFileReference; path = "zh-iso-8.m4a"; sourceTree = "<group>"; };
 		6432D5DA55C213DE4505BF43 /* lex-pr-3.m4a */ = {isa = PBXFileReference; path = "lex-pr-3.m4a"; sourceTree = "<group>"; };
 		644A77D64B8D69C1B14C00F9 /* dwh-ph-9.m4a */ = {isa = PBXFileReference; path = "dwh-ph-9.m4a"; sourceTree = "<group>"; };
@@ -9096,6 +9102,7 @@
 		8B3B9CB7112AACA6BDFAA93F /* kh-wm-29.m4a */ = {isa = PBXFileReference; path = "kh-wm-29.m4a"; sourceTree = "<group>"; };
 		8B42471C033B7A9CD605C9B3 /* rl-wi-19.m4a */ = {isa = PBXFileReference; path = "rl-wi-19.m4a"; sourceTree = "<group>"; };
 		8B453743E6783774960874E4 /* ch-wi-33.m4a */ = {isa = PBXFileReference; path = "ch-wi-33.m4a"; sourceTree = "<group>"; };
+		8B4C7D300C26088E425309DC /* ARStoryQuestInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARStoryQuestInteractor.swift; sourceTree = "<group>"; };
 		8B507A478D7D7ACE7EE90E93 /* lex-aw-18.m4a */ = {isa = PBXFileReference; path = "lex-aw-18.m4a"; sourceTree = "<group>"; };
 		8B6BCF7E069DFC79F8CF41DE /* ProgramEditorInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramEditorInteractorTests.swift; sourceTree = "<group>"; };
 		8B7009507298BF6EAB7176D9 /* rl-sen-17.m4a */ = {isa = PBXFileReference; path = "rl-sen-17.m4a"; sourceTree = "<group>"; };
@@ -9216,6 +9223,7 @@
 		910C4DDB9E353AE3BF346698 /* ch-sen-13.m4a */ = {isa = PBXFileReference; path = "ch-sen-13.m4a"; sourceTree = "<group>"; };
 		911A06C575EDE334497F12F5 /* ScreeningPrompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreeningPrompts.swift; sourceTree = "<group>"; };
 		9126A0AFBABBFB6B2D8AA21B /* BreathingHapticWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingHapticWorker.swift; sourceTree = "<group>"; };
+		91287672E0AE450137578DE3 /* ARStoryQuestModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARStoryQuestModels.swift; sourceTree = "<group>"; };
 		9158544118D344E87B4F9D54 /* rl-sen-2.m4a */ = {isa = PBXFileReference; path = "rl-sen-2.m4a"; sourceTree = "<group>"; };
 		91627B46CEBEB8760322A193 /* ch-sen-34.m4a */ = {isa = PBXFileReference; path = "ch-sen-34.m4a"; sourceTree = "<group>"; };
 		916E5C72C95AA7A6FD7E8D2D /* l-sen-19.m4a */ = {isa = PBXFileReference; path = "l-sen-19.m4a"; sourceTree = "<group>"; };
@@ -11781,13 +11789,6 @@
 			path = MimicLyalya;
 			sourceTree = "<group>";
 		};
-		049F921DDB14B862022309C1 /* SyncTests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SyncTests;
-			sourceTree = "<group>";
-		};
 		080A0AE1AFD66C215CD4F9DB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -11798,26 +11799,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		098AB58767888DF9D8F9CA43 /* Presenters */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Presenters;
-			sourceTree = "<group>";
-		};
 		0D758CEFD80375916583047D /* Errors */ = {
 			isa = PBXGroup;
 			children = (
 				478C812636024099005CEF08 /* AppError.swift */,
 			);
 			path = Errors;
-			sourceTree = "<group>";
-		};
-		0DD3DD26AC2E281084520B87 /* StateScreens */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = StateScreens;
 			sourceTree = "<group>";
 		};
 		0DE9632EFA502A9B44620D7D /* Extensions */ = {
@@ -11835,7 +11822,6 @@
 			isa = PBXGroup;
 			children = (
 				5DA73ABFD3FE01C7040B28EF /* Flows */,
-				4C62FC65BA349E9FC16B062D /* ScreenshotTour */,
 				B2C992C0289E6549E835D04D /* Info.plist */,
 			);
 			path = HappySpeechUITests;
@@ -13612,13 +13598,6 @@
 			path = ARMirror;
 			sourceTree = "<group>";
 		};
-		4C62FC65BA349E9FC16B062D /* ScreenshotTour */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ScreenshotTour;
-			sourceTree = "<group>";
-		};
 		4C8B22D9EF06A6CD8430359D /* SoundHunter */ = {
 			isa = PBXGroup;
 			children = (
@@ -14469,10 +14448,7 @@
 		62E9545F8ED20B1F8BE07B7F /* Snapshot */ = {
 			isa = PBXGroup;
 			children = (
-				68E4A17E7C8084B60D79BE80 /* ChildCircuit */,
 				DA4FF389731F3510E30B357A /* DesignSystem */,
-				FACB32891B5911B2F25D5252 /* ParentCircuit */,
-				0DD3DD26AC2E281084520B87 /* StateScreens */,
 				ADBF41846F9E684384135C15 /* DesignSystemSnapshotTests.swift */,
 			);
 			path = Snapshot;
@@ -14501,13 +14477,6 @@
 				64DF2D0B3EDFB96B758CE585 /* BreathingARView.swift */,
 			);
 			path = BreathingAR;
-			sourceTree = "<group>";
-		};
-		68E4A17E7C8084B60D79BE80 /* ChildCircuit */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ChildCircuit;
 			sourceTree = "<group>";
 		};
 		69E2BA8210818595466ABED4 /* Demo */ = {
@@ -15397,7 +15366,6 @@
 		77BF565C569EBAF859859F67 /* HappySpeechTests */ = {
 			isa = PBXGroup;
 			children = (
-				B86BE800DF238528DA16E6CF /* Integration */,
 				1C1918C54E95B94F11E4DE63 /* Mocks */,
 				62E9545F8ED20B1F8BE07B7F /* Snapshot */,
 				D4A94C534D82C889E52A6F35 /* Unit */,
@@ -15823,6 +15791,10 @@
 		9CF225CDB440FC0BC74C81B2 /* ARStoryQuest */ = {
 			isa = PBXGroup;
 			children = (
+				8B4C7D300C26088E425309DC /* ARStoryQuestInteractor.swift */,
+				91287672E0AE450137578DE3 /* ARStoryQuestModels.swift */,
+				020A43715AF78B449621B95C /* ARStoryQuestPresenter.swift */,
+				642722964429D4E4462BC393 /* ARStoryQuestRouter.swift */,
 				8F5125D6478766A78FF1D896 /* ARStoryQuestView.swift */,
 			);
 			path = ARStoryQuest;
@@ -16233,9 +16205,7 @@
 		A6F14C93433CC65C38C21A70 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				B6C977B08BB9016363F75E3B /* Animations */,
 				2B84BB973840FAFE650923E8 /* Audio */,
-				CC5CFC635F650CFA442EF25C /* Content */,
 				810DAB490628A856324D842C /* Models */,
 				5EBAEFCAF11720803D9FAE13 /* Assets.xcassets */,
 				3C000BFC52916C1D77729EDE /* GoogleService-Info.plist */,
@@ -16420,13 +16390,6 @@
 			path = ASR;
 			sourceTree = "<group>";
 		};
-		B6C977B08BB9016363F75E3B /* Animations */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Animations;
-			sourceTree = "<group>";
-		};
 		B7911B12A6F1EFA9378E238B /* Features */ = {
 			isa = PBXGroup;
 			children = (
@@ -16439,15 +16402,6 @@
 				FE18FE14E4D236D979AEE21E /* SessionShellInteractorTests.swift */,
 			);
 			path = Features;
-			sourceTree = "<group>";
-		};
-		B86BE800DF238528DA16E6CF /* Integration */ = {
-			isa = PBXGroup;
-			children = (
-				D2FB3686ED77B76D1E4B7C99 /* RealmTests */,
-				049F921DDB14B862022309C1 /* SyncTests */,
-			);
-			path = Integration;
 			sourceTree = "<group>";
 		};
 		B97EF6FB13BE0C63903D8534 /* Content */ = {
@@ -16885,13 +16839,6 @@
 			path = Tokens;
 			sourceTree = "<group>";
 		};
-		CC5CFC635F650CFA442EF25C /* Content */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Content;
-			sourceTree = "<group>";
-		};
 		CC78D3ED35DF0AFDBEA0F922 /* VAD */ = {
 			isa = PBXGroup;
 			children = (
@@ -16916,13 +16863,6 @@
 			path = AR;
 			sourceTree = "<group>";
 		};
-		D02C4B6F4BE11BE3EF89B8DF /* Core */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Core;
-			sourceTree = "<group>";
-		};
 		D258A14B7091878DBF3CD6B0 /* LessonPlayer */ = {
 			isa = PBXGroup;
 			children = (
@@ -16944,13 +16884,6 @@
 				80EDD9FEAF36ECAA95E846F4 /* VisualAcoustic */,
 			);
 			path = LessonPlayer;
-			sourceTree = "<group>";
-		};
-		D2FB3686ED77B76D1E4B7C99 /* RealmTests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = RealmTests;
 			sourceTree = "<group>";
 		};
 		D42A631EA884BCDDFFA6630E /* ARZone */ = {
@@ -16982,10 +16915,8 @@
 		D4A94C534D82C889E52A6F35 /* Unit */ = {
 			isa = PBXGroup;
 			children = (
-				D02C4B6F4BE11BE3EF89B8DF /* Core */,
 				B7911B12A6F1EFA9378E238B /* Features */,
 				AD33542C0DE90C83B37FC021 /* Interactors */,
-				098AB58767888DF9D8F9CA43 /* Presenters */,
 				C8A016B5923955DD836C37EC /* Services */,
 			);
 			path = Unit;
@@ -18414,13 +18345,6 @@
 				7C93827B5825FCA57F0D7D5D /* r-wm-69.m4a */,
 			);
 			path = R;
-			sourceTree = "<group>";
-		};
-		FACB32891B5911B2F25D5252 /* ParentCircuit */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ParentCircuit;
 			sourceTree = "<group>";
 		};
 		FEC96E1101C63F4BD10594A3 /* KH */ = {
@@ -24324,6 +24248,10 @@
 				8D99E190872882E5B8856933 /* ARMirrorRouter.swift in Sources */,
 				6AF5DF6ADEA0BD8BB3A40020 /* ARMirrorView.swift in Sources */,
 				6AE00FDBD6C2A9D4F32694F0 /* ARSessionService.swift in Sources */,
+				9799E957C2072D29FD7B821F /* ARStoryQuestInteractor.swift in Sources */,
+				EF8A4183D26808F607564901 /* ARStoryQuestModels.swift in Sources */,
+				7C8760D9E17F27409E57145C /* ARStoryQuestPresenter.swift in Sources */,
+				4FFB02634C5822D738ED81F6 /* ARStoryQuestRouter.swift in Sources */,
 				28337A25DB1B9306C0D3B5C9 /* ARStoryQuestView.swift in Sources */,
 				B6F113E7A8816C3900B573F9 /* ARZoneDisplayLogic.swift in Sources */,
 				83ADB801FE8945EC7B6F6308 /* ARZoneInteractor.swift in Sources */,
