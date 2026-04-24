@@ -1,6 +1,6 @@
 # Sound Assets Registry — HappySpeech
 
-**Version 2.0 — 2026-04-23**
+**Version 2.1 — 2026-04-24**
 **Managed by:** Sound Curator. All sounds verified CC0 or royalty-free.
 
 ---
@@ -10,12 +10,13 @@
 | Категория | Файлов | Размер | Placement | Статус |
 |---|---|---|---|---|
 | UI sounds (.caf) | 16 | ~150 KB | `HappySpeech/Resources/Audio/UI/` (в репо) | ✅ M3.2 done |
-| Ляля voice brand (.m4a) | 120 | ~2 MB | `HappySpeech/Resources/Audio/Lyalya/` (в репо) | ✅ M3.3 done |
+| Ляля voice brand (.m4a) | 149 | ~5 MB | `HappySpeech/Resources/Audio/Lyalya/` (в репо) | ✅ M3.3 + M3.7 done |
 | Content audio batch 1 (.m4a) | 1000 | 12.65 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 1 |
 | Content audio batch 2 (.m4a) | 1028 | 11.1 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 2 |
 | Content audio batch 3 (.m4a) | 681 | 8.36 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 3 |
 | Content audio batch 4 (.m4a) | 2568 | 40.09 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 4 |
-| Эталоны для M4.3 (premium TTS) | 0 | — | `_workshop/references/` | ⏳ pending M3.5 |
+| Content audio batch 5 — grammar (.m4a) | 141 | 2.3 MB | `HappySpeech/Resources/Audio/Content/Grammar/` (локально, gitignored → Firebase Storage) | ✅ M3.5 done |
+| Эталоны для M4.3 (premium TTS) | 0 | — | `_workshop/references/` | ⏳ pending |
 | Ambient / background music | 0 / 4 | — | `Resources/Audio/Ambient/` | ⏳ pending M9 |
 
 ---
@@ -255,13 +256,72 @@ COPYRIGHT RULE: каждый звук должен иметь verified CC0/Apach
 
 ---
 
+## M3.5 — Content Audio Batch 5 — Grammar (141 файл, 2.3 MB) ✅
+
+**Дата:** 2026-04-24
+**Генерация:** edge-tts `ru-RU-SvetlanaNeural` → ffmpeg AAC .m4a
+**Формат:** 22050 Hz mono AAC, 9–18 KB/файл
+**Пак:** `pack_grammar.json` — 141 items из 7 stages
+
+| Stage | Файлов | Описание |
+|---|---|---|
+| plural | 20 | Множественное число |
+| adjective_agreement | 20 | Согласование прилагательных |
+| prepositions | 23 | Предлоги |
+| verb_forms | 19 | Глагольные формы |
+| cases | 20 | Падежи |
+| word_change | 26 | Словоизменение |
+| sentences_grammar | 13 | Грамматические предложения |
+| **ИТОГО** | **141** | — |
+
+**Валидация (5 случайных файлов):**
+- AAC codec ✅
+- 22050 Hz mono ✅
+- Размер 9–18 KB ✅
+- 141/141 сгенерировано, 0 ошибок ✅
+
+**Путь:** `HappySpeech/Resources/Audio/Content/Grammar/` (локально, gitignored → Firebase Storage)
+
+---
+
+## M3.7 — Новые фразы Ляли +29 (итого 149 фраз) ✅
+
+**Дата:** 2026-04-24
+**Генерация:** edge-tts `ru-RU-SvetlanaNeural` → ffmpeg AAC .m4a
+**Формат:** 22050 Hz mono AAC, 41–49 KB/файл
+**Путь:** `HappySpeech/Resources/Audio/Lyalya/`
+
+**Примечание по голосу:** `ru-RU-DariyaNeural` недоступен в edge-tts 7.2.8 (список голосов ограничен SvetlanaNeural + DmitryNeural). Использован `SvetlanaNeural` — соответствует M3.3.
+
+| Экран | Файлы | Кол-во |
+|---|---|---|
+| HomeTasks | lyalya_hometasks_*.m4a | 3 |
+| WorldMap | lyalya_worldmap_*.m4a | 3 |
+| Onboarding | lyalya_onboarding_*.m4a | 4 |
+| SessionComplete | lyalya_session_*.m4a | 3 |
+| Rewards | lyalya_reward_*.m4a | 3 |
+| ProgressDashboard | lyalya_progress_*.m4a | 2 |
+| Settings | lyalya_settings_hello.m4a | 1 |
+| Permissions | lyalya_permission_*.m4a | 2 |
+| Demo | lyalya_demo_*.m4a | 3 |
+| ChildHome | lyalya_childhome_*.m4a | 5 |
+| **ИТОГО новых** | — | **29** |
+
+**Валидация (5 файлов):**
+- AAC codec ✅
+- 22050 Hz mono ✅
+- Размер 41–49 KB ✅
+- 29/29 сгенерировано, 0 ошибок ✅
+
+---
+
 ## Следующие шаги
 
-- **M3.4 batch 3** — ✅ DONE — велярные К/Г/Х (681 файл, 8.36 MB, 17 мин)
-- **M3.4 batch 4** — ✅ DONE — Ж/Ч/Щ/Й + lexical/breathing/narrative/gymn/phonemic/diffWH (2568 файлов, 40.09 MB, 70 мин)
-- **M3.5** — генерация эталонов для PronunciationScorer (после M3.4 batch 2, ~1200 слов)
+- **M3.5** — ✅ DONE — grammar batch (141 файл, 2.3 MB)
+- **M3.7** — ✅ DONE — Ляля +29 фраз (итого 149)
+- **Эталоны для PronunciationScorer** — ~1200 слов (pending)
 - **M3.6 ambient** — 4 трека CC0 для world_map/lesson/AR/reward
-- **Firebase Storage upload** — после M3.4 batch 3 (финальный) → delegated to backend-developer M11.4
+- **Firebase Storage upload** — delegated to backend-developer M11.4
 
 ## См. также
 
