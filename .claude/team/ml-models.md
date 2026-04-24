@@ -87,6 +87,31 @@
 | D-005 | CHILDRU corpus | Research corpus | ~10h | Russian children speech | Planned (S2) |
 | D-006 | Custom micro-corpus | Logopedist recordings (in-house) | ~200 utterances | Pronunciation scoring annotation | Planned (S4–S6) |
 | D-007 | Reference pronunciations | Logopedist recordings (in-house) | 520+ word recordings | Content seed audio | Planned (S3–S5) |
+| D-008 | PronunciationScorer whistling | Content Audio (S,Z,C) + pitch/time augmentation | 500 WAV (300 correct + 200 aug) | Binary scorer training: С,З,Ц | READY 2026-04-24 |
+| D-009 | PronunciationScorer hissing | Content Audio (SH,ZH,CH,SHCH) + pitch/time augmentation | 500 WAV (300 correct + 200 aug) | Binary scorer training: Ш,Ж,Ч,Щ | READY 2026-04-24 |
+| D-010 | PronunciationScorer sonants | Content Audio (R,L,RL) + pitch-shift augmentation | 500 WAV (300 correct + 200 aug) | Binary scorer training: Р,Л | READY 2026-04-24 |
+| D-011 | PronunciationScorer velar | Content Audio (K,G,KH) + pitch/noise augmentation | 500 WAV (300 correct + 200 aug) | Binary scorer training: К,Г,Х | READY 2026-04-24 |
+
+### D-008 – D-011: PronunciationScorer Training Datasets (2026-04-24)
+
+**Источник правильных:** `HappySpeech/Resources/Audio/Content/{S,Z,C,SH,ZH,CH,SHCH,R,L,RL,K,G,KH}/` — TTS-синтезированные слова (Silero TTS), лицензия MIT-совместимая.
+
+**Метод аугментации неправильных (имитация детских ошибок):**
+- whistling (sigmatism): `librosa.effects.pitch_shift(n_steps=-2)` + `time_stretch(rate=1.05)` — С→Ш-подобное искажение
+- hissing (sigmatism_inv): `pitch_shift(n_steps=+2)` + `time_stretch(rate=0.95)` — Ш→С-подобное
+- sonants (rotation): `pitch_shift(n_steps=+2)` + Gaussian noise σ=0.003 — Р→Л ротацизм
+- velar (velar_fronting): `pitch_shift(n_steps=+3)` + Gaussian noise σ=0.002 — К→Т переднеязычная замена
+
+**Формат:** 16kHz mono WAV, длина 1.2–2.6 сек (нативная из контентного аудио)
+
+**Пути (не в репо, в .gitignore):**
+- Правильные: `~/Downloads/HappySpeech/_workshop/datasets/correct/{group}/*.wav`
+- Неправильные: `~/Downloads/HappySpeech/_workshop/datasets/incorrect/{group}/*.wav`
+- Манифесты: `~/Downloads/HappySpeech/_workshop/datasets/{group}_manifest.csv`
+
+**Скрипт подготовки:** `~/Downloads/HappySpeech/_workshop/scripts/prepare_datasets.py`
+
+**Баланс классов:** 60% correct / 40% incorrect (300/200) — намеренная асимметрия в пользу правильных для снижения ложноположительных ошибок при оценке детской речи.
 
 ---
 
