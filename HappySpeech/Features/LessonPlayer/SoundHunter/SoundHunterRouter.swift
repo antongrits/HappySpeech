@@ -1,25 +1,24 @@
-import SwiftUI
+import Foundation
 
 // MARK: - SoundHunterRoutingLogic
 
 @MainActor
-protocol SoundHunterRoutingLogic {
-    func routeToSessionComplete()
+protocol SoundHunterRoutingLogic: AnyObject {
     func routeBack()
 }
 
 // MARK: - SoundHunterRouter
+//
+// SoundHunter встраивается внутрь `SessionShell` и не имеет собственной навигации —
+// по завершении игры View вызывает `onComplete(score:)`, родитель сам решает,
+// куда идти дальше. Роутер используется лишь для сценария «закрыть досрочно».
 
 @MainActor
 final class SoundHunterRouter: SoundHunterRoutingLogic {
 
-    weak var coordinator: AppCoordinator?
-
-    func routeToSessionComplete() {
-        coordinator?.navigate(to: .sessionComplete)
-    }
+    var onDismiss: (() -> Void)?
 
     func routeBack() {
-        coordinator?.pop()
+        onDismiss?()
     }
 }
