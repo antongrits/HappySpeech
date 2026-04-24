@@ -1,10 +1,13 @@
-import SwiftUI
+import Foundation
 
 // MARK: - BingoRoutingLogic
+//
+// Bingo живёт внутри `SessionShellView`, поэтому собственный AppCoordinator
+// ему не нужен. Маршрутизация ограничивается одним сценарием — выходом
+// из игры с прокидыванием финального score родителю через `onDismiss`.
 
 @MainActor
-protocol BingoRoutingLogic {
-    func routeToSessionComplete()
+protocol BingoRoutingLogic: AnyObject {
     func routeBack()
 }
 
@@ -13,13 +16,12 @@ protocol BingoRoutingLogic {
 @MainActor
 final class BingoRouter: BingoRoutingLogic {
 
-    weak var coordinator: AppCoordinator?
-
-    func routeToSessionComplete() {
-        coordinator?.navigate(to: .sessionComplete)
-    }
+    /// Замыкание, которое вызывается, когда игра завершена и пользователь
+    /// нажал «Завершить». `BingoView` подключает к нему вызов `onComplete`
+    /// (контракт с родительским `SessionShellView`).
+    var onDismiss: (() -> Void)?
 
     func routeBack() {
-        coordinator?.pop()
+        onDismiss?()
     }
 }
