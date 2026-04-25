@@ -9654,6 +9654,50 @@
         }
       }
     },
+    "sessionHistory.a11y.chart": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "График точности"
+          }
+        }
+      }
+    },
+    "sessionHistory.a11y.chartTrendPattern": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$d сессий: первая %2$d процентов, последняя %3$d процентов"
+          }
+        }
+      }
+    },
+    "sessionHistory.a11y.summaryPattern": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Всего %1$d сессий, средняя точность %2$d процентов, общее время %3$d минут"
+          }
+        }
+      }
+    },
+    "sessionHistory.chart.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прогресс точности"
+          }
+        }
+      }
+    },
     "sessionHistory.empty.cta.start": {
       "extractionState": "manual",
       "localizations": {
@@ -9958,6 +10002,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "Звук %@"
+          }
+        }
+      }
+    },
+    "sessionHistory.summary.accuracy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "точность"
+          }
+        }
+      }
+    },
+    "sessionHistory.summary.minutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "минут"
+          }
+        }
+      }
+    },
+    "sessionHistory.summary.sessions": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "занятий"
           }
         }
       }
