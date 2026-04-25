@@ -25,8 +25,10 @@ struct ScreeningView: View {
     @State private var presenter: ScreeningPresenter?
     @State private var router: ScreeningRouter?
     @State private var state = ScreeningViewState()
+    @State private var isSaving: Bool = false
 
     @Environment(AppContainer.self) private var container
+    @Environment(AppCoordinator.self) private var coordinator
 
     var body: some View {
         ZStack {
@@ -35,7 +37,9 @@ struct ScreeningView: View {
             VStack(spacing: SpacingTokens.large) {
                 header
                 if state.isFinished, let outcome = state.outcome {
-                    SummaryView(vm: outcome, onDone: { onFinish(outcome.outcome) })
+                    SummaryView(vm: outcome, isSaving: isSaving) {
+                        complete(outcome: outcome.outcome)
+                    }
                 } else if state.showBlockTransition, let blockTitle = state.blockTitle {
                     BlockTransitionView(title: blockTitle) {
                         state.showBlockTransition = false
@@ -81,12 +85,16 @@ struct ScreeningView: View {
     private func bootstrap() async {
         guard interactor == nil else { return }
         let presenterInstance = ScreeningPresenter()
-        let interactorInstance = ScreeningInteractor()
+        let interactorInstance = ScreeningInteractor(realmActor: container.realmActor)
         let routerInstance = ScreeningRouter()
 
         interactorInstance.presenter = presenterInstance
+        interactorInstance.router = routerInstance
         presenterInstance.display = ScreeningDisplayBridge(state: state) { self.state = $0 }
         routerInstance.onComplete = { outcome in onFinish(outcome) }
+        routerInstance.onRouteToParentHome = { [coordinator] in
+            coordinator.navigate(to: .parentHome)
+        }
         routerInstance.onCancel = onCancel
 
         self.interactor = interactorInstance
@@ -94,6 +102,43 @@ struct ScreeningView: View {
         self.router = routerInstance
 
         await interactorInstance.startScreening(.init(childId: childId, childAge: childAge))
+    }
+
+    /// Triggered by Summary CTA — формирует `CompleteRequest` из текущего outcome
+    /// и передаёт интерактору, который persist'ит запись и переключает root.
+    private func complete(outcome: ScreeningOutcome) {
+        guard !isSaving else { return }
+        isSaving = true
+        let request = Self.makeCompleteRequest(from: outcome, childId: childId)
+        Task {
+            await interactor?.completeScreening(request)
+            isSaving = false
+            onFinish(outcome)
+        }
+    }
+
+    // MARK: - Helpers
+
+    /// Маппинг `ScreeningOutcome` → `CompleteRequest`. Severity выводится из
+    /// количества звуков с verdict == .intervention:
+    ///   0 — "mild", 1–2 — "moderate", 3+ — "severe".
+    static func makeCompleteRequest(from outcome: ScreeningOutcome, childId: String) -> ScreeningModels.CompleteRequest {
+        let severity: String
+        switch outcome.priorityTargetSounds.count {
+        case 0:    severity = "mild"
+        case 1, 2: severity = "moderate"
+        default:   severity = "severe"
+        }
+        let packs = outcome.priorityTargetSounds.map { sound in
+            "sound_\(sound.lowercased())_pack"
+        }
+        return ScreeningModels.CompleteRequest(
+            childId: childId,
+            severity: severity,
+            problematicSounds: outcome.priorityTargetSounds,
+            recommendedPacks: packs,
+            notes: ""
+        )
     }
 
     private func submit(score: Float) {
@@ -248,17 +293,29 @@ private struct BlockTransitionView: View {
 
 private struct SummaryView: View {
     let vm: ScreeningSummaryViewModel
+    let isSaving: Bool
     let onDone: () -> Void
+
     var body: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.small) {
-            Text(String(localized: "screening.summary.title"))
+            Text(String(localized: "screening.complete"))
                 .font(TypographyTokens.title())
             Text(vm.summaryText)
                 .font(TypographyTokens.body(16))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
             HSProgressBar(value: 1.0)
-            HSButton(String(localized: "screening.summary.done"), style: .primary, action: onDone)
-                .frame(maxWidth: .infinity)
+            if isSaving {
+                HStack(spacing: SpacingTokens.small) {
+                    ProgressView().progressViewStyle(.circular)
+                    Text(String(localized: "screening.saving"))
+                        .font(TypographyTokens.body(14))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+            } else {
+                HSButton(String(localized: "screening.summary.done"), style: .primary, action: onDone)
+                    .frame(maxWidth: .infinity)
+            }
         }
         .padding(SpacingTokens.large)
     }

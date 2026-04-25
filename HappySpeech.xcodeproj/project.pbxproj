@@ -2275,6 +2275,7 @@
 		5F47C95D92028EA07A0B1354 /* z-syl-14.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED4CD6849E5A55054E19EE56 /* z-syl-14.m4a */; };
 		5F4BC8E52DEB1910D4156E6F /* StoryCompletionInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE1BF9445CD3921F835BA64 /* StoryCompletionInteractorTests.swift */; };
 		5F4D8B877562FFAEAD005A90 /* br-217.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E178DE145C2B4BFF15248D1A /* br-217.m4a */; };
+		5F527C8715FAEA274AF92DD1 /* ScreeningOutcomeObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F5ECCD23D76C5EF07F7659 /* ScreeningOutcomeObject.swift */; };
 		5F8EDBA40DF616DB92412E51 /* kh-ph-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5AF6FFFA53B2B1AE29EDCEB3 /* kh-ph-0.m4a */; };
 		5F963BF2C9D2DBD9F28E1E69 /* lex-vf-18.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1289152AAEA717BA48B1055A /* lex-vf-18.m4a */; };
 		5F9E9C8AFB729E9374206D47 /* dwh-df-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E3D9678A9D33C943BE3B2776 /* dwh-df-6.m4a */; };
@@ -7826,6 +7827,7 @@
 		47EDE5555395EBE3CA26ACD9 /* StoryCompletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCompletionView.swift; sourceTree = "<group>"; };
 		47EEB753E1ACD81892A5A9BA /* dwh-wm-21.m4a */ = {isa = PBXFileReference; path = "dwh-wm-21.m4a"; sourceTree = "<group>"; };
 		47F2D2FF36F182B9C6536A28 /* g-wi-29.m4a */ = {isa = PBXFileReference; path = "g-wi-29.m4a"; sourceTree = "<group>"; };
+		47F5ECCD23D76C5EF07F7659 /* ScreeningOutcomeObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreeningOutcomeObject.swift; sourceTree = "<group>"; };
 		4801713E37F4D512CADF0E9C /* lex-ad-6.m4a */ = {isa = PBXFileReference; path = "lex-ad-6.m4a"; sourceTree = "<group>"; };
 		480AF7F54526D87B2272FF39 /* ag-042.m4a */ = {isa = PBXFileReference; path = "ag-042.m4a"; sourceTree = "<group>"; };
 		4810A449558C155F426B016F /* r-ph-58.m4a */ = {isa = PBXFileReference; path = "r-ph-58.m4a"; sourceTree = "<group>"; };
@@ -18500,6 +18502,7 @@
 			children = (
 				C6BF9C3167825E9315EB359D /* LLMDecisionLog.swift */,
 				699FC20B5B2E0CFD1AE4A1D8 /* RealmModels.swift */,
+				47F5ECCD23D76C5EF07F7659 /* ScreeningOutcomeObject.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -25401,6 +25404,7 @@
 				7A0462FAB0AF24B2C39D8526 /* ScreeningDisplayLogic.swift in Sources */,
 				FFBBB95A3E3326C3AA59A9B5 /* ScreeningInteractor.swift in Sources */,
 				98C06B5A3D09E9B8D4A9E526 /* ScreeningModels.swift in Sources */,
+				5F527C8715FAEA274AF92DD1 /* ScreeningOutcomeObject.swift in Sources */,
 				75692D3B705DE80930E2604C /* ScreeningPresenter.swift in Sources */,
 				2981C5EB4148DF9E86A3392D /* ScreeningPrompts.swift in Sources */,
 				FB5E3165D1DFAB07CF7B107F /* ScreeningRouter.swift in Sources */,
