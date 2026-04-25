@@ -155,41 +155,37 @@ private struct ParentDashboardTab: View {
     }
 
     private var childSection: some View {
-        HStack(spacing: SpacingTokens.sp3) {
-            // Avatar
-            Circle()
-                .fill(ColorTokens.Brand.primary.opacity(0.15))
-                .frame(width: 52, height: 52)
-                .overlay(
-                    Text(String(viewModel.childName.prefix(1)))
-                        .font(.system(size: 22, weight: .bold, design: .rounded))
-                        .foregroundStyle(ColorTokens.Brand.primary)
-                )
+        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.sp4) {
+            HStack(spacing: SpacingTokens.sp3) {
+                // Avatar
+                Circle()
+                    .fill(ColorTokens.Brand.primary.opacity(0.15))
+                    .frame(width: 52, height: 52)
+                    .overlay(
+                        Text(String(viewModel.childName.prefix(1)))
+                            .font(.system(size: 22, weight: .bold, design: .rounded))
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                    )
 
-            VStack(alignment: .leading, spacing: 2) {
-                Text(viewModel.childName)
-                    .font(TypographyTokens.headline(17))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                Text(String(localized: "\(viewModel.childAge) лет · \(viewModel.targetSoundsText)"))
-                    .font(TypographyTokens.body(13))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-            }
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(viewModel.childName)
+                        .font(TypographyTokens.headline(17))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                    Text(String(localized: "\(viewModel.childAge) лет · \(viewModel.targetSoundsText)"))
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                }
 
-            Spacer()
+                Spacer()
 
-            Button {
-                // Switch child
-            } label: {
-                Image(systemName: "chevron.down.circle")
-                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                Button {
+                    // Switch child
+                } label: {
+                    Image(systemName: "chevron.down.circle")
+                        .foregroundStyle(ColorTokens.Parent.inkSoft)
+                }
             }
         }
-        .padding(SpacingTokens.sp4)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                .fill(ColorTokens.Parent.surface)
-                .parentCardShadow()
-        )
     }
 
     private func lastSessionCard(_ session: ParentHomeModels.SessionSummary) -> some View {
@@ -597,29 +593,25 @@ private struct ParentStatCard: View {
     let color: Color
 
     var body: some View {
-        VStack(spacing: SpacingTokens.sp2) {
-            Image(systemName: icon)
-                .font(.system(size: 20))
-                .foregroundStyle(color)
+        HSLiquidGlassCard(style: .tinted(color), padding: SpacingTokens.sp4) {
+            VStack(spacing: SpacingTokens.sp2) {
+                Image(systemName: icon)
+                    .font(.system(size: 20))
+                    .foregroundStyle(color)
 
-            Text(value)
-                .font(.system(size: 20, weight: .bold, design: .rounded))
-                .foregroundStyle(ColorTokens.Parent.ink)
+                Text(value)
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .foregroundStyle(ColorTokens.Parent.ink)
 
-            Text(label)
-                .font(TypographyTokens.caption(10))
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .ctaTextStyle()
+                Text(label)
+                    .font(TypographyTokens.caption(10))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .ctaTextStyle()
+            }
+            .frame(maxWidth: .infinity)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, SpacingTokens.sp4)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
-                .fill(ColorTokens.Parent.surface)
-                .parentCardShadow()
-        )
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(label): \(value)")
     }
