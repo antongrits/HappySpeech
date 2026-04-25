@@ -4118,12 +4118,6 @@
             "state": "translated",
             "value": "Ошибка данных при синхронизации."
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Invalid data during sync."
-          }
         }
       }
     },
@@ -4134,12 +4128,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Нет подключения к интернету. Данные сохранены локально и синхронизируются автоматически."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No internet connection. Your progress is saved locally and will sync automatically."
           }
         }
       }
@@ -4152,12 +4140,6 @@
             "state": "translated",
             "value": "Сервер отклонил синхронизацию: %@"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Server rejected sync: %@"
-          }
         }
       }
     },
@@ -4168,12 +4150,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Не удалось синхронизировать данные. Попробуйте позже."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sync failed. Please try again later."
           }
         }
       }
