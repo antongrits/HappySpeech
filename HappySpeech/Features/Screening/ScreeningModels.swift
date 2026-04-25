@@ -65,6 +65,26 @@ enum ScreeningModels {
             let priorityTargetSounds: [String]
         }
     }
+
+    // MARK: CompleteRequest
+    //
+    // Финальный «акт сдачи»: после того, как презентер сформировал ViewModel и UI
+    // показал summary, родитель/специалист подтверждает запись результата. Этот
+    // запрос несёт в себе уже агрегированные поля для сохранения в Realm.
+    struct CompleteRequest: Sendable {
+        let childId: String
+        /// "mild" | "moderate" | "severe" — выводится из количества звуков с
+        /// `intervention`-verdict (см. ScreeningOutcomeObject header).
+        let severity: String
+        /// Список проблемных звуков (verdict == .intervention), отсортированный
+        /// по убыванию серьёзности.
+        let problematicSounds: [String]
+        /// Идентификаторы рекомендованных контент-паков
+        /// (например, ["sound_r_pack", "sound_sh_pack"]).
+        let recommendedPacks: [String]
+        /// Свободные заметки. По умолчанию — пустая строка.
+        let notes: String
+    }
 }
 
 // MARK: - ScreeningBlock

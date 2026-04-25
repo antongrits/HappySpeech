@@ -14,6 +14,10 @@ enum RealmMigrations {
             // v2: added LLMDecisionLog — Realm creates the new object schema automatically,
             // no enumeration needed since the entity didn't exist before.
         }
+        if oldSchemaVersion < 3 {
+            // v3: added ScreeningOutcomeObject — same as above, новый объект не требует
+            // миграционных действий, Realm создаёт схему автоматически.
+        }
     }
 }
 

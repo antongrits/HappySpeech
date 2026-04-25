@@ -140,5 +140,5 @@ final class RewardRecord: Object, @unchecked Sendable {
 
 /// Current Realm schema version. Increment with each migration.
 enum RealmSchemaVersion {
-    static let current: UInt64 = 2   // v2: added LLMDecisionLog
+    static let current: UInt64 = 3   // v3: added ScreeningOutcomeObject
 }
