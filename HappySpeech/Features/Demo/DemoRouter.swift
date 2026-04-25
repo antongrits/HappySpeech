@@ -4,17 +4,21 @@ import SwiftUI
 
 @MainActor
 protocol DemoRoutingLogic {
-    func routeBack()
+    func routeSkipped()
+    func routeCompleted()
 }
 
 // MARK: - DemoRouter
+//
+// View задаёт колбэки: вызывается, когда пользователь нажал «Пропустить»
+// или прошёл все 15 шагов. Default behaviour — pop из координатора.
 
 @MainActor
 final class DemoRouter: DemoRoutingLogic {
 
-    weak var coordinator: AppCoordinator?
+    var onSkipped: (() -> Void)?
+    var onCompleted: (() -> Void)?
 
-    func routeBack() {
-        coordinator?.pop()
-    }
+    func routeSkipped() { onSkipped?() }
+    func routeCompleted() { onCompleted?() }
 }
