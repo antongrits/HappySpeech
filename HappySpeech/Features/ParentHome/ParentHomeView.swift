@@ -1,4 +1,5 @@
 import SwiftUI
+import Charts
 
 // MARK: - ParentHomeView
 
@@ -396,8 +397,26 @@ private struct ParentAnalyticsTab: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: SpacingTokens.sp5) {
-                    ForEach(progress, id: \.sound) { item in
-                        SoundProgressCard(item: item)
+                    if progress.isEmpty {
+                        HSEmptyState(
+                            icon: "chart.bar.xaxis",
+                            title: String(localized: "Данных пока нет"),
+                            message: String(localized: "Аналитика появится после первых занятий")
+                        )
+                        .frame(minHeight: 360)
+                    } else {
+                        SoundAccuracyChartCard(progress: progress)
+
+                        VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+                            Text(String(localized: "По звукам"))
+                                .font(TypographyTokens.headline(17))
+                                .foregroundStyle(ColorTokens.Parent.ink)
+                                .padding(.horizontal, SpacingTokens.sp1)
+
+                            ForEach(progress, id: \.sound) { item in
+                                SoundProgressCard(item: item)
+                            }
+                        }
                     }
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
@@ -406,6 +425,132 @@ private struct ParentAnalyticsTab: View {
             .background(ColorTokens.Parent.bg.ignoresSafeArea())
             .navigationTitle(String(localized: "Аналитика"))
         }
+    }
+}
+
+// MARK: - Sound accuracy chart (Swift Charts)
+
+/// Bar chart of average accuracy per target sound.
+/// Uses Swift Charts (`Chart` / `BarMark`) — iOS 16+. Tinted to the parent
+/// circuit accent. Bars are sorted in the same order as the cards below for
+/// visual continuity.
+private struct SoundAccuracyChartCard: View {
+    let progress: [ParentHomeModels.SoundProgress]
+
+    private var chartData: [ChartPoint] {
+        progress.map { item in
+            ChartPoint(
+                sound: item.sound,
+                accuracy: item.overallRate,
+                tint: Self.tint(for: item.overallRate)
+            )
+        }
+    }
+
+    private var averageAccuracy: Double {
+        guard !progress.isEmpty else { return 0 }
+        let sum = progress.map(\.overallRate).reduce(0, +)
+        return sum / Double(progress.count)
+    }
+
+    var body: some View {
+        HSCard(style: .elevated) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp4) {
+                header
+
+                Chart(chartData) { point in
+                    BarMark(
+                        x: .value(String(localized: "Звук"), point.sound),
+                        y: .value(String(localized: "Точность"), point.accuracy * 100)
+                    )
+                    .foregroundStyle(point.tint)
+                    .cornerRadius(6)
+                    .annotation(position: .top, alignment: .center, spacing: 4) {
+                        Text("\(Int(point.accuracy * 100))%")
+                            .font(TypographyTokens.caption(11))
+                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    }
+                }
+                .frame(height: 200)
+                .chartYScale(domain: 0...110)
+                .chartYAxis {
+                    AxisMarks(values: [0, 25, 50, 75, 100]) { value in
+                        AxisGridLine().foregroundStyle(ColorTokens.Parent.line.opacity(0.4))
+                        AxisValueLabel {
+                            if let intValue = value.as(Int.self) {
+                                Text("\(intValue)%")
+                                    .font(TypographyTokens.caption(10))
+                                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                            }
+                        }
+                    }
+                }
+                .chartXAxis {
+                    AxisMarks(values: .automatic) { _ in
+                        AxisValueLabel()
+                            .font(TypographyTokens.caption(11).bold())
+                            .foregroundStyle(ColorTokens.Parent.ink)
+                    }
+                }
+                .accessibilityLabel(String(localized: "Диаграмма точности по звукам"))
+                .accessibilityValue(
+                    chartData
+                        .map { "\($0.sound): \(Int($0.accuracy * 100))%" }
+                        .joined(separator: ", ")
+                )
+
+                averageRow
+            }
+        }
+        .environment(\.circuitContext, .parent)
+    }
+
+    private var header: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(String(localized: "Точность по звукам"))
+                    .font(TypographyTokens.headline(17))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                Text(String(localized: "За последние 30 дней"))
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+            }
+            Spacer()
+            Image(systemName: "chart.bar.fill")
+                .foregroundStyle(ColorTokens.Parent.accent)
+        }
+    }
+
+    private var averageRow: some View {
+        HStack(spacing: SpacingTokens.sp2) {
+            Image(systemName: "checkmark.seal.fill")
+                .font(.system(size: 14))
+                .foregroundStyle(ColorTokens.Semantic.success)
+            Text(String(localized: "Средняя точность: \(Int(averageAccuracy * 100))%"))
+                .font(TypographyTokens.body(13))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+            Spacer()
+        }
+        .padding(.top, SpacingTokens.sp1)
+    }
+
+    /// Bar tint by accuracy band — green ≥ 80 %, gold 60–79 %, warning < 60 %.
+    private static func tint(for rate: Double) -> Color {
+        switch rate {
+        case 0.80...:
+            return ColorTokens.Semantic.success
+        case 0.60..<0.80:
+            return ColorTokens.Brand.gold
+        default:
+            return ColorTokens.Semantic.warning
+        }
+    }
+
+    private struct ChartPoint: Identifiable, Sendable {
+        let id = UUID()
+        let sound: String
+        let accuracy: Double
+        let tint: Color
     }
 }
 
