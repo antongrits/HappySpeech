@@ -2,10 +2,15 @@ import Foundation
 
 // MARK: - ScreeningRouter
 
-/// Navigation glue for Screening. In the app today the screening is presented
-/// as a modal sheet over ParentHome; after finish, the router fires
-/// `onComplete(outcome)` so the parent flow can persist the verdict into the
-/// child profile and update the adaptive planner.
+/// Navigation glue for Screening. В приложении скрининг показывается как
+/// модальный sheet поверх ParentHome (или как шаг онбординга). После завершения
+/// router эмитирует:
+///   • `onComplete(outcome)` — для тех вызывающих, кто хочет получить outcome
+///     (например, чтобы передать его дальше в onboarding-флоу);
+///   • `onRouteToParentHome` — целевая навигация в ParentHome через
+///     `AppCoordinator.navigate(to: .parentHome)`. Вызывается интерактором
+///     после успешного persist'а в Realm.
+///   • `onCancel` — пользователь прервал скрининг.
 @MainActor
 final class ScreeningRouter {
 
@@ -13,11 +18,19 @@ final class ScreeningRouter {
     /// to persist `ScreeningOutcome` to the child profile and dismiss the
     /// screening sheet.
     var onComplete: ((ScreeningOutcome) -> Void)?
+    /// Fired after `ScreeningOutcomeObject` has been persisted to Realm —
+    /// navigation should switch root to ParentHome.
+    var onRouteToParentHome: (() -> Void)?
     /// Fired when the user aborts mid-screening.
     var onCancel: (() -> Void)?
 
     func complete(outcome: ScreeningOutcome) {
         onComplete?(outcome)
+    }
+
+    /// Triggered by the interactor after Realm write succeeds.
+    func routeToParentHome() {
+        onRouteToParentHome?()
     }
 
     func cancel() {

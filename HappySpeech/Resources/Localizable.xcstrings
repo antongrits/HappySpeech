@@ -8587,6 +8587,17 @@
         }
       }
     },
+    "screening.complete": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скрининг завершён"
+          }
+        }
+      }
+    },
     "screening.continue": {
       "extractionState": "manual",
       "localizations": {
@@ -8598,6 +8609,17 @@
         }
       }
     },
+    "screening.outcome.saved": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Результаты сохранены"
+          }
+        }
+      }
+    },
     "screening.prompt.listen": {
       "extractionState": "manual",
       "localizations": {
@@ -8605,6 +8627,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Послушать эталон"
+          }
+        }
+      }
+    },
+    "screening.saving": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сохраняем результаты..."
           }
         }
       }
