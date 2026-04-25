@@ -9094,6 +9094,39 @@
           }
         }
       }
+    },
+    "ds.hschart.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нет данных для графика"
+          }
+        }
+      }
+    },
+    "ds.hschart.empty.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока нечего показывать. Сыграй пару занятий и вернись."
+          }
+        }
+      }
+    },
+    "ds.hschart.default_label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "График результатов"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
