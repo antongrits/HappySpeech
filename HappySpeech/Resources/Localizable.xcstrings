@@ -11162,6 +11162,94 @@
           }
         }
       }
+    },
+    "story.button.complete": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завершить"
+          }
+        }
+      }
+    },
+    "story.button.complete.accessibility": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завершить историю"
+          }
+        }
+      }
+    },
+    "story.button.next": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дальше"
+          }
+        }
+      }
+    },
+    "story.button.next.accessibility": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Следующая сцена"
+          }
+        }
+      }
+    },
+    "story.character.label %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Персонаж: %@"
+          }
+        }
+      }
+    },
+    "story.player.accessibility_label %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "История: %@"
+          }
+        }
+      }
+    },
+    "story.player.progress %@ из %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сцена %@ из %@"
+          }
+        }
+      }
+    },
+    "story.target_word.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слово:"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

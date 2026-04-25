@@ -660,4 +660,12 @@ public final class LiveAdaptivePlannerService: AdaptivePlannerService, @unchecke
         case .diff: return .memory
         }
     }
+
+    // MARK: - Story recommendation
+
+    /// Возвращает случайную анимированную историю для заданного целевого звука.
+    /// Используется AdaptivePlannerService для вставки сторис-активности в маршрут.
+    func recommendedStory(for sound: String) -> AnimatedStory? {
+        StoryLibrary.shared.stories(for: sound).randomElement()
+    }
 }

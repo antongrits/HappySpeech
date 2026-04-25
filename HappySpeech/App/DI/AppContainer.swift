@@ -227,6 +227,9 @@ public final class AppContainer {
         return _faceAnalysisService!
     }
 
+    /// Библиотека анимированных историй. Singleton — создаётся один раз для всего приложения.
+    public var storyLibrary: StoryLibrary { StoryLibrary.shared }
+
     // MARK: - GuidedTour
 
     private var _guidedTourCoordinator: GuidedTourCoordinator?
