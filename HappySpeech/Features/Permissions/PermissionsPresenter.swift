@@ -115,8 +115,24 @@ final class PermissionsPresenter: PermissionsPresentationLogic {
             state: step.state,
             showSettingsButton: showSettings,
             isCompleted: isCompleted,
-            accessibilityLabel: label
+            accessibilityLabel: label,
+            lyalyaState: makeLyalyaState(for: step.state)
         )
+    }
+
+    /// Маппинг состояния шага → состояние маскота:
+    /// - granted → celebrating (праздник),
+    /// - denied/restricted → encouraging (поддержка, "ничего страшного"),
+    /// - skipped → idle,
+    /// - notDetermined → explaining (Ляля объясняет, зачем нужно).
+    private func makeLyalyaState(for permissionState: PermissionState) -> LyalyaState {
+        switch permissionState {
+        case .granted:       return .celebrating
+        case .denied:        return .encouraging
+        case .restricted:    return .encouraging
+        case .skipped:       return .idle
+        case .notDetermined: return .explaining
+        }
     }
 
     private func makeProgressLabel(currentIndex: Int, total: Int) -> String {
@@ -124,6 +140,27 @@ final class PermissionsPresenter: PermissionsPresentationLogic {
         return String(
             format: String(localized: "permissions.progressLabel"),
             currentIndex + 1, total
+        )
+    }
+}
+
+// MARK: - All-done card factory
+
+extension PermissionsPresenter {
+
+    /// Формирует ViewModel финального праздничного шага.
+    /// View использует этот метод напрямую через `presenter` для
+    /// получения локализованных строк (без отдельного VIP-цикла).
+    static func makeAllDoneCard(steps: [PermissionStepCard]) -> PermissionsAllDoneCard {
+        let granted = steps.filter { $0.state == .granted }.count
+        let total = steps.count
+        return PermissionsAllDoneCard(
+            title: String(localized: "permissions.allDone.title"),
+            subtitle: String(localized: "permissions.allDone.subtitle"),
+            ctaTitle: String(localized: "permissions.allDone.cta"),
+            lyalyaState: .celebrating,
+            grantedCount: granted,
+            totalCount: total
         )
     }
 }
