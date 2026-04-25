@@ -1,17 +1,68 @@
-import SwiftUI
 import OSLog
+import SwiftUI
+
+// MARK: - DemoAccentColor + Resolved Colors
+
+/// Маппинг семантического акцента шага → конкретные `Color` из ColorTokens.
+/// Хранится в слое View, чтобы Models / Presenter оставались UIKit-free.
+private extension DemoAccentColor {
+
+    /// Базовый цвет акцента (используется на иконках, кнопках, маскоте).
+    var resolvedColor: Color {
+        switch self {
+        case .primary: return ColorTokens.Brand.primary
+        case .purple:  return ColorTokens.Brand.lilac
+        case .orange:  return ColorTokens.Brand.primaryHi
+        case .teal:    return ColorTokens.Brand.sky
+        case .green:   return ColorTokens.Brand.mint
+        case .sky:     return ColorTokens.Brand.sky
+        case .mint:    return ColorTokens.Brand.mint
+        case .lilac:   return ColorTokens.Brand.lilac
+        case .butter:  return ColorTokens.Brand.butter
+        case .gold:    return ColorTokens.Brand.gold
+        case .rose:    return ColorTokens.Brand.rose
+        case .parent:  return ColorTokens.Parent.accent
+        case .spec:    return ColorTokens.Spec.accent
+        }
+    }
+
+    /// Вторая точка градиента (отличается оттенком, чтобы дать «глубину»).
+    var resolvedSecondary: Color {
+        switch self {
+        case .primary: return ColorTokens.Brand.lilac
+        case .purple:  return ColorTokens.Brand.primary
+        case .orange:  return ColorTokens.Brand.butter
+        case .teal:    return ColorTokens.Brand.lilac
+        case .green:   return ColorTokens.Brand.sky
+        case .sky:     return ColorTokens.Brand.mint
+        case .mint:    return ColorTokens.Brand.sky
+        case .lilac:   return ColorTokens.Brand.sky
+        case .butter:  return ColorTokens.Brand.gold
+        case .gold:    return ColorTokens.Brand.butter
+        case .rose:    return ColorTokens.Brand.primary
+        case .parent:  return ColorTokens.Brand.sky
+        case .spec:    return ColorTokens.Brand.lilac
+        }
+    }
+}
 
 // MARK: - DemoModeView
 //
-// 15-шаговый walkthrough. Каждый шаг показывает:
-//   – заголовок и описание раздела;
-//   – большой emoji-постер «экрана» (или Spotlight-вырез поверх затемнения);
-//   – маскот Ляля с подсказкой в облачке;
-//   – прогресс «Шаг N из 15» + LinearProgressView;
-//   – кнопки Назад / Далее (или «Завершить» на 15-м шаге);
-//   – кнопку Skip в toolbar.
+// Полноэкранный 15-шаговый walkthrough.
 //
-// Сигнатура `init()` сохранена для AppCoordinator.
+// Каждый шаг — слайд с:
+//   • динамическим линейным градиентом (accent → secondary);
+//   • декоративными плавающими «парус»-кругами поверх фона;
+//   • большой круглой illustration (SF Symbol) с тенью;
+//   • заголовком (Display), подзаголовком (Caption), описанием (Body);
+//   • маскотом Лялей в нужном состоянии (waving / explaining / pointing / …);
+//   • опциональной кнопкой «Попробовать!» (для интерактивных шагов 4 и 5);
+//   • прогресс-баром «Шаг N из 15» в шапке;
+//   • кнопками «Назад» / «Далее» (или «Начать!» на последнем);
+//   • кнопкой «Пропустить» в toolbar.
+//
+// Свайп TabView .page переключает шаги (Reduced Motion → без animation).
+// Все интерактивные элементы имеют `accessibilityLabel` / `accessibilityHint`.
 
 struct DemoModeView: View {
 
@@ -40,29 +91,17 @@ struct DemoModeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                background
-
-                VStack(spacing: 0) {
-                    progressHeader
-                    Spacer(minLength: SpacingTokens.large)
-                    spotlightCanvas
-                    Spacer(minLength: SpacingTokens.large)
-                    mascotBubble
-                    Spacer(minLength: SpacingTokens.large)
-                    actionRow
+                animatedBackground
+                contentLayer
+                if let toast = display.toastMessage {
+                    toastOverlay(toast)
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .zIndex(2)
                 }
-                .padding(.bottom, SpacingTokens.large)
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        interactor?.skipDemo(.init())
-                    } label: {
-                        Text(String(localized: "demo.cta.skip"))
-                            .font(TypographyTokens.body(15))
-                            .foregroundStyle(.white.opacity(0.9))
-                    }
-                    .accessibilityLabel(String(localized: "demo.a11y.skip"))
+                    skipButton
                 }
             }
             .toolbarBackground(.hidden, for: .navigationBar)
@@ -79,32 +118,67 @@ struct DemoModeView: View {
             display.consumeCompleted()
             coordinator.navigate(to: .auth)
         }
+        .onChange(of: display.toastMessage) { _, value in
+            guard value != nil else { return }
+            // Auto-dismiss toast спустя 2.4 секунды.
+            Task { @MainActor in
+                try? await Task.sleep(nanoseconds: 2_400_000_000)
+                guard !Task.isCancelled else { return }
+                withAnimation(reduceMotion ? .linear(duration: 0.01) : MotionTokens.spring) {
+                    display.consumeToast()
+                }
+            }
+        }
     }
 
-    // MARK: - Background
+    // MARK: - Animated background
 
-    private var background: some View {
-        LinearGradient(
-            colors: [
-                ColorTokens.Brand.primary.opacity(0.95),
-                ColorTokens.Brand.lilac.opacity(0.85)
-            ],
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
-        .ignoresSafeArea()
-        .overlay {
-            // Decorative parallax circles
+    /// Динамический градиент: accent → secondary текущего шага. При свайпе
+    /// между шагами SwiftUI плавно интерполирует градиент.
+    private var animatedBackground: some View {
+        ZStack {
+            LinearGradient(
+                colors: [
+                    display.accent.resolvedColor,
+                    display.accent.resolvedSecondary
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
+
             ZStack {
-                Circle().fill(Color.white.opacity(0.06))
-                    .frame(width: 280)
-                    .offset(x: -100, y: -200)
-                Circle().fill(Color.white.opacity(0.04))
-                    .frame(width: 200)
-                    .offset(x: 130, y: 60)
+                Circle()
+                    .fill(Color.white.opacity(0.07))
+                    .frame(width: 320)
+                    .offset(x: -120, y: -260)
+                Circle()
+                    .fill(Color.white.opacity(0.05))
+                    .frame(width: 220)
+                    .offset(x: 140, y: 80)
+                Circle()
+                    .fill(Color.white.opacity(0.04))
+                    .frame(width: 160)
+                    .offset(x: -80, y: 240)
             }
             .accessibilityHidden(true)
         }
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.4), value: display.accent)
+    }
+
+    // MARK: - Content layer
+
+    private var contentLayer: some View {
+        VStack(spacing: 0) {
+            progressHeader
+            Spacer(minLength: SpacingTokens.medium)
+            stepCarousel
+            Spacer(minLength: SpacingTokens.medium)
+            mascotBubble
+            Spacer(minLength: SpacingTokens.medium)
+            actionRow
+        }
+        .padding(.bottom, SpacingTokens.large)
     }
 
     // MARK: - Progress header
@@ -114,7 +188,8 @@ struct DemoModeView: View {
             HStack {
                 Text(display.progressLabel)
                     .font(TypographyTokens.mono(13))
-                    .foregroundStyle(.white.opacity(0.85))
+                    .foregroundStyle(.white.opacity(0.9))
+                    .accessibilityIdentifier("demo.progress.label")
                 Spacer()
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
@@ -130,62 +205,188 @@ struct DemoModeView: View {
         .accessibilityLabel(display.progressLabel)
     }
 
-    // MARK: - Spotlight canvas
+    // MARK: - Skip button
 
-    /// Имитирует «вырез» в затемнённом overlay'е поверх предполагаемого
-    /// «экрана»-карточки. Использует Canvas + .blendMode(.destinationOut),
-    /// чтобы получить дырку круглой формы.
-    private var spotlightCanvas: some View {
-        ZStack {
-            // Фейковый «экран» приложения за overlay'ем.
-            HSCard(style: .elevated, padding: SpacingTokens.xLarge) {
-                VStack(spacing: SpacingTokens.medium) {
-                    Text(display.screenEmoji)
-                        .font(.system(size: 88))
-                        .accessibilityHidden(true)
-                    Text(display.stepTitle)
-                        .font(TypographyTokens.title(22))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .multilineTextAlignment(.center)
-                    Text(display.stepDescription)
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .multilineTextAlignment(.center)
-                        .lineSpacing(3)
-                        .padding(.horizontal, SpacingTokens.tiny)
-                }
-                .frame(maxWidth: .infinity)
-            }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .transition(.asymmetric(
-                insertion: .opacity.combined(with: .move(edge: .trailing)),
-                removal: .opacity.combined(with: .move(edge: .leading))
-            ))
-            .id(display.currentIndex)   // re-render with transition on step change
+    private var skipButton: some View {
+        Button {
+            interactor?.skipDemo(.init())
+        } label: {
+            Text(String(localized: "demo.cta.skip"))
+                .font(TypographyTokens.body(15))
+                .foregroundStyle(.white.opacity(0.9))
+                .padding(.horizontal, SpacingTokens.small)
+                .padding(.vertical, SpacingTokens.tiny)
+                .contentShape(Rectangle())
         }
-        .animation(reduceMotion ? nil : MotionTokens.page, value: display.currentIndex)
+        .accessibilityLabel(String(localized: "demo.a11y.skip"))
+        .accessibilityHint(String(localized: "demo.a11y.skip.hint"))
+        .accessibilityIdentifier("demo.skip")
+    }
+
+    // MARK: - Step carousel
+
+    /// TabView с .page стилем: пользователь может свайпать между шагами,
+    /// или нажимать «Назад / Далее». Reduced Motion: TabView сам не делает
+    /// тяжёлых анимаций, но мы убираем дополнительный transition вокруг card.
+    @ViewBuilder
+    private var stepCarousel: some View {
+        if display.steps.isEmpty {
+            HSCard(style: .elevated, padding: SpacingTokens.xLarge) {
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .tint(.white)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, SpacingTokens.screenEdge)
+        } else {
+            TabView(selection: pageBinding) {
+                ForEach(Array(display.steps.enumerated()), id: \.offset) { index, step in
+                    stepCard(for: step)
+                        .tag(index)
+                        .padding(.horizontal, SpacingTokens.screenEdge)
+                }
+            }
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            .frame(maxHeight: .infinity)
+            .accessibilityIdentifier("demo.carousel")
+        }
+    }
+
+    /// Биндинг для TabView selection. Чтение → текущий index из display,
+    /// запись → отправляет JumpTo в Interactor.
+    private var pageBinding: Binding<Int> {
+        Binding(
+            get: { display.currentIndex },
+            set: { newValue in
+                interactor?.jumpTo(.init(index: newValue))
+            }
+        )
+    }
+
+    // MARK: - Step card
+
+    private func stepCard(for step: DemoStep) -> some View {
+        VStack(spacing: SpacingTokens.medium) {
+            illustrationView(for: step)
+            VStack(spacing: SpacingTokens.tiny) {
+                if !step.subtitle.isEmpty {
+                    Text(step.subtitle.uppercased())
+                        .font(TypographyTokens.mono(11))
+                        .foregroundStyle(step.accent.resolvedColor.opacity(0.9))
+                        .tracking(1.5)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                }
+                Text(step.title)
+                    .font(TypographyTokens.title(24))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .accessibilityIdentifier("demo.step.title")
+                Text(step.description)
+                    .font(TypographyTokens.body(15))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineSpacing(4)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .padding(.horizontal, SpacingTokens.tiny)
+            }
+
+            if step.hasInteractive, let actionTitle = step.actionTitle {
+                Button {
+                    interactor?.tapInteractive(.init())
+                } label: {
+                    Label(actionTitle, systemImage: "play.circle.fill")
+                        .font(TypographyTokens.cta())
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, SpacingTokens.medium)
+                        .padding(.vertical, SpacingTokens.small)
+                        .background(
+                            Capsule()
+                                .fill(step.accent.resolvedColor)
+                        )
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(actionTitle)
+                .accessibilityHint(String(localized: "demo.try.hint"))
+                .accessibilityIdentifier("demo.try.button")
+            }
+        }
+        .padding(SpacingTokens.large)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .background(
+            RoundedRectangle(cornerRadius: 28, style: .continuous)
+                .fill(ColorTokens.Kid.surface)
+                .shadow(color: .black.opacity(0.12), radius: 18, y: 6)
+        )
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(display.stepTitle). \(display.stepDescription)")
+        .accessibilityLabel(combinedAccessibilityLabel(for: step))
+    }
+
+    // MARK: - Illustration
+
+    /// Большой круглый «постер» шага: SF Symbol по центру + emoji-fallback
+    /// + тень. Если у шага задан `illustrationSymbol` — рендерим Image,
+    /// иначе используем `screenEmoji` как Text.
+    @ViewBuilder
+    private func illustrationView(for step: DemoStep) -> some View {
+        ZStack {
+            Circle()
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            step.accent.resolvedColor.opacity(0.85),
+                            step.accent.resolvedSecondary.opacity(0.85)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .frame(width: 140, height: 140)
+                .shadow(color: step.accent.resolvedColor.opacity(0.35), radius: 20, y: 8)
+
+            if !step.illustrationSymbol.isEmpty {
+                Image(systemName: step.illustrationSymbol)
+                    .font(.system(size: 64, weight: .bold))
+                    .foregroundStyle(.white)
+                    .accessibilityHidden(true)
+            } else {
+                Text(step.screenEmoji)
+                    .font(.system(size: 72))
+                    .accessibilityHidden(true)
+            }
+        }
+        .padding(.top, SpacingTokens.small)
     }
 
     // MARK: - Mascot bubble
 
     private var mascotBubble: some View {
         HStack(alignment: .top, spacing: SpacingTokens.small) {
-            HSMascotView(mood: .explaining, size: 64)
+            LyalyaMascotView(state: display.lyalyaState, size: 72)
                 .accessibilityHidden(true)
 
-            HSCard(style: .tinted(Color.white.opacity(0.95)), padding: SpacingTokens.medium) {
+            HSCard(
+                style: .tinted(Color.white.opacity(0.95)),
+                padding: SpacingTokens.medium
+            ) {
                 Text(display.mascotText)
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .multilineTextAlignment(.leading)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel(display.mascotText)
+        .accessibilityLabel(
+            String(format: String(localized: "demo.a11y.mascot"), display.mascotText)
+        )
+        .accessibilityIdentifier("demo.mascot.bubble")
     }
 
     // MARK: - Action row
@@ -202,6 +403,8 @@ struct DemoModeView: View {
             }
             .disabled(display.isFirst)
             .opacity(display.isFirst ? 0.5 : 1.0)
+            .accessibilityHint(String(localized: "demo.a11y.back.hint"))
+            .accessibilityIdentifier("demo.back.button")
 
             if display.isLast {
                 HSButton(
@@ -211,6 +414,8 @@ struct DemoModeView: View {
                 ) {
                     interactor?.completeDemo(.init())
                 }
+                .accessibilityHint(String(localized: "demo.a11y.finish.hint"))
+                .accessibilityIdentifier("demo.finish.button")
             } else {
                 HSButton(
                     display.nextTitle,
@@ -219,9 +424,46 @@ struct DemoModeView: View {
                 ) {
                     interactor?.advanceStep(.init())
                 }
+                .accessibilityHint(String(localized: "demo.a11y.next.hint"))
+                .accessibilityIdentifier("demo.next.button")
             }
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
+    }
+
+    // MARK: - Toast overlay
+
+    private func toastOverlay(_ message: String) -> some View {
+        VStack {
+            HStack(spacing: SpacingTokens.small) {
+                Image(systemName: "sparkles")
+                    .foregroundStyle(.white)
+                Text(message)
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(.white)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+            }
+            .padding(.horizontal, SpacingTokens.medium)
+            .padding(.vertical, SpacingTokens.small)
+            .background(
+                Capsule()
+                    .fill(Color.black.opacity(0.75))
+            )
+            .padding(.top, SpacingTokens.xLarge)
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+        .accessibilityElement()
+        .accessibilityLabel(message)
+        .accessibilityAddTraits(.isStaticText)
+    }
+
+    // MARK: - Helpers
+
+    private func combinedAccessibilityLabel(for step: DemoStep) -> String {
+        let subtitle = step.subtitle.isEmpty ? "" : "\(step.subtitle). "
+        return "\(subtitle)\(step.title). \(step.description)"
     }
 
     // MARK: - Bootstrap
@@ -238,6 +480,7 @@ struct DemoModeView: View {
         let coord = coordinator
         router.onSkipped = { coord.navigate(to: .auth) }
         router.onCompleted = { coord.navigate(to: .auth) }
+        router.onRouteToHome = { coord.navigate(to: .auth) }
 
         self.presenter = presenter
         self.interactor = interactor
