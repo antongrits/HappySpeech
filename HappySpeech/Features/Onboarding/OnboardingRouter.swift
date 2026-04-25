@@ -4,17 +4,20 @@ import SwiftUI
 
 @MainActor
 protocol OnboardingRoutingLogic {
-    func routeBack()
+    func routeCompleted(profile: OnboardingProfile)
 }
 
 // MARK: - OnboardingRouter
+//
+// View задаёт один колбэк — `onCompleted`. Внешний код (App / координатор)
+// решает, куда вести: parent home / role select / child home.
 
 @MainActor
 final class OnboardingRouter: OnboardingRoutingLogic {
 
-    weak var coordinator: AppCoordinator?
+    var onCompleted: ((OnboardingProfile) -> Void)?
 
-    func routeBack() {
-        coordinator?.pop()
+    func routeCompleted(profile: OnboardingProfile) {
+        onCompleted?(profile)
     }
 }

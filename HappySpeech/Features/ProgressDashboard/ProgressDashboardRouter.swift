@@ -5,6 +5,7 @@ import SwiftUI
 @MainActor
 protocol ProgressDashboardRoutingLogic {
     func routeBack()
+    func routeOpenSoundDetail(sound: String)
 }
 
 // MARK: - ProgressDashboardRouter
@@ -12,9 +13,9 @@ protocol ProgressDashboardRoutingLogic {
 @MainActor
 final class ProgressDashboardRouter: ProgressDashboardRoutingLogic {
 
-    weak var coordinator: AppCoordinator?
+    var onDismiss: (() -> Void)?
+    var onOpenSoundDetail: ((String) -> Void)?
 
-    func routeBack() {
-        coordinator?.pop()
-    }
+    func routeBack() { onDismiss?() }
+    func routeOpenSoundDetail(sound: String) { onOpenSoundDetail?(sound) }
 }
