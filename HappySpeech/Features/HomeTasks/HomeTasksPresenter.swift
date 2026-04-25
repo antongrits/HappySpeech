@@ -9,6 +9,8 @@ protocol HomeTasksPresentationLogic: AnyObject {
     func presentUpdate(_ response: HomeTasksModels.Update.Response)
     func presentChangeFilter(_ response: HomeTasksModels.ChangeFilter.Response)
     func presentRefresh(_ response: HomeTasksModels.Refresh.Response)
+    func presentStartTask(_ response: HomeTasksModels.StartTask.Response)
+    func presentNotifyOverdue(_ response: HomeTasksModels.NotifyOverdue.Response)
     func presentFailure(_ response: HomeTasksModels.Failure.Response)
 }
 
@@ -34,30 +36,35 @@ final class HomeTasksPresenter: HomeTasksPresentationLogic {
 
     func presentFetch(_ response: HomeTasksModels.Fetch.Response) {
         let visible = filteredAndSorted(response.tasks, by: response.activeFilter)
+        let stats = computeStats(response.tasks)
         let viewModel = HomeTasksModels.Fetch.ViewModel(
-            visibleTasks: visible.map(makeRow),
-            totalCount: response.tasks.count,
-            activeCount: response.tasks.filter { !$0.isCompleted }.count,
-            completedCount: response.tasks.filter(\.isCompleted).count,
+            sections: makeSections(from: visible),
+            totalCount: stats.total,
+            activeCount: stats.active,
+            completedCount: stats.completed,
+            overdueCount: stats.overdue,
             activeFilter: response.activeFilter,
             emptyTitle: emptyTitle(for: response.activeFilter),
             emptyMessage: emptyMessage(for: response.activeFilter),
-            isEmpty: visible.isEmpty
+            isEmpty: visible.isEmpty,
+            suggestOverduePrompt: stats.overdue > 0
         )
         display?.displayFetch(viewModel)
     }
 
     func presentUpdate(_ response: HomeTasksModels.Update.Response) {
         let visible = filteredAndSorted(response.allTasks, by: response.activeFilter)
+        let stats = computeStats(response.allTasks)
         let toast: String? = response.updatedTask.isCompleted
             ? String(localized: "homeTasks.toast.completed")
             : String(localized: "homeTasks.toast.reopened")
 
         let viewModel = HomeTasksModels.Update.ViewModel(
-            visibleTasks: visible.map(makeRow),
-            totalCount: response.allTasks.count,
-            activeCount: response.allTasks.filter { !$0.isCompleted }.count,
-            completedCount: response.allTasks.filter(\.isCompleted).count,
+            sections: makeSections(from: visible),
+            totalCount: stats.total,
+            activeCount: stats.active,
+            completedCount: stats.completed,
+            overdueCount: stats.overdue,
             activeFilter: response.activeFilter,
             toastMessage: toast,
             isEmpty: visible.isEmpty
@@ -67,11 +74,13 @@ final class HomeTasksPresenter: HomeTasksPresentationLogic {
 
     func presentChangeFilter(_ response: HomeTasksModels.ChangeFilter.Response) {
         let visible = filteredAndSorted(response.tasks, by: response.filter)
+        let stats = computeStats(response.tasks)
         let viewModel = HomeTasksModels.ChangeFilter.ViewModel(
-            visibleTasks: visible.map(makeRow),
-            totalCount: response.tasks.count,
-            activeCount: response.tasks.filter { !$0.isCompleted }.count,
-            completedCount: response.tasks.filter(\.isCompleted).count,
+            sections: makeSections(from: visible),
+            totalCount: stats.total,
+            activeCount: stats.active,
+            completedCount: stats.completed,
+            overdueCount: stats.overdue,
             activeFilter: response.filter,
             isEmpty: visible.isEmpty
         )
@@ -80,15 +89,41 @@ final class HomeTasksPresenter: HomeTasksPresentationLogic {
 
     func presentRefresh(_ response: HomeTasksModels.Refresh.Response) {
         let visible = filteredAndSorted(response.tasks, by: response.activeFilter)
+        let stats = computeStats(response.tasks)
         let viewModel = HomeTasksModels.Refresh.ViewModel(
-            visibleTasks: visible.map(makeRow),
-            totalCount: response.tasks.count,
-            activeCount: response.tasks.filter { !$0.isCompleted }.count,
-            completedCount: response.tasks.filter(\.isCompleted).count,
+            sections: makeSections(from: visible),
+            totalCount: stats.total,
+            activeCount: stats.active,
+            completedCount: stats.completed,
+            overdueCount: stats.overdue,
             activeFilter: response.activeFilter,
             isEmpty: visible.isEmpty
         )
         display?.displayRefresh(viewModel)
+    }
+
+    func presentStartTask(_ response: HomeTasksModels.StartTask.Response) {
+        logger.info("start task=\(response.taskId, privacy: .public) → \(response.exerciseType, privacy: .public)/\(response.targetSound, privacy: .public)")
+        let viewModel = HomeTasksModels.StartTask.ViewModel(
+            toastMessage: String(localized: "homeTasks.toast.started"),
+            exerciseType: response.exerciseType,
+            targetSound: response.targetSound
+        )
+        display?.displayStartTask(viewModel)
+    }
+
+    func presentNotifyOverdue(_ response: HomeTasksModels.NotifyOverdue.Response) {
+        let toast: String
+        if response.scheduled {
+            let timeText = String(format: "%02d:%02d", response.hour, response.minute)
+            toast = String(
+                format: String(localized: "homeTasks.toast.notifyScheduled"),
+                timeText
+            )
+        } else {
+            toast = String(localized: "homeTasks.toast.notifyFailed")
+        }
+        display?.displayNotifyOverdue(.init(toastMessage: toast))
     }
 
     func presentFailure(_ response: HomeTasksModels.Failure.Response) {
@@ -179,15 +214,56 @@ final class HomeTasksPresenter: HomeTasksPresentationLogic {
             id: task.id,
             title: task.title,
             description: task.description,
+            subtitle: makeSubtitle(for: task),
             soundBadgeText: soundBadge,
             priorityBadgeText: task.priority.displayName,
             priority: task.priority,
             dueDateText: dueText,
             isOverdue: isOverdue,
             isCompleted: task.isCompleted,
+            isStarted: task.isStarted,
+            exerciseType: task.exerciseType,
+            targetSound: task.targetSound,
+            startButtonTitle: makeStartButtonTitle(for: task),
             accessibilityLabel: label,
             accessibilityHint: hint
         )
+    }
+
+    /// Подзаголовок карточки: «Звук Р · ~10 мин · от Марины Ивановны».
+    /// Опускает сегменты, если они пусты, чтобы не было лишних точек.
+    private func makeSubtitle(for task: HomeTask) -> String {
+        var segments: [String] = []
+        if task.targetSound != "—" {
+            segments.append(String(
+                format: String(localized: "homeTasks.subtitle.sound"),
+                task.targetSound
+            ))
+        }
+        if task.estimatedMinutes > 0 {
+            segments.append(String(
+                format: String(localized: "homeTasks.subtitle.minutes"),
+                task.estimatedMinutes
+            ))
+        }
+        if !task.assignedBy.isEmpty {
+            segments.append(String(
+                format: String(localized: "homeTasks.subtitle.assignedBy"),
+                task.assignedBy
+            ))
+        }
+        return segments.joined(separator: " · ")
+    }
+
+    /// Контекстный заголовок CTA: «Начать», «Продолжить», «Повторить».
+    private func makeStartButtonTitle(for task: HomeTask) -> String {
+        if task.isCompleted {
+            return String(localized: "homeTasks.action.repeat")
+        }
+        if task.isStarted {
+            return String(localized: "homeTasks.action.continue")
+        }
+        return String(localized: "homeTasks.action.start")
     }
 
     private func emptyTitle(for filter: TaskFilter) -> String {
@@ -204,5 +280,72 @@ final class HomeTasksPresenter: HomeTasksPresentationLogic {
         case .active:    return String(localized: "homeTasks.empty.active.message")
         case .completed: return String(localized: "homeTasks.empty.completed.message")
         }
+    }
+
+    // MARK: - Section grouping
+
+    /// Распределяет уже отфильтрованные задачи по секциям дедлайна.
+    /// Порядок секций фиксирован: overdue → today → thisWeek → later → completed.
+    private func makeSections(from tasks: [HomeTask]) -> [HomeTaskSection] {
+        var buckets: [TaskGroupKind: [HomeTask]] = [:]
+        for task in tasks {
+            buckets[bucket(for: task), default: []].append(task)
+        }
+        return TaskGroupKind.allCases.compactMap { kind in
+            guard let group = buckets[kind], !group.isEmpty else { return nil }
+            return HomeTaskSection(
+                kind: kind,
+                title: String(localized: kind.titleKey),
+                rows: group.map(makeRow)
+            )
+        }
+    }
+
+    /// Маппинг задачи на bucket. Сначала смотрим, выполнена ли,
+    /// потом анализируем дедлайн относительно текущего дня.
+    private func bucket(for task: HomeTask) -> TaskGroupKind {
+        if task.isCompleted { return .completed }
+        guard let due = task.dueDate else { return .later }
+
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let dayDiff = calendar.dateComponents(
+            [.day], from: today, to: calendar.startOfDay(for: due)
+        ).day ?? 0
+
+        switch dayDiff {
+        case ..<0:    return .overdue
+        case 0:       return .today
+        case 1...7:   return .thisWeek
+        default:      return .later
+        }
+    }
+
+    // MARK: - Stats
+
+    /// Сводные счётчики для toolbar-бейджа и chips.
+    private struct Stats {
+        let total: Int
+        let active: Int
+        let completed: Int
+        let overdue: Int
+    }
+
+    private func computeStats(_ tasks: [HomeTask]) -> Stats {
+        var active = 0
+        var completed = 0
+        var overdue = 0
+        let today = Calendar.current.startOfDay(for: Date())
+        for task in tasks {
+            if task.isCompleted {
+                completed += 1
+            } else {
+                active += 1
+                if let due = task.dueDate, due < today {
+                    overdue += 1
+                }
+            }
+        }
+        return Stats(total: tasks.count, active: active, completed: completed, overdue: overdue)
     }
 }

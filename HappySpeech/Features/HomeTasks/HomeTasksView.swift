@@ -28,6 +28,7 @@ struct HomeTasksView: View {
 
     private let onDismiss: (() -> Void)?
     private let onOpenDetail: ((String) -> Void)?
+    private let onStartGame: ((_ exerciseType: String, _ targetSound: String) -> Void)?
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "HomeTasksView")
 
@@ -35,10 +36,12 @@ struct HomeTasksView: View {
 
     init(
         onDismiss: (() -> Void)? = nil,
-        onOpenDetail: ((String) -> Void)? = nil
+        onOpenDetail: ((String) -> Void)? = nil,
+        onStartGame: ((_ exerciseType: String, _ targetSound: String) -> Void)? = nil
     ) {
         self.onDismiss = onDismiss
         self.onOpenDetail = onOpenDetail
+        self.onStartGame = onStartGame
     }
 
     // MARK: - Body
@@ -46,7 +49,8 @@ struct HomeTasksView: View {
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
-                ColorTokens.Parent.bg.ignoresSafeArea()
+                backgroundGradient
+                    .ignoresSafeArea()
 
                 content
                     .refreshable { performRefresh() }
@@ -66,16 +70,65 @@ struct HomeTasksView: View {
             .navigationTitle(String(localized: "homeTasks.navTitle"))
             .navigationBarTitleDisplayMode(.large)
             .toolbar { toolbarBadge }
+            .alert(
+                String(localized: "homeTasks.overdue.alert.title"),
+                isPresented: overduePromptBinding,
+                actions: { overdueAlertActions },
+                message: { Text(String(localized: "homeTasks.overdue.alert.message")) }
+            )
         }
         .environment(\.circuitContext, .parent)
         .task { await bootstrap() }
+    }
+
+    // MARK: - Background
+
+    /// Мягкий тёплый градиент через токены DesignSystem — `Brand.butter`
+    /// (тёплый жёлтый) → `Parent.bg` (нейтральный фон). Соответствует
+    /// родительскому контуру, но добавляет «домашнее» настроение для секции
+    /// заданий.
+    private var backgroundGradient: some View {
+        LinearGradient(
+            colors: [
+                ColorTokens.Brand.butter.opacity(0.35),
+                ColorTokens.Parent.bg
+            ],
+            startPoint: .top,
+            endPoint: .center
+        )
+    }
+
+    /// Двусторонний binding для `.alert` — гасит prompt через
+    /// `display.dismissOverduePrompt()` при отказе пользователя.
+    private var overduePromptBinding: Binding<Bool> {
+        Binding(
+            get: { display.pendingOverduePrompt && display.overdueCount > 0 },
+            set: { newValue in
+                if !newValue {
+                    display.dismissOverduePrompt()
+                }
+            }
+        )
+    }
+
+    @ViewBuilder
+    private var overdueAlertActions: some View {
+        Button(String(localized: "homeTasks.overdue.alert.notify")) {
+            handleNotifyOverdue()
+        }
+        Button(
+            String(localized: "homeTasks.overdue.alert.later"),
+            role: .cancel
+        ) {
+            display.dismissOverduePrompt()
+        }
     }
 
     // MARK: - Content switch
 
     @ViewBuilder
     private var content: some View {
-        if display.isLoading && display.visibleTasks.isEmpty {
+        if display.isLoading && display.sections.isEmpty {
             HSLoadingView(message: String(localized: "homeTasks.loading"))
         } else {
             VStack(spacing: 0) {
@@ -136,49 +189,72 @@ struct HomeTasksView: View {
         }
     }
 
-    // MARK: - Tasks list
+    // MARK: - Tasks list (sectioned)
 
     private var tasksList: some View {
         ScrollView {
-            LazyVStack(spacing: SpacingTokens.listGap) {
-                ForEach(Array(display.visibleTasks.enumerated()), id: \.element.id) { index, row in
-                    HomeTaskCard(
-                        row: row,
-                        reduceMotion: reduceMotion,
-                        onToggle: { handleToggle(row.id) },
-                        onOpen: { handleOpen(row.id) }
-                    )
-                    .transition(.opacity.combined(with: .move(edge: .top)))
-                    .animation(
-                        reduceMotion
-                            ? nil
-                            : .spring(response: 0.45, dampingFraction: 0.78).delay(Double(index) * 0.03),
-                        value: display.activeFilter
-                    )
+            LazyVStack(spacing: SpacingTokens.large, pinnedViews: []) {
+                ForEach(display.sections) { section in
+                    sectionView(section)
                 }
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.top, SpacingTokens.regular)
             .padding(.bottom, SpacingTokens.xxLarge)
+            .animation(
+                reduceMotion ? nil : .spring(response: 0.45, dampingFraction: 0.82),
+                value: display.sections.map(\.id)
+            )
+        }
+    }
+
+    /// Заголовок секции + список карточек на «жидком стекле».
+    /// Каждая карточка — `HSLiquidGlassCard(.elevated)`, чтобы карточки
+    /// просматривались на фоне градиента.
+    @ViewBuilder
+    private func sectionView(_ section: HomeTaskSection) -> some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.small) {
+            HStack(spacing: SpacingTokens.tiny) {
+                Text(section.title)
+                    .font(TypographyTokens.headline())
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                if section.kind == .overdue, display.overdueCount > 0 {
+                    HSBadge(
+                        "\(display.overdueCount)",
+                        style: .filled(ColorTokens.Semantic.error)
+                    )
+                    .accessibilityHidden(true)
+                }
+                Spacer(minLength: 0)
+            }
+            .padding(.horizontal, SpacingTokens.tiny)
+            .accessibilityAddTraits(.isHeader)
+
+            VStack(spacing: SpacingTokens.listGap) {
+                ForEach(section.rows) { row in
+                    HomeTaskCard(
+                        row: row,
+                        reduceMotion: reduceMotion,
+                        onToggle: { handleToggle(row.id) },
+                        onOpen: { handleOpen(row.id) },
+                        onStart: { handleStart(row.id) }
+                    )
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+                }
+            }
         }
     }
 
     // MARK: - Empty state
 
+    /// Empty-state с маскотом «Ляля» в celebrating-состоянии.
+    /// Никаких эмодзи в UI — только Rive-маскот через DesignSystem.
     private var emptyStateView: some View {
         VStack(spacing: SpacingTokens.large) {
             Spacer(minLength: SpacingTokens.xLarge)
 
-            Text(verbatim: "🦋")
-                .font(.system(size: 96))
-                .accessibilityHidden(true)
-                .scaleEffect(reduceMotion ? 1 : 1.05)
-                .animation(
-                    reduceMotion
-                        ? nil
-                        : .easeInOut(duration: 1.6).repeatForever(autoreverses: true),
-                    value: display.isEmpty
-                )
+            LyalyaMascotView(state: .celebrating, size: 160)
+                .accessibilityLabel(String(localized: "homeTasks.empty.celebrating.label"))
 
             VStack(spacing: SpacingTokens.small) {
                 Text(display.emptyTitle)
@@ -229,6 +305,16 @@ struct HomeTasksView: View {
         router?.routeOpenDetail(taskId: id)
     }
 
+    private func handleStart(_ id: String) {
+        container.hapticService.impact(.medium)
+        interactor?.startTask(.init(taskId: id))
+    }
+
+    private func handleNotifyOverdue() {
+        container.hapticService.impact(.light)
+        interactor?.requestOverdueReminder(.init())
+    }
+
     private func handleFilterChange(_ filter: TaskFilter) {
         guard display.activeFilter != filter else { return }
         container.hapticService.selection()
@@ -249,14 +335,18 @@ struct HomeTasksView: View {
         guard !bootstrapped else { return }
         bootstrapped = true
 
-        let interactor = HomeTasksInteractor()
+        let interactor = HomeTasksInteractor(
+            notificationService: container.notificationService
+        )
         let presenter = HomeTasksPresenter()
         let router = HomeTasksRouter()
 
         interactor.presenter = presenter
+        interactor.gameRouter = router
         presenter.display = display
         router.onDismiss = onDismiss
         router.onOpenDetail = onOpenDetail
+        router.onStartGame = onStartGame
 
         self.interactor = interactor
         self.presenter = presenter
@@ -331,46 +421,64 @@ private struct HomeTaskFilterChip: View {
 
 // MARK: - HomeTaskCard
 
-/// Карточка задания в parent-стиле. Иконка-чекбокс слева, контент в центре,
-/// chevron справа открывает детали.
+/// Карточка задания в parent-стиле, на «жидком стекле».
+/// Слева — чекбокс «выполнено», в центре — заголовок/подзаголовок/мета,
+/// снизу — кнопка «Начать»/«Продолжить»/«Повторить» (открывает шаблон игры).
+/// Тап по карточке без кнопок — открыть детали.
 private struct HomeTaskCard: View {
 
     let row: HomeTaskRow
     let reduceMotion: Bool
     let onToggle: () -> Void
     let onOpen: () -> Void
+    let onStart: () -> Void
 
     var body: some View {
-        HSCard(style: .elevated, padding: 0) {
-            HStack(alignment: .top, spacing: SpacingTokens.regular) {
-                checkboxButton
-
-                VStack(alignment: .leading, spacing: SpacingTokens.small) {
-                    headerRow
-                    titleAndDescription
-                    metaRow
-                }
-
-                Spacer(minLength: 0)
-
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(ColorTokens.Parent.inkSoft)
-                    .frame(width: 24, height: 24)
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.cardPad) {
+            VStack(alignment: .leading, spacing: SpacingTokens.regular) {
+                topRow
+                titleAndDescription
+                metaRow
+                startButton
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .contentShape(Rectangle())
+        .onTapGesture { onOpen() }
+        .opacity(row.isCompleted ? 0.75 : 1.0)
+        .overlay(alignment: .topTrailing) {
+            if row.isStarted, !row.isCompleted {
+                inProgressIndicator
+                    .padding(SpacingTokens.tiny)
                     .accessibilityHidden(true)
             }
-            .padding(SpacingTokens.cardPad)
-            .contentShape(Rectangle())
-            .onTapGesture { onOpen() }
         }
-        .opacity(row.isCompleted ? 0.7 : 1.0)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(row.accessibilityLabel)
         .accessibilityHint(row.accessibilityHint)
-        .accessibilityAddTraits(.isButton)
     }
 
-    // MARK: Checkbox
+    // MARK: Top row (checkbox + badges)
+
+    private var topRow: some View {
+        HStack(alignment: .top, spacing: SpacingTokens.regular) {
+            checkboxButton
+            VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
+                HStack(spacing: SpacingTokens.tiny) {
+                    HSBadge(row.soundBadgeText, style: .filled(ColorTokens.Brand.primary))
+                    HSBadge(row.priorityBadgeText, style: priorityBadgeStyle)
+                    Spacer(minLength: 0)
+                }
+                if !row.subtitle.isEmpty {
+                    Text(row.subtitle)
+                        .font(TypographyTokens.caption())
+                        .foregroundStyle(ColorTokens.Parent.inkSoft)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                }
+            }
+        }
+    }
 
     private var checkboxButton: some View {
         Button(action: onToggle) {
@@ -398,17 +506,10 @@ private struct HomeTaskCard: View {
         .accessibilityLabel(row.isCompleted
                             ? String(localized: "homeTasks.a11y.checkboxOn")
                             : String(localized: "homeTasks.a11y.checkboxOff"))
+        .accessibilityHint(row.isCompleted
+                           ? String(localized: "homeTasks.a11y.hintReopen")
+                           : String(localized: "homeTasks.a11y.hintComplete"))
         .accessibilityAddTraits(.isButton)
-    }
-
-    // MARK: Header (badges)
-
-    private var headerRow: some View {
-        HStack(spacing: SpacingTokens.tiny) {
-            HSBadge(row.soundBadgeText, style: .filled(ColorTokens.Brand.primary))
-            HSBadge(row.priorityBadgeText, style: priorityBadgeStyle)
-            Spacer(minLength: 0)
-        }
     }
 
     private var priorityBadgeStyle: HSBadge.BadgeStyle {
@@ -457,6 +558,55 @@ private struct HomeTaskCard: View {
             }
             .accessibilityLabel(due)
         }
+    }
+
+    // MARK: Start button
+
+    @ViewBuilder
+    private var startButton: some View {
+        if !row.isCompleted {
+            HSButton(
+                row.startButtonTitle,
+                style: .primary,
+                size: .medium,
+                icon: "play.fill"
+            ) {
+                onStart()
+            }
+            .frame(maxWidth: .infinity)
+            .accessibilityLabel(row.startButtonTitle)
+            .accessibilityHint(String(localized: "homeTasks.a11y.startHint"))
+        } else {
+            HSButton(
+                row.startButtonTitle,
+                style: .secondary,
+                size: .medium,
+                icon: "arrow.clockwise"
+            ) {
+                onStart()
+            }
+            .frame(maxWidth: .infinity)
+            .accessibilityLabel(row.startButtonTitle)
+            .accessibilityHint(String(localized: "homeTasks.a11y.repeatHint"))
+        }
+    }
+
+    // MARK: In-progress indicator
+
+    private var inProgressIndicator: some View {
+        HStack(spacing: SpacingTokens.micro) {
+            Circle()
+                .fill(ColorTokens.Brand.gold)
+                .frame(width: 6, height: 6)
+            Text(String(localized: "homeTasks.indicator.inProgress"))
+                .font(TypographyTokens.caption())
+                .foregroundStyle(ColorTokens.Brand.gold)
+        }
+        .padding(.horizontal, SpacingTokens.tiny)
+        .padding(.vertical, 2)
+        .background(
+            Capsule().fill(ColorTokens.Brand.gold.opacity(0.15))
+        )
     }
 }
 

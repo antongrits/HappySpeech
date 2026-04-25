@@ -9,6 +9,18 @@ protocol HomeTasksBusinessLogic: AnyObject {
     func update(_ request: HomeTasksModels.Update.Request)
     func changeFilter(_ request: HomeTasksModels.ChangeFilter.Request)
     func refresh(_ request: HomeTasksModels.Refresh.Request)
+    func startTask(_ request: HomeTasksModels.StartTask.Request)
+    func requestOverdueReminder(_ request: HomeTasksModels.NotifyOverdue.Request)
+}
+
+// MARK: - HomeTasksGameRouting
+
+/// Тонкая зависимость, которую Interactor дёргает при запуске упражнения.
+/// На текущем этапе — лог-заглушка; позже будет реальный coordinator-роут
+/// в шаблон игры по `exerciseType`/`targetSound`.
+@MainActor
+protocol HomeTasksGameRouting: AnyObject {
+    func routeToGame(exerciseType: String, targetSound: String)
 }
 
 // MARK: - HomeTasksInteractor
@@ -18,13 +30,21 @@ protocol HomeTasksBusinessLogic: AnyObject {
 /// Источник данных — на текущем спринте in-memory seed (5–7 заданий разных типов).
 /// На следующем спринте сюда будет подключён `HomeTaskRepository` поверх Realm
 /// + listener Firestore. Контракт `presenter` остаётся, поэтому View не пострадает.
+///
+/// Зависимости:
+/// * `gameRouter` — заглушка маршрутизации в шаблон игры (передаёт View).
+/// * `notificationService` — реальный `NotificationService` (планирует утреннее
+///   напоминание для просроченных заданий). Опционален: при `nil` Interactor
+///   возвращает `scheduled = false` и Presenter покажет нейтральный toast.
 @MainActor
 final class HomeTasksInteractor: HomeTasksBusinessLogic {
 
     // MARK: - Collaborators
 
     var presenter: (any HomeTasksPresentationLogic)?
+    weak var gameRouter: (any HomeTasksGameRouting)?
 
+    private let notificationService: (any NotificationService)?
     private let logger = Logger(subsystem: "ru.happyspeech", category: "HomeTasks")
 
     // MARK: - State
@@ -34,7 +54,8 @@ final class HomeTasksInteractor: HomeTasksBusinessLogic {
 
     // MARK: - Init
 
-    init() {
+    init(notificationService: (any NotificationService)? = nil) {
+        self.notificationService = notificationService
         self.allTasks = Self.makeSeedTasks()
     }
 
@@ -65,6 +86,10 @@ final class HomeTasksInteractor: HomeTasksBusinessLogic {
         }
 
         allTasks[index].isCompleted.toggle()
+        // Если отмечаем как выполненное — снимаем флаг "в процессе".
+        if allTasks[index].isCompleted {
+            allTasks[index].isStarted = false
+        }
         let updated = allTasks[index]
 
         logger.info("toggled task=\(updated.id, privacy: .public) → completed=\(updated.isCompleted, privacy: .public)")
@@ -99,6 +124,86 @@ final class HomeTasksInteractor: HomeTasksBusinessLogic {
         )
         presenter?.presentRefresh(response)
     }
+
+    /// Помечает задачу как «в процессе» и просит router открыть шаблон игры.
+    /// Параметры `exerciseType` и `targetSound` берутся из самой задачи —
+    /// View не должна знать про эти поля.
+    func startTask(_ request: HomeTasksModels.StartTask.Request) {
+        guard let index = allTasks.firstIndex(where: { $0.id == request.taskId }) else {
+            logger.warning("startTask: task not found id=\(request.taskId, privacy: .public)")
+            presenter?.presentFailure(.init(
+                message: String(localized: "homeTasks.error.taskNotFound")
+            ))
+            return
+        }
+
+        let task = allTasks[index]
+        markStarted(taskId: task.id)
+
+        logger.info("startTask id=\(task.id, privacy: .public) exerciseType=\(task.exerciseType, privacy: .public) sound=\(task.targetSound, privacy: .public)")
+        gameRouter?.routeToGame(exerciseType: task.exerciseType, targetSound: task.targetSound)
+
+        presenter?.presentStartTask(.init(
+            taskId: task.id,
+            exerciseType: task.exerciseType,
+            targetSound: task.targetSound
+        ))
+    }
+
+    /// Запрашивает у NotificationService утреннее напоминание для просроченных
+    /// заданий. Если сервиса нет (например, в Preview) — возвращает
+    /// `scheduled = false`, и Presenter покажет нейтральный toast.
+    func requestOverdueReminder(_ request: HomeTasksModels.NotifyOverdue.Request) {
+        guard let service = notificationService else {
+            logger.info("notify overdue: notificationService=nil → no-op")
+            presenter?.presentNotifyOverdue(.init(
+                scheduled: false,
+                hour: request.hour,
+                minute: request.minute
+            ))
+            return
+        }
+
+        Task { [weak self] in
+            guard let self else { return }
+            let granted = await service.requestPermission()
+            guard granted else {
+                self.logger.warning("notify overdue: permission denied")
+                self.presenter?.presentNotifyOverdue(.init(
+                    scheduled: false,
+                    hour: request.hour,
+                    minute: request.minute
+                ))
+                return
+            }
+            do {
+                try await service.scheduleDailyReminder(at: request.hour, minute: request.minute)
+                self.logger.info("notify overdue scheduled at \(request.hour, privacy: .public):\(request.minute, privacy: .public)")
+                self.presenter?.presentNotifyOverdue(.init(
+                    scheduled: true,
+                    hour: request.hour,
+                    minute: request.minute
+                ))
+            } catch {
+                self.logger.error("notify overdue failed: \(error.localizedDescription, privacy: .public)")
+                self.presenter?.presentNotifyOverdue(.init(
+                    scheduled: false,
+                    hour: request.hour,
+                    minute: request.minute
+                ))
+            }
+        }
+    }
+
+    // MARK: - Private
+
+    /// Внутренняя пометка «задача начата». Не дёргает Presenter — это делает
+    /// `startTask` через `presentStartTask` после успешного route.
+    private func markStarted(taskId: String) {
+        guard let index = allTasks.firstIndex(where: { $0.id == taskId }) else { return }
+        guard !allTasks[index].isCompleted else { return }
+        allTasks[index].isStarted = true
+    }
 }
 
 // MARK: - Seed data
@@ -115,15 +220,21 @@ private extension HomeTasksInteractor {
             calendar.date(byAdding: .day, value: days, to: now)
         }
 
+        let assignedBy = String(localized: "homeTasks.seed.assignedBy")
+
         let base: [HomeTask] = [
             HomeTask(
                 id: "task-001",
                 title: String(localized: "homeTasks.seed.repeatR.title"),
                 description: String(localized: "homeTasks.seed.repeatR.desc"),
                 targetSound: "Р",
-                dueDate: dueIn(days: 1),
+                dueDate: dueIn(days: 0),
                 isCompleted: false,
-                priority: .high
+                priority: .high,
+                isStarted: true,
+                exerciseType: "repeat-after-model",
+                estimatedMinutes: 10,
+                assignedBy: assignedBy
             ),
             HomeTask(
                 id: "task-002",
@@ -132,7 +243,10 @@ private extension HomeTasksInteractor {
                 targetSound: "—",
                 dueDate: dueIn(days: 1),
                 isCompleted: false,
-                priority: .high
+                priority: .high,
+                exerciseType: "breathing",
+                estimatedMinutes: 5,
+                assignedBy: assignedBy
             ),
             HomeTask(
                 id: "task-003",
@@ -141,7 +255,10 @@ private extension HomeTasksInteractor {
                 targetSound: "Ш",
                 dueDate: dueIn(days: 2),
                 isCompleted: false,
-                priority: .medium
+                priority: .medium,
+                exerciseType: "bingo",
+                estimatedMinutes: 7,
+                assignedBy: assignedBy
             ),
             HomeTask(
                 id: "task-004",
@@ -150,7 +267,10 @@ private extension HomeTasksInteractor {
                 targetSound: "Л",
                 dueDate: dueIn(days: 3),
                 isCompleted: false,
-                priority: .medium
+                priority: .medium,
+                exerciseType: "story-completion",
+                estimatedMinutes: 12,
+                assignedBy: assignedBy
             ),
             HomeTask(
                 id: "task-005",
@@ -159,7 +279,10 @@ private extension HomeTasksInteractor {
                 targetSound: "З",
                 dueDate: dueIn(days: 4),
                 isCompleted: true,
-                priority: .low
+                priority: .low,
+                exerciseType: "sorting",
+                estimatedMinutes: 8,
+                assignedBy: assignedBy
             ),
             HomeTask(
                 id: "task-006",
@@ -168,7 +291,10 @@ private extension HomeTasksInteractor {
                 targetSound: "К",
                 dueDate: nil,
                 isCompleted: true,
-                priority: .low
+                priority: .low,
+                exerciseType: "articulation-imitation",
+                estimatedMinutes: 6,
+                assignedBy: assignedBy
             ),
             HomeTask(
                 id: "task-007",
@@ -177,7 +303,10 @@ private extension HomeTasksInteractor {
                 targetSound: "С/Ш",
                 dueDate: dueIn(days: -1),
                 isCompleted: false,
-                priority: .high
+                priority: .high,
+                exerciseType: "minimal-pairs",
+                estimatedMinutes: 9,
+                assignedBy: assignedBy
             )
         ]
 
@@ -185,6 +314,7 @@ private extension HomeTasksInteractor {
             return base.map { task in
                 var copy = task
                 copy.isCompleted = false
+                copy.isStarted = false
                 return copy
             }
         }
