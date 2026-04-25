@@ -1,0 +1,19 @@
+{
+  "videos": [
+    {"id": "intro", "duration": 5.0, "description": "Вступление с Лялей"},
+    {"id": "trailer", "duration": 30.0, "description": "Трейлер приложения"},
+    {"id": "transition_correct", "duration": 1.5, "description": "Переход — верный ответ"},
+    {"id": "transition_wrong", "duration": 1.5, "description": "Переход — неверный ответ"},
+    {"id": "transition_levelup", "duration": 2.0, "description": "Повышение уровня"},
+    {"id": "transition_complete", "duration": 2.0, "description": "Завершение сессии"},
+    {"id": "celebrate_star1", "duration": 3.0, "description": "1 звезда"},
+    {"id": "celebrate_star2", "duration": 3.0, "description": "2 звезды"},
+    {"id": "celebrate_star3", "duration": 3.0, "description": "3 звезды"},
+    {"id": "celebrate_milestone", "duration": 3.0, "description": "Milestone"},
+    {"id": "celebrate_streak", "duration": 3.0, "description": "Серия"},
+    {"id": "celebrate_perfect", "duration": 3.0, "description": "Идеальный результат"},
+    {"id": "celebrate_firsttime", "duration": 3.0, "description": "Первый раз"},
+    {"id": "celebrate_weekly", "duration": 3.0, "description": "Неделя"},
+    {"id": "onboarding_hero", "duration": 7.0, "description": "Онбординг hero"}
+  ]
+}
