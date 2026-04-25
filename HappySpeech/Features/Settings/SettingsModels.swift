@@ -138,6 +138,109 @@ enum SettingsModels {
         }
     }
 
+    // MARK: - LoadModelPacks
+
+    enum LoadModelPacks {
+        struct Request: Sendable {}
+        struct Response: Sendable {
+            let asrPacks: [ASRPackState]
+            let llmPacks: [LLMPackState]
+        }
+        struct ViewModel: Sendable {
+            let asrItems: [ModelPackRowVM]
+            let llmItems: [ModelPackRowVM]
+        }
+    }
+
+    // MARK: - DownloadModelPack
+
+    enum DownloadModelPack {
+        enum Family: Sendable {
+            case asr(WhisperKitModelPack)
+            case llm(LLMModelPack)
+        }
+        struct Request: Sendable {
+            let family: Family
+        }
+        struct Response: Sendable {
+            let success: Bool
+            let identifier: String
+            let errorMessage: String?
+        }
+        struct ViewModel: Sendable {
+            let toastMessage: String
+            let toastIsError: Bool
+        }
+    }
+
+    // MARK: - DeleteModelPack
+
+    enum DeleteModelPack {
+        struct Request: Sendable {
+            let family: DownloadModelPack.Family
+        }
+        struct Response: Sendable {
+            let success: Bool
+            let identifier: String
+            let errorMessage: String?
+        }
+        struct ViewModel: Sendable {
+            let toastMessage: String
+            let toastIsError: Bool
+        }
+    }
+
+    // MARK: - DownloadProgress
+
+    enum DownloadProgress {
+        struct Response: Sendable {
+            let identifier: String
+            let progress: Double         // 0.0–1.0
+            let bytesDownloaded: Int64
+            let totalBytes: Int64
+            let isFinished: Bool
+            let isFailed: Bool
+            let errorMessage: String?
+        }
+        struct ViewModel: Sendable {
+            let identifier: String
+            let progress: Double
+            let progressLine: String     // «12.3 МБ / 150 МБ»
+            let isFinished: Bool
+            let isFailed: Bool
+        }
+    }
+
+    // MARK: - LoadLicenses
+
+    enum LoadLicenses {
+        struct Request: Sendable {}
+        struct Response: Sendable {
+            let licenses: [OpenSourceLicense]
+        }
+        struct ViewModel: Sendable {
+            let licenses: [OpenSourceLicenseVM]
+        }
+    }
+
+    // MARK: - Export GDPR (Share sheet)
+
+    enum ExportShare {
+        struct Request: Sendable {
+            let userId: String
+        }
+        struct Response: Sendable {
+            let success: Bool
+            let fileURL: URL?
+            let errorMessage: String?
+        }
+        struct ViewModel: Sendable {
+            let fileURL: URL?
+            let toastMessage: String
+            let toastIsError: Bool
+        }
+    }
+
     // MARK: - Failure
 
     enum Failure {
@@ -148,6 +251,58 @@ enum SettingsModels {
             let toastMessage: String
         }
     }
+}
+
+// MARK: - Model packs domain types
+
+/// Состояние ASR-пака (WhisperKit) для UI.
+struct ASRPackState: Sendable, Equatable {
+    let pack: WhisperKitModelPack
+    let isInstalled: Bool
+    let isActive: Bool
+    let isDownloading: Bool
+    let progress: Double
+}
+
+/// Состояние LLM-пака (Qwen) для UI.
+struct LLMPackState: Sendable, Equatable {
+    let pack: LLMModelPack
+    let isInstalled: Bool
+    let isInUse: Bool
+    let isDownloading: Bool
+    let progress: Double
+}
+
+/// ViewModel строки пака для отображения в списке.
+struct ModelPackRowVM: Sendable, Equatable, Identifiable {
+    let id: String                // "whisper.tiny" / "llm.qwen15b"
+    let title: String             // «Whisper tiny»
+    let subtitle: String          // «150 МБ · быстрый, базовое качество»
+    let sizeText: String          // «~150 МБ»
+    let isInstalled: Bool
+    let isActive: Bool            // активный пак (используется сейчас)
+    let isDownloading: Bool
+    let progress: Double          // 0.0–1.0
+    let canDelete: Bool
+    let actionTitle: String       // «Скачать» / «Удалить» / «Активный»
+}
+
+/// Один пункт в списке «Лицензии открытого ПО».
+struct OpenSourceLicense: Sendable, Equatable, Identifiable {
+    let id: String                 // package name
+    let name: String
+    let licenseType: String        // «MIT», «Apache 2.0»
+    let url: String?
+    let bodyText: String           // полный текст лицензии
+}
+
+/// ViewModel для отображения лицензии в списке.
+struct OpenSourceLicenseVM: Sendable, Equatable, Identifiable {
+    let id: String
+    let title: String
+    let subtitle: String           // «MIT · github.com/...»
+    let url: URL?
+    let bodyText: String
 }
 
 // MARK: - Domain types
