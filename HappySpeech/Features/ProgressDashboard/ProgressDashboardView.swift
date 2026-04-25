@@ -86,14 +86,118 @@ struct ProgressDashboardView: View {
         } else {
             ScrollView {
                 VStack(alignment: .leading, spacing: SpacingTokens.sectionGap) {
+                    periodPickerSection
                     summaryCardsRow
                     dailyChartSection
                     weeklyChartSection
+                    highlightsSection
                     llmSummarySection
+                    recommendationsSection
                     soundsGridSection
                 }
                 .padding(.vertical, SpacingTokens.large)
                 .padding(.bottom, SpacingTokens.xLarge)
+            }
+        }
+    }
+
+    // MARK: - Period picker
+
+    private var periodPickerSection: some View {
+        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.tiny) {
+            HStack(spacing: SpacingTokens.tiny) {
+                ForEach(display.periodOptions) { option in
+                    PeriodChipView(option: option) {
+                        handlePeriodChange(option.period)
+                    }
+                }
+            }
+            .frame(maxWidth: .infinity)
+        }
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .accessibilityElement(children: .contain)
+    }
+
+    // MARK: - Highlights (top performers / needs work)
+
+    @ViewBuilder
+    private var highlightsSection: some View {
+        if !display.topPerformers.isEmpty || !display.needsWork.isEmpty {
+            VStack(alignment: .leading, spacing: SpacingTokens.regular) {
+                sectionHeader(
+                    title: String(localized: "progressDashboard.section.highlights"),
+                    subtitle: String(localized: "progressDashboard.section.highlights.subtitle")
+                )
+
+                VStack(alignment: .leading, spacing: SpacingTokens.regular) {
+                    if !display.topPerformers.isEmpty {
+                        highlightsCard(
+                            title: String(localized: "progressDashboard.top"),
+                            iconName: "star.fill",
+                            iconTint: ColorTokens.Semantic.success,
+                            chips: display.topPerformers
+                        )
+                    }
+                    if !display.needsWork.isEmpty {
+                        highlightsCard(
+                            title: String(localized: "progressDashboard.work"),
+                            iconName: "exclamationmark.triangle.fill",
+                            iconTint: ColorTokens.Semantic.warning,
+                            chips: display.needsWork
+                        )
+                    }
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func highlightsCard(
+        title: String,
+        iconName: String,
+        iconTint: Color,
+        chips: [SoundChipViewModel]
+    ) -> some View {
+        HSCard(style: .elevated, padding: SpacingTokens.cardPad) {
+            VStack(alignment: .leading, spacing: SpacingTokens.small) {
+                HStack(spacing: SpacingTokens.tiny) {
+                    Image(systemName: iconName)
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(iconTint)
+                        .accessibilityHidden(true)
+                    Text(title)
+                        .font(TypographyTokens.headline(15))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                }
+
+                FlowChipsRow(chips: chips)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .accessibilityElement(children: .contain)
+    }
+
+    // MARK: - Recommendations
+
+    @ViewBuilder
+    private var recommendationsSection: some View {
+        if !display.recommendations.isEmpty {
+            VStack(alignment: .leading, spacing: SpacingTokens.regular) {
+                sectionHeader(
+                    title: String(localized: "progressDashboard.recommendations.title"),
+                    subtitle: String(localized: "progressDashboard.recommendations.subtitle")
+                )
+
+                HSCard(style: .elevated, padding: SpacingTokens.cardPad) {
+                    VStack(alignment: .leading, spacing: SpacingTokens.regular) {
+                        ForEach(display.recommendations) { item in
+                            RecommendationRowView(item: item)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
             }
         }
     }
@@ -398,9 +502,20 @@ struct ProgressDashboardView: View {
         interactor?.loadSoundDetail(.init(sound: sound))
     }
 
+    private func handlePeriodChange(_ period: ProgressDashboardModels.TimePeriod) {
+        guard period != display.selectedPeriod else { return }
+        container.hapticService.selection()
+        logger.info("changePeriod \(period.rawValue, privacy: .public)")
+        interactor?.changePeriod(.init(childId: childId, period: period))
+    }
+
     private func performRefresh() {
         container.hapticService.impact(.light)
-        interactor?.loadDashboard(.init(childId: childId, forceReload: true))
+        interactor?.loadDashboard(.init(
+            childId: childId,
+            forceReload: true,
+            period: display.selectedPeriod
+        ))
         requestLLMSummary()
     }
 
@@ -447,7 +562,7 @@ struct ProgressDashboardView: View {
         self.presenter = presenter
         self.router = router
 
-        interactor.loadDashboard(.init(childId: childId, forceReload: true))
+        interactor.loadDashboard(.init(childId: childId, forceReload: true, period: .week))
         // Запрашиваем LLM-сводку немного позже, чтобы основной UI успел отрисоваться.
         try? await Task.sleep(for: .milliseconds(150))
         requestLLMSummary()
@@ -701,6 +816,137 @@ private struct DetailMetric: View {
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(title): \(value)")
+    }
+}
+
+// MARK: - PeriodChipView
+
+private struct PeriodChipView: View {
+
+    let option: PeriodOptionViewModel
+    let onTap: () -> Void
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    var body: some View {
+        Button(action: onTap) {
+            Text(option.title)
+                .font(TypographyTokens.headline(14))
+                .foregroundStyle(textColor)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, SpacingTokens.small)
+                .background(background)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.18), value: option.isSelected)
+        .accessibilityLabel(option.accessibilityLabel)
+        .accessibilityAddTraits(option.isSelected ? [.isButton, .isSelected] : [.isButton])
+    }
+
+    @ViewBuilder
+    private var background: some View {
+        if option.isSelected {
+            RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                .fill(ColorTokens.Parent.accent)
+        } else {
+            RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                .fill(Color.clear)
+        }
+    }
+
+    private var textColor: Color {
+        option.isSelected ? .white : ColorTokens.Parent.ink
+    }
+}
+
+// MARK: - FlowChipsRow (соединяет SoundChipViewModel в HStack-обёртку)
+
+private struct FlowChipsRow: View {
+
+    let chips: [SoundChipViewModel]
+
+    var body: some View {
+        // Простая горизонтальная прокрутка — на iPhone хватает на 3-5 чипов.
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: SpacingTokens.tiny) {
+                ForEach(chips) { chip in
+                    SoundChipView(chip: chip)
+                }
+            }
+        }
+    }
+}
+
+private struct SoundChipView: View {
+
+    let chip: SoundChipViewModel
+
+    var body: some View {
+        HStack(spacing: SpacingTokens.micro) {
+            Text(chip.sound)
+                .font(TypographyTokens.headline(14))
+                .foregroundStyle(textColor)
+            Text(chip.percentText)
+                .font(TypographyTokens.mono(11))
+                .foregroundStyle(textColor.opacity(0.85))
+        }
+        .padding(.horizontal, SpacingTokens.small)
+        .padding(.vertical, SpacingTokens.micro)
+        .background(
+            Capsule(style: .continuous)
+                .fill(backgroundColor)
+        )
+        .overlay(
+            Capsule(style: .continuous)
+                .strokeBorder(borderColor, lineWidth: 1)
+        )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(chip.accessibilityLabel)
+    }
+
+    private var textColor: Color {
+        switch chip.tone {
+        case .positive:  return ColorTokens.Semantic.success
+        case .attention: return ColorTokens.Semantic.warning
+        }
+    }
+
+    private var backgroundColor: Color {
+        switch chip.tone {
+        case .positive:  return ColorTokens.Semantic.successBg
+        case .attention: return ColorTokens.Semantic.warningBg
+        }
+    }
+
+    private var borderColor: Color {
+        textColor.opacity(0.25)
+    }
+}
+
+// MARK: - RecommendationRowView
+
+private struct RecommendationRowView: View {
+
+    let item: RecommendationViewModel
+
+    var body: some View {
+        HStack(alignment: .top, spacing: SpacingTokens.regular) {
+            Image(systemName: item.iconName)
+                .font(.system(size: 18, weight: .semibold))
+                .foregroundStyle(ColorTokens.Parent.accent)
+                .accessibilityHidden(true)
+
+            Text(item.text)
+                .font(TypographyTokens.body(15))
+                .foregroundStyle(ColorTokens.Parent.ink)
+                .lineSpacing(TypographyTokens.LineSpacing.normal)
+                .lineLimit(nil)
+                .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(item.accessibilityLabel)
     }
 }
 

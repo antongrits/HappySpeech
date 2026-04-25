@@ -30,7 +30,15 @@ final class ProgressDashboardPresenter: ProgressDashboardPresentationLogic {
         let weeklyChart = response.weeklyAccuracy.map {
             WeeklyChartPoint(weekIndex: $0.weekIndex, label: $0.label, value: Double($0.accuracy * 100))
         }
-        let soundCells = response.sounds.map(makeSoundCell)
+        // Сортируем cells: worst first — фокус внимания родителя на проблемных звуках.
+        let sortedSounds = response.sounds.sorted { $0.accuracy < $1.accuracy }
+        let soundCells = sortedSounds.map(makeSoundCell)
+
+        let topPerformers = makeTopPerformers(response.sounds)
+        let needsWork = makeNeedsWork(response.sounds)
+        let recommendations = makeRecommendations(response.recommendations)
+        let periodOptions = makePeriodOptions(selected: response.period)
+
         let isEmpty = response.sounds.isEmpty
         let viewModel = ProgressDashboardModels.LoadDashboard.ViewModel(
             summaryCards: summaryCards,
@@ -38,6 +46,10 @@ final class ProgressDashboardPresenter: ProgressDashboardPresentationLogic {
             weeklyChart: weeklyChart,
             dailyAxisLabels: response.dailyAccuracy.map(\.day),
             soundCells: soundCells,
+            topPerformers: topPerformers,
+            needsWork: needsWork,
+            recommendations: recommendations,
+            periodOptions: periodOptions,
             isEmpty: isEmpty,
             emptyTitle: String(localized: "progressDashboard.empty.title"),
             emptyMessage: String(localized: "progressDashboard.empty.message")
@@ -208,6 +220,81 @@ final class ProgressDashboardPresenter: ProgressDashboardPresentationLogic {
         case .up:     return String(localized: "progressDashboard.trend.up")
         case .down:   return String(localized: "progressDashboard.trend.down")
         case .stable: return String(localized: "progressDashboard.trend.stable")
+        }
+    }
+
+    // MARK: - Top performers / needs work
+
+    private func makeTopPerformers(_ sounds: [SoundProgress]) -> [SoundChipViewModel] {
+        sounds
+            .filter { $0.accuracy >= 0.80 }
+            .sorted { $0.accuracy > $1.accuracy }
+            .prefix(3)
+            .map { progress in
+                let percent = Int(progress.accuracy * 100)
+                let label = String(
+                    format: String(localized: "progressDashboard.a11y.topChipPattern"),
+                    progress.sound, percent
+                )
+                return SoundChipViewModel(
+                    sound: progress.sound,
+                    percentText: "\(percent)%",
+                    tone: .positive,
+                    accessibilityLabel: label
+                )
+            }
+    }
+
+    private func makeNeedsWork(_ sounds: [SoundProgress]) -> [SoundChipViewModel] {
+        sounds
+            .filter { $0.accuracy < 0.60 }
+            .sorted { $0.accuracy < $1.accuracy }
+            .prefix(3)
+            .map { progress in
+                let percent = Int(progress.accuracy * 100)
+                let label = String(
+                    format: String(localized: "progressDashboard.a11y.workChipPattern"),
+                    progress.sound, percent
+                )
+                return SoundChipViewModel(
+                    sound: progress.sound,
+                    percentText: "\(percent)%",
+                    tone: .attention,
+                    accessibilityLabel: label
+                )
+            }
+    }
+
+    // MARK: - Recommendations
+
+    private func makeRecommendations(_ items: [String]) -> [RecommendationViewModel] {
+        items.enumerated().map { index, text in
+            RecommendationViewModel(
+                id: index,
+                text: text,
+                iconName: "checkmark.circle.fill",
+                accessibilityLabel: text
+            )
+        }
+    }
+
+    // MARK: - Period options
+
+    private func makePeriodOptions(selected: ProgressDashboardModels.TimePeriod) -> [PeriodOptionViewModel] {
+        ProgressDashboardModels.TimePeriod.allCases.map { period in
+            let title = String(localized: period.titleKey)
+            let isSelected = (period == selected)
+            let label = String(
+                format: String(localized: "progressDashboard.a11y.periodPattern"),
+                title,
+                isSelected ? String(localized: "progressDashboard.a11y.selected") : ""
+            )
+            return PeriodOptionViewModel(
+                period: period,
+                title: title,
+                isSelected: isSelected,
+                accessibilityLabel: label
+            )
         }
     }
 }
