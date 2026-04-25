@@ -594,6 +594,7 @@
 		18C81792F0B6FA0A277BB343 /* lex-sw-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CCE82076F92736562F3A12C2 /* lex-sw-8.m4a */; };
 		18CB2C1BA3E83740C533DEF7 /* speech-methodology-full.md in Resources */ = {isa = PBXBuildFile; fileRef = 19DD65984ACC025F0E3926C0 /* speech-methodology-full.md */; };
 		18CDB90C06F4A85BD83D6FF4 /* LiveServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E39E6D462EC13DD391D2A8 /* LiveServices.swift */; };
+		18EE52420708B7292A392B9C /* AdaptivePlannerServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865559639DB1AC00CB54889E /* AdaptivePlannerServiceTests.swift */; };
 		18F1EEAB360DB40061CE6E3D /* z-iso-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 379C9CE69682D3458590C4CC /* z-iso-6.m4a */; };
 		191F942275090B7CEC2CCEE4 /* phon-fs-15.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5AE14CDF780F33B19577661A /* phon-fs-15.m4a */; };
 		192CC15C0751129FC12FE1EB /* y-ph-27.m4a in Resources */ = {isa = PBXBuildFile; fileRef = EE5ABE386E6909F4F531843E /* y-ph-27.m4a */; };
@@ -1131,6 +1132,7 @@
 		2D9D10E9D9F0492CDC635752 /* y-ph-21.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 716C23DFCE1FAFA52B80F339 /* y-ph-21.m4a */; };
 		2DB567BC843F4F37403D46FA /* zh-df-1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 01E57D712C13DAF086A561BB /* zh-df-1.m4a */; };
 		2DB74AFFADCBC819EF926791 /* VisualAcousticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015E71A1741238D4FDA49A9C /* VisualAcousticView.swift */; };
+		2DBBEE4E097DD2AC86D142DA /* DisplayStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F49003DC39DE33CDD8D24F /* DisplayStateTests.swift */; };
 		2DE14DFCE5C9FA3227B374A2 /* shch-syl-19.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B8F03715724F1F39D885267B /* shch-syl-19.m4a */; };
 		2DEC31234B5F76B7B9F9FF1A /* kh-iso-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F71A3449869720691D81CCF4 /* kh-iso-0.m4a */; };
 		2DF81A6B524B9DAE9C193E60 /* ProgramEditorInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61B7B75A0BFCFF836877667 /* ProgramEditorInteractor.swift */; };
@@ -1563,6 +1565,7 @@
 		3EA9DB1B6E69FC0828DF0B22 /* shch-ph-25.m4a in Resources */ = {isa = PBXBuildFile; fileRef = DF67853334973BEF7DE90517 /* shch-ph-25.m4a */; };
 		3EAE9EA6442E1B4062D71EBC /* r-ph-24.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 6537B648D61C15ADD06DA279 /* r-ph-24.m4a */; };
 		3EAF8687AC54F1BCD3C90E55 /* narr-si-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = EE9BC3AE040FE042ED22FFAE /* narr-si-2.m4a */; };
+		3EB3D6CC6FC5B73E8AC35489 /* OnboardingFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A0ED34A0F97ED8A7F8F355 /* OnboardingFlowUITests.swift */; };
 		3EBFD6C59A3F69156C682657 /* kh-iso-7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F039DD698233D2E482B43671 /* kh-iso-7.m4a */; };
 		3ED68A71D08A408848C067C5 /* phon-sp-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C847FAC95F48D09EC421CEF4 /* phon-sp-8.m4a */; };
 		3ED7E4B43CD291341AF5E752 /* z-iso-5.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B1C10711075BD2B71CDEB362 /* z-iso-5.m4a */; };
@@ -3026,6 +3029,7 @@
 		7F65E4F00990B7319BEDD412 /* shch-syl-25.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 735EC05FB74E37374C040A81 /* shch-syl-25.m4a */; };
 		7F76A1016BC38ED9A30FCC59 /* sh-syl-20.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 447531933FF6770AEC383A87 /* sh-syl-20.m4a */; };
 		7F7F0452AF2307CA43FE6CE8 /* z-wf-21.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E87448CF4B759D548142A29B /* z-wf-21.m4a */; };
+		7F835AE70684DD673E14A22C /* AuthFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050EFC2665C25AC19DC5EFCB /* AuthFlowUITests.swift */; };
 		7F892ED6FD9699E385B2C593 /* s-iso-5.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C2D3A565FC299E2D4C836A3B /* s-iso-5.m4a */; };
 		7F91A31F87A31F461A5630C8 /* c-sen-14.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 610CAA76D5F5D1500D57FC35 /* c-sen-14.m4a */; };
 		7F948CEBC623DC61480F5D4D /* narr-c-1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7D4DD4259D99C61D96508D04 /* narr-c-1.m4a */; };
@@ -6203,6 +6207,7 @@
 		04F864F544AA67D1DAD21004 /* y-syl-17.m4a */ = {isa = PBXFileReference; path = "y-syl-17.m4a"; sourceTree = "<group>"; };
 		04FA2C1E20D888CCA98EBC3A /* shch-ph-28.m4a */ = {isa = PBXFileReference; path = "shch-ph-28.m4a"; sourceTree = "<group>"; };
 		04FE03F0E03C4C57A81F5399 /* ch-iso-8.m4a */ = {isa = PBXFileReference; path = "ch-iso-8.m4a"; sourceTree = "<group>"; };
+		050EFC2665C25AC19DC5EFCB /* AuthFlowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlowUITests.swift; sourceTree = "<group>"; };
 		05100A7636EF36276651CC13 /* zh-ph-12.m4a */ = {isa = PBXFileReference; path = "zh-ph-12.m4a"; sourceTree = "<group>"; };
 		0546918AC7BCB8A482197855 /* kh-syl-18.m4a */ = {isa = PBXFileReference; path = "kh-syl-18.m4a"; sourceTree = "<group>"; };
 		05537D2111F94A7DEBCA2770 /* s-wi-1.m4a */ = {isa = PBXFileReference; path = "s-wi-1.m4a"; sourceTree = "<group>"; };
@@ -7858,6 +7863,7 @@
 		49572A94AE518C6877EAD825 /* lyalya_demo_try.m4a */ = {isa = PBXFileReference; path = lyalya_demo_try.m4a; sourceTree = "<group>"; };
 		499500F96141782F2A797A12 /* k-wm-13.m4a */ = {isa = PBXFileReference; path = "k-wm-13.m4a"; sourceTree = "<group>"; };
 		4999069DF275F042F954638D /* lex-bi-13.m4a */ = {isa = PBXFileReference; path = "lex-bi-13.m4a"; sourceTree = "<group>"; };
+		49A0ED34A0F97ED8A7F8F355 /* OnboardingFlowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingFlowUITests.swift; sourceTree = "<group>"; };
 		49A8D46346E9D614EF86F912 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		49B7D4CB5831F0D1D956F068 /* lyalya_story_10.m4a */ = {isa = PBXFileReference; path = lyalya_story_10.m4a; sourceTree = "<group>"; };
 		49B7ED15FD59C8C51AFD2782 /* lex-vf-17.m4a */ = {isa = PBXFileReference; path = "lex-vf-17.m4a"; sourceTree = "<group>"; };
@@ -9298,6 +9304,7 @@
 		864684C998308B24D508D765 /* zh-wm-43.m4a */ = {isa = PBXFileReference; path = "zh-wm-43.m4a"; sourceTree = "<group>"; };
 		864F7AAB03C60057986088B2 /* r-wm-56.m4a */ = {isa = PBXFileReference; path = "r-wm-56.m4a"; sourceTree = "<group>"; };
 		86530BACFD46C05F7F2ECD04 /* s-syl-11.m4a */ = {isa = PBXFileReference; path = "s-syl-11.m4a"; sourceTree = "<group>"; };
+		865559639DB1AC00CB54889E /* AdaptivePlannerServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptivePlannerServiceTests.swift; sourceTree = "<group>"; };
 		86567F696662F426B3EB4359 /* k-diff-12.m4a */ = {isa = PBXFileReference; path = "k-diff-12.m4a"; sourceTree = "<group>"; };
 		865BDD1B6E7A29A093D0BFE5 /* k-prep-17.m4a */ = {isa = PBXFileReference; path = "k-prep-17.m4a"; sourceTree = "<group>"; };
 		865D36BD48DD90B32223CECF /* ch-prep-6.m4a */ = {isa = PBXFileReference; path = "ch-prep-6.m4a"; sourceTree = "<group>"; };
@@ -11063,6 +11070,7 @@
 		D1C74916A9E08CF14A820315 /* r-wi-47.m4a */ = {isa = PBXFileReference; path = "r-wi-47.m4a"; sourceTree = "<group>"; };
 		D1D0CA2F51A60D9CB28352C1 /* ch-wi-23.m4a */ = {isa = PBXFileReference; path = "ch-wi-23.m4a"; sourceTree = "<group>"; };
 		D1EAB470DB0DF15673908AB9 /* br-201.m4a */ = {isa = PBXFileReference; path = "br-201.m4a"; sourceTree = "<group>"; };
+		D1F49003DC39DE33CDD8D24F /* DisplayStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayStateTests.swift; sourceTree = "<group>"; };
 		D1F62EF4344D49CD864EADE9 /* sh-wi-38.m4a */ = {isa = PBXFileReference; path = "sh-wi-38.m4a"; sourceTree = "<group>"; };
 		D213AE35D3E7A0DE297BDD85 /* g-wf-19.m4a */ = {isa = PBXFileReference; path = "g-wf-19.m4a"; sourceTree = "<group>"; };
 		D228C8F449C870605287076B /* shch-wi-17.m4a */ = {isa = PBXFileReference; path = "shch-wi-17.m4a"; sourceTree = "<group>"; };
@@ -14897,6 +14905,8 @@
 		5DA73ABFD3FE01C7040B28EF /* Flows */ = {
 			isa = PBXGroup;
 			children = (
+				050EFC2665C25AC19DC5EFCB /* AuthFlowUITests.swift */,
+				49A0ED34A0F97ED8A7F8F355 /* OnboardingFlowUITests.swift */,
 				5A0CA8BFD01204C1B767211C /* OnboardingToFirstLessonUITests.swift */,
 			);
 			path = Flows;
@@ -14919,6 +14929,7 @@
 			children = (
 				DA4FF389731F3510E30B357A /* DesignSystem */,
 				ADBF41846F9E684384135C15 /* DesignSystemSnapshotTests.swift */,
+				D1F49003DC39DE33CDD8D24F /* DisplayStateTests.swift */,
 			);
 			path = Snapshot;
 			sourceTree = "<group>";
@@ -17480,6 +17491,7 @@
 		C8A016B5923955DD836C37EC /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				865559639DB1AC00CB54889E /* AdaptivePlannerServiceTests.swift */,
 				43F0FD43E9E9C355E349DB4C /* AppErrorTests.swift */,
 				891787FE84A8DE87DDFC404F /* ContentEngineTests.swift */,
 				AABD10350ECAA606782BE07D /* LLMDecisionServiceTests.swift */,
@@ -25052,6 +25064,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F835AE70684DD673E14A22C /* AuthFlowUITests.swift in Sources */,
+				3EB3D6CC6FC5B73E8AC35489 /* OnboardingFlowUITests.swift in Sources */,
 				4C4D9E3E94BE055E2A5F362A /* OnboardingToFirstLessonUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -25060,12 +25074,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18EE52420708B7292A392B9C /* AdaptivePlannerServiceTests.swift in Sources */,
 				E3ECC5C2C4571623EC555261 /* AppErrorTests.swift in Sources */,
 				838D952BEE85D459C9D22306 /* BingoInteractorTests.swift in Sources */,
 				113313232CBBD4F99B929666 /* BreathingInteractorTests.swift in Sources */,
 				53593C793A82F0D8945834E9 /* ChildHomeInteractorTests.swift in Sources */,
 				29F23788B7490EF452A5121A /* ContentEngineTests.swift in Sources */,
 				4A775C8B6E63558CEB552443 /* DesignSystemSnapshotTests.swift in Sources */,
+				2DBBEE4E097DD2AC86D142DA /* DisplayStateTests.swift in Sources */,
 				619F386A0250E64F09EE64EC /* DragAndMatchInteractorTests.swift in Sources */,
 				227A8DFCE0EAC0753D9F9871 /* GuidedTourCoordinatorTests.swift in Sources */,
 				BFCACC5B414C116DA41E7AFA /* HSMascotViewSnapshotTests.swift in Sources */,
