@@ -2726,6 +2726,7 @@
 		730B7DAA2BF266F0D128B6BF /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 31A09A9B58B0A077F11595A8 /* Localizable.xcstrings */; };
 		7315803172AE6262EC70999B /* s-wi-48.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 98CC85AA5F6777B731A476DC /* s-wi-48.m4a */; };
 		731FEFC8296DA3713BE04CC4 /* narr-ms-22.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3338E86CBF6C36BF6718B862 /* narr-ms-22.m4a */; };
+		73317DED4AE4E23DDB6D8176 /* SessionReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C6AA9D179D72A437FC5C9E /* SessionReviewView.swift */; };
 		734F039EC7755604313A260F /* kh-wi-33.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D13571F47BF53453F190BF56 /* kh-wi-33.m4a */; };
 		735B67D388611B6B6F311FD8 /* zh-wi-13.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B0ECE9AD5A65A73D7D6A2BD7 /* zh-wi-13.m4a */; };
 		735EF10D385DF56B13AFB686 /* y-wm-14.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FB2685A2ECCCD11F92D4A433 /* y-wm-14.m4a */; };
@@ -10464,6 +10465,7 @@
 		B7B64CBB41477E167A9E85BF /* gr-vb-16.m4a */ = {isa = PBXFileReference; path = "gr-vb-16.m4a"; sourceTree = "<group>"; };
 		B7B87507AD1FB4406B3A613B /* HSPictTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSPictTile.swift; sourceTree = "<group>"; };
 		B7BC8960196D1749AD309E3B /* ag-145.m4a */ = {isa = PBXFileReference; path = "ag-145.m4a"; sourceTree = "<group>"; };
+		B7C6AA9D179D72A437FC5C9E /* SessionReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionReviewView.swift; sourceTree = "<group>"; };
 		B7CEB879873995A9CF77F575 /* SoundServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundServiceTests.swift; sourceTree = "<group>"; };
 		B7D8338F84F69992E7125C06 /* z-wi-17.m4a */ = {isa = PBXFileReference; path = "z-wi-17.m4a"; sourceTree = "<group>"; };
 		B7DB81079072194C8CD3F061 /* ag-143.m4a */ = {isa = PBXFileReference; path = "ag-143.m4a"; sourceTree = "<group>"; };
@@ -12703,6 +12705,7 @@
 				4C1F18F375E03E931BE5B4AB /* SessionReviewModels.swift */,
 				2D9275946CE7E9C7052F607F /* SessionReviewPresenter.swift */,
 				D4354FB65C3A34CAF9995010 /* SessionReviewRouter.swift */,
+				B7C6AA9D179D72A437FC5C9E /* SessionReviewView.swift */,
 			);
 			path = SessionReview;
 			sourceTree = "<group>";
@@ -25420,6 +25423,7 @@
 				9001717CF16B5876CB86FEC4 /* SessionReviewModels.swift in Sources */,
 				5F01FB9D2F1F80B14261447B /* SessionReviewPresenter.swift in Sources */,
 				7149F9697D5A2E440562AECC /* SessionReviewRouter.swift in Sources */,
+				73317DED4AE4E23DDB6D8176 /* SessionReviewView.swift in Sources */,
 				9ADFE34C7C7377DA9CCBB4FE /* SessionShellDisplayLogic.swift in Sources */,
 				94284F9DC9E8F888C4337770 /* SessionShellInteractor.swift in Sources */,
 				722C83AF80B306D7B21550ED /* SessionShellModels.swift in Sources */,
