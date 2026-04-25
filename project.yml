@@ -79,11 +79,14 @@ targets:
         CFBundleShortVersionString: "1.0.0"
         UILaunchScreen:
           UIColorName: LaunchBackground
-        NSMicrophoneUsageDescription: "Приложению нужен микрофон для записи речи ребёнка."
-        NSCameraUsageDescription: "Приложению нужна камера для AR-упражнений артикуляции."
-        NSFaceIDUsageDescription: "Face ID используется для быстрой аутентификации родителя."
+        NSMicrophoneUsageDescription: "HappySpeech использует микрофон для распознавания произношения и логопедических упражнений"
+        NSCameraUsageDescription: "HappySpeech использует камеру для AR-упражнений артикуляции и мимической гимнастики"
+        NSFaceIDUsageDescription: "HappySpeech может использовать Face ID для быстрого входа родителей"
+        NSSpeechRecognitionUsageDescription: "HappySpeech использует распознавание речи для оценки произношения"
         UIBackgroundModes:
           - audio
+          - remote-notification
+        MinimumOSVersion: "17.0"
         UIRequiredDeviceCapabilities:
           - arm64
         UIApplicationSceneManifest:
