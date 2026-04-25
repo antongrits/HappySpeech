@@ -15,8 +15,17 @@ struct HappySpeechApp: App {
         // NSException SIGABRT before tests can start.
         let isTesting = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
         if !isTesting, FirebaseApp.app() == nil {
-            FirebaseApp.configure()
-            HSLogger.app.info("FirebaseApp.configure() called")
+            // Guard against placeholder GoogleService-Info.plist (CI / local Debug without real Firebase config).
+            // If API_KEY is a template value Firebase throws NSException before any UI is shown.
+            if let plistURL = Bundle.main.url(forResource: "GoogleService-Info", withExtension: "plist"),
+               let plist = NSDictionary(contentsOf: plistURL),
+               let apiKey = plist["API_KEY"] as? String,
+               !apiKey.hasPrefix("REPLACE_") {
+                FirebaseApp.configure()
+                HSLogger.app.info("FirebaseApp.configure() called")
+            } else {
+                HSLogger.app.warning("GoogleService-Info.plist contains placeholder values — Firebase skipped (Debug/CI mode)")
+            }
         }
     }
 
