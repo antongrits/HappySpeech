@@ -155,4 +155,15 @@ struct PermissionStepCard: Sendable, Identifiable, Equatable {
     let showSettingsButton: Bool
     let isCompleted: Bool
     let accessibilityLabel: String
+    let lyalyaState: LyalyaState
+}
+
+/// Финальный экран после прохождения всех шагов (sequential flow).
+struct PermissionsAllDoneCard: Sendable, Equatable {
+    let title: String
+    let subtitle: String
+    let ctaTitle: String
+    let lyalyaState: LyalyaState
+    let grantedCount: Int
+    let totalCount: Int
 }
