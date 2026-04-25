@@ -1,8 +1,26 @@
+import OSLog
 import SwiftUI
 
 // MARK: - ChildHomeView (Clean Swift: View)
+//
+// Главный экран ребёнка (kid contour). Состав секций:
+//   1. Hero (приветствие, дата, streak badge)
+//   2. Маскот Ляля (ReactiveMascot, реагирует на streak)
+//   3. AchievementBanner (если есть новая ачивка)
+//   4. Daily Mission Detail (с reps counter)
+//   5. Quick Play — горизонтальная карусель из 5 игр
+//   6. Quick Actions — 2×2 grid с навигацией
+//   7. World Map mini preview (5 цветных кружков)
+//   8. Sound Progress (по звукам ребёнка)
+//   9. Recent Sessions (последние 3 урока)
+//
+// Все View-компоненты (Mascot, Bubble, StreakBadge, MissionCard, QuickPlayCard,
+// WorldMapMiniPreview, ProgressRow, RecentSessionRow, AchievementBanner, Empty
+// states, helpers) вынесены в ChildHomeViewComponents.swift, чтобы файл не
+// превышал лимит SwiftLint file_length=900.
 
 struct ChildHomeView: View {
+
     let childId: String
 
     @State private var viewModel = ChildHomeViewModel()
@@ -13,29 +31,53 @@ struct ChildHomeView: View {
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
+    private static let logger = Logger(subsystem: "ru.happyspeech", category: "ChildHome")
+
     init(childId: String) {
         self.childId = childId
     }
+
+    // MARK: - Body
 
     var body: some View {
         ZStack {
             kidBackground
 
             ScrollView(showsIndicators: false) {
-                VStack(spacing: 0) {
-                    greetingSection
+                VStack(spacing: SpacingTokens.sp5) {
+                    heroSection
+
                     mascotSection
                         .spotlightAnchor(key: "mascot_header")
+
+                    if viewModel.hasAchievement, let ach = viewModel.achievement {
+                        ChildHomeAchievementBanner(achievement: ach) {
+                            Task { await interactor?.dismissAchievement(id: ach.id) }
+                        }
+                        .transition(.scale.combined(with: .opacity))
+                    }
+
                     dailyMissionSection
                         .spotlightAnchor(key: "daily_mission_card")
+
+                    quickPlaySection
+                        .spotlightAnchor(key: "quick_play_strip")
+
                     quickActionsSection
                         .spotlightAnchor(key: "start_lesson_button")
+
+                    worldMapPreviewSection
+
                     progressSection
                         .spotlightAnchor(key: "streak_banner")
+
+                    recentSessionsSection
 
                     Spacer(minLength: SpacingTokens.sp16)
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
+                .animation(reduceMotion ? nil : .easeInOut(duration: 0.25),
+                           value: viewModel.hasAchievement)
             }
 
             parentButton
@@ -49,25 +91,28 @@ struct ChildHomeView: View {
         .loadingOverlay(viewModel.isLoading)
     }
 
-    // MARK: - Wiring
+    // MARK: - Wiring (Clean Swift bootstrap)
 
     private func bootstrap() {
         guard interactor == nil else { return }
         let presenter = ChildHomePresenter()
-        let interactor = ChildHomeInteractor(
+        let createdInteractor = ChildHomeInteractor(
             childRepository: container.childRepository,
             sessionRepository: container.sessionRepository
         )
-        interactor.presenter = presenter
+        createdInteractor.presenter = presenter
         presenter.viewModel = viewModel
-        let router = ChildHomeRouter()
-        router.coordinator = coordinator
-        self.interactor = interactor
-        self.router = router
+
+        let createdRouter = ChildHomeRouter()
+        createdRouter.coordinator = coordinator
+
+        self.interactor = createdInteractor
+        self.router = createdRouter
         ActiveChildStore.shared.set(childId)
+        Self.logger.debug("ChildHome bootstrapped for child=\(childId, privacy: .public)")
     }
 
-    // MARK: - Sections
+    // MARK: - Background
 
     private var kidBackground: some View {
         ZStack {
@@ -78,119 +123,224 @@ struct ChildHomeView: View {
             )
             .ignoresSafeArea()
 
-            CloudDecoration()
+            ChildHomeCloudDecoration()
         }
     }
 
-    private var greetingSection: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(String(localized: "child.home.greeting"))
-                    .font(TypographyTokens.body())
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+    // MARK: - Hero / greeting
 
-                Text(viewModel.childName.isEmpty
-                     ? String(localized: "child.default.name")
-                     : viewModel.childName)
-                    .font(TypographyTokens.title(24))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-            }
+    private var heroSection: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+            HStack(alignment: .top, spacing: SpacingTokens.sp3) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "child.home.greeting"))
+                        .font(TypographyTokens.body(15))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
 
-            Spacer()
+                    Text("\(viewModel.displayedName)!")
+                        .font(TypographyTokens.title(28))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.8)
 
-            if viewModel.currentStreak > 0 {
-                StreakBadge(streak: viewModel.currentStreak)
+                    if !viewModel.formattedDate.isEmpty {
+                        Text(viewModel.formattedDate.capitalizedFirstLetter)
+                            .font(TypographyTokens.caption(12))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .padding(.top, 2)
+                    }
+                }
+
+                Spacer()
+
+                if viewModel.currentStreak > 0 {
+                    ChildHomeStreakBadge(
+                        streak: viewModel.currentStreak,
+                        isHot: viewModel.isStreakHot
+                    )
+                }
             }
         }
         .padding(.top, SpacingTokens.pageTop)
-        .padding(.bottom, SpacingTokens.sp3)
     }
 
+    // MARK: - Mascot Lyalya
+
     private var mascotSection: some View {
-        VStack(spacing: SpacingTokens.sp2) {
-            HSMascotView(mood: viewModel.mascotMood, size: 140)
+        VStack(spacing: SpacingTokens.sp3) {
+            ChildHomeReactiveMascot(mood: viewModel.mascotMood, reduceMotion: reduceMotion)
 
             if let phrase = viewModel.mascotPhrase {
-                Text(phrase)
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, SpacingTokens.sp8)
+                ChildHomeMascotBubble(text: phrase)
                     .transition(.opacity)
             }
         }
-        .padding(.vertical, SpacingTokens.sp4)
+        .padding(.vertical, SpacingTokens.sp3)
+        .frame(maxWidth: .infinity)
     }
+
+    // MARK: - Daily Mission
 
     private var dailyMissionSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-            Text(String(localized: "child.home.daily.section"))
-                .font(TypographyTokens.caption(12))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .textCase(.uppercase)
-                .tracking(1)
+            sectionHeader(String(localized: "child.home.mission.section"), emoji: "🎯")
 
-            DailyMissionCard(mission: viewModel.dailyMission) {
-                router?.routeToLesson(childId: childId, template: "listenAndChoose")
+            ChildHomeDailyMissionDetailCard(
+                mission: viewModel.dailyMissionDetail
+            ) {
+                guard let interactor, let router else { return }
+                Task { await interactor.recordMissionTap() }
+                router.routeToLesson(
+                    childId: childId,
+                    template: viewModel.dailyMissionDetail.templateType
+                )
             }
         }
-        .padding(.top, SpacingTokens.sp2)
     }
+
+    // MARK: - Quick Play (M8.7 — horizontal carousel)
+
+    private var quickPlaySection: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+            sectionHeader(String(localized: "child.home.quick.section"), emoji: "🎮")
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: SpacingTokens.sp3) {
+                    ForEach(viewModel.quickPlayItems) { item in
+                        ChildHomeQuickPlayCard(item: item) {
+                            router?.routeToLesson(
+                                childId: childId,
+                                template: item.templateType
+                            )
+                        }
+                    }
+                }
+                .padding(.horizontal, 2)
+                .padding(.vertical, 4)
+            }
+        }
+    }
+
+    // MARK: - Quick Actions (legacy 2x2 grid)
 
     private var quickActionsSection: some View {
-        LazyVGrid(
-            columns: [GridItem(.flexible()), GridItem(.flexible())],
-            spacing: SpacingTokens.sp3
-        ) {
-            QuickActionTile(
-                title: String(localized: "child.home.action.worldmap"),
-                icon: "map.fill",
-                color: ColorTokens.Brand.sky
-            ) {
-                router?.routeToWorldMap(childId: childId, sound: viewModel.dailyMission.targetSound)
-            }
+        VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+            sectionHeader(String(localized: "child.home.actions.section"), emoji: "✨")
 
-            QuickActionTile(
-                title: String(localized: "child.home.action.ar"),
-                icon: "camera.fill",
-                color: ColorTokens.Brand.lilac
+            LazyVGrid(
+                columns: [GridItem(.flexible()), GridItem(.flexible())],
+                spacing: SpacingTokens.sp3
             ) {
-                router?.routeToARZone()
-            }
-
-            QuickActionTile(
-                title: String(localized: "child.home.action.rewards"),
-                icon: "star.fill",
-                color: ColorTokens.Brand.butter
-            ) {
-                router?.routeToRewards(childId: childId)
-            }
-
-            QuickActionTile(
-                title: String(localized: "child.home.action.achievements"),
-                icon: "trophy.fill",
-                color: ColorTokens.Brand.mint
-            ) {
-                router?.routeToRewards(childId: childId)
+                ChildHomeQuickActionTile(
+                    title: String(localized: "child.home.action.worldmap"),
+                    icon: "map.fill",
+                    color: ColorTokens.Brand.sky
+                ) {
+                    router?.routeToWorldMap(
+                        childId: childId,
+                        sound: viewModel.dailyMission.targetSound
+                    )
+                }
+                ChildHomeQuickActionTile(
+                    title: String(localized: "child.home.action.ar"),
+                    icon: "camera.fill",
+                    color: ColorTokens.Brand.lilac
+                ) {
+                    router?.routeToARZone()
+                }
+                ChildHomeQuickActionTile(
+                    title: String(localized: "child.home.action.rewards"),
+                    icon: "star.fill",
+                    color: ColorTokens.Brand.butter
+                ) {
+                    router?.routeToRewards(childId: childId)
+                }
+                ChildHomeQuickActionTile(
+                    title: String(localized: "child.home.action.achievements"),
+                    icon: "trophy.fill",
+                    color: ColorTokens.Brand.mint
+                ) {
+                    router?.routeToRewards(childId: childId)
+                }
             }
         }
-        .padding(.top, SpacingTokens.sp5)
     }
+
+    // MARK: - World Map mini preview
+
+    private var worldMapPreviewSection: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+            HStack {
+                sectionHeader(String(localized: "child.home.world.section"), emoji: "🗺")
+                Spacer()
+                Button {
+                    router?.routeToWorldMap(
+                        childId: childId,
+                        sound: viewModel.dailyMission.targetSound
+                    )
+                } label: {
+                    Text(String(localized: "child.home.world.open"))
+                        .font(TypographyTokens.caption(13))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                }
+                .accessibilityHint(String(localized: "child.home.world.open.hint"))
+            }
+
+            ChildHomeWorldMapMiniPreview(
+                zones: viewModel.worldZones,
+                onZoneTap: { zone in
+                    router?.routeToWorldMap(childId: childId, sound: zone.sound)
+                }
+            )
+        }
+    }
+
+    // MARK: - Sound Progress
 
     private var progressSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-            Text(String(localized: "child.home.progress.section"))
-                .font(TypographyTokens.caption(12))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .textCase(.uppercase)
-                .tracking(1)
-                .padding(.top, SpacingTokens.sp5)
+            sectionHeader(String(localized: "child.home.progress.section"), emoji: "📈")
 
-            ForEach(viewModel.soundProgress) { item in
-                SoundProgressRow(item: item)
+            if viewModel.soundProgress.isEmpty {
+                ChildHomeEmptyProgressView()
+            } else {
+                ForEach(viewModel.soundProgress) { item in
+                    ChildHomeSoundProgressRow(item: item)
+                }
             }
         }
     }
+
+    // MARK: - Recent Sessions
+
+    private var recentSessionsSection: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+            HStack {
+                sectionHeader(String(localized: "child.home.recent.section"), emoji: "📚")
+                Spacer()
+                Button {
+                    router?.routeToSessionHistory(childId: childId)
+                } label: {
+                    Text(String(localized: "child.home.recent.all"))
+                        .font(TypographyTokens.caption(13))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                }
+                .accessibilityHint(String(localized: "child.home.recent.all.hint"))
+            }
+
+            if viewModel.recentSessions.isEmpty {
+                ChildHomeEmptyRecentView()
+            } else {
+                VStack(spacing: SpacingTokens.sp2) {
+                    ForEach(viewModel.recentSessions) { session in
+                        ChildHomeRecentSessionRow(session: session)
+                    }
+                }
+            }
+        }
+    }
+
+    // MARK: - Parent button
 
     private var parentButton: some View {
         VStack {
@@ -202,201 +352,47 @@ struct ChildHomeView: View {
                     Image(systemName: "person.2.fill")
                         .font(.system(size: 16))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .padding(SpacingTokens.sp3)
+                        .frame(width: 44, height: 44)
                         .background(
-                            Circle().fill(ColorTokens.Kid.surface)
-                                .kidTileShadow()
+                            Circle().fill(ColorTokens.Kid.surface).kidTileShadow()
                         )
                 }
                 .accessibilityLabel(String(localized: "child.home.a11y.parent.button"))
+                .accessibilityHint(String(localized: "child.home.a11y.parent.button.hint"))
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.top, SpacingTokens.sp2)
             Spacer()
         }
     }
-}
 
-// MARK: - Supporting Views
+    // MARK: - Section header helper
 
-private struct CloudDecoration: View {
-    var body: some View {
-        ZStack {
-            Ellipse()
-                .fill(Color.white.opacity(0.6))
-                .frame(width: 120, height: 60)
-                .blur(radius: 20)
-                .offset(x: -80, y: 60)
-
-            Ellipse()
-                .fill(Color.white.opacity(0.5))
-                .frame(width: 90, height: 45)
-                .blur(radius: 16)
-                .offset(x: 100, y: 90)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-    }
-}
-
-private struct DailyMissionCard: View {
-    let mission: ChildHomeModels.DailyMission
-    let onTap: () -> Void
-
-    var body: some View {
-        Button(action: onTap) {
-            HStack(spacing: SpacingTokens.sp4) {
-                ZStack {
-                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
-                        .fill(ColorTokens.Brand.primary.opacity(0.15))
-                        .frame(width: 56, height: 56)
-
-                    Text(mission.targetSound)
-                        .font(.system(size: 28, weight: .black, design: .rounded))
-                        .foregroundStyle(ColorTokens.Brand.primary)
-                }
-
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(mission.title)
-                        .font(TypographyTokens.headline(16))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(nil)
-                        .minimumScaleFactor(0.85)
-
-                    Text(mission.subtitle)
-                        .font(TypographyTokens.body(13))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(nil)
-                        .minimumScaleFactor(0.85)
-
-                    HSProgressBar(value: mission.progress, style: .kid, tint: ColorTokens.Brand.primary)
-                        .frame(height: 10)
-                        .padding(.top, 2)
-                }
-
-                Spacer()
-
-                Image(systemName: "play.circle.fill")
-                    .font(.system(size: 32))
-                    .foregroundStyle(ColorTokens.Brand.primary)
-            }
-            .padding(SpacingTokens.sp4)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                    .fill(ColorTokens.Kid.surface)
-                    .kidCardShadow()
-            )
-        }
-        .buttonStyle(.plain)
-        .tapFeedback()
-        .accessibilityLabel(Text("\(mission.title). \(mission.subtitle)"))
-        .accessibilityHint(Text(String(localized: "child.home.daily.a11y.hint")))
-    }
-}
-
-private struct QuickActionTile: View {
-    let title: String
-    let icon: String
-    let color: Color
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            VStack(spacing: SpacingTokens.sp2) {
-                Image(systemName: icon)
-                    .font(.system(size: 26))
-                    .foregroundStyle(color)
-                    .frame(width: 52, height: 52)
-                    .background(Circle().fill(color.opacity(0.12)))
-
-                Text(title)
-                    .font(TypographyTokens.body(13))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                    .ctaTextStyle()
-            }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, SpacingTokens.sp4)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
-                    .fill(ColorTokens.Kid.surface)
-                    .kidCardShadow()
-            )
-        }
-        .buttonStyle(.plain)
-        .tapFeedback()
-        .accessibilityLabel(title)
-    }
-}
-
-private struct StreakBadge: View {
-    let streak: Int
-
-    var body: some View {
-        HStack(spacing: 4) {
-            Image(systemName: "flame.fill")
+    private func sectionHeader(_ title: String, emoji: String) -> some View {
+        HStack(spacing: SpacingTokens.sp2) {
+            Text(emoji)
                 .font(.system(size: 14))
-                .foregroundStyle(ColorTokens.Semantic.warning)
-            Text("\(streak)")
-                .font(.system(size: 14, weight: .bold, design: .rounded))
-                .foregroundStyle(ColorTokens.Semantic.warning)
+            Text(title)
+                .font(TypographyTokens.caption(12))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .textCase(.uppercase)
+                .tracking(1)
+            Spacer(minLength: 0)
         }
-        .padding(.horizontal, SpacingTokens.sp3)
-        .padding(.vertical, SpacingTokens.sp2)
-        .background(Capsule().fill(ColorTokens.Semantic.warning.opacity(0.12)))
-        .accessibilityLabel(Text(String.localizedStringWithFormat(
-            String(localized: "child.home.streak.a11y"),
-            streak
-        )))
-    }
-}
-
-private struct SoundProgressRow: View {
-    let item: ChildHomeModels.SoundProgressItem
-
-    var body: some View {
-        HStack(spacing: SpacingTokens.sp3) {
-            Text(item.sound)
-                .font(.system(size: 20, weight: .black, design: .rounded))
-                .foregroundStyle(ColorTokens.SoundFamilyColors.hue(for: item.accent))
-                .frame(width: 36)
-
-            VStack(alignment: .leading, spacing: 3) {
-                HStack {
-                    Text(item.stageName)
-                        .font(TypographyTokens.body(13))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                    Spacer()
-                    Text(formatPercent(item.rate))
-                        .font(TypographyTokens.mono(12))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                }
-                HSProgressBar(
-                    value: item.rate,
-                    style: .kid,
-                    tint: ColorTokens.SoundFamilyColors.hue(for: item.accent)
-                )
-                .frame(height: 8)
-            }
-        }
-        .padding(.vertical, SpacingTokens.sp2)
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(Text(String.localizedStringWithFormat(
-            String(localized: "child.home.sound.row.a11y"),
-            item.sound, item.stageName, Int(item.rate * 100)
-        )))
-    }
-
-    private func formatPercent(_ rate: Double) -> String {
-        "\(Int(rate * 100))%"
     }
 }
 
 // MARK: - Preview
 
-#Preview("Child Home") {
+#Preview("Child Home — Light") {
     ChildHomeView(childId: "preview-child-1")
         .environment(AppCoordinator())
         .environment(AppContainer.preview())
+}
+
+#Preview("Child Home — Dark") {
+    ChildHomeView(childId: "preview-child-1")
+        .environment(AppCoordinator())
+        .environment(AppContainer.preview())
+        .preferredColorScheme(.dark)
 }
