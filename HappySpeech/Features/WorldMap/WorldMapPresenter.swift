@@ -127,6 +127,9 @@ final class WorldMapPresenter: WorldMapPresentationLogic {
             foregroundColor: fg,
             isLocked: zone.isLocked,
             isHighlighted: isHighlighted,
+            position: zone.position,
+            isCurrentLocation: zone.isCurrentLocation,
+            isCompleted: zone.progress >= 1.0,
             accessibilityLabel: a11yLabel,
             accessibilityHint: a11yHint
         )
@@ -139,6 +142,7 @@ final class WorldMapPresenter: WorldMapPresentationLogic {
         case "lilac":  return ColorTokens.Brand.lilac
         case "coral":  return ColorTokens.Brand.primary
         case "gold":   return ColorTokens.Brand.gold
+        case "sky":    return ColorTokens.Brand.sky
         default:       return ColorTokens.Brand.sky
         }
     }

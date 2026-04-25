@@ -11920,6 +11920,17 @@
         }
       }
     },
+    "worldMap.zone.vowels": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Гласные"
+          }
+        }
+      }
+    },
     "worldMap.zone.whistling": {
       "extractionState": "manual",
       "localizations": {
@@ -11927,6 +11938,160 @@
           "stringUnit": {
             "state": "translated",
             "value": "Свистящие"
+          }
+        }
+      }
+    },
+    "worldmap.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Карта прогресса"
+          }
+        }
+      }
+    },
+    "worldmap.progress.total": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Общий прогресс"
+          }
+        }
+      }
+    },
+    "worldmap.streak": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "дней подряд"
+          }
+        }
+      }
+    },
+    "worldmap.streak.start": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начни серию!"
+          }
+        }
+      }
+    },
+    "worldmap.island.locked": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заблокировано"
+          }
+        }
+      }
+    },
+    "worldmap.island.completed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пройдено!"
+          }
+        }
+      }
+    },
+    "worldmap.island.lessons": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "уроков"
+          }
+        }
+      }
+    },
+    "worldmap.island.current": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ты здесь"
+          }
+        }
+      }
+    },
+    "worldmap.island.sibilants": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров Свистящих"
+          }
+        }
+      }
+    },
+    "worldmap.island.hissing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров Шипящих"
+          }
+        }
+      }
+    },
+    "worldmap.island.sonorant.r": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров Сонора Р"
+          }
+        }
+      }
+    },
+    "worldmap.island.sonorant.l": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров Сонора Л"
+          }
+        }
+      }
+    },
+    "worldmap.island.velar": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров Заднеязычных"
+          }
+        }
+      }
+    },
+    "worldmap.island.vowels": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров Гласных"
           }
         }
       }

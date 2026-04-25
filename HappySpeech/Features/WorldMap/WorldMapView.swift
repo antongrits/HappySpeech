@@ -22,6 +22,7 @@ struct WorldMapView: View {
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.horizontalSizeClass) private var hSizeClass
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     // MARK: - VIP State
 
@@ -62,7 +63,12 @@ struct WorldMapView: View {
             ScrollView {
                 VStack(spacing: SpacingTokens.large) {
                     mascotHeader
-                    zonesGrid
+                    streakBadge
+                    if useGridFallback {
+                        zonesGrid
+                    } else {
+                        islandsCanvas
+                    }
                     Spacer(minLength: 96)
                 }
                 .padding(.top, SpacingTokens.medium)
@@ -113,26 +119,78 @@ struct WorldMapView: View {
 
     private var mascotHeader: some View {
         VStack(spacing: SpacingTokens.tiny) {
-            Text(verbatim: "🦋")
-                .font(.system(size: 86))
-                .scaleEffect(appeared && !reduceMotion ? 1.06 : 1.0)
-                .animation(
-                    reduceMotion
-                        ? nil
-                        : .easeInOut(duration: 1.8).repeatForever(autoreverses: true),
-                    value: appeared
-                )
-                .accessibilityHidden(true)
+            Text(String(localized: "worldmap.title"))
+                .font(TypographyTokens.title(22).weight(.bold))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
 
             Text(String(localized: "worldMap.mascot.greeting"))
-                .font(TypographyTokens.title(20))
-                .foregroundStyle(ColorTokens.Kid.ink)
+                .font(TypographyTokens.body(15))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .minimumScaleFactor(0.85)
                 .padding(.horizontal, SpacingTokens.large)
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
+    }
+
+    // MARK: - Streak badge
+
+    @ViewBuilder
+    private var streakBadge: some View {
+        let streakText = display.hasStreak
+            ? display.streakLabel
+            : String(localized: "worldmap.streak.start")
+        HSLiquidGlassCard(
+            style: .tinted(
+                display.hasStreak
+                    ? ColorTokens.Brand.primary
+                    : ColorTokens.Brand.sky
+            ),
+            padding: SpacingTokens.small
+        ) {
+            HStack(spacing: SpacingTokens.tiny) {
+                Image(systemName: display.hasStreak ? "flame.fill" : "sparkles")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundStyle(
+                        display.hasStreak
+                            ? ColorTokens.Brand.primary
+                            : ColorTokens.Brand.sky
+                    )
+                Text(streakText)
+                    .font(TypographyTokens.headline(14).weight(.semibold))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+            }
+        }
+        .fixedSize(horizontal: true, vertical: false)
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(streakText)
+    }
+
+    // MARK: - Islands canvas
+
+    private var islandsCanvas: some View {
+        WorldMapIslandsCanvas(
+            cards: display.zones,
+            appeared: appeared,
+            reduceMotion: reduceMotion,
+            onTapZone: { handleZoneTap($0) }
+        )
+        .padding(.horizontal, SpacingTokens.screenEdge)
+    }
+
+    /// Использовать сеточный fallback вместо канваса:
+    /// — на iPad/regular size class (там много места — карточки выглядят лучше);
+    /// — на больших Dynamic Type, где плашки на канвасе перестают помещаться.
+    private var useGridFallback: Bool {
+        if hSizeClass == .regular { return true }
+        return dynamicTypeSize >= .accessibility1
     }
 
     // MARK: - Zones grid

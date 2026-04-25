@@ -72,8 +72,24 @@ final class WorldMapInteractor: WorldMapBusinessLogic {
 
 private extension WorldMapInteractor {
 
+    /// Сид-данные карты звуков. 6 зон → 6 островов на «канвасе».
+    /// Координаты `position` нормализованы [0..1] и подобраны вручную так,
+    /// чтобы соединяющая dash-линия читалась как «маршрут приключения».
     static func makeSeedZones() -> [WorldZone] {
         [
+            WorldZone(
+                id: "zone-vowels",
+                name: String(localized: "worldMap.zone.vowels"),
+                icon: "🎵",
+                sounds: ["А", "О", "У", "И"],
+                progress: 1.0,
+                completedLessons: 10,
+                totalLessons: 10,
+                colorName: "sky",
+                isLocked: false,
+                position: CGPoint(x: 0.18, y: 0.86),
+                isCurrentLocation: false
+            ),
             WorldZone(
                 id: "zone-whistling",
                 name: String(localized: "worldMap.zone.whistling"),
@@ -83,7 +99,9 @@ private extension WorldMapInteractor {
                 completedLessons: 13,
                 totalLessons: 20,
                 colorName: "mint",
-                isLocked: false
+                isLocked: false,
+                position: CGPoint(x: 0.74, y: 0.74),
+                isCurrentLocation: false
             ),
             WorldZone(
                 id: "zone-hissing",
@@ -94,7 +112,9 @@ private extension WorldMapInteractor {
                 completedLessons: 6,
                 totalLessons: 20,
                 colorName: "butter",
-                isLocked: false
+                isLocked: false,
+                position: CGPoint(x: 0.30, y: 0.56),
+                isCurrentLocation: true
             ),
             WorldZone(
                 id: "zone-sonorant",
@@ -105,7 +125,9 @@ private extension WorldMapInteractor {
                 completedLessons: 2,
                 totalLessons: 20,
                 colorName: "lilac",
-                isLocked: false
+                isLocked: false,
+                position: CGPoint(x: 0.78, y: 0.40),
+                isCurrentLocation: false
             ),
             WorldZone(
                 id: "zone-velar",
@@ -116,7 +138,9 @@ private extension WorldMapInteractor {
                 completedLessons: 0,
                 totalLessons: 15,
                 colorName: "coral",
-                isLocked: true
+                isLocked: true,
+                position: CGPoint(x: 0.32, y: 0.24),
+                isCurrentLocation: false
             ),
             WorldZone(
                 id: "zone-grammar",
@@ -127,7 +151,9 @@ private extension WorldMapInteractor {
                 completedLessons: 0,
                 totalLessons: 12,
                 colorName: "gold",
-                isLocked: true
+                isLocked: true,
+                position: CGPoint(x: 0.78, y: 0.10),
+                isCurrentLocation: false
             )
         ]
     }
