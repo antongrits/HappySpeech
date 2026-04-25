@@ -22,6 +22,18 @@
       ]
     }
   ],
+  "appcheck": {
+    "enforcementMode": "ENFORCED",
+    "providers": {
+      "deviceCheck": {
+        "enabled": true
+      },
+      "debug": {
+        "enabled": true,
+        "comment": "Debug provider for iOS Simulator — disable before App Store submission"
+      }
+    }
+  },
   "emulators": {
     "auth": {
       "port": 9099

@@ -12,7 +12,7 @@
  *   - moderateUserContent  (Firestore trigger, v2, placeholder)
  *   - sendWeeklyReport     (scheduled, every Sunday 10:00 MSK)
  *
- * Region: europe-west1
+ * Region: europe-west3
  * Contract source: .claude/team/api-contracts.md + M1.3 plan.
  */
 
@@ -25,8 +25,8 @@ if (!admin.apps.length) {
   admin.initializeApp();
 }
 
-// Region close to target audience (Russia/CIS). europe-west1.
-const REGION = 'europe-west1';
+// Region close to target audience (Russia/CIS). europe-west3 (Frankfurt).
+const REGION = 'europe-west3';
 
 const { onCall, HttpsError } = require('firebase-functions/v2/https');
 const { onDocumentCreated, onDocumentWritten } = require('firebase-functions/v2/firestore');

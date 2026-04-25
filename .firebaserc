@@ -1,6 +1,7 @@
 {
   "projects": {
-    "default": "happyspeech-prod",
+    "default": "happyspeech-app",
+    "prod": "happyspeech-app",
     "dev": "happyspeech-dev",
     "staging": "happyspeech-staging"
   },
