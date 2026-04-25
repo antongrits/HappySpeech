@@ -156,6 +156,7 @@ struct RewardsView: View {
                         .foregroundStyle(tab.isActive ? .white : ColorTokens.Kid.ink)
                         .padding(.horizontal, SpacingTokens.medium)
                         .padding(.vertical, SpacingTokens.tiny)
+                        .frame(minHeight: 44)
                         .background(
                             Capsule().fill(
                                 tab.isActive

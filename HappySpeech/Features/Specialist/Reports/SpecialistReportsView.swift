@@ -454,6 +454,7 @@ private struct FilterChip: View {
             }
             .padding(.horizontal, SpacingTokens.sp3)
             .padding(.vertical, SpacingTokens.sp2)
+            .frame(minHeight: 44)
             .background(
                 Capsule()
                     .fill(isSelected ? ColorTokens.Spec.accent : ColorTokens.Spec.surface)
@@ -466,7 +467,7 @@ private struct FilterChip: View {
         }
         .buttonStyle(.plain)
         .accessibilityLabel(title)
-        .accessibilityAddTraits(isSelected ? .isSelected : [])
+        .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
     }
 }
 
