@@ -321,6 +321,7 @@
 		0DBAB9F8B23CF07644621030 /* r-wm-34.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F049C21481B5A17014E09DB6 /* r-wm-34.m4a */; };
 		0DBD161016E9F34BEEF80A38 /* c-iso-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4D2C9FB18FD1731033CAC544 /* c-iso-2.m4a */; };
 		0DBE5ACDD3C0C128F11BF8B5 /* ag-110.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8A26DFA82B1BF80EACF2549D /* ag-110.m4a */; };
+		0DC263C546A3B03C41D5AB9E /* HSChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE721B0622B2DB536B51D4E /* HSChart.swift */; };
 		0DC4489C94D2D145DDF643B1 /* r-ph-44.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 6B4E5870E29045A37BEC7D78 /* r-ph-44.m4a */; };
 		0DD470816B0D0FAE783C4408 /* s-wf-14.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 183AC69C83BE6DE156A6C78A /* s-wf-14.m4a */; };
 		0E01378E0161769DE888EFA1 /* shch-wf-7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2ECC4E3E11D2F58270404643 /* shch-wf-7.m4a */; };
@@ -1734,6 +1735,7 @@
 		472DB2E151A6C2E4125BAFAD /* ag-036.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 47A4F52C37E0C9C21F53C013 /* ag-036.m4a */; };
 		473832B566D586D8DE5408DD /* rl-diff-24.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7C03B2EAEDF1B14EC665DE45 /* rl-diff-24.m4a */; };
 		4755891B0FE67FA563DA47B9 /* y-sen-13.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 565ACC2E35A70F6FF3FE8917 /* y-sen-13.m4a */; };
+		475A809CA9200E8C2291C264 /* HSARSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B869FD9E5DE3A203C2524D2B /* HSARSceneView.swift */; };
 		476079F32BF3E83FD1B3DD3E /* zh-ph-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C7382119D79E58ADDCDA7397 /* zh-ph-6.m4a */; };
 		4765FEAF9C25946BA4FC48BD /* shch-prep-10.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 63A4ED49C45C095F58F77AE2 /* shch-prep-10.m4a */; };
 		476FAA46A3A293D2B4ED5701 /* narr-ms-13.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1AB925DC18AC589BEEB7A75E /* narr-ms-13.m4a */; };
@@ -1763,6 +1765,7 @@
 		483BD968E69F39E745BA9B66 /* kh-sen-20.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A86C381EF614C3828CAED7F6 /* kh-sen-20.m4a */; };
 		4840DA81F442AC8D42BADAAD /* DragAndMatchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D9B81A26677BEAE150364C /* DragAndMatchRouter.swift */; };
 		484D3C9751044D9127230A2A /* shch-wi-20.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2C896CEF1876D5DC6B297F73 /* shch-wi-20.m4a */; };
+		486042C67F127E3320A77A7F /* HSAudioRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92FD883BB3B53EBB8A4EA7D1 /* HSAudioRecorderView.swift */; };
 		4865C57EA80CD63A994263C1 /* y-sen-30.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3C4C4AC0AF069139E92F0B3 /* y-sen-30.m4a */; };
 		486FACFDA491E15EC90DBDE7 /* c-wf-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C985139B874DD86C079090C2 /* c-wf-2.m4a */; };
 		487161F45B149D4A2E19965C /* ch-wi-20.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E9AF646C81F6607729C74B1F /* ch-wi-20.m4a */; };
@@ -4348,6 +4351,7 @@
 		B8163C5D44B0A98A0B544919 /* dwh-df-39.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 11BEB6B25780EF2B3BA3DB7E /* dwh-df-39.m4a */; };
 		B827DBC97B28A89F0AF6A3AC /* kh-sen-33.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 96EB8E13660DE3EAC870DFE5 /* kh-sen-33.m4a */; };
 		B8452A5033D327FC4C942987 /* s-ph-33.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B9E98529489C0A2F46120AAB /* s-ph-33.m4a */; };
+		B848D77BF95C397431F49E6F /* HSLottieContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74AF67F089B765285C33750F /* HSLottieContainer.swift */; };
 		B8496B6C42A2A71E2A0E0CF7 /* kh-wf-28.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3ACDC1D224C5959108BD8DB1 /* kh-wf-28.m4a */; };
 		B84A2C95EFA72A9546B999EC /* lyalya_reward_new.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CD8E195309862D55FCE5BD57 /* lyalya_reward_new.m4a */; };
 		B85A214B1A3603FDF4F7D593 /* dwh-df-22.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0A0E1460E0E3D3A3523FF46E /* dwh-df-22.m4a */; };
@@ -4609,6 +4613,7 @@
 		C1E95B45DA32C9D383D9814B /* rl-syl-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 15B0812D6E4161CC159BF614 /* rl-syl-0.m4a */; };
 		C1EC06037E7973CA50B9831C /* kh-wm-32.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 253372BDC9472FE6EC3BE857 /* kh-wm-32.m4a */; };
 		C1F0D30B63998E2CB6725064 /* narr-dl-7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F5BE15727CC8BD34EE1CF9DD /* narr-dl-7.m4a */; };
+		C1F55384F06C82C540724012 /* HSLiquidGlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299FD665245C37A950CBDE4D /* HSLiquidGlassCard.swift */; };
 		C21AB2FB6A614A601D927C31 /* g-wi-14.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CA38F8B5A0EE8DB6E7C9C2B2 /* g-wi-14.m4a */; };
 		C21FBB78F73D1A74CA067707 /* rl-diff-23.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F6B15C28F8145C426B64B533 /* rl-diff-23.m4a */; };
 		C21FCA65FC7FBDC577C8F422 /* phon-fs-12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B4192D7F5C3121663750E285 /* phon-fs-12.m4a */; };
@@ -5329,6 +5334,7 @@
 		E19EBAB8557BF105B423792E /* DemoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01961906FA6B92715CC92A56 /* DemoInteractor.swift */; };
 		E1AC4EE01EBA8192EEEECBF9 /* lex-tr-14.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 38A80061F24C7FFD937987A6 /* lex-tr-14.m4a */; };
 		E1AE0FDB68B68DA20E4BB862 /* ButterflyCatchModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194974682AB1F5821D98BCC9 /* ButterflyCatchModels.swift */; };
+		E1B0598C9AEA9040CDCBEC02 /* HSAccessibleText.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56674424930AA8D35C45334 /* HSAccessibleText.swift */; };
 		E1C0A1288E5E6F899E81C95A /* shch-ph-29.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3C6B1E91CB9D195F0EEFDF02 /* shch-ph-29.m4a */; };
 		E1C57BB41BC10B37279D6B05 /* l-sen-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8F8A863C4483F9A575D24F4E /* l-sen-2.m4a */; };
 		E1C82DE6A08BEDCFBA5A1397 /* dwh-prep-1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 57AF84A8E0D5CA55F7293CAD /* dwh-prep-1.m4a */; };
@@ -6420,6 +6426,7 @@
 		0ED762B34EDA106EDDA28F72 /* ch-wm-34.m4a */ = {isa = PBXFileReference; path = "ch-wm-34.m4a"; sourceTree = "<group>"; };
 		0EDEDA120302C2341058D579 /* ag-073.m4a */ = {isa = PBXFileReference; path = "ag-073.m4a"; sourceTree = "<group>"; };
 		0EDFBF1386217A916E084B44 /* z-syl-0.m4a */ = {isa = PBXFileReference; path = "z-syl-0.m4a"; sourceTree = "<group>"; };
+		0EE721B0622B2DB536B51D4E /* HSChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSChart.swift; sourceTree = "<group>"; };
 		0EEAB6D705D23C7A7E1260AC /* g-wm-9.m4a */ = {isa = PBXFileReference; path = "g-wm-9.m4a"; sourceTree = "<group>"; };
 		0EF05424E97844445CB84A86 /* y-sen-35.m4a */ = {isa = PBXFileReference; path = "y-sen-35.m4a"; sourceTree = "<group>"; };
 		0EF9230FD983427C41C993E7 /* ch-wi-18.m4a */ = {isa = PBXFileReference; path = "ch-wi-18.m4a"; sourceTree = "<group>"; };
@@ -7053,6 +7060,7 @@
 		2985A9359357685EEB975CE9 /* ARActivityDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARActivityDisplayLogic.swift; sourceTree = "<group>"; };
 		298B3E99BC696683FB992B24 /* ARActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARActivityView.swift; sourceTree = "<group>"; };
 		299C57C6F1C83BCF602F8B1C /* ag-028.m4a */ = {isa = PBXFileReference; path = "ag-028.m4a"; sourceTree = "<group>"; };
+		299FD665245C37A950CBDE4D /* HSLiquidGlassCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSLiquidGlassCard.swift; sourceTree = "<group>"; };
 		29A3E25B915F7196295493C9 /* br-278.m4a */ = {isa = PBXFileReference; path = "br-278.m4a"; sourceTree = "<group>"; };
 		29AB188A9EBC018E087D0D73 /* dwh-ph-16.m4a */ = {isa = PBXFileReference; path = "dwh-ph-16.m4a"; sourceTree = "<group>"; };
 		29AF57C5E90619F714076520 /* s-wi-10.m4a */ = {isa = PBXFileReference; path = "s-wi-10.m4a"; sourceTree = "<group>"; };
@@ -8785,6 +8793,7 @@
 		74933C205D03A3EBC04E8775 /* ag-132.m4a */ = {isa = PBXFileReference; path = "ag-132.m4a"; sourceTree = "<group>"; };
 		74A08300252DED965286BD7E /* ag-013.m4a */ = {isa = PBXFileReference; path = "ag-013.m4a"; sourceTree = "<group>"; };
 		74A9FEE6AFDFF5678A51EEFF /* y-ph-30.m4a */ = {isa = PBXFileReference; path = "y-ph-30.m4a"; sourceTree = "<group>"; };
+		74AF67F089B765285C33750F /* HSLottieContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSLottieContainer.swift; sourceTree = "<group>"; };
 		74C3959CD00F408F21AB2AD5 /* br-104.m4a */ = {isa = PBXFileReference; path = "br-104.m4a"; sourceTree = "<group>"; };
 		74C610BC213CBDD91050EED5 /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
 		74CA34407B16FC76C86B0244 /* k-wi-41.m4a */ = {isa = PBXFileReference; path = "k-wi-41.m4a"; sourceTree = "<group>"; };
@@ -9525,6 +9534,7 @@
 		928AD23BC9FC73DE8F387BF6 /* c-wm-8.m4a */ = {isa = PBXFileReference; path = "c-wm-8.m4a"; sourceTree = "<group>"; };
 		928CACE576F86132C53C94C0 /* br-006.m4a */ = {isa = PBXFileReference; path = "br-006.m4a"; sourceTree = "<group>"; };
 		92EDEAC7FC09096CF9B27F08 /* shch-df-16.m4a */ = {isa = PBXFileReference; path = "shch-df-16.m4a"; sourceTree = "<group>"; };
+		92FD883BB3B53EBB8A4EA7D1 /* HSAudioRecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSAudioRecorderView.swift; sourceTree = "<group>"; };
 		92FF344BC68062C0C3788C95 /* k-wi-1.m4a */ = {isa = PBXFileReference; path = "k-wi-1.m4a"; sourceTree = "<group>"; };
 		92FFAF8AD016A745E026E342 /* br-145.m4a */ = {isa = PBXFileReference; path = "br-145.m4a"; sourceTree = "<group>"; };
 		930E2B6B275C97FCA3F9C3F5 /* lex-bi-9.m4a */ = {isa = PBXFileReference; path = "lex-bi-9.m4a"; sourceTree = "<group>"; };
@@ -10425,6 +10435,7 @@
 		B860ADBC2A9B24B8E59D7BF1 /* sh-wi-35.m4a */ = {isa = PBXFileReference; path = "sh-wi-35.m4a"; sourceTree = "<group>"; };
 		B86178096A30255E5202408F /* BreathingARInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingARInteractor.swift; sourceTree = "<group>"; };
 		B863DFDA60BACE6C1AFCB1F4 /* lex-hf-16.m4a */ = {isa = PBXFileReference; path = "lex-hf-16.m4a"; sourceTree = "<group>"; };
+		B869FD9E5DE3A203C2524D2B /* HSARSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSARSceneView.swift; sourceTree = "<group>"; };
 		B86B19E1D88DA48FD10BC259 /* narr-f-0.m4a */ = {isa = PBXFileReference; path = "narr-f-0.m4a"; sourceTree = "<group>"; };
 		B88A835561EDD17A4E6744D9 /* lyalya_encourage_06.m4a */ = {isa = PBXFileReference; path = lyalya_encourage_06.m4a; sourceTree = "<group>"; };
 		B8914F3756F04B83210EF0CA /* ch-wm-38.m4a */ = {isa = PBXFileReference; path = "ch-wm-38.m4a"; sourceTree = "<group>"; };
@@ -10719,6 +10730,7 @@
 		C556A2C38CC55991379EF0C2 /* k-ph-2.m4a */ = {isa = PBXFileReference; path = "k-ph-2.m4a"; sourceTree = "<group>"; };
 		C55F29B96D4493DC8E307F9B /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		C5634AB0F84EDB03447CA31C /* lyalya_hint_22.m4a */ = {isa = PBXFileReference; path = lyalya_hint_22.m4a; sourceTree = "<group>"; };
+		C56674424930AA8D35C45334 /* HSAccessibleText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSAccessibleText.swift; sourceTree = "<group>"; };
 		C569FEE56606667C4D3F4904 /* ag-008.m4a */ = {isa = PBXFileReference; path = "ag-008.m4a"; sourceTree = "<group>"; };
 		C57FC31CF06E738024774725 /* l-prep-11.m4a */ = {isa = PBXFileReference; path = "l-prep-11.m4a"; sourceTree = "<group>"; };
 		C585BCB0C47A67125E9F89B8 /* shch-ph-12.m4a */ = {isa = PBXFileReference; path = "shch-ph-12.m4a"; sourceTree = "<group>"; };
@@ -16204,15 +16216,21 @@
 		9D30A6242A9E5A6D322C777F /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				C56674424930AA8D35C45334 /* HSAccessibleText.swift */,
+				B869FD9E5DE3A203C2524D2B /* HSARSceneView.swift */,
+				92FD883BB3B53EBB8A4EA7D1 /* HSAudioRecorderView.swift */,
 				EDD29D9BB382C85D882D4E3E /* HSAudioWaveform.swift */,
 				718AD33155ED3A6287B0EB6F /* HSAudioWaveView.swift */,
 				62DF33FE6E34AF77A3217A6F /* HSBadge.swift */,
 				80991007FFA348A65559E1F9 /* HSButton.swift */,
 				D65D5A47523D4BA76DCBF6A2 /* HSCard.swift */,
+				0EE721B0622B2DB536B51D4E /* HSChart.swift */,
 				D24AE9929ED82C34528F1965 /* HSEmptyStateView.swift */,
 				52D2BDFB0F10928C8227798E /* HSErrorStateView.swift */,
 				F20A87358592858A889D44DB /* HSKidTabBar.swift */,
+				299FD665245C37A950CBDE4D /* HSLiquidGlassCard.swift */,
 				BFA060E9DFE272E246BC0C45 /* HSLoadingView.swift */,
+				74AF67F089B765285C33750F /* HSLottieContainer.swift */,
 				98644AD8553B9E6BDD36A7D3 /* HSMascotView.swift */,
 				DA0951F7717AE643FC0A15FC /* HSMiniSpark.swift */,
 				B38B4F3571D6B0CF004CDB08 /* HSOfflineBanner.swift */,
@@ -25067,16 +25085,22 @@
 				7BDB3E2D9E1DB8ECAB656832 /* GuidedTourModels.swift in Sources */,
 				0B29E6E9810951908C6CF870 /* GuidedTourTipView.swift in Sources */,
 				E7BE29475F64D30D5E58EE14 /* HFInferenceClient.swift in Sources */,
+				475A809CA9200E8C2291C264 /* HSARSceneView.swift in Sources */,
+				E1B0598C9AEA9040CDCBEC02 /* HSAccessibleText.swift in Sources */,
+				486042C67F127E3320A77A7F /* HSAudioRecorderView.swift in Sources */,
 				5AF0BF96F1ABD0F4CDA09EA1 /* HSAudioWaveView.swift in Sources */,
 				285D99B0EF7A5CAFD762611F /* HSAudioWaveform.swift in Sources */,
 				299A632C09466E4F81D3F613 /* HSBadge.swift in Sources */,
 				79FDD806936A8DF3A6DE1CAA /* HSButton.swift in Sources */,
 				4049695DEC1BE09BD83AA383 /* HSCard.swift in Sources */,
+				0DC263C546A3B03C41D5AB9E /* HSChart.swift in Sources */,
 				8D0A6A0DB6A2C2B2BB96A7D0 /* HSEmptyStateView.swift in Sources */,
 				E1E3EC21E2E7801B14CA912D /* HSErrorStateView.swift in Sources */,
 				FD9A992FA276E2F3728596E0 /* HSKidTabBar.swift in Sources */,
+				C1F55384F06C82C540724012 /* HSLiquidGlassCard.swift in Sources */,
 				44EF735C1CBE72B181394E40 /* HSLoadingView.swift in Sources */,
 				983B78147D6756C970E13A26 /* HSLogger.swift in Sources */,
+				B848D77BF95C397431F49E6F /* HSLottieContainer.swift in Sources */,
 				308B6F1DD872D38E9D12E8FF /* HSMascotView.swift in Sources */,
 				ABB07A86CFC41FACBFA8A556 /* HSMiniSpark.swift in Sources */,
 				DA992C4CCEE2EB453D0CEC07 /* HSOfflineBanner.swift in Sources */,
