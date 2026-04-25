@@ -3237,6 +3237,259 @@
         }
       }
     },
+    "homeTasks.toast.started": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запускаем упражнение"
+          }
+        }
+      }
+    },
+    "homeTasks.toast.notifyScheduled": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Напомним завтра в %@"
+          }
+        }
+      }
+    },
+    "homeTasks.toast.notifyFailed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось запланировать напоминание"
+          }
+        }
+      }
+    },
+    "homeTasks.group.overdue": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Просрочено"
+          }
+        }
+      }
+    },
+    "homeTasks.group.today": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодня"
+          }
+        }
+      }
+    },
+    "homeTasks.group.thisWeek": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На этой неделе"
+          }
+        }
+      }
+    },
+    "homeTasks.group.later": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Позже"
+          }
+        }
+      }
+    },
+    "homeTasks.group.completed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выполнено"
+          }
+        }
+      }
+    },
+    "homeTasks.action.start": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать"
+          }
+        }
+      }
+    },
+    "homeTasks.action.continue": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжить"
+          }
+        }
+      }
+    },
+    "homeTasks.action.repeat": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторить"
+          }
+        }
+      }
+    },
+    "homeTasks.subtitle.sound": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук %@"
+          }
+        }
+      }
+    },
+    "homeTasks.subtitle.minutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "~%lld мин"
+          }
+        }
+      }
+    },
+    "homeTasks.subtitle.assignedBy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "от %@"
+          }
+        }
+      }
+    },
+    "homeTasks.overdue.alert.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Есть просроченные задания"
+          }
+        }
+      }
+    },
+    "homeTasks.overdue.alert.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хочешь, мы напомним завтра утром, чтобы не забыть позаниматься?"
+          }
+        }
+      }
+    },
+    "homeTasks.overdue.alert.notify": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Напомнить"
+          }
+        }
+      }
+    },
+    "homeTasks.overdue.alert.later": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Позже"
+          }
+        }
+      }
+    },
+    "homeTasks.empty.celebrating.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Маскот Ляля радуется выполненным заданиям"
+          }
+        }
+      }
+    },
+    "homeTasks.indicator.inProgress": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В процессе"
+          }
+        }
+      }
+    },
+    "homeTasks.a11y.startHint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открывает упражнение"
+          }
+        }
+      }
+    },
+    "homeTasks.a11y.repeatHint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запускает упражнение ещё раз"
+          }
+        }
+      }
+    },
+    "homeTasks.seed.assignedBy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Марины Ивановны"
+          }
+        }
+      }
+    },
     "lyalya.mascot.accessibility.hint.idle": {
       "extractionState": "manual",
       "localizations": {
