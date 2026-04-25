@@ -70,7 +70,10 @@ private struct SpecChildListView: View {
                         // Add child
                     } label: {
                         Image(systemName: "plus")
+                            .accessibilityHidden(true)
                     }
+                    .accessibilityLabel(String(localized: "Добавить ребёнка"))
+                    .accessibilityHint(String(localized: "Открыть форму создания профиля"))
                 }
             }
         }
@@ -120,9 +123,21 @@ private struct SpecChildRow: View {
                 Image(systemName: "chevron.right")
                     .font(.system(size: 12))
                     .foregroundStyle(ColorTokens.Spec.inkMuted)
+                    .accessibilityHidden(true)
             }
         }
         .padding(.vertical, SpacingTokens.sp2)
+        .frame(minHeight: 56)
+        .contentShape(Rectangle())
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(accessibilityRowLabel)
+        .accessibilityHint(String(localized: "Открыть профиль ребёнка"))
+        .accessibilityAddTraits(.isButton)
+    }
+
+    private var accessibilityRowLabel: String {
+        let sounds = targetSounds.joined(separator: ", ")
+        return "\(name), \(age) лет. Целевые звуки: \(sounds). Последнее занятие: \(lastSession)"
     }
 }
 
