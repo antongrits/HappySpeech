@@ -1,5 +1,6 @@
 import SwiftUI
 import OSLog
+import Charts
 
 // MARK: - SessionHistoryView
 //
@@ -46,7 +47,7 @@ struct SessionHistoryView: View {
     var body: some View {
         NavigationStack(path: $path) {
             ZStack(alignment: .bottom) {
-                ColorTokens.Parent.bg.ignoresSafeArea()
+                backgroundGradient.ignoresSafeArea()
 
                 content
                     .refreshable { performRefresh() }
@@ -93,6 +94,19 @@ struct SessionHistoryView: View {
         }
     }
 
+    // MARK: - Background
+
+    private var backgroundGradient: LinearGradient {
+        LinearGradient(
+            colors: [
+                ColorTokens.Parent.bgDeep,
+                ColorTokens.Parent.bg
+            ],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    }
+
     // MARK: - Content
 
     @ViewBuilder
@@ -102,11 +116,246 @@ struct SessionHistoryView: View {
         } else if display.isEmpty {
             emptyStateView
         } else {
-            VStack(spacing: 0) {
-                if !display.activeSoundChips.isEmpty || display.activeFilter.fromDate != nil || display.activeFilter.toDate != nil {
-                    activeFilterStrip
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: SpacingTokens.regular, pinnedViews: []) {
+                    if !display.activeSoundChips.isEmpty
+                        || display.activeFilter.fromDate != nil
+                        || display.activeFilter.toDate != nil {
+                        activeFilterStrip
+                            .padding(.top, SpacingTokens.tiny)
+                    }
+
+                    summaryCard
+                        .padding(.horizontal, SpacingTokens.screenEdge)
+
+                    if display.chartPoints().count >= 2 {
+                        chartCard
+                            .padding(.horizontal, SpacingTokens.screenEdge)
+                    }
+
+                    groupedSessions
+                        .padding(.horizontal, SpacingTokens.screenEdge)
                 }
-                sessionList
+                .padding(.bottom, SpacingTokens.xLarge)
+            }
+            .scrollIndicators(.hidden)
+        }
+    }
+
+    // MARK: - Summary Card (Liquid Glass)
+
+    private var summaryCard: some View {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.large) {
+            HStack(alignment: .center, spacing: SpacingTokens.regular) {
+                summaryMetric(
+                    valueText: "\(display.filteredCount)",
+                    captionText: String(localized: "sessionHistory.summary.sessions"),
+                    color: ColorTokens.Parent.accent,
+                    icon: "list.bullet.clipboard"
+                )
+
+                summaryDivider
+
+                summaryMetric(
+                    valueText: "\(display.averageAccuracyPercent())%",
+                    captionText: String(localized: "sessionHistory.summary.accuracy"),
+                    color: averageAccuracyColor,
+                    icon: "target"
+                )
+
+                summaryDivider
+
+                summaryMetric(
+                    valueText: "\(display.totalDurationMinutes())",
+                    captionText: String(localized: "sessionHistory.summary.minutes"),
+                    color: ColorTokens.Brand.butter,
+                    icon: "clock"
+                )
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(summaryAccessibilityLabel)
+    }
+
+    private func summaryMetric(
+        valueText: String,
+        captionText: String,
+        color: Color,
+        icon: String
+    ) -> some View {
+        VStack(alignment: .center, spacing: SpacingTokens.micro) {
+            Image(systemName: icon)
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundStyle(color)
+                .accessibilityHidden(true)
+            Text(valueText)
+                .font(TypographyTokens.headline(22).weight(.bold))
+                .foregroundStyle(ColorTokens.Parent.ink)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+            Text(captionText)
+                .font(TypographyTokens.caption(11))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
+                .minimumScaleFactor(0.85)
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    private var summaryDivider: some View {
+        Rectangle()
+            .fill(ColorTokens.Parent.line)
+            .frame(width: 1, height: 36)
+            .accessibilityHidden(true)
+    }
+
+    private var averageAccuracyColor: Color {
+        let percent = display.averageAccuracyPercent()
+        if percent >= 70 { return ColorTokens.Semantic.success }
+        if percent >= 50 { return ColorTokens.Semantic.warning }
+        return ColorTokens.Semantic.error
+    }
+
+    private var summaryAccessibilityLabel: String {
+        String(
+            format: String(localized: "sessionHistory.a11y.summaryPattern"),
+            display.filteredCount,
+            display.averageAccuracyPercent(),
+            display.totalDurationMinutes()
+        )
+    }
+
+    // MARK: - Chart Card (Liquid Glass + Swift Charts)
+
+    private var chartCard: some View {
+        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.large) {
+            VStack(alignment: .leading, spacing: SpacingTokens.small) {
+                HStack(spacing: SpacingTokens.tiny) {
+                    Image(systemName: "chart.line.uptrend.xyaxis")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(ColorTokens.Parent.accent)
+                    Text(String(localized: "sessionHistory.chart.title"))
+                        .font(TypographyTokens.caption(12).weight(.semibold))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .textCase(.uppercase)
+                        .accessibilityAddTraits(.isHeader)
+                }
+
+                trendChart
+                    .frame(height: 160)
+                    .accessibilityLabel(String(localized: "sessionHistory.a11y.chart"))
+                    .accessibilityValue(chartAccessibilityValue)
+            }
+        }
+    }
+
+    private var trendChart: some View {
+        let points = display.chartPoints()
+        return Chart(points) { point in
+            AreaMark(
+                x: .value("date", point.date),
+                yStart: .value("zero", 0),
+                yEnd: .value("accuracy", point.accuracyPercent)
+            )
+            .foregroundStyle(
+                LinearGradient(
+                    colors: [
+                        ColorTokens.Parent.accent.opacity(0.40),
+                        ColorTokens.Parent.accent.opacity(0.04)
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            )
+            .interpolationMethod(.catmullRom)
+
+            LineMark(
+                x: .value("date", point.date),
+                y: .value("accuracy", point.accuracyPercent)
+            )
+            .foregroundStyle(ColorTokens.Parent.accent)
+            .lineStyle(StrokeStyle(lineWidth: 2.4, lineCap: .round))
+            .interpolationMethod(.catmullRom)
+
+            PointMark(
+                x: .value("date", point.date),
+                y: .value("accuracy", point.accuracyPercent)
+            )
+            .foregroundStyle(ColorTokens.Parent.surface)
+            .symbolSize(28)
+        }
+        .chartYScale(domain: 0...100)
+        .chartYAxis {
+            AxisMarks(position: .leading, values: [0, 50, 100]) { value in
+                AxisGridLine()
+                    .foregroundStyle(ColorTokens.Parent.line.opacity(0.6))
+                AxisValueLabel {
+                    if let percent = value.as(Int.self) {
+                        Text("\(percent)%")
+                            .font(TypographyTokens.caption(10))
+                            .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    }
+                }
+            }
+        }
+        .chartXAxis {
+            AxisMarks(values: .automatic(desiredCount: 4)) { value in
+                AxisValueLabel(format: .dateTime.day().month(.abbreviated), centered: false)
+                    .font(TypographyTokens.caption(10))
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+            }
+        }
+    }
+
+    private var chartAccessibilityValue: String {
+        let points = display.chartPoints()
+        guard !points.isEmpty else { return "" }
+        let last = Int(points.last?.accuracyPercent ?? 0)
+        let first = Int(points.first?.accuracyPercent ?? 0)
+        return String(
+            format: String(localized: "sessionHistory.a11y.chartTrendPattern"),
+            points.count,
+            first,
+            last
+        )
+    }
+
+    // MARK: - Grouped sessions (Liquid Glass cards)
+
+    private var groupedSessions: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.regular) {
+            ForEach(display.groups) { group in
+                VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
+                    Text(group.monthTitle)
+                        .font(TypographyTokens.caption(12).weight(.semibold))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .textCase(.uppercase)
+                        .padding(.horizontal, SpacingTokens.tiny)
+                        .accessibilityAddTraits(.isHeader)
+
+                    HSLiquidGlassCard(style: .primary, padding: 0) {
+                        VStack(spacing: 0) {
+                            ForEach(Array(group.rows.enumerated()), id: \.element.id) { index, row in
+                                Button {
+                                    handleOpen(row.id)
+                                } label: {
+                                    SessionHistoryRowContent(row: row)
+                                        .padding(.horizontal, SpacingTokens.regular)
+                                        .padding(.vertical, SpacingTokens.small)
+                                        .contentShape(Rectangle())
+                                }
+                                .buttonStyle(.plain)
+
+                                if index < group.rows.count - 1 {
+                                    Divider()
+                                        .background(ColorTokens.Parent.line)
+                                        .padding(.leading, SpacingTokens.regular + 40 + SpacingTokens.regular)
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -171,36 +420,6 @@ struct SessionHistoryView: View {
             .accessibilityLabel(String(localized: "sessionHistory.a11y.clearFilter"))
         }
         .padding(.vertical, SpacingTokens.tiny)
-        .background(ColorTokens.Parent.bg)
-    }
-
-    // MARK: - Session list
-
-    private var sessionList: some View {
-        List {
-            ForEach(display.groups) { group in
-                Section {
-                    ForEach(group.rows) { row in
-                        Button {
-                            handleOpen(row.id)
-                        } label: {
-                            SessionHistoryRowContent(row: row)
-                        }
-                        .buttonStyle(.plain)
-                        .listRowBackground(ColorTokens.Parent.surface)
-                        .listRowSeparatorTint(ColorTokens.Parent.line)
-                    }
-                } header: {
-                    Text(group.monthTitle)
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Parent.inkMuted)
-                        .textCase(.uppercase)
-                        .accessibilityAddTraits(.isHeader)
-                }
-            }
-        }
-        .listStyle(.insetGrouped)
-        .scrollContentBackground(.hidden)
         .background(ColorTokens.Parent.bg)
     }
 
