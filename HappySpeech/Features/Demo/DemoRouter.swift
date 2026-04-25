@@ -6,6 +6,7 @@ import SwiftUI
 protocol DemoRoutingLogic {
     func routeSkipped()
     func routeCompleted()
+    func routeToHome()
 }
 
 // MARK: - DemoRouter
@@ -18,7 +19,9 @@ final class DemoRouter: DemoRoutingLogic {
 
     var onSkipped: (() -> Void)?
     var onCompleted: (() -> Void)?
+    var onRouteToHome: (() -> Void)?
 
     func routeSkipped() { onSkipped?() }
     func routeCompleted() { onCompleted?() }
+    func routeToHome() { onRouteToHome?() }
 }
