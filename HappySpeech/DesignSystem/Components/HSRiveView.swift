@@ -105,11 +105,20 @@ final class RiveModel: ObservableObject {
     private var blinkTimer: Timer?
 
     init(fileName: String, stateMachine: String) {
-        guard Bundle.main.url(forResource: fileName, withExtension: "riv") != nil else {
-            // Файл отсутствует — остаёмся в isLoaded = false, viewModel = nil
+        guard let url = Bundle.main.url(forResource: fileName, withExtension: "riv") else {
+            // Файл отсутствует — остаёмся в isLoaded = false, viewModel = nil.
             return
         }
-        // Файл найден — создаём RiveViewModel (может упасть если файл невалиден)
+        // Проверяем минимальный размер файла перед инициализацией:
+        // корректный .riv всегда > 512 байт. Пустой placeholder вызовет ObjC-краш
+        // внутри RiveRuntime, поэтому мы обходим это превентивно.
+        let minValidSize: Int = 512
+        guard let attrs = try? FileManager.default.attributesOfItem(atPath: url.path),
+              let fileSize = attrs[.size] as? Int,
+              fileSize > minValidSize else {
+            return
+        }
+        // Файл найден и имеет достаточный размер — создаём RiveViewModel.
         let vm = RiveViewModel(fileName: fileName, stateMachineName: stateMachine)
         self.viewModel = vm
         self.isLoaded = true
