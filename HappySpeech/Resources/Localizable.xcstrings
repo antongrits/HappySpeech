@@ -11008,6 +11008,28 @@
           }
         }
       }
+    },
+    "lyalya.mascot.accessibility.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Маскот Ляля"
+          }
+        }
+      }
+    },
+    "lyalya.mascot.accessibility.hint.idle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажми, чтобы поздороваться"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
