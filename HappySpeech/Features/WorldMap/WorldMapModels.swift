@@ -87,6 +87,36 @@ struct WorldZone: Sendable, Identifiable, Equatable {
     var totalLessons: Int
     let colorName: String
     let isLocked: Bool
+    /// Нормализованная позиция острова на канвасе [0..1, 0..1]. У сетки игнорируется.
+    let position: CGPoint
+    /// Маркер «текущего» острова — здесь стоит Ляля-маскот.
+    let isCurrentLocation: Bool
+
+    init(
+        id: String,
+        name: String,
+        icon: String,
+        sounds: [String],
+        progress: Float,
+        completedLessons: Int,
+        totalLessons: Int,
+        colorName: String,
+        isLocked: Bool,
+        position: CGPoint = .zero,
+        isCurrentLocation: Bool = false
+    ) {
+        self.id = id
+        self.name = name
+        self.icon = icon
+        self.sounds = sounds
+        self.progress = progress
+        self.completedLessons = completedLessons
+        self.totalLessons = totalLessons
+        self.colorName = colorName
+        self.isLocked = isLocked
+        self.position = position
+        self.isCurrentLocation = isCurrentLocation
+    }
 }
 
 // MARK: - View-ready zone card
@@ -103,6 +133,12 @@ struct WorldZoneCard: Sendable, Identifiable, Equatable {
     let foregroundColor: Color
     let isLocked: Bool
     let isHighlighted: Bool
+    /// Нормализованная позиция острова на канвасе [0..1, 0..1].
+    let position: CGPoint
+    /// Маркер «текущего» острова на канвасе.
+    let isCurrentLocation: Bool
+    /// Полностью пройденная зона (>=100%).
+    let isCompleted: Bool
     let accessibilityLabel: String
     let accessibilityHint: String
 }
