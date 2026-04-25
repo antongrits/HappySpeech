@@ -299,7 +299,7 @@ private struct HomeTaskFilterChip: View {
             .foregroundStyle(isActive ? Color.white : ColorTokens.Parent.inkMuted)
             .padding(.horizontal, SpacingTokens.regular)
             .padding(.vertical, SpacingTokens.small)
-            .frame(minHeight: 36)
+            .frame(minHeight: 44)
             .background(
                 Capsule()
                     .fill(isActive ? ColorTokens.Parent.accent : ColorTokens.Parent.surface)
