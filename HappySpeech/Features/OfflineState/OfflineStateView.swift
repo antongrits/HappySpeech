@@ -127,9 +127,11 @@ struct OfflineStateView: View {
     }
 
     private var pendingBadge: some View {
+        // WCAG 1.4.3: white text on yellow warning background ~1.1:1 — fail.
+        // Switch to dark ink on warning yellow → ~10:1 contrast.
         Text(viewModel.pendingBadgeText)
-            .font(.system(size: 11, weight: .semibold))
-            .foregroundStyle(.white)
+            .font(.system(size: 12, weight: .semibold))
+            .foregroundStyle(ColorTokens.Kid.ink)
             .padding(.horizontal, SpacingTokens.sp3)
             .padding(.vertical, SpacingTokens.sp1)
             .background(Capsule().fill(ColorTokens.Semantic.warning))

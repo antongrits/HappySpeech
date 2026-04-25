@@ -197,6 +197,7 @@ struct WorldMapView: View {
                 )
                 .frame(height: 6)
                 .frame(maxWidth: 180)
+                .accessibilityHidden(true)
             }
 
             Spacer(minLength: 0)
@@ -367,6 +368,7 @@ private struct WorldZoneTile: View {
                 tint: card.foregroundColor
             )
             .frame(height: 4)
+            .accessibilityHidden(true)
 
             Text(card.lessonsLabel)
                 .font(TypographyTokens.caption(11))
