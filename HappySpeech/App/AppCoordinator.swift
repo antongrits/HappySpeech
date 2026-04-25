@@ -298,6 +298,29 @@ struct AppCoordinatorView: View {
     }
 
     private func launchSplash() {
+        // Debug screenshot-tour shortcut: launch with -HSStartRoute <route> to skip splash.
+        let args = ProcessInfo.processInfo.arguments
+        if let idx = args.firstIndex(of: "-HSStartRoute"), idx + 1 < args.count {
+            let route = args[idx + 1]
+            let target: AppRoute
+            switch route {
+            case "demoMode":         target = .demoMode
+            case "parentHome":       target = .parentHome
+            case "roleSelect":       target = .roleSelect
+            case "onboarding":       target = .onboarding
+            case "settings":         target = .settings
+            case "offlineState":     target = .offlineState
+            case "childHome":        target = .childHome(childId: "demo-child")
+            case "progressDashboard": target = .progressDashboard(childId: "demo-child")
+            case "rewards":          target = .rewards(childId: "demo-child")
+            case "worldMap":         target = .worldMap(childId: "demo-child", targetSound: "Р")
+            case "sessionHistory":   target = .sessionHistory(childId: "demo-child")
+            case "sessionComplete":  target = .sessionComplete
+            default:                 target = .auth
+            }
+            coordinator.navigate(to: target)
+            return
+        }
         // Auto-transition from splash after delay
         Task {
             try? await Task.sleep(for: .seconds(2.2))
