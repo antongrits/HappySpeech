@@ -5764,6 +5764,7 @@
 		F42266128E7FEB024D7C106B /* br-233.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 31C4264F0E1E0E3652EE5C65 /* br-233.m4a */; };
 		F4283E472BF5B31B6C09832A /* sh-wi-27.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1C5DE0B2BD4F04A6AA2325B0 /* sh-wi-27.m4a */; };
 		F42A90C87B7C123C31438173 /* rl-prep-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0BEBC75FB734574092BA4A68 /* rl-prep-2.m4a */; };
+		F42E0CCB5009FEB7DA4D5F76 /* SpecialistReportsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4471B341E3E1DDFEE241D8F /* SpecialistReportsView.swift */; };
 		F43B99EADBF539110C1690CA /* lyalya_story_11.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7505CF05811BA158290DE680 /* lyalya_story_11.m4a */; };
 		F43FE7CE146609D7CED2B1DF /* r-wf-57.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 124106A9DC2FB55FBF83933D /* r-wf-57.m4a */; };
 		F445FD16BBEEF228E7BBDECF /* z-syl-3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D6500BB96EF44639596B6D8E /* z-syl-3.m4a */; };
@@ -10684,6 +10685,7 @@
 		C42DF5DFE0B005BAC77FB989 /* kh-wi-34.m4a */ = {isa = PBXFileReference; path = "kh-wi-34.m4a"; sourceTree = "<group>"; };
 		C43D824BED43BB3376F27512 /* s-sen-9.m4a */ = {isa = PBXFileReference; path = "s-sen-9.m4a"; sourceTree = "<group>"; };
 		C44040E2B94FE5BD27392586 /* s-diff-19.m4a */ = {isa = PBXFileReference; path = "s-diff-19.m4a"; sourceTree = "<group>"; };
+		C4471B341E3E1DDFEE241D8F /* SpecialistReportsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialistReportsView.swift; sourceTree = "<group>"; };
 		C447A656F01F68F032257FDF /* lex-ad-7.m4a */ = {isa = PBXFileReference; path = "lex-ad-7.m4a"; sourceTree = "<group>"; };
 		C448D243C14569EEDE31DEF1 /* r-ph-15.m4a */ = {isa = PBXFileReference; path = "r-ph-15.m4a"; sourceTree = "<group>"; };
 		C45E2554B82369E9A46C83E2 /* lyalya_encourage_04.m4a */ = {isa = PBXFileReference; path = lyalya_encourage_04.m4a; sourceTree = "<group>"; };
@@ -12646,6 +12648,7 @@
 				26885FA7FDF1FE1360C9CFE1 /* ReportsModels.swift */,
 				EAF225BCFCB8AE8862C290FD /* ReportsPresenter.swift */,
 				673CBE0BEC619594AE63848E /* ReportsRouter.swift */,
+				C4471B341E3E1DDFEE241D8F /* SpecialistReportsView.swift */,
 			);
 			path = Reports;
 			sourceTree = "<group>";
@@ -25292,6 +25295,7 @@
 				BD561BFAFF217E267B0C519E /* SpecialistInteractor.swift in Sources */,
 				F3A06046BBD6032FEB9E64E6 /* SpecialistModels.swift in Sources */,
 				2CB495B099757F1128E30914 /* SpecialistPresenter.swift in Sources */,
+				F42E0CCB5009FEB7DA4D5F76 /* SpecialistReportsView.swift in Sources */,
 				2A759E0EA4CE7F301532DD1B /* SpecialistRouter.swift in Sources */,
 				28BD9352B9C7FE7FC1F9AC2D /* SplashView.swift in Sources */,
 				7FBFFAB7E3821278849ADFDA /* SpotlightOverlay.swift in Sources */,
