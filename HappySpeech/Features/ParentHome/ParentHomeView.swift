@@ -265,12 +265,12 @@ private struct ParentDashboardTab: View {
             HStack(alignment: .top, spacing: SpacingTokens.sp3) {
                 Image(systemName: "house.circle.fill")
                     .font(.system(size: 28))
-                    .foregroundStyle(Color(hex: "#E5A000"))
+                    .foregroundStyle(ColorTokens.Brand.gold)
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(String(localized: "Домашнее задание"))
                         .font(TypographyTokens.caption(11))
-                        .foregroundStyle(Color(hex: "#E5A000"))
+                        .foregroundStyle(ColorTokens.Brand.gold)
                         .textCase(.uppercase)
                         .tracking(1)
 

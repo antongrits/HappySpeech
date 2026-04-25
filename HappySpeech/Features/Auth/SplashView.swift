@@ -10,11 +10,11 @@ struct SplashView: View {
 
     var body: some View {
         ZStack {
-            // Background gradient matching tokens.jsx
+            // Background gradient matching design tokens (Brand coral)
             LinearGradient(
                 colors: [
-                    Color(hex: "#F4572A"),
-                    Color(hex: "#C13818")
+                    ColorTokens.Brand.primary,
+                    ColorTokens.Brand.primaryHi
                 ],
                 startPoint: .top,
                 endPoint: .bottom
