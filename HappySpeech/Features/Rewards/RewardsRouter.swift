@@ -4,17 +4,21 @@ import SwiftUI
 
 @MainActor
 protocol RewardsRoutingLogic {
-    func routeBack()
+    func routeDismiss()
+    func routeOpenStickerDetail(id: String)
 }
 
 // MARK: - RewardsRouter
+//
+// View задаёт колбэки. Поддерживаем переиспользование экрана в push-стеке,
+// в табах и в standalone-режиме без зависимости от `AppCoordinator`.
 
 @MainActor
 final class RewardsRouter: RewardsRoutingLogic {
 
-    weak var coordinator: AppCoordinator?
+    var onDismiss: (() -> Void)?
+    var onOpenStickerDetail: ((String) -> Void)?
 
-    func routeBack() {
-        coordinator?.pop()
-    }
+    func routeDismiss() { onDismiss?() }
+    func routeOpenStickerDetail(id: String) { onOpenStickerDetail?(id) }
 }
