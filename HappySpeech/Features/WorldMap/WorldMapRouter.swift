@@ -5,16 +5,25 @@ import SwiftUI
 @MainActor
 protocol WorldMapRoutingLogic {
     func routeBack()
+    func routeOpenZone(zoneId: String)
 }
 
 // MARK: - WorldMapRouter
+//
+// Лёгкий router без AppCoordinator-ссылки. View-уровень сам решает, как
+// обрабатывать колбэки (например, push новой страницы или dismiss).
 
 @MainActor
 final class WorldMapRouter: WorldMapRoutingLogic {
 
-    weak var coordinator: AppCoordinator?
+    var onDismiss: (() -> Void)?
+    var onOpenZone: ((String) -> Void)?
 
     func routeBack() {
-        coordinator?.pop()
+        onDismiss?()
+    }
+
+    func routeOpenZone(zoneId: String) {
+        onOpenZone?(zoneId)
     }
 }
