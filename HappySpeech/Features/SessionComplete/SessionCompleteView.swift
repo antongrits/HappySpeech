@@ -36,10 +36,15 @@ struct SessionCompleteView: View {
     // MARK: - Local UI
 
     @State private var animatedScore: Int = 0
+    @State private var ringFraction: Double = 0
     @State private var sharePresented = false
     @State private var shareText: String = ""
+    @State private var celebrationVisible = false
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "SessionCompleteView")
+
+    // Минимальный порог для показа CelebrationOverlay (точность ≥ 80%).
+    private static let celebrationThreshold: Float = 0.80
 
     // MARK: - Init
 
@@ -96,6 +101,18 @@ struct SessionCompleteView: View {
                         }
                     }
             }
+
+            // Праздничный overlay при accuracy ≥ 80%.
+            if celebrationVisible {
+                CelebrationOverlayView(stars: max(1, result.starsEarned)) {
+                    withAnimation(reduceMotion ? nil : .easeOut(duration: 0.25)) {
+                        celebrationVisible = false
+                    }
+                }
+                .transition(.opacity)
+                .zIndex(10)
+                .accessibilityAddTraits(.isModal)
+            }
         }
         .navigationBarBackButtonHidden()
         .environment(\.circuitContext, .kid)
@@ -131,9 +148,10 @@ struct SessionCompleteView: View {
     private var mascotPhase: some View {
         let visible = display.isPhaseVisible(.mascot)
         VStack(spacing: SpacingTokens.medium) {
-            HSMascotView(mood: result.score >= 0.75 ? .celebrating : .encouraging, size: 140)
+            LyalyaMascotView(state: lyalyaResultState, size: 140)
                 .scaleEffect(visible ? 1 : 0.2)
                 .opacity(visible ? 1 : 0)
+                .accessibilityHidden(true)
 
             Text(display.mascotTagline)
                 .font(TypographyTokens.title(22))
@@ -146,24 +164,56 @@ struct SessionCompleteView: View {
         .accessibilityLabel(display.mascotTagline)
     }
 
+    /// Маппинг результата сессии → состояние маскота.
+    /// ≥80%: празднует, 50–79%: машет, <50%: подбадривает.
+    private var lyalyaResultState: LyalyaState {
+        switch result.score {
+        case 0.80...:    return .celebrating
+        case 0.50..<0.80: return .waving
+        default:          return .encouraging
+        }
+    }
+
     @ViewBuilder
     private var scorePhase: some View {
         let visible = display.isPhaseVisible(.score)
-        VStack(spacing: SpacingTokens.tiny) {
-            Text("\(animatedScore)%")
-                .font(TypographyTokens.kidDisplay(56))
-                .foregroundStyle(scoreColor)
-                .monospacedDigit()
-                .accessibilityHidden(true)
+        ZStack {
+            // Track ring
+            Circle()
+                .stroke(ColorTokens.Kid.surfaceAlt, style: StrokeStyle(lineWidth: 14, lineCap: .round))
 
-            Text(String(localized: "sessionComplete.score.caption"))
-                .font(TypographyTokens.body())
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
+            // Animated progress ring (count-up via ringFraction)
+            Circle()
+                .trim(from: 0, to: ringFraction)
+                .stroke(
+                    scoreColor,
+                    style: StrokeStyle(lineWidth: 14, lineCap: .round)
+                )
+                .rotationEffect(.degrees(-90))
+                .shadow(color: scoreColor.opacity(0.35), radius: 8, x: 0, y: 0)
+
+            VStack(spacing: SpacingTokens.micro) {
+                Text("\(animatedScore)%")
+                    .font(TypographyTokens.kidDisplay(48))
+                    .foregroundStyle(scoreColor)
+                    .monospacedDigit()
+                    .accessibilityHidden(true)
+
+                Text(String(localized: "sessionComplete.accuracy"))
+                    .font(TypographyTokens.body(13))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .textCase(.lowercase)
+                    .accessibilityHidden(true)
+            }
         }
+        .frame(width: 180, height: 180)
         .opacity(visible ? 1 : 0)
         .scaleEffect(visible ? 1 : 0.85)
         .accessibilityElement(children: .combine)
-        .accessibilityLabel(display.accessibilitySummary)
+        .accessibilityLabel(
+            String(format: String(localized: "sessionComplete.summaryRing.a11y"), animatedScore)
+        )
+        .accessibilityAddTraits(.isImage)
     }
 
     @ViewBuilder
@@ -198,36 +248,43 @@ struct SessionCompleteView: View {
     private var summaryPhase: some View {
         let visible = display.isPhaseVisible(.summary)
         VStack(spacing: SpacingTokens.medium) {
+            // Staggered row 1
             HStack(spacing: SpacingTokens.medium) {
                 statCard(
                     icon: "music.note.list",
                     title: display.gameTitle,
                     caption: String(localized: "sessionComplete.summary.gameCaption")
                 )
+                .modifier(StaggeredAppear(visible: visible, index: 0, reduceMotion: reduceMotion))
+
                 statCard(
                     icon: "speaker.wave.2.fill",
                     title: display.soundLabel,
                     caption: String(localized: "sessionComplete.summary.soundCaption")
                 )
+                .modifier(StaggeredAppear(visible: visible, index: 1, reduceMotion: reduceMotion))
             }
+            // Staggered row 2
             HStack(spacing: SpacingTokens.medium) {
                 statCard(
                     icon: "checkmark.seal.fill",
                     title: display.attemptsLabel,
                     caption: String(localized: "sessionComplete.summary.attemptsCaption")
                 )
+                .modifier(StaggeredAppear(visible: visible, index: 2, reduceMotion: reduceMotion))
+
                 statCard(
                     icon: "clock.fill",
                     title: display.durationLabel,
                     caption: String(localized: "sessionComplete.summary.durationCaption")
                 )
+                .modifier(StaggeredAppear(visible: visible, index: 3, reduceMotion: reduceMotion))
             }
             if let next = display.nextLessonTitle {
                 nextLessonCard(title: next)
+                    .modifier(StaggeredAppear(visible: visible, index: 4, reduceMotion: reduceMotion))
             }
         }
-        .opacity(visible ? 1 : 0)
-        .offset(y: visible ? 0 : 20)
     }
 
     private func statCard(icon: String, title: String, caption: String) -> some View {
@@ -386,16 +443,31 @@ struct SessionCompleteView: View {
                 interactor.advancePhase(.init(to: phase))
             }
         }
+
+        // После всех фаз — показываем праздничный overlay при высокой точности.
+        if result.score >= Self.celebrationThreshold {
+            try? await Task.sleep(for: .seconds(useReducedMotion ? 0.1 : 0.6))
+            withAnimation(useReducedMotion ? nil : .easeIn(duration: 0.35)) {
+                celebrationVisible = true
+            }
+        }
     }
 
     private func animateScoreCountUp(to target: Int) {
         guard target > 0 else {
             animatedScore = 0
+            ringFraction = 0
             return
         }
+        let targetFraction = Double(target) / 100.0
         if reduceMotion {
             animatedScore = target
+            ringFraction = targetFraction
             return
+        }
+        // Параллельно: tween дуги кольца (1.1s) + count-up счётчика.
+        withAnimation(.easeOut(duration: 1.1)) {
+            ringFraction = targetFraction
         }
         let steps = max(8, target / 4)
         let stepDelay: UInt64 = 22_000_000  // 22 ms per step
@@ -407,6 +479,28 @@ struct SessionCompleteView: View {
             }
             animatedScore = target
         }
+    }
+}
+
+// MARK: - StaggeredAppear
+
+/// Появление с задержкой 0.10s × index. Reduced-motion: мгновенное появление.
+private struct StaggeredAppear: ViewModifier {
+    let visible: Bool
+    let index: Int
+    let reduceMotion: Bool
+
+    func body(content: Content) -> some View {
+        content
+            .opacity(visible ? 1 : 0)
+            .offset(y: visible ? 0 : 18)
+            .animation(
+                reduceMotion
+                    ? nil
+                    : .spring(response: 0.45, dampingFraction: 0.78)
+                        .delay(Double(index) * 0.10),
+                value: visible
+            )
     }
 }
 
