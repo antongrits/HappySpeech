@@ -10842,6 +10842,413 @@
         }
       }
     },
+    "settings.section.models": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Языковые пакеты"
+          }
+        }
+      }
+    },
+    "settings.models.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загружаем список пакетов…"
+          }
+        }
+      }
+    },
+    "settings.models.footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Языковые пакеты используются для распознавания речи и адаптивных подсказок. Загрузка возможна только по Wi-Fi."
+          }
+        }
+      }
+    },
+    "settings.models.action.download": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скачать"
+          }
+        }
+      }
+    },
+    "settings.models.action.delete": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалить"
+          }
+        }
+      }
+    },
+    "settings.models.status.active": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Активный"
+          }
+        }
+      }
+    },
+    "settings.models.status.downloading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загрузка…"
+          }
+        }
+      }
+    },
+    "settings.models.badge.active": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "АКТИВ"
+          }
+        }
+      }
+    },
+    "settings.models.toast.downloaded": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пакет загружен"
+          }
+        }
+      }
+    },
+    "settings.models.toast.downloadFailed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось скачать пакет"
+          }
+        }
+      }
+    },
+    "settings.models.toast.deleted": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пакет удалён"
+          }
+        }
+      }
+    },
+    "settings.models.toast.deleteFailed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось удалить пакет"
+          }
+        }
+      }
+    },
+    "settings.models.error.unavailable": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Менеджер моделей недоступен"
+          }
+        }
+      }
+    },
+    "settings.models.delete.confirm.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалить пакет?"
+          }
+        }
+      }
+    },
+    "settings.models.delete.confirm.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Файлы пакета будут удалены с устройства. Их можно будет скачать снова."
+          }
+        }
+      }
+    },
+    "settings.models.delete.confirm.action": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалить"
+          }
+        }
+      }
+    },
+    "settings.models.delete.confirm.cancel": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отмена"
+          }
+        }
+      }
+    },
+    "settings.models.whisper.tiny.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Базовое распознавание, экономия места"
+          }
+        }
+      }
+    },
+    "settings.models.whisper.base.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Стандартное качество для большинства занятий"
+          }
+        }
+      }
+    },
+    "settings.models.whisper.small.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Высокое качество для шумных условий"
+          }
+        }
+      }
+    },
+    "settings.about.licenses": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лицензии открытого ПО"
+          }
+        }
+      }
+    },
+    "settings.licenses.openRepo": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть репозиторий"
+          }
+        }
+      }
+    },
+    "settings.licenses.body.whisperkit": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MIT License\n\nCopyright (c) 2024 Argmax, Inc.\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the «Software»), to deal in the Software without restriction."
+          }
+        }
+      }
+    },
+    "settings.licenses.body.realm": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apache License 2.0\n\nCopyright (c) 2014–2024 Realm Inc.\n\nLicensed under the Apache License, Version 2.0 (the «License»); you may not use this file except in compliance with the License."
+          }
+        }
+      }
+    },
+    "settings.licenses.body.firebase": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apache License 2.0\n\nCopyright (c) 2017–2024 Google LLC.\n\nLicensed under the Apache License, Version 2.0."
+          }
+        }
+      }
+    },
+    "settings.licenses.body.snapshot": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MIT License\n\nCopyright (c) 2018 Point-Free, Inc.\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software."
+          }
+        }
+      }
+    },
+    "settings.licenses.body.qwen": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apache License 2.0\n\nCopyright (c) 2024 Alibaba Cloud / Qwen Team.\n\nLicensed under the Apache License, Version 2.0."
+          }
+        }
+      }
+    },
+    "settings.licenses.body.silero": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MIT License\n\nCopyright (c) Silero Team.\n\nPermission is hereby granted, free of charge."
+          }
+        }
+      }
+    },
+    "settings.export.toast.shareReady": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Файл данных готов к отправке"
+          }
+        }
+      }
+    },
+    "settings.a11y.licenses.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открывает список лицензий используемых открытых библиотек"
+          }
+        }
+      }
+    },
+    "settings.a11y.licenseRow.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открывает текст лицензии"
+          }
+        }
+      }
+    },
+    "settings.a11y.modelPack.download.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите, чтобы скачать пакет"
+          }
+        }
+      }
+    },
+    "settings.a11y.modelPack.delete.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите, чтобы удалить пакет"
+          }
+        }
+      }
+    },
+    "settings.a11y.modelPack.active.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Этот пакет используется приложением сейчас"
+          }
+        }
+      }
+    },
+    "settings.a11y.modelPack.active": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Активный"
+          }
+        }
+      }
+    },
+    "settings.a11y.modelPack.installed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Установлен"
+          }
+        }
+      }
+    },
+    "settings.a11y.modelPack.progress": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загрузка %d процентов"
+          }
+        }
+      }
+    },
     "settings.section.profile": {
       "extractionState": "manual",
       "localizations": {
