@@ -5243,6 +5243,72 @@
         }
       }
     },
+    "permissions.allDone.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Всё готово!"
+          }
+        }
+      }
+    },
+    "permissions.allDone.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Можно начинать заниматься. Ляля уже ждёт тебя!"
+          }
+        }
+      }
+    },
+    "permissions.allDone.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать!"
+          }
+        }
+      }
+    },
+    "permissions.lyalya.a11y.explaining": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Маскот Ляля рассказывает о разрешении"
+          }
+        }
+      }
+    },
+    "permissions.lyalya.a11y.celebrating": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Маскот Ляля радуется"
+          }
+        }
+      }
+    },
+    "permissions.granted.badge": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отлично!"
+          }
+        }
+      }
+    },
     "program.block.articulationGymnastics": {
       "extractionState": "manual",
       "localizations": {
