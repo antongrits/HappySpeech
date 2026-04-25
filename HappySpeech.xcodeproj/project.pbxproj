@@ -3922,6 +3922,7 @@
 		A57EFF2D7A6112F366E167B6 /* br-248.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5D019DCEE5CFA47CFAA3FED5 /* br-248.m4a */; };
 		A5B9BDCF602F68F5AA47CC3B /* SessionReviewInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 977600B5F0C81F3877664D6E /* SessionReviewInteractorTests.swift */; };
 		A5BCEA7222267211A6DABF4F /* k-sen-15.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CF07AA68F42476545236CC39 /* k-sen-15.m4a */; };
+		A5D00FFE4991B43502F3D6DC /* WorldMapIslandsCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C6B34692568C854297525C /* WorldMapIslandsCanvas.swift */; };
 		A5E0D77AFD64D4CA4C4FEB77 /* z-sen-13.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D22F6DF481FBDF3A540A954F /* z-sen-13.m4a */; };
 		A5E6515C146CF8A2019D78FE /* r-iso-22.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 72EEDE5A7A504BA14D8C9CA7 /* r-iso-22.m4a */; };
 		A5EB9CFA96993BD4755BD61B /* phon-fs-10.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B57B592292958A1CFCBB233D /* phon-fs-10.m4a */; };
@@ -10409,6 +10410,7 @@
 		B57FBBCC2529CDC70914A580 /* phon-sp-11.m4a */ = {isa = PBXFileReference; path = "phon-sp-11.m4a"; sourceTree = "<group>"; };
 		B59859A5C0A593895143A172 /* kh-wi-5.m4a */ = {isa = PBXFileReference; path = "kh-wi-5.m4a"; sourceTree = "<group>"; };
 		B5A8620039562C78D13F39C9 /* ch-wm-23.m4a */ = {isa = PBXFileReference; path = "ch-wm-23.m4a"; sourceTree = "<group>"; };
+		B5C6B34692568C854297525C /* WorldMapIslandsCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldMapIslandsCanvas.swift; sourceTree = "<group>"; };
 		B5D0E6CA1CCCDF7E7D730424 /* l-sen-8.m4a */ = {isa = PBXFileReference; path = "l-sen-8.m4a"; sourceTree = "<group>"; };
 		B5DB82903E803FA806800B06 /* ch-sen-9.m4a */ = {isa = PBXFileReference; path = "ch-sen-9.m4a"; sourceTree = "<group>"; };
 		B5E9A7468025EBE2DDC894BF /* s-sen-27.m4a */ = {isa = PBXFileReference; path = "s-sen-27.m4a"; sourceTree = "<group>"; };
@@ -12272,6 +12274,7 @@
 			children = (
 				7A64640382EC55001E14E90A /* WorldMapDisplayLogic.swift */,
 				C76B3ACEA1EEA7E50B30EFDD /* WorldMapInteractor.swift */,
+				B5C6B34692568C854297525C /* WorldMapIslandsCanvas.swift */,
 				23E7EB0EC89BDFA9002E394E /* WorldMapModels.swift */,
 				F7CF63F664572E42A6B11BA1 /* WorldMapPresenter.swift */,
 				FF117C114F90B68B138C42E0 /* WorldMapRouter.swift */,
@@ -25500,6 +25503,7 @@
 				14B1B0994BE4E99C248D4D94 /* WhisperKitModelManager.swift in Sources */,
 				744785353F1E2FC776253332 /* WorldMapDisplayLogic.swift in Sources */,
 				20189F159E0E8085698D0B5C /* WorldMapInteractor.swift in Sources */,
+				A5D00FFE4991B43502F3D6DC /* WorldMapIslandsCanvas.swift in Sources */,
 				4BBED59938218A0C9632F1B0 /* WorldMapModels.swift in Sources */,
 				335A0B88025D72B55713412C /* WorldMapPresenter.swift in Sources */,
 				74D5FA9B5A3C7B8BE49D1FDF /* WorldMapRouter.swift in Sources */,
