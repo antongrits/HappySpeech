@@ -1714,6 +1714,7 @@
 		465AF97CD692D115B69BA312 /* l-prep-7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4688C1A1FCA7B10BB911080C /* l-prep-7.m4a */; };
 		465D32A97C99A8BAA8C87CD4 /* rl-wi-9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0452E885AC7F6E0C65868DC8 /* rl-wi-9.m4a */; };
 		465DAF1201C5E99E60320ABF /* lex-cs-16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A8A87D5D9CB9D1135F66E7A0 /* lex-cs-16.m4a */; };
+		4661DE1F23421547D127142C /* FaceAnalysisService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75215535F2D8BB7B4F566CC7 /* FaceAnalysisService.swift */; };
 		466329A436FD250A74842605 /* k-wf-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D7D1ED0C01E093DA6E7112D0 /* k-wf-6.m4a */; };
 		4666CA620B780A503FD69383 /* r-wi-46.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 99E3EC2A23BD77F40118DD2D /* r-wi-46.m4a */; };
 		468D663A2A553572C6813035 /* phon-sa-3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4913E826154722ECF4A3BC91 /* phon-sa-3.m4a */; };
@@ -3428,7 +3429,6 @@
 		916249D097A9FDE4CC97857C /* y-wf-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F8D5C19E7F74CDE6E0BAEC27 /* y-wf-6.m4a */; };
 		9162E7E8E9BA64029509BBCB /* y-syl-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7F16E2302DEB2DCB5788AE4C /* y-syl-8.m4a */; };
 		9166F991349EA025D462609E /* AirStreamDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A862A003BFA3A3AC1BD3448A /* AirStreamDetector.swift */; };
-		F06091FC97C346A9AB45B0C1 /* FaceAnalysisService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25937A80496A47409DB7B53D /* FaceAnalysisService.swift */; };
 		917344A791547672522DA77A /* c-prep-12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7BBF4B28804883B289999B47 /* c-prep-12.m4a */; };
 		917B919F7ACC11EBE45255D3 /* kh-sen-15.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D5D8B83F1DE601DC537F1BBB /* kh-sen-15.m4a */; };
 		918913C424212AA3A8B355B2 /* l-ph-4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5A90486D7130B5F6CF38B30A /* l-ph-4.m4a */; };
@@ -4946,6 +4946,7 @@
 		D19296C854A04A66DAA711E0 /* AccessibilityModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1335149E25CB663FAF60F0 /* AccessibilityModifiers.swift */; };
 		D195ED8214F7F48E35EC4536 /* zh-wi-22.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F6028FDC33527C93487F378F /* zh-wi-22.m4a */; };
 		D1971A22AD1161652112D17B /* g-wf-19.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D213AE35D3E7A0DE297BDD85 /* g-wf-19.m4a */; };
+		D1AD09F6FB5AE4A79D24A01F /* ChildHomeViewComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10934E133DD14EE69CF598EE /* ChildHomeViewComponents.swift */; };
 		D1BCA6C4E49EA8E8BE62B16C /* y-wm-28.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 28667A295F526EEA368D8F27 /* y-wm-28.m4a */; };
 		D1BF0C05042C9711CD3625F1 /* z-wi-44.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AE2EB53143729D0B86AE72C8 /* z-wi-44.m4a */; };
 		D1CBCAB8BD07217FD32F1EDC /* br-088.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 577D156ABD52ED039EF4D66C /* br-088.m4a */; };
@@ -6450,6 +6451,7 @@
 		1060988E6FAB213E0DEC5EFE /* r-ph-29.m4a */ = {isa = PBXFileReference; path = "r-ph-29.m4a"; sourceTree = "<group>"; };
 		108A4304D1A255CDFEEF2AC8 /* zh-wf-28.m4a */ = {isa = PBXFileReference; path = "zh-wf-28.m4a"; sourceTree = "<group>"; };
 		108E2A5B65042F262AE7ED5A /* zh-prep-12.m4a */ = {isa = PBXFileReference; path = "zh-prep-12.m4a"; sourceTree = "<group>"; };
+		10934E133DD14EE69CF598EE /* ChildHomeViewComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildHomeViewComponents.swift; sourceTree = "<group>"; };
 		109930BDCBA1E263176128A0 /* kh-sen-18.m4a */ = {isa = PBXFileReference; path = "kh-sen-18.m4a"; sourceTree = "<group>"; };
 		10A1B2046348B9321384CC6F /* r-ph-77.m4a */ = {isa = PBXFileReference; path = "r-ph-77.m4a"; sourceTree = "<group>"; };
 		10AE2E033D5E171A92BDAFE0 /* c-wi-10.m4a */ = {isa = PBXFileReference; path = "c-wi-10.m4a"; sourceTree = "<group>"; };
@@ -8795,6 +8797,7 @@
 		750FEB24BDA6CE3FA5E99FE1 /* s-wm-29.m4a */ = {isa = PBXFileReference; path = "s-wm-29.m4a"; sourceTree = "<group>"; };
 		7516CE1DAA0D42B70125CD71 /* shch-wi-12.m4a */ = {isa = PBXFileReference; path = "shch-wi-12.m4a"; sourceTree = "<group>"; };
 		7519565DE2AA59555A6DB58F /* s-wm-11.m4a */ = {isa = PBXFileReference; path = "s-wm-11.m4a"; sourceTree = "<group>"; };
+		75215535F2D8BB7B4F566CC7 /* FaceAnalysisService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceAnalysisService.swift; sourceTree = "<group>"; };
 		7524AA86F2701B1AFB1FBE57 /* c-ph-1.m4a */ = {isa = PBXFileReference; path = "c-ph-1.m4a"; sourceTree = "<group>"; };
 		752F707D533D4A20121516C1 /* l-iso-9.m4a */ = {isa = PBXFileReference; path = "l-iso-9.m4a"; sourceTree = "<group>"; };
 		7531D22EC4882E4A0A659326 /* zh-wf-12.m4a */ = {isa = PBXFileReference; path = "zh-wf-12.m4a"; sourceTree = "<group>"; };
@@ -10036,7 +10039,6 @@
 		A85CA5EAEE974EF2DA555F69 /* l-sen-3.m4a */ = {isa = PBXFileReference; path = "l-sen-3.m4a"; sourceTree = "<group>"; };
 		A85FF2A9C9B0B5A1DFA2F5BD /* ag-012.m4a */ = {isa = PBXFileReference; path = "ag-012.m4a"; sourceTree = "<group>"; };
 		A862A003BFA3A3AC1BD3448A /* AirStreamDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirStreamDetector.swift; sourceTree = "<group>"; };
-		25937A80496A47409DB7B53D /* FaceAnalysisService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceAnalysisService.swift; sourceTree = "<group>"; };
 		A86C381EF614C3828CAED7F6 /* kh-sen-20.m4a */ = {isa = PBXFileReference; path = "kh-sen-20.m4a"; sourceTree = "<group>"; };
 		A87EC84B8DB4C9A0328B5F2B /* br-042.m4a */ = {isa = PBXFileReference; path = "br-042.m4a"; sourceTree = "<group>"; };
 		A889A1CEC482353ED4A9F9E6 /* s-iso-10.m4a */ = {isa = PBXFileReference; path = "s-iso-10.m4a"; sourceTree = "<group>"; };
@@ -12696,11 +12698,11 @@
 			children = (
 				A862A003BFA3A3AC1BD3448A /* AirStreamDetector.swift */,
 				B4173F62C51F1821EFF34D1F /* ARSessionService.swift */,
-				25937A80496A47409DB7B53D /* FaceAnalysisService.swift */,
 				292EE5C0B310A1D47B2F4806 /* AudioAnalysisService.swift */,
 				1669AC3C06DA42F0D51F7D2A /* AudioService.swift */,
 				DF006D9CCB45EC4F1E84D1AF /* AuthService.swift */,
 				F5CDA40383ADC3E09FFA79CF /* ClaudeAPIClient.swift */,
+				75215535F2D8BB7B4F566CC7 /* FaceAnalysisService.swift */,
 				1B5A31B335F2D5B7CF93A251 /* LiveAuthService.swift */,
 				F7E39E6D462EC13DD391D2A8 /* LiveServices.swift */,
 				AA9B989B699B2B41B5EEE405 /* MockServices.swift */,
@@ -16156,6 +16158,7 @@
 				FD017F028138E0285415700C /* ChildHomePresenter.swift */,
 				429D1E4A82ECDBDF7133308E /* ChildHomeRouter.swift */,
 				79853A6CBF1D788687E7CE53 /* ChildHomeView.swift */,
+				10934E133DD14EE69CF598EE /* ChildHomeViewComponents.swift */,
 				1CEE3D138BC1CA00BFEBDBFE /* ChildHomeViewModel.swift */,
 			);
 			path = ChildHome;
@@ -24980,7 +24983,6 @@
 				F7E038E9DDFA1013EEA19716 /* ASRServiceLive.swift in Sources */,
 				D19296C854A04A66DAA711E0 /* AccessibilityModifiers.swift in Sources */,
 				9166F991349EA025D462609E /* AirStreamDetector.swift in Sources */,
-				F06091FC97C346A9AB45B0C1 /* FaceAnalysisService.swift in Sources */,
 				15E4ADCCBB55B9158EFF8B1B /* AnalyticsService.swift in Sources */,
 				E0863DC0AA3AB013D2178E7A /* AppContainer.swift in Sources */,
 				53648D5DF5896F6FABB017EE /* AppCoordinator.swift in Sources */,
@@ -25035,6 +25037,7 @@
 				4E5C90FCBF4ED43B9BFC31BC /* ChildHomePresenter.swift in Sources */,
 				D481C7BA804BA0AF3D7F68C4 /* ChildHomeRouter.swift in Sources */,
 				F743B86C92ADAF149394EC50 /* ChildHomeView.swift in Sources */,
+				D1AD09F6FB5AE4A79D24A01F /* ChildHomeViewComponents.swift in Sources */,
 				C0E773F8DB3B8EE0BD08E703 /* ChildHomeViewModel.swift in Sources */,
 				D15C90D0BE5F4B888FE98D70 /* ChildRepository.swift in Sources */,
 				204FCC9C55F4F36A8B3CAAF0 /* ClaudeAPIClient.swift in Sources */,
@@ -25054,6 +25057,7 @@
 				4840DA81F442AC8D42BADAAD /* DragAndMatchRouter.swift in Sources */,
 				010C46BA02AD9A10A28AFC83 /* DragAndMatchView.swift in Sources */,
 				782DAC71E696332431E04DE7 /* EmailAuthWorker.swift in Sources */,
+				4661DE1F23421547D127142C /* FaceAnalysisService.swift in Sources */,
 				EF593BFD58DBA9B549391570 /* GoogleSignInWorker.swift in Sources */,
 				C6DA29ABB54179A09B2CE39B /* GuidedTourContainer.swift in Sources */,
 				DC02F154775B85D993FFDAA1 /* GuidedTourCoordinator.swift in Sources */,
