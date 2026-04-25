@@ -13173,6 +13173,171 @@
           }
         }
       }
+    },
+    "sessionComplete.accuracy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "точность"
+          }
+        }
+      }
+    },
+    "sessionComplete.summaryRing.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кольцо точности %1$d процентов"
+          }
+        }
+      }
+    },
+    "sessionComplete.celebration.continue": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжить"
+          }
+        }
+      }
+    },
+    "rewards.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Награды"
+          }
+        }
+      }
+    },
+    "rewards.progress": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "наград получено"
+          }
+        }
+      }
+    },
+    "rewards.tab.sounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуки"
+          }
+        }
+      }
+    },
+    "rewards.tab.streaks": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серии"
+          }
+        }
+      }
+    },
+    "rewards.tab.games": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Игры"
+          }
+        }
+      }
+    },
+    "rewards.tab.special": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Особые"
+          }
+        }
+      }
+    },
+    "rewards.locked": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заблокировано"
+          }
+        }
+      }
+    },
+    "rewards.unlocked.date": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Получено"
+          }
+        }
+      }
+    },
+    "rewards.sticker.first": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Первый звук"
+          }
+        }
+      }
+    },
+    "rewards.sticker.week": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неделя подряд"
+          }
+        }
+      }
+    },
+    "rewards.header.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Собирай стикеры за каждое достижение"
+          }
+        }
+      }
+    },
+    "rewards.unlock.sparkle.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Получен новый стикер"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
