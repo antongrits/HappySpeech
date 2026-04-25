@@ -8,11 +8,17 @@ protocol DemoPresentationLogic: AnyObject {
     func presentLoadDemo(_ response: DemoModels.LoadDemo.Response)
     func presentAdvanceStep(_ response: DemoModels.AdvanceStep.Response)
     func presentGoBack(_ response: DemoModels.GoBack.Response)
+    func presentJumpTo(_ response: DemoModels.JumpTo.Response)
+    func presentInteractiveTap(_ response: DemoModels.InteractiveTap.Response)
     func presentSkipDemo(_ response: DemoModels.SkipDemo.Response)
     func presentCompleteDemo(_ response: DemoModels.CompleteDemo.Response)
 }
 
 // MARK: - DemoPresenter
+//
+// Чистая трансформация Response → ViewModel. Не содержит UIKit/SwiftUI и не
+// общается напрямую с Realm — только форматирует тексты и вычисляет
+// производные значения вроде `progressFraction`, `nextTitle`, `progressLabel`.
 
 @MainActor
 final class DemoPresenter: DemoPresentationLogic {
@@ -26,58 +32,118 @@ final class DemoPresenter: DemoPresentationLogic {
     // MARK: - PresentationLogic
 
     func presentLoadDemo(_ response: DemoModels.LoadDemo.Response) {
+        let step = response.steps[safe: response.currentIndex]
+        let total = response.steps.count
         let vm = DemoModels.LoadDemo.ViewModel(
             steps: response.steps,
             currentIndex: response.currentIndex,
-            totalSteps: response.steps.count,
-            progress: progress(currentIndex: response.currentIndex, total: response.steps.count),
-            progressLabel: progressLabel(currentIndex: response.currentIndex, total: response.steps.count),
+            totalSteps: total,
+            progress: progress(currentIndex: response.currentIndex, total: total),
+            progressLabel: progressLabel(currentIndex: response.currentIndex, total: total),
             isFirst: response.currentIndex == 0,
-            isLast: response.currentIndex >= response.steps.count - 1,
+            isLast: response.currentIndex >= total - 1,
             backTitle: String(localized: "demo.cta.back"),
-            nextTitle: nextTitle(currentIndex: response.currentIndex, total: response.steps.count),
-            stepTitle: response.steps[safe: response.currentIndex]?.title ?? "",
-            stepDescription: response.steps[safe: response.currentIndex]?.description ?? "",
-            mascotText: response.steps[safe: response.currentIndex]?.mascotText ?? "",
-            screenEmoji: response.steps[safe: response.currentIndex]?.screenEmoji ?? "📱"
+            nextTitle: nextTitle(currentIndex: response.currentIndex, total: total),
+            stepTitle: step?.title ?? "",
+            stepSubtitle: step?.subtitle ?? "",
+            stepDescription: step?.description ?? "",
+            mascotText: step?.mascotText ?? "",
+            screenEmoji: step?.screenEmoji ?? "📱",
+            illustrationSymbol: step?.illustrationSymbol ?? "",
+            accent: step?.accent ?? .primary,
+            lyalyaState: step?.lyalyaState ?? .explaining,
+            hasInteractive: step?.hasInteractive ?? false,
+            actionTitle: step?.actionTitle
         )
         display?.displayLoadDemo(vm)
     }
 
     func presentAdvanceStep(_ response: DemoModels.AdvanceStep.Response) {
+        let step = response.steps[safe: response.currentIndex]
+        let total = response.steps.count
         let vm = DemoModels.AdvanceStep.ViewModel(
             currentIndex: response.currentIndex,
-            totalSteps: response.steps.count,
-            progress: progress(currentIndex: response.currentIndex, total: response.steps.count),
-            progressLabel: progressLabel(currentIndex: response.currentIndex, total: response.steps.count),
+            totalSteps: total,
+            progress: progress(currentIndex: response.currentIndex, total: total),
+            progressLabel: progressLabel(currentIndex: response.currentIndex, total: total),
             isFirst: response.currentIndex == 0,
-            isLast: response.currentIndex >= response.steps.count - 1,
+            isLast: response.currentIndex >= total - 1,
             backTitle: String(localized: "demo.cta.back"),
-            nextTitle: nextTitle(currentIndex: response.currentIndex, total: response.steps.count),
-            stepTitle: response.steps[safe: response.currentIndex]?.title ?? "",
-            stepDescription: response.steps[safe: response.currentIndex]?.description ?? "",
-            mascotText: response.steps[safe: response.currentIndex]?.mascotText ?? "",
-            screenEmoji: response.steps[safe: response.currentIndex]?.screenEmoji ?? "📱",
+            nextTitle: nextTitle(currentIndex: response.currentIndex, total: total),
+            stepTitle: step?.title ?? "",
+            stepSubtitle: step?.subtitle ?? "",
+            stepDescription: step?.description ?? "",
+            mascotText: step?.mascotText ?? "",
+            screenEmoji: step?.screenEmoji ?? "📱",
+            illustrationSymbol: step?.illustrationSymbol ?? "",
+            accent: step?.accent ?? .primary,
+            lyalyaState: step?.lyalyaState ?? .explaining,
+            hasInteractive: step?.hasInteractive ?? false,
+            actionTitle: step?.actionTitle,
             isCompleted: response.isCompleted
         )
         display?.displayAdvanceStep(vm)
     }
 
     func presentGoBack(_ response: DemoModels.GoBack.Response) {
+        let step = response.steps[safe: response.currentIndex]
+        let total = response.steps.count
         let vm = DemoModels.GoBack.ViewModel(
             currentIndex: response.currentIndex,
-            progress: progress(currentIndex: response.currentIndex, total: response.steps.count),
-            progressLabel: progressLabel(currentIndex: response.currentIndex, total: response.steps.count),
+            progress: progress(currentIndex: response.currentIndex, total: total),
+            progressLabel: progressLabel(currentIndex: response.currentIndex, total: total),
             isFirst: response.currentIndex == 0,
-            isLast: response.currentIndex >= response.steps.count - 1,
+            isLast: response.currentIndex >= total - 1,
             backTitle: String(localized: "demo.cta.back"),
-            nextTitle: nextTitle(currentIndex: response.currentIndex, total: response.steps.count),
-            stepTitle: response.steps[safe: response.currentIndex]?.title ?? "",
-            stepDescription: response.steps[safe: response.currentIndex]?.description ?? "",
-            mascotText: response.steps[safe: response.currentIndex]?.mascotText ?? "",
-            screenEmoji: response.steps[safe: response.currentIndex]?.screenEmoji ?? "📱"
+            nextTitle: nextTitle(currentIndex: response.currentIndex, total: total),
+            stepTitle: step?.title ?? "",
+            stepSubtitle: step?.subtitle ?? "",
+            stepDescription: step?.description ?? "",
+            mascotText: step?.mascotText ?? "",
+            screenEmoji: step?.screenEmoji ?? "📱",
+            illustrationSymbol: step?.illustrationSymbol ?? "",
+            accent: step?.accent ?? .primary,
+            lyalyaState: step?.lyalyaState ?? .explaining,
+            hasInteractive: step?.hasInteractive ?? false,
+            actionTitle: step?.actionTitle
         )
         display?.displayGoBack(vm)
+    }
+
+    func presentJumpTo(_ response: DemoModels.JumpTo.Response) {
+        let step = response.steps[safe: response.currentIndex]
+        let total = response.steps.count
+        let vm = DemoModels.JumpTo.ViewModel(
+            currentIndex: response.currentIndex,
+            progress: progress(currentIndex: response.currentIndex, total: total),
+            progressLabel: progressLabel(currentIndex: response.currentIndex, total: total),
+            isFirst: response.currentIndex == 0,
+            isLast: response.currentIndex >= total - 1,
+            backTitle: String(localized: "demo.cta.back"),
+            nextTitle: nextTitle(currentIndex: response.currentIndex, total: total),
+            stepTitle: step?.title ?? "",
+            stepSubtitle: step?.subtitle ?? "",
+            stepDescription: step?.description ?? "",
+            mascotText: step?.mascotText ?? "",
+            screenEmoji: step?.screenEmoji ?? "📱",
+            illustrationSymbol: step?.illustrationSymbol ?? "",
+            accent: step?.accent ?? .primary,
+            lyalyaState: step?.lyalyaState ?? .explaining,
+            hasInteractive: step?.hasInteractive ?? false,
+            actionTitle: step?.actionTitle
+        )
+        display?.displayJumpTo(vm)
+    }
+
+    func presentInteractiveTap(_ response: DemoModels.InteractiveTap.Response) {
+        let toast = String(
+            format: String(localized: "demo.interactive.toast"),
+            response.stepTitle
+        )
+        display?.displayInteractiveTap(.init(
+            stepId: response.stepId,
+            toastMessage: toast
+        ))
     }
 
     func presentSkipDemo(_ response: DemoModels.SkipDemo.Response) {
