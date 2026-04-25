@@ -107,26 +107,58 @@ struct RewardsView: View {
     // MARK: - Sections
 
     private var headerSection: some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
-            HStack {
+        VStack(alignment: .leading, spacing: SpacingTokens.small) {
+            // Top row: Lyalya + counts + ring
+            HStack(alignment: .center, spacing: SpacingTokens.medium) {
+                LyalyaMascotView(state: lyalyaHeaderState, size: 56)
+                    .accessibilityHidden(true)
+
                 VStack(alignment: .leading, spacing: SpacingTokens.micro) {
                     Text(display.progressLabel)
                         .font(TypographyTokens.title(20))
                         .foregroundStyle(ColorTokens.Kid.ink)
                         .accessibilityAddTraits(.isHeader)
-                    Text(String(localized: "rewards.subtitle"))
-                        .font(TypographyTokens.body(13))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "rewards.progress"))
+                        .font(TypographyTokens.body(12))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .textCase(.lowercase)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                 }
+
                 Spacer()
+
                 HSProgressBar(value: display.progress, style: .ring, showLabel: true)
                     .frame(width: 56, height: 56)
                     .accessibilityHidden(true)
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.top, SpacingTokens.tiny)
+
+            // Subtitle row
+            Text(String(localized: "rewards.header.subtitle"))
+                .font(TypographyTokens.body(13))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .lineLimit(2)
+                .minimumScaleFactor(0.9)
         }
         .padding(.bottom, SpacingTokens.small)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            "\(display.progressLabel) \(String(localized: "rewards.progress"))"
+        )
+    }
+
+    /// Маппинг прогресса коллекции → состояние маскота в header.
+    private var lyalyaHeaderState: LyalyaState {
+        switch display.progress {
+        case 0.50...:    return .celebrating
+        case 0.10..<0.50: return .happy
+        default:          return .waving
+        }
     }
 
     private var tabFilterSection: some View {
@@ -199,8 +231,8 @@ struct RewardsView: View {
                 ),
                 spacing: SpacingTokens.medium
             ) {
-                ForEach(display.cells) { cell in
-                    StickerCellView(cell: cell) {
+                ForEach(Array(display.cells.enumerated()), id: \.element.id) { index, cell in
+                    StickerCellView(cell: cell, appearIndex: index) {
                         interactor?.openSticker(.init(id: cell.id))
                         if cell.isUnlocked && cell.isNew {
                             // Auto-claim "new" badge when the kid taps the sticker.
@@ -240,10 +272,19 @@ struct RewardsView: View {
 
 private struct StickerCellView: View {
     let cell: StickerCellViewModel
+    let appearIndex: Int
     let onTap: () -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     @State private var bounce = false
+    @State private var appeared = false
+    @State private var sparkleAngle: Double = 0
+
+    private var appearDelay: Double {
+        // Stagger: 30ms × index, capped to keep the screen alive.
+        min(Double(appearIndex) * 0.030, 0.6)
+    }
 
     var body: some View {
         Button(action: {
@@ -259,6 +300,30 @@ private struct StickerCellView: View {
             }
         }
         .buttonStyle(.plain)
+        .scaleEffect(appeared ? 1 : 0.6)
+        .opacity(appeared ? 1 : 0)
+        .onAppear {
+            guard !appeared else { return }
+            if reduceMotion {
+                appeared = true
+                return
+            }
+            // Bounce-in только для unlocked. Locked — мягкий fade.
+            let animation: Animation = cell.isUnlocked
+                ? .spring(response: 0.5, dampingFraction: 0.55).delay(appearDelay)
+                : .easeOut(duration: 0.35).delay(appearDelay)
+            withAnimation(animation) {
+                appeared = true
+            }
+            // Sparkle: вращение для isNew стикеров.
+            if cell.isNew {
+                withAnimation(
+                    .linear(duration: 6).repeatForever(autoreverses: false)
+                ) {
+                    sparkleAngle = 360
+                }
+            }
+        }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(cell.accessibilityLabel)
         .accessibilityAddTraits(.isButton)
@@ -273,9 +338,23 @@ private struct StickerCellView: View {
         ) {
             VStack(spacing: SpacingTokens.tiny) {
                 ZStack {
+                    // Soft halo behind the icon
                     Circle()
                         .fill(ColorTokens.Brand.butter.opacity(0.18))
                         .frame(width: 64, height: 64)
+                        .shadow(
+                            color: cell.isNew
+                                ? ColorTokens.Brand.gold.opacity(0.55)
+                                : Color.clear,
+                            radius: 10
+                        )
+
+                    // Sparkle ring around isNew stickers
+                    if cell.isNew {
+                        sparkleRing
+                            .frame(width: 84, height: 84)
+                            .accessibilityHidden(true)
+                    }
 
                     Text(cell.emoji)
                         .font(.system(size: 38))
@@ -308,6 +387,20 @@ private struct StickerCellView: View {
         }
     }
 
+    /// Лёгкий sparkle-ring: 4 крошечных звёздочки по окружности, медленно вращается.
+    private var sparkleRing: some View {
+        ZStack {
+            ForEach(0..<4, id: \.self) { i in
+                Image(systemName: "sparkle")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundStyle(ColorTokens.Brand.gold)
+                    .offset(y: -42)
+                    .rotationEffect(.degrees(Double(i) * 90))
+            }
+        }
+        .rotationEffect(.degrees(reduceMotion ? 0 : sparkleAngle))
+    }
+
     // MARK: - Locked: plain surface, no glass
 
     private var lockedCell: some View {
@@ -328,6 +421,7 @@ private struct StickerCellView: View {
                     .padding(6)
                     .background(Circle().fill(ColorTokens.Kid.surface))
                     .offset(x: 22, y: 22)
+                    .accessibilityLabel(String(localized: "rewards.locked"))
             }
 
             Text(cell.name)
