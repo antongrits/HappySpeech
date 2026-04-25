@@ -41,7 +41,7 @@ struct SpecialistHomeView: View {
         switch tab {
         case .children: SpecChildListView()
         case .sessions: SpecSessionListView()
-        case .reports:  SpecReportsView()
+        case .reports:  SpecialistReportsView()
         case .settings: SettingsView()
         }
     }
@@ -139,49 +139,6 @@ private struct SpecSessionListView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(ColorTokens.Spec.bg.ignoresSafeArea())
             .navigationTitle(String(localized: "Занятия"))
-        }
-    }
-}
-
-// MARK: - SpecReportsView
-
-private struct SpecReportsView: View {
-    var body: some View {
-        NavigationStack {
-            List {
-                Section {
-                    ForEach(0..<3) { i in
-                        HStack {
-                            Image(systemName: "doc.text.fill")
-                                .foregroundStyle(ColorTokens.Spec.accent)
-                            Text(["Отчёт за апрель 2026", "Отчёт за март 2026", "Отчёт за февраль 2026"][i])
-                                .font(TypographyTokens.body())
-                                .foregroundStyle(ColorTokens.Spec.ink)
-                            Spacer()
-                            Button {
-                                // Export
-                            } label: {
-                                Image(systemName: "square.and.arrow.up")
-                                    .foregroundStyle(ColorTokens.Spec.accent)
-                            }
-                        }
-                    }
-                } header: {
-                    Text(String(localized: "Готовые отчёты"))
-                }
-
-                Section {
-                    HSButton(String(localized: "Создать PDF-отчёт"), style: .secondary, icon: "doc.text") {}
-                    HSButton(String(localized: "Экспорт CSV"), style: .secondary, icon: "tablecells") {}
-                } header: {
-                    Text(String(localized: "Создать отчёт"))
-                }
-            }
-            .listStyle(.insetGrouped)
-            .scrollContentBackground(.hidden)
-            .background(ColorTokens.Spec.bg.ignoresSafeArea())
-            .navigationTitle(String(localized: "Отчёты"))
-            .environment(\.circuitContext, .specialist)
         }
     }
 }

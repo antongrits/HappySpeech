@@ -9589,6 +9589,1425 @@
           }
         }
       }
+    },
+    "reports.detail.attempts": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Всего попыток"
+          }
+        }
+      }
+    },
+    "reports.detail.confidence": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Средняя уверенность"
+          }
+        }
+      }
+    },
+    "reports.detail.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прогресс по звуку за выбранный период"
+          }
+        }
+      }
+    },
+    "reports.detail.successes": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Успешных попыток"
+          }
+        }
+      }
+    },
+    "reports.detail.wow": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Изменение неделя-к-неделе"
+          }
+        }
+      }
+    },
+    "reports.empty.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попробуйте увеличить диапазон или сменить фильтр"
+          }
+        }
+      }
+    },
+    "reports.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нет данных"
+          }
+        }
+      }
+    },
+    "reports.export.csv": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CSV"
+          }
+        }
+      }
+    },
+    "reports.export.pdf": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PDF"
+          }
+        }
+      }
+    },
+    "reports.export.ready": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отчёт готов к отправке"
+          }
+        }
+      }
+    },
+    "reports.export.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Экспорт"
+          }
+        }
+      }
+    },
+    "reports.filter.all": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все"
+          }
+        }
+      }
+    },
+    "reports.filter.improving": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Улучшение"
+          }
+        }
+      }
+    },
+    "reports.filter.recommendations": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рекомендации"
+          }
+        }
+      }
+    },
+    "reports.filter.struggling": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сложности"
+          }
+        }
+      }
+    },
+    "reports.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Считаем статистику…"
+          }
+        }
+      }
+    },
+    "reports.range.7": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 дней"
+          }
+        }
+      }
+    },
+    "reports.range.30": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 дней"
+          }
+        }
+      }
+    },
+    "reports.range.90": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "90 дней"
+          }
+        }
+      }
+    },
+    "reports.range.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Диапазон"
+          }
+        }
+      }
+    },
+    "reports.refresh": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обновить"
+          }
+        }
+      }
+    },
+    "reports.section.sounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "По звукам"
+          }
+        }
+      }
+    },
+    "reports.share": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поделиться"
+          }
+        }
+      }
+    },
+    "reports.summary.accuracy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Точность"
+          }
+        }
+      }
+    },
+    "reports.summary.minutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Минут"
+          }
+        }
+      }
+    },
+    "reports.summary.sessions": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сессий"
+          }
+        }
+      }
+    },
+    "Отчёты": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отчёты"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.0": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "0 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.0": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "0 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.1": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 попытка"
+          }
+        }
+      }
+    },
+    "reports.row.success.1": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 успешная"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.2": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 попытки"
+          }
+        }
+      }
+    },
+    "reports.row.success.2": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "2 успешные"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.3": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 попытки"
+          }
+        }
+      }
+    },
+    "reports.row.success.3": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 успешные"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.4": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4 попытки"
+          }
+        }
+      }
+    },
+    "reports.row.success.4": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4 успешные"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.5": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.5": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.6": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "6 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.6": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "6 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.7": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.7": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.8": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "8 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.8": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "8 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.9": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "9 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.9": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "9 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.10": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.10": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.11": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "11 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.11": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "11 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.12": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "12 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.12": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "12 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.13": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "13 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.13": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "13 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.14": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "14 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.14": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "14 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.15": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "15 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.15": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "15 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.16": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "16 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.16": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "16 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.17": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "17 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.17": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "17 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.18": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "18 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.18": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "18 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.19": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "19 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.19": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "19 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.20": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "20 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.20": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "20 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.21": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "21 попытка"
+          }
+        }
+      }
+    },
+    "reports.row.success.21": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "21 успешная"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.22": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "22 попытки"
+          }
+        }
+      }
+    },
+    "reports.row.success.22": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "22 успешные"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.23": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "23 попытки"
+          }
+        }
+      }
+    },
+    "reports.row.success.23": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "23 успешные"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.24": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "24 попытки"
+          }
+        }
+      }
+    },
+    "reports.row.success.24": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "24 успешные"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.25": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "25 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.25": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "25 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.26": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "26 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.26": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "26 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.27": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "27 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.27": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "27 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.28": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "28 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.28": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "28 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.29": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "29 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.29": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "29 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.30": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.30": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.31": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "31 попытка"
+          }
+        }
+      }
+    },
+    "reports.row.success.31": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "31 успешная"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.32": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "32 попытки"
+          }
+        }
+      }
+    },
+    "reports.row.success.32": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "32 успешные"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.33": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "33 попытки"
+          }
+        }
+      }
+    },
+    "reports.row.success.33": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "33 успешные"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.34": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "34 попытки"
+          }
+        }
+      }
+    },
+    "reports.row.success.34": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "34 успешные"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.35": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "35 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.35": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "35 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.36": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "36 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.36": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "36 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.37": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "37 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.37": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "37 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.38": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "38 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.38": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "38 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.39": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "39 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.39": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "39 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.40": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "40 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.40": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "40 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.41": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "41 попытка"
+          }
+        }
+      }
+    },
+    "reports.row.success.41": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "41 успешная"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.42": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "42 попытки"
+          }
+        }
+      }
+    },
+    "reports.row.success.42": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "42 успешные"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.43": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "43 попытки"
+          }
+        }
+      }
+    },
+    "reports.row.success.43": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "43 успешные"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.44": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "44 попытки"
+          }
+        }
+      }
+    },
+    "reports.row.success.44": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "44 успешные"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.45": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "45 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.45": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "45 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.46": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "46 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.46": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "46 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.47": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "47 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.47": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "47 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.48": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "48 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.48": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "48 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.49": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "49 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.49": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "49 успешных"
+          }
+        }
+      }
+    },
+    "reports.row.attempts.50": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "50 попыток"
+          }
+        }
+      }
+    },
+    "reports.row.success.50": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "50 успешных"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
