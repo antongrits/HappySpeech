@@ -17,15 +17,20 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Приложению нужен микрофон для записи речи ребёнка.</string>
+	<string>HappySpeech использует микрофон для распознавания произношения и логопедических упражнений</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Приложению нужна камера для AR-упражнений артикуляции.</string>
+	<string>HappySpeech использует камеру для AR-упражнений артикуляции и мимической гимнастики</string>
 	<key>NSFaceIDUsageDescription</key>
-	<string>Face ID используется для быстрой аутентификации родителя.</string>
+	<string>HappySpeech может использовать Face ID для быстрого входа родителей</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>HappySpeech использует распознавание речи для оценки произношения</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
+		<string>remote-notification</string>
 	</array>
+	<key>MinimumOSVersion</key>
+	<string>17.0</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>arm64</string>
