@@ -6013,6 +6013,259 @@
         }
       }
     },
+    "progressDashboard.period.week": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неделя"
+          }
+        }
+      }
+    },
+    "progressDashboard.period.month": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Месяц"
+          }
+        }
+      }
+    },
+    "progressDashboard.period.quarter": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Квартал"
+          }
+        }
+      }
+    },
+    "progressDashboard.section.highlights": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Главное за период"
+          }
+        }
+      }
+    },
+    "progressDashboard.section.highlights.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лучшие звуки и звуки, требующие внимания"
+          }
+        }
+      }
+    },
+    "progressDashboard.top": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лучшие звуки"
+          }
+        }
+      }
+    },
+    "progressDashboard.work": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Требуют внимания"
+          }
+        }
+      }
+    },
+    "progressDashboard.recommendations.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рекомендации на неделю"
+          }
+        }
+      }
+    },
+    "progressDashboard.recommendations.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чем заняться, чтобы прогресс рос"
+          }
+        }
+      }
+    },
+    "progressDashboard.rec.week.1": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Уделить больше времени звуку Ж — поиграть в «Поймай звук»."
+          }
+        }
+      }
+    },
+    "progressDashboard.rec.week.2": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторить слова со звуком Ш в середине слова."
+          }
+        }
+      }
+    },
+    "progressDashboard.rec.week.3": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сыграть в Bingo с парами Ч и Щ для дифференциации."
+          }
+        }
+      }
+    },
+    "progressDashboard.rec.month.1": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрепить звуки Ш и Ж в коротких рассказах."
+          }
+        }
+      }
+    },
+    "progressDashboard.rec.month.2": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поработать с минимальными парами свистящих и шипящих."
+          }
+        }
+      }
+    },
+    "progressDashboard.rec.month.3": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сделать дыхательные упражнения 2 раза в неделю."
+          }
+        }
+      }
+    },
+    "progressDashboard.rec.month.4": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поощрить ребёнка за стабильную ежедневную практику."
+          }
+        }
+      }
+    },
+    "progressDashboard.rec.quarter.1": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перейти к свободной речи со звуками Р и Л."
+          }
+        }
+      }
+    },
+    "progressDashboard.rec.quarter.2": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрепить шипящие на уровне предложений и рассказов."
+          }
+        }
+      }
+    },
+    "progressDashboard.rec.quarter.3": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показать прогресс логопеду — обсудить следующий этап."
+          }
+        }
+      }
+    },
+    "progressDashboard.a11y.topChipPattern": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лучший звук %@: %d процентов"
+          }
+        }
+      }
+    },
+    "progressDashboard.a11y.workChipPattern": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Требует внимания звук %@: %d процентов"
+          }
+        }
+      }
+    },
+    "progressDashboard.a11y.periodPattern": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Период %@ %@"
+          }
+        }
+      }
+    },
+    "progressDashboard.a11y.selected": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "выбрано"
+          }
+        }
+      }
+    },
     "puzzle.complete": {
       "extractionState": "manual",
       "localizations": {

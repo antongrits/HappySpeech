@@ -24,6 +24,11 @@ final class ProgressDashboardDisplay: ProgressDashboardDisplayLogic {
     var weeklyChart: [WeeklyChartPoint] = []
     var dailyAxisLabels: [String] = []
     var soundCells: [SoundProgressCellViewModel] = []
+    var topPerformers: [SoundChipViewModel] = []
+    var needsWork: [SoundChipViewModel] = []
+    var recommendations: [RecommendationViewModel] = []
+    var periodOptions: [PeriodOptionViewModel] = []
+    var selectedPeriod: ProgressDashboardModels.TimePeriod = .week
 
     var llmSummary: LLMSummaryViewModel?
     var isLLMLoading: Bool = false
@@ -45,6 +50,11 @@ final class ProgressDashboardDisplay: ProgressDashboardDisplayLogic {
         weeklyChart = viewModel.weeklyChart
         dailyAxisLabels = viewModel.dailyAxisLabels
         soundCells = viewModel.soundCells
+        topPerformers = viewModel.topPerformers
+        needsWork = viewModel.needsWork
+        recommendations = viewModel.recommendations
+        periodOptions = viewModel.periodOptions
+        selectedPeriod = viewModel.periodOptions.first(where: { $0.isSelected })?.period ?? .week
         isEmpty = viewModel.isEmpty
         emptyTitle = viewModel.emptyTitle
         emptyMessage = viewModel.emptyMessage

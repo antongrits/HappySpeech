@@ -11,15 +11,45 @@ import SwiftUI
 
 enum ProgressDashboardModels {
 
+    // MARK: - TimePeriod
+
+    /// Период агрегации данных. Влияет на длину `dailyAccuracy` (7/30/90 дней)
+    /// и на содержимое weekly chart (для quarter — помесячная разбивка).
+    enum TimePeriod: String, Sendable, CaseIterable, Equatable {
+        case week
+        case month
+        case quarter
+
+        /// Локализованный заголовок чипа.
+        var titleKey: String.LocalizationValue {
+            switch self {
+            case .week:    return "progressDashboard.period.week"
+            case .month:   return "progressDashboard.period.month"
+            case .quarter: return "progressDashboard.period.quarter"
+            }
+        }
+
+        /// Длина дневного диапазона в днях.
+        var dayCount: Int {
+            switch self {
+            case .week:    return 7
+            case .month:   return 30
+            case .quarter: return 90
+            }
+        }
+    }
+
     // MARK: - LoadDashboard
 
     enum LoadDashboard {
         struct Request: Sendable {
             let childId: String
             let forceReload: Bool
-            init(childId: String, forceReload: Bool = false) {
+            let period: TimePeriod
+            init(childId: String, forceReload: Bool = false, period: TimePeriod = .week) {
                 self.childId = childId
                 self.forceReload = forceReload
+                self.period = period
             }
         }
 
@@ -28,6 +58,8 @@ enum ProgressDashboardModels {
             let dailyAccuracy: [DailyAccuracy]
             let weeklyAccuracy: [WeeklyAccuracy]
             let sounds: [SoundProgress]
+            let recommendations: [String]
+            let period: TimePeriod
         }
 
         struct ViewModel: Sendable {
@@ -36,9 +68,22 @@ enum ProgressDashboardModels {
             let weeklyChart: [WeeklyChartPoint]
             let dailyAxisLabels: [String]
             let soundCells: [SoundProgressCellViewModel]
+            let topPerformers: [SoundChipViewModel]
+            let needsWork: [SoundChipViewModel]
+            let recommendations: [RecommendationViewModel]
+            let periodOptions: [PeriodOptionViewModel]
             let isEmpty: Bool
             let emptyTitle: String
             let emptyMessage: String
+        }
+    }
+
+    // MARK: - ChangePeriod
+
+    enum ChangePeriod {
+        struct Request: Sendable {
+            let childId: String
+            let period: TimePeriod
         }
     }
 
@@ -178,6 +223,40 @@ struct LLMSummaryViewModel: Sendable, Equatable {
     let title: String
     let bodyText: String
     let isFallback: Bool
+    let accessibilityLabel: String
+}
+
+// MARK: - Period chips
+
+struct PeriodOptionViewModel: Sendable, Identifiable, Equatable, Hashable {
+    var id: String { period.rawValue }
+    let period: ProgressDashboardModels.TimePeriod
+    let title: String
+    let isSelected: Bool
+    let accessibilityLabel: String
+}
+
+// MARK: - Sound chips (top performers / needs work)
+
+struct SoundChipViewModel: Sendable, Identifiable, Equatable, Hashable {
+    enum Tone: String, Sendable, Equatable {
+        case positive   // ≥ 80% — зелёный
+        case attention  // < 60% — оранжевый
+    }
+
+    var id: String { sound }
+    let sound: String
+    let percentText: String
+    let tone: Tone
+    let accessibilityLabel: String
+}
+
+// MARK: - Recommendations
+
+struct RecommendationViewModel: Sendable, Identifiable, Equatable, Hashable {
+    let id: Int
+    let text: String
+    let iconName: String
     let accessibilityLabel: String
 }
 
