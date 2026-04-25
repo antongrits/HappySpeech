@@ -9127,6 +9127,83 @@
           }
         }
       }
+    },
+    "ds.recorder.caption.idle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажми, чтобы говорить"
+          }
+        }
+      }
+    },
+    "ds.recorder.caption.listening": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слушаю..."
+          }
+        }
+      }
+    },
+    "ds.recorder.caption.processing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обрабатываю..."
+          }
+        }
+      }
+    },
+    "ds.recorder.a11y.label.idle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кнопка записи"
+          }
+        }
+      }
+    },
+    "ds.recorder.a11y.label.listening": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запись идёт"
+          }
+        }
+      }
+    },
+    "ds.recorder.a11y.label.processing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Идёт обработка записи"
+          }
+        }
+      }
+    },
+    "ds.recorder.a11y.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дважды коснись, чтобы начать или остановить запись"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
