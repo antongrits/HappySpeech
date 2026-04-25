@@ -13,6 +13,11 @@ protocol SettingsBusinessLogic: AnyObject {
     func exportData(_ request: SettingsModels.ExportData.Request)
     func clearCache(_ request: SettingsModels.ClearCache.Request)
     func connectSpecialist(_ request: SettingsModels.ConnectSpecialist.Request)
+    func loadModelPacks(_ request: SettingsModels.LoadModelPacks.Request)
+    func downloadModelPack(_ request: SettingsModels.DownloadModelPack.Request)
+    func deleteModelPack(_ request: SettingsModels.DeleteModelPack.Request)
+    func loadLicenses(_ request: SettingsModels.LoadLicenses.Request)
+    func exportShare(_ request: SettingsModels.ExportShare.Request)
 }
 
 // MARK: - SettingsInteractor
@@ -30,22 +35,30 @@ final class SettingsInteractor: SettingsBusinessLogic {
 
     private let themeManager: ThemeManager
     private let notificationService: any NotificationService
+    private let whisperKitModelManager: (any WhisperKitModelManagerProtocol)?
+    private let llmModelManager: (any LLMModelManagerProtocol)?
     private let defaults: UserDefaults
     private let logger = Logger(subsystem: "ru.happyspeech", category: "Settings")
 
     // MARK: - State
 
     private var settings: AppSettings = .default
+    private var asrProgress: [WhisperKitModelPack: Double] = [:]
+    private var llmProgress: [LLMModelPack: Double] = [:]
 
     // MARK: - Init
 
     init(
         themeManager: ThemeManager,
         notificationService: any NotificationService,
+        whisperKitModelManager: (any WhisperKitModelManagerProtocol)? = nil,
+        llmModelManager: (any LLMModelManagerProtocol)? = nil,
         defaults: UserDefaults = .standard
     ) {
         self.themeManager = themeManager
         self.notificationService = notificationService
+        self.whisperKitModelManager = whisperKitModelManager
+        self.llmModelManager = llmModelManager
         self.defaults = defaults
     }
 
@@ -236,5 +249,326 @@ final class SettingsInteractor: SettingsBusinessLogic {
         settings.specialistConnected = defaults.bool(forKey: SettingsKey.specialistConnected)
 
         return settings
+    }
+
+    // MARK: - Model packs
+
+    func loadModelPacks(_ request: SettingsModels.LoadModelPacks.Request) {
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            let asrStates = await collectASRPackStates()
+            let llmStates = await collectLLMPackStates()
+            presenter?.presentLoadModelPacks(.init(
+                asrPacks: asrStates,
+                llmPacks: llmStates
+            ))
+        }
+    }
+
+    func downloadModelPack(_ request: SettingsModels.DownloadModelPack.Request) {
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            switch request.family {
+            case .asr(let pack):
+                await downloadASRPack(pack)
+            case .llm(let pack):
+                await downloadLLMPack(pack)
+            }
+        }
+    }
+
+    func deleteModelPack(_ request: SettingsModels.DeleteModelPack.Request) {
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            switch request.family {
+            case .asr(let pack):
+                await deleteASRPack(pack)
+            case .llm(let pack):
+                await deleteLLMPack(pack)
+            }
+        }
+    }
+
+    func loadLicenses(_ request: SettingsModels.LoadLicenses.Request) {
+        let licenses: [OpenSourceLicense] = [
+            OpenSourceLicense(
+                id: "whisperkit",
+                name: "WhisperKit",
+                licenseType: "MIT",
+                url: "https://github.com/argmaxinc/WhisperKit",
+                bodyText: String(localized: "settings.licenses.body.whisperkit")
+            ),
+            OpenSourceLicense(
+                id: "realm-swift",
+                name: "Realm Swift",
+                licenseType: "Apache 2.0",
+                url: "https://github.com/realm/realm-swift",
+                bodyText: String(localized: "settings.licenses.body.realm")
+            ),
+            OpenSourceLicense(
+                id: "firebase-ios-sdk",
+                name: "Firebase iOS SDK",
+                licenseType: "Apache 2.0",
+                url: "https://github.com/firebase/firebase-ios-sdk",
+                bodyText: String(localized: "settings.licenses.body.firebase")
+            ),
+            OpenSourceLicense(
+                id: "swift-snapshot-testing",
+                name: "swift-snapshot-testing",
+                licenseType: "MIT",
+                url: "https://github.com/pointfreeco/swift-snapshot-testing",
+                bodyText: String(localized: "settings.licenses.body.snapshot")
+            ),
+            OpenSourceLicense(
+                id: "qwen2.5",
+                name: "Qwen2.5-1.5B",
+                licenseType: "Apache 2.0",
+                url: "https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct",
+                bodyText: String(localized: "settings.licenses.body.qwen")
+            ),
+            OpenSourceLicense(
+                id: "silero-vad",
+                name: "Silero VAD",
+                licenseType: "MIT",
+                url: "https://github.com/snakers4/silero-vad",
+                bodyText: String(localized: "settings.licenses.body.silero")
+            )
+        ]
+        presenter?.presentLoadLicenses(.init(licenses: licenses))
+    }
+
+    func exportShare(_ request: SettingsModels.ExportShare.Request) {
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            do {
+                let payload = makeExportPayload(userId: request.userId)
+                let data = try JSONEncoder().encode(payload)
+                let timestamp = Int(Date().timeIntervalSince1970)
+                let fileName = "happyspeech-export-\(timestamp).json"
+                let tmpURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
+                try data.write(to: tmpURL, options: .atomic)
+                logger.info("export file written \(fileName, privacy: .public)")
+                presenter?.presentExportShare(.init(
+                    success: true,
+                    fileURL: tmpURL,
+                    errorMessage: nil
+                ))
+            } catch {
+                logger.error("export failed: \(error.localizedDescription, privacy: .public)")
+                presenter?.presentExportShare(.init(
+                    success: false,
+                    fileURL: nil,
+                    errorMessage: error.localizedDescription
+                ))
+            }
+        }
+    }
+
+    // MARK: - Model packs helpers
+
+    private func collectASRPackStates() async -> [ASRPackState] {
+        guard let manager = whisperKitModelManager else {
+            // Деградация без manager — возвращаем минимальный набор для UI.
+            return WhisperKitModelPack.allCases.map { pack in
+                ASRPackState(pack: pack, isInstalled: false, isActive: false, isDownloading: false, progress: 0)
+            }
+        }
+        let installed = await manager.installedPacks()
+        let active = await manager.currentlyInstalledPack()
+        let installedSet = Set(installed)
+        return WhisperKitModelPack.allCases.map { pack in
+            ASRPackState(
+                pack: pack,
+                isInstalled: installedSet.contains(pack),
+                isActive: active == pack,
+                isDownloading: asrProgress[pack] != nil,
+                progress: asrProgress[pack] ?? 0
+            )
+        }
+    }
+
+    private func collectLLMPackStates() async -> [LLMPackState] {
+        guard let manager = llmModelManager else {
+            return LLMModelPack.allCases.map { pack in
+                LLMPackState(pack: pack, isInstalled: false, isInUse: false, isDownloading: false, progress: 0)
+            }
+        }
+        var states: [LLMPackState] = []
+        for pack in LLMModelPack.allCases {
+            let installed = await manager.isModelInstalled(pack)
+            let inUse = await manager.isCurrentlyInUse(pack)
+            states.append(LLMPackState(
+                pack: pack,
+                isInstalled: installed,
+                isInUse: inUse,
+                isDownloading: llmProgress[pack] != nil,
+                progress: llmProgress[pack] ?? 0
+            ))
+        }
+        return states
+    }
+
+    private func downloadASRPack(_ pack: WhisperKitModelPack) async {
+        guard let manager = whisperKitModelManager else {
+            presenter?.presentDownloadModelPack(.init(
+                success: false,
+                identifier: "whisper.\(pack.rawValue)",
+                errorMessage: String(localized: "settings.models.error.unavailable")
+            ))
+            return
+        }
+        asrProgress[pack] = 0
+        logger.info("ASR pack download start: \(pack.rawValue, privacy: .public)")
+        do {
+            try await manager.download(pack: pack)
+            asrProgress[pack] = nil
+            logger.info("ASR pack downloaded: \(pack.rawValue, privacy: .public)")
+            presenter?.presentDownloadModelPack(.init(
+                success: true,
+                identifier: "whisper.\(pack.rawValue)",
+                errorMessage: nil
+            ))
+            // Обновим список паков.
+            loadModelPacks(.init())
+        } catch {
+            asrProgress[pack] = nil
+            logger.error("ASR download failed: \(error.localizedDescription, privacy: .public)")
+            presenter?.presentDownloadModelPack(.init(
+                success: false,
+                identifier: "whisper.\(pack.rawValue)",
+                errorMessage: error.localizedDescription
+            ))
+        }
+    }
+
+    private func downloadLLMPack(_ pack: LLMModelPack) async {
+        guard let manager = llmModelManager else {
+            presenter?.presentDownloadModelPack(.init(
+                success: false,
+                identifier: "llm.\(pack.rawValue)",
+                errorMessage: String(localized: "settings.models.error.unavailable")
+            ))
+            return
+        }
+        llmProgress[pack] = 0
+        logger.info("LLM pack download start: \(pack.rawValue, privacy: .public)")
+        do {
+            try await manager.downloadIfNeeded(pack)
+            llmProgress[pack] = nil
+            logger.info("LLM pack downloaded: \(pack.rawValue, privacy: .public)")
+            presenter?.presentDownloadModelPack(.init(
+                success: true,
+                identifier: "llm.\(pack.rawValue)",
+                errorMessage: nil
+            ))
+            loadModelPacks(.init())
+        } catch {
+            llmProgress[pack] = nil
+            logger.error("LLM download failed: \(error.localizedDescription, privacy: .public)")
+            presenter?.presentDownloadModelPack(.init(
+                success: false,
+                identifier: "llm.\(pack.rawValue)",
+                errorMessage: error.localizedDescription
+            ))
+        }
+    }
+
+    private func deleteASRPack(_ pack: WhisperKitModelPack) async {
+        guard let manager = whisperKitModelManager else {
+            presenter?.presentDeleteModelPack(.init(
+                success: false,
+                identifier: "whisper.\(pack.rawValue)",
+                errorMessage: String(localized: "settings.models.error.unavailable")
+            ))
+            return
+        }
+        do {
+            try await manager.deletePack(pack)
+            logger.info("ASR pack deleted: \(pack.rawValue, privacy: .public)")
+            presenter?.presentDeleteModelPack(.init(
+                success: true,
+                identifier: "whisper.\(pack.rawValue)",
+                errorMessage: nil
+            ))
+            loadModelPacks(.init())
+        } catch {
+            logger.error("ASR delete failed: \(error.localizedDescription, privacy: .public)")
+            presenter?.presentDeleteModelPack(.init(
+                success: false,
+                identifier: "whisper.\(pack.rawValue)",
+                errorMessage: error.localizedDescription
+            ))
+        }
+    }
+
+    private func deleteLLMPack(_ pack: LLMModelPack) async {
+        guard let manager = llmModelManager else {
+            presenter?.presentDeleteModelPack(.init(
+                success: false,
+                identifier: "llm.\(pack.rawValue)",
+                errorMessage: String(localized: "settings.models.error.unavailable")
+            ))
+            return
+        }
+        do {
+            try await manager.deleteModel(pack)
+            logger.info("LLM pack deleted: \(pack.rawValue, privacy: .public)")
+            presenter?.presentDeleteModelPack(.init(
+                success: true,
+                identifier: "llm.\(pack.rawValue)",
+                errorMessage: nil
+            ))
+            loadModelPacks(.init())
+        } catch {
+            logger.error("LLM delete failed: \(error.localizedDescription, privacy: .public)")
+            presenter?.presentDeleteModelPack(.init(
+                success: false,
+                identifier: "llm.\(pack.rawValue)",
+                errorMessage: error.localizedDescription
+            ))
+        }
+    }
+
+    // MARK: - Export helpers
+
+    private struct ExportPayload: Codable {
+        let exportedAt: Date
+        let userId: String
+        let appVersion: String
+        let buildNumber: String
+        let settings: ExportSettings
+    }
+
+    private struct ExportSettings: Codable {
+        let theme: String
+        let childName: String
+        let childAge: Int
+        let childAvatar: String
+        let notificationsEnabled: Bool
+        let audioQuality: String
+        let autoDownload: Bool
+        let specialistConnected: Bool
+    }
+
+    private func makeExportPayload(userId: String) -> ExportPayload {
+        let info = Bundle.main.infoDictionary ?? [:]
+        let version = info["CFBundleShortVersionString"] as? String ?? "1.0.0"
+        let build = info["CFBundleVersion"] as? String ?? "1"
+        return ExportPayload(
+            exportedAt: Date(),
+            userId: userId,
+            appVersion: version,
+            buildNumber: build,
+            settings: ExportSettings(
+                theme: settings.theme.rawValue,
+                childName: settings.childName,
+                childAge: settings.childAge,
+                childAvatar: settings.childAvatar,
+                notificationsEnabled: settings.notificationsEnabled,
+                audioQuality: settings.audioQuality.rawValue,
+                autoDownload: settings.autoDownload,
+                specialistConnected: settings.specialistConnected
+            )
+        )
     }
 }

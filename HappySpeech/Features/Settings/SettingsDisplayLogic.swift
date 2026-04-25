@@ -13,6 +13,11 @@ protocol SettingsDisplayLogic: AnyObject {
     func displayExportData(_ viewModel: SettingsModels.ExportData.ViewModel)
     func displayClearCache(_ viewModel: SettingsModels.ClearCache.ViewModel)
     func displayConnectSpecialist(_ viewModel: SettingsModels.ConnectSpecialist.ViewModel)
+    func displayLoadModelPacks(_ viewModel: SettingsModels.LoadModelPacks.ViewModel)
+    func displayDownloadModelPack(_ viewModel: SettingsModels.DownloadModelPack.ViewModel)
+    func displayDeleteModelPack(_ viewModel: SettingsModels.DeleteModelPack.ViewModel)
+    func displayLoadLicenses(_ viewModel: SettingsModels.LoadLicenses.ViewModel)
+    func displayExportShare(_ viewModel: SettingsModels.ExportShare.ViewModel)
     func displayFailure(_ viewModel: SettingsModels.Failure.ViewModel)
     func displayLoading(_ isLoading: Bool)
 }
@@ -31,6 +36,12 @@ final class SettingsDisplay: SettingsDisplayLogic {
     var isLoading: Bool = false
     var toastMessage: String?
     var toastIsError: Bool = false
+
+    // Models / licenses / share state.
+    var asrModelItems: [ModelPackRowVM] = []
+    var llmModelItems: [ModelPackRowVM] = []
+    var licenses: [OpenSourceLicenseVM] = []
+    var shareFileURL: URL?
 
     // MARK: - SettingsDisplayLogic
 
@@ -85,6 +96,31 @@ final class SettingsDisplay: SettingsDisplayLogic {
         isLoading = false
     }
 
+    func displayLoadModelPacks(_ viewModel: SettingsModels.LoadModelPacks.ViewModel) {
+        asrModelItems = viewModel.asrItems
+        llmModelItems = viewModel.llmItems
+    }
+
+    func displayDownloadModelPack(_ viewModel: SettingsModels.DownloadModelPack.ViewModel) {
+        toastMessage = viewModel.toastMessage
+        toastIsError = viewModel.toastIsError
+    }
+
+    func displayDeleteModelPack(_ viewModel: SettingsModels.DeleteModelPack.ViewModel) {
+        toastMessage = viewModel.toastMessage
+        toastIsError = viewModel.toastIsError
+    }
+
+    func displayLoadLicenses(_ viewModel: SettingsModels.LoadLicenses.ViewModel) {
+        licenses = viewModel.licenses
+    }
+
+    func displayExportShare(_ viewModel: SettingsModels.ExportShare.ViewModel) {
+        shareFileURL = viewModel.fileURL
+        toastMessage = viewModel.toastMessage
+        toastIsError = viewModel.toastIsError
+    }
+
     func displayFailure(_ viewModel: SettingsModels.Failure.ViewModel) {
         toastMessage = viewModel.toastMessage
         toastIsError = true
@@ -98,5 +134,9 @@ final class SettingsDisplay: SettingsDisplayLogic {
     func clearToast() {
         toastMessage = nil
         toastIsError = false
+    }
+
+    func clearShareFile() {
+        shareFileURL = nil
     }
 }

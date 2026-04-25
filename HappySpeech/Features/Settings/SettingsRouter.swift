@@ -8,6 +8,8 @@ protocol SettingsRoutingLogic {
     func routeOpenPrivacyPolicy()
     func routeOpenTerms()
     func routeOpenSpecialistPanel()
+    func routeOpenURL(_ url: URL)
+    func routeShareFile(_ url: URL)
 }
 
 // MARK: - SettingsRouter
@@ -23,9 +25,13 @@ final class SettingsRouter: SettingsRoutingLogic {
     var onOpenPrivacyPolicy: (() -> Void)?
     var onOpenTerms: (() -> Void)?
     var onOpenSpecialistPanel: (() -> Void)?
+    var onOpenURL: ((URL) -> Void)?
+    var onShareFile: ((URL) -> Void)?
 
     func routeBack() { onDismiss?() }
     func routeOpenPrivacyPolicy() { onOpenPrivacyPolicy?() }
     func routeOpenTerms() { onOpenTerms?() }
     func routeOpenSpecialistPanel() { onOpenSpecialistPanel?() }
+    func routeOpenURL(_ url: URL) { onOpenURL?(url) }
+    func routeShareFile(_ url: URL) { onShareFile?(url) }
 }
