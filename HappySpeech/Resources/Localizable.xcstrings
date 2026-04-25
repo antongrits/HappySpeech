@@ -9204,6 +9204,127 @@
           }
         }
       }
+    },
+    "offline.auto_retry.0": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторяем подключение…"
+          }
+        }
+      }
+    },
+    "offline.auto_retry.1": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повтор через 1 секунду"
+          }
+        }
+      }
+    },
+    "offline.auto_retry.2": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повтор через 2 секунды"
+          }
+        }
+      }
+    },
+    "offline.auto_retry.3": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повтор через 3 секунды"
+          }
+        }
+      }
+    },
+    "offline.auto_retry.4": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повтор через 4 секунды"
+          }
+        }
+      }
+    },
+    "offline.auto_retry.5": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повтор через 5 секунд"
+          }
+        }
+      }
+    },
+    "offline.illustration.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Иллюстрация: нет подключения к интернету"
+          }
+        }
+      }
+    },
+    "offline.retry.a11y.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите, чтобы повторить попытку подключения"
+          }
+        }
+      }
+    },
+    "offline.continue.a11y.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите, чтобы продолжить занятие в офлайн-режиме"
+          }
+        }
+      }
+    },
+    "ds.ar.scene.a11y_label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AR-сцена"
+          }
+        }
+      }
+    },
+    "ds.ar.scene.fallback_a11y_label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запасное изображение AR-сцены"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
