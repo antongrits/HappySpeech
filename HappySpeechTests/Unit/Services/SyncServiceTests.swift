@@ -4,7 +4,7 @@ import RealmSwift
 
 // MARK: - SyncServiceTests
 //
-// 13 unit-тестов для LiveSyncService (требование ≥12).
+// 17 unit-тестов для LiveSyncService (M10.1 batch 4 — требование ≥15).
 //
 // Стратегия изоляции:
 //   • RealmActor — реальный actor c in-memory Realm — нет I/O.
@@ -418,7 +418,93 @@ final class SyncServiceTests: XCTestCase {
         }
     }
 
-    // MARK: - Test 13: wifiOnly блокирует cellular
+    // MARK: - Test 13: drainQueue при пустой очереди не выполняет лишних записей
+
+    func testDrainQueue_emptyQueue_publishesCompletedZero() async throws {
+        let realm = try await makeRealmActor()
+        let sut = makeSUT(realmActor: realm)
+
+        let (collectTask, collector) = startCollecting(from: sut)
+        try await Task.sleep(nanoseconds: 50_000_000)
+
+        // Не добавляем ни одной операции
+        try await sut.drainQueue()
+        try await Task.sleep(nanoseconds: 100_000_000)
+        collectTask.cancel()
+
+        let hasCompleted = await collector.contains { state in
+            if case .completed(let n) = state { return n == 0 }
+            return false
+        }
+        XCTAssertTrue(hasCompleted,
+            "Пустая очередь должна публиковать .completed(itemsSynced: 0)")
+    }
+
+    // MARK: - Test 14: syncUserProgress бросает ошибку при offline
+
+    func testSyncUserProgress_offline_throwsOfflineError() async throws {
+        let realm = try await makeRealmActor()
+        let sut = makeSUT(realmActor: realm, isConnected: false)
+
+        do {
+            try await sut.syncUserProgress(userId: "user-1")
+            XCTFail("syncUserProgress должен бросить ошибку при offline")
+        } catch let error as SyncError {
+            guard case .offline = error else {
+                XCTFail("Ожидается SyncError.offline, получено: \(error)")
+                return
+            }
+        } catch {
+            XCTFail("Ожидается SyncError.offline, получено: \(error)")
+        }
+    }
+
+    // MARK: - Test 15: syncUserProgress с пустым userId бросает remoteRejected
+
+    func testSyncUserProgress_emptyUserId_throwsRemoteRejected() async throws {
+        let realm = try await makeRealmActor()
+        let sut = makeSUT(realmActor: realm, isConnected: true)
+
+        // Добавляем child с parentId, чтобы snapshot был непустым
+        await realm.asyncWrite { realmInstance in
+            let profile = ChildProfile()
+            profile.id = UUID().uuidString
+            profile.parentId = ""
+            profile.name = "Тест"
+            profile.age = 6
+            realmInstance.add(profile)
+        }
+
+        do {
+            try await sut.syncUserProgress(userId: "")
+            XCTFail("Пустой userId должен приводить к ошибке")
+        } catch let error as SyncError {
+            if case .remoteRejected = error {
+                // Ожидаемый результат
+            } else {
+                XCTFail("Ожидается SyncError.remoteRejected, получено: \(error)")
+            }
+        } catch {
+            XCTFail("Ожидается SyncError, получено: \(error)")
+        }
+    }
+
+    // MARK: - Test 16 (бонус): isSyncing возвращает false до и после drain
+
+    func testIsSyncing_falseBeforeAndAfterDrain() async throws {
+        let realm = try await makeRealmActor()
+        let sut = makeSUT(realmActor: realm)
+
+        let before = await sut.isSyncing()
+        XCTAssertFalse(before, "До drain isSyncing должен быть false")
+
+        try await sut.drainQueue()
+
+        let after = await sut.isSyncing()
+        XCTAssertFalse(after, "После завершения drain isSyncing должен быть false")
+    }
+
+    // MARK: - Test 17 (бонус): wifiOnly блокирует cellular
 
     func testWifiOnlyPolicyBlocksCellular() async throws {
         let realm = try await makeRealmActor()
