@@ -132,6 +132,16 @@ private struct ParentDashboardTab: View {
             .navigationTitle(String(localized: "Прогресс"))
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        coordinator.navigate(to: .sessionHistory(childId: viewModel.childId))
+                    } label: {
+                        Image(systemName: "clock.arrow.circlepath")
+                            .foregroundStyle(ColorTokens.Parent.accent)
+                    }
+                    .accessibilityLabel(String(localized: "История занятий"))
+                }
+
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         coordinator.navigate(to: .childHome(childId: viewModel.childId))
