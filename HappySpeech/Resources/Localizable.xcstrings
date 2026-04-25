@@ -11030,6 +11030,138 @@
           }
         }
       }
+    },
+    "story_player.skip": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пропустить"
+          }
+        }
+      }
+    },
+    "story_player.skip.accessibility": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пропустить видео"
+          }
+        }
+      }
+    },
+    "celebration.title_star1": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец!"
+          }
+        }
+      }
+    },
+    "celebration.title_star2": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отличная работа!"
+          }
+        }
+      }
+    },
+    "celebration.title_star3": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Превосходно!"
+          }
+        }
+      }
+    },
+    "celebration.perfect_subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ты справился идеально!"
+          }
+        }
+      }
+    },
+    "celebration.continue_button": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжить"
+          }
+        }
+      }
+    },
+    "celebration.continue_button.accessibility": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжить занятие"
+          }
+        }
+      }
+    },
+    "lyalya.scene.idle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ляля отдыхает"
+          }
+        }
+      }
+    },
+    "lyalya.scene.celebrating": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ляля празднует победу"
+          }
+        }
+      }
+    },
+    "lyalya.scene.waving": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ляля машет крылышком"
+          }
+        }
+      }
+    },
+    "lyalya.scene.default": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ляля"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
