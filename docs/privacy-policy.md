@@ -168,7 +168,7 @@ HappySpeech is a speech therapy app for children aged 5–8 years. Children are 
 
 The data controller is:
 
-**Anton Grits**
+**Anton Hryts**
 Individual developer
 Email: antongric558@gmail.com
 
