@@ -27,6 +27,9 @@ struct ChildHomeView: View {
     @State private var interactor: ChildHomeInteractor?
     @State private var router: ChildHomeRouter?
 
+    /// B13 — SOS-flow: alert «Позвать родителя?» перед фактическим переходом.
+    @State private var showSOSAlert: Bool = false
+
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -57,6 +60,16 @@ struct ChildHomeView: View {
                         .transition(.scale.combined(with: .opacity))
                     }
 
+                    // B13: полноразмерный Streak Banner с pulse-анимацией.
+                    // Показываем только при streak ≥ 1 — нечего поощрять при нуле.
+                    if viewModel.currentStreak > 0 {
+                        ChildHomeStreakBanner(
+                            streak: viewModel.currentStreak,
+                            isHot: viewModel.isStreakHot
+                        )
+                        .transition(.scale.combined(with: .opacity))
+                    }
+
                     dailyMissionSection
                         .spotlightAnchor(key: "daily_mission_card")
 
@@ -71,7 +84,11 @@ struct ChildHomeView: View {
                     progressSection
                         .spotlightAnchor(key: "streak_banner")
 
+                    recentRewardsSection
+
                     recentSessionsSection
+
+                    sosSection
 
                     Spacer(minLength: SpacingTokens.sp16)
                 }
@@ -89,6 +106,20 @@ struct ChildHomeView: View {
         }
         .environment(\.circuitContext, .kid)
         .loadingOverlay(viewModel.isLoading)
+        .alert(
+            String(localized: "child.home.sos.alert_title"),
+            isPresented: $showSOSAlert
+        ) {
+            Button(String(localized: "child.home.sos.confirm")) {
+                Self.logger.info("SOS confirmed → routing to ParentHome")
+                router?.routeToParentHome()
+            }
+            Button(String(localized: "child.home.sos.cancel"), role: .cancel) {
+                Self.logger.debug("SOS cancelled by child")
+            }
+        } message: {
+            Text(String(localized: "child.home.sos.alert_message"))
+        }
     }
 
     // MARK: - Wiring (Clean Swift bootstrap)
@@ -183,7 +214,15 @@ struct ChildHomeView: View {
 
     private var dailyMissionSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-            sectionHeader(String(localized: "child.home.mission.section"), emoji: "🎯")
+            HStack(spacing: SpacingTokens.sp2) {
+                sectionHeader(String(localized: "child.home.mission.section"), emoji: "🎯")
+                Spacer(minLength: 0)
+                // B13: компактный таймер до конца дня (TimelineView, обновление 60с).
+                // Не показываем, если миссия уже завершена.
+                if !viewModel.dailyMissionDetail.isCompleted {
+                    ChildHomeMissionTimerLabel()
+                }
+            }
 
             ChildHomeDailyMissionDetailCard(
                 mission: viewModel.dailyMissionDetail
@@ -311,6 +350,69 @@ struct ChildHomeView: View {
         }
     }
 
+    // MARK: - Recent Rewards (B13 — отдельная секция, не путать с RecentSessions)
+
+    private var recentRewardsSection: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+            HStack {
+                sectionHeader(String(localized: "child.home.rewards.title"), emoji: "🏅")
+                Spacer()
+                Button {
+                    router?.routeToRewards(childId: childId)
+                } label: {
+                    Text(String(localized: "child.home.rewards.show_all"))
+                        .font(TypographyTokens.caption(13))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                }
+                .accessibilityHint(String(localized: "child.home.rewards.show_all.hint"))
+            }
+
+            if viewModel.recentRewards.isEmpty {
+                ChildHomeEmptyRewardsView()
+            } else {
+                VStack(spacing: SpacingTokens.sp2) {
+                    ForEach(viewModel.recentRewards.prefix(3)) { reward in
+                        ChildHomeRecentRewardRow(reward: reward)
+                    }
+                }
+            }
+        }
+    }
+
+    // MARK: - SOS (B13 — «Позвать родителя» с alert-подтверждением)
+
+    private var sosSection: some View {
+        Button {
+            Self.logger.debug("SOS button tapped — presenting alert")
+            showSOSAlert = true
+        } label: {
+            HStack(spacing: SpacingTokens.sp2) {
+                Image(systemName: "person.crop.circle.badge.exclamationmark")
+                    .font(.system(size: 16, weight: .semibold))
+                Text(String(localized: "child.home.sos.button"))
+                    .font(TypographyTokens.body(14))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+            }
+            .foregroundStyle(ColorTokens.Brand.primary)
+            .padding(.horizontal, SpacingTokens.sp4)
+            .padding(.vertical, SpacingTokens.sp3)
+            .frame(maxWidth: .infinity)
+            .background(
+                Capsule()
+                    .fill(ColorTokens.Brand.primary.opacity(0.10))
+            )
+            .overlay(
+                Capsule()
+                    .strokeBorder(ColorTokens.Brand.primary.opacity(0.25), lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+        .tapFeedback()
+        .accessibilityLabel(String(localized: "child.home.sos.button"))
+        .accessibilityHint(String(localized: "child.home.sos.alert_message"))
+    }
+
     // MARK: - Recent Sessions
 
     private var recentSessionsSection: some View {
@@ -347,7 +449,10 @@ struct ChildHomeView: View {
             HStack {
                 Spacer()
                 Button {
-                    router?.routeToParentHome()
+                    // B13: вместо немедленного перехода — показываем SOS alert
+                    // (consistency с нижней кнопкой «Позвать родителя»).
+                    Self.logger.debug("Top-right parent button tapped — presenting SOS alert")
+                    showSOSAlert = true
                 } label: {
                     Image(systemName: "person.2.fill")
                         .font(.system(size: 16))

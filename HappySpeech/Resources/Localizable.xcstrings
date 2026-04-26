@@ -1585,6 +1585,296 @@
         }
       }
     },
+    "child.home.rewards.bronze": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Бронзовая медаль"
+          }
+        }
+      }
+    },
+    "child.home.rewards.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока нет наград — заверши первое занятие!"
+          }
+        }
+      }
+    },
+    "child.home.rewards.gold": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Золотой кубок"
+          }
+        }
+      }
+    },
+    "child.home.rewards.show_all": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все награды"
+          }
+        }
+      }
+    },
+    "child.home.rewards.show_all.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть полный список наград"
+          }
+        }
+      }
+    },
+    "child.home.rewards.silver": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серебряная медаль"
+          }
+        }
+      }
+    },
+    "child.home.rewards.streak": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звезда серии"
+          }
+        }
+      }
+    },
+    "child.home.rewards.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мои награды"
+          }
+        }
+      }
+    },
+    "child.home.quick.difficulty.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сложность %lld из 3"
+          }
+        }
+      }
+    },
+    "child.home.sos.alert_message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Родитель получит уведомление и подойдёт к тебе"
+          }
+        }
+      }
+    },
+    "child.home.sos.alert_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Позвать родителя?"
+          }
+        }
+      }
+    },
+    "child.home.sos.button": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Позвать родителя"
+          }
+        }
+      }
+    },
+    "child.home.sos.cancel": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отмена"
+          }
+        }
+      }
+    },
+    "child.home.sos.confirm": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Позвать"
+          }
+        }
+      }
+    },
+    "child.home.streak.banner.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серия %lld дней. Не прерывай серию занятий!"
+          }
+        }
+      }
+    },
+    "child.home.streak.hot": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В ударе"
+          }
+        }
+      }
+    },
+    "child.home.streak.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не прерывай серию занятий!"
+          }
+        }
+      }
+    },
+    "child.home.time.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Осталось до конца дня %lld часов %lld минут"
+          }
+        }
+      }
+    },
+    "child.home.time.hours.format": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld ч"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld ч"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld ч"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld ч"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "child.home.time.minutes.format": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld минуту"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld минуты"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld минут"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld минут"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "child.home.time.minutes.short.format": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld мин"
+          }
+        }
+      }
+    },
+    "child.home.time_left": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Осталось"
+          }
+        }
+      }
+    },
     "child.home.sound.row.a11y": {
       "extractionState": "manual",
       "localizations": {

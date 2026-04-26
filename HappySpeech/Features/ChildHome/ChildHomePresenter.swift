@@ -35,7 +35,9 @@ final class ChildHomePresenter: ChildHomePresentationLogic {
             achievement: makeAchievement(from: response),
             dailyMissionDetail: makeMissionDetail(from: response),
             formattedDate: dateFormatter.string(from: Date()),
-            isStreakHot: response.currentStreak >= 7
+            isStreakHot: response.currentStreak >= 7,
+            recentRewards: makeRecentRewards(from: response),
+            hasOverdueTask: response.hasOverdueTask
         )
         viewModel?.displayFetch(vm)
     }
@@ -90,7 +92,22 @@ final class ChildHomePresenter: ChildHomePresentationLogic {
                 templateType: data.templateType,
                 title: String(localized: String.LocalizationValue(data.titleKey)),
                 icon: data.icon,
-                accent: data.accent
+                accent: data.accent,
+                difficulty: max(1, min(3, data.difficulty))
+            )
+        }
+    }
+
+    /// B13: маппинг наград из Response в VM с локализованными заголовками.
+    private func makeRecentRewards(
+        from response: ChildHomeModels.Fetch.Response
+    ) -> [ChildHomeModels.RecentReward] {
+        response.recentRewards.map { data in
+            ChildHomeModels.RecentReward(
+                id: data.id,
+                emoji: data.emoji,
+                title: String(localized: String.LocalizationValue(data.titleKey)),
+                earnedAt: data.earnedAt
             )
         }
     }

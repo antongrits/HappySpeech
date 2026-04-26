@@ -29,6 +29,13 @@ final class ChildHomeViewModel: ChildHomeDisplayLogic {
     var formattedDate: String = ""
     var isStreakHot: Bool = false
 
+    // MARK: - B13 deep VIP additions
+
+    /// Последние 3 награды (отдельно от RecentSession).
+    var recentRewards: [ChildHomeModels.RecentReward] = []
+    /// Просрочена ли дневная миссия (вечер + не закрыта). Влияет на маскота и pulse баннера.
+    var hasOverdueTask: Bool = false
+
     // MARK: - Computed helpers
 
     var displayedName: String {
@@ -59,6 +66,10 @@ final class ChildHomeViewModel: ChildHomeDisplayLogic {
         self.dailyMissionDetail = viewModel.dailyMissionDetail
         self.formattedDate      = viewModel.formattedDate
         self.isStreakHot        = viewModel.isStreakHot
+
+        // B13
+        self.recentRewards      = viewModel.recentRewards
+        self.hasOverdueTask     = viewModel.hasOverdueTask
 
         self.isLoading          = false
     }
