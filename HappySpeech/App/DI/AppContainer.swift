@@ -19,6 +19,15 @@ public final class AppContainer {
     public let themeManager: ThemeManager
     public let authService: any AuthService
 
+    // M6.16: ScreeningOutcome repository — lazy, инициализируется при первом обращении.
+    private var _screeningOutcomeRepository: (any ScreeningOutcomeRepository)?
+    public var screeningOutcomeRepository: any ScreeningOutcomeRepository {
+        if let existing = _screeningOutcomeRepository { return existing }
+        let new = LiveScreeningOutcomeRepository(realmActor: realmActor)
+        _screeningOutcomeRepository = new
+        return new
+    }
+
     // Services (lazy-init via closures to avoid startup latency)
     private var _audioService: (any AudioService)?
     private var _asrService: (any ASRService)?

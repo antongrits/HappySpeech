@@ -27,6 +27,8 @@ enum AppRoute: Hashable {
     case progressDashboard(childId: String)
     case sessionHistory(childId: String)
     case homeTasks
+    /// M6.16: Повторный скрининг из ParentHome.
+    case screening(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -278,6 +280,15 @@ struct AppCoordinatorView: View {
         case .homeTasks:
             HomeTasksView()
                 .environment(\.circuitContext, .parent)
+
+        case .screening(let childId):
+            ScreeningView(
+                childId: childId,
+                childAge: 6,
+                onFinish: { _ in coordinator.navigate(to: .parentHome) },
+                onCancel: { coordinator.navigate(to: .parentHome) }
+            )
+            .environment(\.circuitContext, .parent)
         }
     }
 

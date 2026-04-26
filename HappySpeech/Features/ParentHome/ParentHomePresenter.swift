@@ -27,6 +27,8 @@ final class ParentHomePresenter: ParentHomePresentationLogic {
             summary: response.progressSummary
         )
 
+        let screeningCard = Self.makeScreeningCard(from: response.screeningOutcome)
+
         let vm = ParentHomeModels.Fetch.ViewModel(
             childId: response.childId,
             childName: response.childName,
@@ -40,7 +42,8 @@ final class ParentHomePresenter: ParentHomePresentationLogic {
             recentSessions: sessions,
             soundProgress: soundProgress,
             homeTask: response.homeTask,
-            recommendations: recommendations
+            recommendations: recommendations,
+            screeningCard: screeningCard
         )
         viewModel?.displayFetch(vm)
     }
@@ -133,6 +136,54 @@ final class ParentHomePresenter: ParentHomePresentationLogic {
         case ..<0.9:  return String(localized: "stage.phrase")
         default:       return String(localized: "stage.story")
         }
+    }
+
+    // MARK: - M6.16: Screening Card
+
+    private static func makeScreeningCard(
+        from outcome: ScreeningOutcomeDTO?
+    ) -> ParentHomeModels.ScreeningCardViewModel? {
+        guard let outcome else { return nil }
+
+        let df = DateFormatter()
+        df.locale = Locale(identifier: "ru_RU")
+        df.dateStyle = .long
+        df.timeStyle = .none
+        let dateText = df.string(from: outcome.completedAt)
+
+        let sounds = outcome.problematicSounds
+        let soundsText = sounds.isEmpty
+            ? String(localized: "screening.card.no_issues")
+            : sounds.joined(separator: ", ")
+
+        let recommendation: String
+        switch outcome.overallSeverity {
+        case "mild":
+            recommendation = String(localized: "screening.card.reco.mild")
+        case "moderate":
+            let format = String(localized: "screening.card.reco.moderate")
+            recommendation = String.localizedStringWithFormat(format, soundsText)
+        case "severe":
+            let format = String(localized: "screening.card.reco.severe")
+            recommendation = String.localizedStringWithFormat(format, soundsText)
+        default:
+            recommendation = String(localized: "screening.card.reco.mild")
+        }
+
+        // Показываем «Перепройти» если с момента скрининга прошло ≥ 14 дней.
+        let daysSince = Calendar.current.dateComponents(
+            [.day], from: outcome.completedAt, to: Date()
+        ).day ?? 0
+        let canRetake = daysSince >= 14
+
+        return ParentHomeModels.ScreeningCardViewModel(
+            completedAtText: dateText,
+            severityText: outcome.severityDisplayText,
+            problematicSoundsText: soundsText,
+            recommendationText: recommendation,
+            canRetake: canRetake,
+            severityColorToken: outcome.overallSeverity
+        )
     }
 
     private static func recommendations(for sounds: [String], summary: [String: Double]) -> [String] {
