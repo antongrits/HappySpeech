@@ -10,6 +10,12 @@ protocol SessionReviewBusinessLogic: AnyObject {
     func finalizeReview(_ request: SessionReviewModels.FinalizeReview.Request) async
     func loadDetails(_ request: SessionReviewModels.LoadDetails.Request) async
     func exportPDF(_ request: SessionReviewModels.ExportPDF.Request) async
+    /// M6.15: Загрузить per-attempt scoring breakdown для текущей сессии.
+    func loadAttemptBreakdown(_ request: SessionReviewModels.LoadAttemptBreakdown.Request) async
+    /// M6.15: Добавить текстовую аннотацию специалиста к попытке или всей сессии.
+    func addAnnotation(_ request: SessionReviewModels.AddAnnotation.Request) async
+    /// M6.15: Удалить аннотацию.
+    func deleteAnnotation(_ request: SessionReviewModels.DeleteAnnotation.Request) async
 }
 
 // MARK: - SessionReviewInteractor
@@ -36,6 +42,11 @@ final class SessionReviewInteractor: SessionReviewBusinessLogic {
     private var rows: [AttemptReviewRow] = []
     private var specialistNotes: String = ""
     private var currentSummary: SessionSummary?
+    /// M6.15: Breakdown по попыткам — статистика по каждой попытке с детализацией.
+    private var attemptBreakdown: [AttemptBreakdownRow] = []
+    /// M6.15: Аннотации специалиста (in-memory; при наличии Realm-поддержки
+    /// перепишутся через `SessionAnnotation`-объект в Data-слое).
+    private var annotations: [SessionAnnotation] = []
 
     // MARK: - Init
 
@@ -266,27 +277,27 @@ final class SessionReviewInteractor: SessionReviewBusinessLogic {
     /// Человекочитаемое имя шаблона. Источник истины — `TemplateType`,
     /// здесь — словарь UI-меток.
     static func gameName(for templateType: String) -> String {
-        switch templateType {
-        case "listenAndChoose":       return String(localized: "game.listen_and_choose")
-        case "repeatAfterModel":     return String(localized: "game.repeat_after_model")
-        case "dragAndMatch":         return String(localized: "game.drag_and_match")
-        case "storyCompletion":      return String(localized: "game.story_completion")
-        case "puzzleReveal":         return String(localized: "game.puzzle_reveal")
-        case "sorting":               return String(localized: "game.sorting")
-        case "memory":                return String(localized: "game.memory")
-        case "bingo":                 return String(localized: "game.bingo")
-        case "soundHunter":           return String(localized: "game.sound_hunter")
-        case "articulationImitation": return String(localized: "game.articulation_imitation")
-        case "ARActivity":            return String(localized: "game.ar_activity")
-        case "visualAcoustic":       return String(localized: "game.visual_acoustic")
-        case "breathing":             return String(localized: "game.breathing")
-        case "rhythm":                return String(localized: "game.rhythm")
-        case "narrativeQuest":        return String(localized: "game.narrative_quest")
-        case "minimalPairs":          return String(localized: "game.minimal_pairs")
-        default:
-            return templateType
-        }
+        gameNameMap[templateType] ?? templateType
     }
+
+    private static let gameNameMap: [String: String] = [
+        "listenAndChoose": String(localized: "game.listen_and_choose"),
+        "repeatAfterModel": String(localized: "game.repeat_after_model"),
+        "dragAndMatch": String(localized: "game.drag_and_match"),
+        "storyCompletion": String(localized: "game.story_completion"),
+        "puzzleReveal": String(localized: "game.puzzle_reveal"),
+        "sorting": String(localized: "game.sorting"),
+        "memory": String(localized: "game.memory"),
+        "bingo": String(localized: "game.bingo"),
+        "soundHunter": String(localized: "game.sound_hunter"),
+        "articulationImitation": String(localized: "game.articulation_imitation"),
+        "ARActivity": String(localized: "game.ar_activity"),
+        "visualAcoustic": String(localized: "game.visual_acoustic"),
+        "breathing": String(localized: "game.breathing"),
+        "rhythm": String(localized: "game.rhythm"),
+        "narrativeQuest": String(localized: "game.narrative_quest"),
+        "minimalPairs": String(localized: "game.minimal_pairs")
+    ]
 
     // MARK: - Summary (existing)
 
@@ -311,10 +322,128 @@ final class SessionReviewInteractor: SessionReviewBusinessLogic {
         )
     }
 
+    // MARK: - M6.15: Per-attempt breakdown
+
+    /// Загружает детальную статистику по каждой попытке текущей сессии.
+    /// Если сессия уже закэширована — использует её; иначе подгружает из репозитория.
+    func loadAttemptBreakdown(_ request: SessionReviewModels.LoadAttemptBreakdown.Request) async {
+        do {
+            let session: SessionDTO
+            if let cached = currentSession, cached.id == request.sessionId {
+                session = cached
+            } else {
+                session = try await sessionRepository.fetch(id: request.sessionId)
+                currentSession = session
+            }
+
+            attemptBreakdown = Self.buildBreakdown(from: session)
+            await presenter?.presentAttemptBreakdown(.init(
+                sessionId: request.sessionId,
+                rows: attemptBreakdown
+            ))
+        } catch {
+            logger.error("loadAttemptBreakdown failed: \(error.localizedDescription, privacy: .public)")
+        }
+    }
+
+    // MARK: - M6.15: Annotations
+
+    /// Добавляет текстовую аннотацию специалиста к попытке или сессии.
+    /// `targetAttemptId` == nil означает аннотацию ко всей сессии.
+    func addAnnotation(_ request: SessionReviewModels.AddAnnotation.Request) async {
+        guard !request.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            logger.warning("addAnnotation: empty text — ignored")
+            return
+        }
+        let annotation = SessionAnnotation(
+            id: UUID().uuidString,
+            sessionId: request.sessionId,
+            targetAttemptId: request.targetAttemptId,
+            text: request.text,
+            createdAt: Date()
+        )
+        annotations.append(annotation)
+        let attemptIdLog = request.targetAttemptId ?? "session"
+        let textLen = request.text.count
+        logger.info(
+            "addAnnotation sid=\(request.sessionId, privacy: .public) aid=\(attemptIdLog, privacy: .public) len=\(textLen, privacy: .public)"
+        )
+        await presenter?.presentAnnotationUpdated(.init(
+            sessionId: request.sessionId,
+            annotations: annotations
+        ))
+    }
+
+    /// Удаляет аннотацию по id.
+    func deleteAnnotation(_ request: SessionReviewModels.DeleteAnnotation.Request) async {
+        annotations.removeAll { $0.id == request.annotationId }
+        logger.info("deleteAnnotation id=\(request.annotationId, privacy: .public)")
+        await presenter?.presentAnnotationUpdated(.init(
+            sessionId: request.sessionId,
+            annotations: annotations
+        ))
+    }
+
+    // MARK: - Helpers (M6.15)
+
+    /// Строит per-attempt breakdown — детальные строки с ASR/ML/manual score.
+    static func buildBreakdown(from session: SessionDTO) -> [AttemptBreakdownRow] {
+        session.attempts.enumerated().map { index, attempt in
+            let autoScore = max(attempt.asrScore, attempt.pronunciationScore >= 0 ? attempt.pronunciationScore : 0)
+            let effectiveScore = attempt.manualScore > 0 ? attempt.manualScore : autoScore
+            let confidence = ScoreConfidence.make(
+                asr: attempt.asrScore,
+                pronunciation: attempt.pronunciationScore,
+                manual: attempt.manualScore
+            )
+            return AttemptBreakdownRow(
+                index: index + 1,
+                id: attempt.id,
+                word: attempt.word,
+                asrTranscript: attempt.asrTranscript,
+                asrScore: attempt.asrScore,
+                pronunciationScore: attempt.pronunciationScore >= 0 ? attempt.pronunciationScore : nil,
+                manualScore: attempt.manualScore > 0 ? attempt.manualScore : nil,
+                effectiveScore: effectiveScore,
+                isCorrect: attempt.isCorrect,
+                audioPath: attempt.audioLocalPath,
+                confidence: confidence,
+                timestamp: attempt.timestamp
+            )
+        }
+    }
+
+    /// Вычисляет среднюю точность по группам attemptBreakdown.
+    static func breakdownStats(from rows: [AttemptBreakdownRow]) -> BreakdownStats {
+        guard !rows.isEmpty else {
+            return BreakdownStats(
+                averageASR: 0, averagePronunciation: nil,
+                averageEffective: 0, totalCorrect: 0, manualOverrideCount: 0
+            )
+        }
+        let avgASR = rows.map(\.asrScore).reduce(0, +) / Double(rows.count)
+        let pronunciationRows = rows.compactMap(\.pronunciationScore)
+        let avgPron: Double? = pronunciationRows.isEmpty
+            ? nil
+            : pronunciationRows.reduce(0, +) / Double(pronunciationRows.count)
+        let avgEff = rows.map(\.effectiveScore).reduce(0, +) / Double(rows.count)
+        let correct = rows.filter(\.isCorrect).count
+        let overrides = rows.filter { $0.manualScore != nil }.count
+        return BreakdownStats(
+            averageASR: avgASR,
+            averagePronunciation: avgPron,
+            averageEffective: avgEff,
+            totalCorrect: correct,
+            manualOverrideCount: overrides
+        )
+    }
+
     // MARK: - Test hooks
 
     // swiftlint:disable identifier_name
     func _rows() -> [AttemptReviewRow] { rows }
     func _summary() -> SessionSummary? { currentSummary }
+    func _attemptBreakdown() -> [AttemptBreakdownRow] { attemptBreakdown }
+    func _annotations() -> [SessionAnnotation] { annotations }
     // swiftlint:enable identifier_name
 }
