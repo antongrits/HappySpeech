@@ -313,7 +313,11 @@ struct SessionShellBinder: View {
             Text(String(localized: "session.completed.title"))
                 .font(TypographyTokens.title(28))
                 .foregroundStyle(ColorTokens.Kid.ink)
-            HSButton(String(localized: "session.completed.cta"), style: .primary) {
+            HSButton(
+                String(localized: "session.completed.cta"),
+                style: .primary,
+                icon: "chart.bar.fill"
+            ) {
                 onSessionFinished()
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
@@ -396,7 +400,11 @@ struct SessionShellBinder: View {
             Text(String(localized: "Целевой звук: \(activity.soundTarget)"))
                 .font(TypographyTokens.body())
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
-            HSButton(String(localized: "Отметить выполненным"), style: .primary) {
+            HSButton(
+                String(localized: "Готово"),
+                style: .primary,
+                icon: "checkmark.circle.fill"
+            ) {
                 Task { await onComplete(activity.id, 0.9) }
             }
             .padding(.horizontal, SpacingTokens.screenEdge)

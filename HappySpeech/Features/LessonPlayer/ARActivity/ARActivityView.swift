@@ -114,7 +114,11 @@ struct ARActivityView: View {
             cameraHint
                 .padding(.horizontal, SpacingTokens.screenEdge)
 
-            HSButton(String(localized: "Начать"), style: .primary) {
+            HSButton(
+                String(localized: "Начать"),
+                style: .primary,
+                icon: "play.fill"
+            ) {
                 interactor?.startActivity(.init(activityType: display.activityType))
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
@@ -191,7 +195,11 @@ struct ARActivityView: View {
 
             Spacer(minLength: SpacingTokens.medium)
 
-            HSButton(String(localized: "Завершить"), style: .primary) {
+            HSButton(
+                String(localized: "Завершить"),
+                style: .primary,
+                icon: "checkmark.circle.fill"
+            ) {
                 onComplete(display.lastScore)
             }
             .padding(.horizontal, SpacingTokens.screenEdge)

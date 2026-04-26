@@ -204,7 +204,11 @@ struct BingoView: View {
                     .lineLimit(nil)
                     .minimumScaleFactor(0.85)
                     .padding(.horizontal, SpacingTokens.xLarge)
-                HSButton(String(localized: "Завершить"), style: .primary) {
+                HSButton(
+                    String(localized: "Завершить"),
+                    style: .primary,
+                    icon: "checkmark.circle.fill"
+                ) {
                     interactor?.completeGame()
                 }
                 .frame(maxWidth: 320)
@@ -235,7 +239,11 @@ struct BingoView: View {
                 .minimumScaleFactor(0.85)
                 .padding(.horizontal, SpacingTokens.xLarge)
             Spacer()
-            HSButton(String(localized: "Завершить"), style: .primary) {
+            HSButton(
+                String(localized: "Завершить"),
+                style: .primary,
+                icon: "checkmark.circle.fill"
+            ) {
                 finalize()
             }
             .frame(maxWidth: 320)

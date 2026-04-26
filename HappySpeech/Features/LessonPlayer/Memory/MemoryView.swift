@@ -257,7 +257,8 @@ struct MemoryView: View {
             Spacer()
             HSButton(
                 String(localized: "Завершить"),
-                style: .primary
+                style: .primary,
+                icon: "checkmark.circle.fill"
             ) { finalize() }
             .frame(maxWidth: 320)
             .padding(.bottom, SpacingTokens.large)
