@@ -12,6 +12,7 @@ import Foundation
 // `SetManualScore`, `FinalizeReview`) сохранены без изменений — обеспечивают
 // обратную совместимость существующих per-attempt флоу.
 
+// swiftlint:disable nesting
 enum SessionReviewModels {
 
     // MARK: LoadSession (per-attempt review)
@@ -139,6 +140,7 @@ enum SessionReviewModels {
         }
     }
 }
+// swiftlint:enable nesting
 
 // MARK: - Per-attempt row (existing)
 
