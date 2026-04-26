@@ -390,39 +390,32 @@ private struct OnboardingRoleCard: View {
 
     var body: some View {
         Button(action: onTap) {
-            HStack(spacing: SpacingTokens.medium) {
-                Text(role.emoji)
-                    .font(.system(size: 40))
-                    .frame(width: 56)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                    Text(role.displayName)
-                        .font(TypographyTokens.headline(17))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                    Text(role.description)
-                        .font(TypographyTokens.body(13))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .multilineTextAlignment(.leading)
-                        .lineLimit(2)
+            HSLiquidGlassCard(
+                style: isSelected ? .tinted(ColorTokens.Brand.primary) : .primary,
+                padding: SpacingTokens.medium
+            ) {
+                HStack(spacing: SpacingTokens.medium) {
+                    Text(role.emoji)
+                        .font(.system(size: 40))
+                        .frame(width: 56)
+                        .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                        Text(role.displayName)
+                            .font(TypographyTokens.headline(17))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                        Text(role.description)
+                            .font(TypographyTokens.body(13))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .multilineTextAlignment(.leading)
+                            .lineLimit(2)
+                    }
+                    Spacer()
+                    Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                        .font(.system(size: 22, weight: .semibold))
+                        .foregroundStyle(isSelected ? ColorTokens.Brand.primary : ColorTokens.Kid.line)
+                        .accessibilityHidden(true)
                 }
-                Spacer()
-                Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
-                    .font(.system(size: 22, weight: .semibold))
-                    .foregroundStyle(isSelected ? ColorTokens.Brand.primary : ColorTokens.Kid.line)
-                    .accessibilityHidden(true)
             }
-            .padding(SpacingTokens.medium)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                    .fill(ColorTokens.Kid.surface)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                            .strokeBorder(
-                                isSelected ? ColorTokens.Brand.primary : Color.clear,
-                                lineWidth: 2
-                            )
-                    )
-            )
             .scaleEffect(isSelected ? 1.02 : 1.0)
             .animation(reduceMotion ? nil : MotionTokens.spring, value: isSelected)
         }
@@ -984,7 +977,7 @@ private struct OnboardingPermissionsStep: View {
     }
 
     private func permissionCard(icon: String, title: String, body: String, color: Color) -> some View {
-        HSCard(style: .elevated, padding: SpacingTokens.medium) {
+        HSLiquidGlassCard(style: .tinted(color), padding: SpacingTokens.medium) {
             HStack(alignment: .top, spacing: SpacingTokens.medium) {
                 Image(systemName: icon)
                     .font(.system(size: 32))
@@ -1255,40 +1248,36 @@ private struct OnboardingAboutStep: View {
     }
 
     private func featureCard(_ feature: Feature, delay: Double) -> some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.small) {
-            ZStack {
-                RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
-                    .fill(feature.color.opacity(0.12))
-                    .frame(width: 44, height: 44)
-                Image(systemName: feature.icon)
-                    .font(.system(size: 20, weight: .semibold))
-                    .foregroundStyle(feature.color)
-                    .accessibilityHidden(true)
+        HSLiquidGlassCard(style: .tinted(feature.color), padding: SpacingTokens.medium) {
+            VStack(alignment: .leading, spacing: SpacingTokens.small) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                        .fill(feature.color.opacity(0.12))
+                        .frame(width: 44, height: 44)
+                    Image(systemName: feature.icon)
+                        .font(.system(size: 20, weight: .semibold))
+                        .foregroundStyle(feature.color)
+                        .accessibilityHidden(true)
+                }
+
+                Text(feature.title)
+                    .font(TypographyTokens.headline(14))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                    .multilineTextAlignment(.leading)
+
+                Text(feature.description)
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .lineLimit(3)
+                    .minimumScaleFactor(0.85)
+                    .multilineTextAlignment(.leading)
+
+                Spacer(minLength: 0)
             }
-
-            Text(feature.title)
-                .font(TypographyTokens.headline(14))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .lineLimit(2)
-                .minimumScaleFactor(0.85)
-                .multilineTextAlignment(.leading)
-
-            Text(feature.description)
-                .font(TypographyTokens.caption(12))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .lineLimit(3)
-                .minimumScaleFactor(0.85)
-                .multilineTextAlignment(.leading)
-
-            Spacer(minLength: 0)
+            .frame(maxWidth: .infinity, minHeight: 110, alignment: .topLeading)
         }
-        .padding(SpacingTokens.medium)
-        .frame(maxWidth: .infinity, minHeight: 130, alignment: .topLeading)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                .fill(ColorTokens.Kid.surface)
-                .shadow(color: .black.opacity(0.06), radius: 8, y: 3)
-        )
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(feature.title). \(feature.description)")
         .opacity(appeared ? 1 : 0)
