@@ -19,14 +19,19 @@ final class ParentHomeInteractor: ParentHomeBusinessLogic {
 
     private let childRepository: any ChildRepository
     private let sessionRepository: any SessionRepository
+    /// M6.16: Репозиторий результатов скрининга. Опциональный — не ломает
+    /// существующие инициализации в тестах и превью.
+    private let screeningOutcomeRepository: (any ScreeningOutcomeRepository)?
     private var activeChildId: String?
 
     init(
         childRepository: any ChildRepository,
-        sessionRepository: any SessionRepository
+        sessionRepository: any SessionRepository,
+        screeningOutcomeRepository: (any ScreeningOutcomeRepository)? = nil
     ) {
         self.childRepository = childRepository
         self.sessionRepository = sessionRepository
+        self.screeningOutcomeRepository = screeningOutcomeRepository
     }
 
     func fetchData(_ request: ParentHomeModels.Fetch.Request) async {
@@ -77,6 +82,14 @@ final class ParentHomeInteractor: ParentHomeBusinessLogic {
         let overall = Self.overallRate(for: child.progressSummary)
         let homeTask = Self.homeTask(for: child)
 
+        // M6.16: Загружаем последний outcome скрининга.
+        let screeningOutcome: ScreeningOutcomeDTO?
+        if let repo = screeningOutcomeRepository {
+            screeningOutcome = try? await repo.fetchLatest(childId: child.id)
+        } else {
+            screeningOutcome = nil
+        }
+
         let response = ParentHomeModels.Fetch.Response(
             childId: child.id,
             childName: child.name,
@@ -87,7 +100,8 @@ final class ParentHomeInteractor: ParentHomeBusinessLogic {
             overallRate: overall,
             recentSessions: sessionData,
             progressSummary: child.progressSummary,
-            homeTask: homeTask
+            homeTask: homeTask,
+            screeningOutcome: screeningOutcome
         )
         presenter?.presentFetch(response)
     }

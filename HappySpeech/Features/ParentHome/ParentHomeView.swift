@@ -1,4 +1,3 @@
-import Charts
 import SwiftUI
 
 // MARK: - ParentHomeView
@@ -41,7 +40,8 @@ struct ParentHomeView: View {
             if scene == nil {
                 scene = ParentHomeScene(
                     childRepository: container.childRepository,
-                    sessionRepository: container.sessionRepository
+                    sessionRepository: container.sessionRepository,
+                    screeningOutcomeRepository: container.screeningOutcomeRepository
                 )
             }
             await scene?.interactor.fetchData(.init(preferredChildId: nil))
@@ -75,13 +75,15 @@ final class ParentHomeScene {
 
     init(
         childRepository: any ChildRepository,
-        sessionRepository: any SessionRepository
+        sessionRepository: any SessionRepository,
+        screeningOutcomeRepository: (any ScreeningOutcomeRepository)? = nil
     ) {
         let viewModel = ParentHomeViewModel()
         let presenter = ParentHomePresenter()
         let interactor = ParentHomeInteractor(
             childRepository: childRepository,
-            sessionRepository: sessionRepository
+            sessionRepository: sessionRepository,
+            screeningOutcomeRepository: screeningOutcomeRepository
         )
         presenter.viewModel = viewModel
         interactor.presenter = presenter
@@ -116,6 +118,11 @@ private struct ParentDashboardTab: View {
 
                     // Streak & stats
                     statsRow
+
+                    // M6.16: Screening card (если скрининг пройден)
+                    if let screening = viewModel.screeningCard {
+                        screeningCard(screening)
+                    }
 
                     // Home task from LLM
                     if let homeTask = viewModel.homeTask {
@@ -232,7 +239,10 @@ private struct ParentDashboardTab: View {
                     }
                 }
 
-                HSProgressBar(value: session.successRate, style: .parent, tint: session.successRate >= 0.7 ? ColorTokens.Semantic.success : ColorTokens.Semantic.warning)
+                let tint = session.successRate >= 0.7
+                    ? ColorTokens.Semantic.success
+                    : ColorTokens.Semantic.warning
+                HSProgressBar(value: session.successRate, style: .parent, tint: tint)
             }
         }
         .environment(\.circuitContext, .parent)
@@ -295,6 +305,90 @@ private struct ParentDashboardTab: View {
         .environment(\.circuitContext, .parent)
     }
 
+    // MARK: - M6.16: Screening card
+
+    private func screeningCard(_ card: ParentHomeModels.ScreeningCardViewModel) -> some View {
+        let accentColor = severityColor(for: card.severityColorToken)
+        return HSCard(style: .tinted(accentColor.opacity(0.10))) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+                // Header
+                HStack(spacing: SpacingTokens.sp2) {
+                    Image(systemName: "ear.and.waveform")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(accentColor)
+                        .accessibilityHidden(true)
+
+                    VStack(alignment: .leading, spacing: 1) {
+                        Text(String(localized: "screening.card.title"))
+                            .font(TypographyTokens.headline(15))
+                            .foregroundStyle(ColorTokens.Parent.ink)
+                        Text(card.completedAtText)
+                            .font(TypographyTokens.caption(11))
+                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    }
+
+                    Spacer()
+
+                    // Severity badge
+                    Text(card.severityText)
+                        .font(.system(size: 11, weight: .bold))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(Capsule().fill(accentColor))
+                }
+
+                // Problematic sounds
+                if !card.problematicSoundsText.isEmpty {
+                    HStack(spacing: SpacingTokens.sp2) {
+                        Text(String(localized: "screening.card.sounds_label"))
+                            .font(TypographyTokens.caption(12))
+                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        Text(card.problematicSoundsText)
+                            .font(TypographyTokens.body(13).weight(.semibold))
+                            .foregroundStyle(ColorTokens.Parent.ink)
+                    }
+                }
+
+                // Recommendation
+                Text(card.recommendationText)
+                    .font(TypographyTokens.body(13))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .ctaTextStyle()
+                    .fixedSize(horizontal: false, vertical: true)
+
+                // Retake button (если актуально)
+                if card.canRetake {
+                    Button {
+                        coordinator.navigate(to: .screening(childId: viewModel.childId))
+                    } label: {
+                        Label(String(localized: "screening.card.retake"),
+                              systemImage: "arrow.clockwise")
+                            .font(TypographyTokens.body(13).weight(.medium))
+                            .foregroundStyle(accentColor)
+                    }
+                    .accessibilityHint(String(localized: "screening.card.retake.hint"))
+                }
+            }
+        }
+        .environment(\.circuitContext, .parent)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            String(format: String(localized: "screening.card.a11y"),
+                   card.severityText,
+                   card.problematicSoundsText,
+                   card.completedAtText)
+        )
+    }
+
+    private func severityColor(for token: String) -> Color {
+        switch token {
+        case "severe":   return ColorTokens.Semantic.error
+        case "moderate": return ColorTokens.Brand.gold
+        default:          return ColorTokens.Semantic.success
+        }
+    }
+
     private var recommendationsSection: some View {
         HSLiquidGlassCard(style: .primary, padding: SpacingTokens.sp5) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
@@ -317,309 +411,6 @@ private struct ParentDashboardTab: View {
                 }
             }
         }
-    }
-}
-
-// MARK: - Sessions Tab
-
-private struct ParentSessionsTab: View {
-    let sessions: [ParentHomeModels.SessionSummary]
-
-    var body: some View {
-        NavigationStack {
-            Group {
-                if sessions.isEmpty {
-                    HSEmptyState(
-                        icon: "list.bullet.rectangle",
-                        title: String(localized: "Занятий ещё не было"),
-                        message: String(localized: "История занятий появится здесь после первого сеанса")
-                    )
-                } else {
-                    List(sessions, id: \.id) { session in
-                        SessionRow(session: session)
-                            .listRowBackground(ColorTokens.Parent.surface)
-                            .listRowSeparatorTint(ColorTokens.Parent.line)
-                    }
-                    .listStyle(.insetGrouped)
-                    .scrollContentBackground(.hidden)
-                    .background(ColorTokens.Parent.bg)
-                }
-            }
-            .navigationTitle(String(localized: "История занятий"))
-        }
-    }
-}
-
-private struct SessionRow: View {
-    let session: ParentHomeModels.SessionSummary
-
-    var body: some View {
-        HStack(spacing: SpacingTokens.sp3) {
-            // Sound badge
-            ZStack {
-                Circle()
-                    .fill(ColorTokens.Brand.primary.opacity(0.12))
-                    .frame(width: 44, height: 44)
-                Text(session.targetSound)
-                    .font(.system(size: 18, weight: .black, design: .rounded))
-                    .foregroundStyle(ColorTokens.Brand.primary)
-            }
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text(session.templateName)
-                    .font(TypographyTokens.body())
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                HStack(spacing: SpacingTokens.sp2) {
-                    Text(session.dateText)
-                    Text("·")
-                    Text(session.durationText)
-                }
-                .font(TypographyTokens.caption())
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-            }
-
-            Spacer()
-
-            VStack(alignment: .trailing, spacing: 2) {
-                Text(session.resultText)
-                    .font(TypographyTokens.mono(14))
-                    .foregroundStyle(session.successRate >= 0.7 ? ColorTokens.Semantic.success : ColorTokens.Semantic.warning)
-            }
-        }
-        .padding(.vertical, SpacingTokens.sp2)
-    }
-}
-
-// MARK: - Analytics Tab
-
-private struct ParentAnalyticsTab: View {
-    let progress: [ParentHomeModels.SoundProgress]
-
-    var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: SpacingTokens.sp5) {
-                    if progress.isEmpty {
-                        HSEmptyState(
-                            icon: "chart.bar.xaxis",
-                            title: String(localized: "Данных пока нет"),
-                            message: String(localized: "Аналитика появится после первых занятий")
-                        )
-                        .frame(minHeight: 360)
-                    } else {
-                        SoundAccuracyChartCard(progress: progress)
-
-                        VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-                            Text(String(localized: "По звукам"))
-                                .font(TypographyTokens.headline(17))
-                                .foregroundStyle(ColorTokens.Parent.ink)
-                                .padding(.horizontal, SpacingTokens.sp1)
-
-                            ForEach(progress, id: \.sound) { item in
-                                SoundProgressCard(item: item)
-                            }
-                        }
-                    }
-                }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.vertical, SpacingTokens.sp5)
-            }
-            .background(ColorTokens.Parent.bg.ignoresSafeArea())
-            .navigationTitle(String(localized: "Аналитика"))
-        }
-    }
-}
-
-// MARK: - Sound accuracy chart (Swift Charts)
-
-/// Bar chart of average accuracy per target sound.
-/// Uses Swift Charts (`Chart` / `BarMark`) — iOS 16+. Tinted to the parent
-/// circuit accent. Bars are sorted in the same order as the cards below for
-/// visual continuity.
-private struct SoundAccuracyChartCard: View {
-    let progress: [ParentHomeModels.SoundProgress]
-
-    private var chartData: [ChartPoint] {
-        progress.map { item in
-            ChartPoint(
-                sound: item.sound,
-                accuracy: item.overallRate,
-                tint: Self.tint(for: item.overallRate)
-            )
-        }
-    }
-
-    private var averageAccuracy: Double {
-        guard !progress.isEmpty else { return 0 }
-        let sum = progress.map(\.overallRate).reduce(0, +)
-        return sum / Double(progress.count)
-    }
-
-    var body: some View {
-        HSCard(style: .elevated) {
-            VStack(alignment: .leading, spacing: SpacingTokens.sp4) {
-                header
-
-                Chart(chartData) { point in
-                    BarMark(
-                        x: .value(String(localized: "Звук"), point.sound),
-                        y: .value(String(localized: "Точность"), point.accuracy * 100)
-                    )
-                    .foregroundStyle(point.tint)
-                    .cornerRadius(6)
-                    .annotation(position: .top, alignment: .center, spacing: 4) {
-                        Text("\(Int(point.accuracy * 100))%")
-                            .font(TypographyTokens.caption(11))
-                            .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    }
-                }
-                .frame(height: 200)
-                .chartYScale(domain: 0...110)
-                .chartYAxis {
-                    AxisMarks(values: [0, 25, 50, 75, 100]) { value in
-                        AxisGridLine().foregroundStyle(ColorTokens.Parent.line.opacity(0.4))
-                        AxisValueLabel {
-                            if let intValue = value.as(Int.self) {
-                                Text("\(intValue)%")
-                                    .font(TypographyTokens.caption(10))
-                                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                            }
-                        }
-                    }
-                }
-                .chartXAxis {
-                    AxisMarks(values: .automatic) { _ in
-                        AxisValueLabel()
-                            .font(TypographyTokens.caption(11).bold())
-                            .foregroundStyle(ColorTokens.Parent.ink)
-                    }
-                }
-                .accessibilityLabel(String(localized: "Диаграмма точности по звукам"))
-                .accessibilityValue(
-                    chartData
-                        .map { "\($0.sound): \(Int($0.accuracy * 100))%" }
-                        .joined(separator: ", ")
-                )
-
-                averageRow
-            }
-        }
-        .environment(\.circuitContext, .parent)
-    }
-
-    private var header: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 2) {
-                Text(String(localized: "Точность по звукам"))
-                    .font(TypographyTokens.headline(17))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                Text(String(localized: "За последние 30 дней"))
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-            }
-            Spacer()
-            Image(systemName: "chart.bar.fill")
-                .foregroundStyle(ColorTokens.Parent.accent)
-        }
-    }
-
-    private var averageRow: some View {
-        HStack(spacing: SpacingTokens.sp2) {
-            Image(systemName: "checkmark.seal.fill")
-                .font(.system(size: 14))
-                .foregroundStyle(ColorTokens.Semantic.success)
-            Text(String(localized: "Средняя точность: \(Int(averageAccuracy * 100))%"))
-                .font(TypographyTokens.body(13))
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-            Spacer()
-        }
-        .padding(.top, SpacingTokens.sp1)
-    }
-
-    /// Bar tint by accuracy band — green ≥ 80 %, gold 60–79 %, warning < 60 %.
-    private static func tint(for rate: Double) -> Color {
-        switch rate {
-        case 0.80...:
-            return ColorTokens.Semantic.success
-        case 0.60..<0.80:
-            return ColorTokens.Brand.gold
-        default:
-            return ColorTokens.Semantic.warning
-        }
-    }
-
-    private struct ChartPoint: Identifiable, Sendable {
-        let id = UUID()
-        let sound: String
-        let accuracy: Double
-        let tint: Color
-    }
-}
-
-private struct SoundProgressCard: View {
-    let item: ParentHomeModels.SoundProgress
-
-    var body: some View {
-        HSCard(style: .elevated) {
-            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-                HStack {
-                    Text(item.sound)
-                        .font(.system(size: 28, weight: .black, design: .rounded))
-                        .foregroundStyle(ColorTokens.Brand.primary)
-
-                    VStack(alignment: .leading) {
-                        Text(item.familyName)
-                            .font(TypographyTokens.body(13))
-                            .foregroundStyle(ColorTokens.Parent.inkMuted)
-                        Text(item.currentStage)
-                            .font(TypographyTokens.headline(15))
-                            .foregroundStyle(ColorTokens.Parent.ink)
-                    }
-
-                    Spacer()
-
-                    Text("\(Int(item.overallRate * 100))%")
-                        .font(TypographyTokens.headline(22))
-                        .foregroundStyle(ColorTokens.Parent.accent)
-                }
-
-                HSProgressBar(value: item.overallRate, style: .parent, tint: ColorTokens.Parent.accent)
-            }
-        }
-        .environment(\.circuitContext, .parent)
-    }
-}
-
-// MARK: - Stat Card
-
-private struct ParentStatCard: View {
-    let value: String
-    let label: String
-    let icon: String
-    let color: Color
-
-    var body: some View {
-        HSLiquidGlassCard(style: .tinted(color), padding: SpacingTokens.sp4) {
-            VStack(spacing: SpacingTokens.sp2) {
-                Image(systemName: icon)
-                    .font(.system(size: 20))
-                    .foregroundStyle(color)
-
-                Text(value)
-                    .font(.system(size: 20, weight: .bold, design: .rounded))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-
-                Text(label)
-                    .font(TypographyTokens.caption(10))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .ctaTextStyle()
-            }
-            .frame(maxWidth: .infinity)
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(label): \(value)")
     }
 }
 

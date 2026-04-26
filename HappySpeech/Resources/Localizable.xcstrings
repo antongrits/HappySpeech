@@ -15311,6 +15311,446 @@
           }
         }
       }
+    },
+    "review.section.breakdown": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разбор попыток"
+          }
+        }
+      }
+    },
+    "review.breakdown.expand": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Развернуть разбор попыток"
+          }
+        }
+      }
+    },
+    "review.breakdown.collapse": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Свернуть разбор попыток"
+          }
+        }
+      }
+    },
+    "review.breakdown.no_transcript": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(нет транскрипта)"
+          }
+        }
+      }
+    },
+    "review.breakdown.correct_of": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d из %d верно"
+          }
+        }
+      }
+    },
+    "review.breakdown.manual_count": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ручных правок: %d"
+          }
+        }
+      }
+    },
+    "review.breakdown.manual_label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ручная оценка"
+          }
+        }
+      }
+    },
+    "review.breakdown.stat.effective": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Итого"
+          }
+        }
+      }
+    },
+    "review.breakdown.stat.asr": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ASR"
+          }
+        }
+      }
+    },
+    "review.breakdown.stat.ml": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ML"
+          }
+        }
+      }
+    },
+    "review.breakdown.chip.asr": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ASR"
+          }
+        }
+      }
+    },
+    "review.breakdown.chip.ml": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ML"
+          }
+        }
+      }
+    },
+    "review.breakdown.annotate": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заметка"
+          }
+        }
+      }
+    },
+    "review.breakdown.annotate.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавить текстовую заметку к этой попытке"
+          }
+        }
+      }
+    },
+    "review.attempt.correct": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "верно"
+          }
+        }
+      }
+    },
+    "review.attempt.incorrect": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "неверно"
+          }
+        }
+      }
+    },
+    "review.section.annotations": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заметки специалиста"
+          }
+        }
+      }
+    },
+    "review.annotation.add": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавить"
+          }
+        }
+      }
+    },
+    "review.annotation.add.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавить текстовую заметку к сессии"
+          }
+        }
+      }
+    },
+    "review.annotation.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заметок пока нет"
+          }
+        }
+      }
+    },
+    "review.annotation.delete": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалить заметку"
+          }
+        }
+      }
+    },
+    "review.annotation.delete.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалить эту заметку"
+          }
+        }
+      }
+    },
+    "review.annotation.nav_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новая заметка"
+          }
+        }
+      }
+    },
+    "review.annotation.cancel": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отмена"
+          }
+        }
+      }
+    },
+    "review.annotation.save": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сохранить"
+          }
+        }
+      }
+    },
+    "review.annotation.sheet.session": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "К сессии целиком"
+          }
+        }
+      }
+    },
+    "review.annotation.sheet.attempt": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "К выбранной попытке"
+          }
+        }
+      }
+    },
+    "review.annotation.field.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Текст заметки"
+          }
+        }
+      }
+    },
+    "screening.card.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скрининг"
+          }
+        }
+      }
+    },
+    "screening.card.no_issues": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проблем не выявлено"
+          }
+        }
+      }
+    },
+    "screening.card.sounds_label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуки:"
+          }
+        }
+      }
+    },
+    "screening.card.retake": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перепройти скрининг"
+          }
+        }
+      }
+    },
+    "screening.card.retake.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пройти скрининг заново для обновления рекомендаций"
+          }
+        }
+      }
+    },
+    "screening.card.reco.mild": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все звуки в норме. Продолжайте занятия для закрепления."
+          }
+        }
+      }
+    },
+    "screening.card.reco.moderate": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Требуется дополнительная работа над: %@. Рекомендуем ежедневные занятия."
+          }
+        }
+      }
+    },
+    "screening.card.reco.severe": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Необходима системная коррекция звуков: %@. Желательна консультация логопеда."
+          }
+        }
+      }
+    },
+    "screening.card.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скрининг: %@. Звуки: %@. Дата: %@"
+          }
+        }
+      }
+    },
+    "screening.severity.mild": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Норма"
+          }
+        }
+      }
+    },
+    "screening.severity.moderate": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Требует внимания"
+          }
+        }
+      }
+    },
+    "screening.severity.severe": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Требует коррекции"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
