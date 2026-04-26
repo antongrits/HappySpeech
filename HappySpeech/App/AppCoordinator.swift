@@ -35,6 +35,9 @@ enum PermissionType: Hashable {
     case microphone
     case camera
     case notifications
+    /// ARKit Face Tracking — требует camera + ARKit, запрашивается через AVCaptureDevice.
+    /// На устройствах без TrueDepth считается недоступным (ограничен до .camera).
+    case faceTracking
 }
 
 // MARK: - AppCoordinator
