@@ -255,5 +255,64 @@ enum DemoModels {
         struct Response: Sendable {}
         struct ViewModel: Sendable {}
     }
+
+    // MARK: - ToggleAutoAdvance
+
+    enum ToggleAutoAdvance {
+        struct Request: Sendable {}
+        struct Response: Sendable {
+            let isEnabled: Bool
+            let toggleLabel: String
+        }
+        struct ViewModel: Sendable {
+            let isEnabled: Bool
+            let toggleLabel: String
+        }
+    }
+
+    // MARK: - AutoAdvanceTick (внутренний — только Interactor использует)
+
+    enum AutoAdvanceTick {
+        struct Request: Sendable {}
+        struct Response: Sendable {
+            let steps: [DemoStep]
+            let currentIndex: Int
+            let isCompleted: Bool
+        }
+        struct ViewModel: Sendable {
+            let currentIndex: Int
+            let progress: Double
+            let progressLabel: String
+            let isFirst: Bool
+            let isLast: Bool
+            let backTitle: String
+            let nextTitle: String
+            let stepTitle: String
+            let stepSubtitle: String
+            let stepDescription: String
+            let mascotText: String
+            let screenEmoji: String
+            let illustrationSymbol: String
+            let accent: DemoAccentColor
+            let lyalyaState: LyalyaState
+            let hasInteractive: Bool
+            let actionTitle: String?
+            let isCompleted: Bool
+        }
+    }
+
+    // MARK: - ReplayStep
+
+    enum ReplayStep {
+        struct Request: Sendable {}
+        struct Response: Sendable {
+            let stepId: Int
+            let stepTitle: String
+        }
+        struct ViewModel: Sendable {
+            let stepId: Int
+            let toastMessage: String
+        }
+    }
 }
 // swiftlint:enable nesting

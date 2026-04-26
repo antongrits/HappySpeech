@@ -12,6 +12,9 @@ protocol DemoPresentationLogic: AnyObject {
     func presentInteractiveTap(_ response: DemoModels.InteractiveTap.Response)
     func presentSkipDemo(_ response: DemoModels.SkipDemo.Response)
     func presentCompleteDemo(_ response: DemoModels.CompleteDemo.Response)
+    func presentToggleAutoAdvance(_ response: DemoModels.ToggleAutoAdvance.Response)
+    func presentAutoAdvanceTick(_ response: DemoModels.AutoAdvanceTick.Response)
+    func presentReplayStep(_ response: DemoModels.ReplayStep.Response)
 }
 
 // MARK: - DemoPresenter
@@ -152,6 +155,50 @@ final class DemoPresenter: DemoPresentationLogic {
 
     func presentCompleteDemo(_ response: DemoModels.CompleteDemo.Response) {
         display?.displayCompleteDemo(.init())
+    }
+
+    func presentToggleAutoAdvance(_ response: DemoModels.ToggleAutoAdvance.Response) {
+        display?.displayToggleAutoAdvance(.init(
+            isEnabled: response.isEnabled,
+            toggleLabel: response.toggleLabel
+        ))
+    }
+
+    func presentAutoAdvanceTick(_ response: DemoModels.AutoAdvanceTick.Response) {
+        let step = response.steps[safe: response.currentIndex]
+        let total = response.steps.count
+        let vm = DemoModels.AutoAdvanceTick.ViewModel(
+            currentIndex: response.currentIndex,
+            progress: progress(currentIndex: response.currentIndex, total: total),
+            progressLabel: progressLabel(currentIndex: response.currentIndex, total: total),
+            isFirst: response.currentIndex == 0,
+            isLast: response.currentIndex >= total - 1,
+            backTitle: String(localized: "demo.cta.back"),
+            nextTitle: nextTitle(currentIndex: response.currentIndex, total: total),
+            stepTitle: step?.title ?? "",
+            stepSubtitle: step?.subtitle ?? "",
+            stepDescription: step?.description ?? "",
+            mascotText: step?.mascotText ?? "",
+            screenEmoji: step?.screenEmoji ?? "📱",
+            illustrationSymbol: step?.illustrationSymbol ?? "",
+            accent: step?.accent ?? .primary,
+            lyalyaState: step?.lyalyaState ?? .explaining,
+            hasInteractive: step?.hasInteractive ?? false,
+            actionTitle: step?.actionTitle,
+            isCompleted: response.isCompleted
+        )
+        display?.displayAutoAdvanceTick(vm)
+    }
+
+    func presentReplayStep(_ response: DemoModels.ReplayStep.Response) {
+        let toast = String(
+            format: String(localized: "demo.replay.button"),
+            response.stepTitle
+        )
+        display?.displayReplayStep(.init(
+            stepId: response.stepId,
+            toastMessage: toast
+        ))
     }
 
     // MARK: - Private helpers

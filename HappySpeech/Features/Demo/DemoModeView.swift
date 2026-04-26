@@ -80,6 +80,15 @@ struct DemoModeView: View {
     @State private var router: DemoRouter?
     @State private var bootstrapped = false
 
+    // MARK: - Local UI State
+
+    /// Показывать ли Overview Sheet со списком всех 15 шагов.
+    @State private var showOverview = false
+    /// Локальный обратный отсчёт авто-перехода (5→0).
+    @State private var countdownSeconds: Int = 5
+    /// Timer для отображения обратного отсчёта (отдельно от autoAdvanceTask в Interactor).
+    @State private var countdownTimer: Timer?
+
     private let logger = Logger(subsystem: "ru.happyspeech", category: "DemoModeView")
 
     // MARK: - Init
@@ -98,35 +107,68 @@ struct DemoModeView: View {
                         .transition(.move(edge: .top).combined(with: .opacity))
                         .zIndex(2)
                 }
+                // AutoAdvance countdown overlay (правый нижний угол над carousel)
+                if display.autoAdvanceEnabled {
+                    autoAdvanceCountdownOverlay
+                        .transition(.scale.combined(with: .opacity))
+                        .zIndex(3)
+                }
             }
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
+                ToolbarItem(placement: .topBarLeading) {
+                    overviewButton
+                }
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    replayButton
+                    autoAdvanceToggleButton
                     skipButton
                 }
             }
             .toolbarBackground(.hidden, for: .navigationBar)
+            .sheet(isPresented: $showOverview) {
+                DemoOverviewSheet(
+                    steps: display.steps,
+                    currentIndex: display.currentIndex
+                ) { index in
+                    interactor?.jumpTo(.init(index: index))
+                }
+            }
         }
         .environment(\.circuitContext, .kid)
         .task { await bootstrap() }
         .onChange(of: display.pendingSkip) { _, value in
             guard value else { return }
             display.consumeSkip()
+            stopCountdown()
             coordinator.navigate(to: .auth)
         }
         .onChange(of: display.pendingCompleted) { _, value in
             guard value else { return }
             display.consumeCompleted()
+            stopCountdown()
             coordinator.navigate(to: .auth)
         }
         .onChange(of: display.toastMessage) { _, value in
             guard value != nil else { return }
-            // Auto-dismiss toast спустя 2.4 секунды.
             Task { @MainActor in
                 try? await Task.sleep(nanoseconds: 2_400_000_000)
                 guard !Task.isCancelled else { return }
                 withAnimation(reduceMotion ? .linear(duration: 0.01) : MotionTokens.spring) {
                     display.consumeToast()
                 }
+            }
+        }
+        .onChange(of: display.autoAdvanceEnabled) { _, enabled in
+            if enabled {
+                startCountdown()
+            } else {
+                stopCountdown()
+            }
+        }
+        .onChange(of: display.currentIndex) { _, _ in
+            // При переходе на новый шаг — сбрасываем отсчёт.
+            if display.autoAdvanceEnabled {
+                startCountdown()
             }
         }
     }
@@ -199,20 +241,31 @@ struct DemoModeView: View {
                 .tint(.white)
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .accessibilityHidden(true)
+
+            // DotNavigator под прогресс-баром
+            if !display.steps.isEmpty {
+                DemoDotNavigator(
+                    totalSteps: display.steps.count,
+                    currentIndex: display.currentIndex,
+                    accent: display.accent.resolvedColor
+                ) { index in
+                    interactor?.jumpTo(.init(index: index))
+                }
+            }
         }
         .padding(.top, SpacingTokens.tiny)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(display.progressLabel)
     }
 
-    // MARK: - Skip button
+    // MARK: - Toolbar buttons
 
     private var skipButton: some View {
         Button {
             interactor?.skipDemo(.init())
         } label: {
             Text(String(localized: "demo.cta.skip"))
-                .font(TypographyTokens.body(15))
+                .font(TypographyTokens.body(14))
                 .foregroundStyle(.white.opacity(0.9))
                 .padding(.horizontal, SpacingTokens.small)
                 .padding(.vertical, SpacingTokens.tiny)
@@ -221,6 +274,92 @@ struct DemoModeView: View {
         .accessibilityLabel(String(localized: "demo.a11y.skip"))
         .accessibilityHint(String(localized: "demo.a11y.skip.hint"))
         .accessibilityIdentifier("demo.skip")
+    }
+
+    private var replayButton: some View {
+        Button {
+            interactor?.replayStep(.init())
+        } label: {
+            Image(systemName: "arrow.counterclockwise")
+                .font(.system(size: 16, weight: .semibold))
+                .foregroundStyle(.white.opacity(0.85))
+                .frame(width: 36, height: 36)
+                .contentShape(Rectangle())
+        }
+        .accessibilityLabel(String(localized: "demo.replay.button"))
+        .accessibilityHint(String(localized: "demo.replay.hint"))
+        .accessibilityIdentifier("demo.replay")
+    }
+
+    private var autoAdvanceToggleButton: some View {
+        Button {
+            interactor?.toggleAutoAdvance(.init())
+        } label: {
+            Image(systemName: display.autoAdvanceEnabled ? "play.circle.fill" : "play.circle")
+                .font(.system(size: 17, weight: .semibold))
+                .foregroundStyle(display.autoAdvanceEnabled ? .white : .white.opacity(0.7))
+                .frame(width: 36, height: 36)
+                .contentShape(Rectangle())
+        }
+        .accessibilityLabel(display.autoAdvanceEnabled
+            ? String(localized: "demo.autoadvance.toggle.on")
+            : String(localized: "demo.autoadvance.toggle.off")
+        )
+        .accessibilityIdentifier("demo.autoadvance.toggle")
+    }
+
+    private var overviewButton: some View {
+        Button {
+            showOverview = true
+        } label: {
+            Image(systemName: "list.bullet.rectangle")
+                .font(.system(size: 16, weight: .semibold))
+                .foregroundStyle(.white.opacity(0.85))
+                .frame(width: 36, height: 36)
+                .contentShape(Rectangle())
+        }
+        .accessibilityLabel(String(localized: "demo.overview.label"))
+        .accessibilityIdentifier("demo.overview")
+    }
+
+    // MARK: - AutoAdvance countdown overlay
+
+    private var autoAdvanceCountdownOverlay: some View {
+        VStack {
+            Spacer()
+            HStack {
+                Spacer()
+                DemoAutoAdvanceCountdownView(
+                    secondsLeft: countdownSeconds,
+                    accent: display.accent.resolvedColor
+                )
+                .padding(.trailing, SpacingTokens.screenEdge)
+                .padding(.bottom, SpacingTokens.xLarge + SpacingTokens.xLarge)
+            }
+        }
+    }
+
+    // MARK: - Countdown helpers
+
+    private func startCountdown() {
+        countdownSeconds = 5
+        stopCountdown()
+        countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+            Task { @MainActor in
+                if self.countdownSeconds > 0 {
+                    self.countdownSeconds -= 1
+                } else {
+                    self.countdownTimer?.invalidate()
+                    self.countdownTimer = nil
+                }
+            }
+        }
+    }
+
+    private func stopCountdown() {
+        countdownTimer?.invalidate()
+        countdownTimer = nil
+        countdownSeconds = 5
     }
 
     // MARK: - Step carousel
