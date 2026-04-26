@@ -76,7 +76,8 @@ final class ChildHomeViewModelDisplayTests: XCTestCase {
                 templateType: "listen-and-choose",
                 title: "Игра \(i)",
                 icon: "star",
-                accent: .coral
+                accent: .coral,
+                difficulty: 1
             )
         }
         return ChildHomeModels.Fetch.ViewModel(
@@ -92,7 +93,11 @@ final class ChildHomeViewModelDisplayTests: XCTestCase {
             achievement: nil,
             dailyMissionDetail: .placeholder,
             formattedDate: "25 апреля",
-            isStreakHot: isStreakHot
+            isStreakHot: isStreakHot,
+            recentRewards: [],
+            hasOverdueTask: false,
+            todayWords: [],
+            homeTasks: []
         )
     }
 }
@@ -181,7 +186,8 @@ final class ParentHomeViewModelDisplayTests: XCTestCase {
             recentSessions: sessions,
             soundProgress: [],
             homeTask: nil,
-            recommendations: []
+            recommendations: [],
+            screeningCard: nil
         )
     }
 }
@@ -459,8 +465,6 @@ final class WorldMapDisplayTests: XCTestCase {
     // MARK: Helpers
 
     private func makeWorldZoneCard(index: Int, zoneCount: Int) -> WorldZoneCard {
-        let bg: Color = .blue
-        let fg: Color = .white
         let progress = Double(index) / max(Double(zoneCount - 1), 1)
         return WorldZoneCard(
             id: "zone-\(index)",
@@ -470,10 +474,12 @@ final class WorldMapDisplayTests: XCTestCase {
             progress: progress,
             progressLabel: "\(index * 33)%",
             lessonsLabel: "3 урока",
-            backgroundColor: bg,
-            foregroundColor: fg,
+            colorName: "brandBlue",
             isLocked: index > 1,
             isHighlighted: index == 0,
+            position: .zero,
+            isCurrentLocation: index == 0,
+            isCompleted: false,
             accessibilityLabel: "Зона \(index + 1)",
             accessibilityHint: index > 1 ? "Заблокировано" : "Начать"
         )
@@ -500,7 +506,7 @@ final class HomeTasksDisplayTests: XCTestCase {
 
     func test_defaultState_noTasks() {
         let sut = HomeTasksDisplay()
-        XCTAssertTrue(sut.visibleTasks.isEmpty)
+        XCTAssertTrue(sut.sections.isEmpty)
         XCTAssertEqual(sut.totalCount, 0)
         XCTAssertEqual(sut.activeFilter, .all)
     }
@@ -508,7 +514,7 @@ final class HomeTasksDisplayTests: XCTestCase {
     func test_displayFetch_populatesTasks() {
         let sut = HomeTasksDisplay()
         sut.displayFetch(makeFetchVM(taskCount: 3, active: 2, completed: 1))
-        XCTAssertEqual(sut.visibleTasks.count, 3)
+        XCTAssertFalse(sut.sections.isEmpty || sut.totalCount == 0)
         XCTAssertEqual(sut.totalCount, 3)
         XCTAssertEqual(sut.activeCount, 2)
         XCTAssertEqual(sut.completedCount, 1)
@@ -520,7 +526,7 @@ final class HomeTasksDisplayTests: XCTestCase {
         sut.displayFetch(makeFetchVM(taskCount: 3, active: 2, completed: 1))
         sut.displayChangeFilter(makeChangeFilterVM(filter: .active, taskCount: 2))
         XCTAssertEqual(sut.activeFilter, .active)
-        XCTAssertEqual(sut.visibleTasks.count, 2)
+        XCTAssertEqual(sut.totalCount, 2)
     }
 
     func test_displayLoading_setsFlag() {
@@ -550,40 +556,54 @@ final class HomeTasksDisplayTests: XCTestCase {
             id: id,
             title: "Упражнение \(id)",
             description: "Повтори 5 раз",
+            subtitle: "Звук С · ~5 мин",
             soundBadgeText: "С",
             priorityBadgeText: "Средний",
             priority: .medium,
             dueDateText: nil,
             isOverdue: false,
             isCompleted: isCompleted,
+            isStarted: false,
+            exerciseType: "repeat-after-model",
+            targetSound: "С",
+            startButtonTitle: "Начать",
             accessibilityLabel: "Задание \(id)",
             accessibilityHint: "Дважды нажмите для выполнения"
         )
     }
 
+    private func makeHomeTaskSection(rows: [HomeTaskRow]) -> HomeTaskSection {
+        HomeTaskSection(kind: .today, title: "Сегодня", rows: rows)
+    }
+
     private func makeFetchVM(taskCount: Int, active: Int, completed: Int) -> HomeTasksModels.Fetch.ViewModel {
-        let tasks = (0..<taskCount).map { makeHomeTaskRow(id: "\($0)", isCompleted: $0 >= active) }
+        let rows = (0..<taskCount).map { makeHomeTaskRow(id: "\($0)", isCompleted: $0 >= active) }
+        let section = makeHomeTaskSection(rows: rows)
         return HomeTasksModels.Fetch.ViewModel(
-            visibleTasks: tasks,
+            sections: [section],
             totalCount: taskCount,
             activeCount: active,
             completedCount: completed,
+            overdueCount: 0,
             activeFilter: .all,
             emptyTitle: "",
             emptyMessage: "",
-            isEmpty: tasks.isEmpty
+            isEmpty: rows.isEmpty,
+            suggestOverduePrompt: false
         )
     }
 
     private func makeChangeFilterVM(filter: TaskFilter, taskCount: Int) -> HomeTasksModels.ChangeFilter.ViewModel {
-        let tasks = (0..<taskCount).map { makeHomeTaskRow(id: "f\($0)") }
+        let rows = (0..<taskCount).map { makeHomeTaskRow(id: "f\($0)") }
+        let section = makeHomeTaskSection(rows: rows)
         return HomeTasksModels.ChangeFilter.ViewModel(
-            visibleTasks: tasks,
+            sections: [section],
             totalCount: taskCount,
             activeCount: taskCount,
             completedCount: 0,
+            overdueCount: 0,
             activeFilter: filter,
-            isEmpty: tasks.isEmpty
+            isEmpty: rows.isEmpty
         )
     }
 }
@@ -818,7 +838,8 @@ final class OnboardingDisplayTests: XCTestCase {
             progressLabel: "Шаг \(step.rawValue + 1)",
             profile: OnboardingProfile(),
             canAdvance: true,
-            isCompleted: isCompleted
+            isCompleted: isCompleted,
+            mascotText: "Привет!"
         )
     }
 }
@@ -905,9 +926,15 @@ final class DemoDisplayTests: XCTestCase {
             backTitle: "Назад",
             nextTitle: isLast ? "Готово" : "Далее",
             stepTitle: step.title,
+            stepSubtitle: "",
             stepDescription: step.description,
             mascotText: step.mascotText,
-            screenEmoji: step.screenEmoji
+            screenEmoji: step.screenEmoji,
+            illustrationSymbol: step.illustrationSymbol,
+            accent: step.accent,
+            lyalyaState: step.lyalyaState,
+            hasInteractive: step.hasInteractive,
+            actionTitle: step.actionTitle
         )
     }
 
@@ -922,9 +949,15 @@ final class DemoDisplayTests: XCTestCase {
             backTitle: isFirst ? "" : "Назад",
             nextTitle: isLast ? "Готово" : "Далее",
             stepTitle: "Шаг \(index + 1)",
+            stepSubtitle: "",
             stepDescription: "Описание",
             mascotText: "Отлично!",
             screenEmoji: "🎉",
+            illustrationSymbol: "star.fill",
+            accent: .primary,
+            lyalyaState: .celebrating,
+            hasInteractive: false,
+            actionTitle: nil,
             isCompleted: isCompleted
         )
     }
@@ -979,7 +1012,8 @@ final class PermissionsDisplayTests: XCTestCase {
         sut.displaySkip(PermissionsModels.Skip.ViewModel(
             steps: startVM.steps,
             currentIndex: 0,
-            isFinished: true
+            isFinished: true,
+            allDoneCard: nil
         ))
         XCTAssertTrue(sut.isFinished)
     }
@@ -995,11 +1029,12 @@ final class PermissionsDisplayTests: XCTestCase {
             allowTitle: "Разрешить",
             skipTitle: "Позже",
             privacyNote: nil,
-            accentColor: .blue,
+            accent: .primary,
             state: .notDetermined,
             showSettingsButton: false,
             isCompleted: false,
-            accessibilityLabel: "Разрешение: Микрофон"
+            accessibilityLabel: "Разрешение: Микрофон",
+            lyalyaState: .idle
         )
     }
 

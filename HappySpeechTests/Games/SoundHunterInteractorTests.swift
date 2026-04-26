@@ -1,5 +1,5 @@
 @testable import HappySpeech
-import Testing
+import XCTest
 
 // MARK: - Spy
 
@@ -33,9 +33,8 @@ private final class SpySoundHunterPresenter: SoundHunterPresentationLogic {
 
 // MARK: - Tests
 
-@Suite("SoundHunterInteractor")
 @MainActor
-struct SoundHunterInteractorTests {
+final class SoundHunterInteractorTests: XCTestCase {
 
     private func makeSUT(sound: String = "С") -> (SoundHunterInteractor, SpySoundHunterPresenter) {
         let spy = SpySoundHunterPresenter()
@@ -46,56 +45,51 @@ struct SoundHunterInteractorTests {
 
     // MARK: - 1. loadScene загружает 9 предметов
 
-    @Test("loadScene загружает ровно 9 предметов для сцены 0")
-    func loadSceneLoads9Items() {
+    func test_loadScene_loads9Items() {
         let (sut, spy) = makeSUT()
         sut.loadScene(.init(sceneIndex: 0))
-        #expect(spy.loadSceneCalled)
-        #expect(spy.lastLoadScene?.items.count == 9)
+        XCTAssertTrue(spy.loadSceneCalled)
+        XCTAssertEqual(spy.lastLoadScene?.items.count, 9)
     }
 
     // MARK: - 2. resolveSoundGroup
 
-    @Test("resolveSoundGroup корректно маппит все группы")
-    func resolveSoundGroup() {
-        #expect(SoundHunterInteractor.resolveSoundGroup(for: "С") == "whistling")
-        #expect(SoundHunterInteractor.resolveSoundGroup(for: "Ш") == "hissing")
-        #expect(SoundHunterInteractor.resolveSoundGroup(for: "Р") == "sonants")
-        #expect(SoundHunterInteractor.resolveSoundGroup(for: "К") == "velar")
+    func test_resolveSoundGroup_allGroups() {
+        XCTAssertEqual(SoundHunterInteractor.resolveSoundGroup(for: "С"), "whistling")
+        XCTAssertEqual(SoundHunterInteractor.resolveSoundGroup(for: "Ш"), "hissing")
+        XCTAssertEqual(SoundHunterInteractor.resolveSoundGroup(for: "Р"), "sonants")
+        XCTAssertEqual(SoundHunterInteractor.resolveSoundGroup(for: "К"), "velar")
     }
 
     // MARK: - 3. tapItem на правильный предмет
 
-    @Test("tapItem на предмет с целевым звуком даёт newState = correct")
-    func tapCorrectItem() {
+    func test_tapCorrectItem_stateCorrect() {
         let (sut, spy) = makeSUT(sound: "С")
         sut.loadScene(.init(sceneIndex: 0))
         guard let scene = spy.lastLoadScene else { return }
         guard let correctItem = scene.items.first(where: { $0.hasTargetSound }) else {
-            Issue.record("В сцене нет правильных предметов")
+            XCTFail("В сцене нет правильных предметов")
             return
         }
         sut.tapItem(.init(itemId: correctItem.id))
-        #expect(spy.tapItemCalled)
-        #expect(spy.lastTapItem?.newState == .correct)
+        XCTAssertTrue(spy.tapItemCalled)
+        XCTAssertEqual(spy.lastTapItem?.newState, .correct)
     }
 
     // MARK: - 4. tapItem на неправильный предмет
 
-    @Test("tapItem на предмет без целевого звука даёт newState = wrong")
-    func tapWrongItem() {
+    func test_tapWrongItem_stateWrong() {
         let (sut, spy) = makeSUT(sound: "С")
         sut.loadScene(.init(sceneIndex: 0))
         guard let scene = spy.lastLoadScene else { return }
         guard let wrongItem = scene.items.first(where: { !$0.hasTargetSound }) else { return }
         sut.tapItem(.init(itemId: wrongItem.id))
-        #expect(spy.lastTapItem?.newState == .wrong)
+        XCTAssertEqual(spy.lastTapItem?.newState, .wrong)
     }
 
     // MARK: - 5. correctCount растёт после правильного тапа
 
-    @Test("correctCount увеличивается после каждого правильного тапа")
-    func correctCountGrowsOnCorrectTap() {
+    func test_correctCount_grows() {
         let (sut, spy) = makeSUT()
         sut.loadScene(.init(sceneIndex: 0))
         guard let scene = spy.lastLoadScene else { return }
@@ -103,35 +97,33 @@ struct SoundHunterInteractorTests {
         guard !correctItems.isEmpty else { return }
 
         sut.tapItem(.init(itemId: correctItems[0].id))
-        #expect((spy.lastTapItem?.correctCount ?? 0) == 1)
+        XCTAssertEqual(spy.lastTapItem?.correctCount ?? 0, 1)
     }
 
-    // MARK: - 6. completeGame вызывает presenter с finalScore
+    // MARK: - 6. completeGame → score in [0,1]
 
-    @Test("completeGame передаёт score в диапазоне [0, 1]")
-    func completeGameScoreInRange() {
+    func test_completeGame_scoreInRange() {
         let (sut, spy) = makeSUT()
         sut.loadScene(.init(sceneIndex: 0))
         sut.completeGame()
-        #expect(spy.completeSceneCalled)
+        XCTAssertTrue(spy.completeSceneCalled)
         let score = spy.lastCompleteScene?.totalScore ?? -1
-        #expect(score >= 0 && score <= 1)
+        XCTAssertGreaterThanOrEqual(score, 0)
+        XCTAssertLessThanOrEqual(score, 1)
     }
 
     // MARK: - 7. buildScenes возвращает 3 сцены для каждой группы
 
-    @Test("buildScenes возвращает 3 сцены для каждой группы")
-    func buildScenesReturns3PerGroup() {
+    func test_buildScenes_3PerGroup() {
         for group in ["whistling", "hissing", "sonants", "velar"] {
             let scenes = SoundHunterInteractor.buildScenes(for: group)
-            #expect(scenes.count == 3, "Группа \(group) должна иметь 3 сцены")
+            XCTAssertEqual(scenes.count, 3, "Группа \(group) должна иметь 3 сцены")
         }
     }
 
-    // MARK: - 8. повторный tap на обработанный предмет игнорируется
+    // MARK: - 8. повторный tap на правильный предмет игнорируется
 
-    @Test("повторный tapItem на уже правильный предмет игнорируется")
-    func doubleTapIgnored() {
+    func test_doubleTap_ignored() {
         let (sut, spy) = makeSUT()
         sut.loadScene(.init(sceneIndex: 0))
         guard let scene = spy.lastLoadScene,
@@ -141,6 +133,6 @@ struct SoundHunterInteractorTests {
         let countAfterFirst = spy.lastTapItem?.correctCount ?? 0
         sut.tapItem(.init(itemId: correctItem.id))
         let countAfterSecond = spy.lastTapItem?.correctCount ?? 0
-        #expect(countAfterFirst == countAfterSecond)
+        XCTAssertEqual(countAfterFirst, countAfterSecond)
     }
 }

@@ -1,5 +1,5 @@
 @testable import HappySpeech
-import Testing
+import XCTest
 
 // MARK: - Spy
 
@@ -33,9 +33,8 @@ private final class SpyStoryPresenter: StoryCompletionPresentationLogic {
 
 // MARK: - Tests
 
-@Suite("StoryCompletionInteractor")
 @MainActor
-struct StoryCompletionInteractorTests {
+final class StoryCompletionInteractorTests: XCTestCase {
 
     private func makeActivity(sound: String = "С") -> SessionActivity {
         SessionActivity(
@@ -58,105 +57,97 @@ struct StoryCompletionInteractorTests {
 
     // MARK: - 1. loadStory загружает первую сцену
 
-    @Test("loadStory загружает сцену 0 и вызывает presentLoadStory")
-    func loadStoryLoadsFirstScene() {
+    func test_loadStory_loadsFirstScene() {
         let (sut, spy) = makeSUT()
         sut.loadStory(.init(activity: makeActivity(), sceneIndex: 0))
-        #expect(spy.loadStoryCalled)
-        #expect(spy.lastLoadStory?.sceneIndex == 0)
-        #expect(spy.lastLoadStory?.totalScenes == 5)
+        XCTAssertTrue(spy.loadStoryCalled)
+        XCTAssertEqual(spy.lastLoadStory?.sceneIndex, 0)
+        XCTAssertEqual(spy.lastLoadStory?.totalScenes, 5)
     }
 
     // MARK: - 2. buildScenes возвращает 5 сцен
 
-    @Test("buildScenes возвращает 5 сцен для каждой группы")
-    func buildScenesReturnsFiveScenes() {
+    func test_buildScenes_returnsFiveScenes() {
         for group in ["whistling", "hissing", "sonants", "velar"] {
             let scenes = StoryCompletionInteractor.buildScenes(for: group, total: 5)
-            #expect(scenes.count == 5, "Группа \(group) должна иметь 5 сцен")
+            XCTAssertEqual(scenes.count, 5, "Группа \(group) должна иметь 5 сцен")
         }
     }
 
     // MARK: - 3. resolveSoundGroup
 
-    @Test("resolveSoundGroup корректно маппит звуки")
-    func resolveSoundGroup() {
-        #expect(StoryCompletionInteractor.resolveSoundGroup(for: "С") == "whistling")
-        #expect(StoryCompletionInteractor.resolveSoundGroup(for: "Ш") == "hissing")
-        #expect(StoryCompletionInteractor.resolveSoundGroup(for: "Р") == "sonants")
-        #expect(StoryCompletionInteractor.resolveSoundGroup(for: "К") == "velar")
+    func test_resolveSoundGroup() {
+        XCTAssertEqual(StoryCompletionInteractor.resolveSoundGroup(for: "С"), "whistling")
+        XCTAssertEqual(StoryCompletionInteractor.resolveSoundGroup(for: "Ш"), "hissing")
+        XCTAssertEqual(StoryCompletionInteractor.resolveSoundGroup(for: "Р"), "sonants")
+        XCTAssertEqual(StoryCompletionInteractor.resolveSoundGroup(for: "К"), "velar")
     }
 
     // MARK: - 4. chooseWord: правильный ответ
 
-    @Test("chooseWord с правильным индексом возвращает isCorrect = true")
-    func chooseWordCorrect() {
+    func test_chooseWord_correct() {
         let (sut, spy) = makeSUT()
         sut.loadStory(.init(activity: makeActivity(), sceneIndex: 0))
         guard let scene = spy.lastLoadStory?.scene else { return }
         sut.chooseWord(.init(choiceIndex: scene.correctIndex))
-        #expect(spy.chooseWordCalled)
-        #expect(spy.lastChooseWord?.isCorrect == true)
+        XCTAssertTrue(spy.chooseWordCalled)
+        XCTAssertEqual(spy.lastChooseWord?.isCorrect, true)
     }
 
     // MARK: - 5. chooseWord: неправильный ответ
 
-    @Test("chooseWord с неправильным индексом возвращает isCorrect = false")
-    func chooseWordWrong() {
+    func test_chooseWord_wrong() {
         let (sut, spy) = makeSUT()
         sut.loadStory(.init(activity: makeActivity(), sceneIndex: 0))
         guard let scene = spy.lastLoadStory?.scene else { return }
         let wrongIndex = scene.correctIndex == 0 ? 1 : 0
         sut.chooseWord(.init(choiceIndex: wrongIndex))
-        #expect(spy.lastChooseWord?.isCorrect == false)
+        XCTAssertEqual(spy.lastChooseWord?.isCorrect, false)
     }
 
     // MARK: - 6. complete вычисляет score
 
-    @Test("complete передаёт score в диапазоне [0, 1]")
-    func completeScoreInRange() {
+    func test_complete_scoreInRange() {
         let (sut, spy) = makeSUT()
         sut.loadStory(.init(activity: makeActivity(), sceneIndex: 0))
         sut.complete()
-        #expect(spy.completeCalled)
+        XCTAssertTrue(spy.completeCalled)
         let score = spy.lastComplete?.score ?? -1
-        #expect(score >= 0 && score <= 1)
+        XCTAssertGreaterThanOrEqual(score, 0)
+        XCTAssertLessThanOrEqual(score, 1)
     }
 
     // MARK: - 7. complete дважды — игнорируется
 
-    @Test("повторный вызов complete игнорируется")
-    func completeTwiceIgnored() {
+    func test_complete_twice_ignored() {
         let (sut, spy) = makeSUT()
         sut.loadStory(.init(activity: makeActivity(), sceneIndex: 0))
         sut.complete()
         let firstScore = spy.lastComplete?.score
         spy.lastComplete = nil
         sut.complete()
-        #expect(spy.lastComplete == nil, "Второй complete не должен вызывать presenter")
+        XCTAssertNil(spy.lastComplete, "Второй complete не должен вызывать presenter")
         _ = firstScore
     }
 
-    // MARK: - 8. cancel завершает игру без вызова complete
+    // MARK: - 8. cancel не вызывает complete
 
-    @Test("cancel не вызывает presentComplete")
-    func cancelDoesNotCallComplete() {
+    func test_cancel_doesNotCallComplete() {
         let (sut, spy) = makeSUT()
         sut.loadStory(.init(activity: makeActivity(), sceneIndex: 0))
         sut.cancel()
-        #expect(!spy.completeCalled)
+        XCTAssertFalse(spy.completeCalled)
     }
 
     // MARK: - 9. filledStoryText содержит правильное слово
 
-    @Test("filledStoryText заменяет маркер правильным словом")
-    func filledStoryTextContainsCorrectWord() {
+    func test_filledStoryText_containsCorrectWord() {
         let (sut, spy) = makeSUT()
         sut.loadStory(.init(activity: makeActivity(), sceneIndex: 0))
         guard let scene = spy.lastLoadStory?.scene else { return }
         sut.chooseWord(.init(choiceIndex: scene.correctIndex))
         let filledText = spy.lastChooseWord?.filledStoryText ?? ""
         let correctWord = scene.choices[scene.correctIndex]
-        #expect(filledText.contains(correctWord))
+        XCTAssertTrue(filledText.contains(correctWord))
     }
 }

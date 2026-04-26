@@ -1,8 +1,8 @@
 @testable import HappySpeech
-import Testing
+import XCTest
 import UIKit
 
-// MARK: - Mock HapticService (shared in this file)
+// MARK: - Mock HapticService
 
 private final class MemoryMockHaptic: HapticService, @unchecked Sendable {
     var selectionCount = 0
@@ -48,9 +48,8 @@ private final class SpyMemoryPresenter: MemoryPresentationLogic {
 
 // MARK: - Tests
 
-@Suite("MemoryInteractor")
 @MainActor
-struct MemoryInteractorTests {
+final class MemoryInteractorTests: XCTestCase {
 
     private func makeSUT() -> (MemoryInteractor, SpyMemoryPresenter, MemoryMockHaptic) {
         let haptic = MemoryMockHaptic()
@@ -62,58 +61,52 @@ struct MemoryInteractorTests {
 
     // MARK: - 1. loadSession создаёт 16 карточек
 
-    @Test("loadSession загружает 16 карточек (8 пар)")
-    func loadSessionLoads16Cards() async {
+    func test_loadSession_loads16Cards() async {
         let (sut, spy, _) = makeSUT()
         await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
-        #expect(spy.loadSessionCalled)
-        #expect(spy.lastLoadSession?.cards.count == 16)
+        XCTAssertTrue(spy.loadSessionCalled)
+        XCTAssertEqual(spy.lastLoadSession?.cards.count, 16)
     }
 
     // MARK: - 2. все карточки изначально закрыты
 
-    @Test("все карточки после loadSession — лицом вниз")
-    func allCardsFaceDownOnLoad() async {
+    func test_allCardsFaceDown_onLoad() async {
         let (sut, spy, _) = makeSUT()
         await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
         let faceUpCards = spy.lastLoadSession?.cards.filter(\.isFaceUp) ?? []
-        #expect(faceUpCards.isEmpty)
+        XCTAssertTrue(faceUpCards.isEmpty)
     }
 
     // MARK: - 3. flipCard переворачивает карточку
 
-    @Test("flipCard переворачивает одну карточку")
-    func flipCardFlipsOne() async {
+    func test_flipCard_flipsOne() async {
         let (sut, spy, haptic) = makeSUT()
         await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
         guard let firstCard = spy.lastLoadSession?.cards.first else { return }
         await sut.flipCard(.init(cardId: firstCard.id))
-        #expect(spy.flipCardCalled)
-        #expect(haptic.selectionCount >= 1)
+        XCTAssertTrue(spy.flipCardCalled)
+        XCTAssertGreaterThanOrEqual(haptic.selectionCount, 1)
         let updatedCard = spy.lastFlipCard?.cards.first(where: { $0.id == firstCard.id })
-        #expect(updatedCard?.isFaceUp == true)
+        XCTAssertEqual(updatedCard?.isFaceUp, true)
     }
 
-    // MARK: - 4. flipCard на одинаковую пару → matchFound
+    // MARK: - 4. flip одинаковой пары → matchFound
 
-    @Test("flip двух карточек одной пары → matchFound = true")
-    func flipMatchingPair() async {
+    func test_flipMatchingPair_matchFoundTrue() async {
         let (sut, spy, haptic) = makeSUT()
         await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
-        guard let cards = spy.lastLoadSession?.cards else { return }
-        // Находим пару — две карточки с одинаковым pairId
-        guard let firstCard = cards.first,
+        guard let cards = spy.lastLoadSession?.cards,
+              let firstCard = cards.first,
               let secondCard = cards.first(where: { $0.pairId == firstCard.pairId && $0.id != firstCard.id }) else { return }
         await sut.flipCard(.init(cardId: firstCard.id))
         await sut.flipCard(.init(cardId: secondCard.id))
-        #expect(spy.lastFlipCard?.matchFound == true)
-        #expect(haptic.notificationSuccessCount >= 1)
+        XCTAssertEqual(spy.lastFlipCard?.matchFound, true)
+        XCTAssertGreaterThanOrEqual(haptic.notificationSuccessCount, 1)
     }
 
-    // MARK: - 5. flipCard на разные карточки → matchFound = false
+    // MARK: - 5. flip разных пар → matchFound = false
 
-    @Test("flip двух карточек разных пар → matchFound = false")
-    func flipNonMatchingPair() async {
+    func test_flipNonMatchingPair_matchFoundFalse() async {
         let (sut, spy, haptic) = makeSUT()
         await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
         guard let cards = spy.lastLoadSession?.cards else { return }
@@ -121,44 +114,39 @@ struct MemoryInteractorTests {
         guard let secondCard = cards.first(where: { $0.pairId != firstCard.pairId }) else { return }
         await sut.flipCard(.init(cardId: firstCard.id))
         await sut.flipCard(.init(cardId: secondCard.id))
-        #expect(spy.lastFlipCard?.matchFound == false)
-        #expect(haptic.notificationWarningCount >= 1)
+        XCTAssertEqual(spy.lastFlipCard?.matchFound, false)
+        XCTAssertGreaterThanOrEqual(haptic.notificationWarningCount, 1)
     }
 
     // MARK: - 6. MemoryCard.deck возвращает 16 карточек
 
-    @Test("MemoryCard.deck возвращает 16 карточек")
-    func deckHas16Cards() {
+    func test_deck_has16Cards() {
         let deck = MemoryCard.deck(for: "whistling")
-        #expect(deck.count == 16)
+        XCTAssertEqual(deck.count, 16)
     }
 
-    // MARK: - 7. cancel завершает игру
+    // MARK: - 7. cancel не крашится
 
-    @Test("cancel не крашится после loadSession")
-    func cancelAfterLoad() async {
+    func test_cancel_afterLoad_doesNotCrash() async {
         let (sut, _, _) = makeSUT()
         await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
         sut.cancel()
-        #expect(Bool(true))
+        XCTAssertTrue(true)
     }
 
-    // MARK: - 8. flipCard на уже matched карточку игнорируется
+    // MARK: - 8. flipCard на matched карточку игнорируется
 
-    @Test("flipCard на уже matched карточку игнорируется")
-    func flipMatchedCardIgnored() async {
+    func test_flipMatchedCard_ignored() async {
         let (sut, spy, _) = makeSUT()
         await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
         guard let cards = spy.lastLoadSession?.cards,
               let firstCard = cards.first,
               let secondCard = cards.first(where: { $0.pairId == firstCard.pairId && $0.id != firstCard.id }) else { return }
-        // Открываем пару и матчим
         await sut.flipCard(.init(cardId: firstCard.id))
         await sut.flipCard(.init(cardId: secondCard.id))
         let flipCountAfterMatch = spy.lastFlipCard?.cards.filter(\.isMatched).count ?? 0
-        // Пытаемся снова открыть matched карточку
         await sut.flipCard(.init(cardId: firstCard.id))
         let flipCountAfterRetry = spy.lastFlipCard?.cards.filter(\.isMatched).count ?? 0
-        #expect(flipCountAfterMatch == flipCountAfterRetry)
+        XCTAssertEqual(flipCountAfterMatch, flipCountAfterRetry)
     }
 }

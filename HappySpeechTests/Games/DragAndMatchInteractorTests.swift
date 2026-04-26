@@ -1,8 +1,8 @@
 @testable import HappySpeech
-import Testing
+import XCTest
 import UIKit
 
-// MARK: - Mock
+// MARK: - Mock HapticService
 
 private final class DragMockHaptic: HapticService, @unchecked Sendable {
     var selectionCount = 0
@@ -41,9 +41,8 @@ private final class SpyDragPresenter: DragAndMatchPresentationLogic {
 
 // MARK: - Tests
 
-@Suite("DragAndMatchInteractor")
 @MainActor
-struct DragAndMatchInteractorTests {
+final class DragAndMatchInteractorTests: XCTestCase {
 
     private func makeSUT() -> (DragAndMatchInteractor, SpyDragPresenter, DragMockHaptic) {
         let haptic = DragMockHaptic()
@@ -55,78 +54,71 @@ struct DragAndMatchInteractorTests {
 
     // MARK: - 1. loadSession загружает слова и корзины
 
-    @Test("loadSession загружает слова и корзины для group whistling")
-    func loadSessionLoadsData() async {
+    func test_loadSession_loadsWordsAndBuckets() async {
         let (sut, spy, _) = makeSUT()
         await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
-        #expect(spy.loadSessionCalled)
-        #expect((spy.lastLoadSession?.words.count ?? 0) > 0)
-        #expect((spy.lastLoadSession?.buckets.count ?? 0) > 0)
+        XCTAssertTrue(spy.loadSessionCalled)
+        XCTAssertGreaterThan(spy.lastLoadSession?.words.count ?? 0, 0)
+        XCTAssertGreaterThan(spy.lastLoadSession?.buckets.count ?? 0, 0)
     }
 
     // MARK: - 2. DragWord.set возвращает данные для всех групп
 
-    @Test("DragWord.set возвращает непустые слова и корзины для всех групп")
-    func dragWordSetAllGroups() {
+    func test_dragWordSet_allGroups() {
         for group in ["whistling", "hissing", "sonants", "velar", "any"] {
             let (words, buckets) = DragWord.set(for: group)
-            #expect(!words.isEmpty, "Группа \(group) должна иметь слова")
-            #expect(!buckets.isEmpty, "Группа \(group) должна иметь корзины")
+            XCTAssertFalse(words.isEmpty, "Группа \(group) должна иметь слова")
+            XCTAssertFalse(buckets.isEmpty, "Группа \(group) должна иметь корзины")
         }
     }
 
     // MARK: - 3. dropWord: правильная корзина
 
-    @Test("dropWord с правильной корзиной → correct = true, haptic selection")
-    func dropWordCorrect() async {
+    func test_dropWord_correct_hapticFires() async {
         let (sut, spy, haptic) = makeSUT()
         await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
         guard let word = spy.lastLoadSession?.words.first else { return }
         await sut.dropWord(.init(wordId: word.id, bucketId: word.correctBucketId))
-        #expect(spy.dropWordCalled)
-        #expect(spy.lastDropWord?.correct == true)
-        #expect(haptic.selectionCount >= 1)
+        XCTAssertTrue(spy.dropWordCalled)
+        XCTAssertEqual(spy.lastDropWord?.correct, true)
+        XCTAssertGreaterThanOrEqual(haptic.selectionCount, 1)
     }
 
     // MARK: - 4. dropWord: неправильная корзина
 
-    @Test("dropWord с неправильной корзиной → correct = false, haptic warning")
-    func dropWordWrong() async {
+    func test_dropWord_wrong_hapticWarning() async {
         let (sut, spy, haptic) = makeSUT()
         await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
         guard let word = spy.lastLoadSession?.words.first,
               let wrongBucket = spy.lastLoadSession?.buckets.first(where: { $0.id != word.correctBucketId }) else { return }
         await sut.dropWord(.init(wordId: word.id, bucketId: wrongBucket.id))
-        #expect(spy.lastDropWord?.correct == false)
-        #expect(haptic.notificationCount >= 1)
+        XCTAssertEqual(spy.lastDropWord?.correct, false)
+        XCTAssertGreaterThanOrEqual(haptic.notificationCount, 1)
     }
 
     // MARK: - 5. feedbackText передаётся в Response
 
-    @Test("dropWord передаёт feedbackText в Response")
-    func dropWordFeedbackText() async {
+    func test_dropWord_feedbackText_notEmpty() async {
         let (sut, spy, _) = makeSUT()
         await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
         guard let word = spy.lastLoadSession?.words.first else { return }
         await sut.dropWord(.init(wordId: word.id, bucketId: word.correctBucketId))
-        #expect(!(spy.lastDropWord?.feedbackText.isEmpty ?? true))
+        XCTAssertFalse(spy.lastDropWord?.feedbackText.isEmpty ?? true)
     }
 
-    // MARK: - 6. completeSession вычисляет correctCount
+    // MARK: - 6. completeSession без дропов → correctCount = 0
 
-    @Test("completeSession без дропов → correctCount = 0")
-    func completeSessionNoDrop() async {
+    func test_completeSession_noDrop_correctCountZero() async {
         let (sut, spy, _) = makeSUT()
         await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
         await sut.completeSession(.init())
-        #expect(spy.completeCalled)
-        #expect(spy.lastComplete?.correctCount == 0)
+        XCTAssertTrue(spy.completeCalled)
+        XCTAssertEqual(spy.lastComplete?.correctCount, 0)
     }
 
-    // MARK: - 7. completeSession после правильных дропов
+    // MARK: - 7. completeSession после правильных дропов → correctCount > 0
 
-    @Test("completeSession после правильных дропов → correctCount > 0")
-    func completeAfterCorrectDrops() async {
+    func test_completeSession_afterCorrectDrops_correctCountPositive() async {
         let (sut, spy, _) = makeSUT()
         await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
         guard let words = spy.lastLoadSession?.words else { return }
@@ -134,17 +126,15 @@ struct DragAndMatchInteractorTests {
             await sut.dropWord(.init(wordId: word.id, bucketId: word.correctBucketId))
         }
         await sut.completeSession(.init())
-        #expect((spy.lastComplete?.correctCount ?? 0) >= 1)
+        XCTAssertGreaterThanOrEqual(spy.lastComplete?.correctCount ?? 0, 1)
     }
 
-    // MARK: - 8. dropWord неизвестного wordId — не крашится
+    // MARK: - 8. dropWord с неизвестным wordId не крашится
 
-    @Test("dropWord с неизвестным wordId не крашится")
-    func dropUnknownWord() async {
+    func test_dropWord_unknownWordId_doesNotCrash() async {
         let (sut, spy, _) = makeSUT()
         await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
         await sut.dropWord(.init(wordId: "nonexistent-id", bucketId: "bucket-1"))
-        // не должно быть краша
-        #expect(!spy.dropWordCalled)
+        XCTAssertFalse(spy.dropWordCalled)
     }
 }

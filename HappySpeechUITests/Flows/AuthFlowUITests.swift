@@ -60,11 +60,11 @@ final class AuthFlowUITests: XCTestCase {
         )
 
         XCTAssertTrue(
-            emailField.waitForExistence(timeout: 3) || !app.textFields.isEmpty,
+            emailField.waitForExistence(timeout: 3) || app.textFields.count > 0,
             "На экране входа должно быть поле email"
         )
         XCTAssertTrue(
-            passwordField.waitForExistence(timeout: 3) || !app.secureTextFields.isEmpty,
+            passwordField.waitForExistence(timeout: 3) || app.secureTextFields.count > 0,
             "На экране входа должно быть поле пароля"
         )
     }
