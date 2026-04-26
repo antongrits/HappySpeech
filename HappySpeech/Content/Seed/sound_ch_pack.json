@@ -409,8 +409,8 @@
         { "id": "ch-df-34", "word": "скрипач — скрипаш","hint": "Скрипач — с Ч на конце.", "difficulty": 3 }
       ]
     },
-    "tongue_twisters": {
-      "stageId": "tongue_twisters",
+    "story": {
+      "stageId": "story",
       "note": "Скороговорки и ритмические фразы со звуком [Ч] для автоматизации.",
       "items": [
         { "id": "ch-tt-0",  "word": "Чашка чая у Чижа",                    "hint": "Чашка — Ч начало. Чая — Ч начало. Чижа — Ч начало. Три слова на Ч!", "difficulty": 2 },
@@ -476,6 +476,6 @@
     "phrase":         ["story-completion", "drag-and-match", "repeat-after-model", "sorting", "minimal-pairs"],
     "sentence":       ["story-completion", "drag-and-match", "repeat-after-model", "sorting", "minimal-pairs"],
     "diff":           ["minimal-pairs", "sorting", "listen-and-choose"],
-    "tongue_twisters":["repeat-after-model", "rhythm", "story-completion"]
+    "story":["repeat-after-model", "rhythm", "story-completion"]
   }
 }
