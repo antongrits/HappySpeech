@@ -28,16 +28,20 @@ struct SessionReviewView: View {
 
     // MARK: - Environment
 
-    @Environment(AppContainer.self) private var container
-    @Environment(AppCoordinator.self) private var coordinator
-    @Environment(\.dismiss) private var dismiss
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(AppContainer.self) var container
+    @Environment(AppCoordinator.self) var coordinator
+    @Environment(\.dismiss) var dismiss
+    @Environment(\.accessibilityReduceMotion) var reduceMotion
 
     // MARK: - State
 
-    @State private var viewModel = SessionReviewViewModelHolder()
-    @State private var pendingShareURL: ShareableURL?
-    @State private var isExporting = false
+    @State var viewModel = SessionReviewViewModelHolder()
+    @State var pendingShareURL: ShareableURL?
+    @State var isExporting = false
+    @State var isBreakdownExpanded: Bool = false
+    @State var isAnnotationSheetPresented: Bool = false
+    @State var annotationText: String = ""
+    @State var pendingAnnotationAttemptId: String?
 
     // MARK: - Body
 
@@ -58,9 +62,13 @@ struct SessionReviewView: View {
         .sheet(item: $pendingShareURL) { item in
             ShareSheetView(items: [item.url])
         }
+        .sheet(isPresented: $isAnnotationSheetPresented) {
+            annotationSheet
+        }
         .task {
             bootstrap()
             await viewModel.interactor?.loadDetails(.init(sessionId: sessionId))
+            await viewModel.interactor?.loadAttemptBreakdown(.init(sessionId: sessionId))
         }
         .environment(\.circuitContext, .specialist)
     }
@@ -95,6 +103,8 @@ struct SessionReviewView: View {
                     gamesSection
                     phonemeChartCard
                     phonemeListSection
+                    attemptBreakdownSection
+                    annotationsSection
                     recommendationSection
                     exportButton
                 }
@@ -402,14 +412,14 @@ struct SessionReviewView: View {
 
     // MARK: - Reusable
 
-    private func sectionHeader(_ text: String) -> some View {
+    func sectionHeader(_ text: String) -> some View {
         Text(text)
             .font(TypographyTokens.headline(15))
             .foregroundStyle(ColorTokens.Spec.ink)
             .accessibilityAddTraits(.isHeader)
     }
 
-    private func emptyCard(text: String) -> some View {
+    func emptyCard(text: String) -> some View {
         HSLiquidGlassCard(style: .primary) {
             HStack {
                 Spacer()
@@ -459,233 +469,6 @@ struct SessionReviewView: View {
             pendingShareURL = ShareableURL(url: url)
         }
     }
-}
-
-// MARK: - ViewModelHolder
-
-@MainActor
-@Observable
-final class SessionReviewViewModelHolder: SessionReviewDisplayLogic {
-
-    // Display state — full session details (B1)
-    var titleText: String = ""
-    var dateText: String = ""
-    var durationText: String = ""
-    var childNameText: String = ""
-    var games: [GameResultViewModel] = []
-    var phonemeChartData: [SoundAccuracy] = []
-    var phonemeRows: [PhonemeRowViewModel] = []
-    var llmRecommendation: String?
-    var overallAccuracyPercent: Int = 0
-    var totalAttemptsText: String = ""
-
-    // Per-attempt state (legacy)
-    var attemptRows: [AttemptReviewRow] = []
-    var legacySummary: SessionReviewSummary?
-    var saveConfirmation: String?
-
-    // Export state
-    var lastExportURL: URL?
-    var lastExportConfirmation: String?
-
-    // Loading / error
-    var isLoading: Bool = true
-    var hasLoadedOnce: Bool = false
-    var errorText: String?
-
-    // Wiring
-    var interactor: SessionReviewInteractor?
-    var router: SessionReviewRouter?
-
-    // MARK: - Display logic
-
-    func displayLoadSession(_ vm: SessionReviewModels.LoadSession.ViewModel) {
-        attemptRows = vm.rows
-        legacySummary = vm.summary
-        isLoading = false
-        hasLoadedOnce = true
-    }
-
-    func displaySetManualScore(_ vm: SessionReviewModels.SetManualScore.ViewModel) {
-        attemptRows = vm.rows
-        legacySummary = vm.summary
-    }
-
-    func displayFinalizeReview(_ vm: SessionReviewModels.FinalizeReview.ViewModel) {
-        saveConfirmation = vm.confirmationText
-    }
-
-    func displayLoadDetails(_ vm: SessionReviewModels.LoadDetails.ViewModel) {
-        titleText = vm.titleText
-        dateText = vm.dateText
-        durationText = vm.durationText
-        childNameText = vm.childNameText
-        games = vm.games
-        phonemeChartData = vm.phonemeChartData
-        phonemeRows = vm.phonemeRows
-        llmRecommendation = vm.llmRecommendation
-        overallAccuracyPercent = vm.overallAccuracyPercent
-        totalAttemptsText = vm.totalAttemptsText
-        isLoading = false
-        hasLoadedOnce = true
-        errorText = nil
-    }
-
-    func displayExportPDF(_ vm: SessionReviewModels.ExportPDF.ViewModel) {
-        lastExportURL = vm.shareableURL
-        lastExportConfirmation = vm.confirmationText
-    }
-}
-
-// MARK: - Game row
-
-private struct GameResultRow: View {
-    let row: GameResultViewModel
-
-    var body: some View {
-        HStack(spacing: SpacingTokens.small) {
-            ToneIndicator(tone: row.tone)
-                .frame(width: 12, height: 12)
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text(row.title)
-                    .font(TypographyTokens.body(14).weight(.semibold))
-                    .foregroundStyle(ColorTokens.Spec.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.85)
-                Text(row.detailText)
-                    .font(TypographyTokens.caption(11))
-                    .foregroundStyle(ColorTokens.Spec.inkMuted)
-            }
-
-            Spacer(minLength: SpacingTokens.tiny)
-
-            AccuracyPill(percent: row.accuracyPercent, tone: row.tone)
-        }
-        .padding(.vertical, SpacingTokens.small)
-        .padding(.horizontal, SpacingTokens.small)
-        .frame(minHeight: 44)
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(
-            "\(row.title), \(row.detailText), \(row.accuracyPercent)%"
-        )
-    }
-}
-
-// MARK: - Phoneme row
-
-private struct PhonemeAccuracyRow: View {
-    let row: PhonemeRowViewModel
-
-    var body: some View {
-        HStack(spacing: SpacingTokens.small) {
-            ZStack {
-                Circle()
-                    .fill(toneColor(row.tone).opacity(0.15))
-                    .frame(width: 36, height: 36)
-                Text(row.phoneme)
-                    .font(.system(size: 16, weight: .black, design: .rounded))
-                    .foregroundStyle(toneColor(row.tone))
-            }
-
-            Text(localizedToneTitle(row.tone))
-                .font(TypographyTokens.body(13))
-                .foregroundStyle(ColorTokens.Spec.inkMuted)
-
-            Spacer()
-
-            AccuracyPill(percent: row.accuracyPercent, tone: row.tone)
-        }
-        .padding(.vertical, SpacingTokens.small)
-        .padding(.horizontal, SpacingTokens.small)
-        .frame(minHeight: 44)
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(
-            String(
-                format: String(localized: "review.phoneme.a11y"),
-                row.phoneme,
-                row.accuracyPercent,
-                localizedToneTitle(row.tone)
-            )
-        )
-    }
-
-    private func toneColor(_ tone: AccuracyTone) -> Color {
-        switch tone {
-        case .good:   return ColorTokens.Semantic.success
-        case .medium: return ColorTokens.Brand.gold
-        case .poor:   return ColorTokens.Semantic.error
-        }
-    }
-
-    private func localizedToneTitle(_ tone: AccuracyTone) -> String {
-        switch tone {
-        case .good:   return String(localized: "review.tone.good")
-        case .medium: return String(localized: "review.tone.medium")
-        case .poor:   return String(localized: "review.tone.poor")
-        }
-    }
-}
-
-// MARK: - Tone indicator
-
-private struct ToneIndicator: View {
-    let tone: AccuracyTone
-
-    var body: some View {
-        Circle()
-            .fill(color)
-            .accessibilityHidden(true)
-    }
-
-    private var color: Color {
-        switch tone {
-        case .good:   return ColorTokens.Semantic.success
-        case .medium: return ColorTokens.Brand.gold
-        case .poor:   return ColorTokens.Semantic.error
-        }
-    }
-}
-
-// MARK: - Accuracy pill
-
-private struct AccuracyPill: View {
-    let percent: Int
-    let tone: AccuracyTone
-
-    var body: some View {
-        Text("\(percent)%")
-            .font(.system(size: 13, weight: .bold, design: .rounded))
-            .foregroundStyle(.white)
-            .padding(.horizontal, SpacingTokens.small)
-            .padding(.vertical, 4)
-            .background(Capsule().fill(color))
-    }
-
-    private var color: Color {
-        switch tone {
-        case .good:   return ColorTokens.Semantic.success
-        case .medium: return ColorTokens.Brand.gold
-        case .poor:   return ColorTokens.Semantic.error
-        }
-    }
-}
-
-// MARK: - Share helpers
-
-private struct ShareableURL: Identifiable {
-    let id = UUID()
-    let url: URL
-}
-
-private struct ShareSheetView: UIViewControllerRepresentable {
-    let items: [Any]
-
-    func makeUIViewController(context: Context) -> UIActivityViewController {
-        UIActivityViewController(activityItems: items, applicationActivities: nil)
-    }
-
-    func updateUIViewController(_ controller: UIActivityViewController, context: Context) {}
 }
 
 // MARK: - Preview

@@ -10,6 +10,10 @@ protocol SessionReviewPresentationLogic: AnyObject {
     func presentFinalizeReview(_ response: SessionReviewModels.FinalizeReview.Response) async
     func presentLoadDetails(_ response: SessionReviewModels.LoadDetails.Response) async
     func presentExportPDF(_ response: SessionReviewModels.ExportPDF.Response) async
+    /// M6.15: Breakdown по попыткам.
+    func presentAttemptBreakdown(_ response: SessionReviewModels.LoadAttemptBreakdown.Response) async
+    /// M6.15: Обновление аннотаций (после add/delete).
+    func presentAnnotationUpdated(_ response: SessionReviewModels.AnnotationUpdated.Response) async
 }
 
 // MARK: - SessionReviewDisplayLogic
@@ -21,6 +25,10 @@ protocol SessionReviewDisplayLogic: AnyObject {
     func displayFinalizeReview(_ vm: SessionReviewModels.FinalizeReview.ViewModel)
     func displayLoadDetails(_ vm: SessionReviewModels.LoadDetails.ViewModel)
     func displayExportPDF(_ vm: SessionReviewModels.ExportPDF.ViewModel)
+    /// M6.15: Breakdown по попыткам.
+    func displayAttemptBreakdown(_ vm: SessionReviewModels.LoadAttemptBreakdown.ViewModel)
+    /// M6.15: Обновление аннотаций.
+    func displayAnnotationUpdated(_ vm: SessionReviewModels.AnnotationUpdated.ViewModel)
 }
 
 // MARK: - SessionReviewPresenter
@@ -123,6 +131,69 @@ final class SessionReviewPresenter: SessionReviewPresentationLogic {
         ))
     }
 
+    // MARK: - M6.15: Attempt breakdown
+
+    func presentAttemptBreakdown(_ response: SessionReviewModels.LoadAttemptBreakdown.Response) async {
+        let rowVMs = response.rows.map { row -> AttemptBreakdownViewModel in
+            let scorePct = Int((row.effectiveScore * 100).rounded())
+            let tone = AccuracyTone.make(from: scorePct)
+            return AttemptBreakdownViewModel(
+                id: row.id,
+                index: row.index,
+                word: row.word,
+                asrTranscript: row.asrTranscript.isEmpty
+                    ? String(localized: "review.breakdown.no_transcript")
+                    : row.asrTranscript,
+                asrScoreText: "\(Int((row.asrScore * 100).rounded()))%",
+                pronunciationScoreText: row.pronunciationScore.map { "\(Int(($0 * 100).rounded()))%" },
+                effectiveScoreText: "\(scorePct)%",
+                isCorrect: row.isCorrect,
+                audioPath: row.audioPath,
+                confidenceIconName: row.confidence.iconName,
+                tone: tone,
+                hasManualScore: row.manualScore != nil,
+                timestampText: Self.timeFormatter.string(from: row.timestamp)
+            )
+        }
+
+        let allRows = response.rows
+        let stats = SessionReviewInteractor.breakdownStats(from: allRows)
+        let statsVM = BreakdownStatsViewModel(
+            averageASRText: "\(Int((stats.averageASR * 100).rounded()))%",
+            averagePronunciationText: stats.averagePronunciation.map { "\(Int(($0 * 100).rounded()))%" },
+            averageEffectiveText: "\(Int((stats.averageEffective * 100).rounded()))%",
+            totalCorrectText: String(
+                format: String(localized: "review.breakdown.correct_of"),
+                stats.totalCorrect,
+                allRows.count
+            ),
+            manualOverrideText: stats.manualOverrideCount > 0
+                ? String(format: String(localized: "review.breakdown.manual_count"), stats.manualOverrideCount)
+                : nil
+        )
+
+        display?.displayAttemptBreakdown(.init(
+            sessionId: response.sessionId,
+            rows: rowVMs,
+            stats: statsVM
+        ))
+    }
+
+    // MARK: - M6.15: Annotations
+
+    func presentAnnotationUpdated(_ response: SessionReviewModels.AnnotationUpdated.Response) async {
+        let annotationVMs = response.annotations.map { ann -> AnnotationViewModel in
+            AnnotationViewModel(
+                id: ann.id,
+                text: ann.text,
+                dateText: Self.annotationDateFormatter.string(from: ann.createdAt),
+                targetAttemptWord: nil,  // word lookup требует доступа к попыткам; в MVP опускаем
+                isSessionLevel: ann.targetAttemptId == nil
+            )
+        }
+        display?.displayAnnotationUpdated(.init(annotations: annotationVMs))
+    }
+
     // MARK: - Helpers
 
     private static let dateFormatter: DateFormatter = {
@@ -158,6 +229,21 @@ final class SessionReviewPresenter: SessionReviewPresentationLogic {
             tone: AccuracyTone.make(from: percent)
         )
     }
+
+    private static let timeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.dateFormat = "HH:mm:ss"
+        return formatter
+    }()
+
+    private static let annotationDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        return formatter
+    }()
 
     private static func color(for tone: AccuracyTone) -> Color {
         switch tone {

@@ -86,6 +86,58 @@ enum SessionReviewModels {
             let confirmationText: String
         }
     }
+
+    // MARK: LoadAttemptBreakdown (M6.15 — per-attempt scoring detail)
+    enum LoadAttemptBreakdown {
+        struct Request { let sessionId: String }
+        struct Response {
+            let sessionId: String
+            let rows: [AttemptBreakdownRow]
+        }
+        struct ViewModel: Equatable {
+            let sessionId: String
+            let rows: [AttemptBreakdownViewModel]
+            let stats: BreakdownStatsViewModel
+        }
+    }
+
+    // MARK: AddAnnotation (M6.15 — specialist text annotation)
+    enum AddAnnotation {
+        struct Request {
+            let sessionId: String
+            /// nil — аннотация ко всей сессии; строка — к конкретной попытке.
+            let targetAttemptId: String?
+            let text: String
+        }
+        struct Response {
+            let sessionId: String
+            let annotations: [SessionAnnotation]
+        }
+        struct ViewModel: Equatable {
+            let annotations: [AnnotationViewModel]
+            let confirmationText: String
+        }
+    }
+
+    // MARK: DeleteAnnotation (M6.15)
+    enum DeleteAnnotation {
+        struct Request {
+            let sessionId: String
+            let annotationId: String
+        }
+        // Response переиспользует AddAnnotation.Response
+    }
+
+    // MARK: AnnotationUpdated (shared response from add/delete)
+    enum AnnotationUpdated {
+        struct Response {
+            let sessionId: String
+            let annotations: [SessionAnnotation]
+        }
+        struct ViewModel: Equatable {
+            let annotations: [AnnotationViewModel]
+        }
+    }
 }
 
 // MARK: - Per-attempt row (existing)
@@ -197,6 +249,128 @@ enum AccuracyTone: Sendable, Equatable, Hashable {
         case .poor:   return String(localized: "review.tone.poor")
         }
     }
+}
+
+// MARK: - AttemptBreakdownRow (M6.15 — per-attempt detail)
+
+/// Детальная строка для одной попытки в контексте специалистского обзора.
+/// Содержит все три оценки (ASR, ML, manual) и флаг уверенности движка.
+struct AttemptBreakdownRow: Identifiable, Sendable, Equatable, Hashable {
+    /// Порядковый номер (1-based) — для отображения в UI.
+    let index: Int
+    let id: String
+    let word: String
+    let asrTranscript: String
+    /// Оценка ASR-движка (WhisperKit confidence × корректность транскрипта), 0…1.
+    let asrScore: Double
+    /// Оценка PronunciationScorer (Core ML), nil если модель не применялась.
+    let pronunciationScore: Double?
+    /// Ручная оценка специалиста, nil если не выставлена.
+    let manualScore: Double?
+    /// Итоговая оценка: manualScore > pronunciationScore > asrScore.
+    let effectiveScore: Double
+    /// Финальный бинарный результат попытки.
+    let isCorrect: Bool
+    /// Путь к локальному аудиофайлу для воспроизведения.
+    let audioPath: String
+    /// Уровень согласованности между ASR и ML оценками.
+    let confidence: ScoreConfidence
+    let timestamp: Date
+}
+
+// MARK: - ScoreConfidence
+
+/// Согласованность между автоматическими оценками. Влияет на иконку в UI.
+enum ScoreConfidence: String, Sendable, Equatable, Hashable, CaseIterable {
+    /// Обе модели согласны — отклонение < 15%.
+    case high
+    /// Умеренное расхождение 15–30%.
+    case medium
+    /// Сильное расхождение > 30% или только одна модель.
+    case low
+
+    static func make(asr: Double, pronunciation: Double, manual: Double) -> ScoreConfidence {
+        // Manual override снижает доверие до medium — специалист что-то знает.
+        if manual > 0 { return .medium }
+        // Если PronunciationScorer не применялся — только ASR.
+        guard pronunciation >= 0 else { return .low }
+        let delta = abs(asr - pronunciation)
+        switch delta {
+        case ..<0.15:
+            return .high
+        case ..<0.30:
+            return .medium
+        default:
+            return .low
+        }
+    }
+
+    var iconName: String {
+        switch self {
+        case .high:   return "checkmark.seal.fill"
+        case .medium: return "exclamationmark.triangle"
+        case .low:    return "questionmark.circle"
+        }
+    }
+}
+
+// MARK: - BreakdownStats
+
+/// Агрегированная статистика breakdown'а — отдаётся в ViewModel.
+struct BreakdownStats: Sendable, Equatable {
+    let averageASR: Double
+    let averagePronunciation: Double?
+    let averageEffective: Double
+    let totalCorrect: Int
+    let manualOverrideCount: Int
+}
+
+// MARK: - SessionAnnotation
+
+/// Текстовая аннотация специалиста к сессии или к конкретной попытке.
+/// In-memory (M6.15), сохранение в Realm через Sync-слой — в следующем спринте.
+struct SessionAnnotation: Identifiable, Sendable, Equatable, Hashable {
+    let id: String
+    let sessionId: String
+    /// nil — аннотация ко всей сессии, строка — к попытке.
+    let targetAttemptId: String?
+    let text: String
+    let createdAt: Date
+}
+
+// MARK: - View-side models (M6.15)
+
+struct AttemptBreakdownViewModel: Identifiable, Equatable, Hashable {
+    let id: String
+    let index: Int
+    let word: String
+    let asrTranscript: String
+    let asrScoreText: String
+    let pronunciationScoreText: String?
+    let effectiveScoreText: String
+    let isCorrect: Bool
+    let audioPath: String
+    let confidenceIconName: String
+    let tone: AccuracyTone
+    let hasManualScore: Bool
+    let timestampText: String
+}
+
+struct BreakdownStatsViewModel: Equatable {
+    let averageASRText: String
+    let averagePronunciationText: String?
+    let averageEffectiveText: String
+    let totalCorrectText: String
+    let manualOverrideText: String?
+}
+
+struct AnnotationViewModel: Identifiable, Equatable, Hashable {
+    let id: String
+    let text: String
+    let dateText: String
+    /// nil — аннотация ко всей сессии.
+    let targetAttemptWord: String?
+    let isSessionLevel: Bool
 }
 
 // MARK: - SessionReview (B1 alias namespace)
