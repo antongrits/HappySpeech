@@ -1,5 +1,4 @@
 import Foundation
-import SwiftUI
 
 // MARK: - Settings VIP Models
 //

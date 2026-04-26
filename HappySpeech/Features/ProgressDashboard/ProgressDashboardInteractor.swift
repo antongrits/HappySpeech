@@ -106,6 +106,8 @@ final class ProgressDashboardInteractor: ProgressDashboardBusinessLogic {
             return
         }
 
+        presenter?.presentLLMLoading(true)
+
         Task { @MainActor [weak self] in
             guard let self else { return }
             // Готовим вход для адаптера. Для Tier B (parent) — вызывает HF API

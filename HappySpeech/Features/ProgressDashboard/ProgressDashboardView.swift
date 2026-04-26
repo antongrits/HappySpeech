@@ -534,7 +534,6 @@ struct ProgressDashboardView: View {
                 trend: cell.trend
             )
         }
-        display.displayLLMLoading(true)
         interactor?.requestLLMSummary(.init(
             childName: container.themeManager.selectedTheme.displayName,
             summary: summaryDomain,
