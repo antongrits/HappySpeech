@@ -50,7 +50,7 @@ Goal: Close all gaps. App Store + Diploma ready.
 | S12-019 | App Store metadata ru+en (description, keywords) | pm | P1 | [x] DONE |
 | S12-020 | Screenshot tour (80 screenshots, 2 devices) | qa-simulator | P1 | [x] DONE |
 | S12-021 | TestFlight build upload | ios-dev-arch | P1 | [!] BLOCKED |
-| S12-022 | Firestore security rules deploy + verify | backend-dev-infra | P1 | [~] PARTIAL — rules валидированы (0 ошибок), deploy заблокирован (antongric132@gmail.com — нет прав Firebase Management API) |
+| S12-022 | Firestore security rules deploy + verify | backend-dev-infra | P1 | [x] DONE — Firebase проект `happyspeech-dfd95` (eur3, antongric132@gmail.com), Firestore rules + indexes deployed, Auth Email/Password enabled, iOS app `1:142079911892:ios:7b7e0441408ac7e1de9841` + GoogleService-Info.plist в Resources/. Storage пропущен (Blaze required, FirebaseStorage не используется в Swift коде MVP) |
 | S12-023 | Diploma presentation deck | pm | P1 | [x] DONE |
 
 Acceptance Criteria:
@@ -61,15 +61,17 @@ Acceptance Criteria:
 - [x] BUILD SUCCEEDED on simulator (iPhone 17 Pro)
 - [x] 0 SwiftLint warnings in Features/Services/App
 - [x] App Store metadata complete (ru+en) — docs/appstore-metadata.md (ru+en, все поля)
-- [!] MILESTONE M6 gate review — pending TestFlight + Firestore deploy
+- [x] Firestore deployed (rules + indexes) on happyspeech-dfd95 (eur3)
+- [x] Firebase Auth Email/Password enabled, iOS app + GoogleService-Info.plist готовы
+- [!] MILESTONE M6 gate review — pending TestFlight only
 
 Milestones summary:
 M1 MVP            code done  unit tests DONE
 M2 All templates  code done  snapshot tests DONE, content S+Sh DONE
-M3 Dashboard      code done  Firestore deploy BLOCKED
+M3 Dashboard      code done  Firestore deploy DONE (happyspeech-dfd95)
 M4 AR+ML          wrappers   .mlpackage BLOCKED (training pipeline)
 M5 LLM+Spec       DONE       AdaptivePlanner + PDF export DONE
-M6 App Store      Sprint 12  tests+content DONE, deploy BLOCKED
+M6 App Store      Sprint 12  tests+content DONE, Firestore deploy DONE, TestFlight pending
 
 ---
 
@@ -91,9 +93,23 @@ M6 App Store      Sprint 12  tests+content DONE, deploy BLOCKED
 - H-блок: content packs закоммичены, финальная статистика
 
 ### Блокеры для финального деплоя
-1. Firebase deploy: нужен `firebase login antongric558@gmail.com` в Terminal
+1. ~~Firebase deploy~~ ✅ DONE 2026-04-26 — happyspeech-dfd95 (Firestore + Auth + iOS app + Rules + Indexes)
 2. .mlpackage файлы: нужен ML training pipeline
 3. TestFlight: нужен Apple Developer account
+
+### Firebase setup details (2026-04-26)
+- Project ID: `happyspeech-dfd95` (project number 142079911892)
+- Owner: antongric132@gmail.com (Spark plan, no-cost)
+- Firestore: `(default)` в `eur3` multi-region (Europe)
+- Rules: firestore.rules deployed (ruleset b8fe0cb1-f8ea-4fde-a813-137451d60983)
+- Indexes: firestore.indexes.json deployed
+- Auth: Email/Password enabled (validated via signUp smoke test)
+- iOS app: `1:142079911892:ios:7b7e0441408ac7e1de9841` (bundle `ru.happyspeech.app`)
+- GoogleService-Info.plist: `HappySpeech/Resources/GoogleService-Info.plist` (884 bytes)
+- API_KEY: `AIzaSyBcBvYhD__ct6I_HwFu-3RnyeJvZI5gQEc`
+- Storage: пропущен (Blaze plan required в новых проектах после Oct 2024; FirebaseStorage SDK подключен в Xcode но не используется в Swift — для MVP не нужен)
+- Gemini in Firebase: disabled (COPPA compliance, дети)
+- Google Analytics: disabled (Kids Category compliance)
 
 ### Acceptance Criteria статус
 - [x] Unit coverage >= 70% на Interactors
@@ -103,3 +119,4 @@ M6 App Store      Sprint 12  tests+content DONE, deploy BLOCKED
 - [x] BUILD SUCCEEDED на симуляторе
 - [x] 0 SwiftLint нарушений в Features/Services/App
 - [x] App Store metadata — DONE (docs/appstore-metadata.md)
+- [x] Firestore deploy — DONE (happyspeech-dfd95, eur3, Email/Password Auth, iOS app + plist)
