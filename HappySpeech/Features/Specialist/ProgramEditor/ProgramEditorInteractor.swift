@@ -95,8 +95,9 @@ final class ProgramEditorInteractor: ProgramEditorBusinessLogic {
 
     // MARK: - Test hook
 
-    /// Exposed for unit tests to inspect internal state without going through
-    /// the presenter chain.
+    // Exposed for unit tests to inspect internal state without going through
+    // the presenter chain.
+    // swiftlint:disable:next identifier_name
     func _currentProgram() -> Program { currentProgram }
 
     // MARK: - Defaults
@@ -109,7 +110,7 @@ final class ProgramEditorInteractor: ProgramEditorBusinessLogic {
             ProgramBlock(type: .wordsInitial, durationMinutes: 4, targetSound: "Р"),
             ProgramBlock(type: .breakRest, durationMinutes: 1),
             ProgramBlock(type: .minimalPairs, durationMinutes: 2, targetSound: "Р/Л"),
-            ProgramBlock(type: .coolDown, durationMinutes: 1),
+            ProgramBlock(type: .coolDown, durationMinutes: 1)
         ]
     }
 }

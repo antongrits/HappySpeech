@@ -1,5 +1,5 @@
-import SwiftUI
 import RiveRuntime
+import SwiftUI
 
 // MARK: - MascotMood (расширение — индекс для Rive state machine)
 

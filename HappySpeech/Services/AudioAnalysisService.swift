@@ -1,16 +1,16 @@
+import Accelerate
 @preconcurrency import AVFoundation
 @preconcurrency import CoreML
-import Accelerate
 import OSLog
 
 // MARK: - Domain Types
 
 /// Класс звука, детектированный SoundClassifier.
 public enum SoundClass: String, Sendable, CaseIterable {
-    case speech    = "speech"
-    case noise     = "noise"
-    case silence   = "silence"
-    case breathing = "breathing"
+    case speech
+    case noise
+    case silence
+    case breathing
 
     /// Локализованное описание для UI.
     public var localizedDescription: String {
@@ -197,14 +197,14 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
 
     /// Строит треугольный Mel-фильтрбанк [nMels, nFft/2+1].
     private func buildMelFilterbank() -> [[Float]] {
-        let halfN    = nFft / 2 + 1
+        let halfN = nFft / 2 + 1
         let fMin: Float = 0.0
         let fMax: Float = Float(sampleRate) / 2.0
 
         let melMin = 2595 * log10(1 + fMin / 700)
         let melMax = 2595 * log10(1 + fMax / 700)
 
-        var melPts   = [Float](repeating: 0, count: nMels + 2)
+        var melPts = [Float](repeating: 0, count: nMels + 2)
         for i in 0 ..< nMels + 2 {
             melPts[i] = melMin + Float(i) * (melMax - melMin) / Float(nMels + 1)
         }
@@ -217,6 +217,7 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
         }
 
         var fb = [[Float]](repeating: [Float](repeating: 0, count: halfN), count: nMels)
+        // swiftlint:disable identifier_name
         for m in 0 ..< nMels {
             let left   = binPts[m]
             let center = binPts[m + 1]
@@ -228,6 +229,7 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
                 fb[m][k] = Float(right - k) / Float(max(right - center, 1))
             }
         }
+        // swiftlint:enable identifier_name
         return fb
     }
 
@@ -244,7 +246,7 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
         var allValues = [Float]()
         for frame in logmel { allValues += frame }
         var mean: Float = 0
-        var std:  Float = 1
+        var std: Float = 1
         vDSP_meanv(allValues, 1, &mean, vDSP_Length(allValues.count))
         var variance: Float = 0
         vDSP_measqv(allValues, 1, &variance, vDSP_Length(allValues.count))
@@ -263,7 +265,7 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
 
         // Разбираем classLabel и classProbability
         var predictedClass = SoundClass.noise
-        var confidence:    Float = 0.5
+        var confidence: Float = 0.5
         var probs = [SoundClass: Float]()
 
         if let labelFeature = output.featureValue(for: "classLabel"),
@@ -282,8 +284,8 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
         }
 
         return AudioAnalysisResult(
-            soundClass:    predictedClass,
-            confidence:    confidence,
+            soundClass: predictedClass,
+            confidence: confidence,
             probabilities: probs
         )
     }
@@ -294,8 +296,8 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
     private func fallbackResult() -> AudioAnalysisResult {
         // По умолчанию считаем тишиной — безопасно для ASR pipeline
         return AudioAnalysisResult(
-            soundClass:    .silence,
-            confidence:    1.0,
+            soundClass: .silence,
+            confidence: 1.0,
             probabilities: [.silence: 1.0, .speech: 0.0, .noise: 0.0, .breathing: 0.0]
         )
     }
@@ -312,8 +314,8 @@ public final class MockAudioAnalysisService: AudioAnalysisService, @unchecked Se
 
     public func classifySound(_ buffer: AVAudioPCMBuffer) async -> AudioAnalysisResult {
         AudioAnalysisResult(
-            soundClass:    mockedClass,
-            confidence:    mockedConfidence,
+            soundClass: mockedClass,
+            confidence: mockedConfidence,
             probabilities: [mockedClass: mockedConfidence]
         )
     }

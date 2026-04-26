@@ -1,6 +1,6 @@
 import Foundation
-import WhisperKit
 import OSLog
+import WhisperKit
 
 // MARK: - LiveASRService
 

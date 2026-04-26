@@ -27,11 +27,6 @@ enum HomeTasksModels {
             let tasks: [HomeTask]
             let activeFilter: TaskFilter
             let isFromCache: Bool
-            init(tasks: [HomeTask], activeFilter: TaskFilter, isFromCache: Bool) {
-                self.tasks = tasks
-                self.activeFilter = activeFilter
-                self.isFromCache = isFromCache
-            }
         }
 
         struct ViewModel: Sendable {
@@ -289,11 +284,11 @@ struct HomeTaskSection: Sendable, Identifiable, Equatable {
 
 /// Корневой признак группировки. Порядок enum — это порядок отображения.
 enum TaskGroupKind: String, Sendable, CaseIterable, Equatable {
-    case overdue   = "overdue"     // дедлайн в прошлом, не выполнено
-    case today     = "today"       // дедлайн = сегодня
-    case thisWeek  = "thisWeek"    // дедлайн в пределах ближайших 7 дней
-    case later     = "later"       // дедлайн позже / не задан
-    case completed = "completed"   // выполнено
+    case overdue                  // дедлайн в прошлом, не выполнено
+    case today                    // дедлайн = сегодня
+    case thisWeek                 // дедлайн в пределах ближайших 7 дней
+    case later                    // дедлайн позже / не задан
+    case completed                // выполнено
 
     /// Ключ локализации для заголовка секции.
     var titleKey: String.LocalizationValue {

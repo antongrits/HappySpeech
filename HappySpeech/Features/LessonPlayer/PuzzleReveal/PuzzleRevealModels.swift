@@ -176,8 +176,8 @@ final class PuzzleRevealDisplay {
 
     // Environment
     var isASRAvailable: Bool = false
-    var revealingTileIndex: Int? = nil   // текущая плитка в анимации
+    var revealingTileIndex: Int?   // текущая плитка в анимации
 
     // Publishing hook — когда View готов передать score наверх.
-    var pendingFinalScore: Float? = nil
+    var pendingFinalScore: Float?
 }

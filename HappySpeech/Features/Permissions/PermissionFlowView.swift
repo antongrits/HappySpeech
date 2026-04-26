@@ -1,5 +1,5 @@
-import SwiftUI
 import OSLog
+import SwiftUI
 
 // MARK: - PermissionFlowView
 //
@@ -386,12 +386,15 @@ struct PermissionFlowView: View {
                     .accessibilityHint(String(localized: "permissions.a11y.allowHint"))
                 }
 
-                Button(action: { handleSkip(step) }) {
-                    Text(step.skipTitle)
-                        .font(TypographyTokens.body(16))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .frame(maxWidth: .infinity, minHeight: 44)
-                }
+                Button(
+                    action: { handleSkip(step) },
+                    label: {
+                        Text(step.skipTitle)
+                            .font(TypographyTokens.body(16))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .frame(maxWidth: .infinity, minHeight: 44)
+                    }
+                )
                 .buttonStyle(.plain)
                 .accessibilityLabel(String(localized: "permissions.a11y.skipLabel"))
                 .accessibilityHint(String(localized: "permissions.a11y.skipHint"))
@@ -545,15 +548,22 @@ private struct ConfettiBurstView: View {
 
     @State private var animateParticles: Bool = false
 
-    private let particles: [(emoji: String, x: CGFloat, delay: Double, duration: Double)] = [
-        ("🎉", 0.10, 0.00, 2.6),
-        ("⭐️", 0.25, 0.20, 2.4),
-        ("✨", 0.40, 0.10, 2.8),
-        ("🌟", 0.55, 0.30, 2.5),
-        ("💫", 0.70, 0.05, 2.7),
-        ("🎊", 0.85, 0.25, 2.6),
-        ("⭐️", 0.18, 0.35, 2.5),
-        ("✨", 0.62, 0.15, 2.7)
+    private struct ConfettiParticle {
+        let emoji: String
+        let xPosition: CGFloat
+        let delay: Double
+        let duration: Double
+    }
+
+    private let particles: [ConfettiParticle] = [
+        ConfettiParticle(emoji: "🎉", xPosition: 0.10, delay: 0.00, duration: 2.6),
+        ConfettiParticle(emoji: "⭐️", xPosition: 0.25, delay: 0.20, duration: 2.4),
+        ConfettiParticle(emoji: "✨", xPosition: 0.40, delay: 0.10, duration: 2.8),
+        ConfettiParticle(emoji: "🌟", xPosition: 0.55, delay: 0.30, duration: 2.5),
+        ConfettiParticle(emoji: "💫", xPosition: 0.70, delay: 0.05, duration: 2.7),
+        ConfettiParticle(emoji: "🎊", xPosition: 0.85, delay: 0.25, duration: 2.6),
+        ConfettiParticle(emoji: "⭐️", xPosition: 0.18, delay: 0.35, duration: 2.5),
+        ConfettiParticle(emoji: "✨", xPosition: 0.62, delay: 0.15, duration: 2.7)
     ]
 
     var body: some View {
@@ -564,7 +574,7 @@ private struct ConfettiBurstView: View {
                     Text(item.emoji)
                         .font(.system(size: 28))
                         .position(
-                            x: proxy.size.width * item.x,
+                            x: proxy.size.width * item.xPosition,
                             y: animateParticles ? proxy.size.height + 40 : -40
                         )
                         .opacity(animateParticles ? 0.0 : 1.0)

@@ -44,6 +44,7 @@ public protocol ClaudeAPIClientProtocol: Sendable {
 public struct ClaudeAPIClient: ClaudeAPIClientProtocol {
 
     public static let defaultModel = "claude-haiku-4-5"
+    // swiftlint:disable:next force_unwrapping
     public static let defaultEndpoint = URL(string: "https://api.anthropic.com/v1/messages")!
     public static let apiVersionHeader = "2023-06-01"
 

@@ -1,6 +1,6 @@
-import SwiftUI
 import Charts
 import OSLog
+import SwiftUI
 
 // MARK: - SessionReviewView
 //

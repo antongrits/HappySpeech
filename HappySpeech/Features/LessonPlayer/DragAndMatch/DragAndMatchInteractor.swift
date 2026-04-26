@@ -106,10 +106,8 @@ final class DragAndMatchInteractor: DragAndMatchBusinessLogic {
 
     func completeSession(_ request: DragAndMatchModels.CompleteSession.Request) async {
         var correct = 0
-        for word in words {
-            if placedWords[word.id] == word.correctBucketId {
-                correct += 1
-            }
+        for word in words where placedWords[word.id] == word.correctBucketId {
+            correct += 1
         }
         let total = max(words.count, 1)
         logger.info("Session complete: \(correct)/\(total)")

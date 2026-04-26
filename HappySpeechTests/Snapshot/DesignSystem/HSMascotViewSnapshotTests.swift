@@ -1,6 +1,6 @@
-import XCTest
-import SwiftUI
 @testable import HappySpeech
+import SwiftUI
+import XCTest
 
 // MARK: - HSMascotViewSnapshotTests
 //
@@ -23,7 +23,7 @@ final class HSMascotViewSnapshotTests: XCTestCase {
     private let renderSize = CGSize(width: 200, height: 200)
     private let appearances: [(String, UIUserInterfaceStyle)] = [
         ("Light", .light),
-        ("Dark",  .dark),
+        ("Dark", .dark)
     ]
 
     // MARK: - Tests — по одному тесту на настроение

@@ -243,11 +243,9 @@ public final class LiveARSessionService: NSObject, ARSessionService, @unchecked 
     // MARK: - Init
 
     public override init() {
-        var capturedContinuation: AsyncStream<FaceBlendshapes>.Continuation!
-        self.blendshapeStream = AsyncStream { continuation in
-            capturedContinuation = continuation
-        }
-        self.continuation = capturedContinuation
+        let stream = AsyncStream<FaceBlendshapes>.makeStream()
+        self.blendshapeStream = stream.stream
+        self.continuation = stream.continuation
         super.init()
         self.session.delegate = self
         HSLogger.ar.debug("LiveARSessionService initialised (supported=\(self.isSupported))")
@@ -355,11 +353,9 @@ public final class MockARSessionService: ARSessionService, @unchecked Sendable {
 
     public init(isSupported: Bool = true) {
         self.isSupported = isSupported
-        var capturedContinuation: AsyncStream<FaceBlendshapes>.Continuation!
-        self.blendshapeStream = AsyncStream { continuation in
-            capturedContinuation = continuation
-        }
-        self.continuation = capturedContinuation
+        let stream = AsyncStream<FaceBlendshapes>.makeStream()
+        self.blendshapeStream = stream.stream
+        self.continuation = stream.continuation
     }
 
     deinit {

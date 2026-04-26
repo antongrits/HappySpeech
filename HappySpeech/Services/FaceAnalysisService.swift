@@ -1,7 +1,7 @@
-import Vision
-@preconcurrency import AVFoundation
 import Accelerate
+@preconcurrency import AVFoundation
 import OSLog
+import Vision
 
 // MARK: - Domain Types
 
@@ -144,13 +144,13 @@ public final class LiveFaceAnalysisService: FaceAnalysisService, @unchecked Send
         allPoints += faceContour
 
         return FaceLandmarkResult(
-            allPoints:      allPoints,
-            mouthPoints:    outerLips + innerLips,
-            leftEyePoints:  leftEye,
+            allPoints: allPoints,
+            mouthPoints: outerLips + innerLips,
+            leftEyePoints: leftEye,
             rightEyePoints: rightEye,
-            jawPoints:      faceContour,
-            boundingBox:    observation.boundingBox,
-            confidence:     observation.confidence
+            jawPoints: faceContour,
+            boundingBox: observation.boundingBox,
+            confidence: observation.confidence
         )
     }
 
@@ -160,16 +160,17 @@ public final class LiveFaceAnalysisService: FaceAnalysisService, @unchecked Send
         let pts = landmarks.mouthPoints
         guard pts.count >= 4 else {
             return LipSymmetryResult(
-                symmetryScore:  0.5,
-                leftCorner:     .zero,
-                rightCorner:    .zero,
+                symmetryScore: 0.5,
+                leftCorner: .zero,
+                rightCorner: .zero,
                 mouthOpenRatio: 0,
-                isOpen:         false
+                isOpen: false
             )
         }
 
         var xsFloat = pts.map { Float($0.x) }
         var ysFloat = pts.map { Float($0.y) }
+        // swiftlint:disable:next identifier_name
         let n = vDSP_Length(pts.count)
 
         var minX: Float = 0; var maxX: Float = 0
@@ -197,11 +198,11 @@ public final class LiveFaceAnalysisService: FaceAnalysisService, @unchecked Send
         let isOpen = mouthOpenRatio > 0.15
 
         return LipSymmetryResult(
-            symmetryScore:  symmetryScore,
-            leftCorner:     leftCorner,
-            rightCorner:    rightCorner,
+            symmetryScore: symmetryScore,
+            leftCorner: leftCorner,
+            rightCorner: rightCorner,
             mouthOpenRatio: mouthOpenRatio,
-            isOpen:         isOpen
+            isOpen: isOpen
         )
     }
 
@@ -224,16 +225,16 @@ public final class LiveFaceAnalysisService: FaceAnalysisService, @unchecked Send
 
         // Нормализация: типичный выдох ≈ 0.01–0.12 RMS.
         // Порог 0.15 принят как условный «100%» силы выдоха.
-        let normalized    = min(1.0, rms / 0.15)
+        let normalized = min(1.0, rms / 0.15)
 
         // Выдох: не тишина (> 0.05) и не крик/шум (< 0.7)
         let isBreathing   = normalized > 0.05 && normalized < 0.7
         let confidence    = isBreathing ? min(1.0, normalized * 2.0) : 0.0
 
         return FaceAirStreamResult(
-            rmsLevel:    normalized,
+            rmsLevel: normalized,
             isBreathing: isBreathing,
-            confidence:  confidence
+            confidence: confidence
         )
     }
 }
@@ -253,11 +254,11 @@ public final class MockFaceAnalysisService: FaceAnalysisService, @unchecked Send
 
     public func analyzeLipSymmetry(landmarks: FaceLandmarkResult) -> LipSymmetryResult {
         LipSymmetryResult(
-            symmetryScore:  0.85,
-            leftCorner:     CGPoint(x: 0.3, y: 0.5),
-            rightCorner:    CGPoint(x: 0.7, y: 0.5),
+            symmetryScore: 0.85,
+            leftCorner: CGPoint(x: 0.3, y: 0.5),
+            rightCorner: CGPoint(x: 0.7, y: 0.5),
             mouthOpenRatio: 0.3,
-            isOpen:         true
+            isOpen: true
         )
     }
 

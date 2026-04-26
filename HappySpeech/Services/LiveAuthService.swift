@@ -1,8 +1,8 @@
-import Foundation
-import UIKit
 import FirebaseAuth
 import FirebaseCore
+import Foundation
 import GoogleSignIn
+import UIKit
 
 // MARK: - LiveAuthService
 

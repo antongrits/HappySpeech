@@ -81,7 +81,7 @@ public final class NotificationServiceLive: NotificationService, @unchecked Send
         center.removePendingNotificationRequests(withIdentifiers: [
             Identifier.dailyReminder,
             Identifier.streakReminder,
-            Identifier.weeklyReport,
+            Identifier.weeklyReport
         ])
         HSLogger.app.info("Cancelled known reminders")
     }

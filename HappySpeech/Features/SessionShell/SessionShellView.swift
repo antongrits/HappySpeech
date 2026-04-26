@@ -1,6 +1,6 @@
+import OSLog
 // swiftlint:disable file_length
 import SwiftUI
-import OSLog
 
 // MARK: - SessionShellView
 //

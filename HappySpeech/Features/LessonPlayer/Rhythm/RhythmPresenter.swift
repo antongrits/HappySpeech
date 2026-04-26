@@ -27,22 +27,22 @@ final class RhythmPresenter: RhythmPresentationLogic {
     // MARK: - LoadPattern
 
     func presentLoadPattern(_ response: RhythmModels.LoadPattern.Response) {
-        let p = response.pattern
-        let beats = p.beats.map {
+        let pattern = response.pattern
+        let beats = pattern.beats.map {
             RhythmBeatDisplay(strength: $0, isActive: false, wasHit: false)
         }
         let progress = Double(response.patternIndex) / Double(max(1, response.totalPatterns))
-        let vm = RhythmModels.LoadPattern.ViewModel(
+        let viewModelData = RhythmModels.LoadPattern.ViewModel(
             beats: beats,
-            syllableWord: p.syllableWord,
-            targetWord: p.targetWord,
-            displayPattern: p.displayPattern,
-            emoji: p.emoji,
+            syllableWord: pattern.syllableWord,
+            targetWord: pattern.targetWord,
+            displayPattern: pattern.displayPattern,
+            emoji: pattern.emoji,
             patternIndex: response.patternIndex,
             totalPatterns: response.totalPatterns,
             progressFraction: progress
         )
-        viewModel?.displayLoadPattern(vm)
+        viewModel?.displayLoadPattern(viewModelData)
     }
 
     // MARK: - PlayPattern

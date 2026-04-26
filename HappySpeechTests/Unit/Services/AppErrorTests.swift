@@ -1,5 +1,5 @@
-import XCTest
 @testable import HappySpeech
+import XCTest
 
 // MARK: - AppErrorTests
 
@@ -14,7 +14,7 @@ final class AppErrorTests: XCTestCase {
             .llmNotDownloaded,
             .contentPackNotFound("test-pack"),
             .realmWriteFailed("test"),
-            .unknown("test"),
+            .unknown("test")
         ]
 
         for error in errors {

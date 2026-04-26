@@ -1,5 +1,5 @@
-import XCTest
 @testable import HappySpeech
+import XCTest
 
 // MARK: - GuidedTourCoordinatorTests
 //
@@ -24,7 +24,7 @@ final class GuidedTourCoordinatorTests: XCTestCase {
             TourStep(id: "b", title: "B", body: "bodyB", highlightKey: "b",
                      lyalyaPhrase: nil, autoAdvanceAfter: nil, allowSkip: true),
             TourStep(id: "c", title: "C", body: "bodyC", highlightKey: "c",
-                     lyalyaPhrase: nil, autoAdvanceAfter: nil, allowSkip: false),
+                     lyalyaPhrase: nil, autoAdvanceAfter: nil, allowSkip: false)
         ]
     ) -> (GuidedTourCoordinator, UserDefaults) {
         let suiteName = "tour-test-\(UUID().uuidString)"

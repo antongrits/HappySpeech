@@ -60,11 +60,11 @@ final class AuthFlowUITests: XCTestCase {
         )
 
         XCTAssertTrue(
-            emailField.waitForExistence(timeout: 3) || app.textFields.count > 0,
+            emailField.waitForExistence(timeout: 3) || !app.textFields.isEmpty,
             "На экране входа должно быть поле email"
         )
         XCTAssertTrue(
-            passwordField.waitForExistence(timeout: 3) || app.secureTextFields.count > 0,
+            passwordField.waitForExistence(timeout: 3) || !app.secureTextFields.isEmpty,
             "На экране входа должно быть поле пароля"
         )
     }
@@ -101,7 +101,7 @@ final class AuthFlowUITests: XCTestCase {
         }
         signUpLink.tap()
 
-        let signUpRoot  = app.otherElements["AuthSignUpRoot"]
+        let signUpRoot = app.otherElements["AuthSignUpRoot"]
         let confirmField = app.secureTextFields.element(boundBy: 1)
 
         let signUpVisible = signUpRoot.waitForExistence(timeout: 3)

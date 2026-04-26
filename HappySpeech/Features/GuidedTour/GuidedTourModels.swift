@@ -138,7 +138,7 @@ enum TourSteps {
                 lyalyaPhrase: "session_end_01",
                 autoAdvanceAfter: 3.0,
                 allowSkip: false
-            ),
+            )
         ]
     }
 }

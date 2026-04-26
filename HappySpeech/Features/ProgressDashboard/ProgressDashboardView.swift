@@ -1,6 +1,6 @@
-import SwiftUI
 import Charts
 import OSLog
+import SwiftUI
 
 // MARK: - ProgressDashboardView
 //
@@ -243,8 +243,8 @@ struct ProgressDashboardView: View {
                 .chartYAxis {
                     AxisMarks(position: .leading, values: [0, 50, 100]) { value in
                         AxisValueLabel {
-                            if let v = value.as(Int.self) {
-                                Text("\(v)%")
+                            if let intValue = value.as(Int.self) {
+                                Text("\(intValue)%")
                                     .font(TypographyTokens.caption(11))
                                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                             }
@@ -314,8 +314,8 @@ struct ProgressDashboardView: View {
                 .chartYAxis {
                     AxisMarks(position: .leading, values: [0, 50, 100]) { value in
                         AxisValueLabel {
-                            if let v = value.as(Int.self) {
-                                Text("\(v)%")
+                            if let intValue = value.as(Int.self) {
+                                Text("\(intValue)%")
                                     .font(TypographyTokens.caption(11))
                                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                             }
@@ -759,8 +759,8 @@ private struct SoundProgressDetailView: View {
                 .chartYAxis {
                     AxisMarks(position: .leading, values: [0, 50, 100]) { value in
                         AxisValueLabel {
-                            if let v = value.as(Int.self) {
-                                Text("\(v)%")
+                            if let intValue = value.as(Int.self) {
+                                Text("\(intValue)%")
                                     .font(TypographyTokens.caption(11))
                                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                             }

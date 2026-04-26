@@ -36,7 +36,7 @@ struct BreathingView: View {
             ColorTokens.Kid.bg.ignoresSafeArea()
             content
             if store.showTutorial { tutorialOverlay }
-            if store.showWarmUp   { warmUpOverlay }
+            if store.showWarmUp { warmUpOverlay }
         }
         .task {
             store.presenter.viewModel = store

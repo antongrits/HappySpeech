@@ -271,14 +271,11 @@ public struct RuleBasedDecisionService: Sendable {
         let durationMin = sessionDuration / 60.0
         var score: Double = 0
 
-        if audioMetrics.silenceRatio > 0.6 { score += 0.5 }
-        else if audioMetrics.silenceRatio > 0.4 { score += 0.3 }
+        if audioMetrics.silenceRatio > 0.6 { score += 0.5 } else if audioMetrics.silenceRatio > 0.4 { score += 0.3 }
 
-        if audioMetrics.attemptsPerMinute < 2 { score += 0.3 }
-        else if audioMetrics.attemptsPerMinute < 3.5 { score += 0.15 }
+        if audioMetrics.attemptsPerMinute < 2 { score += 0.3 } else if audioMetrics.attemptsPerMinute < 3.5 { score += 0.15 }
 
-        if durationMin > 10 { score += 0.2 }
-        else if durationMin > 6 { score += 0.1 }
+        if durationMin > 10 { score += 0.2 } else if durationMin > 6 { score += 0.1 }
 
         if audioMetrics.averageAmplitude < 0.05 { score += 0.15 }
 
@@ -481,7 +478,7 @@ public struct RuleBasedDecisionService: Sendable {
     ]
 
     static let emojiPositive: [String] = ["✨", "⭐", "🌟", "🎉", "👏", "🏆", "🥇", "💫"]
-    static let emojiGentle:   [String] = ["💪", "🌱", "🤗", "💖", "🙂", "🌈"]
+    static let emojiGentle: [String] = ["💪", "🌱", "🤗", "💖", "🙂", "🌈"]
 
     static let stickerPool: [String] = [
         "butterfly-01", "bear-01", "fox-01", "bunny-01", "hedgehog-01",
@@ -791,9 +788,9 @@ public struct RuleBasedDecisionService: Sendable {
 
     static let wordPools: [SoundFamily: [String]] = [
         .whistling: ["сом", "сок", "сад", "санки", "самолёт", "сова", "стол", "сумка", "сыр", "слон"],
-        .hissing:   ["шар", "шапка", "шуба", "школа", "шишка", "шарф", "шмель", "шкаф", "шум", "шина"],
-        .sonorant:  ["рыба", "рак", "радуга", "ракета", "рубашка", "лампа", "лодка", "луна", "лиса", "лыжи"],
-        .velar:     ["кот", "кит", "куст", "кофта", "камень", "гусь", "гора", "гриб", "хлеб", "хвост"]
+        .hissing: ["шар", "шапка", "шуба", "школа", "шишка", "шарф", "шмель", "шкаф", "шум", "шина"],
+        .sonorant: ["рыба", "рак", "радуга", "ракета", "рубашка", "лампа", "лодка", "луна", "лиса", "лыжи"],
+        .velar: ["кот", "кит", "куст", "кофта", "камень", "гусь", "гора", "гриб", "хлеб", "хвост"]
     ]
 
     static let minimalPairPools: [String: [(String, String)]] = [

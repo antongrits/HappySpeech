@@ -44,9 +44,9 @@ public struct HSKidTabBar: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var animatedSelection: KidTab
 
-    private let barHeight:    CGFloat = 72
-    private let iconSize:     CGFloat = 26
-    private let labelSize:    CGFloat = 10
+    private let barHeight: CGFloat = 72
+    private let iconSize: CGFloat = 26
+    private let labelSize: CGFloat = 10
     private let itemMinWidth: CGFloat = 56  // minimum touch target
 
     // MARK: - Init

@@ -88,32 +88,32 @@ final class RewardsPresenter: RewardsPresentationLogic {
     }
 
     func presentOpenSticker(_ response: RewardsModels.OpenSticker.Response) {
-        let s = response.sticker
-        let dateLabel: String? = s.unlockedAt.map {
+        let sticker = response.sticker
+        let dateLabel: String? = sticker.unlockedAt.map {
             String(
                 format: String(localized: "rewards.detail.unlockedOn"),
                 Self.dateFormatter.string(from: $0)
             )
         }
         let detail = StickerDetailViewModel(
-            id: s.id,
-            emoji: s.emoji,
-            name: s.name,
-            collectionName: s.collection.displayName,
-            unlockCondition: s.unlockCondition,
+            id: sticker.id,
+            emoji: sticker.emoji,
+            name: sticker.name,
+            collectionName: sticker.collection.displayName,
+            unlockCondition: sticker.unlockCondition,
             unlockedDateLabel: dateLabel,
-            isUnlocked: s.isUnlocked
+            isUnlocked: sticker.isUnlocked
         )
         display?.displayOpenSticker(.init(detail: detail))
     }
 
     func presentClaimReward(_ response: RewardsModels.ClaimReward.Response) {
-        let s = response.sticker
+        let sticker = response.sticker
         let unlock = StickerUnlockViewModel(
-            id: s.id,
-            emoji: s.emoji,
-            name: s.name,
-            confettiEmojis: ["🎉", "✨", "⭐", "🌟", "💫", s.emoji]
+            id: sticker.id,
+            emoji: sticker.emoji,
+            name: sticker.name,
+            confettiEmojis: ["🎉", "✨", "⭐", "🌟", "💫", sticker.emoji]
         )
         display?.displayClaimReward(.init(unlock: unlock))
     }
@@ -129,20 +129,20 @@ final class RewardsPresenter: RewardsPresentationLogic {
         let filtered: [Sticker] = (filter == .all)
             ? stickers
             : stickers.filter { $0.collection == filter }
-        return filtered.map { s in
+        return filtered.map { sticker in
             let label: String
-            if s.isUnlocked {
-                label = String(format: String(localized: "rewards.a11y.cellUnlocked"), s.name)
+            if sticker.isUnlocked {
+                label = String(format: String(localized: "rewards.a11y.cellUnlocked"), sticker.name)
             } else {
-                label = String(format: String(localized: "rewards.a11y.cellLocked"), s.name)
+                label = String(format: String(localized: "rewards.a11y.cellLocked"), sticker.name)
             }
             return StickerCellViewModel(
-                id: s.id,
-                emoji: s.emoji,
-                name: s.name,
-                isUnlocked: s.isUnlocked,
-                isNew: s.isNew,
-                collection: s.collection,
+                id: sticker.id,
+                emoji: sticker.emoji,
+                name: sticker.name,
+                isUnlocked: sticker.isUnlocked,
+                isNew: sticker.isNew,
+                collection: sticker.collection,
                 accessibilityLabel: label
             )
         }

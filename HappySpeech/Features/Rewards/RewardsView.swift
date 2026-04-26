@@ -1,5 +1,5 @@
-import SwiftUI
 import OSLog
+import SwiftUI
 
 // MARK: - RewardsView
 //
@@ -287,18 +287,21 @@ private struct StickerCellView: View {
     }
 
     var body: some View {
-        Button(action: {
-            onTap()
-            withAnimation(reduceMotion ? nil : MotionTokens.bounce) {
-                bounce.toggle()
+        Button(
+            action: {
+                onTap()
+                withAnimation(reduceMotion ? nil : MotionTokens.bounce) {
+                    bounce.toggle()
+                }
+            },
+            label: {
+                if cell.isUnlocked {
+                    unlockedCell
+                } else {
+                    lockedCell
+                }
             }
-        }) {
-            if cell.isUnlocked {
-                unlockedCell
-            } else {
-                lockedCell
-            }
-        }
+        )
         .buttonStyle(.plain)
         .scaleEffect(appeared ? 1 : 0.6)
         .opacity(appeared ? 1 : 0)

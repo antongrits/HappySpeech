@@ -1,7 +1,7 @@
-import SwiftUI
-import OSLog
 import FirebaseCore
 import GoogleSignIn
+import OSLog
+import SwiftUI
 
 // MARK: - HappySpeechApp
 

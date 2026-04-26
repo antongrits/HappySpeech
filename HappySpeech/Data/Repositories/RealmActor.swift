@@ -1,6 +1,6 @@
 import Foundation
-import RealmSwift
 import OSLog
+import RealmSwift
 
 // MARK: - RealmActor
 

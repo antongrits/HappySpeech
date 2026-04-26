@@ -31,8 +31,7 @@ enum ReportsAggregator {
             guard let first = ordered.first?.successRate,
                   let last  = ordered.last?.successRate else { continue }
             let delta = last - first
-            if delta >= 0.10 { improved.append(sound) }
-            else if delta <= -0.10 { struggling.append(sound) }
+            if delta >= 0.10 { improved.append(sound) } else if delta <= -0.10 { struggling.append(sound) }
         }
 
         return ReportSummary(

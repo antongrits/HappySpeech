@@ -61,18 +61,18 @@ public enum TypographyTokens {
     // MARK: - Line Spacing
 
     public enum LineSpacing {
-        public static let tight:   CGFloat = 1.1
-        public static let normal:  CGFloat = 1.35
+        public static let tight: CGFloat = 1.1
+        public static let normal: CGFloat = 1.35
         public static let relaxed: CGFloat = 1.5
-        public static let loose:   CGFloat = 1.7
+        public static let loose: CGFloat = 1.7
     }
 
     // MARK: - Letter Spacing
 
     public enum LetterSpacing {
-        public static let tight:   CGFloat = -0.5
-        public static let normal:  CGFloat = 0
-        public static let wide:    CGFloat = 0.5
-        public static let widest:  CGFloat = 2.0
+        public static let tight: CGFloat = -0.5
+        public static let normal: CGFloat = 0
+        public static let wide: CGFloat = 0.5
+        public static let widest: CGFloat = 2.0
     }
 }

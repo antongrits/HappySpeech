@@ -1,5 +1,5 @@
-import XCTest
 @testable import HappySpeech
+import XCTest
 
 // MARK: - ReportsAggregatorTests
 
@@ -45,7 +45,7 @@ final class ReportsAggregatorTests: XCTestCase {
     func test_summarize_improvedSound_detected() {
         // Same sound, score improved from 0.3 to 0.9
         let early = makeSession(daysAgo: 10, sound: "Р", total: 10, correct: 3)
-        let late  = makeSession(daysAgo: 0,  sound: "Р", total: 10, correct: 9)
+        let late  = makeSession(daysAgo: 0, sound: "Р", total: 10, correct: 9)
         let s = ReportsAggregator.summarize(sessions: [early, late])
         XCTAssertTrue(s.improvedSounds.contains("Р"))
         XCTAssertFalse(s.strugglingSounds.contains("Р"))
@@ -53,7 +53,7 @@ final class ReportsAggregatorTests: XCTestCase {
 
     func test_summarize_strugglingSound_detected() {
         let early = makeSession(daysAgo: 10, sound: "Л", total: 10, correct: 8)
-        let late  = makeSession(daysAgo: 0,  sound: "Л", total: 10, correct: 4)
+        let late  = makeSession(daysAgo: 0, sound: "Л", total: 10, correct: 4)
         let s = ReportsAggregator.summarize(sessions: [early, late])
         XCTAssertTrue(s.strugglingSounds.contains("Л"))
     }
@@ -64,7 +64,7 @@ final class ReportsAggregatorTests: XCTestCase {
         let sessions = [
             makeSession(daysAgo: 2, sound: "Р", total: 5, correct: 3),
             makeSession(daysAgo: 1, sound: "Р", total: 7, correct: 5),
-            makeSession(daysAgo: 0, sound: "Ш", total: 4, correct: 3),
+            makeSession(daysAgo: 0, sound: "Ш", total: 4, correct: 3)
         ]
         let rows = ReportsAggregator.soundBreakdown(sessions: sessions)
         XCTAssertEqual(rows.count, 2)
@@ -79,7 +79,7 @@ final class ReportsAggregatorTests: XCTestCase {
         let sessions = [
             makeSession(daysAgo: 5, sound: "Р"),
             makeSession(daysAgo: 1, sound: "Ш"),
-            makeSession(daysAgo: 3, sound: "Л"),
+            makeSession(daysAgo: 3, sound: "Л")
         ]
         let timeline = ReportsAggregator.timeline(sessions: sessions)
         XCTAssertEqual(timeline.count, 3)

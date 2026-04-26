@@ -156,13 +156,15 @@ struct AuthSignInView: View {
     private var formSection: some View {
         VStack(spacing: SpacingTokens.sp3) {
             authTextField(
-                title: String(localized: "auth.email.label"),
-                text: $email,
-                icon: "envelope",
-                keyboard: .emailAddress,
-                contentType: .emailAddress,
-                isSecure: false,
-                field: .email
+                config: AuthFieldConfig(
+                    title: String(localized: "auth.email.label"),
+                    icon: "envelope",
+                    keyboard: .emailAddress,
+                    contentType: .emailAddress,
+                    isSecure: false,
+                    field: .email
+                ),
+                text: $email
             )
             .submitLabel(.next)
             .onSubmit { focusedField = .password }
@@ -170,13 +172,15 @@ struct AuthSignInView: View {
             .accessibilityHint(String(localized: "accessibility.email_field.hint"))
 
             authTextField(
-                title: String(localized: "auth.password.label"),
-                text: $password,
-                icon: "lock",
-                keyboard: .default,
-                contentType: .password,
-                isSecure: true,
-                field: .password
+                config: AuthFieldConfig(
+                    title: String(localized: "auth.password.label"),
+                    icon: "lock",
+                    keyboard: .default,
+                    contentType: .password,
+                    isSecure: true,
+                    field: .password
+                ),
+                text: $password
             )
             .submitLabel(.go)
             .onSubmit(signIn)
@@ -258,16 +262,26 @@ struct AuthSignInView: View {
 
     // MARK: - Components
 
+    private struct AuthFieldConfig {
+        let title: String
+        let icon: String
+        let keyboard: UIKeyboardType
+        let contentType: UITextContentType?
+        let isSecure: Bool
+        let field: Field
+    }
+
     @ViewBuilder
     private func authTextField(
-        title: String,
-        text: Binding<String>,
-        icon: String,
-        keyboard: UIKeyboardType,
-        contentType: UITextContentType?,
-        isSecure: Bool,
-        field: Field
+        config: AuthFieldConfig,
+        text: Binding<String>
     ) -> some View {
+        let title = config.title
+        let icon = config.icon
+        let keyboard = config.keyboard
+        let contentType = config.contentType
+        let isSecure = config.isSecure
+        let field = config.field
         HStack(spacing: SpacingTokens.sp3) {
             Image(systemName: icon)
                 .font(.system(size: 16))

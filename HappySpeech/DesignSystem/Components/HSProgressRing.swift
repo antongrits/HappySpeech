@@ -8,7 +8,7 @@ public struct HSProgressRing: View {
     let lineWidth: CGFloat
     var color: Color = ColorTokens.Brand.primary
     var backgroundColor: Color = Color(.systemFill)
-    var label: String? = nil
+    var label: String?
 
     public init(value: Double, size: CGFloat = 80, lineWidth: CGFloat = 8, color: Color = ColorTokens.Brand.primary, label: String? = nil) {
         self.value = value

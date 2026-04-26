@@ -77,49 +77,49 @@ final class PuzzleRevealInteractor: PuzzleRevealBusinessLogic {
 
     private let puzzleCatalog: [String: [PuzzleItem]] = [
         "whistling": [
-            PuzzleItem(word: "самолёт", emoji: "✈️",  soundGroup: "whistling",
+            PuzzleItem(word: "самолёт", emoji: "✈️", soundGroup: "whistling",
                        hintText: String(localized: "Произнеси слово с буквой «С»")),
-            PuzzleItem(word: "зебра",   emoji: "🦓", soundGroup: "whistling",
+            PuzzleItem(word: "зебра", emoji: "🦓", soundGroup: "whistling",
                        hintText: String(localized: "Произнеси слово с буквой «З»")),
-            PuzzleItem(word: "цапля",   emoji: "🦢", soundGroup: "whistling",
+            PuzzleItem(word: "цапля", emoji: "🦢", soundGroup: "whistling",
                        hintText: String(localized: "Произнеси слово с буквой «Ц»")),
-            PuzzleItem(word: "слон",    emoji: "🐘", soundGroup: "whistling",
+            PuzzleItem(word: "слон", emoji: "🐘", soundGroup: "whistling",
                        hintText: String(localized: "Произнеси слово с буквой «С»")),
-            PuzzleItem(word: "заяц",    emoji: "🐇", soundGroup: "whistling",
+            PuzzleItem(word: "заяц", emoji: "🐇", soundGroup: "whistling",
                        hintText: String(localized: "Произнеси слово с буквой «З»"))
         ],
         "hissing": [
-            PuzzleItem(word: "шапка",   emoji: "🧢", soundGroup: "hissing",
+            PuzzleItem(word: "шапка", emoji: "🧢", soundGroup: "hissing",
                        hintText: String(localized: "Произнеси слово с буквой «Ш»")),
-            PuzzleItem(word: "жираф",   emoji: "🦒", soundGroup: "hissing",
+            PuzzleItem(word: "жираф", emoji: "🦒", soundGroup: "hissing",
                        hintText: String(localized: "Произнеси слово с буквой «Ж»")),
-            PuzzleItem(word: "чайник",  emoji: "🫖", soundGroup: "hissing",
+            PuzzleItem(word: "чайник", emoji: "🫖", soundGroup: "hissing",
                        hintText: String(localized: "Произнеси слово с буквой «Ч»")),
-            PuzzleItem(word: "щука",    emoji: "🐟", soundGroup: "hissing",
+            PuzzleItem(word: "щука", emoji: "🐟", soundGroup: "hissing",
                        hintText: String(localized: "Произнеси слово с буквой «Щ»")),
-            PuzzleItem(word: "кошка",   emoji: "🐱", soundGroup: "hissing",
+            PuzzleItem(word: "кошка", emoji: "🐱", soundGroup: "hissing",
                        hintText: String(localized: "Произнеси слово с буквой «Ш»"))
         ],
         "sonants": [
-            PuzzleItem(word: "ракета",  emoji: "🚀", soundGroup: "sonants",
+            PuzzleItem(word: "ракета", emoji: "🚀", soundGroup: "sonants",
                        hintText: String(localized: "Произнеси слово с буквой «Р»")),
             PuzzleItem(word: "лягушка", emoji: "🐸", soundGroup: "sonants",
                        hintText: String(localized: "Произнеси слово с буквой «Л»")),
-            PuzzleItem(word: "рыба",    emoji: "🐠", soundGroup: "sonants",
+            PuzzleItem(word: "рыба", emoji: "🐠", soundGroup: "sonants",
                        hintText: String(localized: "Произнеси слово с буквой «Р»")),
-            PuzzleItem(word: "лампа",   emoji: "💡", soundGroup: "sonants",
+            PuzzleItem(word: "лампа", emoji: "💡", soundGroup: "sonants",
                        hintText: String(localized: "Произнеси слово с буквой «Л»")),
-            PuzzleItem(word: "орёл",    emoji: "🦅", soundGroup: "sonants",
+            PuzzleItem(word: "орёл", emoji: "🦅", soundGroup: "sonants",
                        hintText: String(localized: "Произнеси слово с буквой «Р»"))
         ],
         "velar": [
-            PuzzleItem(word: "кот",     emoji: "🐈", soundGroup: "velar",
+            PuzzleItem(word: "кот", emoji: "🐈", soundGroup: "velar",
                        hintText: String(localized: "Произнеси слово с буквой «К»")),
-            PuzzleItem(word: "гусь",    emoji: "🦢", soundGroup: "velar",
+            PuzzleItem(word: "гусь", emoji: "🦢", soundGroup: "velar",
                        hintText: String(localized: "Произнеси слово с буквой «Г»")),
-            PuzzleItem(word: "хомяк",   emoji: "🐹", soundGroup: "velar",
+            PuzzleItem(word: "хомяк", emoji: "🐹", soundGroup: "velar",
                        hintText: String(localized: "Произнеси слово с буквой «Х»")),
-            PuzzleItem(word: "кубик",   emoji: "🎲", soundGroup: "velar",
+            PuzzleItem(word: "кубик", emoji: "🎲", soundGroup: "velar",
                        hintText: String(localized: "Произнеси слово с буквой «К»")),
             PuzzleItem(word: "горилла", emoji: "🦍", soundGroup: "velar",
                        hintText: String(localized: "Произнеси слово с буквой «Г»"))
@@ -316,15 +316,15 @@ final class PuzzleRevealInteractor: PuzzleRevealBusinessLogic {
     /// Простой scoring: точное совпадение — 1.0; совпадение первых двух букв — 0.7;
     /// любая непустая транскрипция — 0.5; пустая — 0.3 с подмешанным confidence.
     private static func score(transcript: String, target: String, confidence: Float) -> Float {
-        let t = transcript
+        let normalized = transcript
             .lowercased()
             .trimmingCharacters(in: .whitespacesAndNewlines)
         let target = target.lowercased()
         guard !target.isEmpty else { return min(max(confidence, 0), 1) }
 
-        if t == target { return 1.0 }
-        if t.hasPrefix(target.prefix(2)) { return 0.7 }
-        if !t.isEmpty { return max(0.5, confidence * 0.8) }
+        if normalized == target { return 1.0 }
+        if normalized.hasPrefix(target.prefix(2)) { return 0.7 }
+        if !normalized.isEmpty { return max(0.5, confidence * 0.8) }
         return max(0.3, confidence * 0.5)
     }
 

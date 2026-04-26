@@ -18,10 +18,10 @@ public struct HSProgressStepBar: View {
 
     // MARK: - Layout constants
 
-    private let dotSize:     CGFloat = 18
+    private let dotSize: CGFloat = 18
     private let activeDotSize: CGFloat = 22
-    private let lineHeight:  CGFloat = 3
-    private let ringWidth:   CGFloat = 3
+    private let lineHeight: CGFloat = 3
+    private let ringWidth: CGFloat = 3
 
     // MARK: - Init
 
@@ -108,7 +108,7 @@ public struct HSProgressStepBar: View {
     }
 
     private func dotState(for step: Int) -> DotState {
-        if step < currentStep  { return .completed }
+        if step < currentStep { return .completed }
         if step == currentStep { return .current }
         return .future
     }

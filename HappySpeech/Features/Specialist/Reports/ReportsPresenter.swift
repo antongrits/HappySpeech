@@ -24,23 +24,23 @@ final class ReportsPresenter: ReportsPresentationLogic {
     weak var display: (any ReportsDisplayLogic)?
 
     private let dateFormatter: DateFormatter = {
-        let f = DateFormatter()
-        f.dateStyle = .short
-        return f
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        return formatter
     }()
 
     func presentFetchReport(_ response: ReportsModels.FetchReport.Response) async {
-        let s = response.summary
-        let vm = ReportsModels.FetchReport.ViewModel(
+        let summary = response.summary
+        let viewModel = ReportsModels.FetchReport.ViewModel(
             titleText: String(localized: "reports.title"),
             rangeLabel: String(localized: "reports.range.last30"),
-            totalSessionsText: String(localized: "reports.metric.sessions.\(s.totalSessions)"),
-            totalMinutesText: String(localized: "reports.metric.minutes.\(s.totalMinutes)"),
-            overallSuccessPercent: Int(s.overallSuccessRate * 100),
+            totalSessionsText: String(localized: "reports.metric.sessions.\(summary.totalSessions)"),
+            totalMinutesText: String(localized: "reports.metric.minutes.\(summary.totalMinutes)"),
+            overallSuccessPercent: Int(summary.overallSuccessRate * 100),
             rows: response.soundBreakdown,
             timeline: response.sessionTimeline
         )
-        display?.displayFetchReport(vm)
+        display?.displayFetchReport(viewModel)
     }
 
     func presentExportReport(_ response: ReportsModels.ExportReport.Response) async {
