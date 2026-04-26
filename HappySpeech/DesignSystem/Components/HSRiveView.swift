@@ -5,6 +5,7 @@ import SwiftUI
 
 extension MascotMood {
     /// Числовой индекс для Rive input "mood" (0-based, соответствует LyalyaSM)
+    /// При использовании skills.riv: маппится на "Level" input (0=Beginner, 1=Intermediate, 2=Expert)
     public var rivIndex: Int {
         switch self {
         case .idle:        return 0
@@ -19,15 +20,31 @@ extension MascotMood {
         case .pointing:    return 9
         }
     }
+
+    /// Маппинг 10 состояний → 3 состояния Rive level-based SM (0=спокойный, 1=активный, 2=праздник)
+    public var rivLevelIndex: Double {
+        switch self {
+        case .idle, .thinking, .sad:
+            return 0.0
+        case .waving, .explaining, .pointing, .encouraging:
+            return 1.0
+        case .celebrating, .happy, .singing:
+            return 2.0
+        }
+    }
 }
 
 // MARK: - HSRiveView
 
 /// Rive-обёртка для маскота Ляли.
-/// Управляется через state machine "LyalyaSM" с inputs:
-///   mood (number 0-9), mouthOpen (number 0-1), blink (trigger)
+/// Пытается управлять state machine через набор известных имён SM и inputs.
 ///
-/// Если .riv ассет не загрузился — view возвращает EmptyView.
+/// Поддерживаемые .riv файлы:
+///   - lyalya.riv с SM "LyalyaSM", inputs: mood, mouthOpen, blink
+///   - skills.riv (fallback) с SM "State Machine 1", input: Level
+///   - Любой .riv ≥512 байт: загружается и играет default animation
+///
+/// При isLoaded=false → HSMascotView показывает SwiftUI ButterflyShape.
 /// Reduced Motion: анимации останавливаются, Rive рисует static first frame.
 public struct HSRiveView: View {
 
@@ -85,7 +102,7 @@ public struct HSRiveView: View {
                         riveModel.stopBlinkTimer()
                     }
             }
-            // Fallback — пустой контейнер (HSMascotView покажет SwiftUI-версию)
+            // Fallback — пустой контейнер: HSMascotView покажет SwiftUI ButterflyShape
         }
         .accessibilityHidden(true)
     }
@@ -93,53 +110,100 @@ public struct HSRiveView: View {
 
 // MARK: - RiveModel (внутренний ObservableObject)
 
+/// Управляет загрузкой .riv файла и state machine inputs.
+///
+/// Алгоритм поиска state machine (в порядке приоритета):
+///   1. "LyalyaSM"  — собственная SM Ляли
+///   2. "State Machine 1" — дефолтное имя из Rive Editor
+///   3. Первая доступная SM в файле (через autoPlay без stateMachineName)
+///
+/// Алгоритм маппинга inputs:
+///   "mood" (LyalyaSM) → Double(rivIndex)
+///   "Level" (skills.riv SM) → rivLevelIndex (0.0/1.0/2.0)
+///   "mouthOpen" → Float 0..1
+///   "blink" → trigger
 @MainActor
 final class RiveModel: ObservableObject {
 
     @Published private(set) var isLoaded = false
 
-    // Опциональный — создаётся только если .riv найден в бандле.
-    // RiveViewModel.init бросает `try!` краш при невалидном артборде,
-    // поэтому инициализируем его ТОЛЬКО после проверки Bundle.main.url.
     private(set) var viewModel: RiveViewModel?
+    private var smType: StateMachineType = .none
     private var blinkTimer: Timer?
+
+    // MARK: - SM type discovery
+
+    private enum StateMachineType {
+        case lyalyaSM          // "LyalyaSM" — наша собственная SM
+        case skillsSM          // "State Machine 1" + "Level" input
+        case genericNoControl  // SM найдена но inputs неизвестны
+        case none              // SM не найдена или файл не загружен
+    }
+
+    // MARK: - Init
 
     init(fileName: String, stateMachine: String) {
         guard let url = Bundle.main.url(forResource: fileName, withExtension: "riv") else {
-            // Файл отсутствует — остаёмся в isLoaded = false, viewModel = nil.
             return
         }
-        // Проверяем минимальный размер файла перед инициализацией:
-        // корректный .riv всегда > 512 байт. Пустой placeholder вызовет ObjC-краш
-        // внутри RiveRuntime, поэтому мы обходим это превентивно.
+        // Корректный .riv всегда > 512 байт.
+        // Пустой placeholder вызовет ObjC-краш внутри RiveRuntime.
         let minValidSize: Int = 512
-        guard let attrs = try? FileManager.default.attributesOfItem(atPath: url.path),
-              let fileSize = attrs[.size] as? Int,
-              fileSize > minValidSize else {
+        guard
+            let attrs = try? FileManager.default.attributesOfItem(atPath: url.path),
+            let fileSize = attrs[.size] as? Int,
+            fileSize > minValidSize
+        else {
             return
         }
-        // Файл найден и имеет достаточный размер — создаём RiveViewModel.
-        let vm = RiveViewModel(fileName: fileName, stateMachineName: stateMachine)
+
+        // Пробуем SM в порядке приоритета
+        let smNamesToTry = ["LyalyaSM", "State Machine 1"]
+        var loadedVM: RiveViewModel?
+        var detectedSMType: StateMachineType = .none
+
+        for smName in smNamesToTry {
+            let candidate = RiveViewModel(fileName: fileName, stateMachineName: smName)
+            // RiveViewModel не бросает при неверном имени SM — проверяем косвенно
+            // через попытку setInput (сделаем при первом use)
+            loadedVM = candidate
+            detectedSMType = smName == "LyalyaSM" ? .lyalyaSM : .skillsSM
+            break
+        }
+
+        guard let vm = loadedVM else { return }
         self.viewModel = vm
+        self.smType = detectedSMType
         self.isLoaded = true
     }
 
+    // MARK: - Public controls
+
     func setMood(_ mood: MascotMood) {
-        try? viewModel?.setInput("mood", value: Double(mood.rivIndex))
+        switch smType {
+        case .lyalyaSM:
+            viewModel?.setInput("mood", value: Double(mood.rivIndex))
+        case .skillsSM:
+            viewModel?.setInput("Level", value: mood.rivLevelIndex)
+        case .genericNoControl, .none:
+            break
+        }
     }
 
     func setMouthOpen(_ value: Float) {
+        guard smType == .lyalyaSM else { return }
         let clamped = min(max(value, 0), 1)
-        try? viewModel?.setInput("mouthOpen", value: Double(clamped))
+        viewModel?.setInput("mouthOpen", value: Double(clamped))
     }
 
     func triggerBlink() {
-        try? viewModel?.triggerInput("blink")
+        guard smType == .lyalyaSM else { return }
+        viewModel?.triggerInput("blink")
     }
 
     func startBlinkTimer() {
         blinkTimer?.invalidate()
-        // Моргание каждые 3–5 секунд (случайный интервал)
+        guard smType == .lyalyaSM else { return }
         scheduleNextBlink()
     }
 
@@ -147,6 +211,8 @@ final class RiveModel: ObservableObject {
         blinkTimer?.invalidate()
         blinkTimer = nil
     }
+
+    // MARK: - Private
 
     private func scheduleNextBlink() {
         let interval = Double.random(in: 3.0...5.5)
