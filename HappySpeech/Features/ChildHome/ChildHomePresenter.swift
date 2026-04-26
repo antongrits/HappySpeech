@@ -5,6 +5,15 @@ import Foundation
 @MainActor
 protocol ChildHomePresentationLogic: AnyObject {
     func presentFetch(_ response: ChildHomeModels.Fetch.Response)
+    func presentMascotTap(_ response: ChildHomeModels.MascotTap.Response)
+}
+
+// MARK: - ChildHomeModels.MascotTap (inline extension)
+
+extension ChildHomeModels {
+    enum MascotTap {
+        struct Response: Sendable {}
+    }
 }
 
 // MARK: - ChildHomePresenter
@@ -37,9 +46,23 @@ final class ChildHomePresenter: ChildHomePresentationLogic {
             formattedDate: dateFormatter.string(from: Date()),
             isStreakHot: response.currentStreak >= 7,
             recentRewards: makeRecentRewards(from: response),
-            hasOverdueTask: response.hasOverdueTask
+            hasOverdueTask: response.hasOverdueTask,
+            todayWords: makeTodayWords(from: response),
+            homeTasks: makeHomeTasks(from: response)
         )
         viewModel?.displayFetch(vm)
+    }
+
+    func presentMascotTap(_ response: ChildHomeModels.MascotTap.Response) {
+        let phrases: [String] = [
+            String(localized: "child.home.mascot.tap.phrase1"),
+            String(localized: "child.home.mascot.tap.phrase2"),
+            String(localized: "child.home.mascot.tap.phrase3"),
+            String(localized: "child.home.mascot.tap.phrase4"),
+            String(localized: "child.home.mascot.tap.phrase5")
+        ]
+        let phrase = phrases.randomElement() ?? phrases[0]
+        viewModel?.displayMascotTap(phrase: phrase)
     }
 
     // MARK: - VM builders
@@ -180,5 +203,38 @@ final class ChildHomePresenter: ChildHomePresentationLogic {
         if ["Р", "Л"].contains(upper) { return .sonorant }
         if ["К", "Г", "Х"].contains(upper) { return .velar }
         return .sonorant
+    }
+
+    // MARK: - TodayWords builder (M8.7 v6)
+
+    private func makeTodayWords(
+        from response: ChildHomeModels.Fetch.Response
+    ) -> [ChildHomeModels.TodayWord] {
+        response.todayWords.map { data in
+            ChildHomeModels.TodayWord(
+                id: data.id,
+                word: data.word,
+                syllables: data.syllables,
+                targetSound: data.targetSound,
+                soundPosition: data.soundPosition,
+                successRate: data.successRate
+            )
+        }
+    }
+
+    // MARK: - HomeTasks builder (M8.7 v6)
+
+    private func makeHomeTasks(
+        from response: ChildHomeModels.Fetch.Response
+    ) -> [ChildHomeModels.HomeTaskPreview] {
+        response.homeTasks.map { data in
+            ChildHomeModels.HomeTaskPreview(
+                id: data.id,
+                title: String(localized: String.LocalizationValue(data.titleKey)),
+                targetSound: data.targetSound,
+                dueDate: data.dueDate,
+                isCompleted: data.isCompleted
+            )
+        }
     }
 }

@@ -36,6 +36,17 @@ final class ChildHomeViewModel: ChildHomeDisplayLogic {
     /// Просрочена ли дневная миссия (вечер + не закрыта). Влияет на маскота и pulse баннера.
     var hasOverdueTask: Bool = false
 
+    // MARK: - M8.7 v6 additions
+
+    /// Слова из daily route — отображаются в секции «Слова дня».
+    var todayWords: [ChildHomeModels.TodayWord] = []
+    /// Preview заданий логопеда (pending tasks).
+    var homeTasks: [ChildHomeModels.HomeTaskPreview] = []
+    /// Фраза Ляли после tap по маскоту (обновляется при каждом нажатии).
+    var mascotTapPhrase: String? = nil
+    /// Счётчик нажатий на маскота — нужен для разнообразия фраз.
+    var mascotTapCount: Int = 0
+
     // MARK: - Computed helpers
 
     var displayedName: String {
@@ -49,6 +60,11 @@ final class ChildHomeViewModel: ChildHomeDisplayLogic {
     }
 
     // MARK: - DisplayLogic
+
+    func displayMascotTap(phrase: String) {
+        mascotTapCount += 1
+        mascotTapPhrase = phrase
+    }
 
     func displayFetch(_ viewModel: ChildHomeModels.Fetch.ViewModel) {
         self.childName          = viewModel.childName
@@ -70,6 +86,10 @@ final class ChildHomeViewModel: ChildHomeDisplayLogic {
         // B13
         self.recentRewards      = viewModel.recentRewards
         self.hasOverdueTask     = viewModel.hasOverdueTask
+
+        // M8.7 v6
+        self.todayWords         = viewModel.todayWords
+        self.homeTasks          = viewModel.homeTasks
 
         self.isLoading          = false
     }
