@@ -388,7 +388,8 @@ struct ChildHomeView: View {
         } label: {
             HStack(spacing: SpacingTokens.sp2) {
                 Image(systemName: "person.crop.circle.badge.exclamationmark")
-                    .font(.system(size: 16, weight: .semibold))
+                    .font(TypographyTokens.body(16).weight(.semibold))
+                    .accessibilityHidden(true)
                 Text(String(localized: "child.home.sos.button"))
                     .font(TypographyTokens.body(14))
                     .lineLimit(1)
@@ -455,12 +456,14 @@ struct ChildHomeView: View {
                     showSOSAlert = true
                 } label: {
                     Image(systemName: "person.2.fill")
-                        .font(.system(size: 16))
+                        .font(TypographyTokens.body(16))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .frame(width: 44, height: 44)
+                        .frame(width: 56, height: 56)
                         .background(
                             Circle().fill(ColorTokens.Kid.surface).kidTileShadow()
                         )
+                        .contentShape(Circle())
+                        .accessibilityHidden(true)
                 }
                 .accessibilityLabel(String(localized: "child.home.a11y.parent.button"))
                 .accessibilityHint(String(localized: "child.home.a11y.parent.button.hint"))
@@ -476,7 +479,8 @@ struct ChildHomeView: View {
     private func sectionHeader(_ title: String, emoji: String) -> some View {
         HStack(spacing: SpacingTokens.sp2) {
             Text(emoji)
-                .font(.system(size: 14))
+                .font(TypographyTokens.caption(14))
+                .accessibilityHidden(true)
             Text(title)
                 .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
