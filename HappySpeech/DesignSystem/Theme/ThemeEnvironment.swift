@@ -4,9 +4,9 @@ import SwiftUI
 
 /// The user-selectable theme preference, persisted to UserDefaults.
 public enum AppTheme: String, CaseIterable, Sendable {
-    case system = "system"
-    case light  = "light"
-    case dark   = "dark"
+    case system
+    case light
+    case dark
 
     public var displayName: String {
         switch self {

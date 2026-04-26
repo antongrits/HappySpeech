@@ -529,7 +529,7 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
                 ("лиса",  "ли-са",    "final")
             ]
         ]
-        let pairs = wordMap[sound] ?? wordMap["Р"]!
+        let pairs = wordMap[sound] ?? wordMap["Р"] ?? []
         return pairs.enumerated().map { idx, pair in
             ChildHomeModels.TodayWordData(
                 id: "tw-\(sound)-\(idx)",

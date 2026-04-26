@@ -1,5 +1,4 @@
 import OSLog
-// swiftlint:disable file_length
 import SwiftUI
 
 // MARK: - SessionShellView
@@ -823,4 +822,3 @@ extension GameType {
         }
     }
 }
-// swiftlint:enable file_length

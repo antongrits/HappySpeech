@@ -48,9 +48,8 @@ final class StoryCompletionPresenter: StoryCompletionPresentationLogic {
             progressFraction: progress,
             isReading: true
         )
-        logger.info(
-            "presentLoadStory scene=\(response.sceneIndex, privacy: .public)/\(response.totalScenes, privacy: .public) group=\(scene.soundGroup, privacy: .public)"
-        )
+        let sceneInfo = "\(response.sceneIndex)/\(response.totalScenes) group=\(scene.soundGroup)"
+        logger.info("presentLoadStory scene=\(sceneInfo, privacy: .public)")
         display?.displayLoadStory(vm)
     }
 
@@ -112,8 +111,9 @@ final class StoryCompletionPresenter: StoryCompletionPresentationLogic {
         default: message = String(localized: "Попробуем ещё раз?")
         }
 
+        let storyCompleteInfo = "stars=\(stars) correct=\(response.correctCount)/\(response.totalScenes)"
         logger.info(
-            "presentComplete score=\(response.score, privacy: .public) stars=\(stars, privacy: .public) correct=\(response.correctCount, privacy: .public)/\(response.totalScenes, privacy: .public)"
+            "presentComplete score=\(response.score, privacy: .public) \(storyCompleteInfo, privacy: .public)"
         )
 
         let vm = StoryCompletionModels.Complete.ViewModel(

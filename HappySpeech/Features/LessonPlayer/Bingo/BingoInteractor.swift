@@ -225,7 +225,10 @@ final class BingoInteractor: NSObject, BingoBusinessLogic {
         }
         score = min(max(score, 0), 1)
 
-        logger.info("completeGame marked=\(markedCount, privacy: .public)/\(totalCount, privacy: .public) bingo=\(self.bingoAchieved, privacy: .public) score=\(score, privacy: .public)")
+        let bingoInfo = "bingo=\(self.bingoAchieved) score=\(score)"
+        logger.info(
+            "completeGame marked=\(markedCount, privacy: .public)/\(totalCount, privacy: .public) \(bingoInfo, privacy: .public)"
+        )
 
         presenter?.presentCompleteGame(BingoModels.CompleteGame.Response(
             score: score,

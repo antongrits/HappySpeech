@@ -19,7 +19,8 @@ public struct HFInferenceClient: HFInferenceClientProtocol {
     public static let modelVikhrNemo = "Vikhrmodels/Vikhr-Nemo-12B-Instruct-R-21-09-24"
     public static let modelVikhr7B   = "Vikhrmodels/Vikhr-7B-instruct_0.4"
 
-    private let baseURL = URL(string: "https://api-inference.huggingface.co/models/")!
+    // swiftlint:disable:next force_unwrapping
+    private let baseURL = URL(string: "https://api-inference.huggingface.co/models/")! // статичная валидная строка
     private let session: URLSession
     private let tokenProvider: @Sendable () -> String?
 

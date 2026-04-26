@@ -87,7 +87,8 @@ final class SortingInteractor: SortingBusinessLogic {
         self.bestStreak = 0
         self.elapsed = 0
         self.isGameOver = false
-        logger.info("Sorting loaded set=\(set.id, privacy: .public) words=\(self.words.count, privacy: .public) categories=\(self.categories.count, privacy: .public) group=\(request.soundGroup, privacy: .public)")
+        let sortInfo = "words=\(self.words.count) categories=\(self.categories.count) group=\(request.soundGroup)"
+        logger.info("Sorting loaded set=\(set.id, privacy: .public) \(sortInfo, privacy: .public)")
 
         let response = SortingModels.LoadSession.Response(
             setTitle: set.title,
@@ -132,7 +133,10 @@ final class SortingInteractor: SortingBusinessLogic {
         }
         let streakTriggered = correct && currentStreak >= streakBonusThreshold
 
-        logger.info("classify word=\(word.word, privacy: .public) → \(request.categoryId, privacy: .public) correct=\(correct) streak=\(self.currentStreak, privacy: .public) best=\(self.bestStreak, privacy: .public)")
+        let classInfo = "correct=\(correct) streak=\(self.currentStreak) best=\(self.bestStreak)"
+        logger.info(
+            "classify word=\(word.word, privacy: .public) → \(request.categoryId, privacy: .public) \(classInfo, privacy: .public)"
+        )
 
         if correct {
             if streakTriggered {
@@ -219,7 +223,10 @@ final class SortingInteractor: SortingBusinessLogic {
         }
         let total = max(words.count, 1)
         let score = computeScore(correct: correct, total: total, elapsed: elapsed, bestStreak: bestStreak)
-        logger.info("Sorting complete \(correct, privacy: .public)/\(total, privacy: .public) elapsed=\(self.elapsed, privacy: .public)s best=\(self.bestStreak, privacy: .public) reason=\(String(describing: reason), privacy: .public) score=\(score, privacy: .public)")
+        let sortCompleteInfo = "elapsed=\(self.elapsed)s best=\(self.bestStreak) reason=\(String(describing: reason)) score=\(score)"
+        logger.info(
+            "Sorting complete \(correct, privacy: .public)/\(total, privacy: .public) \(sortCompleteInfo, privacy: .public)"
+        )
 
         let response = SortingModels.CompleteSession.Response(
             correctCount: correct,

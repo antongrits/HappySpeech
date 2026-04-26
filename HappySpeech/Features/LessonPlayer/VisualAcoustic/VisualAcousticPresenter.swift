@@ -43,9 +43,8 @@ final class VisualAcousticPresenter: VisualAcousticPresentationLogic {
             totalRounds: response.totalRounds,
             progressFraction: progress
         )
-        logger.info(
-            "presentLoadRound round=\(response.roundIndex, privacy: .public)/\(response.totalRounds, privacy: .public) group=\(round.soundGroup, privacy: .public)"
-        )
+        let roundInfo = "\(response.roundIndex)/\(response.totalRounds) group=\(round.soundGroup)"
+        logger.info("presentLoadRound round=\(roundInfo, privacy: .public)")
         display?.displayLoadRound(vm)
     }
 
@@ -88,8 +87,9 @@ final class VisualAcousticPresenter: VisualAcousticPresentationLogic {
             feedbackCorrect: response.isCorrect,
             feedbackText: feedback
         )
+        let choiceInfo = "chosen=\(response.choiceIndex) correctIdx=\(response.correctIndex)"
         logger.info(
-            "presentChoiceWord correct=\(response.isCorrect, privacy: .public) chosen=\(response.choiceIndex, privacy: .public) correctIdx=\(response.correctIndex, privacy: .public)"
+            "presentChoiceWord correct=\(response.isCorrect, privacy: .public) \(choiceInfo, privacy: .public)"
         )
         display?.displayChoiceWord(vm)
     }
@@ -119,8 +119,9 @@ final class VisualAcousticPresenter: VisualAcousticPresentationLogic {
         default: message = String(localized: "Попробуем ещё раз?")
         }
 
+        let completeInfo = "stars=\(stars) correct=\(response.correctCount)/\(response.totalRounds)"
         logger.info(
-            "presentComplete score=\(response.score, privacy: .public) stars=\(stars, privacy: .public) correct=\(response.correctCount, privacy: .public)/\(response.totalRounds, privacy: .public)"
+            "presentComplete score=\(response.score, privacy: .public) \(completeInfo, privacy: .public)"
         )
 
         let vm = VisualAcousticModels.Complete.ViewModel(
