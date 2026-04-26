@@ -181,7 +181,11 @@ final class OnboardingInteractor: OnboardingBusinessLogic {
         // Сохраняем профиль и флаг «онбординг пройден» в UserDefaults,
         // чтобы при следующем запуске Splash сразу маршрутизировал в home.
         OnboardingState.markCompleted(profile: profile)
-        logger.info("completeOnboarding role=\(self.profile.role.rawValue, privacy: .public) age=\(self.profile.childAge, privacy: .public) goals=\(self.profile.goals.count, privacy: .public) sounds=\(self.profile.difficultSounds.count, privacy: .public) minutes=\(self.profile.dailyMinutes, privacy: .public)")
+        let onboardInfo = "age=\(self.profile.childAge) goals=\(self.profile.goals.count)" +
+            " sounds=\(self.profile.difficultSounds.count) min=\(self.profile.dailyMinutes)"
+        logger.info(
+            "completeOnboarding role=\(self.profile.role.rawValue, privacy: .public) \(onboardInfo, privacy: .public)"
+        )
         presenter?.presentCompleteOnboarding(.init(profile: profile))
     }
 

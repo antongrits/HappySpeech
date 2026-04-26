@@ -155,6 +155,8 @@ public enum AirStreamAnalyzer {
         // withUnsafeMutableBufferPointer гарантирует, что поинтеры переживают всё тело блока
         return real.withUnsafeMutableBufferPointer { realBuf in
             imag.withUnsafeMutableBufferPointer { imagBuf in
+                // baseAddress гарантированно non-nil для non-empty буферов (invariant: frame ≥ 1)
+                // swiftlint:disable:next force_unwrapping
                 var complexBuffer = DSPSplitComplex(realp: realBuf.baseAddress!, imagp: imagBuf.baseAddress!)
 
                 guard let fftSetup = vDSP_create_fftsetup(

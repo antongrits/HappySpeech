@@ -35,7 +35,9 @@ public final class ContentEngine {
             loadedPacks[packId] = pack
         }
 
-        let pack = loadedPacks[packId]!
+        guard let pack = loadedPacks[packId] else {
+            throw AppError.contentPackNotFound("Pack \(packId) failed to load")
+        }
         let items = filterItems(from: pack.items, difficulty: difficulty, count: wordCount)
 
         HSLogger.content.info("Built lesson: \(sound) \(stage.rawValue) \(template.rawValue) ×\(items.count)")

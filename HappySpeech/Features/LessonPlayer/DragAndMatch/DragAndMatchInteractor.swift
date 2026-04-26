@@ -54,7 +54,8 @@ final class DragAndMatchInteractor: DragAndMatchBusinessLogic {
         self.words = words.shuffled()
         self.buckets = buckets
         self.placedWords = [:]
-        logger.info("Loaded \(self.words.count, privacy: .public) words / \(self.buckets.count, privacy: .public) buckets for group=\(request.soundGroup, privacy: .public)")
+        let dragInfo = "\(self.words.count) words / \(self.buckets.count) buckets group=\(request.soundGroup)"
+        logger.info("Loaded \(dragInfo, privacy: .public)")
 
         let response = DragAndMatchModels.LoadSession.Response(
             words: self.words,

@@ -27,7 +27,9 @@ public final class LocalLLMServiceLive: LocalLLMService, @unchecked Sendable {
     // MARK: - Download
 
     public func downloadModel() async throws {
-        let remoteURL = URL(string: "https://storage.googleapis.com/happyspeech-models/\(modelFileName)")!
+        guard let remoteURL = URL(string: "https://storage.googleapis.com/happyspeech-models/\(modelFileName)") else {
+            throw AppError.networkPermanent("Invalid model URL for \(modelFileName)")
+        }
         HSLogger.llm.info("Downloading LLM from \(remoteURL)")
         let (tempURL, _) = try await URLSession.shared.download(from: remoteURL)
         let dir = modelPath.deletingLastPathComponent()
@@ -48,7 +50,9 @@ public final class LocalLLMServiceLive: LocalLLMService, @unchecked Sendable {
             ? Int(Double(request.correctAttempts) / Double(request.totalAttempts) * 100)
             : 0
         let errorList = request.errorWords.prefix(3).joined(separator: ", ")
-        let summary = "\(request.childName) отработал звук «\(request.targetSound)» — \(rate)% правильно за \(request.sessionDurationSec / 60) мин. Ошибки: \(errorList.isEmpty ? "нет" : errorList)."
+        let summary = "\(request.childName) отработал звук «\(request.targetSound)» — " +
+            "\(rate)% правильно за \(request.sessionDurationSec / 60) мин. " +
+            "Ошибки: \(errorList.isEmpty ? "нет" : errorList)."
         let task = "Повторите слова: \(errorList.isEmpty ? "любые слова со звуком \(request.targetSound)" : errorList)."
         return ParentSummaryResponse(parentSummary: summary, homeTask: task)
     }

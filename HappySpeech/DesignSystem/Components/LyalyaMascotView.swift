@@ -7,16 +7,16 @@ import SwiftUI
 // Добавление нового состояния: обновить rivIndex в HSRiveView.swift.
 
 public enum LyalyaState: String, CaseIterable, Sendable {
-    case idle        = "idle"
-    case waving      = "waving"
-    case pointing    = "pointing"
-    case celebrating = "celebrating"
-    case thinking    = "thinking"
-    case explaining  = "explaining"
-    case singing     = "singing"
-    case sad         = "sad"
-    case happy       = "happy"
-    case encouraging = "encouraging"
+    case idle
+    case waving
+    case pointing
+    case celebrating
+    case thinking
+    case explaining
+    case singing
+    case sad
+    case happy
+    case encouraging
 
     /// Маппинг в MascotMood для передачи в HSMascotView / HSRiveView
     public var mascotMood: MascotMood {

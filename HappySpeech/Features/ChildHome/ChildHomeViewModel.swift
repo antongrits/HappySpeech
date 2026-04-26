@@ -43,7 +43,7 @@ final class ChildHomeViewModel: ChildHomeDisplayLogic {
     /// Preview заданий логопеда (pending tasks).
     var homeTasks: [ChildHomeModels.HomeTaskPreview] = []
     /// Фраза Ляли после tap по маскоту (обновляется при каждом нажатии).
-    var mascotTapPhrase: String? = nil
+    var mascotTapPhrase: String?
     /// Счётчик нажатий на маскота — нужен для разнообразия фраз.
     var mascotTapCount: Int = 0
 

@@ -41,8 +41,9 @@ final class SessionCompleteInteractor: SessionCompleteBusinessLogic {
 
     func loadResult(_ request: SessionCompleteModels.LoadResult.Request) {
         result = request.result
+        let resultInfo = "score=\(request.result.score) stars=\(request.result.starsEarned)"
         logger.info(
-            "loadResult game=\(request.result.gameTitle, privacy: .public) score=\(request.result.score, privacy: .public) stars=\(request.result.starsEarned, privacy: .public)"
+            "loadResult game=\(request.result.gameTitle, privacy: .public) \(resultInfo, privacy: .public)"
         )
         presenter?.presentLoadResult(.init(result: request.result))
     }

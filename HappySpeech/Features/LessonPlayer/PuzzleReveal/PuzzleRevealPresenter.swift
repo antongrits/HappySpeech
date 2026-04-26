@@ -68,7 +68,8 @@ final class PuzzleRevealPresenter: PuzzleRevealPresentationLogic {
         let total = max(1, response.tiles.count)
         let progress = Double(revealedCount) / Double(total)
 
-        logger.info("revealTile idx=\(response.tileIndex, privacy: .public) score=\(response.score, privacy: .public) allRevealed=\(response.allRevealed, privacy: .public)")
+        let tileInfo = "score=\(response.score) allRevealed=\(response.allRevealed)"
+        logger.info("revealTile idx=\(response.tileIndex, privacy: .public) \(tileInfo, privacy: .public)")
 
         let vm = PuzzleRevealModels.RevealTile.ViewModel(
             tileIndex: response.tileIndex,
