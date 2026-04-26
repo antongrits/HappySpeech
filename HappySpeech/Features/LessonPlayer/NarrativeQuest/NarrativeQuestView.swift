@@ -150,7 +150,7 @@ struct NarrativeQuestView: View {
 
             Spacer(minLength: 0)
 
-            HSButton(String(localized: "Начать квест!"), style: .primary, icon: "sparkles") {
+            HSButton(String(localized: "Начать"), style: .primary, icon: "sparkles") {
                 container.soundService.playUISound(.tap)
                 container.hapticService.selection()
                 interactor.startStage(.init(stageIndex: 0))

@@ -508,6 +508,7 @@ private struct StickerDetailSheet: View {
             HSButton(
                 String(localized: "rewards.detail.close"),
                 style: .primary,
+                icon: "xmark",
                 action: onClose
             )
             .padding(.horizontal, SpacingTokens.screenEdge)

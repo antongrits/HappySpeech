@@ -297,7 +297,8 @@ struct MinimalPairsView: View {
             Spacer()
             HSButton(
                 String(localized: "Завершить"),
-                style: .primary
+                style: .primary,
+                icon: "checkmark.circle.fill"
             ) {
                 finalize()
             }

@@ -199,7 +199,11 @@ struct SoundHunterView: View {
 
             Spacer(minLength: SpacingTokens.medium)
 
-            HSButton(String(localized: "Завершить"), style: .primary) {
+            HSButton(
+                String(localized: "Завершить"),
+                style: .primary,
+                icon: "checkmark.circle.fill"
+            ) {
                 onComplete(display.lastScore)
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
