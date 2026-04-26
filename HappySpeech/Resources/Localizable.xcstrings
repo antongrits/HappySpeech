@@ -17050,6 +17050,622 @@
           }
         }
       }
+    },
+    "demo.autoadvance.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Авто-переход через %d с"
+          }
+        }
+      }
+    },
+    "demo.autoadvance.toggle.on": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Авто-переход вкл."
+          }
+        }
+      }
+    },
+    "demo.autoadvance.toggle.off": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Авто-переход выкл."
+          }
+        }
+      }
+    },
+    "demo.replay.button": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ещё раз"
+          }
+        }
+      }
+    },
+    "demo.replay.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторить шаг с начала"
+          }
+        }
+      }
+    },
+    "demo.thumbnail.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перейти к шагу %d"
+          }
+        }
+      }
+    },
+    "demo.dot.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шаг %d из %d"
+          }
+        }
+      }
+    },
+    "demo.today.words.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слова дня"
+          }
+        }
+      }
+    },
+    "demo.today.words.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Это слова, которые ты будешь тренировать сегодня."
+          }
+        }
+      }
+    },
+    "demo.today.words.mascot": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запомни эти слова — они нам понадобятся!"
+          }
+        }
+      }
+    },
+    "demo.today.words.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Словарный запас"
+          }
+        }
+      }
+    },
+    "demo.overview.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обзор шагов"
+          }
+        }
+      }
+    },
+    "onboarding.screening.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проверим твою речь"
+          }
+        }
+      }
+    },
+    "onboarding.screening.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ляля задаст несколько вопросов, чтобы понять, с чего лучше начать."
+          }
+        }
+      }
+    },
+    "onboarding.screening.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пройти скрининг"
+          }
+        }
+      }
+    },
+    "onboarding.screening.skip": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пропустить скрининг"
+          }
+        }
+      }
+    },
+    "onboarding.screening.mascot": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Это займёт всего 2–3 минуты!"
+          }
+        }
+      }
+    },
+    "onboarding.mascot.welcome": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Привет! Я Ляля. Помогу тебе говорить красиво!"
+          }
+        }
+      }
+    },
+    "onboarding.mascot.role": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Расскажи, кто ты? Я подстрою занятия под тебя."
+          }
+        }
+      }
+    },
+    "onboarding.mascot.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как мне к тебе обращаться?"
+          }
+        }
+      }
+    },
+    "onboarding.mascot.age": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Возраст важен — я выберу подходящие упражнения."
+          }
+        }
+      }
+    },
+    "onboarding.mascot.goals": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вместе поставим цели и будем их достигать!"
+          }
+        }
+      }
+    },
+    "onboarding.mascot.sounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выбери звуки, которые хочешь улучшить."
+          }
+        }
+      }
+    },
+    "onboarding.mascot.schedule": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Даже 5 минут каждый день творят чудеса!"
+          }
+        }
+      }
+    },
+    "onboarding.mascot.permissions": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мне нужен микрофон, чтобы слышать тебя."
+          }
+        }
+      }
+    },
+    "onboarding.mascot.download": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Одна загрузка — и занятия работают без интернета!"
+          }
+        }
+      }
+    },
+    "onboarding.mascot.complete": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ура! Всё готово. Вперёд к первому уроку!"
+          }
+        }
+      }
+    },
+    "onboarding.about.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как работает HappySpeech?"
+          }
+        }
+      }
+    },
+    "onboarding.about.feature1.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Умные игры"
+          }
+        }
+      }
+    },
+    "onboarding.about.feature1.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "16 видов упражнений, адаптированных под твой прогресс"
+          }
+        }
+      }
+    },
+    "onboarding.about.feature2.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AI-логопед"
+          }
+        }
+      }
+    },
+    "onboarding.about.feature2.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ляля слышит тебя и оценивает произношение в реальном времени"
+          }
+        }
+      }
+    },
+    "onboarding.about.feature3.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Offline-first"
+          }
+        }
+      }
+    },
+    "onboarding.about.feature3.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все игры работают без интернета"
+          }
+        }
+      }
+    },
+    "onboarding.about.feature4.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для семьи"
+          }
+        }
+      }
+    },
+    "onboarding.about.feature4.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Родители и логопед отслеживают прогресс в отдельном разделе"
+          }
+        }
+      }
+    },
+    "child.home.today.words.section": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слова дня"
+          }
+        }
+      }
+    },
+    "child.home.today.words.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слова появятся после первого урока"
+          }
+        }
+      }
+    },
+    "child.home.today.word.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слово %@, произношение %@"
+          }
+        }
+      }
+    },
+    "child.home.today.word.play.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажми, чтобы услышать произношение"
+          }
+        }
+      }
+    },
+    "child.home.hometasks.section": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задания логопеда"
+          }
+        }
+      }
+    },
+    "child.home.hometasks.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новых заданий нет"
+          }
+        }
+      }
+    },
+    "child.home.hometasks.count": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d задания"
+          }
+        }
+      }
+    },
+    "child.home.hometasks.see_all": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Смотреть все"
+          }
+        }
+      }
+    },
+    "child.home.mascot.tap.phrase1": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ты молодец! Продолжай!"
+          }
+        }
+      }
+    },
+    "child.home.mascot.tap.phrase2": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодня будет классный урок!"
+          }
+        }
+      }
+    },
+    "child.home.mascot.tap.phrase3": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Привет! Я рада тебя видеть!"
+          }
+        }
+      }
+    },
+    "child.home.mascot.tap.phrase4": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ты отлично справляешься!"
+          }
+        }
+      }
+    },
+    "child.home.mascot.tap.phrase5": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Давай потренируемся вместе!"
+          }
+        }
+      }
+    },
+    "child.home.mascot.tap.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Потрогать Лялю"
+          }
+        }
+      }
+    },
+    "child.home.mascot.tap.a11y.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ляля скажет что-нибудь приятное"
+          }
+        }
+      }
+    },
+    "child.home.pull_to_refresh": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Потяни вниз, чтобы обновить"
+          }
+        }
+      }
+    },
+    "child.home.achievements.section": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Достижения"
+          }
+        }
+      }
+    },
+    "child.home.achievements.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Первое достижение совсем рядом!"
+          }
+        }
+      }
+    },
+    "child.home.achievements.badge.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Достижение: %@"
+          }
+        }
+      }
+    },
+    "accessibility.close": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
