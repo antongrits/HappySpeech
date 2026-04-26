@@ -237,38 +237,67 @@
 
 ---
 
-## M5.3 Vision ML Stack (2026-04-24)
+## M5.3 Vision ML Stack (2026-04-26) — DEPLOYED
 
-### VNDetectFaceLandmarksRequest
-- Type: Apple Vision framework (no .mlpackage — встроен в iOS SDK)
-- Points: 76 (constellation .constellation76Points, iOS 13+)
-- iOS requirement: 13+ (используется на 17+)
-- Swift integration: `LiveFaceAnalysisService.analyzeFaceLandmarks(pixelBuffer:)`
-- Output: `FaceLandmarkResult` — allPoints, mouthPoints, leftEyePoints, rightEyePoints, jawPoints, boundingBox, confidence
-- Status: production
+### M-007: AppleFaceLandmarksDetector (Apple Vision 76 точек)
+- **Type:** Apple Vision framework `VNDetectFaceLandmarksRequest` (no .mlpackage — встроен в iOS SDK)
+- **Путь:** HappySpeech/ML/Vision/AppleFaceLandmarksDetector.swift
+- **Points:** 76 (constellation76Points, iOS 15+; 65 на iOS 13–14)
+- **Input:** CVPixelBuffer (из ARFrame.capturedImage или AVCaptureSession)
+- **Output:** `FaceLandmarks76` — outerLips(12), innerLips(8), nose(5), noseCrest(3), leftEye(8), rightEye(8), leftBrow(7), rightBrow(7), jaw(17), medianLine — allPoints, boundingBox, confidence
+- **Concurrency:** actor (thread-safe), AsyncSequence publisher для ARKit stream
+- **Latency:** < 10 ms / frame (iPhone 12+, оценочно)
+- **Дата:** 2026-04-26
+- **Статус:** production
 
-### LipSymmetryAnalyzer (vDSP)
-- Type: Pure vDSP computation (no ML model)
-- Algorithm: vDSP_minv/maxv для экстракции bbox губ + нормализованное отклонение центра
-- Output: `LipSymmetryResult` — symmetryScore (0–1), leftCorner, rightCorner, mouthOpenRatio, isOpen
-- Swift integration: `LiveFaceAnalysisService.analyzeLipSymmetry(landmarks:)`
-- Status: production
+### M-008: TonguePostureClassifier CNN (.mlpackage)
+- **Type:** Core ML MLP (2 hidden layers) — на основе синтетического датасета (M5.3 prototype)
+- **Путь:** HappySpeech/Resources/Models/TonguePostureClassifier.mlpackage
+- **Swift wrapper:** HappySpeech/ML/Vision/TonguePostureClassifierML.swift
+- **Архитектура:** Linear(50→64) + ReLU + Dropout(0.3) → Linear(64→64) + ReLU + Dropout(0.2) → Linear(64→9)
+- **Input:** feature vector [1, 50] — 23 ARKit blendshapes + 27 reserved (FaceMesh slots)
+- **Output:** classLabel (String) + classProbability (Dictionary) — 9 классов
+- **Классы:** neutral, cup_shape, shoveling, mushroom, painter, tongue_up, tongue_down, tongue_left, tongue_right
+- **Датасет:** синтетический — 200 примеров/класс × 9 = 1800 train + 450 val, noise ±10%
+- **Device:** MPS (Apple Silicon M-серия)
+- **Accuracy:** 100% | Precision: 100% | Recall: 100% | F1: 100% (на синтетике)
+- **Sanity check:** 9/9 центров классов классифицированы правильно (CoreML predict)
+- **Размер:** 0.012 MB (12 KB, INT8 квантизированная)
+- **Тренировочный скрипт:** `_workshop/scripts/train_tongue_posture.py`
+- **Fallback:** rule-based TonguePostureClassifier (если mlpackage не загружен)
+- **Дата:** 2026-04-26
+- **Статус:** production (prototype на синтетике); v2 на реальных данных — planned M13
 
-### AirStreamDetector (RMS via vDSP)
-- Type: vDSP_rmsqv энергетический детектор (no ML model)
-- Threshold: normalized RMS 0.05–0.7 (типичный выдох, reference = 0.15)
-- Output: `FaceAirStreamResult` — rmsLevel, isBreathing, confidence
-- Swift integration: `LiveFaceAnalysisService.detectAirStream(buffer:)`
-- Note: Отличается от `AirStreamDetector` в Services/ — тот работает с FaceBlendshapes+micAmplitude (AR-режим), этот — с AVAudioPCMBuffer (non-AR режим)
-- Status: production
+### M-009: LipSymmetryAnalyzer (vDSP, rule-based)
+- **Type:** Pure Swift + vDSP computation (no ML model)
+- **Путь:** HappySpeech/ML/Vision/LipSymmetryAnalyzer.swift
+- **Algorithm:** vDSP_minv/maxv для bbox губ + отклонение centerX от 0.5 + corner Y-asymmetry
+- **Input:** FaceLandmarks76 (или [CGPoint] mouthPoints)
+- **Output:** `LipSymmetryScore` — symmetryScore(0–1), leftCorner, rightCorner, mouthCenterY, mouthOpenRatio, isOpen, cornerVerticalAsymmetry, hasHypotonia
+- **Гипотония:** |leftY − rightY| > 0.04 → hasHypotonia=true (признак дизартрии)
+- **Дата:** 2026-04-26
+- **Статус:** production
 
-### TonguePostureClassifier
-- Type: Rule-based classifier (no ML model) — на blendshapes из ARKit
-- Postures: neutral, cupShape, shoveling, mushroom, painter, smile, pucker, tongueUp, tongueDown, tongueLeft, tongueRight
-- Swift integration: `TonguePostureClassifier.classify(_:)` + `confidence(_:for:)`
-- Path: HappySpeech/ML/TonguePostureClassifier.swift
-- Note: Реальная rule-based реализация (не stub); future v2 — Core ML CNN через MediaPipe Face Mesh
-- Status: production (rule-based), v2 planned
+### M-010: AirStreamAnalyzer (vDSP FFT spectral, rule-based)
+- **Type:** vDSP FFT спектральный анализ (no ML model)
+- **Путь:** HappySpeech/ML/Vision/AirStreamAnalyzer.swift
+- **Algorithm:** vDSP FFT 512 точек + Hanning window + band energy ratio classification
+- **Полосы:** breathing (0–500 Hz), voice (500–2000 Hz), hissing (2–5 kHz), whistling (4–8 kHz)
+- **Input:** [Float] samples @ 16kHz, длина ≥ 512
+- **Output:** `AirStreamProfile` — streamType (silence/breathing/whistling/hissing/voice), intensity, confidence, band energies
+- **Классификация:** свистящие С/З/Ц → .whistling; шипящие Ш/Ж/Ч/Щ → .hissing
+- **Отличие от Services/AirStreamDetector:** тот работает с ARKit blendshapes+mic (AR-режим); этот — чистый DSP без ARKit
+- **Дата:** 2026-04-26
+- **Статус:** production
+
+### Note: MediaPipe FaceMesh (478 points)
+- **Статус:** NOT DEPLOYED (M5.3 blocker)
+- **Причина:** нет готовой CoreML-версии FaceMesh на HuggingFace под Apache/MIT лицензией;
+  конвертация tflite→coreml требует tflite2coreml который не поддерживает последние версии tflite.
+  Подробнее в decisions.md ADR-015.
+- **Workaround:** AppleFaceLandmarksDetector (76 точек) как primary; TonguePostureClassifier принимает
+  27 резервных слотов для будущих FaceMesh дельт.
+- **Planned:** M13 — если появится совместимый конвертер или Apple Vision добавит 478-point mode.
 
 ---
 
@@ -284,6 +313,8 @@
 | PronunciationScorer_velar | Test accuracy | > 85% | 100% (47/47) | Mac M-серия (PyTorch) | 2026-04-26 |
 | SoundClassifier | Speech class accuracy | > 80% | 100% (5/5) | Mac M-серия (CoreML) | 2026-04-26 |
 | SoundClassifier | Macro F1 (train eval) | > 80% | 85.2% | Mac M-серия (PyTorch) | 2026-04-24 |
+| TonguePostureClassifier CNN | Val accuracy (synthetic) | > 75% | 100% (450/450) | Mac M-серия (PyTorch+MPS) | 2026-04-26 |
+| TonguePostureClassifier CNN | CoreML sanity check | 9/9 | 9/9 | Mac M-серия (CoreML) | 2026-04-26 |
 | WhisperKit tiny | WER on child test set | < 25% | TBD | iPhone 15 Pro | TBD |
 | Qwen2.5-1.5B | JSON validity rate | 100% | TBD | iPhone 15 Pro | TBD |
 | Qwen2.5-1.5B | Latency (parent_summary) | < 3s | TBD | iPhone 15 Pro | TBD |
