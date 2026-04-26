@@ -22,6 +22,8 @@ enum ParentHomeModels {
             let recentSessions: [SessionData]
             let progressSummary: [String: Double]
             let homeTask: String?
+            /// M6.16: Последний результат скрининга, nil — скрининг не пройден.
+            let screeningOutcome: ScreeningOutcomeDTO?
         }
 
         struct ViewModel: Sendable {
@@ -38,7 +40,22 @@ enum ParentHomeModels {
             let soundProgress: [SoundProgress]
             let homeTask: String?
             let recommendations: [String]
+            /// M6.16: Карточка скрининга (nil — скрининг не пройден или не актуален).
+            let screeningCard: ScreeningCardViewModel?
         }
+    }
+
+    // MARK: - M6.16: Screening Card
+
+    /// ViewModel для карточки скрининга в ParentHome. Показывается если скрининг пройден.
+    struct ScreeningCardViewModel: Sendable, Equatable {
+        let completedAtText: String
+        let severityText: String
+        let problematicSoundsText: String
+        let recommendationText: String
+        let canRetake: Bool
+        /// Цвет-код серьёзности для UI — raw строка для Sendable.
+        let severityColorToken: String   // "mild" | "moderate" | "severe"
     }
 
     // MARK: Domain data

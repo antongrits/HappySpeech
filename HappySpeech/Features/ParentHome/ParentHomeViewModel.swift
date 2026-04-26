@@ -23,6 +23,8 @@ final class ParentHomeViewModel: ParentHomeDisplayLogic {
     var soundProgress: [ParentHomeModels.SoundProgress] = []
     var homeTask: String?
     var recommendations: [String] = []
+    /// M6.16: Карточка скрининга. nil — скрининг не пройден.
+    var screeningCard: ParentHomeModels.ScreeningCardViewModel?
     var isLoading: Bool = true
     var isEmpty: Bool = false
 
@@ -40,6 +42,7 @@ final class ParentHomeViewModel: ParentHomeDisplayLogic {
         self.soundProgress = viewModel.soundProgress
         self.homeTask = viewModel.homeTask
         self.recommendations = viewModel.recommendations
+        self.screeningCard = viewModel.screeningCard
         self.isLoading = false
         self.isEmpty = viewModel.lastSession == nil && viewModel.recentSessions.isEmpty
     }

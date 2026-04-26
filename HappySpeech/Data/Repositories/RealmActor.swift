@@ -86,6 +86,17 @@ public actor RealmActor {
         return Array(realmInstance.objects(type)).map(map)
     }
 
+    /// Fetch filtered objects using async Realm — result is Sendable.
+    /// M6.16: используется ScreeningOutcomeRepository для безопасного cross-actor доступа.
+    public func fetchFilteredMappedAsync<T: Object, DTO: Sendable>(
+        _ type: T.Type,
+        predicate: NSPredicate,
+        map: @escaping (T) -> DTO
+    ) async throws -> [DTO] {
+        let realmInstance = try await Realm(actor: self)
+        return Array(realmInstance.objects(type).filter(predicate)).map(map)
+    }
+
     /// Write a block to Realm using async Realm.
     public func asyncWrite(_ block: @escaping (Realm) -> Void) async {
         guard let realmInstance = try? await Realm(actor: self) else { return }
