@@ -9,6 +9,7 @@ protocol PermissionsDisplayLogic: AnyObject {
     func displayRequestPermission(_ viewModel: PermissionsModels.RequestPermission.ViewModel)
     func displaySkip(_ viewModel: PermissionsModels.Skip.ViewModel)
     func displayOpenSettings(_ viewModel: PermissionsModels.OpenSettings.ViewModel)
+    func displayCheckAllPermissions(_ viewModel: PermissionsModels.CheckAllPermissions.ViewModel)
     func displayFailure(_ viewModel: PermissionsModels.Failure.ViewModel)
     func displayLoading(_ isRequesting: Bool)
 }
@@ -29,6 +30,13 @@ final class PermissionsDisplay: PermissionsDisplayLogic {
     var isRequesting: Bool = false
     var toastMessage: String?
     var pendingSettingsURL: URL?
+
+    // Overview (Settings → Разрешения)
+    var overviewCards: [PermissionOverviewCard] = []
+    var overviewSummaryLabel: String = ""
+    var overviewAllGranted: Bool = false
+    var overviewGrantedCount: Int = 0
+    var overviewTotalCount: Int = 0
 
     func displayStart(_ viewModel: PermissionsModels.Start.ViewModel) {
         steps = viewModel.steps
@@ -55,6 +63,14 @@ final class PermissionsDisplay: PermissionsDisplayLogic {
     func displayOpenSettings(_ viewModel: PermissionsModels.OpenSettings.ViewModel) {
         pendingSettingsURL = viewModel.url
         toastMessage = viewModel.toastMessage
+    }
+
+    func displayCheckAllPermissions(_ viewModel: PermissionsModels.CheckAllPermissions.ViewModel) {
+        overviewCards = viewModel.cards
+        overviewSummaryLabel = viewModel.summaryLabel
+        overviewAllGranted = viewModel.allGranted
+        overviewGrantedCount = viewModel.grantedCount
+        overviewTotalCount = viewModel.totalCount
     }
 
     func displayFailure(_ viewModel: PermissionsModels.Failure.ViewModel) {
