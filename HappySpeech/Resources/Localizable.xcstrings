@@ -15751,6 +15751,546 @@
           }
         }
       }
+    },
+    "ar.tutorial.arMirror.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Артикуляционное зеркало"
+          }
+        }
+      }
+    },
+    "ar.tutorial.arMirror.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Смотри на своё лицо в экране и повторяй движения Ляли. AR-камера отслеживает артикуляцию в реальном времени."
+          }
+        }
+      }
+    },
+    "ar.tutorial.arMirror.step1": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поверни телефон фронтальной камерой к себе"
+          }
+        }
+      }
+    },
+    "ar.tutorial.arMirror.step2": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторяй движения губ и языка за Лялей"
+          }
+        }
+      }
+    },
+    "ar.tutorial.arMirror.step3": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Получи звёздочку за каждую правильную позу!"
+          }
+        }
+      }
+    },
+    "ar.tutorial.butterflyCatch.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лови бабочек улыбкой"
+          }
+        }
+      }
+    },
+    "ar.tutorial.butterflyCatch.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Улыбайся — и бабочки прилетят к тебе! Широкая улыбка — больше бабочек."
+          }
+        }
+      }
+    },
+    "ar.tutorial.butterflyCatch.step1": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Направь камеру на своё лицо"
+          }
+        }
+      }
+    },
+    "ar.tutorial.butterflyCatch.step2": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Улыбнись как можно шире — это твоя суперсила"
+          }
+        }
+      }
+    },
+    "ar.tutorial.butterflyCatch.step3": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поймай всех бабочек и собери все звёзды!"
+          }
+        }
+      }
+    },
+    "ar.tutorial.holdThePose.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удержи позу"
+          }
+        }
+      }
+    },
+    "ar.tutorial.holdThePose.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удержи артикуляционную позу как можно дольше. Таймер считает секунды!"
+          }
+        }
+      }
+    },
+    "ar.tutorial.holdThePose.step1": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Направь камеру на своё лицо"
+          }
+        }
+      }
+    },
+    "ar.tutorial.holdThePose.step2": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прими нужную позу губ или языка"
+          }
+        }
+      }
+    },
+    "ar.tutorial.holdThePose.step3": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Держи позу, пока таймер не остановится"
+          }
+        }
+      }
+    },
+    "ar.tutorial.mimicLyalya.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторяй за Лялей"
+          }
+        }
+      }
+    },
+    "ar.tutorial.mimicLyalya.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Смотри на маскота Лялю и копируй её артикуляцию. Чем точнее — тем выше балл!"
+          }
+        }
+      }
+    },
+    "ar.tutorial.mimicLyalya.step1": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поверни камеру к лицу"
+          }
+        }
+      }
+    },
+    "ar.tutorial.mimicLyalya.step2": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Смотри на Лялю и повторяй её движения"
+          }
+        }
+      }
+    },
+    "ar.tutorial.mimicLyalya.step3": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "За точное повторение — получи звёздочку!"
+          }
+        }
+      }
+    },
+    "ar.tutorial.breathingAR.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дыхательные упражнения"
+          }
+        }
+      }
+    },
+    "ar.tutorial.breathingAR.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дуй на одуванчик или надувай облако! AR видит твоё дыхание по движению щёк."
+          }
+        }
+      }
+    },
+    "ar.tutorial.breathingAR.step1": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Направь камеру на своё лицо"
+          }
+        }
+      }
+    },
+    "ar.tutorial.breathingAR.step2": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сделай глубокий вдох и медленно выдыхай"
+          }
+        }
+      }
+    },
+    "ar.tutorial.breathingAR.step3": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Раздуй все облака и собери все звёзды!"
+          }
+        }
+      }
+    },
+    "ar.tutorial.soundAndFace.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук и лицо"
+          }
+        }
+      }
+    },
+    "ar.tutorial.soundAndFace.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Произнеси звук — и посмотри, как меняется твоё лицо на экране. Звук должен совпасть с артикуляцией!"
+          }
+        }
+      }
+    },
+    "ar.tutorial.soundAndFace.step1": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поверни камеру к лицу"
+          }
+        }
+      }
+    },
+    "ar.tutorial.soundAndFace.step2": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Произнеси нужный звук чётко и громко"
+          }
+        }
+      }
+    },
+    "ar.tutorial.soundAndFace.step3": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проверь: лицо и звук должны совпасть!"
+          }
+        }
+      }
+    },
+    "ar.tutorial.poseSequence.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Последовательность поз"
+          }
+        }
+      }
+    },
+    "ar.tutorial.poseSequence.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выполни серию артикуляционных поз по порядку. Как гимнастика для рта!"
+          }
+        }
+      }
+    },
+    "ar.tutorial.poseSequence.step1": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Направь камеру на своё лицо"
+          }
+        }
+      }
+    },
+    "ar.tutorial.poseSequence.step2": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выполняй позы в том порядке, в котором они появляются"
+          }
+        }
+      }
+    },
+    "ar.tutorial.poseSequence.step3": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завершив всю цепочку — получи большую звезду!"
+          }
+        }
+      }
+    },
+    "ar.tutorial.arStoryQuest.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AR-квест: История"
+          }
+        }
+      }
+    },
+    "ar.tutorial.arStoryQuest.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помоги Ляле рассказать историю! Произноси слова и используй артикуляцию, чтобы двигаться по сюжету."
+          }
+        }
+      }
+    },
+    "ar.tutorial.arStoryQuest.step1": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Направь камеру на своё лицо"
+          }
+        }
+      }
+    },
+    "ar.tutorial.arStoryQuest.step2": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слушай историю и говори нужные слова"
+          }
+        }
+      }
+    },
+    "ar.tutorial.arStoryQuest.step3": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помоги Ляле дойти до финала!"
+          }
+        }
+      }
+    },
+    "ar.tutorial.default.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AR-игра"
+          }
+        }
+      }
+    },
+    "ar.tutorial.default.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Направь камеру на своё лицо и следуй подсказкам."
+          }
+        }
+      }
+    },
+    "ar.tutorial.default.step1": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поверни фронтальную камеру к себе"
+          }
+        }
+      }
+    },
+    "ar.tutorial.cta.start": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать"
+          }
+        }
+      }
+    },
+    "ar.tutorial.cta.skip": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пропустить"
+          }
+        }
+      }
+    },
+    "ar.zone.planner.recommended.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодня Ляля советует"
+          }
+        }
+      }
+    },
+    "ar.zone.planner.recommended.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Планировщик подобрал для тебя эту AR-игру. Попробуй сначала её!"
+          }
+        }
+      }
+    },
+    "ar.zone.planner.fatigue.tired.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сделай паузу перед AR"
+          }
+        }
+      }
+    },
+    "ar.zone.planner.fatigue.tired.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ты сегодня уже хорошо поработал(а). AR-упражнения лучше делать отдохнувшим(ей)."
+          }
+        }
+      }
+    },
+    "ar.zone.planner.fatigue.normal.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Небольшой отдых не помешает"
+          }
+        }
+      }
+    },
+    "ar.zone.planner.fatigue.normal.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Можно немного отдохнуть перед AR-играми. Или — вперёд, ты справишься!"
+          }
+        }
+      }
+    },
+    "ar.zone.badge.recommended": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ляля советует"
+          }
+        }
+      }
+    },
+    "ar.zone.badge.new": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новая"
+          }
+        }
+      }
+    },
+    "ar.zone.badge.completed": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пройдено"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
