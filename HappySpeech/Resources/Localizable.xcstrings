@@ -16599,6 +16599,226 @@
           }
         }
       }
+    },
+    "worldMap.zone.vowels.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Гласные звуки — фундамент речи. Учимся произносить А, О, У, И, Э, Ы чисто и громко."
+          }
+        }
+      }
+    },
+    "worldMap.zone.whistling.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Свистящие звуки С, З, Ц. Тренируем точное положение языка и поток воздуха."
+          }
+        }
+      }
+    },
+    "worldMap.zone.hissing.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шипящие звуки Ш, Ж, Ч, Щ. Учимся поднимать язык вверх и округлять губы."
+          }
+        }
+      }
+    },
+    "worldMap.zone.sonorant.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сонорные звуки Р и Л — самые сложные. Тренируем вибрацию языка и его подъём."
+          }
+        }
+      }
+    },
+    "worldMap.zone.velar.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заднеязычные звуки К, Г, Х. Учимся опускать язык к горлу и управлять задней частью."
+          }
+        }
+      }
+    },
+    "worldMap.zone.grammar.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Правила русского языка: словоизменение, согласование, предложения."
+          }
+        }
+      }
+    },
+    "worldMap.zone.ar.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Специальные AR-упражнения с камерой. Видим артикуляцию в реальном времени!"
+          }
+        }
+      }
+    },
+    "worldMap.zone.ar": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остров AR"
+          }
+        }
+      }
+    },
+    "worldMap.detail.close": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть"
+          }
+        }
+      }
+    },
+    "worldMap.detail.descriptionTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "О зоне"
+          }
+        }
+      }
+    },
+    "worldMap.detail.soundsTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуки"
+          }
+        }
+      }
+    },
+    "worldMap.detail.ctaLocked": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зона заблокирована"
+          }
+        }
+      }
+    },
+    "worldMap.detail.ctaStart": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать путешествие"
+          }
+        }
+      }
+    },
+    "worldMap.detail.ctaContinue": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжить"
+          }
+        }
+      }
+    },
+    "worldMap.detail.ctaReview": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторить"
+          }
+        }
+      }
+    },
+    "worldMap.detail.prerequisiteHint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сначала пройди зону «%@»"
+          }
+        }
+      }
+    },
+    "worldMap.detail.recommendedLessons": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d уроков"
+          }
+        }
+      }
+    },
+    "worldMap.detail.sessionDuration": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "~%d мин"
+          }
+        }
+      }
+    },
+    "worldMap.detail.stats.lessons": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рекомендовано"
+          }
+        }
+      }
+    },
+    "worldMap.detail.stats.perSession": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На сессию"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

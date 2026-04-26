@@ -7,6 +7,8 @@ import OSLog
 protocol WorldMapBusinessLogic: AnyObject {
     func loadMap(_ request: WorldMapModels.LoadMap.Request)
     func selectZone(_ request: WorldMapModels.SelectZone.Request)
+    func loadZoneDetail(_ request: WorldMapModels.LoadZoneDetail.Request)
+    func refreshProgress(_ request: WorldMapModels.RefreshProgress.Request)
 }
 
 // MARK: - WorldMapInteractor
@@ -66,42 +68,100 @@ final class WorldMapInteractor: WorldMapBusinessLogic {
         )
         presenter?.presentSelectZone(response)
     }
+
+    func loadZoneDetail(_ request: WorldMapModels.LoadZoneDetail.Request) {
+        guard let zone = zones.first(where: { $0.id == request.zoneId }) else {
+            presenter?.presentFailure(.init(
+                message: String(localized: "worldMap.error.zoneNotFound")
+            ))
+            return
+        }
+
+        let prereqName: String?
+        if let prereqId = zone.prerequisiteZoneId {
+            prereqName = zones.first(where: { $0.id == prereqId })?.name
+        } else {
+            prereqName = nil
+        }
+
+        logger.info("loadZoneDetail id=\(zone.id, privacy: .public)")
+        presenter?.presentLoadZoneDetail(.init(
+            zone: zone,
+            recommendedLessonCount: zone.recommendedLessonCount,
+            estimatedMinutesPerSession: zone.estimatedMinutesPerSession,
+            prerequisiteZoneName: prereqName
+        ))
+    }
+
+    func refreshProgress(_ request: WorldMapModels.RefreshProgress.Request) {
+        // На следующем спринте — запрос к Realm через ChildRepository.
+        // Сейчас пересидимируем с текущими данными, увеличивая completedLessons
+        // на 1 для current-zone (имитация завершённого урока).
+        logger.info("refreshProgress childId=\(request.childId, privacy: .private(mask: .hash))")
+
+        zones = zones.map { zone in
+            var copy = zone
+            if zone.isCurrentLocation && copy.completedLessons < copy.totalLessons {
+                copy.completedLessons += 1
+                copy.progress = Float(copy.completedLessons) / Float(copy.totalLessons)
+            }
+            return copy
+        }
+
+        totalStars = zones.reduce(0) { $0 + $1.completedLessons }
+
+        presenter?.presentRefreshProgress(.init(
+            zones: zones,
+            totalStars: totalStars,
+            dailyStreak: dailyStreak
+        ))
+    }
 }
 
 // MARK: - Seed
 
 private extension WorldMapInteractor {
 
-    /// Сид-данные карты звуков. 6 зон → 6 островов на «канвасе».
+    /// Сид-данные карты звуков. 7 зон → 7 островов на «канвасе».
     /// Координаты `position` нормализованы [0..1] и подобраны вручную так,
     /// чтобы соединяющая dash-линия читалась как «маршрут приключения».
+    /// Порядок — последовательность логопедической работы:
+    /// Гласные → Свистящие → Шипящие → Соноры → Заднеязычные → Грамматика → AR.
     static func makeSeedZones() -> [WorldZone] {
         [
             WorldZone(
                 id: "zone-vowels",
                 name: String(localized: "worldMap.zone.vowels"),
                 icon: "🎵",
-                sounds: ["А", "О", "У", "И"],
+                sounds: ["А", "О", "У", "И", "Э", "Ы"],
                 progress: 1.0,
                 completedLessons: 10,
                 totalLessons: 10,
                 colorName: "sky",
                 isLocked: false,
-                position: CGPoint(x: 0.18, y: 0.86),
-                isCurrentLocation: false
+                position: CGPoint(x: 0.18, y: 0.88),
+                isCurrentLocation: false,
+                description: String(localized: "worldMap.zone.vowels.desc"),
+                prerequisiteZoneId: nil,
+                recommendedLessonCount: 10,
+                estimatedMinutesPerSession: 8
             ),
             WorldZone(
                 id: "zone-whistling",
                 name: String(localized: "worldMap.zone.whistling"),
                 icon: "🐍",
-                sounds: ["С", "З", "Ц"],
+                sounds: ["С", "Сь", "З", "Зь", "Ц"],
                 progress: 0.65,
                 completedLessons: 13,
                 totalLessons: 20,
                 colorName: "mint",
                 isLocked: false,
-                position: CGPoint(x: 0.74, y: 0.74),
-                isCurrentLocation: false
+                position: CGPoint(x: 0.78, y: 0.75),
+                isCurrentLocation: false,
+                description: String(localized: "worldMap.zone.whistling.desc"),
+                prerequisiteZoneId: "zone-vowels",
+                recommendedLessonCount: 20,
+                estimatedMinutesPerSession: 12
             ),
             WorldZone(
                 id: "zone-hissing",
@@ -113,34 +173,46 @@ private extension WorldMapInteractor {
                 totalLessons: 20,
                 colorName: "butter",
                 isLocked: false,
-                position: CGPoint(x: 0.30, y: 0.56),
-                isCurrentLocation: true
+                position: CGPoint(x: 0.28, y: 0.60),
+                isCurrentLocation: true,
+                description: String(localized: "worldMap.zone.hissing.desc"),
+                prerequisiteZoneId: "zone-whistling",
+                recommendedLessonCount: 20,
+                estimatedMinutesPerSession: 12
             ),
             WorldZone(
                 id: "zone-sonorant",
                 name: String(localized: "worldMap.zone.sonorant"),
                 icon: "🐯",
-                sounds: ["Р", "Л"],
+                sounds: ["Р", "Рь", "Л", "Ль"],
                 progress: 0.10,
                 completedLessons: 2,
                 totalLessons: 20,
                 colorName: "lilac",
                 isLocked: false,
-                position: CGPoint(x: 0.78, y: 0.40),
-                isCurrentLocation: false
+                position: CGPoint(x: 0.74, y: 0.44),
+                isCurrentLocation: false,
+                description: String(localized: "worldMap.zone.sonorant.desc"),
+                prerequisiteZoneId: "zone-hissing",
+                recommendedLessonCount: 20,
+                estimatedMinutesPerSession: 14
             ),
             WorldZone(
                 id: "zone-velar",
                 name: String(localized: "worldMap.zone.velar"),
                 icon: "🦆",
-                sounds: ["К", "Г", "Х"],
+                sounds: ["К", "Кь", "Г", "Гь", "Х", "Хь"],
                 progress: 0.0,
                 completedLessons: 0,
                 totalLessons: 15,
                 colorName: "coral",
                 isLocked: true,
-                position: CGPoint(x: 0.32, y: 0.24),
-                isCurrentLocation: false
+                position: CGPoint(x: 0.28, y: 0.28),
+                isCurrentLocation: false,
+                description: String(localized: "worldMap.zone.velar.desc"),
+                prerequisiteZoneId: "zone-sonorant",
+                recommendedLessonCount: 15,
+                estimatedMinutesPerSession: 12
             ),
             WorldZone(
                 id: "zone-grammar",
@@ -152,8 +224,29 @@ private extension WorldMapInteractor {
                 totalLessons: 12,
                 colorName: "gold",
                 isLocked: true,
-                position: CGPoint(x: 0.78, y: 0.10),
-                isCurrentLocation: false
+                position: CGPoint(x: 0.74, y: 0.14),
+                isCurrentLocation: false,
+                description: String(localized: "worldMap.zone.grammar.desc"),
+                prerequisiteZoneId: "zone-velar",
+                recommendedLessonCount: 12,
+                estimatedMinutesPerSession: 15
+            ),
+            WorldZone(
+                id: "zone-ar",
+                name: String(localized: "worldMap.zone.ar"),
+                icon: "🌟",
+                sounds: [],
+                progress: 0.0,
+                completedLessons: 0,
+                totalLessons: 8,
+                colorName: "primary",
+                isLocked: true,
+                position: CGPoint(x: 0.50, y: 0.05),
+                isCurrentLocation: false,
+                description: String(localized: "worldMap.zone.ar.desc"),
+                prerequisiteZoneId: "zone-grammar",
+                recommendedLessonCount: 8,
+                estimatedMinutesPerSession: 10
             )
         ]
     }

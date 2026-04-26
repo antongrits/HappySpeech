@@ -66,6 +66,65 @@ enum WorldMapModels {
         }
     }
 
+    // MARK: - LoadZoneDetail
+
+    /// Запрос детальной карточки зоны для bottom sheet (звуки, методика, уровни).
+    enum LoadZoneDetail {
+        struct Request: Sendable {
+            let zoneId: String
+        }
+
+        struct Response: Sendable {
+            let zone: WorldZone
+            let recommendedLessonCount: Int
+            let estimatedMinutesPerSession: Int
+            let prerequisiteZoneName: String?
+        }
+
+        struct ViewModel: Sendable {
+            let zoneId: String
+            let name: String
+            let icon: String
+            let description: String
+            let soundsLabel: String
+            let progressLabel: String
+            let progress: Double
+            let lessonsLabel: String
+            let recommendedLabel: String
+            let durationLabel: String
+            let isLocked: Bool
+            let prerequisiteHint: String?
+            let ctaTitle: String
+            let backgroundColor: Color
+            let foregroundColor: Color
+            let accessibilityLabel: String
+        }
+    }
+
+    // MARK: - RefreshProgress
+
+    /// Запрос обновления прогресса (после возврата из LessonPlayer).
+    enum RefreshProgress {
+        struct Request: Sendable {
+            let childId: String
+        }
+
+        struct Response: Sendable {
+            let zones: [WorldZone]
+            let totalStars: Int
+            let dailyStreak: Int
+        }
+
+        struct ViewModel: Sendable {
+            let zones: [WorldZoneCard]
+            let totalStarsLabel: String
+            let totalProgressFraction: Double
+            let streakLabel: String
+            let hasStreak: Bool
+            let summaryAccessibilityLabel: String
+        }
+    }
+
     // MARK: - Failure
 
     enum Failure {
@@ -91,6 +150,14 @@ struct WorldZone: Sendable, Identifiable, Equatable {
     let position: CGPoint
     /// Маркер «текущего» острова — здесь стоит Ляля-маскот.
     let isCurrentLocation: Bool
+    /// Краткое методическое описание зоны (для detailSheet).
+    let description: String
+    /// ID зоны-предпосылки (если заблокирована — показываем, что надо пройти раньше).
+    let prerequisiteZoneId: String?
+    /// Рекомендуемое количество занятий до освоения зоны.
+    let recommendedLessonCount: Int
+    /// Средняя длительность сессии в минутах.
+    let estimatedMinutesPerSession: Int
 
     init(
         id: String,
@@ -103,7 +170,11 @@ struct WorldZone: Sendable, Identifiable, Equatable {
         colorName: String,
         isLocked: Bool,
         position: CGPoint = .zero,
-        isCurrentLocation: Bool = false
+        isCurrentLocation: Bool = false,
+        description: String = "",
+        prerequisiteZoneId: String? = nil,
+        recommendedLessonCount: Int = 20,
+        estimatedMinutesPerSession: Int = 12
     ) {
         self.id = id
         self.name = name
@@ -116,6 +187,10 @@ struct WorldZone: Sendable, Identifiable, Equatable {
         self.isLocked = isLocked
         self.position = position
         self.isCurrentLocation = isCurrentLocation
+        self.description = description
+        self.prerequisiteZoneId = prerequisiteZoneId
+        self.recommendedLessonCount = recommendedLessonCount
+        self.estimatedMinutesPerSession = estimatedMinutesPerSession
     }
 }
 
