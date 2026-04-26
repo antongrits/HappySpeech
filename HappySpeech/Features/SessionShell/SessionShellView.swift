@@ -416,7 +416,7 @@ struct SessionShellBinder: View {
 
     private func rewardOverlay(_ vm: RewardViewModel) -> some View {
         VStack(spacing: SpacingTokens.small) {
-            Text(vm.emoji).font(.system(size: 64))
+            Text(vm.emoji).font(TypographyTokens.kidDisplay(64)).accessibilityHidden(true)
             Text(vm.title)
                 .font(TypographyTokens.title())
                 .foregroundStyle(ColorTokens.Kid.ink)
@@ -515,7 +515,7 @@ struct SessionHUDView: View {
         HStack(spacing: 2) {
             ForEach(0..<3, id: \.self) { idx in
                 Image(systemName: idx < state.fatigueHearts ? "heart.fill" : "heart")
-                    .font(.system(size: 13, weight: .semibold))
+                    .font(TypographyTokens.caption(13).weight(.semibold))
                     .foregroundStyle(idx < state.fatigueHearts
                         ? ColorTokens.Semantic.error
                         : ColorTokens.Kid.line)
@@ -534,9 +534,13 @@ struct SessionHUDView: View {
     private var pauseButton: some View {
         Button(action: onPauseTap) {
             Image(systemName: "pause.circle.fill")
-                .font(.system(size: 28, weight: .semibold))
+                .font(TypographyTokens.title(28).weight(.semibold))
                 .foregroundStyle(ColorTokens.Kid.ink)
+                .frame(width: 56, height: 56)
+                .contentShape(Rectangle())
+                .accessibilityHidden(true)
         }
+        .buttonStyle(.plain)
         .accessibilityLabel(String(localized: "session.hud.pause"))
         .accessibilityAddTraits(.isButton)
     }
