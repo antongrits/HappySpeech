@@ -8,6 +8,8 @@ import SwiftUI
 protocol WorldMapPresentationLogic: AnyObject {
     func presentLoadMap(_ response: WorldMapModels.LoadMap.Response)
     func presentSelectZone(_ response: WorldMapModels.SelectZone.Response)
+    func presentLoadZoneDetail(_ response: WorldMapModels.LoadZoneDetail.Response)
+    func presentRefreshProgress(_ response: WorldMapModels.RefreshProgress.Response)
     func presentFailure(_ response: WorldMapModels.Failure.Response)
 }
 
@@ -70,6 +72,117 @@ final class WorldMapPresenter: WorldMapPresentationLogic {
             toastMessage: toast
         )
         display?.displaySelectZone(viewModel)
+    }
+
+    func presentLoadZoneDetail(_ response: WorldMapModels.LoadZoneDetail.Response) {
+        let zone = response.zone
+        let bg = backgroundColor(for: zone.colorName)
+        let fg = foregroundColor(for: zone.colorName)
+        let progressInt = Int((zone.progress * 100).rounded())
+
+        let soundsLabel: String
+        if zone.sounds.isEmpty {
+            soundsLabel = String(localized: "worldMap.zone.grammarHint")
+        } else {
+            soundsLabel = zone.sounds.joined(separator: " · ")
+        }
+
+        let ctaTitle: String
+        if zone.isLocked {
+            ctaTitle = String(localized: "worldMap.detail.ctaLocked")
+        } else if zone.progress >= 1.0 {
+            ctaTitle = String(localized: "worldMap.detail.ctaReview")
+        } else if zone.progress > 0 {
+            ctaTitle = String(localized: "worldMap.detail.ctaContinue")
+        } else {
+            ctaTitle = String(localized: "worldMap.detail.ctaStart")
+        }
+
+        let prereqHint: String?
+        if let prereq = response.prerequisiteZoneName {
+            prereqHint = String(
+                format: String(localized: "worldMap.detail.prerequisiteHint"),
+                prereq
+            )
+        } else {
+            prereqHint = nil
+        }
+
+        let progressLabel = String(
+            format: String(localized: "worldMap.zone.progressPercent"),
+            progressInt
+        )
+        let lessonsLabel = String(
+            format: String(localized: "worldMap.zone.lessons"),
+            zone.completedLessons, zone.totalLessons
+        )
+        let recommendedLabel = String(
+            format: String(localized: "worldMap.detail.recommendedLessons"),
+            response.recommendedLessonCount
+        )
+        let durationLabel = String(
+            format: String(localized: "worldMap.detail.sessionDuration"),
+            response.estimatedMinutesPerSession
+        )
+
+        let a11yLabel = zone.isLocked
+            ? String(format: String(localized: "worldMap.a11y.lockedZone"), zone.name)
+            : String(format: String(localized: "worldMap.a11y.unlockedZone"), zone.name, progressInt)
+
+        let viewModel = WorldMapModels.LoadZoneDetail.ViewModel(
+            zoneId: zone.id,
+            name: zone.name,
+            icon: zone.icon,
+            description: zone.description,
+            soundsLabel: soundsLabel,
+            progressLabel: progressLabel,
+            progress: Double(zone.progress),
+            lessonsLabel: lessonsLabel,
+            recommendedLabel: recommendedLabel,
+            durationLabel: durationLabel,
+            isLocked: zone.isLocked,
+            prerequisiteHint: prereqHint,
+            ctaTitle: ctaTitle,
+            backgroundColor: bg,
+            foregroundColor: fg,
+            accessibilityLabel: a11yLabel
+        )
+        display?.displayLoadZoneDetail(viewModel)
+    }
+
+    func presentRefreshProgress(_ response: WorldMapModels.RefreshProgress.Response) {
+        let cards = response.zones.map { zone in
+            makeCard(zone, isHighlighted: false)
+        }
+
+        let totalLessons = response.zones.reduce(0) { $0 + $1.totalLessons }
+        let totalCompleted = response.zones.reduce(0) { $0 + $1.completedLessons }
+        let totalProgress = totalLessons > 0
+            ? Double(totalCompleted) / Double(totalLessons)
+            : 0
+
+        let starsLabel = String(
+            format: String(localized: "worldMap.stars.label"),
+            response.totalStars
+        )
+        let streakLabel = String(
+            format: String(localized: "worldMap.streak.label"),
+            response.dailyStreak
+        )
+        let summaryA11y = String(
+            format: String(localized: "worldMap.a11y.summary"),
+            response.totalStars, response.dailyStreak
+        )
+
+        let viewModel = WorldMapModels.RefreshProgress.ViewModel(
+            zones: cards,
+            totalStarsLabel: starsLabel,
+            totalProgressFraction: totalProgress,
+            streakLabel: streakLabel,
+            hasStreak: response.dailyStreak > 0,
+            summaryAccessibilityLabel: summaryA11y
+        )
+        display?.displayRefreshProgress(viewModel)
     }
 
     func presentFailure(_ response: WorldMapModels.Failure.Response) {
@@ -137,13 +250,14 @@ final class WorldMapPresenter: WorldMapPresentationLogic {
 
     private func backgroundColor(for name: String) -> Color {
         switch name {
-        case "mint":   return ColorTokens.Brand.mint
-        case "butter": return ColorTokens.Brand.butter
-        case "lilac":  return ColorTokens.Brand.lilac
-        case "coral":  return ColorTokens.Brand.primary
-        case "gold":   return ColorTokens.Brand.gold
-        case "sky":    return ColorTokens.Brand.sky
-        default:       return ColorTokens.Brand.sky
+        case "mint":    return ColorTokens.Brand.mint
+        case "butter":  return ColorTokens.Brand.butter
+        case "lilac":   return ColorTokens.Brand.lilac
+        case "coral":   return ColorTokens.Brand.primary
+        case "gold":    return ColorTokens.Brand.gold
+        case "sky":     return ColorTokens.Brand.sky
+        case "primary": return ColorTokens.Brand.primary
+        default:        return ColorTokens.Brand.sky
         }
     }
 
