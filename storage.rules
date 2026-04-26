@@ -27,20 +27,7 @@ service firebase.storage {
     }
 
     function isAdmin() {
-      return isSignedIn()
-        && (
-          (request.auth.token.admin == true)
-          || (
-            firestore.exists(/databases/(default)/documents/users/$(request.auth.uid))
-            && firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin'
-          )
-        );
-    }
-
-    function isSpecialist() {
-      return isSignedIn()
-        && firestore.exists(/databases/(default)/documents/users/$(request.auth.uid))
-        && firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'specialist';
+      return isSignedIn() && request.auth.token.admin == true;
     }
 
     // Max 20 MB per audio upload; audio/* only.
