@@ -341,6 +341,58 @@ firebase firestore:rules:get | head -20
 - **App Check статус:** настроен в config, не активирован в Console
 - **Project ID:** `happyspeech-app`
 
+---
+
+### [2026-04-26] [animator] M5.2: 3D USDZ маскот Ляля — процедурная геометрия
+
+**Decision:** Создать `lyalya3d.usdz` процедурно через Python (USDA текстовый формат + ZIP-упаковка) вместо загрузки стороннего ригированного персонажа.
+
+**Причина отказа от стороннего ассета:**
+- CC0-лицензированных rigged USDZ персонажей с подходящим cartoon-стилем для детей 5–8 лет не найдено в открытом доступе (Sketchfab CC0, Mixamo — только FBX без USDZ)
+- `xcrun usdz_converter` отсутствует в Xcode 26.4.1 (убран в пользу Reality Composer Pro)
+- Blender не установлен; Reality Converter.app не установлен
+- `usd-core` pip не устанавливается (externally-managed environment)
+
+**Реализованное решение:**
+- Инструмент: Python 3 + trimesh + numpy (доступны на машине)
+- Геометрия: 15 сферических мешей (голова, 2x ухо, 2x глаз, 2x зрачок, нос, 2x щека, туловище, 2x рука, 2x нога)
+- Итого: ~6 951 вершин, ~12 768 треугольников, 9 PBR-материалов (UsdPreviewSurface)
+- Цветовая палитра: пастельные лиловые/розовые тона (BrandLilac #C9A8F0, BrandRose #FFB5C8)
+- Упаковка: ZIP-архив согласно USDZ spec (USDA stored + текстуры deflated)
+
+**Параметры финального файла:**
+- Путь: `HappySpeech/Resources/ARAssets/lyalya3d.usdz`
+- Размер: 759 583 байт (742 KB)
+- UTI: `com.pixar.universal-scene-description-mobile` (подтверждён mdls)
+- ZIP CRC: OK
+- USDA баланс скобок: OK (35 открывающих = 35 закрывающих)
+
+**BlendShapes:** отсутствуют в текущей версии (USDA процедурный, без скелета).
+`LyalyaAnimationHelper` в `LyalyaRealityView.swift` использует процедурные RealityKit-анимации (`OrbitAnimation`, `FromToByAnimation`) вместо blendshapes. Это корректно — fallback уже реализован.
+
+**Используемые анимации (RealityKit процедурные, без blendshapes):**
+- `idle` → `OrbitAnimation` медленное вращение вокруг Y (8 сек, repeat)
+- `waving` → `FromToByAnimation<Transform>` покачивание по Z ±0.12π
+- `celebrating` → `FromToByAnimation<Transform>` подскок +0.07m + поворот Y 0.25π
+- `thinking` → `FromToByAnimation<Transform>` наклон Z 0.08π
+- `pointing` → `FromToByAnimation<Transform>` пульсация scale
+- `sad` → `FromToByAnimation<Transform>` мягкое покачивание Z ±0.05π
+
+**Интеграция:** `LyalyaRealityView.swift` (уже существующий) загружает USDZ через
+`Bundle.main.url(forResource: "lyalya3d", withExtension: "usdz", subdirectory: "ARAssets")`.
+При ошибке загрузки → 2D градиентный фоллбэк (уже реализован).
+
+**Источник:** процедурная генерация (не третья сторона, не CC0-ассет). Лицензия: собственная (HappySpeech project).
+
+**Workshop артефакты** (не в репо, `.gitignore`):
+- `/Users/antongric/Downloads/HappySpeech/_workshop/3d/source/` — пусто (нет сторонних ассетов)
+- `/Users/antongric/Downloads/HappySpeech/_workshop/3d/output/lyalya_v2.usda` — исходный USDA
+- `/Users/antongric/Downloads/HappySpeech/_workshop/3d/textures/` — PNG текстуры (4 файла)
+
+**Следующий шаг (M5.3, при наличии Blender):** импортировать USDA в Blender → добавить скелет + shape keys → экспортировать через Reality Composer Pro в .reality с настоящими blendshapes.
+
+---
+
 ## H1 Sprint 12 Final Stats (2026-04-26)
 - Swift files: 386
 - Total LOC: 75 582
