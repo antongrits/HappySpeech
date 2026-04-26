@@ -29,6 +29,10 @@ enum ChildHomeModels {
             let recentSessions: [RecentSessionData]
             let achievement: AchievementData?
             let dailyMissionDetail: DailyMissionDetailData
+
+            // B13 — deep VIP additions
+            let recentRewards: [RecentRewardData]
+            let hasOverdueTask: Bool
         }
 
         struct ViewModel {
@@ -47,6 +51,10 @@ enum ChildHomeModels {
             let dailyMissionDetail: DailyMissionDetail
             let formattedDate: String
             let isStreakHot: Bool
+
+            // B13 — deep VIP additions
+            let recentRewards: [RecentReward]
+            let hasOverdueTask: Bool
         }
     }
     // swiftlint:enable nesting
@@ -65,6 +73,16 @@ enum ChildHomeModels {
         let titleKey: String
         let icon: String
         let accent: QuickPlayAccent
+        /// Уровень сложности 1…3. Маппится в звёздочки в карточке.
+        let difficulty: Int
+    }
+
+    /// B13: последняя награда, отображается в секции «Недавние достижения».
+    struct RecentRewardData: Sendable {
+        let id: String
+        let emoji: String
+        let titleKey: String
+        let earnedAt: Date
     }
 
     struct WorldZoneData: Sendable {
@@ -170,6 +188,24 @@ enum ChildHomeModels {
         let title: String
         let icon: String
         let accent: QuickPlayAccent
+        /// 1…3 — рисуется звёздочками в карточке (B13).
+        let difficulty: Int
+    }
+
+    // MARK: - Recent rewards (B13 — отдельная секция «Недавние достижения»)
+
+    struct RecentReward: Identifiable, Hashable, Sendable {
+        let id: String
+        let emoji: String
+        let title: String
+        let earnedAt: Date
+
+        static let placeholder = RecentReward(
+            id: "placeholder-reward",
+            emoji: "🏅",
+            title: "Награда",
+            earnedAt: Date()
+        )
     }
 
     // MARK: - World Map mini preview
