@@ -42,7 +42,7 @@ public enum UISound: String, CaseIterable, Sendable {
 
 // MARK: - LyalyaPhrase
 
-/// 100 голосовых фраз маскота «Ляли».
+/// 150 голосовых фраз маскота «Ляли».
 /// Файлы: HappySpeech/Resources/Audio/Lyalya/lyalya_<rawValue>.m4a
 /// Голос: ru-RU-SvetlanaNeural (Microsoft Edge TTS, royalty-free).
 public enum LyalyaPhrase: String, CaseIterable, Sendable {
@@ -182,6 +182,56 @@ public enum LyalyaPhrase: String, CaseIterable, Sendable {
     case encourage08 = "encourage_08"
     case encourage09 = "encourage_09"
     case encourage10 = "encourage_10"
+
+    // Домашние задания
+    case hometasksWelcome = "hometasks_welcome"
+    case hometasksReminder = "hometasks_reminder"
+    case hometasksComplete = "hometasks_complete"
+
+    // Карта мира (WorldMap)
+    case worldmapIntro = "worldmap_intro"
+    case worldmapProgress = "worldmap_progress"
+    case worldmapUnlock = "worldmap_unlock"
+
+    // Онбординг
+    case onboardingHello = "onboarding_hello"
+    case onboardingMic = "onboarding_mic"
+    case onboardingCamera = "onboarding_camera"
+    case onboardingReady = "onboarding_ready"
+
+    // Результат сессии
+    case sessionExcellent = "session_excellent"
+    case sessionGood = "session_good"
+    case sessionTryAgain = "session_try_again"
+
+    // Награды
+    case rewardNew = "reward_new"
+    case rewardRare = "reward_rare"
+    case rewardCollection = "reward_collection"
+
+    // Прогресс-дашборд
+    case progressGreat = "progress_great"
+    case progressKeepGoing = "progress_keep_going"
+    case progressProud = "progress_proud"
+
+    // Настройки
+    case settingsHello = "settings_hello"
+
+    // Запрос разрешений
+    case permissionMic = "permission_mic"
+    case permissionCamera = "permission_camera"
+
+    // Демо-тур
+    case demoIntro = "demo_intro"
+    case demoTry = "demo_try"
+    case demoDone = "demo_done"
+
+    // Главный экран ребёнка (ChildHome)
+    case childhomeMorning = "childhome_morning"
+    case childhomeMission = "childhome_mission"
+    case childhomePlay = "childhome_play"
+    case childhomeStreak = "childhome_streak"
+    case childhomeBye = "childhome_bye"
 }
 
 // MARK: - SoundServiceProtocol
