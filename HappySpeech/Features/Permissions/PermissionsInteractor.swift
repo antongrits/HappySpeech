@@ -12,6 +12,7 @@ protocol PermissionsBusinessLogic: AnyObject {
     func requestPermission(_ request: PermissionsModels.RequestPermission.Request)
     func skipPermission(_ request: PermissionsModels.Skip.Request)
     func openSettings(_ request: PermissionsModels.OpenSettings.Request)
+    func checkAllPermissions(_ request: PermissionsModels.CheckAllPermissions.Request)
 }
 
 // MARK: - PermissionsInteractor
@@ -124,6 +125,15 @@ final class PermissionsInteractor: PermissionsBusinessLogic {
         presenter?.presentOpenSettings(.init(url: url))
     }
 
+    func checkAllPermissions(_ request: PermissionsModels.CheckAllPermissions.Request) {
+        logger.info("checkAllPermissions")
+        var statuses: [PermissionType: PermissionState] = [:]
+        for type in PermissionTypeRegistry.settingsOrder {
+            statuses[type] = currentSystemState(for: type)
+        }
+        presenter?.presentCheckAllPermissions(.init(statuses: statuses))
+    }
+
     // MARK: - Helpers
 
     private func advanceIndex(after current: Int) -> Int? {
@@ -135,18 +145,19 @@ final class PermissionsInteractor: PermissionsBusinessLogic {
         switch type {
         case .microphone:
             switch AVAudioApplication.shared.recordPermission {
-            case .granted:    return .granted
-            case .denied:     return .denied
+            case .granted:      return .granted
+            case .denied:       return .denied
             case .undetermined: return .notDetermined
-            @unknown default: return .notDetermined
+            @unknown default:   return .notDetermined
             }
-        case .camera:
+        case .camera, .faceTracking:
+            // faceTracking использует ту же camera permission.
             switch AVCaptureDevice.authorizationStatus(for: .video) {
-            case .authorized: return .granted
-            case .denied:     return .denied
-            case .restricted: return .restricted
+            case .authorized:    return .granted
+            case .denied:        return .denied
+            case .restricted:    return .restricted
             case .notDetermined: return .notDetermined
-            @unknown default: return .notDetermined
+            @unknown default:    return .notDetermined
             }
         case .notifications:
             // Уведомления — async API, поэтому в start считаем неопределённым;
@@ -163,7 +174,8 @@ final class PermissionsInteractor: PermissionsBusinessLogic {
                     cont.resume(returning: granted)
                 }
             }
-        case .camera:
+        case .camera, .faceTracking:
+            // faceTracking = camera permission + ARKit runtime check.
             return await AVCaptureDevice.requestAccess(for: .video)
         case .notifications:
             do {
@@ -217,6 +229,17 @@ private extension PermissionsInteractor {
                 accentColor: .butter,
                 state: state
             )
+        case .faceTracking:
+            return PermissionStep(
+                id: .faceTracking,
+                icon: "face.dashed",
+                title: String(localized: "permissions.faceTracking.title"),
+                description: String(localized: "permissions.faceTracking.desc"),
+                allowTitle: String(localized: "permissions.faceTracking.allow"),
+                privacyNote: String(localized: "permissions.faceTracking.privacy"),
+                accentColor: .primary,
+                state: state
+            )
         }
     }
 }
@@ -230,6 +253,7 @@ extension PermissionType {
         case .microphone:    return "microphone"
         case .camera:        return "camera"
         case .notifications: return "notifications"
+        case .faceTracking:  return "faceTracking"
         }
     }
 }

@@ -16819,6 +16819,149 @@
           }
         }
       }
+    },
+    "permissions.faceTracking.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Распознавание лица"
+          }
+        }
+      }
+    },
+    "permissions.faceTracking.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AR-упражнения используют камеру для отслеживания артикуляции в реальном времени"
+          }
+        }
+      }
+    },
+    "permissions.faceTracking.allow": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разрешить AR"
+          }
+        }
+      }
+    },
+    "permissions.faceTracking.privacy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Видео с лица не сохраняется и не передаётся — только данные движений"
+          }
+        }
+      }
+    },
+    "permissions.overview.navTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разрешения"
+          }
+        }
+      }
+    },
+    "permissions.overview.allGranted": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все разрешения выданы"
+          }
+        }
+      }
+    },
+    "permissions.overview.partialGranted": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выдано %d из %d разрешений"
+          }
+        }
+      }
+    },
+    "permissions.overview.action.allow": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разрешить"
+          }
+        }
+      }
+    },
+    "permissions.overview.status.granted": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выдано"
+          }
+        }
+      }
+    },
+    "permissions.overview.status.denied": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отказано"
+          }
+        }
+      }
+    },
+    "permissions.overview.status.restricted": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ограничено"
+          }
+        }
+      }
+    },
+    "permissions.overview.status.notDetermined": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не запрошено"
+          }
+        }
+      }
+    },
+    "permissions.overview.status.skipped": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пропущено"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

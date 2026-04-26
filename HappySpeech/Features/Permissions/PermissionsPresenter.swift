@@ -1,5 +1,6 @@
 import Foundation
 import OSLog
+import SwiftUI
 
 // MARK: - PermissionsPresentationLogic
 
@@ -9,6 +10,7 @@ protocol PermissionsPresentationLogic: AnyObject {
     func presentRequestPermission(_ response: PermissionsModels.RequestPermission.Response)
     func presentSkip(_ response: PermissionsModels.Skip.Response)
     func presentOpenSettings(_ response: PermissionsModels.OpenSettings.Response)
+    func presentCheckAllPermissions(_ response: PermissionsModels.CheckAllPermissions.Response)
     func presentFailure(_ response: PermissionsModels.Failure.Response)
 }
 
@@ -78,6 +80,35 @@ final class PermissionsPresenter: PermissionsPresentationLogic {
         display?.displayOpenSettings(.init(url: response.url, toastMessage: toast))
     }
 
+    func presentCheckAllPermissions(_ response: PermissionsModels.CheckAllPermissions.Response) {
+        let cards = PermissionTypeRegistry.settingsOrder.map { type -> PermissionOverviewCard in
+            let state = response.statuses[type] ?? .notDetermined
+            return makeOverviewCard(for: type, state: state)
+        }
+
+        let granted = cards.filter { $0.state == .granted }.count
+        let total = cards.count
+        let allGranted = granted == total
+
+        let summaryLabel: String
+        if allGranted {
+            summaryLabel = String(localized: "permissions.overview.allGranted")
+        } else {
+            summaryLabel = String(
+                format: String(localized: "permissions.overview.partialGranted"),
+                granted, total
+            )
+        }
+
+        display?.displayCheckAllPermissions(.init(
+            cards: cards,
+            allGranted: allGranted,
+            grantedCount: granted,
+            totalCount: total,
+            summaryLabel: summaryLabel
+        ))
+    }
+
     func presentFailure(_ response: PermissionsModels.Failure.Response) {
         logger.error("permissions failure: \(response.message, privacy: .public)")
         display?.displayFailure(.init(toastMessage: response.message))
@@ -140,6 +171,72 @@ final class PermissionsPresenter: PermissionsPresentationLogic {
         return String(
             format: String(localized: "permissions.progressLabel"),
             currentIndex + 1, total
+        )
+    }
+
+    private func makeOverviewCard(
+        for type: PermissionType,
+        state: PermissionState
+    ) -> PermissionOverviewCard {
+        let icon: String
+        let title: String
+        let description: String
+        let accentColor: Color
+        switch type {
+        case .microphone:
+            icon = "mic.fill"
+            title = String(localized: "permissions.mic.title")
+            description = String(localized: "permissions.mic.desc")
+            accentColor = ColorTokens.Brand.primary
+        case .camera:
+            icon = "camera.fill"
+            title = String(localized: "permissions.camera.title")
+            description = String(localized: "permissions.camera.desc")
+            accentColor = ColorTokens.Brand.lilac
+        case .notifications:
+            icon = "bell.fill"
+            title = String(localized: "permissions.notif.title")
+            description = String(localized: "permissions.notif.desc")
+            accentColor = ColorTokens.Brand.butter
+        case .faceTracking:
+            icon = "face.dashed"
+            title = String(localized: "permissions.faceTracking.title")
+            description = String(localized: "permissions.faceTracking.desc")
+            accentColor = ColorTokens.Brand.mint
+        }
+
+        let statusLabel: String
+        switch state {
+        case .granted:       statusLabel = String(localized: "permissions.overview.status.granted")
+        case .denied:        statusLabel = String(localized: "permissions.overview.status.denied")
+        case .restricted:    statusLabel = String(localized: "permissions.overview.status.restricted")
+        case .notDetermined: statusLabel = String(localized: "permissions.overview.status.notDetermined")
+        case .skipped:       statusLabel = String(localized: "permissions.overview.status.skipped")
+        }
+
+        let a11yLabel = "\(title). \(statusLabel)"
+        let a11yHint: String
+        switch state {
+        case .granted:
+            a11yHint = String(localized: "permissions.a11y.granted")
+        case .denied, .restricted:
+            a11yHint = String(localized: "permissions.a11y.denied")
+        default:
+            a11yHint = String(localized: "permissions.a11y.notDetermined")
+        }
+
+        return PermissionOverviewCard(
+            id: type,
+            icon: icon,
+            title: title,
+            description: description,
+            state: state,
+            accentColor: accentColor,
+            statusLabel: statusLabel,
+            canRequest: state == .notDetermined,
+            showSettingsButton: state == .denied || state == .restricted,
+            accessibilityLabel: a11yLabel,
+            accessibilityHint: a11yHint
         )
     }
 }
