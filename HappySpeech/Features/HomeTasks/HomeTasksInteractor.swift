@@ -11,6 +11,8 @@ protocol HomeTasksBusinessLogic: AnyObject {
     func refresh(_ request: HomeTasksModels.Refresh.Request)
     func startTask(_ request: HomeTasksModels.StartTask.Request)
     func requestOverdueReminder(_ request: HomeTasksModels.NotifyOverdue.Request)
+    func fetchDetail(_ request: HomeTasksModels.FetchDetail.Request)
+    func scheduleReminder(_ request: HomeTasksModels.ScheduleReminder.Request)
 }
 
 // MARK: - HomeTasksGameRouting
@@ -36,6 +38,7 @@ protocol HomeTasksGameRouting: AnyObject {
 /// * `notificationService` — реальный `NotificationService` (планирует утреннее
 ///   напоминание для просроченных заданий). Опционален: при `nil` Interactor
 ///   возвращает `scheduled = false` и Presenter покажет нейтральный toast.
+/// * `worker` — `HomeTasksWorker` (per-task push notifications через UNUserNotificationCenter).
 @MainActor
 final class HomeTasksInteractor: HomeTasksBusinessLogic {
 
@@ -45,7 +48,11 @@ final class HomeTasksInteractor: HomeTasksBusinessLogic {
     weak var gameRouter: (any HomeTasksGameRouting)?
 
     private let notificationService: (any NotificationService)?
+    private let worker: any HomeTasksWorkerProtocol
     private let logger = Logger(subsystem: "ru.happyspeech", category: "HomeTasks")
+
+    /// Отслеживаем для каких задач уже запланированы напоминания (in-memory кэш).
+    private var scheduledReminderIds: Set<String> = []
 
     // MARK: - State
 
@@ -54,8 +61,12 @@ final class HomeTasksInteractor: HomeTasksBusinessLogic {
 
     // MARK: - Init
 
-    init(notificationService: (any NotificationService)? = nil) {
+    init(
+        notificationService: (any NotificationService)? = nil,
+        worker: (any HomeTasksWorkerProtocol)? = nil
+    ) {
         self.notificationService = notificationService
+        self.worker = worker ?? HomeTasksWorker()
         self.allTasks = Self.makeSeedTasks()
     }
 
@@ -190,6 +201,79 @@ final class HomeTasksInteractor: HomeTasksBusinessLogic {
                     scheduled: false,
                     hour: request.hour,
                     minute: request.minute
+                ))
+            }
+        }
+    }
+
+    // MARK: - FetchDetail
+
+    /// Загружает детальную карточку задания для bottom sheet.
+    /// View вызывает этот метод при tap на карточку задания.
+    func fetchDetail(_ request: HomeTasksModels.FetchDetail.Request) {
+        guard let task = allTasks.first(where: { $0.id == request.taskId }) else {
+            logger.warning("fetchDetail: task not found id=\(request.taskId, privacy: .public)")
+            presenter?.presentFailure(.init(
+                message: String(localized: "homeTasks.error.taskNotFound")
+            ))
+            return
+        }
+
+        logger.info("fetchDetail id=\(task.id, privacy: .public)")
+        let hasReminder = scheduledReminderIds.contains(task.id)
+
+        presenter?.presentDetail(.init(
+            task: task,
+            hasReminder: hasReminder,
+            reminderScheduled: hasReminder
+        ))
+    }
+
+    // MARK: - ScheduleReminder
+
+    /// Планирует per-task push-уведомление через HomeTasksWorker.
+    /// Требует dueDate у задачи; если его нет — возвращает failure через Presenter.
+    func scheduleReminder(_ request: HomeTasksModels.ScheduleReminder.Request) {
+        guard let task = allTasks.first(where: { $0.id == request.taskId }) else {
+            logger.warning("scheduleReminder: task not found id=\(request.taskId, privacy: .public)")
+            presenter?.presentFailure(.init(
+                message: String(localized: "homeTasks.error.taskNotFound")
+            ))
+            return
+        }
+
+        guard task.dueDate != nil else {
+            logger.info("scheduleReminder: no dueDate for task \(task.id, privacy: .public)")
+            presenter?.presentScheduleReminder(.init(
+                taskId: task.id,
+                scheduled: false,
+                reason: "noDueDate"
+            ))
+            return
+        }
+
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            do {
+                let scheduled = try await self.worker.scheduleTaskReminder(
+                    for: task,
+                    leadTimeMinutes: request.leadTimeMinutes
+                )
+                if scheduled {
+                    self.scheduledReminderIds.insert(task.id)
+                }
+                self.logger.info("scheduleReminder result=\(scheduled, privacy: .public) taskId=\(task.id, privacy: .public)")
+                self.presenter?.presentScheduleReminder(.init(
+                    taskId: task.id,
+                    scheduled: scheduled,
+                    reason: nil
+                ))
+            } catch {
+                self.logger.error("scheduleReminder error: \(error.localizedDescription, privacy: .public)")
+                self.presenter?.presentScheduleReminder(.init(
+                    taskId: task.id,
+                    scheduled: false,
+                    reason: error.localizedDescription
                 ))
             }
         }
