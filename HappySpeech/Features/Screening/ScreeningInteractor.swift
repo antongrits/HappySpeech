@@ -141,8 +141,9 @@ final class ScreeningInteractor: ScreeningBusinessLogic {
 
     // MARK: - Testing helpers
 
-    /// Exposed for unit tests to assert internal state without re-running the
-    /// whole flow via presenter callbacks.
+    // Exposed for unit tests to assert internal state without re-running the
+    // whole flow via presenter callbacks.
+    // swiftlint:disable:next identifier_name
     func _testState() -> (prompts: [ScreeningPrompt], scores: [String: Float]) {
         (prompts, scores)
     }

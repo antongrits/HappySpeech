@@ -1,5 +1,5 @@
-import Foundation
 import CoreTransferable
+import Foundation
 import Observation
 import UniformTypeIdentifiers
 
@@ -53,48 +53,48 @@ extension DragWord {
     /// Набор для группы свистящих: "Есть звук С" vs "Нет звука С".
     static let whistlingSet: ([DragWord], [DragBucket]) = (
         [
-            DragWord(id: "sova",   word: "сова",   emoji: "🦉", correctBucketId: "has_s"),
+            DragWord(id: "sova", word: "сова", emoji: "🦉", correctBucketId: "has_s"),
             DragWord(id: "sobaka", word: "собака", emoji: "🐶", correctBucketId: "has_s"),
-            DragWord(id: "sad",    word: "сад",    emoji: "🌳", correctBucketId: "has_s"),
-            DragWord(id: "ryba",   word: "рыба",   emoji: "🐟", correctBucketId: "no_s"),
-            DragWord(id: "luna",   word: "луна",   emoji: "🌙", correctBucketId: "no_s"),
-            DragWord(id: "gora",   word: "гора",   emoji: "⛰️", correctBucketId: "no_s"),
+            DragWord(id: "sad", word: "сад", emoji: "🌳", correctBucketId: "has_s"),
+            DragWord(id: "ryba", word: "рыба", emoji: "🐟", correctBucketId: "no_s"),
+            DragWord(id: "luna", word: "луна", emoji: "🌙", correctBucketId: "no_s"),
+            DragWord(id: "gora", word: "гора", emoji: "⛰️", correctBucketId: "no_s")
         ],
         [
             DragBucket(id: "has_s", title: "Есть звук «С»", emoji: "✅", color: "mint"),
-            DragBucket(id: "no_s",  title: "Нет звука «С»", emoji: "❌", color: "lilac"),
+            DragBucket(id: "no_s", title: "Нет звука «С»", emoji: "❌", color: "lilac")
         ]
     )
 
     /// Набор для шипящих: "Есть звук Ш" vs "Нет звука Ш".
     static let hissingSet: ([DragWord], [DragBucket]) = (
         [
-            DragWord(id: "shapka",  word: "шапка",  emoji: "🧢", correctBucketId: "has_sh"),
-            DragWord(id: "kashka",  word: "кашка",  emoji: "🥣", correctBucketId: "has_sh"),
-            DragWord(id: "mashka",  word: "мышка",  emoji: "🐭", correctBucketId: "has_sh"),
-            DragWord(id: "kot",     word: "кот",    emoji: "🐱", correctBucketId: "no_sh"),
-            DragWord(id: "dom",     word: "дом",    emoji: "🏠", correctBucketId: "no_sh"),
-            DragWord(id: "les",     word: "лес",    emoji: "🌲", correctBucketId: "no_sh"),
+            DragWord(id: "shapka", word: "шапка", emoji: "🧢", correctBucketId: "has_sh"),
+            DragWord(id: "kashka", word: "кашка", emoji: "🥣", correctBucketId: "has_sh"),
+            DragWord(id: "mashka", word: "мышка", emoji: "🐭", correctBucketId: "has_sh"),
+            DragWord(id: "kot", word: "кот", emoji: "🐱", correctBucketId: "no_sh"),
+            DragWord(id: "dom", word: "дом", emoji: "🏠", correctBucketId: "no_sh"),
+            DragWord(id: "les", word: "лес", emoji: "🌲", correctBucketId: "no_sh")
         ],
         [
             DragBucket(id: "has_sh", title: "Есть звук «Ш»", emoji: "✅", color: "mint"),
-            DragBucket(id: "no_sh",  title: "Нет звука «Ш»", emoji: "❌", color: "lilac"),
+            DragBucket(id: "no_sh", title: "Нет звука «Ш»", emoji: "❌", color: "lilac")
         ]
     )
 
     /// Набор для соноров: "Есть звук Р" vs "Нет звука Р".
     static let sonorantSet: ([DragWord], [DragBucket]) = (
         [
-            DragWord(id: "rak",    word: "рак",    emoji: "🦞", correctBucketId: "has_r"),
-            DragWord(id: "rosa",   word: "роза",   emoji: "🌹", correctBucketId: "has_r"),
+            DragWord(id: "rak", word: "рак", emoji: "🦞", correctBucketId: "has_r"),
+            DragWord(id: "rosa", word: "роза", emoji: "🌹", correctBucketId: "has_r"),
             DragWord(id: "raketa", word: "ракета", emoji: "🚀", correctBucketId: "has_r"),
-            DragWord(id: "kot2",   word: "кот",    emoji: "🐱", correctBucketId: "no_r"),
-            DragWord(id: "luna2",  word: "луна",   emoji: "🌙", correctBucketId: "no_r"),
-            DragWord(id: "vaza",   word: "ваза",   emoji: "🏺", correctBucketId: "no_r"),
+            DragWord(id: "kot2", word: "кот", emoji: "🐱", correctBucketId: "no_r"),
+            DragWord(id: "luna2", word: "луна", emoji: "🌙", correctBucketId: "no_r"),
+            DragWord(id: "vaza", word: "ваза", emoji: "🏺", correctBucketId: "no_r")
         ],
         [
             DragBucket(id: "has_r", title: "Есть звук «Р»", emoji: "✅", color: "mint"),
-            DragBucket(id: "no_r",  title: "Нет звука «Р»", emoji: "❌", color: "lilac"),
+            DragBucket(id: "no_r", title: "Нет звука «Р»", emoji: "❌", color: "lilac")
         ]
     )
 

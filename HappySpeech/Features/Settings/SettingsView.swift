@@ -1,5 +1,5 @@
-import SwiftUI
 import OSLog
+import SwiftUI
 
 // MARK: - SettingsView
 //
@@ -173,13 +173,15 @@ struct SettingsView: View {
             .sheet(item: $selectedLicense) { license in
                 SettingsLicenseDetailSheet(license: license)
             }
-            .sheet(isPresented: $showShareSheet, onDismiss: {
-                display.clearShareFile()
-            }) {
-                if let url = display.shareFileURL {
-                    SettingsShareSheet(items: [url])
+            .sheet(
+                isPresented: $showShareSheet,
+                onDismiss: { display.clearShareFile() },
+                content: {
+                    if let url = display.shareFileURL {
+                        SettingsShareSheet(items: [url])
+                    }
                 }
-            }
+            )
             .onChange(of: display.shareFileURL) { _, newValue in
                 if newValue != nil { showShareSheet = true }
             }

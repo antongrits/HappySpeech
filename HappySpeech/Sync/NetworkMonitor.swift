@@ -12,7 +12,7 @@ public final class LiveNetworkMonitor: NetworkMonitorService, @unchecked Sendabl
 
     public var connectionType: ConnectionType {
         guard let path, path.status == .satisfied else { return .none }
-        if path.usesInterfaceType(.wifi)     { return .wifi }
+        if path.usesInterfaceType(.wifi) { return .wifi }
         if path.usesInterfaceType(.cellular) { return .cellular }
         return .none
     }

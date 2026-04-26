@@ -19,11 +19,11 @@ final class SoundAndFaceInteractor: SoundAndFaceBusinessLogic {
 
     func startGame(_ request: SoundAndFaceModels.StartGame.Request) {
         let posture = Self.posture(forSound: request.targetSound)
-        let t = SoundAndFaceModels.Target(sound: request.targetSound, posture: posture)
-        target = t
+        let newTarget = SoundAndFaceModels.Target(sound: request.targetSound, posture: posture)
+        target = newTarget
         sum = 0
         count = 0
-        presenter?.presentStartGame(.init(target: t))
+        presenter?.presentStartGame(.init(target: newTarget))
     }
 
     func updateFrame(_ request: SoundAndFaceModels.UpdateFrame.Request) {

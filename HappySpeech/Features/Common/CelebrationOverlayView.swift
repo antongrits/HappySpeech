@@ -196,9 +196,9 @@ struct CelebrationOverlayView: View {
             let timer = Timer.scheduledTimer(
                 withTimeInterval: 1.0 / 60.0,
                 repeats: true
-            ) { t in
+            ) { tick in
                 confettiTick += 1
-                if confettiTick > 180 { t.invalidate() }
+                if confettiTick > 180 { tick.invalidate() }
             }
             RunLoop.main.add(timer, forMode: .common)
         }
@@ -263,43 +263,43 @@ private struct ConfettiCanvas: View {
 
     var body: some View {
         GeometryReader { geo in
-            let w = geo.size.width
-            let h = geo.size.height
-            let t = CGFloat(tick) / 60.0  // время в секундах
+            let width = geo.size.width
+            let height = geo.size.height
+            let elapsed = CGFloat(tick) / 60.0  // время в секундах
 
             Canvas { ctx, _ in
-                for p in particles {
-                    let x = (p.startX + p.vx * t).truncatingRemainder(dividingBy: 1) * w
-                    let rawY = p.startY * h + p.vy * t * h + 0.5 * 0.3 * t * t * h
-                    let y = rawY.truncatingRemainder(dividingBy: h + 40)
+                for particle in particles {
+                    let posX = (particle.startX + particle.vx * elapsed).truncatingRemainder(dividingBy: 1) * width
+                    let rawY = particle.startY * height + particle.vy * elapsed * height + 0.5 * 0.3 * elapsed * elapsed * height
+                    let posY = rawY.truncatingRemainder(dividingBy: height + 40)
 
-                    let alpha = max(0, 1 - max(0, t - 2.0) / 1.0)
-                    let color = palette[p.colorIndex].opacity(alpha)
+                    let alpha = max(0, 1 - max(0, elapsed - 2.0) / 1.0)
+                    let color = palette[particle.colorIndex].opacity(alpha)
 
                     ctx.withCGContext { cgCtx in
                         cgCtx.saveGState()
-                        cgCtx.translateBy(x: x, y: y)
+                        cgCtx.translateBy(x: posX, y: posY)
                         cgCtx.rotate(by: CGFloat(
-                            (p.rotation + p.rotationSpeed * Double(tick)).truncatingRemainder(dividingBy: 360)
+                            (particle.rotation + particle.rotationSpeed * Double(tick)).truncatingRemainder(dividingBy: 360)
                         ) * .pi / 180)
                         cgCtx.setFillColor(UIColor(color).cgColor)
 
-                        switch p.shape {
+                        switch particle.shape {
                         case 0:
                             cgCtx.fillEllipse(in: CGRect(
-                                x: -p.size / 2, y: -p.size / 2,
-                                width: p.size, height: p.size
+                                x: -particle.size / 2, y: -particle.size / 2,
+                                width: particle.size, height: particle.size
                             ))
                         case 1:
                             cgCtx.fill(CGRect(
-                                x: -p.size / 2, y: -p.size / 4,
-                                width: p.size, height: p.size / 2
+                                x: -particle.size / 2, y: -particle.size / 4,
+                                width: particle.size, height: particle.size / 2
                             ))
                         default:
                             let path = CGMutablePath()
-                            path.move(to: CGPoint(x: 0, y: -p.size / 2))
-                            path.addLine(to: CGPoint(x: p.size / 2, y: p.size / 2))
-                            path.addLine(to: CGPoint(x: -p.size / 2, y: p.size / 2))
+                            path.move(to: CGPoint(x: 0, y: -particle.size / 2))
+                            path.addLine(to: CGPoint(x: particle.size / 2, y: particle.size / 2))
+                            path.addLine(to: CGPoint(x: -particle.size / 2, y: particle.size / 2))
                             path.closeSubpath()
                             cgCtx.addPath(path)
                             cgCtx.fillPath()

@@ -6,7 +6,7 @@ public struct HSEmptyStateView: View {
     let icon: String
     let title: String
     let message: String
-    var action: (() -> Void)? = nil
+    var action: (() -> Void)?
     var actionTitle: String = "Попробовать"
 
     public init(icon: String, title: String, message: String, action: (() -> Void)? = nil, actionTitle: String = "Попробовать") {

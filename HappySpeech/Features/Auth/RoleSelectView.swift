@@ -7,28 +7,37 @@ struct RoleSelectView: View {
     @State private var appeared = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    private let roles: [(title: String, subtitle: String, icon: String, color: Color, route: AppRoute)] = [
-        (
+    private struct RoleEntry: Identifiable {
+        let id = UUID()
+        let title: String
+        let subtitle: String
+        let icon: String
+        let color: Color
+        let route: AppRoute
+    }
+
+    private let roles: [RoleEntry] = [
+        RoleEntry(
             title: String(localized: "Родитель"),
             subtitle: String(localized: "Настройка профиля и наблюдение за прогрессом"),
             icon: "person.2.fill",
             color: ColorTokens.Brand.sky,
             route: .parentHome
         ),
-        (
+        RoleEntry(
             title: String(localized: "Логопед"),
             subtitle: String(localized: "Специальные инструменты анализа и экспорта"),
             icon: "stethoscope",
             color: ColorTokens.Brand.lilac,
             route: .specialistHome
         ),
-        (
+        RoleEntry(
             title: String(localized: "Ребёнок"),
             subtitle: String(localized: "Продолжить занятия"),
             icon: "star.fill",
             color: ColorTokens.Brand.mint,
             route: .childHome(childId: "preview-child-1")
-        ),
+        )
     ]
 
     var body: some View {

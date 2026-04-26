@@ -1,7 +1,7 @@
-import Foundation
-import CoreML
-import AVFoundation
 import Accelerate
+import AVFoundation
+import CoreML
+import Foundation
 import OSLog
 
 // MARK: - LivePronunciationScorerService

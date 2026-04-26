@@ -42,63 +42,63 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "rak_lak",
             targetWord: "рак", foilWord: "лак",
-            targetEmoji: "🦞",  foilEmoji: "💅",
+            targetEmoji: "🦞", foilEmoji: "💅",
             soundContrast: "Р-Л", targetIsLeft: true
         ),
         MinimalPairRound(
             id: "rama_lama",
             targetWord: "рама", foilWord: "лама",
-            targetEmoji: "🪟",   foilEmoji: "🦙",
+            targetEmoji: "🪟", foilEmoji: "🦙",
             soundContrast: "Р-Л", targetIsLeft: false
         ),
         MinimalPairRound(
             id: "roza_koza",
             targetWord: "роза", foilWord: "коза",
-            targetEmoji: "🌹",   foilEmoji: "🐐",
+            targetEmoji: "🌹", foilEmoji: "🐐",
             soundContrast: "Р-К", targetIsLeft: true
         ),
         MinimalPairRound(
             id: "sova_shuba",
             targetWord: "сова", foilWord: "шуба",
-            targetEmoji: "🦉",   foilEmoji: "🧥",
+            targetEmoji: "🦉", foilEmoji: "🧥",
             soundContrast: "С-Ш", targetIsLeft: true
         ),
         MinimalPairRound(
             id: "sumy_shumy",
             targetWord: "сумы", foilWord: "шумы",
-            targetEmoji: "👜",   foilEmoji: "🔊",
+            targetEmoji: "👜", foilEmoji: "🔊",
             soundContrast: "С-Ш", targetIsLeft: false
         ),
         MinimalPairRound(
             id: "suk_zhuk",
             targetWord: "сук", foilWord: "жук",
-            targetEmoji: "🌿",  foilEmoji: "🐛",
+            targetEmoji: "🌿", foilEmoji: "🐛",
             soundContrast: "С-Ж", targetIsLeft: true
         ),
         MinimalPairRound(
             id: "zima_zhima",
             targetWord: "зима", foilWord: "жима",
-            targetEmoji: "❄️",   foilEmoji: "💪",
+            targetEmoji: "❄️", foilEmoji: "💪",
             soundContrast: "З-Ж", targetIsLeft: false
         ),
         MinimalPairRound(
             id: "lisa_lysa",
             targetWord: "лиса", foilWord: "лыса",
-            targetEmoji: "🦊",   foilEmoji: "👤",
+            targetEmoji: "🦊", foilEmoji: "👤",
             soundContrast: "Л-Л'", targetIsLeft: true
         ),
         MinimalPairRound(
             id: "kot_god",
             targetWord: "кот", foilWord: "год",
-            targetEmoji: "🐱",  foilEmoji: "📅",
+            targetEmoji: "🐱", foilEmoji: "📅",
             soundContrast: "К-Г", targetIsLeft: false
         ),
         MinimalPairRound(
             id: "gora_hora",
             targetWord: "гора", foilWord: "хора",
-            targetEmoji: "⛰️",   foilEmoji: "💃",
+            targetEmoji: "⛰️", foilEmoji: "💃",
             soundContrast: "Г-Х", targetIsLeft: true
-        ),
+        )
     ]
 
     /// Готовит список раундов на сессию. Рандомизирует порядок и сторону

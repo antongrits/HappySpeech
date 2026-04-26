@@ -313,6 +313,8 @@ final class SessionReviewInteractor: SessionReviewBusinessLogic {
 
     // MARK: - Test hooks
 
+    // swiftlint:disable identifier_name
     func _rows() -> [AttemptReviewRow] { rows }
     func _summary() -> SessionSummary? { currentSummary }
+    // swiftlint:enable identifier_name
 }

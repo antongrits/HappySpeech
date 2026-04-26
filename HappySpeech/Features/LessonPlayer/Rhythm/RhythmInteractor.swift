@@ -1,6 +1,6 @@
-import Foundation
-import AVFoundation
 import Accelerate
+import AVFoundation
+import Foundation
 import OSLog
 
 // MARK: - RhythmBusinessLogic
@@ -571,6 +571,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
     // MARK: - Test hooks
 
     #if DEBUG
+    // swiftlint:disable identifier_name
     func _test_pushRMS(_ rms: Float) {
         handleRMS(rms)
     }
@@ -586,5 +587,6 @@ final class RhythmInteractor: RhythmBusinessLogic {
     func _test_forceRecording(_ recording: Bool) {
         isRecording = recording
     }
+    // swiftlint:enable identifier_name
     #endif
 }

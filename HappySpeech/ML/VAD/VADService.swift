@@ -1,7 +1,7 @@
-import Foundation
-import AVFoundation
-import OSLog
 import Accelerate
+import AVFoundation
+import Foundation
+import OSLog
 
 // MARK: - VADService Protocol
 

@@ -1,5 +1,5 @@
-import XCTest
 @testable import HappySpeech
+import XCTest
 
 // MARK: - AdaptivePlannerServiceTests
 // ==================================================================================
@@ -93,9 +93,9 @@ final class AdaptivePlannerServiceTests: XCTestCase {
     // MARK: - 6. sessionMaxSec — правильные значения по возрасту
 
     func testSessionMaxSec_byAge() {
-        XCTAssertEqual(LiveAdaptivePlannerService.sessionMaxSec(for: 5), 480,  "5 лет → 8 мин")
-        XCTAssertEqual(LiveAdaptivePlannerService.sessionMaxSec(for: 6), 720,  "6 лет → 12 мин")
-        XCTAssertEqual(LiveAdaptivePlannerService.sessionMaxSec(for: 7), 720,  "7 лет → 12 мин")
+        XCTAssertEqual(LiveAdaptivePlannerService.sessionMaxSec(for: 5), 480, "5 лет → 8 мин")
+        XCTAssertEqual(LiveAdaptivePlannerService.sessionMaxSec(for: 6), 720, "6 лет → 12 мин")
+        XCTAssertEqual(LiveAdaptivePlannerService.sessionMaxSec(for: 7), 720, "7 лет → 12 мин")
         XCTAssertEqual(LiveAdaptivePlannerService.sessionMaxSec(for: 8), 1200, "8 лет → 20 мин")
     }
 
@@ -180,9 +180,9 @@ final class AdaptivePlannerServiceTests: XCTestCase {
         let fresh  = LiveAdaptivePlannerService.composeRoute(soundTarget: "Р", stage: .wordInit, fatigue: .fresh)
         let normal = LiveAdaptivePlannerService.composeRoute(soundTarget: "Р", stage: .wordInit, fatigue: .normal)
         let tired  = LiveAdaptivePlannerService.composeRoute(soundTarget: "Р", stage: .wordInit, fatigue: .tired)
-        XCTAssertEqual(fresh.count,  4, "fresh → 4 шага")
+        XCTAssertEqual(fresh.count, 4, "fresh → 4 шага")
         XCTAssertEqual(normal.count, 3, "normal → 3 шага")
-        XCTAssertEqual(tired.count,  2, "tired → 2 шага")
+        XCTAssertEqual(tired.count, 2, "tired → 2 шага")
     }
 
     // MARK: - 15. SoundProgressAggregator — пустой список сессий → дефолтное состояние

@@ -1,6 +1,6 @@
 import Foundation
-import OSLog
 import Observation
+import OSLog
 
 // MARK: - AppContainer
 
@@ -123,108 +123,150 @@ public final class AppContainer {
     // MARK: - Lazy Service Access
 
     public var audioService: any AudioService {
-        if _audioService == nil { _audioService = audioServiceFactory() }
-        return _audioService!
+        if let existing = _audioService { return existing }
+        let new = audioServiceFactory()
+        _audioService = new
+        return new
     }
 
     public var asrService: any ASRService {
-        if _asrService == nil { _asrService = asrServiceFactory() }
-        return _asrService!
+        if let existing = _asrService { return existing }
+        let new = asrServiceFactory()
+        _asrService = new
+        return new
     }
 
     public var syncService: any SyncService {
-        if _syncService == nil { _syncService = syncServiceFactory() }
-        return _syncService!
+        if let existing = _syncService { return existing }
+        let new = syncServiceFactory()
+        _syncService = new
+        return new
     }
 
     public var analyticsService: any AnalyticsService {
-        if _analyticsService == nil { _analyticsService = analyticsServiceFactory() }
-        return _analyticsService!
+        if let existing = _analyticsService { return existing }
+        let new = analyticsServiceFactory()
+        _analyticsService = new
+        return new
     }
 
     public var hapticService: any HapticService {
-        if _hapticService == nil { _hapticService = hapticServiceFactory() }
-        return _hapticService!
+        if let existing = _hapticService { return existing }
+        let new = hapticServiceFactory()
+        _hapticService = new
+        return new
     }
 
     public var notificationService: any NotificationService {
-        if _notificationService == nil { _notificationService = notificationServiceFactory() }
-        return _notificationService!
+        if let existing = _notificationService { return existing }
+        let new = notificationServiceFactory()
+        _notificationService = new
+        return new
     }
 
     public var networkMonitor: any NetworkMonitorService {
-        if _networkMonitor == nil { _networkMonitor = networkMonitorFactory() }
-        return _networkMonitor!
+        if let existing = _networkMonitor { return existing }
+        let new = networkMonitorFactory()
+        _networkMonitor = new
+        return new
     }
 
     public var pronunciationService: any PronunciationScorerService {
-        if _pronunciationService == nil { _pronunciationService = pronunciationServiceFactory() }
-        return _pronunciationService!
+        if let existing = _pronunciationService { return existing }
+        let new = pronunciationServiceFactory()
+        _pronunciationService = new
+        return new
     }
 
     public var localLLMService: any LocalLLMService {
-        if _localLLMService == nil { _localLLMService = localLLMServiceFactory() }
-        return _localLLMService!
+        if let existing = _localLLMService { return existing }
+        let new = localLLMServiceFactory()
+        _localLLMService = new
+        return new
     }
 
     public var arService: any ARService {
-        if _arService == nil { _arService = arServiceFactory() }
-        return _arService!
+        if let existing = _arService { return existing }
+        let new = arServiceFactory()
+        _arService = new
+        return new
     }
 
     public var contentService: any ContentService {
-        if _contentService == nil { _contentService = contentServiceFactory() }
-        return _contentService!
+        if let existing = _contentService { return existing }
+        let new = contentServiceFactory()
+        _contentService = new
+        return new
     }
 
     public var adaptivePlannerService: any AdaptivePlannerService {
-        if _adaptivePlannerService == nil { _adaptivePlannerService = adaptivePlannerServiceFactory() }
-        return _adaptivePlannerService!
+        if let existing = _adaptivePlannerService { return existing }
+        let new = adaptivePlannerServiceFactory()
+        _adaptivePlannerService = new
+        return new
     }
 
     public var llmDecisionService: any LLMDecisionServiceProtocol {
-        if _llmDecisionService == nil { _llmDecisionService = llmDecisionServiceFactory() }
-        return _llmDecisionService!
+        if let existing = _llmDecisionService { return existing }
+        let new = llmDecisionServiceFactory()
+        _llmDecisionService = new
+        return new
     }
 
     public var llmDecisionLogRepository: any LLMDecisionLogRepository {
-        if _llmDecisionLogRepository == nil { _llmDecisionLogRepository = llmDecisionLogRepositoryFactory() }
-        return _llmDecisionLogRepository!
+        if let existing = _llmDecisionLogRepository { return existing }
+        let new = llmDecisionLogRepositoryFactory()
+        _llmDecisionLogRepository = new
+        return new
     }
 
     public var llmModelManager: any LLMModelManagerProtocol {
-        if _llmModelManager == nil { _llmModelManager = llmModelManagerFactory() }
-        return _llmModelManager!
+        if let existing = _llmModelManager { return existing }
+        let new = llmModelManagerFactory()
+        _llmModelManager = new
+        return new
     }
 
     public var whisperKitModelManager: any WhisperKitModelManagerProtocol {
-        if _whisperKitModelManager == nil { _whisperKitModelManager = whisperKitModelManagerFactory() }
-        return _whisperKitModelManager!
+        if let existing = _whisperKitModelManager { return existing }
+        let new = whisperKitModelManagerFactory()
+        _whisperKitModelManager = new
+        return new
     }
 
     public var networkClient: NetworkClient {
-        if _networkClient == nil { _networkClient = networkClientFactory() }
-        return _networkClient!
+        if let existing = _networkClient { return existing }
+        let new = networkClientFactory()
+        _networkClient = new
+        return new
     }
 
     public var claudeAPIClient: any ClaudeAPIClientProtocol {
-        if _claudeAPIClient == nil { _claudeAPIClient = claudeAPIClientFactory() }
-        return _claudeAPIClient!
+        if let existing = _claudeAPIClient { return existing }
+        let new = claudeAPIClientFactory()
+        _claudeAPIClient = new
+        return new
     }
 
     public var offlineQueueManager: OfflineQueueManager {
-        if _offlineQueueManager == nil { _offlineQueueManager = offlineQueueManagerFactory() }
-        return _offlineQueueManager!
+        if let existing = _offlineQueueManager { return existing }
+        let new = offlineQueueManagerFactory()
+        _offlineQueueManager = new
+        return new
     }
 
     public var soundService: any SoundServiceProtocol {
-        if _soundService == nil { _soundService = LiveSoundService() }
-        return _soundService!
+        if let existing = _soundService { return existing }
+        let new = LiveSoundService()
+        _soundService = new
+        return new
     }
 
     public var faceAnalysisService: any FaceAnalysisService {
-        if _faceAnalysisService == nil { _faceAnalysisService = LiveFaceAnalysisService() }
-        return _faceAnalysisService!
+        if let existing = _faceAnalysisService { return existing }
+        let new = LiveFaceAnalysisService()
+        _faceAnalysisService = new
+        return new
     }
 
     /// Библиотека анимированных историй. Singleton — создаётся один раз для всего приложения.
@@ -238,10 +280,10 @@ public final class AppContainer {
     /// 11-step tour state survives navigation between ChildHome / ParentHome / Settings.
     /// Internal visibility — only consumed by feature views within the app target.
     var guidedTourCoordinator: GuidedTourCoordinator {
-        if _guidedTourCoordinator == nil {
-            _guidedTourCoordinator = GuidedTourCoordinator(soundService: soundService)
-        }
-        return _guidedTourCoordinator!
+        if let existing = _guidedTourCoordinator { return existing }
+        let new = GuidedTourCoordinator(soundService: soundService)
+        _guidedTourCoordinator = new
+        return new
     }
 }
 

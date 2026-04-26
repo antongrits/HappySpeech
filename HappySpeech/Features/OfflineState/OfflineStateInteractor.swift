@@ -58,7 +58,7 @@ final class OfflineStateInteractor: OfflineStateBusinessLogic {
     private func resolveActiveChildId(preferred: String?) async -> String? {
         if let preferred, !preferred.isEmpty {
             // Verify the preferred id still exists in local storage.
-            if let _ = try? await childRepository.fetch(id: preferred) {
+            if (try? await childRepository.fetch(id: preferred)) != nil {
                 return preferred
             }
         }

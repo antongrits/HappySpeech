@@ -123,7 +123,12 @@ final class SessionHistoryDisplay: SessionHistoryDisplayLogic {
     func chartPoints(limit: Int = 14) -> [SessionHistoryChartPoint] {
         guard !groups.isEmpty else { return [] }
 
-        var rows: [(id: String, date: Date, percent: Double)] = []
+        struct ChartRow {
+            let id: String
+            let date: Date
+            let percent: Double
+        }
+        var rows: [ChartRow] = []
         let calendar = Calendar.current
         let dayFormatter = DateFormatter()
         dayFormatter.locale = Locale(identifier: "ru_RU")
@@ -137,7 +142,7 @@ final class SessionHistoryDisplay: SessionHistoryDisplayLogic {
                     dayNumber: row.dayNumber,
                     calendar: calendar
                 ) else { continue }
-                rows.append((id: row.id, date: date, percent: percent))
+                rows.append(ChartRow(id: row.id, date: date, percent: percent))
             }
         }
 

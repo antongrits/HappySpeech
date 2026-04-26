@@ -1,6 +1,6 @@
-import XCTest
-import SwiftUI
 @testable import HappySpeech
+import SwiftUI
+import XCTest
 
 // MARK: - DisplayStateTests
 //

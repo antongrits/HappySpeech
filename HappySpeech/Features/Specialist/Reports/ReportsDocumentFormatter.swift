@@ -29,7 +29,7 @@ enum ReportsDocumentFormatter {
                     String(format: "%.3f", attempt.asrScore),
                     String(format: "%.3f", attempt.pronunciationScore),
                     String(format: "%.3f", attempt.manualScore),
-                    attempt.isCorrect ? "1" : "0",
+                    attempt.isCorrect ? "1" : "0"
                 ]
                 lines.append(row.joined(separator: ","))
             }
@@ -57,7 +57,7 @@ enum ReportsDocumentFormatter {
             "Сводка:",
             "  Всего сессий: \(summary.totalSessions)",
             "  Всего минут:  \(summary.totalMinutes)",
-            "  Средний успех: \(Int(summary.overallSuccessRate * 100))%",
+            "  Средний успех: \(Int(summary.overallSuccessRate * 100))%"
         ]
         let commaSep = ", "
         if !summary.improvedSounds.isEmpty {

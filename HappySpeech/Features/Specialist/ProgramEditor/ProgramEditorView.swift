@@ -248,8 +248,8 @@ private final class ProgramEditorDisplayBridge: ProgramEditorDisplayLogic {
     }
 
     func displayLoadProgram(_ vm: ProgramEditorModels.LoadProgram.ViewModel) { onLoad(vm) }
-    func displayAddBlock(_ vm: ProgramEditorModels.AddBlock.ViewModel)       { onUpdate(vm.blocks, vm.totalDurationMinutes) }
+    func displayAddBlock(_ vm: ProgramEditorModels.AddBlock.ViewModel) { onUpdate(vm.blocks, vm.totalDurationMinutes) }
     func displayRemoveBlock(_ vm: ProgramEditorModels.RemoveBlock.ViewModel) { onUpdate(vm.blocks, vm.totalDurationMinutes) }
-    func displayMoveBlock(_ vm: ProgramEditorModels.MoveBlock.ViewModel)     { onUpdate(vm.blocks, vm.blocks.map(\.durationMinutes).reduce(0, +)) }
+    func displayMoveBlock(_ vm: ProgramEditorModels.MoveBlock.ViewModel) { onUpdate(vm.blocks, vm.blocks.map(\.durationMinutes).reduce(0, +)) }
     func displaySaveProgram(_ vm: ProgramEditorModels.SaveProgram.ViewModel) { onSave(vm.confirmationMessage) }
 }

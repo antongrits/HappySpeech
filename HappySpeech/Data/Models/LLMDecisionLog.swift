@@ -9,11 +9,11 @@ import RealmSwift
 
 final class LLMDecisionLog: Object, @unchecked Sendable {
     @Persisted(primaryKey: true) var id: String = UUID().uuidString
-    @Persisted var childId: String? = nil
+    @Persisted var childId: String?
     @Persisted var decisionType: String = ""        // "routePlan" | "parentSummary" | ...
     @Persisted var inputHash: String = ""
     @Persisted var output: String = ""               // short string preview
-    @Persisted var modelId: String? = nil            // "Qwen/..." | "Vikhrmodels/..." | nil (rules)
+    @Persisted var modelId: String?            // "Qwen/..." | "Vikhrmodels/..." | nil (rules)
     @Persisted var usedFallback: Bool = true
     @Persisted var latencyMs: Int = 0
     @Persisted var createdAt: Date = Date()

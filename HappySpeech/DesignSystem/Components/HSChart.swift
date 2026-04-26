@@ -1,5 +1,5 @@
-import SwiftUI
 import Charts
+import SwiftUI
 
 // MARK: - SoundAccuracy
 
@@ -175,8 +175,8 @@ public struct HSChart: View {
 #Preview("HSChart Bar") {
     HSChart(
         data: [
-            SoundAccuracy(id: "s",  label: "С", value: 0.92, color: ColorTokens.Brand.mint),
-            SoundAccuracy(id: "z",  label: "З", value: 0.78, color: ColorTokens.Brand.gold),
+            SoundAccuracy(id: "s", label: "С", value: 0.92, color: ColorTokens.Brand.mint),
+            SoundAccuracy(id: "z", label: "З", value: 0.78, color: ColorTokens.Brand.gold),
             SoundAccuracy(id: "ts", label: "Ц", value: 0.55, color: ColorTokens.Brand.primary),
             SoundAccuracy(id: "sh", label: "Ш", value: 0.84, color: ColorTokens.Brand.mint)
         ],

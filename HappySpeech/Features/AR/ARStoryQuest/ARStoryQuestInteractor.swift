@@ -199,11 +199,17 @@ final class ARStoryQuestInteractor: ARStoryQuestBusinessLogic {
     /// - `0.65` если только первые 2 буквы совпадают
     /// - `0.4` если overlap слогов > 50%
     /// - иначе — `max(0.3, confidence × 0.5)`
+    private struct AttemptScore {
+        let score: Float
+        let passed: Bool
+        let feedback: String
+    }
+
     private func scoreAttempt(
         transcript: String,
         target: String,
         confidence: Float
-    ) -> (score: Float, passed: Bool, feedback: String) {
+    ) -> AttemptScore {
         let cleanTranscript = transcript
             .lowercased()
             .trimmingCharacters(in: .whitespacesAndNewlines)
@@ -212,43 +218,47 @@ final class ARStoryQuestInteractor: ARStoryQuestBusinessLogic {
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
         guard !cleanTarget.isEmpty else {
-            return (0, false, String(localized: "ar.quest.feedback.tryAgain"))
+            return AttemptScore(score: 0, passed: false, feedback: String(localized: "ar.quest.feedback.tryAgain"))
         }
 
         // 1. Точное совпадение / содержание
         if !cleanTranscript.isEmpty && cleanTranscript.contains(cleanTarget) {
-            return (1.0, true, String(localized: "ar.quest.feedback.perfect"))
+            return AttemptScore(score: 1.0, passed: true, feedback: String(localized: "ar.quest.feedback.perfect"))
         }
 
         // 2. Первые 2 буквы совпадают + хорошая уверенность
         let prefixMatch = sharedPrefixLength(cleanTranscript, cleanTarget) >= 2
         if prefixMatch && confidence >= highConfidenceThreshold {
-            return (0.9, true, String(localized: "ar.quest.feedback.great"))
+            return AttemptScore(score: 0.9, passed: true, feedback: String(localized: "ar.quest.feedback.great"))
         }
 
         // 3. Высокая уверенность модели — zачёт с бонусом (для MVP когда Mock ASR)
         if confidence >= highConfidenceThreshold && !cleanTranscript.isEmpty {
-            return (0.85, true, String(localized: "ar.quest.feedback.good"))
+            return AttemptScore(score: 0.85, passed: true, feedback: String(localized: "ar.quest.feedback.good"))
         }
 
         // 4. Первые 2 буквы совпадают — пограничный zачёт
         if prefixMatch {
-            return (0.65, true, String(localized: "ar.quest.feedback.good"))
+            return AttemptScore(score: 0.65, passed: true, feedback: String(localized: "ar.quest.feedback.good"))
         }
 
         // 5. Частичное совпадение по слогам
         let overlap = syllableOverlap(cleanTranscript, cleanTarget)
         if overlap >= 0.5 {
-            return (0.55, false, String(localized: "ar.quest.feedback.close"))
+            return AttemptScore(score: 0.55, passed: false, feedback: String(localized: "ar.quest.feedback.close"))
         }
 
         // 6. Для пустого transcript — используем confidence как hint
         if cleanTranscript.isEmpty {
             let score = max(0.3, confidence * 0.5)
-            return (score, score >= passThreshold, String(localized: "ar.quest.feedback.tryAgain"))
+            return AttemptScore(
+                score: score,
+                passed: score >= passThreshold,
+                feedback: String(localized: "ar.quest.feedback.tryAgain")
+            )
         }
 
-        return (0.35, false, String(localized: "ar.quest.feedback.tryAgain"))
+        return AttemptScore(score: 0.35, passed: false, feedback: String(localized: "ar.quest.feedback.tryAgain"))
     }
 
     private func sharedPrefixLength(_ a: String, _ b: String) -> Int {

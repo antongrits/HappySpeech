@@ -1,6 +1,6 @@
-import Foundation
-import AVFoundation
 import Accelerate
+import AVFoundation
+import Foundation
 import OSLog
 
 // MARK: - BreathingAudioWorkerProtocol

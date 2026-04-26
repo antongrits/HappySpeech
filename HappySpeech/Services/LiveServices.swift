@@ -1,7 +1,7 @@
-import Foundation
 import AVFoundation
-import UIKit
+import Foundation
 import OSLog
+import UIKit
 
 // MARK: - LiveAudioService
 // AVAudioEngine is used on main thread — @unchecked Sendable.
@@ -556,8 +556,7 @@ public final class LiveAdaptivePlannerService: AdaptivePlannerService, @unchecke
     ///   • Вечер (21:00–06:00) и не-новый ребёнок → как минимум .normal
     static func computeFatigue(state: SoundProgressState, hour: Int) -> FatigueLevel {
         var level: FatigueLevel = .fresh
-        if state.consecutiveWrong >= 3 { level = .tired }
-        else if state.consecutiveWrong >= 2 { level = .normal }
+        if state.consecutiveWrong >= 3 { level = .tired } else if state.consecutiveWrong >= 2 { level = .normal }
 
         let isLateHour = hour >= 21 || hour < 6
         if isLateHour, level == .fresh, state.lastReviewDate != nil {

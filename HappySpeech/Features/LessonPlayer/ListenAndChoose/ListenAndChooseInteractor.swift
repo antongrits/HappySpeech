@@ -1,5 +1,5 @@
-import Foundation
 import AVFoundation
+import Foundation
 import OSLog
 
 // MARK: - ListenAndChooseBusinessLogic
@@ -335,10 +335,10 @@ final class ListenAndChooseInteractor: NSObject, ListenAndChooseBusinessLogic {
 
     private static func defaultItems(for sound: String) -> [ContentItem] {
         let words = fallbackWords(for: sound)
-        return words.enumerated().map { idx, w in
+        return words.enumerated().map { idx, word in
             ContentItem(
                 id: "default-\(sound)-\(idx)",
-                word: w,
+                word: word,
                 imageAsset: nil,
                 audioAsset: nil,
                 hint: nil,

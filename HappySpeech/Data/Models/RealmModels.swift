@@ -17,7 +17,7 @@ final class ChildProfile: Object, @unchecked Sendable {
     @Persisted var isArchived: Bool = false
     @Persisted var totalSessionMinutes: Int = 0
     @Persisted var currentStreak: Int = 0
-    @Persisted var lastSessionAt: Date? = nil
+    @Persisted var lastSessionAt: Date?
 }
 
 // MARK: - Session
@@ -69,7 +69,7 @@ final class ContentPackMetaRealm: Object, @unchecked Sendable {
     @Persisted var isBundled: Bool = false
     @Persisted var storageUrl: String = ""
     @Persisted var sizeBytes: Int = 0
-    @Persisted var lastSyncAt: Date? = nil
+    @Persisted var lastSyncAt: Date?
 }
 
 // MARK: - AdaptivePlan
@@ -81,8 +81,8 @@ final class AdaptivePlan: Object, @unchecked Sendable {
     @Persisted var plannedRoute: List<RouteStep>
     @Persisted var actualRoute: List<RouteStep>
     @Persisted var fatigueLevel: Int = 0                   // 0=fresh, 1=normal, 2=tired
-    @Persisted var llmSummary: String? = nil
-    @Persisted var homeTask: String? = nil
+    @Persisted var llmSummary: String?
+    @Persisted var homeTask: String?
     @Persisted var isCompleted: Bool = false
 }
 
@@ -107,9 +107,9 @@ final class SyncQueueItem: Object, @unchecked Sendable {
     @Persisted var operation: String = ""                  // "upsert" | "delete"
     @Persisted var payload: String = ""                    // JSON string
     @Persisted var createdAt: Date = Date()
-    @Persisted var syncedAt: Date? = nil
+    @Persisted var syncedAt: Date?
     @Persisted var retryCount: Int = 0
-    @Persisted var lastErrorMessage: String? = nil
+    @Persisted var lastErrorMessage: String?
 }
 
 // MARK: - ProgressEntry
@@ -133,7 +133,7 @@ final class RewardRecord: Object, @unchecked Sendable {
     @Persisted var type: String = ""                       // "sticker" | "badge" | "streak"
     @Persisted var rewardId: String = ""
     @Persisted var earnedAt: Date = Date()
-    @Persisted var sessionId: String? = nil
+    @Persisted var sessionId: String?
 }
 
 // MARK: - SchemaVersion

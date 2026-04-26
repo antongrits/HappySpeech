@@ -64,18 +64,18 @@ extension SortingSet {
         title: "Живое и неживое",
         soundGroup: "any",
         categories: [
-            SortingCategory(id: "living",    title: "Живое",   emoji: "🌱"),
+            SortingCategory(id: "living", title: "Живое", emoji: "🌱"),
             SortingCategory(id: "nonliving", title: "Неживое", emoji: "🪨")
         ],
         words: [
-            SortingWord(id: "kot",    word: "Кот",    emoji: "🐱", correctCategory: "living",    soundGroup: "any"),
-            SortingWord(id: "stol",   word: "Стол",   emoji: "🪑", correctCategory: "nonliving", soundGroup: "any"),
-            SortingWord(id: "reka",   word: "Река",   emoji: "🌊", correctCategory: "nonliving", soundGroup: "any"),
-            SortingWord(id: "sobaka", word: "Собака", emoji: "🐶", correctCategory: "living",    soundGroup: "whistling"),
-            SortingWord(id: "derevo", word: "Дерево", emoji: "🌳", correctCategory: "living",    soundGroup: "any"),
-            SortingWord(id: "kniga",  word: "Книга",  emoji: "📚", correctCategory: "nonliving", soundGroup: "velar"),
-            SortingWord(id: "ryba",   word: "Рыба",   emoji: "🐟", correctCategory: "living",    soundGroup: "sonorant"),
-            SortingWord(id: "dom",    word: "Дом",    emoji: "🏠", correctCategory: "nonliving", soundGroup: "any")
+            SortingWord(id: "kot", word: "Кот", emoji: "🐱", correctCategory: "living", soundGroup: "any"),
+            SortingWord(id: "stol", word: "Стол", emoji: "🪑", correctCategory: "nonliving", soundGroup: "any"),
+            SortingWord(id: "reka", word: "Река", emoji: "🌊", correctCategory: "nonliving", soundGroup: "any"),
+            SortingWord(id: "sobaka", word: "Собака", emoji: "🐶", correctCategory: "living", soundGroup: "whistling"),
+            SortingWord(id: "derevo", word: "Дерево", emoji: "🌳", correctCategory: "living", soundGroup: "any"),
+            SortingWord(id: "kniga", word: "Книга", emoji: "📚", correctCategory: "nonliving", soundGroup: "velar"),
+            SortingWord(id: "ryba", word: "Рыба", emoji: "🐟", correctCategory: "living", soundGroup: "sonorant"),
+            SortingWord(id: "dom", word: "Дом", emoji: "🏠", correctCategory: "nonliving", soundGroup: "any")
         ]
     )
 
@@ -85,18 +85,18 @@ extension SortingSet {
         title: "Фрукты и овощи",
         soundGroup: "whistling",
         categories: [
-            SortingCategory(id: "fruit",  title: "Фрукты",  emoji: "🍎"),
-            SortingCategory(id: "veggie", title: "Овощи",   emoji: "🥕")
+            SortingCategory(id: "fruit", title: "Фрукты", emoji: "🍎"),
+            SortingCategory(id: "veggie", title: "Овощи", emoji: "🥕")
         ],
         words: [
-            SortingWord(id: "sliva",   word: "Слива",   emoji: "🟣", correctCategory: "fruit",  soundGroup: "whistling"),
-            SortingWord(id: "svekla",  word: "Свёкла",  emoji: "🟥", correctCategory: "veggie", soundGroup: "whistling"),
-            SortingWord(id: "apelsin", word: "Апельсин", emoji: "🍊", correctCategory: "fruit",  soundGroup: "whistling"),
+            SortingWord(id: "sliva", word: "Слива", emoji: "🟣", correctCategory: "fruit", soundGroup: "whistling"),
+            SortingWord(id: "svekla", word: "Свёкла", emoji: "🟥", correctCategory: "veggie", soundGroup: "whistling"),
+            SortingWord(id: "apelsin", word: "Апельсин", emoji: "🍊", correctCategory: "fruit", soundGroup: "whistling"),
             SortingWord(id: "kapusta", word: "Капуста", emoji: "🥬", correctCategory: "veggie", soundGroup: "whistling"),
-            SortingWord(id: "abrikos", word: "Абрикос", emoji: "🍑", correctCategory: "fruit",  soundGroup: "whistling"),
-            SortingWord(id: "salat",   word: "Салат",   emoji: "🥗", correctCategory: "veggie", soundGroup: "whistling"),
-            SortingWord(id: "persik",  word: "Персик",  emoji: "🍑", correctCategory: "fruit",  soundGroup: "whistling"),
-            SortingWord(id: "spar",    word: "Спаржа",  emoji: "🌾", correctCategory: "veggie", soundGroup: "whistling")
+            SortingWord(id: "abrikos", word: "Абрикос", emoji: "🍑", correctCategory: "fruit", soundGroup: "whistling"),
+            SortingWord(id: "salat", word: "Салат", emoji: "🥗", correctCategory: "veggie", soundGroup: "whistling"),
+            SortingWord(id: "persik", word: "Персик", emoji: "🍑", correctCategory: "fruit", soundGroup: "whistling"),
+            SortingWord(id: "spar", word: "Спаржа", emoji: "🌾", correctCategory: "veggie", soundGroup: "whistling")
         ]
     )
 
@@ -107,17 +107,17 @@ extension SortingSet {
         soundGroup: "hissing",
         categories: [
             SortingCategory(id: "transport", title: "Транспорт", emoji: "🚗"),
-            SortingCategory(id: "animal",    title: "Животные",  emoji: "🐾")
+            SortingCategory(id: "animal", title: "Животные", emoji: "🐾")
         ],
         words: [
-            SortingWord(id: "mashina",  word: "Машина", emoji: "🚗", correctCategory: "transport", soundGroup: "hissing"),
-            SortingWord(id: "zhiraf",   word: "Жираф",  emoji: "🦒", correctCategory: "animal",    soundGroup: "hissing"),
-            SortingWord(id: "shluka",   word: "Шлюпка", emoji: "🛶", correctCategory: "transport", soundGroup: "hissing"),
-            SortingWord(id: "yozh",     word: "Ёжик",   emoji: "🦔", correctCategory: "animal",    soundGroup: "hissing"),
-            SortingWord(id: "shina",    word: "Шина",   emoji: "🛞", correctCategory: "transport", soundGroup: "hissing"),
-            SortingWord(id: "medvezh",  word: "Медвежонок", emoji: "🐻", correctCategory: "animal", soundGroup: "hissing"),
-            SortingWord(id: "parovoz",  word: "Паровоз", emoji: "🚂", correctCategory: "transport", soundGroup: "hissing"),
-            SortingWord(id: "cherep",   word: "Черепаха", emoji: "🐢", correctCategory: "animal",   soundGroup: "hissing")
+            SortingWord(id: "mashina", word: "Машина", emoji: "🚗", correctCategory: "transport", soundGroup: "hissing"),
+            SortingWord(id: "zhiraf", word: "Жираф", emoji: "🦒", correctCategory: "animal", soundGroup: "hissing"),
+            SortingWord(id: "shluka", word: "Шлюпка", emoji: "🛶", correctCategory: "transport", soundGroup: "hissing"),
+            SortingWord(id: "yozh", word: "Ёжик", emoji: "🦔", correctCategory: "animal", soundGroup: "hissing"),
+            SortingWord(id: "shina", word: "Шина", emoji: "🛞", correctCategory: "transport", soundGroup: "hissing"),
+            SortingWord(id: "medvezh", word: "Медвежонок", emoji: "🐻", correctCategory: "animal", soundGroup: "hissing"),
+            SortingWord(id: "parovoz", word: "Паровоз", emoji: "🚂", correctCategory: "transport", soundGroup: "hissing"),
+            SortingWord(id: "cherep", word: "Черепаха", emoji: "🐢", correctCategory: "animal", soundGroup: "hissing")
         ]
     )
 
@@ -127,18 +127,18 @@ extension SortingSet {
         title: "Посуда и одежда",
         soundGroup: "sonorant",
         categories: [
-            SortingCategory(id: "dish",    title: "Посуда",  emoji: "🍽️"),
-            SortingCategory(id: "clothes", title: "Одежда",  emoji: "👕")
+            SortingCategory(id: "dish", title: "Посуда", emoji: "🍽️"),
+            SortingCategory(id: "clothes", title: "Одежда", emoji: "👕")
         ],
         words: [
-            SortingWord(id: "tarelka", word: "Тарелка", emoji: "🍽️", correctCategory: "dish",    soundGroup: "sonorant"),
+            SortingWord(id: "tarelka", word: "Тарелка", emoji: "🍽️", correctCategory: "dish", soundGroup: "sonorant"),
             SortingWord(id: "rubashka", word: "Рубашка", emoji: "👔", correctCategory: "clothes", soundGroup: "sonorant"),
-            SortingWord(id: "kastrul",  word: "Кастрюля", emoji: "🥘", correctCategory: "dish",   soundGroup: "sonorant"),
-            SortingWord(id: "plat",     word: "Платье",  emoji: "👗", correctCategory: "clothes", soundGroup: "sonorant"),
-            SortingWord(id: "lozhka",   word: "Ложка",   emoji: "🥄", correctCategory: "dish",    soundGroup: "sonorant"),
-            SortingWord(id: "shlyapa",  word: "Шляпа",   emoji: "🎩", correctCategory: "clothes", soundGroup: "sonorant"),
-            SortingWord(id: "chaynik",  word: "Чайник",  emoji: "🫖", correctCategory: "dish",    soundGroup: "sonorant"),
-            SortingWord(id: "kurtka",   word: "Куртка",  emoji: "🧥", correctCategory: "clothes", soundGroup: "sonorant")
+            SortingWord(id: "kastrul", word: "Кастрюля", emoji: "🥘", correctCategory: "dish", soundGroup: "sonorant"),
+            SortingWord(id: "plat", word: "Платье", emoji: "👗", correctCategory: "clothes", soundGroup: "sonorant"),
+            SortingWord(id: "lozhka", word: "Ложка", emoji: "🥄", correctCategory: "dish", soundGroup: "sonorant"),
+            SortingWord(id: "shlyapa", word: "Шляпа", emoji: "🎩", correctCategory: "clothes", soundGroup: "sonorant"),
+            SortingWord(id: "chaynik", word: "Чайник", emoji: "🫖", correctCategory: "dish", soundGroup: "sonorant"),
+            SortingWord(id: "kurtka", word: "Куртка", emoji: "🧥", correctCategory: "clothes", soundGroup: "sonorant")
         ]
     )
 
@@ -148,17 +148,17 @@ extension SortingSet {
         title: "Небо и земля",
         soundGroup: "velar",
         categories: [
-            SortingCategory(id: "sky",   title: "Небо",  emoji: "☁️"),
+            SortingCategory(id: "sky", title: "Небо", emoji: "☁️"),
             SortingCategory(id: "earth", title: "Земля", emoji: "🌍")
         ],
         words: [
-            SortingWord(id: "oblako",  word: "Облако", emoji: "☁️",  correctCategory: "sky",   soundGroup: "velar"),
-            SortingWord(id: "kamen",   word: "Камень", emoji: "🪨",  correctCategory: "earth", soundGroup: "velar"),
-            SortingWord(id: "samolet", word: "Самолёт", emoji: "✈️", correctCategory: "sky",   soundGroup: "velar"),
-            SortingWord(id: "gora",    word: "Гора",   emoji: "⛰️",  correctCategory: "earth", soundGroup: "velar"),
-            SortingWord(id: "luna",    word: "Луна",   emoji: "🌙",  correctCategory: "sky",   soundGroup: "velar"),
-            SortingWord(id: "kust",    word: "Куст",   emoji: "🌳",  correctCategory: "earth", soundGroup: "velar"),
-            SortingWord(id: "raduga",  word: "Радуга", emoji: "🌈",  correctCategory: "sky",   soundGroup: "velar"),
+            SortingWord(id: "oblako", word: "Облако", emoji: "☁️", correctCategory: "sky", soundGroup: "velar"),
+            SortingWord(id: "kamen", word: "Камень", emoji: "🪨", correctCategory: "earth", soundGroup: "velar"),
+            SortingWord(id: "samolet", word: "Самолёт", emoji: "✈️", correctCategory: "sky", soundGroup: "velar"),
+            SortingWord(id: "gora", word: "Гора", emoji: "⛰️", correctCategory: "earth", soundGroup: "velar"),
+            SortingWord(id: "luna", word: "Луна", emoji: "🌙", correctCategory: "sky", soundGroup: "velar"),
+            SortingWord(id: "kust", word: "Куст", emoji: "🌳", correctCategory: "earth", soundGroup: "velar"),
+            SortingWord(id: "raduga", word: "Радуга", emoji: "🌈", correctCategory: "sky", soundGroup: "velar"),
             SortingWord(id: "kolodets", word: "Колодец", emoji: "🪣", correctCategory: "earth", soundGroup: "velar")
         ]
     )
@@ -170,17 +170,17 @@ extension SortingSet {
         soundGroup: "whistling",
         categories: [
             SortingCategory(id: "initial", title: "В начале", emoji: "🔤"),
-            SortingCategory(id: "final",   title: "В конце",  emoji: "🔚")
+            SortingCategory(id: "final", title: "В конце", emoji: "🔚")
         ],
         words: [
-            SortingWord(id: "sok",    word: "Сок",   emoji: "🧃", correctCategory: "initial", soundGroup: "whistling"),
-            SortingWord(id: "nos",    word: "Нос",   emoji: "👃", correctCategory: "final",   soundGroup: "whistling"),
-            SortingWord(id: "sumka",  word: "Сумка", emoji: "👜", correctCategory: "initial", soundGroup: "whistling"),
-            SortingWord(id: "les",    word: "Лес",   emoji: "🌲", correctCategory: "final",   soundGroup: "whistling"),
-            SortingWord(id: "son",    word: "Сон",   emoji: "💤", correctCategory: "initial", soundGroup: "whistling"),
-            SortingWord(id: "pes",    word: "Пёс",   emoji: "🐕", correctCategory: "final",   soundGroup: "whistling"),
+            SortingWord(id: "sok", word: "Сок", emoji: "🧃", correctCategory: "initial", soundGroup: "whistling"),
+            SortingWord(id: "nos", word: "Нос", emoji: "👃", correctCategory: "final", soundGroup: "whistling"),
+            SortingWord(id: "sumka", word: "Сумка", emoji: "👜", correctCategory: "initial", soundGroup: "whistling"),
+            SortingWord(id: "les", word: "Лес", emoji: "🌲", correctCategory: "final", soundGroup: "whistling"),
+            SortingWord(id: "son", word: "Сон", emoji: "💤", correctCategory: "initial", soundGroup: "whistling"),
+            SortingWord(id: "pes", word: "Пёс", emoji: "🐕", correctCategory: "final", soundGroup: "whistling"),
             SortingWord(id: "sobaka", word: "Собака", emoji: "🐶", correctCategory: "initial", soundGroup: "whistling"),
-            SortingWord(id: "kolos",  word: "Колос", emoji: "🌾", correctCategory: "final",   soundGroup: "whistling")
+            SortingWord(id: "kolos", word: "Колос", emoji: "🌾", correctCategory: "final", soundGroup: "whistling")
         ]
     )
 

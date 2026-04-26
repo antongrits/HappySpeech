@@ -1,6 +1,6 @@
-import Testing
 import Foundation
 @testable import HappySpeech
+import Testing
 
 // MARK: - Mock ContentService
 

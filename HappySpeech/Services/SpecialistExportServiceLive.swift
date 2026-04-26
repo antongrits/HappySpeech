@@ -172,11 +172,11 @@ public final class SpecialistExportServiceLive: SpecialistExportService, @unchec
 
         let titleAttrs: [NSAttributedString.Key: Any] = [
             .font: UIFont.boldSystemFont(ofSize: 18),
-            .foregroundColor: UIColor.black,
+            .foregroundColor: UIColor.black
         ]
         let dateAttrs: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 10, weight: .regular),
-            .foregroundColor: UIColor.darkGray,
+            .foregroundColor: UIColor.darkGray
         ]
 
         title.draw(
@@ -201,11 +201,11 @@ public final class SpecialistExportServiceLive: SpecialistExportService, @unchec
     private func drawBody(lines: [String], topY: CGFloat, font: UIFont) {
         let attrs: [NSAttributedString.Key: Any] = [
             .font: font,
-            .foregroundColor: UIColor.black,
+            .foregroundColor: UIColor.black
         ]
         for (offset, line) in lines.enumerated() {
-            let y = topY + CGFloat(offset) * Layout.lineHeight
-            line.draw(at: CGPoint(x: Layout.margin, y: y), withAttributes: attrs)
+            let posY = topY + CGFloat(offset) * Layout.lineHeight
+            line.draw(at: CGPoint(x: Layout.margin, y: posY), withAttributes: attrs)
         }
     }
 
@@ -213,7 +213,7 @@ public final class SpecialistExportServiceLive: SpecialistExportService, @unchec
     private func drawBarChart(rows: [SoundBreakdownRow], topY: CGFloat) {
         let titleAttrs: [NSAttributedString.Key: Any] = [
             .font: UIFont.boldSystemFont(ofSize: 12),
-            .foregroundColor: UIColor.black,
+            .foregroundColor: UIColor.black
         ]
         String(localized: "reports.pdf.chart.title").draw(
             at: CGPoint(x: Layout.margin, y: topY),
@@ -229,17 +229,17 @@ public final class SpecialistExportServiceLive: SpecialistExportService, @unchec
 
         let labelAttrs: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 9, weight: .medium),
-            .foregroundColor: UIColor.black,
+            .foregroundColor: UIColor.black
         ]
 
         for (index, row) in rows.enumerated() {
             let confidence = max(0, min(1, row.averageConfidence))
             let barHeight = chartMaxHeight * CGFloat(confidence)
-            let x = Layout.margin + CGFloat(index) * (barWidth + spacing)
-            let y = chartOriginY + (chartMaxHeight - barHeight)
+            let posX = Layout.margin + CGFloat(index) * (barWidth + spacing)
+            let posY = chartOriginY + (chartMaxHeight - barHeight)
 
             let bar = UIBezierPath(
-                roundedRect: CGRect(x: x, y: y, width: barWidth, height: barHeight),
+                roundedRect: CGRect(x: posX, y: posY, width: barWidth, height: barHeight),
                 cornerRadius: 3
             )
             colorForConfidence(confidence).setFill()
@@ -248,7 +248,7 @@ public final class SpecialistExportServiceLive: SpecialistExportService, @unchec
             // Подпись: звук + проценты.
             let label = "\(row.sound) \(Int(confidence * 100))%"
             label.draw(
-                at: CGPoint(x: x, y: chartOriginY + chartMaxHeight + 4),
+                at: CGPoint(x: posX, y: chartOriginY + chartMaxHeight + 4),
                 withAttributes: labelAttrs
             )
         }
@@ -261,11 +261,11 @@ public final class SpecialistExportServiceLive: SpecialistExportService, @unchec
         let text = String(format: format, pageIndex + 1, pageCount)
         let attrs: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 9, weight: .regular),
-            .foregroundColor: UIColor.darkGray,
+            .foregroundColor: UIColor.darkGray
         ]
         let size = (text as NSString).size(withAttributes: attrs)
-        let x = (Layout.pageWidth - size.width) / 2
-        text.draw(at: CGPoint(x: x, y: footerY), withAttributes: attrs)
+        let posX = (Layout.pageWidth - size.width) / 2
+        text.draw(at: CGPoint(x: posX, y: footerY), withAttributes: attrs)
     }
 
     private func colorForConfidence(_ value: Double) -> UIColor {

@@ -1,5 +1,5 @@
-import XCTest
 @testable import HappySpeech
+import XCTest
 
 // MARK: - SessionReviewInteractorTests
 
@@ -67,7 +67,7 @@ final class SessionReviewInteractorTests: XCTestCase {
     func test_loadSession_buildsAttemptRows() async {
         let (sut, spy) = makeSUT(attempts: [
             makeAttempt(id: "a1", asr: 0.8, pron: 0.9),
-            makeAttempt(id: "a2", asr: 0.3, pron: 0.4),
+            makeAttempt(id: "a2", asr: 0.3, pron: 0.4)
         ])
         await sut.loadSession(.init(sessionId: "s1"))
         XCTAssertEqual(spy.loadCalls, 1)
@@ -109,7 +109,7 @@ final class SessionReviewInteractorTests: XCTestCase {
         let rows: [AttemptReviewRow] = [
             AttemptReviewRow(id: "a1", word: "w", asrTranscript: "w",
                              autoScore: 0.9, manualScore: 0.2,
-                             audioPath: "", isMarkedCorrect: false),
+                             audioPath: "", isMarkedCorrect: false)
         ]
         let summary = SessionReviewInteractor.makeSummary(rows: rows)
         XCTAssertEqual(summary.averageEffectiveScore, 0.2, accuracy: 0.001)
