@@ -11,6 +11,8 @@ protocol HomeTasksPresentationLogic: AnyObject {
     func presentRefresh(_ response: HomeTasksModels.Refresh.Response)
     func presentStartTask(_ response: HomeTasksModels.StartTask.Response)
     func presentNotifyOverdue(_ response: HomeTasksModels.NotifyOverdue.Response)
+    func presentDetail(_ response: HomeTasksModels.FetchDetail.Response)
+    func presentScheduleReminder(_ response: HomeTasksModels.ScheduleReminder.Response)
     func presentFailure(_ response: HomeTasksModels.Failure.Response)
 }
 
@@ -124,6 +126,59 @@ final class HomeTasksPresenter: HomeTasksPresentationLogic {
             toast = String(localized: "homeTasks.toast.notifyFailed")
         }
         display?.displayNotifyOverdue(.init(toastMessage: toast))
+    }
+
+    func presentDetail(_ response: HomeTasksModels.FetchDetail.Response) {
+        let task = response.task
+        let row = makeRow(task)
+
+        let reminderButtonTitle: String
+        if !response.hasReminder {
+            reminderButtonTitle = String(localized: "homeTasks.detail.reminderSet")
+        } else {
+            reminderButtonTitle = String(localized: "homeTasks.detail.reminderActive")
+        }
+
+        let viewModel = HomeTasksModels.FetchDetail.ViewModel(
+            id: task.id,
+            title: task.title,
+            description: task.description,
+            subtitle: makeSubtitle(for: task),
+            soundBadgeText: row.soundBadgeText,
+            priorityBadgeText: row.priorityBadgeText,
+            priority: task.priority,
+            dueDateText: row.dueDateText,
+            isOverdue: row.isOverdue,
+            isCompleted: task.isCompleted,
+            isStarted: task.isStarted,
+            exerciseType: task.exerciseType,
+            targetSound: task.targetSound,
+            startButtonTitle: makeStartButtonTitle(for: task),
+            hasDueDate: task.dueDate != nil,
+            hasReminder: response.hasReminder,
+            reminderScheduled: response.reminderScheduled,
+            reminderButtonTitle: reminderButtonTitle,
+            accessibilityLabel: row.accessibilityLabel
+        )
+        display?.displayDetail(viewModel)
+    }
+
+    func presentScheduleReminder(_ response: HomeTasksModels.ScheduleReminder.Response) {
+        let toast: String
+        if response.scheduled {
+            toast = String(localized: "homeTasks.toast.reminderSet")
+        } else {
+            switch response.reason {
+            case "noDueDate":
+                toast = String(localized: "homeTasks.toast.reminderNoDueDate")
+            default:
+                toast = String(localized: "homeTasks.toast.reminderFailed")
+            }
+        }
+        display?.displayScheduleReminder(.init(
+            toastMessage: toast,
+            reminderScheduled: response.scheduled
+        ))
     }
 
     func presentFailure(_ response: HomeTasksModels.Failure.Response) {

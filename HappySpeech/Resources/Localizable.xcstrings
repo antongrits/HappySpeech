@@ -16291,6 +16291,314 @@
           }
         }
       }
+    },
+    "homeTasks.detail.close": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть"
+          }
+        }
+      }
+    },
+    "homeTasks.detail.descriptionTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Описание задания"
+          }
+        }
+      }
+    },
+    "homeTasks.detail.exerciseType": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тип упражнения"
+          }
+        }
+      }
+    },
+    "homeTasks.detail.targetSound": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Целевой звук"
+          }
+        }
+      }
+    },
+    "homeTasks.detail.dueDate": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Срок выполнения"
+          }
+        }
+      }
+    },
+    "homeTasks.detail.status": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Статус"
+          }
+        }
+      }
+    },
+    "homeTasks.detail.markComplete": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отметить выполненным"
+          }
+        }
+      }
+    },
+    "homeTasks.detail.markIncomplete": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть снова"
+          }
+        }
+      }
+    },
+    "homeTasks.detail.reminderSet": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Напомнить за час"
+          }
+        }
+      }
+    },
+    "homeTasks.detail.reminderActive": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Напоминание активно"
+          }
+        }
+      }
+    },
+    "homeTasks.detail.reminderHint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запланировать уведомление за час до срока"
+          }
+        }
+      }
+    },
+    "homeTasks.toast.reminderSet": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Напоминание запланировано"
+          }
+        }
+      }
+    },
+    "homeTasks.toast.reminderNoDueDate": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Укажите срок выполнения, чтобы получить напоминание"
+          }
+        }
+      }
+    },
+    "homeTasks.toast.reminderFailed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось запланировать напоминание"
+          }
+        }
+      }
+    },
+    "homeTasks.notify.morning.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пора потренироваться!"
+          }
+        }
+      }
+    },
+    "homeTasks.notify.morning.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодня есть домашние задания от логопеда"
+          }
+        }
+      }
+    },
+    "homeTasks.notify.task.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук %@ · ~%d мин"
+          }
+        }
+      }
+    },
+    "homeTasks.notify.action.start": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать упражнение"
+          }
+        }
+      }
+    },
+    "homeTasks.notify.action.dismiss": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть"
+          }
+        }
+      }
+    },
+    "exercise.type.repeatAfterModel": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторяй за образцом"
+          }
+        }
+      }
+    },
+    "exercise.type.breathing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дыхательная гимнастика"
+          }
+        }
+      }
+    },
+    "exercise.type.bingo": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лото звуков"
+          }
+        }
+      }
+    },
+    "exercise.type.storyCompletion": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дополни рассказ"
+          }
+        }
+      }
+    },
+    "exercise.type.sorting": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сортировка"
+          }
+        }
+      }
+    },
+    "exercise.type.articulationImitation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Артикуляционная гимнастика"
+          }
+        }
+      }
+    },
+    "exercise.type.minimalPairs": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Минимальные пары"
+          }
+        }
+      }
+    },
+    "exercise.type.listenAndChoose": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слушай и выбирай"
+          }
+        }
+      }
+    },
+    "exercise.type.dragAndMatch": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перетащи и сопоставь"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

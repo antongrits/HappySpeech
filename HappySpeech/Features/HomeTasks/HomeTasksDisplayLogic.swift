@@ -13,6 +13,8 @@ protocol HomeTasksDisplayLogic: AnyObject {
     func displayRefresh(_ viewModel: HomeTasksModels.Refresh.ViewModel)
     func displayStartTask(_ viewModel: HomeTasksModels.StartTask.ViewModel)
     func displayNotifyOverdue(_ viewModel: HomeTasksModels.NotifyOverdue.ViewModel)
+    func displayDetail(_ viewModel: HomeTasksModels.FetchDetail.ViewModel)
+    func displayScheduleReminder(_ viewModel: HomeTasksModels.ScheduleReminder.ViewModel)
     func displayFailure(_ viewModel: HomeTasksModels.Failure.ViewModel)
     func displayLoading(_ isLoading: Bool)
 }
@@ -46,6 +48,10 @@ final class HomeTasksDisplay: HomeTasksDisplayLogic {
     // Подсказка показать alert «есть просроченные — напомнить?»
     // Поднимается Presenter'ом в presentFetch, гасится View после отклика пользователя.
     var pendingOverduePrompt: Bool = false
+
+    // Детальный sheet задания — заполняется при fetchDetail.
+    var detailViewModel: HomeTasksModels.FetchDetail.ViewModel?
+    var isDetailSheetPresented: Bool = false
 
     // MARK: - HomeTasksDisplayLogic
 
@@ -104,6 +110,42 @@ final class HomeTasksDisplay: HomeTasksDisplayLogic {
         pendingOverduePrompt = false
     }
 
+    func displayDetail(_ viewModel: HomeTasksModels.FetchDetail.ViewModel) {
+        detailViewModel = viewModel
+        isDetailSheetPresented = true
+    }
+
+    func displayScheduleReminder(_ viewModel: HomeTasksModels.ScheduleReminder.ViewModel) {
+        toastMessage = viewModel.toastMessage
+        // Обновляем detailViewModel если он открыт
+        if var detail = detailViewModel {
+            detail = HomeTasksModels.FetchDetail.ViewModel(
+                id: detail.id,
+                title: detail.title,
+                description: detail.description,
+                subtitle: detail.subtitle,
+                soundBadgeText: detail.soundBadgeText,
+                priorityBadgeText: detail.priorityBadgeText,
+                priority: detail.priority,
+                dueDateText: detail.dueDateText,
+                isOverdue: detail.isOverdue,
+                isCompleted: detail.isCompleted,
+                isStarted: detail.isStarted,
+                exerciseType: detail.exerciseType,
+                targetSound: detail.targetSound,
+                startButtonTitle: detail.startButtonTitle,
+                hasDueDate: detail.hasDueDate,
+                hasReminder: viewModel.reminderScheduled,
+                reminderScheduled: viewModel.reminderScheduled,
+                reminderButtonTitle: viewModel.reminderScheduled
+                    ? String(localized: "homeTasks.detail.reminderActive")
+                    : String(localized: "homeTasks.detail.reminderSet"),
+                accessibilityLabel: detail.accessibilityLabel
+            )
+            detailViewModel = detail
+        }
+    }
+
     func displayFailure(_ viewModel: HomeTasksModels.Failure.ViewModel) {
         toastMessage = viewModel.toastMessage
         isLoading = false
@@ -121,5 +163,11 @@ final class HomeTasksDisplay: HomeTasksDisplayLogic {
     /// Закрывает alert о просроченных, если пользователь нажал «Позже».
     func dismissOverduePrompt() {
         pendingOverduePrompt = false
+    }
+
+    /// Закрывает детальный sheet.
+    func dismissDetailSheet() {
+        isDetailSheetPresented = false
+        detailViewModel = nil
     }
 }
