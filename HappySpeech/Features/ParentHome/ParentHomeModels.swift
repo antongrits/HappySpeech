@@ -6,6 +6,7 @@ enum ParentHomeModels {
 
     // MARK: Fetch
 
+    // swiftlint:disable nesting
     enum Fetch {
         struct Request: Sendable {
             let preferredChildId: String?
@@ -44,6 +45,7 @@ enum ParentHomeModels {
             let screeningCard: ScreeningCardViewModel?
         }
     }
+    // swiftlint:enable nesting
 
     // MARK: - M6.16: Screening Card
 
