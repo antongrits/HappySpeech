@@ -304,11 +304,19 @@ struct RhythmView: View {
     private var actionArea: some View {
         switch store.display.phase {
         case .preview:
-            HSButton(String(localized: "Слушай!"), style: .primary) {
+            HSButton(
+                String(localized: "Слушай!"),
+                style: .primary,
+                icon: "speaker.wave.2.fill"
+            ) {
                 Task { await store.interactor.playPattern(.init()) }
             }
         case .completed:
-            HSButton(String(localized: "Завершить"), style: .primary) {
+            HSButton(
+                String(localized: "Завершить"),
+                style: .primary,
+                icon: "checkmark.circle.fill"
+            ) {
                 store.finalScoreToReport = store.display.finalScore
             }
         default:

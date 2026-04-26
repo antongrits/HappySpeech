@@ -168,7 +168,8 @@ struct BreathingView: View {
                         .padding(.horizontal, SpacingTokens.screenEdge)
                     HSButton(
                         String(localized: "Дальше"),
-                        style: .primary
+                        style: .primary,
+                        icon: "arrow.right.circle.fill"
                     ) {
                         Task { await store.interactor.advanceTutorial() }
                     }

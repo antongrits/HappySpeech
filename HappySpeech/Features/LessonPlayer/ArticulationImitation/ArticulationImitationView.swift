@@ -233,7 +233,8 @@ struct ArticulationImitationView: View {
     private var holdingBottom: some View {
         HSButton(
             String(localized: "articulation.button.release"),
-            style: .secondary
+            style: .secondary,
+            icon: "stop.fill"
         ) {
             container.soundService.playUISound(.tap)
             interactor.completeExercise(.init(
