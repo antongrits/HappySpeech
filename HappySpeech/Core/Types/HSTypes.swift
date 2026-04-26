@@ -32,10 +32,10 @@ public enum SpecialistTag {}
 
 /// The four main Russian sound families used in therapy.
 public enum SoundFamily: String, CaseIterable, Codable, Sendable {
-    case whistling  = "whistling"   // Свистящие: С З Ц
-    case hissing    = "hissing"     // Шипящие:   Ш Ж Ч Щ
-    case sonorant   = "sonorant"    // Сонорные:  Р Рь Л Ль
-    case velar      = "velar"       // Заднеязычные: К Г Х
+    case whistling  // Свистящие: С З Ц
+    case hissing    // Шипящие:   Ш Ж Ч Щ
+    case sonorant   // Сонорные:  Р Рь Л Ль
+    case velar      // Заднеязычные: К Г Х
 
     public var displayName: String {
         switch self {
@@ -60,16 +60,16 @@ public enum SoundFamily: String, CaseIterable, Codable, Sendable {
 
 /// The 10-stage correction ladder from Russian speech therapy methodology.
 public enum CorrectionStage: String, CaseIterable, Codable, Sendable, Comparable {
-    case prep       = "prep"        // 0. Подготовка артикуляции
-    case isolated   = "isolated"    // 1. Изолированный звук
-    case syllable   = "syllable"    // 2. Слоги
-    case wordInit   = "wordInit"    // 3. Слово (начальная позиция)
-    case wordMed    = "wordMed"     // 4. Слово (средняя позиция)
-    case wordFinal  = "wordFinal"   // 5. Слово (конечная позиция)
-    case phrase     = "phrase"      // 6. Словосочетание/фраза
-    case sentence   = "sentence"    // 7. Предложение
-    case story      = "story"       // 8. Рассказ
-    case diff       = "diff"        // 9. Дифференциация
+    case prep       // 0. Подготовка артикуляции
+    case isolated   // 1. Изолированный звук
+    case syllable   // 2. Слоги
+    case wordInit   // 3. Слово (начальная позиция)
+    case wordMed    // 4. Слово (средняя позиция)
+    case wordFinal  // 5. Слово (конечная позиция)
+    case phrase     // 6. Словосочетание/фраза
+    case sentence   // 7. Предложение
+    case story      // 8. Рассказ
+    case diff       // 9. Дифференциация
 
     public var displayName: String {
         switch self {
@@ -152,9 +152,9 @@ public enum TemplateType: String, CaseIterable, Codable, Sendable {
 // MARK: - User Roles
 
 public enum UserRole: String, Codable, Sendable {
-    case parent     = "parent"
-    case specialist = "specialist"
-    case child      = "child"
+    case parent
+    case specialist
+    case child
 }
 
 // MARK: - Fatigue Level

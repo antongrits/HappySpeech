@@ -7,10 +7,10 @@ import OSLog
 
 /// Группа звуков русского языка для логопедической работы.
 enum PhonemeGroup: String, CaseIterable, Sendable {
-    case whistling = "whistling"    // С, З, Ц
-    case hissing = "hissing"        // Ш, Ж, Ч, Щ
-    case sonants = "sonants"        // Р, Л
-    case velar = "velar"            // К, Г, Х
+    case whistling  // С, З, Ц
+    case hissing    // Ш, Ж, Ч, Щ
+    case sonants    // Р, Л
+    case velar      // К, Г, Х
 
     var localizedName: String {
         switch self {
@@ -194,17 +194,13 @@ enum MFCCExtractor {
                 let hi = binPoints[m + 2]
 
                 var energy: Float = 0
-                for k in lo..<center {
-                    if k < powerSpectrum.count {
-                        let weight = Float(k - lo) / Float(max(center - lo, 1))
-                        energy += weight * powerSpectrum[k]
-                    }
+                for k in lo..<center where k < powerSpectrum.count {
+                    let weight = Float(k - lo) / Float(max(center - lo, 1))
+                    energy += weight * powerSpectrum[k]
                 }
-                for k in center..<hi {
-                    if k < powerSpectrum.count {
-                        let weight = Float(hi - k) / Float(max(hi - center, 1))
-                        energy += weight * powerSpectrum[k]
-                    }
+                for k in center..<hi where k < powerSpectrum.count {
+                    let weight = Float(hi - k) / Float(max(hi - center, 1))
+                    energy += weight * powerSpectrum[k]
                 }
                 melEnergies[m] = log(max(energy, 1e-8))
             }

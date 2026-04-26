@@ -1,4 +1,3 @@
-// swiftlint:disable file_length
 import SwiftUI
 
 // MARK: - RepeatAfterModelView
@@ -806,4 +805,3 @@ final class RepeatAfterModelStoreBridge: RepeatAfterModelDisplayLogic {
     )
     .environment(AppContainer.preview())
 }
-// swiftlint:enable file_length

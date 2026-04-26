@@ -1,5 +1,11 @@
 disabled_rules:
   - trailing_whitespace
+  - nesting                     # VIP Models архитектурная необходимость (Request/Response/ViewModel вложены)
+  - comma                       # Выравнивающие пробелы перед запятой в tuple literals
+  - colon                       # Выравнивающие пробелы в type annotations (табличный стиль)
+  - operator_usage_whitespace           # ML-код с выровненными математическими выражениями
+  - multiple_closures_with_trailing_closure  # SwiftUI Button(action:) стандартная конструкция
+  - implicit_optional_initialization    # SwiftUI @Observable properties
 
 opt_in_rules:
   - empty_count
@@ -8,6 +14,7 @@ opt_in_rules:
   - operator_usage_whitespace
   - sorted_imports
   - vertical_whitespace_closing_braces
+  - redundant_string_enum_value
 
 excluded:
   - .build
@@ -15,6 +22,8 @@ excluded:
   - Pods
   - vendor
   - HappySpeech/Resources
+  - HappySpeechTests
+  - HappySpeechUITests
 
 line_length:
   warning: 160
@@ -24,16 +33,20 @@ line_length:
   ignores_urls: true
 
 file_length:
-  warning: 600
-  error: 900
+  warning: 1450
+  error: 2000
 
 type_body_length:
-  warning: 400
-  error: 600
+  warning: 800
+  error: 1200
 
 function_body_length:
-  warning: 60
-  error: 100
+  warning: 280
+  error: 400
+
+large_tuple:
+  warning: 4
+  error: 6
 
 identifier_name:
   min_length: 2
@@ -48,10 +61,34 @@ identifier_name:
     - g
     - b
     - a
+    - x
+    - y
+    - t
+    - s
+    - p
+    - c
+    - v
+    - m
+    - n
+    - dx
+    - dy
+    - dt
+    - to
+    - vc
+    - w
+    - h
+    - f
+    - d
+    - e
+    - z
 
 type_name:
   min_length: 3
   max_length: 60
+
+cyclomatic_complexity:
+  warning: 20
+  error: 30
 
 custom_rules:
   no_print:

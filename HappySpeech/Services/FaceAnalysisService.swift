@@ -170,7 +170,6 @@ public final class LiveFaceAnalysisService: FaceAnalysisService, @unchecked Send
 
         var xsFloat = pts.map { Float($0.x) }
         var ysFloat = pts.map { Float($0.y) }
-        // swiftlint:disable:next identifier_name
         let n = vDSP_Length(pts.count)
 
         var minX: Float = 0; var maxX: Float = 0

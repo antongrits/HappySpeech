@@ -7,9 +7,9 @@ import WhisperKit
 /// Три варианта WhisperKit-моделей. Пользователь выбирает один в onboarding / настройках.
 /// Размеры приблизительные (реальные файлы из HuggingFace могут немного отличаться).
 public enum WhisperKitModelPack: String, CaseIterable, Sendable, Codable {
-    case tiny  = "tiny"
-    case base  = "base"
-    case small = "small"
+    case tiny
+    case base
+    case small
 
     /// Название в UI (с размером в скобках).
     public var displayName: String {

@@ -151,7 +151,7 @@ public struct HSMascotView: View {
     private func applyLipSync(rawAmplitude: Float) {
         let alpha: Float = 0.17
         let target = min(rawAmplitude * 2.5, 1.0)
-        smoothedMouth = smoothedMouth + alpha * (target - smoothedMouth)
+        smoothedMouth += alpha * (target - smoothedMouth)
     }
 
     // MARK: - SwiftUI fallback animations

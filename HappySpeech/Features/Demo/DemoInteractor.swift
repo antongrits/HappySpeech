@@ -241,7 +241,6 @@ final class DemoInteractor: DemoBusinessLogic {
 
 private extension DemoInteractor {
 
-    // swiftlint:disable function_body_length
     static func makeSeed() -> [DemoStep] {
         // 15 шагов: знакомство → главный экран → карта → шаблоны игр →
         // AR-зеркало → прогресс → задания специалиста → награды → маскот →
@@ -459,7 +458,6 @@ private extension DemoInteractor {
             )
         ]
     }
-    // swiftlint:enable function_body_length
 }
 
 // MARK: - Safe array subscript

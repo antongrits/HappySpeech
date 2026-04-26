@@ -168,7 +168,12 @@ public final class LiveLLMDecisionService: LLMDecisionServiceProtocol, @unchecke
             ])
             let full = LLMPrompts.systemParentSummary + "\n" + prompt
             if let text = await withTimeout(ms: 3_000, { [hfClient] in
-                try? await hfClient.generate(model: HFInferenceClient.modelVikhrNemo, prompt: full, maxTokens: LLMPrompts.MaxTokens.parentSummary, timeoutMs: 3_000)
+                try? await hfClient.generate(
+                    model: HFInferenceClient.modelVikhrNemo,
+                    prompt: full,
+                    maxTokens: LLMPrompts.MaxTokens.parentSummary,
+                    timeoutMs: 3_000
+                )
             }), let summary = JSONParser.parseParentSummary(text) {
                 let meta = makeMeta(start: start, source: .hfInference, usedFallback: false)
                 logDecision(kind: "parentSummary", meta: meta, output: "hf:\(summary.summaryText.prefix(40))", childId: session.childId)
@@ -250,7 +255,12 @@ public final class LiveLLMDecisionService: LLMDecisionServiceProtocol, @unchecke
             ])
             let full = LLMPrompts.systemContentRecommend + "\n" + prompt
             if let text = await withTimeout(ms: 3_000, { [hfClient] in
-                try? await hfClient.generate(model: HFInferenceClient.modelVikhrNemo, prompt: full, maxTokens: LLMPrompts.MaxTokens.contentRecommend, timeoutMs: 3_000)
+                try? await hfClient.generate(
+                    model: HFInferenceClient.modelVikhrNemo,
+                    prompt: full,
+                    maxTokens: LLMPrompts.MaxTokens.contentRecommend,
+                    timeoutMs: 3_000
+                )
             }), let rec = JSONParser.parseContentRecommendation(text) {
                 let meta = makeMeta(start: start, source: .hfInference, usedFallback: false)
                 logDecision(kind: "recommendContent", meta: meta, output: "hf:\(rec.packIds.count)", childId: profile.id)
@@ -275,7 +285,12 @@ public final class LiveLLMDecisionService: LLMDecisionServiceProtocol, @unchecke
             ])
             let full = LLMPrompts.systemSpecialistReport + "\n" + prompt
             if let text = await withTimeout(ms: 5_000, { [hfClient] in
-                try? await hfClient.generate(model: HFInferenceClient.modelVikhrNemo, prompt: full, maxTokens: LLMPrompts.MaxTokens.specialistReport, timeoutMs: 5_000)
+                try? await hfClient.generate(
+                    model: HFInferenceClient.modelVikhrNemo,
+                    prompt: full,
+                    maxTokens: LLMPrompts.MaxTokens.specialistReport,
+                    timeoutMs: 5_000
+                )
             }), let report = JSONParser.parseSpecialistReport(text) {
                 let meta = makeMeta(start: start, source: .hfInference, usedFallback: false)
                 logDecision(kind: "specialistReport", meta: meta, output: "hf:\(report.headline.prefix(40))", childId: sessions30d.first?.childId)

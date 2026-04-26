@@ -182,9 +182,8 @@ final class ListenAndChooseInteractor: NSObject, ListenAndChooseBusinessLogic {
             currentStreak: currentStreak,
             hint: hint
         )
-        logger.debug(
-            "Attempt correct=\(isCorrect, privacy: .public) attempts=\(attempts, privacy: .public) streak=\(self.currentStreak, privacy: .public) score=\(finalScore, privacy: .public)"
-        )
+        let attemptInfo = "attempts=\(attempts) streak=\(self.currentStreak) score=\(finalScore)"
+        logger.debug("Attempt correct=\(isCorrect, privacy: .public) \(attemptInfo, privacy: .public)")
         presenter?.presentSubmitAttempt(response)
     }
 

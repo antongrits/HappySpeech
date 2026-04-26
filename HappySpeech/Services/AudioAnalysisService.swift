@@ -217,7 +217,6 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
         }
 
         var fb = [[Float]](repeating: [Float](repeating: 0, count: halfN), count: nMels)
-        // swiftlint:disable identifier_name
         for m in 0 ..< nMels {
             let left   = binPts[m]
             let center = binPts[m + 1]
@@ -229,7 +228,6 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
                 fb[m][k] = Float(right - k) / Float(max(right - center, 1))
             }
         }
-        // swiftlint:enable identifier_name
         return fb
     }
 

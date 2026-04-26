@@ -197,7 +197,7 @@ public final class TonguePostureClassifierML: @unchecked Sendable {
     private func fallbackResult(features: [Float]) -> TonguePostureMLResult {
         // Восстанавливаем blendshapes из первых 23 элементов
         let bs = FaceBlendshapes(
-            jawOpen:             features.count > 0  ? features[0]  : 0,
+            jawOpen:             !features.isEmpty   ? features[0]  : 0,
             jawForward:          features.count > 1  ? features[1]  : 0,
             mouthFunnel:         features.count > 2  ? features[2]  : 0,
             mouthPucker:         features.count > 3  ? features[3]  : 0,

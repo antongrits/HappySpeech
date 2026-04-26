@@ -8,19 +8,19 @@ public struct HSSticker: View {
 
     public enum StickerType: String, CaseIterable {
         // Animals
-        case butterfly = "butterfly"
-        case bunny     = "bunny"
-        case bear      = "bear"
-        case fox       = "fox"
-        case owl       = "owl"
-        case penguin   = "penguin"
+        case butterfly
+        case bunny
+        case bear
+        case fox
+        case owl
+        case penguin
         // Stars & Rewards
-        case goldStar  = "goldStar"
-        case silverStar = "silverStar"
-        case crown     = "crown"
-        case trophy    = "trophy"
-        case medal     = "medal"
-        case rocket    = "rocket"
+        case goldStar
+        case silverStar
+        case crown
+        case trophy
+        case medal
+        case rocket
     }
 
     private let type: StickerType

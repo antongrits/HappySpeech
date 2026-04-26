@@ -79,11 +79,16 @@ public struct RuleBasedDecisionService: Sendable {
         let summaryText: String
         switch ratePct {
         case 85...:
-            summaryText = "\(session.childName) отлично поработал со звуком «\(session.targetSound)» — \(ratePct)% правильно за \(mins) мин. Продолжайте в том же духе!"
+            summaryText = "\(session.childName) отлично поработал со звуком «\(session.targetSound)» — " +
+                "\(ratePct)% правильно за \(mins) мин. Продолжайте в том же духе!"
         case 60..<85:
-            summaryText = "\(session.childName) хорошо занимался со звуком «\(session.targetSound)» — \(ratePct)% из \(session.totalAttempts) попыток. Ещё немного практики и будет замечательно."
+            summaryText = "\(session.childName) хорошо занимался со звуком «\(session.targetSound)» — " +
+                "\(ratePct)% из \(session.totalAttempts) попыток. " +
+                "Ещё немного практики и будет замечательно."
         default:
-            summaryText = "\(session.childName) работал со звуком «\(session.targetSound)» — \(ratePct)% из \(session.totalAttempts) попыток. Мягкая поддержка важнее скорости — попробуйте повторить короткими подходами."
+            summaryText = "\(session.childName) работал со звуком «\(session.targetSound)» — " +
+                "\(ratePct)% из \(session.totalAttempts) попыток. Мягкая поддержка важнее скорости — " +
+                "попробуйте повторить короткими подходами."
         }
 
         let homeTask: String
@@ -664,7 +669,8 @@ public struct RuleBasedDecisionService: Sendable {
         let totalDelta = weeks.reduce(0.0) { $0 + $1.improvementDelta }
         let soundsUnique = Set(weeks.flatMap { $0.soundsPracticed }).sorted().joined(separator: ", ")
 
-        let summary = "За \(weeks.count) нед. проведено \(totalSessions) сессий, средний успех \(avgPct)%. Отработаны звуки: \(soundsUnique.isEmpty ? "—" : soundsUnique)."
+        let summary = "За \(weeks.count) нед. проведено \(totalSessions) сессий, средний успех \(avgPct)%. " +
+            "Отработаны звуки: \(soundsUnique.isEmpty ? "—" : soundsUnique)."
 
         var highlights: [String] = []
         highlights.append("Всего сессий: \(totalSessions).")

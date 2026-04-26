@@ -156,7 +156,8 @@ final class PuzzleRevealInteractor: PuzzleRevealBusinessLogic {
         isRecording = false
         isASRAvailable = container.asrService.isReady
 
-        logger.info("loadPuzzle group=\(self.soundGroup, privacy: .public) index=\(self.currentPuzzleIndex, privacy: .public) word=\(item.word, privacy: .public) asrReady=\(self.isASRAvailable, privacy: .public)")
+        let puzzleInfo = "index=\(self.currentPuzzleIndex) word=\(item.word) asrReady=\(self.isASRAvailable)"
+        logger.info("loadPuzzle group=\(self.soundGroup, privacy: .public) \(puzzleInfo, privacy: .public)")
 
         presenter?.presentLoadPuzzle(.init(
             tiles: currentTiles,

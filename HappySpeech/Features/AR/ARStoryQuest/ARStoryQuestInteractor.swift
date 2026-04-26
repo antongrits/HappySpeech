@@ -172,8 +172,9 @@ final class ARStoryQuestInteractor: ARStoryQuestBusinessLogic {
             soundService.playUISound(.incorrect)
         }
 
+        let arStepInfo = "target=\(step.targetWord) score=\(result.score) passed=\(result.passed)"
         HSLogger.ar.info(
-            "ARStoryQuest step=\(step.stepNumber) target=\(step.targetWord, privacy: .public) transcript=\(transcript, privacy: .private) score=\(result.score, privacy: .public) passed=\(result.passed)"
+            "ARStoryQuest step=\(step.stepNumber) \(arStepInfo, privacy: .public) transcript=\(transcript, privacy: .private)"
         )
 
         analytics.track(event: AnalyticsEvent(

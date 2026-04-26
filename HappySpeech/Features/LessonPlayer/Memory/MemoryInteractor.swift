@@ -225,7 +225,8 @@ final class MemoryInteractor: MemoryBusinessLogic {
     ) async {
         timerTask?.cancel()
         timerTask = nil
-        logger.info("Memory complete matched=\(matchedPairs, privacy: .public)/\(self.totalPairs, privacy: .public) elapsed=\(elapsedSeconds, privacy: .public)s reason=\(String(describing: reason), privacy: .public)")
+        let memInfo = "\(matchedPairs)/\(self.totalPairs) elapsed=\(elapsedSeconds)s reason=\(String(describing: reason))"
+        logger.info("Memory complete matched=\(memInfo, privacy: .public)")
 
         let response = MemoryModels.CompleteSession.Request(
             matchedPairs: matchedPairs,
