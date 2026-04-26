@@ -794,6 +794,44 @@ private struct WorldZoneDetailSheet: View {
     }
 }
 
+// MARK: - Color helpers (View layer only)
+
+private extension WorldZoneCard {
+    /// Основной цвет зоны, смаппированный из `colorName` в SwiftUI `Color`.
+    var backgroundColor: Color { colorName.zoneBackgroundColor }
+    /// Цвет текста поверх основного цвета зоны.
+    var foregroundColor: Color { colorName.zoneForegroundColor }
+}
+
+private extension WorldMapModels.LoadZoneDetail.ViewModel {
+    /// Основной цвет зоны, смаппированный из `colorName` в SwiftUI `Color`.
+    var backgroundColor: Color { colorName.zoneBackgroundColor }
+    /// Цвет текста поверх основного цвета зоны.
+    var foregroundColor: Color { colorName.zoneForegroundColor }
+}
+
+private extension String {
+    var zoneBackgroundColor: Color {
+        switch self {
+        case "mint":    return ColorTokens.Brand.mint
+        case "butter":  return ColorTokens.Brand.butter
+        case "lilac":   return ColorTokens.Brand.lilac
+        case "coral":   return ColorTokens.Brand.primary
+        case "gold":    return ColorTokens.Brand.gold
+        case "sky":     return ColorTokens.Brand.sky
+        case "primary": return ColorTokens.Brand.primary
+        default:        return ColorTokens.Brand.sky
+        }
+    }
+
+    var zoneForegroundColor: Color {
+        switch self {
+        case "butter", "gold": return ColorTokens.Kid.ink
+        default:               return .white
+        }
+    }
+}
+
 // MARK: - Preview
 
 #Preview("WorldMap") {

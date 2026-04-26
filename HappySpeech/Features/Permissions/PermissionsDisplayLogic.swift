@@ -30,6 +30,8 @@ final class PermissionsDisplay: PermissionsDisplayLogic {
     var isRequesting: Bool = false
     var toastMessage: String?
     var pendingSettingsURL: URL?
+    /// Заполняется Presenter'ом когда `isFinished == true` и `isSingleMode == false`.
+    var allDoneCard: PermissionsAllDoneCard?
 
     // Overview (Settings → Разрешения)
     var overviewCards: [PermissionOverviewCard] = []
@@ -52,12 +54,18 @@ final class PermissionsDisplay: PermissionsDisplayLogic {
         toastMessage = viewModel.toastMessage
         isFinished = viewModel.isFinished
         isRequesting = false
+        if viewModel.isFinished && !isSingleMode {
+            allDoneCard = viewModel.allDoneCard
+        }
     }
 
     func displaySkip(_ viewModel: PermissionsModels.Skip.ViewModel) {
         steps = viewModel.steps
         currentIndex = viewModel.currentIndex
         isFinished = viewModel.isFinished
+        if viewModel.isFinished && !isSingleMode {
+            allDoneCard = viewModel.allDoneCard
+        }
     }
 
     func displayOpenSettings(_ viewModel: PermissionsModels.OpenSettings.ViewModel) {

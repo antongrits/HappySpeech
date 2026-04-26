@@ -70,6 +70,9 @@ final class PermissionsInteractor: PermissionsBusinessLogic {
             return
         }
 
+        // Первым делом сигнализируем о загрузке — VIP: Interactor → Presenter → Display.
+        presenter?.presentLoading(true)
+
         Task { @MainActor [weak self] in
             guard let self else { return }
             self.logger.info("requesting permission=\(request.type.systemName, privacy: .public)")

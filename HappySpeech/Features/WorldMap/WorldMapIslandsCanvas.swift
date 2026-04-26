@@ -318,6 +318,27 @@ private struct IslandBubble: View {
     }
 }
 
+// MARK: - Color helpers (View layer only)
+
+private extension WorldZoneCard {
+    var backgroundColor: Color { colorName.zoneBackgroundColor }
+}
+
+private extension String {
+    var zoneBackgroundColor: Color {
+        switch self {
+        case "mint":    return ColorTokens.Brand.mint
+        case "butter":  return ColorTokens.Brand.butter
+        case "lilac":   return ColorTokens.Brand.lilac
+        case "coral":   return ColorTokens.Brand.primary
+        case "gold":    return ColorTokens.Brand.gold
+        case "sky":     return ColorTokens.Brand.sky
+        case "primary": return ColorTokens.Brand.primary
+        default:        return ColorTokens.Brand.sky
+        }
+    }
+}
+
 // MARK: - Preview
 
 #Preview("WorldMapIslandsCanvas — populated") {
@@ -330,14 +351,13 @@ private struct IslandBubble: View {
             progress: 1.0,
             progressLabel: "100%",
             lessonsLabel: "10 / 10",
-            backgroundColor: ColorTokens.Brand.sky,
-            foregroundColor: .white,
+            colorName: "sky",
             isLocked: false,
             isHighlighted: false,
             position: CGPoint(x: 0.18, y: 0.86),
             isCurrentLocation: false,
             isCompleted: true,
-            accessibilityLabel: "Гласные",
+            accessibilityLabel: String(localized: "worldmap.preview.vowels.a11y"),
             accessibilityHint: ""
         ),
         .init(
@@ -348,14 +368,13 @@ private struct IslandBubble: View {
             progress: 0.65,
             progressLabel: "65%",
             lessonsLabel: "13 / 20",
-            backgroundColor: ColorTokens.Brand.mint,
-            foregroundColor: .white,
+            colorName: "mint",
             isLocked: false,
             isHighlighted: false,
             position: CGPoint(x: 0.74, y: 0.74),
             isCurrentLocation: false,
             isCompleted: false,
-            accessibilityLabel: "Свистящие",
+            accessibilityLabel: String(localized: "worldmap.preview.sibilants.a11y"),
             accessibilityHint: ""
         ),
         .init(
@@ -366,14 +385,13 @@ private struct IslandBubble: View {
             progress: 0.30,
             progressLabel: "30%",
             lessonsLabel: "6 / 20",
-            backgroundColor: ColorTokens.Brand.butter,
-            foregroundColor: ColorTokens.Kid.ink,
+            colorName: "butter",
             isLocked: false,
             isHighlighted: false,
             position: CGPoint(x: 0.30, y: 0.56),
             isCurrentLocation: true,
             isCompleted: false,
-            accessibilityLabel: "Шипящие",
+            accessibilityLabel: String(localized: "worldmap.preview.hissing.a11y"),
             accessibilityHint: ""
         ),
         .init(
@@ -384,14 +402,13 @@ private struct IslandBubble: View {
             progress: 0.10,
             progressLabel: "10%",
             lessonsLabel: "2 / 20",
-            backgroundColor: ColorTokens.Brand.lilac,
-            foregroundColor: .white,
+            colorName: "lilac",
             isLocked: false,
             isHighlighted: false,
             position: CGPoint(x: 0.78, y: 0.40),
             isCurrentLocation: false,
             isCompleted: false,
-            accessibilityLabel: "Сонор Р",
+            accessibilityLabel: String(localized: "worldmap.preview.sonorant.a11y"),
             accessibilityHint: ""
         ),
         .init(
@@ -402,32 +419,30 @@ private struct IslandBubble: View {
             progress: 0.0,
             progressLabel: "0%",
             lessonsLabel: "0 / 15",
-            backgroundColor: ColorTokens.Brand.primary,
-            foregroundColor: .white,
+            colorName: "primary",
             isLocked: true,
             isHighlighted: false,
             position: CGPoint(x: 0.32, y: 0.24),
             isCurrentLocation: false,
             isCompleted: false,
-            accessibilityLabel: "Заднеязычные",
+            accessibilityLabel: String(localized: "worldmap.preview.velar.a11y"),
             accessibilityHint: ""
         ),
         .init(
             id: "z6",
-            name: "Грамматика",
+            name: String(localized: "worldmap.preview.grammar"),
             icon: "📚",
-            soundsLabel: "Падежи",
+            soundsLabel: String(localized: "worldmap.preview.cases"),
             progress: 0.0,
             progressLabel: "0%",
             lessonsLabel: "0 / 12",
-            backgroundColor: ColorTokens.Brand.gold,
-            foregroundColor: ColorTokens.Kid.ink,
+            colorName: "gold",
             isLocked: true,
             isHighlighted: false,
             position: CGPoint(x: 0.78, y: 0.10),
             isCurrentLocation: false,
             isCompleted: false,
-            accessibilityLabel: "Грамматика",
+            accessibilityLabel: String(localized: "worldmap.preview.grammar.a11y"),
             accessibilityHint: ""
         )
     ]
