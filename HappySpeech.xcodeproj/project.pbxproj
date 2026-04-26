@@ -1133,6 +1133,7 @@
 		2DB567BC843F4F37403D46FA /* zh-df-1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 01E57D712C13DAF086A561BB /* zh-df-1.m4a */; };
 		2DB74AFFADCBC819EF926791 /* VisualAcousticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 015E71A1741238D4FDA49A9C /* VisualAcousticView.swift */; };
 		2DBBEE4E097DD2AC86D142DA /* DisplayStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F49003DC39DE33CDD8D24F /* DisplayStateTests.swift */; };
+		2CB9B0E9C3B54AC88BBE8A98 /* KeyScreensSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1B3A489DEC0428EAE3516AA /* KeyScreensSnapshotTests.swift */; };
 		2DE14DFCE5C9FA3227B374A2 /* shch-syl-19.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B8F03715724F1F39D885267B /* shch-syl-19.m4a */; };
 		2DEC31234B5F76B7B9F9FF1A /* kh-iso-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F71A3449869720691D81CCF4 /* kh-iso-0.m4a */; };
 		2DF81A6B524B9DAE9C193E60 /* ProgramEditorInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61B7B75A0BFCFF836877667 /* ProgramEditorInteractor.swift */; };
@@ -11077,6 +11078,7 @@
 		D1D0CA2F51A60D9CB28352C1 /* ch-wi-23.m4a */ = {isa = PBXFileReference; path = "ch-wi-23.m4a"; sourceTree = "<group>"; };
 		D1EAB470DB0DF15673908AB9 /* br-201.m4a */ = {isa = PBXFileReference; path = "br-201.m4a"; sourceTree = "<group>"; };
 		D1F49003DC39DE33CDD8D24F /* DisplayStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayStateTests.swift; sourceTree = "<group>"; };
+		F1B3A489DEC0428EAE3516AA /* KeyScreensSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyScreensSnapshotTests.swift; sourceTree = "<group>"; };
 		D1F62EF4344D49CD864EADE9 /* sh-wi-38.m4a */ = {isa = PBXFileReference; path = "sh-wi-38.m4a"; sourceTree = "<group>"; };
 		D213AE35D3E7A0DE297BDD85 /* g-wf-19.m4a */ = {isa = PBXFileReference; path = "g-wf-19.m4a"; sourceTree = "<group>"; };
 		D228C8F449C870605287076B /* shch-wi-17.m4a */ = {isa = PBXFileReference; path = "shch-wi-17.m4a"; sourceTree = "<group>"; };
@@ -14938,6 +14940,7 @@
 				DA4FF389731F3510E30B357A /* DesignSystem */,
 				ADBF41846F9E684384135C15 /* DesignSystemSnapshotTests.swift */,
 				D1F49003DC39DE33CDD8D24F /* DisplayStateTests.swift */,
+				F1B3A489DEC0428EAE3516AA /* KeyScreensSnapshotTests.swift */,
 			);
 			path = Snapshot;
 			sourceTree = "<group>";
@@ -25091,6 +25094,7 @@
 				29F23788B7490EF452A5121A /* ContentEngineTests.swift in Sources */,
 				4A775C8B6E63558CEB552443 /* DesignSystemSnapshotTests.swift in Sources */,
 				2DBBEE4E097DD2AC86D142DA /* DisplayStateTests.swift in Sources */,
+				2CB9B0E9C3B54AC88BBE8A98 /* KeyScreensSnapshotTests.swift in Sources */,
 				619F386A0250E64F09EE64EC /* DragAndMatchInteractorTests.swift in Sources */,
 				227A8DFCE0EAC0753D9F9871 /* GuidedTourCoordinatorTests.swift in Sources */,
 				BFCACC5B414C116DA41E7AFA /* HSMascotViewSnapshotTests.swift in Sources */,
