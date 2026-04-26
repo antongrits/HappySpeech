@@ -133,6 +133,12 @@ struct SessionShellHost: View {
                 )
             )
         }
+        .onDisappear {
+            guard let interactor else { return }
+            Task { @MainActor in
+                await interactor.endSessionEarly()
+            }
+        }
     }
 }
 
@@ -397,11 +403,14 @@ struct SessionShellBinder: View {
             Text(activity.gameType.localizedTitle)
                 .font(TypographyTokens.title())
                 .foregroundStyle(ColorTokens.Kid.ink)
-            Text(String(localized: "Целевой звук: \(activity.soundTarget)"))
+            Text(String(
+                format: String(localized: "session.placeholder.target_sound %@"),
+                activity.soundTarget
+            ))
                 .font(TypographyTokens.body())
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
             HSButton(
-                String(localized: "Готово"),
+                String(localized: "general.done"),
                 style: .primary,
                 icon: "checkmark.circle.fill"
             ) {
@@ -641,7 +650,8 @@ struct FeedbackOverlayView: View {
         switch state {
         case .correct:
             withAnimation(.easeOut(duration: 0.18)) { pulseScale = 1.02 }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.18) {
+            Task { @MainActor in
+                try? await Task.sleep(nanoseconds: 180_000_000) // 0.18s
                 withAnimation(.easeIn(duration: 0.18)) { pulseScale = 1.0 }
             }
         case .incorrect:
@@ -655,8 +665,12 @@ struct FeedbackOverlayView: View {
         let amplitude: CGFloat = 8
         let step: TimeInterval = 0.07
         let sequence: [CGFloat] = [amplitude, -amplitude, amplitude, -amplitude, 0]
-        for (idx, value) in sequence.enumerated() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + step * Double(idx)) {
+        Task { @MainActor in
+            for (idx, value) in sequence.enumerated() {
+                if Task.isCancelled { break }
+                if idx > 0 {
+                    try? await Task.sleep(nanoseconds: UInt64(step * 1_000_000_000))
+                }
                 withAnimation(.easeInOut(duration: step)) {
                     shakeOffset = value
                 }
@@ -790,22 +804,22 @@ final class SessionShellDisplayAdapter: SessionShellDisplayLogic {
 extension GameType {
     var localizedTitle: String {
         switch self {
-        case .listenAndChoose:       return String(localized: "Слушай и выбирай")
-        case .repeatAfterModel:      return String(localized: "Повторяй за мной")
-        case .minimalPairs:          return String(localized: "Похожие звуки")
-        case .dragAndMatch:          return String(localized: "Перетащи и совмести")
-        case .memory:                return String(localized: "Запомни пары")
-        case .bingo:                 return String(localized: "Лото")
-        case .breathing:             return String(localized: "Дышим правильно")
-        case .rhythm:                return String(localized: "Ритм речи")
-        case .sorting:               return String(localized: "Разложи по группам")
-        case .puzzleReveal:          return String(localized: "Собери пазл")
-        case .soundHunter:           return String(localized: "Охотник за звуком")
-        case .narrativeQuest:        return String(localized: "Сказка")
-        case .visualAcoustic:        return String(localized: "Вижу звук")
-        case .storyCompletion:       return String(localized: "Закончи историю")
-        case .articulationImitation: return String(localized: "Повтори движение")
-        case .arActivity:            return String(localized: "AR-зеркало")
+        case .listenAndChoose:       return String(localized: "game.listen_and_choose")
+        case .repeatAfterModel:      return String(localized: "game.repeat_after_model")
+        case .minimalPairs:          return String(localized: "game.minimal_pairs")
+        case .dragAndMatch:          return String(localized: "game.drag_and_match")
+        case .memory:                return String(localized: "game.memory")
+        case .bingo:                 return String(localized: "game.bingo")
+        case .breathing:             return String(localized: "game.breathing")
+        case .rhythm:                return String(localized: "game.rhythm")
+        case .sorting:               return String(localized: "game.sorting")
+        case .puzzleReveal:          return String(localized: "game.puzzle_reveal")
+        case .soundHunter:           return String(localized: "game.sound_hunter")
+        case .narrativeQuest:        return String(localized: "game.narrative_quest")
+        case .visualAcoustic:        return String(localized: "game.visual_acoustic")
+        case .storyCompletion:       return String(localized: "game.story_completion")
+        case .articulationImitation: return String(localized: "game.articulation_imitation")
+        case .arActivity:            return String(localized: "game.ar_activity")
         }
     }
 }
