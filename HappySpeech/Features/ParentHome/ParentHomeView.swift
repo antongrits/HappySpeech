@@ -296,31 +296,27 @@ private struct ParentDashboardTab: View {
     }
 
     private var recommendationsSection: some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-            Text(String(localized: "Рекомендации"))
-                .font(TypographyTokens.headline())
-                .foregroundStyle(ColorTokens.Parent.ink)
+        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.sp5) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+                Text(String(localized: "Рекомендации"))
+                    .font(TypographyTokens.headline())
+                    .foregroundStyle(ColorTokens.Parent.ink)
 
-            ForEach(viewModel.recommendations, id: \.self) { rec in
-                HStack(alignment: .top, spacing: SpacingTokens.sp3) {
-                    Image(systemName: "lightbulb.fill")
-                        .font(.system(size: 14))
-                        .foregroundStyle(ColorTokens.Brand.butter)
-                        .padding(.top, 2)
+                ForEach(viewModel.recommendations, id: \.self) { rec in
+                    HStack(alignment: .top, spacing: SpacingTokens.sp3) {
+                        Image(systemName: "lightbulb.fill")
+                            .font(.system(size: 14))
+                            .foregroundStyle(ColorTokens.Brand.butter)
+                            .padding(.top, 2)
 
-                    Text(rec)
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Parent.inkMuted)
-                        .ctaTextStyle()
+                        Text(rec)
+                            .font(TypographyTokens.body(14))
+                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                            .ctaTextStyle()
+                    }
                 }
             }
         }
-        .padding(SpacingTokens.sp5)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                .fill(ColorTokens.Parent.surface)
-                .parentCardShadow()
-        )
     }
 }
 

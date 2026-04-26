@@ -233,28 +233,24 @@ private struct PromptCard: View {
     let onPlay: () -> Void
 
     var body: some View {
-        VStack(spacing: SpacingTokens.medium) {
-            Text(prompt.stimulus)
-                .font(TypographyTokens.title(26))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
+        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.large) {
+            VStack(spacing: SpacingTokens.medium) {
+                Text(prompt.stimulus)
+                    .font(TypographyTokens.title(26))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
 
-            HSButton(String(localized: "screening.prompt.listen"), style: .secondary, action: onPlay)
-                .frame(maxWidth: 260)
+                HSButton(String(localized: "screening.prompt.listen"), style: .secondary, action: onPlay)
+                    .frame(maxWidth: 260)
 
-            HStack(spacing: SpacingTokens.small) {
-                scoreButton(0.0, label: String(localized: "screening.score.wrong"),   color: .red)
-                scoreButton(0.33, label: String(localized: "screening.score.partial"), color: .orange)
-                scoreButton(0.67, label: String(localized: "screening.score.good"),    color: .yellow)
-                scoreButton(1.0, label: String(localized: "screening.score.perfect"), color: .green)
+                HStack(spacing: SpacingTokens.small) {
+                    scoreButton(0.0, label: String(localized: "screening.score.wrong"),   color: .red)
+                    scoreButton(0.33, label: String(localized: "screening.score.partial"), color: .orange)
+                    scoreButton(0.67, label: String(localized: "screening.score.good"),    color: .yellow)
+                    scoreButton(1.0, label: String(localized: "screening.score.perfect"), color: .green)
+                }
             }
         }
-        .padding(SpacingTokens.large)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                .fill(ColorTokens.Kid.surface)
-                .shadow(color: .black.opacity(0.08), radius: 12, y: 4)
-        )
     }
 
     private func scoreButton(_ score: Float, label: String, color: Color) -> some View {

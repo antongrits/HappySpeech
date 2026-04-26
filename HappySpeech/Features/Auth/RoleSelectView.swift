@@ -90,43 +90,39 @@ private struct RoleCard: View {
 
     var body: some View {
         Button(action: action) {
-            HStack(spacing: SpacingTokens.sp5) {
-                // Icon container
-                ZStack {
-                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
-                        .fill(accentColor.opacity(0.15))
-                        .frame(width: 56, height: 56)
+            HSLiquidGlassCard(style: .tinted(accentColor), padding: SpacingTokens.sp5) {
+                HStack(spacing: SpacingTokens.sp5) {
+                    // Icon container
+                    ZStack {
+                        RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                            .fill(accentColor.opacity(0.15))
+                            .frame(width: 56, height: 56)
 
-                    Image(systemName: icon)
-                        .font(.system(size: 24))
-                        .foregroundStyle(accentColor)
+                        Image(systemName: icon)
+                            .font(.system(size: 24))
+                            .foregroundStyle(accentColor)
+                    }
+
+                    // Text
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(title)
+                            .font(TypographyTokens.headline(17))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+
+                        Text(subtitle)
+                            .font(TypographyTokens.body(13))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .lineLimit(2)
+                            .ctaTextStyle()
+                    }
+
+                    Spacer()
+
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(ColorTokens.Kid.inkSoft)
                 }
-
-                // Text
-                VStack(alignment: .leading, spacing: 3) {
-                    Text(title)
-                        .font(TypographyTokens.headline(17))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-
-                    Text(subtitle)
-                        .font(TypographyTokens.body(13))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(2)
-                        .ctaTextStyle()
-                }
-
-                Spacer()
-
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(ColorTokens.Kid.inkSoft)
             }
-            .padding(SpacingTokens.sp5)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
-                    .fill(ColorTokens.Kid.surface)
-                    .kidCardShadow()
-            )
         }
         .buttonStyle(.plain)
         .tapFeedback()

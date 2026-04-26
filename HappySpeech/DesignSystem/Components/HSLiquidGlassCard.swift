@@ -5,18 +5,20 @@ import SwiftUI
 public enum HSLiquidGlassStyle: Sendable, Equatable {
     /// Translucent white glass (default surface).
     case primary
-    /// More opaque variant for dense content.
+    /// More opaque variant for dense content — main CTA cards, modal sheets.
     case elevated
-    /// Tinted glass with a custom hue.
+    /// Tinted glass with a custom hue — stats, progress, accent sections.
     case tinted(Color)
 }
 
 // MARK: - HSLiquidGlassCard
 
-/// Glassmorphism card. Uses `.glassEffect()` on iOS 26+ where available,
-/// otherwise falls back to `.ultraThinMaterial` + hairline overlay + soft
-/// shadow. Padding and corner radius come from `SpacingTokens` and
-/// `RadiusTokens` so the card matches the rest of the system.
+/// Glassmorphism card that adapts to the OS version:
+/// - iOS 26+: uses native `.glassEffect()` API for true system-level glass.
+/// - iOS 17–25: falls back to `.ultraThinMaterial` + tint overlay + hairline border.
+///
+/// Padding and corner radius come from `SpacingTokens` / `RadiusTokens` so
+/// the card is always consistent with the rest of the design system.
 public struct HSLiquidGlassCard<Content: View>: View {
 
     private let style: HSLiquidGlassStyle
@@ -34,24 +36,64 @@ public struct HSLiquidGlassCard<Content: View>: View {
     }
 
     public var body: some View {
-        content()
-            .padding(padding)
-            .background(backgroundView)
-            .overlay(borderOverlay)
-            .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous))
-            .shadow(color: .black.opacity(0.08), radius: 12, y: 4)
+        if #available(iOS 26, *) {
+            ios26Body
+        } else {
+            legacyBody
+        }
     }
 
-    // MARK: - Background
+    // MARK: - iOS 26 body
+
+    @available(iOS 26, *)
+    private var ios26Body: some View {
+        let shape = RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+        return Group {
+            switch style {
+            case .primary:
+                content()
+                    .padding(padding)
+                    .glassEffect(.regular, in: shape)
+                    .shadow(color: shadowColor, radius: shadowRadius, y: shadowY)
+            case .elevated:
+                content()
+                    .padding(padding)
+                    .glassEffect(.regular, in: shape)
+                    .shadow(color: shadowColor, radius: shadowRadius, y: shadowY)
+            case .tinted(let color):
+                content()
+                    .padding(padding)
+                    .glassEffect(.regular.tint(color.opacity(0.28)), in: shape)
+                    .shadow(color: shadowColor, radius: shadowRadius, y: shadowY)
+            }
+        }
+    }
+
+    // MARK: - Legacy body (iOS 17–25)
+
+    private var legacyBody: some View {
+        content()
+            .padding(padding)
+            .background(legacyBackground)
+            .overlay(borderOverlay)
+            .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous))
+            .shadow(color: shadowColor, radius: shadowRadius, y: shadowY)
+    }
 
     @ViewBuilder
-    private var backgroundView: some View {
+    private var legacyBackground: some View {
         ZStack {
-            // Material layer always present — guarantees blur on iOS 17–25
-            // and a sensible substrate on iOS 26 even if glassEffect is unavailable.
-            Rectangle()
-                .fill(.ultraThinMaterial)
+            // Material layer guarantees blur on iOS 17–25.
+            Rectangle().fill(legacyMaterial)
             tintLayer
+        }
+    }
+
+    private var legacyMaterial: Material {
+        switch style {
+        case .primary:   return .ultraThinMaterial
+        case .elevated:  return .ultraThickMaterial
+        case .tinted:    return .ultraThinMaterial
         }
     }
 
@@ -70,6 +112,30 @@ public struct HSLiquidGlassCard<Content: View>: View {
     private var borderOverlay: some View {
         RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
             .strokeBorder(Color.white.opacity(0.2), lineWidth: 1)
+    }
+
+    // MARK: - Shadow tokens per style
+
+    private var shadowColor: Color {
+        switch style {
+        case .primary:           return .black.opacity(0.08)
+        case .elevated:          return .black.opacity(0.15)
+        case .tinted(let color): return color.opacity(0.18)
+        }
+    }
+
+    private var shadowRadius: CGFloat {
+        switch style {
+        case .elevated: return 20
+        default:        return 12
+        }
+    }
+
+    private var shadowY: CGFloat {
+        switch style {
+        case .elevated: return 10
+        default:        return 4
+        }
     }
 }
 
