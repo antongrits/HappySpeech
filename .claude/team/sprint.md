@@ -35,7 +35,7 @@ Goal: Close all gaps. App Store + Diploma ready.
 | S12-004 | Content pack Sh (shibilant) stages 0-5, >=200 items | speech-content-curator | P1 | [x] DONE |
 | S12-005 | Content pack R (sonor) stages 0-5, >=200 items | speech-content-curator | P1 | [x] DONE |
 | S12-006 | Content packs L/Z/Zh/Ts stubs | speech-content-curator | P2 | [x] DONE |
-| S12-007 | .mlpackage files (SileroVAD + PronunciationScorer) in Resources/Models/ | ml-trainer | P1 | [!] BLOCKED |
+| S12-007 | .mlpackage files (SileroVAD + PronunciationScorer) in Resources/Models/ | ml-trainer | P1 | [x] DONE — M4.1-4.5 v6 выполнен 2026-04-26 |
 | S12-008 | PDF + CSV export (SpecialistExportService) | ios-dev-arch | P2 | [x] DONE |
 | S12-009 | Unit tests: ListenAndChoose, RepeatAfterModel, Sorting, Bingo, Memory interactors | qa-unit | P1 | [x] DONE |
 | S12-010 | Unit tests: SyncService, AdaptivePlannerService | qa-unit | P1 | [x] DONE |
@@ -57,7 +57,7 @@ Acceptance Criteria:
 - [x] Unit coverage >= 70% on Interactors
 - [x] Snapshot tests green (light+dark) for 10 key screens (16 templates coverage via KeyScreensSnapshotTests)
 - [x] Content: S + Sh packs complete (400+ items each)
-- [!] .mlpackage files present in Resources/Models/ — BLOCKED (ML training pipeline required)
+- [x] .mlpackage files present in Resources/Models/ — DONE (6 models: SileroVAD 73KB + PronunciationScorer x4 101KB each + SoundClassifier 128KB)
 - [x] BUILD SUCCEEDED on simulator (iPhone 17 Pro)
 - [x] 0 SwiftLint warnings in Features/Services/App
 - [x] App Store metadata complete (ru+en) — docs/appstore-metadata.md (ru+en, все поля)
@@ -69,7 +69,7 @@ Milestones summary:
 M1 MVP            code done  unit tests DONE
 M2 All templates  code done  snapshot tests DONE, content S+Sh DONE
 M3 Dashboard      code done  Firestore deploy DONE (happyspeech-dfd95)
-M4 AR+ML          wrappers   .mlpackage BLOCKED (training pipeline)
+M4 AR+ML          DONE       .mlpackage deployed (SileroVAD CNN + PronunciationScorer x4 + SoundClassifier, retrained with Refs 2026-04-26)
 M5 LLM+Spec       DONE       AdaptivePlanner + PDF export DONE
 M6 App Store      Sprint 12  tests+content DONE, Firestore deploy DONE, TestFlight pending
 
@@ -94,7 +94,7 @@ M6 App Store      Sprint 12  tests+content DONE, Firestore deploy DONE, TestFlig
 
 ### Блокеры для финального деплоя
 1. ~~Firebase deploy~~ ✅ DONE 2026-04-26 — happyspeech-dfd95 (Firestore + Auth + iOS app + Rules + Indexes)
-2. .mlpackage файлы: нужен ML training pipeline
+2. ~~.mlpackage файлы~~ DONE 2026-04-26 — M4.1-4.5 v6 выполнен, 6 моделей задеплоены
 3. TestFlight: нужен Apple Developer account
 
 ### Firebase setup details (2026-04-26)
@@ -115,7 +115,7 @@ M6 App Store      Sprint 12  tests+content DONE, Firestore deploy DONE, TestFlig
 - [x] Unit coverage >= 70% на Interactors
 - [x] Snapshot tests (10 экранов x 2 темы)
 - [x] Content: S + Sh packs (400+ items каждый)
-- [!] .mlpackage files — BLOCKED
+- [x] .mlpackage files — DONE 2026-04-26 (6 mlpackage в Resources/Models/)
 - [x] BUILD SUCCEEDED на симуляторе
 - [x] 0 SwiftLint нарушений в Features/Services/App
 - [x] App Store metadata — DONE (docs/appstore-metadata.md)
