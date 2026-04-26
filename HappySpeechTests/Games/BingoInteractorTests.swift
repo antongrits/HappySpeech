@@ -1,43 +1,47 @@
 @testable import HappySpeech
-import Testing
+import XCTest
 
-// MARK: - Spy
+// MARK: - BingoInteractorTests
+//
+// 9 тестов для BingoInteractor (S12-010 P1).
+// Покрывает: loadGame (25 клеток), resolveSoundGroup, markCell, markCell дважды,
+// completeGame (score 0), starsForScore (4 случая), cancel, checkBingo (пустой).
 
 @MainActor
-private final class SpyBingoPresenter: BingoPresentationLogic {
-    var loadGameCalled = false
-    var callWordCalled = false
-    var markCellCalled = false
-    var completeGameCalled = false
+final class BingoInteractorTests: XCTestCase {
 
-    var lastLoadResponse: BingoModels.LoadGame.Response?
-    var lastCallWordResponse: BingoModels.CallWord.Response?
-    var lastMarkCellResponse: BingoModels.MarkCell.Response?
-    var lastCompleteResponse: BingoModels.CompleteGame.Response?
+    // MARK: - Spy
 
-    func presentLoadGame(_ response: BingoModels.LoadGame.Response) {
-        loadGameCalled = true
-        lastLoadResponse = response
-    }
-    func presentCallWord(_ response: BingoModels.CallWord.Response) {
-        callWordCalled = true
-        lastCallWordResponse = response
-    }
-    func presentMarkCell(_ response: BingoModels.MarkCell.Response) {
-        markCellCalled = true
-        lastMarkCellResponse = response
-    }
-    func presentCompleteGame(_ response: BingoModels.CompleteGame.Response) {
-        completeGameCalled = true
-        lastCompleteResponse = response
-    }
-}
+    private final class SpyPresenter: BingoPresentationLogic {
+        var loadGameCalled = false
+        var callWordCalled = false
+        var markCellCalled = false
+        var completeGameCalled = false
 
-// MARK: - Tests
+        var lastLoadResponse: BingoModels.LoadGame.Response?
+        var lastCallWordResponse: BingoModels.CallWord.Response?
+        var lastMarkCellResponse: BingoModels.MarkCell.Response?
+        var lastCompleteResponse: BingoModels.CompleteGame.Response?
 
-@Suite("BingoInteractor")
-@MainActor
-struct BingoInteractorTests {
+        func presentLoadGame(_ response: BingoModels.LoadGame.Response) {
+            loadGameCalled = true
+            lastLoadResponse = response
+        }
+        func presentCallWord(_ response: BingoModels.CallWord.Response) {
+            callWordCalled = true
+            lastCallWordResponse = response
+        }
+        func presentMarkCell(_ response: BingoModels.MarkCell.Response) {
+            markCellCalled = true
+            lastMarkCellResponse = response
+        }
+        func presentCompleteGame(_ response: BingoModels.CompleteGame.Response) {
+            completeGameCalled = true
+            lastCompleteResponse = response
+        }
+    }
+
+    // MARK: - Helpers
 
     private func makeActivity(sound: String = "С") -> SessionActivity {
         SessionActivity(
@@ -51,73 +55,66 @@ struct BingoInteractorTests {
         )
     }
 
-    private func makeSUT() -> (BingoInteractor, SpyBingoPresenter) {
+    private func makeSUT() -> (BingoInteractor, SpyPresenter) {
         let sut = BingoInteractor()
-        let spy = SpyBingoPresenter()
+        let spy = SpyPresenter()
         sut.presenter = spy
         return (sut, spy)
     }
 
     // MARK: - 1. loadGame создаёт 25 клеток
 
-    @Test("loadGame передаёт 25 клеток в presenter")
-    func loadGameLoads25Cells() {
+    func test_loadGame_loads25Cells() {
         let (sut, spy) = makeSUT()
         sut.loadGame(.init(activity: makeActivity(sound: "С")))
-        #expect(spy.loadGameCalled)
-        #expect(spy.lastLoadResponse?.cells.count == 25)
+        XCTAssertTrue(spy.loadGameCalled)
+        XCTAssertEqual(spy.lastLoadResponse?.cells.count, 25)
     }
 
-    // MARK: - 2. resolveSoundGroup маппинг
+    // MARK: - 2. resolveSoundGroup — маппинг
 
-    @Test("resolveSoundGroup возвращает whistling для С, З, Ц")
-    func resolveSoundGroupWhistling() {
-        #expect(BingoInteractor.resolveSoundGroup(for: "С") == "whistling")
-        #expect(BingoInteractor.resolveSoundGroup(for: "З") == "whistling")
-        #expect(BingoInteractor.resolveSoundGroup(for: "Ц") == "whistling")
+    func test_resolveSoundGroup_whistling() {
+        XCTAssertEqual(BingoInteractor.resolveSoundGroup(for: "С"), "whistling")
+        XCTAssertEqual(BingoInteractor.resolveSoundGroup(for: "З"), "whistling")
+        XCTAssertEqual(BingoInteractor.resolveSoundGroup(for: "Ц"), "whistling")
     }
 
-    @Test("resolveSoundGroup возвращает hissing для Ш, Ж, Ч, Щ")
-    func resolveSoundGroupHissing() {
-        #expect(BingoInteractor.resolveSoundGroup(for: "Ш") == "hissing")
-        #expect(BingoInteractor.resolveSoundGroup(for: "Ж") == "hissing")
-        #expect(BingoInteractor.resolveSoundGroup(for: "Ч") == "hissing")
-        #expect(BingoInteractor.resolveSoundGroup(for: "Щ") == "hissing")
+    func test_resolveSoundGroup_hissing() {
+        XCTAssertEqual(BingoInteractor.resolveSoundGroup(for: "Ш"), "hissing")
+        XCTAssertEqual(BingoInteractor.resolveSoundGroup(for: "Ж"), "hissing")
+        XCTAssertEqual(BingoInteractor.resolveSoundGroup(for: "Ч"), "hissing")
+        XCTAssertEqual(BingoInteractor.resolveSoundGroup(for: "Щ"), "hissing")
     }
 
-    @Test("resolveSoundGroup возвращает sonants для Р, Л")
-    func resolveSoundGroupSonants() {
-        #expect(BingoInteractor.resolveSoundGroup(for: "Р") == "sonants")
-        #expect(BingoInteractor.resolveSoundGroup(for: "Л") == "sonants")
+    func test_resolveSoundGroup_sonants() {
+        XCTAssertEqual(BingoInteractor.resolveSoundGroup(for: "Р"), "sonants")
+        XCTAssertEqual(BingoInteractor.resolveSoundGroup(for: "Л"), "sonants")
     }
 
-    @Test("resolveSoundGroup возвращает velar для К, Г, Х")
-    func resolveSoundGroupVelar() {
-        #expect(BingoInteractor.resolveSoundGroup(for: "К") == "velar")
-        #expect(BingoInteractor.resolveSoundGroup(for: "Г") == "velar")
-        #expect(BingoInteractor.resolveSoundGroup(for: "Х") == "velar")
+    func test_resolveSoundGroup_velar() {
+        XCTAssertEqual(BingoInteractor.resolveSoundGroup(for: "К"), "velar")
+        XCTAssertEqual(BingoInteractor.resolveSoundGroup(for: "Г"), "velar")
+        XCTAssertEqual(BingoInteractor.resolveSoundGroup(for: "Х"), "velar")
     }
 
-    // MARK: - 3. markCell помечает клетку
+    // MARK: - 3. markCell помечает правильную клетку
 
-    @Test("markCell помечает правильную клетку")
-    func markCellMarksCellAsMarked() {
+    func test_markCell_marksCellAsMarked() {
         let (sut, spy) = makeSUT()
         sut.loadGame(.init(activity: makeActivity()))
         guard let firstCell = spy.lastLoadResponse?.cells.first else {
-            Issue.record("Нет клеток после loadGame")
+            XCTFail("Нет клеток после loadGame")
             return
         }
         sut.markCell(.init(cellId: firstCell.id))
-        #expect(spy.markCellCalled)
-        let markedCells = spy.lastMarkCellResponse?.cells.filter(\.isMarked)
-        #expect((markedCells?.count ?? 0) >= 1)
+        XCTAssertTrue(spy.markCellCalled)
+        let markedCount = spy.lastMarkCellResponse?.cells.filter(\.isMarked).count ?? 0
+        XCTAssertGreaterThanOrEqual(markedCount, 1)
     }
 
-    // MARK: - 4. markCell дважды — игнорируется
+    // MARK: - 4. markCell дважды — идемпотентно
 
-    @Test("повторное нажатие на клетку игнорируется")
-    func markCellTwiceIgnored() {
+    func test_markCell_twice_ignored() {
         let (sut, spy) = makeSUT()
         sut.loadGame(.init(activity: makeActivity()))
         guard let firstCell = spy.lastLoadResponse?.cells.first else { return }
@@ -126,64 +123,58 @@ struct BingoInteractorTests {
         let countAfterFirst = spy.lastMarkCellResponse?.cells.filter(\.isMarked).count ?? 0
         sut.markCell(.init(cellId: firstCell.id))
         let countAfterSecond = spy.lastMarkCellResponse?.cells.filter(\.isMarked).count ?? 0
-        #expect(countAfterFirst == countAfterSecond)
+        XCTAssertEqual(countAfterFirst, countAfterSecond)
     }
 
-    // MARK: - 5. completeGame считает score
+    // MARK: - 5. completeGame считает score в [0,1]
 
-    @Test("completeGame без помеченных клеток даёт score = 0")
-    func completeGameZeroMarked() {
+    func test_completeGame_zeroMarked_scoreInRange() {
         let (sut, spy) = makeSUT()
         sut.loadGame(.init(activity: makeActivity()))
         sut.completeGame()
-        #expect(spy.completeGameCalled)
+        XCTAssertTrue(spy.completeGameCalled)
         let score = spy.lastCompleteResponse?.score ?? -1
-        #expect(score >= 0 && score <= 1)
+        XCTAssertGreaterThanOrEqual(score, 0)
+        XCTAssertLessThanOrEqual(score, 1)
     }
 
-    // MARK: - 6. BingoPresenter: starsForScore
+    // MARK: - 6. starsForScore
 
-    @Test("starsForScore возвращает 3 звезды для score >= 0.9")
-    func starsForScoreThreeStars() {
-        #expect(BingoPresenter.starsForScore(0.9) == 3)
-        #expect(BingoPresenter.starsForScore(1.0) == 3)
+    func test_starsForScore_threeStars() {
+        XCTAssertEqual(BingoPresenter.starsForScore(0.9), 3)
+        XCTAssertEqual(BingoPresenter.starsForScore(1.0), 3)
     }
 
-    @Test("starsForScore возвращает 2 звезды для 0.7..0.89")
-    func starsForScoreTwoStars() {
-        #expect(BingoPresenter.starsForScore(0.7) == 2)
-        #expect(BingoPresenter.starsForScore(0.85) == 2)
+    func test_starsForScore_twoStars() {
+        XCTAssertEqual(BingoPresenter.starsForScore(0.7), 2)
+        XCTAssertEqual(BingoPresenter.starsForScore(0.85), 2)
     }
 
-    @Test("starsForScore возвращает 1 звезду для 0.5..0.69")
-    func starsForScoreOneStar() {
-        #expect(BingoPresenter.starsForScore(0.5) == 1)
-        #expect(BingoPresenter.starsForScore(0.65) == 1)
+    func test_starsForScore_oneStar() {
+        XCTAssertEqual(BingoPresenter.starsForScore(0.5), 1)
+        XCTAssertEqual(BingoPresenter.starsForScore(0.65), 1)
     }
 
-    @Test("starsForScore возвращает 0 для score < 0.5")
-    func starsForScoreZeroStars() {
-        #expect(BingoPresenter.starsForScore(0.0) == 0)
-        #expect(BingoPresenter.starsForScore(0.49) == 0)
+    func test_starsForScore_zeroStars() {
+        XCTAssertEqual(BingoPresenter.starsForScore(0.0), 0)
+        XCTAssertEqual(BingoPresenter.starsForScore(0.49), 0)
     }
 
-    // MARK: - 7. cancel завершает игру
+    // MARK: - 7. cancel не вызывает presentCompleteGame
 
-    @Test("cancel не крашится и не вызывает presentCompleteGame")
-    func cancelDoesNotCallComplete() {
+    func test_cancel_doesNotCallComplete() {
         let (sut, spy) = makeSUT()
         sut.loadGame(.init(activity: makeActivity()))
         sut.cancel()
-        #expect(!spy.completeGameCalled)
+        XCTAssertFalse(spy.completeGameCalled)
     }
 
     // MARK: - 8. checkBingo без помеченных — пустой список
 
-    @Test("checkBingo без отмеченных клеток возвращает пустой массив")
-    func checkBingoNoMarked() {
+    func test_checkBingo_noMarked_returnsEmpty() {
         let (sut, _) = makeSUT()
         sut.loadGame(.init(activity: makeActivity()))
         let lines = sut.checkBingo()
-        #expect(lines.isEmpty)
+        XCTAssertTrue(lines.isEmpty)
     }
 }

@@ -1,5 +1,5 @@
 @testable import HappySpeech
-import Testing
+import XCTest
 
 // MARK: - Spy
 
@@ -35,9 +35,8 @@ private final class SpyMinimalPairsPresenter: MinimalPairsPresentationLogic {
 
 // MARK: - Tests
 
-@Suite("MinimalPairsInteractor")
 @MainActor
-struct MinimalPairsInteractorTests {
+final class MinimalPairsInteractorTests: XCTestCase {
 
     private func makeSUT() -> (MinimalPairsInteractor, SpyMinimalPairsPresenter) {
         let sut = MinimalPairsInteractor()
@@ -48,88 +47,80 @@ struct MinimalPairsInteractorTests {
 
     // MARK: - 1. loadSession загружает 10 раундов
 
-    @Test("loadSession загружает 10 раундов")
-    func loadSessionLoads10Rounds() async {
+    func test_loadSession_loads10Rounds() async {
         let (sut, spy) = makeSUT()
         await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша"))
-        #expect(spy.loadSessionCalled)
-        #expect(spy.lastLoadSession?.rounds.count == 10)
+        XCTAssertTrue(spy.loadSessionCalled)
+        XCTAssertEqual(spy.lastLoadSession?.rounds.count, 10)
     }
 
     // MARK: - 2. startRound загружает первый раунд
 
-    @Test("startRound(0) загружает раунд с roundNumber = 1")
-    func startRoundZero() async {
+    func test_startRound_zero_roundNumber1() async {
         let (sut, spy) = makeSUT()
         await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша"))
         await sut.startRound(.init(roundIndex: 0))
-        #expect(spy.startRoundCalled)
-        #expect(spy.lastStartRound?.roundNumber == 1)
-        #expect(spy.lastStartRound?.total == 10)
+        XCTAssertTrue(spy.startRoundCalled)
+        XCTAssertEqual(spy.lastStartRound?.roundNumber, 1)
+        XCTAssertEqual(spy.lastStartRound?.total, 10)
     }
 
     // MARK: - 3. selectOption: правильный выбор
 
-    @Test("selectOption(selectedIsTarget: true) → correct = true")
-    func selectOptionCorrect() async {
+    func test_selectOption_correct() async {
         let (sut, spy) = makeSUT()
         await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша"))
         await sut.startRound(.init(roundIndex: 0))
         await sut.selectOption(.init(selectedIsTarget: true))
-        #expect(spy.selectOptionCalled)
-        #expect(spy.lastSelectOption?.correct == true)
+        XCTAssertTrue(spy.selectOptionCalled)
+        XCTAssertEqual(spy.lastSelectOption?.correct, true)
     }
 
     // MARK: - 4. selectOption: неправильный выбор
 
-    @Test("selectOption(selectedIsTarget: false) → correct = false")
-    func selectOptionWrong() async {
+    func test_selectOption_wrong() async {
         let (sut, spy) = makeSUT()
         await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша"))
         await sut.startRound(.init(roundIndex: 0))
         await sut.selectOption(.init(selectedIsTarget: false))
-        #expect(spy.lastSelectOption?.correct == false)
+        XCTAssertEqual(spy.lastSelectOption?.correct, false)
     }
 
     // MARK: - 5. correctAnswer передаётся в response
 
-    @Test("selectOption передаёт correctAnswer")
-    func selectOptionTransmitsCorrectAnswer() async {
+    func test_selectOption_transmitsCorrectAnswer() async {
         let (sut, spy) = makeSUT()
         await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша"))
         await sut.startRound(.init(roundIndex: 0))
         let targetWord = spy.lastStartRound?.pair.targetWord ?? ""
         await sut.selectOption(.init(selectedIsTarget: true))
-        #expect(spy.lastSelectOption?.correctAnswer == targetWord)
+        XCTAssertEqual(spy.lastSelectOption?.correctAnswer, targetWord)
     }
 
-    // MARK: - 6. completeSession вычисляет correctCount
+    // MARK: - 6. completeSession без ответов → correctCount = 0
 
-    @Test("completeSession без ответов → correctCount = 0")
-    func completeSessionNoAnswers() async {
+    func test_completeSession_noAnswers_correctCountZero() async {
         let (sut, spy) = makeSUT()
         await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша"))
         await sut.completeSession(.init())
-        #expect(spy.completeCalled)
-        #expect(spy.lastComplete?.correctCount == 0)
-        #expect(spy.lastComplete?.totalRounds == 10)
+        XCTAssertTrue(spy.completeCalled)
+        XCTAssertEqual(spy.lastComplete?.correctCount, 0)
+        XCTAssertEqual(spy.lastComplete?.totalRounds, 10)
     }
 
-    // MARK: - 7. startRound с out-of-bounds игнорируется
+    // MARK: - 7. startRound с out-of-bounds не крашится
 
-    @Test("startRound с индексом >= rounds.count не крашится")
-    func startRoundOutOfBounds() async {
+    func test_startRound_outOfBounds_ignored() async {
         let (sut, spy) = makeSUT()
         await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша"))
         await sut.startRound(.init(roundIndex: 99))
-        #expect(!spy.startRoundCalled)
+        XCTAssertFalse(spy.startRoundCalled)
     }
 
-    // MARK: - 8. MinimalPairRound.rounds возвращает раунды
+    // MARK: - 8. MinimalPairRound.rounds возвращает count раундов
 
-    @Test("MinimalPairRound.rounds(count:contrast:) возвращает count раундов")
-    func roundsFactory() {
+    func test_roundsFactory_returnsCount() {
         let rounds = MinimalPairRound.rounds(count: 5, contrast: "Р-Л")
-        #expect(rounds.count == 5)
+        XCTAssertEqual(rounds.count, 5)
     }
 }

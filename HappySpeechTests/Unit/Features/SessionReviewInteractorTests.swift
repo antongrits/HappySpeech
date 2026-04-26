@@ -24,6 +24,10 @@ final class SessionReviewInteractorTests: XCTestCase {
         func presentFinalizeReview(_ response: SessionReviewModels.FinalizeReview.Response) async {
             finalizedAt = response.savedAt
         }
+        func presentLoadDetails(_ response: SessionReviewModels.LoadDetails.Response) async {}
+        func presentExportPDF(_ response: SessionReviewModels.ExportPDF.Response) async {}
+        func presentAttemptBreakdown(_ response: SessionReviewModels.LoadAttemptBreakdown.Response) async {}
+        func presentAnnotationUpdated(_ response: SessionReviewModels.AnnotationUpdated.Response) async {}
     }
 
     private final class StubSessionRepo: SessionRepository, @unchecked Sendable {

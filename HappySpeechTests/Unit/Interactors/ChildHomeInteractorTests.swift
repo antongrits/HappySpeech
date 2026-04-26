@@ -18,6 +18,7 @@ final class ChildHomeInteractorTests: XCTestCase {
         func presentFetch(_ response: ChildHomeModels.Fetch.Response) {
             fetchResponses.append(response)
         }
+        func presentMascotTap(_ response: ChildHomeModels.MascotTap.Response) {}
     }
 
     private func makeSUT() -> (ChildHomeInteractor, SpyPresenter) {

@@ -1,5 +1,5 @@
 @testable import HappySpeech
-import Testing
+import XCTest
 import UIKit
 
 // MARK: - Mock HapticService
@@ -46,9 +46,8 @@ private final class SpySortingPresenter: SortingPresentationLogic {
 
 // MARK: - Tests
 
-@Suite("SortingInteractor")
 @MainActor
-struct SortingInteractorTests {
+final class SortingInteractorTests: XCTestCase {
 
     private func makeSUT() -> (SortingInteractor, SpySortingPresenter, MockHapticService) {
         let haptic = MockHapticService()
@@ -60,53 +59,48 @@ struct SortingInteractorTests {
 
     // MARK: - 1. loadSession загружает набор слов
 
-    @Test("loadSession загружает набор слов и вызывает presenter")
-    func loadSessionLoadsWords() async {
+    func test_loadSession_loadsWords() async {
         let (sut, spy, _) = makeSUT()
         await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
-        #expect(spy.loadSessionCalled)
-        #expect((spy.lastLoadSession?.words.count ?? 0) > 0)
+        XCTAssertTrue(spy.loadSessionCalled)
+        XCTAssertGreaterThan(spy.lastLoadSession?.words.count ?? 0, 0)
     }
 
     // MARK: - 2. loadSession загружает 2 категории
 
-    @Test("loadSession загружает 2 категории")
-    func loadSessionTwoCategories() async {
+    func test_loadSession_twoCategories() async {
         let (sut, spy, _) = makeSUT()
         await sut.loadSession(.init(soundGroup: "hissing", childName: "Ваня"))
-        #expect(spy.lastLoadSession?.categories.count == 2)
+        XCTAssertEqual(spy.lastLoadSession?.categories.count, 2)
     }
 
     // MARK: - 3. classifyWord: правильная категория
 
-    @Test("classifyWord с правильной категорией → correct = true, haptic selection")
-    func classifyWordCorrect() async {
+    func test_classifyWord_correct_hapticFires() async {
         let (sut, spy, haptic) = makeSUT()
         await sut.loadSession(.init(soundGroup: "animate", childName: "Маша"))
         guard let word = spy.lastLoadSession?.words.first else { return }
         await sut.classifyWord(.init(wordId: word.id, categoryId: word.correctCategory))
-        #expect(spy.classifyWordCalled)
-        #expect(spy.lastClassifyWord?.correct == true)
-        #expect(haptic.selectionCount >= 1 || haptic.notificationCount >= 1)
+        XCTAssertTrue(spy.classifyWordCalled)
+        XCTAssertEqual(spy.lastClassifyWord?.correct, true)
+        XCTAssertTrue(haptic.selectionCount >= 1 || haptic.notificationCount >= 1)
     }
 
     // MARK: - 4. classifyWord: неправильная категория
 
-    @Test("classifyWord с неправильной категорией → correct = false")
-    func classifyWordWrong() async {
+    func test_classifyWord_wrong_hapticWarning() async {
         let (sut, spy, haptic) = makeSUT()
         await sut.loadSession(.init(soundGroup: "animate", childName: "Маша"))
         guard let word = spy.lastLoadSession?.words.first,
               let wrongCategory = spy.lastLoadSession?.categories.first(where: { $0.id != word.correctCategory }) else { return }
         await sut.classifyWord(.init(wordId: word.id, categoryId: wrongCategory.id))
-        #expect(spy.lastClassifyWord?.correct == false)
-        #expect(haptic.notificationCount >= 1)
+        XCTAssertEqual(spy.lastClassifyWord?.correct, false)
+        XCTAssertGreaterThanOrEqual(haptic.notificationCount, 1)
     }
 
     // MARK: - 5. streak работает корректно
 
-    @Test("streak увеличивается при последовательных правильных ответах")
-    func streakIncreases() async {
+    func test_streak_increases() async {
         let (sut, spy, _) = makeSUT()
         await sut.loadSession(.init(soundGroup: "animate", childName: "Маша"))
         guard let words = spy.lastLoadSession?.words else { return }
@@ -115,38 +109,36 @@ struct SortingInteractorTests {
             await sut.classifyWord(.init(wordId: word.id, categoryId: word.correctCategory))
             streak = spy.lastClassifyWord?.streak ?? 0
         }
-        #expect(streak >= 1)
+        XCTAssertGreaterThanOrEqual(streak, 1)
     }
 
     // MARK: - 6. SortingSet.set(for:) возвращает набор
 
-    @Test("SortingSet.set(for:) возвращает набор для каждой группы")
-    func setForAllGroups() {
+    func test_sortingSet_allGroups() {
         for group in ["whistling", "hissing", "sonorant", "velar", "any"] {
             let set = SortingSet.set(for: group)
-            #expect(!set.words.isEmpty, "Группа \(group) должна иметь слова")
+            XCTAssertFalse(set.words.isEmpty, "Группа \(group) должна иметь слова")
         }
     }
 
     // MARK: - 7. cancel завершает игру
 
-    @Test("cancel не крашится")
-    func cancelDoesNotCrash() async {
+    func test_cancel_doesNotCrash() async {
         let (sut, _, _) = makeSUT()
         await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
         sut.cancel()
-        #expect(Bool(true))
+        XCTAssertTrue(true)
     }
 
-    // MARK: - 8. completeSession вызывает presenter
+    // MARK: - 8. completeSession вычисляет finalScore
 
-    @Test("completeSession вычисляет и передаёт finalScore")
-    func completeSessionScore() async {
+    func test_completeSession_scoreInRange() async {
         let (sut, spy, _) = makeSUT()
         await sut.loadSession(.init(soundGroup: "animate", childName: "Маша"))
         await sut.completeSession(.init())
-        #expect(spy.completeCalled)
+        XCTAssertTrue(spy.completeCalled)
         let score = spy.lastComplete?.finalScore ?? -1
-        #expect(score >= 0 && score <= 1)
+        XCTAssertGreaterThanOrEqual(score, 0)
+        XCTAssertLessThanOrEqual(score, 1)
     }
 }

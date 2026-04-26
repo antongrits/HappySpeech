@@ -4,6 +4,12 @@ import XCTest
 
 @testable import HappySpeech
 
+// MARK: - Sendable wrapper for CVPixelBuffer
+
+private struct PixelBufferWrapper: @unchecked Sendable {
+    let buffer: CVPixelBuffer
+}
+
 // MARK: - AppleFaceLandmarksDetectorTests
 
 final class AppleFaceLandmarksDetectorTests: XCTestCase {
@@ -20,34 +26,33 @@ final class AppleFaceLandmarksDetectorTests: XCTestCase {
         XCTAssertNotNil(detector, "AppleFaceLandmarksDetector должен инициализироваться без ошибок")
     }
 
-    // MARK: - Test 2: Пустой пиксельный буфер → nil (лицо не найдено)
+    // MARK: - Test 2: Пустой пиксельный буфер → nil (лицо не найдётся)
 
     func testDetectReturnsNilForBlankBuffer() async {
-        // 1×1 пиксель — лицо точно не найдётся
-        guard let buffer = makeSolidColorPixelBuffer(width: 1, height: 1, color: 0x80_80_80) else {
+        guard let raw = makeSolidColorPixelBuffer(width: 1, height: 1, color: 0x80_80_80) else {
             XCTFail("Не удалось создать CVPixelBuffer")
             return
         }
-        let result = await detector.detect(pixelBuffer: buffer)
-        // На таком маленьком буфере Vision не найдёт лицо
+        let wrapper = PixelBufferWrapper(buffer: raw)
+        let result = await detector.detect(pixelBuffer: wrapper.buffer)
         XCTAssertNil(result, "Детектор должен вернуть nil на 1×1 пиксельном буфере")
     }
 
     // MARK: - Test 3: Маленький буфер без лица → nil
 
     func testDetectReturnsNilForNoisyBuffer() async {
-        guard let buffer = makeRandomNoisyPixelBuffer(width: 64, height: 64) else {
+        guard let raw = makeRandomNoisyPixelBuffer(width: 64, height: 64) else {
             XCTFail("Не удалось создать CVPixelBuffer")
             return
         }
-        let result = await detector.detect(pixelBuffer: buffer)
+        let wrapper = PixelBufferWrapper(buffer: raw)
+        let result = await detector.detect(pixelBuffer: wrapper.buffer)
         XCTAssertNil(result, "Шумовой буфер не должен содержать лицо")
     }
 
-    // MARK: - Test 4: FaceLandmarks76 структура корректна при non-nil результате
+    // MARK: - Test 4: FaceLandmarks76 структура корректна
 
     func testFaceLandmarks76StructureIsValid() async {
-        // Создаём мок-результат вручную (Vision на симуляторе не детектирует лица)
         let mockResult = makeMockLandmarks76()
 
         XCTAssertLessThanOrEqual(mockResult.outerLips.count, 12,
@@ -75,20 +80,20 @@ final class AppleFaceLandmarksDetectorTests: XCTestCase {
     // MARK: - Test 6: Конкурентные вызовы — actor защищает состояние
 
     func testConcurrentCallsDoNotCrash() async {
-        guard let buffer = makeSolidColorPixelBuffer(width: 32, height: 32, color: 0xFF_FF_FF) else {
+        guard let raw = makeSolidColorPixelBuffer(width: 32, height: 32, color: 0xFF_FF_FF) else {
             XCTFail("Не удалось создать CVPixelBuffer")
             return
         }
-        // Запускаем 10 конкурентных вызовов
+        let wrapper = PixelBufferWrapper(buffer: raw)
+        let localDetector = detector!
         await withTaskGroup(of: Optional<FaceLandmarks76>.self) { group in
             for _ in 0..<10 {
                 group.addTask {
-                    await self.detector.detect(pixelBuffer: buffer)
+                    await localDetector.detect(pixelBuffer: wrapper.buffer)
                 }
             }
-            for await _ in group { } // просто ждём завершения
+            for await _ in group { }
         }
-        // Тест проходит если нет краша / гонки данных
         XCTAssertTrue(true, "Конкурентные вызовы завершились без краша")
     }
 

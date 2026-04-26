@@ -1,5 +1,5 @@
 @testable import HappySpeech
-import Testing
+import XCTest
 
 // MARK: - Spy
 
@@ -37,9 +37,8 @@ private final class SpyVisualAcousticPresenter: VisualAcousticPresentationLogic 
 
 // MARK: - Tests
 
-@Suite("VisualAcousticInteractor")
 @MainActor
-struct VisualAcousticInteractorTests {
+final class VisualAcousticInteractorTests: XCTestCase {
 
     private func makeActivity(sound: String = "С") -> SessionActivity {
         SessionActivity(
@@ -62,89 +61,81 @@ struct VisualAcousticInteractorTests {
 
     // MARK: - 1. loadRound загружает первый раунд
 
-    @Test("loadRound загружает раунд 0 и 6 всего")
-    func loadRoundLoadsFirstRound() {
+    func test_loadRound_loadsFirstRound() {
         let (sut, spy) = makeSUT()
         sut.loadRound(.init(activity: makeActivity(), roundIndex: 0))
-        #expect(spy.loadRoundCalled)
-        #expect(spy.lastLoadRound?.roundIndex == 0)
-        #expect(spy.lastLoadRound?.totalRounds == 6)
+        XCTAssertTrue(spy.loadRoundCalled)
+        XCTAssertEqual(spy.lastLoadRound?.roundIndex, 0)
+        XCTAssertEqual(spy.lastLoadRound?.totalRounds, 6)
     }
 
     // MARK: - 2. buildRounds возвращает 6 раундов
 
-    @Test("buildRounds возвращает 6 раундов для каждой группы")
-    func buildRoundsSixPerGroup() {
+    func test_buildRounds_sixPerGroup() {
         for group in ["whistling", "hissing", "sonants", "velar"] {
             let rounds = VisualAcousticInteractor.buildRounds(for: group, total: 6)
-            #expect(rounds.count == 6, "Группа \(group) должна иметь 6 раундов")
+            XCTAssertEqual(rounds.count, 6, "Группа \(group) должна иметь 6 раундов")
         }
     }
 
     // MARK: - 3. resolveSoundGroup
 
-    @Test("resolveSoundGroup корректно маппит все группы")
-    func resolveSoundGroup() {
-        #expect(VisualAcousticInteractor.resolveSoundGroup(for: "С") == "whistling")
-        #expect(VisualAcousticInteractor.resolveSoundGroup(for: "Ш") == "hissing")
-        #expect(VisualAcousticInteractor.resolveSoundGroup(for: "Р") == "sonants")
-        #expect(VisualAcousticInteractor.resolveSoundGroup(for: "К") == "velar")
+    func test_resolveSoundGroup_allGroups() {
+        XCTAssertEqual(VisualAcousticInteractor.resolveSoundGroup(for: "С"), "whistling")
+        XCTAssertEqual(VisualAcousticInteractor.resolveSoundGroup(for: "Ш"), "hissing")
+        XCTAssertEqual(VisualAcousticInteractor.resolveSoundGroup(for: "Р"), "sonants")
+        XCTAssertEqual(VisualAcousticInteractor.resolveSoundGroup(for: "К"), "velar")
     }
 
     // MARK: - 4. chooseWord: правильный ответ
 
-    @Test("chooseWord с правильным индексом → isCorrect = true")
-    func chooseWordCorrect() {
+    func test_chooseWord_correct() {
         let (sut, spy) = makeSUT()
         sut.loadRound(.init(activity: makeActivity(), roundIndex: 0))
         guard let round = spy.lastLoadRound?.round else { return }
         sut.chooseWord(.init(choiceIndex: round.correctIndex))
-        #expect(spy.chooseWordCalled)
-        #expect(spy.lastChoiceWord?.isCorrect == true)
+        XCTAssertTrue(spy.chooseWordCalled)
+        XCTAssertEqual(spy.lastChoiceWord?.isCorrect, true)
     }
 
     // MARK: - 5. chooseWord: неправильный ответ
 
-    @Test("chooseWord с неправильным индексом → isCorrect = false")
-    func chooseWordWrong() {
+    func test_chooseWord_wrong() {
         let (sut, spy) = makeSUT()
         sut.loadRound(.init(activity: makeActivity(), roundIndex: 0))
         guard let round = spy.lastLoadRound?.round else { return }
         let wrongIdx = round.correctIndex == 0 ? 1 : 0
         sut.chooseWord(.init(choiceIndex: wrongIdx))
-        #expect(spy.lastChoiceWord?.isCorrect == false)
+        XCTAssertEqual(spy.lastChoiceWord?.isCorrect, false)
     }
 
-    // MARK: - 6. complete вычисляет score
+    // MARK: - 6. complete после 0 правильных → score = 0
 
-    @Test("complete после 0 правильных ответов → score = 0")
-    func completeZeroCorrect() {
+    func test_complete_zeroCorrect_scoreZero() {
         let (sut, spy) = makeSUT()
         sut.loadRound(.init(activity: makeActivity(), roundIndex: 0))
         sut.complete()
-        #expect(spy.completeCalled)
-        #expect(spy.lastComplete?.score == 0.0)
+        XCTAssertTrue(spy.completeCalled)
+        XCTAssertEqual(spy.lastComplete?.score, 0.0)
     }
 
     // MARK: - 7. cancel не вызывает complete
 
-    @Test("cancel не вызывает presentComplete")
-    func cancelDoesNotComplete() {
+    func test_cancel_doesNotComplete() {
         let (sut, spy) = makeSUT()
         sut.loadRound(.init(activity: makeActivity(), roundIndex: 0))
         sut.cancel()
-        #expect(!spy.completeCalled)
+        XCTAssertFalse(spy.completeCalled)
     }
 
     // MARK: - 8. correctWord передаётся в response
 
-    @Test("chooseWord передаёт correctWord в response")
-    func correctWordTransmitted() {
+    func test_correctWord_transmitted() {
         let (sut, spy) = makeSUT()
         sut.loadRound(.init(activity: makeActivity(), roundIndex: 0))
         guard let round = spy.lastLoadRound?.round else { return }
         sut.chooseWord(.init(choiceIndex: round.correctIndex))
         let expectedWord = round.choices[round.correctIndex]
-        #expect(spy.lastChoiceWord?.correctWord == expectedWord)
+        XCTAssertEqual(spy.lastChoiceWord?.correctWord, expectedWord)
     }
 }
