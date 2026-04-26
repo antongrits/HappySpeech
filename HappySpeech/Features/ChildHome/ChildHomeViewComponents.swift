@@ -189,20 +189,16 @@ struct ChildHomeDailyMissionDetailCard: View {
 
     var body: some View {
         Button(action: onTap) {
-            VStack(spacing: SpacingTokens.sp4) {
-                topRow
-                progressBlock
-                if mission.isCompleted {
-                    completedRow
+            HSLiquidGlassCard(style: .primary, padding: SpacingTokens.cardPad) {
+                VStack(spacing: SpacingTokens.sp4) {
+                    topRow
+                    progressBlock
+                    if mission.isCompleted {
+                        completedRow
+                    }
                 }
+                .frame(maxWidth: .infinity)
             }
-            .padding(SpacingTokens.cardPad)
-            .frame(maxWidth: .infinity)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                    .fill(ColorTokens.Kid.surface)
-                    .kidCardShadow()
-            )
         }
         .buttonStyle(.plain)
         .tapFeedback()
@@ -408,7 +404,7 @@ struct ChildHomeWorldMapMiniPreview: View {
     let onZoneTap: (ChildHomeModels.WorldZonePreview) -> Void
 
     var body: some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated) {
             HStack(spacing: SpacingTokens.sp3) {
                 ForEach(zones) { zone in
                     Button {
@@ -567,7 +563,7 @@ struct ChildHomeAchievementBanner: View {
     let onDismiss: () -> Void
 
     var body: some View {
-        HSCard(style: .tinted(ColorTokens.Brand.gold.opacity(0.18))) {
+        HSLiquidGlassCard(style: .tinted(ColorTokens.Brand.gold)) {
             HStack(alignment: .top, spacing: SpacingTokens.sp3) {
                 Text(achievement.emoji)
                     .font(TypographyTokens.display(36))
@@ -664,7 +660,7 @@ struct ChildHomeStreakBanner: View {
     @State private var flameRotation: Double = 0
 
     var body: some View {
-        HSCard(style: .tinted(ColorTokens.Semantic.warning.opacity(0.14))) {
+        HSLiquidGlassCard(style: .tinted(ColorTokens.Semantic.warning)) {
             HStack(alignment: .center, spacing: SpacingTokens.sp4) {
                 flameIcon
 

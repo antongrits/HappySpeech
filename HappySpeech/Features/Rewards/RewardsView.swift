@@ -480,7 +480,7 @@ private struct StickerDetailSheet: View {
                     .tracking(0.6)
             }
 
-            HSCard(style: .flat, padding: SpacingTokens.medium) {
+            HSLiquidGlassCard(style: .primary, padding: SpacingTokens.medium) {
                 VStack(alignment: .leading, spacing: SpacingTokens.small) {
                     Label {
                         Text(detail.unlockCondition)
