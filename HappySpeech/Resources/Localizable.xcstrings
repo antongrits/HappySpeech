@@ -11121,6 +11121,17 @@
         }
       }
     },
+    "session.placeholder.target_sound %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Целевой звук: %@"
+          }
+        }
+      }
+    },
     "session.resume": {
       "extractionState": "manual",
       "localizations": {
