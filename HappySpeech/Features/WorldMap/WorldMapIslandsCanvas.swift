@@ -199,11 +199,12 @@ private struct IslandBubble: View {
 
             if card.isLocked {
                 Image(systemName: "lock.fill")
-                    .font(.system(size: 28, weight: .semibold))
+                    .font(TypographyTokens.title(28).weight(.semibold))
                     .foregroundStyle(.white)
+                    .accessibilityHidden(true)
             } else {
                 Text(card.icon)
-                    .font(.system(size: 38))
+                    .font(TypographyTokens.display(38))
                     .accessibilityHidden(true)
             }
 
@@ -310,7 +311,7 @@ private struct IslandBubble: View {
                 .frame(width: 22, height: 22)
                 .shadow(color: .black.opacity(0.18), radius: 2, y: 1)
             Image(systemName: "checkmark")
-                .font(.system(size: 11, weight: .bold))
+                .font(TypographyTokens.caption(11).weight(.bold))
                 .foregroundStyle(.white)
         }
         .accessibilityHidden(true)

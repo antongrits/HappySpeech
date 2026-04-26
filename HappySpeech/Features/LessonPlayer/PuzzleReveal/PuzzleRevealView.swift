@@ -270,7 +270,7 @@ struct PuzzleRevealView: View {
         VStack(spacing: SpacingTokens.large) {
             Spacer()
             Text("🎉")
-                .font(.system(size: 72))
+                .font(TypographyTokens.kidDisplay(72))
                 .accessibilityHidden(true)
             Text(String(localized: "Пазл собран!"))
                 .font(TypographyTokens.title(28))
@@ -278,7 +278,7 @@ struct PuzzleRevealView: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
             Text(display.emoji)
-                .font(.system(size: 120))
+                .font(TypographyTokens.kidDisplay(120))
                 .accessibilityHidden(true)
                 .scaleEffect(reduceMotion ? 1 : 1.0)
                 .transition(.scale.combined(with: .opacity))
@@ -352,7 +352,7 @@ struct PuzzleRevealView: View {
         HStack(spacing: SpacingTokens.small) {
             ForEach(0..<3, id: \.self) { idx in
                 Image(systemName: idx < display.starsEarned ? "star.fill" : "star")
-                    .font(.system(size: 44, weight: .semibold))
+                    .font(TypographyTokens.display(44).weight(.semibold))
                     .foregroundStyle(
                         idx < display.starsEarned
                             ? ColorTokens.Brand.butter
@@ -433,11 +433,11 @@ private struct PuzzleTileView: View {
 
             if tile.isRevealed {
                 Text(emoji)
-                    .font(.system(size: 40))
+                    .font(TypographyTokens.display(40))
                     .accessibilityHidden(true)
             } else {
                 Image(systemName: "questionmark")
-                    .font(.system(size: 22, weight: .heavy))
+                    .font(TypographyTokens.title(22).weight(.heavy))
                     .foregroundStyle(.white.opacity(0.9))
                     .accessibilityHidden(true)
             }

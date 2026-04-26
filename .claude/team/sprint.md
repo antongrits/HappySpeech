@@ -50,7 +50,7 @@ Goal: Close all gaps. App Store + Diploma ready.
 | S12-019 | App Store metadata ru+en (description, keywords) | pm | P1 | [x] DONE |
 | S12-020 | Screenshot tour (80 screenshots, 2 devices) | qa-simulator | P1 | [x] DONE |
 | S12-021 | TestFlight build upload | ios-dev-arch | P1 | [!] BLOCKED |
-| S12-022 | Firestore security rules deploy + verify | backend-dev-infra | P1 | [!] BLOCKED |
+| S12-022 | Firestore security rules deploy + verify | backend-dev-infra | P1 | [~] PARTIAL — rules валидированы (0 ошибок), deploy заблокирован (antongric132@gmail.com — нет прав Firebase Management API) |
 | S12-023 | Diploma presentation deck | pm | P1 | [x] DONE |
 
 Acceptance Criteria:
