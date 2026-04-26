@@ -5,4 +5,5 @@ import Foundation
 @MainActor
 protocol ChildHomeDisplayLogic: AnyObject {
     func displayFetch(_ viewModel: ChildHomeModels.Fetch.ViewModel)
+    func displayMascotTap(phrase: String)
 }

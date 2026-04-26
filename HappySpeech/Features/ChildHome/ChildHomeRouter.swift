@@ -10,6 +10,7 @@ protocol ChildHomeRoutingLogic {
     func routeToRewards(childId: String)
     func routeToLesson(childId: String, template: String)
     func routeToSessionHistory(childId: String)
+    func routeToHomeTasks()
 }
 
 // MARK: - ChildHomeRouter
@@ -55,5 +56,9 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
             return
         }
         coordinator?.navigate(to: .sessionHistory(childId: childId))
+    }
+
+    func routeToHomeTasks() {
+        coordinator?.navigate(to: .homeTasks)
     }
 }

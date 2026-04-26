@@ -8,6 +8,8 @@ protocol ChildHomeBusinessLogic: AnyObject {
     func fetchChildData(_ request: ChildHomeModels.Fetch.Request) async
     func dismissAchievement(id: String) async
     func recordMissionTap() async
+    func tapMascot() async
+    func refreshData(childId: String) async
 }
 
 // MARK: - ChildHomeInteractor
@@ -68,7 +70,16 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
 
     func recordMissionTap() async {
         logger.info("Daily mission tapped from ChildHome")
-        // M10: продвинуть completedReps. Сейчас — no-op.
+    }
+
+    func tapMascot() async {
+        logger.info("Mascot tapped — presenting encouragement phrase")
+        presenter?.presentMascotTap(.init())
+    }
+
+    func refreshData(childId: String) async {
+        logger.info("Pull-to-refresh: childId=\(childId, privacy: .public)")
+        await fetchChildData(.init(childId: childId))
     }
 
     // MARK: - Response building
@@ -116,7 +127,9 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
             ),
             dailyMissionDetail: mission,
             recentRewards: Self.makeRewardsForSection(from: recent),
-            hasOverdueTask: hasOverdueTask
+            hasOverdueTask: hasOverdueTask,
+            todayWords: Self.buildTodayWords(sound: dailySound),
+            homeTasks: Self.seedHomeTasks()
         )
     }
 
@@ -200,7 +213,9 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
                 completedReps: completedReps
             ),
             recentRewards: Self.seedRecentRewards(),
-            hasOverdueTask: hasOverdueTask
+            hasOverdueTask: hasOverdueTask,
+            todayWords: Self.buildTodayWords(sound: dailySound),
+            homeTasks: Self.seedHomeTasks()
         )
     }
 
@@ -475,5 +490,77 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
 
     private static var dayOfYear: Int {
         Calendar.current.ordinality(of: .day, in: .year, for: Date()) ?? 0
+    }
+
+    // MARK: - TodayWords seed (M8.7 v6)
+
+    /// Формирует список слов дня из известного набора для целевого звука.
+    /// В M10 этот метод будет заменён вызовом ContentEngine.dailyWords(for:).
+    private static func buildTodayWords(
+        sound: String
+    ) -> [ChildHomeModels.TodayWordData] {
+        let wordMap: [String: [(word: String, syllables: String, pos: String)]] = [
+            "Р": [
+                ("рыба",  "ры-ба",    "init"),
+                ("гора",  "го-ра",    "final"),
+                ("ворона","во-ро-на", "mid"),
+                ("рот",   "рот",      "init"),
+                ("тигр",  "тигр",     "final")
+            ],
+            "Л": [
+                ("лиса",  "ли-са",    "init"),
+                ("стол",  "стол",     "final"),
+                ("палка", "пал-ка",   "mid"),
+                ("луна",  "лу-на",    "init"),
+                ("вилка", "вил-ка",   "mid")
+            ],
+            "Ш": [
+                ("шапка", "шап-ка",   "init"),
+                ("кошка", "кош-ка",   "mid"),
+                ("камыш", "ка-мыш",   "final"),
+                ("шуба",  "шу-ба",    "init"),
+                ("мишка", "миш-ка",   "mid")
+            ],
+            "С": [
+                ("сова",  "со-ва",    "init"),
+                ("оса",   "о-са",     "final"),
+                ("весна", "вес-на",   "mid"),
+                ("сок",   "сок",      "init"),
+                ("лиса",  "ли-са",    "final")
+            ]
+        ]
+        let pairs = wordMap[sound] ?? wordMap["Р"]!
+        return pairs.enumerated().map { idx, pair in
+            ChildHomeModels.TodayWordData(
+                id: "tw-\(sound)-\(idx)",
+                word: pair.word,
+                syllables: pair.syllables,
+                targetSound: sound,
+                soundPosition: pair.pos,
+                successRate: nil
+            )
+        }
+    }
+
+    // MARK: - HomeTasks seed (M8.7 v6)
+
+    private static func seedHomeTasks() -> [ChildHomeModels.HomeTaskPreviewData] {
+        let now = Date()
+        return [
+            .init(
+                id: "ht-seed-1",
+                titleKey: "child.home.hometasks.count",
+                targetSound: "Р",
+                dueDate: now.addingTimeInterval(86_400),
+                isCompleted: false
+            ),
+            .init(
+                id: "ht-seed-2",
+                titleKey: "child.home.hometasks.count",
+                targetSound: "Ш",
+                dueDate: now.addingTimeInterval(172_800),
+                isCompleted: true
+            )
+        ]
     }
 }

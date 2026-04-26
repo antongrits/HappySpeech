@@ -50,7 +50,7 @@ struct ChildHomeView: View {
                 VStack(spacing: SpacingTokens.sp5) {
                     heroSection
 
-                    mascotSection
+                    mascotInteractionZone
                         .spotlightAnchor(key: "mascot_header")
 
                     if viewModel.hasAchievement, let ach = viewModel.achievement {
@@ -60,8 +60,6 @@ struct ChildHomeView: View {
                         .transition(.scale.combined(with: .opacity))
                     }
 
-                    // B13: полноразмерный Streak Banner с pulse-анимацией.
-                    // Показываем только при streak ≥ 1 — нечего поощрять при нуле.
                     if viewModel.currentStreak > 0 {
                         ChildHomeStreakBanner(
                             streak: viewModel.currentStreak,
@@ -73,11 +71,21 @@ struct ChildHomeView: View {
                     dailyMissionSection
                         .spotlightAnchor(key: "daily_mission_card")
 
+                    // M8.7 v6: Слова дня
+                    if !viewModel.todayWords.isEmpty {
+                        todayWordsSection
+                    }
+
                     quickPlaySection
                         .spotlightAnchor(key: "quick_play_strip")
 
                     quickActionsSection
                         .spotlightAnchor(key: "start_lesson_button")
+
+                    // M8.7 v6: Задания логопеда
+                    if !viewModel.homeTasks.isEmpty {
+                        homeTasksSection
+                    }
 
                     worldMapPreviewSection
 
@@ -95,6 +103,9 @@ struct ChildHomeView: View {
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .animation(reduceMotion ? nil : .easeInOut(duration: 0.25),
                            value: viewModel.hasAchievement)
+            }
+            .refreshable {
+                await interactor?.refreshData(childId: childId)
             }
 
             parentButton
@@ -195,19 +206,42 @@ struct ChildHomeView: View {
         .padding(.top, SpacingTokens.pageTop)
     }
 
-    // MARK: - Mascot Lyalya
+    // MARK: - Mascot Interaction Zone (M8.7 v6)
+    //
+    // Tap по Ляле → Interactor → Presenter → случайная поощрительная фраза.
+    // Bubble появляется на 3 секунды, потом пропадает.
+    // Reduced Motion: убираем scale-анимацию, bubble всё равно появляется.
 
-    private var mascotSection: some View {
+    private var mascotInteractionZone: some View {
         VStack(spacing: SpacingTokens.sp3) {
-            ChildHomeReactiveMascot(mood: viewModel.mascotMood, reduceMotion: reduceMotion)
+            Button {
+                Task { @MainActor in
+                    await interactor?.tapMascot()
+                    // Автоскрытие через 3 сек.
+                    try? await Task.sleep(nanoseconds: 3_000_000_000)
+                    withAnimation(reduceMotion ? nil : MotionTokens.spring) {
+                        viewModel.mascotTapPhrase = nil
+                    }
+                }
+            } label: {
+                ChildHomeReactiveMascot(mood: viewModel.mascotMood, reduceMotion: reduceMotion)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(String(localized: "child.home.mascot.tap.a11y"))
+            .accessibilityHint(String(localized: "child.home.mascot.tap.a11y.hint"))
 
-            if let phrase = viewModel.mascotPhrase {
+            // MascotTap phrase — показывается поверх обычной фразы.
+            if let tapPhrase = viewModel.mascotTapPhrase {
+                ChildHomeMascotBubble(text: tapPhrase)
+                    .transition(.opacity.combined(with: .move(edge: .bottom)))
+            } else if let phrase = viewModel.mascotPhrase {
                 ChildHomeMascotBubble(text: phrase)
                     .transition(.opacity)
             }
         }
         .padding(.vertical, SpacingTokens.sp3)
         .frame(maxWidth: .infinity)
+        .animation(reduceMotion ? nil : MotionTokens.spring, value: viewModel.mascotTapPhrase)
     }
 
     // MARK: - Daily Mission
@@ -471,6 +505,50 @@ struct ChildHomeView: View {
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.top, SpacingTokens.sp2)
             Spacer()
+        }
+    }
+
+    // MARK: - Today Words (M8.7 v6)
+
+    private var todayWordsSection: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+            sectionHeader(String(localized: "child.home.today.words.section"), emoji: "📝")
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: SpacingTokens.sp3) {
+                    ForEach(viewModel.todayWords) { word in
+                        ChildHomeTodayWordCard(word: word)
+                    }
+                }
+                .padding(.horizontal, 2)
+                .padding(.vertical, 4)
+            }
+        }
+    }
+
+    // MARK: - HomeTasks Preview (M8.7 v6)
+
+    private var homeTasksSection: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+            HStack {
+                sectionHeader(String(localized: "child.home.hometasks.section"), emoji: "📋")
+                Spacer()
+                Button {
+                    router?.routeToHomeTasks()
+                } label: {
+                    Text(String(localized: "child.home.hometasks.see_all"))
+                        .font(TypographyTokens.caption(13))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                }
+            }
+
+            VStack(spacing: SpacingTokens.sp2) {
+                ForEach(viewModel.homeTasks.prefix(2)) { task in
+                    ChildHomeTaskPreviewRow(task: task) {
+                        router?.routeToHomeTasks()
+                    }
+                }
+            }
         }
     }
 
