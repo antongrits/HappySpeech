@@ -68,10 +68,33 @@ extension TargetWordItem {
 
 // MARK: - Phase
 
+/// 7-step state machine для одного слова в сессии «Повтори за Лялей»:
+///
+///   loading
+///     ↓
+///   wordPreview          — слово показано, ребёнок может нажать «Послушать» / «Записать»
+///     ↓ (auto или tap)
+///   modelPlaying         — Ляля произносит эталон, буквы подсвечиваются по очереди
+///     ↓ (audio finished)
+///   waiting              — короткая пауза «приготовиться» (~0.6с)
+///     ↓ (tap mic)
+///   recording            — идёт запись с микрофона + pulse-ring анимация
+///     ↓ (stop)
+///   processing           — ASR + scoring (1–2 сек)
+///     ↓
+///   feedback             — ⭐︎ результат + AttemptDots
+///     ↓ (advance / retry)
+///   wordPreview … или completed
+///
+/// `result` — алиас для `feedback`, оставлен для семантической ясности
+/// "финальной фазы успеха". Использовать `.feedback` (текущий код).
 enum RepeatPhase: Sendable, Equatable {
     case loading
     case wordPreview
+    case modelPlaying
+    case waiting
     case recording
+    case processing
     case feedback
     case completed
 }

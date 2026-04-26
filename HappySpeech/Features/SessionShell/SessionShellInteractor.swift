@@ -19,6 +19,13 @@ protocol SessionShellBusinessLogic: AnyObject {
 /// Orchestrates a full session: loads a route from `AdaptivePlannerService`, passes
 /// activities to game children, collects score, and decides when to stop (including
 /// fatigue detection based on consecutive errors and session length).
+///
+/// Fatigue model:
+///   * 3 hearts at session start.
+///   * Every 3 consecutive incorrect answers (`score < 0.5`) drain 1 heart.
+///   * 0 hearts → fatigueDetected, session is offered to end gracefully.
+///   * Session also auto-stops at `maxSessionMinutes` of *active* time
+///     (excludes accumulated pause time).
 @MainActor
 final class SessionShellInteractor: SessionShellBusinessLogic {
 
@@ -39,12 +46,17 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
     private var pauseStartTime: Date?
     private var accumulatedPauseSeconds: TimeInterval = 0
 
-    // MARK: Fatigue thresholds
+    /// 3 hearts → 0. Drained every `errorsPerHeart` consecutive incorrect answers.
+    private var fatigueHearts: Int = 3
+
+    // MARK: - Fatigue thresholds
 
     private let maxConsecutiveErrors = 3
+    private let errorsPerHeart = 3
+    private let initialHearts = 3
     private let maxSessionMinutes: Double = 15
 
-    // MARK: Init
+    // MARK: - Init
 
     init(
         contentService: any ContentService,
@@ -58,7 +70,7 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         self.hapticService = hapticService
     }
 
-    // MARK: SessionShellBusinessLogic
+    // MARK: - SessionShellBusinessLogic
 
     func startSession(_ request: SessionShellModels.StartSession.Request) async {
         sessionStartTime = Date()
@@ -67,34 +79,49 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         consecutiveErrors = 0
         currentIndex = 0
         isPaused = false
+        fatigueHearts = initialHearts
 
         let activities = await loadActivities(for: request)
         self.activities = activities
 
         let totalMinutes = max(activities.count * 2, 1)
-        logger.info("Session started: type=\(request.sessionType.rawValue) steps=\(activities.count)")
+        logger.info(
+            "Session started: type=\(request.sessionType.rawValue) steps=\(activities.count) hearts=\(self.fatigueHearts)"
+        )
 
         let response = SessionShellModels.StartSession.Response(
             activities: activities,
             totalSteps: activities.count,
-            estimatedMinutes: totalMinutes
+            estimatedMinutes: totalMinutes,
+            sessionStartTime: sessionStartTime
         )
         await presenter?.presentStartSession(response)
     }
 
     func completeActivity(_ request: SessionShellModels.CompleteActivity.Request) async {
         guard currentIndex < activities.count else {
-            logger.warning("completeActivity called with currentIndex=\(self.currentIndex) >= activities=\(self.activities.count)")
+            logger.warning(
+                "completeActivity called with currentIndex=\(self.currentIndex) >= activities=\(self.activities.count)"
+            )
             return
         }
 
-        if request.score < 0.5 {
+        let isCorrect = request.score >= 0.5
+        let feedback: SessionShellModels.ActivityFeedback = isCorrect ? .correct : .incorrect
+
+        if isCorrect {
+            consecutiveErrors = 0
+            hapticService.notification(.success)
+        } else {
             consecutiveErrors += 1
             errorCount += request.errorCount
             hapticService.notification(.warning)
-        } else {
-            consecutiveErrors = 0
-            hapticService.notification(.success)
+
+            // Каждые `errorsPerHeart` подряд неправильных ответов — минус сердце.
+            if consecutiveErrors > 0 && consecutiveErrors % errorsPerHeart == 0 {
+                fatigueHearts = max(0, fatigueHearts - 1)
+                logger.info("Fatigue heart drained → hearts=\(self.fatigueHearts)")
+            }
         }
 
         activities[currentIndex].isCompleted = true
@@ -114,9 +141,13 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
             nextActivity: fatigueDetected ? nil : nextActivity,
             isSessionComplete: nextActivity == nil || fatigueDetected,
             earnedReward: reward,
-            fatigueDetected: fatigueDetected
+            fatigueDetected: fatigueDetected,
+            fatigueHearts: fatigueHearts,
+            feedback: feedback
         )
-        logger.info("Activity \(request.activityId) score=\(request.score) fatigue=\(fatigueDetected) complete=\(response.isSessionComplete)")
+        logger.info(
+            "Activity \(request.activityId) score=\(request.score) fatigue=\(fatigueDetected) hearts=\(self.fatigueHearts) done=\(response.isSessionComplete)"
+        )
 
         if response.isSessionComplete {
             await saveSession()
@@ -130,7 +161,10 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         pauseStartTime = Date()
 
         let progress = Float(currentIndex) / Float(max(activities.count, 1))
-        let response = SessionShellModels.PauseSession.Response(currentProgress: progress)
+        let response = SessionShellModels.PauseSession.Response(
+            currentProgress: progress,
+            activeSeconds: activeElapsedSeconds
+        )
         presenter?.presentPauseSession(response)
     }
 
@@ -160,11 +194,23 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         await saveSession()
     }
 
-    // MARK: Private
+    // MARK: - Public read access (for SessionShellHost mirroring)
+
+    /// Текущее «живое» время сессии, без учёта пауз. Используется TimelineView
+    /// в HUD как точка опоры для счётчика mm:ss.
+    var sessionActiveStartReference: Date {
+        sessionStartTime.addingTimeInterval(accumulatedPauseSeconds)
+    }
+
+    var currentFatigueHearts: Int { fatigueHearts }
+
+    // MARK: - Private
 
     private func detectFatigue() -> Bool {
         let elapsed = activeElapsedSeconds / 60
-        return consecutiveErrors >= maxConsecutiveErrors || elapsed >= maxSessionMinutes
+        return fatigueHearts == 0
+            || consecutiveErrors >= maxConsecutiveErrors
+            || elapsed >= maxSessionMinutes
     }
 
     private var activeElapsedSeconds: TimeInterval {
@@ -234,7 +280,9 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
     private func saveSession() async {
         let totalCompleted = activities.filter { $0.isCompleted }.count
         let avgScore = avgScoreValue()
-        logger.info("Session saved: \(totalCompleted)/\(self.activities.count) avg=\(avgScore, format: .fixed(precision: 2))")
+        logger.info(
+            "Session saved: \(totalCompleted)/\(self.activities.count) avg=\(avgScore, format: .fixed(precision: 2))"
+        )
         // Production persistence via sessionRepository goes here (Sprint 12 follow-up).
     }
 

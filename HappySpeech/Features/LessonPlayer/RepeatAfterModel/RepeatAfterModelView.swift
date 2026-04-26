@@ -1,13 +1,22 @@
+// swiftlint:disable file_length
 import SwiftUI
 
 // MARK: - RepeatAfterModelView
 //
-// "Повтори за Лялей": плеер проигрывает эталон, ребёнок жмёт
-// микрофон и произносит. Транскрипт + confidence из `ASRService`
-// прокидываются в интерактор, тот считает score.
+// «Повтори за Лялей» — плеер проигрывает эталон, ребёнок жмёт микрофон и
+// произносит. Транскрипт + confidence из `ASRService` прокидываются в
+// интерактор, тот считает score.
 //
-// Фазы:
-//   loading → wordPreview → recording → feedback → wordPreview → … → completed
+// 7-фазный state machine (см. `RepeatPhase`):
+//   loading → wordPreview → modelPlaying → waiting → recording
+//           → processing → feedback → wordPreview … → completed
+//
+// UI-блоки:
+//   • Header (Ляля + greeting + progress);
+//   • WordCard (emoji, слово, подсветка букв, AttemptDots);
+//   • RecordingButton (80×80pt Capsule с pulse ring);
+//   • Feedback (✓ / ↻ + score bar);
+//   • Completed (звёздочки + сообщение).
 //
 // Source of truth UI — `RepeatAfterModelDisplay` (@Observable store).
 
@@ -32,8 +41,12 @@ struct RepeatAfterModelView: View {
 
     // Local UI-only state
     @State private var micPulse: Bool = false
+    @State private var ringPulse: Bool = false
     @State private var sessionStarted: Bool = false
     @State private var asrTask: Task<Void, Never>?
+    @State private var letterHighlightTask: Task<Void, Never>?
+    @State private var highlightedLetterIndex: Int = -1
+    @State private var modelPlaybackTask: Task<Void, Never>?
 
     // MARK: - Init
 
@@ -66,9 +79,16 @@ struct RepeatAfterModelView: View {
         .onChange(of: display.pendingFinalScore) { _, newScore in
             if let newScore { onComplete(newScore) }
         }
+        .onChange(of: display.phase) { _, newPhase in
+            handlePhaseChange(newPhase)
+        }
         .onDisappear {
             asrTask?.cancel()
             asrTask = nil
+            letterHighlightTask?.cancel()
+            letterHighlightTask = nil
+            modelPlaybackTask?.cancel()
+            modelPlaybackTask = nil
             interactor.cancel()
         }
         .accessibilityElement(children: .contain)
@@ -84,8 +104,14 @@ struct RepeatAfterModelView: View {
             loadingView
         case .wordPreview:
             wordPreviewView
+        case .modelPlaying:
+            modelPlayingView
+        case .waiting:
+            waitingView
         case .recording:
             recordingView
+        case .processing:
+            processingView
         case .feedback:
             feedbackView
         case .completed:
@@ -112,7 +138,8 @@ struct RepeatAfterModelView: View {
         VStack(spacing: SpacingTokens.large) {
             header
             Spacer(minLength: 0)
-            wordCard
+            wordCard(highlightActive: false)
+            attemptDotsView
             Spacer(minLength: 0)
             wordPreviewBottom
         }
@@ -120,26 +147,23 @@ struct RepeatAfterModelView: View {
     }
 
     @ViewBuilder
-    private var wordCard: some View {
+    private func wordCard(highlightActive: Bool) -> some View {
         if let word = display.currentWord {
             VStack(spacing: SpacingTokens.medium) {
                 Text(word.emoji)
                     .font(.system(size: 96))
                     .accessibilityHidden(true)
-                Text(word.word)
-                    .font(TypographyTokens.kidDisplay(40))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                    .multilineTextAlignment(.center)
+
+                LetterHighlightView(
+                    word: word.word,
+                    highlightedIndex: highlightActive ? highlightedLetterIndex : -1
+                )
+
                 Text(display.syllabification)
                     .font(TypographyTokens.body(16))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .lineLimit(nil)
                     .minimumScaleFactor(0.85)
-                Text(display.attemptsLabel)
-                    .font(TypographyTokens.caption(13))
-                    .foregroundStyle(ColorTokens.Brand.primary)
             }
             .padding(SpacingTokens.large)
             .frame(maxWidth: .infinity)
@@ -162,6 +186,7 @@ struct RepeatAfterModelView: View {
                 icon: "speaker.wave.2.fill"
             ) {
                 container.soundService.playUISound(.tap)
+                triggerModelPlayback()
             }
             .accessibilityHint(String(localized: "repeat.button.listen.hint"))
 
@@ -177,6 +202,49 @@ struct RepeatAfterModelView: View {
         .padding(.horizontal, SpacingTokens.screenEdge)
     }
 
+    // MARK: - Model playing (Ляля произносит эталон)
+
+    private var modelPlayingView: some View {
+        VStack(spacing: SpacingTokens.large) {
+            header
+            Spacer(minLength: 0)
+            wordCard(highlightActive: true)
+            attemptDotsView
+            Spacer(minLength: 0)
+
+            VStack(spacing: SpacingTokens.tiny) {
+                Image(systemName: "speaker.wave.3.fill")
+                    .font(.system(size: 28, weight: .semibold))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .symbolEffect(.pulse, options: reduceMotion ? .nonRepeating : .repeating, value: ringPulse)
+                Text(String(localized: "repeat.phase.model_playing"))
+                    .font(TypographyTokens.headline(18))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+            }
+            .padding(.bottom, SpacingTokens.large)
+        }
+        .padding(.vertical, SpacingTokens.medium)
+    }
+
+    // MARK: - Waiting (приготовься)
+
+    private var waitingView: some View {
+        VStack(spacing: SpacingTokens.large) {
+            header
+            Spacer(minLength: 0)
+            VStack(spacing: SpacingTokens.medium) {
+                HSMascotView(mood: .pointing, size: 140)
+                    .accessibilityHidden(true)
+                Text(String(localized: "repeat.phase.waiting"))
+                    .font(TypographyTokens.title(28))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+            }
+            attemptDotsView
+            Spacer(minLength: 0)
+        }
+        .padding(.vertical, SpacingTokens.medium)
+    }
+
     // MARK: - Recording
 
     private var recordingView: some View {
@@ -184,15 +252,16 @@ struct RepeatAfterModelView: View {
             header
             Spacer(minLength: 0)
             recordingBody
+            attemptDotsView
             Spacer(minLength: 0)
-            HSButton(
-                String(localized: "repeat.button.stop"),
-                style: .primary,
-                icon: "stop.fill"
-            ) {
-                stopRecording()
-            }
+            RecordingButton(
+                isRecording: true,
+                pulse: $micPulse,
+                reduceMotion: reduceMotion,
+                onTap: stopRecording
+            )
             .padding(.horizontal, SpacingTokens.screenEdge)
+            .accessibilityLabel(String(localized: "repeat.button.stop"))
             .accessibilityHint(String(localized: "repeat.button.stop.hint"))
         }
         .padding(.vertical, SpacingTokens.medium)
@@ -236,6 +305,30 @@ struct RepeatAfterModelView: View {
         .padding(.horizontal, SpacingTokens.screenEdge)
     }
 
+    // MARK: - Processing
+
+    private var processingView: some View {
+        VStack(spacing: SpacingTokens.large) {
+            header
+            Spacer(minLength: 0)
+            VStack(spacing: SpacingTokens.medium) {
+                HSMascotView(mood: .thinking, size: 140)
+                    .accessibilityHidden(true)
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .scaleEffect(1.2)
+                Text(String(localized: "repeat.phase.processing"))
+                    .font(TypographyTokens.title(22))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+            }
+            attemptDotsView
+            Spacer(minLength: 0)
+        }
+        .padding(.vertical, SpacingTokens.medium)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(String(localized: "repeat.phase.processing"))
+    }
+
     // MARK: - Feedback
 
     private var feedbackView: some View {
@@ -243,6 +336,7 @@ struct RepeatAfterModelView: View {
             header
             Spacer(minLength: 0)
             feedbackBody
+            attemptDotsView
             Spacer(minLength: 0)
             feedbackBottom
         }
@@ -272,10 +366,6 @@ struct RepeatAfterModelView: View {
             HSProgressBar(value: Double(display.score))
                 .frame(height: 10)
                 .padding(.horizontal, SpacingTokens.xLarge)
-
-            Text(display.attemptsLabel)
-                .font(TypographyTokens.caption(13))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
         .accessibilityElement(children: .combine)
@@ -379,12 +469,63 @@ struct RepeatAfterModelView: View {
 
     private var mascotMood: MascotMood {
         switch display.phase {
-        case .loading:      return .thinking
-        case .wordPreview:  return .explaining
-        case .recording:    return .encouraging
-        case .feedback:     return display.passed ? .celebrating : .encouraging
-        case .completed:    return .happy
+        case .loading:       return .thinking
+        case .wordPreview:   return .explaining
+        case .modelPlaying:  return .singing
+        case .waiting:       return .pointing
+        case .recording:     return .encouraging
+        case .processing:    return .thinking
+        case .feedback:      return display.passed ? .celebrating : .encouraging
+        case .completed:     return .happy
         }
+    }
+
+    // MARK: - Attempt dots
+
+    /// 3 кружка под слово — закрашиваются по мере использованных попыток.
+    /// Текущая попытка подсвечена брендовым цветом, использованные — серой
+    /// заливкой, ещё не использованные — пустые.
+    private var attemptDotsView: some View {
+        let totalAttempts = 3
+        let used = max(0, totalAttempts - max(0, totalAttempts - currentAttemptsLeft))
+        let usedCount = totalAttempts - currentAttemptsLeft
+        return HStack(spacing: SpacingTokens.tiny) {
+            ForEach(0..<totalAttempts, id: \.self) { idx in
+                attemptDot(index: idx, usedCount: usedCount)
+            }
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(String(
+            localized: "repeat.attempts.dot.a11y \(used) \(totalAttempts)"
+        ))
+    }
+
+    private func attemptDot(index: Int, usedCount: Int) -> some View {
+        let isUsed = index < usedCount
+        let isCurrent = index == usedCount && index < 3
+        return Circle()
+            .fill(dotFill(isUsed: isUsed, isCurrent: isCurrent))
+            .frame(width: 14, height: 14)
+            .overlay(
+                Circle().strokeBorder(ColorTokens.Kid.line, lineWidth: isUsed || isCurrent ? 0 : 1)
+            )
+    }
+
+    private func dotFill(isUsed: Bool, isCurrent: Bool) -> Color {
+        if isCurrent { return ColorTokens.Brand.primary }
+        if isUsed { return ColorTokens.Kid.inkMuted.opacity(0.4) }
+        return Color.clear
+    }
+
+    /// Аппроксимация attemptsLeft на основе строки `attemptsLabel` от Presenter.
+    /// `attemptsLabel` имеет формат "Попыток осталось: %lld" — мы вытаскиваем
+    /// число и подставляем в кружки.
+    private var currentAttemptsLeft: Int {
+        let digits = display.attemptsLabel.compactMap { $0.isNumber ? $0 : nil }
+        if let value = Int(String(digits)) {
+            return max(0, min(3, value))
+        }
+        return 3
     }
 
     // MARK: - Recording control
@@ -418,6 +559,9 @@ struct RepeatAfterModelView: View {
         let audioService = container.audioService
         let asrService = container.asrService
         interactor.toggleRecording()
+        // Переключаемся в processing на время ASR — пользователь видит
+        // «Проверяю...» пока не пришёл ответ.
+        display.phase = .processing
 
         asrTask?.cancel()
         asrTask = Task { @MainActor in
@@ -442,6 +586,57 @@ struct RepeatAfterModelView: View {
         interactor.submitTranscript(.init(transcript: "", confidence: confidence))
     }
 
+    // MARK: - Phase change handler (LetterHighlight + auto-progression)
+
+    private func handlePhaseChange(_ newPhase: RepeatPhase) {
+        switch newPhase {
+        case .modelPlaying:
+            startLetterHighlight()
+        case .wordPreview, .recording, .processing, .feedback, .completed, .loading, .waiting:
+            stopLetterHighlight()
+        }
+    }
+
+    /// Автопроигрывание эталонного слова: переходит wordPreview → modelPlaying.
+    /// Реальный аудио-asset не блокируем — играем UI-звук и запускаем
+    /// псевдо-таймер длительности (200мс на букву), чтобы LetterHighlight
+    /// дошёл до конца и сам перевёл фазу в waiting → wordPreview.
+    private func triggerModelPlayback() {
+        guard display.phase == .wordPreview else { return }
+        display.phase = .modelPlaying
+    }
+
+    private func startLetterHighlight() {
+        guard let word = display.currentWord?.word, !word.isEmpty else { return }
+        ringPulse = true
+        highlightedLetterIndex = -1
+        letterHighlightTask?.cancel()
+        letterHighlightTask = Task { @MainActor in
+            let letters = Array(word)
+            let stepMs: UInt64 = 200_000_000 // 200ms
+            for idx in 0..<letters.count {
+                if Task.isCancelled { return }
+                highlightedLetterIndex = idx
+                try? await Task.sleep(nanoseconds: stepMs)
+            }
+            if Task.isCancelled { return }
+            highlightedLetterIndex = -1
+            ringPulse = false
+            // Короткая пауза «приготовиться», затем возвращаем в wordPreview.
+            display.phase = .waiting
+            try? await Task.sleep(nanoseconds: 600_000_000)
+            if Task.isCancelled { return }
+            display.phase = .wordPreview
+        }
+    }
+
+    private func stopLetterHighlight() {
+        letterHighlightTask?.cancel()
+        letterHighlightTask = nil
+        highlightedLetterIndex = -1
+        ringPulse = false
+    }
+
     // MARK: - Flow helpers
 
     private func startSessionOnce() {
@@ -460,6 +655,78 @@ struct RepeatAfterModelView: View {
             return family.rawValue
         }
         return SoundFamily.whistling.rawValue
+    }
+}
+
+// MARK: - LetterHighlightView
+
+/// Подсветка букв слова по очереди при воспроизведении эталона.
+/// Никакого аудио-sync — просто визуальный таймер 200мс на букву.
+struct LetterHighlightView: View {
+    let word: String
+    let highlightedIndex: Int
+
+    var body: some View {
+        HStack(spacing: 2) {
+            ForEach(Array(word.enumerated()), id: \.offset) { idx, ch in
+                Text(String(ch))
+                    .font(.system(size: 40, weight: .bold, design: .rounded))
+                    .foregroundStyle(idx == highlightedIndex
+                        ? ColorTokens.Brand.primary
+                        : ColorTokens.Kid.ink)
+                    .scaleEffect(idx == highlightedIndex ? 1.15 : 1.0)
+                    .animation(.spring(duration: 0.25), value: highlightedIndex)
+            }
+        }
+        .lineLimit(1)
+        .minimumScaleFactor(0.5)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(word)
+        .accessibilityHint(String(localized: "repeat.letter.highlight.a11y"))
+    }
+}
+
+// MARK: - RecordingButton
+
+/// 80×80pt Capsule-кнопка с pulse-ring анимацией. Красная при isRecording=true.
+struct RecordingButton: View {
+    let isRecording: Bool
+    @Binding var pulse: Bool
+    let reduceMotion: Bool
+    let onTap: () -> Void
+
+    var body: some View {
+        Button(action: onTap) {
+            ZStack {
+                if isRecording && !reduceMotion {
+                    Circle()
+                        .strokeBorder(ColorTokens.Semantic.error.opacity(0.4), lineWidth: 4)
+                        .frame(width: 100, height: 100)
+                        .scaleEffect(pulse ? 1.25 : 1.0)
+                        .opacity(pulse ? 0.0 : 0.9)
+                        .animation(
+                            .easeOut(duration: 1.1).repeatForever(autoreverses: false),
+                            value: pulse
+                        )
+                }
+                Capsule()
+                    .fill(isRecording
+                        ? ColorTokens.Semantic.error
+                        : ColorTokens.Brand.primary)
+                    .frame(width: 80, height: 80)
+                    .overlay(
+                        Image(systemName: isRecording ? "stop.fill" : "mic.fill")
+                            .font(.system(size: 32, weight: .bold))
+                            .foregroundStyle(.white)
+                    )
+                    .shadow(color: .black.opacity(0.18), radius: 10, y: 4)
+            }
+            .frame(maxWidth: .infinity)
+        }
+        .buttonStyle(.plain)
+        .onAppear { if !reduceMotion { pulse = true } }
+        .onDisappear { pulse = false }
+        .accessibilityAddTraits(.isButton)
     }
 }
 
@@ -532,3 +799,4 @@ final class RepeatAfterModelStoreBridge: RepeatAfterModelDisplayLogic {
     )
     .environment(AppContainer.preview())
 }
+// swiftlint:enable file_length
