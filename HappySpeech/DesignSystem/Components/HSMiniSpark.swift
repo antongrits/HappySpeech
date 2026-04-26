@@ -14,7 +14,7 @@ public struct HSMiniSpark: View {
     @State private var progress: Double = 0
 
     private let particleCount = 6
-    private let burstRadius:  CGFloat = 44
+    private let burstRadius: CGFloat = 44
     private let particleSize: CGFloat = 8
 
     public init(isActive: Bool) {
@@ -120,10 +120,10 @@ public struct HSMiniSpark: View {
 // MARK: - SparkParticle
 
 private struct SparkParticle {
-    let angle:   Double
-    let scale:   CGFloat
+    let angle: Double
+    let scale: CGFloat
     let opacity: Double
-    let color:   Color
+    let color: Color
 }
 
 // MARK: - Preview

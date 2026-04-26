@@ -1,8 +1,8 @@
+import AVFoundation
 import Foundation
 import OSLog
-import AVFoundation
-import UserNotifications
 import UIKit
+import UserNotifications
 
 // MARK: - PermissionsBusinessLogic
 

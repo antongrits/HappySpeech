@@ -1,6 +1,6 @@
+@testable import HappySpeech
 import Testing
 import UIKit
-@testable import HappySpeech
 
 // MARK: - Mock HapticService (shared in this file)
 
@@ -11,8 +11,7 @@ private final class MemoryMockHaptic: HapticService, @unchecked Sendable {
 
     func selection() { selectionCount += 1 }
     func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) {
-        if type == .success { notificationSuccessCount += 1 }
-        else { notificationWarningCount += 1 }
+        if type == .success { notificationSuccessCount += 1 } else { notificationWarningCount += 1 }
     }
     func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {}
 }

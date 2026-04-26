@@ -129,28 +129,28 @@ public struct OnboardingProfile: Sendable, Equatable {
     public static let recommendedAgeRange: ClosedRange<Int> = 5...8
 
     public static let availableGoals: [(id: String, label: String)] = [
-        ("pronunciation",  String(localized: "onboarding.goal.pronunciation")),
-        ("fluency",        String(localized: "onboarding.goal.fluency")),
-        ("vocabulary",     String(localized: "onboarding.goal.vocabulary")),
-        ("grammar",        String(localized: "onboarding.goal.grammar")),
-        ("communication",  String(localized: "onboarding.goal.communication"))
+        ("pronunciation", String(localized: "onboarding.goal.pronunciation")),
+        ("fluency", String(localized: "onboarding.goal.fluency")),
+        ("vocabulary", String(localized: "onboarding.goal.vocabulary")),
+        ("grammar", String(localized: "onboarding.goal.grammar")),
+        ("communication", String(localized: "onboarding.goal.communication"))
     ]
 
     /// Звуки русского языка, с которыми чаще всего работают логопеды
     /// в возрасте 5–8 лет. Группа: соноры (Р, Л), шипящие (Ш, Ж, Ч, Щ),
     /// свистящие (С, З), заднеязычные (К, Г, Х).
     public static let availableSounds: [(id: String, label: String)] = [
-        ("R",  "Р"),
-        ("L",  "Л"),
+        ("R", "Р"),
+        ("L", "Л"),
         ("Sh", "Ш"),
         ("Zh", "Ж"),
         ("Ch", "Ч"),
         ("Sch", "Щ"),
-        ("S",  "С"),
-        ("Z",  "З"),
+        ("S", "С"),
+        ("Z", "З"),
         ("Ts", "Ц"),
-        ("K",  "К"),
-        ("G",  "Г"),
+        ("K", "К"),
+        ("G", "Г"),
         ("Kh", "Х")
     ]
 

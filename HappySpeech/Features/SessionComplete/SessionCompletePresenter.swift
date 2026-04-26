@@ -29,11 +29,11 @@ final class SessionCompletePresenter: SessionCompletePresentationLogic {
     // MARK: - Formatters
 
     private static let durationFormatter: DateComponentsFormatter = {
-        let f = DateComponentsFormatter()
-        f.allowedUnits = [.minute, .second]
-        f.unitsStyle = .abbreviated
-        f.zeroFormattingBehavior = .pad
-        return f
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.minute, .second]
+        formatter.unitsStyle = .abbreviated
+        formatter.zeroFormattingBehavior = .pad
+        return formatter
     }()
 
     // MARK: - Presentation

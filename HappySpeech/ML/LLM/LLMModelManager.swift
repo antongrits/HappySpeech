@@ -284,7 +284,6 @@ public actor LLMModelManager: LLMModelManagerProtocol {
     private func emitLLM(_ state: ModelDownloadState) {
         progressContinuation?.yield(state)
     }
-
 }
 
 // MARK: - Legacy alias

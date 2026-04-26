@@ -1,6 +1,6 @@
-import XCTest
-import RealmSwift
 @testable import HappySpeech
+import RealmSwift
+import XCTest
 
 // MARK: - SyncServiceTests
 //

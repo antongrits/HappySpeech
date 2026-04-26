@@ -6,7 +6,7 @@ import RealmSwift
 /// Centralised Realm migration block. Increment RealmSchemaVersion.current with each schema change.
 enum RealmMigrations {
 
-    static let migrationBlock: MigrationBlock = { migration, oldSchemaVersion in
+    static let migrationBlock: MigrationBlock = { _, oldSchemaVersion in
         if oldSchemaVersion < 1 {
             // v1: initial schema — no action needed (Realm handles new properties with defaults)
         }

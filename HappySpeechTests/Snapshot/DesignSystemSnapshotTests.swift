@@ -1,6 +1,6 @@
-import XCTest
-import SwiftUI
 @testable import HappySpeech
+import SwiftUI
+import XCTest
 
 // MARK: - DesignSystemSnapshotTests
 //
@@ -27,10 +27,10 @@ final class DesignSystemSnapshotTests: XCTestCase {
     }
     private let devices: [DeviceConfig] = [
         DeviceConfig(name: "iPhoneSE3", size: CGSize(width: 375, height: 667)),
-        DeviceConfig(name: "iPhone17Pro", size: CGSize(width: 402, height: 874)),
+        DeviceConfig(name: "iPhone17Pro", size: CGSize(width: 402, height: 874))
     ]
     private let appearances: [(String, UIUserInterfaceStyle)] = [
-        ("Light", .light), ("Dark", .dark),
+        ("Light", .light), ("Dark", .dark)
     ]
 
     // MARK: - Helpers

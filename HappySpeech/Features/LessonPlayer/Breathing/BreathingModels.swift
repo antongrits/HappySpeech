@@ -39,7 +39,7 @@ enum BreathingModels {
     enum SubmitAttempt {
         struct Request {
             var selectedWord: String = ""
-            var audioURL: URL? = nil
+            var audioURL: URL?
         }
         struct Response {
             var isCorrect: Bool = false

@@ -517,6 +517,7 @@ final class BreathingInteractor: BreathingBusinessLogic {
     // Let unit tests feed deterministic amplitudes without the timer race.
 
     #if DEBUG
+    // swiftlint:disable identifier_name
     func _test_pushAmplitude(_ amplitude: Float) {
         handleAmplitude(amplitude)
     }
@@ -536,6 +537,7 @@ final class BreathingInteractor: BreathingBusinessLogic {
     func _test_currentStableRatio() -> Float {
         computeStableRatio()
     }
+    // swiftlint:enable identifier_name
     #endif
 }
 

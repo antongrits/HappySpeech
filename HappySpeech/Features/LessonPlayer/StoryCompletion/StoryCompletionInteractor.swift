@@ -1,5 +1,5 @@
-import Foundation
 import AVFoundation
+import Foundation
 import OSLog
 
 // MARK: - StoryCompletionBusinessLogic
@@ -337,7 +337,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 correctIndex: 2,
                 soundGroup: "whistling",
                 emoji: "🐇"
-            ),
+            )
         ],
 
         // MARK: hissing — Ш / Ж / Ч / Щ
@@ -381,7 +381,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 correctIndex: 2,
                 soundGroup: "hissing",
                 emoji: "🧢"
-            ),
+            )
         ],
 
         // MARK: sonants — Р / Л
@@ -425,7 +425,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 correctIndex: 2,
                 soundGroup: "sonants",
                 emoji: "🍅"
-            ),
+            )
         ],
 
         // MARK: velar — К / Г / Х
@@ -469,7 +469,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 correctIndex: 0,
                 soundGroup: "velar",
                 emoji: "🥖"
-            ),
-        ],
+            )
+        ]
     ]
 }

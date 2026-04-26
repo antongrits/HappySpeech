@@ -1,6 +1,6 @@
+@testable import HappySpeech
 import Testing
 import UIKit
-@testable import HappySpeech
 
 // MARK: - Mock
 

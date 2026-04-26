@@ -44,7 +44,7 @@ public struct HSSpeechBubble: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var appeared = false
 
-    private let tailWidth:  CGFloat = 18
+    private let tailWidth: CGFloat = 18
     private let tailHeight: CGFloat = 14
     private let cornerRadius: CGFloat = RadiusTokens.md
 

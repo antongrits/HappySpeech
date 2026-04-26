@@ -1,6 +1,6 @@
-import SwiftUI
-import OSLog
 import Charts
+import OSLog
+import SwiftUI
 
 // MARK: - SessionHistoryView
 //
@@ -300,7 +300,7 @@ struct SessionHistoryView: View {
             }
         }
         .chartXAxis {
-            AxisMarks(values: .automatic(desiredCount: 4)) { value in
+            AxisMarks(values: .automatic(desiredCount: 4)) { _ in
                 AxisValueLabel(format: .dateTime.day().month(.abbreviated), centered: false)
                     .font(TypographyTokens.caption(10))
                     .foregroundStyle(ColorTokens.Parent.inkSoft)

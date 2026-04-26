@@ -1,5 +1,5 @@
-import XCTest
 @testable import HappySpeech
+import XCTest
 
 // MARK: - ProgramEditorInteractorTests
 
@@ -123,7 +123,7 @@ final class ProgramEditorInteractorTests: XCTestCase {
         let blocks = [
             ProgramBlock(type: .syllables, durationMinutes: 5),
             ProgramBlock(type: .breakRest, durationMinutes: 1),
-            ProgramBlock(type: .breakRest, durationMinutes: 1),
+            ProgramBlock(type: .breakRest, durationMinutes: 1)
         ]
         XCTAssertFalse(ProgramEditorPresenter.isValid(blocks))
     }

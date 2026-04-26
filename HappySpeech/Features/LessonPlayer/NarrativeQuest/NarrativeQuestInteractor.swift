@@ -72,7 +72,10 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
 
     func loadQuest(_ request: NarrativeQuestModels.LoadQuest.Request) {
         let group = Self.resolveSoundGroup(request.soundTarget)
-        let script = Self.questCatalog[group] ?? Self.questCatalog["whistling"]!
+        guard let script = Self.questCatalog[group] ?? Self.questCatalog["whistling"] else {
+            logger.error("NarrativeQuest catalog missing default fallback for group=\(group, privacy: .public)")
+            return
+        }
         self.script = script
         self.currentStageIndex = 0
         self.stageScores = []

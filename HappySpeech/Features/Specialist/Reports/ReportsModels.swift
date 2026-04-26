@@ -67,7 +67,7 @@ struct DateRange: Sendable, Equatable {
         return DateRange(start: start, end: end)
     }
 
-    static func last7days(now: Date = Date()) -> DateRange  { .lastNDays(7,  now: now) }
+    static func last7days(now: Date = Date()) -> DateRange { .lastNDays(7, now: now) }
     static func last30days(now: Date = Date()) -> DateRange { .lastNDays(30, now: now) }
 }
 

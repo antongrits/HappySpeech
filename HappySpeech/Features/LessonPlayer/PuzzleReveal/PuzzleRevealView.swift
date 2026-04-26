@@ -1,5 +1,5 @@
-import SwiftUI
 import OSLog
+import SwiftUI
 
 // MARK: - PuzzleRevealView
 //
@@ -185,7 +185,7 @@ struct PuzzleRevealView: View {
 
     private var feedbackColor: Color {
         if display.lastScore >= 0.85 { return ColorTokens.Feedback.correct }
-        if display.lastScore >= 0.6  { return ColorTokens.Brand.primary }
+        if display.lastScore >= 0.6 { return ColorTokens.Brand.primary }
         return ColorTokens.Kid.inkMuted
     }
 

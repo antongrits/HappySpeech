@@ -1,5 +1,5 @@
-import SwiftUI
 import OSLog
+import SwiftUI
 
 // MARK: - ScreeningView
 //
@@ -244,9 +244,9 @@ private struct PromptCard: View {
                     .frame(maxWidth: 260)
 
                 HStack(spacing: SpacingTokens.small) {
-                    scoreButton(0.0, label: String(localized: "screening.score.wrong"),   color: .red)
+                    scoreButton(0.0, label: String(localized: "screening.score.wrong"), color: .red)
                     scoreButton(0.33, label: String(localized: "screening.score.partial"), color: .orange)
-                    scoreButton(0.67, label: String(localized: "screening.score.good"),    color: .yellow)
+                    scoreButton(0.67, label: String(localized: "screening.score.good"), color: .yellow)
                     scoreButton(1.0, label: String(localized: "screening.score.perfect"), color: .green)
                 }
             }
@@ -254,13 +254,16 @@ private struct PromptCard: View {
     }
 
     private func scoreButton(_ score: Float, label: String, color: Color) -> some View {
-        Button(action: { onScore(score) }) {
-            VStack(spacing: SpacingTokens.tiny) {
-                Circle().fill(color.opacity(0.3)).frame(width: 44, height: 44)
-                Text(label).font(TypographyTokens.caption(11))
+        Button(
+            action: { onScore(score) },
+            label: {
+                VStack(spacing: SpacingTokens.tiny) {
+                    Circle().fill(color.opacity(0.3)).frame(width: 44, height: 44)
+                    Text(label).font(TypographyTokens.caption(11))
+                }
+                .frame(maxWidth: .infinity)
             }
-            .frame(maxWidth: .infinity)
-        }
+        )
         .buttonStyle(.plain)
         .accessibilityLabel(label)
     }

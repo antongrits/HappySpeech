@@ -1,5 +1,5 @@
-import SwiftUI
 import OSLog
+import SwiftUI
 
 // MARK: - RhythmView
 //
@@ -356,8 +356,8 @@ private struct BeatDot: View {
         switch (strength, isActive) {
         case (.strong, true):  return ColorTokens.Brand.primary
         case (.strong, false): return ColorTokens.Brand.lilac
-        case (.weak,   true):  return ColorTokens.Brand.primary.opacity(0.8)
-        case (.weak,   false): return ColorTokens.Kid.surfaceAlt
+        case (.weak, true):  return ColorTokens.Brand.primary.opacity(0.8)
+        case (.weak, false): return ColorTokens.Kid.surfaceAlt
         }
     }
 }

@@ -1,5 +1,5 @@
-import Foundation
 import AVFoundation
+import Foundation
 import UIKit
 
 // MARK: - Mock implementations for Preview and Tests
@@ -407,6 +407,6 @@ public extension ContentItem {
         ContentItem(id: "5", word: "ракета", imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 2),
         ContentItem(id: "6", word: "рот", imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 1),
         ContentItem(id: "7", word: "рис", imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 1),
-        ContentItem(id: "8", word: "река", imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 2),
+        ContentItem(id: "8", word: "река", imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 2)
     ]
 }

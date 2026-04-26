@@ -149,7 +149,7 @@ final class HomeTasksPresenter: HomeTasksPresentationLogic {
                 return priorityOrder(lhs.priority) < priorityOrder(rhs.priority)
             }
             switch (lhs.dueDate, rhs.dueDate) {
-            case let (l?, r?): return l < r
+            case let (left?, right?): return left < right
             case (_?, nil):    return true
             case (nil, _?):    return false
             case (nil, nil):   return lhs.id < rhs.id

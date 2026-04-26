@@ -73,7 +73,7 @@ public struct KeychainKey: Sendable, Hashable {
     }
 
     public static let anthropicAPIToken  = KeychainKey(service: "ru.happyspeech.anthropic", account: "api-token")
-    public static let huggingFaceToken   = KeychainKey(service: "ru.happyspeech.hf",        account: "inference-token")
+    public static let huggingFaceToken   = KeychainKey(service: "ru.happyspeech.hf", account: "inference-token")
 }
 
 public extension KeychainStoreProtocol {

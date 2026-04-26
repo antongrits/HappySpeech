@@ -24,8 +24,8 @@ public struct HSAudioWaveView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var displayAmplitudes: [Float] = []
 
-    private let barGap:    CGFloat = 3
-    private let minBarH:   CGFloat = 4
+    private let barGap: CGFloat = 3
+    private let minBarH: CGFloat = 4
     private let barRadius: CGFloat = 3
 
     // MARK: - Init

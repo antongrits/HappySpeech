@@ -389,8 +389,12 @@ struct AnimatedStoryPlayerView: View {
 }
 
 #Preview("Сонорная история") {
-    AnimatedStoryPlayerView(
-        story: StoryLibrary.shared.stories(for: "Р").first!,
-        onComplete: { }
-    )
+    if let story = StoryLibrary.shared.stories(for: "Р").first {
+        AnimatedStoryPlayerView(
+            story: story,
+            onComplete: { }
+        )
+    } else {
+        Text("No story available")
+    }
 }
