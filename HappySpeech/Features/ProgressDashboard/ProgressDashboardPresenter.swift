@@ -8,6 +8,7 @@ protocol ProgressDashboardPresentationLogic: AnyObject {
     func presentLoadDashboard(_ response: ProgressDashboardModels.LoadDashboard.Response)
     func presentLoadSoundDetail(_ response: ProgressDashboardModels.LoadSoundDetail.Response)
     func presentRequestLLMSummary(_ response: ProgressDashboardModels.RequestLLMSummary.Response)
+    func presentLLMLoading(_ isLoading: Bool)
     func presentFailure(_ response: ProgressDashboardModels.Failure.Response)
 }
 
@@ -99,6 +100,10 @@ final class ProgressDashboardPresenter: ProgressDashboardPresentationLogic {
             accessibilityLabel: label
         )
         display?.displayRequestLLMSummary(.init(summary: viewModel))
+    }
+
+    func presentLLMLoading(_ isLoading: Bool) {
+        display?.displayLLMLoading(isLoading)
     }
 
     func presentFailure(_ response: ProgressDashboardModels.Failure.Response) {
