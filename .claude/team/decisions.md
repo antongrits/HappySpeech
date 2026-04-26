@@ -401,3 +401,63 @@ firebase firestore:rules:get | head -20
 - Content stages: 196
 - Content items: 6 265
 - BUILD: SUCCEEDED
+
+---
+
+### [2026-04-26] [ml-engineer] ADR-015: Vision ML Stack M5.3 — MediaPipe FaceMesh vs Apple Vision
+
+**Decision:** Использовать Apple Vision `VNDetectFaceLandmarksRequest` (76 точек) как primary источник face landmarks. MediaPipe FaceMesh (478 точек) — не задеплоен.
+
+**Reason:** Поиск готовой CoreML-версии FaceMesh занял > 30 минут без результата:
+1. HuggingFace: ни одного репозитория `mediapipe face mesh coreml` с рабочей моделью под Apache/MIT.
+2. Официальный Google MediaPipe tflite (`face_landmark.tflite`) конвертируется через `tflite2coreml`, но последние версии (2022+) используют `FULLY_CONNECTED` op с dtype int16, который coremltools 8/9 не поддерживает.
+3. Альтернатива — конвертация вручную через onnx2coreml — требует промежуточного экспорта в ONNX, что нестабильно для MediaPipe custom ops.
+
+**Решение-workaround:**
+- `AppleFaceLandmarksDetector.swift` (actor, Vision 76 точек) — production primary
+- `TonguePostureClassifierML` принимает 50-dim вектор: первые 23 = ARKit blendshapes, 27 зарезервированы для FaceMesh дельт (когда/если появится конвертация)
+- Все контракты данных готовы к расширению до 478 точек без изменения Swift API
+
+**Risk:** 76 точек Vision не даёт внутреннего положения языка. ARKit blendshapes `tongueOut` остаётся единственным tongue-сигналом — подтверждено ADR-008.
+
+**Planned M13:** Переисследовать FaceMesh CoreML — Google выпускает новые версии MediaPipe SDK каждые ~6 месяцев; к M13 может появиться iOS-нативный вариант.
+
+---
+
+### [2026-04-26] [ml-engineer] ADR-016: TonguePostureClassifier — синтетические данные для M5.3
+
+**Decision:** Обучить TonguePostureClassifier CNN на **синтетических feature vectors** (не на реальных детских записях).
+
+**Reason:**
+1. Реальные детские данные с размеченными tongue postures отсутствуют — сбор занял бы несколько недель и требует согласия родителей + логопеда.
+2. Синтетика достаточна для прототипа диплома — демонстрирует архитектуру и pipeline без клинических претензий.
+3. M5.3 план v6 явно допускает синтетику с документированием.
+
+**Датасет:**
+- 9 классов × 200 train + 50 val = 1800 train / 450 val
+- Центры классов: эмпирические прототипы ARKit blendshapes (23 значения)
+- Noise: Gaussian ±10% от центра, clamp [0,1]
+- Val accuracy: 100% (ожидаемо для разделимой синтетики)
+
+**Ограничения (явно задокументированы):**
+- Модель не тестировалась на реальных детских blendshapes
+- 100% accuracy — следствие разделимости синтетики, не реального качества
+- Для клинического применения необходим M13-этап с реальными данными
+
+**Planned M13:** Собрать ~50 записей на класс через LiveARSessionService + logopedist annotation. Переобучить на реальных данных. Ожидаемая val_acc на реальных: 75–85%.
+
+---
+
+### [2026-04-26] [ml-engineer] M5.3: Vision ML Stack — итоги деплоя
+
+**Что собрано:**
+1. `AppleFaceLandmarksDetector` (actor, Vision 76 точек) — `HappySpeech/ML/Vision/`
+2. `TonguePostureClassifierML` (CoreML CNN 9 классов) — `HappySpeech/ML/Vision/` + `Resources/Models/TonguePostureClassifier.mlpackage`
+3. `LipSymmetryAnalyzer` (vDSP, enum + LipSymmetryScore) — `HappySpeech/ML/Vision/`
+4. `AirStreamAnalyzer` (vDSP FFT spectral) — `HappySpeech/ML/Vision/`
+5. 28 unit-тестов в `HappySpeechTests/ML/Vision/` (4 test файла × ~7 тестов)
+
+**Что НЕ собрано:**
+- MediaPipe FaceMesh 478 (блокер ADR-015)
+
+**BUILD:** SUCCEEDED (0 errors, 0 warnings)
