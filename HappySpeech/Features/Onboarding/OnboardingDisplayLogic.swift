@@ -41,6 +41,12 @@ final class OnboardingDisplay: OnboardingDisplayLogic {
     var modelStatus: ModelDownloadStatus = .idle
     var modelStatusLabel: String = ""
 
+    // Mascot per-step phrase
+    var mascotText: String = ""
+
+    // Screening skip flag (если пользователь нажал «Пропустить скрининг»)
+    var screeningSkipped: Bool = false
+
     // Routing intent
     var pendingCompleted: Bool = false
 
@@ -53,6 +59,7 @@ final class OnboardingDisplay: OnboardingDisplayLogic {
         progressLabel = viewModel.progressLabel
         profile = viewModel.profile
         canAdvance = viewModel.canAdvance
+        mascotText = viewModel.mascotText
     }
 
     func displayAdvanceStep(_ viewModel: OnboardingModels.AdvanceStep.ViewModel) {
@@ -62,6 +69,7 @@ final class OnboardingDisplay: OnboardingDisplayLogic {
         progressLabel = viewModel.progressLabel
         profile = viewModel.profile
         canAdvance = viewModel.canAdvance
+        mascotText = viewModel.mascotText
         if viewModel.isCompleted { pendingCompleted = true }
     }
 
@@ -71,6 +79,7 @@ final class OnboardingDisplay: OnboardingDisplayLogic {
         progress = viewModel.progress
         progressLabel = viewModel.progressLabel
         canAdvance = viewModel.canAdvance
+        mascotText = viewModel.mascotText
     }
 
     func displaySetRole(_ viewModel: OnboardingModels.SetRole.ViewModel) {
@@ -109,6 +118,7 @@ final class OnboardingDisplay: OnboardingDisplayLogic {
         progress = viewModel.progress
         progressLabel = viewModel.progressLabel
         canAdvance = viewModel.canAdvance
+        mascotText = viewModel.mascotText
     }
 
     func displayStartModelDownload(_ viewModel: OnboardingModels.StartModelDownload.ViewModel) {

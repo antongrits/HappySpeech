@@ -212,6 +212,7 @@ enum OnboardingModels {
             let progressLabel: String
             let profile: OnboardingProfile
             let canAdvance: Bool
+            let mascotText: String
         }
     }
 
@@ -234,6 +235,7 @@ enum OnboardingModels {
             let profile: OnboardingProfile
             let canAdvance: Bool
             let isCompleted: Bool
+            let mascotText: String
         }
     }
 
@@ -251,6 +253,7 @@ enum OnboardingModels {
             let progress: Double
             let progressLabel: String
             let canAdvance: Bool
+            let mascotText: String
         }
     }
 
@@ -359,6 +362,7 @@ enum OnboardingModels {
             let progress: Double
             let progressLabel: String
             let canAdvance: Bool
+            let mascotText: String
         }
     }
 
