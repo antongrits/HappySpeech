@@ -7,6 +7,8 @@ import Observation
 protocol WorldMapDisplayLogic: AnyObject {
     func displayLoadMap(_ viewModel: WorldMapModels.LoadMap.ViewModel)
     func displaySelectZone(_ viewModel: WorldMapModels.SelectZone.ViewModel)
+    func displayLoadZoneDetail(_ viewModel: WorldMapModels.LoadZoneDetail.ViewModel)
+    func displayRefreshProgress(_ viewModel: WorldMapModels.RefreshProgress.ViewModel)
     func displayFailure(_ viewModel: WorldMapModels.Failure.ViewModel)
     func displayLoading(_ isLoading: Bool)
 }
@@ -29,6 +31,10 @@ final class WorldMapDisplay: WorldMapDisplayLogic {
     var isLoading: Bool = false
     var toastMessage: String?
 
+    // Детальный sheet зоны — заполняется при loadZoneDetail.
+    var zoneDetailViewModel: WorldMapModels.LoadZoneDetail.ViewModel?
+    var isZoneDetailSheetPresented: Bool = false
+
     func displayLoadMap(_ viewModel: WorldMapModels.LoadMap.ViewModel) {
         zones = viewModel.zones
         highlightedZoneId = viewModel.highlightedZoneId
@@ -46,6 +52,21 @@ final class WorldMapDisplay: WorldMapDisplayLogic {
         }
     }
 
+    func displayLoadZoneDetail(_ viewModel: WorldMapModels.LoadZoneDetail.ViewModel) {
+        zoneDetailViewModel = viewModel
+        isZoneDetailSheetPresented = true
+    }
+
+    func displayRefreshProgress(_ viewModel: WorldMapModels.RefreshProgress.ViewModel) {
+        zones = viewModel.zones
+        totalStarsLabel = viewModel.totalStarsLabel
+        totalProgressFraction = viewModel.totalProgressFraction
+        streakLabel = viewModel.streakLabel
+        hasStreak = viewModel.hasStreak
+        summaryAccessibilityLabel = viewModel.summaryAccessibilityLabel
+        isLoading = false
+    }
+
     func displayFailure(_ viewModel: WorldMapModels.Failure.ViewModel) {
         toastMessage = viewModel.toastMessage
         isLoading = false
@@ -57,5 +78,10 @@ final class WorldMapDisplay: WorldMapDisplayLogic {
 
     func clearToast() {
         toastMessage = nil
+    }
+
+    func dismissZoneDetailSheet() {
+        isZoneDetailSheetPresented = false
+        zoneDetailViewModel = nil
     }
 }
