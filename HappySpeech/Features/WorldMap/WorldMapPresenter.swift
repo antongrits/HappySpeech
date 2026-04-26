@@ -1,6 +1,5 @@
 import Foundation
 import OSLog
-import SwiftUI
 
 // MARK: - WorldMapPresentationLogic
 
@@ -76,8 +75,6 @@ final class WorldMapPresenter: WorldMapPresentationLogic {
 
     func presentLoadZoneDetail(_ response: WorldMapModels.LoadZoneDetail.Response) {
         let zone = response.zone
-        let bg = backgroundColor(for: zone.colorName)
-        let fg = foregroundColor(for: zone.colorName)
         let progressInt = Int((zone.progress * 100).rounded())
 
         let soundsLabel: String
@@ -143,8 +140,7 @@ final class WorldMapPresenter: WorldMapPresentationLogic {
             isLocked: zone.isLocked,
             prerequisiteHint: prereqHint,
             ctaTitle: ctaTitle,
-            backgroundColor: bg,
-            foregroundColor: fg,
+            colorName: zone.colorName,
             accessibilityLabel: a11yLabel
         )
         display?.displayLoadZoneDetail(viewModel)
@@ -193,8 +189,6 @@ final class WorldMapPresenter: WorldMapPresentationLogic {
     // MARK: - Helpers
 
     private func makeCard(_ zone: WorldZone, isHighlighted: Bool) -> WorldZoneCard {
-        let bg = backgroundColor(for: zone.colorName)
-        let fg = foregroundColor(for: zone.colorName)
         let progressInt = Int((zone.progress * 100).rounded())
 
         let progressLabel = String(
@@ -236,8 +230,7 @@ final class WorldMapPresenter: WorldMapPresentationLogic {
             progress: Double(zone.progress),
             progressLabel: progressLabel,
             lessonsLabel: lessonsLabel,
-            backgroundColor: bg,
-            foregroundColor: fg,
+            colorName: zone.colorName,
             isLocked: zone.isLocked,
             isHighlighted: isHighlighted,
             position: zone.position,
@@ -246,28 +239,5 @@ final class WorldMapPresenter: WorldMapPresentationLogic {
             accessibilityLabel: a11yLabel,
             accessibilityHint: a11yHint
         )
-    }
-
-    private func backgroundColor(for name: String) -> Color {
-        switch name {
-        case "mint":    return ColorTokens.Brand.mint
-        case "butter":  return ColorTokens.Brand.butter
-        case "lilac":   return ColorTokens.Brand.lilac
-        case "coral":   return ColorTokens.Brand.primary
-        case "gold":    return ColorTokens.Brand.gold
-        case "sky":     return ColorTokens.Brand.sky
-        case "primary": return ColorTokens.Brand.primary
-        default:        return ColorTokens.Brand.sky
-        }
-    }
-
-    private func foregroundColor(for name: String) -> Color {
-        // Все Brand-цвета достаточно насыщенные для белого текста.
-        switch name {
-        case "butter", "gold":
-            return ColorTokens.Kid.ink
-        default:
-            return .white
-        }
     }
 }

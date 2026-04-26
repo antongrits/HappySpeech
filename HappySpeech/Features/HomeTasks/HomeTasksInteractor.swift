@@ -29,9 +29,7 @@ protocol HomeTasksGameRouting: AnyObject {
 
 /// Бизнес-логика экрана «Домашние задания».
 ///
-/// Источник данных — на текущем спринте in-memory seed (5–7 заданий разных типов).
-/// На следующем спринте сюда будет подключён `HomeTaskRepository` поверх Realm
-/// + listener Firestore. Контракт `presenter` остаётся, поэтому View не пострадает.
+/// Использует in-memory seed (5–7 заданий разных типов).
 ///
 /// Зависимости:
 /// * `gameRouter` — заглушка маршрутизации в шаблон игры (передаёт View).
@@ -175,7 +173,7 @@ final class HomeTasksInteractor: HomeTasksBusinessLogic {
             return
         }
 
-        Task { [weak self] in
+        Task { @MainActor [weak self] in
             guard let self else { return }
             let granted = await service.requestPermission()
             guard granted else {
@@ -294,19 +292,31 @@ final class HomeTasksInteractor: HomeTasksBusinessLogic {
 
 private extension HomeTasksInteractor {
 
-    /// Генерирует список заданий для preview / on-boarding до подключения репозитория.
-    /// `reseed=true` оставляет только активные (имитация «обновлено логопедом»).
+    /// Генерирует список заданий для in-memory seed до подключения репозитория.
+    /// `reseed=true` сбрасывает прогресс всех заданий (имитация «обновлено логопедом»).
     static func makeSeedTasks(reseed: Bool = false) -> [HomeTask] {
+        let base = seedTaskItems()
+        if reseed {
+            return base.map { task in
+                var copy = task
+                copy.isCompleted = false
+                copy.isStarted = false
+                return copy
+            }
+        }
+        return base
+    }
+
+    private static func seedTaskItems() -> [HomeTask] {
         let calendar = Calendar.current
         let now = Date()
+        let assignedBy = String(localized: "homeTasks.seed.assignedBy")
 
         func dueIn(days: Int) -> Date? {
             calendar.date(byAdding: .day, value: days, to: now)
         }
 
-        let assignedBy = String(localized: "homeTasks.seed.assignedBy")
-
-        let base: [HomeTask] = [
+        return [
             HomeTask(
                 id: "task-001",
                 title: String(localized: "homeTasks.seed.repeatR.title"),
@@ -393,15 +403,5 @@ private extension HomeTasksInteractor {
                 assignedBy: assignedBy
             )
         ]
-
-        if reseed {
-            return base.map { task in
-                var copy = task
-                copy.isCompleted = false
-                copy.isStarted = false
-                return copy
-            }
-        }
-        return base
     }
 }
