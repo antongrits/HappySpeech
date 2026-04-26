@@ -23,9 +23,12 @@ struct ARZoneView: View {
         NavigationStack(path: $viewModelHolder.path) {
             ScrollView {
                 VStack(alignment: .leading, spacing: SpacingTokens.large) {
-                    heroSection
+                    heroBanner
+                    quickTipsCarousel
                     instructionsSection
+                    recommendedSection
                     activitiesHeader
+                    difficultyFilterChips
                     activitiesContent
                     unsupportedNotice
                 }
@@ -49,42 +52,23 @@ struct ARZoneView: View {
         }
     }
 
-    // MARK: - Hero section
+    // MARK: - Hero banner (sky→lilac gradient + decorative pulse rings + 3D Lyalya)
 
-    private var heroSection: some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
-            heroMascot
-            Text("ar.zone.greeting")
-                .font(TypographyTokens.title(26))
-                .foregroundStyle(ColorTokens.Kid.ink)
-            Text("ar.zone.subtitle")
-                .font(TypographyTokens.body())
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-        }
+    private var heroBanner: some View {
+        ARHeroBanner(
+            isCompactDevice: isCompactDevice,
+            mascotState: viewModelHolder.mascotState,
+            phase: viewModelHolder.phase
+        )
     }
 
-    /// Hero-маскот 240pt с placeholder-пульсацией первые ~300 мс загрузки.
-    /// На iPhone SE — 2D эмодзи-фоллбэк 🦋 (ARMascot2DFallback).
+    // MARK: - Quick tips carousel
+
     @ViewBuilder
-    private var heroMascot: some View {
-        ZStack {
-            if isCompactDevice {
-                ARMascot2DFallback(size: 160)
-            } else {
-                LyalyaRealityView(
-                    animation: viewModelHolder.mascotState,
-                    size: 240
-                )
-                .accessibilityLabel(Text("ar.zone.mascot.accessibility"))
-                // Placeholder — пульсирующий круг поверх 3D пока phase = .loading
-                if viewModelHolder.phase == .loading {
-                    ARMascotLoadingPlaceholder(size: 240)
-                        .transition(.opacity)
-                }
-            }
+    private var quickTipsCarousel: some View {
+        if !viewModelHolder.tips.isEmpty {
+            ARQuickTipsCarousel(tips: viewModelHolder.tips)
         }
-        .frame(maxWidth: .infinity, alignment: .center)
-        .padding(.vertical, SpacingTokens.tiny)
     }
 
     // MARK: - Instructions section
@@ -104,6 +88,18 @@ struct ARZoneView: View {
         }
     }
 
+    // MARK: - Recommended CTA
+
+    @ViewBuilder
+    private var recommendedSection: some View {
+        if let recommended = viewModelHolder.recommendedCard,
+           viewModelHolder.phase == .ready {
+            ARStartRecommendedButton(card: recommended) { [weak interactor] in
+                interactor?.selectGame(.init(gameId: recommended.id))
+            }
+        }
+    }
+
     // MARK: - Activities section
 
     private var activitiesHeader: some View {
@@ -111,6 +107,13 @@ struct ARZoneView: View {
             .font(TypographyTokens.headline(18))
             .foregroundStyle(ColorTokens.Kid.ink)
             .padding(.top, SpacingTokens.small)
+    }
+
+    @ViewBuilder
+    private var difficultyFilterChips: some View {
+        if !viewModelHolder.cards.isEmpty {
+            ARDifficultyFilterChips(selected: $viewModelHolder.activeFilter)
+        }
     }
 
     @ViewBuilder
@@ -127,23 +130,32 @@ struct ARZoneView: View {
         }
     }
 
+    private var filteredCards: [ARGameCard] {
+        viewModelHolder.cards.filter { viewModelHolder.activeFilter.matches($0) }
+    }
+
+    @ViewBuilder
     private var gamesGrid: some View {
-        LazyVGrid(
-            columns: [
-                GridItem(.flexible(), spacing: SpacingTokens.small),
-                GridItem(.flexible(), spacing: SpacingTokens.small)
-            ],
-            spacing: SpacingTokens.small
-        ) {
-            ForEach(viewModelHolder.cards) { card in
-                Button {
-                    interactor?.selectGame(.init(gameId: card.id))
-                } label: {
-                    ARGameCardView(card: card)
+        if filteredCards.isEmpty {
+            ARFilterEmptyState(filter: viewModelHolder.activeFilter)
+        } else {
+            LazyVGrid(
+                columns: [
+                    GridItem(.flexible(), spacing: SpacingTokens.small),
+                    GridItem(.flexible(), spacing: SpacingTokens.small)
+                ],
+                spacing: SpacingTokens.small
+            ) {
+                ForEach(filteredCards) { card in
+                    Button {
+                        interactor?.selectGame(.init(gameId: card.id))
+                    } label: {
+                        ARGameCardView(card: card)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(Text(card.title))
+                    .accessibilityHint(Text(card.subtitle))
                 }
-                .buttonStyle(.plain)
-                .accessibilityLabel(Text(card.title))
-                .accessibilityHint(Text(card.subtitle))
             }
         }
     }
@@ -151,21 +163,9 @@ struct ARZoneView: View {
     @ViewBuilder
     private var unsupportedNotice: some View {
         if !viewModelHolder.isARSupported {
-            HStack(alignment: .top, spacing: SpacingTokens.small) {
-                Image(systemName: "exclamationmark.triangle.fill")
-                    .foregroundStyle(ColorTokens.Semantic.warning)
-                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                    Text("ar.zone.unsupportedTitle")
-                        .font(TypographyTokens.headline())
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                    Text("ar.zone.unsupportedBody")
-                        .font(TypographyTokens.body(13))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                }
+            ARFallbackBannerView { [weak interactor] in
+                interactor?.selectFallback(.init())
             }
-            .padding(SpacingTokens.regular)
-            .background(ColorTokens.Semantic.warningBg)
-            .cornerRadius(RadiusTokens.md)
         }
     }
 
@@ -183,6 +183,7 @@ struct ARZoneView: View {
         router.onNavigateLocal = { [weak viewModelHolder] destination in
             viewModelHolder?.path.append(destination)
         }
+        viewModelHolder.router = router
 
         self.interactor = interactor
         self.presenter = presenter
@@ -213,14 +214,23 @@ struct ARZoneView: View {
 final class ARZoneDisplay: ARZoneDisplayLogic {
     var cards: [ARGameCard] = []
     var instructionSteps: [InstructionStep] = []
+    var tips: [ARQuickTip] = []
+    var recommendedCard: ARGameCard?
     var mascotState: LyalyaAnimation = .idle
     var phase: ARZonePhase = .loading
     var isARSupported: Bool = true
     var path: [ARGameDestination] = []
+    /// Пользовательский UI-state — какой фильтр сложности активен сейчас.
+    var activeFilter: ARDifficultyFilter = .all
+    /// Слабая ссылка на router нужна, чтобы Display мог триггернуть routeToFallback,
+    /// не утаскивая координатор из View. Router владеется через @State в ARZoneView.
+    weak var router: ARZoneRouter?
 
     func displayLoadGames(_ viewModel: ARZoneModels.LoadGames.ViewModel) {
         self.cards = viewModel.cards
         self.instructionSteps = viewModel.instructionSteps
+        self.tips = viewModel.tips
+        self.recommendedCard = viewModel.recommendedCard
         self.mascotState = viewModel.mascotState
         self.phase = viewModel.phase
         self.isARSupported = viewModel.isARSupported
@@ -228,6 +238,10 @@ final class ARZoneDisplay: ARZoneDisplayLogic {
 
     func displaySelectGame(_ viewModel: ARZoneModels.SelectGame.ViewModel) {
         path.append(viewModel.destination)
+    }
+
+    func displaySelectFallback(_ viewModel: ARZoneModels.SelectFallback.ViewModel) {
+        router?.routeToFallback()
     }
 }
 
@@ -255,6 +269,7 @@ private struct ARMascot2DFallback: View {
                 .shadow(color: ColorTokens.Brand.lilac.opacity(0.3), radius: 14, x: 0, y: 6)
             Text("🦋")
                 .font(.system(size: size * 0.5))
+                .accessibilityHidden(true)
         }
         .frame(width: size, height: size)
         .offset(y: bob)
@@ -306,6 +321,396 @@ private struct ARMascotLoadingPlaceholder: View {
     }
 }
 
+// MARK: - ARHeroBanner
+
+/// Hero-баннер на входе в AR-зону.
+/// Содержит 3D Лялю (или 2D-фоллбэк), декоративные пульсирующие кольца и
+/// gradient-фон sky → lilac (через `ColorTokens.Brand`).
+/// Reduced Motion отключает кольца и тени.
+private struct ARHeroBanner: View {
+    let isCompactDevice: Bool
+    let mascotState: LyalyaAnimation
+    let phase: ARZonePhase
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var ringScale: CGFloat = 0.9
+    @State private var ringOpacity: Double = 0.55
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.small) {
+            ZStack {
+                heroBackground
+                pulseRings
+                heroMascot
+            }
+            .frame(maxWidth: .infinity)
+            .frame(height: 260)
+            .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous))
+            .shadow(
+                color: ColorTokens.Brand.sky.opacity(reduceMotion ? 0.0 : 0.25),
+                radius: 16, x: 0, y: 8
+            )
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel(Text("ar.zone.mascot.accessibility"))
+
+            VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
+                Text("ar.zone.greeting")
+                    .font(TypographyTokens.title(26))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                Text("ar.zone.subtitle")
+                    .font(TypographyTokens.body())
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(.top, SpacingTokens.tiny)
+        }
+        .onAppear {
+            guard !reduceMotion else { return }
+            withAnimation(.easeInOut(duration: 1.6).repeatForever(autoreverses: true)) {
+                ringScale = 1.08
+                ringOpacity = 0.25
+            }
+        }
+    }
+
+    private var heroBackground: some View {
+        LinearGradient(
+            colors: [
+                ColorTokens.Brand.sky,
+                ColorTokens.Brand.lilac
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+
+    @ViewBuilder
+    private var pulseRings: some View {
+        if !reduceMotion {
+            ZStack {
+                Circle()
+                    .stroke(Color.white.opacity(0.35), lineWidth: 2)
+                    .frame(width: 220, height: 220)
+                    .scaleEffect(ringScale)
+                    .opacity(ringOpacity)
+                Circle()
+                    .stroke(Color.white.opacity(0.25), lineWidth: 2)
+                    .frame(width: 280, height: 280)
+                    .scaleEffect(ringScale * 1.05)
+                    .opacity(ringOpacity * 0.8)
+            }
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
+        }
+    }
+
+    @ViewBuilder
+    private var heroMascot: some View {
+        ZStack {
+            if isCompactDevice {
+                ARMascot2DFallback(size: 160)
+            } else {
+                LyalyaRealityView(animation: mascotState, size: 220)
+                if phase == .loading {
+                    ARMascotLoadingPlaceholder(size: 220)
+                        .transition(.opacity)
+                }
+            }
+        }
+    }
+}
+
+// MARK: - ARQuickTipsCarousel
+
+/// Карусель «быстрых советов» — ротация раз в 4.5 сек.
+/// При Reduced Motion смены не анимируются (резкая замена).
+private struct ARQuickTipsCarousel: View {
+    let tips: [ARQuickTip]
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var index: Int = 0
+    @State private var task: Task<Void, Never>?
+
+    var body: some View {
+        let tip = tips[safe: index] ?? tips[0]
+        HSLiquidGlassCard(
+            style: .tinted(ColorTokens.Brand.sky.opacity(0.18)),
+            padding: SpacingTokens.regular
+        ) {
+            HStack(spacing: SpacingTokens.regular) {
+                Image(systemName: tip.icon)
+                    .font(TypographyTokens.headline(20).weight(.semibold))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .frame(width: 32)
+                    .accessibilityHidden(true)
+                Text(tip.text)
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                tipDots
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(Text(tip.text))
+        .id(tip.id)
+        .transition(reduceMotion ? .identity : .opacity.combined(with: .scale(scale: 0.97)))
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.35), value: index)
+        .onAppear { startRotation() }
+        .onDisappear { stopRotation() }
+    }
+
+    private var tipDots: some View {
+        HStack(spacing: 4) {
+            ForEach(0..<tips.count, id: \.self) { i in
+                Circle()
+                    .fill(i == index
+                          ? ColorTokens.Brand.primary
+                          : ColorTokens.Brand.primary.opacity(0.25))
+                    .frame(width: 6, height: 6)
+            }
+        }
+        .accessibilityHidden(true)
+    }
+
+    private func startRotation() {
+        guard tips.count > 1 else { return }
+        stopRotation()
+        task = Task { @MainActor in
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .milliseconds(4500))
+                if Task.isCancelled { return }
+                index = (index + 1) % tips.count
+            }
+        }
+    }
+
+    private func stopRotation() {
+        task?.cancel()
+        task = nil
+    }
+}
+
+// MARK: - ARStartRecommendedButton
+
+/// CTA «Начать AR-сессию» — стартует первую рекомендованную лёгкую игру.
+/// Показывается только при `phase == .ready`.
+private struct ARStartRecommendedButton: View {
+    let card: ARGameCard
+    let action: () -> Void
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var pulse: CGFloat = 1.0
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: SpacingTokens.regular) {
+                ZStack {
+                    Circle()
+                        .fill(Color.white.opacity(0.22))
+                        .frame(width: 48, height: 48)
+                    Image(systemName: "play.fill")
+                        .font(TypographyTokens.headline(20).weight(.bold))
+                        .foregroundStyle(.white)
+                        .accessibilityHidden(true)
+                }
+                .scaleEffect(pulse)
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("ar.zone.recommended.cta")
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(.white)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                    Text(card.title)
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(Color.white.opacity(0.92))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                }
+
+                Spacer(minLength: 0)
+
+                Image(systemName: "arrow.right")
+                    .font(TypographyTokens.body(15).weight(.semibold))
+                    .foregroundStyle(.white)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.regular)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                LinearGradient(
+                    colors: [ColorTokens.Brand.primary, ColorTokens.Brand.lilac],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+            .cornerRadius(RadiusTokens.lg)
+            .shadow(
+                color: ColorTokens.Brand.primary.opacity(reduceMotion ? 0.0 : 0.32),
+                radius: 12, x: 0, y: 6
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Text("ar.zone.recommended.cta"))
+        .accessibilityHint(Text(card.title))
+        .onAppear {
+            guard !reduceMotion else { return }
+            withAnimation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true)) {
+                pulse = 1.07
+            }
+        }
+    }
+}
+
+// MARK: - ARDifficultyFilterChips
+
+/// Набор chips для фильтра по сложности (Все / Легко / Средне / Сложно).
+private struct ARDifficultyFilterChips: View {
+    @Binding var selected: ARDifficultyFilter
+
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: SpacingTokens.small) {
+                ForEach(ARDifficultyFilter.allCases, id: \.self) { filter in
+                    Button {
+                        withAnimation(.easeInOut(duration: 0.18)) {
+                            selected = filter
+                        }
+                    } label: {
+                        chip(for: filter, isActive: selected == filter)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(Text(LocalizedStringResource(stringLiteral: filter.titleKey)))
+                    .accessibilityAddTraits(selected == filter ? .isSelected : [])
+                }
+            }
+            .padding(.horizontal, 2)
+            .padding(.vertical, 2)
+        }
+    }
+
+    private func chip(for filter: ARDifficultyFilter, isActive: Bool) -> some View {
+        Text(LocalizedStringResource(stringLiteral: filter.titleKey))
+            .font(TypographyTokens.body(13).weight(.semibold))
+            .foregroundStyle(isActive ? Color.white : ColorTokens.Kid.ink)
+            .padding(.horizontal, SpacingTokens.regular)
+            .padding(.vertical, SpacingTokens.tiny)
+            .background(
+                Capsule().fill(
+                    isActive
+                    ? AnyShapeStyle(
+                        LinearGradient(
+                            colors: [ColorTokens.Brand.primary, ColorTokens.Brand.lilac],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    : AnyShapeStyle(ColorTokens.Kid.surfaceAlt)
+                )
+            )
+            .overlay(
+                Capsule()
+                    .strokeBorder(
+                        isActive ? Color.clear : ColorTokens.Kid.ink.opacity(0.08),
+                        lineWidth: 1
+                    )
+            )
+    }
+}
+
+// MARK: - ARFilterEmptyState
+
+/// «Под этот фильтр игр нет» — мягкий empty-state.
+private struct ARFilterEmptyState: View {
+    let filter: ARDifficultyFilter
+
+    var body: some View {
+        VStack(spacing: SpacingTokens.small) {
+            Image(systemName: "magnifyingglass")
+                .font(TypographyTokens.title(28).weight(.regular))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .accessibilityHidden(true)
+            Text("ar.zone.filter.empty")
+                .font(TypographyTokens.body(14))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .multilineTextAlignment(.center)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, SpacingTokens.xLarge)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(Text("ar.zone.filter.empty"))
+    }
+}
+
+// MARK: - ARFallbackBannerView
+
+/// Полноценный fallback-баннер для устройств без TrueDepth-камеры.
+/// Содержит иконку, заголовок, объяснение и CTA «Открыть 2D-альтернативу».
+private struct ARFallbackBannerView: View {
+    let onSelectFallback: () -> Void
+
+    var body: some View {
+        HSLiquidGlassCard(
+            style: .tinted(ColorTokens.Semantic.warningBg),
+            padding: SpacingTokens.large
+        ) {
+            VStack(spacing: SpacingTokens.regular) {
+                ZStack {
+                    Circle()
+                        .fill(ColorTokens.Semantic.warning.opacity(0.18))
+                        .frame(width: 64, height: 64)
+                    Image(systemName: "iphone.gen3.slash")
+                        .font(TypographyTokens.title(28).weight(.medium))
+                        .foregroundStyle(ColorTokens.Semantic.warning)
+                        .accessibilityHidden(true)
+                }
+                Text("ar.zone.unsupportedTitle")
+                    .font(TypographyTokens.headline(18))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                Text("ar.zone.unsupportedBody")
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
+
+                Button(action: onSelectFallback) {
+                    HStack(spacing: SpacingTokens.tiny) {
+                        Image(systemName: "play.fill")
+                            .accessibilityHidden(true)
+                        Text("ar.zone.fallbackCTA")
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
+                    }
+                    .font(TypographyTokens.headline(15))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, SpacingTokens.large)
+                    .padding(.vertical, SpacingTokens.small)
+                    .background(
+                        Capsule().fill(ColorTokens.Semantic.warning)
+                    )
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(Text("ar.zone.fallbackCTA"))
+                .padding(.top, SpacingTokens.tiny)
+            }
+            .frame(maxWidth: .infinity)
+        }
+        .accessibilityElement(children: .contain)
+    }
+}
+
 // MARK: - InstructionStepCard
 
 /// Карточка с одним шагом инструкции: номер + иконка + заголовок + текст.
@@ -329,8 +734,9 @@ private struct InstructionStepCard: View {
                         )
                         .frame(width: 48, height: 48)
                     Image(systemName: step.icon)
-                        .font(.system(size: 22, weight: .semibold))
+                        .font(TypographyTokens.title(22).weight(.semibold))
                         .foregroundStyle(.white)
+                        .accessibilityHidden(true)
                 }
                 .overlay(alignment: .topTrailing) {
                     Text("\(step.number)")
@@ -374,8 +780,9 @@ private struct ARGameCardView: View {
         VStack(alignment: .leading, spacing: SpacingTokens.small) {
             HStack {
                 Image(systemName: card.iconName)
-                    .font(.system(size: 30, weight: .medium))
+                    .font(TypographyTokens.title(30).weight(.medium))
                     .foregroundStyle(.white)
+                    .accessibilityHidden(true)
                 Spacer()
                 difficultyDots
             }
@@ -389,6 +796,7 @@ private struct ARGameCardView: View {
                 HStack(spacing: SpacingTokens.micro) {
                     Image(systemName: "clock")
                         .font(.caption2)
+                        .accessibilityHidden(true)
                     Text("\(card.estimatedMinutes) мин")
                         .font(TypographyTokens.body(12))
                 }
@@ -416,6 +824,14 @@ private struct ARGameCardView: View {
                     .frame(width: 6, height: 6)
             }
         }
+    }
+}
+
+// MARK: - Array safe subscript (локальный helper для карусели)
+
+private extension Array {
+    subscript(safe index: Int) -> Element? {
+        indices.contains(index) ? self[index] : nil
     }
 }
 
