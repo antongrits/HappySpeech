@@ -326,7 +326,7 @@ MIT License — см. [LICENSE](LICENSE)
 
 ## Автор
 
-Антон Григорьев — дипломный проект, 2026
+Антон Гриц — дипломный проект, 2026
 
 - Email: antongric558@gmail.com
 - GitHub: [@antongrits](https://github.com/antongrits)
