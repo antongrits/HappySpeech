@@ -5142,3 +5142,1765 @@ HomeTasksView (VoiceOver OK), SessionHistoryView (labels OK), SettingsView (togg
 - Поднять все `caption(10)` и `caption(11)` → минимум `caption(12)` систематически во всех экранах.
 - Добавить `accessibilityValue` к Swift Charts в `weeklyChartSection` и `dailyChartSection` (ProgressDashboardView).
 - display(32) → title(24)
+
+---
+
+## C1 — Batch 1: Детализированные спеки 10 экранов (2026-04-26)
+
+> Фокус батча: Liquid Glass refresh, состояния маскота «Ляля», уникальные градиенты, реалистичный русский контент.
+> Контур kid: min tap target 56×56pt. Контур parent/specialist: 44×44pt.
+
+---
+
+## ChildHome Screen — Детальная спека (Liquid Glass Refresh)
+
+**Контур:** kid
+**Статус:** реализован (503 LOC), нужен Liquid Glass refresh + полные состояния маскота
+
+### Градиент фона
+```swift
+LinearGradient(
+    colors: [ColorTokens.Kid.bg, ColorTokens.Kid.bgDeep],
+    startPoint: .top, endPoint: .bottom
+)
+// Поверх — радиальный глоу: Color.Brand.primary.opacity(0.08) из верхнего левого угла
+```
+
+### Навигация
+- Входит из: AppCoordinator после аутентификации / onboarding complete
+- Выходит в: WorldMapView (tap на зоны), SessionShellView (Quick Play), RewardsView, ProgressDashboardView, ParentHome (SOS / parent switch)
+
+### Структура UI (top → bottom)
+
+```
+ZStack {
+    kidGradientBackground               // full bleed
+    ScrollView(showsIndicators: false) {
+        VStack(spacing: SpacingTokens.sp5) {  // sp5 = 20pt
+
+            // 1. HERO SECTION (top)
+            HStack {
+                VStack(alignment: .leading, spacing: SpacingTokens.xs) {
+                    Text("Привет, Маша!")        // kidDisplay(32), Kid.ink
+                    Text("пятница, 25 апреля")   // caption(12), Kid.inkMuted
+                }
+                Spacer()
+                StreakBadge(count: 7)             // 56×56pt, Brand.butter фон
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)  // 16pt
+            .padding(.top, safeAreaInsets.top + SpacingTokens.l)
+
+            // 2. МАСКОТ ЛЯЛЯ — ReactiveMascotSection
+            HSMascotView(state: mascotState)     // 160×160pt, centred
+                .frame(maxWidth: .infinity)
+
+            // 3. ACHIEVEMENT BANNER (conditional)
+            // Показывается если viewModel.hasAchievement == true
+            ChildHomeAchievementBanner(...)
+                .HSLiquidGlassCard(.tinted)      // Brand.gold tint
+                .padding(.horizontal, SpacingTokens.screenEdge)
+
+            // 4. DAILY MISSION CARD
+            DailyMissionCard(...)
+                .HSLiquidGlassCard(.standard)
+                .padding(.horizontal, SpacingTokens.screenEdge)
+
+            // 5. QUICK PLAY CAROUSEL
+            Text("Играть сейчас")                // title(18), Kid.ink, padding .l left
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: SpacingTokens.m) {
+                    ForEach(viewModel.quickPlayItems) { item in
+                        QuickPlayCard(item: item) // 140×160pt
+                            .HSLiquidGlassCard(.elevated)
+                    }
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+            }
+
+            // 6. QUICK ACTIONS 2×2 GRID
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())],
+                      spacing: SpacingTokens.m) {
+                QuickActionCell(icon: "🗺️", label: "Карта мира",  accent: Brand.sky)
+                QuickActionCell(icon: "🏆", label: "Награды",     accent: Brand.butter)
+                QuickActionCell(icon: "📋", label: "Задания",     accent: Brand.gold)
+                QuickActionCell(icon: "📊", label: "Прогресс",    accent: Brand.mint)
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            // Каждая ячейка: .infinity / 2 × 88pt, HSLiquidGlassCard(.standard)
+
+            // 7. WORLD MAP MINI PREVIEW
+            WorldMapMiniPreview(zones: viewModel.zones)   // 5 цветных кружков
+                .frame(height: 72pt)
+                .HSLiquidGlassCard(.standard)
+                .padding(.horizontal, SpacingTokens.screenEdge)
+
+            // 8. SOUND PROGRESS (compact)
+            VStack(spacing: SpacingTokens.s) {
+                Text("Мои звуки")                // headline(18), Kid.ink
+                ForEach(viewModel.soundProgress) { sound in
+                    SoundProgressRow(sound: sound)   // 56pt height
+                }
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+
+            // 9. RECENT SESSIONS (последние 3)
+            VStack(spacing: SpacingTokens.s) {
+                Text("Последние занятия")        // headline(18), Kid.ink
+                ForEach(viewModel.recentSessions) { session in
+                    RecentSessionRow(session: session)  // 64pt height
+                        .HSLiquidGlassCard(.standard)
+                }
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.bottom, SpacingTokens.xxxl)
+        }
+    }
+
+    // SOS кнопка — плавающая, bottom trailing
+    SOSButton()
+        .frame(56, 56)
+        .position(bottom: 24pt, trailing: 16pt)
+}
+```
+
+### Маскот «Ляля» — состояния
+
+| Условие | Состояние маскота | Размер |
+|---|---|---|
+| Первое открытие дня | `.waving` | 160×160pt |
+| streak ≥ 7 дней | `.celebrating` | 160×160pt |
+| Нет занятий > 2 дней | `.encouraging` | 160×160pt |
+| idle > 5s | `.idle` (лёгкое дыхание) | 160×160pt |
+| Ачивка появилась | `.celebrating` + частицы | 160×160pt |
+
+### Компоненты DS
+
+- `HSLiquidGlassCard(.standard)` — DailyMission, QuickActions, RecentSessions
+- `HSLiquidGlassCard(.tinted)` — AchievementBanner (Brand.gold tint)
+- `HSLiquidGlassCard(.elevated)` — QuickPlay карточки (чуть больше blur)
+- `HSButton(style: .primary)` — кнопка «Начать занятие» внутри DailyMissionCard, 56pt высота
+- `HSProgressBar` — в SoundProgressRow, mint цвет
+- `HSBadge` — streak count в StreakBadge, butter фон
+
+### Liquid Glass
+
+- Все карточки: `.glassEffect()` / fallback `.ultraThinMaterial` (iOS <26)
+- QuickPlay карточки: `.glassEffect(in: RoundedRectangle(cornerRadius: 16))` + Brand-цвет tint
+- AchievementBanner: `.glassEffect(in: RoundedRectangle(cornerRadius: 16))` + Gold overlay 0.12 opacity
+
+### Анимации
+
+- Маскот появление при смене состояния: scale 0.85→1.0 + opacity, `MotionTokens.bounce`
+- AchievementBanner появление: slide сверху + opacity 0→1, `MotionTokens.spring`, delay 0.2s
+- QuickPlay карточки stagger: каждая с delay n×0.05s, `MotionTokens.outQuick`
+- SOS кнопка: пульсирует idle `MotionTokens.idlePulse` (scale 1.0→1.05)
+- Reduced Motion: все spring/bounce → opacity fade 0.15s, без scale
+
+### Accessibility
+
+- StreakBadge: `accessibilityLabel("Серия \(count) дней подряд")`
+- HSMascotView: `accessibilityLabel("Ляля")`, `accessibilityHidden(false)`
+- QuickActionCell: `accessibilityLabel("Открыть \(label)")`, `.isButton` trait
+- SoundProgressRow: `accessibilityLabel("\(sound.name), прогресс \(sound.percent)%")`
+- VoiceOver порядок: hero → маскот → mission → quickplay → actions → progress → sessions
+- Min tap target: 56×56pt на всех интерактивных элементах (kid-контур)
+- Dynamic Type: kidDisplay масштабируется, но не менее 24pt
+
+### Ключи локализации (новые)
+
+- `child.home.greeting` → "Привет, %@!"
+- `child.home.streak.badge` → "%d дней подряд"
+- `child.home.section.play.now` → "Играть сейчас"
+- `child.home.section.quick.actions` → "Быстрые действия"
+- `child.home.section.my.sounds` → "Мои звуки"
+- `child.home.section.recent` → "Последние занятия"
+- `child.home.sos.button` → "Позвать родителя"
+
+### iPhone SE адаптация (width < 375pt)
+
+- Маскот: 120×120pt (вместо 160pt)
+- QuickPlay карточки: 120×140pt
+- QuickActions grid: вертикальный стек вместо 2×2 (если AX text)
+- kidDisplay(32) → kidDisplay(28)
+
+---
+
+## SessionComplete Screen — Детальная спека
+
+**Контур:** kid
+**Статус:** реализован (543 LOC), нужна Liquid Glass + детальная дизайн-спека маскота
+
+### Градиент фона
+```swift
+// Динамический — зависит от точности:
+// accuracy ≥ 0.80: LinearGradient([Brand.mint.opacity(0.3), Kid.bg])
+// accuracy 0.60–0.79: LinearGradient([Brand.sky.opacity(0.25), Kid.bg])
+// accuracy < 0.60: LinearGradient([Kid.bg, Kid.bgDeep])
+// + радиальный глоу из центра: Brand.primary.opacity(0.06)
+```
+
+### Навигация
+- Входит из: SessionShellView (по завершении упражнения)
+- Выходит в: ChildHomeView ("Продолжить"), SessionShellView ("Играть ещё"), RewardsView (если новый стикер)
+
+### 4-фазный reveal (временна́я диаграмма)
+
+```
+Phase .mascot  [0.0–0.5s]  — HSMascotView появляется scale 0→1, bounce
+Phase .score   [0.5–1.2s]  — count-up анимация: 0→accuracyPercent за 0.7s
+Phase .stars   [1.2–2.0s]  — 3 звезды последовательно pop-in (delay 0.25s каждая)
+Phase .summary [2.0–2.5s]  — stat-карточки slide снизу + CTA кнопки fade-in
+```
+
+### Структура UI (top → bottom)
+
+```
+ZStack {
+    dynamicGradientBackground
+    CelebrationOverlay(visible: accuracy ≥ 0.80)  // конфетти Lottie поверх
+
+    VStack(spacing: 0) {
+
+        // МАСКОТ — phase .mascot
+        HSMascotView(state: mascotState)    // 180×180pt, centred, padding top 48pt
+            .padding(.top, 48)
+
+        // ЗАГОЛОВОК — phase .mascot завершена
+        Text(resultTitle)                   // kidDisplay(32), Kid.ink
+            .multilineTextAlignment(.center)
+        Text(resultSubtitle)               // title(18), Kid.inkMuted
+            .multilineTextAlignment(.center)
+        // padding bottom SpacingTokens.xxl
+
+        // RING SCORE — phase .score
+        ZStack {
+            Circle().stroke(Kid.line, lineWidth: 8)
+                .frame(72×72pt)
+            Circle()
+                .trim(from: 0, to: ringFraction)
+                .stroke(ringColor, style: .init(lineWidth: 8, lineCap: .round))
+                .frame(72×72pt)
+                .rotationEffect(.degrees(-90))
+            Text("\(animatedScore)%")       // title(24), ringColor
+        }
+
+        // ЗВЁЗДЫ — phase .stars
+        HStack(spacing: SpacingTokens.xl) {
+            ForEach(0..<3) { index in
+                StarView(filled: index < earnedStars)   // 48×48pt каждая
+                    .scaleEffect(starScale[index])
+            }
+        }
+
+        // STAT CARDS — phase .summary
+        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())],
+                  spacing: SpacingTokens.m) {
+            StatCard(icon: "🎯", value: "\(correctCount)", label: "Правильно")
+            StatCard(icon: "🔁", value: "\(totalCount)", label: "Всего")
+            StatCard(icon: "⏱️", value: durationString, label: "Время")
+            StatCard(icon: "🔥", value: "\(streakCount)", label: "Серия")
+        }
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        // Каждая StatCard: HSLiquidGlassCard(.standard), 80pt высота
+
+        // NEXT LESSON PREVIEW (conditional)
+        if let nextLesson = viewModel.nextLesson {
+            NextLessonPreviewCard(lesson: nextLesson)
+                .HSLiquidGlassCard(.tinted)    // Brand.sky tint
+                .padding(.horizontal, SpacingTokens.screenEdge)
+        }
+
+        Spacer()
+
+        // CTA BUTTONS
+        VStack(spacing: SpacingTokens.m) {
+            HSButton("Продолжить", style: .primary)   // .infinity × 56pt
+            HSButton("Играть ещё", style: .secondary) // .infinity × 56pt
+        }
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .padding(.bottom, SpacingTokens.xxl)
+    }
+}
+```
+
+### Маскот «Ляля» — состояния
+
+| accuracy | Маскот | Анимация |
+|---|---|---|
+| ≥ 80% | `.celebrating` | прыжок + конфетти Lottie |
+| 60–79% | `.encouraging` | подбадривает, большой палец вверх |
+| < 60% | `.thinking` | думает, "ничего страшного" |
+
+### Liquid Glass
+
+- StatCard: `.glassEffect(in: RoundedRectangle(cornerRadius: 12))`, fallback `.ultraThinMaterial`
+- NextLessonPreviewCard: `.glassEffect()` + Brand.sky tint 0.10 opacity
+- CelebrationOverlay: Lottie JSON поверх (конфетти), `HSLottieContainer(name: "celebration")`
+
+### Анимации
+
+- Маскот: scale 0→1.1→1.0, `MotionTokens.bounce`, от 0.0s
+- Ring stroke: `animateableData`, линейно 0.7s, от 0.5s
+- Star pop-in: scale 0→1.3→1.0, `MotionTokens.bounce`, delay [1.2, 1.45, 1.7s]
+- StatCard stagger: opacity 0→1 + translateY 16→0, delay [2.0, 2.1, 2.2, 2.3s]
+- Haptic: `.success` при phase .stars (accuracy ≥ 80%), `.warning` если < 60%
+- Share button: появляется вместе со stat-cards, `.outQuick`
+- Reduced Motion: фазы без анимации, мгновенное появление, без scale
+
+### Accessibility
+
+- Ring score: `accessibilityLabel("Точность \(animatedScore) процентов")`
+- StarView: `accessibilityLabel("\(earnedStars) звезды из трёх")`
+- StatCard: `accessibilityElement(children: .combine)`, label "Правильных ответов: \(correctCount)"
+- CTA primary: `accessibilityLabel("Продолжить занятия")`
+- CTA secondary: `accessibilityLabel("Повторить упражнение")`
+- VoiceOver порядок: маскот → заголовок → точность → звёзды → статистика → кнопки
+- Haptic feedback не зависит от Reduce Motion (это не анимация)
+
+### Ключи локализации (новые)
+
+- `session.complete.title.excellent` → "Отлично, %@!"
+- `session.complete.title.good` → "Молодец, %@!"
+- `session.complete.title.keep.going` → "Продолжаем стараться, %@!"
+- `session.complete.subtitle.excellent` → "Ты справился на отлично!"
+- `session.complete.stat.correct` → "Правильно"
+- `session.complete.stat.total` → "Всего"
+- `session.complete.stat.time` → "Время"
+- `session.complete.stat.streak` → "Серия"
+- `session.complete.cta.continue` → "Продолжить"
+- `session.complete.cta.replay` → "Играть ещё"
+
+### iPhone SE адаптация (width < 375pt)
+
+- Маскот: 140×140pt
+- Ring score: 60×60pt
+- StatCard grid → 2×2 но с меньшими padding (sp2 = 8pt)
+- CTA кнопки: 52pt высота
+
+---
+
+## AuthSignIn Screen — Детальная спека
+
+**Контур:** universal (до выбора роли — нейтральный тёплый стиль)
+**Статус:** реализован (315 LOC), нет дизайн-спеки
+
+### Градиент фона
+```swift
+LinearGradient(
+    colors: [ColorTokens.Kid.bg, Color.white.opacity(0.95)],
+    startPoint: .topLeading, endPoint: .bottomTrailing
+)
+// Декоративные blob: Brand.primary.opacity(0.07) сверху-справа, Brand.mint.opacity(0.05) снизу-слева
+// Реализованы через ellipse в ZStack, blur(radius: 60)
+```
+
+### Навигация
+- Входит из: LaunchScreen / Onboarding complete (если auth required)
+- Выходит в: ChildHomeView / ParentHomeView / SpecialistHomeView (по роли)
+- "Войти как гость": ChildHomeView demo mode
+
+### Структура UI (top → bottom)
+
+```
+ZStack {
+    gradientBackground
+    decorativeBlobs        // accessibility hidden
+
+    VStack(spacing: 0) {
+
+        // HEADER — логотип + закрыть
+        HStack {
+            Image("AppLogo")              // 40×40pt, AccessibilityHidden=false
+            Text("HappySpeech")           // title(24), Kid.ink
+            Spacer()
+            // Кнопка закрыть (если modal): 44×44pt ghost icon
+        }
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .padding(.top, safeAreaTop + SpacingTokens.l)
+
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: SpacingTokens.sp5) {
+
+                // WELCOME SECTION
+                VStack(spacing: SpacingTokens.s) {
+                    HSMascotView(state: .waving)       // 100×100pt
+                    Text("Добро пожаловать!")           // title(24), Kid.ink
+                    Text("Войдите, чтобы сохранить прогресс") // body(15), Kid.inkMuted
+                }
+                .multilineTextAlignment(.center)
+                .padding(.top, SpacingTokens.xxl)
+
+                // FORM SECTION — Liquid Glass
+                VStack(spacing: SpacingTokens.m) {
+                    HSTextField(
+                        placeholder: "Эл. почта",
+                        text: $email,
+                        keyboardType: .emailAddress,
+                        textContentType: .emailAddress
+                    )                                 // height 52pt, radius 10pt
+                    HSTextField(
+                        placeholder: "Пароль",
+                        text: $password,
+                        isSecure: true,
+                        textContentType: .password
+                    )                                 // height 52pt
+
+                    // Забыли пароль
+                    HStack {
+                        Spacer()
+                        Button("Забыли пароль?") { }  // caption(12), Brand.sky
+                            .frame(minHeight: 44)
+                    }
+                }
+                .padding(SpacingTokens.cardPadding)   // 16pt
+                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+                .padding(.horizontal, SpacingTokens.screenEdge)
+
+                // AUTH BUTTONS
+                VStack(spacing: SpacingTokens.s) {
+                    HSButton("Войти", style: .primary)          // .infinity × 56pt
+                    HSButton("Войти через Apple", style: .secondary,
+                             icon: "apple.logo")                 // .infinity × 56pt
+                    HSButton("Создать аккаунт", style: .ghost)  // .infinity × 52pt
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+
+                // GUEST / FOOTER
+                Button("Продолжить без входа") { }   // caption(12), Kid.inkMuted
+                    .frame(minHeight: 44)
+                    .padding(.bottom, SpacingTokens.xxxl)
+            }
+        }
+    }
+}
+```
+
+### Маскот «Ляля»
+
+- Размер: 100×100pt, позиция: верх welcome section
+- Состояние: `.waving` при появлении → `.idle` через 3 секунды
+- При ошибке авторизации: `.encouraging` (подбадривает)
+- При успехе: `.celebrating` (0.5s) перед переходом
+
+### Liquid Glass
+
+- Form section: `.ultraThinMaterial` background (iOS 26 `.glassEffect()` опционально)
+- TextField фон: `Kid.surface` с `.glassEffect(in: RoundedRectangle(cornerRadius: 10))`
+- Loading overlay: `ProgressView` в `.ultraThinMaterial` sheet
+
+### Анимации
+
+- Маскот появление: scale 0.8→1.0 + opacity, `MotionTokens.spring`, delay 0.1s
+- Form section: slide снизу 24pt + opacity, `MotionTokens.page`, delay 0.3s
+- Auth buttons: stagger opacity, delay 0.5s, `MotionTokens.outQuick`
+- Error state: shake horizontal form section, 3 oscillations 4pt amplitude
+- Success: маскот `.celebrating` + fade out view, `MotionTokens.hero`
+- Reduced Motion: нет slide/scale, только opacity transitions
+
+### Accessibility
+
+- Form: `accessibilityLabel("Поле для ввода электронной почты")`, `textContentType: .emailAddress`
+- Password field: `accessibilityLabel("Поле для ввода пароля")`, `isSecure: true`
+- "Войти через Apple": `accessibilityLabel("Войти через Apple ID")`
+- Кнопка "Войти": disabled когда поля пустые, `accessibilityHint("Заполните почту и пароль")`
+- VoiceOver: маскот → заголовок → форма → кнопки → ссылки
+- Dynamic Type: поля растягиваются, кнопки не меньше 44pt
+- Маскот: `accessibilityHidden(true)` в режиме форм (декоративный элемент)
+
+### Ключи локализации (новые)
+
+- `auth.signin.welcome` → "Добро пожаловать!"
+- `auth.signin.subtitle` → "Войдите, чтобы сохранить прогресс"
+- `auth.signin.email.placeholder` → "Эл. почта"
+- `auth.signin.password.placeholder` → "Пароль"
+- `auth.signin.forgot.password` → "Забыли пароль?"
+- `auth.signin.cta.signin` → "Войти"
+- `auth.signin.cta.apple` → "Войти через Apple"
+- `auth.signin.cta.register` → "Создать аккаунт"
+- `auth.signin.cta.guest` → "Продолжить без входа"
+
+### iPhone SE адаптация (width < 375pt)
+
+- Маскот: 80×80pt
+- Form padding: 12pt (вместо 16pt)
+- Кнопки: 52pt высота (вместо 56pt)
+- Декоративные blob: скрыть
+
+---
+
+## HoldThePose Screen — Детальная спека (AR)
+
+**Контур:** kid (AR-игра)
+**Статус:** реализован (122 LOC), минимальный дизайн — нужна полная спека
+
+### Градиент фона
+```swift
+// AR режим — фон это живая камера (ARFaceViewContainer)
+// Overlay поверх камеры:
+LinearGradient(
+    colors: [.black.opacity(0.55), .clear, .black.opacity(0.65)],
+    startPoint: .top, endPoint: .bottom
+)
+// Fallback (ARKit не поддерживается):
+LinearGradient([ColorTokens.Kid.bgDeep, ColorTokens.Brand.lilac.opacity(0.4)])
+```
+
+### Навигация
+- Входит из: ARZoneView или LessonPlayerView (AR-упражнение)
+- Выходит в: SessionShellView (завершение) / dismiss назад
+
+### Структура UI (top → bottom)
+
+```
+ZStack {
+
+    // СЛОЙ 1: камера или fallback
+    if ARFaceTrackingConfiguration.isSupported {
+        ARFaceViewContainer(session: session)
+            .ignoresSafeArea()
+    } else {
+        ARUnsupportedGradient()
+            .ignoresSafeArea()
+        ARUnsupportedView()           // иллюстрация + текст
+    }
+
+    // СЛОЙ 2: gradient overlay (HUD затемнение)
+    LinearGradient(...)
+        .ignoresSafeArea()
+
+    // СЛОЙ 3: HUD
+    VStack {
+
+        // TOP HUD
+        ARGameHUD(
+            title: display.postureName,          // "Улыбнись" — title(18), .white
+            scoreText: display.lastStars.map { "\($0)⭐" },
+            onClose: { dismiss() }               // 44×44pt close button, .white
+        )
+        // ARGameHUD высота: 64pt + safeAreaTop
+        // Background: .black.opacity(0.35) + .ultraThinMaterial blur
+
+        Spacer()
+
+        // CENTER — маскот-зеркало (наложение поверх AR)
+        // Показывается первые 3 секунды как "образец" позы
+        if showSampleMascot {
+            HSMascotView(state: .explaining)      // 80×80pt, trailing alignment
+                .frame(width: 80, height: 80)
+                .padding(.trailing, SpacingTokens.l)
+                .frame(maxWidth: .infinity, alignment: .trailing)
+        }
+
+        // BOTTOM HUD
+        VStack(spacing: SpacingTokens.s) {
+
+            // НАЗВАНИЕ ПОЗЫ
+            Text(display.postureName)             // headline(18), .white, капсула-фон
+                .padding(.horizontal, SpacingTokens.l)
+                .padding(.vertical, SpacingTokens.s)
+                .background(.black.opacity(0.45), in: Capsule())
+
+            // ПРОГРЕСС-БАР удержания позы
+            GeometryReader { proxy in
+                ZStack(alignment: .leading) {
+                    Capsule()
+                        .fill(.white.opacity(0.25))
+                    Capsule()
+                        .fill(progressColor)       // mint → gold → rose по progress
+                        .frame(width: proxy.size.width * CGFloat(display.progress))
+                }
+            }
+            .frame(height: 14)
+            .animation(MotionTokens.outQuick, value: display.progress)
+
+            // CONFIDENCE PERCENT
+            Text("\(display.confidencePercent)%")  // body(13), .white.opacity(0.85)
+
+            // ПУЛЬС-ИНДИКАТОР (когда поза засчитана)
+            if display.progress >= 1.0 {
+                SuccessParticleView()               // Lottie "pose_success", 60×60pt
+            }
+        }
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .padding(.bottom, SpacingTokens.xLarge)
+    }
+}
+```
+
+### Прогресс-цвет (progressColor)
+```swift
+// display.progress 0.0–0.4: Brand.mint
+// display.progress 0.4–0.8: Brand.butter (gold)
+// display.progress 0.8–1.0: Semantic.success
+```
+
+### ARUnsupportedView (fallback)
+```
+VStack(spacing: SpacingTokens.xxl) {
+    Image(systemName: "camera.slash.fill")   // 64×64pt, Kid.inkMuted
+    Text("AR не поддерживается")             // title(24), Kid.ink
+    Text("Это упражнение требует\nFace ID камеру") // body(15), Kid.inkMuted
+    HSButton("Назад", style: .secondary)     // 56×56pt min
+}
+.padding(SpacingTokens.xxl)
+```
+
+### Маскот «Ляля»
+
+- Размер: 80×80pt (compact — не мешает AR-виду)
+- Позиция: trailing top, показывается только 3s как образец
+- Состояние: `.explaining` — показывает пример позы
+- При успехе (progress = 1.0): маскот `.celebrating` 1.5s, затем скрывается
+- Haptic: `.success` при progress = 1.0
+
+### Liquid Glass
+
+- ARGameHUD фон: `Color.black.opacity(0.35)` + `.ultraThinMaterial` (не `.glassEffect()` — AR совместимость)
+- Pose label capsule: `.black.opacity(0.45)` (без blur — производительность AR)
+- Прогресс-бар: нет glass эффекта (нативный overlay)
+
+### Анимации
+
+- Прогресс-бар fill: `MotionTokens.outQuick`, непрерывная (каждый frame ARKit)
+- Маскот появление: scale 0→1, `MotionTokens.spring`, delay 0.2s
+- Маскот исчезновение: opacity 1→0, `MotionTokens.outQuick`, delay 3.0s
+- SuccessParticle: Lottie `pose_success`, autoplay, loop: false
+- Смена прогресс-цвета: `.animation(MotionTokens.outQuick, value: progressColor)`
+- Reduced Motion: прогресс-бар без анимации fill (прыжок к значению)
+
+### Accessibility
+
+- Close button: `accessibilityLabel("Закрыть упражнение")`, 44×44pt
+- Прогресс: `accessibilityLabel("Удержание позы \(display.confidencePercent) процентов")`
+- ARFaceViewContainer: `accessibilityHidden(true)` (камера — не VoiceOver элемент)
+- Маскот образец: `accessibilityLabel("Ляля показывает пример: \(display.postureName)")`
+- При Reduce Motion: добавить текстовый счётчик "x секунд удержано"
+- VoiceOver озвучивает каждые 25% через `UIAccessibility.post(.announcement)`
+
+### Ключи локализации (новые)
+
+- `ar.holdPose.title` → "Удержи позу"
+- `ar.holdPose.unsupported.title` → "AR не поддерживается"
+- `ar.holdPose.unsupported.subtitle` → "Это упражнение требует камеру Face ID"
+- `ar.holdPose.success` → "Отлично! Поза засчитана!"
+- `ar.holdPose.progress.label` → "Удержание: %d%%"
+- `ar.holdPose.close` → "Закрыть упражнение"
+
+### iPhone SE (нет Face ID — всегда ARUnsupportedView)
+
+- Уведомление: "Ваш iPhone не поддерживает AR-упражнения"
+- Предложение: альтернативное упражнение без AR (HSButton "Другое упражнение")
+
+---
+
+## StoryPlayer Screen — Детальная спека
+
+**Контур:** kid (видео-истории, introduction контент)
+**Статус:** реализован (223 LOC), нет дизайн-спеки вообще
+
+### Градиент фона
+```swift
+// Режим видео: чёрный фон (кинотеатр)
+Color.black.ignoresSafeArea()
+
+// Режим placeholder (нет видео):
+LinearGradient(
+    colors: [ColorTokens.Brand.lilac.opacity(0.5), ColorTokens.Kid.bgDeep],
+    startPoint: .top, endPoint: .bottom
+)
+```
+
+### Навигация
+- Входит из: LessonPlayerView (перед упражнением) / OnboardingFlowView (demo видео)
+- Выходит в: вызывающий экран через `onDismiss` callback
+
+### Структура UI (top → bottom)
+
+```
+ZStack(alignment: .bottom) {
+
+    // СЛОЙ 1: видео или placeholder
+    if videoURL != nil {
+        AVPlayerView(player: player)
+            .ignoresSafeArea()
+            .aspectRatio(16/9, contentMode: .fit)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color.black)
+    } else {
+        PlaceholderGradientBackground()
+        PlaceholderIllustration(videoID: videoID)  // SF Symbol или кастомная иллюстрация
+    }
+
+    // СЛОЙ 2: top controls (Skip)
+    VStack {
+        HStack {
+            Spacer()
+            SkipButton(visible: showSkip)           // "Пропустить →", 44×44pt min
+                .padding(.top, safeAreaTop + SpacingTokens.m)
+                .padding(.trailing, SpacingTokens.screenEdge)
+        }
+        Spacer()
+    }
+
+    // СЛОЙ 3: subtitle overlay (bottom)
+    if let subtitle = subtitle {
+        VStack {
+            Spacer()
+            Text(subtitle)
+                .font(TypographyTokens.headline(18))
+                .foregroundStyle(.white)
+                .multilineTextAlignment(.center)
+                .lineLimit(3)
+                .padding(.horizontal, SpacingTokens.xxl)
+                .padding(.vertical, SpacingTokens.m)
+                .background(
+                    .black.opacity(0.55),
+                    in: RoundedRectangle(cornerRadius: 12)
+                )
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.bottom, safeAreaBottom + SpacingTokens.xxl)
+        }
+    }
+
+    // СЛОЙ 4: маскот Ляля (появляется в конце видео)
+    if isNearEnd {
+        HSMascotView(state: .waving)               // 80×80pt, leading bottom
+            .frame(width: 80, height: 80)
+            .padding(.leading, SpacingTokens.l)
+            .padding(.bottom, safeAreaBottom + 80)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+    }
+}
+.onTapGesture { togglePlayback() }                 // tap по экрану = play/pause
+```
+
+### SkipButton
+```
+Capsule фон: .black.opacity(0.45) / .ultraThinMaterial
+Label: "Пропустить →", caption(13), .white
+Padding: 10pt вертикальный, 16pt горизонтальный
+Min tap target: 44×44pt
+Появляется: через 2 секунды после начала воспроизведения
+```
+
+### PlaceholderIllustration (когда нет видео)
+```
+VStack(spacing: SpacingTokens.xl) {
+    Image(systemName: "play.circle.fill")   // 80×80pt, .white.opacity(0.6)
+    Text("Видео загружается...")            // body(15), .white.opacity(0.8)
+    Text(videoID)                           // caption(12), .white.opacity(0.4)
+}
+```
+
+### Маскот «Ляля»
+
+- Размер: 80×80pt, позиция: bottom leading (не мешает субтитрам)
+- Появляется: когда `isNearEnd == true` (осталось < 3 секунды видео)
+- Состояние: `.waving` — машет рукой перед завершением
+- Переход: opacity 0→1, `MotionTokens.spring`
+
+### Liquid Glass
+
+- SkipButton: `.ultraThinMaterial` в capsule (совместимо с AVPlayer фоном)
+- Subtitle background: `.black.opacity(0.55)` без glass (для читаемости на видео)
+
+### Анимации
+
+- Skip button появление: opacity 0→1, `MotionTokens.page`, delay 2.0s
+- Маскот появление: scale 0.8→1.0 + opacity, `MotionTokens.spring`, delay 0.3s
+- Subtitle смена: crossfade opacity, `MotionTokens.outQuick`
+- Reduced Motion: без scale анимаций, только opacity
+
+### Accessibility
+
+- AVPlayer: `accessibilityLabel("Обучающее видео: \(videoID)")`
+- SkipButton: `accessibilityLabel("Пропустить видео")`
+- Subtitle Text: `accessibilityLabel(subtitle)` — субтитры читаются VoiceOver
+- Маскот в конце: `accessibilityLabel("Ляля: видео заканчивается")`
+- Media controls: VoiceOver может управлять AVPlayer нативно
+
+### Ключи локализации (новые)
+
+- `story.player.skip` → "Пропустить"
+- `story.player.loading` → "Видео загружается..."
+- `story.player.accessibility.video` → "Обучающее видео"
+- `story.player.accessibility.skip` → "Пропустить видео"
+- `story.player.accessibility.mascot.end` → "Ляля: видео заканчивается"
+
+### iPhone SE адаптация
+
+- Маскот: 64×64pt (вместо 80pt)
+- Subtitle: lineLimit(2), уменьшить padding
+- SkipButton: без изменений (уже минимальный)
+
+---
+
+## ProgressDashboard Screen — Детальная спека (Главный экран)
+
+**Контур:** parent (+ specialist view-only)
+**Статус:** реализован (959 LOC), нет детальной дизайн-спеки главного экрана
+
+### Градиент фона
+```swift
+LinearGradient(
+    colors: [ColorTokens.Parent.bg, ColorTokens.Parent.bgDeep],
+    startPoint: .top, endPoint: .bottom
+)
+// Верхняя полоса акцента: Parent.accent.opacity(0.06), высота 200pt
+```
+
+### Навигация
+- Входит из: ParentHomeView (таб Прогресс) / SpecialistHomeView (tap на ребёнка)
+- Выходит в: SoundProgressDetailView (tap на звук) / SessionHistoryView (tap на сессию)
+
+### Структура UI (top → bottom)
+
+```
+ZStack {
+    parentGradientBackground
+
+    VStack(spacing: 0) {
+
+        // NAVIGATION BAR (custom)
+        HStack {
+            Button { } label: { Image(systemName: "chevron.left") }  // 44×44pt
+                .foregroundStyle(Parent.accent)
+            Text("Прогресс Маши")         // title(20), Parent.ink
+            Spacer()
+            // Period picker: "Неделя" | "Месяц" | "Всё время"
+            PeriodPickerView(selected: $selectedPeriod)   // сегментированный, 120×32pt
+        }
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .padding(.vertical, SpacingTokens.m)
+
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: SpacingTokens.sectionSpacing) {  // 24pt
+
+                // SUMMARY CARD — главная метрика
+                SummaryCard(
+                    accuracy: viewModel.overallAccuracy,    // "82%"
+                    sessionsCount: viewModel.sessionsCount, // "14 занятий"
+                    totalDuration: viewModel.totalDuration  // "3ч 20мин"
+                )
+                .HSLiquidGlassCard(.elevated)
+                .padding(.horizontal, SpacingTokens.screenEdge)
+
+                // WEEKLY ACTIVITY CHART (Swift Charts)
+                WeeklyActivitySection(data: viewModel.weeklyData)
+                    .HSLiquidGlassCard(.standard)
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                // Bar chart: 7 баров (дни недели)
+                // Ось Y: количество упражнений (0–20)
+                // Цвет баров: Parent.accent
+                // Высота секции: 220pt (chart 160pt + labels)
+
+                // SOUND PROGRESS — компактная карта для каждого звука
+                SoundFamilySection(
+                    title: "Шипящие",
+                    color: ColorTokens.SoundFamilyColors.Hissing.hue,
+                    sounds: viewModel.hissingSounds
+                )
+                .HSLiquidGlassCard(.standard)
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                // Повторяется для каждой группы звуков с данными
+
+                // ACCURACY TREND (Swift Charts — line)
+                AccuracyTrendSection(data: viewModel.accuracyTrend)
+                    .HSLiquidGlassCard(.standard)
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                // Line chart: N точек по дням/неделям
+                // Цвет линии: Semantic.success
+                // Область под линией: Semantic.success.opacity(0.12)
+
+                // HIGHLIGHTS — 3 карточки-инсайта
+                HighlightsSection(highlights: viewModel.highlights)
+                // HStack scrollable: карточки 160×100pt
+                // Пример: "Лучший день: среда", "Серия: 7 дней", "Лидер звук: Ш"
+
+                // RECOMMENDATIONS
+                RecommendationsSection(items: viewModel.recommendations)
+                    .HSLiquidGlassCard(.standard)
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                // Список рекомендаций от AdaptivePlannerService
+
+                Spacer(minLength: SpacingTokens.xxxl)
+            }
+            .padding(.top, SpacingTokens.m)
+        }
+    }
+}
+```
+
+### SummaryCard — детали
+```
+HSLiquidGlassCard(.elevated) {
+    HStack(spacing: 0) {
+        // Левая часть: ring chart
+        ZStack {
+            Circle().stroke(Parent.line, lineWidth: 10).frame(80×80pt)
+            Circle()
+                .trim(from: 0, to: accuracy/100)
+                .stroke(Semantic.success, lineWidth: 10)
+                .frame(80×80pt)
+            Text("\(accuracy)%")   // title(20), Parent.ink
+        }
+        Spacer()
+        // Правая часть: метрики
+        VStack(alignment: .trailing, spacing: SpacingTokens.s) {
+            MetricPair(label: "Занятий", value: "\(sessionsCount)")   // mono(16)
+            MetricPair(label: "Время", value: totalDuration)           // mono(16)
+            MetricPair(label: "Серия", value: "\(streak) дней")       // mono(16)
+        }
+    }
+    .padding(SpacingTokens.cardPadding)
+}
+```
+
+### SoundProgressRow — детали
+
+```
+HStack {
+    SoundFamilyDot(color: familyColor)   // 12×12pt circle
+    Text(soundLabel)                      // body(15), Parent.ink
+    Spacer()
+    HSProgressBar(fraction: progress,    // 120×8pt, горизонтальный
+                  tint: familyColor)
+    Text("\(Int(progress * 100))%")      // mono(13), Parent.inkMuted
+}
+.frame(minHeight: 44)                    // min tap target specialist
+.onTapGesture { navigateToSoundDetail(sound) }
+```
+
+### Liquid Glass
+
+- SummaryCard: `.glassEffect(in: RoundedRectangle(cornerRadius: 16))` + `.elevated` prominence
+- WeeklyActivity + AccuracyTrend + SoundFamily карточки: `.glassEffect(.standard)`
+- Highlights: отдельные маленькие карточки `.glassEffect(.standard)` 160×100pt
+- PeriodPicker: нативный `Picker(style: .segmented)`, no glass
+
+### Анимации
+
+- Ring stroke: анимированный при появлении, `MotionTokens.page` 0.6s
+- Bar chart: bars анимируются снизу вверх при появлении, `MotionTokens.spring`
+- SoundProgress строки: stagger opacity, delay n×0.04s
+- Смена периода: crossfade данных `.animation(MotionTokens.page, value: selectedPeriod)`
+- Reduced Motion: нет ring анимации, статичные charts
+
+### Accessibility
+
+- SummaryCard: `accessibilityElement(children: .combine)`, label "Общая точность \(accuracy) процентов, занятий \(sessionsCount), время \(totalDuration)"
+- Ring: `accessibilityHidden(true)` — данные уже в label card
+- Chart секции: `accessibilityLabel("График активности по неделям")`, `accessibilityValue("Среднее \(avgSessions) занятий в день")`
+- SoundProgressRow: `accessibilityLabel("\(soundLabel), прогресс \(percent) процентов")`, `.isButton` trait
+- PeriodPicker: нативный Picker — VoiceOver автоматически
+
+### Ключи локализации (новые)
+
+- `progress.dashboard.title` → "Прогресс %@"
+- `progress.dashboard.period.week` → "Неделя"
+- `progress.dashboard.period.month` → "Месяц"
+- `progress.dashboard.period.all` → "Всё время"
+- `progress.dashboard.summary.sessions` → "занятий"
+- `progress.dashboard.summary.time` → "Время"
+- `progress.dashboard.summary.streak` → "Серия"
+- `progress.dashboard.section.activity` → "Активность"
+- `progress.dashboard.section.sounds` → "Звуки"
+- `progress.dashboard.section.highlights` → "Достижения"
+- `progress.dashboard.section.recommendations` → "Рекомендации"
+
+### iPhone SE адаптация (width < 375pt)
+
+- SummaryCard: ring 64×64pt
+- WeeklyChart: высота 140pt
+- SoundProgress bar: 96pt ширина
+- PeriodPicker: abbreviations "Нед" | "Мес" | "Всё"
+
+---
+
+## Rewards Screen — Детальная спека (Album Grid)
+
+**Контур:** kid
+**Статус:** реализован (602 LOC), нужна Liquid Glass + детальная batch-спека
+
+### Градиент фона
+```swift
+LinearGradient(
+    colors: [ColorTokens.Brand.butter.opacity(0.35), ColorTokens.Kid.bg],
+    startPoint: .top, endPoint: .bottom
+)
+// Декоративные confetti-частицы (статичные): Brand.gold, Brand.rose, Brand.mint
+// Реализовать через ForEach scattered ellipse, opacity 0.15
+```
+
+### Навигация
+- Входит из: ChildHomeView (QuickActions "Награды") / SessionCompleteView (новый стикер)
+- Выходит в: StickerDetailView (tap на стикер) / StreakModalView (tap на streak)
+
+### Структура UI (top → bottom)
+
+```
+ZStack {
+    rewardsGradientBackground
+    confettiDecoration        // accessibility hidden
+
+    VStack(spacing: 0) {
+
+        // HEADER
+        HStack {
+            Button { dismiss() } label: {
+                Image(systemName: "chevron.left")
+            }
+            .frame(56, 56)                              // kid tap target
+            Text("Мои награды")                         // title(24), Kid.ink
+            Spacer()
+            // Streak badge
+            StreakButton(count: viewModel.streakDays) {
+                showStreakModal = true
+            }
+            .frame(minWidth: 56, minHeight: 56)
+        }
+        .padding(.horizontal, SpacingTokens.screenEdge)
+
+        // МАСКОТ + STREAK SUMMARY
+        HStack {
+            HSMascotView(state: mascotState)             // 80×80pt
+                .padding(.leading, SpacingTokens.l)
+            VStack(alignment: .leading, spacing: SpacingTokens.xs) {
+                Text("Собрано: \(viewModel.collectedCount) / \(viewModel.totalCount)")
+                    // title(18), Kid.ink
+                Text("Стикеров за эту неделю: \(viewModel.weekCount)")
+                    // caption(13), Kid.inkMuted
+            }
+            Spacer()
+        }
+        .padding(.vertical, SpacingTokens.m)
+        .HSLiquidGlassCard(.standard)
+        .padding(.horizontal, SpacingTokens.screenEdge)
+
+        // FILTER CHIPS (категории)
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: SpacingTokens.s) {
+                ForEach(RewardCategory.allCases) { cat in
+                    HSChip(
+                        label: cat.localizedName,
+                        isSelected: selectedCategory == cat
+                    ) {
+                        selectedCategory = cat
+                    }
+                    .frame(minHeight: 56)               // kid tap target
+                }
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+        }
+        .padding(.vertical, SpacingTokens.s)
+
+        // ALBUM GRID
+        ScrollView(showsIndicators: false) {
+            LazyVGrid(
+                columns: [
+                    GridItem(.flexible(), spacing: SpacingTokens.m),
+                    GridItem(.flexible(), spacing: SpacingTokens.m),
+                    GridItem(.flexible(), spacing: SpacingTokens.m)
+                ],
+                spacing: SpacingTokens.m
+            ) {
+                ForEach(filteredStickers) { sticker in
+                    StickerCell(sticker: sticker)
+                        .frame(minWidth: 96, minHeight: 96)  // 3-колонка
+                        .onTapGesture { selectedSticker = sticker }
+                }
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.bottom, SpacingTokens.xxxl)
+        }
+    }
+}
+.sheet(item: $selectedSticker) { sticker in
+    StickerDetailView(sticker: sticker)
+        .presentationDetents([.medium])
+}
+.sheet(isPresented: $showStreakModal) {
+    StreakModalView(days: viewModel.streakDays)
+        .presentationDetents([.medium])
+}
+```
+
+### StickerCell — детали
+
+```
+ZStack {
+    if sticker.isUnlocked {
+        // Разблокированный стикер
+        Image(sticker.imageName)
+            .resizable()
+            .aspectRatio(1, contentMode: .fit)
+            .HSLiquidGlassCard(.standard)
+            // При новом стикере: Brand.gold border 2pt, анимированный shine
+    } else {
+        // Заблокированный: силуэт
+        RoundedRectangle(cornerRadius: RadiusTokens.card)
+            .fill(Kid.surfaceAlt)
+            .overlay(
+                Image(systemName: "lock.fill")
+                    .font(.system(size: 24))
+                    .foregroundStyle(Kid.inkSoft)
+            )
+    }
+}
+.frame(minWidth: 96, minHeight: 96)
+.scaleEffect(sticker.isNew ? 1.05 : 1.0)
+.animation(MotionTokens.idlePulse, value: sticker.isNew)
+```
+
+### Категории (RewardCategory)
+- `.all` → "Все"
+- `.sounds` → "Звуки"
+- `.stars` → "Звёзды"
+- `.streaks` → "Серии"
+- `.special` → "Особые"
+
+### Маскот «Ляля»
+
+- Размер: 80×80pt, позиция: summary card leading
+- Состояние: `.celebrating` если новый стикер есть / `.waving` обычно
+- При tap на заблокированный: `.encouraging` (мотивирует разблокировать)
+
+### Liquid Glass
+
+- Summary card: `.glassEffect(.standard)`
+- StickerCell разблокированный: `.glassEffect(.standard)` в card
+- StickerCell заблокированный: `.ultraThinMaterial` dimmed
+
+### Анимации
+
+- Новый стикер появление: scale 0→1.2→1.0, `MotionTokens.bounce` + confetti Lottie
+- Grid stagger: opacity 0→1, delay n×0.03s (по порядку в grid)
+- Filter chip смена: crossfade content `.animation(MotionTokens.outQuick, value: selectedCategory)`
+- Pulсирование нового стикера: scale 1.0→1.05 loop, `MotionTokens.idlePulse`
+- Reduced Motion: без scale анимаций, без stagger
+
+### Accessibility
+
+- StickerCell разблокированный: `accessibilityLabel("\(sticker.name), получен \(sticker.earnedDate)")`, `.isButton`
+- StickerCell заблокированный: `accessibilityLabel("\(sticker.name), заблокирован. Нужно: \(sticker.unlockCondition)")`
+- Summary: `accessibilityElement(children: .combine)`, "Собрано \(collected) из \(total) стикеров"
+- StreakBadge: `accessibilityLabel("Серия \(days) дней")`
+- Filter chips: `accessibilityAddTraits(.isSelected)` если активен
+- Grid: `accessibilityLabel("Альбом наград")`
+
+### Ключи локализации (новые)
+
+- `rewards.title` → "Мои награды"
+- `rewards.collected` → "Собрано: %d / %d"
+- `rewards.week.count` → "Стикеров за неделю: %d"
+- `rewards.category.all` → "Все"
+- `rewards.category.sounds` → "Звуки"
+- `rewards.category.stars` → "Звёзды"
+- `rewards.category.streaks` → "Серии"
+- `rewards.category.special` → "Особые"
+- `rewards.sticker.locked` → "Заблокировано"
+
+### iPhone SE адаптация (width < 375pt)
+
+- Grid: 3 → 2 колонки (при Dynamic Type AX)
+- StickerCell: 80×80pt минимум
+- Summary card: маскот скрыть, только текст
+
+---
+
+## SessionShell Screen — Детальная спека
+
+**Контур:** kid
+**Статус:** реализован (421 LOC), частичная спека M7.2
+
+### Градиент фона
+```swift
+// Динамический — меняется по типу игры:
+// listen-and-choose: LinearGradient([Brand.sky.opacity(0.3), Kid.bg])
+// repeat-after-model: LinearGradient([Brand.primary.opacity(0.25), Kid.bg])
+// AR: LinearGradient([Brand.lilac.opacity(0.4), Kid.bgDeep])
+// По умолчанию: LinearGradient([Kid.bg, Kid.bgDeep])
+```
+
+### Навигация
+- Входит из: ChildHomeView / WorldMapView (start level)
+- Содержит: LessonPlayer игры как child views
+- Выходит в: SessionCompleteView (завершение) / ChildHomeView (abandon)
+
+### Структура UI (top → bottom)
+
+```
+ZStack {
+    gameGradientBackground   // меняется по типу игры
+
+    VStack(spacing: 0) {
+
+        // SESSION HUD (прилипает сверху)
+        SessionHUDView(
+            progress: viewModel.exerciseProgress,     // 0.0–1.0
+            exerciseIndex: viewModel.currentIndex,     // "3 из 8"
+            soundLabel: viewModel.currentSoundLabel,   // "Звук Ш"
+            fatigueLevel: viewModel.fatigueLevel,      // enum: normal/elevated/high
+            onPause: { showPauseSheet = true },
+            onSOS: { showSOSAlert = true }
+        )
+        // Высота HUD: 64pt + safeAreaTop
+        // Фон HUD: .ultraThinMaterial
+
+        // PROGRESS BAR под HUD
+        HSProgressBar(
+            fraction: viewModel.exerciseProgress,
+            tint: progressTintColor,                   // по типу игры
+            style: .capsule
+        )
+        .frame(height: 6)
+        .padding(.horizontal, SpacingTokens.screenEdge)
+
+        // GAME CONTENT AREA — сюда рендерится текущая игра
+        GameContentView(
+            game: viewModel.currentGame,
+            mascotState: $mascotState,
+            onGameComplete: { result in
+                Task { await interactor?.gameCompleted(.init(result: result)) }
+            }
+        )
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        // Игра занимает всё оставшееся пространство
+        // Маскот внутри игры — 120×120pt, позиция bottom leading
+
+        // FEEDBACK OVERLAY (temporary, 1.5s)
+        if showFeedback {
+            FeedbackOverlay(isCorrect: lastAnswerCorrect)
+                // Correct: зелёный flash + Brand.mint confetti + haptic .success
+                // Incorrect: мягкий красный border flash + haptic .warning
+        }
+    }
+
+    // PAUSE SHEET
+    .sheet(isPresented: $showPauseSheet) {
+        PauseSheetView(
+            onResume: { showPauseSheet = false },
+            onAbandon: { interactor?.abandonSession() }
+        )
+        .presentationDetents([.fraction(0.4)])
+    }
+}
+```
+
+### SessionHUDView — детали
+
+```
+HStack {
+    // Прогресс-текст
+    VStack(alignment: .leading, spacing: 2) {
+        Text(soundLabel)          // caption(12), Kid.ink
+        Text("\(index) из \(total)") // caption(11), Kid.inkMuted
+    }
+
+    Spacer()
+
+    // Fatigue indicator
+    FatigueIndicator(level: fatigueLevel)   // 3 кружка: зелёный/жёлтый/красный
+
+    // Пауза
+    Button(action: onPause) {
+        Image(systemName: "pause.fill")
+    }
+    .frame(44, 44)
+
+    // SOS
+    Button(action: onSOS) {
+        Image(systemName: "phone.fill")
+            .foregroundStyle(Semantic.error)
+    }
+    .frame(44, 44)
+}
+.padding(.horizontal, SpacingTokens.screenEdge)
+.padding(.vertical, SpacingTokens.s)
+.background(.ultraThinMaterial)
+```
+
+### FeedbackOverlay — детали
+
+```
+// CORRECT:
+ZStack {
+    Color.Semantic.success.opacity(0.12).ignoresSafeArea()  // зелёная вспышка
+    VStack {
+        Text("Правильно!")    // kidDisplay(32), Semantic.success, центр
+        HSMascotView(state: .celebrating)   // 80×80pt, временно
+    }
+}
+.transition(.opacity)
+.animation(MotionTokens.outQuick)
+// Автоматически исчезает через 1.5s
+
+// INCORRECT:
+ZStack {
+    RoundedRectangle(cornerRadius: 16)
+        .stroke(Semantic.error.opacity(0.4), lineWidth: 3)  // красная рамка
+        .ignoresSafeArea(edges: [])
+    VStack {
+        Text("Попробуй ещё раз")  // title(18), Semantic.error.opacity(0.8), центр
+        HSMascotView(state: .encouraging)  // 80×80pt
+    }
+}
+.transition(.opacity)
+```
+
+### PauseSheetView — детали
+
+```
+VStack(spacing: SpacingTokens.xxl) {
+    HSMascotView(state: .idle)            // 80×80pt
+    Text("Пауза")                         // title(24), Kid.ink
+    Text("Возвращаемся?")                 // body(15), Kid.inkMuted
+
+    HSButton("Продолжить", style: .primary)   // .infinity × 56pt
+    HSButton("Выйти", style: .ghost)          // .infinity × 52pt, Semantic.error цвет
+}
+.padding(SpacingTokens.xxl)
+```
+
+### Маскот «Ляля» в SessionShell
+
+- Размер: 120×120pt внутри GameContentArea
+- Позиция: определяется каждой игрой (bottom leading / center)
+- Состояния: передаются через `@Binding var mascotState`
+  - `.listening` — во время записи ответа
+  - `.thinking` — ожидание результата
+  - `.celebrating` — правильный ответ (1.5s)
+  - `.encouraging` — неправильный ответ (1.5s)
+  - `.speaking` — воспроизводит эталонное слово
+
+### Liquid Glass
+
+- SessionHUD: `.ultraThinMaterial` background (не `.glassEffect()` — производительность)
+- PauseSheet VStack: `.glassEffect(.standard)` в card
+- FeedbackOverlay: без glass (прозрачный цветовой оверлей)
+- Игры внутри (LessonPlayer): определяют свои glass-эффекты
+
+### Анимации
+
+- FeedbackOverlay появление: opacity 0→1, `MotionTokens.outQuick`
+- FeedbackOverlay исчезновение: opacity 1→0, delay 1.5s, `MotionTokens.outQuick`
+- Прогресс-бар fill: `MotionTokens.outQuick`, value: exerciseProgress
+- HUD смена звука: crossfade text, `MotionTokens.outQuick`
+- Переход между играми: slide leading→trailing, `MotionTokens.page`
+- Reduced Motion: feedback без opacity flash, нет slide (фиксированный layout)
+
+### Accessibility
+
+- HUD: `accessibilityElement(children: .ignore)`, `accessibilityLabel("Упражнение \(index) из \(total). Звук: \(soundLabel)")`
+- Pause button: `accessibilityLabel("Пауза")`
+- SOS button: `accessibilityLabel("Позвать родителя")`
+- FeedbackOverlay правильный: `UIAccessibility.post(notification: .announcement, argument: "Правильно!")`
+- FeedbackOverlay неправильный: `UIAccessibility.post(notification: .announcement, argument: "Попробуй ещё раз")`
+- GameContent: VoiceOver фокус перемещается на новую игру при смене
+
+### Ключи локализации (новые)
+
+- `session.hud.exercise.counter` → "Упражнение %d из %d"
+- `session.feedback.correct` → "Правильно!"
+- `session.feedback.incorrect` → "Попробуй ещё раз"
+- `session.pause.title` → "Пауза"
+- `session.pause.subtitle` → "Возвращаемся?"
+- `session.pause.resume` → "Продолжить"
+- `session.pause.abandon` → "Выйти"
+
+### iPhone SE адаптация (width < 375pt)
+
+- HUD: скрыть FatigueIndicator (только текст)
+- Маскот: 96×96pt (вместо 120pt)
+- FeedbackOverlay текст: title(24) вместо kidDisplay(32)
+
+---
+
+## LessonPlayer RepeatAfterModel — Детальная спека
+
+**Контур:** kid (ключевая логопедическая игра)
+**Статус:** есть LessonPlayer папка (559 LOC PuzzleRevealView), нет спеки RepeatAfterModel
+
+### Назначение
+Игра "Повтори за героем": ребёнок слушает эталонное слово от маскота и повторяет его. ASR оценивает произношение.
+
+### Градиент фона
+```swift
+LinearGradient(
+    colors: [ColorTokens.Games.repeatAfterModel.opacity(0.3), ColorTokens.Kid.bg],
+    startPoint: .topLeading, endPoint: .bottomTrailing
+)
+// Games.repeatAfterModel: coral-apricot (Brand.primary тон)
+```
+
+### Навигация
+- Входит из: SessionShellView (как child view, game type `.repeatAfterModel`)
+- Коллбэк: `onGameComplete(GameResult)` → SessionShell
+
+### Состояния игры (GamePhase)
+
+```swift
+enum GamePhase {
+    case intro          // показ слова и иллюстрации, 2s
+    case modelPlaying   // Ляля "говорит" эталонное слово
+    case waiting        // пауза перед записью, 0.5s
+    case recording      // запись ответа ребёнка (VAD)
+    case processing     // ASR обработка
+    case result         // показ результата (correct/partial/incorrect)
+    case next           // переход к следующему слову
+}
+```
+
+### Структура UI (top → bottom)
+
+```
+VStack(spacing: SpacingTokens.sp5) {
+
+    // ИЛЛЮСТРАЦИЯ СЛОВА + МАСКОТ
+    ZStack(alignment: .bottomLeading) {
+
+        // Основная иллюстрация слова
+        WordIllustrationCard(imageName: exercise.illustrationName)
+        // RoundedRectangle(radius: 16), 280×200pt
+        // HSLiquidGlassCard(.elevated) + иллюстрация полноэкранная
+        // accessibilityLabel: exercise.word
+
+        // Маскот снизу-слева
+        HSMascotView(state: mascotState)   // 120×120pt
+            .offset(x: -16, y: 32)
+    }
+    .frame(maxWidth: .infinity)
+    .padding(.horizontal, SpacingTokens.screenEdge)
+
+    // СЛОВО
+    Text(exercise.word)                    // kidDisplay(40), Kid.ink, centred
+        .tracking(2)                       // разрядка для читаемости
+    // При phase .modelPlaying: каждая буква подсвечивается по очереди
+    // Brand.primary цвет, animation MotionTokens.outQuick
+
+    // ТРАНСКРИПЦИЯ (опционально, для старших)
+    if showTranscription {
+        Text("[" + exercise.transcription + "]")
+            .font(TypographyTokens.body(15))
+            .foregroundStyle(ColorTokens.Kid.inkMuted)
+    }
+
+    Spacer()
+
+    // ГЛАВНЫЙ БЛОК ДЕЙСТВИЯ
+    VStack(spacing: SpacingTokens.xl) {
+
+        // Фаза INTRO / WAITING: кнопка "Слушать"
+        if phase == .intro || phase == .waiting {
+            HSButton(
+                phase == .intro ? "Слушать" : "Слушаю...",
+                style: .primary,
+                icon: "speaker.wave.2.fill"
+            ) {
+                interactor?.playModel()
+            }
+            .frame(minHeight: 56)   // kid tap target
+
+        // Фаза MODEL PLAYING: аудио-волна маскота
+        } else if phase == .modelPlaying {
+            HSAudioWaveform(isPlaying: true, tint: Brand.primary)
+                .frame(height: 56)
+            Text("Слушай внимательно")  // body(15), Kid.inkMuted
+
+        // Фаза RECORDING: кнопка записи
+        } else if phase == .recording {
+            RecordingButton(isRecording: true) {
+                interactor?.stopRecording()
+            }
+            // 80×80pt круглая кнопка, Brand.primary, пульсирует
+            // Surrounding ring: Brand.primary.opacity(0.3), анимированный
+
+            HSAudioWaveform(isPlaying: true, tint: Brand.primary)
+                .frame(height: 40)
+            Text("Говори!")             // title(18), Kid.ink, bold
+
+        // Фаза PROCESSING: spinner
+        } else if phase == .processing {
+            ProgressView()
+                .tint(Brand.primary)
+                .scaleEffect(1.5)
+            Text("Слушаю...")           // body(15), Kid.inkMuted
+
+        // Фаза RESULT: результат + оценка
+        } else if phase == .result {
+            ResultView(score: lastScore)
+            // Correct: Semantic.success, "Отлично!" + конфетти
+            // Partial: Brand.butter, "Почти!" + подсветка ошибочной части
+            // Incorrect: Kid.inkMuted, "Попробуем ещё?" + Ляля .encouraging
+        }
+
+        // WORD ATTEMPTS DOTS (3 попытки)
+        HStack(spacing: SpacingTokens.s) {
+            ForEach(0..<3) { i in
+                Circle()
+                    .fill(attemptColor(i))  // success/warning/muted
+                    .frame(10, 10)
+            }
+        }
+    }
+    .padding(.horizontal, SpacingTokens.screenEdge)
+    .padding(.bottom, SpacingTokens.xxl)
+}
+```
+
+### RecordingButton — детали
+
+```
+ZStack {
+    // Внешний пульсирующий ring
+    Circle()
+        .stroke(Brand.primary.opacity(0.3), lineWidth: 3)
+        .frame(92, 92)
+        .scaleEffect(pulseScale)         // 1.0→1.25 loop, MotionTokens.idlePulse
+
+    // Внутренняя кнопка
+    Circle()
+        .fill(Brand.primary)
+        .frame(80, 80)
+        .overlay(
+            Image(systemName: "mic.fill")
+                .font(.system(size: 28, weight: .semibold))
+                .foregroundStyle(.white)
+        )
+        .shadow(color: Brand.primary.opacity(0.4), radius: 12, y: 4)
+}
+.frame(92, 92)
+.onTapGesture { onTap() }
+```
+
+### Маскот «Ляля» — состояния по фазам
+
+| Фаза | Состояние | Анимация |
+|---|---|---|
+| `.intro` | `.waving` | привет |
+| `.modelPlaying` | `.speaking` | рот движется |
+| `.waiting` | `.thinking` | небольшая пауза |
+| `.recording` | `.listening` | наклон к микрофону |
+| `.processing` | `.thinking` | мигание |
+| `.result` (correct) | `.celebrating` | прыжок |
+| `.result` (partial) | `.encouraging` | одобряет |
+| `.result` (incorrect) | `.encouraging` | мягко подбадривает |
+
+### Жест "потянуть для записи"
+
+Дополнительный UX (опционально):
+- `DragGesture` по вертикали вниз на иллюстрации → запустить запись
+- Визуальный хинт: стрелка вниз, `caption(12)`, Kid.inkMuted, fade-in через 2s
+
+### Liquid Glass
+
+- WordIllustrationCard: `.glassEffect(in: RoundedRectangle(cornerRadius: 16))` + `.elevated`
+- ResultView карточка: `.glassEffect(.standard)` с semantic tint
+- RecordingButton: нет glass (нативный круглый элемент)
+
+### Анимации
+
+- Маскот смена состояния: `MotionTokens.spring` при каждой смене phase
+- RecordingButton pulse: scale 1.0→1.25, `MotionTokens.idlePulse`
+- Буква-подсветка при model playing: opacity 0→1 delay по index, 0.08s каждая
+- Result появление: scale 0.9→1.0 + opacity, `MotionTokens.bounce`
+- Correct result: HSSticker confetti + `MotionTokens.bounce` + haptic .success
+- Attempt dots: fill анимация, `MotionTokens.outQuick`
+- Переход к следующему слову: slide trailing, `MotionTokens.page`
+- Reduced Motion: нет pulse/scale, только opacity переходы
+
+### Accessibility
+
+- Иллюстрация: `accessibilityLabel(exercise.word)`, `accessibilityHint("Слово для упражнения")`
+- Кнопка "Слушать": `accessibilityLabel("Послушать слово \(exercise.word)")`
+- RecordingButton: `accessibilityLabel("Начать запись. Скажи \(exercise.word)")`
+- Waveform запись: `accessibilityLabel("Идёт запись вашего голоса")`
+- Processing: `accessibilityLabel("Анализ произношения")`
+- ResultView correct: `UIAccessibility.post(.announcement, "Правильно!")`
+- ResultView incorrect: `UIAccessibility.post(.announcement, "Попробуй ещё раз")`
+- Attempt dots: `accessibilityLabel("Попытка \(i+1) из 3")`
+
+### Ключи локализации (новые)
+
+- `game.repeat.listen` → "Слушать"
+- `game.repeat.listening` → "Слушаю..."
+- `game.repeat.say.now` → "Говори!"
+- `game.repeat.processing` → "Слушаю..."
+- `game.repeat.result.correct` → "Отлично!"
+- `game.repeat.result.partial` → "Почти!"
+- `game.repeat.result.incorrect` → "Попробуем ещё?"
+- `game.repeat.hint.swipe` → "Потяни вниз чтобы говорить"
+- `game.repeat.attempt` → "Попытка %d из 3"
+
+### iPhone SE адаптация (width < 375pt)
+
+- WordIllustrationCard: 240×160pt
+- kidDisplay(40) → title(32)
+- RecordingButton: 72×72pt (outer ring 80pt)
+- Транскрипция: всегда скрыта
+
+---
+
+## LessonPlayer ListenAndChoose — Детальная спека
+
+**Контур:** kid
+**Статус:** нет спеки (входит в набор игр LessonPlayer)
+
+### Назначение
+Игра "Слушай и выбирай": ребёнок слушает слово и выбирает правильную картинку из 4 вариантов.
+
+### Градиент фона
+```swift
+LinearGradient(
+    colors: [ColorTokens.Games.listenAndChoose.opacity(0.3), ColorTokens.Kid.bg],
+    startPoint: .top, endPoint: .bottom
+)
+// Games.listenAndChoose: Brand.sky тон (голубой)
+```
+
+### Состояния игры (ChoicePhase)
+
+```swift
+enum ChoicePhase {
+    case intro          // показ 4 картинок, Ляля готовится
+    case playing        // воспроизводится аудио (1–2s)
+    case choosing       // ребёнок выбирает (таймер опционален)
+    case result         // highlight правильного + feedback
+    case next           // переход к следующему вопросу
+}
+```
+
+### Структура UI (top → bottom)
+
+```
+VStack(spacing: SpacingTokens.sp5) {
+
+    // МАСКОТ + ПОДСКАЗКА
+    HStack(alignment: .bottom, spacing: SpacingTokens.m) {
+        HSMascotView(state: mascotState)      // 100×100pt, leading
+
+        // Speech bubble (если phase .intro или .playing)
+        if let bubbleText = viewModel.bubbleText {
+            SpeechBubble(text: bubbleText)    // brand.sky fill, title(18)
+                .frame(maxWidth: 200pt)
+        }
+    }
+    .frame(maxWidth: .infinity, alignment: .leading)
+    .padding(.horizontal, SpacingTokens.screenEdge)
+
+    // AUDIO PLAY BUTTON (центральный, крупный)
+    Button(action: { interactor?.playAudio() }) {
+        ZStack {
+            Circle()
+                .fill(Brand.sky.opacity(0.15))
+                .frame(88, 88)
+            Circle()
+                .fill(Brand.sky)
+                .frame(72, 72)
+            Image(systemName: phase == .playing ? "waveform" : "speaker.wave.2.fill")
+                .font(.system(size: 28, weight: .semibold))
+                .foregroundStyle(.white)
+        }
+    }
+    .frame(88, 88)   // kid tap target
+    .disabled(phase == .playing)
+    // Пульсирует во время воспроизведения
+
+    Spacer()
+
+    // CHOICE GRID (2×2)
+    LazyVGrid(
+        columns: [GridItem(.flexible()), GridItem(.flexible())],
+        spacing: SpacingTokens.m
+    ) {
+        ForEach(viewModel.choices) { choice in
+            ChoiceCard(
+                choice: choice,
+                state: choiceState(for: choice),
+                onTap: { interactor?.selectChoice(choice) }
+            )
+            .frame(minHeight: 130pt)    // kid tap target + иллюстрация
+        }
+    }
+    .padding(.horizontal, SpacingTokens.screenEdge)
+    .padding(.bottom, SpacingTokens.xxl)
+}
+```
+
+### ChoiceCard — детали
+
+```
+ZStack {
+    RoundedRectangle(cornerRadius: RadiusTokens.large)  // 16pt
+        .fill(cardFill(state))
+        .shadow(color: cardShadow(state), radius: 8, y: 4)
+
+    VStack(spacing: SpacingTokens.s) {
+        Image(choice.imageName)
+            .resizable()
+            .aspectRatio(1, contentMode: .fit)
+            .frame(maxHeight: 80pt)
+
+        Text(choice.label)            // title(18), Kid.ink (опционально)
+    }
+    .padding(SpacingTokens.cardPadding)
+}
+
+// State → fill:
+// .idle:    Kid.surface
+// .selected: Brand.sky.opacity(0.2)  // пока ждём результат
+// .correct: Semantic.successBg + green border 2pt
+// .incorrect: Semantic.errorBg + red border 2pt
+// .disabled: Kid.surfaceAlt.opacity(0.5)
+```
+
+### Маскот «Ляля» — состояния
+
+| Фаза | Состояние |
+|---|---|
+| `.intro` | `.waving` |
+| `.playing` | `.speaking` — рот движется |
+| `.choosing` | `.thinking` — ждёт выбор |
+| `.result` correct | `.celebrating` |
+| `.result` incorrect | `.encouraging` |
+
+### Liquid Glass
+
+- ChoiceCard: `.glassEffect(in: RoundedRectangle(cornerRadius: 16))` в состоянии `.idle`
+- Correct state: semantic tint поверх glass
+- AudioPlayButton: нативный circle (нет glass)
+
+### Анимации
+
+- AudioPlayButton pulse: scale 1.0→1.1 loop, `MotionTokens.idlePulse`, только при `.playing`
+- ChoiceCard tap: scale 1.0→0.94→1.0, `MotionTokens.spring`
+- ChoiceCard correct reveal: border flash + scale 1.0→1.05→1.0, `MotionTokens.bounce`
+- ChoiceCard incorrect: shake horizontal 3pt, 3 oscillations
+- Grid появление: stagger opacity 0→1, delay n×0.05s, `MotionTokens.spring`
+- Маскот смена: `MotionTokens.spring`
+- Reduced Motion: нет scale/shake, только opacity + border color изменение
+
+### Accessibility
+
+- AudioPlayButton: `accessibilityLabel("Послушать слово")`, `accessibilityHint("Нажмите для воспроизведения")`
+- ChoiceCard: `accessibilityLabel(choice.label)`, `.isButton` trait
+- ChoiceCard correct: `accessibilityAddTraits(.isSelected)` + `UIAccessibility.post(.announcement, "Правильно! \(choice.label)")`
+- ChoiceCard incorrect: `UIAccessibility.post(.announcement, "Не верно. Попробуй ещё раз")`
+- Маскот: `accessibilityHidden(true)` (декоративный)
+- VoiceOver порядок: маскот-bubble → кнопка слушать → 4 карточки
+
+### Ключи локализации (новые)
+
+- `game.listen.choose.play.audio` → "Послушать слово"
+- `game.listen.choose.intro.bubble` → "Слушай и найди картинку!"
+- `game.listen.choose.choosing.bubble` → "Что ты слышал?"
+- `game.listen.choose.correct` → "Правильно!"
+- `game.listen.choose.incorrect` → "Не совсем. Слушай ещё раз!"
+- `game.listen.choose.tap.hint` → "Выбери картинку"
+
+### iPhone SE адаптация (width < 375pt)
+
+- ChoiceCard: minHeight 110pt (вместо 130pt)
+- Иллюстрация в карточке: 64pt (вместо 80pt)
+- Маскот: 80×80pt
+- AudioPlayButton: 72×72pt

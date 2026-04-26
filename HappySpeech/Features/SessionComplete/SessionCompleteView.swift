@@ -223,7 +223,7 @@ struct SessionCompleteView: View {
             ForEach(0..<display.starsTotal, id: \.self) { index in
                 let earned = index < display.starsEarned
                 Image(systemName: earned ? "star.fill" : "star")
-                    .font(.system(size: 44, weight: .semibold))
+                    .font(TypographyTokens.display(44).weight(.semibold))
                     .foregroundStyle(earned ? ColorTokens.Brand.gold : ColorTokens.Kid.line)
                     .scaleEffect(visible ? 1 : 0.2)
                     .opacity(visible ? 1 : 0)
@@ -292,8 +292,9 @@ struct SessionCompleteView: View {
             VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
                 HStack(spacing: SpacingTokens.tiny) {
                     Image(systemName: icon)
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(TypographyTokens.caption(14).weight(.semibold))
                         .foregroundStyle(ColorTokens.Brand.primary)
+                        .accessibilityHidden(true)
                     Text(caption)
                         .font(TypographyTokens.caption(11))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
@@ -316,8 +317,9 @@ struct SessionCompleteView: View {
         HSLiquidGlassCard(style: .tinted(ColorTokens.Brand.lilac), padding: SpacingTokens.medium) {
             HStack(spacing: SpacingTokens.medium) {
                 Image(systemName: "sparkles")
-                    .font(.system(size: 22, weight: .semibold))
+                    .font(TypographyTokens.title(22).weight(.semibold))
                     .foregroundStyle(ColorTokens.Brand.lilac)
+                    .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: SpacingTokens.micro) {
                     Text(String(localized: "sessionComplete.nextLesson.label"))
                         .font(TypographyTokens.caption(11))

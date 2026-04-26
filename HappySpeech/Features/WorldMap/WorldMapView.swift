@@ -154,12 +154,13 @@ struct WorldMapView: View {
         ) {
             HStack(spacing: SpacingTokens.tiny) {
                 Image(systemName: display.hasStreak ? "flame.fill" : "sparkles")
-                    .font(.system(size: 16, weight: .semibold))
+                    .font(TypographyTokens.body(16).weight(.semibold))
                     .foregroundStyle(
                         display.hasStreak
                             ? ColorTokens.Brand.primary
                             : ColorTokens.Brand.sky
                     )
+                    .accessibilityHidden(true)
                 Text(streakText)
                     .font(TypographyTokens.headline(14).weight(.semibold))
                     .foregroundStyle(ColorTokens.Kid.ink)
@@ -243,7 +244,8 @@ struct WorldMapView: View {
                 HStack(spacing: SpacingTokens.tiny) {
                     Image(systemName: "star.fill")
                         .foregroundStyle(ColorTokens.Brand.butter)
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(TypographyTokens.caption(14).weight(.semibold))
+                        .accessibilityHidden(true)
                     Text(display.totalStarsLabel)
                         .font(TypographyTokens.mono(13))
                         .foregroundStyle(ColorTokens.Kid.ink)
@@ -264,7 +266,8 @@ struct WorldMapView: View {
                 HStack(spacing: 4) {
                     Image(systemName: "flame.fill")
                         .foregroundStyle(ColorTokens.Brand.primary)
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(TypographyTokens.caption(14).weight(.semibold))
+                        .accessibilityHidden(true)
                     Text(display.streakLabel)
                         .font(TypographyTokens.mono(13).weight(.semibold))
                         .foregroundStyle(ColorTokens.Kid.ink)
@@ -465,8 +468,9 @@ private struct WorldZoneTile: View {
                 RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
                     .fill(.black.opacity(0.35))
                 Image(systemName: "lock.fill")
-                    .font(.system(size: 32, weight: .semibold))
+                    .font(TypographyTokens.title(32).weight(.semibold))
                     .foregroundStyle(.white)
+                    .accessibilityHidden(true)
             }
         }
     }

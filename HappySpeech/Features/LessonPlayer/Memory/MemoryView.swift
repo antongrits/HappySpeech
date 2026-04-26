@@ -153,7 +153,8 @@ struct MemoryView: View {
     private var timerBadge: some View {
         HStack(spacing: SpacingTokens.tiny) {
             Image(systemName: "timer")
-                .font(.system(size: 13, weight: .semibold))
+                .font(TypographyTokens.caption(13).weight(.semibold))
+                .accessibilityHidden(true)
             Text(display.timerLabel)
                 .font(TypographyTokens.mono(14))
                 .monospacedDigit()
@@ -193,7 +194,7 @@ struct MemoryView: View {
                 if faceUp {
                     VStack(spacing: 4) {
                         Text(card.emoji)
-                            .font(.system(size: 36))
+                            .font(TypographyTokens.title(36))
                             .accessibilityHidden(true)
                         Text(card.word)
                             .font(TypographyTokens.caption(12))
@@ -203,8 +204,9 @@ struct MemoryView: View {
                     }
                 } else {
                     Image(systemName: "questionmark")
-                        .font(.system(size: 22, weight: .bold))
+                        .font(TypographyTokens.title(22).weight(.bold))
                         .foregroundStyle(.white)
+                        .accessibilityHidden(true)
                 }
             }
             .frame(height: 86)
@@ -272,7 +274,7 @@ struct MemoryView: View {
         HStack(spacing: SpacingTokens.small) {
             ForEach(0..<3, id: \.self) { idx in
                 Image(systemName: idx < display.starsEarned ? "star.fill" : "star")
-                    .font(.system(size: 44, weight: .semibold))
+                    .font(TypographyTokens.display(44).weight(.semibold))
                     .foregroundStyle(
                         idx < display.starsEarned
                             ? ColorTokens.Brand.butter
