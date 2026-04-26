@@ -11,10 +11,13 @@ enum ARZoneModels {
         struct Response {
             let games: [ARGame]
             let instructions: [InstructionCatalog.Seed]
+            let tips: [InstructionCatalog.TipSeed]
         }
         struct ViewModel {
             let cards: [ARGameCard]
             let instructionSteps: [InstructionStep]
+            let tips: [ARQuickTip]
+            let recommendedCard: ARGameCard?
             let mascotState: LyalyaAnimation
             let phase: ARZonePhase
             let isARSupported: Bool
@@ -26,6 +29,14 @@ enum ARZoneModels {
         struct Request { let gameId: String }
         struct Response { let game: ARGame }
         struct ViewModel { let destination: ARGameDestination }
+    }
+
+    // MARK: - SelectFallback
+    /// Пользователь нажал «Открыть 2D-альтернативу» на устройстве без TrueDepth.
+    enum SelectFallback {
+        struct Request {}
+        struct Response {}
+        struct ViewModel {}
     }
 }
 
@@ -75,7 +86,7 @@ enum InstructionCatalog {
             number: 1,
             titleKey: "ar.zone.step1.title",
             bodyKey: "ar.zone.step1.body",
-            icon: "face.dashed",
+            icon: "face.smiling",
             tintIndex: 0
         ),
         Seed(
@@ -83,7 +94,7 @@ enum InstructionCatalog {
             number: 2,
             titleKey: "ar.zone.step2.title",
             bodyKey: "ar.zone.step2.body",
-            icon: "speaker.wave.2.fill",
+            icon: "light.max",
             tintIndex: 2
         ),
         Seed(
@@ -91,10 +102,65 @@ enum InstructionCatalog {
             number: 3,
             titleKey: "ar.zone.step3.title",
             bodyKey: "ar.zone.step3.body",
-            icon: "sparkles",
+            icon: "mic.fill",
             tintIndex: 4
         )
     ]
+
+    // MARK: - Quick tips
+
+    /// Лёгкие подсказки-карусель под hero-баннером (ротация 4 сек).
+    /// Никакой бизнес-логики — это «совет дня» для повышения качества AR-сессии.
+    struct TipSeed: Sendable, Hashable {
+        let id: String
+        let textKey: String
+        let icon: String
+    }
+
+    static let tipSeeds: [TipSeed] = [
+        TipSeed(id: "tip-1", textKey: "ar.zone.tip1", icon: "headphones"),
+        TipSeed(id: "tip-2", textKey: "ar.zone.tip2", icon: "leaf.fill"),
+        TipSeed(id: "tip-3", textKey: "ar.zone.tip3", icon: "hand.thumbsup.fill")
+    ]
+}
+
+// MARK: - ARQuickTip (view-ready)
+
+/// Готовая к рендеру подсказка для карусели.
+public struct ARQuickTip: Sendable, Identifiable, Hashable {
+    public let id: String
+    public let text: String
+    public let icon: String
+}
+
+// MARK: - ARDifficultyFilter
+
+/// Фильтр карточек по сложности.
+public enum ARDifficultyFilter: Hashable, CaseIterable, Sendable {
+    case all
+    case easy       // difficulty == 1
+    case medium     // difficulty == 2
+    case hard       // difficulty == 3
+
+    /// Локализованный заголовок чипа.
+    public var titleKey: String {
+        switch self {
+        case .all:    return "ar.zone.filter.all"
+        case .easy:   return "ar.zone.filter.easy"
+        case .medium: return "ar.zone.filter.medium"
+        case .hard:   return "ar.zone.filter.hard"
+        }
+    }
+
+    /// Подходит ли карточка под фильтр.
+    public func matches(_ card: ARGameCard) -> Bool {
+        switch self {
+        case .all:    return true
+        case .easy:   return card.difficulty == 1
+        case .medium: return card.difficulty == 2
+        case .hard:   return card.difficulty == 3
+        }
+    }
 }
 
 // MARK: - ARGame (domain model)
