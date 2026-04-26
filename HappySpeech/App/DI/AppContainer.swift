@@ -19,6 +19,10 @@ public final class AppContainer {
     public let themeManager: ThemeManager
     public let authService: any AuthService
 
+    /// Идентификатор активного ребёнка — устанавливается после выбора профиля.
+    /// Используется ARZoneInteractor → AdaptivePlannerService.
+    public var currentChildId: String = ""
+
     // M6.16: ScreeningOutcome repository — lazy, инициализируется при первом обращении.
     private var _screeningOutcomeRepository: (any ScreeningOutcomeRepository)?
     public var screeningOutcomeRepository: any ScreeningOutcomeRepository {

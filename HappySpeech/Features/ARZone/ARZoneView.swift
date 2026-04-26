@@ -25,6 +25,7 @@ struct ARZoneView: View {
                 VStack(alignment: .leading, spacing: SpacingTokens.large) {
                     heroBanner
                     quickTipsCarousel
+                    plannerBannerSection
                     instructionsSection
                     recommendedSection
                     activitiesHeader
@@ -43,12 +44,30 @@ struct ARZoneView: View {
                 ARZoneView.destinationView(for: destination)
             }
         }
+        .sheet(item: $viewModelHolder.pendingTutorial) { request in
+            ARZoneTutorialSheetView(
+                tutorial: request.tutorial,
+                onStart: {
+                    interactor?.dismissTutorial(
+                        .init(destination: request.destination, action: .start)
+                    )
+                },
+                onSkip: {
+                    interactor?.dismissTutorial(
+                        .init(destination: request.destination, action: .skip)
+                    )
+                }
+            )
+            .presentationDetents([.medium, .large])
+            .presentationDragIndicator(.visible)
+            .presentationCornerRadius(RadiusTokens.sheet)
+        }
         .onAppear { bootstrap() }
         .task {
             // Показываем placeholder первые ~300 мс — USDZ успевает подгрузиться,
             // затем interactor пересчитает phase в .ready / .unsupported.
             try? await Task.sleep(for: .milliseconds(300))
-            interactor?.loadGames(.init())
+            interactor?.loadGames(.init(childId: container.currentChildId))
         }
     }
 
@@ -68,6 +87,15 @@ struct ARZoneView: View {
     private var quickTipsCarousel: some View {
         if !viewModelHolder.tips.isEmpty {
             ARQuickTipsCarousel(tips: viewModelHolder.tips)
+        }
+    }
+
+    // MARK: - Planner Banner (AdaptivePlannerService recommendation)
+
+    @ViewBuilder
+    private var plannerBannerSection: some View {
+        if let banner = viewModelHolder.plannerBanner {
+            ARPlannerBannerView(banner: banner)
         }
     }
 
@@ -95,7 +123,10 @@ struct ARZoneView: View {
         if let recommended = viewModelHolder.recommendedCard,
            viewModelHolder.phase == .ready {
             ARStartRecommendedButton(card: recommended) { [weak interactor] in
-                interactor?.selectGame(.init(gameId: recommended.id))
+                interactor?.selectGame(.init(
+                    gameId: recommended.id,
+                    skipTutorial: recommended.hasBeenPlayedBefore
+                ))
             }
         }
     }
@@ -148,13 +179,19 @@ struct ARZoneView: View {
             ) {
                 ForEach(filteredCards) { card in
                     Button {
-                        interactor?.selectGame(.init(gameId: card.id))
+                        interactor?.selectGame(.init(
+                            gameId: card.id,
+                            skipTutorial: card.hasBeenPlayedBefore
+                        ))
                     } label: {
                         ARGameCardView(card: card)
                     }
                     .buttonStyle(.plain)
-                    .accessibilityLabel(Text(card.title))
+                    .accessibilityLabel(
+                        Text(arCardAccessibilityLabel(card: card))
+                    )
                     .accessibilityHint(Text(card.subtitle))
+                    .accessibilityAddTraits(card.badge == .recommendedByLyalya ? .isSelected : [])
                 }
             }
         }
@@ -169,6 +206,29 @@ struct ARZoneView: View {
         }
     }
 
+    // MARK: - Accessibility helper
+
+    private func arCardAccessibilityLabel(card: ARGameCard) -> String {
+        var label = "AR игра: \(card.title), \(card.estimatedMinutes) мин"
+        switch card.badge {
+        case .recommendedByLyalya:
+            label += ", рекомендовано Лялей"
+        case .newGame:
+            label += ", новая игра"
+        case .completed:
+            label += ", пройдено сегодня"
+        case .none:
+            break
+        }
+        switch card.difficulty {
+        case 1: label += ", лёгкий уровень"
+        case 2: label += ", средний уровень"
+        case 3: label += ", сложный уровень"
+        default: break
+        }
+        return label
+    }
+
     // MARK: - Wiring
 
     private func bootstrap() {
@@ -177,7 +237,10 @@ struct ARZoneView: View {
         let presenter = ARZonePresenter()
         let router = ARZoneRouter()
 
+        // Инжектируем AdaptivePlannerService из AppContainer
+        interactor.plannerService = container.adaptivePlannerService
         interactor.presenter = presenter
+
         presenter.viewModel = viewModelHolder
         router.coordinator = coordinator
         router.onNavigateLocal = { [weak viewModelHolder] destination in
@@ -212,6 +275,17 @@ struct ARZoneView: View {
 @Observable
 @MainActor
 final class ARZoneDisplay: ARZoneDisplayLogic {
+
+    // MARK: - TutorialRequest (Identifiable для sheet(item:))
+
+    struct TutorialRequest: Identifiable {
+        let id: String          // == tutorial.id
+        let tutorial: ARTutorial
+        let destination: ARGameDestination
+    }
+
+    // MARK: - Published state
+
     var cards: [ARGameCard] = []
     var instructionSteps: [InstructionStep] = []
     var tips: [ARQuickTip] = []
@@ -222,9 +296,15 @@ final class ARZoneDisplay: ARZoneDisplayLogic {
     var path: [ARGameDestination] = []
     /// Пользовательский UI-state — какой фильтр сложности активен сейчас.
     var activeFilter: ARDifficultyFilter = .all
+    /// Баннер рекомендации AdaptivePlannerService (nil = не показывать).
+    var plannerBanner: ARPlannerBanner?
+    /// Pending tutorial request — .sheet(item:) реагирует на non-nil.
+    var pendingTutorial: TutorialRequest?
     /// Слабая ссылка на router нужна, чтобы Display мог триггернуть routeToFallback,
     /// не утаскивая координатор из View. Router владеется через @State в ARZoneView.
     weak var router: ARZoneRouter?
+
+    // MARK: - DisplayLogic
 
     func displayLoadGames(_ viewModel: ARZoneModels.LoadGames.ViewModel) {
         self.cards = viewModel.cards
@@ -234,14 +314,39 @@ final class ARZoneDisplay: ARZoneDisplayLogic {
         self.mascotState = viewModel.mascotState
         self.phase = viewModel.phase
         self.isARSupported = viewModel.isARSupported
+        self.plannerBanner = viewModel.plannerBanner
     }
 
     func displaySelectGame(_ viewModel: ARZoneModels.SelectGame.ViewModel) {
+        // tutorial == nil → сразу переходим к игре
+        path.append(viewModel.destination)
+    }
+
+    func displayShowTutorial(_ viewModel: ARZoneModels.SelectGame.ViewModel) {
+        guard let tutorial = viewModel.tutorial else {
+            // Нет инструкции — сразу к игре
+            path.append(viewModel.destination)
+            return
+        }
+        // Сигнализируем View через Observable-поле — sheet(item:) подхватит
+        pendingTutorial = TutorialRequest(
+            id: tutorial.id,
+            tutorial: tutorial,
+            destination: viewModel.destination
+        )
+    }
+
+    func displayDismissTutorial(_ viewModel: ARZoneModels.DismissTutorial.ViewModel) {
+        pendingTutorial = nil
         path.append(viewModel.destination)
     }
 
     func displaySelectFallback(_ viewModel: ARZoneModels.SelectFallback.ViewModel) {
         router?.routeToFallback()
+    }
+
+    func displayRefreshPlannerAdvice(_ viewModel: ARZoneModels.RefreshPlannerAdvice.ViewModel) {
+        self.plannerBanner = viewModel.banner
     }
 }
 
@@ -769,6 +874,75 @@ private struct InstructionStepCard: View {
     }
 }
 
+// MARK: - ARPlannerBannerView
+
+/// Баннер рекомендации/предупреждения от AdaptivePlannerService.
+/// Три варианта: recommended (звезда), fatigueWarning (zzz), fatigueLight (листик).
+private struct ARPlannerBannerView: View {
+    let banner: ARPlannerBanner
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var iconBounce: Int = 0
+
+    private var bannerStyle: HSLiquidGlassStyle {
+        switch banner.variant {
+        case .recommended:    return .tinted(ColorTokens.Brand.butter.opacity(0.22))
+        case .fatigueWarning: return .tinted(ColorTokens.Semantic.warningBg)
+        case .fatigueLight:   return .tinted(ColorTokens.Brand.mint.opacity(0.2))
+        }
+    }
+
+    private var iconColor: Color {
+        switch banner.variant {
+        case .recommended:    return ColorTokens.Brand.gold
+        case .fatigueWarning: return ColorTokens.Semantic.warning
+        case .fatigueLight:   return ColorTokens.Brand.mint
+        }
+    }
+
+    var body: some View {
+        HSLiquidGlassCard(style: bannerStyle, padding: SpacingTokens.regular) {
+            HStack(spacing: SpacingTokens.regular) {
+                Image(systemName: banner.icon)
+                    .font(TypographyTokens.title(24).weight(.semibold))
+                    .foregroundStyle(iconColor)
+                    .symbolEffect(.bounce.down, value: iconBounce)
+                    .frame(width: 36)
+                    .accessibilityHidden(true)
+
+                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                    Text(String(localized: String.LocalizationValue(banner.titleKey)))
+                        .font(TypographyTokens.headline(14).weight(.semibold))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+
+                    Text(String(localized: String.LocalizationValue(banner.bodyKey)))
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            Text(
+                "\(String(localized: String.LocalizationValue(banner.titleKey))). " +
+                "\(String(localized: String.LocalizationValue(banner.bodyKey)))"
+            )
+        )
+        .onAppear {
+            guard !reduceMotion else { return }
+            withAnimation(MotionTokens.bounce.delay(0.4)) {
+                iconBounce += 1
+            }
+        }
+    }
+}
+
 // MARK: - ARGameCardView
 
 private struct ARGameCardView: View {
@@ -777,43 +951,50 @@ private struct ARGameCardView: View {
 
     var body: some View {
         let colors = ARCardPalette.gradient(for: card.accentColorIndex)
-        VStack(alignment: .leading, spacing: SpacingTokens.small) {
-            HStack {
-                Image(systemName: card.iconName)
-                    .font(TypographyTokens.title(30).weight(.medium))
-                    .foregroundStyle(.white)
-                    .accessibilityHidden(true)
-                Spacer()
-                difficultyDots
-            }
-            Spacer(minLength: SpacingTokens.tiny)
-            VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                Text(card.title)
-                    .font(TypographyTokens.headline(16))
-                    .foregroundStyle(.white)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-                HStack(spacing: SpacingTokens.micro) {
-                    Image(systemName: "clock")
-                        .font(.caption2)
+        ZStack(alignment: .topTrailing) {
+            VStack(alignment: .leading, spacing: SpacingTokens.small) {
+                HStack {
+                    Image(systemName: card.iconName)
+                        .font(TypographyTokens.title(30).weight(.medium))
+                        .foregroundStyle(.white)
                         .accessibilityHidden(true)
-                    Text("\(card.estimatedMinutes) мин")
-                        .font(TypographyTokens.body(12))
+                    Spacer()
+                    difficultyDots
                 }
-                .foregroundStyle(.white.opacity(0.85))
+                Spacer(minLength: SpacingTokens.tiny)
+                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                    Text(card.title)
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(.white)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    HStack(spacing: SpacingTokens.micro) {
+                        Image(systemName: "clock")
+                            .font(.caption2)
+                            .accessibilityHidden(true)
+                        Text("\(card.estimatedMinutes) мин")
+                            .font(TypographyTokens.body(12))
+                    }
+                    .foregroundStyle(.white.opacity(0.85))
+                }
             }
+            .padding(SpacingTokens.regular)
+            .frame(maxWidth: .infinity, minHeight: 150, alignment: .topLeading)
+            .background(
+                LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing)
+            )
+            .cornerRadius(RadiusTokens.lg)
+            .shadow(
+                color: colors.first?.opacity(0.3) ?? .black.opacity(0.15),
+                radius: reduceMotion ? 0 : 8,
+                x: 0, y: 4
+            )
+
+            // Бейдж от AdaptivePlannerService
+            ARGameBadgeOverlay(badge: card.badge)
+                .padding(.top, SpacingTokens.small)
+                .padding(.trailing, SpacingTokens.small)
         }
-        .padding(SpacingTokens.regular)
-        .frame(maxWidth: .infinity, minHeight: 150, alignment: .topLeading)
-        .background(
-            LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing)
-        )
-        .cornerRadius(RadiusTokens.lg)
-        .shadow(
-            color: colors.first?.opacity(0.3) ?? .black.opacity(0.15),
-            radius: reduceMotion ? 0 : 8,
-            x: 0, y: 4
-        )
     }
 
     private var difficultyDots: some View {
@@ -824,6 +1005,46 @@ private struct ARGameCardView: View {
                     .frame(width: 6, height: 6)
             }
         }
+    }
+}
+
+// MARK: - ARGameBadgeOverlay
+
+/// Маленький бейдж в углу карточки AR-игры.
+private struct ARGameBadgeOverlay: View {
+    let badge: ARGameBadge
+
+    var body: some View {
+        switch badge {
+        case .recommendedByLyalya:
+            badgeView(icon: "star.fill", color: ColorTokens.Brand.gold,
+                      labelKey: "ar.zone.badge.recommended")
+        case .newGame:
+            badgeView(icon: "sparkles", color: ColorTokens.Brand.sky,
+                      labelKey: "ar.zone.badge.new")
+        case .completed:
+            badgeView(icon: "checkmark.circle.fill", color: ColorTokens.Brand.mint,
+                      labelKey: "ar.zone.badge.completed")
+        case .none:
+            EmptyView()
+        }
+    }
+
+    private func badgeView(icon: String, color: Color, labelKey: String) -> some View {
+        HStack(spacing: 3) {
+            Image(systemName: icon)
+                .font(.system(size: 9, weight: .bold))
+                .accessibilityHidden(true)
+            Text(String(localized: String.LocalizationValue(labelKey)))
+                .font(TypographyTokens.body(9).weight(.bold))
+        }
+        .foregroundStyle(.white)
+        .padding(.horizontal, 7)
+        .padding(.vertical, 3)
+        .background(
+            Capsule().fill(color)
+        )
+        .shadow(color: color.opacity(0.4), radius: 4, x: 0, y: 2)
     }
 }
 

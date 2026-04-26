@@ -7,11 +7,16 @@ enum ARZoneModels {
 
     // MARK: - LoadGames
     enum LoadGames {
-        struct Request {}
+        struct Request {
+            /// Идентификатор ребёнка — нужен AdaptivePlannerService для рекомендаций.
+            let childId: String
+            init(childId: String = "") { self.childId = childId }
+        }
         struct Response {
             let games: [ARGame]
             let instructions: [InstructionCatalog.Seed]
             let tips: [InstructionCatalog.TipSeed]
+            let plannerAdvice: ARPlannerAdvice?
         }
         struct ViewModel {
             let cards: [ARGameCard]
@@ -21,14 +26,32 @@ enum ARZoneModels {
             let mascotState: LyalyaAnimation
             let phase: ARZonePhase
             let isARSupported: Bool
+            /// Подсказка AdaptivePlanner — «сегодня Ляля советует», предупреждение об усталости.
+            let plannerBanner: ARPlannerBanner?
         }
     }
 
-    // MARK: - SelectGame
+    // MARK: - SelectGame (с pre-flight tutorial)
     enum SelectGame {
-        struct Request { let gameId: String }
-        struct Response { let game: ARGame }
-        struct ViewModel { let destination: ARGameDestination }
+        struct Request {
+            let gameId: String
+            /// true — если пользователь уже видел инструкцию к этой игре (>= 1 раз)
+            let skipTutorial: Bool
+            init(gameId: String, skipTutorial: Bool = false) {
+                self.gameId = gameId
+                self.skipTutorial = skipTutorial
+            }
+        }
+        struct Response {
+            let game: ARGame
+            let tutorial: ARTutorial
+            let skipTutorial: Bool
+        }
+        struct ViewModel {
+            let destination: ARGameDestination
+            /// Если nil — нет инструкции, сразу запускаем игру.
+            let tutorial: ARTutorial?
+        }
     }
 
     // MARK: - SelectFallback
@@ -38,6 +61,227 @@ enum ARZoneModels {
         struct Response {}
         struct ViewModel {}
     }
+
+    // MARK: - DismissTutorial
+    /// Пользователь нажал «Начать» или «Пропустить» в tutorial sheet.
+    enum DismissTutorial {
+        enum Action: Sendable, Equatable {
+            case start           // нажал «Начать»
+            case skip            // нажал «Пропустить»
+        }
+        struct Request {
+            let destination: ARGameDestination
+            let action: Action
+        }
+        struct Response {
+            let destination: ARGameDestination
+        }
+        struct ViewModel {
+            let destination: ARGameDestination
+        }
+    }
+
+    // MARK: - RefreshPlannerAdvice
+    /// Периодическое обновление рекомендации планировщика (например, после завершения AR-сессии).
+    enum RefreshPlannerAdvice {
+        struct Request { let childId: String }
+        struct Response { let advice: ARPlannerAdvice? }
+        struct ViewModel { let banner: ARPlannerBanner? }
+    }
+}
+
+// MARK: - ARTutorial (инструкция перед игрой)
+
+/// Структура инструкции, показываемой в modal sheet перед стартом AR-игры.
+/// Содержит шаги с SF Symbol иконками (fallback вместо Lottie) и короткий текст.
+public struct ARTutorial: Sendable, Identifiable, Hashable {
+    public let id: String                  // == gameId
+    public let titleKey: String            // "ar.tutorial.<gameId>.title"
+    public let bodyKey: String             // "ar.tutorial.<gameId>.body" (1-2 предложения)
+    public let steps: [ARTutorialStep]
+    public let animationSystemSymbol: String   // SF Symbol для анимации (symbolEffect)
+    public let accentColorIndex: Int       // 0…5 для градиента
+}
+
+/// Один шаг в инструкции AR-игры.
+public struct ARTutorialStep: Sendable, Identifiable, Hashable {
+    public let id: String
+    public let icon: String                // SF Symbol
+    public let textKey: String
+}
+
+// MARK: - ARTutorialCatalog
+
+/// Каталог инструкций для всех 8 AR-игр.
+enum ARTutorialCatalog {
+
+    static func tutorial(for gameId: String) -> ARTutorial {
+        switch gameId {
+        case "ar-mirror":
+            return ARTutorial(
+                id: gameId,
+                titleKey: "ar.tutorial.arMirror.title",
+                bodyKey: "ar.tutorial.arMirror.body",
+                steps: [
+                    ARTutorialStep(id: "s1", icon: "camera.fill", textKey: "ar.tutorial.arMirror.step1"),
+                    ARTutorialStep(id: "s2", icon: "face.smiling.inverse", textKey: "ar.tutorial.arMirror.step2"),
+                    ARTutorialStep(id: "s3", icon: "star.fill", textKey: "ar.tutorial.arMirror.step3")
+                ],
+                animationSystemSymbol: "camera.metering.center.weighted",
+                accentColorIndex: 0
+            )
+        case "butterfly-catch":
+            return ARTutorial(
+                id: gameId,
+                titleKey: "ar.tutorial.butterflyCatch.title",
+                bodyKey: "ar.tutorial.butterflyCatch.body",
+                steps: [
+                    ARTutorialStep(id: "s1", icon: "camera.fill", textKey: "ar.tutorial.butterflyCatch.step1"),
+                    ARTutorialStep(id: "s2", icon: "mouth.fill", textKey: "ar.tutorial.butterflyCatch.step2"),
+                    ARTutorialStep(id: "s3", icon: "sparkles", textKey: "ar.tutorial.butterflyCatch.step3")
+                ],
+                animationSystemSymbol: "sparkles",
+                accentColorIndex: 1
+            )
+        case "hold-the-pose":
+            return ARTutorial(
+                id: gameId,
+                titleKey: "ar.tutorial.holdThePose.title",
+                bodyKey: "ar.tutorial.holdThePose.body",
+                steps: [
+                    ARTutorialStep(id: "s1", icon: "camera.fill", textKey: "ar.tutorial.holdThePose.step1"),
+                    ARTutorialStep(id: "s2", icon: "face.smiling", textKey: "ar.tutorial.holdThePose.step2"),
+                    ARTutorialStep(id: "s3", icon: "timer", textKey: "ar.tutorial.holdThePose.step3")
+                ],
+                animationSystemSymbol: "stopwatch",
+                accentColorIndex: 2
+            )
+        case "mimic-lyalya":
+            return ARTutorial(
+                id: gameId,
+                titleKey: "ar.tutorial.mimicLyalya.title",
+                bodyKey: "ar.tutorial.mimicLyalya.body",
+                steps: [
+                    ARTutorialStep(id: "s1", icon: "camera.fill", textKey: "ar.tutorial.mimicLyalya.step1"),
+                    ARTutorialStep(id: "s2", icon: "person.fill.viewfinder", textKey: "ar.tutorial.mimicLyalya.step2"),
+                    ARTutorialStep(id: "s3", icon: "checkmark.circle.fill", textKey: "ar.tutorial.mimicLyalya.step3")
+                ],
+                animationSystemSymbol: "person.fill.viewfinder",
+                accentColorIndex: 3
+            )
+        case "breathing-ar":
+            return ARTutorial(
+                id: gameId,
+                titleKey: "ar.tutorial.breathingAR.title",
+                bodyKey: "ar.tutorial.breathingAR.body",
+                steps: [
+                    ARTutorialStep(id: "s1", icon: "camera.fill", textKey: "ar.tutorial.breathingAR.step1"),
+                    ARTutorialStep(id: "s2", icon: "wind", textKey: "ar.tutorial.breathingAR.step2"),
+                    ARTutorialStep(id: "s3", icon: "lungs.fill", textKey: "ar.tutorial.breathingAR.step3")
+                ],
+                animationSystemSymbol: "wind",
+                accentColorIndex: 2
+            )
+        case "sound-and-face":
+            return ARTutorial(
+                id: gameId,
+                titleKey: "ar.tutorial.soundAndFace.title",
+                bodyKey: "ar.tutorial.soundAndFace.body",
+                steps: [
+                    ARTutorialStep(id: "s1", icon: "camera.fill", textKey: "ar.tutorial.soundAndFace.step1"),
+                    ARTutorialStep(id: "s2", icon: "mic.fill", textKey: "ar.tutorial.soundAndFace.step2"),
+                    ARTutorialStep(id: "s3", icon: "waveform.and.mic", textKey: "ar.tutorial.soundAndFace.step3")
+                ],
+                animationSystemSymbol: "waveform.and.mic",
+                accentColorIndex: 5
+            )
+        case "pose-sequence":
+            return ARTutorial(
+                id: gameId,
+                titleKey: "ar.tutorial.poseSequence.title",
+                bodyKey: "ar.tutorial.poseSequence.body",
+                steps: [
+                    ARTutorialStep(id: "s1", icon: "camera.fill", textKey: "ar.tutorial.poseSequence.step1"),
+                    ARTutorialStep(id: "s2", icon: "list.number", textKey: "ar.tutorial.poseSequence.step2"),
+                    ARTutorialStep(id: "s3", icon: "checkmark.seal.fill", textKey: "ar.tutorial.poseSequence.step3")
+                ],
+                animationSystemSymbol: "list.number",
+                accentColorIndex: 4
+            )
+        case "ar-story-quest":
+            return ARTutorial(
+                id: gameId,
+                titleKey: "ar.tutorial.arStoryQuest.title",
+                bodyKey: "ar.tutorial.arStoryQuest.body",
+                steps: [
+                    ARTutorialStep(id: "s1", icon: "camera.fill", textKey: "ar.tutorial.arStoryQuest.step1"),
+                    ARTutorialStep(id: "s2", icon: "book.pages", textKey: "ar.tutorial.arStoryQuest.step2"),
+                    ARTutorialStep(id: "s3", icon: "star.bubble.fill", textKey: "ar.tutorial.arStoryQuest.step3")
+                ],
+                animationSystemSymbol: "book.pages",
+                accentColorIndex: 3
+            )
+        default:
+            return ARTutorial(
+                id: gameId,
+                titleKey: "ar.tutorial.default.title",
+                bodyKey: "ar.tutorial.default.body",
+                steps: [
+                    ARTutorialStep(id: "s1", icon: "camera.fill", textKey: "ar.tutorial.default.step1")
+                ],
+                animationSystemSymbol: "arkit",
+                accentColorIndex: 0
+            )
+        }
+    }
+}
+
+// MARK: - ARPlannerAdvice (domain — из AdaptivePlannerService)
+
+/// Рекомендация AdaptivePlannerService для AR-зоны.
+public struct ARPlannerAdvice: Sendable, Equatable {
+    public enum Kind: Sendable, Equatable {
+        /// Планировщик рекомендует именно AR сегодня — показать highlighted game
+        case arRecommended(gameId: String)
+        /// Ребёнок устал — мягкое предупреждение
+        case fatigueWarning(level: FatigueLevel)
+        /// Всё хорошо — нет специального сообщения
+        case none
+    }
+    public let kind: Kind
+    public let recommendedGameId: String?
+
+    public init(kind: Kind, recommendedGameId: String? = nil) {
+        self.kind = kind
+        self.recommendedGameId = recommendedGameId
+    }
+}
+
+// MARK: - ARPlannerBanner (view-ready)
+
+/// View-модель баннера Планировщика в ARZone.
+public struct ARPlannerBanner: Sendable, Identifiable, Equatable {
+    public enum Variant: Sendable, Equatable {
+        case recommended        // «Сегодня Ляля советует:»
+        case fatigueWarning     // «Сделай паузу перед AR»
+        case fatigueLight       // «Устал(а)? Можно немного отдохнуть»
+    }
+    public let id: String
+    public let variant: Variant
+    public let titleKey: String
+    public let bodyKey: String
+    public let icon: String
+    public let highlightedGameId: String?  // если .recommended — какую игру выделить
+}
+
+// MARK: - ARGameBadge (бейдж состояния карточки)
+
+/// Бейдж для карточки AR-игры — показывает статус от планировщика/прогресса.
+public enum ARGameBadge: Sendable, Equatable, Hashable {
+    case recommendedByLyalya   // «Ляля советует» — AdaptivePlanner выбрал эту игру
+    case newGame               // первый раз
+    case completed             // ребёнок уже прошёл сегодня
+    case none
 }
 
 // MARK: - ARZonePhase
@@ -201,6 +445,10 @@ public struct ARGameCard: Sendable, Identifiable, Hashable {
     public let estimatedMinutes: Int
     public let accentColorIndex: Int            // 0…5 для gradient выбора
     public let destination: ARGameDestination
+    /// Бейдж состояния от AdaptivePlannerService.
+    public let badge: ARGameBadge
+    /// true, если ребёнок уже запускал эту игру — tutorial можно пропустить.
+    public let hasBeenPlayedBefore: Bool
 }
 
 // MARK: - Catalog (источник правды по играм)
