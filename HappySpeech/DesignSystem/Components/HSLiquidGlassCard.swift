@@ -25,6 +25,8 @@ public struct HSLiquidGlassCard<Content: View>: View {
     private let padding: CGFloat
     private let content: () -> Content
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     public init(
         style: HSLiquidGlassStyle = .primary,
         padding: CGFloat = SpacingTokens.regular,
@@ -36,7 +38,9 @@ public struct HSLiquidGlassCard<Content: View>: View {
     }
 
     public var body: some View {
-        if #available(iOS 26, *) {
+        // На iOS 26 используем нативный glassEffect, если только не включён Reduced Motion.
+        // При reduceMotion переходим на статичный legacyBody (ultraThinMaterial без blur-анимаций).
+        if #available(iOS 26, *), !reduceMotion {
             ios26Body
         } else {
             legacyBody

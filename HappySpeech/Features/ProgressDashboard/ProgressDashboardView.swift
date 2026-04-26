@@ -159,7 +159,7 @@ struct ProgressDashboardView: View {
         iconTint: Color,
         chips: [SoundChipViewModel]
     ) -> some View {
-        HSCard(style: .elevated, padding: SpacingTokens.cardPad) {
+        HSLiquidGlassCard(style: .tinted(iconTint), padding: SpacingTokens.cardPad) {
             VStack(alignment: .leading, spacing: SpacingTokens.small) {
                 HStack(spacing: SpacingTokens.tiny) {
                     Image(systemName: iconName)
@@ -189,7 +189,7 @@ struct ProgressDashboardView: View {
                     subtitle: String(localized: "progressDashboard.recommendations.subtitle")
                 )
 
-                HSCard(style: .elevated, padding: SpacingTokens.cardPad) {
+                HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.cardPad) {
                     VStack(alignment: .leading, spacing: SpacingTokens.regular) {
                         ForEach(display.recommendations) { item in
                             RecommendationRowView(item: item)
@@ -224,7 +224,7 @@ struct ProgressDashboardView: View {
                 subtitle: String(localized: "progressDashboard.section.weekly.subtitle")
             )
 
-            HSCard(style: .elevated, padding: SpacingTokens.regular) {
+            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
                 Chart(display.dailyChart) { point in
                     BarMark(
                         x: .value(String(localized: "progressDashboard.chart.day"), point.day),
@@ -283,7 +283,7 @@ struct ProgressDashboardView: View {
                 subtitle: String(localized: "progressDashboard.section.monthly.subtitle")
             )
 
-            HSCard(style: .elevated, padding: SpacingTokens.regular) {
+            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
                 Chart(display.weeklyChart) { point in
                     LineMark(
                         x: .value(String(localized: "progressDashboard.chart.week"), point.label),
@@ -354,7 +354,7 @@ struct ProgressDashboardView: View {
                 subtitle: nil
             )
 
-            HSCard(style: .elevated, padding: SpacingTokens.cardPad) {
+            HSLiquidGlassCard(style: .tinted(ColorTokens.Brand.lilac), padding: SpacingTokens.cardPad) {
                 HStack(alignment: .top, spacing: SpacingTokens.regular) {
                     ZStack {
                         Circle()
@@ -581,7 +581,7 @@ private struct SummaryCardView: View {
     let card: SummaryCardViewModel
 
     var body: some View {
-        HSCard(style: .elevated, padding: SpacingTokens.cardPad) {
+        HSLiquidGlassCard(style: .tinted(accentColor), padding: SpacingTokens.cardPad) {
             VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
                 Text(card.title)
                     .font(TypographyTokens.caption(12))
@@ -634,7 +634,7 @@ private struct SoundProgressCellView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        HSCard(style: .elevated, padding: SpacingTokens.regular) {
+        HSLiquidGlassCard(style: .tinted(Color(cell.familyHueName)), padding: SpacingTokens.regular) {
             VStack(alignment: .leading, spacing: SpacingTokens.small) {
                 HStack(alignment: .top) {
                     Text(cell.sound)
@@ -710,7 +710,7 @@ private struct SoundProgressDetailView: View {
     }
 
     private var headerCard: some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated) {
             HStack(alignment: .top, spacing: SpacingTokens.regular) {
                 Text(detail.sound)
                     .font(TypographyTokens.display(48))
@@ -743,7 +743,7 @@ private struct SoundProgressDetailView: View {
                 .font(TypographyTokens.title(20))
                 .foregroundStyle(ColorTokens.Parent.ink)
 
-            HSCard(style: .elevated, padding: SpacingTokens.regular) {
+            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
                 Chart(detail.history) { point in
                     LineMark(
                         x: .value(String(localized: "progressDashboard.chart.day"), point.day),
@@ -802,7 +802,7 @@ private struct DetailMetric: View {
     let color: Color
 
     var body: some View {
-        HSCard(style: .flat, padding: SpacingTokens.regular) {
+        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.regular) {
             VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
                 Text(title)
                     .font(TypographyTokens.caption(11))

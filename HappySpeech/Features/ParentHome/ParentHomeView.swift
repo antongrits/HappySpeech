@@ -206,7 +206,7 @@ private struct ParentDashboardTab: View {
     }
 
     private func lastSessionCard(_ session: ParentHomeModels.SessionSummary) -> some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
                 HStack {
                     HSBadge(session.targetSound, style: .filled(ColorTokens.Brand.primary))
