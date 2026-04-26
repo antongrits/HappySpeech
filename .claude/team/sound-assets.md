@@ -1,6 +1,6 @@
 # Sound Assets Registry — HappySpeech
 
-**Version 2.1 — 2026-04-24**
+**Version 2.2 — 2026-04-26**
 **Managed by:** Sound Curator. All sounds verified CC0 or royalty-free.
 
 ---
@@ -10,13 +10,13 @@
 | Категория | Файлов | Размер | Placement | Статус |
 |---|---|---|---|---|
 | UI sounds (.caf) | 16 | ~150 KB | `HappySpeech/Resources/Audio/UI/` (в репо) | ✅ M3.2 done |
-| Ляля voice brand (.m4a) | 149 | ~5 MB | `HappySpeech/Resources/Audio/Lyalya/` (в репо) | ✅ M3.3 + M3.7 done |
+| Ляля voice brand (.m4a) | 150 | ~5.1 MB | `HappySpeech/Resources/Audio/Lyalya/` (в репо) | ✅ M3.3 + M3.7 + M3.7b done |
 | Content audio batch 1 (.m4a) | 1000 | 12.65 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 1 |
 | Content audio batch 2 (.m4a) | 1028 | 11.1 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 2 |
 | Content audio batch 3 (.m4a) | 681 | 8.36 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 3 |
 | Content audio batch 4 (.m4a) | 2568 | 40.09 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 4 |
-| Content audio batch 5 — grammar (.m4a) | 141 | 2.3 MB | `HappySpeech/Resources/Audio/Content/Grammar/` (локально, gitignored → Firebase Storage) | ✅ M3.5 done |
-| Эталоны для M4.3 (premium TTS) | 0 | — | `_workshop/references/` | ⏳ pending |
+| Content audio batch 5 — lexical+grammar (.m4a) | 900 | 16.9 MB | `HappySpeech/Resources/Audio/Content/Lexical/` + `Grammar/` (локально, gitignored) | ✅ M3.4 batch 5 |
+| Эталоны для PronunciationScorer (ML refs) | 665 | 7.9 MB | `HappySpeech/Resources/Audio/Refs/` (в репо) | ✅ M3.5 done |
 | Ambient / background music | 0 / 4 | — | `Resources/Audio/Ambient/` | ⏳ pending M9 |
 
 ---
@@ -196,12 +196,27 @@
 
 ---
 
-## M3.5 — Эталоны для PronunciationScorer (pending) ⏳
+## M3.5 — Эталоны для PronunciationScorer (665 файлов, 7.9 MB) ✅
 
-**Цель:** premium TTS (utrobinmv VITS High, Apache 2.0 — см. `ml-models-research.md`) на целевые слова каждого пака → обучающие данные для M4.3 per-group scorers.
+**Дата:** 2026-04-26
+**Голос:** `ru-RU-SvetlanaNeural` (edge-tts) → -16 LUFS → AAC 16kHz mono 96kbps
+**Лицензия:** Microsoft edge-tts (royalty-free)
+**Размещение:** `HappySpeech/Resources/Audio/Refs/{sound}/` (в репо — ≤10 MB)
 
-**Оценка объёма:** ~1200 эталонных слов × ~20 KB = 24 MB
-**Размещение:** `_workshop/datasets/raw/references/` (не в репо)
+| Звук | Этапы | Файлов | Размер |
+|---|---|---|---|
+| S (свистящий С) | wordInit (64) + wordMed (50) + wordFinal (40) | 154 | 1.8 MB |
+| Z (свистящий З) | wordInit (55) + wordMed (45) + wordFinal (35) | 135 | 1.6 MB |
+| SH (шипящий Ш) | wordInit (56) + wordMed (50) + wordFinal (40) | 146 | 1.7 MB |
+| R (сонорный Р) | wordInit (70) + wordMed (80) + wordFinal (80) | 230 | 2.7 MB |
+| **ИТОГО** | — | **665** | **7.9 MB** |
+
+**Валидация (6 случайных файлов):**
+- AAC LC, 16000 Hz, mono ✅
+- Размер 8–28 KB ✅ (< 50 KB)
+- edge-tts clean signal, SNR >> 30 dB ✅
+
+**Назначение:** обучающие данные для `PronunciationScorer` CoreML (M4.3). Каждый файл — эталонное произношение целевого слова для сравнения с речью ребёнка.
 
 ---
 
@@ -284,43 +299,44 @@ COPYRIGHT RULE: каждый звук должен иметь verified CC0/Apach
 
 ---
 
-## M3.7 — Новые фразы Ляли +29 (итого 149 фраз) ✅
+## M3.7 — Новые фразы Ляли +30 (итого 150 фраз) ✅
 
-**Дата:** 2026-04-24
-**Генерация:** edge-tts `ru-RU-SvetlanaNeural` → ffmpeg AAC .m4a
-**Формат:** 22050 Hz mono AAC, 41–49 KB/файл
+**Дата:** 2026-04-24 / 2026-04-26 (финальная фраза)
+**Генерация:** edge-tts `ru-RU-SvetlanaNeural` → ffmpeg AAC .m4a → -16 LUFS
+**Формат:** 16kHz mono AAC, 8–50 KB/файл
 **Путь:** `HappySpeech/Resources/Audio/Lyalya/`
 
-**Примечание по голосу:** `ru-RU-DariyaNeural` недоступен в edge-tts 7.2.8 (список голосов ограничен SvetlanaNeural + DmitryNeural). Использован `SvetlanaNeural` — соответствует M3.3.
+**Примечание по голосу:** `ru-RU-DariyaNeural` недоступен в edge-tts 7.2.8. Использован `SvetlanaNeural` — соответствует M3.3.
 
-| Экран | Файлы | Кол-во |
+**Swift enum:** `LyalyaPhrase` в `SoundService.swift` обновлён до 150 кейсов (все новые группы добавлены).
+
+| Экран / категория | Файлы | Кол-во |
 |---|---|---|
 | HomeTasks | lyalya_hometasks_*.m4a | 3 |
 | WorldMap | lyalya_worldmap_*.m4a | 3 |
 | Onboarding | lyalya_onboarding_*.m4a | 4 |
-| SessionComplete | lyalya_session_*.m4a | 3 |
+| SessionComplete (оценки) | lyalya_session_excellent/good/try_again.m4a | 3 |
 | Rewards | lyalya_reward_*.m4a | 3 |
-| ProgressDashboard | lyalya_progress_*.m4a | 2 |
+| ProgressDashboard | lyalya_progress_great/keep_going/proud.m4a | 3 |
 | Settings | lyalya_settings_hello.m4a | 1 |
 | Permissions | lyalya_permission_*.m4a | 2 |
 | Demo | lyalya_demo_*.m4a | 3 |
 | ChildHome | lyalya_childhome_*.m4a | 5 |
-| **ИТОГО новых** | — | **29** |
+| **ИТОГО новых (M3.7b)** | — | **30** |
 
 **Валидация (5 файлов):**
-- AAC codec ✅
-- 22050 Hz mono ✅
-- Размер 41–49 KB ✅
-- 29/29 сгенерировано, 0 ошибок ✅
+- AAC LC, 16000 Hz mono ✅
+- Размер 8–50 KB ✅
+- 30/30 сгенерировано, 0 ошибок ✅
 
 ---
 
 ## Следующие шаги
 
-- **M3.5** — ✅ DONE — grammar batch (141 файл, 2.3 MB)
-- **M3.7** — ✅ DONE — Ляля +29 фраз (итого 149)
-- **Эталоны для PronunciationScorer** — ~1200 слов (pending)
-- **M3.6 ambient** — 4 трека CC0 для world_map/lesson/AR/reward
+- **M3.4 batch 5** — ✅ DONE — lexical (700) + grammar (200) = 900 новых файлов (16.9 MB)
+- **M3.5 Эталоны** — ✅ DONE — 665 файлов (7.9 MB) в Refs/ (в репо)
+- **M3.7b** — ✅ DONE — Ляля +30 фраз (итого 150, все в LyalyaPhrase enum)
+- **M3.6 ambient** — 4 трека CC0 для world_map/lesson/AR/reward (⏳ pending M9)
 - **Firebase Storage upload** — delegated to backend-developer M11.4
 
 ## См. также
