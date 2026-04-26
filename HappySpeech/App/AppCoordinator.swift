@@ -321,11 +321,15 @@ struct AppCoordinatorView: View {
             coordinator.navigate(to: target)
             return
         }
-        // Auto-transition from splash after delay
+        // Auto-transition from splash after delay.
+        // First launch (онбординг не пройден) → показываем 10-шаговый онбординг.
+        // В противном случае идём в auth — пользователь либо войдёт, либо
+        // зарегистрируется и попадёт в roleSelect.
         Task {
             try? await Task.sleep(for: .seconds(2.2))
             await MainActor.run {
-                coordinator.navigate(to: .auth)
+                let target: AppRoute = OnboardingState.isCompleted ? .auth : .onboarding
+                coordinator.navigate(to: target)
             }
         }
     }
