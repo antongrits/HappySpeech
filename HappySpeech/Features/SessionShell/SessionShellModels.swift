@@ -1,10 +1,27 @@
 import Foundation
 
 // MARK: - SessionShell VIP Models
+//
+// SessionShell оборачивает игровую сессию HUD'ом, FeedbackOverlay, PauseSheet и
+// прокидывает фазы (loading / playing / paused / fatigue / completed) во View.
+//
+// VIP-стек:
+//   View → Interactor.startSession()      → Presenter.presentStartSession() → ViewModel
+//   View → Interactor.completeActivity()  → Presenter.presentCompleteActivity()
+//   View → Interactor.pauseSession()      → Presenter.presentPauseSession()
+//
+// Фичи под капотом:
+//   • прогрессбар (0…1) — Float по индексу активности;
+//   • таймер mm:ss — TimelineView во View, синхронизация startTime от Interactor;
+//   • 3 сердечка усталости — каждые 3 подряд неправильных ответа списываем 1;
+//   • Pause sheet — мотивационная фраза от Ляли + 2 действия;
+//   • Feedback overlay — зелёный flash / красная рамка + shake (auto-dismiss 0.8s);
+//   • Reduced Motion — все анимации в Binder уважают environment.
 
 enum SessionShellModels {
 
-    // MARK: StartSession
+    // MARK: - StartSession
+
     enum StartSession {
         struct Request {
             let childId: String
@@ -15,15 +32,18 @@ enum SessionShellModels {
             let activities: [SessionActivity]
             let totalSteps: Int
             let estimatedMinutes: Int
+            let sessionStartTime: Date
         }
         struct ViewModel {
             let activities: [SessionActivity]
             let totalSteps: Int
             let progressTitle: String
+            let sessionStartTime: Date
         }
     }
 
-    // MARK: CompleteActivity
+    // MARK: - CompleteActivity
+
     enum CompleteActivity {
         struct Request {
             let activityId: String
@@ -36,23 +56,64 @@ enum SessionShellModels {
             let isSessionComplete: Bool
             let earnedReward: SessionReward?
             let fatigueDetected: Bool
+            /// Кол-во оставшихся «сердечек усталости» (0…3). Каждые 3 подряд
+            /// ошибочных ответа списывают одно сердце.
+            let fatigueHearts: Int
+            /// `correct` если score >= 0.5, иначе `incorrect`. Управляет
+            /// FeedbackOverlay (flash / shake).
+            let feedback: ActivityFeedback
         }
         struct ViewModel {
             let shouldAdvance: Bool
             let shouldShowFatigueAlert: Bool
             let shouldShowReward: Bool
             let reward: RewardViewModel?
+            let feedbackState: FeedbackState
+            let fatigueHearts: Int
+            let mascotState: MascotState
         }
     }
 
-    // MARK: PauseSession
+    // MARK: - PauseSession
+
     enum PauseSession {
         struct Request {}
-        struct Response { let currentProgress: Float }
+        struct Response {
+            let currentProgress: Float
+            let activeSeconds: TimeInterval
+        }
         struct ViewModel {
             let progressPercentage: Float
             let timeSpentFormatted: String
+            let motivationalPhrase: String
         }
+    }
+
+    // MARK: - Feedback states
+
+    /// State of the feedback overlay rendered above the game content.
+    enum FeedbackState: Equatable, Sendable {
+        case none
+        case correct
+        case incorrect
+    }
+
+    /// Domain-level result of a single activity. Maps 1:1 onto `FeedbackState`
+    /// inside the Presenter.
+    enum ActivityFeedback: Sendable, Equatable {
+        case correct
+        case incorrect
+    }
+
+    /// Lyalya mood requested by the Presenter for the current shell state.
+    /// View picks the matching `MascotMood` via `mascotMood(for:)`.
+    enum MascotState: Sendable, Equatable {
+        case idle
+        case encouraging
+        case celebrating
+        case thinking
+        case explaining
+        case waving
     }
 }
 
@@ -68,6 +129,9 @@ struct SessionActivity: Identifiable, Sendable, Equatable {
     var score: Float?
 }
 
+/// Все 16 шаблонов игр, поддерживаемых проектом. Дублирование с
+/// `TemplateType` (контент-слой) — намеренно: фиче-слой и контент-слой
+/// разделены через мост `SessionShellInteractor.gameType(from:)`.
 enum GameType: String, Sendable, CaseIterable {
     case listenAndChoose        = "ListenAndChoose"
     case repeatAfterModel       = "RepeatAfterModel"
