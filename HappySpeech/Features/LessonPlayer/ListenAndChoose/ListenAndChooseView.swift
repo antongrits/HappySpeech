@@ -108,8 +108,9 @@ struct ListenAndChooseView: View {
     private func phaseRow(icon: String, text: String, tint: Color) -> some View {
         HStack(spacing: SpacingTokens.tiny) {
             Image(systemName: icon)
-                .font(.system(size: 14, weight: .semibold))
+                .font(TypographyTokens.caption(14).weight(.semibold))
                 .foregroundStyle(tint)
+                .accessibilityHidden(true)
             Text(text)
                 .font(TypographyTokens.body(14))
                 .foregroundStyle(tint)
@@ -161,7 +162,8 @@ struct ListenAndChooseView: View {
             } label: {
                 HStack(spacing: SpacingTokens.small) {
                     Image(systemName: "arrow.counterclockwise")
-                        .font(.system(size: 18, weight: .semibold))
+                        .font(TypographyTokens.body(18).weight(.semibold))
+                        .accessibilityHidden(true)
                     Text(String(localized: "Повтори"))
                         .font(TypographyTokens.body(14))
                 }
@@ -211,8 +213,9 @@ struct ListenAndChooseView: View {
                               padding: SpacingTokens.regular) {
                 VStack(spacing: SpacingTokens.small) {
                     Image(systemName: option.imageSystemName)
-                        .font(.system(size: 48, weight: .medium))
+                        .font(TypographyTokens.display(48).weight(.medium))
                         .foregroundStyle(ColorTokens.Brand.primary)
+                        .accessibilityHidden(true)
                     Text(option.word)
                         .font(TypographyTokens.body(17))
                         .foregroundStyle(ColorTokens.Kid.ink)
@@ -259,6 +262,7 @@ struct ListenAndChooseView: View {
         HStack(spacing: SpacingTokens.small) {
             Image(systemName: isCorrect ? "checkmark.circle.fill" : "xmark.circle.fill")
                 .foregroundStyle(isCorrect ? ColorTokens.Semantic.success : ColorTokens.Semantic.error)
+                .accessibilityHidden(true)
             Text(text)
                 .font(TypographyTokens.body(16))
                 .foregroundStyle(ColorTokens.Kid.ink)
@@ -422,15 +426,20 @@ struct AudioPlayButton: View {
                     .frame(width: 88, height: 88)
                     .overlay(
                         Image(systemName: isPlaying ? "speaker.wave.3.fill" : "play.fill")
-                            .font(.system(size: 36, weight: .bold))
+                            .font(TypographyTokens.title(36).weight(.bold))
                             .foregroundStyle(.white)
+                            .accessibilityHidden(true)
                     )
                     .shadow(color: ColorTokens.Brand.primary.opacity(0.35), radius: 12, y: 6)
             }
             .frame(width: 140, height: 140)
+            .contentShape(Circle())
         }
         .buttonStyle(.plain)
         .accessibilityAddTraits(.isButton)
+        .accessibilityLabel(String(
+            localized: isPlaying ? "a11y.audio.playing" : "a11y.button.play"
+        ))
         .onChange(of: isPlaying) { _, newValue in
             if newValue { rippleStart = Date() }
         }

@@ -151,7 +151,7 @@ struct RepeatAfterModelView: View {
         if let word = display.currentWord {
             VStack(spacing: SpacingTokens.medium) {
                 Text(word.emoji)
-                    .font(.system(size: 96))
+                    .font(TypographyTokens.kidDisplay(96))
                     .accessibilityHidden(true)
 
                 LetterHighlightView(
@@ -214,9 +214,10 @@ struct RepeatAfterModelView: View {
 
             VStack(spacing: SpacingTokens.tiny) {
                 Image(systemName: "speaker.wave.3.fill")
-                    .font(.system(size: 28, weight: .semibold))
+                    .font(TypographyTokens.title(28).weight(.semibold))
                     .foregroundStyle(ColorTokens.Brand.primary)
                     .symbolEffect(.pulse, options: reduceMotion ? .nonRepeating : .repeating, value: ringPulse)
+                    .accessibilityHidden(true)
                 Text(String(localized: "repeat.phase.model_playing"))
                     .font(TypographyTokens.headline(18))
                     .foregroundStyle(ColorTokens.Brand.primary)
@@ -281,7 +282,7 @@ struct RepeatAfterModelView: View {
                         value: micPulse
                     )
                 Image(systemName: "mic.fill")
-                    .font(.system(size: 96, weight: .bold))
+                    .font(TypographyTokens.kidDisplay(96).weight(.bold))
                     .foregroundStyle(ColorTokens.Brand.primary)
                     .accessibilityHidden(true)
             }
@@ -347,12 +348,12 @@ struct RepeatAfterModelView: View {
         VStack(spacing: SpacingTokens.medium) {
             if display.passed {
                 Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 120, weight: .bold))
+                    .font(TypographyTokens.kidDisplay(120).weight(.bold))
                     .foregroundStyle(ColorTokens.Brand.mint)
                     .accessibilityHidden(true)
             } else {
                 Image(systemName: "arrow.triangle.2.circlepath")
-                    .font(.system(size: 96, weight: .bold))
+                    .font(TypographyTokens.kidDisplay(96).weight(.bold))
                     .foregroundStyle(ColorTokens.Brand.sky)
                     .accessibilityHidden(true)
             }
@@ -409,7 +410,7 @@ struct RepeatAfterModelView: View {
             HStack(spacing: SpacingTokens.tiny) {
                 ForEach(0..<3, id: \.self) { index in
                     Image(systemName: index < display.starsEarned ? "star.fill" : "star")
-                        .font(.system(size: 44, weight: .bold))
+                        .font(TypographyTokens.display(44).weight(.bold))
                         .foregroundStyle(
                             index < display.starsEarned
                                 ? ColorTokens.Brand.gold
@@ -666,16 +667,18 @@ struct LetterHighlightView: View {
     let word: String
     let highlightedIndex: Int
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     var body: some View {
         HStack(spacing: 2) {
             ForEach(Array(word.enumerated()), id: \.offset) { idx, ch in
                 Text(String(ch))
-                    .font(.system(size: 40, weight: .bold, design: .rounded))
+                    .font(TypographyTokens.kidDisplay(40).weight(.bold))
                     .foregroundStyle(idx == highlightedIndex
                         ? ColorTokens.Brand.primary
                         : ColorTokens.Kid.ink)
                     .scaleEffect(idx == highlightedIndex ? 1.15 : 1.0)
-                    .animation(.spring(duration: 0.25), value: highlightedIndex)
+                    .animation(reduceMotion ? nil : .spring(duration: 0.25), value: highlightedIndex)
             }
         }
         .lineLimit(1)
@@ -716,8 +719,9 @@ struct RecordingButton: View {
                     .frame(width: 80, height: 80)
                     .overlay(
                         Image(systemName: isRecording ? "stop.fill" : "mic.fill")
-                            .font(.system(size: 32, weight: .bold))
+                            .font(TypographyTokens.title(32).weight(.bold))
                             .foregroundStyle(.white)
+                            .accessibilityHidden(true)
                     )
                     .shadow(color: .black.opacity(0.18), radius: 10, y: 4)
             }
@@ -727,6 +731,9 @@ struct RecordingButton: View {
         .onAppear { if !reduceMotion { pulse = true } }
         .onDisappear { pulse = false }
         .accessibilityAddTraits(.isButton)
+        .accessibilityLabel(String(
+            localized: isRecording ? "a11y.button.stop_record" : "a11y.button.record"
+        ))
     }
 }
 

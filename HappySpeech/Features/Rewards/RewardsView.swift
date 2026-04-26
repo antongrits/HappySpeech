@@ -169,7 +169,7 @@ struct RewardsView: View {
                         interactor?.filterByCollection(.init(collection: tab.collection))
                     } label: {
                         HStack(spacing: 6) {
-                            Text(tab.emoji).font(.system(size: 16))
+                            Text(tab.emoji).font(TypographyTokens.body(16)).accessibilityHidden(true)
                             Text(tab.title)
                                 .font(TypographyTokens.body(14))
                                 .lineLimit(1)
@@ -360,8 +360,9 @@ private struct StickerCellView: View {
                     }
 
                     Text(cell.emoji)
-                        .font(.system(size: 38))
+                        .font(TypographyTokens.display(38))
                         .scaleEffect(bounce ? 1.08 : 1.0)
+                        .accessibilityHidden(true)
 
                     if cell.isNew {
                         Circle()
@@ -395,7 +396,7 @@ private struct StickerCellView: View {
         ZStack {
             ForEach(0..<4, id: \.self) { i in
                 Image(systemName: "sparkle")
-                    .font(.system(size: 10, weight: .bold))
+                    .font(TypographyTokens.caption(10).weight(.bold))
                     .foregroundStyle(ColorTokens.Brand.gold)
                     .offset(y: -42)
                     .rotationEffect(.degrees(Double(i) * 90))
@@ -414,12 +415,13 @@ private struct StickerCellView: View {
                     .frame(width: 64, height: 64)
 
                 Text(cell.emoji)
-                    .font(.system(size: 38))
+                    .font(TypographyTokens.display(38))
                     .grayscale(0.95)
                     .opacity(0.35)
+                    .accessibilityHidden(true)
 
                 Image(systemName: "lock.fill")
-                    .font(.system(size: 14, weight: .semibold))
+                    .font(TypographyTokens.caption(14).weight(.semibold))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .padding(6)
                     .background(Circle().fill(ColorTokens.Kid.surface))
@@ -461,9 +463,10 @@ private struct StickerDetailSheet: View {
                     )
                     .frame(width: 140, height: 140)
                 Text(detail.emoji)
-                    .font(.system(size: 80))
+                    .font(TypographyTokens.kidDisplay(80))
                     .opacity(detail.isUnlocked ? 1 : 0.4)
                     .grayscale(detail.isUnlocked ? 0 : 0.9)
+                    .accessibilityHidden(true)
             }
 
             VStack(spacing: SpacingTokens.tiny) {
@@ -535,6 +538,8 @@ private struct StickerUnlockOverlay: View {
             Color.black.opacity(0.55)
                 .ignoresSafeArea()
                 .onTapGesture(perform: onDismiss)
+                .accessibilityAddTraits(.isButton)
+                .accessibilityLabel(String(localized: "a11y.button.close"))
 
             // Confetti rain (emoji raining downward)
             ForEach(0..<unlock.confettiEmojis.count * 3, id: \.self) { index in
@@ -560,9 +565,10 @@ private struct StickerUnlockOverlay: View {
                     .tracking(1.0)
 
                 Text(unlock.emoji)
-                    .font(.system(size: 120))
+                    .font(TypographyTokens.kidDisplay(120))
                     .scaleEffect(stickerScale)
                     .shadow(color: ColorTokens.Brand.gold.opacity(0.5), radius: 18)
+                    .accessibilityHidden(true)
 
                 Text(unlock.name)
                     .font(TypographyTokens.title(28))

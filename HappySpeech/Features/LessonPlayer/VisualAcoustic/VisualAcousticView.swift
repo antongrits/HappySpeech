@@ -123,7 +123,7 @@ struct VisualAcousticView: View {
                 .frame(height: 160)
 
             Text(display.imageEmoji)
-                .font(.system(size: 96))
+                .font(TypographyTokens.kidDisplay(96))
                 .shadow(color: .black.opacity(0.08), radius: 8, y: 4)
                 .scaleEffect(reduceMotion ? 1.0 : (display.isPlaying ? 1.04 : 1.0))
                 .animation(
@@ -139,7 +139,7 @@ struct VisualAcousticView: View {
                     HStack {
                         Spacer()
                         Image(systemName: "speaker.wave.2.fill")
-                            .font(.system(size: 18, weight: .semibold))
+                            .font(TypographyTokens.body(18).weight(.semibold))
                             .foregroundStyle(ColorTokens.Brand.primary)
                             .padding(SpacingTokens.small)
                             .background(Circle().fill(ColorTokens.Kid.surfaceAlt))
@@ -224,7 +224,7 @@ struct VisualAcousticView: View {
             Image(systemName: display.feedbackCorrect
                   ? "checkmark.circle.fill"
                   : "lightbulb.fill")
-                .font(.system(size: 20, weight: .semibold))
+                .font(TypographyTokens.title(20).weight(.semibold))
                 .foregroundStyle(
                     display.feedbackCorrect
                         ? ColorTokens.Feedback.correct
@@ -312,7 +312,7 @@ struct VisualAcousticView: View {
         HStack(spacing: SpacingTokens.small) {
             ForEach(0..<3, id: \.self) { idx in
                 Image(systemName: idx < display.starsEarned ? "star.fill" : "star")
-                    .font(.system(size: 44, weight: .semibold))
+                    .font(TypographyTokens.display(44).weight(.semibold))
                     .foregroundStyle(
                         idx < display.starsEarned
                             ? ColorTokens.Brand.butter
@@ -482,18 +482,18 @@ private struct ChoiceTile: View {
             EmptyView()
         case .correct:
             Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 20, weight: .bold))
+                .font(TypographyTokens.title(20).weight(.bold))
                 .foregroundStyle(.white)
                 .accessibilityHidden(true)
         case .wrong:
             if isRevealed {
                 Image(systemName: "star.fill")
-                    .font(.system(size: 20, weight: .bold))
+                    .font(TypographyTokens.title(20).weight(.bold))
                     .foregroundStyle(.white)
                     .accessibilityHidden(true)
             } else {
                 Image(systemName: "xmark.circle.fill")
-                    .font(.system(size: 20, weight: .bold))
+                    .font(TypographyTokens.title(20).weight(.bold))
                     .foregroundStyle(.white)
                     .accessibilityHidden(true)
             }

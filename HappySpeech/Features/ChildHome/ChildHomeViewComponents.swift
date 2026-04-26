@@ -133,11 +133,12 @@ struct ChildHomeStreakBadge: View {
 
             HStack(spacing: 4) {
                 Image(systemName: "flame.fill")
-                    .font(.system(size: 14))
+                    .font(TypographyTokens.caption(14))
                     .foregroundStyle(ColorTokens.Semantic.warning)
+                    .accessibilityHidden(true)
 
                 Text("\(streak)")
-                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                    .font(TypographyTokens.caption(14).weight(.bold))
                     .foregroundStyle(ColorTokens.Semantic.warning)
             }
             .padding(.horizontal, SpacingTokens.sp3)
@@ -235,7 +236,7 @@ struct ChildHomeDailyMissionDetailCard: View {
             Spacer(minLength: 0)
 
             Image(systemName: "play.circle.fill")
-                .font(.system(size: 32))
+                .font(TypographyTokens.title(32))
                 .foregroundStyle(ColorTokens.Brand.primary)
                 .accessibilityHidden(true)
         }
@@ -266,6 +267,7 @@ struct ChildHomeDailyMissionDetailCard: View {
         HStack(spacing: SpacingTokens.sp2) {
             Image(systemName: "checkmark.seal.fill")
                 .foregroundStyle(ColorTokens.Semantic.success)
+                .accessibilityHidden(true)
             Text(String(localized: "child.home.mission.completed"))
                 .font(TypographyTokens.body(14))
                 .foregroundStyle(ColorTokens.Semantic.success)
@@ -294,8 +296,9 @@ struct ChildHomeQuickPlayCard: View {
                         .frame(width: 48, height: 48)
 
                     Image(systemName: item.icon)
-                        .font(.system(size: 22, weight: .semibold))
+                        .font(TypographyTokens.title(22).weight(.semibold))
                         .foregroundStyle(accentColor)
+                        .accessibilityHidden(true)
                 }
 
                 Spacer(minLength: 0)
@@ -348,7 +351,7 @@ struct ChildHomeDifficultyStarsView: View {
         HStack(spacing: 2) {
             ForEach(0..<3, id: \.self) { index in
                 Image(systemName: index < level ? "star.fill" : "star")
-                    .font(.system(size: 10, weight: .semibold))
+                    .font(TypographyTokens.caption(10).weight(.semibold))
                     .foregroundStyle(index < level ? tint : ColorTokens.Kid.inkSoft)
             }
         }
@@ -369,10 +372,11 @@ struct ChildHomeQuickActionTile: View {
         Button(action: action) {
             VStack(spacing: SpacingTokens.sp2) {
                 Image(systemName: icon)
-                    .font(.system(size: 26))
+                    .font(TypographyTokens.title(26))
                     .foregroundStyle(color)
-                    .frame(width: 52, height: 52)
+                    .frame(width: 56, height: 56)
                     .background(Circle().fill(color.opacity(0.12)))
+                    .accessibilityHidden(true)
 
                 Text(title)
                     .font(TypographyTokens.body(13))
@@ -447,12 +451,13 @@ struct ChildHomeWorldZoneBubble: View {
                     .frame(width: 48, height: 48)
 
                 Text(zone.emoji)
-                    .font(.system(size: 22))
+                    .font(TypographyTokens.title(22))
+                    .accessibilityHidden(true)
             }
             .frame(width: 56, height: 56)
 
             Text(zone.sound)
-                .font(.system(size: 12, weight: .bold, design: .rounded))
+                .font(TypographyTokens.caption(12).weight(.bold))
                 .foregroundStyle(familyColor)
         }
         .frame(maxWidth: .infinity)
@@ -473,7 +478,7 @@ struct ChildHomeSoundProgressRow: View {
         HSCard(style: .flat) {
             HStack(spacing: SpacingTokens.sp3) {
                 Text(item.sound)
-                    .font(.system(size: 22, weight: .black, design: .rounded))
+                    .font(TypographyTokens.title(22).weight(.black))
                     .foregroundStyle(familyColor)
                     .frame(width: 36)
 
@@ -518,7 +523,7 @@ struct ChildHomeRecentSessionRow: View {
                         .fill(ColorTokens.Brand.mint.opacity(0.15))
                         .frame(width: 40, height: 40)
                     Text(session.soundTarget)
-                        .font(.system(size: 16, weight: .black, design: .rounded))
+                        .font(TypographyTokens.body(16).weight(.black))
                         .foregroundStyle(ColorTokens.Brand.mint)
                 }
 
@@ -535,7 +540,7 @@ struct ChildHomeRecentSessionRow: View {
                 Spacer()
 
                 Text(session.scoreEmoji)
-                    .font(.system(size: 16))
+                    .font(TypographyTokens.body(16))
                     .accessibilityHidden(true)
             }
         }
@@ -565,7 +570,7 @@ struct ChildHomeAchievementBanner: View {
         HSCard(style: .tinted(ColorTokens.Brand.gold.opacity(0.18))) {
             HStack(alignment: .top, spacing: SpacingTokens.sp3) {
                 Text(achievement.emoji)
-                    .font(.system(size: 36))
+                    .font(TypographyTokens.display(36))
                     .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: 2) {
@@ -592,9 +597,13 @@ struct ChildHomeAchievementBanner: View {
 
                 Button(action: onDismiss) {
                     Image(systemName: "xmark.circle.fill")
-                        .font(.system(size: 22))
+                        .font(TypographyTokens.title(22))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .frame(width: 56, height: 56)
+                        .contentShape(Rectangle())
+                        .accessibilityHidden(true)
                 }
+                .buttonStyle(.plain)
                 .accessibilityLabel(String(localized: "child.home.achievement.dismiss"))
             }
         }
@@ -610,8 +619,9 @@ struct ChildHomeEmptyProgressView: View {
         HSCard(style: .flat) {
             HStack(spacing: SpacingTokens.sp3) {
                 Image(systemName: "sparkles")
-                    .font(.system(size: 22))
+                    .font(TypographyTokens.title(22))
                     .foregroundStyle(ColorTokens.Brand.primary)
+                    .accessibilityHidden(true)
                 Text(String(localized: "child.home.progress.empty"))
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
@@ -626,8 +636,9 @@ struct ChildHomeEmptyRecentView: View {
         HSCard(style: .flat) {
             HStack(spacing: SpacingTokens.sp3) {
                 Image(systemName: "book.closed")
-                    .font(.system(size: 20))
+                    .font(TypographyTokens.title(20))
                     .foregroundStyle(ColorTokens.Brand.sky)
+                    .accessibilityHidden(true)
                 Text(String(localized: "child.home.recent.empty"))
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
@@ -694,7 +705,7 @@ struct ChildHomeStreakBanner: View {
                 .frame(width: 56, height: 56)
 
             Image(systemName: "flame.fill")
-                .font(.system(size: 28, weight: .bold))
+                .font(TypographyTokens.title(28).weight(.bold))
                 .foregroundStyle(ColorTokens.Semantic.warning)
                 .rotationEffect(.degrees(flameRotation))
                 .accessibilityHidden(true)
@@ -704,9 +715,9 @@ struct ChildHomeStreakBanner: View {
     private var hotChip: some View {
         HStack(spacing: 4) {
             Image(systemName: "sparkles")
-                .font(.system(size: 11, weight: .bold))
+                .font(TypographyTokens.caption(11).weight(.bold))
             Text(String(localized: "child.home.streak.hot"))
-                .font(.system(size: 11, weight: .bold, design: .rounded))
+                .font(TypographyTokens.caption(11).weight(.bold))
                 .textCase(.uppercase)
                 .tracking(0.5)
         }
@@ -764,7 +775,7 @@ struct ChildHomeMissionTimerLabel: View {
             let remaining = Self.timeUntilMidnight(from: context.date)
             HStack(spacing: 4) {
                 Image(systemName: "hourglass")
-                    .font(.system(size: 11, weight: .semibold))
+                    .font(TypographyTokens.caption(11).weight(.semibold))
                     .foregroundStyle(ColorTokens.Brand.primary)
                     .accessibilityHidden(true)
 
@@ -836,7 +847,7 @@ struct ChildHomeRecentRewardRow: View {
                         .fill(ColorTokens.Brand.gold.opacity(0.18))
                         .frame(width: 44, height: 44)
                     Text(reward.emoji)
-                        .font(.system(size: 22))
+                        .font(TypographyTokens.title(22))
                         .accessibilityHidden(true)
                 }
 
@@ -854,7 +865,7 @@ struct ChildHomeRecentRewardRow: View {
                 Spacer()
 
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 12, weight: .semibold))
+                    .font(TypographyTokens.caption(12).weight(.semibold))
                     .foregroundStyle(ColorTokens.Kid.inkSoft)
                     .accessibilityHidden(true)
             }
@@ -878,8 +889,9 @@ struct ChildHomeEmptyRewardsView: View {
         HSCard(style: .flat) {
             HStack(spacing: SpacingTokens.sp3) {
                 Image(systemName: "trophy")
-                    .font(.system(size: 20))
+                    .font(TypographyTokens.title(20))
                     .foregroundStyle(ColorTokens.Brand.gold)
+                    .accessibilityHidden(true)
                 Text(String(localized: "child.home.rewards.empty"))
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
