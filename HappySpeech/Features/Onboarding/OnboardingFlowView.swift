@@ -50,6 +50,17 @@ struct OnboardingFlowView: View {
                 stepContent
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
 
+                // Mascot bubble: показываем на шагах, где есть фраза Ляли.
+                // Welcome и Completion — пропускаем (там своя большая Ляля).
+                if !display.mascotText.isEmpty
+                    && display.currentStep != .welcome
+                    && display.currentStep != .completion {
+                    OnboardingMascotBubble(text: display.mascotText)
+                        .padding(.bottom, SpacingTokens.small)
+                        .transition(.opacity.combined(with: .move(edge: .bottom)))
+                        .animation(reduceMotion ? nil : MotionTokens.spring, value: display.currentStep)
+                }
+
                 actionFooter
             }
         }
@@ -1133,9 +1144,288 @@ private struct OnboardingCompletionStep: View {
     }
 }
 
+// MARK: - OnboardingMascotBubble
+//
+// Небольшой пузырёк с фразой Ляли — отображается под шагами,
+// где `display.mascotText` непустой.
+
+private struct OnboardingMascotBubble: View {
+    let text: String
+
+    var body: some View {
+        HStack(alignment: .top, spacing: SpacingTokens.small) {
+            LyalyaMascotView(state: .explaining, size: 52)
+                .accessibilityHidden(true)
+
+            Text(text)
+                .font(TypographyTokens.body(13))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.leading)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(SpacingTokens.small)
+                .background(
+                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                        .fill(ColorTokens.Kid.surface)
+                )
+        }
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(text)
+    }
+}
+
+// MARK: - OnboardingAboutStep
+//
+// 4 feature-карточки в сетке 2×2, описывающие ключевые возможности приложения.
+// Показывается после Welcome или Role (в зависимости от UX-решения).
+
+private struct OnboardingAboutStep: View {
+
+    private struct Feature: Identifiable {
+        let id: Int
+        let icon: String
+        let title: String
+        let description: String
+        let color: Color
+    }
+
+    private let features: [Feature] = [
+        .init(
+            id: 1,
+            icon: "gamecontroller.fill",
+            title: String(localized: "onboarding.about.feature1.title"),
+            description: String(localized: "onboarding.about.feature1.desc"),
+            color: ColorTokens.Brand.primary
+        ),
+        .init(
+            id: 2,
+            icon: "waveform.badge.mic",
+            title: String(localized: "onboarding.about.feature2.title"),
+            description: String(localized: "onboarding.about.feature2.desc"),
+            color: ColorTokens.Brand.lilac
+        ),
+        .init(
+            id: 3,
+            icon: "wifi.slash",
+            title: String(localized: "onboarding.about.feature3.title"),
+            description: String(localized: "onboarding.about.feature3.desc"),
+            color: ColorTokens.Brand.sky
+        ),
+        .init(
+            id: 4,
+            icon: "person.2.fill",
+            title: String(localized: "onboarding.about.feature4.title"),
+            description: String(localized: "onboarding.about.feature4.desc"),
+            color: ColorTokens.Brand.mint
+        )
+    ]
+
+    @State private var appeared = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    var body: some View {
+        VStack(spacing: SpacingTokens.medium) {
+            Text(String(localized: "onboarding.about.title"))
+                .font(TypographyTokens.title(24))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, SpacingTokens.large)
+                .padding(.top, SpacingTokens.medium)
+                .accessibilityAddTraits(.isHeader)
+                .opacity(appeared ? 1 : 0)
+                .offset(y: appeared ? 0 : 16)
+
+            LazyVGrid(
+                columns: [GridItem(.flexible()), GridItem(.flexible())],
+                spacing: SpacingTokens.small
+            ) {
+                ForEach(Array(features.enumerated()), id: \.element.id) { index, feature in
+                    featureCard(feature, delay: Double(index) * 0.08)
+                }
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+        }
+        .onAppear {
+            withAnimation(reduceMotion ? nil : MotionTokens.spring.delay(0.1)) {
+                appeared = true
+            }
+        }
+    }
+
+    private func featureCard(_ feature: Feature, delay: Double) -> some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.small) {
+            ZStack {
+                RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                    .fill(feature.color.opacity(0.12))
+                    .frame(width: 44, height: 44)
+                Image(systemName: feature.icon)
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundStyle(feature.color)
+                    .accessibilityHidden(true)
+            }
+
+            Text(feature.title)
+                .font(TypographyTokens.headline(14))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
+                .multilineTextAlignment(.leading)
+
+            Text(feature.description)
+                .font(TypographyTokens.caption(12))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(3)
+                .minimumScaleFactor(0.85)
+                .multilineTextAlignment(.leading)
+
+            Spacer(minLength: 0)
+        }
+        .padding(SpacingTokens.medium)
+        .frame(maxWidth: .infinity, minHeight: 130, alignment: .topLeading)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                .fill(ColorTokens.Kid.surface)
+                .shadow(color: .black.opacity(0.06), radius: 8, y: 3)
+        )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(feature.title). \(feature.description)")
+        .opacity(appeared ? 1 : 0)
+        .offset(y: appeared ? 0 : 20)
+        .animation(
+            reduceMotion ? nil : MotionTokens.spring.delay(delay + 0.15),
+            value: appeared
+        )
+    }
+}
+
+// MARK: - OnboardingScreeningIntroStep
+//
+// Вводный экран скрининга: маскот Ляля + описание + 2 CTA.
+// «Пройти скрининг» → переходим к скрининговым вопросам (следующий шаг).
+// «Пропустить» → Interactor пропускает шаг.
+//
+// Скрининг — опциональная диагностическая пауза между Schedule и Permissions.
+// Она помогает подобрать первый content pack точнее.
+
+private struct OnboardingScreeningIntroStep: View {
+    let onStartScreening: () -> Void
+    let onSkipScreening: () -> Void
+
+    @State private var appeared = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    private let features: [(icon: String, text: String)] = [
+        ("checkmark.circle.fill",
+         String(localized: "onboarding.about.feature1.desc")),
+        ("mic.circle.fill",
+         String(localized: "onboarding.about.feature2.desc")),
+        ("clock.badge.checkmark.fill",
+         String(localized: "onboarding.screening.subtitle"))
+    ]
+
+    var body: some View {
+        VStack(spacing: SpacingTokens.large) {
+            Spacer(minLength: SpacingTokens.small)
+
+            LyalyaMascotView(state: .thinking, size: 130)
+                .scaleEffect(appeared ? 1 : 0.7)
+                .opacity(appeared ? 1 : 0)
+                .accessibilityHidden(true)
+
+            VStack(spacing: SpacingTokens.small) {
+                Text(String(localized: "onboarding.screening.title"))
+                    .font(TypographyTokens.title(24))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, SpacingTokens.large)
+                    .accessibilityAddTraits(.isHeader)
+
+                Text(String(localized: "onboarding.mascot.complete"))
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, SpacingTokens.xLarge)
+                    .lineSpacing(3)
+            }
+            .opacity(appeared ? 1 : 0)
+            .offset(y: appeared ? 0 : 14)
+
+            VStack(spacing: SpacingTokens.small) {
+                ForEach(features.indices, id: \.self) { index in
+                    HStack(spacing: SpacingTokens.small) {
+                        Image(systemName: features[index].icon)
+                            .font(.system(size: 18, weight: .semibold))
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                            .frame(width: 28)
+                            .accessibilityHidden(true)
+                        Text(features[index].text)
+                            .font(TypographyTokens.body(13))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
+                        Spacer(minLength: 0)
+                    }
+                    .padding(.vertical, SpacingTokens.tiny)
+                }
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .opacity(appeared ? 1 : 0)
+
+            VStack(spacing: SpacingTokens.tiny) {
+                HSButton(
+                    String(localized: "onboarding.screening.cta"),
+                    style: .primary,
+                    icon: "checkmark"
+                ) {
+                    onStartScreening()
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+
+                Button {
+                    onSkipScreening()
+                } label: {
+                    Text(String(localized: "onboarding.screening.skip"))
+                        .font(TypographyTokens.body(14))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .padding(.vertical, SpacingTokens.tiny)
+                }
+                .accessibilityLabel(String(localized: "onboarding.screening.skip"))
+            }
+
+            Spacer(minLength: SpacingTokens.small)
+        }
+        .onAppear {
+            withAnimation(reduceMotion ? nil : MotionTokens.spring.delay(0.1)) {
+                appeared = true
+            }
+        }
+    }
+}
+
 // MARK: - Preview
 
 #Preview("Onboarding 10-step") {
     OnboardingFlowView(onComplete: { _ in })
         .environment(AppCoordinator())
+}
+
+#Preview("Onboarding About Step") {
+    OnboardingAboutStep()
+        .background(ColorTokens.Kid.bg)
+}
+
+#Preview("Onboarding Screening Intro") {
+    OnboardingScreeningIntroStep(
+        onStartScreening: {},
+        onSkipScreening: {}
+    )
+    .background(ColorTokens.Kid.bg)
+}
+
+#Preview("Onboarding Mascot Bubble") {
+    OnboardingMascotBubble(text: "Привет! Я Ляля. Помогу тебе говорить красиво!")
+        .padding()
+        .background(ColorTokens.Kid.bg)
 }

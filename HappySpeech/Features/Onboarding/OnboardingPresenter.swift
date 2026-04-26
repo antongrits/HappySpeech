@@ -41,7 +41,8 @@ final class OnboardingPresenter: OnboardingPresentationLogic {
             progress: progress(from: response.initialStep, total: total),
             progressLabel: progressLabel(from: response.initialStep, total: total),
             profile: response.profile,
-            canAdvance: canAdvance
+            canAdvance: canAdvance,
+            mascotText: mascotText(for: response.initialStep)
         ))
     }
 
@@ -55,7 +56,8 @@ final class OnboardingPresenter: OnboardingPresentationLogic {
             progressLabel: progressLabel(from: response.currentStep, total: total),
             profile: response.profile,
             canAdvance: canAdvance,
-            isCompleted: response.isCompleted
+            isCompleted: response.isCompleted,
+            mascotText: mascotText(for: response.currentStep)
         ))
     }
 
@@ -67,7 +69,8 @@ final class OnboardingPresenter: OnboardingPresentationLogic {
             totalSteps: total,
             progress: progress(from: response.currentStep, total: total),
             progressLabel: progressLabel(from: response.currentStep, total: total),
-            canAdvance: canAdvance
+            canAdvance: canAdvance,
+            mascotText: mascotText(for: response.currentStep)
         ))
     }
 
@@ -120,7 +123,8 @@ final class OnboardingPresenter: OnboardingPresentationLogic {
             totalSteps: total,
             progress: progress(from: response.currentStep, total: total),
             progressLabel: progressLabel(from: response.currentStep, total: total),
-            canAdvance: canAdvance(from: response.currentStep, profile: response.profile)
+            canAdvance: canAdvance(from: response.currentStep, profile: response.profile),
+            mascotText: mascotText(for: response.currentStep)
         ))
     }
 
@@ -194,5 +198,22 @@ final class OnboardingPresenter: OnboardingPresentationLogic {
 
     private func progressLabel(from step: OnboardingStep, total: Int) -> String {
         String(format: String(localized: "onboarding.progress.label"), step.rawValue + 1, total)
+    }
+
+    /// Фраза Ляли для каждого шага онбординга.
+    /// Используется в mascot-пузырьке под шагом.
+    private func mascotText(for step: OnboardingStep) -> String {
+        switch step {
+        case .welcome:       return String(localized: "onboarding.mascot.welcome")
+        case .role:          return String(localized: "onboarding.mascot.role")
+        case .childName:     return String(localized: "onboarding.mascot.name")
+        case .childAge:      return String(localized: "onboarding.mascot.age")
+        case .goals:         return String(localized: "onboarding.mascot.goals")
+        case .sounds:        return String(localized: "onboarding.mascot.sounds")
+        case .schedule:      return String(localized: "onboarding.mascot.schedule")
+        case .permissions:   return String(localized: "onboarding.mascot.permissions")
+        case .modelDownload: return String(localized: "onboarding.mascot.download")
+        case .completion:    return String(localized: "onboarding.mascot.complete")
+        }
     }
 }
