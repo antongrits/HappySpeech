@@ -307,6 +307,9 @@ struct ChildHomeQuickPlayCard: View {
                     .minimumScaleFactor(0.85)
                     .multilineTextAlignment(.leading)
                     .ctaTextStyle()
+
+                // B13: difficulty stars (1…3) — визуальная подсказка сложности.
+                ChildHomeDifficultyStarsView(level: item.difficulty, tint: accentColor)
             }
             .padding(SpacingTokens.sp4)
             .frame(width: 130, height: 160, alignment: .topLeading)
@@ -324,7 +327,32 @@ struct ChildHomeQuickPlayCard: View {
         .tapFeedback()
         .accessibilityElement(children: .combine)
         .accessibilityLabel(item.title)
+        .accessibilityValue(Text(String.localizedStringWithFormat(
+            String(localized: "child.home.quick.difficulty.a11y"),
+            item.difficulty
+        )))
         .accessibilityHint(String(localized: "child.home.quick.a11y.hint"))
+    }
+}
+
+// MARK: - DifficultyStarsView (B13)
+
+/// 3 звёздочки: первые `level` залиты, остальные — outline.
+/// Используется в `ChildHomeQuickPlayCard` для визуализации сложности 1…3.
+struct ChildHomeDifficultyStarsView: View {
+
+    let level: Int
+    let tint: Color
+
+    var body: some View {
+        HStack(spacing: 2) {
+            ForEach(0..<3, id: \.self) { index in
+                Image(systemName: index < level ? "star.fill" : "star")
+                    .font(.system(size: 10, weight: .semibold))
+                    .foregroundStyle(index < level ? tint : ColorTokens.Kid.inkSoft)
+            }
+        }
+        .accessibilityHidden(true)
     }
 }
 
@@ -601,6 +629,258 @@ struct ChildHomeEmptyRecentView: View {
                     .font(.system(size: 20))
                     .foregroundStyle(ColorTokens.Brand.sky)
                 Text(String(localized: "child.home.recent.empty"))
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                Spacer()
+            }
+        }
+    }
+}
+
+// MARK: - StreakBanner (B13 — full-width banner, не путать со StreakBadge в hero)
+
+/// Полноразмерная карточка-баннер серии занятий. Показывается между маскотом и
+/// daily mission. Содержит огонёк, счётчик дней (plural) и call-to-action
+/// «Не прерви серию!». Pulse-анимация раз в 3 секунды (если ReduceMotion = off).
+/// Hidden, если streak == 0 — нечего поощрять.
+struct ChildHomeStreakBanner: View {
+
+    let streak: Int
+    let isHot: Bool
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var pulse: CGFloat = 1.0
+    @State private var flameRotation: Double = 0
+
+    var body: some View {
+        HSCard(style: .tinted(ColorTokens.Semantic.warning.opacity(0.14))) {
+            HStack(alignment: .center, spacing: SpacingTokens.sp4) {
+                flameIcon
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(streakCountText)
+                        .font(TypographyTokens.headline(18))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+
+                    Text(String(localized: "child.home.streak.subtitle"))
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                }
+
+                Spacer(minLength: 0)
+
+                if isHot {
+                    hotChip
+                }
+            }
+            .scaleEffect(pulse)
+        }
+        .onAppear { startPulse() }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(Text(String.localizedStringWithFormat(
+            String(localized: "child.home.streak.banner.a11y"),
+            streak
+        )))
+    }
+
+    private var flameIcon: some View {
+        ZStack {
+            Circle()
+                .fill(ColorTokens.Semantic.warning.opacity(0.2))
+                .frame(width: 56, height: 56)
+
+            Image(systemName: "flame.fill")
+                .font(.system(size: 28, weight: .bold))
+                .foregroundStyle(ColorTokens.Semantic.warning)
+                .rotationEffect(.degrees(flameRotation))
+                .accessibilityHidden(true)
+        }
+    }
+
+    private var hotChip: some View {
+        HStack(spacing: 4) {
+            Image(systemName: "sparkles")
+                .font(.system(size: 11, weight: .bold))
+            Text(String(localized: "child.home.streak.hot"))
+                .font(.system(size: 11, weight: .bold, design: .rounded))
+                .textCase(.uppercase)
+                .tracking(0.5)
+        }
+        .foregroundStyle(ColorTokens.Brand.gold)
+        .padding(.horizontal, SpacingTokens.sp2)
+        .padding(.vertical, 4)
+        .background(Capsule().fill(ColorTokens.Brand.gold.opacity(0.18)))
+        .accessibilityHidden(true)
+    }
+
+    private var streakCountText: String {
+        let format = String(localized: "child.home.streak.format")
+        return String.localizedStringWithFormat(format, streak)
+    }
+
+    private func startPulse() {
+        guard !reduceMotion else {
+            pulse = 1.0
+            flameRotation = 0
+            return
+        }
+        // Pulse каждые 3 секунды — лёгкий «вдох» карточки, не раздражает периферийное зрение.
+        withAnimation(
+            .easeInOut(duration: 1.5)
+                .repeatForever(autoreverses: true)
+                .delay(0.5)
+        ) {
+            pulse = 1.025
+        }
+        withAnimation(
+            .easeInOut(duration: 1.5)
+                .repeatForever(autoreverses: true)
+        ) {
+            flameRotation = 6
+        }
+    }
+}
+
+// MARK: - MissionTimerLabel (B13 — TimelineView, обновляется раз в минуту)
+
+/// Метка «Осталось N ч M мин» — компактный таймер до конца дня (полночь).
+/// Использует `TimelineView(.periodic(...))`, обновление раз в 60 с — без Timer.publish.
+struct ChildHomeMissionTimerLabel: View {
+
+    /// Текущее время для расчёта (по умолчанию — `.now`, но можно передать
+    /// для тестов / Preview'ев).
+    let now: Date
+
+    init(now: Date = Date()) {
+        self.now = now
+    }
+
+    var body: some View {
+        TimelineView(.periodic(from: .now, by: 60)) { context in
+            let remaining = Self.timeUntilMidnight(from: context.date)
+            HStack(spacing: 4) {
+                Image(systemName: "hourglass")
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .accessibilityHidden(true)
+
+                Text(Self.formatRemaining(remaining))
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+            }
+            .padding(.horizontal, SpacingTokens.sp2)
+            .padding(.vertical, 4)
+            .background(
+                Capsule().fill(ColorTokens.Brand.primary.opacity(0.10))
+            )
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel(Text(Self.a11y(for: remaining)))
+        }
+    }
+
+    // MARK: - Time math (внутренняя)
+
+    private static func timeUntilMidnight(from date: Date) -> (hours: Int, minutes: Int) {
+        let calendar = Calendar.current
+        guard let startOfTomorrow = calendar.nextDate(
+            after: date,
+            matching: DateComponents(hour: 0, minute: 0, second: 0),
+            matchingPolicy: .nextTime
+        ) else {
+            return (0, 0)
+        }
+        let interval = max(0, startOfTomorrow.timeIntervalSince(date))
+        let totalMinutes = Int(interval / 60)
+        return (totalMinutes / 60, totalMinutes % 60)
+    }
+
+    private static func formatRemaining(_ remaining: (hours: Int, minutes: Int)) -> String {
+        let prefix = String(localized: "child.home.time_left")
+        if remaining.hours == 0 {
+            let minutesFormat = String(localized: "child.home.time.minutes.format")
+            let minutesText = String.localizedStringWithFormat(minutesFormat, remaining.minutes)
+            return "\(prefix) \(minutesText)"
+        }
+        let hoursFormat = String(localized: "child.home.time.hours.format")
+        let minutesFormat = String(localized: "child.home.time.minutes.short.format")
+        let hoursText = String.localizedStringWithFormat(hoursFormat, remaining.hours)
+        let minutesText = String.localizedStringWithFormat(minutesFormat, remaining.minutes)
+        return "\(prefix) \(hoursText) \(minutesText)"
+    }
+
+    private static func a11y(for remaining: (hours: Int, minutes: Int)) -> String {
+        let format = String(localized: "child.home.time.a11y")
+        return String.localizedStringWithFormat(format, remaining.hours, remaining.minutes)
+    }
+}
+
+// MARK: - RecentRewardRow (B13)
+
+/// Строка в секции «Недавние достижения». Не путать с `RecentSessionRow` —
+/// здесь именно награды (emoji + название), без оценки и шаблона игры.
+struct ChildHomeRecentRewardRow: View {
+
+    let reward: ChildHomeModels.RecentReward
+
+    var body: some View {
+        HSCard(style: .flat) {
+            HStack(spacing: SpacingTokens.sp3) {
+                ZStack {
+                    Circle()
+                        .fill(ColorTokens.Brand.gold.opacity(0.18))
+                        .frame(width: 44, height: 44)
+                    Text(reward.emoji)
+                        .font(.system(size: 22))
+                        .accessibilityHidden(true)
+                }
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(reward.title)
+                        .font(TypographyTokens.body(14))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                    Text(formattedDate)
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                }
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(ColorTokens.Kid.inkSoft)
+                    .accessibilityHidden(true)
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(Text("\(reward.emoji) \(reward.title). \(formattedDate)"))
+    }
+
+    private var formattedDate: String {
+        let formatter = RelativeDateTimeFormatter()
+        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.unitsStyle = .full
+        return formatter.localizedString(for: reward.earnedAt, relativeTo: Date())
+    }
+}
+
+// MARK: - EmptyRewardsView (B13)
+
+struct ChildHomeEmptyRewardsView: View {
+    var body: some View {
+        HSCard(style: .flat) {
+            HStack(spacing: SpacingTokens.sp3) {
+                Image(systemName: "trophy")
+                    .font(.system(size: 20))
+                    .foregroundStyle(ColorTokens.Brand.gold)
+                Text(String(localized: "child.home.rewards.empty"))
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                 Spacer()
