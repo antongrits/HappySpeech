@@ -1,5 +1,4 @@
 import Foundation
-import SwiftUI
 
 // MARK: - WorldMap VIP Models
 //
@@ -95,8 +94,8 @@ enum WorldMapModels {
             let isLocked: Bool
             let prerequisiteHint: String?
             let ctaTitle: String
-            let backgroundColor: Color
-            let foregroundColor: Color
+            /// Имя цвета из палитры `ColorTokens.Brand.*` (маппинг — на стороне View).
+            let colorName: String
             let accessibilityLabel: String
         }
     }
@@ -204,8 +203,8 @@ struct WorldZoneCard: Sendable, Identifiable, Equatable {
     let progress: Double
     let progressLabel: String
     let lessonsLabel: String
-    let backgroundColor: Color
-    let foregroundColor: Color
+    /// Имя цвета из палитры `ColorTokens.Brand.*` (маппинг — на стороне View).
+    let colorName: String
     let isLocked: Bool
     let isHighlighted: Bool
     /// Нормализованная позиция острова на канвасе [0..1, 0..1].

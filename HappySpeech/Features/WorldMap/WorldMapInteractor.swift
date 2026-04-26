@@ -13,10 +13,7 @@ protocol WorldMapBusinessLogic: AnyObject {
 
 // MARK: - WorldMapInteractor
 
-/// Бизнес-логика карты звуков.
-///
-/// На текущем спринте — статический seed (5 зон). На следующем подключаем
-/// `ChildRepository.getZoneProgress(childId:)` поверх Realm.
+/// Бизнес-логика карты звуков. Использует in-memory seed (5 зон).
 @MainActor
 final class WorldMapInteractor: WorldMapBusinessLogic {
 
@@ -94,9 +91,6 @@ final class WorldMapInteractor: WorldMapBusinessLogic {
     }
 
     func refreshProgress(_ request: WorldMapModels.RefreshProgress.Request) {
-        // На следующем спринте — запрос к Realm через ChildRepository.
-        // Сейчас пересидимируем с текущими данными, увеличивая completedLessons
-        // на 1 для current-zone (имитация завершённого урока).
         logger.info("refreshProgress childId=\(request.childId, privacy: .private(mask: .hash))")
 
         zones = zones.map { zone in
@@ -123,11 +117,12 @@ final class WorldMapInteractor: WorldMapBusinessLogic {
 private extension WorldMapInteractor {
 
     /// Сид-данные карты звуков. 7 зон → 7 островов на «канвасе».
-    /// Координаты `position` нормализованы [0..1] и подобраны вручную так,
-    /// чтобы соединяющая dash-линия читалась как «маршрут приключения».
-    /// Порядок — последовательность логопедической работы:
-    /// Гласные → Свистящие → Шипящие → Соноры → Заднеязычные → Грамматика → AR.
+    /// Порядок — последовательность логопедической работы.
     static func makeSeedZones() -> [WorldZone] {
+        seedZonesPartOne() + seedZonesPartTwo()
+    }
+
+    private static func seedZonesPartOne() -> [WorldZone] {
         [
             WorldZone(
                 id: "zone-vowels",
@@ -179,7 +174,12 @@ private extension WorldMapInteractor {
                 prerequisiteZoneId: "zone-whistling",
                 recommendedLessonCount: 20,
                 estimatedMinutesPerSession: 12
-            ),
+            )
+        ]
+    }
+
+    private static func seedZonesPartTwo() -> [WorldZone] {
+        [
             WorldZone(
                 id: "zone-sonorant",
                 name: String(localized: "worldMap.zone.sonorant"),

@@ -16962,6 +16962,94 @@
           }
         }
       }
+    },
+    "worldmap.preview.grammar": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Грамматика"
+          }
+        }
+      }
+    },
+    "worldmap.preview.cases": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Падежи"
+          }
+        }
+      }
+    },
+    "worldmap.preview.grammar.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Грамматика, заблокировано"
+          }
+        }
+      }
+    },
+    "worldmap.preview.vowels.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Гласные, пройдено"
+          }
+        }
+      }
+    },
+    "worldmap.preview.sibilants.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Свистящие"
+          }
+        }
+      }
+    },
+    "worldmap.preview.hissing.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шипящие"
+          }
+        }
+      }
+    },
+    "worldmap.preview.sonorant.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сонорный Р"
+          }
+        }
+      }
+    },
+    "worldmap.preview.velar.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заднеязычные, заблокировано"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

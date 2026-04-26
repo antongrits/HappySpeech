@@ -1,6 +1,5 @@
 import Foundation
 import OSLog
-import SwiftUI
 
 // MARK: - PermissionsPresentationLogic
 
@@ -12,6 +11,7 @@ protocol PermissionsPresentationLogic: AnyObject {
     func presentOpenSettings(_ response: PermissionsModels.OpenSettings.Response)
     func presentCheckAllPermissions(_ response: PermissionsModels.CheckAllPermissions.Response)
     func presentFailure(_ response: PermissionsModels.Failure.Response)
+    func presentLoading(_ isLoading: Bool)
 }
 
 // MARK: - PermissionsPresenter
@@ -55,21 +55,29 @@ final class PermissionsPresenter: PermissionsPresentationLogic {
         }
 
         let nextIdx = response.nextIndex ?? response.updatedSteps.count - 1
+        let allDone: PermissionsAllDoneCard? = response.isFinished
+            ? makeAllDoneCard(steps: cards)
+            : nil
         display?.displayRequestPermission(.init(
             steps: cards,
             currentIndex: nextIdx,
             toastMessage: toast,
-            isFinished: response.isFinished
+            isFinished: response.isFinished,
+            allDoneCard: allDone
         ))
     }
 
     func presentSkip(_ response: PermissionsModels.Skip.Response) {
         let cards = response.updatedSteps.map(makeCard)
         let nextIdx = response.nextIndex ?? response.updatedSteps.count - 1
+        let allDone: PermissionsAllDoneCard? = response.isFinished
+            ? makeAllDoneCard(steps: cards)
+            : nil
         display?.displaySkip(.init(
             steps: cards,
             currentIndex: nextIdx,
-            isFinished: response.isFinished
+            isFinished: response.isFinished,
+            allDoneCard: allDone
         ))
     }
 
@@ -114,6 +122,10 @@ final class PermissionsPresenter: PermissionsPresentationLogic {
         display?.displayFailure(.init(toastMessage: response.message))
     }
 
+    func presentLoading(_ isLoading: Bool) {
+        display?.displayLoading(isLoading)
+    }
+
     // MARK: - Helpers
 
     private func makeCard(_ step: PermissionStep) -> PermissionStepCard {
@@ -142,7 +154,7 @@ final class PermissionsPresenter: PermissionsPresentationLogic {
             allowTitle: step.allowTitle,
             skipTitle: String(localized: "permissions.skip"),
             privacyNote: step.privacyNote,
-            accentColor: step.accentColor.color,
+            accent: step.accentColor,
             state: step.state,
             showSettingsButton: showSettings,
             isCompleted: isCompleted,
@@ -181,28 +193,28 @@ final class PermissionsPresenter: PermissionsPresentationLogic {
         let icon: String
         let title: String
         let description: String
-        let accentColor: Color
+        let accent: PermissionAccent
         switch type {
         case .microphone:
             icon = "mic.fill"
             title = String(localized: "permissions.mic.title")
             description = String(localized: "permissions.mic.desc")
-            accentColor = ColorTokens.Brand.primary
+            accent = .primary
         case .camera:
             icon = "camera.fill"
             title = String(localized: "permissions.camera.title")
             description = String(localized: "permissions.camera.desc")
-            accentColor = ColorTokens.Brand.lilac
+            accent = .lilac
         case .notifications:
             icon = "bell.fill"
             title = String(localized: "permissions.notif.title")
             description = String(localized: "permissions.notif.desc")
-            accentColor = ColorTokens.Brand.butter
+            accent = .butter
         case .faceTracking:
             icon = "face.dashed"
             title = String(localized: "permissions.faceTracking.title")
             description = String(localized: "permissions.faceTracking.desc")
-            accentColor = ColorTokens.Brand.mint
+            accent = .mint
         }
 
         let statusLabel: String
@@ -231,7 +243,7 @@ final class PermissionsPresenter: PermissionsPresentationLogic {
             title: title,
             description: description,
             state: state,
-            accentColor: accentColor,
+            accent: accent,
             statusLabel: statusLabel,
             canRequest: state == .notDetermined,
             showSettingsButton: state == .denied || state == .restricted,
@@ -243,12 +255,11 @@ final class PermissionsPresenter: PermissionsPresentationLogic {
 
 // MARK: - All-done card factory
 
-extension PermissionsPresenter {
+private extension PermissionsPresenter {
 
     /// Формирует ViewModel финального праздничного шага.
-    /// View использует этот метод напрямую через `presenter` для
-    /// получения локализованных строк (без отдельного VIP-цикла).
-    static func makeAllDoneCard(steps: [PermissionStepCard]) -> PermissionsAllDoneCard {
+    /// Вызывается только из Presenter (не из View) — через VIP-цикл.
+    func makeAllDoneCard(steps: [PermissionStepCard]) -> PermissionsAllDoneCard {
         let granted = steps.filter { $0.state == .granted }.count
         let total = steps.count
         return PermissionsAllDoneCard(

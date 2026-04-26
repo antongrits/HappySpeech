@@ -149,8 +149,16 @@ struct PermissionFlowView: View {
 
     @ViewBuilder
     private var allDoneContent: some View {
-        let card = PermissionsPresenter.makeAllDoneCard(steps: display.steps)
+        if let card = display.allDoneCard {
+            allDoneContentBody(card)
+        } else {
+            ProgressView()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+    }
 
+    @ViewBuilder
+    private func allDoneContentBody(_ card: PermissionsAllDoneCard) -> some View {
         ZStack {
             // Конфетти / радостный фон-градиент
             LinearGradient(
@@ -467,7 +475,6 @@ struct PermissionFlowView: View {
     // MARK: - Actions
 
     private func handleAllow(_ step: PermissionStepCard) {
-        display.displayLoading(true)
         interactor?.requestPermission(.init(type: step.id))
     }
 
@@ -535,6 +542,24 @@ struct PermissionFlowView: View {
         // Single = старая семантика Coordinator (один permission по deep-link).
         interactor.start(.init(single: sequential ? nil : type))
     }
+}
+
+// MARK: - Color helpers (View layer only)
+
+private extension PermissionAccent {
+    var color: Color {
+        switch self {
+        case .primary: return ColorTokens.Brand.primary
+        case .lilac:   return ColorTokens.Brand.lilac
+        case .butter:  return ColorTokens.Brand.butter
+        case .mint:    return ColorTokens.Brand.mint
+        }
+    }
+}
+
+private extension PermissionStepCard {
+    /// Удобный маппинг `accent → Color` для использования в View.
+    var accentColor: Color { accent.color }
 }
 
 // MARK: - ConfettiBurstView

@@ -1,5 +1,4 @@
 import Foundation
-import SwiftUI
 
 // MARK: - Permissions VIP Models
 //
@@ -53,6 +52,8 @@ enum PermissionsModels {
             let currentIndex: Int
             let toastMessage: String?
             let isFinished: Bool
+            /// Заполняется только когда `isFinished == true` и поток не single-mode.
+            let allDoneCard: PermissionsAllDoneCard?
         }
     }
 
@@ -73,6 +74,8 @@ enum PermissionsModels {
             let steps: [PermissionStepCard]
             let currentIndex: Int
             let isFinished: Bool
+            /// Заполняется только когда `isFinished == true` и поток не single-mode.
+            let allDoneCard: PermissionsAllDoneCard?
         }
     }
 
@@ -127,7 +130,8 @@ struct PermissionOverviewCard: Sendable, Identifiable, Equatable {
     let title: String
     let description: String
     let state: PermissionState
-    let accentColor: Color
+    /// Цветовой акцент карточки. Конвертацию в `Color` производить на стороне View.
+    let accent: PermissionAccent
     let statusLabel: String
     let canRequest: Bool
     let showSettingsButton: Bool
@@ -166,19 +170,13 @@ struct PermissionStep: Sendable, Identifiable, Equatable {
     var state: PermissionState
 }
 
-/// Цветовой тон шага (соответствует ColorTokens.Brand.*).
+/// Цветовой тон шага (соответствует `ColorTokens.Brand.*`).
+/// Конвертацию в SwiftUI `Color` производить на стороне View через `.color`.
 enum PermissionAccent: String, Sendable, Equatable {
     case primary
     case lilac
     case butter
-
-    var color: Color {
-        switch self {
-        case .primary: return ColorTokens.Brand.primary
-        case .lilac:   return ColorTokens.Brand.lilac
-        case .butter:  return ColorTokens.Brand.butter
-        }
-    }
+    case mint
 }
 
 /// View-ready карточка одного шага. Все строки — уже локализованные.
@@ -190,7 +188,8 @@ struct PermissionStepCard: Sendable, Identifiable, Equatable {
     let allowTitle: String
     let skipTitle: String
     let privacyNote: String?
-    let accentColor: Color
+    /// Цветовой акцент карточки. Конвертацию в `Color` производить на стороне View.
+    let accent: PermissionAccent
     let state: PermissionState
     let showSettingsButton: Bool
     let isCompleted: Bool

@@ -2870,6 +2870,7 @@
 		714F16AEAC975C9C9B8A6AEF /* ch-df-15.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A5F75749DF334FA3E578F497 /* ch-df-15.m4a */; };
 		716CAA1D337E55EB162A95C5 /* l-wf-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C792A1A9E47FC4E52AF15B56 /* l-wf-2.m4a */; };
 		717A1A44684090F71432C4ED /* ag-024.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 486F726E8CE48D5A5F15FABF /* ag-024.m4a */; };
+		718C00601B1856513BFB35A4 /* PermissionsOverviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43378F32A09DF15274CEE6FC /* PermissionsOverviewView.swift */; };
 		719153B90A6CA14A6BBDC708 /* ag-093.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C164AE8F9A4B4745BDCE892E /* ag-093.m4a */; };
 		71925AC016E9D1010F9B8312 /* lyalya_story_05.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0C98AC966216DAF96F7B54BF /* lyalya_story_05.m4a */; };
 		719B8BEBE73DADC483FF93E2 /* dwh-syl-11.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 50DA72FB77F76F6DAD04C6FF /* dwh-syl-11.m4a */; };
@@ -5735,6 +5736,7 @@
 		E0F4D13272B47F057F12095C /* lex-hf-15.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4C2940DE0E6E9043032B5200 /* lex-hf-15.m4a */; };
 		E11505DAB2C24B1F5B4F9DC9 /* l-wf-22.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8FC46E731745A6E3DAFFC81F /* l-wf-22.m4a */; };
 		E1564A31F45EEA7C13E0668F /* dwh-df-7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = DA4516E8DFE9FA2A2F0A97E4 /* dwh-df-7.m4a */; };
+		E15DE21E6EC9BE8910019E49 /* HomeTaskDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455BAA7AE1F69D46BD8ADD6B /* HomeTaskDetailSheet.swift */; };
 		E1679A1A8A79EAE8428E89C4 /* error.caf in Resources */ = {isa = PBXBuildFile; fileRef = 1E40B9CD55F1C46ED352BECC /* error.caf */; };
 		E16861236924D18885FAA815 /* br-166.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 50DC136DAF5F487121B629F1 /* br-166.m4a */; };
 		E17535F0681A0A543B7FCAED /* br-266.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3310F9F6A77A625F5A43CBBB /* br-266.m4a */; };
@@ -8233,6 +8235,7 @@
 		430EEFD284C8BD4E6F687BC1 /* lyalya_hint_10.m4a */ = {isa = PBXFileReference; path = lyalya_hint_10.m4a; sourceTree = "<group>"; };
 		431ACDF41212BD7C8E815260 /* g-syl-5.m4a */ = {isa = PBXFileReference; path = "g-syl-5.m4a"; sourceTree = "<group>"; };
 		432E161FBE9D89FE9727902B /* r-wm-43.m4a */ = {isa = PBXFileReference; path = "r-wm-43.m4a"; sourceTree = "<group>"; };
+		43378F32A09DF15274CEE6FC /* PermissionsOverviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsOverviewView.swift; sourceTree = "<group>"; };
 		433B37142F9D928ED1538D27 /* kh-syl-10.m4a */ = {isa = PBXFileReference; path = "kh-syl-10.m4a"; sourceTree = "<group>"; };
 		433B37C541EA1269F07423C9 /* kh-syl-28.m4a */ = {isa = PBXFileReference; path = "kh-syl-28.m4a"; sourceTree = "<group>"; };
 		4343BF5ACE2FA2528E261EFA /* l-wm-24.m4a */ = {isa = PBXFileReference; path = "l-wm-24.m4a"; sourceTree = "<group>"; };
@@ -8289,6 +8292,7 @@
 		4522E161D123E86413F6B2BB /* s-iso-1.m4a */ = {isa = PBXFileReference; path = "s-iso-1.m4a"; sourceTree = "<group>"; };
 		453E37DAD8734446579D5FF2 /* r-wi-6.m4a */ = {isa = PBXFileReference; path = "r-wi-6.m4a"; sourceTree = "<group>"; };
 		45578CA67C97A0B83CEA71F9 /* shch-wf-23.m4a */ = {isa = PBXFileReference; path = "shch-wf-23.m4a"; sourceTree = "<group>"; };
+		455BAA7AE1F69D46BD8ADD6B /* HomeTaskDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTaskDetailSheet.swift; sourceTree = "<group>"; };
 		455DFB93C2DE23A41A1819DD /* shch-ph-18.m4a */ = {isa = PBXFileReference; path = "shch-ph-18.m4a"; sourceTree = "<group>"; };
 		45620E0365F8EA0A3350AF97 /* r-ph-61.m4a */ = {isa = PBXFileReference; path = "r-ph-61.m4a"; sourceTree = "<group>"; };
 		4573C21F3D16BEAA89A5CD2A /* gr-pl-17.m4a */ = {isa = PBXFileReference; path = "gr-pl-17.m4a"; sourceTree = "<group>"; };
@@ -14890,6 +14894,7 @@
 				AEBB093EE09AE24D5B7C5EE0 /* PermissionsDisplayLogic.swift */,
 				C231BE9B001859E90BDE4E86 /* PermissionsInteractor.swift */,
 				4E1FCFB327A844D035AE57F8 /* PermissionsModels.swift */,
+				43378F32A09DF15274CEE6FC /* PermissionsOverviewView.swift */,
 				EDC6827C5E430378B84A1E70 /* PermissionsPresenter.swift */,
 				E41C8C694BF4C591D582AB47 /* PermissionsRouter.swift */,
 			);
@@ -17150,6 +17155,7 @@
 			isa = PBXGroup;
 			children = (
 				0D7EC4A38808A12D715A9D31 /* Workers */,
+				455BAA7AE1F69D46BD8ADD6B /* HomeTaskDetailSheet.swift */,
 				6AEDA279BD1078DAC926EB5F /* HomeTasksDisplayLogic.swift */,
 				363D11295E1EC54D760FF03F /* HomeTasksInteractor.swift */,
 				65B373EC92ADF0A7C02B20D6 /* HomeTasksModels.swift */,
@@ -27041,6 +27047,7 @@
 				2E3F062C282CCAB0D777FBF7 /* HoldThePosePresenter.swift in Sources */,
 				0846B39A303DCADFD71091AA /* HoldThePoseRouter.swift in Sources */,
 				A6F60578B172A8B7116D4ABF /* HoldThePoseView.swift in Sources */,
+				E15DE21E6EC9BE8910019E49 /* HomeTaskDetailSheet.swift in Sources */,
 				71FC4030EB2DD69DC043E0ED /* HomeTasksDisplayLogic.swift in Sources */,
 				BE68EDC1FD5D4571864C1BA8 /* HomeTasksInteractor.swift in Sources */,
 				33DF4328A21491FC53D7656C /* HomeTasksModels.swift in Sources */,
@@ -27123,6 +27130,7 @@
 				3C653F46398472086EEA807A /* PermissionsDisplayLogic.swift in Sources */,
 				AC7087A0CF78E060C16E13C0 /* PermissionsInteractor.swift in Sources */,
 				328D3E7016526B2064607C91 /* PermissionsModels.swift in Sources */,
+				718C00601B1856513BFB35A4 /* PermissionsOverviewView.swift in Sources */,
 				1736E49BB0634C871AB4A1D0 /* PermissionsPresenter.swift in Sources */,
 				9257C93318A9EDB4E0CB8AB6 /* PermissionsRouter.swift in Sources */,
 				49CB5F7C2411F3EE11D811EA /* PoseSequenceInteractor.swift in Sources */,

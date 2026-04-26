@@ -388,6 +388,24 @@ private struct PermissionOverviewCardView: View {
     }
 }
 
+// MARK: - Color helpers (View layer only)
+
+private extension PermissionAccent {
+    var color: Color {
+        switch self {
+        case .primary: return ColorTokens.Brand.primary
+        case .lilac:   return ColorTokens.Brand.lilac
+        case .butter:  return ColorTokens.Brand.butter
+        case .mint:    return ColorTokens.Brand.mint
+        }
+    }
+}
+
+private extension PermissionOverviewCard {
+    /// Удобный маппинг `accent → Color` для использования в View.
+    var accentColor: Color { accent.color }
+}
+
 // MARK: - PermissionState + rawValue (for animation)
 
 private extension PermissionState {
