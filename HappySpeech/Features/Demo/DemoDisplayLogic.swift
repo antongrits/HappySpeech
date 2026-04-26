@@ -12,6 +12,9 @@ protocol DemoDisplayLogic: AnyObject {
     func displayInteractiveTap(_ viewModel: DemoModels.InteractiveTap.ViewModel)
     func displaySkipDemo(_ viewModel: DemoModels.SkipDemo.ViewModel)
     func displayCompleteDemo(_ viewModel: DemoModels.CompleteDemo.ViewModel)
+    func displayToggleAutoAdvance(_ viewModel: DemoModels.ToggleAutoAdvance.ViewModel)
+    func displayAutoAdvanceTick(_ viewModel: DemoModels.AutoAdvanceTick.ViewModel)
+    func displayReplayStep(_ viewModel: DemoModels.ReplayStep.ViewModel)
 }
 
 // MARK: - DemoDisplay (Observable Store)
@@ -50,6 +53,11 @@ final class DemoDisplay: DemoDisplayLogic {
 
     // Toast (для интерактивного шага «Попробовать!»)
     var toastMessage: String?
+
+    // AutoAdvance
+    var autoAdvanceEnabled: Bool = false
+    var autoAdvanceLabel: String = ""
+    var autoAdvanceToggleLabel: String = ""
 
     // Routing intents
     var pendingSkip: Bool = false
@@ -158,6 +166,38 @@ final class DemoDisplay: DemoDisplayLogic {
 
     func displayCompleteDemo(_ viewModel: DemoModels.CompleteDemo.ViewModel) {
         pendingCompleted = true
+    }
+
+    func displayToggleAutoAdvance(_ viewModel: DemoModels.ToggleAutoAdvance.ViewModel) {
+        autoAdvanceEnabled = viewModel.isEnabled
+        autoAdvanceToggleLabel = viewModel.toggleLabel
+    }
+
+    func displayAutoAdvanceTick(_ viewModel: DemoModels.AutoAdvanceTick.ViewModel) {
+        applyCommon(
+            currentIndex: viewModel.currentIndex,
+            progress: viewModel.progress,
+            progressLabel: viewModel.progressLabel,
+            isFirst: viewModel.isFirst,
+            isLast: viewModel.isLast,
+            backTitle: viewModel.backTitle,
+            nextTitle: viewModel.nextTitle,
+            stepTitle: viewModel.stepTitle,
+            stepSubtitle: viewModel.stepSubtitle,
+            stepDescription: viewModel.stepDescription,
+            mascotText: viewModel.mascotText,
+            screenEmoji: viewModel.screenEmoji,
+            illustrationSymbol: viewModel.illustrationSymbol,
+            accent: viewModel.accent,
+            lyalyaState: viewModel.lyalyaState,
+            hasInteractive: viewModel.hasInteractive,
+            actionTitle: viewModel.actionTitle
+        )
+        if viewModel.isCompleted { pendingCompleted = true }
+    }
+
+    func displayReplayStep(_ viewModel: DemoModels.ReplayStep.ViewModel) {
+        toastMessage = viewModel.toastMessage
     }
 
     // MARK: - View helpers

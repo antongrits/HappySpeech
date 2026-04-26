@@ -2519,6 +2519,7 @@
 		63106818DEAEC6125AC9CDE1 /* l-ph-11.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A66DB6E1AFC1DFC88605DB68 /* l-ph-11.m4a */; };
 		631E01D5D56305A5359FEBCB /* dwh-ph-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 91B010616FE54C35425C3D63 /* dwh-ph-6.m4a */; };
 		631F93B930D98B0A50B5C304 /* s-wi-29.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D43E123F56DE3DA5BE95E2DB /* s-wi-29.m4a */; };
+		6330B67F1A932C062A610ABF /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553659FEDE6FA928F4D90547 /* DemoView.swift */; };
 		6337EAED840DF58E62FE6057 /* z-wi-22.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 289B6B3DE64147356BF15627 /* z-wi-22.m4a */; };
 		63448C7F799AC60A20733036 /* br-278.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 29A3E25B915F7196295493C9 /* br-278.m4a */; };
 		6358F17DB42BF2E197D2AC57 /* ch-df-17.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0BC027098621CE4C7805F110 /* ch-df-17.m4a */; };
@@ -8718,6 +8719,7 @@
 		54F710DF808AFB7385E75EE0 /* lex-ss-23.m4a */ = {isa = PBXFileReference; path = "lex-ss-23.m4a"; sourceTree = "<group>"; };
 		54FD4C546194BCF2D56E7483 /* g-diff-9.m4a */ = {isa = PBXFileReference; path = "g-diff-9.m4a"; sourceTree = "<group>"; };
 		54FFB1E07804D2BA61499449 /* br-182.m4a */ = {isa = PBXFileReference; path = "br-182.m4a"; sourceTree = "<group>"; };
+		553659FEDE6FA928F4D90547 /* DemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoView.swift; sourceTree = "<group>"; };
 		55398E78DBD522560BB591B9 /* lex-bi-1.m4a */ = {isa = PBXFileReference; path = "lex-bi-1.m4a"; sourceTree = "<group>"; };
 		5558635B4092794C07A9E64F /* r-wm-13.m4a */ = {isa = PBXFileReference; path = "r-wm-13.m4a"; sourceTree = "<group>"; };
 		555AB70B4180DC2164885E1E /* ch-wf-10.m4a */ = {isa = PBXFileReference; path = "ch-wf-10.m4a"; sourceTree = "<group>"; };
@@ -16231,6 +16233,7 @@
 				E01E3E19CB103200AB26C4C2 /* DemoModeView.swift */,
 				AE1CD46AD1FA46C56221CBD1 /* DemoPresenter.swift */,
 				D6818452DB25BED47CA1074B /* DemoRouter.swift */,
+				553659FEDE6FA928F4D90547 /* DemoView.swift */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -26997,6 +27000,7 @@
 				6D951D775DD2B7A9BA4EB1C1 /* DemoModels.swift in Sources */,
 				EB8F1BFB6D8193CDD8172F5B /* DemoPresenter.swift in Sources */,
 				6B443BB86E9B63A3C280A202 /* DemoRouter.swift in Sources */,
+				6330B67F1A932C062A610ABF /* DemoView.swift in Sources */,
 				1F679D3FA7257A5553873583 /* DragAndMatchDisplayLogic.swift in Sources */,
 				0B27B551E87345314136B1AD /* DragAndMatchInteractor.swift in Sources */,
 				06CCF9D36DD05D5E1B9C5ACB /* DragAndMatchModels.swift in Sources */,

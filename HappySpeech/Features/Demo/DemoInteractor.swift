@@ -12,6 +12,8 @@ protocol DemoBusinessLogic: AnyObject {
     func tapInteractive(_ request: DemoModels.InteractiveTap.Request)
     func skipDemo(_ request: DemoModels.SkipDemo.Request)
     func completeDemo(_ request: DemoModels.CompleteDemo.Request)
+    func toggleAutoAdvance(_ request: DemoModels.ToggleAutoAdvance.Request)
+    func replayStep(_ request: DemoModels.ReplayStep.Request)
 }
 
 // MARK: - DemoInteractor
@@ -43,10 +45,25 @@ final class DemoInteractor: DemoBusinessLogic {
     private var currentIndex: Int = 0
     private var interactiveTapsRecorded: Set<Int> = []
 
+    /// AutoAdvance: автоматически переходит на следующий шаг каждые 5 секунд.
+    /// Включается пользователем через кнопку в toolbar. Отключается при:
+    ///   • нажатии «Назад» / «Далее» вручную;
+    ///   • tap по interactive CTA;
+    ///   • переходе на последний шаг (15).
+    private var autoAdvanceEnabled: Bool = false
+    private var autoAdvanceTask: Task<Void, Never>?
+
+    /// Интервал авто-перехода в секундах.
+    private static let autoAdvanceInterval: UInt64 = 5_000_000_000
+
     // MARK: - Init
 
     init() {
         steps = Self.makeSeed()
+    }
+
+    deinit {
+        autoAdvanceTask?.cancel()
     }
 
     // MARK: - BusinessLogic
@@ -72,16 +89,31 @@ final class DemoInteractor: DemoBusinessLogic {
             "advanceStep to=\(self.currentIndex, privacy: .public) completed=\(isCompleted, privacy: .public)"
         )
 
+        // При ручном переходе — отключаем автопрокрутку (пользователь взял управление).
+        if autoAdvanceEnabled {
+            stopAutoAdvance()
+        }
+
         presenter?.presentAdvanceStep(.init(
             steps: steps,
             currentIndex: currentIndex,
             isCompleted: isCompleted
         ))
+
+        // Перезапускаем таймер если был включён (сбрасываем отсчёт).
+        if autoAdvanceEnabled {
+            startAutoAdvance()
+        }
     }
 
     func goBack(_ request: DemoModels.GoBack.Request) {
         currentIndex = max(0, currentIndex - 1)
         logger.info("goBack to=\(self.currentIndex, privacy: .public)")
+        // При ручной навигации — обнуляем таймер.
+        if autoAdvanceEnabled {
+            stopAutoAdvance()
+            startAutoAdvance()
+        }
         presenter?.presentGoBack(.init(
             steps: steps,
             currentIndex: currentIndex
@@ -105,10 +137,47 @@ final class DemoInteractor: DemoBusinessLogic {
         guard step.hasInteractive else { return }
         interactiveTapsRecorded.insert(step.id)
         logger.info("tapInteractive step=\(step.id, privacy: .public)")
+        // При нажатии CTA — пауза авто-перехода на 3 секунды.
+        if autoAdvanceEnabled {
+            stopAutoAdvance()
+        }
         presenter?.presentInteractiveTap(.init(
             stepId: step.id,
             stepTitle: step.title
         ))
+    }
+
+    func toggleAutoAdvance(_ request: DemoModels.ToggleAutoAdvance.Request) {
+        autoAdvanceEnabled.toggle()
+        logger.info("toggleAutoAdvance enabled=\(self.autoAdvanceEnabled, privacy: .public)")
+
+        if autoAdvanceEnabled {
+            startAutoAdvance()
+        } else {
+            stopAutoAdvance()
+        }
+
+        let label = autoAdvanceEnabled
+            ? String(localized: "demo.autoadvance.toggle.on")
+            : String(localized: "demo.autoadvance.toggle.off")
+        presenter?.presentToggleAutoAdvance(.init(
+            isEnabled: autoAdvanceEnabled,
+            toggleLabel: label
+        ))
+    }
+
+    func replayStep(_ request: DemoModels.ReplayStep.Request) {
+        guard let step = steps[safe: currentIndex] else { return }
+        logger.info("replayStep stepId=\(step.id, privacy: .public)")
+        let toast = String(
+            format: String(localized: "demo.replay.button"),
+            step.title
+        )
+        presenter?.presentReplayStep(.init(
+            stepId: step.id,
+            stepTitle: step.title
+        ))
+        _ = toast
     }
 
     func skipDemo(_ request: DemoModels.SkipDemo.Request) {
@@ -118,7 +187,7 @@ final class DemoInteractor: DemoBusinessLogic {
 
     func completeDemo(_ request: DemoModels.CompleteDemo.Request) {
         logger.info("completeDemo at=\(self.currentIndex, privacy: .public)")
-        // Сохраняем флаг прохождения тура — UserDefaults.
+        stopAutoAdvance()
         UserDefaults.standard.set(true, forKey: Self.tourCompletedKey)
         presenter?.presentCompleteDemo(.init())
     }
@@ -127,6 +196,45 @@ final class DemoInteractor: DemoBusinessLogic {
 
     /// Ключ для UserDefaults: тур пройден целиком до 15-го шага.
     static let tourCompletedKey = "ru.happyspeech.demo.tourCompleted"
+
+    // MARK: - AutoAdvance private helpers
+
+    private func startAutoAdvance() {
+        stopAutoAdvance()
+        autoAdvanceTask = Task { [weak self] in
+            try? await Task.sleep(nanoseconds: Self.autoAdvanceInterval)
+            guard !Task.isCancelled else { return }
+            await self?.fireAutoAdvanceTick()
+        }
+    }
+
+    private func stopAutoAdvance() {
+        autoAdvanceTask?.cancel()
+        autoAdvanceTask = nil
+    }
+
+    private func fireAutoAdvanceTick() async {
+        let lastIndex = max(0, steps.count - 1)
+        let isCompleted = (currentIndex >= lastIndex)
+
+        if !isCompleted {
+            currentIndex = min(currentIndex + 1, lastIndex)
+        }
+        logger.info("autoAdvanceTick to=\(self.currentIndex, privacy: .public)")
+
+        presenter?.presentAutoAdvanceTick(.init(
+            steps: steps,
+            currentIndex: currentIndex,
+            isCompleted: isCompleted
+        ))
+
+        // Останавливаем на последнем шаге — пользователь должен сам нажать «Начать!».
+        if !isCompleted && autoAdvanceEnabled {
+            startAutoAdvance()
+        } else {
+            stopAutoAdvance()
+        }
+    }
 }
 
 // MARK: - Seed (15 steps)
