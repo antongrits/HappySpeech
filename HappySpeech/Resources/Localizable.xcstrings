@@ -397,6 +397,72 @@
         }
       }
     },
+    "ar.zone.fallbackCTA": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть 2D-альтернативу"
+          }
+        }
+      }
+    },
+    "ar.zone.filter.all": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все"
+          }
+        }
+      }
+    },
+    "ar.zone.filter.easy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Легко"
+          }
+        }
+      }
+    },
+    "ar.zone.filter.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Под этот фильтр игр пока нет — попробуй другую сложность."
+          }
+        }
+      }
+    },
+    "ar.zone.filter.hard": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сложно"
+          }
+        }
+      }
+    },
+    "ar.zone.filter.medium": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Средне"
+          }
+        }
+      }
+    },
     "ar.zone.greeting": {
       "extractionState": "manual",
       "localizations": {
@@ -430,13 +496,24 @@
         }
       }
     },
+    "ar.zone.recommended.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать AR-сессию"
+          }
+        }
+      }
+    },
     "ar.zone.step1.body": {
       "extractionState": "manual",
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Держи телефон на уровне глаз, чтобы камера видела твоё лицо."
+            "value": "На расстоянии вытянутой руки, чтобы камера видела всё лицо."
           }
         }
       }
@@ -447,7 +524,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Поднеси лицо"
+            "value": "Встань напротив"
           }
         }
       }
@@ -458,7 +535,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Проверь, что звук на телефоне не выключен — Ляля будет говорить."
+            "value": "Свет должен падать спереди — так Ляля лучше тебя видит."
           }
         }
       }
@@ -469,7 +546,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Включи звук"
+            "value": "Хорошее освещение"
           }
         }
       }
@@ -480,7 +557,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Повторяй за Лялей движения и звуки — у тебя всё получится!"
+            "value": "Не торопись — Ляля услышит каждый звук."
           }
         }
       }
@@ -491,7 +568,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Следуй за Лялей"
+            "value": "Говори чётко"
           }
         }
       }
@@ -503,6 +580,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "Выбери весёлую игру — и тренируйся вместе с Лялей через камеру."
+          }
+        }
+      }
+    },
+    "ar.zone.tip1": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лучше играть в наушниках — Ляля услышит тебя точнее."
+          }
+        }
+      }
+    },
+    "ar.zone.tip2": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Найди тихое место — фоновый шум мешает слышать звуки."
+          }
+        }
+      }
+    },
+    "ar.zone.tip3": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пять минут в день — и через неделю заметишь прогресс!"
           }
         }
       }
