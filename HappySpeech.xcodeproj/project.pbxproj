@@ -5669,6 +5669,7 @@
 		DE8B48DEACB3CA041CE38B8F /* r-sen-12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F57010EF1FB20EDF6A44E576 /* r-sen-12.m4a */; };
 		DE8DBEF2C363644EFF82C7AD /* rl-prep-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4D7B610CFCDF66272A9FB8F3 /* rl-prep-6.m4a */; };
 		DE8F92248082F60F51D0C926 /* ch-wf-4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E256D228A973749A07E39BD8 /* ch-wf-4.m4a */; };
+		DE998F68CA6FC2EB9E57C83E /* HomeTasksWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF1196CFAE3006F17E5145B /* HomeTasksWorker.swift */; };
 		DEA02A73E0A6A6BCD8D55AEF /* lyalya_hint_20.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E4DB5306205564AE0743C9F0 /* lyalya_hint_20.m4a */; };
 		DEC438814CF803240C412966 /* ch-wi-14.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 901281FCE4E38834E0CD89DE /* ch-wi-14.m4a */; };
 		DECC56A89E32F25BD1FC38D9 /* lex-fe-1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C437057C480218BE65B26B82 /* lex-fe-1.m4a */; };
@@ -8508,6 +8509,7 @@
 		4CBA48AD0E008264FA99DFE0 /* ch-sen-2.m4a */ = {isa = PBXFileReference; path = "ch-sen-2.m4a"; sourceTree = "<group>"; };
 		4CBED66859CC3E6171F00D8D /* lex-cl-5.m4a */ = {isa = PBXFileReference; path = "lex-cl-5.m4a"; sourceTree = "<group>"; };
 		4CDAF5B506AAEAD463983787 /* z-wm-7.m4a */ = {isa = PBXFileReference; path = "z-wm-7.m4a"; sourceTree = "<group>"; };
+		4CF1196CFAE3006F17E5145B /* HomeTasksWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTasksWorker.swift; sourceTree = "<group>"; };
 		4CF5C692AB0BD8257378AF39 /* shch-wm-25.m4a */ = {isa = PBXFileReference; path = "shch-wm-25.m4a"; sourceTree = "<group>"; };
 		4D019954F5ED02137DAC887F /* y-ph-4.m4a */ = {isa = PBXFileReference; path = "y-ph-4.m4a"; sourceTree = "<group>"; };
 		4D025617959D5081F795CADB /* br-178.m4a */ = {isa = PBXFileReference; path = "br-178.m4a"; sourceTree = "<group>"; };
@@ -13097,6 +13099,14 @@
 			path = Errors;
 			sourceTree = "<group>";
 		};
+		0D7EC4A38808A12D715A9D31 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				4CF1196CFAE3006F17E5145B /* HomeTasksWorker.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
 		0DE9632EFA502A9B44620D7D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -17139,6 +17149,7 @@
 		7E2153C009AE851F8631C79C /* HomeTasks */ = {
 			isa = PBXGroup;
 			children = (
+				0D7EC4A38808A12D715A9D31 /* Workers */,
 				6AEDA279BD1078DAC926EB5F /* HomeTasksDisplayLogic.swift */,
 				363D11295E1EC54D760FF03F /* HomeTasksInteractor.swift */,
 				65B373EC92ADF0A7C02B20D6 /* HomeTasksModels.swift */,
@@ -27036,6 +27047,7 @@
 				3EEC434DD5067783CD59AA4B /* HomeTasksPresenter.swift in Sources */,
 				CAA3C7D1922CD8EA3D671F57 /* HomeTasksRouter.swift in Sources */,
 				3536AF0CA0172B38CDAA14BA /* HomeTasksView.swift in Sources */,
+				DE998F68CA6FC2EB9E57C83E /* HomeTasksWorker.swift in Sources */,
 				A006CEEEC10C89D753ED23A3 /* KeychainStore.swift in Sources */,
 				DAED9F7353EF8314F53AA3E7 /* LLMDecisionLog.swift in Sources */,
 				A37D68EEA07D0B1AA79940BA /* LLMDecisionService.swift in Sources */,

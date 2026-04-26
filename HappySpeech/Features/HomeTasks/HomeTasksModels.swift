@@ -133,6 +133,69 @@ enum HomeTasksModels {
         }
     }
 
+    // MARK: - FetchDetail
+
+    /// Запрос детальных данных конкретного задания для sheet'а.
+    enum FetchDetail {
+        struct Request: Sendable {
+            let taskId: String
+        }
+
+        struct Response: Sendable {
+            let task: HomeTask
+            let hasReminder: Bool
+            let reminderScheduled: Bool
+        }
+
+        struct ViewModel: Sendable {
+            let id: String
+            let title: String
+            let description: String
+            let subtitle: String
+            let soundBadgeText: String
+            let priorityBadgeText: String
+            let priority: TaskPriority
+            let dueDateText: String?
+            let isOverdue: Bool
+            let isCompleted: Bool
+            let isStarted: Bool
+            let exerciseType: String
+            let targetSound: String
+            let startButtonTitle: String
+            let hasDueDate: Bool
+            let hasReminder: Bool
+            let reminderScheduled: Bool
+            let reminderButtonTitle: String
+            let accessibilityLabel: String
+        }
+    }
+
+    // MARK: - ScheduleReminder
+
+    /// Запрос на планирование push-уведомления за N минут до дедлайна задачи.
+    enum ScheduleReminder {
+        struct Request: Sendable {
+            let taskId: String
+            /// Сколько минут до дедлайна показывать напоминание (default 60).
+            let leadTimeMinutes: Int
+            init(taskId: String, leadTimeMinutes: Int = 60) {
+                self.taskId = taskId
+                self.leadTimeMinutes = leadTimeMinutes
+            }
+        }
+
+        struct Response: Sendable {
+            let taskId: String
+            let scheduled: Bool
+            let reason: String?
+        }
+
+        struct ViewModel: Sendable {
+            let toastMessage: String
+            let reminderScheduled: Bool
+        }
+    }
+
     // MARK: - NotifyOverdue
 
     /// Заглушка-обращение к NotificationService: «напомни завтра утром».
