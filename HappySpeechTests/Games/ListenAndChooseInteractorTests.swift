@@ -1,6 +1,6 @@
 import Foundation
 @testable import HappySpeech
-import Testing
+import XCTest
 
 // MARK: - Mock ContentService
 
@@ -37,9 +37,8 @@ private final class SpyListenPresenter: ListenAndChoosePresentationLogic {
 
 // MARK: - Tests
 
-@Suite("ListenAndChooseInteractor")
 @MainActor
-struct ListenAndChooseInteractorTests {
+final class ListenAndChooseInteractorTests: XCTestCase {
 
     private func makeSUT() -> (ListenAndChooseInteractor, SpyListenPresenter, MockContentService) {
         let mockContent = MockContentService()
@@ -51,18 +50,16 @@ struct ListenAndChooseInteractorTests {
 
     // MARK: - 1. loadRound строит вопросы из fallback-каталога
 
-    @Test("loadRound со звуком С строит вопросы и вызывает presenter")
-    func loadRoundFallback() async {
+    func test_loadRound_fallback_callsPresenter() async {
         let (sut, spy, _) = makeSUT()
         await sut.loadRound(.init(soundTarget: "С", difficulty: 2))
-        #expect(spy.loadRoundCalled)
-        #expect((spy.lastLoadRound?.options.count ?? 0) >= 2)
+        XCTAssertTrue(spy.loadRoundCalled)
+        XCTAssertGreaterThanOrEqual(spy.lastLoadRound?.options.count ?? 0, 2)
     }
 
     // MARK: - 2. submitAttempt: правильный ответ
 
-    @Test("submitAttempt с правильным индексом → isCorrect = true")
-    func submitCorrect() async {
+    func test_submitAttempt_correct_isCorrectTrue() async {
         let (sut, spy, _) = makeSUT()
         await sut.loadRound(.init(soundTarget: "С", difficulty: 2))
         guard let loadResp = spy.lastLoadRound else { return }
@@ -72,14 +69,13 @@ struct ListenAndChooseInteractorTests {
             attemptsUsed: 1,
             responseTimeMs: 500
         ))
-        #expect(spy.submitAttemptCalled)
-        #expect(spy.lastSubmitAttempt?.isCorrect == true)
+        XCTAssertTrue(spy.submitAttemptCalled)
+        XCTAssertEqual(spy.lastSubmitAttempt?.isCorrect, true)
     }
 
     // MARK: - 3. submitAttempt: неправильный ответ
 
-    @Test("submitAttempt с неправильным индексом → isCorrect = false")
-    func submitWrong() async {
+    func test_submitAttempt_wrong_isCorrectFalse() async {
         let (sut, spy, _) = makeSUT()
         await sut.loadRound(.init(soundTarget: "С", difficulty: 2))
         guard let loadResp = spy.lastLoadRound else { return }
@@ -90,13 +86,12 @@ struct ListenAndChooseInteractorTests {
             attemptsUsed: 1,
             responseTimeMs: 800
         ))
-        #expect(spy.lastSubmitAttempt?.isCorrect == false)
+        XCTAssertEqual(spy.lastSubmitAttempt?.isCorrect, false)
     }
 
     // MARK: - 4. submitAttempt: 3 попытки → shouldRevealAnswer
 
-    @Test("submitAttempt с attemptsUsed=3 и wrong → shouldRevealAnswer = true")
-    func submitThreeAttemptsReveals() async {
+    func test_submitAttempt_threeAttempts_revealsAnswer() async {
         let (sut, spy, _) = makeSUT()
         await sut.loadRound(.init(soundTarget: "С", difficulty: 2))
         guard let loadResp = spy.lastLoadRound else { return }
@@ -107,25 +102,22 @@ struct ListenAndChooseInteractorTests {
             attemptsUsed: 3,
             responseTimeMs: nil
         ))
-        #expect(spy.lastSubmitAttempt?.shouldRevealAnswer == true)
+        XCTAssertEqual(spy.lastSubmitAttempt?.shouldRevealAnswer, true)
     }
 
-    // MARK: - 5. resolveSoundGroup
+    // MARK: - 5. resolveSoundGroup маппит все группы корректно
 
-    @Test("resolveSoundGroup маппит все группы корректно")
-    func resolveSoundGroup() async {
+    func test_resolveSoundGroup_allGroups() async {
         let (sut, spy, _) = makeSUT()
-        // Загружаем каждый звук и проверяем, что вопросы строятся
         for sound in ["С", "Ш", "Р", "К"] {
             await sut.loadRound(.init(soundTarget: sound, difficulty: 1))
-            #expect(spy.loadRoundCalled, "Sound \(sound) должен порождать вопросы")
+            XCTAssertTrue(spy.loadRoundCalled, "Sound \(sound) должен порождать вопросы")
         }
     }
 
-    // MARK: - 6. loadRound со stubbedPack — использует данные пака
+    // MARK: - 6. loadRound с stubbedPack использует слова пака
 
-    @Test("loadRound с ContentService возвращающим пак использует слова пака")
-    func loadRoundWithPack() async {
+    func test_loadRound_withPack_usesPackData() async {
         let (sut, spy, mockContent) = makeSUT()
         let items = [
             ContentItem(id: "1", word: "сова", imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 1),
@@ -139,13 +131,12 @@ struct ListenAndChooseInteractorTests {
             items: items
         )
         await sut.loadRound(.init(soundTarget: "С", difficulty: 2))
-        #expect(spy.loadRoundCalled)
+        XCTAssertTrue(spy.loadRoundCalled)
     }
 
-    // MARK: - 7. currentStreak растёт при последовательных правильных ответах
+    // MARK: - 7. currentStreak растёт при правильных ответах
 
-    @Test("currentStreak увеличивается при последовательных правильных ответах")
-    func streakIncreases() async {
+    func test_currentStreak_increases() async {
         let (sut, spy, _) = makeSUT()
         await sut.loadRound(.init(soundTarget: "С", difficulty: 2))
         guard let loadResp = spy.lastLoadRound else { return }
@@ -155,17 +146,15 @@ struct ListenAndChooseInteractorTests {
             attemptsUsed: 1,
             responseTimeMs: nil
         ))
-        #expect((spy.lastSubmitAttempt?.currentStreak ?? 0) == 1)
+        XCTAssertEqual(spy.lastSubmitAttempt?.currentStreak ?? 0, 1)
     }
 
     // MARK: - 8. currentStreak сбрасывается при неправильном ответе
 
-    @Test("currentStreak сбрасывается при неправильном ответе")
-    func streakResetsOnWrong() async {
+    func test_currentStreak_resetsOnWrong() async {
         let (sut, spy, _) = makeSUT()
         await sut.loadRound(.init(soundTarget: "С", difficulty: 2))
         guard let loadResp = spy.lastLoadRound else { return }
-        // Сначала правильный, потом неправильный
         sut.submitAttempt(.init(
             selectedIndex: loadResp.correctIndex,
             correctIndex: loadResp.correctIndex,
@@ -179,6 +168,6 @@ struct ListenAndChooseInteractorTests {
             attemptsUsed: 1,
             responseTimeMs: nil
         ))
-        #expect((spy.lastSubmitAttempt?.currentStreak ?? 1) == 0)
+        XCTAssertEqual(spy.lastSubmitAttempt?.currentStreak ?? 1, 0)
     }
 }

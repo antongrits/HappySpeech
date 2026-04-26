@@ -1,5 +1,5 @@
 @testable import HappySpeech
-import Testing
+import XCTest
 
 // MARK: - Spy
 
@@ -45,9 +45,8 @@ private final class SpyRhythmPresenter: RhythmPresentationLogic {
 
 // MARK: - Tests
 
-@Suite("RhythmInteractor")
 @MainActor
-struct RhythmInteractorTests {
+final class RhythmInteractorTests: XCTestCase {
 
     private func makeSUT(group: String = "sonants") -> (RhythmInteractor, SpyRhythmPresenter) {
         let sut = RhythmInteractor(soundGroup: group, totalPatternsPerSession: 3)
@@ -58,91 +57,80 @@ struct RhythmInteractorTests {
 
     // MARK: - 1. loadPattern загружает паттерн
 
-    @Test("loadPattern загружает паттерн для группы sonants")
-    func loadPatternSonants() async {
+    func test_loadPattern_sonants() async {
         let (sut, spy) = makeSUT(group: "sonants")
         await sut.loadPattern(.init(soundGroup: "sonants", index: 0))
-        #expect(spy.loadPatternCalled)
-        #expect(spy.lastLoadPattern?.pattern.soundGroup == "sonants")
+        XCTAssertTrue(spy.loadPatternCalled)
+        XCTAssertEqual(spy.lastLoadPattern?.pattern.soundGroup, "sonants")
     }
 
     // MARK: - 2. patternCatalog содержит все группы
 
-    @Test("patternCatalog содержит записи для всех 4 групп")
-    func patternCatalogAllGroups() {
+    func test_patternCatalog_allGroups() {
         for group in ["whistling", "hissing", "sonants", "velar"] {
             let patterns = RhythmInteractor.patternCatalog[group]
-            #expect(patterns != nil, "Группа \(group) должна быть в каталоге")
-            #expect((patterns?.count ?? 0) >= 5, "Каждая группа должна иметь >= 5 паттернов")
+            XCTAssertNotNil(patterns, "Группа \(group) должна быть в каталоге")
+            XCTAssertGreaterThanOrEqual(patterns?.count ?? 0, 5, "Каждая группа должна иметь >= 5 паттернов")
         }
     }
 
     // MARK: - 3. soundGroup маппинг
 
-    @Test("soundGroup(for:) корректно маппит звуки")
-    func soundGroupMapping() {
-        #expect(RhythmInteractor.soundGroup(for: "С") == "whistling")
-        #expect(RhythmInteractor.soundGroup(for: "Ш") == "hissing")
-        #expect(RhythmInteractor.soundGroup(for: "Р") == "sonants")
-        #expect(RhythmInteractor.soundGroup(for: "К") == "velar")
+    func test_soundGroupMapping() {
+        XCTAssertEqual(RhythmInteractor.soundGroup(for: "С"), "whistling")
+        XCTAssertEqual(RhythmInteractor.soundGroup(for: "Ш"), "hissing")
+        XCTAssertEqual(RhythmInteractor.soundGroup(for: "Р"), "sonants")
+        XCTAssertEqual(RhythmInteractor.soundGroup(for: "К"), "velar")
     }
 
     // MARK: - 4. evaluateRhythm: точное совпадение → score = 1.0
 
-    @Test("evaluateRhythm с detectedBeats == expectedBeats → score = 1.0")
-    func evaluatePerfectMatch() async {
+    func test_evaluate_perfectMatch_score1() async {
         let (sut, spy) = makeSUT()
         await sut.loadPattern(.init(soundGroup: "sonants", index: 0))
         let expected = spy.lastLoadPattern?.pattern.beats.count ?? 2
-        // Не запускаем реальный движок — вызываем evaluateRhythm напрямую через тест-хук
         sut._test_setCurrentPattern(RhythmInteractor.patternCatalog["sonants"]![0])
         await sut.evaluateRhythm(.init(detectedBeats: expected, expectedBeats: expected))
-        #expect(spy.evalCalled)
-        #expect(spy.lastEvaluate?.score == 1.0)
-        #expect(spy.lastEvaluate?.correct == true)
+        XCTAssertTrue(spy.evalCalled)
+        XCTAssertEqual(spy.lastEvaluate?.score, 1.0)
+        XCTAssertEqual(spy.lastEvaluate?.correct, true)
     }
 
     // MARK: - 5. evaluateRhythm: разница 1 → score = 0.8
 
-    @Test("evaluateRhythm с diff=1 → score = 0.8")
-    func evaluateDiffOne() async {
+    func test_evaluate_diffOne_score08() async {
         let (sut, spy) = makeSUT()
         sut._test_setCurrentPattern(RhythmInteractor.patternCatalog["sonants"]![0])
         let expected = RhythmInteractor.patternCatalog["sonants"]![0].beats.count
         await sut.evaluateRhythm(.init(detectedBeats: expected - 1, expectedBeats: expected))
-        #expect(spy.lastEvaluate?.score == 0.8)
+        XCTAssertEqual(spy.lastEvaluate?.score, 0.8)
     }
 
     // MARK: - 6. evaluateRhythm: diff >= 3 → score = 0.3
 
-    @Test("evaluateRhythm с diff >= 3 → score = 0.3")
-    func evaluateDiffThreeOrMore() async {
+    func test_evaluate_diffThreeOrMore_score03() async {
         let (sut, spy) = makeSUT()
-        // Выбираем паттерн с 4 битами (velar: "ка-РА-мель-ка")
         let fourBeatPattern = RhythmInteractor.patternCatalog["velar"]!.first(where: { $0.beats.count == 4 })!
         sut._test_setCurrentPattern(fourBeatPattern)
         let expected = fourBeatPattern.beats.count
-        // detectedBeats = 0, diff = 4 → score = 0.3
         await sut.evaluateRhythm(.init(detectedBeats: 0, expectedBeats: expected))
-        #expect(spy.lastEvaluate?.score == 0.3)
+        XCTAssertEqual(spy.lastEvaluate?.score, 0.3)
     }
 
-    // MARK: - 7. _test_pushRMS обновляет presenter через RMS
+    // MARK: - 7. _test_pushRMS вызывает presentUpdateRMS
 
-    @Test("_test_pushRMS вызывает presentUpdateRMS")
-    func pushRMSCallsPresenter() {
+    func test_pushRMS_callsPresenter() {
         let (sut, spy) = makeSUT()
         sut._test_pushRMS(0.5)
-        #expect(spy.rmsUpdateCalled)
+        XCTAssertTrue(spy.rmsUpdateCalled)
     }
 
-    // MARK: - 8. complete без записи даёт finalScore = 0
+    // MARK: - 8. complete без правильных паттернов → finalScore = 0
 
-    @Test("complete без правильных паттернов даёт finalScore = 0")
-    func completeNoCorrect() async {
+    func test_complete_noCorrect_scoreZero() async {
         let (sut, spy) = makeSUT(group: "sonants")
         await sut.complete(.init())
-        #expect(spy.completeCalled)
-        #expect(spy.lastComplete?.finalScore == 0.0)
+        XCTAssertTrue(spy.completeCalled)
+        XCTAssertEqual(spy.lastComplete?.finalScore, 0.0)
     }
 }

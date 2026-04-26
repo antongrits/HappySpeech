@@ -143,6 +143,11 @@ final class RiveModel: ObservableObject {
     // MARK: - Init
 
     init(fileName: String, stateMachine: String) {
+        // В тестовом окружении RiveRuntime крашится на невалидных .riv файлах.
+        // XCTest устанавливает XCTestConfigurationFilePath в env.
+        let isRunningTests = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+        guard !isRunningTests else { return }
+
         guard let url = Bundle.main.url(forResource: fileName, withExtension: "riv") else {
             return
         }

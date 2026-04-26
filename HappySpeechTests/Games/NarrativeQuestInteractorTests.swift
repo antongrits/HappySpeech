@@ -1,5 +1,5 @@
 @testable import HappySpeech
-import Testing
+import XCTest
 
 // MARK: - Spy
 
@@ -43,9 +43,8 @@ private final class SpyNarrativePresenter: NarrativeQuestPresentationLogic {
 
 // MARK: - Tests
 
-@Suite("NarrativeQuestInteractor")
 @MainActor
-struct NarrativeQuestInteractorTests {
+final class NarrativeQuestInteractorTests: XCTestCase {
 
     private func makeSUT() -> (NarrativeQuestInteractor, SpyNarrativePresenter) {
         let spy = SpyNarrativePresenter()
@@ -53,107 +52,97 @@ struct NarrativeQuestInteractorTests {
         return (sut, spy)
     }
 
-    // MARK: - 1. loadQuest загружает скрипт
+    // MARK: - 1. loadQuest загружает скрипт с 4 этапами
 
-    @Test("loadQuest загружает скрипт с 4 этапами для whistling")
-    func loadQuestWhistling() {
+    func test_loadQuest_whistling_fourStages() {
         let (sut, spy) = makeSUT()
         sut.loadQuest(.init(soundTarget: "С", childName: "Маша"))
-        #expect(spy.loadQuestCalled)
-        #expect(spy.lastLoadQuest?.script.stages.count == 4)
+        XCTAssertTrue(spy.loadQuestCalled)
+        XCTAssertEqual(spy.lastLoadQuest?.script.stages.count, 4)
     }
 
     // MARK: - 2. questCatalog содержит все группы
 
-    @Test("questCatalog содержит квесты для всех 4 групп")
-    func questCatalogAllGroups() {
+    func test_questCatalog_allGroups() {
         for group in ["whistling", "hissing", "sonants", "velar"] {
-            #expect(NarrativeQuestInteractor.questCatalog[group] != nil,
-                    "Группа \(group) должна быть в каталоге")
+            XCTAssertNotNil(NarrativeQuestInteractor.questCatalog[group],
+                            "Группа \(group) должна быть в каталоге")
         }
     }
 
     // MARK: - 3. resolveSoundGroup
 
-    @Test("resolveSoundGroup корректно маппит звуки")
-    func resolveSoundGroup() {
-        #expect(NarrativeQuestInteractor.resolveSoundGroup("С") == "whistling")
-        #expect(NarrativeQuestInteractor.resolveSoundGroup("Ш") == "hissing")
-        #expect(NarrativeQuestInteractor.resolveSoundGroup("Р") == "sonants")
-        #expect(NarrativeQuestInteractor.resolveSoundGroup("К") == "velar")
+    func test_resolveSoundGroup() {
+        XCTAssertEqual(NarrativeQuestInteractor.resolveSoundGroup("С"), "whistling")
+        XCTAssertEqual(NarrativeQuestInteractor.resolveSoundGroup("Ш"), "hissing")
+        XCTAssertEqual(NarrativeQuestInteractor.resolveSoundGroup("Р"), "sonants")
+        XCTAssertEqual(NarrativeQuestInteractor.resolveSoundGroup("К"), "velar")
     }
 
-    // MARK: - 4. startStage передаёт правильный этап
+    // MARK: - 4. startStage(0) передаёт stageNumber = 1
 
-    @Test("startStage(0) передаёт стейдж с stageNumber = 1")
-    func startStageZero() {
+    func test_startStage_zero_stageNumber1() {
         let (sut, spy) = makeSUT()
         sut.loadQuest(.init(soundTarget: "С", childName: "Маша"))
         sut.startStage(.init(stageIndex: 0))
-        #expect(spy.startStageCalled)
-        #expect(spy.lastStartStage?.stageNumber == 1)
+        XCTAssertTrue(spy.startStageCalled)
+        XCTAssertEqual(spy.lastStartStage?.stageNumber, 1)
     }
 
     // MARK: - 5. evaluateWord: точное совпадение → passed
 
-    @Test("evaluateWord: transcript == target → score = 1.0, passed = true")
-    func evaluateWordExactMatch() {
+    func test_evaluateWord_exactMatch_passed() {
         let (sut, spy) = makeSUT()
         sut.loadQuest(.init(soundTarget: "С", childName: "Маша"))
         sut.startStage(.init(stageIndex: 0))
         sut.evaluateWord(.init(transcript: "сова", confidence: 0.95))
-        #expect(spy.evaluateWordCalled)
-        #expect(spy.lastEvaluate?.passed == true)
-        #expect(spy.lastEvaluate?.score == 1.0)
+        XCTAssertTrue(spy.evaluateWordCalled)
+        XCTAssertEqual(spy.lastEvaluate?.passed, true)
+        XCTAssertEqual(spy.lastEvaluate?.score, 1.0)
     }
 
     // MARK: - 6. evaluateWord: пустой transcript → score через confidence
 
-    @Test("evaluateWord: пустой transcript даёт score через fallback")
-    func evaluateWordEmptyTranscript() {
-        let (_, _) = makeSUT()
+    func test_evaluateWord_emptyTranscript_fallback() {
         let (score, passed) = NarrativeQuestInteractor.scoreAttempt(
             transcript: "",
             target: "сова",
             confidence: 0.75
         )
-        #expect(score == 0.75)
-        #expect(passed == true)  // 0.75 >= passThreshold 0.6
+        XCTAssertEqual(score, 0.75)
+        XCTAssertTrue(passed)  // 0.75 >= passThreshold 0.6
     }
 
-    // MARK: - 7. completeQuest вычисляет averageScore
+    // MARK: - 7. completeQuest → averageScore in [0,1]
 
-    @Test("completeQuest передаёт averageScore в диапазоне [0, 1]")
-    func completeQuestScoreInRange() {
+    func test_completeQuest_scoreInRange() {
         let (sut, spy) = makeSUT()
         sut.loadQuest(.init(soundTarget: "С", childName: "Маша"))
         sut.completeQuest(.init())
-        #expect(spy.completeQuestCalled)
+        XCTAssertTrue(spy.completeQuestCalled)
         let avg = spy.lastComplete?.averageScore ?? -1
-        #expect(avg >= 0 && avg <= 1)
+        XCTAssertGreaterThanOrEqual(avg, 0)
+        XCTAssertLessThanOrEqual(avg, 1)
     }
 
-    // MARK: - 8. cancel не крашится
+    // MARK: - 8. cancel не вызывает completeQuest
 
-    @Test("cancel не крашится и не вызывает completeQuest")
-    func cancelDoesNotComplete() {
+    func test_cancel_doesNotComplete() {
         let (sut, spy) = makeSUT()
         sut.loadQuest(.init(soundTarget: "С", childName: "Маша"))
         sut.cancel()
-        #expect(!spy.completeQuestCalled)
+        XCTAssertFalse(spy.completeQuestCalled)
     }
 
-    // MARK: - 9. scoreAttempt: точное содержание транскрипта
+    // MARK: - 9. scoreAttempt: transcript содержит target → score = 1.0
 
-    @Test("scoreAttempt: transcript точно совпадает с target → score = 1.0")
-    func scoreAttemptContains() {
-        // Используем точное вхождение (cleanTranscript.contains(cleanTarget))
+    func test_scoreAttempt_contains() {
         let (score, passed) = NarrativeQuestInteractor.scoreAttempt(
             transcript: "сова летит",
             target: "сова",
             confidence: 0.9
         )
-        #expect(score == 1.0)
-        #expect(passed)
+        XCTAssertEqual(score, 1.0)
+        XCTAssertTrue(passed)
     }
 }

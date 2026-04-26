@@ -1,5 +1,5 @@
 @testable import HappySpeech
-import Testing
+import XCTest
 
 // MARK: - Spy
 
@@ -41,9 +41,8 @@ private final class SpyPuzzlePresenter: PuzzleRevealPresentationLogic {
 
 // MARK: - Tests
 
-@Suite("PuzzleRevealInteractor")
 @MainActor
-struct PuzzleRevealInteractorTests {
+final class PuzzleRevealInteractorTests: XCTestCase {
 
     private func makeActivity(sound: String = "С") -> SessionActivity {
         SessionActivity(
@@ -67,81 +66,71 @@ struct PuzzleRevealInteractorTests {
 
     // MARK: - 1. loadPuzzle создаёт 9 плиток
 
-    @Test("loadPuzzle создаёт 9 плиток для пазла 0")
-    func loadPuzzleCreates9Tiles() {
+    func test_loadPuzzle_creates9Tiles() {
         let (sut, spy) = makeSUT()
         sut.loadPuzzle(.init(activity: makeActivity(), puzzleIndex: 0))
-        #expect(spy.loadPuzzleCalled)
-        #expect(spy.lastLoadPuzzle?.tiles.count == 9)
+        XCTAssertTrue(spy.loadPuzzleCalled)
+        XCTAssertEqual(spy.lastLoadPuzzle?.tiles.count, 9)
     }
 
-    // MARK: - 2. Все плитки изначально закрыты
+    // MARK: - 2. все плитки изначально закрыты
 
-    @Test("все плитки после loadPuzzle закрыты")
-    func allTilesClosedOnLoad() {
+    func test_allTilesClosed_onLoad() {
         let (sut, spy) = makeSUT()
         sut.loadPuzzle(.init(activity: makeActivity(), puzzleIndex: 0))
         guard let tiles = spy.lastLoadPuzzle?.tiles else { return }
         let openTiles = tiles.filter(\.isRevealed)
-        #expect(openTiles.isEmpty)
+        XCTAssertTrue(openTiles.isEmpty)
     }
 
     // MARK: - 3. resolveSoundGroup
 
-    @Test("resolveSoundGroup корректно маппит звуки")
-    func resolveSoundGroup() {
-        #expect(PuzzleRevealInteractor.resolveSoundGroup(for: "С") == "whistling")
-        #expect(PuzzleRevealInteractor.resolveSoundGroup(for: "Ш") == "hissing")
-        #expect(PuzzleRevealInteractor.resolveSoundGroup(for: "Р") == "sonants")
-        #expect(PuzzleRevealInteractor.resolveSoundGroup(for: "К") == "velar")
+    func test_resolveSoundGroup_allGroups() {
+        XCTAssertEqual(PuzzleRevealInteractor.resolveSoundGroup(for: "С"), "whistling")
+        XCTAssertEqual(PuzzleRevealInteractor.resolveSoundGroup(for: "Ш"), "hissing")
+        XCTAssertEqual(PuzzleRevealInteractor.resolveSoundGroup(for: "Р"), "sonants")
+        XCTAssertEqual(PuzzleRevealInteractor.resolveSoundGroup(for: "К"), "velar")
     }
 
-    // MARK: - 4. tileCount и totalPuzzles константы
+    // MARK: - 4. tileCount = 9, totalPuzzles = 5
 
-    @Test("tileCount = 9, totalPuzzles = 5")
-    func configConstants() {
-        #expect(PuzzleRevealInteractor.tileCount == 9)
-        #expect(PuzzleRevealInteractor.totalPuzzles == 5)
+    func test_configConstants() {
+        XCTAssertEqual(PuzzleRevealInteractor.tileCount, 9)
+        XCTAssertEqual(PuzzleRevealInteractor.totalPuzzles, 5)
     }
 
-    // MARK: - 5. startRecord переводит состояние в recording
+    // MARK: - 5. startRecord вызывает presentStartRecord
 
-    @Test("startRecord вызывает presentStartRecord")
-    func startRecordCallsPresenter() {
+    func test_startRecord_callsPresenter() {
         let (sut, spy) = makeSUT()
         sut.loadPuzzle(.init(activity: makeActivity(), puzzleIndex: 0))
         sut.startRecord(.init())
-        #expect(spy.startRecordCalled)
+        XCTAssertTrue(spy.startRecordCalled)
     }
 
-    // MARK: - 6. cancel не крашится
+    // MARK: - 6. cancel не крашится до loadPuzzle
 
-    @Test("cancel не крашится при вызове до loadPuzzle")
-    func cancelBeforeLoad() {
+    func test_cancel_beforeLoad_doesNotCrash() {
         let (sut, _) = makeSUT()
         sut.cancel()
-        // просто проверяем, что нет краша
-        #expect(Bool(true))
+        XCTAssertTrue(true)
     }
 
-    // MARK: - 7. score-функция правильный подсчёт
+    // MARK: - 7. complete вызывает presenter
 
-    @Test("stars: average < 0.5 → 1 звезда")
-    func starsLow() {
+    func test_complete_callsPresenter() {
         let (sut, spy) = makeSUT()
         sut.complete(.init())
-        // без попыток averageScore = 0 → 1 звезда (по формуле ..<0.5 → 1)
-        #expect(spy.completeCalled)
+        XCTAssertTrue(spy.completeCalled)
     }
 
-    // MARK: - 8. loadPuzzle с разными soundGroup
+    // MARK: - 8. loadPuzzle работает для всех групп звуков
 
-    @Test("loadPuzzle работает для всех групп звуков")
-    func loadPuzzleAllGroups() {
+    func test_loadPuzzle_allSoundGroups() {
         for sound in ["С", "Ш", "Р", "К"] {
             let (sut, spy) = makeSUT()
             sut.loadPuzzle(.init(activity: makeActivity(sound: sound), puzzleIndex: 0))
-            #expect(spy.lastLoadPuzzle?.tiles.count == 9, "Sound \(sound) должен давать 9 плиток")
+            XCTAssertEqual(spy.lastLoadPuzzle?.tiles.count, 9, "Sound \(sound) должен давать 9 плиток")
         }
     }
 }
