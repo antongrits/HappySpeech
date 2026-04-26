@@ -1,14 +1,25 @@
+// swiftlint:disable file_length
 import SwiftUI
 import OSLog
 
 // MARK: - SessionShellView
+//
+// Public entry point for an active therapy session.
+//
+// Архитектура:
+//   SessionShellView
+//     └─ SessionShellHost (owns VIP stack, bridges Interactor → State)
+//          └─ SessionShellBinder (pure SwiftUI render)
+//               ├─ SessionHUDView (HSLiquidGlassCard со счётчиком/прогрессом/сердечками/паузой)
+//               ├─ Game content area (concrete game View)
+//               ├─ FeedbackOverlayView (flash + shake + Ляля)
+//               └─ PauseSheetView (motivational + 2 actions, exit-confirm alert)
+//
+// Полный VIP стек (Interactor / Presenter / Router + Adapter) живёт в
+// `SessionShellHost`, который владеет lifecycle интерактора и зеркалит state в
+// лёгкий `SessionShellState`, читаемый Binder'ом. Такой раздел держит
+// SwiftUI-render чистым, а интерактор — reference-type `AnyObject`.
 
-/// Public entry point for an active therapy session.
-///
-/// The full VIP stack (Interactor / Presenter / Router + Adapter) is wired inside
-/// `SessionShellHost` which owns lifecycle of the interactor and mirrors state into
-/// a lightweight `SessionShellState` used by `SessionShellBinder`. This split keeps
-/// the SwiftUI render pure while the interactor remains a reference-type `AnyObject`.
 struct SessionShellView: View {
 
     let childId: String
@@ -79,15 +90,19 @@ struct SessionShellHost: View {
                     )
                 )
             },
-            onPauseToggle: { wasPaused in
-                if wasPaused {
-                    interactor?.resumeSession()
-                } else {
-                    interactor?.pauseSession(SessionShellModels.PauseSession.Request())
-                }
+            onPauseRequested: {
+                shellState.isPaused = true
+                interactor?.pauseSession(SessionShellModels.PauseSession.Request())
             },
-            onEndEarly: {
+            onResume: {
+                shellState.isPaused = false
+                interactor?.resumeSession()
+            },
+            onExitConfirmed: {
                 await interactor?.endSessionEarly()
+                router?.routeBack()
+            },
+            onSessionFinished: {
                 router?.routeToResults(activities: shellState.activities)
             }
         )
@@ -123,6 +138,8 @@ struct SessionShellHost: View {
 
 // MARK: - SessionShellState
 
+/// Snapshot of all UI-relevant data the Binder needs to render. Mirrored from
+/// the Interactor through `SessionShellDisplayAdapter`.
 struct SessionShellState {
     var activities: [SessionActivity] = []
     var currentIndex: Int = 0
@@ -130,7 +147,14 @@ struct SessionShellState {
     var rewardVM: RewardViewModel?
     var isShowingReward: Bool = false
     var isShowingFatigueAlert: Bool = false
+    var isShowingPauseSheet: Bool = false
+    var isShowingExitAlert: Bool = false
     var isPaused: Bool = false
+    var feedbackState: SessionShellModels.FeedbackState = .none
+    var fatigueHearts: Int = 3
+    var mascotState: SessionShellModels.MascotState = .idle
+    var motivationalPhrase: String = ""
+    var sessionStartReference: Date = Date()
 }
 
 // MARK: - SessionShellBinder
@@ -139,18 +163,25 @@ struct SessionShellState {
 struct SessionShellBinder: View {
     @Binding var state: SessionShellState
     let onComplete: (String, Float) async -> Void
-    let onPauseToggle: (Bool) -> Void
-    let onEndEarly: () async -> Void
+    let onPauseRequested: () -> Void
+    let onResume: () -> Void
+    let onExitConfirmed: () async -> Void
+    let onSessionFinished: () -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(AppContainer.self) private var container
 
     var body: some View {
         ZStack(alignment: .top) {
-            ColorTokens.Kid.bg.ignoresSafeArea()
+            backgroundGradient
+                .ignoresSafeArea()
 
             VStack(spacing: SpacingTokens.regular) {
-                header
-                    .padding(.horizontal, SpacingTokens.screenEdge)
+                SessionHUDView(
+                    state: state,
+                    onPauseTap: handlePauseTap
+                )
+                .padding(.horizontal, SpacingTokens.screenEdge)
 
                 content
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -158,83 +189,114 @@ struct SessionShellBinder: View {
             }
             .padding(.vertical, SpacingTokens.large)
 
+            if state.feedbackState != .none {
+                FeedbackOverlayView(
+                    state: state.feedbackState,
+                    mascotState: state.mascotState
+                )
+                .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale))
+                .zIndex(5)
+                .allowsHitTesting(false)
+            }
+
             if state.isShowingReward, let vm = state.rewardVM {
                 rewardOverlay(vm)
                     .transition(reduceMotion ? .opacity : .move(edge: .top).combined(with: .opacity))
                     .zIndex(10)
             }
         }
+        .sheet(isPresented: $state.isShowingPauseSheet) {
+            PauseSheetView(
+                motivationalPhrase: state.motivationalPhrase,
+                onResume: {
+                    state.isShowingPauseSheet = false
+                    onResume()
+                },
+                onExitTap: {
+                    state.isShowingExitAlert = true
+                }
+            )
+        }
         .alert(
-            String(localized: "Пора отдохнуть"),
-            isPresented: $state.isShowingFatigueAlert
+            String(localized: "session.hud.exit_confirm"),
+            isPresented: $state.isShowingExitAlert
         ) {
-            Button(String(localized: "Закончить")) {
-                Task { await onEndEarly() }
+            Button(String(localized: "session.hud.exit"), role: .destructive) {
+                state.isShowingExitAlert = false
+                state.isShowingPauseSheet = false
+                Task { await onExitConfirmed() }
+            }
+            Button(String(localized: "common.cancel"), role: .cancel) {
+                state.isShowingExitAlert = false
             }
         } message: {
-            Text(String(localized: "Ты отлично поработал! Давай продолжим чуть позже."))
+            Text(String(localized: "session.hud.exit_message"))
         }
-    }
-
-    // MARK: Header
-
-    private var header: some View {
-        HStack(spacing: SpacingTokens.small) {
-            HStack(spacing: SpacingTokens.tiny) {
-                HSMascotView(mood: .encouraging, size: 48)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                    Text(String(localized: "Шаг \(state.currentIndex + 1) из \(max(state.totalSteps, 1))"))
-                        .font(TypographyTokens.caption())
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    HSProgressBar(
-                        value: state.totalSteps > 0
-                            ? Double(state.currentIndex) / Double(state.totalSteps)
-                            : 0
-                    )
-                    .frame(width: 160, height: 8)
+        .alert(
+            String(localized: "session.fatigue.alert.title"),
+            isPresented: $state.isShowingFatigueAlert
+        ) {
+            Button(String(localized: "session.fatigue.stop")) {
+                Task { await onExitConfirmed() }
+            }
+        } message: {
+            Text(String(localized: "session.fatigue.alert.message"))
+        }
+        .onChange(of: state.feedbackState) { _, newValue in
+            if newValue != .none {
+                Task { @MainActor in
+                    try? await Task.sleep(for: .milliseconds(800))
+                    state.feedbackState = .none
                 }
             }
-            .accessibilityElement(children: .combine)
-            .accessibilityLabel(String(
-                localized: "Прогресс: шаг \(state.currentIndex + 1) из \(max(state.totalSteps, 1))"
-            ))
-
-            Spacer()
-
-            Button {
-                let wasPaused = state.isPaused
-                state.isPaused.toggle()
-                onPauseToggle(wasPaused)
-            } label: {
-                Image(systemName: state.isPaused ? "play.fill" : "pause.fill")
-                    .font(.system(size: 20, weight: .semibold))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .padding(SpacingTokens.small)
-                    .background(Circle().fill(ColorTokens.Kid.surface))
-            }
-            .accessibilityLabel(state.isPaused
-                ? String(localized: "Продолжить занятие")
-                : String(localized: "Пауза"))
-            .accessibilityAddTraits(.isButton)
         }
     }
 
-    // MARK: Content
+    // MARK: - Background
+
+    /// Динамический градиент по типу текущей игры. Меняется плавно при смене
+    /// activity (через `id` ниже).
+    private var backgroundGradient: LinearGradient {
+        let palette = state.activities.indices.contains(state.currentIndex)
+            ? gradientPalette(for: state.activities[state.currentIndex].gameType)
+            : (top: ColorTokens.Kid.bg, bottom: ColorTokens.Kid.bgSoft)
+        return LinearGradient(
+            colors: [palette.top, palette.bottom],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+
+    private func gradientPalette(for type: GameType) -> (top: Color, bottom: Color) {
+        switch type {
+        case .listenAndChoose, .repeatAfterModel, .minimalPairs:
+            return (ColorTokens.Brand.sky.opacity(0.18), ColorTokens.Kid.bgSoft)
+        case .breathing, .rhythm:
+            return (ColorTokens.Brand.mint.opacity(0.18), ColorTokens.Kid.bgSoft)
+        case .narrativeQuest, .storyCompletion:
+            return (ColorTokens.Brand.lilac.opacity(0.18), ColorTokens.Kid.bgSoft)
+        case .arActivity, .articulationImitation, .visualAcoustic:
+            return (ColorTokens.Brand.butter.opacity(0.18), ColorTokens.Kid.bgSoft)
+        default:
+            return (ColorTokens.Kid.bgSoft, ColorTokens.Kid.bg)
+        }
+    }
+
+    // MARK: - Pause handler
+
+    private func handlePauseTap() {
+        guard !state.isPaused else { return }
+        container.hapticService.selection()
+        state.isShowingPauseSheet = true
+        onPauseRequested()
+    }
+
+    // MARK: - Content
 
     @ViewBuilder
     private var content: some View {
         if state.currentIndex >= state.totalSteps, state.totalSteps > 0 {
-            VStack(spacing: SpacingTokens.large) {
-                HSMascotView(mood: .celebrating, size: 140)
-                Text(String(localized: "Занятие завершено!"))
-                    .font(TypographyTokens.title(28))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                HSButton(String(localized: "Итоги"), style: .primary) {
-                    Task { await onEndEarly() }
-                }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-            }
+            sessionCompletedView
         } else if state.activities.indices.contains(state.currentIndex) {
             let activity = state.activities[state.currentIndex]
             gameView(for: activity)
@@ -242,6 +304,19 @@ struct SessionShellBinder: View {
         } else {
             ProgressView()
                 .progressViewStyle(.circular)
+        }
+    }
+
+    private var sessionCompletedView: some View {
+        VStack(spacing: SpacingTokens.large) {
+            HSMascotView(mood: .celebrating, size: 140)
+            Text(String(localized: "session.completed.title"))
+                .font(TypographyTokens.title(28))
+                .foregroundStyle(ColorTokens.Kid.ink)
+            HSButton(String(localized: "session.completed.cta"), style: .primary) {
+                onSessionFinished()
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
         }
     }
 
@@ -329,7 +404,7 @@ struct SessionShellBinder: View {
         .padding()
     }
 
-    // MARK: Reward overlay
+    // MARK: - Reward overlay
 
     private func rewardOverlay(_ vm: RewardViewModel) -> some View {
         VStack(spacing: SpacingTokens.small) {
@@ -353,6 +428,299 @@ struct SessionShellBinder: View {
     }
 }
 
+// MARK: - SessionHUDView
+
+/// HUD строка над контентом сессии:
+///   [Прогресс-бар] [mm:ss таймер] [♥♥♥] [⏸]
+/// Обёрнуто в `HSLiquidGlassCard(.primary)`. Таймер использует `TimelineView`
+/// и считает живое время от `state.sessionStartReference`.
+struct SessionHUDView: View {
+    let state: SessionShellState
+    let onPauseTap: () -> Void
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    var body: some View {
+        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.small) {
+            HStack(spacing: SpacingTokens.regular) {
+                progressBlock
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                timerBlock
+                fatigueBlock
+                pauseButton
+            }
+        }
+        .accessibilityElement(children: .contain)
+    }
+
+    // MARK: Progress
+
+    private var progressBlock: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+            Text(String(
+                localized: "session.hud.step_format \(state.currentIndex + 1) \(max(state.totalSteps, 1))"
+            ))
+            .font(TypographyTokens.caption())
+            .foregroundStyle(ColorTokens.Kid.inkMuted)
+
+            ProgressView(
+                value: max(0, min(progressFraction, 1))
+            )
+            .progressViewStyle(.linear)
+            .tint(ColorTokens.Brand.primary)
+            .frame(height: 6)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(String(
+            localized: "session.hud.progress.a11y \(state.currentIndex + 1) \(max(state.totalSteps, 1))"
+        ))
+    }
+
+    private var progressFraction: Double {
+        guard state.totalSteps > 0 else { return 0 }
+        return Double(state.currentIndex) / Double(state.totalSteps)
+    }
+
+    // MARK: Timer
+
+    private var timerBlock: some View {
+        TimelineView(.periodic(from: state.sessionStartReference, by: 1.0)) { context in
+            let elapsed = max(0, context.date.timeIntervalSince(state.sessionStartReference))
+            Text(Self.formatElapsed(elapsed))
+                .font(TypographyTokens.caption(13).monospacedDigit())
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .frame(minWidth: 44, alignment: .trailing)
+                .accessibilityLabel(String(
+                    localized: "session.hud.timer.a11y \(Int(elapsed / 60)) \(Int(elapsed) % 60)"
+                ))
+        }
+    }
+
+    private static func formatElapsed(_ seconds: TimeInterval) -> String {
+        let total = Int(seconds.rounded())
+        return String(format: "%02d:%02d", total / 60, total % 60)
+    }
+
+    // MARK: Fatigue (3 hearts)
+
+    private var fatigueBlock: some View {
+        HStack(spacing: 2) {
+            ForEach(0..<3, id: \.self) { idx in
+                Image(systemName: idx < state.fatigueHearts ? "heart.fill" : "heart")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(idx < state.fatigueHearts
+                        ? ColorTokens.Semantic.error
+                        : ColorTokens.Kid.line)
+                    .scaleEffect(reduceMotion ? 1.0 : (idx < state.fatigueHearts ? 1.0 : 0.85))
+                    .animation(reduceMotion ? nil : .spring(duration: 0.4), value: state.fatigueHearts)
+            }
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(String(
+            localized: "session.hud.fatigue.a11y \(state.fatigueHearts)"
+        ))
+    }
+
+    // MARK: Pause
+
+    private var pauseButton: some View {
+        Button(action: onPauseTap) {
+            Image(systemName: "pause.circle.fill")
+                .font(.system(size: 28, weight: .semibold))
+                .foregroundStyle(ColorTokens.Kid.ink)
+        }
+        .accessibilityLabel(String(localized: "session.hud.pause"))
+        .accessibilityAddTraits(.isButton)
+    }
+}
+
+// MARK: - FeedbackOverlayView
+
+/// Полупрозрачный overlay поверх игрового контента.
+///
+///  • `.correct`   — мягкая зелёная вспышка + scale-pulse 1.0→1.02→1.0;
+///  • `.incorrect` — красная рамка + horizontal shake (3 tap'а ±8pt);
+///  • Reduced Motion: только цвет, без scale/shake.
+///
+/// Auto-dismiss 0.8s управляется снаружи (`onChange(feedbackState)` в Binder).
+struct FeedbackOverlayView: View {
+    let state: SessionShellModels.FeedbackState
+    let mascotState: SessionShellModels.MascotState
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var pulseScale: CGFloat = 1.0
+    @State private var shakeOffset: CGFloat = 0
+
+    var body: some View {
+        ZStack {
+            tintLayer
+                .ignoresSafeArea()
+                .scaleEffect(pulseScale)
+
+            VStack {
+                Spacer()
+                feedbackBubble
+                    .offset(x: shakeOffset)
+                    .padding(.bottom, SpacingTokens.xxLarge)
+            }
+        }
+        .onAppear { runEntryAnimation() }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(accessibilityText)
+    }
+
+    private var tintLayer: some View {
+        Group {
+            switch state {
+            case .correct:
+                ColorTokens.Semantic.success.opacity(0.18)
+            case .incorrect:
+                ColorTokens.Semantic.error.opacity(0.12)
+            case .none:
+                Color.clear
+            }
+        }
+    }
+
+    private var feedbackBubble: some View {
+        HStack(spacing: SpacingTokens.small) {
+            HSMascotView(mood: mascotMood(for: mascotState), size: 56)
+                .accessibilityHidden(true)
+            Text(bubbleText)
+                .font(TypographyTokens.headline(18))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
+                .multilineTextAlignment(.leading)
+        }
+        .padding(.horizontal, SpacingTokens.medium)
+        .padding(.vertical, SpacingTokens.small)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                .fill(ColorTokens.Kid.surface)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                .strokeBorder(borderColor, lineWidth: state == .incorrect ? 2 : 0)
+        )
+        .shadow(color: .black.opacity(0.10), radius: 14, y: 4)
+    }
+
+    private var borderColor: Color {
+        switch state {
+        case .correct:   return ColorTokens.Semantic.success
+        case .incorrect: return ColorTokens.Semantic.error
+        case .none:      return .clear
+        }
+    }
+
+    private var bubbleText: String {
+        switch state {
+        case .correct:   return String(localized: "session.feedback.correct")
+        case .incorrect: return String(localized: "session.feedback.incorrect")
+        case .none:      return ""
+        }
+    }
+
+    private var accessibilityText: String { bubbleText }
+
+    private func runEntryAnimation() {
+        guard !reduceMotion else { return }
+        switch state {
+        case .correct:
+            withAnimation(.easeOut(duration: 0.18)) { pulseScale = 1.02 }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.18) {
+                withAnimation(.easeIn(duration: 0.18)) { pulseScale = 1.0 }
+            }
+        case .incorrect:
+            performShake()
+        case .none:
+            break
+        }
+    }
+
+    private func performShake() {
+        let amplitude: CGFloat = 8
+        let step: TimeInterval = 0.07
+        let sequence: [CGFloat] = [amplitude, -amplitude, amplitude, -amplitude, 0]
+        for (idx, value) in sequence.enumerated() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + step * Double(idx)) {
+                withAnimation(.easeInOut(duration: step)) {
+                    shakeOffset = value
+                }
+            }
+        }
+    }
+
+    private func mascotMood(for state: SessionShellModels.MascotState) -> MascotMood {
+        switch state {
+        case .idle:        return .idle
+        case .encouraging: return .encouraging
+        case .celebrating: return .celebrating
+        case .thinking:    return .thinking
+        case .explaining:  return .explaining
+        case .waving:      return .waving
+        }
+    }
+}
+
+// MARK: - PauseSheetView
+
+/// Сheet с мотивационной фразой и двумя действиями: «Продолжить», «Выйти».
+/// Подложка — `HSLiquidGlassCard(.elevated)`.
+struct PauseSheetView: View {
+    let motivationalPhrase: String
+    let onResume: () -> Void
+    let onExitTap: () -> Void
+
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        ZStack {
+            ColorTokens.Kid.bg.ignoresSafeArea()
+            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.large) {
+                VStack(spacing: SpacingTokens.large) {
+                    HSMascotView(mood: .encouraging, size: 120)
+                        .accessibilityHidden(true)
+
+                    Text(motivationalPhrase.isEmpty
+                        ? String(localized: "session.pause.motivational")
+                        : motivationalPhrase)
+                        .font(TypographyTokens.title(22))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                        .padding(.horizontal, SpacingTokens.regular)
+
+                    VStack(spacing: SpacingTokens.small) {
+                        HSButton(
+                            String(localized: "session.hud.resume"),
+                            style: .primary,
+                            icon: "play.fill"
+                        ) {
+                            onResume()
+                            dismiss()
+                        }
+
+                        HSButton(
+                            String(localized: "session.hud.exit"),
+                            style: .secondary,
+                            icon: "xmark"
+                        ) {
+                            onExitTap()
+                        }
+                    }
+                }
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+        }
+        .presentationDetents([.medium, .large])
+        .presentationDragIndicator(.visible)
+        .accessibilityElement(children: .contain)
+    }
+}
+
 // MARK: - SessionShellDisplayAdapter
 
 /// Bridges the presenter (class, `AnyObject`) into SwiftUI `@State`.
@@ -368,9 +736,17 @@ final class SessionShellDisplayAdapter: SessionShellDisplayLogic {
         state.activities = viewModel.activities
         state.totalSteps = viewModel.totalSteps
         state.currentIndex = 0
+        state.fatigueHearts = 3
+        state.feedbackState = .none
+        state.mascotState = .waving
+        state.sessionStartReference = viewModel.sessionStartTime
     }
 
     func displayCompleteActivity(_ viewModel: SessionShellModels.CompleteActivity.ViewModel) {
+        state.feedbackState = viewModel.feedbackState
+        state.fatigueHearts = viewModel.fatigueHearts
+        state.mascotState = viewModel.mascotState
+
         if viewModel.shouldShowReward, let reward = viewModel.reward {
             state.rewardVM = reward
             state.isShowingReward = true
@@ -391,7 +767,9 @@ final class SessionShellDisplayAdapter: SessionShellDisplayLogic {
     }
 
     func displayPauseSession(_ viewModel: SessionShellModels.PauseSession.ViewModel) {
-        // pause state is mirrored by the Binder's button directly
+        state.motivationalPhrase = viewModel.motivationalPhrase
+        // Sheet visibility управляется вручную из Binder.handlePauseTap, чтобы
+        // не зависеть от async-доставки от Presenter.
     }
 }
 
@@ -419,3 +797,4 @@ extension GameType {
         }
     }
 }
+// swiftlint:enable file_length
