@@ -643,6 +643,7 @@ private struct SessionHistoryFilterChipBadge: View {
             Capsule().fill(ColorTokens.Parent.accent.opacity(0.12))
         )
         .accessibilityLabel(label)
+        .accessibilityAddTraits(.isStaticText)
     }
 }
 
@@ -964,6 +965,7 @@ private struct DateFieldButton: View {
                 )
                 .datePickerStyle(.graphical)
                 .padding()
+                .accessibilityHint(String(localized: "sessionHistory.filter.datePicker.hint"))
 
                 HStack(spacing: SpacingTokens.regular) {
                     HSButton(

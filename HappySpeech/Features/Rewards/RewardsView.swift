@@ -188,7 +188,7 @@ struct RewardsView: View {
                         .foregroundStyle(tab.isActive ? .white : ColorTokens.Kid.ink)
                         .padding(.horizontal, SpacingTokens.medium)
                         .padding(.vertical, SpacingTokens.tiny)
-                        .frame(minHeight: 44)
+                        .frame(minHeight: 56)
                         .background(
                             Capsule().fill(
                                 tab.isActive
@@ -372,7 +372,7 @@ private struct StickerCellView: View {
                 }
 
                 Text(cell.name)
-                    .font(TypographyTokens.caption(11))
+                    .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
@@ -387,7 +387,7 @@ private struct StickerCellView: View {
                         .background(Capsule().fill(ColorTokens.Brand.gold))
                 }
             }
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity, minHeight: 88)
         }
     }
 
@@ -430,13 +430,13 @@ private struct StickerCellView: View {
             }
 
             Text(cell.name)
-                .font(TypographyTokens.caption(11))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .font(TypographyTokens.caption(12))
+                .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .minimumScaleFactor(0.85)
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, minHeight: 88)
         .padding(SpacingTokens.tiny)
     }
 }

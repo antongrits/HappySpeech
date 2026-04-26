@@ -265,10 +265,12 @@ struct DemoModeView: View {
             interactor?.skipDemo(.init())
         } label: {
             Text(String(localized: "demo.cta.skip"))
-                .font(TypographyTokens.body(14))
-                .foregroundStyle(.white.opacity(0.9))
+                .font(TypographyTokens.body(14).weight(.semibold))
+                .foregroundStyle(.white)
                 .padding(.horizontal, SpacingTokens.small)
                 .padding(.vertical, SpacingTokens.tiny)
+                .frame(minWidth: 44, minHeight: 44)
+                .background(Color.black.opacity(0.001))
                 .contentShape(Rectangle())
         }
         .accessibilityLabel(String(localized: "demo.a11y.skip"))
@@ -425,7 +427,7 @@ struct DemoModeView: View {
                     .accessibilityIdentifier("demo.step.title")
                 Text(step.description)
                     .font(TypographyTokens.body(15))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .foregroundStyle(ColorTokens.Kid.ink)
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
                     .lineLimit(nil)

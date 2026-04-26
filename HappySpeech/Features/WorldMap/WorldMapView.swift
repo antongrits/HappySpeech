@@ -453,8 +453,8 @@ private struct WorldZoneTile: View {
             .accessibilityHidden(true)
 
             Text(card.lessonsLabel)
-                .font(TypographyTokens.caption(11))
-                .foregroundStyle(card.foregroundColor.opacity(0.7))
+                .font(TypographyTokens.caption(12))
+                .foregroundStyle(card.foregroundColor.opacity(0.85))
         }
         .padding(SpacingTokens.regular)
     }
@@ -753,7 +753,7 @@ private struct WorldZoneDetailSheet: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
             Text(label)
-                .font(TypographyTokens.caption(11))
+                .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)

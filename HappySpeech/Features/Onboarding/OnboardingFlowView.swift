@@ -404,8 +404,8 @@ private struct OnboardingRoleCard: View {
                             .font(TypographyTokens.headline(17))
                             .foregroundStyle(ColorTokens.Kid.ink)
                         Text(role.description)
-                            .font(TypographyTokens.body(13))
-                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .font(TypographyTokens.body(14))
+                            .foregroundStyle(ColorTokens.Kid.ink)
                             .multilineTextAlignment(.leading)
                             .lineLimit(2)
                     }
@@ -653,8 +653,8 @@ private struct AgeBubble: View {
                     .font(TypographyTokens.title(28))
                     .foregroundStyle(isSelected ? .white : ColorTokens.Kid.ink)
                 Text(String(localized: "onboarding.age.years.short"))
-                    .font(TypographyTokens.caption(11))
-                    .foregroundStyle(isSelected ? Color.white.opacity(0.8) : ColorTokens.Kid.inkMuted)
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(isSelected ? Color.white : ColorTokens.Kid.ink)
             }
             .frame(width: 70, height: 70)
             .background(
