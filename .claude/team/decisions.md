@@ -284,3 +284,68 @@ Agent SDK требует `claude` CLI бинарник — запускает е
 **Reason:** MLC-LLM — нет SPM, требует CMake+Rust. MLX Swift — нативный, SPM, Qwen2.5 через mlx-community.
 **Supersedes:** ADR-002.
 **Performance:** ~15-25 tok/s на iPhone 15 Pro (Metal).
+
+---
+
+## G1 Firebase Deploy (2026-04-26)
+
+**Статус: ЗАБЛОКИРОВАН — требуется ручное действие от разработчика**
+
+### Выполнено (локальная верификация)
+
+- **Firestore Rules:** файл `firestore.rules` существует, 357 строк, v1.1 (2026-04-22). Синтаксис корректен. Покрывает: /users, /children, /sessions, /attempts, /progress, /plans, /reports, /weekly_reports, /rewards, /routes, /specialists, /assignments, /content/*, /contentPacks, /exercises, /audits. Default deny на `/{document=**}`.
+- **Firestore Indexes:** файл `firestore.indexes.json` существует, JSON-синтаксис OK, **14 составных индексов** (sessions×5, progress×2, attempts×1, contentPacks×1, exercises×1, reports×1, rewards×1, routes×1, weekly_reports×1).
+- **firebase.json:** корректен, App Check настроен в режиме `ENFORCED` с провайдером `deviceCheck` + `debug` (для симулятора).
+- **storage.rules:** файл существует.
+- **.firebaserc:** default=`happyspeech-app`, prod=`happyspeech-app`, dev=`happyspeech-dev`, staging=`happyspeech-staging`.
+- **GoogleService-Info.plist:** PLACEHOLDER — реальные значения не заполнены.
+
+### Блокеры
+
+1. **Firebase CLI залогинен под `antongric132@gmail.com`** — проектов не найдено. Нужно залогиниться под `antongric558@gmail.com`.
+2. **Firebase проект `happyspeech-app` не создан** (или недоступен с текущим аккаунтом) — `firebase projects:list` возвращает пустой список.
+3. **GoogleService-Info.plist содержит placeholder** — реальный plist нужно скачать из Firebase Console после создания проекта.
+
+### Инструкция для ручного разблокирования
+
+```bash
+# 1. В терминале с поддержкой интерактивного ввода:
+firebase login --reauth
+# → выбрать antongric558@gmail.com в браузере
+
+# 2. Создать проект в Firebase Console:
+#    https://console.firebase.google.com/
+#    - Project ID: happyspeech-app
+#    - Регион Firestore: europe-west3
+#    - Включить App Check → DeviceCheck + Debug provider
+
+# 3. Скачать GoogleService-Info.plist → заменить placeholder в:
+#    HappySpeech/Resources/GoogleService-Info.plist
+
+# 4. Деплой:
+cd /Users/antongric/Yandex.Disk.localized/xcode_projects/Диплом/HappySpeech
+firebase deploy --only firestore:rules
+firebase deploy --only firestore:indexes
+firebase deploy --only storage
+
+# 5. Верификация:
+firebase firestore:rules:get | head -20
+```
+
+### App Check статус
+- В `firebase.json` настроен: `enforcementMode: ENFORCED`, провайдеры: `deviceCheck` (prod) + `debug` (simulator).
+- Активация в Firebase Console: Project Settings → App Check → Register app → DeviceCheck.
+
+- **Firestore Rules деплой:** не выполнен (CLI не авторизован под нужным аккаунтом)
+- **Firestore Indexes деплой:** не выполнен (та же причина)
+- **App Check статус:** настроен в config, не активирован в Console
+- **Project ID:** `happyspeech-app`
+
+## H1 Sprint 12 Final Stats (2026-04-26)
+- Swift files: 386
+- Total LOC: 75 582
+- Git commits: 125
+- Localization keys: 1 381
+- Content stages: 196
+- Content items: 6 265
+- BUILD: SUCCEEDED
