@@ -11913,6 +11913,17 @@
         }
       }
     },
+    "sessionHistory.filter.datePicker.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите дату из календаря"
+          }
+        }
+      }
+    },
     "sessionHistory.filter.notSet": {
       "extractionState": "manual",
       "localizations": {

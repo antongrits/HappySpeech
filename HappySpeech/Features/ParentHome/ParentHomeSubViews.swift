@@ -75,6 +75,7 @@ struct SessionRow: View {
             }
             .font(TypographyTokens.caption())
             .foregroundStyle(ColorTokens.Parent.inkMuted)
+            .lineLimit(2)
         }
     }
 
@@ -179,7 +180,7 @@ struct SoundAccuracyChartCard: View {
                         AxisValueLabel {
                             if let intValue = value.as(Int.self) {
                                 Text("\(intValue)%")
-                                    .font(TypographyTokens.caption(10))
+                                    .font(TypographyTokens.caption(11))
                                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                             }
                         }
@@ -309,7 +310,7 @@ struct ParentStatCard: View {
                     .foregroundStyle(ColorTokens.Parent.ink)
 
                 Text(label)
-                    .font(TypographyTokens.caption(10))
+                    .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
