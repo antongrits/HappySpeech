@@ -10,7 +10,10 @@ protocol OnboardingDisplayLogic: AnyObject {
     func displayGoBack(_ viewModel: OnboardingModels.GoBack.ViewModel)
     func displaySetRole(_ viewModel: OnboardingModels.SetRole.ViewModel)
     func displaySetProfile(_ viewModel: OnboardingModels.SetProfile.ViewModel)
+    func displaySetAge(_ viewModel: OnboardingModels.SetAge.ViewModel)
     func displayToggleGoal(_ viewModel: OnboardingModels.ToggleGoal.ViewModel)
+    func displayToggleSound(_ viewModel: OnboardingModels.ToggleSound.ViewModel)
+    func displaySetSchedule(_ viewModel: OnboardingModels.SetSchedule.ViewModel)
     func displaySkipPermissions(_ viewModel: OnboardingModels.SkipPermissions.ViewModel)
     func displayStartModelDownload(_ viewModel: OnboardingModels.StartModelDownload.ViewModel)
     func displayCompleteOnboarding(_ viewModel: OnboardingModels.CompleteOnboarding.ViewModel)
@@ -80,7 +83,22 @@ final class OnboardingDisplay: OnboardingDisplayLogic {
         canAdvance = viewModel.canAdvance
     }
 
+    func displaySetAge(_ viewModel: OnboardingModels.SetAge.ViewModel) {
+        profile = viewModel.profile
+        canAdvance = viewModel.canAdvance
+    }
+
     func displayToggleGoal(_ viewModel: OnboardingModels.ToggleGoal.ViewModel) {
+        profile = viewModel.profile
+        canAdvance = viewModel.canAdvance
+    }
+
+    func displayToggleSound(_ viewModel: OnboardingModels.ToggleSound.ViewModel) {
+        profile = viewModel.profile
+        canAdvance = viewModel.canAdvance
+    }
+
+    func displaySetSchedule(_ viewModel: OnboardingModels.SetSchedule.ViewModel) {
         profile = viewModel.profile
         canAdvance = viewModel.canAdvance
     }

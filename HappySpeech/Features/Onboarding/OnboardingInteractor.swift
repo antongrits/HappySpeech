@@ -10,7 +10,10 @@ protocol OnboardingBusinessLogic: AnyObject {
     func goBack(_ request: OnboardingModels.GoBack.Request)
     func setRole(_ request: OnboardingModels.SetRole.Request)
     func setProfile(_ request: OnboardingModels.SetProfile.Request)
+    func setAge(_ request: OnboardingModels.SetAge.Request)
     func toggleGoal(_ request: OnboardingModels.ToggleGoal.Request)
+    func toggleSound(_ request: OnboardingModels.ToggleSound.Request)
+    func setSchedule(_ request: OnboardingModels.SetSchedule.Request)
     func skipPermissions(_ request: OnboardingModels.SkipPermissions.Request)
     func startModelDownload(_ request: OnboardingModels.StartModelDownload.Request)
     func completeOnboarding(_ request: OnboardingModels.CompleteOnboarding.Request)
@@ -18,9 +21,9 @@ protocol OnboardingBusinessLogic: AnyObject {
 
 // MARK: - OnboardingInteractor
 
-/// Бизнес-логика онбординга. На M7.2 хранит профиль в памяти; на M8 будет
-/// сохранять в `ChildRepository` и передавать `WhisperKitModelManager` для
-/// фоновой загрузки модели.
+/// Бизнес-логика 10-шагового онбординга. Хранит профиль в памяти, при
+/// completeOnboarding — сохраняет в `OnboardingState` (UserDefaults). На M8
+/// плановый WhisperKitModelManager заменит симуляцию загрузки модели.
 @MainActor
 final class OnboardingInteractor: OnboardingBusinessLogic {
 
@@ -95,12 +98,17 @@ final class OnboardingInteractor: OnboardingBusinessLogic {
     func setProfile(_ request: OnboardingModels.SetProfile.Request) {
         let trimmedName = request.name.trimmingCharacters(in: .whitespaces)
         profile.childName = trimmedName
-        profile.childAge = max(3, min(12, request.age))
         if !request.avatar.isEmpty {
             profile.childAvatar = request.avatar
         }
-        logger.info("setProfile age=\(self.profile.childAge, privacy: .public)")
+        logger.info("setProfile nameLen=\(trimmedName.count, privacy: .public)")
         presenter?.presentSetProfile(.init(profile: profile))
+    }
+
+    func setAge(_ request: OnboardingModels.SetAge.Request) {
+        profile.childAge = max(3, min(12, request.age))
+        logger.info("setAge age=\(self.profile.childAge, privacy: .public)")
+        presenter?.presentSetAge(.init(profile: profile))
     }
 
     func toggleGoal(_ request: OnboardingModels.ToggleGoal.Request) {
@@ -111,6 +119,25 @@ final class OnboardingInteractor: OnboardingBusinessLogic {
         }
         logger.info("toggleGoal id=\(request.goalId, privacy: .public) selected=\(self.profile.goals.count, privacy: .public)")
         presenter?.presentToggleGoal(.init(profile: profile))
+    }
+
+    func toggleSound(_ request: OnboardingModels.ToggleSound.Request) {
+        if profile.difficultSounds.contains(request.soundId) {
+            profile.difficultSounds.remove(request.soundId)
+        } else {
+            profile.difficultSounds.insert(request.soundId)
+        }
+        logger.info("toggleSound id=\(request.soundId, privacy: .public) selected=\(self.profile.difficultSounds.count, privacy: .public)")
+        presenter?.presentToggleSound(.init(profile: profile))
+    }
+
+    func setSchedule(_ request: OnboardingModels.SetSchedule.Request) {
+        let clamped = OnboardingProfile.availableSchedules.contains(request.minutes)
+            ? request.minutes
+            : 10
+        profile.dailyMinutes = clamped
+        logger.info("setSchedule minutes=\(self.profile.dailyMinutes, privacy: .public)")
+        presenter?.presentSetSchedule(.init(profile: profile))
     }
 
     func skipPermissions(_ request: OnboardingModels.SkipPermissions.Request) {
@@ -134,21 +161,27 @@ final class OnboardingInteractor: OnboardingBusinessLogic {
         presenter?.presentStartModelDownload(.init(status: modelStatus))
 
         downloadTask = Task { [weak self] in
-            // Симуляция загрузки: 12 шагов по 250 ms (~3 сек).
+            // Симуляция загрузки: 12 шагов по 250 ms (~3 сек). На M8 заменится
+            // на реальный WhisperKitModelManager. Task наследует MainActor от
+            // окружающего класса, поэтому publishProgress / completeModelDownload
+            // вызываются изолированно — `await` не требуется.
             for step in 1...12 {
                 if Task.isCancelled { return }
                 try? await Task.sleep(for: .milliseconds(250))
                 let progress = Double(step) / 12.0
-                await self?.publishProgress(progress)
+                self?.publishProgress(progress)
             }
-            await self?.completeModelDownload()
+            self?.completeModelDownload()
         }
     }
 
     func completeOnboarding(_ request: OnboardingModels.CompleteOnboarding.Request) {
         downloadTask?.cancel()
         downloadTask = nil
-        logger.info("completeOnboarding role=\(self.profile.role.rawValue, privacy: .public) name=\(self.profile.childName, privacy: .private(mask: .hash))")
+        // Сохраняем профиль и флаг «онбординг пройден» в UserDefaults,
+        // чтобы при следующем запуске Splash сразу маршрутизировал в home.
+        OnboardingState.markCompleted(profile: profile)
+        logger.info("completeOnboarding role=\(self.profile.role.rawValue, privacy: .public) age=\(self.profile.childAge, privacy: .public) goals=\(self.profile.goals.count, privacy: .public) sounds=\(self.profile.difficultSounds.count, privacy: .public) minutes=\(self.profile.dailyMinutes, privacy: .public)")
         presenter?.presentCompleteOnboarding(.init(profile: profile))
     }
 

@@ -10,7 +10,10 @@ protocol OnboardingPresentationLogic: AnyObject {
     func presentGoBack(_ response: OnboardingModels.GoBack.Response)
     func presentSetRole(_ response: OnboardingModels.SetRole.Response)
     func presentSetProfile(_ response: OnboardingModels.SetProfile.Response)
+    func presentSetAge(_ response: OnboardingModels.SetAge.Response)
     func presentToggleGoal(_ response: OnboardingModels.ToggleGoal.Response)
+    func presentToggleSound(_ response: OnboardingModels.ToggleSound.Response)
+    func presentSetSchedule(_ response: OnboardingModels.SetSchedule.Response)
     func presentSkipPermissions(_ response: OnboardingModels.SkipPermissions.Response)
     func presentStartModelDownload(_ response: OnboardingModels.StartModelDownload.Response)
     func presentCompleteOnboarding(_ response: OnboardingModels.CompleteOnboarding.Response)
@@ -78,7 +81,14 @@ final class OnboardingPresenter: OnboardingPresentationLogic {
     func presentSetProfile(_ response: OnboardingModels.SetProfile.Response) {
         display?.displaySetProfile(.init(
             profile: response.profile,
-            canAdvance: canAdvance(from: .childProfile, profile: response.profile)
+            canAdvance: canAdvance(from: .childName, profile: response.profile)
+        ))
+    }
+
+    func presentSetAge(_ response: OnboardingModels.SetAge.Response) {
+        display?.displaySetAge(.init(
+            profile: response.profile,
+            canAdvance: canAdvance(from: .childAge, profile: response.profile)
         ))
     }
 
@@ -86,6 +96,20 @@ final class OnboardingPresenter: OnboardingPresentationLogic {
         display?.displayToggleGoal(.init(
             profile: response.profile,
             canAdvance: canAdvance(from: .goals, profile: response.profile)
+        ))
+    }
+
+    func presentToggleSound(_ response: OnboardingModels.ToggleSound.Response) {
+        display?.displayToggleSound(.init(
+            profile: response.profile,
+            canAdvance: canAdvance(from: .sounds, profile: response.profile)
+        ))
+    }
+
+    func presentSetSchedule(_ response: OnboardingModels.SetSchedule.Response) {
+        display?.displaySetSchedule(.init(
+            profile: response.profile,
+            canAdvance: canAdvance(from: .schedule, profile: response.profile)
         ))
     }
 
@@ -106,7 +130,7 @@ final class OnboardingPresenter: OnboardingPresentationLogic {
         switch response.status {
         case .idle:
             label = String(localized: "onboarding.model.idle")
-            canAdvance = true   // позволено пропустить
+            canAdvance = true
         case .downloading(let progress):
             let percent = Int((progress * 100).rounded())
             label = String(format: String(localized: "onboarding.model.downloading"), percent)
@@ -142,10 +166,18 @@ final class OnboardingPresenter: OnboardingPresentationLogic {
             return true
         case .role:
             return true   // роль всегда выбрана (default = .parent)
-        case .childProfile:
+        case .childName:
             return profile.childName.trimmingCharacters(in: .whitespaces).count >= 2
+        case .childAge:
+            // Возраст всегда задан default'ом, но дополнительно валидируем диапазон.
+            return OnboardingProfile.availableAges.contains(profile.childAge)
         case .goals:
-            return true   // можно пропустить
+            // Goals — обязательный шаг (хотя бы одна цель).
+            return !profile.goals.isEmpty
+        case .sounds:
+            return true   // звуки опциональны
+        case .schedule:
+            return OnboardingProfile.availableSchedules.contains(profile.dailyMinutes)
         case .permissions:
             return true
         case .modelDownload:

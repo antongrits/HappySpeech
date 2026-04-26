@@ -3,11 +3,11 @@ import OSLog
 
 // MARK: - OnboardingFlowView
 //
-// 7-шаговый онбординг (welcome → role → profile → goals → permissions →
-// modelDownload → completion).
+// 10-шаговый онбординг (welcome → role → childName → childAge → goals →
+// sounds → schedule → permissions → modelDownload → completion).
 //
 // Сигнатура `init(onComplete:)` опциональна: если onComplete не передан,
-// View использует `AppCoordinator.navigate(to: .parentHome)` (бывший дефолт).
+// View использует router → AppCoordinator (по выбранной роли).
 
 struct OnboardingFlowView: View {
 
@@ -41,7 +41,8 @@ struct OnboardingFlowView: View {
 
     var body: some View {
         ZStack {
-            ColorTokens.Kid.bg.ignoresSafeArea()
+            backgroundGradient
+                .ignoresSafeArea()
 
             VStack(spacing: 0) {
                 progressHeader
@@ -58,6 +59,42 @@ struct OnboardingFlowView: View {
             guard value else { return }
             display.consumeCompleted()
             handleCompletion()
+        }
+    }
+
+    // MARK: - Background gradient (меняется по шагу)
+
+    private var backgroundGradient: some View {
+        LinearGradient(
+            colors: gradientColors(for: display.currentStep),
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.4), value: display.currentStep)
+    }
+
+    private func gradientColors(for step: OnboardingStep) -> [Color] {
+        switch step {
+        case .welcome:
+            return [ColorTokens.Brand.butter.opacity(0.25), ColorTokens.Kid.bg]
+        case .role:
+            return [ColorTokens.Brand.lilac.opacity(0.20), ColorTokens.Kid.bg]
+        case .childName:
+            return [ColorTokens.Brand.rose.opacity(0.20), ColorTokens.Kid.bg]
+        case .childAge:
+            return [ColorTokens.Brand.sky.opacity(0.20), ColorTokens.Kid.bg]
+        case .goals:
+            return [ColorTokens.Brand.mint.opacity(0.20), ColorTokens.Kid.bg]
+        case .sounds:
+            return [ColorTokens.Brand.primary.opacity(0.18), ColorTokens.Kid.bg]
+        case .schedule:
+            return [ColorTokens.Brand.sky.opacity(0.20), ColorTokens.Brand.mint.opacity(0.10)]
+        case .permissions:
+            return [ColorTokens.Brand.lilac.opacity(0.18), ColorTokens.Kid.bg]
+        case .modelDownload:
+            return [ColorTokens.Brand.sky.opacity(0.22), ColorTokens.Kid.bg]
+        case .completion:
+            return [ColorTokens.Brand.butter.opacity(0.30), ColorTokens.Brand.primary.opacity(0.18)]
         }
     }
 
@@ -86,35 +123,11 @@ struct OnboardingFlowView: View {
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.top, SpacingTokens.tiny)
 
-            stepIndicator
+            HSProgressBar(value: display.progress, style: .kid)
                 .padding(.horizontal, SpacingTokens.screenEdge)
+                .accessibilityLabel(display.progressLabel)
         }
         .padding(.bottom, SpacingTokens.small)
-    }
-
-    private var stepIndicator: some View {
-        HStack(spacing: 6) {
-            ForEach(OnboardingStep.allCases, id: \.rawValue) { step in
-                Circle()
-                    .fill(circleColor(for: step))
-                    .frame(width: step == display.currentStep ? 12 : 8,
-                           height: step == display.currentStep ? 12 : 8)
-                    .animation(reduceMotion ? nil : MotionTokens.spring, value: display.currentStep)
-                    .accessibilityHidden(true)
-            }
-        }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(display.progressLabel)
-    }
-
-    private func circleColor(for step: OnboardingStep) -> Color {
-        if step.rawValue < display.currentStep.rawValue {
-            return ColorTokens.Brand.primary
-        }
-        if step == display.currentStep {
-            return ColorTokens.Brand.primary
-        }
-        return ColorTokens.Kid.line
     }
 
     // MARK: - Step content
@@ -132,11 +145,18 @@ struct OnboardingFlowView: View {
                         interactor?.setRole(.init(role: role))
                     }
                 )
-            case .childProfile:
-                OnboardingProfileStep(
+            case .childName:
+                OnboardingNameStep(
                     profile: display.profile,
-                    onChange: { name, age, avatar in
-                        interactor?.setProfile(.init(name: name, age: age, avatar: avatar))
+                    onChange: { name, avatar in
+                        interactor?.setProfile(.init(name: name, avatar: avatar))
+                    }
+                )
+            case .childAge:
+                OnboardingAgeStep(
+                    age: display.profile.childAge,
+                    onChange: { age in
+                        interactor?.setAge(.init(age: age))
                     }
                 )
             case .goals:
@@ -146,10 +166,22 @@ struct OnboardingFlowView: View {
                         interactor?.toggleGoal(.init(goalId: id))
                     }
                 )
-            case .permissions:
-                OnboardingPermissionsStep(
-                    onSkip: { interactor?.skipPermissions(.init()) }
+            case .sounds:
+                OnboardingSoundsStep(
+                    selectedSounds: display.profile.difficultSounds,
+                    onToggle: { id in
+                        interactor?.toggleSound(.init(soundId: id))
+                    }
                 )
+            case .schedule:
+                OnboardingScheduleStep(
+                    selectedMinutes: display.profile.dailyMinutes,
+                    onSelect: { minutes in
+                        interactor?.setSchedule(.init(minutes: minutes))
+                    }
+                )
+            case .permissions:
+                OnboardingPermissionsStep()
             case .modelDownload:
                 OnboardingModelDownloadStep(
                     status: display.modelStatus,
@@ -187,7 +219,7 @@ struct OnboardingFlowView: View {
             .disabled(!display.canAdvance)
             .opacity(display.canAdvance ? 1.0 : 0.5)
 
-            if display.currentStep == .permissions || display.currentStep == .modelDownload {
+            if display.currentStep.isSkippable {
                 Button {
                     if display.currentStep == .permissions {
                         interactor?.skipPermissions(.init())
@@ -208,8 +240,9 @@ struct OnboardingFlowView: View {
 
     private var primaryButtonTitle: String {
         switch display.currentStep {
-        case .welcome:        return String(localized: "onboarding.cta.start")
-        case .role, .childProfile, .goals, .permissions:
+        case .welcome:
+            return String(localized: "onboarding.cta.start")
+        case .role, .childName, .childAge, .goals, .sounds, .schedule, .permissions:
             return String(localized: "onboarding.cta.next")
         case .modelDownload:
             switch display.modelStatus {
@@ -242,35 +275,19 @@ struct OnboardingFlowView: View {
         let interactor = OnboardingInteractor()
         interactor.presenter = presenter
         let router = OnboardingRouter()
-        router.onCompleted = { profile in
-            handleRouteCompletion(with: profile)
-        }
+        router.coordinator = coordinator
+        router.onCompleted = onComplete
 
         self.presenter = presenter
         self.interactor = interactor
         self.router = router
 
         interactor.loadOnboarding(.init())
+        logger.info("Onboarding bootstrapped (10-step deep flow)")
     }
 
     private func handleCompletion() {
         router?.routeCompleted(profile: display.profile)
-        if onComplete == nil {
-            handleRouteCompletion(with: display.profile)
-        }
-    }
-
-    private func handleRouteCompletion(with profile: OnboardingProfile) {
-        if let onComplete {
-            onComplete(profile)
-            return
-        }
-        // Default behaviour from coordinator integration:
-        switch profile.role {
-        case .parent:     coordinator.navigate(to: .parentHome)
-        case .specialist: coordinator.navigate(to: .specialistHome)
-        case .child:      coordinator.navigate(to: .childHome(childId: "primary-child"))
-        }
     }
 }
 
@@ -283,7 +300,7 @@ private struct OnboardingWelcomeStep: View {
     var body: some View {
         VStack(spacing: SpacingTokens.large) {
             Spacer()
-            HSMascotView(mood: .waving, size: 180)
+            LyalyaMascotView(state: .waving, size: 180)
                 .scaleEffect(appeared ? 1 : 0.6)
                 .opacity(appeared ? 1 : 0)
                 .accessibilityHidden(true)
@@ -405,33 +422,83 @@ private struct OnboardingRoleCard: View {
     }
 }
 
-// MARK: - Step 3: Profile
+// MARK: - Step 3: ChildName + Avatar
 
-private struct OnboardingProfileStep: View {
+private struct OnboardingNameStep: View {
     let profile: OnboardingProfile
-    let onChange: (String, Int, String) -> Void
+    let onChange: (String, String) -> Void
 
     @State private var name: String
-    @State private var age: Int
     @State private var avatar: String
     @FocusState private var nameFocused: Bool
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    init(profile: OnboardingProfile, onChange: @escaping (String, Int, String) -> Void) {
+    init(profile: OnboardingProfile, onChange: @escaping (String, String) -> Void) {
         self.profile = profile
         self.onChange = onChange
         _name = State(initialValue: profile.childName)
-        _age = State(initialValue: profile.childAge)
         _avatar = State(initialValue: profile.childAvatar)
     }
 
     var body: some View {
         ScrollView {
             VStack(spacing: SpacingTokens.large) {
-                Text(String(localized: "onboarding.profile.title"))
+                Spacer(minLength: SpacingTokens.medium)
+
+                LyalyaMascotView(state: .pointing, size: 100)
+                    .accessibilityHidden(true)
+
+                Text(String(localized: "onboarding.name.title"))
                     .font(TypographyTokens.title(24))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .padding(.top, SpacingTokens.medium)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, SpacingTokens.large)
                     .accessibilityAddTraits(.isHeader)
+
+                Text(String(localized: "onboarding.name.subtitle"))
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, SpacingTokens.xLarge)
+
+                // Name field
+                VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
+                    Text(String(localized: "onboarding.profile.name.label"))
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .textCase(.uppercase)
+                        .tracking(0.6)
+
+                    TextField(String(localized: "onboarding.name.placeholder"), text: $name)
+                        .font(TypographyTokens.headline(18))
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .padding(.vertical, SpacingTokens.medium)
+                        .padding(.horizontal, SpacingTokens.large)
+                        .background(
+                            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                                .fill(ColorTokens.Kid.surface)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                                        .strokeBorder(
+                                            nameFocused ? ColorTokens.Brand.primary : Color.clear,
+                                            lineWidth: 2
+                                        )
+                                )
+                        )
+                        .focused($nameFocused)
+                        .submitLabel(.done)
+                        .autocorrectionDisabled()
+                        .textInputAutocapitalization(.words)
+                        .onChange(of: name) { _, newValue in
+                            onChange(newValue, avatar)
+                        }
+                        .onSubmit {
+                            nameFocused = false
+                        }
+                        .accessibilityLabel(String(localized: "onboarding.profile.name.label"))
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
 
                 // Avatar selection
                 VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
@@ -448,68 +515,13 @@ private struct OnboardingProfileStep: View {
                                 isSelected: avatar == option,
                                 onTap: {
                                     avatar = option
-                                    onChange(name, age, avatar)
+                                    onChange(name, avatar)
                                 }
                             )
                         }
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, SpacingTokens.screenEdge)
-
-                // Name field
-                VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
-                    Text(String(localized: "onboarding.profile.name.label"))
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .textCase(.uppercase)
-                        .tracking(0.6)
-
-                    TextField(String(localized: "onboarding.profile.name.placeholder"), text: $name)
-                        .font(TypographyTokens.headline(18))
-                        .multilineTextAlignment(.center)
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .padding(.vertical, SpacingTokens.medium)
-                        .padding(.horizontal, SpacingTokens.large)
-                        .background(
-                            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
-                                .fill(ColorTokens.Kid.surface)
-                        )
-                        .focused($nameFocused)
-                        .submitLabel(.done)
-                        .autocorrectionDisabled()
-                        .textInputAutocapitalization(.words)
-                        .onChange(of: name) { _, newValue in
-                            onChange(newValue, age, avatar)
-                        }
-                        .onSubmit {
-                            nameFocused = false
-                        }
-                        .accessibilityLabel(String(localized: "onboarding.profile.name.label"))
-                }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-
-                // Age picker
-                VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
-                    Text(String(localized: "onboarding.profile.age.label"))
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .textCase(.uppercase)
-                        .tracking(0.6)
-
-                    Picker(String(localized: "onboarding.profile.age.label"), selection: $age) {
-                        ForEach(OnboardingProfile.availableAges, id: \.self) { value in
-                            Text(String(format: String(localized: "onboarding.profile.age.years"), value))
-                                .tag(value)
-                        }
-                    }
-                    .pickerStyle(.wheel)
-                    .frame(height: 110)
-                    .onChange(of: age) { _, newValue in
-                        onChange(name, newValue, avatar)
-                    }
-                    .accessibilityLabel(String(localized: "onboarding.profile.age.label"))
-                }
                 .padding(.horizontal, SpacingTokens.screenEdge)
 
                 Spacer(minLength: SpacingTokens.large)
@@ -550,7 +562,118 @@ private struct AvatarOption: View {
     }
 }
 
-// MARK: - Step 4: Goals
+// MARK: - Step 4: Age
+
+private struct OnboardingAgeStep: View {
+    let age: Int
+    let onChange: (Int) -> Void
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    var body: some View {
+        VStack(spacing: SpacingTokens.large) {
+            Spacer(minLength: SpacingTokens.medium)
+
+            LyalyaMascotView(state: .thinking, size: 110)
+                .accessibilityHidden(true)
+
+            VStack(spacing: SpacingTokens.small) {
+                Text(String(localized: "onboarding.age.title"))
+                    .font(TypographyTokens.title(24))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, SpacingTokens.large)
+                    .accessibilityAddTraits(.isHeader)
+
+                Text(String(localized: "onboarding.age.subtitle"))
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, SpacingTokens.xLarge)
+            }
+
+            // Большие круглые кнопки 5/6/7/8 + строка «другое»
+            HStack(spacing: SpacingTokens.small) {
+                ForEach(OnboardingProfile.recommendedAgeRange, id: \.self) { value in
+                    AgeBubble(
+                        value: value,
+                        isSelected: age == value,
+                        onTap: { onChange(value) }
+                    )
+                }
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+
+            // Picker для нестандартных возрастов (3-4, 9-12)
+            VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
+                Text(String(localized: "onboarding.age.other.label"))
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .textCase(.uppercase)
+                    .tracking(0.6)
+
+                Picker(
+                    String(localized: "onboarding.profile.age.label"),
+                    selection: Binding(
+                        get: { age },
+                        set: { onChange($0) }
+                    )
+                ) {
+                    ForEach(OnboardingProfile.availableAges, id: \.self) { value in
+                        Text(String(format: String(localized: "onboarding.profile.age.years"), value))
+                            .tag(value)
+                    }
+                }
+                .pickerStyle(.wheel)
+                .frame(height: 110)
+                .accessibilityLabel(String(localized: "onboarding.profile.age.label"))
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+
+            Spacer(minLength: SpacingTokens.medium)
+        }
+    }
+}
+
+private struct AgeBubble: View {
+    let value: Int
+    let isSelected: Bool
+    let onTap: () -> Void
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    var body: some View {
+        Button(action: onTap) {
+            VStack(spacing: 2) {
+                Text("\(value)")
+                    .font(TypographyTokens.title(28))
+                    .foregroundStyle(isSelected ? .white : ColorTokens.Kid.ink)
+                Text(String(localized: "onboarding.age.years.short"))
+                    .font(TypographyTokens.caption(11))
+                    .foregroundStyle(isSelected ? Color.white.opacity(0.8) : ColorTokens.Kid.inkMuted)
+            }
+            .frame(width: 70, height: 70)
+            .background(
+                Circle()
+                    .fill(isSelected ? ColorTokens.Brand.primary : ColorTokens.Kid.surface)
+                    .overlay(
+                        Circle()
+                            .strokeBorder(
+                                isSelected ? Color.clear : ColorTokens.Kid.line,
+                                lineWidth: 1.5
+                            )
+                    )
+            )
+            .scaleEffect(isSelected ? 1.08 : 1.0)
+            .animation(reduceMotion ? nil : MotionTokens.spring, value: isSelected)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(String(format: String(localized: "onboarding.profile.age.years"), value))
+        .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
+    }
+}
+
+// MARK: - Step 5: Goals
 
 private struct OnboardingGoalsStep: View {
     let selectedGoals: Set<String>
@@ -626,10 +749,188 @@ private struct GoalChipRow: View {
     }
 }
 
-// MARK: - Step 5: Permissions
+// MARK: - Step 6: Sounds (NEW)
+
+private struct OnboardingSoundsStep: View {
+    let selectedSounds: Set<String>
+    let onToggle: (String) -> Void
+
+    private let columns = [
+        GridItem(.adaptive(minimum: 70, maximum: 90), spacing: SpacingTokens.tiny)
+    ]
+
+    var body: some View {
+        VStack(spacing: SpacingTokens.medium) {
+            Text(String(localized: "onboarding.sounds.title"))
+                .font(TypographyTokens.title(22))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .padding(.top, SpacingTokens.medium)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, SpacingTokens.large)
+                .accessibilityAddTraits(.isHeader)
+
+            Text(String(localized: "onboarding.sounds.subtitle"))
+                .font(TypographyTokens.body(13))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, SpacingTokens.large)
+
+            ScrollView {
+                LazyVGrid(columns: columns, spacing: SpacingTokens.tiny) {
+                    ForEach(OnboardingProfile.availableSounds, id: \.id) { sound in
+                        SoundChip(
+                            label: sound.label,
+                            isSelected: selectedSounds.contains(sound.id),
+                            onTap: { onToggle(sound.id) }
+                        )
+                    }
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.top, SpacingTokens.tiny)
+            }
+
+            Text(String(format: String(localized: "onboarding.sounds.selectedCount"), selectedSounds.count))
+                .font(TypographyTokens.caption(12))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .accessibilityLabel(
+                    String(format: String(localized: "onboarding.sounds.selectedCount"), selectedSounds.count)
+                )
+        }
+    }
+}
+
+private struct SoundChip: View {
+    let label: String
+    let isSelected: Bool
+    let onTap: () -> Void
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    var body: some View {
+        Button(action: onTap) {
+            Text(label)
+                .font(TypographyTokens.title(22))
+                .foregroundStyle(isSelected ? .white : ColorTokens.Kid.ink)
+                .frame(width: 60, height: 60)
+                .background(
+                    Circle()
+                        .fill(isSelected ? ColorTokens.Brand.primary : ColorTokens.Kid.surface)
+                        .overlay(
+                            Circle()
+                                .strokeBorder(
+                                    isSelected ? Color.clear : ColorTokens.Kid.line,
+                                    lineWidth: 1.5
+                                )
+                        )
+                )
+                .scaleEffect(isSelected ? 1.06 : 1.0)
+                .animation(reduceMotion ? nil : MotionTokens.spring, value: isSelected)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(String(format: String(localized: "onboarding.a11y.sound"), label))
+        .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
+    }
+}
+
+// MARK: - Step 7: Schedule (NEW)
+
+private struct OnboardingScheduleStep: View {
+    let selectedMinutes: Int
+    let onSelect: (Int) -> Void
+
+    var body: some View {
+        VStack(spacing: SpacingTokens.medium) {
+            Spacer(minLength: SpacingTokens.medium)
+
+            LyalyaMascotView(state: .happy, size: 100)
+                .accessibilityHidden(true)
+
+            Text(String(localized: "onboarding.schedule.title"))
+                .font(TypographyTokens.title(24))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, SpacingTokens.large)
+                .accessibilityAddTraits(.isHeader)
+
+            Text(String(localized: "onboarding.schedule.subtitle"))
+                .font(TypographyTokens.body(13))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, SpacingTokens.xLarge)
+
+            VStack(spacing: SpacingTokens.small) {
+                ForEach(DailySchedulePreset.allPresets) { preset in
+                    ScheduleRow(
+                        preset: preset,
+                        isSelected: preset.minutes == selectedMinutes,
+                        onTap: { onSelect(preset.minutes) }
+                    )
+                }
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+
+            Spacer(minLength: SpacingTokens.medium)
+        }
+    }
+}
+
+private struct ScheduleRow: View {
+    let preset: DailySchedulePreset
+    let isSelected: Bool
+    let onTap: () -> Void
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    var body: some View {
+        Button(action: onTap) {
+            HStack(spacing: SpacingTokens.medium) {
+                Image(systemName: "clock.fill")
+                    .font(.system(size: 24))
+                    .foregroundStyle(isSelected ? ColorTokens.Brand.primary : ColorTokens.Kid.inkMuted)
+                    .frame(width: 36)
+                    .accessibilityHidden(true)
+
+                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                    Text(preset.title)
+                        .font(TypographyTokens.headline(17))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                    Text(preset.subtitle)
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(2)
+                        .multilineTextAlignment(.leading)
+                }
+                Spacer()
+                Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
+                    .font(.system(size: 22, weight: .semibold))
+                    .foregroundStyle(isSelected ? ColorTokens.Brand.primary : ColorTokens.Kid.line)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.medium)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                    .fill(ColorTokens.Kid.surface)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                            .strokeBorder(
+                                isSelected ? ColorTokens.Brand.primary : Color.clear,
+                                lineWidth: 2
+                            )
+                    )
+            )
+            .scaleEffect(isSelected ? 1.01 : 1.0)
+            .animation(reduceMotion ? nil : MotionTokens.spring, value: isSelected)
+        }
+        .buttonStyle(.plain)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(preset.title). \(preset.subtitle)")
+        .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
+    }
+}
+
+// MARK: - Step 8: Permissions
 
 private struct OnboardingPermissionsStep: View {
-    let onSkip: () -> Void
 
     var body: some View {
         VStack(spacing: SpacingTokens.medium) {
@@ -695,7 +996,7 @@ private struct OnboardingPermissionsStep: View {
     }
 }
 
-// MARK: - Step 6: Model Download
+// MARK: - Step 9: Model Download
 
 private struct OnboardingModelDownloadStep: View {
     let status: ModelDownloadStatus
@@ -728,7 +1029,6 @@ private struct OnboardingModelDownloadStep: View {
                     .padding(.horizontal, SpacingTokens.large)
             }
 
-            // Status / progress
             VStack(spacing: SpacingTokens.tiny) {
                 Text(statusLabel)
                     .font(TypographyTokens.body(14))
@@ -743,7 +1043,6 @@ private struct OnboardingModelDownloadStep: View {
             .accessibilityElement(children: .combine)
             .accessibilityLabel(statusLabel)
 
-            // Auto-start CTA when idle
             if status == .idle {
                 HSButton(
                     String(localized: "onboarding.cta.startDownload"),
@@ -761,16 +1060,16 @@ private struct OnboardingModelDownloadStep: View {
 
     private var iconName: String {
         switch status {
-        case .completed: return "checkmark.circle.fill"
+        case .completed:   return "checkmark.circle.fill"
         case .downloading: return "arrow.down.circle"
-        case .failed: return "exclamationmark.triangle.fill"
-        case .skipped: return "forward.circle"
-        case .idle: return "arrow.down.circle"
+        case .failed:      return "exclamationmark.triangle.fill"
+        case .skipped:     return "forward.circle"
+        case .idle:        return "arrow.down.circle"
         }
     }
 }
 
-// MARK: - Step 7: Completion
+// MARK: - Step 10: Completion
 
 private struct OnboardingCompletionStep: View {
     let profile: OnboardingProfile
@@ -797,8 +1096,11 @@ private struct OnboardingCompletionStep: View {
             VStack(spacing: SpacingTokens.large) {
                 Spacer()
 
+                LyalyaMascotView(state: .celebrating, size: 150)
+                    .accessibilityHidden(true)
+
                 Text(profile.childAvatar)
-                    .font(.system(size: 100))
+                    .font(.system(size: 60))
                     .accessibilityHidden(true)
 
                 VStack(spacing: SpacingTokens.small) {
@@ -833,7 +1135,7 @@ private struct OnboardingCompletionStep: View {
 
 // MARK: - Preview
 
-#Preview("Onboarding") {
+#Preview("Onboarding 10-step") {
     OnboardingFlowView(onComplete: { _ in })
         .environment(AppCoordinator())
 }

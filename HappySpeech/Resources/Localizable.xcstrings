@@ -13591,6 +13591,270 @@
           }
         }
       }
+    },
+    "onboarding.a11y.sound": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук %@"
+          }
+        }
+      }
+    },
+    "onboarding.age.other.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ИЛИ ДРУГОЙ ВОЗРАСТ"
+          }
+        }
+      }
+    },
+    "onboarding.age.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Это поможет подобрать упражнения для подходящего возраста."
+          }
+        }
+      }
+    },
+    "onboarding.age.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сколько лет ребёнку?"
+          }
+        }
+      }
+    },
+    "onboarding.age.years.short": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "лет"
+          }
+        }
+      }
+    },
+    "onboarding.goal.fluency": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Плавность речи"
+          }
+        }
+      }
+    },
+    "onboarding.goal.pronunciation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Произношение звуков"
+          }
+        }
+      }
+    },
+    "onboarding.goal.vocabulary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Словарный запас"
+          }
+        }
+      }
+    },
+    "onboarding.name.placeholder": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Введи имя"
+          }
+        }
+      }
+    },
+    "onboarding.name.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Имя поможет Ляле обращаться к ребёнку лично."
+          }
+        }
+      }
+    },
+    "onboarding.name.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как зовут ребёнка?"
+          }
+        }
+      }
+    },
+    "onboarding.schedule.minutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d мин"
+          }
+        }
+      }
+    },
+    "onboarding.schedule.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чем регулярнее занятия, тем заметнее результат. Можно изменить в любой момент."
+          }
+        }
+      }
+    },
+    "onboarding.schedule.subtitle.5": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Короткие подходы — для самых маленьких"
+          }
+        }
+      }
+    },
+    "onboarding.schedule.subtitle.10": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Базовый ритм — рекомендуется логопедами"
+          }
+        }
+      }
+    },
+    "onboarding.schedule.subtitle.15": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Углублённая практика — лучший прогресс"
+          }
+        }
+      }
+    },
+    "onboarding.schedule.subtitle.20": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Интенсивный режим — только под контролем"
+          }
+        }
+      }
+    },
+    "onboarding.schedule.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сколько минут в день?"
+          }
+        }
+      }
+    },
+    "onboarding.sounds.selectedCount": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выбрано: %d"
+          }
+        }
+      }
+    },
+    "onboarding.sounds.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Можно пропустить — Ляля подберёт сама. Отметь звуки, которые даются с трудом."
+          }
+        }
+      }
+    },
+    "onboarding.sounds.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Какие звуки трудны?"
+          }
+        }
+      }
+    },
+    "onboarding.step.age.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Возраст"
+          }
+        }
+      }
+    },
+    "onboarding.step.schedule.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Расписание"
+          }
+        }
+      }
+    },
+    "onboarding.step.sounds.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуки"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
