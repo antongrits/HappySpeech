@@ -399,7 +399,7 @@ struct PermissionFlowView: View {
                     label: {
                         Text(step.skipTitle)
                             .font(TypographyTokens.body(16))
-                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .foregroundStyle(ColorTokens.Kid.ink.opacity(0.60))
                             .frame(maxWidth: .infinity, minHeight: 44)
                     }
                 )

@@ -269,9 +269,10 @@ struct SpecialistReportsView: View {
             HStack(spacing: SpacingTokens.sp2) {
                 Image(systemName: icon)
                     .font(.system(size: 16, weight: .semibold))
+                    .accessibilityHidden(true)
                 Text(title)
                     .font(TypographyTokens.cta())
-                    .lineLimit(1)
+                    .lineLimit(nil)
                     .minimumScaleFactor(0.85)
             }
             .frame(maxWidth: .infinity)
@@ -489,7 +490,7 @@ private struct SummaryMetric: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
             Text(label)
-                .font(TypographyTokens.caption(10))
+                .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Spec.inkMuted)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
@@ -528,7 +529,7 @@ private struct SoundBreakdownRowView: View {
                         Text("·")
                         Text(String(localized: "reports.row.success.\(row.successes)"))
                     }
-                    .font(TypographyTokens.caption(11))
+                    .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Spec.inkMuted)
                 }
 
@@ -558,9 +559,10 @@ private struct SoundBreakdownRowView: View {
             : (delta <= -0.05 ? "arrow.down.right" : "minus")
         return HStack(spacing: 2) {
             Image(systemName: iconName)
-                .font(.system(size: 10, weight: .bold))
+                .font(TypographyTokens.mono(12).weight(.bold))
+                .accessibilityHidden(true)
             Text("\(percent)pp")
-                .font(.system(size: 11, weight: .semibold, design: .rounded))
+                .font(TypographyTokens.mono(12).weight(.semibold))
         }
         .foregroundStyle(color)
         .padding(.horizontal, SpacingTokens.sp2)

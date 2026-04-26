@@ -245,7 +245,7 @@ struct ProgressDashboardView: View {
                         AxisValueLabel {
                             if let intValue = value.as(Int.self) {
                                 Text("\(intValue)%")
-                                    .font(TypographyTokens.caption(11))
+                                    .font(TypographyTokens.caption(12))
                                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                             }
                         }
@@ -256,7 +256,7 @@ struct ProgressDashboardView: View {
                 .chartXAxis {
                     AxisMarks(values: .automatic) { _ in
                         AxisValueLabel()
-                            .font(TypographyTokens.caption(11))
+                            .font(TypographyTokens.caption(12))
                             .foregroundStyle(ColorTokens.Parent.inkMuted)
                     }
                 }
@@ -316,7 +316,7 @@ struct ProgressDashboardView: View {
                         AxisValueLabel {
                             if let intValue = value.as(Int.self) {
                                 Text("\(intValue)%")
-                                    .font(TypographyTokens.caption(11))
+                                    .font(TypographyTokens.caption(12))
                                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                             }
                         }
@@ -327,7 +327,7 @@ struct ProgressDashboardView: View {
                 .chartXAxis {
                     AxisMarks(values: .automatic) { _ in
                         AxisValueLabel()
-                            .font(TypographyTokens.caption(11))
+                            .font(TypographyTokens.caption(12))
                             .foregroundStyle(ColorTokens.Parent.inkMuted)
                     }
                 }
@@ -602,7 +602,7 @@ private struct SummaryCardView: View {
                         .padding(.top, SpacingTokens.micro)
                 } else if let caption = card.caption {
                     Text(caption)
-                        .font(TypographyTokens.caption(11))
+                        .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
                         .lineLimit(1)
                         .minimumScaleFactor(0.85)

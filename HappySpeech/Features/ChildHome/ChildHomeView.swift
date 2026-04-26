@@ -356,6 +356,9 @@ struct ChildHomeView: View {
                         .font(TypographyTokens.caption(13))
                         .foregroundStyle(ColorTokens.Brand.primary)
                 }
+                .frame(minHeight: 44)
+                .contentShape(Rectangle())
+                .accessibilityLabel(String(localized: "child.home.world.open"))
                 .accessibilityHint(String(localized: "child.home.world.open.hint"))
             }
 
@@ -398,6 +401,9 @@ struct ChildHomeView: View {
                         .font(TypographyTokens.caption(13))
                         .foregroundStyle(ColorTokens.Brand.primary)
                 }
+                .frame(minHeight: 44)
+                .contentShape(Rectangle())
+                .accessibilityLabel(String(localized: "child.home.rewards.show_all"))
                 .accessibilityHint(String(localized: "child.home.rewards.show_all.hint"))
             }
 
@@ -462,6 +468,9 @@ struct ChildHomeView: View {
                         .font(TypographyTokens.caption(13))
                         .foregroundStyle(ColorTokens.Brand.primary)
                 }
+                .frame(minHeight: 44)
+                .contentShape(Rectangle())
+                .accessibilityLabel(String(localized: "child.home.recent.all"))
                 .accessibilityHint(String(localized: "child.home.recent.all.hint"))
             }
 
@@ -540,6 +549,9 @@ struct ChildHomeView: View {
                         .font(TypographyTokens.caption(13))
                         .foregroundStyle(ColorTokens.Brand.primary)
                 }
+                .frame(minHeight: 44)
+                .contentShape(Rectangle())
+                .accessibilityLabel(String(localized: "child.home.hometasks.see_all"))
             }
 
             VStack(spacing: SpacingTokens.sp2) {

@@ -150,7 +150,7 @@ struct OfflineStateView: View {
 
             Text(String(localized: "offline.body"))
                 .font(TypographyTokens.body(15))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, SpacingTokens.sp6)
                 .lineLimit(nil)

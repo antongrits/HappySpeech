@@ -312,7 +312,7 @@ struct SettingsView: View {
                 .textCase(.uppercase)
         } footer: {
             Text(String(localized: "settings.notifications.footer"))
-                .font(TypographyTokens.caption(11))
+                .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Parent.inkMuted)
         }
     }
@@ -393,7 +393,7 @@ struct SettingsView: View {
                 .textCase(.uppercase)
         } footer: {
             Text(String(localized: "settings.models.footer"))
-                .font(TypographyTokens.caption(11))
+                .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Parent.inkMuted)
         }
     }
@@ -469,7 +469,7 @@ struct SettingsView: View {
                 .textCase(.uppercase)
         } footer: {
             Text(String(localized: "settings.data.footer"))
-                .font(TypographyTokens.caption(11))
+                .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Parent.inkMuted)
         }
     }
@@ -997,7 +997,7 @@ private struct ModelPackRow: View {
                             .frame(maxWidth: .infinity)
                     } else {
                         Text(item.sizeText)
-                            .font(TypographyTokens.caption(11))
+                            .font(TypographyTokens.caption(12))
                             .foregroundStyle(ColorTokens.Parent.inkSoft)
                     }
                 }
