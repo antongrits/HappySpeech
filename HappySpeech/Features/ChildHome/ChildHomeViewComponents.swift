@@ -901,6 +901,153 @@ struct ChildHomeEmptyRewardsView: View {
     }
 }
 
+// MARK: - TodayWordCard (M8.7 v6)
+//
+// Карточка слова дня в горизонтальной карусели «Слова дня».
+// Размер: 90×100, rounded.
+
+struct ChildHomeTodayWordCard: View {
+
+    let word: ChildHomeModels.TodayWord
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var tapped = false
+
+    var body: some View {
+        Button {
+            guard !reduceMotion else { return }
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.5)) {
+                tapped = true
+            }
+            Task { @MainActor in
+                try? await Task.sleep(nanoseconds: 400_000_000)
+                tapped = false
+            }
+        } label: {
+            VStack(spacing: SpacingTokens.sp2) {
+                // Буква звука
+                ZStack {
+                    Circle()
+                        .fill(ColorTokens.Brand.primary.opacity(0.12))
+                        .frame(width: 36, height: 36)
+                    Text(word.targetSound)
+                        .font(.system(size: 17, weight: .black, design: .rounded))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                }
+                .accessibilityHidden(true)
+
+                Text(word.word)
+                    .font(TypographyTokens.headline(13))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+                    .multilineTextAlignment(.center)
+
+                Text(word.syllables)
+                    .font(TypographyTokens.mono(11))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+
+                Text(word.positionEmoji)
+                    .font(.system(size: 12))
+                    .accessibilityHidden(true)
+            }
+            .padding(.vertical, SpacingTokens.sp3)
+            .padding(.horizontal, SpacingTokens.sp3)
+            .frame(width: 88)
+            .frame(minHeight: 104)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                    .fill(ColorTokens.Kid.surface)
+                    .kidTileShadow()
+            )
+            .scaleEffect(tapped ? 0.92 : 1.0)
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(
+            String(format: String(localized: "child.home.today.word.a11y"),
+                   word.word, word.syllables)
+        )
+        .accessibilityHint(String(localized: "child.home.today.word.play.hint"))
+    }
+}
+
+// MARK: - HomeTaskPreviewRow (M8.7 v6)
+//
+// Строка задания от логопеда в preview-секции на ChildHome.
+
+struct ChildHomeTaskPreviewRow: View {
+
+    let task: ChildHomeModels.HomeTaskPreview
+    let onTap: () -> Void
+
+    var body: some View {
+        Button(action: onTap) {
+            HStack(spacing: SpacingTokens.sp3) {
+                ZStack {
+                    Circle()
+                        .fill(task.isCompleted
+                              ? ColorTokens.Semantic.success.opacity(0.12)
+                              : ColorTokens.Brand.primary.opacity(0.12))
+                        .frame(width: 40, height: 40)
+                    Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "doc.badge.arrow.up")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(task.isCompleted
+                                         ? ColorTokens.Semantic.success
+                                         : ColorTokens.Brand.primary)
+                        .accessibilityHidden(true)
+                }
+
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(task.title)
+                        .font(TypographyTokens.headline(14))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+
+                    HStack(spacing: SpacingTokens.sp2) {
+                        Text(task.targetSound)
+                            .font(TypographyTokens.mono(11))
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(
+                                Capsule()
+                                    .fill(ColorTokens.Brand.primary.opacity(0.10))
+                            )
+
+                        if task.isOverdue {
+                            Image(systemName: "exclamationmark.circle.fill")
+                                .font(.system(size: 12))
+                                .foregroundStyle(ColorTokens.Semantic.error)
+                                .accessibilityHidden(true)
+                        }
+                    }
+                }
+
+                Spacer(minLength: 0)
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(ColorTokens.Kid.line)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp3)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                    .fill(ColorTokens.Kid.surface)
+                    .kidTileShadow()
+            )
+        }
+        .buttonStyle(.plain)
+        .tapFeedback()
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(task.title). \(task.targetSound)")
+        .accessibilityAddTraits(.isButton)
+    }
+}
+
 // MARK: - Helpers / extensions (shared with ChildHomeView)
 
 extension String {

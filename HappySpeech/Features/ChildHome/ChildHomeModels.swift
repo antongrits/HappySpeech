@@ -33,6 +33,10 @@ enum ChildHomeModels {
             // B13 — deep VIP additions
             let recentRewards: [RecentRewardData]
             let hasOverdueTask: Bool
+
+            // M8.7 v6 — new sections
+            let todayWords: [TodayWordData]
+            let homeTasks: [HomeTaskPreviewData]
         }
 
         struct ViewModel {
@@ -55,6 +59,10 @@ enum ChildHomeModels {
             // B13 — deep VIP additions
             let recentRewards: [RecentReward]
             let hasOverdueTask: Bool
+
+            // M8.7 v6 — new sections
+            let todayWords: [TodayWord]
+            let homeTasks: [HomeTaskPreview]
         }
     }
     // swiftlint:enable nesting
@@ -250,5 +258,64 @@ enum ChildHomeModels {
             emoji: "🎉",
             isVisible: true
         )
+    }
+
+    // MARK: - TodayWord (слова из daily route)
+
+    /// Слово дня: показывается ребёнку в карточке «Слова дня».
+    struct TodayWord: Identifiable, Hashable, Sendable {
+        let id: String
+        /// Текст слова (напр. «рыба»).
+        let word: String
+        /// Транскрипция / слоговое разбиение (напр. «ры-ба»).
+        let syllables: String
+        /// Целевой звук, который тренируется в этом слове.
+        let targetSound: String
+        /// Позиция звука в слове: "init" / "mid" / "final".
+        let soundPosition: String
+        /// Процент правильных попыток ребёнка (0…1). nil → ещё не пробовал.
+        let successRate: Double?
+
+        var positionEmoji: String {
+            switch soundPosition {
+            case "init":  return "⬅️"
+            case "mid":   return "↔️"
+            case "final": return "➡️"
+            default:      return "🔤"
+            }
+        }
+    }
+
+    struct TodayWordData: Sendable {
+        let id: String
+        let word: String
+        let syllables: String
+        let targetSound: String
+        let soundPosition: String
+        let successRate: Double?
+    }
+
+    // MARK: - HomeTaskPreview (задание от логопеда)
+
+    /// Краткий preview задания логопеда для секции на ChildHome.
+    struct HomeTaskPreview: Identifiable, Hashable, Sendable {
+        let id: String
+        let title: String
+        let targetSound: String
+        let dueDate: Date?
+        let isCompleted: Bool
+
+        var isOverdue: Bool {
+            guard let due = dueDate else { return false }
+            return !isCompleted && due < Date()
+        }
+    }
+
+    struct HomeTaskPreviewData: Sendable {
+        let id: String
+        let titleKey: String
+        let targetSound: String
+        let dueDate: Date?
+        let isCompleted: Bool
     }
 }
