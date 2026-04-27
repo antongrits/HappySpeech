@@ -56,8 +56,27 @@ struct HappySpeechApp: App {
                     ProcessInfo.processInfo.systemUptime)
     }
 
-    @State private var container: AppContainer = AppContainer.live()
+    @State private var container: AppContainer = HappySpeechApp.makeContainer()
     @State private var coordinator: AppCoordinator = AppCoordinator()
+
+    /// Выбирает production или preview-контейнер в зависимости от launch arguments.
+    /// При запуске UI-тестов с флагами -UITestMockServices или -UITestOffline
+    /// используется AppContainer.preview() с MockNetworkMonitor.
+    private static func makeContainer() -> AppContainer {
+        let args = ProcessInfo.processInfo.arguments
+        let useMock = args.contains("-UITestMockServices") || args.contains("-UITestOffline")
+        if useMock {
+            let container = AppContainer.preview()
+            // При -UITestOffline принудительно отключаем сеть в MockNetworkMonitor
+            if args.contains("-UITestOffline"),
+               let mock = container.networkMonitor as? MockNetworkMonitor {
+                mock.isConnected = false
+                mock.connectionType = .none
+            }
+            return container
+        }
+        return AppContainer.live()
+    }
 
     var body: some Scene {
         WindowGroup {

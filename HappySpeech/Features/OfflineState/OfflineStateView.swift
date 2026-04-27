@@ -65,6 +65,7 @@ struct OfflineStateView: View {
             await viewModel.interactor?.fetch(.init())
         }
         .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("OfflineStateRoot")
     }
 
     // MARK: - Background

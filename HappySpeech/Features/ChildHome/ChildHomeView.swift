@@ -111,6 +111,7 @@ struct ChildHomeView: View {
             parentButton
                 .spotlightAnchor(key: "parent_dashboard")
         }
+        .accessibilityIdentifier("ChildHomeRoot")
         .onAppear { bootstrap() }
         .task {
             await interactor?.fetchChildData(.init(childId: childId))
