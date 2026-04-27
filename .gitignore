@@ -66,5 +66,5 @@ __pycache__/
 venv/
 .venv/
 
-# Content audio (>10MB, stored in Firebase Storage — do not commit)
-HappySpeech/Resources/Audio/Content/
+# Content audio — bundled in app (Firebase Storage skipped, Spark plan)
+# HappySpeech/Resources/Audio/Content/ — unbundled for direct app bundle inclusion
