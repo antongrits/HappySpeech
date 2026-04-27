@@ -12,6 +12,7 @@ final class AuthInteractorTests: XCTestCase {
 
     // MARK: - Spy
 
+    @MainActor
     private final class SpyPresenter: AuthPresentationLogic {
         var authStateCalled = false
         var signInCalled = false

@@ -285,11 +285,13 @@ final class GameTemplatesSnapshotTests: XCTestCase {
     }
 
     private func snapshotURL(screen: String, device: String, appearance: String) -> URL {
-        let dir = Bundle(for: Self.self).bundleURL
-            .deletingLastPathComponent()
-            .appendingPathComponent("__Snapshots__/GameTemplates/\(screen)")
-        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        return dir.appendingPathComponent("\(device)_\(appearance).png")
+        SnapshotTestHelper.snapshotURL(
+            testClass: Self.self,
+            category: "GameTemplates",
+            screen: screen,
+            device: device,
+            appearance: appearance
+        )
     }
 
     private func record<V: View>(_ view: V, screen: String) throws {

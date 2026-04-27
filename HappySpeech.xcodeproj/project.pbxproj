@@ -3557,6 +3557,7 @@
 		844A08CDF87EDA909DA9DF8B /* SoundAndFacePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFD7F7EC1E2816F411542BB /* SoundAndFacePresenter.swift */; };
 		8451998A14729C8390A4655E /* shch-wm-14.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 79ED5FA39D8D6FCC5CF65F2C /* shch-wm-14.m4a */; };
 		845862C47F79315DC347A6DE /* KeyScreensSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B585E90367E10470C5D9642B /* KeyScreensSnapshotTests.swift */; };
+		F1152C099C7649AE972FCE0E /* SnapshotTestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D271656AA094E6C95D36E4E /* SnapshotTestHelper.swift */; };
 		846FB085D659985E7FC9958D /* zh-wm-11.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7144E069CF5AA86449C79B35 /* zh-wm-11.m4a */; };
 		847142640A5F319F02A37102 /* kh-ph-32.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2FDC53EC3A189490104A35B9 /* kh-ph-32.m4a */; };
 		84848B820FD95657859A4E3B /* phon-vu-18.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8A7FB05F54F885EB1762F764 /* phon-vu-18.m4a */; };
@@ -7410,6 +7411,7 @@
 		11A69FD9354CDCF9A33CAE65 /* g-wm-10.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "g-wm-10.m4a"; sourceTree = "<group>"; };
 		11B2F6F28467D191959D5A9E /* r-sen-37.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "r-sen-37.m4a"; sourceTree = "<group>"; };
 		11B39162C028EF46673703F6 /* AdvancedGameSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedGameSnapshotTests.swift; sourceTree = "<group>"; };
+		5D271656AA094E6C95D36E4E /* SnapshotTestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotTestHelper.swift; sourceTree = "<group>"; };
 		11BEB6B25780EF2B3BA3DB7E /* dwh-df-39.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "dwh-df-39.m4a"; sourceTree = "<group>"; };
 		11C5FED1D08351991EF8C5A8 /* phon-wb-10.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "phon-wb-10.m4a"; sourceTree = "<group>"; };
 		11C832886A049931B584A6EC /* s-wi-19.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "s-wi-19.m4a"; sourceTree = "<group>"; };
@@ -17164,6 +17166,7 @@
 				DA4FF389731F3510E30B357A /* DesignSystem */,
 				11B39162C028EF46673703F6 /* AdvancedGameSnapshotTests.swift */,
 				5AD2F2021E858F9B3AB35565 /* ARSnapshotTests.swift */,
+				5D271656AA094E6C95D36E4E /* SnapshotTestHelper.swift */,
 				ADBF41846F9E684384135C15 /* DesignSystemSnapshotTests.swift */,
 				D1F49003DC39DE33CDD8D24F /* DisplayStateTests.swift */,
 				1F9F3FDE27C82F883EF53997 /* DynamicTypeSnapshotTests.swift */,
@@ -28380,6 +28383,7 @@
 			files = (
 				E4A32DE09D1DBDE315CFE224 /* ARInteractorSmokeTests.swift in Sources */,
 				9837B15D4FB457631AC3D179 /* ARSnapshotTests.swift in Sources */,
+				F1152C099C7649AE972FCE0E /* SnapshotTestHelper.swift in Sources */,
 				18EE52420708B7292A392B9C /* AdaptivePlannerServiceTests.swift in Sources */,
 				7D75257DC7FDDAFAB1D3F1BA /* AdvancedGameSnapshotTests.swift in Sources */,
 				A666FEDA0DE6A46BD6E0D41D /* AirStreamAnalyzerTests.swift in Sources */,

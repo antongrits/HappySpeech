@@ -12,6 +12,7 @@ final class RepeatAfterModelInteractorTests: XCTestCase {
 
     // MARK: - Spy
 
+    @MainActor
     private final class SpyPresenter: RepeatAfterModelPresentationLogic {
         var loadSessionCalled = false
         var startWordCalled = false

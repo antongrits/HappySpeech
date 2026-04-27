@@ -49,11 +49,10 @@ final class DesignSystemSnapshotTests: XCTestCase {
     }
 
     private func snapshotURL(component: String, device: String, appearance: String) -> URL {
-        let dir = Bundle(for: Self.self).bundleURL
-            .deletingLastPathComponent()
-            .appendingPathComponent("__Snapshots__/\(component)")
-        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        return dir.appendingPathComponent("\(device)_\(appearance).png")
+        let base = SnapshotTestHelper.baseDir(for: Self.self)
+            .appendingPathComponent(component)
+        try? FileManager.default.createDirectory(at: base, withIntermediateDirectories: true)
+        return base.appendingPathComponent("\(device)_\(appearance).png")
     }
 
     private func record<V: View>(_ view: V, component: String) throws {
