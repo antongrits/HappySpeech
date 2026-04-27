@@ -9,316 +9,1656 @@
       "stageId": "prep",
       "note": "Артикуляционная гимнастика для заднеязычного звонкого [Г]. Цель — поднять корень языка к нёбу с голосом.",
       "items": [
-        { "id": "g-prep-0",  "word": "горка с голосом",    "hint": "Широко открой рот. Подними корень языка вверх и включи голос — получится Г!", "difficulty": 1 },
-        { "id": "g-prep-1",  "word": "громкий кашель",     "hint": "Кашляни с голосом: гх-гх-гх. Чувствуй вибрацию в горле.", "difficulty": 1 },
-        { "id": "g-prep-2",  "word": "полоскание с голосом","hint": "Откинь голову, как при полоскании, и добавь голос: г-г-г в глубине.", "difficulty": 2 },
-        { "id": "g-prep-3",  "word": "грудной голос",      "hint": "Положи руку на грудь. Скажи г-г-г и почувствуй вибрацию ладонью.", "difficulty": 2 },
-        { "id": "g-prep-4",  "word": "голосовая вибрация", "hint": "Тяни звук м-м-м, потом плавно переходи в глубокое г-г-г.", "difficulty": 3 },
-        { "id": "g-prep-5",  "word": "кошечка злится",     "hint": "Выгни спинку языка горбом вверх. Добавь голос — как кошка шипит с голосом.", "difficulty": 3 },
-        { "id": "g-prep-6",  "word": "горбик с голосом",   "hint": "Открой рот, сделай горбик языком и скажи голосом: г.", "difficulty": 2 },
-        { "id": "g-prep-7",  "word": "нёбо-язык",          "hint": "Кончиком языка медленно — нёбо вверх, корень назад. Чувствуй движение.", "difficulty": 2 },
-        { "id": "g-prep-8",  "word": "маляр",              "hint": "Широким языком 'красим потолок' — проводи вперёд-назад по нёбу.", "difficulty": 2 },
-        { "id": "g-prep-9",  "word": "лошадка",            "hint": "Щёлкай языком медленно. Потом добавь голос: г-г-г между щелчками.", "difficulty": 3 },
-        { "id": "g-prep-10", "word": "качели",             "hint": "Язычок вверх — вниз. Потом добавляем голос при движении вверх.", "difficulty": 2 },
-        { "id": "g-prep-11", "word": "жевание",            "difficulty": 1, "hint": "Медленно жуй воображаемую жвачку — разогреваем нижнюю челюсть." },
-        { "id": "g-prep-12", "word": "надуй щёки",         "hint": "Надуй обе щёки, удержи 3 секунды, выпусти — хлопни ладошками.", "difficulty": 1 }
+        {
+          "id": "g-prep-0",
+          "word": "горка с голосом",
+          "hint": "Широко открой рот. Подними корень языка вверх и включи голос — получится Г!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/G/g-prep-0.m4a"
+        },
+        {
+          "id": "g-prep-1",
+          "word": "громкий кашель",
+          "hint": "Кашляни с голосом: гх-гх-гх. Чувствуй вибрацию в горле.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/G/g-prep-1.m4a"
+        },
+        {
+          "id": "g-prep-2",
+          "word": "полоскание с голосом",
+          "hint": "Откинь голову, как при полоскании, и добавь голос: г-г-г в глубине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-prep-2.m4a"
+        },
+        {
+          "id": "g-prep-3",
+          "word": "грудной голос",
+          "hint": "Положи руку на грудь. Скажи г-г-г и почувствуй вибрацию ладонью.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-prep-3.m4a"
+        },
+        {
+          "id": "g-prep-4",
+          "word": "голосовая вибрация",
+          "hint": "Тяни звук м-м-м, потом плавно переходи в глубокое г-г-г.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-prep-4.m4a"
+        },
+        {
+          "id": "g-prep-5",
+          "word": "кошечка злится",
+          "hint": "Выгни спинку языка горбом вверх. Добавь голос — как кошка шипит с голосом.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-prep-5.m4a"
+        },
+        {
+          "id": "g-prep-6",
+          "word": "горбик с голосом",
+          "hint": "Открой рот, сделай горбик языком и скажи голосом: г.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-prep-6.m4a"
+        },
+        {
+          "id": "g-prep-7",
+          "word": "нёбо-язык",
+          "hint": "Кончиком языка медленно — нёбо вверх, корень назад. Чувствуй движение.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-prep-7.m4a"
+        },
+        {
+          "id": "g-prep-8",
+          "word": "маляр",
+          "hint": "Широким языком 'красим потолок' — проводи вперёд-назад по нёбу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-prep-8.m4a"
+        },
+        {
+          "id": "g-prep-9",
+          "word": "лошадка",
+          "hint": "Щёлкай языком медленно. Потом добавь голос: г-г-г между щелчками.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-prep-9.m4a"
+        },
+        {
+          "id": "g-prep-10",
+          "word": "качели",
+          "hint": "Язычок вверх — вниз. Потом добавляем голос при движении вверх.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-prep-10.m4a"
+        },
+        {
+          "id": "g-prep-11",
+          "word": "жевание",
+          "difficulty": 1,
+          "hint": "Медленно жуй воображаемую жвачку — разогреваем нижнюю челюсть.",
+          "audio_file": "Audio/Content/G/g-prep-11.m4a"
+        },
+        {
+          "id": "g-prep-12",
+          "word": "надуй щёки",
+          "hint": "Надуй обе щёки, удержи 3 секунды, выпусти — хлопни ладошками.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/G/g-prep-12.m4a"
+        }
       ]
     },
     "isolated": {
       "stageId": "isolated",
       "note": "Изолированный звук [Г] — образы, ритм, голосовые упражнения.",
       "items": [
-        { "id": "g-iso-0",  "word": "г-г-г гусь",        "hint": "Гусь гогочет: га-га-га. Делай Г с голосом.", "difficulty": 1 },
-        { "id": "g-iso-1",  "word": "г-г-г капли",        "hint": "Тяжёлые капли: г-г-г равномерно.", "difficulty": 1 },
-        { "id": "g-iso-2",  "word": "г — пауза — г",      "hint": "Г — пауза — Г. Не торопись, дай голосу звучать.", "difficulty": 2 },
-        { "id": "g-iso-3",  "word": "гь-гь-гь мягко",    "hint": "Мягкий [Г'] — тихо и мягко: гь-гь-гь.", "difficulty": 2 },
-        { "id": "g-iso-4",  "word": "г/гь чередование",  "hint": "Чередуй: Г — Гь — Г — Гь. Слышишь разницу?", "difficulty": 3 },
-        { "id": "g-iso-5",  "word": "г тихо-громко",     "hint": "Тихо: г... всё громче: г! г! Г!", "difficulty": 3 },
-        { "id": "g-iso-6",  "word": "г ритм 2-2",        "hint": "Два удара — пауза — два удара: гг — пауза — гг.", "difficulty": 3 },
-        { "id": "g-iso-7",  "word": "га-га гусь",        "hint": "Гусь кричит: га-га! Скажи три раза: га-га, га-га, га-га.", "difficulty": 2 }
+        {
+          "id": "g-iso-0",
+          "word": "г-г-г гусь",
+          "hint": "Гусь гогочет: га-га-га. Делай Г с голосом.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/G/g-iso-0.m4a"
+        },
+        {
+          "id": "g-iso-1",
+          "word": "г-г-г капли",
+          "hint": "Тяжёлые капли: г-г-г равномерно.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/G/g-iso-1.m4a"
+        },
+        {
+          "id": "g-iso-2",
+          "word": "г — пауза — г",
+          "hint": "Г — пауза — Г. Не торопись, дай голосу звучать.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-iso-2.m4a"
+        },
+        {
+          "id": "g-iso-3",
+          "word": "гь-гь-гь мягко",
+          "hint": "Мягкий [Г'] — тихо и мягко: гь-гь-гь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-iso-3.m4a"
+        },
+        {
+          "id": "g-iso-4",
+          "word": "г/гь чередование",
+          "hint": "Чередуй: Г — Гь — Г — Гь. Слышишь разницу?",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-iso-4.m4a"
+        },
+        {
+          "id": "g-iso-5",
+          "word": "г тихо-громко",
+          "hint": "Тихо: г... всё громче: г! г! Г!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-iso-5.m4a"
+        },
+        {
+          "id": "g-iso-6",
+          "word": "г ритм 2-2",
+          "hint": "Два удара — пауза — два удара: гг — пауза — гг.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-iso-6.m4a"
+        },
+        {
+          "id": "g-iso-7",
+          "word": "га-га гусь",
+          "hint": "Гусь кричит: га-га! Скажи три раза: га-га, га-га, га-га.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-iso-7.m4a"
+        }
       ]
     },
     "syllable": {
       "stageId": "syllable",
       "note": "Слоги прямые, обратные, парные, мягкий [Г'].",
       "items": [
-        { "id": "g-syl-0",  "word": "га",      "difficulty": 1 },
-        { "id": "g-syl-1",  "word": "го",      "difficulty": 1 },
-        { "id": "g-syl-2",  "word": "гу",      "difficulty": 1 },
-        { "id": "g-syl-3",  "word": "гы",      "difficulty": 1 },
-        { "id": "g-syl-4",  "word": "гэ",      "difficulty": 1 },
-        { "id": "g-syl-5",  "word": "аг",      "difficulty": 2 },
-        { "id": "g-syl-6",  "word": "ог",      "difficulty": 2 },
-        { "id": "g-syl-7",  "word": "уг",      "difficulty": 2 },
-        { "id": "g-syl-8",  "word": "ыг",      "difficulty": 2 },
-        { "id": "g-syl-9",  "word": "га-га",   "difficulty": 2 },
-        { "id": "g-syl-10", "word": "го-го",   "difficulty": 2 },
-        { "id": "g-syl-11", "word": "гу-гу",   "difficulty": 2 },
-        { "id": "g-syl-12", "word": "га-го",   "difficulty": 2 },
-        { "id": "g-syl-13", "word": "го-гу",   "difficulty": 2 },
-        { "id": "g-syl-14", "word": "ага",     "difficulty": 2 },
-        { "id": "g-syl-15", "word": "ого",     "difficulty": 2 },
-        { "id": "g-syl-16", "word": "угу",     "difficulty": 2 },
-        { "id": "g-syl-17", "word": "ги",      "difficulty": 1 },
-        { "id": "g-syl-18", "word": "ге",      "difficulty": 1 },
-        { "id": "g-syl-19", "word": "гя",      "difficulty": 2 },
-        { "id": "g-syl-20", "word": "гю",      "difficulty": 2 },
-        { "id": "g-syl-21", "word": "га-го-гу","difficulty": 3 },
-        { "id": "g-syl-22", "word": "аг-ог-уг","difficulty": 3 }
+        {
+          "id": "g-syl-0",
+          "word": "га",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/G/g-syl-0.m4a"
+        },
+        {
+          "id": "g-syl-1",
+          "word": "го",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/G/g-syl-1.m4a"
+        },
+        {
+          "id": "g-syl-2",
+          "word": "гу",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/G/g-syl-2.m4a"
+        },
+        {
+          "id": "g-syl-3",
+          "word": "гы",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/G/g-syl-3.m4a"
+        },
+        {
+          "id": "g-syl-4",
+          "word": "гэ",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/G/g-syl-4.m4a"
+        },
+        {
+          "id": "g-syl-5",
+          "word": "аг",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-syl-5.m4a"
+        },
+        {
+          "id": "g-syl-6",
+          "word": "ог",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-syl-6.m4a"
+        },
+        {
+          "id": "g-syl-7",
+          "word": "уг",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-syl-7.m4a"
+        },
+        {
+          "id": "g-syl-8",
+          "word": "ыг",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-syl-8.m4a"
+        },
+        {
+          "id": "g-syl-9",
+          "word": "га-га",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-syl-9.m4a"
+        },
+        {
+          "id": "g-syl-10",
+          "word": "го-го",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-syl-10.m4a"
+        },
+        {
+          "id": "g-syl-11",
+          "word": "гу-гу",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-syl-11.m4a"
+        },
+        {
+          "id": "g-syl-12",
+          "word": "га-го",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-syl-12.m4a"
+        },
+        {
+          "id": "g-syl-13",
+          "word": "го-гу",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-syl-13.m4a"
+        },
+        {
+          "id": "g-syl-14",
+          "word": "ага",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-syl-14.m4a"
+        },
+        {
+          "id": "g-syl-15",
+          "word": "ого",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-syl-15.m4a"
+        },
+        {
+          "id": "g-syl-16",
+          "word": "угу",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-syl-16.m4a"
+        },
+        {
+          "id": "g-syl-17",
+          "word": "ги",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/G/g-syl-17.m4a"
+        },
+        {
+          "id": "g-syl-18",
+          "word": "ге",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/G/g-syl-18.m4a"
+        },
+        {
+          "id": "g-syl-19",
+          "word": "гя",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-syl-19.m4a"
+        },
+        {
+          "id": "g-syl-20",
+          "word": "гю",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-syl-20.m4a"
+        },
+        {
+          "id": "g-syl-21",
+          "word": "га-го-гу",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-syl-21.m4a"
+        },
+        {
+          "id": "g-syl-22",
+          "word": "аг-ог-уг",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-syl-22.m4a"
+        }
       ]
     },
     "wordInit": {
       "stageId": "wordInit",
       "note": "[Г] и [Г'] в начале слова.",
       "items": [
-        { "id": "g-wi-0",  "word": "газ",       "difficulty": 1 },
-        { "id": "g-wi-1",  "word": "гусь",      "difficulty": 1 },
-        { "id": "g-wi-2",  "word": "гул",       "difficulty": 1 },
-        { "id": "g-wi-3",  "word": "гам",       "difficulty": 1 },
-        { "id": "g-wi-4",  "word": "газета",    "difficulty": 2 },
-        { "id": "g-wi-5",  "word": "гараж",     "difficulty": 2 },
-        { "id": "g-wi-6",  "word": "гвоздь",    "difficulty": 2 },
-        { "id": "g-wi-7",  "word": "глаз",      "difficulty": 2 },
-        { "id": "g-wi-8",  "word": "гнездо",    "difficulty": 2 },
-        { "id": "g-wi-9",  "word": "гора",      "difficulty": 2 },
-        { "id": "g-wi-10", "word": "горох",     "difficulty": 2 },
-        { "id": "g-wi-11", "word": "горшок",    "difficulty": 2 },
-        { "id": "g-wi-12", "word": "гости",     "difficulty": 2 },
-        { "id": "g-wi-13", "word": "гром",      "difficulty": 2 },
-        { "id": "g-wi-14", "word": "груша",     "difficulty": 2 },
-        { "id": "g-wi-15", "word": "губы",      "difficulty": 2 },
-        { "id": "g-wi-16", "word": "гусеница",  "difficulty": 3 },
-        { "id": "g-wi-17", "word": "гимнаст",   "difficulty": 3 },
-        { "id": "g-wi-18", "word": "гитара",    "difficulty": 3 },
-        { "id": "g-wi-19", "word": "гиря",      "difficulty": 2 },
-        { "id": "g-wi-20", "word": "гид",       "difficulty": 2 },
-        { "id": "g-wi-21", "word": "гимн",      "difficulty": 2 },
-        { "id": "g-wi-22", "word": "горилла",   "difficulty": 3 },
-        { "id": "g-wi-23", "word": "горчица",   "difficulty": 3 },
-        { "id": "g-wi-24", "word": "гречка",    "difficulty": 2 },
-        { "id": "g-wi-25", "word": "грива",     "difficulty": 2 },
-        { "id": "g-wi-26", "word": "глобус",    "difficulty": 3 },
-        { "id": "g-wi-27", "word": "гладить",   "difficulty": 3 },
-        { "id": "g-wi-28", "word": "гладкий",   "difficulty": 3 },
-        { "id": "g-wi-29", "word": "голубь",    "difficulty": 2 },
-        { "id": "g-wi-30", "word": "голос",     "difficulty": 2 },
-        { "id": "g-wi-31", "word": "голова",    "difficulty": 2 },
-        { "id": "g-wi-32", "word": "горка",     "difficulty": 2 },
-        { "id": "g-wi-33", "word": "гармонь",   "difficulty": 3 },
-        { "id": "g-wi-34", "word": "горячий",   "difficulty": 3 },
-        { "id": "g-wi-35", "word": "гиацинт",   "difficulty": 4 },
-        { "id": "g-wi-36", "word": "гирлянда",  "difficulty": 4 },
-        { "id": "g-wi-37", "word": "гладиатор", "difficulty": 4 },
-        { "id": "g-wi-38", "word": "горбатый",  "difficulty": 3 },
-        { "id": "g-wi-39", "word": "горсть",    "difficulty": 3 },
-        { "id": "g-wi-40", "word": "горница",   "difficulty": 4 },
-        { "id": "g-wi-41", "word": "готовить",  "difficulty": 3 },
-        { "id": "g-wi-42", "word": "гоголь-моголь", "difficulty": 4 },
-        { "id": "g-wi-43", "word": "гимназия",  "difficulty": 4 },
-        { "id": "g-wi-44", "word": "гнать",     "difficulty": 3 },
-        { "id": "g-wi-45", "word": "гнилой",    "difficulty": 3 },
-        { "id": "g-wi-46", "word": "говядина",  "difficulty": 3 },
-        { "id": "g-wi-47", "word": "гобелен",   "difficulty": 4 },
-        { "id": "g-wi-48", "word": "горчить",   "difficulty": 3 },
-        { "id": "g-wi-49", "word": "грядка",    "difficulty": 3 }
+        {
+          "id": "g-wi-0",
+          "word": "газ",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/G/g-wi-0.m4a"
+        },
+        {
+          "id": "g-wi-1",
+          "word": "гусь",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/G/g-wi-1.m4a"
+        },
+        {
+          "id": "g-wi-2",
+          "word": "гул",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/G/g-wi-2.m4a"
+        },
+        {
+          "id": "g-wi-3",
+          "word": "гам",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/G/g-wi-3.m4a"
+        },
+        {
+          "id": "g-wi-4",
+          "word": "газета",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-4.m4a"
+        },
+        {
+          "id": "g-wi-5",
+          "word": "гараж",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-5.m4a"
+        },
+        {
+          "id": "g-wi-6",
+          "word": "гвоздь",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-6.m4a"
+        },
+        {
+          "id": "g-wi-7",
+          "word": "глаз",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-7.m4a"
+        },
+        {
+          "id": "g-wi-8",
+          "word": "гнездо",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-8.m4a"
+        },
+        {
+          "id": "g-wi-9",
+          "word": "гора",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-9.m4a"
+        },
+        {
+          "id": "g-wi-10",
+          "word": "горох",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-10.m4a"
+        },
+        {
+          "id": "g-wi-11",
+          "word": "горшок",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-11.m4a"
+        },
+        {
+          "id": "g-wi-12",
+          "word": "гости",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-12.m4a"
+        },
+        {
+          "id": "g-wi-13",
+          "word": "гром",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-13.m4a"
+        },
+        {
+          "id": "g-wi-14",
+          "word": "груша",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-14.m4a"
+        },
+        {
+          "id": "g-wi-15",
+          "word": "губы",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-15.m4a"
+        },
+        {
+          "id": "g-wi-16",
+          "word": "гусеница",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wi-16.m4a"
+        },
+        {
+          "id": "g-wi-17",
+          "word": "гимнаст",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wi-17.m4a"
+        },
+        {
+          "id": "g-wi-18",
+          "word": "гитара",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wi-18.m4a"
+        },
+        {
+          "id": "g-wi-19",
+          "word": "гиря",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-19.m4a"
+        },
+        {
+          "id": "g-wi-20",
+          "word": "гид",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-20.m4a"
+        },
+        {
+          "id": "g-wi-21",
+          "word": "гимн",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-21.m4a"
+        },
+        {
+          "id": "g-wi-22",
+          "word": "горилла",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wi-22.m4a"
+        },
+        {
+          "id": "g-wi-23",
+          "word": "горчица",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wi-23.m4a"
+        },
+        {
+          "id": "g-wi-24",
+          "word": "гречка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-24.m4a"
+        },
+        {
+          "id": "g-wi-25",
+          "word": "грива",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-25.m4a"
+        },
+        {
+          "id": "g-wi-26",
+          "word": "глобус",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wi-26.m4a"
+        },
+        {
+          "id": "g-wi-27",
+          "word": "гладить",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wi-27.m4a"
+        },
+        {
+          "id": "g-wi-28",
+          "word": "гладкий",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wi-28.m4a"
+        },
+        {
+          "id": "g-wi-29",
+          "word": "голубь",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-29.m4a"
+        },
+        {
+          "id": "g-wi-30",
+          "word": "голос",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-30.m4a"
+        },
+        {
+          "id": "g-wi-31",
+          "word": "голова",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-31.m4a"
+        },
+        {
+          "id": "g-wi-32",
+          "word": "горка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-32.m4a"
+        },
+        {
+          "id": "g-wi-33",
+          "word": "гармонь",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wi-33.m4a"
+        },
+        {
+          "id": "g-wi-34",
+          "word": "горячий",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wi-34.m4a"
+        },
+        {
+          "id": "g-wi-35",
+          "word": "гиацинт",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-wi-35.m4a"
+        },
+        {
+          "id": "g-wi-36",
+          "word": "гирлянда",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-wi-36.m4a"
+        },
+        {
+          "id": "g-wi-37",
+          "word": "гладиатор",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-wi-37.m4a"
+        },
+        {
+          "id": "g-wi-38",
+          "word": "горбатый",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wi-38.m4a"
+        },
+        {
+          "id": "g-wi-39",
+          "word": "горсть",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wi-39.m4a"
+        },
+        {
+          "id": "g-wi-40",
+          "word": "горница",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-wi-40.m4a"
+        },
+        {
+          "id": "g-wi-41",
+          "word": "готовить",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wi-41.m4a"
+        },
+        {
+          "id": "g-wi-42",
+          "word": "гоголь-моголь",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-wi-42.m4a"
+        },
+        {
+          "id": "g-wi-43",
+          "word": "гимназия",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-wi-43.m4a"
+        },
+        {
+          "id": "g-wi-44",
+          "word": "гнать",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wi-44.m4a"
+        },
+        {
+          "id": "g-wi-45",
+          "word": "гнилой",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wi-45.m4a"
+        },
+        {
+          "id": "g-wi-46",
+          "word": "говядина",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wi-46.m4a"
+        },
+        {
+          "id": "g-wi-47",
+          "word": "гобелен",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-wi-47.m4a"
+        },
+        {
+          "id": "g-wi-48",
+          "word": "горчить",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wi-48.m4a"
+        },
+        {
+          "id": "g-wi-49",
+          "word": "грядка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wi-49.m4a"
+        }
       ]
     },
     "wordMed": {
       "stageId": "wordMed",
       "note": "[Г] в середине слова.",
       "items": [
-        { "id": "g-wm-0",  "word": "вагон",     "difficulty": 2 },
-        { "id": "g-wm-1",  "word": "дуга",      "difficulty": 2 },
-        { "id": "g-wm-2",  "word": "нога",      "difficulty": 2 },
-        { "id": "g-wm-3",  "word": "рога",      "difficulty": 2 },
-        { "id": "g-wm-4",  "word": "дорога",    "difficulty": 3 },
-        { "id": "g-wm-5",  "word": "бумага",    "difficulty": 3 },
-        { "id": "g-wm-6",  "word": "подруга",   "difficulty": 3 },
-        { "id": "g-wm-7",  "word": "серьга",    "difficulty": 3 },
-        { "id": "g-wm-8",  "word": "бегун",     "difficulty": 2 },
-        { "id": "g-wm-9",  "word": "пирог",     "difficulty": 2 },
-        { "id": "g-wm-10", "word": "порог",     "difficulty": 2 },
-        { "id": "g-wm-11", "word": "берег",     "difficulty": 2 },
-        { "id": "g-wm-12", "word": "снег",      "difficulty": 2 },
-        { "id": "g-wm-13", "word": "мозг",      "difficulty": 2 },
-        { "id": "g-wm-14", "word": "пугало",    "difficulty": 3 },
-        { "id": "g-wm-15", "word": "иголка",    "difficulty": 3 },
-        { "id": "g-wm-16", "word": "ягода",     "difficulty": 3 },
-        { "id": "g-wm-17", "word": "загадка",   "difficulty": 3 },
-        { "id": "g-wm-18", "word": "огонь",     "difficulty": 2 },
-        { "id": "g-wm-19", "word": "огород",    "difficulty": 3 },
-        { "id": "g-wm-20", "word": "пугать",    "difficulty": 2 },
-        { "id": "g-wm-21", "word": "лягушка",   "difficulty": 3 },
-        { "id": "g-wm-22", "word": "бегемот",   "difficulty": 3 },
-        { "id": "g-wm-23", "word": "дорогой",   "difficulty": 3 },
-        { "id": "g-wm-24", "word": "другой",    "difficulty": 3 },
-        { "id": "g-wm-25", "word": "стога",     "difficulty": 3 },
-        { "id": "g-wm-26", "word": "рубаха",    "difficulty": 3 },
-        { "id": "g-wm-27", "word": "сапоги",    "difficulty": 3 },
-        { "id": "g-wm-28", "word": "вдруг",     "difficulty": 3 },
-        { "id": "g-wm-29", "word": "угол",      "difficulty": 2 },
-        { "id": "g-wm-30", "word": "игра",      "difficulty": 2 },
-        { "id": "g-wm-31", "word": "агат",      "difficulty": 3 },
-        { "id": "g-wm-32", "word": "глагол",    "difficulty": 3 },
-        { "id": "g-wm-33", "word": "сугроб",    "difficulty": 3 },
-        { "id": "g-wm-34", "word": "разгон",    "difficulty": 3 },
-        { "id": "g-wm-35", "word": "поганка",   "difficulty": 3 },
-        { "id": "g-wm-36", "word": "горбатый",  "difficulty": 3 },
-        { "id": "g-wm-37", "word": "дорогой",   "difficulty": 3 },
-        { "id": "g-wm-38", "word": "пирога",    "difficulty": 3 },
-        { "id": "g-wm-39", "word": "могила",    "difficulty": 3 }
+        {
+          "id": "g-wm-0",
+          "word": "вагон",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-0.m4a"
+        },
+        {
+          "id": "g-wm-1",
+          "word": "дуга",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-1.m4a"
+        },
+        {
+          "id": "g-wm-2",
+          "word": "нога",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-2.m4a"
+        },
+        {
+          "id": "g-wm-3",
+          "word": "рога",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-3.m4a"
+        },
+        {
+          "id": "g-wm-4",
+          "word": "дорога",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-4.m4a"
+        },
+        {
+          "id": "g-wm-5",
+          "word": "бумага",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-5.m4a"
+        },
+        {
+          "id": "g-wm-6",
+          "word": "подруга",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-6.m4a"
+        },
+        {
+          "id": "g-wm-7",
+          "word": "серьга",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-7.m4a"
+        },
+        {
+          "id": "g-wm-8",
+          "word": "бегун",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-8.m4a"
+        },
+        {
+          "id": "g-wm-9",
+          "word": "пирог",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-9.m4a"
+        },
+        {
+          "id": "g-wm-10",
+          "word": "порог",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-10.m4a"
+        },
+        {
+          "id": "g-wm-11",
+          "word": "берег",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-11.m4a"
+        },
+        {
+          "id": "g-wm-12",
+          "word": "снег",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-12.m4a"
+        },
+        {
+          "id": "g-wm-13",
+          "word": "мозг",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-13.m4a"
+        },
+        {
+          "id": "g-wm-14",
+          "word": "пугало",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-14.m4a"
+        },
+        {
+          "id": "g-wm-15",
+          "word": "иголка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-15.m4a"
+        },
+        {
+          "id": "g-wm-16",
+          "word": "ягода",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-16.m4a"
+        },
+        {
+          "id": "g-wm-17",
+          "word": "загадка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-17.m4a"
+        },
+        {
+          "id": "g-wm-18",
+          "word": "огонь",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-18.m4a"
+        },
+        {
+          "id": "g-wm-19",
+          "word": "огород",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-19.m4a"
+        },
+        {
+          "id": "g-wm-20",
+          "word": "пугать",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-20.m4a"
+        },
+        {
+          "id": "g-wm-21",
+          "word": "лягушка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-21.m4a"
+        },
+        {
+          "id": "g-wm-22",
+          "word": "бегемот",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-22.m4a"
+        },
+        {
+          "id": "g-wm-23",
+          "word": "дорогой",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-23.m4a"
+        },
+        {
+          "id": "g-wm-24",
+          "word": "другой",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-24.m4a"
+        },
+        {
+          "id": "g-wm-25",
+          "word": "стога",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-25.m4a"
+        },
+        {
+          "id": "g-wm-26",
+          "word": "рубаха",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-26.m4a"
+        },
+        {
+          "id": "g-wm-27",
+          "word": "сапоги",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-27.m4a"
+        },
+        {
+          "id": "g-wm-28",
+          "word": "вдруг",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-28.m4a"
+        },
+        {
+          "id": "g-wm-29",
+          "word": "угол",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-29.m4a"
+        },
+        {
+          "id": "g-wm-30",
+          "word": "игра",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wm-30.m4a"
+        },
+        {
+          "id": "g-wm-31",
+          "word": "агат",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-31.m4a"
+        },
+        {
+          "id": "g-wm-32",
+          "word": "глагол",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-32.m4a"
+        },
+        {
+          "id": "g-wm-33",
+          "word": "сугроб",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-33.m4a"
+        },
+        {
+          "id": "g-wm-34",
+          "word": "разгон",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-34.m4a"
+        },
+        {
+          "id": "g-wm-35",
+          "word": "поганка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-35.m4a"
+        },
+        {
+          "id": "g-wm-36",
+          "word": "горбатый",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-36.m4a"
+        },
+        {
+          "id": "g-wm-37",
+          "word": "дорогой",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-37.m4a"
+        },
+        {
+          "id": "g-wm-38",
+          "word": "пирога",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-38.m4a"
+        },
+        {
+          "id": "g-wm-39",
+          "word": "могила",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wm-39.m4a"
+        }
       ]
     },
     "wordFinal": {
       "stageId": "wordFinal",
       "note": "[Г] в конце слова (оглушается до К).",
       "items": [
-        { "id": "g-wf-0",  "word": "луг",       "hint": "В конце слышим К, но пишем Г. Луг — зелёная полянка.", "difficulty": 2 },
-        { "id": "g-wf-1",  "word": "берег",     "hint": "Берег — у реки или моря.", "difficulty": 2 },
-        { "id": "g-wf-2",  "word": "снег",      "hint": "Снег — белый и холодный.", "difficulty": 2 },
-        { "id": "g-wf-3",  "word": "пирог",     "hint": "Пирог — вкусная выпечка.", "difficulty": 2 },
-        { "id": "g-wf-4",  "word": "порог",     "hint": "Порог — у входа в дом.", "difficulty": 2 },
-        { "id": "g-wf-5",  "word": "стог",      "hint": "Стог сена — большая куча сена.", "difficulty": 2 },
-        { "id": "g-wf-6",  "word": "мозг",      "hint": "Мозг — думает внутри головы.", "difficulty": 2 },
-        { "id": "g-wf-7",  "word": "рог",       "hint": "Рог — у быка или оленя.", "difficulty": 2 },
-        { "id": "g-wf-8",  "word": "враг",      "hint": "Враг — противник. Есть Г в конце!", "difficulty": 3 },
-        { "id": "g-wf-9",  "word": "слог",      "hint": "Слог — часть слова.", "difficulty": 3 },
-        { "id": "g-wf-10", "word": "чертог",    "hint": "Чертог — дворец. Старое слово.", "difficulty": 4 },
-        { "id": "g-wf-11", "word": "флаг",      "hint": "Флаг — у страны или корабля.", "difficulty": 2 },
-        { "id": "g-wf-12", "word": "каблук",    "hint": "Осторожно: каблук — тут К настоящий!", "difficulty": 3 },
-        { "id": "g-wf-13", "word": "нарог",     "hint": "Нарог — нет такого слова. Правильно: порог!", "difficulty": 3 },
-        { "id": "g-wf-14", "word": "сапог",     "hint": "Один сапог, два сапога. Г в конце!", "difficulty": 2 },
-        { "id": "g-wf-15", "word": "утюг",      "hint": "Утюг — гладим одежду. Г в конце!", "difficulty": 2 },
-        { "id": "g-wf-16", "word": "тюльпан",   "hint": "Осторожно: в тюльпане нет Г. Зато в слоге 'пан'!", "difficulty": 3 },
-        { "id": "g-wf-17", "word": "творог",    "hint": "Творог — молочный продукт. Г в конце.", "difficulty": 3 },
-        { "id": "g-wf-18", "word": "недуг",     "hint": "Недуг — болезнь. Г в конце.", "difficulty": 4 },
-        { "id": "g-wf-19", "word": "лог",       "hint": "Лог — овраг, низина.", "difficulty": 3 }
+        {
+          "id": "g-wf-0",
+          "word": "луг",
+          "hint": "В конце слышим К, но пишем Г. Луг — зелёная полянка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wf-0.m4a"
+        },
+        {
+          "id": "g-wf-1",
+          "word": "берег",
+          "hint": "Берег — у реки или моря.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wf-1.m4a"
+        },
+        {
+          "id": "g-wf-2",
+          "word": "снег",
+          "hint": "Снег — белый и холодный.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wf-2.m4a"
+        },
+        {
+          "id": "g-wf-3",
+          "word": "пирог",
+          "hint": "Пирог — вкусная выпечка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wf-3.m4a"
+        },
+        {
+          "id": "g-wf-4",
+          "word": "порог",
+          "hint": "Порог — у входа в дом.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wf-4.m4a"
+        },
+        {
+          "id": "g-wf-5",
+          "word": "стог",
+          "hint": "Стог сена — большая куча сена.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wf-5.m4a"
+        },
+        {
+          "id": "g-wf-6",
+          "word": "мозг",
+          "hint": "Мозг — думает внутри головы.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wf-6.m4a"
+        },
+        {
+          "id": "g-wf-7",
+          "word": "рог",
+          "hint": "Рог — у быка или оленя.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wf-7.m4a"
+        },
+        {
+          "id": "g-wf-8",
+          "word": "враг",
+          "hint": "Враг — противник. Есть Г в конце!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wf-8.m4a"
+        },
+        {
+          "id": "g-wf-9",
+          "word": "слог",
+          "hint": "Слог — часть слова.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wf-9.m4a"
+        },
+        {
+          "id": "g-wf-10",
+          "word": "чертог",
+          "hint": "Чертог — дворец. Старое слово.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-wf-10.m4a"
+        },
+        {
+          "id": "g-wf-11",
+          "word": "флаг",
+          "hint": "Флаг — у страны или корабля.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wf-11.m4a"
+        },
+        {
+          "id": "g-wf-12",
+          "word": "каблук",
+          "hint": "Осторожно: каблук — тут К настоящий!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wf-12.m4a"
+        },
+        {
+          "id": "g-wf-13",
+          "word": "нарог",
+          "hint": "Нарог — нет такого слова. Правильно: порог!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wf-13.m4a"
+        },
+        {
+          "id": "g-wf-14",
+          "word": "сапог",
+          "hint": "Один сапог, два сапога. Г в конце!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wf-14.m4a"
+        },
+        {
+          "id": "g-wf-15",
+          "word": "утюг",
+          "hint": "Утюг — гладим одежду. Г в конце!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wf-15.m4a"
+        },
+        {
+          "id": "g-wf-16",
+          "word": "тюльпан",
+          "hint": "Осторожно: в тюльпане нет Г. Зато в слоге 'пан'!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wf-16.m4a"
+        },
+        {
+          "id": "g-wf-17",
+          "word": "творог",
+          "hint": "Творог — молочный продукт. Г в конце.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wf-17.m4a"
+        },
+        {
+          "id": "g-wf-18",
+          "word": "недуг",
+          "hint": "Недуг — болезнь. Г в конце.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-wf-18.m4a"
+        },
+        {
+          "id": "g-wf-19",
+          "word": "лог",
+          "hint": "Лог — овраг, низина.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wf-19.m4a"
+        }
       ]
     },
     "phrase": {
       "stageId": "phrase",
       "note": "Фразы со звуком [Г]/[Г'].",
       "items": [
-        { "id": "g-ph-0",  "word": "гусь гуляет",               "difficulty": 1 },
-        { "id": "g-ph-1",  "word": "высокая гора",               "difficulty": 2 },
-        { "id": "g-ph-2",  "word": "голубь на крыше",            "difficulty": 2 },
-        { "id": "g-ph-3",  "word": "гости пришли",               "difficulty": 2 },
-        { "id": "g-ph-4",  "word": "гром и молния",              "difficulty": 2 },
-        { "id": "g-ph-5",  "word": "груша в вазе",               "difficulty": 2 },
-        { "id": "g-ph-6",  "word": "большое гнездо",             "difficulty": 2 },
-        { "id": "g-ph-7",  "word": "горошек в тарелке",          "difficulty": 2 },
-        { "id": "g-ph-8",  "word": "горячий горшок",             "difficulty": 2 },
-        { "id": "g-ph-9",  "word": "гусеница на листе",          "difficulty": 3 },
-        { "id": "g-ph-10", "word": "гитара в гараже",            "difficulty": 3 },
-        { "id": "g-ph-11", "word": "голубое небо",               "difficulty": 2 },
-        { "id": "g-ph-12", "word": "гречка с маслом",            "difficulty": 2 },
-        { "id": "g-ph-13", "word": "горилла в зоопарке",         "difficulty": 3 },
-        { "id": "g-ph-14", "word": "дорога в гору",              "difficulty": 2 },
-        { "id": "g-ph-15", "word": "огонь горит",                "difficulty": 2 },
-        { "id": "g-ph-16", "word": "нога болит",                 "difficulty": 2 },
-        { "id": "g-ph-17", "word": "лягушка в болоте",           "difficulty": 3 },
-        { "id": "g-ph-18", "word": "снег идёт",                  "difficulty": 2 },
-        { "id": "g-ph-19", "word": "пирог с ягодами",            "difficulty": 3 },
-        { "id": "g-ph-20", "word": "берег реки",                 "difficulty": 2 },
-        { "id": "g-ph-21", "word": "загадка для детей",          "difficulty": 3 },
-        { "id": "g-ph-22", "word": "сапог на ноге",              "difficulty": 2 },
-        { "id": "g-ph-23", "word": "флаг на корабле",            "difficulty": 3 },
-        { "id": "g-ph-24", "word": "бегемот в воде",             "difficulty": 2 },
-        { "id": "g-ph-25", "word": "гречка с горохом",           "difficulty": 2 },
-        { "id": "g-ph-26", "word": "гусь на лугу",               "difficulty": 2 },
-        { "id": "g-ph-27", "word": "горячий горшок на плите",    "difficulty": 3 },
-        { "id": "g-ph-28", "word": "гитара Гены",                "difficulty": 3 },
-        { "id": "g-ph-29", "word": "голубое гнездо грача",       "difficulty": 3 },
-        { "id": "g-ph-30", "word": "галоп галопом",              "difficulty": 3 },
-        { "id": "g-ph-31", "word": "горилла гуляет",             "difficulty": 2 },
-        { "id": "g-ph-32", "word": "гребни гор",                 "difficulty": 3 },
-        { "id": "g-ph-33", "word": "гусеничный трактор",         "difficulty": 3 },
-        { "id": "g-ph-34", "word": "глухой голос",               "difficulty": 3 },
-        { "id": "g-ph-35", "word": "гармония и гармонь",         "difficulty": 3 }
+        {
+          "id": "g-ph-0",
+          "word": "гусь гуляет",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/G/g-ph-0.m4a"
+        },
+        {
+          "id": "g-ph-1",
+          "word": "высокая гора",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-ph-1.m4a"
+        },
+        {
+          "id": "g-ph-2",
+          "word": "голубь на крыше",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-ph-2.m4a"
+        },
+        {
+          "id": "g-ph-3",
+          "word": "гости пришли",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-ph-3.m4a"
+        },
+        {
+          "id": "g-ph-4",
+          "word": "гром и молния",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-ph-4.m4a"
+        },
+        {
+          "id": "g-ph-5",
+          "word": "груша в вазе",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-ph-5.m4a"
+        },
+        {
+          "id": "g-ph-6",
+          "word": "большое гнездо",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-ph-6.m4a"
+        },
+        {
+          "id": "g-ph-7",
+          "word": "горошек в тарелке",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-ph-7.m4a"
+        },
+        {
+          "id": "g-ph-8",
+          "word": "горячий горшок",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-ph-8.m4a"
+        },
+        {
+          "id": "g-ph-9",
+          "word": "гусеница на листе",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-ph-9.m4a"
+        },
+        {
+          "id": "g-ph-10",
+          "word": "гитара в гараже",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-ph-10.m4a"
+        },
+        {
+          "id": "g-ph-11",
+          "word": "голубое небо",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-ph-11.m4a"
+        },
+        {
+          "id": "g-ph-12",
+          "word": "гречка с маслом",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-ph-12.m4a"
+        },
+        {
+          "id": "g-ph-13",
+          "word": "горилла в зоопарке",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-ph-13.m4a"
+        },
+        {
+          "id": "g-ph-14",
+          "word": "дорога в гору",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-ph-14.m4a"
+        },
+        {
+          "id": "g-ph-15",
+          "word": "огонь горит",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-ph-15.m4a"
+        },
+        {
+          "id": "g-ph-16",
+          "word": "нога болит",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-ph-16.m4a"
+        },
+        {
+          "id": "g-ph-17",
+          "word": "лягушка в болоте",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-ph-17.m4a"
+        },
+        {
+          "id": "g-ph-18",
+          "word": "снег идёт",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-ph-18.m4a"
+        },
+        {
+          "id": "g-ph-19",
+          "word": "пирог с ягодами",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-ph-19.m4a"
+        },
+        {
+          "id": "g-ph-20",
+          "word": "берег реки",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-ph-20.m4a"
+        },
+        {
+          "id": "g-ph-21",
+          "word": "загадка для детей",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-ph-21.m4a"
+        },
+        {
+          "id": "g-ph-22",
+          "word": "сапог на ноге",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-ph-22.m4a"
+        },
+        {
+          "id": "g-ph-23",
+          "word": "флаг на корабле",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-ph-23.m4a"
+        },
+        {
+          "id": "g-ph-24",
+          "word": "бегемот в воде",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-ph-24.m4a"
+        },
+        {
+          "id": "g-ph-25",
+          "word": "гречка с горохом",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-ph-25.m4a"
+        },
+        {
+          "id": "g-ph-26",
+          "word": "гусь на лугу",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-ph-26.m4a"
+        },
+        {
+          "id": "g-ph-27",
+          "word": "горячий горшок на плите",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-ph-27.m4a"
+        },
+        {
+          "id": "g-ph-28",
+          "word": "гитара Гены",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-ph-28.m4a"
+        },
+        {
+          "id": "g-ph-29",
+          "word": "голубое гнездо грача",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-ph-29.m4a"
+        },
+        {
+          "id": "g-ph-30",
+          "word": "галоп галопом",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-ph-30.m4a"
+        },
+        {
+          "id": "g-ph-31",
+          "word": "горилла гуляет",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-ph-31.m4a"
+        },
+        {
+          "id": "g-ph-32",
+          "word": "гребни гор",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-ph-32.m4a"
+        },
+        {
+          "id": "g-ph-33",
+          "word": "гусеничный трактор",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-ph-33.m4a"
+        },
+        {
+          "id": "g-ph-34",
+          "word": "глухой голос",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-ph-34.m4a"
+        },
+        {
+          "id": "g-ph-35",
+          "word": "гармония и гармонь",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-ph-35.m4a"
+        }
       ]
     },
     "sentence": {
       "stageId": "sentence",
       "note": "Предложения со звуком [Г]/[Г'].",
       "items": [
-        { "id": "g-sen-0",  "word": "Гусь гуляет у пруда.",                        "difficulty": 2 },
-        { "id": "g-sen-1",  "word": "На горе растёт гриб.",                         "difficulty": 2 },
-        { "id": "g-sen-2",  "word": "Голубь сидит на крыше.",                       "difficulty": 2 },
-        { "id": "g-sen-3",  "word": "Гром гремит в грозу.",                         "difficulty": 3 },
-        { "id": "g-sen-4",  "word": "Гусеница ползёт по листу.",                    "difficulty": 3 },
-        { "id": "g-sen-5",  "word": "Гитарист играет на гитаре.",                   "difficulty": 3 },
-        { "id": "g-sen-6",  "word": "Лягушка прыгает в болото.",                    "difficulty": 3 },
-        { "id": "g-sen-7",  "word": "В огороде растёт горох.",                      "difficulty": 3 },
-        { "id": "g-sen-8",  "word": "Снег лежит на горе.",                          "difficulty": 2 },
-        { "id": "g-sen-9",  "word": "Глеб нарисовал глобус.",                       "difficulty": 3 },
-        { "id": "g-sen-10", "word": "Бегемот живёт в тёплых странах.",              "difficulty": 3 },
-        { "id": "g-sen-11", "word": "Гречка с маслом очень вкусная.",               "difficulty": 3 },
-        { "id": "g-sen-12", "word": "Горилла — большая и сильная обезьяна.",        "difficulty": 4 },
-        { "id": "g-sen-13", "word": "По дороге в гору едет вагон.",                 "difficulty": 4 },
-        { "id": "g-sen-14", "word": "Гена загадал загадку другу.",                  "difficulty": 4 },
-        { "id": "g-sen-15", "word": "Гусь переплыл большое озеро.",                "difficulty": 3 },
-        { "id": "g-sen-16", "word": "Грибники нашли гриб в горах.",               "difficulty": 4 },
-        { "id": "g-sen-17", "word": "Голубые горы стоят вдали.",                  "difficulty": 3 },
-        { "id": "g-sen-18", "word": "Гречневая каша готова.",                      "difficulty": 2 },
-        { "id": "g-sen-19", "word": "Гарик и Глеб играли в гараже.",              "difficulty": 4 },
-        { "id": "g-sen-20", "word": "Голосистый гусь гонит гусят.",               "difficulty": 4 },
-        { "id": "g-sen-21", "word": "Горилла грустит в зоопарке.",                "difficulty": 3 },
-        { "id": "g-sen-22", "word": "Грузовик едет по дороге в гору.",            "difficulty": 4 },
-        { "id": "g-sen-23", "word": "Гусеница ела листья на грядке.",             "difficulty": 4 },
-        { "id": "g-sen-24", "word": "Голубь гулял по набережной.",                "difficulty": 3 }
+        {
+          "id": "g-sen-0",
+          "word": "Гусь гуляет у пруда.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-sen-0.m4a"
+        },
+        {
+          "id": "g-sen-1",
+          "word": "На горе растёт гриб.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-sen-1.m4a"
+        },
+        {
+          "id": "g-sen-2",
+          "word": "Голубь сидит на крыше.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-sen-2.m4a"
+        },
+        {
+          "id": "g-sen-3",
+          "word": "Гром гремит в грозу.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-sen-3.m4a"
+        },
+        {
+          "id": "g-sen-4",
+          "word": "Гусеница ползёт по листу.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-sen-4.m4a"
+        },
+        {
+          "id": "g-sen-5",
+          "word": "Гитарист играет на гитаре.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-sen-5.m4a"
+        },
+        {
+          "id": "g-sen-6",
+          "word": "Лягушка прыгает в болото.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-sen-6.m4a"
+        },
+        {
+          "id": "g-sen-7",
+          "word": "В огороде растёт горох.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-sen-7.m4a"
+        },
+        {
+          "id": "g-sen-8",
+          "word": "Снег лежит на горе.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-sen-8.m4a"
+        },
+        {
+          "id": "g-sen-9",
+          "word": "Глеб нарисовал глобус.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-sen-9.m4a"
+        },
+        {
+          "id": "g-sen-10",
+          "word": "Бегемот живёт в тёплых странах.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-sen-10.m4a"
+        },
+        {
+          "id": "g-sen-11",
+          "word": "Гречка с маслом очень вкусная.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-sen-11.m4a"
+        },
+        {
+          "id": "g-sen-12",
+          "word": "Горилла — большая и сильная обезьяна.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-sen-12.m4a"
+        },
+        {
+          "id": "g-sen-13",
+          "word": "По дороге в гору едет вагон.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-sen-13.m4a"
+        },
+        {
+          "id": "g-sen-14",
+          "word": "Гена загадал загадку другу.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-sen-14.m4a"
+        },
+        {
+          "id": "g-sen-15",
+          "word": "Гусь переплыл большое озеро.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-sen-15.m4a"
+        },
+        {
+          "id": "g-sen-16",
+          "word": "Грибники нашли гриб в горах.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-sen-16.m4a"
+        },
+        {
+          "id": "g-sen-17",
+          "word": "Голубые горы стоят вдали.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-sen-17.m4a"
+        },
+        {
+          "id": "g-sen-18",
+          "word": "Гречневая каша готова.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-sen-18.m4a"
+        },
+        {
+          "id": "g-sen-19",
+          "word": "Гарик и Глеб играли в гараже.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-sen-19.m4a"
+        },
+        {
+          "id": "g-sen-20",
+          "word": "Голосистый гусь гонит гусят.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-sen-20.m4a"
+        },
+        {
+          "id": "g-sen-21",
+          "word": "Горилла грустит в зоопарке.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-sen-21.m4a"
+        },
+        {
+          "id": "g-sen-22",
+          "word": "Грузовик едет по дороге в гору.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-sen-22.m4a"
+        },
+        {
+          "id": "g-sen-23",
+          "word": "Гусеница ела листья на грядке.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-sen-23.m4a"
+        },
+        {
+          "id": "g-sen-24",
+          "word": "Голубь гулял по набережной.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-sen-24.m4a"
+        }
       ]
     },
     "diff": {
       "stageId": "diff",
       "note": "Дифференциация [Г]-[К].",
       "items": [
-        { "id": "g-diff-0",  "word": "год — код",       "hint": "Г — звонкий, К — глухой. Год — время, код — шифр.", "difficulty": 2 },
-        { "id": "g-diff-1",  "word": "гора — кора",     "hint": "Гора — высокая. Кора — у дерева. Г или К?", "difficulty": 2 },
-        { "id": "g-diff-2",  "word": "гол — кол",       "hint": "Гол — в футболе. Кол — острый. Слышишь разницу?", "difficulty": 2 },
-        { "id": "g-diff-3",  "word": "гот — кот",       "hint": "Кот — животное. Гот — нет слова. Правильно: кот!", "difficulty": 2 },
-        { "id": "g-diff-4",  "word": "гость — кость",   "hint": "Гость — пришёл. Кость — у скелета.", "difficulty": 3 },
-        { "id": "g-diff-5",  "word": "грот — крот",     "hint": "Грот — пещера. Крот — зверёк.", "difficulty": 3 },
-        { "id": "g-diff-6",  "word": "гам — кам",       "hint": "Гам — шум. Кам — нет такого.", "difficulty": 2 },
-        { "id": "g-diff-7",  "word": "газ — каз",       "hint": "Газ — для плиты. Каз — нет слова.", "difficulty": 2 },
-        { "id": "g-diff-8",  "word": "гид — кит",       "hint": "Гид — экскурсовод. Кит — большая рыба.", "difficulty": 3 },
-        { "id": "g-diff-9",  "word": "груша — крыша",   "hint": "Груша — фрукт. Крыша — у дома.", "difficulty": 3 },
-        { "id": "g-diff-10", "word": "гора — кора — нора","hint": "Три слова. Найди то, где начало Г!", "difficulty": 3 },
-        { "id": "g-diff-11", "word": "гул — кул",       "hint": "Гул — звук. Кул — нет. Правильно: гул!", "difficulty": 2 },
-        { "id": "g-diff-12", "word": "губы — кубы",     "hint": "Губы — на лице. Кубы — фигуры. Г или К?", "difficulty": 3 },
-        { "id": "g-diff-13", "word": "горох — порох",   "hint": "Горох — овощ. Порох — взрывается. Разные слова!", "difficulty": 3 },
-        { "id": "g-diff-14", "word": "гора — горка — горочка","hint": "Одно слово, три формы. Везде слышим Г!", "difficulty": 4 }
+        {
+          "id": "g-diff-0",
+          "word": "год — код",
+          "hint": "Г — звонкий, К — глухой. Год — время, код — шифр.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-diff-0.m4a"
+        },
+        {
+          "id": "g-diff-1",
+          "word": "гора — кора",
+          "hint": "Гора — высокая. Кора — у дерева. Г или К?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-diff-1.m4a"
+        },
+        {
+          "id": "g-diff-2",
+          "word": "гол — кол",
+          "hint": "Гол — в футболе. Кол — острый. Слышишь разницу?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-diff-2.m4a"
+        },
+        {
+          "id": "g-diff-3",
+          "word": "гот — кот",
+          "hint": "Кот — животное. Гот — нет слова. Правильно: кот!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-diff-3.m4a"
+        },
+        {
+          "id": "g-diff-4",
+          "word": "гость — кость",
+          "hint": "Гость — пришёл. Кость — у скелета.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-diff-4.m4a"
+        },
+        {
+          "id": "g-diff-5",
+          "word": "грот — крот",
+          "hint": "Грот — пещера. Крот — зверёк.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-diff-5.m4a"
+        },
+        {
+          "id": "g-diff-6",
+          "word": "гам — кам",
+          "hint": "Гам — шум. Кам — нет такого.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-diff-6.m4a"
+        },
+        {
+          "id": "g-diff-7",
+          "word": "газ — каз",
+          "hint": "Газ — для плиты. Каз — нет слова.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-diff-7.m4a"
+        },
+        {
+          "id": "g-diff-8",
+          "word": "гид — кит",
+          "hint": "Гид — экскурсовод. Кит — большая рыба.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-diff-8.m4a"
+        },
+        {
+          "id": "g-diff-9",
+          "word": "груша — крыша",
+          "hint": "Груша — фрукт. Крыша — у дома.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-diff-9.m4a"
+        },
+        {
+          "id": "g-diff-10",
+          "word": "гора — кора — нора",
+          "hint": "Три слова. Найди то, где начало Г!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-diff-10.m4a"
+        },
+        {
+          "id": "g-diff-11",
+          "word": "гул — кул",
+          "hint": "Гул — звук. Кул — нет. Правильно: гул!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-diff-11.m4a"
+        },
+        {
+          "id": "g-diff-12",
+          "word": "губы — кубы",
+          "hint": "Губы — на лице. Кубы — фигуры. Г или К?",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-diff-12.m4a"
+        },
+        {
+          "id": "g-diff-13",
+          "word": "горох — порох",
+          "hint": "Горох — овощ. Порох — взрывается. Разные слова!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-diff-13.m4a"
+        },
+        {
+          "id": "g-diff-14",
+          "word": "гора — горка — горочка",
+          "hint": "Одно слово, три формы. Везде слышим Г!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-diff-14.m4a"
+        }
       ]
     },
     "story": {
       "stageId": "story",
       "note": "Короткие тексты и рассказы со звуком [Г]/[Г'].",
       "items": [
-        { "id": "g-st-0",  "word": "Гусь и гусята",             "hint": "Гусь вёл гусят на луг. Гусята гуляли и клевали траву. Гусь гоготал.", "difficulty": 3 },
-        { "id": "g-st-1",  "word": "Гроза в горах",             "hint": "В горах гремел гром. Гром гремел громко. Горы гудели.", "difficulty": 3 },
-        { "id": "g-st-2",  "word": "Где грибы?",                "hint": "Гена пошёл в лес. Он глядел под горку. Там был гриб!", "difficulty": 3 },
-        { "id": "g-st-3",  "word": "Голубь на горе",            "hint": "На горе сидел голубь. Голубь гулил. Гора была голубой от неба.", "difficulty": 3 },
-        { "id": "g-st-4",  "word": "Горошины в горшке",         "hint": "В горшке варился горох. Горошины прыгали. Горячий пар шёл вверх.", "difficulty": 3 },
-        { "id": "g-st-5",  "word": "Гитарист Гена",             "hint": "Гена играл на гитаре. Он играл громко и гордо. Гости хлопали.", "difficulty": 4 },
-        { "id": "g-st-6",  "word": "Горилла в гостях",          "hint": "Горилла пришла в гости. Горилла дала гостям груши. Гости обрадовались.", "difficulty": 4 },
-        { "id": "g-st-7",  "word": "Гусеница на грядке",        "hint": "Гусеница ползла по грядке. Она грызла горох и гречиху.", "difficulty": 4 },
-        { "id": "g-st-8",  "word": "Глеб и глобус",             "hint": "Глеб смотрел на глобус. Он нашёл горы и города. Глеб улыбнулся.", "difficulty": 4 },
-        { "id": "g-st-9",  "word": "Бегемот и гора",            "hint": "Бегемот хотел залезть на гору. Но он был большой. Гора была крутая.", "difficulty": 4 },
-        { "id": "g-st-10", "word": "Голос в горах",             "hint": "«Го-го-го!» — крикнул Гена. Горы ответили: «Го-го-го!» Это эхо.", "difficulty": 3 },
-        { "id": "g-st-11", "word": "Гречка и горох",            "hint": "Мама сварила гречку. Папа принёс горох. Вместе — гречка с горохом!", "difficulty": 3 },
-        { "id": "g-st-12", "word": "Гром и молния",             "hint": "Гром — это звук. Молния — это свет. Сначала видим, потом слышим гром.", "difficulty": 4 }
+        {
+          "id": "g-st-0",
+          "word": "Гусь и гусята",
+          "hint": "Гусь вёл гусят на луг. Гусята гуляли и клевали траву. Гусь гоготал.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-st-0.m4a"
+        },
+        {
+          "id": "g-st-1",
+          "word": "Гроза в горах",
+          "hint": "В горах гремел гром. Гром гремел громко. Горы гудели.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-st-1.m4a"
+        },
+        {
+          "id": "g-st-2",
+          "word": "Где грибы?",
+          "hint": "Гена пошёл в лес. Он глядел под горку. Там был гриб!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-st-2.m4a"
+        },
+        {
+          "id": "g-st-3",
+          "word": "Голубь на горе",
+          "hint": "На горе сидел голубь. Голубь гулил. Гора была голубой от неба.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-st-3.m4a"
+        },
+        {
+          "id": "g-st-4",
+          "word": "Горошины в горшке",
+          "hint": "В горшке варился горох. Горошины прыгали. Горячий пар шёл вверх.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-st-4.m4a"
+        },
+        {
+          "id": "g-st-5",
+          "word": "Гитарист Гена",
+          "hint": "Гена играл на гитаре. Он играл громко и гордо. Гости хлопали.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-st-5.m4a"
+        },
+        {
+          "id": "g-st-6",
+          "word": "Горилла в гостях",
+          "hint": "Горилла пришла в гости. Горилла дала гостям груши. Гости обрадовались.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-st-6.m4a"
+        },
+        {
+          "id": "g-st-7",
+          "word": "Гусеница на грядке",
+          "hint": "Гусеница ползла по грядке. Она грызла горох и гречиху.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-st-7.m4a"
+        },
+        {
+          "id": "g-st-8",
+          "word": "Глеб и глобус",
+          "hint": "Глеб смотрел на глобус. Он нашёл горы и города. Глеб улыбнулся.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-st-8.m4a"
+        },
+        {
+          "id": "g-st-9",
+          "word": "Бегемот и гора",
+          "hint": "Бегемот хотел залезть на гору. Но он был большой. Гора была крутая.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-st-9.m4a"
+        },
+        {
+          "id": "g-st-10",
+          "word": "Голос в горах",
+          "hint": "«Го-го-го!» — крикнул Гена. Горы ответили: «Го-го-го!» Это эхо.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-st-10.m4a"
+        },
+        {
+          "id": "g-st-11",
+          "word": "Гречка и горох",
+          "hint": "Мама сварила гречку. Папа принёс горох. Вместе — гречка с горохом!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-st-11.m4a"
+        },
+        {
+          "id": "g-st-12",
+          "word": "Гром и молния",
+          "hint": "Гром — это звук. Молния — это свет. Сначала видим, потом слышим гром.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-st-12.m4a"
+        }
       ]
     }
   },
   "templateCompatibility": {
-    "prep":      ["articulation-imitation", "breathing", "rhythm", "ar-activity"],
-    "isolated":  ["repeat-after-model", "listen-and-choose", "sorting", "ar-activity"],
-    "syllable":  ["listen-and-choose", "sorting", "repeat-after-model", "bingo", "rhythm"],
-    "wordInit":  ["listen-and-choose", "repeat-after-model", "drag-and-match", "memory", "bingo", "sound-hunter", "puzzle-reveal", "visual-acoustic", "minimal-pairs"],
-    "wordMed":   ["listen-and-choose", "repeat-after-model", "drag-and-match", "memory", "sound-hunter"],
-    "wordFinal": ["listen-and-choose", "repeat-after-model", "minimal-pairs", "sorting"],
-    "phrase":    ["story-completion", "drag-and-match", "repeat-after-model", "sorting", "minimal-pairs"],
-    "sentence":  ["repeat-after-model", "story-completion", "narrative-quest"],
-    "diff":      ["minimal-pairs", "listen-and-choose", "sorting", "drag-and-match"],
-    "story":     ["narrative-quest", "story-completion", "repeat-after-model"]
+    "prep": [
+      "articulation-imitation",
+      "breathing",
+      "rhythm",
+      "ar-activity"
+    ],
+    "isolated": [
+      "repeat-after-model",
+      "listen-and-choose",
+      "sorting",
+      "ar-activity"
+    ],
+    "syllable": [
+      "listen-and-choose",
+      "sorting",
+      "repeat-after-model",
+      "bingo",
+      "rhythm"
+    ],
+    "wordInit": [
+      "listen-and-choose",
+      "repeat-after-model",
+      "drag-and-match",
+      "memory",
+      "bingo",
+      "sound-hunter",
+      "puzzle-reveal",
+      "visual-acoustic",
+      "minimal-pairs"
+    ],
+    "wordMed": [
+      "listen-and-choose",
+      "repeat-after-model",
+      "drag-and-match",
+      "memory",
+      "sound-hunter"
+    ],
+    "wordFinal": [
+      "listen-and-choose",
+      "repeat-after-model",
+      "minimal-pairs",
+      "sorting"
+    ],
+    "phrase": [
+      "story-completion",
+      "drag-and-match",
+      "repeat-after-model",
+      "sorting",
+      "minimal-pairs"
+    ],
+    "sentence": [
+      "repeat-after-model",
+      "story-completion",
+      "narrative-quest"
+    ],
+    "diff": [
+      "minimal-pairs",
+      "listen-and-choose",
+      "sorting",
+      "drag-and-match"
+    ],
+    "story": [
+      "narrative-quest",
+      "story-completion",
+      "repeat-after-model"
+    ]
   }
 }
