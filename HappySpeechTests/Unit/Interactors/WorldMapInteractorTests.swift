@@ -12,6 +12,7 @@ final class WorldMapInteractorTests: XCTestCase {
 
     // MARK: - Spy
 
+    @MainActor
     private final class SpyPresenter: WorldMapPresentationLogic {
         var loadMapCalled = false
         var selectZoneCalled = false
