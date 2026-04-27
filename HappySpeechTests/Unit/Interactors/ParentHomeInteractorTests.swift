@@ -12,6 +12,7 @@ final class ParentHomeInteractorTests: XCTestCase {
 
     // MARK: - Spy
 
+    @MainActor
     private final class SpyPresenter: ParentHomePresentationLogic {
         var fetchCalled = false
         var loadingCalled = false

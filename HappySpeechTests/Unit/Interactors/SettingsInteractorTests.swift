@@ -12,6 +12,7 @@ final class SettingsInteractorTests: XCTestCase {
 
     // MARK: - Spy
 
+    @MainActor
     private final class SpyPresenter: SettingsPresentationLogic {
         var loadSettingsCalled = false
         var updateThemeCalled = false

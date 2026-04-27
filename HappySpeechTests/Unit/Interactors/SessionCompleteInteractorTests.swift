@@ -12,6 +12,7 @@ final class SessionCompleteInteractorTests: XCTestCase {
 
     // MARK: - Spy
 
+    @MainActor
     private final class SpyPresenter: SessionCompletePresentationLogic {
         var loadResultCalled = false
         var advancePhaseCalled = false

@@ -101,12 +101,12 @@ final class HSMascotViewSnapshotTests: XCTestCase {
     }
 
     private func referenceURL(name: String, appearance: String) -> URL {
-        // Сохраняем рядом с бандлом тест-таргета
-        let baseDir = Bundle(for: Self.self).bundleURL
-            .deletingLastPathComponent()
-            .appendingPathComponent("__Snapshots__/HSMascotView")
-        try? FileManager.default.createDirectory(at: baseDir, withIntermediateDirectories: true)
         let safeName = name.replacingOccurrences(of: "/", with: "_")
-        return baseDir.appendingPathComponent("\(safeName)_\(appearance).png")
+        return SnapshotTestHelper.snapshotURL(
+            testClass: Self.self,
+            category: "HSMascotView",
+            name: safeName,
+            appearance: appearance
+        )
     }
 }

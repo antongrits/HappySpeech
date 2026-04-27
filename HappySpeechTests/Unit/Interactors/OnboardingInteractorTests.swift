@@ -12,6 +12,7 @@ final class OnboardingInteractorTests: XCTestCase {
 
     // MARK: - Spy
 
+    @MainActor
     private final class SpyPresenter: OnboardingPresentationLogic {
         var loadOnboardingCalled = false
         var advanceStepCalled = false

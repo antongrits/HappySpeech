@@ -149,8 +149,12 @@ final class RiveModel: ObservableObject {
 
     init(fileName: String, stateMachine: String) {
         // В тестовом окружении RiveRuntime крашится на невалидных .riv файлах.
-        // XCTest устанавливает XCTestConfigurationFilePath в env.
-        let isRunningTests = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+        // XCTest устанавливает XCTestConfigurationFilePath в env (unit тесты).
+        // UITest host-процесс передаёт -UITestDisableAnimations как launch argument.
+        let isRunningTests =
+            ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+            || ProcessInfo.processInfo.arguments.contains("-UITestDisableAnimations")
+            || ProcessInfo.processInfo.arguments.contains("-UITestDemoMode")
         guard !isRunningTests else { return }
 
         guard let url = Bundle.main.url(forResource: fileName, withExtension: "riv") else {

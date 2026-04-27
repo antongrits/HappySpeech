@@ -175,11 +175,13 @@ final class KeyScreensSnapshotTests: XCTestCase {
     // MARK: - Reference storage
 
     private func snapshotURL(screen: String, device: String, appearance: String) -> URL {
-        let baseDir = Bundle(for: Self.self).bundleURL
-            .deletingLastPathComponent()
-            .appendingPathComponent("__Snapshots__/KeyScreens/\(screen)")
-        try? FileManager.default.createDirectory(at: baseDir, withIntermediateDirectories: true)
-        return baseDir.appendingPathComponent("\(device)_\(appearance).png")
+        SnapshotTestHelper.snapshotURL(
+            testClass: Self.self,
+            category: "KeyScreens",
+            screen: screen,
+            device: device,
+            appearance: appearance
+        )
     }
 
     // MARK: - Record / compare

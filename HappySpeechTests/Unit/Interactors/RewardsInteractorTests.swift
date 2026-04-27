@@ -11,6 +11,7 @@ final class RewardsInteractorTests: XCTestCase {
 
     // MARK: - Spy
 
+    @MainActor
     private final class SpyPresenter: RewardsPresentationLogic {
         var loadRewardsCalled = false
         var filterCalled = false

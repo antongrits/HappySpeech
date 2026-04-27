@@ -12,6 +12,7 @@ final class BingoInteractorTests: XCTestCase {
 
     // MARK: - Spy
 
+    @MainActor
     private final class SpyPresenter: BingoPresentationLogic {
         var loadGameCalled = false
         var callWordCalled = false

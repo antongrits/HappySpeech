@@ -12,6 +12,7 @@ final class HomeTasksInteractorTests: XCTestCase {
 
     // MARK: - Spy
 
+    @MainActor
     private final class SpyPresenter: HomeTasksPresentationLogic {
         var fetchCalled = false
         var updateCalled = false
