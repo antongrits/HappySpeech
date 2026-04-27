@@ -9,301 +9,1563 @@
       "stageId": "quest_forest",
       "note": "Квест «Лес»: Ляля потерялась в лесу — помоги ей найти дорогу домой.",
       "items": [
-        { "id": "narr-f-0",  "word": "Ляля заблудилась в лесу!",           "hint": "Помоги Ляле. Скажи: «Ляля, не бойся!»", "difficulty": 1 },
-        { "id": "narr-f-1",  "word": "Кто живёт в лесу?",                   "hint": "Назови лесных зверей: лиса, волк, заяц, медведь.", "difficulty": 1 },
-        { "id": "narr-f-2",  "word": "Ляля видит белку с орехами",          "hint": "Скажи: «Белка, белка, где орешки?»", "difficulty": 2 },
-        { "id": "narr-f-3",  "word": "Найди слова с Л: лес, лиса, белка",  "hint": "Лес — Л в начале. Лиса — Л в начале. Белка — Л в середине!", "difficulty": 2 },
-        { "id": "narr-f-4",  "word": "Ляля встречает ёжика",               "hint": "Скажи: «Ёжик несёт грибы в норку».", "difficulty": 2 },
-        { "id": "narr-f-5",  "word": "Посчитай ёжиков: один, два, три...", "hint": "Один ёжик, два ёжика, три ёжика!", "difficulty": 2 },
-        { "id": "narr-f-6",  "word": "Ляля видит речку",                   "hint": "Скажи: «Речка журчит и сверкает!»", "difficulty": 2 },
-        { "id": "narr-f-7",  "word": "Описание реки: какая она?",          "hint": "Речка чистая, холодная, быстрая, синяя.", "difficulty": 3 },
-        { "id": "narr-f-8",  "word": "Кто живёт в речке?",                 "hint": "Рыба, рак, лягушка, утка.", "difficulty": 2 },
-        { "id": "narr-f-9",  "word": "Ляля нашла тропинку!",               "hint": "Скажи: «По тропинке Ляля шла и домой она пришла!»", "difficulty": 3 },
-        { "id": "narr-f-10", "word": "Кто помог Ляле? Расскажи",           "hint": "Белка, ёжик и речка помогли Ляле найти тропинку.", "difficulty": 3 },
-        { "id": "narr-f-11", "word": "Придумай концовку истории",           "hint": "Ляля пришла домой и... что случилось дальше?", "difficulty": 4 }
+        {
+          "id": "narr-f-0",
+          "word": "Ляля заблудилась в лесу!",
+          "hint": "Помоги Ляле. Скажи: «Ляля, не бойся!»",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-f-0.m4a"
+        },
+        {
+          "id": "narr-f-1",
+          "word": "Кто живёт в лесу?",
+          "hint": "Назови лесных зверей: лиса, волк, заяц, медведь.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-f-1.m4a"
+        },
+        {
+          "id": "narr-f-2",
+          "word": "Ляля видит белку с орехами",
+          "hint": "Скажи: «Белка, белка, где орешки?»",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-f-2.m4a"
+        },
+        {
+          "id": "narr-f-3",
+          "word": "Найди слова с Л: лес, лиса, белка",
+          "hint": "Лес — Л в начале. Лиса — Л в начале. Белка — Л в середине!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-f-3.m4a"
+        },
+        {
+          "id": "narr-f-4",
+          "word": "Ляля встречает ёжика",
+          "hint": "Скажи: «Ёжик несёт грибы в норку».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-f-4.m4a"
+        },
+        {
+          "id": "narr-f-5",
+          "word": "Посчитай ёжиков: один, два, три...",
+          "hint": "Один ёжик, два ёжика, три ёжика!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-f-5.m4a"
+        },
+        {
+          "id": "narr-f-6",
+          "word": "Ляля видит речку",
+          "hint": "Скажи: «Речка журчит и сверкает!»",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-f-6.m4a"
+        },
+        {
+          "id": "narr-f-7",
+          "word": "Описание реки: какая она?",
+          "hint": "Речка чистая, холодная, быстрая, синяя.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-f-7.m4a"
+        },
+        {
+          "id": "narr-f-8",
+          "word": "Кто живёт в речке?",
+          "hint": "Рыба, рак, лягушка, утка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-f-8.m4a"
+        },
+        {
+          "id": "narr-f-9",
+          "word": "Ляля нашла тропинку!",
+          "hint": "Скажи: «По тропинке Ляля шла и домой она пришла!»",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-f-9.m4a"
+        },
+        {
+          "id": "narr-f-10",
+          "word": "Кто помог Ляле? Расскажи",
+          "hint": "Белка, ёжик и речка помогли Ляле найти тропинку.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-f-10.m4a"
+        },
+        {
+          "id": "narr-f-11",
+          "word": "Придумай концовку истории",
+          "hint": "Ляля пришла домой и... что случилось дальше?",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-f-11.m4a"
+        }
       ]
     },
     "quest_sea": {
       "stageId": "quest_sea",
       "note": "Квест «Море»: Ляля отправляется на корабле к острову сокровищ.",
       "items": [
-        { "id": "narr-s-0",  "word": "Ляля плывёт на корабле!",            "hint": "Скажи: «Корабль плывёт по синему морю».", "difficulty": 1 },
-        { "id": "narr-s-1",  "word": "Что видно с корабля?",               "hint": "Волны, рыбы, чайки, остров, облака.", "difficulty": 2 },
-        { "id": "narr-s-2",  "word": "Ляля видит кита!",                   "hint": "«Кит плещется в воде» — повтори!", "difficulty": 2 },
-        { "id": "narr-s-3",  "word": "Найди слова с К: кит, корабль, картинка", "hint": "К-И-Т. К-О-Р-А-Б-Л-Ь. Все начинаются с К!", "difficulty": 2 },
-        { "id": "narr-s-4",  "word": "Ляля приплыла на остров!",           "hint": "«Ляля сошла на берег и увидела пальму».", "difficulty": 3 },
-        { "id": "narr-s-5",  "word": "Опиши остров: какой он?",            "hint": "Остров тёплый, солнечный, красивый, маленький.", "difficulty": 3 },
-        { "id": "narr-s-6",  "word": "Ляля нашла сундук!",                 "hint": "«В сундуке лежали монеты и украшения».", "difficulty": 3 },
-        { "id": "narr-s-7",  "word": "Посчитай монеты: один, два...",      "hint": "Одна монета, две монеты, три монеты!", "difficulty": 2 },
-        { "id": "narr-s-8",  "word": "Ляля дарит сокровище другу",        "hint": "Скажи: «Я дарю тебе это сокровище!»", "difficulty": 3 },
-        { "id": "narr-s-9",  "word": "Придумай имя острову",               "hint": "Остров Радости? Солнечный остров? Придумай!", "difficulty": 4 },
-        { "id": "narr-s-10", "word": "Расскажи всю историю про море",      "hint": "Корабль... кит... остров... сундук... монеты... подарок!", "difficulty": 5 }
+        {
+          "id": "narr-s-0",
+          "word": "Ляля плывёт на корабле!",
+          "hint": "Скажи: «Корабль плывёт по синему морю».",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-s-0.m4a"
+        },
+        {
+          "id": "narr-s-1",
+          "word": "Что видно с корабля?",
+          "hint": "Волны, рыбы, чайки, остров, облака.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-s-1.m4a"
+        },
+        {
+          "id": "narr-s-2",
+          "word": "Ляля видит кита!",
+          "hint": "«Кит плещется в воде» — повтори!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-s-2.m4a"
+        },
+        {
+          "id": "narr-s-3",
+          "word": "Найди слова с К: кит, корабль, картинка",
+          "hint": "К-И-Т. К-О-Р-А-Б-Л-Ь. Все начинаются с К!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-s-3.m4a"
+        },
+        {
+          "id": "narr-s-4",
+          "word": "Ляля приплыла на остров!",
+          "hint": "«Ляля сошла на берег и увидела пальму».",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-s-4.m4a"
+        },
+        {
+          "id": "narr-s-5",
+          "word": "Опиши остров: какой он?",
+          "hint": "Остров тёплый, солнечный, красивый, маленький.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-s-5.m4a"
+        },
+        {
+          "id": "narr-s-6",
+          "word": "Ляля нашла сундук!",
+          "hint": "«В сундуке лежали монеты и украшения».",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-s-6.m4a"
+        },
+        {
+          "id": "narr-s-7",
+          "word": "Посчитай монеты: один, два...",
+          "hint": "Одна монета, две монеты, три монеты!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-s-7.m4a"
+        },
+        {
+          "id": "narr-s-8",
+          "word": "Ляля дарит сокровище другу",
+          "hint": "Скажи: «Я дарю тебе это сокровище!»",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-s-8.m4a"
+        },
+        {
+          "id": "narr-s-9",
+          "word": "Придумай имя острову",
+          "hint": "Остров Радости? Солнечный остров? Придумай!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-s-9.m4a"
+        },
+        {
+          "id": "narr-s-10",
+          "word": "Расскажи всю историю про море",
+          "hint": "Корабль... кит... остров... сундук... монеты... подарок!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Narrative/narr-s-10.m4a"
+        }
       ]
     },
     "quest_city": {
       "stageId": "quest_city",
       "note": "Квест «Город»: Ляля идёт по городу и знакомится с профессиями.",
       "items": [
-        { "id": "narr-c-0",  "word": "Ляля вышла в город",                 "hint": "«В городе много домов, машин и людей».", "difficulty": 1 },
-        { "id": "narr-c-1",  "word": "Кого Ляля встретила в городе?",      "hint": "Врач, учитель, пожарный, повар, водитель.", "difficulty": 2 },
-        { "id": "narr-c-2",  "word": "Ляля встретила врача",               "hint": "«Врач лечит людей. У него белый халат».", "difficulty": 2 },
-        { "id": "narr-c-3",  "word": "Что делает врач?",                   "hint": "Врач лечит, осматривает, прописывает лекарства.", "difficulty": 3 },
-        { "id": "narr-c-4",  "word": "Ляля встретила пожарного",           "hint": "«Пожарный тушит огонь. Он очень смелый!»", "difficulty": 2 },
-        { "id": "narr-c-5",  "word": "Найди слово с Ш: пожарный, шлем",   "hint": "Шлем — Ш в начале! Пожарный — нет Ш.", "difficulty": 2 },
-        { "id": "narr-c-6",  "word": "Ляля зашла в магазин",               "hint": "«В магазине продают фрукты, овощи, сок».", "difficulty": 2 },
-        { "id": "narr-c-7",  "word": "Что купила Ляля?",                   "hint": "Яблоко, банан, морковь, апельсин, сок.", "difficulty": 2 },
-        { "id": "narr-c-8",  "word": "Ляля едет в автобусе",               "hint": "«Автобус везёт людей по городу».", "difficulty": 2 },
-        { "id": "narr-c-9",  "word": "Посчитай остановки: раз, два...",    "hint": "Одна остановка, две остановки, три остановки!", "difficulty": 2 },
-        { "id": "narr-c-10", "word": "Ляля вернулась домой",               "hint": "«Дома Ляля рассказала маме про город».", "difficulty": 3 },
-        { "id": "narr-c-11", "word": "Расскажи маме о городе",             "hint": "Врач... пожарный... магазин... автобус... домой!", "difficulty": 4 }
+        {
+          "id": "narr-c-0",
+          "word": "Ляля вышла в город",
+          "hint": "«В городе много домов, машин и людей».",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-c-0.m4a"
+        },
+        {
+          "id": "narr-c-1",
+          "word": "Кого Ляля встретила в городе?",
+          "hint": "Врач, учитель, пожарный, повар, водитель.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-c-1.m4a"
+        },
+        {
+          "id": "narr-c-2",
+          "word": "Ляля встретила врача",
+          "hint": "«Врач лечит людей. У него белый халат».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-c-2.m4a"
+        },
+        {
+          "id": "narr-c-3",
+          "word": "Что делает врач?",
+          "hint": "Врач лечит, осматривает, прописывает лекарства.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-c-3.m4a"
+        },
+        {
+          "id": "narr-c-4",
+          "word": "Ляля встретила пожарного",
+          "hint": "«Пожарный тушит огонь. Он очень смелый!»",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-c-4.m4a"
+        },
+        {
+          "id": "narr-c-5",
+          "word": "Найди слово с Ш: пожарный, шлем",
+          "hint": "Шлем — Ш в начале! Пожарный — нет Ш.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-c-5.m4a"
+        },
+        {
+          "id": "narr-c-6",
+          "word": "Ляля зашла в магазин",
+          "hint": "«В магазине продают фрукты, овощи, сок».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-c-6.m4a"
+        },
+        {
+          "id": "narr-c-7",
+          "word": "Что купила Ляля?",
+          "hint": "Яблоко, банан, морковь, апельсин, сок.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-c-7.m4a"
+        },
+        {
+          "id": "narr-c-8",
+          "word": "Ляля едет в автобусе",
+          "hint": "«Автобус везёт людей по городу».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-c-8.m4a"
+        },
+        {
+          "id": "narr-c-9",
+          "word": "Посчитай остановки: раз, два...",
+          "hint": "Одна остановка, две остановки, три остановки!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-c-9.m4a"
+        },
+        {
+          "id": "narr-c-10",
+          "word": "Ляля вернулась домой",
+          "hint": "«Дома Ляля рассказала маме про город».",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-c-10.m4a"
+        },
+        {
+          "id": "narr-c-11",
+          "word": "Расскажи маме о городе",
+          "hint": "Врач... пожарный... магазин... автобус... домой!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-c-11.m4a"
+        }
       ]
     },
     "quest_farm": {
       "stageId": "quest_farm",
       "note": "Квест «Ферма»: Ляля помогает на ферме и знакомится с животными.",
       "items": [
-        { "id": "narr-fm-0",  "word": "Ляля на ферме!",                     "hint": "«На ферме живут коровы, свиньи, куры, лошади».", "difficulty": 1 },
-        { "id": "narr-fm-1",  "word": "Кто мычит? Кто хрюкает?",           "hint": "Корова — МУУ! Свинья — ХРЮК! Курица — КО-КО!", "difficulty": 1 },
-        { "id": "narr-fm-2",  "word": "Ляля кормит кур",                   "hint": "«Ляля бросила зерно и куры клюют».", "difficulty": 2 },
-        { "id": "narr-fm-3",  "word": "Найди звук К: курица, корова, кот", "hint": "К-У-Р-И-Ц-А. К-О-Р-О-В-А. К-О-Т. Все с К!", "difficulty": 2 },
-        { "id": "narr-fm-4",  "word": "Ляля доит корову",                  "hint": "«Молоко — белое и вкусное».", "difficulty": 2 },
-        { "id": "narr-fm-5",  "word": "Из чего делают масло?",             "hint": "Масло делают из молока! Корова даёт молоко.", "difficulty": 2 },
-        { "id": "narr-fm-6",  "word": "Ляля скачет на лошади",             "hint": "«Лошадь бежит по полю — и-го-го!»", "difficulty": 2 },
-        { "id": "narr-fm-7",  "word": "Описание лошади",                   "hint": "Лошадь красивая, быстрая, сильная, высокая.", "difficulty": 3 },
-        { "id": "narr-fm-8",  "word": "Ляля собирает яйца",                "hint": "«В гнезде лежали белые яйца».", "difficulty": 2 },
-        { "id": "narr-fm-9",  "word": "Сколько яиц: посчитай",             "hint": "Одно яйцо, два яйца, три яйца, четыре яйца!", "difficulty": 2 },
-        { "id": "narr-fm-10", "word": "Ляля прощается с фермой",           "hint": "«До свидания, корова! До свидания, курочка!»", "difficulty": 3 },
-        { "id": "narr-fm-11", "word": "Что Ляля узнала на ферме?",         "hint": "Расскажи: корова, молоко, масло, куры, яйца, лошадь.", "difficulty": 4 }
+        {
+          "id": "narr-fm-0",
+          "word": "Ляля на ферме!",
+          "hint": "«На ферме живут коровы, свиньи, куры, лошади».",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-fm-0.m4a"
+        },
+        {
+          "id": "narr-fm-1",
+          "word": "Кто мычит? Кто хрюкает?",
+          "hint": "Корова — МУУ! Свинья — ХРЮК! Курица — КО-КО!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-fm-1.m4a"
+        },
+        {
+          "id": "narr-fm-2",
+          "word": "Ляля кормит кур",
+          "hint": "«Ляля бросила зерно и куры клюют».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-fm-2.m4a"
+        },
+        {
+          "id": "narr-fm-3",
+          "word": "Найди звук К: курица, корова, кот",
+          "hint": "К-У-Р-И-Ц-А. К-О-Р-О-В-А. К-О-Т. Все с К!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-fm-3.m4a"
+        },
+        {
+          "id": "narr-fm-4",
+          "word": "Ляля доит корову",
+          "hint": "«Молоко — белое и вкусное».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-fm-4.m4a"
+        },
+        {
+          "id": "narr-fm-5",
+          "word": "Из чего делают масло?",
+          "hint": "Масло делают из молока! Корова даёт молоко.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-fm-5.m4a"
+        },
+        {
+          "id": "narr-fm-6",
+          "word": "Ляля скачет на лошади",
+          "hint": "«Лошадь бежит по полю — и-го-го!»",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-fm-6.m4a"
+        },
+        {
+          "id": "narr-fm-7",
+          "word": "Описание лошади",
+          "hint": "Лошадь красивая, быстрая, сильная, высокая.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-fm-7.m4a"
+        },
+        {
+          "id": "narr-fm-8",
+          "word": "Ляля собирает яйца",
+          "hint": "«В гнезде лежали белые яйца».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-fm-8.m4a"
+        },
+        {
+          "id": "narr-fm-9",
+          "word": "Сколько яиц: посчитай",
+          "hint": "Одно яйцо, два яйца, три яйца, четыре яйца!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-fm-9.m4a"
+        },
+        {
+          "id": "narr-fm-10",
+          "word": "Ляля прощается с фермой",
+          "hint": "«До свидания, корова! До свидания, курочка!»",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-fm-10.m4a"
+        },
+        {
+          "id": "narr-fm-11",
+          "word": "Что Ляля узнала на ферме?",
+          "hint": "Расскажи: корова, молоко, масло, куры, яйца, лошадь.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-fm-11.m4a"
+        }
       ]
     },
     "quest_magic": {
       "stageId": "quest_magic",
       "note": "Квест «Волшебный замок»: Ляля помогает принцессе расколдовать замок.",
       "items": [
-        { "id": "narr-m-0",  "word": "Перед Лялей волшебный замок",        "hint": "«Замок высокий, старинный и красивый».", "difficulty": 1 },
-        { "id": "narr-m-1",  "word": "Замок заколдовал злой волшебник",    "hint": "Скажи: «Мы расколдуем замок!»", "difficulty": 2 },
-        { "id": "narr-m-2",  "word": "Первое заклинание: слова на З",      "hint": "Замок, звезда, зеркало, золото — скажи все слова с З!", "difficulty": 2 },
-        { "id": "narr-m-3",  "word": "Второе заклинание: слова на Ч",     "hint": "Чудо, чистый, четыре, черепаха — скажи с Ч!", "difficulty": 2 },
-        { "id": "narr-m-4",  "word": "Ляля встречает принцессу",          "hint": "«Принцесса ждала спасителя сто лет».", "difficulty": 2 },
-        { "id": "narr-m-5",  "word": "Помоги принцессе: скажи комплимент","hint": "«Ты красивая! Ты добрая! Ты умная!»", "difficulty": 2 },
-        { "id": "narr-m-6",  "word": "Третье заклинание: скороговорка",   "hint": "«Шла Саша по шоссе и сосала сушку» — три раза!", "difficulty": 4 },
-        { "id": "narr-m-7",  "word": "Замок расколдован!",                 "hint": "«Ура! Замок ожил и стал светлым!»", "difficulty": 2 },
-        { "id": "narr-m-8",  "word": "Принцесса зовёт на праздник",       "hint": "«На праздник пришли все жители замка».", "difficulty": 3 },
-        { "id": "narr-m-9",  "word": "Кто пришёл на праздник?",            "hint": "Рыцари, феи, гномы, принцессы, драконы — добрые!", "difficulty": 3 },
-        { "id": "narr-m-10", "word": "Тост принцессы на празднике",        "hint": "«Я рада всем гостям! Спасибо Ляле!»", "difficulty": 3 },
-        { "id": "narr-m-11", "word": "Расскажи историю волшебного замка",  "hint": "Замок... заколдовали... заклинания... принцесса... праздник!", "difficulty": 5 }
+        {
+          "id": "narr-m-0",
+          "word": "Перед Лялей волшебный замок",
+          "hint": "«Замок высокий, старинный и красивый».",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-m-0.m4a"
+        },
+        {
+          "id": "narr-m-1",
+          "word": "Замок заколдовал злой волшебник",
+          "hint": "Скажи: «Мы расколдуем замок!»",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-m-1.m4a"
+        },
+        {
+          "id": "narr-m-2",
+          "word": "Первое заклинание: слова на З",
+          "hint": "Замок, звезда, зеркало, золото — скажи все слова с З!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-m-2.m4a"
+        },
+        {
+          "id": "narr-m-3",
+          "word": "Второе заклинание: слова на Ч",
+          "hint": "Чудо, чистый, четыре, черепаха — скажи с Ч!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-m-3.m4a"
+        },
+        {
+          "id": "narr-m-4",
+          "word": "Ляля встречает принцессу",
+          "hint": "«Принцесса ждала спасителя сто лет».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-m-4.m4a"
+        },
+        {
+          "id": "narr-m-5",
+          "word": "Помоги принцессе: скажи комплимент",
+          "hint": "«Ты красивая! Ты добрая! Ты умная!»",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-m-5.m4a"
+        },
+        {
+          "id": "narr-m-6",
+          "word": "Третье заклинание: скороговорка",
+          "hint": "«Шла Саша по шоссе и сосала сушку» — три раза!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-m-6.m4a"
+        },
+        {
+          "id": "narr-m-7",
+          "word": "Замок расколдован!",
+          "hint": "«Ура! Замок ожил и стал светлым!»",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-m-7.m4a"
+        },
+        {
+          "id": "narr-m-8",
+          "word": "Принцесса зовёт на праздник",
+          "hint": "«На праздник пришли все жители замка».",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-m-8.m4a"
+        },
+        {
+          "id": "narr-m-9",
+          "word": "Кто пришёл на праздник?",
+          "hint": "Рыцари, феи, гномы, принцессы, драконы — добрые!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-m-9.m4a"
+        },
+        {
+          "id": "narr-m-10",
+          "word": "Тост принцессы на празднике",
+          "hint": "«Я рада всем гостям! Спасибо Ляле!»",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-m-10.m4a"
+        },
+        {
+          "id": "narr-m-11",
+          "word": "Расскажи историю волшебного замка",
+          "hint": "Замок... заколдовали... заклинания... принцесса... праздник!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Narrative/narr-m-11.m4a"
+        }
       ]
     },
     "quest_space": {
       "stageId": "quest_space",
       "note": "Квест «Космос»: Ляля летит на ракете к звёздам.",
       "items": [
-        { "id": "narr-sp-0",  "word": "Ляля летит в ракете!",              "hint": "«Ракета летит — у-у-у — к звёздам!»", "difficulty": 1 },
-        { "id": "narr-sp-1",  "word": "Что видно из ракеты?",              "hint": "Земля, луна, звёзды, планеты, солнце.", "difficulty": 2 },
-        { "id": "narr-sp-2",  "word": "Найди слова с Р: ракета, Россия",   "hint": "Ракета — Р в начале. Россия — Р в начале!", "difficulty": 2 },
-        { "id": "narr-sp-3",  "word": "Ляля на Луне!",                     "hint": "«На Луне нет воздуха — надо надеть скафандр».", "difficulty": 2 },
-        { "id": "narr-sp-4",  "word": "Опиши Луну: какая она?",            "hint": "Луна круглая, белая, далёкая, холодная.", "difficulty": 3 },
-        { "id": "narr-sp-5",  "word": "Ляля встречает инопланетянина",     "hint": "«Привет! Я с Земли. Ты откуда?»", "difficulty": 2 },
-        { "id": "narr-sp-6",  "word": "Расскажи инопланетянину про Землю", "hint": "На Земле есть вода, воздух, деревья, животные, люди.", "difficulty": 4 },
-        { "id": "narr-sp-7",  "word": "Ляля смотрит на звёзды",           "hint": "«Звёзды яркие и красивые — как огни».", "difficulty": 2 },
-        { "id": "narr-sp-8",  "word": "Посчитай планеты: Земля, Марс...",  "hint": "Земля, Марс, Юпитер — три планеты! Назови ещё.", "difficulty": 3 },
-        { "id": "narr-sp-9",  "word": "Ляля летит домой на Землю",        "hint": "«Земля! Я возвращаюсь домой!»", "difficulty": 2 },
-        { "id": "narr-sp-10", "word": "Что расскажет Ляля маме про космос?","hint": "Ракета, Луна, звёзды, инопланетянин, Земля!", "difficulty": 4 },
-        { "id": "narr-sp-11", "word": "Полная история полёта Ляли",        "hint": "Расскажи всё: старт ракеты → Луна → звёзды → инопланетянин → возвращение.", "difficulty": 5 }
+        {
+          "id": "narr-sp-0",
+          "word": "Ляля летит в ракете!",
+          "hint": "«Ракета летит — у-у-у — к звёздам!»",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-sp-0.m4a"
+        },
+        {
+          "id": "narr-sp-1",
+          "word": "Что видно из ракеты?",
+          "hint": "Земля, луна, звёзды, планеты, солнце.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-sp-1.m4a"
+        },
+        {
+          "id": "narr-sp-2",
+          "word": "Найди слова с Р: ракета, Россия",
+          "hint": "Ракета — Р в начале. Россия — Р в начале!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-sp-2.m4a"
+        },
+        {
+          "id": "narr-sp-3",
+          "word": "Ляля на Луне!",
+          "hint": "«На Луне нет воздуха — надо надеть скафандр».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-sp-3.m4a"
+        },
+        {
+          "id": "narr-sp-4",
+          "word": "Опиши Луну: какая она?",
+          "hint": "Луна круглая, белая, далёкая, холодная.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-sp-4.m4a"
+        },
+        {
+          "id": "narr-sp-5",
+          "word": "Ляля встречает инопланетянина",
+          "hint": "«Привет! Я с Земли. Ты откуда?»",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-sp-5.m4a"
+        },
+        {
+          "id": "narr-sp-6",
+          "word": "Расскажи инопланетянину про Землю",
+          "hint": "На Земле есть вода, воздух, деревья, животные, люди.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-sp-6.m4a"
+        },
+        {
+          "id": "narr-sp-7",
+          "word": "Ляля смотрит на звёзды",
+          "hint": "«Звёзды яркие и красивые — как огни».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-sp-7.m4a"
+        },
+        {
+          "id": "narr-sp-8",
+          "word": "Посчитай планеты: Земля, Марс...",
+          "hint": "Земля, Марс, Юпитер — три планеты! Назови ещё.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-sp-8.m4a"
+        },
+        {
+          "id": "narr-sp-9",
+          "word": "Ляля летит домой на Землю",
+          "hint": "«Земля! Я возвращаюсь домой!»",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-sp-9.m4a"
+        },
+        {
+          "id": "narr-sp-10",
+          "word": "Что расскажет Ляля маме про космос?",
+          "hint": "Ракета, Луна, звёзды, инопланетянин, Земля!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-sp-10.m4a"
+        },
+        {
+          "id": "narr-sp-11",
+          "word": "Полная история полёта Ляли",
+          "hint": "Расскажи всё: старт ракеты → Луна → звёзды → инопланетянин → возвращение.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Narrative/narr-sp-11.m4a"
+        }
       ]
     },
     "retelling": {
       "stageId": "retelling",
       "note": "Пересказ коротких историй — развитие связной речи.",
       "items": [
-        { "id": "narr-rt-0",  "word": "История «Кот и мышка»",            "hint": "Кот сидел у норки. Мышка выбежала. Кот прыгнул. Мышка убежала. Кот остался ни с чем.", "difficulty": 2 },
-        { "id": "narr-rt-1",  "word": "Перескажи «Кот и мышка»",          "hint": "Сначала — кот. Потом — мышка. Потом — что случилось?", "difficulty": 3 },
-        { "id": "narr-rt-2",  "word": "История «Дождь»",                   "hint": "Пошёл дождь. Заяц спрятался под грибом. Ёжик тоже спрятался. Дождь кончился. Все вышли.", "difficulty": 2 },
-        { "id": "narr-rt-3",  "word": "Перескажи «Дождь»",                "hint": "Дождь... гриб... заяц... ёжик... дождь кончился...", "difficulty": 3 },
-        { "id": "narr-rt-4",  "word": "История «Три медведя»",             "hint": "Машенька пришла в дом медведей. Поела кашу. Поспала. Медведи вернулись. Машенька убежала.", "difficulty": 3 },
-        { "id": "narr-rt-5",  "word": "Перескажи «Три медведя»",           "hint": "Домик... три стула... три кровати... три чашки... Машенька!", "difficulty": 4 },
-        { "id": "narr-rt-6",  "word": "История «Репка»",                   "hint": "Посадил дед репку. Выросла большая. Тянут-потянут — вытянуть не могут. Пришла бабка...", "difficulty": 2 },
-        { "id": "narr-rt-7",  "word": "Перескажи «Репку» по порядку",      "hint": "Дед → бабка → внучка → жучка → кошка → мышка!", "difficulty": 3 },
-        { "id": "narr-rt-8",  "word": "История «Курочка Ряба»",            "hint": "Снесла курочка яичко. Не простое — золотое. Мышка хвостиком смахнула. Разбилось. Не плачьте!", "difficulty": 2 },
-        { "id": "narr-rt-9",  "word": "Перескажи «Курочку Рябу»",          "hint": "Курочка... яичко... мышка... разбилось... новое яичко!", "difficulty": 3 },
-        { "id": "narr-rt-10", "word": "Придумай свою короткую историю",    "hint": "Кто главный герой? Что случилось? Чем кончилось?", "difficulty": 5 },
-        { "id": "narr-rt-11", "word": "История про себя: что я делал сегодня?", "hint": "Утром я... потом я... а вечером я...", "difficulty": 4 }
+        {
+          "id": "narr-rt-0",
+          "word": "История «Кот и мышка»",
+          "hint": "Кот сидел у норки. Мышка выбежала. Кот прыгнул. Мышка убежала. Кот остался ни с чем.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-rt-0.m4a"
+        },
+        {
+          "id": "narr-rt-1",
+          "word": "Перескажи «Кот и мышка»",
+          "hint": "Сначала — кот. Потом — мышка. Потом — что случилось?",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-rt-1.m4a"
+        },
+        {
+          "id": "narr-rt-2",
+          "word": "История «Дождь»",
+          "hint": "Пошёл дождь. Заяц спрятался под грибом. Ёжик тоже спрятался. Дождь кончился. Все вышли.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-rt-2.m4a"
+        },
+        {
+          "id": "narr-rt-3",
+          "word": "Перескажи «Дождь»",
+          "hint": "Дождь... гриб... заяц... ёжик... дождь кончился...",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-rt-3.m4a"
+        },
+        {
+          "id": "narr-rt-4",
+          "word": "История «Три медведя»",
+          "hint": "Машенька пришла в дом медведей. Поела кашу. Поспала. Медведи вернулись. Машенька убежала.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-rt-4.m4a"
+        },
+        {
+          "id": "narr-rt-5",
+          "word": "Перескажи «Три медведя»",
+          "hint": "Домик... три стула... три кровати... три чашки... Машенька!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-rt-5.m4a"
+        },
+        {
+          "id": "narr-rt-6",
+          "word": "История «Репка»",
+          "hint": "Посадил дед репку. Выросла большая. Тянут-потянут — вытянуть не могут. Пришла бабка...",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-rt-6.m4a"
+        },
+        {
+          "id": "narr-rt-7",
+          "word": "Перескажи «Репку» по порядку",
+          "hint": "Дед → бабка → внучка → жучка → кошка → мышка!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-rt-7.m4a"
+        },
+        {
+          "id": "narr-rt-8",
+          "word": "История «Курочка Ряба»",
+          "hint": "Снесла курочка яичко. Не простое — золотое. Мышка хвостиком смахнула. Разбилось. Не плачьте!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-rt-8.m4a"
+        },
+        {
+          "id": "narr-rt-9",
+          "word": "Перескажи «Курочку Рябу»",
+          "hint": "Курочка... яичко... мышка... разбилось... новое яичко!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-rt-9.m4a"
+        },
+        {
+          "id": "narr-rt-10",
+          "word": "Придумай свою короткую историю",
+          "hint": "Кто главный герой? Что случилось? Чем кончилось?",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Narrative/narr-rt-10.m4a"
+        },
+        {
+          "id": "narr-rt-11",
+          "word": "История про себя: что я делал сегодня?",
+          "hint": "Утром я... потом я... а вечером я...",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-rt-11.m4a"
+        }
       ]
     },
     "description": {
       "stageId": "description",
       "note": "Описание картинок и предметов — развитие монологической речи.",
       "items": [
-        { "id": "narr-d-0",  "word": "Опиши кошку",                        "hint": "Кошка... какая? (мягкая, пушистая). Что делает? (мурлычет, спит).", "difficulty": 2 },
-        { "id": "narr-d-1",  "word": "Опиши яблоко",                       "hint": "Яблоко... цвет (красное, зелёное). Форма (круглое). Вкус (сладкое).", "difficulty": 2 },
-        { "id": "narr-d-2",  "word": "Опиши лето",                         "hint": "Летом... (тепло, солнечно, можно купаться, растут цветы).", "difficulty": 2 },
-        { "id": "narr-d-3",  "word": "Опиши зиму",                         "hint": "Зимой... (холодно, снег, мороз, лёд, санки, ёлка).", "difficulty": 2 },
-        { "id": "narr-d-4",  "word": "Опиши своего лучшего друга",          "hint": "Мой друг... имя, внешность, характер, что любит делать.", "difficulty": 3 },
-        { "id": "narr-d-5",  "word": "Опиши любимую игрушку",              "hint": "Моя игрушка... название, цвет, форма, почему нравится.", "difficulty": 3 },
-        { "id": "narr-d-6",  "word": "Опиши картинку «лес»",               "hint": "На картинке лес. Деревья высокие. Между деревьями тропинка. Птицы поют.", "difficulty": 3 },
-        { "id": "narr-d-7",  "word": "Сравни кошку и собаку",              "hint": "Кошка маленькая, собака большая. Кошка мяукает, собака лает.", "difficulty": 4 },
-        { "id": "narr-d-8",  "word": "Сравни лето и зиму",                 "hint": "Летом тепло, зимой холодно. Летом цветы, зимой снег.", "difficulty": 4 },
-        { "id": "narr-d-9",  "word": "Опиши свой день рождения",           "hint": "Когда? Кто пришёл? Что ели? Что дарили? Что делали?", "difficulty": 4 },
-        { "id": "narr-d-10", "word": "Опиши свою комнату",                 "hint": "В моей комнате есть... кровать, стол, игрушки, окно...", "difficulty": 4 },
-        { "id": "narr-d-11", "word": "Опиши любимое время года",           "hint": "Моё любимое время года... потому что... тогда можно...", "difficulty": 4 }
+        {
+          "id": "narr-d-0",
+          "word": "Опиши кошку",
+          "hint": "Кошка... какая? (мягкая, пушистая). Что делает? (мурлычет, спит).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-d-0.m4a"
+        },
+        {
+          "id": "narr-d-1",
+          "word": "Опиши яблоко",
+          "hint": "Яблоко... цвет (красное, зелёное). Форма (круглое). Вкус (сладкое).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-d-1.m4a"
+        },
+        {
+          "id": "narr-d-2",
+          "word": "Опиши лето",
+          "hint": "Летом... (тепло, солнечно, можно купаться, растут цветы).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-d-2.m4a"
+        },
+        {
+          "id": "narr-d-3",
+          "word": "Опиши зиму",
+          "hint": "Зимой... (холодно, снег, мороз, лёд, санки, ёлка).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-d-3.m4a"
+        },
+        {
+          "id": "narr-d-4",
+          "word": "Опиши своего лучшего друга",
+          "hint": "Мой друг... имя, внешность, характер, что любит делать.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-d-4.m4a"
+        },
+        {
+          "id": "narr-d-5",
+          "word": "Опиши любимую игрушку",
+          "hint": "Моя игрушка... название, цвет, форма, почему нравится.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-d-5.m4a"
+        },
+        {
+          "id": "narr-d-6",
+          "word": "Опиши картинку «лес»",
+          "hint": "На картинке лес. Деревья высокие. Между деревьями тропинка. Птицы поют.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-d-6.m4a"
+        },
+        {
+          "id": "narr-d-7",
+          "word": "Сравни кошку и собаку",
+          "hint": "Кошка маленькая, собака большая. Кошка мяукает, собака лает.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-d-7.m4a"
+        },
+        {
+          "id": "narr-d-8",
+          "word": "Сравни лето и зиму",
+          "hint": "Летом тепло, зимой холодно. Летом цветы, зимой снег.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-d-8.m4a"
+        },
+        {
+          "id": "narr-d-9",
+          "word": "Опиши свой день рождения",
+          "hint": "Когда? Кто пришёл? Что ели? Что дарили? Что делали?",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-d-9.m4a"
+        },
+        {
+          "id": "narr-d-10",
+          "word": "Опиши свою комнату",
+          "hint": "В моей комнате есть... кровать, стол, игрушки, окно...",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-d-10.m4a"
+        },
+        {
+          "id": "narr-d-11",
+          "word": "Опиши любимое время года",
+          "hint": "Моё любимое время года... потому что... тогда можно...",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-d-11.m4a"
+        }
       ]
     },
     "quest_animals": {
       "stageId": "quest_animals",
       "note": "Квест «Зоопарк»: Ляля идёт в зоопарк и знакомится с животными — звукоподражания, описания, сравнения.",
       "items": [
-        { "id": "narr-an-0",  "word": "Ляля в зоопарке!",                    "hint": "«В зоопарке живут разные животные со всего мира».", "difficulty": 1 },
-        { "id": "narr-an-1",  "word": "Лев рычит — р-р-р!",                  "hint": "Вдохни. Рычи как лев: Р-Р-Р! Громко и грозно. Повтори три раза.", "difficulty": 2 },
-        { "id": "narr-an-2",  "word": "Слон трубит — ту-ту-ту!",             "hint": "Вдохни. Тяни через нос и рот сразу: туу-туу-туу. Как слон.", "difficulty": 2 },
-        { "id": "narr-an-3",  "word": "Жираф молчит и ест листья",           "hint": "«Жираф высокий — он достаёт листья с самых высоких деревьев».", "difficulty": 2 },
-        { "id": "narr-an-4",  "word": "Обезьяна прыгает",                    "hint": "«Обезьяна прыгает и кричит: у-у-у!» — повтори с голосом.", "difficulty": 2 },
-        { "id": "narr-an-5",  "word": "Опиши льва: какой он?",               "hint": "Лев большой, рыжий, грозный, гривастый, сильный.", "difficulty": 3 },
-        { "id": "narr-an-6",  "word": "Сравни слона и мышку",                "hint": "Слон большой, мышка маленькая. Слон тяжёлый, мышка лёгкая.", "difficulty": 3 },
-        { "id": "narr-an-7",  "word": "Что едят животные?",                  "hint": "Лев — мясо. Жираф — листья. Обезьяна — бананы. Слон — ветки.", "difficulty": 2 },
-        { "id": "narr-an-8",  "word": "Ляля встречает пингвина",             "hint": "«Пингвин смешно переваливается, но прекрасно плавает».", "difficulty": 3 },
-        { "id": "narr-an-9",  "word": "Придумай имя пингвину",               "hint": "Как зовут пингвина? Пиня? Павлик? Придумай и объясни!", "difficulty": 3 },
-        { "id": "narr-an-10", "word": "Какое животное любимое у Ляли?",      "hint": "Ляля любит... потому что... оно... умеет... выглядит...", "difficulty": 4 },
-        { "id": "narr-an-11", "word": "Расскажи про поход в зоопарк",        "hint": "Лев... слон... жираф... обезьяна... пингвин... вот и всё!", "difficulty": 5 }
+        {
+          "id": "narr-an-0",
+          "word": "Ляля в зоопарке!",
+          "hint": "«В зоопарке живут разные животные со всего мира».",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-an-0.m4a"
+        },
+        {
+          "id": "narr-an-1",
+          "word": "Лев рычит — р-р-р!",
+          "hint": "Вдохни. Рычи как лев: Р-Р-Р! Громко и грозно. Повтори три раза.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-an-1.m4a"
+        },
+        {
+          "id": "narr-an-2",
+          "word": "Слон трубит — ту-ту-ту!",
+          "hint": "Вдохни. Тяни через нос и рот сразу: туу-туу-туу. Как слон.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-an-2.m4a"
+        },
+        {
+          "id": "narr-an-3",
+          "word": "Жираф молчит и ест листья",
+          "hint": "«Жираф высокий — он достаёт листья с самых высоких деревьев».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-an-3.m4a"
+        },
+        {
+          "id": "narr-an-4",
+          "word": "Обезьяна прыгает",
+          "hint": "«Обезьяна прыгает и кричит: у-у-у!» — повтори с голосом.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-an-4.m4a"
+        },
+        {
+          "id": "narr-an-5",
+          "word": "Опиши льва: какой он?",
+          "hint": "Лев большой, рыжий, грозный, гривастый, сильный.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-an-5.m4a"
+        },
+        {
+          "id": "narr-an-6",
+          "word": "Сравни слона и мышку",
+          "hint": "Слон большой, мышка маленькая. Слон тяжёлый, мышка лёгкая.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-an-6.m4a"
+        },
+        {
+          "id": "narr-an-7",
+          "word": "Что едят животные?",
+          "hint": "Лев — мясо. Жираф — листья. Обезьяна — бананы. Слон — ветки.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-an-7.m4a"
+        },
+        {
+          "id": "narr-an-8",
+          "word": "Ляля встречает пингвина",
+          "hint": "«Пингвин смешно переваливается, но прекрасно плавает».",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-an-8.m4a"
+        },
+        {
+          "id": "narr-an-9",
+          "word": "Придумай имя пингвину",
+          "hint": "Как зовут пингвина? Пиня? Павлик? Придумай и объясни!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-an-9.m4a"
+        },
+        {
+          "id": "narr-an-10",
+          "word": "Какое животное любимое у Ляли?",
+          "hint": "Ляля любит... потому что... оно... умеет... выглядит...",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-an-10.m4a"
+        },
+        {
+          "id": "narr-an-11",
+          "word": "Расскажи про поход в зоопарк",
+          "hint": "Лев... слон... жираф... обезьяна... пингвин... вот и всё!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Narrative/narr-an-11.m4a"
+        }
       ]
     },
     "quest_home": {
       "stageId": "quest_home",
       "note": "Квест «Дома у Ляли»: изучаем комнаты, предметы быта, помогаем Ляле убраться.",
       "items": [
-        { "id": "narr-h-0",  "word": "Дома у Ляли",                          "hint": "«У Ляли уютный дом. В нём много комнат».", "difficulty": 1 },
-        { "id": "narr-h-1",  "word": "Что есть в кухне?",                    "hint": "Плита, холодильник, стол, чашки, кастрюля, ложки.", "difficulty": 1 },
-        { "id": "narr-h-2",  "word": "Ляля готовит суп",                     "hint": "«В кастрюле варится суп. Морковка, картошка, лук».", "difficulty": 2 },
-        { "id": "narr-h-3",  "word": "Что есть в детской комнате?",          "hint": "Кровать, игрушки, книжки, стол, шкаф, коврик.", "difficulty": 1 },
-        { "id": "narr-h-4",  "word": "Ляля убирает игрушки",                 "hint": "«Ляля складывает кубики, машинки и мишку в ящик».", "difficulty": 2 },
-        { "id": "narr-h-5",  "word": "Что есть в ванной комнате?",           "hint": "Ванна, душ, зеркало, полотенце, мыло, зубная щётка.", "difficulty": 2 },
-        { "id": "narr-h-6",  "word": "Ляля умывается",                       "hint": "«Ляля моет руки мылом, умывает лицо, вытирается полотенцем».", "difficulty": 2 },
-        { "id": "narr-h-7",  "word": "Что делают вечером дома?",             "hint": "Ужинают, смотрят книжки, купаются, ложатся спать.", "difficulty": 2 },
-        { "id": "narr-h-8",  "word": "Ляля читает книжку",                   "hint": "«Ляля открыла книгу. Там картинки и буквы».", "difficulty": 2 },
-        { "id": "narr-h-9",  "word": "О чём книжка у Ляли?",                "hint": "В книжке... животные? Сказка? Стихи? Расскажи что представил!", "difficulty": 3 },
-        { "id": "narr-h-10", "word": "Опиши любимый уголок дома",           "hint": "Мой любимый уголок... там стоит... я там люблю...", "difficulty": 4 },
-        { "id": "narr-h-11", "word": "Расскажи, как провела вечер Ляля",    "hint": "Суп... игрушки... ванная... книжка... и спать!", "difficulty": 4 }
+        {
+          "id": "narr-h-0",
+          "word": "Дома у Ляли",
+          "hint": "«У Ляли уютный дом. В нём много комнат».",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-h-0.m4a"
+        },
+        {
+          "id": "narr-h-1",
+          "word": "Что есть в кухне?",
+          "hint": "Плита, холодильник, стол, чашки, кастрюля, ложки.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-h-1.m4a"
+        },
+        {
+          "id": "narr-h-2",
+          "word": "Ляля готовит суп",
+          "hint": "«В кастрюле варится суп. Морковка, картошка, лук».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-h-2.m4a"
+        },
+        {
+          "id": "narr-h-3",
+          "word": "Что есть в детской комнате?",
+          "hint": "Кровать, игрушки, книжки, стол, шкаф, коврик.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-h-3.m4a"
+        },
+        {
+          "id": "narr-h-4",
+          "word": "Ляля убирает игрушки",
+          "hint": "«Ляля складывает кубики, машинки и мишку в ящик».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-h-4.m4a"
+        },
+        {
+          "id": "narr-h-5",
+          "word": "Что есть в ванной комнате?",
+          "hint": "Ванна, душ, зеркало, полотенце, мыло, зубная щётка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-h-5.m4a"
+        },
+        {
+          "id": "narr-h-6",
+          "word": "Ляля умывается",
+          "hint": "«Ляля моет руки мылом, умывает лицо, вытирается полотенцем».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-h-6.m4a"
+        },
+        {
+          "id": "narr-h-7",
+          "word": "Что делают вечером дома?",
+          "hint": "Ужинают, смотрят книжки, купаются, ложатся спать.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-h-7.m4a"
+        },
+        {
+          "id": "narr-h-8",
+          "word": "Ляля читает книжку",
+          "hint": "«Ляля открыла книгу. Там картинки и буквы».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-h-8.m4a"
+        },
+        {
+          "id": "narr-h-9",
+          "word": "О чём книжка у Ляли?",
+          "hint": "В книжке... животные? Сказка? Стихи? Расскажи что представил!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-h-9.m4a"
+        },
+        {
+          "id": "narr-h-10",
+          "word": "Опиши любимый уголок дома",
+          "hint": "Мой любимый уголок... там стоит... я там люблю...",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-h-10.m4a"
+        },
+        {
+          "id": "narr-h-11",
+          "word": "Расскажи, как провела вечер Ляля",
+          "hint": "Суп... игрушки... ванная... книжка... и спать!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-h-11.m4a"
+        }
       ]
     },
     "quest_seasons": {
       "stageId": "quest_seasons",
       "note": "Квест «Времена года»: Ляля путешествует по четырём сезонам и рассказывает о каждом.",
       "items": [
-        { "id": "narr-ss-0",  "word": "Ляля путешествует по временам года!", "hint": "«Четыре времени года: весна, лето, осень, зима».", "difficulty": 1 },
-        { "id": "narr-ss-1",  "word": "Весна — что изменилось?",             "hint": "Растаял снег, потекли ручьи, распустились цветы, запели птицы.", "difficulty": 2 },
-        { "id": "narr-ss-2",  "word": "Ляля гуляет весной",                  "hint": "«Весной тепло. Ляля нашла первый цветок — подснежник!»", "difficulty": 2 },
-        { "id": "narr-ss-3",  "word": "Лето — что делает Ляля?",             "hint": "Купается, загорает, ест мороженое, играет в мяч, рвёт ягоды.", "difficulty": 2 },
-        { "id": "narr-ss-4",  "word": "Опиши летний день",                   "hint": "Летом... тепло... солнечно... можно... вкусно... весело...", "difficulty": 3 },
-        { "id": "narr-ss-5",  "word": "Осень — листья летят",                "hint": "«Осенью листья жёлтые, красные и оранжевые. Они кружатся и падают».", "difficulty": 2 },
-        { "id": "narr-ss-6",  "word": "Ляля собирает листья",                "hint": "«Ляля собрала букет из осенних листьев: дуб, клён, берёза».", "difficulty": 2 },
-        { "id": "narr-ss-7",  "word": "Зима — что произошло?",               "hint": "Выпал снег, замёрзли реки, птицы улетели, дети катаются на санках.", "difficulty": 2 },
-        { "id": "narr-ss-8",  "word": "Ляля лепит снеговика",                "hint": "«Один шар, второй шар, третий шар. Морковка-нос, шапка, шарф».", "difficulty": 2 },
-        { "id": "narr-ss-9",  "word": "Любимое время года — почему?",        "hint": "Моё любимое — лето (зима/весна/осень), потому что... тогда...", "difficulty": 3 },
-        { "id": "narr-ss-10", "word": "Сравни лето и зиму",                  "hint": "Летом тепло и зелено, зимой холодно и бело. Летом купаются, зимой катаются.", "difficulty": 4 },
-        { "id": "narr-ss-11", "word": "Расскажи о всех четырёх сезонах",     "hint": "Весна... лето... осень... зима... у каждого свои признаки!", "difficulty": 5 }
+        {
+          "id": "narr-ss-0",
+          "word": "Ляля путешествует по временам года!",
+          "hint": "«Четыре времени года: весна, лето, осень, зима».",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-ss-0.m4a"
+        },
+        {
+          "id": "narr-ss-1",
+          "word": "Весна — что изменилось?",
+          "hint": "Растаял снег, потекли ручьи, распустились цветы, запели птицы.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-ss-1.m4a"
+        },
+        {
+          "id": "narr-ss-2",
+          "word": "Ляля гуляет весной",
+          "hint": "«Весной тепло. Ляля нашла первый цветок — подснежник!»",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-ss-2.m4a"
+        },
+        {
+          "id": "narr-ss-3",
+          "word": "Лето — что делает Ляля?",
+          "hint": "Купается, загорает, ест мороженое, играет в мяч, рвёт ягоды.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-ss-3.m4a"
+        },
+        {
+          "id": "narr-ss-4",
+          "word": "Опиши летний день",
+          "hint": "Летом... тепло... солнечно... можно... вкусно... весело...",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-ss-4.m4a"
+        },
+        {
+          "id": "narr-ss-5",
+          "word": "Осень — листья летят",
+          "hint": "«Осенью листья жёлтые, красные и оранжевые. Они кружатся и падают».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-ss-5.m4a"
+        },
+        {
+          "id": "narr-ss-6",
+          "word": "Ляля собирает листья",
+          "hint": "«Ляля собрала букет из осенних листьев: дуб, клён, берёза».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-ss-6.m4a"
+        },
+        {
+          "id": "narr-ss-7",
+          "word": "Зима — что произошло?",
+          "hint": "Выпал снег, замёрзли реки, птицы улетели, дети катаются на санках.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-ss-7.m4a"
+        },
+        {
+          "id": "narr-ss-8",
+          "word": "Ляля лепит снеговика",
+          "hint": "«Один шар, второй шар, третий шар. Морковка-нос, шапка, шарф».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-ss-8.m4a"
+        },
+        {
+          "id": "narr-ss-9",
+          "word": "Любимое время года — почему?",
+          "hint": "Моё любимое — лето (зима/весна/осень), потому что... тогда...",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-ss-9.m4a"
+        },
+        {
+          "id": "narr-ss-10",
+          "word": "Сравни лето и зиму",
+          "hint": "Летом тепло и зелено, зимой холодно и бело. Летом купаются, зимой катаются.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-ss-10.m4a"
+        },
+        {
+          "id": "narr-ss-11",
+          "word": "Расскажи о всех четырёх сезонах",
+          "hint": "Весна... лето... осень... зима... у каждого свои признаки!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Narrative/narr-ss-11.m4a"
+        }
       ]
     },
     "soundimitation": {
       "stageId": "soundimitation",
       "note": "Звукоподражания с нарративом — ребёнок озвучивает сцену вместе с Лялей.",
       "items": [
-        { "id": "narr-si-0",  "word": "Дождик стучит: кап-кап-кап",         "hint": "Повтори: кап-кап-кап. Быстрее: кап-кап-кап-кап! Дождь усиливается.", "difficulty": 1 },
-        { "id": "narr-si-1",  "word": "Гром гремит: бах-бах!",               "hint": "Глубокий вдох. Громко: БАХ! Потом тише: бах... Гром вдали.", "difficulty": 2 },
-        { "id": "narr-si-2",  "word": "Ручей журчит: жур-жур-жур",          "hint": "Тихо и быстро: жур-жур-жур. Как вода бежит по камешкам.", "difficulty": 2 },
-        { "id": "narr-si-3",  "word": "Ветер воет: у-у-у!",                  "hint": "Протяжно и грустно: у-у-у-у. Ветер плачет за окном.", "difficulty": 2 },
-        { "id": "narr-si-4",  "word": "Листья шуршат: ш-ш-ш",               "hint": "Тихо и долго: шшшш. Как листья трутся под ногами.", "difficulty": 2 },
-        { "id": "narr-si-5",  "word": "Птичка поёт: тюи-тюи-тюи",           "hint": "Высоко и весело: тюи-тюи-тюи. Птичка рада весне!", "difficulty": 2 },
-        { "id": "narr-si-6",  "word": "Кукушка кукует: ку-ку, ку-ку",       "hint": "Ку-ку! Ку-ку! Кукушка спрашивает: сколько лет тебе?", "difficulty": 1 },
-        { "id": "narr-si-7",  "word": "Пчёлы летят: ж-ж-ж",                 "hint": "Тяни долго: жжжжж. Пчела летит к цветку за мёдом.", "difficulty": 2 },
-        { "id": "narr-si-8",  "word": "Кошка мурлычет: муррр",               "hint": "Закрой рот — мурлыкай: мурр-мурр-мурр. Кошка довольна.", "difficulty": 2 },
-        { "id": "narr-si-9",  "word": "Собака лает: гав-гав!",               "hint": "Звонко и резко: гав-гав! Потом тихо: гав... Услышала хозяина.", "difficulty": 1 },
-        { "id": "narr-si-10", "word": "Корова мычит: му-у-у",                "hint": "Низко и протяжно: му-у-у. Корова зовёт телёнка.", "difficulty": 1 },
-        { "id": "narr-si-11", "word": "Свинья хрюкает: хрю-хрю",            "hint": "Носом: хрю-хрю. Свинья нашла лужу — счастлива!", "difficulty": 2 },
-        { "id": "narr-si-12", "word": "Лягушка квакает: ква-ква-ква",        "hint": "Резко и весело: ква-ква-ква! Лягушки поют у пруда.", "difficulty": 1 },
-        { "id": "narr-si-13", "word": "Волк воет: ааа-ааа-ааа",             "hint": "Тихо → громко → тихо: аа-АА-аа. Волк воет на луну.", "difficulty": 3 },
-        { "id": "narr-si-14", "word": "Медведь рычит: р-р-р-р",             "hint": "Низко и страшно: р-р-р. Медведь проснулся после зимы.", "difficulty": 2 },
-        { "id": "narr-si-15", "word": "Поезд едет: чух-чух-чух",            "hint": "Ритмично: чух-чух-чух-чух. Поезд набирает скорость!", "difficulty": 2 },
-        { "id": "narr-si-16", "word": "Машина гудит: би-би-би!",            "hint": "Коротко и резко: би-би! Машина пропускает пешехода.", "difficulty": 1 },
-        { "id": "narr-si-17", "word": "Самолёт летит: у-у-у-у-у",           "hint": "Нарастающий гул: у-у-У-У-У. Самолёт летит в небо.", "difficulty": 2 },
-        { "id": "narr-si-18", "word": "Мотоцикл: тр-тр-тр-тр",             "hint": "Вибрируй губами быстро: тр-тр-тр. Мотоцикл мчится.", "difficulty": 3 },
-        { "id": "narr-si-19", "word": "Колокол звонит: бомм-бомм-бомм",     "hint": "С голосом низко: бомм! Ещё: бомм! Колокол в церкви.", "difficulty": 3 },
-        { "id": "narr-si-20", "word": "Сцена в лесу — всё вместе!",         "hint": "Птичка тюи... ёжик пффф... ручей жур-жур... ветер у-у. Разыграй сцену!", "difficulty": 4 }
+        {
+          "id": "narr-si-0",
+          "word": "Дождик стучит: кап-кап-кап",
+          "hint": "Повтори: кап-кап-кап. Быстрее: кап-кап-кап-кап! Дождь усиливается.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-si-0.m4a"
+        },
+        {
+          "id": "narr-si-1",
+          "word": "Гром гремит: бах-бах!",
+          "hint": "Глубокий вдох. Громко: БАХ! Потом тише: бах... Гром вдали.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-si-1.m4a"
+        },
+        {
+          "id": "narr-si-2",
+          "word": "Ручей журчит: жур-жур-жур",
+          "hint": "Тихо и быстро: жур-жур-жур. Как вода бежит по камешкам.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-si-2.m4a"
+        },
+        {
+          "id": "narr-si-3",
+          "word": "Ветер воет: у-у-у!",
+          "hint": "Протяжно и грустно: у-у-у-у. Ветер плачет за окном.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-si-3.m4a"
+        },
+        {
+          "id": "narr-si-4",
+          "word": "Листья шуршат: ш-ш-ш",
+          "hint": "Тихо и долго: шшшш. Как листья трутся под ногами.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-si-4.m4a"
+        },
+        {
+          "id": "narr-si-5",
+          "word": "Птичка поёт: тюи-тюи-тюи",
+          "hint": "Высоко и весело: тюи-тюи-тюи. Птичка рада весне!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-si-5.m4a"
+        },
+        {
+          "id": "narr-si-6",
+          "word": "Кукушка кукует: ку-ку, ку-ку",
+          "hint": "Ку-ку! Ку-ку! Кукушка спрашивает: сколько лет тебе?",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-si-6.m4a"
+        },
+        {
+          "id": "narr-si-7",
+          "word": "Пчёлы летят: ж-ж-ж",
+          "hint": "Тяни долго: жжжжж. Пчела летит к цветку за мёдом.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-si-7.m4a"
+        },
+        {
+          "id": "narr-si-8",
+          "word": "Кошка мурлычет: муррр",
+          "hint": "Закрой рот — мурлыкай: мурр-мурр-мурр. Кошка довольна.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-si-8.m4a"
+        },
+        {
+          "id": "narr-si-9",
+          "word": "Собака лает: гав-гав!",
+          "hint": "Звонко и резко: гав-гав! Потом тихо: гав... Услышала хозяина.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-si-9.m4a"
+        },
+        {
+          "id": "narr-si-10",
+          "word": "Корова мычит: му-у-у",
+          "hint": "Низко и протяжно: му-у-у. Корова зовёт телёнка.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-si-10.m4a"
+        },
+        {
+          "id": "narr-si-11",
+          "word": "Свинья хрюкает: хрю-хрю",
+          "hint": "Носом: хрю-хрю. Свинья нашла лужу — счастлива!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-si-11.m4a"
+        },
+        {
+          "id": "narr-si-12",
+          "word": "Лягушка квакает: ква-ква-ква",
+          "hint": "Резко и весело: ква-ква-ква! Лягушки поют у пруда.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-si-12.m4a"
+        },
+        {
+          "id": "narr-si-13",
+          "word": "Волк воет: ааа-ааа-ааа",
+          "hint": "Тихо → громко → тихо: аа-АА-аа. Волк воет на луну.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-si-13.m4a"
+        },
+        {
+          "id": "narr-si-14",
+          "word": "Медведь рычит: р-р-р-р",
+          "hint": "Низко и страшно: р-р-р. Медведь проснулся после зимы.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-si-14.m4a"
+        },
+        {
+          "id": "narr-si-15",
+          "word": "Поезд едет: чух-чух-чух",
+          "hint": "Ритмично: чух-чух-чух-чух. Поезд набирает скорость!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-si-15.m4a"
+        },
+        {
+          "id": "narr-si-16",
+          "word": "Машина гудит: би-би-би!",
+          "hint": "Коротко и резко: би-би! Машина пропускает пешехода.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-si-16.m4a"
+        },
+        {
+          "id": "narr-si-17",
+          "word": "Самолёт летит: у-у-у-у-у",
+          "hint": "Нарастающий гул: у-у-У-У-У. Самолёт летит в небо.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-si-17.m4a"
+        },
+        {
+          "id": "narr-si-18",
+          "word": "Мотоцикл: тр-тр-тр-тр",
+          "hint": "Вибрируй губами быстро: тр-тр-тр. Мотоцикл мчится.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-si-18.m4a"
+        },
+        {
+          "id": "narr-si-19",
+          "word": "Колокол звонит: бомм-бомм-бомм",
+          "hint": "С голосом низко: бомм! Ещё: бомм! Колокол в церкви.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-si-19.m4a"
+        },
+        {
+          "id": "narr-si-20",
+          "word": "Сцена в лесу — всё вместе!",
+          "hint": "Птичка тюи... ёжик пффф... ручей жур-жур... ветер у-у. Разыграй сцену!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-si-20.m4a"
+        }
       ]
     },
     "mini_stories": {
       "stageId": "mini_stories",
       "note": "Мини-истории: Ляля рассказывает короткие истории — ребёнок повторяет, дополняет, заканчивает.",
       "items": [
-        { "id": "narr-ms-0",  "word": "История «Котёнок и молоко»",          "hint": "Котёнок увидел молоко. Подошёл. Понюхал. Попробовал. Вкусно! Вылакал всё.", "difficulty": 2 },
-        { "id": "narr-ms-1",  "word": "Перескажи «Котёнок и молоко»",        "hint": "Котёнок... увидел... подошёл... понюхал... попробовал... вылакал!", "difficulty": 3 },
-        { "id": "narr-ms-2",  "word": "История «Маша и гриб»",               "hint": "Маша пошла в лес. Нашла гриб. Большой! Срезала. Принесла домой. Мама обрадовалась.", "difficulty": 2 },
-        { "id": "narr-ms-3",  "word": "Перескажи «Маша и гриб»",             "hint": "Маша... лес... гриб... срезала... принесла... мама...", "difficulty": 3 },
-        { "id": "narr-ms-4",  "word": "История «Снежный ком»",               "hint": "Дети лепили снеговика. Один ком — маленький. Второй — побольше. Третий — большой. Красавец!", "difficulty": 2 },
-        { "id": "narr-ms-5",  "word": "Перескажи «Снежный ком»",             "hint": "Дети... ком маленький... больше... ещё больше... снеговик!", "difficulty": 3 },
-        { "id": "narr-ms-6",  "word": "История «Потерянный мячик»",          "hint": "Мячик прыгнул и укатился. Ваня искал долго. Нашёл под кроватью. Радость!", "difficulty": 2 },
-        { "id": "narr-ms-7",  "word": "Чем кончилась история с мячиком?",   "hint": "Ваня нашёл мячик. Он... (стал играть? рассказал маме? поставил на полку?)", "difficulty": 3 },
-        { "id": "narr-ms-8",  "word": "История «Утро птички»",               "hint": "Птичка проснулась. Попила воды. Поела зёрнышек. Почистила пёрышки. Полетела петь.", "difficulty": 2 },
-        { "id": "narr-ms-9",  "word": "Перескажи «Утро птички»",             "hint": "Проснулась... вода... зёрна... пёрышки... полетела петь!", "difficulty": 3 },
-        { "id": "narr-ms-10", "word": "История «Рыбак и рыбка»",             "hint": "Рыбак сел у реки. Закинул удочку. Ждал-ждал. Поймал рыбку! Отпустил обратно.", "difficulty": 2 },
-        { "id": "narr-ms-11", "word": "Почему рыбак отпустил рыбку?",        "hint": "Рыбка была маленькая / красивая / попросила... придумай причину!", "difficulty": 4 },
-        { "id": "narr-ms-12", "word": "История «Ляля потеряла варежку»",     "hint": "Ляля гуляла. Потеряла варежку. Замёрзла рука. Вернулась — нашла у двери.", "difficulty": 2 },
-        { "id": "narr-ms-13", "word": "Перескажи про варежку",               "hint": "Ляля... гуляла... потеряла... замёрзла... вернулась... нашла!", "difficulty": 3 },
-        { "id": "narr-ms-14", "word": "История «Щенок учится лаять»",        "hint": "Щенок был маленький. Он пробовал: ав! Потом: гав! Потом: ГАВ! Научился!", "difficulty": 2 },
-        { "id": "narr-ms-15", "word": "Озвучь щенка: ав, гав, ГАВ!",        "hint": "Скажи как щенок: сначала тихо — ав... потом громче — гав! Потом совсем громко!", "difficulty": 2 },
-        { "id": "narr-ms-16", "word": "История «Яблоня»",                    "hint": "Посадили зёрнышко. Выросло деревце. Потом — яблоня. На ней — яблоки. Вкусно!", "difficulty": 2 },
-        { "id": "narr-ms-17", "word": "Что нужно яблоне, чтобы расти?",     "hint": "Солнце, вода, земля, тепло — всё нужно яблоне!", "difficulty": 3 },
-        { "id": "narr-ms-18", "word": "История «Непослушный зонтик»",        "hint": "Пошёл дождь. Ляля открыла зонтик. Налетел ветер. Зонтик вывернулся! Ляля засмеялась.", "difficulty": 3 },
-        { "id": "narr-ms-19", "word": "Придумай: что было дальше с Лялей?", "hint": "Ляля с вывернутым зонтиком... побежала домой? Встретила друга? Придумай!", "difficulty": 4 },
-        { "id": "narr-ms-20", "word": "История «Друзья под дождём»",         "hint": "Миша и Ляля попали под дождь. Спрятались под деревом. Пели песни. Дождь кончился.", "difficulty": 2 },
-        { "id": "narr-ms-21", "word": "Какие песни пели Миша и Ляля?",       "hint": "Спой или назови: «Антошка», «Крокодил Гена», «В лесу родилась ёлочка»...", "difficulty": 3 },
-        { "id": "narr-ms-22", "word": "Придумай свою короткую историю",      "hint": "Выбери героя: кошка / мышка / Ляля. Что случилось? Чем кончилось?", "difficulty": 5 },
-        { "id": "narr-ms-23", "word": "Расскажи любимую историю своими словами", "hint": "Любая сказка или история — начало, середина, конец!", "difficulty": 5 }
+        {
+          "id": "narr-ms-0",
+          "word": "История «Котёнок и молоко»",
+          "hint": "Котёнок увидел молоко. Подошёл. Понюхал. Попробовал. Вкусно! Вылакал всё.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-ms-0.m4a"
+        },
+        {
+          "id": "narr-ms-1",
+          "word": "Перескажи «Котёнок и молоко»",
+          "hint": "Котёнок... увидел... подошёл... понюхал... попробовал... вылакал!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-ms-1.m4a"
+        },
+        {
+          "id": "narr-ms-2",
+          "word": "История «Маша и гриб»",
+          "hint": "Маша пошла в лес. Нашла гриб. Большой! Срезала. Принесла домой. Мама обрадовалась.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-ms-2.m4a"
+        },
+        {
+          "id": "narr-ms-3",
+          "word": "Перескажи «Маша и гриб»",
+          "hint": "Маша... лес... гриб... срезала... принесла... мама...",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-ms-3.m4a"
+        },
+        {
+          "id": "narr-ms-4",
+          "word": "История «Снежный ком»",
+          "hint": "Дети лепили снеговика. Один ком — маленький. Второй — побольше. Третий — большой. Красавец!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-ms-4.m4a"
+        },
+        {
+          "id": "narr-ms-5",
+          "word": "Перескажи «Снежный ком»",
+          "hint": "Дети... ком маленький... больше... ещё больше... снеговик!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-ms-5.m4a"
+        },
+        {
+          "id": "narr-ms-6",
+          "word": "История «Потерянный мячик»",
+          "hint": "Мячик прыгнул и укатился. Ваня искал долго. Нашёл под кроватью. Радость!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-ms-6.m4a"
+        },
+        {
+          "id": "narr-ms-7",
+          "word": "Чем кончилась история с мячиком?",
+          "hint": "Ваня нашёл мячик. Он... (стал играть? рассказал маме? поставил на полку?)",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-ms-7.m4a"
+        },
+        {
+          "id": "narr-ms-8",
+          "word": "История «Утро птички»",
+          "hint": "Птичка проснулась. Попила воды. Поела зёрнышек. Почистила пёрышки. Полетела петь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-ms-8.m4a"
+        },
+        {
+          "id": "narr-ms-9",
+          "word": "Перескажи «Утро птички»",
+          "hint": "Проснулась... вода... зёрна... пёрышки... полетела петь!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-ms-9.m4a"
+        },
+        {
+          "id": "narr-ms-10",
+          "word": "История «Рыбак и рыбка»",
+          "hint": "Рыбак сел у реки. Закинул удочку. Ждал-ждал. Поймал рыбку! Отпустил обратно.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-ms-10.m4a"
+        },
+        {
+          "id": "narr-ms-11",
+          "word": "Почему рыбак отпустил рыбку?",
+          "hint": "Рыбка была маленькая / красивая / попросила... придумай причину!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-ms-11.m4a"
+        },
+        {
+          "id": "narr-ms-12",
+          "word": "История «Ляля потеряла варежку»",
+          "hint": "Ляля гуляла. Потеряла варежку. Замёрзла рука. Вернулась — нашла у двери.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-ms-12.m4a"
+        },
+        {
+          "id": "narr-ms-13",
+          "word": "Перескажи про варежку",
+          "hint": "Ляля... гуляла... потеряла... замёрзла... вернулась... нашла!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-ms-13.m4a"
+        },
+        {
+          "id": "narr-ms-14",
+          "word": "История «Щенок учится лаять»",
+          "hint": "Щенок был маленький. Он пробовал: ав! Потом: гав! Потом: ГАВ! Научился!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-ms-14.m4a"
+        },
+        {
+          "id": "narr-ms-15",
+          "word": "Озвучь щенка: ав, гав, ГАВ!",
+          "hint": "Скажи как щенок: сначала тихо — ав... потом громче — гав! Потом совсем громко!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-ms-15.m4a"
+        },
+        {
+          "id": "narr-ms-16",
+          "word": "История «Яблоня»",
+          "hint": "Посадили зёрнышко. Выросло деревце. Потом — яблоня. На ней — яблоки. Вкусно!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-ms-16.m4a"
+        },
+        {
+          "id": "narr-ms-17",
+          "word": "Что нужно яблоне, чтобы расти?",
+          "hint": "Солнце, вода, земля, тепло — всё нужно яблоне!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-ms-17.m4a"
+        },
+        {
+          "id": "narr-ms-18",
+          "word": "История «Непослушный зонтик»",
+          "hint": "Пошёл дождь. Ляля открыла зонтик. Налетел ветер. Зонтик вывернулся! Ляля засмеялась.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-ms-18.m4a"
+        },
+        {
+          "id": "narr-ms-19",
+          "word": "Придумай: что было дальше с Лялей?",
+          "hint": "Ляля с вывернутым зонтиком... побежала домой? Встретила друга? Придумай!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-ms-19.m4a"
+        },
+        {
+          "id": "narr-ms-20",
+          "word": "История «Друзья под дождём»",
+          "hint": "Миша и Ляля попали под дождь. Спрятались под деревом. Пели песни. Дождь кончился.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-ms-20.m4a"
+        },
+        {
+          "id": "narr-ms-21",
+          "word": "Какие песни пели Миша и Ляля?",
+          "hint": "Спой или назови: «Антошка», «Крокодил Гена», «В лесу родилась ёлочка»...",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-ms-21.m4a"
+        },
+        {
+          "id": "narr-ms-22",
+          "word": "Придумай свою короткую историю",
+          "hint": "Выбери героя: кошка / мышка / Ляля. Что случилось? Чем кончилось?",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Narrative/narr-ms-22.m4a"
+        },
+        {
+          "id": "narr-ms-23",
+          "word": "Расскажи любимую историю своими словами",
+          "hint": "Любая сказка или история — начало, середина, конец!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Narrative/narr-ms-23.m4a"
+        }
       ]
     },
     "dialogue": {
       "stageId": "dialogue",
       "note": "Диалоги с Лялей: ребёнок отвечает на вопросы персонажа, учится выстраивать беседу.",
       "items": [
-        { "id": "narr-dl-0",  "word": "Ляля спрашивает: как тебя зовут?",   "hint": "Ответь Ляле: «Меня зовут...» Скажи своё имя!", "difficulty": 1 },
-        { "id": "narr-dl-1",  "word": "Ляля спрашивает: сколько тебе лет?", "hint": "«Мне ... лет». Покажи на пальцах и скажи вслух.", "difficulty": 1 },
-        { "id": "narr-dl-2",  "word": "Ляля: где ты живёшь?",               "hint": "«Я живу в...» — название города или «дома».", "difficulty": 1 },
-        { "id": "narr-dl-3",  "word": "Ляля: что ты любишь есть?",          "hint": "«Я люблю... (суп, блины, яблоки, мороженое...)»", "difficulty": 1 },
-        { "id": "narr-dl-4",  "word": "Ляля: есть ли у тебя домашнее животное?", "hint": "«Да, у меня есть...» или «Нет, но я хочу...»", "difficulty": 2 },
-        { "id": "narr-dl-5",  "word": "Ляля: что ты делал сегодня утром?",  "hint": "«Утром я... встал, позавтракал, оделся...»", "difficulty": 2 },
-        { "id": "narr-dl-6",  "word": "Ляля: какая твоя любимая игра?",     "hint": "«Я люблю играть в... потому что...»", "difficulty": 2 },
-        { "id": "narr-dl-7",  "word": "Ляля: кто твой лучший друг?",        "hint": "«Мой лучший друг... Мы вместе...»", "difficulty": 2 },
-        { "id": "narr-dl-8",  "word": "Ляля: что ты боишься?",              "hint": "«Я боюсь... (темноты, грома, высоты...) Но это ничего!»", "difficulty": 3 },
-        { "id": "narr-dl-9",  "word": "Ляля: что ты умеешь делать хорошо?", "hint": "«Я умею... (рисовать, бегать, петь, прыгать...)»", "difficulty": 2 },
-        { "id": "narr-dl-10", "word": "Ляля: помоги мне найти кошку!",      "hint": "«Кошка могла быть... под кроватью? В шкафу? На диване?»", "difficulty": 2 },
-        { "id": "narr-dl-11", "word": "Ляля: что подарить маме?",           "hint": "«Маме понравится... (цветы / рисунок / пирог / обнимашки!)»", "difficulty": 2 },
-        { "id": "narr-dl-12", "word": "Ляля: научи меня считать до 5!",     "hint": "«Один, два, три, четыре, пять!» Медленно и чётко.", "difficulty": 1 },
-        { "id": "narr-dl-13", "word": "Ляля: как называются дни недели?",   "hint": "«Понедельник, вторник, среда...» Назови все семь!", "difficulty": 3 },
-        { "id": "narr-dl-14", "word": "Ляля: какое сейчас время года?",     "hint": "«Сейчас... потому что... холодно/тепло... цветы/снег...»", "difficulty": 2 },
-        { "id": "narr-dl-15", "word": "Ляля: опиши мне погоду сегодня",     "hint": "«Сегодня... (солнечно/пасмурно/дождь/снег/ветер/тепло)»", "difficulty": 2 },
-        { "id": "narr-dl-16", "word": "Ляля: расскажи стихотворение!",      "hint": "Расскажи любое знакомое стихотворение. Не торопись!", "difficulty": 3 },
-        { "id": "narr-dl-17", "word": "Ляля: загадай мне загадку",          "hint": "Загадай любую загадку — про животных, природу, предметы.", "difficulty": 4 },
-        { "id": "narr-dl-18", "word": "Ляля: что тебе нравится в детском саду?", "hint": "«Мне нравится... (играть, рисовать, есть, дружить)»", "difficulty": 2 },
-        { "id": "narr-dl-19", "word": "Ляля: твоя мечта?",                  "hint": "«Я мечтаю... (стать космонавтом / завести собаку / поехать к морю)»", "difficulty": 3 },
-        { "id": "narr-dl-20", "word": "Ляля: скажи мне доброе слово!",      "hint": "Скажи Ляле что-нибудь хорошее: «Ты весёлая! Умная! Красивая! Добрая!»", "difficulty": 1 },
-        { "id": "narr-dl-21", "word": "Ляля: придумай вопрос для меня",     "hint": "Теперь ты спрашиваешь у Ляли! Что хочешь узнать?", "difficulty": 4 },
-        { "id": "narr-dl-22", "word": "Поговорим про животных: вопрос-ответ","hint": "Ляля называет животное — ты говоришь, что оно умеет делать!", "difficulty": 3 },
-        { "id": "narr-dl-23", "word": "Ляля: как сказать «спасибо» красиво?","hint": "«Большое спасибо!» / «Очень тебе благодарен!» / «Ты мне очень помог!»", "difficulty": 2 }
+        {
+          "id": "narr-dl-0",
+          "word": "Ляля спрашивает: как тебя зовут?",
+          "hint": "Ответь Ляле: «Меня зовут...» Скажи своё имя!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-dl-0.m4a"
+        },
+        {
+          "id": "narr-dl-1",
+          "word": "Ляля спрашивает: сколько тебе лет?",
+          "hint": "«Мне ... лет». Покажи на пальцах и скажи вслух.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-dl-1.m4a"
+        },
+        {
+          "id": "narr-dl-2",
+          "word": "Ляля: где ты живёшь?",
+          "hint": "«Я живу в...» — название города или «дома».",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-dl-2.m4a"
+        },
+        {
+          "id": "narr-dl-3",
+          "word": "Ляля: что ты любишь есть?",
+          "hint": "«Я люблю... (суп, блины, яблоки, мороженое...)»",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-dl-3.m4a"
+        },
+        {
+          "id": "narr-dl-4",
+          "word": "Ляля: есть ли у тебя домашнее животное?",
+          "hint": "«Да, у меня есть...» или «Нет, но я хочу...»",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-dl-4.m4a"
+        },
+        {
+          "id": "narr-dl-5",
+          "word": "Ляля: что ты делал сегодня утром?",
+          "hint": "«Утром я... встал, позавтракал, оделся...»",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-dl-5.m4a"
+        },
+        {
+          "id": "narr-dl-6",
+          "word": "Ляля: какая твоя любимая игра?",
+          "hint": "«Я люблю играть в... потому что...»",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-dl-6.m4a"
+        },
+        {
+          "id": "narr-dl-7",
+          "word": "Ляля: кто твой лучший друг?",
+          "hint": "«Мой лучший друг... Мы вместе...»",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-dl-7.m4a"
+        },
+        {
+          "id": "narr-dl-8",
+          "word": "Ляля: что ты боишься?",
+          "hint": "«Я боюсь... (темноты, грома, высоты...) Но это ничего!»",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-dl-8.m4a"
+        },
+        {
+          "id": "narr-dl-9",
+          "word": "Ляля: что ты умеешь делать хорошо?",
+          "hint": "«Я умею... (рисовать, бегать, петь, прыгать...)»",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-dl-9.m4a"
+        },
+        {
+          "id": "narr-dl-10",
+          "word": "Ляля: помоги мне найти кошку!",
+          "hint": "«Кошка могла быть... под кроватью? В шкафу? На диване?»",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-dl-10.m4a"
+        },
+        {
+          "id": "narr-dl-11",
+          "word": "Ляля: что подарить маме?",
+          "hint": "«Маме понравится... (цветы / рисунок / пирог / обнимашки!)»",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-dl-11.m4a"
+        },
+        {
+          "id": "narr-dl-12",
+          "word": "Ляля: научи меня считать до 5!",
+          "hint": "«Один, два, три, четыре, пять!» Медленно и чётко.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-dl-12.m4a"
+        },
+        {
+          "id": "narr-dl-13",
+          "word": "Ляля: как называются дни недели?",
+          "hint": "«Понедельник, вторник, среда...» Назови все семь!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-dl-13.m4a"
+        },
+        {
+          "id": "narr-dl-14",
+          "word": "Ляля: какое сейчас время года?",
+          "hint": "«Сейчас... потому что... холодно/тепло... цветы/снег...»",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-dl-14.m4a"
+        },
+        {
+          "id": "narr-dl-15",
+          "word": "Ляля: опиши мне погоду сегодня",
+          "hint": "«Сегодня... (солнечно/пасмурно/дождь/снег/ветер/тепло)»",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-dl-15.m4a"
+        },
+        {
+          "id": "narr-dl-16",
+          "word": "Ляля: расскажи стихотворение!",
+          "hint": "Расскажи любое знакомое стихотворение. Не торопись!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-dl-16.m4a"
+        },
+        {
+          "id": "narr-dl-17",
+          "word": "Ляля: загадай мне загадку",
+          "hint": "Загадай любую загадку — про животных, природу, предметы.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-dl-17.m4a"
+        },
+        {
+          "id": "narr-dl-18",
+          "word": "Ляля: что тебе нравится в детском саду?",
+          "hint": "«Мне нравится... (играть, рисовать, есть, дружить)»",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-dl-18.m4a"
+        },
+        {
+          "id": "narr-dl-19",
+          "word": "Ляля: твоя мечта?",
+          "hint": "«Я мечтаю... (стать космонавтом / завести собаку / поехать к морю)»",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-dl-19.m4a"
+        },
+        {
+          "id": "narr-dl-20",
+          "word": "Ляля: скажи мне доброе слово!",
+          "hint": "Скажи Ляле что-нибудь хорошее: «Ты весёлая! Умная! Красивая! Добрая!»",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Narrative/narr-dl-20.m4a"
+        },
+        {
+          "id": "narr-dl-21",
+          "word": "Ляля: придумай вопрос для меня",
+          "hint": "Теперь ты спрашиваешь у Ляли! Что хочешь узнать?",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Narrative/narr-dl-21.m4a"
+        },
+        {
+          "id": "narr-dl-22",
+          "word": "Поговорим про животных: вопрос-ответ",
+          "hint": "Ляля называет животное — ты говоришь, что оно умеет делать!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Narrative/narr-dl-22.m4a"
+        },
+        {
+          "id": "narr-dl-23",
+          "word": "Ляля: как сказать «спасибо» красиво?",
+          "hint": "«Большое спасибо!» / «Очень тебе благодарен!» / «Ты мне очень помог!»",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Narrative/narr-dl-23.m4a"
+        }
       ]
     }
   },
   "templateCompatibility": {
-    "quest_forest":   ["narrative-quest", "repeat-after-model", "listen-and-choose", "sorting"],
-    "quest_sea":      ["narrative-quest", "repeat-after-model", "listen-and-choose"],
-    "quest_city":     ["narrative-quest", "repeat-after-model", "drag-and-match"],
-    "quest_farm":     ["narrative-quest", "repeat-after-model", "listen-and-choose", "sorting"],
-    "quest_magic":    ["narrative-quest", "repeat-after-model", "rhythm"],
-    "quest_space":    ["narrative-quest", "repeat-after-model", "listen-and-choose"],
-    "retelling":      ["narrative-quest", "story-completion", "repeat-after-model"],
-    "description":    ["narrative-quest", "story-completion", "repeat-after-model", "drag-and-match"],
-    "quest_animals":  ["narrative-quest", "repeat-after-model", "listen-and-choose", "sorting"],
-    "quest_home":     ["narrative-quest", "repeat-after-model", "drag-and-match"],
-    "quest_seasons":  ["narrative-quest", "repeat-after-model", "listen-and-choose", "story-completion"],
-    "soundimitation": ["repeat-after-model", "articulation-imitation", "rhythm", "narrative-quest"],
-    "mini_stories":   ["narrative-quest", "story-completion", "repeat-after-model"],
-    "dialogue":       ["narrative-quest", "repeat-after-model", "listen-and-choose"]
+    "quest_forest": [
+      "narrative-quest",
+      "repeat-after-model",
+      "listen-and-choose",
+      "sorting"
+    ],
+    "quest_sea": [
+      "narrative-quest",
+      "repeat-after-model",
+      "listen-and-choose"
+    ],
+    "quest_city": [
+      "narrative-quest",
+      "repeat-after-model",
+      "drag-and-match"
+    ],
+    "quest_farm": [
+      "narrative-quest",
+      "repeat-after-model",
+      "listen-and-choose",
+      "sorting"
+    ],
+    "quest_magic": [
+      "narrative-quest",
+      "repeat-after-model",
+      "rhythm"
+    ],
+    "quest_space": [
+      "narrative-quest",
+      "repeat-after-model",
+      "listen-and-choose"
+    ],
+    "retelling": [
+      "narrative-quest",
+      "story-completion",
+      "repeat-after-model"
+    ],
+    "description": [
+      "narrative-quest",
+      "story-completion",
+      "repeat-after-model",
+      "drag-and-match"
+    ],
+    "quest_animals": [
+      "narrative-quest",
+      "repeat-after-model",
+      "listen-and-choose",
+      "sorting"
+    ],
+    "quest_home": [
+      "narrative-quest",
+      "repeat-after-model",
+      "drag-and-match"
+    ],
+    "quest_seasons": [
+      "narrative-quest",
+      "repeat-after-model",
+      "listen-and-choose",
+      "story-completion"
+    ],
+    "soundimitation": [
+      "repeat-after-model",
+      "articulation-imitation",
+      "rhythm",
+      "narrative-quest"
+    ],
+    "mini_stories": [
+      "narrative-quest",
+      "story-completion",
+      "repeat-after-model"
+    ],
+    "dialogue": [
+      "narrative-quest",
+      "repeat-after-model",
+      "listen-and-choose"
+    ]
   }
 }

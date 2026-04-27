@@ -9,309 +9,1638 @@
       "stageId": "prep",
       "note": "Артикуляционная гимнастика для постановки [Й]. Цель — напряжение средней части языка, поднятой к твёрдому нёбу.",
       "items": [
-        { "id": "y-prep-0",  "word": "улыбка широкая",     "hint": "Улыбнись как можно шире — покажи все зубки. Держи 5 секунд.", "difficulty": 1 },
-        { "id": "y-prep-1",  "word": "улыбка-трубочка",    "hint": "Чередуй: широкая улыбка — трубочка. По 3 раза каждую.", "difficulty": 1 },
-        { "id": "y-prep-2",  "word": "горбик средний",     "hint": "Открой рот. Подними среднюю часть языка к твёрдому нёбу, кончик внизу.", "difficulty": 2 },
-        { "id": "y-prep-3",  "word": "и-и-и напряжение",  "hint": "Скажи и-и-и, почувствуй, как средняя часть языка прижимается к нёбу.", "difficulty": 2 },
-        { "id": "y-prep-4",  "word": "й перед гласной",   "hint": "Скажи и быстро, потом добавь а: и-а, и-а. Так получается й в слове 'яблоко'.", "difficulty": 2 },
-        { "id": "y-prep-5",  "word": "качели",            "hint": "Язычок вверх — вниз, вверх — вниз. Следи за средней частью языка.", "difficulty": 2 },
-        { "id": "y-prep-6",  "word": "маляр",             "hint": "Широким языком 'красим' нёбо — проводи вперёд-назад по твёрдому нёбу.", "difficulty": 2 },
-        { "id": "y-prep-7",  "word": "лопатка",           "hint": "Широкий расслабленный язычок на нижней губе. Держи 5 секунд.", "difficulty": 1 },
-        { "id": "y-prep-8",  "word": "иголочка",          "hint": "Острый кончик языка — вытяни вперёд не касаясь губ.", "difficulty": 2 },
-        { "id": "y-prep-9",  "word": "заборчик",          "hint": "Улыбнись широко — покажи все зубки. Держи 5 секунд.", "difficulty": 1 },
-        { "id": "y-prep-10", "word": "вкусное варенье",  "hint": "Лижем верхнюю губу — как котёнок. Язык широкий.", "difficulty": 1 },
-        { "id": "y-prep-11", "word": "чередование",      "hint": "Улыбка — трубочка — улыбка. 5 раз быстро.", "difficulty": 2 },
-        { "id": "y-prep-12", "word": "пружина-язык",     "hint": "Язык к нёбу — быстро вниз — опять вверх. Вверх-вниз 10 раз.", "difficulty": 2 },
-        { "id": "y-prep-13", "word": "спинка-горкой",    "hint": "Средняя часть языка горбом вверх, кончик внизу. Держи 5 секунд.", "difficulty": 3 },
-        { "id": "y-prep-14", "word": "молоточек",        "hint": "Кончиком языка стучим за верхними зубами: та-та-та-та.", "difficulty": 2 },
-        { "id": "y-prep-15", "word": "трубочка-улыбка",  "hint": "Трубочка — широкая улыбка. Быстро, 10 раз подряд.", "difficulty": 2 }
+        {
+          "id": "y-prep-0",
+          "word": "улыбка широкая",
+          "hint": "Улыбнись как можно шире — покажи все зубки. Держи 5 секунд.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-prep-0.m4a"
+        },
+        {
+          "id": "y-prep-1",
+          "word": "улыбка-трубочка",
+          "hint": "Чередуй: широкая улыбка — трубочка. По 3 раза каждую.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-prep-1.m4a"
+        },
+        {
+          "id": "y-prep-2",
+          "word": "горбик средний",
+          "hint": "Открой рот. Подними среднюю часть языка к твёрдому нёбу, кончик внизу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-prep-2.m4a"
+        },
+        {
+          "id": "y-prep-3",
+          "word": "и-и-и напряжение",
+          "hint": "Скажи и-и-и, почувствуй, как средняя часть языка прижимается к нёбу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-prep-3.m4a"
+        },
+        {
+          "id": "y-prep-4",
+          "word": "й перед гласной",
+          "hint": "Скажи и быстро, потом добавь а: и-а, и-а. Так получается й в слове 'яблоко'.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-prep-4.m4a"
+        },
+        {
+          "id": "y-prep-5",
+          "word": "качели",
+          "hint": "Язычок вверх — вниз, вверх — вниз. Следи за средней частью языка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-prep-5.m4a"
+        },
+        {
+          "id": "y-prep-6",
+          "word": "маляр",
+          "hint": "Широким языком 'красим' нёбо — проводи вперёд-назад по твёрдому нёбу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-prep-6.m4a"
+        },
+        {
+          "id": "y-prep-7",
+          "word": "лопатка",
+          "hint": "Широкий расслабленный язычок на нижней губе. Держи 5 секунд.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-prep-7.m4a"
+        },
+        {
+          "id": "y-prep-8",
+          "word": "иголочка",
+          "hint": "Острый кончик языка — вытяни вперёд не касаясь губ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-prep-8.m4a"
+        },
+        {
+          "id": "y-prep-9",
+          "word": "заборчик",
+          "hint": "Улыбнись широко — покажи все зубки. Держи 5 секунд.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-prep-9.m4a"
+        },
+        {
+          "id": "y-prep-10",
+          "word": "вкусное варенье",
+          "hint": "Лижем верхнюю губу — как котёнок. Язык широкий.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-prep-10.m4a"
+        },
+        {
+          "id": "y-prep-11",
+          "word": "чередование",
+          "hint": "Улыбка — трубочка — улыбка. 5 раз быстро.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-prep-11.m4a"
+        },
+        {
+          "id": "y-prep-12",
+          "word": "пружина-язык",
+          "hint": "Язык к нёбу — быстро вниз — опять вверх. Вверх-вниз 10 раз.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-prep-12.m4a"
+        },
+        {
+          "id": "y-prep-13",
+          "word": "спинка-горкой",
+          "hint": "Средняя часть языка горбом вверх, кончик внизу. Держи 5 секунд.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-prep-13.m4a"
+        },
+        {
+          "id": "y-prep-14",
+          "word": "молоточек",
+          "hint": "Кончиком языка стучим за верхними зубами: та-та-та-та.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-prep-14.m4a"
+        },
+        {
+          "id": "y-prep-15",
+          "word": "трубочка-улыбка",
+          "hint": "Трубочка — широкая улыбка. Быстро, 10 раз подряд.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-prep-15.m4a"
+        }
       ]
     },
     "isolated": {
       "stageId": "isolated",
       "note": "Изолированный звук [Й] — через слияние с гласными.",
       "items": [
-        { "id": "y-iso-0",  "word": "й — начало яблока",  "hint": "Яблоко начинается с Й+А. Скажи медленно: й-а-б-ло-ко. Слышишь Й?", "difficulty": 1 },
-        { "id": "y-iso-1",  "word": "й — начало ёжика",   "hint": "Ёжик начинается с Й+О. Скажи медленно: й-о-жик.", "difficulty": 1 },
-        { "id": "y-iso-2",  "word": "й — начало юлы",     "hint": "Юла начинается с Й+У. Скажи медленно: й-у-ла.", "difficulty": 1 },
-        { "id": "y-iso-3",  "word": "й в середине",       "hint": "Майка: ма-й-ка. Слышишь Й в середине?", "difficulty": 2 },
-        { "id": "y-iso-4",  "word": "й в конце",          "hint": "Май: ма-й. Слышишь Й в конце?", "difficulty": 2 },
-        { "id": "y-iso-5",  "word": "й-й-й как скрип",   "hint": "Й звучит как скрип двери: й-й-й. Повтори три раза.", "difficulty": 2 },
-        { "id": "y-iso-6",  "word": "й тихо-громко",     "hint": "Тихо: й... Потом громче: й! Й! Й!", "difficulty": 3 },
-        { "id": "y-iso-7",  "word": "й ритм 2-2",        "hint": "Два удара — пауза: йй — пауза — йй.", "difficulty": 3 },
-        { "id": "y-iso-8",  "word": "й в слове ель",    "hint": "Ель начинается с Й+Э. Скажи медленно: й-э-ль.", "difficulty": 2 },
-        { "id": "y-iso-9",  "word": "й-а, й-о, й-у",   "hint": "Чередуй: й-а, й-о, й-у, й-э. Это — я, ё, ю, е!", "difficulty": 2 },
-        { "id": "y-iso-10", "word": "й тихо-быстро",   "hint": "Медленно: й-й-й... Потом быстрее: йй-йй-йй!", "difficulty": 3 },
-        { "id": "y-iso-11", "word": "й в конце слова", "hint": "Скажи слово «чай»: ча-й. Слышишь Й на конце?", "difficulty": 2 }
+        {
+          "id": "y-iso-0",
+          "word": "й — начало яблока",
+          "hint": "Яблоко начинается с Й+А. Скажи медленно: й-а-б-ло-ко. Слышишь Й?",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-iso-0.m4a"
+        },
+        {
+          "id": "y-iso-1",
+          "word": "й — начало ёжика",
+          "hint": "Ёжик начинается с Й+О. Скажи медленно: й-о-жик.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-iso-1.m4a"
+        },
+        {
+          "id": "y-iso-2",
+          "word": "й — начало юлы",
+          "hint": "Юла начинается с Й+У. Скажи медленно: й-у-ла.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-iso-2.m4a"
+        },
+        {
+          "id": "y-iso-3",
+          "word": "й в середине",
+          "hint": "Майка: ма-й-ка. Слышишь Й в середине?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-iso-3.m4a"
+        },
+        {
+          "id": "y-iso-4",
+          "word": "й в конце",
+          "hint": "Май: ма-й. Слышишь Й в конце?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-iso-4.m4a"
+        },
+        {
+          "id": "y-iso-5",
+          "word": "й-й-й как скрип",
+          "hint": "Й звучит как скрип двери: й-й-й. Повтори три раза.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-iso-5.m4a"
+        },
+        {
+          "id": "y-iso-6",
+          "word": "й тихо-громко",
+          "hint": "Тихо: й... Потом громче: й! Й! Й!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-iso-6.m4a"
+        },
+        {
+          "id": "y-iso-7",
+          "word": "й ритм 2-2",
+          "hint": "Два удара — пауза: йй — пауза — йй.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-iso-7.m4a"
+        },
+        {
+          "id": "y-iso-8",
+          "word": "й в слове ель",
+          "hint": "Ель начинается с Й+Э. Скажи медленно: й-э-ль.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-iso-8.m4a"
+        },
+        {
+          "id": "y-iso-9",
+          "word": "й-а, й-о, й-у",
+          "hint": "Чередуй: й-а, й-о, й-у, й-э. Это — я, ё, ю, е!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-iso-9.m4a"
+        },
+        {
+          "id": "y-iso-10",
+          "word": "й тихо-быстро",
+          "hint": "Медленно: й-й-й... Потом быстрее: йй-йй-йй!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-iso-10.m4a"
+        },
+        {
+          "id": "y-iso-11",
+          "word": "й в конце слова",
+          "hint": "Скажи слово «чай»: ча-й. Слышишь Й на конце?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-iso-11.m4a"
+        }
       ]
     },
     "syllable": {
       "stageId": "syllable",
       "note": "Слоги с [Й]: йотированные гласные и Й в конце.",
       "items": [
-        { "id": "y-syl-0",  "word": "йа (я)",   "hint": "Буква Я = Й+А", "difficulty": 1 },
-        { "id": "y-syl-1",  "word": "йо (ё)",   "hint": "Буква Ё = Й+О", "difficulty": 1 },
-        { "id": "y-syl-2",  "word": "йу (ю)",   "hint": "Буква Ю = Й+У", "difficulty": 1 },
-        { "id": "y-syl-3",  "word": "йэ (е)",   "hint": "Буква Е = Й+Э", "difficulty": 1 },
-        { "id": "y-syl-4",  "word": "ай",       "difficulty": 2 },
-        { "id": "y-syl-5",  "word": "ой",       "difficulty": 2 },
-        { "id": "y-syl-6",  "word": "уй",       "difficulty": 2 },
-        { "id": "y-syl-7",  "word": "эй",       "difficulty": 2 },
-        { "id": "y-syl-8",  "word": "ий",       "difficulty": 2 },
-        { "id": "y-syl-9",  "word": "ай-ай",    "difficulty": 2 },
-        { "id": "y-syl-10", "word": "ой-ой",    "difficulty": 2 },
-        { "id": "y-syl-11", "word": "ай-ой",    "difficulty": 2 },
-        { "id": "y-syl-12", "word": "ой-уй",    "difficulty": 2 },
-        { "id": "y-syl-13", "word": "ай-ой-уй", "difficulty": 3 },
-        { "id": "y-syl-14", "word": "май",      "difficulty": 2 },
-        { "id": "y-syl-15", "word": "рай",      "difficulty": 2 },
-        { "id": "y-syl-16", "word": "бой",      "difficulty": 2 },
-        { "id": "y-syl-17", "word": "рой",      "difficulty": 2 },
-        { "id": "y-syl-18", "word": "дай",      "difficulty": 1 },
-        { "id": "y-syl-19", "word": "лей",      "difficulty": 2 },
-        { "id": "y-syl-20", "word": "вей",      "difficulty": 2 },
-        { "id": "y-syl-21", "word": "куй",      "difficulty": 2 },
-        { "id": "y-syl-22", "word": "дуй",      "difficulty": 2 },
-        { "id": "y-syl-23", "word": "ай-ай-ай", "difficulty": 1 },
-        { "id": "y-syl-24", "word": "ой-ой-ой", "difficulty": 1 },
-        { "id": "y-syl-25", "word": "уй-уй-уй", "difficulty": 2 },
-        { "id": "y-syl-26", "word": "ай-ой",    "difficulty": 2 },
-        { "id": "y-syl-27", "word": "ой-эй",    "difficulty": 2 },
-        { "id": "y-syl-28", "word": "ай-ой-эй", "difficulty": 3 },
-        { "id": "y-syl-29", "word": "йа-йо-йу", "difficulty": 3 }
+        {
+          "id": "y-syl-0",
+          "word": "йа (я)",
+          "hint": "Буква Я = Й+А",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-syl-0.m4a"
+        },
+        {
+          "id": "y-syl-1",
+          "word": "йо (ё)",
+          "hint": "Буква Ё = Й+О",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-syl-1.m4a"
+        },
+        {
+          "id": "y-syl-2",
+          "word": "йу (ю)",
+          "hint": "Буква Ю = Й+У",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-syl-2.m4a"
+        },
+        {
+          "id": "y-syl-3",
+          "word": "йэ (е)",
+          "hint": "Буква Е = Й+Э",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-syl-3.m4a"
+        },
+        {
+          "id": "y-syl-4",
+          "word": "ай",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-syl-4.m4a"
+        },
+        {
+          "id": "y-syl-5",
+          "word": "ой",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-syl-5.m4a"
+        },
+        {
+          "id": "y-syl-6",
+          "word": "уй",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-syl-6.m4a"
+        },
+        {
+          "id": "y-syl-7",
+          "word": "эй",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-syl-7.m4a"
+        },
+        {
+          "id": "y-syl-8",
+          "word": "ий",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-syl-8.m4a"
+        },
+        {
+          "id": "y-syl-9",
+          "word": "ай-ай",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-syl-9.m4a"
+        },
+        {
+          "id": "y-syl-10",
+          "word": "ой-ой",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-syl-10.m4a"
+        },
+        {
+          "id": "y-syl-11",
+          "word": "ай-ой",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-syl-11.m4a"
+        },
+        {
+          "id": "y-syl-12",
+          "word": "ой-уй",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-syl-12.m4a"
+        },
+        {
+          "id": "y-syl-13",
+          "word": "ай-ой-уй",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-syl-13.m4a"
+        },
+        {
+          "id": "y-syl-14",
+          "word": "май",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-syl-14.m4a"
+        },
+        {
+          "id": "y-syl-15",
+          "word": "рай",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-syl-15.m4a"
+        },
+        {
+          "id": "y-syl-16",
+          "word": "бой",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-syl-16.m4a"
+        },
+        {
+          "id": "y-syl-17",
+          "word": "рой",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-syl-17.m4a"
+        },
+        {
+          "id": "y-syl-18",
+          "word": "дай",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-syl-18.m4a"
+        },
+        {
+          "id": "y-syl-19",
+          "word": "лей",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-syl-19.m4a"
+        },
+        {
+          "id": "y-syl-20",
+          "word": "вей",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-syl-20.m4a"
+        },
+        {
+          "id": "y-syl-21",
+          "word": "куй",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-syl-21.m4a"
+        },
+        {
+          "id": "y-syl-22",
+          "word": "дуй",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-syl-22.m4a"
+        },
+        {
+          "id": "y-syl-23",
+          "word": "ай-ай-ай",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-syl-23.m4a"
+        },
+        {
+          "id": "y-syl-24",
+          "word": "ой-ой-ой",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-syl-24.m4a"
+        },
+        {
+          "id": "y-syl-25",
+          "word": "уй-уй-уй",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-syl-25.m4a"
+        },
+        {
+          "id": "y-syl-26",
+          "word": "ай-ой",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-syl-26.m4a"
+        },
+        {
+          "id": "y-syl-27",
+          "word": "ой-эй",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-syl-27.m4a"
+        },
+        {
+          "id": "y-syl-28",
+          "word": "ай-ой-эй",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-syl-28.m4a"
+        },
+        {
+          "id": "y-syl-29",
+          "word": "йа-йо-йу",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-syl-29.m4a"
+        }
       ]
     },
     "wordInit": {
       "stageId": "wordInit",
       "note": "[Й] в начале слова (через йотированные гласные).",
       "items": [
-        { "id": "y-wi-0",  "word": "яблоко",    "difficulty": 2 },
-        { "id": "y-wi-1",  "word": "яма",       "difficulty": 1 },
-        { "id": "y-wi-2",  "word": "ягода",     "difficulty": 2 },
-        { "id": "y-wi-3",  "word": "ягнёнок",   "difficulty": 3 },
-        { "id": "y-wi-4",  "word": "якорь",     "difficulty": 2 },
-        { "id": "y-wi-5",  "word": "яхта",      "difficulty": 2 },
-        { "id": "y-wi-6",  "word": "ял",        "difficulty": 2 },
-        { "id": "y-wi-7",  "word": "январь",    "difficulty": 3 },
-        { "id": "y-wi-8",  "word": "ёж",        "difficulty": 1 },
-        { "id": "y-wi-9",  "word": "ёлка",      "difficulty": 1 },
-        { "id": "y-wi-10", "word": "ёмкость",   "difficulty": 3 },
-        { "id": "y-wi-11", "word": "ёршик",     "difficulty": 2 },
-        { "id": "y-wi-12", "word": "юла",       "difficulty": 1 },
-        { "id": "y-wi-13", "word": "юнга",      "difficulty": 2 },
-        { "id": "y-wi-14", "word": "юг",        "difficulty": 1 },
-        { "id": "y-wi-15", "word": "юбка",      "difficulty": 2 },
-        { "id": "y-wi-16", "word": "юрта",      "difficulty": 2 },
-        { "id": "y-wi-17", "word": "юмор",      "difficulty": 3 },
-        { "id": "y-wi-18", "word": "яркий",     "difficulty": 2 },
-        { "id": "y-wi-19", "word": "ястреб",    "difficulty": 3 },
-        { "id": "y-wi-20", "word": "яблоня",    "difficulty": 3 },
-        { "id": "y-wi-21", "word": "яхтсмен",   "difficulty": 4 },
-        { "id": "y-wi-22", "word": "ягуар",     "difficulty": 3 },
-        { "id": "y-wi-23", "word": "ящик",      "difficulty": 2 },
-        { "id": "y-wi-24", "word": "ящерица",   "difficulty": 3 },
-        { "id": "y-wi-25", "word": "ель",       "difficulty": 1 },
-        { "id": "y-wi-26", "word": "ёрш",       "difficulty": 1 },
-        { "id": "y-wi-27", "word": "юла",       "difficulty": 1 },
-        { "id": "y-wi-28", "word": "яркость",   "difficulty": 3 },
-        { "id": "y-wi-29", "word": "ягнята",    "difficulty": 3 },
-        { "id": "y-wi-30", "word": "юный",      "difficulty": 2 },
-        { "id": "y-wi-31", "word": "ёлочка",    "difficulty": 2 },
-        { "id": "y-wi-32", "word": "яблоня",    "difficulty": 2 },
-        { "id": "y-wi-33", "word": "юбилей",    "difficulty": 3 },
-        { "id": "y-wi-34", "word": "яхта",      "difficulty": 2 },
-        { "id": "y-wi-35", "word": "ястреб",    "difficulty": 3 },
-        { "id": "y-wi-36", "word": "яичница",   "difficulty": 3 },
-        { "id": "y-wi-37", "word": "ёкать",     "difficulty": 3 },
-        { "id": "y-wi-38", "word": "юмор",      "difficulty": 3 },
-        { "id": "y-wi-39", "word": "яснее",     "difficulty": 3 }
+        {
+          "id": "y-wi-0",
+          "word": "яблоко",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wi-0.m4a"
+        },
+        {
+          "id": "y-wi-1",
+          "word": "яма",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-wi-1.m4a"
+        },
+        {
+          "id": "y-wi-2",
+          "word": "ягода",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wi-2.m4a"
+        },
+        {
+          "id": "y-wi-3",
+          "word": "ягнёнок",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wi-3.m4a"
+        },
+        {
+          "id": "y-wi-4",
+          "word": "якорь",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wi-4.m4a"
+        },
+        {
+          "id": "y-wi-5",
+          "word": "яхта",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wi-5.m4a"
+        },
+        {
+          "id": "y-wi-6",
+          "word": "ял",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wi-6.m4a"
+        },
+        {
+          "id": "y-wi-7",
+          "word": "январь",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wi-7.m4a"
+        },
+        {
+          "id": "y-wi-8",
+          "word": "ёж",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-wi-8.m4a"
+        },
+        {
+          "id": "y-wi-9",
+          "word": "ёлка",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-wi-9.m4a"
+        },
+        {
+          "id": "y-wi-10",
+          "word": "ёмкость",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wi-10.m4a"
+        },
+        {
+          "id": "y-wi-11",
+          "word": "ёршик",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wi-11.m4a"
+        },
+        {
+          "id": "y-wi-12",
+          "word": "юла",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-wi-12.m4a"
+        },
+        {
+          "id": "y-wi-13",
+          "word": "юнга",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wi-13.m4a"
+        },
+        {
+          "id": "y-wi-14",
+          "word": "юг",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-wi-14.m4a"
+        },
+        {
+          "id": "y-wi-15",
+          "word": "юбка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wi-15.m4a"
+        },
+        {
+          "id": "y-wi-16",
+          "word": "юрта",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wi-16.m4a"
+        },
+        {
+          "id": "y-wi-17",
+          "word": "юмор",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wi-17.m4a"
+        },
+        {
+          "id": "y-wi-18",
+          "word": "яркий",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wi-18.m4a"
+        },
+        {
+          "id": "y-wi-19",
+          "word": "ястреб",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wi-19.m4a"
+        },
+        {
+          "id": "y-wi-20",
+          "word": "яблоня",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wi-20.m4a"
+        },
+        {
+          "id": "y-wi-21",
+          "word": "яхтсмен",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Y/y-wi-21.m4a"
+        },
+        {
+          "id": "y-wi-22",
+          "word": "ягуар",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wi-22.m4a"
+        },
+        {
+          "id": "y-wi-23",
+          "word": "ящик",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wi-23.m4a"
+        },
+        {
+          "id": "y-wi-24",
+          "word": "ящерица",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wi-24.m4a"
+        },
+        {
+          "id": "y-wi-25",
+          "word": "ель",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-wi-25.m4a"
+        },
+        {
+          "id": "y-wi-26",
+          "word": "ёрш",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-wi-26.m4a"
+        },
+        {
+          "id": "y-wi-27",
+          "word": "юла",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-wi-27.m4a"
+        },
+        {
+          "id": "y-wi-28",
+          "word": "яркость",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wi-28.m4a"
+        },
+        {
+          "id": "y-wi-29",
+          "word": "ягнята",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wi-29.m4a"
+        },
+        {
+          "id": "y-wi-30",
+          "word": "юный",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wi-30.m4a"
+        },
+        {
+          "id": "y-wi-31",
+          "word": "ёлочка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wi-31.m4a"
+        },
+        {
+          "id": "y-wi-32",
+          "word": "яблоня",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wi-32.m4a"
+        },
+        {
+          "id": "y-wi-33",
+          "word": "юбилей",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wi-33.m4a"
+        },
+        {
+          "id": "y-wi-34",
+          "word": "яхта",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wi-34.m4a"
+        },
+        {
+          "id": "y-wi-35",
+          "word": "ястреб",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wi-35.m4a"
+        },
+        {
+          "id": "y-wi-36",
+          "word": "яичница",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wi-36.m4a"
+        },
+        {
+          "id": "y-wi-37",
+          "word": "ёкать",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wi-37.m4a"
+        },
+        {
+          "id": "y-wi-38",
+          "word": "юмор",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wi-38.m4a"
+        },
+        {
+          "id": "y-wi-39",
+          "word": "яснее",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wi-39.m4a"
+        }
       ]
     },
     "wordMed": {
       "stageId": "wordMed",
       "note": "[Й] в середине слова.",
       "items": [
-        { "id": "y-wm-0",  "word": "майка",     "difficulty": 2 },
-        { "id": "y-wm-1",  "word": "зайка",     "difficulty": 1 },
-        { "id": "y-wm-2",  "word": "чайка",     "difficulty": 2 },
-        { "id": "y-wm-3",  "word": "чайник",    "difficulty": 2 },
-        { "id": "y-wm-4",  "word": "лейка",     "difficulty": 2 },
-        { "id": "y-wm-5",  "word": "гайка",     "difficulty": 2 },
-        { "id": "y-wm-6",  "word": "байка",     "difficulty": 2 },
-        { "id": "y-wm-7",  "word": "стройка",   "difficulty": 3 },
-        { "id": "y-wm-8",  "word": "тройка",    "difficulty": 2 },
-        { "id": "y-wm-9",  "word": "двойник",   "difficulty": 3 },
-        { "id": "y-wm-10", "word": "война",     "difficulty": 2 },
-        { "id": "y-wm-11", "word": "трамвай",   "difficulty": 3 },
-        { "id": "y-wm-12", "word": "бройлер",   "difficulty": 3 },
-        { "id": "y-wm-13", "word": "хоккей",    "difficulty": 3 },
-        { "id": "y-wm-14", "word": "кофей",     "difficulty": 3 },
-        { "id": "y-wm-15", "word": "музей",     "difficulty": 3 },
-        { "id": "y-wm-16", "word": "шейка",     "difficulty": 2 },
-        { "id": "y-wm-17", "word": "лейка",     "difficulty": 2 },
-        { "id": "y-wm-18", "word": "скамейка",  "difficulty": 3 },
-        { "id": "y-wm-19", "word": "линейка",   "difficulty": 3 },
-        { "id": "y-wm-20", "word": "копейка",   "difficulty": 3 },
-        { "id": "y-wm-21", "word": "змейка",    "difficulty": 3 },
-        { "id": "y-wm-22", "word": "лайка",     "difficulty": 2 },
-        { "id": "y-wm-23", "word": "зайчик",    "difficulty": 2 },
-        { "id": "y-wm-24", "word": "пайка",     "difficulty": 3 },
-        { "id": "y-wm-25", "word": "зайчонок", "difficulty": 2 },
-        { "id": "y-wm-26", "word": "чайный",   "difficulty": 2 },
-        { "id": "y-wm-27", "word": "раёк",     "difficulty": 3 },
-        { "id": "y-wm-28", "word": "чайная",   "difficulty": 2 },
-        { "id": "y-wm-29", "word": "попугай",  "difficulty": 2 },
-        { "id": "y-wm-30", "word": "урожай",   "difficulty": 3 },
-        { "id": "y-wm-31", "word": "трамвай",  "difficulty": 2 },
-        { "id": "y-wm-32", "word": "самолёт",  "difficulty": 2 },
-        { "id": "y-wm-33", "word": "бойкий",   "difficulty": 3 },
-        { "id": "y-wm-34", "word": "тайник",   "difficulty": 3 },
-        { "id": "y-wm-35", "word": "хозяйка",  "difficulty": 3 },
-        { "id": "y-wm-36", "word": "бойница",  "difficulty": 4 },
-        { "id": "y-wm-37", "word": "пайщик",   "difficulty": 4 },
-        { "id": "y-wm-38", "word": "гайка",    "difficulty": 2 },
-        { "id": "y-wm-39", "word": "кайма",    "difficulty": 3 }
+        {
+          "id": "y-wm-0",
+          "word": "майка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wm-0.m4a"
+        },
+        {
+          "id": "y-wm-1",
+          "word": "зайка",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-wm-1.m4a"
+        },
+        {
+          "id": "y-wm-2",
+          "word": "чайка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wm-2.m4a"
+        },
+        {
+          "id": "y-wm-3",
+          "word": "чайник",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wm-3.m4a"
+        },
+        {
+          "id": "y-wm-4",
+          "word": "лейка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wm-4.m4a"
+        },
+        {
+          "id": "y-wm-5",
+          "word": "гайка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wm-5.m4a"
+        },
+        {
+          "id": "y-wm-6",
+          "word": "байка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wm-6.m4a"
+        },
+        {
+          "id": "y-wm-7",
+          "word": "стройка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wm-7.m4a"
+        },
+        {
+          "id": "y-wm-8",
+          "word": "тройка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wm-8.m4a"
+        },
+        {
+          "id": "y-wm-9",
+          "word": "двойник",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wm-9.m4a"
+        },
+        {
+          "id": "y-wm-10",
+          "word": "война",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wm-10.m4a"
+        },
+        {
+          "id": "y-wm-11",
+          "word": "трамвай",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wm-11.m4a"
+        },
+        {
+          "id": "y-wm-12",
+          "word": "бройлер",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wm-12.m4a"
+        },
+        {
+          "id": "y-wm-13",
+          "word": "хоккей",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wm-13.m4a"
+        },
+        {
+          "id": "y-wm-14",
+          "word": "кофей",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wm-14.m4a"
+        },
+        {
+          "id": "y-wm-15",
+          "word": "музей",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wm-15.m4a"
+        },
+        {
+          "id": "y-wm-16",
+          "word": "шейка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wm-16.m4a"
+        },
+        {
+          "id": "y-wm-17",
+          "word": "лейка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wm-17.m4a"
+        },
+        {
+          "id": "y-wm-18",
+          "word": "скамейка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wm-18.m4a"
+        },
+        {
+          "id": "y-wm-19",
+          "word": "линейка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wm-19.m4a"
+        },
+        {
+          "id": "y-wm-20",
+          "word": "копейка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wm-20.m4a"
+        },
+        {
+          "id": "y-wm-21",
+          "word": "змейка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wm-21.m4a"
+        },
+        {
+          "id": "y-wm-22",
+          "word": "лайка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wm-22.m4a"
+        },
+        {
+          "id": "y-wm-23",
+          "word": "зайчик",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wm-23.m4a"
+        },
+        {
+          "id": "y-wm-24",
+          "word": "пайка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wm-24.m4a"
+        },
+        {
+          "id": "y-wm-25",
+          "word": "зайчонок",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wm-25.m4a"
+        },
+        {
+          "id": "y-wm-26",
+          "word": "чайный",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wm-26.m4a"
+        },
+        {
+          "id": "y-wm-27",
+          "word": "раёк",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wm-27.m4a"
+        },
+        {
+          "id": "y-wm-28",
+          "word": "чайная",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wm-28.m4a"
+        },
+        {
+          "id": "y-wm-29",
+          "word": "попугай",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wm-29.m4a"
+        },
+        {
+          "id": "y-wm-30",
+          "word": "урожай",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wm-30.m4a"
+        },
+        {
+          "id": "y-wm-31",
+          "word": "трамвай",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wm-31.m4a"
+        },
+        {
+          "id": "y-wm-32",
+          "word": "самолёт",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wm-32.m4a"
+        },
+        {
+          "id": "y-wm-33",
+          "word": "бойкий",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wm-33.m4a"
+        },
+        {
+          "id": "y-wm-34",
+          "word": "тайник",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wm-34.m4a"
+        },
+        {
+          "id": "y-wm-35",
+          "word": "хозяйка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wm-35.m4a"
+        },
+        {
+          "id": "y-wm-36",
+          "word": "бойница",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Y/y-wm-36.m4a"
+        },
+        {
+          "id": "y-wm-37",
+          "word": "пайщик",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Y/y-wm-37.m4a"
+        },
+        {
+          "id": "y-wm-38",
+          "word": "гайка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wm-38.m4a"
+        },
+        {
+          "id": "y-wm-39",
+          "word": "кайма",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wm-39.m4a"
+        }
       ]
     },
     "wordFinal": {
       "stageId": "wordFinal",
       "note": "[Й] в конце слова.",
       "items": [
-        { "id": "y-wf-0",  "word": "май",       "difficulty": 1 },
-        { "id": "y-wf-1",  "word": "рай",       "difficulty": 1 },
-        { "id": "y-wf-2",  "word": "сарай",     "difficulty": 2 },
-        { "id": "y-wf-3",  "word": "чай",       "difficulty": 1 },
-        { "id": "y-wf-4",  "word": "трамвай",   "difficulty": 2 },
-        { "id": "y-wf-5",  "word": "воробей",   "difficulty": 2 },
-        { "id": "y-wf-6",  "word": "соловей",   "difficulty": 3 },
-        { "id": "y-wf-7",  "word": "попугай",   "difficulty": 3 },
-        { "id": "y-wf-8",  "word": "лей",       "difficulty": 2 },
-        { "id": "y-wf-9",  "word": "пей",       "difficulty": 1 },
-        { "id": "y-wf-10", "word": "бей",       "difficulty": 1 },
-        { "id": "y-wf-11", "word": "сей",       "difficulty": 2 },
-        { "id": "y-wf-12", "word": "хоккей",    "difficulty": 3 },
-        { "id": "y-wf-13", "word": "музей",     "difficulty": 3 },
-        { "id": "y-wf-14", "word": "ручей",     "difficulty": 2 },
-        { "id": "y-wf-15", "word": "улей",      "difficulty": 2 },
-        { "id": "y-wf-16", "word": "клей",      "difficulty": 2 },
-        { "id": "y-wf-17", "word": "шалфей",    "difficulty": 4 },
-        { "id": "y-wf-18", "word": "кофей",     "difficulty": 3 },
-        { "id": "y-wf-19", "word": "жонглёй",   "difficulty": 4 },
-        { "id": "y-wf-20", "word": "трамвай",   "difficulty": 2 },
-        { "id": "y-wf-21", "word": "урожай",    "difficulty": 2 },
-        { "id": "y-wf-22", "word": "попугай",   "difficulty": 2 },
-        { "id": "y-wf-23", "word": "самовар",   "difficulty": 3 },
-        { "id": "y-wf-24", "word": "трамплин",  "difficulty": 3 },
-        { "id": "y-wf-25", "word": "линей",     "difficulty": 2 },
-        { "id": "y-wf-26", "word": "клей",      "difficulty": 1 },
-        { "id": "y-wf-27", "word": "реквием",   "difficulty": 4 },
-        { "id": "y-wf-28", "word": "батарей",   "difficulty": 3 },
-        { "id": "y-wf-29", "word": "гарнизон",  "difficulty": 4 }
+        {
+          "id": "y-wf-0",
+          "word": "май",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-wf-0.m4a"
+        },
+        {
+          "id": "y-wf-1",
+          "word": "рай",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-wf-1.m4a"
+        },
+        {
+          "id": "y-wf-2",
+          "word": "сарай",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wf-2.m4a"
+        },
+        {
+          "id": "y-wf-3",
+          "word": "чай",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-wf-3.m4a"
+        },
+        {
+          "id": "y-wf-4",
+          "word": "трамвай",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wf-4.m4a"
+        },
+        {
+          "id": "y-wf-5",
+          "word": "воробей",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wf-5.m4a"
+        },
+        {
+          "id": "y-wf-6",
+          "word": "соловей",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wf-6.m4a"
+        },
+        {
+          "id": "y-wf-7",
+          "word": "попугай",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wf-7.m4a"
+        },
+        {
+          "id": "y-wf-8",
+          "word": "лей",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wf-8.m4a"
+        },
+        {
+          "id": "y-wf-9",
+          "word": "пей",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-wf-9.m4a"
+        },
+        {
+          "id": "y-wf-10",
+          "word": "бей",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-wf-10.m4a"
+        },
+        {
+          "id": "y-wf-11",
+          "word": "сей",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wf-11.m4a"
+        },
+        {
+          "id": "y-wf-12",
+          "word": "хоккей",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wf-12.m4a"
+        },
+        {
+          "id": "y-wf-13",
+          "word": "музей",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wf-13.m4a"
+        },
+        {
+          "id": "y-wf-14",
+          "word": "ручей",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wf-14.m4a"
+        },
+        {
+          "id": "y-wf-15",
+          "word": "улей",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wf-15.m4a"
+        },
+        {
+          "id": "y-wf-16",
+          "word": "клей",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wf-16.m4a"
+        },
+        {
+          "id": "y-wf-17",
+          "word": "шалфей",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Y/y-wf-17.m4a"
+        },
+        {
+          "id": "y-wf-18",
+          "word": "кофей",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wf-18.m4a"
+        },
+        {
+          "id": "y-wf-19",
+          "word": "жонглёй",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Y/y-wf-19.m4a"
+        },
+        {
+          "id": "y-wf-20",
+          "word": "трамвай",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wf-20.m4a"
+        },
+        {
+          "id": "y-wf-21",
+          "word": "урожай",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wf-21.m4a"
+        },
+        {
+          "id": "y-wf-22",
+          "word": "попугай",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wf-22.m4a"
+        },
+        {
+          "id": "y-wf-23",
+          "word": "самовар",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wf-23.m4a"
+        },
+        {
+          "id": "y-wf-24",
+          "word": "трамплин",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wf-24.m4a"
+        },
+        {
+          "id": "y-wf-25",
+          "word": "линей",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-wf-25.m4a"
+        },
+        {
+          "id": "y-wf-26",
+          "word": "клей",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-wf-26.m4a"
+        },
+        {
+          "id": "y-wf-27",
+          "word": "реквием",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Y/y-wf-27.m4a"
+        },
+        {
+          "id": "y-wf-28",
+          "word": "батарей",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-wf-28.m4a"
+        },
+        {
+          "id": "y-wf-29",
+          "word": "гарнизон",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Y/y-wf-29.m4a"
+        }
       ]
     },
     "phrase": {
       "stageId": "phrase",
       "note": "Фразы со звуком [Й].",
       "items": [
-        { "id": "y-ph-0",  "word": "зайка в поле",               "difficulty": 1 },
-        { "id": "y-ph-1",  "word": "яблоко на ветке",             "difficulty": 2 },
-        { "id": "y-ph-2",  "word": "ёж под ёлкой",               "difficulty": 2 },
-        { "id": "y-ph-3",  "word": "юла крутится",                "difficulty": 2 },
-        { "id": "y-ph-4",  "word": "чайник на плите",             "difficulty": 2 },
-        { "id": "y-ph-5",  "word": "майка в полоску",             "difficulty": 2 },
-        { "id": "y-ph-6",  "word": "ягода в корзине",             "difficulty": 2 },
-        { "id": "y-ph-7",  "word": "якорь в море",                "difficulty": 2 },
-        { "id": "y-ph-8",  "word": "воробей поёт",                "difficulty": 2 },
-        { "id": "y-ph-9",  "word": "музей картин",                "difficulty": 2 },
-        { "id": "y-ph-10", "word": "лейка с водой",               "difficulty": 2 },
-        { "id": "y-ph-11", "word": "скамейка в парке",            "difficulty": 2 },
-        { "id": "y-ph-12", "word": "ёлочка в лесу",               "difficulty": 2 },
-        { "id": "y-ph-13", "word": "юбка с бантом",               "difficulty": 2 },
-        { "id": "y-ph-14", "word": "январский мороз",             "difficulty": 3 },
-        { "id": "y-ph-15", "word": "ягуар в зоопарке",            "difficulty": 3 },
-        { "id": "y-ph-16", "word": "соловей в саду",              "difficulty": 3 },
-        { "id": "y-ph-17", "word": "яркая юбка",                  "difficulty": 2 },
-        { "id": "y-ph-18", "word": "копейка на полу",             "difficulty": 2 },
-        { "id": "y-ph-19", "word": "ёж с иголками",               "difficulty": 2 },
-        { "id": "y-ph-20", "word": "яйцо в гнезде",               "difficulty": 2 },
-        { "id": "y-ph-21", "word": "трамвай едет",                "difficulty": 2 },
-        { "id": "y-ph-22", "word": "ягнёнок на лугу",             "difficulty": 2 },
-        { "id": "y-ph-23", "word": "ёлка в лесу",                 "difficulty": 1 },
-        { "id": "y-ph-24", "word": "юный спортсмен",              "difficulty": 3 },
-        { "id": "y-ph-25", "word": "яхта в море",                 "difficulty": 2 },
-        { "id": "y-ph-26", "word": "зайчик под кустом",           "difficulty": 2 },
-        { "id": "y-ph-27", "word": "майка с полосками",           "difficulty": 2 },
-        { "id": "y-ph-28", "word": "чайка над волной",            "difficulty": 3 },
-        { "id": "y-ph-29", "word": "чай с лимоном",               "difficulty": 2 },
-        { "id": "y-ph-30", "word": "урожай яблок",                "difficulty": 2 },
-        { "id": "y-ph-31", "word": "ячмень в поле",               "difficulty": 3 },
-        { "id": "y-ph-32", "word": "январь холодный",             "difficulty": 3 },
-        { "id": "y-ph-33", "word": "яркий свет",                  "difficulty": 2 },
-        { "id": "y-ph-34", "word": "ёж в листьях",                "difficulty": 2 },
-        { "id": "y-ph-35", "word": "юрта в степи",                "difficulty": 3 },
-        { "id": "y-ph-36", "word": "попугай в клетке",            "difficulty": 2 },
-        { "id": "y-ph-37", "word": "лейка для цветов",            "difficulty": 2 },
-        { "id": "y-ph-38", "word": "юла на столе",                "difficulty": 1 },
-        { "id": "y-ph-39", "word": "соловей поёт",                "difficulty": 2 },
-        { "id": "y-ph-40", "word": "якорь на дне",                "difficulty": 2 },
-        { "id": "y-ph-41", "word": "ягуар в прыжке",              "difficulty": 3 }
+        {
+          "id": "y-ph-0",
+          "word": "зайка в поле",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-ph-0.m4a"
+        },
+        {
+          "id": "y-ph-1",
+          "word": "яблоко на ветке",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-1.m4a"
+        },
+        {
+          "id": "y-ph-2",
+          "word": "ёж под ёлкой",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-2.m4a"
+        },
+        {
+          "id": "y-ph-3",
+          "word": "юла крутится",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-3.m4a"
+        },
+        {
+          "id": "y-ph-4",
+          "word": "чайник на плите",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-4.m4a"
+        },
+        {
+          "id": "y-ph-5",
+          "word": "майка в полоску",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-5.m4a"
+        },
+        {
+          "id": "y-ph-6",
+          "word": "ягода в корзине",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-6.m4a"
+        },
+        {
+          "id": "y-ph-7",
+          "word": "якорь в море",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-7.m4a"
+        },
+        {
+          "id": "y-ph-8",
+          "word": "воробей поёт",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-8.m4a"
+        },
+        {
+          "id": "y-ph-9",
+          "word": "музей картин",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-9.m4a"
+        },
+        {
+          "id": "y-ph-10",
+          "word": "лейка с водой",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-10.m4a"
+        },
+        {
+          "id": "y-ph-11",
+          "word": "скамейка в парке",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-11.m4a"
+        },
+        {
+          "id": "y-ph-12",
+          "word": "ёлочка в лесу",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-12.m4a"
+        },
+        {
+          "id": "y-ph-13",
+          "word": "юбка с бантом",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-13.m4a"
+        },
+        {
+          "id": "y-ph-14",
+          "word": "январский мороз",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-ph-14.m4a"
+        },
+        {
+          "id": "y-ph-15",
+          "word": "ягуар в зоопарке",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-ph-15.m4a"
+        },
+        {
+          "id": "y-ph-16",
+          "word": "соловей в саду",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-ph-16.m4a"
+        },
+        {
+          "id": "y-ph-17",
+          "word": "яркая юбка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-17.m4a"
+        },
+        {
+          "id": "y-ph-18",
+          "word": "копейка на полу",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-18.m4a"
+        },
+        {
+          "id": "y-ph-19",
+          "word": "ёж с иголками",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-19.m4a"
+        },
+        {
+          "id": "y-ph-20",
+          "word": "яйцо в гнезде",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-20.m4a"
+        },
+        {
+          "id": "y-ph-21",
+          "word": "трамвай едет",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-21.m4a"
+        },
+        {
+          "id": "y-ph-22",
+          "word": "ягнёнок на лугу",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-22.m4a"
+        },
+        {
+          "id": "y-ph-23",
+          "word": "ёлка в лесу",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-ph-23.m4a"
+        },
+        {
+          "id": "y-ph-24",
+          "word": "юный спортсмен",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-ph-24.m4a"
+        },
+        {
+          "id": "y-ph-25",
+          "word": "яхта в море",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-25.m4a"
+        },
+        {
+          "id": "y-ph-26",
+          "word": "зайчик под кустом",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-26.m4a"
+        },
+        {
+          "id": "y-ph-27",
+          "word": "майка с полосками",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-27.m4a"
+        },
+        {
+          "id": "y-ph-28",
+          "word": "чайка над волной",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-ph-28.m4a"
+        },
+        {
+          "id": "y-ph-29",
+          "word": "чай с лимоном",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-29.m4a"
+        },
+        {
+          "id": "y-ph-30",
+          "word": "урожай яблок",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-30.m4a"
+        },
+        {
+          "id": "y-ph-31",
+          "word": "ячмень в поле",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-ph-31.m4a"
+        },
+        {
+          "id": "y-ph-32",
+          "word": "январь холодный",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-ph-32.m4a"
+        },
+        {
+          "id": "y-ph-33",
+          "word": "яркий свет",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-33.m4a"
+        },
+        {
+          "id": "y-ph-34",
+          "word": "ёж в листьях",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-34.m4a"
+        },
+        {
+          "id": "y-ph-35",
+          "word": "юрта в степи",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-ph-35.m4a"
+        },
+        {
+          "id": "y-ph-36",
+          "word": "попугай в клетке",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-36.m4a"
+        },
+        {
+          "id": "y-ph-37",
+          "word": "лейка для цветов",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-37.m4a"
+        },
+        {
+          "id": "y-ph-38",
+          "word": "юла на столе",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Y/y-ph-38.m4a"
+        },
+        {
+          "id": "y-ph-39",
+          "word": "соловей поёт",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-39.m4a"
+        },
+        {
+          "id": "y-ph-40",
+          "word": "якорь на дне",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-ph-40.m4a"
+        },
+        {
+          "id": "y-ph-41",
+          "word": "ягуар в прыжке",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-ph-41.m4a"
+        }
       ]
     },
     "sentence": {
       "stageId": "sentence",
       "note": "Предложения со звуком [Й].",
       "items": [
-        { "id": "y-sen-0",  "word": "Зайка прыгает по полю.",                       "difficulty": 2 },
-        { "id": "y-sen-1",  "word": "Яблоко упало с яблони.",                        "difficulty": 2 },
-        { "id": "y-sen-2",  "word": "Ёж живёт в лесу под ёлкой.",                   "difficulty": 3 },
-        { "id": "y-sen-3",  "word": "Юла крутится на столе.",                        "difficulty": 2 },
-        { "id": "y-sen-4",  "word": "Воробей поёт на скамейке.",                    "difficulty": 3 },
-        { "id": "y-sen-5",  "word": "Соловей поёт в саду.",                          "difficulty": 3 },
-        { "id": "y-sen-6",  "word": "Чайник закипел на плите.",                     "difficulty": 3 },
-        { "id": "y-sen-7",  "word": "Маша поливает цветы лейкой.",                  "difficulty": 3 },
-        { "id": "y-sen-8",  "word": "В музее много красивых картин.",               "difficulty": 3 },
-        { "id": "y-sen-9",  "word": "Якорь держит яхту у берега.",                  "difficulty": 3 },
-        { "id": "y-sen-10", "word": "Ягуар — быстрый и пятнистый хищник.",         "difficulty": 4 },
-        { "id": "y-sen-11", "word": "Юнга помогает морякам на корабле.",            "difficulty": 4 },
-        { "id": "y-sen-12", "word": "В январе выпало много снега.",                 "difficulty": 4 },
-        { "id": "y-sen-13", "word": "Ёжик нашёл яблоко под ёлкой.",               "difficulty": 4 },
-        { "id": "y-sen-14", "word": "Яркая юбка лежит на скамейке.",               "difficulty": 4 },
-        { "id": "y-sen-15", "word": "Ёжик катит яблоко на спине.",                  "difficulty": 3 },
-        { "id": "y-sen-16", "word": "Яйцо лежит в гнезде на ветке.",               "difficulty": 2 },
-        { "id": "y-sen-17", "word": "Трамвай едет по улице.",                       "difficulty": 2 },
-        { "id": "y-sen-18", "word": "Попугай кричит: «Привет! Привет!»",           "difficulty": 3 },
-        { "id": "y-sen-19", "word": "Зайчик сидит под кустом.",                    "difficulty": 2 },
-        { "id": "y-sen-20", "word": "Ягнёнок бегает по лугу.",                     "difficulty": 2 },
-        { "id": "y-sen-21", "word": "Соловей поёт красиво в саду.",                "difficulty": 3 },
-        { "id": "y-sen-22", "word": "Яхта плывёт по синему морю.",                 "difficulty": 3 },
-        { "id": "y-sen-23", "word": "Чай с лимоном согревает в мороз.",            "difficulty": 3 },
-        { "id": "y-sen-24", "word": "Урожай яблок в этом году большой.",           "difficulty": 3 },
-        { "id": "y-sen-25", "word": "Юный художник рисует ёлку.",                  "difficulty": 3 },
-        { "id": "y-sen-26", "word": "Якорь держит лодку у берега.",                "difficulty": 3 },
-        { "id": "y-sen-27", "word": "Яркие огни украшают ёлочку.",                 "difficulty": 3 },
-        { "id": "y-sen-28", "word": "Ёж нашёл яблоко и яблоню.",                  "difficulty": 3 },
-        { "id": "y-sen-29", "word": "Маша поливает яблоню из лейки.",              "difficulty": 3 },
-        { "id": "y-sen-30", "word": "Чайка кричит над морем.",                     "difficulty": 2 },
-        { "id": "y-sen-31", "word": "Майка намокла под дождём.",                   "difficulty": 2 },
-        { "id": "y-sen-32", "word": "Январь — самый холодный месяц.",              "difficulty": 4 },
-        { "id": "y-sen-33", "word": "Ягуар прыгнул высоко.",                       "difficulty": 3 },
-        { "id": "y-sen-34", "word": "В музее стоят красивые картины.",             "difficulty": 3 },
-        { "id": "y-sen-35", "word": "Воробей клюёт зёрна на скамейке.",           "difficulty": 3 },
-        { "id": "y-sen-36", "word": "Юная певица поёт красивую песню.",            "difficulty": 4 },
-        { "id": "y-sen-37", "word": "Юнга смотрит в подзорную трубу.",             "difficulty": 4 },
-        { "id": "y-sen-38", "word": "Зайчонок прыгнул в ямку под ёлкой.",         "difficulty": 4 },
-        { "id": "y-sen-39", "word": "Ёлочка украшена яркими игрушками.",           "difficulty": 4 }
+        {
+          "id": "y-sen-0",
+          "word": "Зайка прыгает по полю.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-sen-0.m4a"
+        },
+        {
+          "id": "y-sen-1",
+          "word": "Яблоко упало с яблони.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-sen-1.m4a"
+        },
+        {
+          "id": "y-sen-2",
+          "word": "Ёж живёт в лесу под ёлкой.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-sen-2.m4a"
+        },
+        {
+          "id": "y-sen-3",
+          "word": "Юла крутится на столе.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-sen-3.m4a"
+        },
+        {
+          "id": "y-sen-4",
+          "word": "Воробей поёт на скамейке.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-sen-4.m4a"
+        },
+        {
+          "id": "y-sen-5",
+          "word": "Соловей поёт в саду.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-sen-5.m4a"
+        },
+        {
+          "id": "y-sen-6",
+          "word": "Чайник закипел на плите.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-sen-6.m4a"
+        },
+        {
+          "id": "y-sen-7",
+          "word": "Маша поливает цветы лейкой.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-sen-7.m4a"
+        },
+        {
+          "id": "y-sen-8",
+          "word": "В музее много красивых картин.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-sen-8.m4a"
+        },
+        {
+          "id": "y-sen-9",
+          "word": "Якорь держит яхту у берега.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-sen-9.m4a"
+        },
+        {
+          "id": "y-sen-10",
+          "word": "Ягуар — быстрый и пятнистый хищник.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Y/y-sen-10.m4a"
+        },
+        {
+          "id": "y-sen-11",
+          "word": "Юнга помогает морякам на корабле.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Y/y-sen-11.m4a"
+        },
+        {
+          "id": "y-sen-12",
+          "word": "В январе выпало много снега.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Y/y-sen-12.m4a"
+        },
+        {
+          "id": "y-sen-13",
+          "word": "Ёжик нашёл яблоко под ёлкой.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Y/y-sen-13.m4a"
+        },
+        {
+          "id": "y-sen-14",
+          "word": "Яркая юбка лежит на скамейке.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Y/y-sen-14.m4a"
+        },
+        {
+          "id": "y-sen-15",
+          "word": "Ёжик катит яблоко на спине.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-sen-15.m4a"
+        },
+        {
+          "id": "y-sen-16",
+          "word": "Яйцо лежит в гнезде на ветке.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-sen-16.m4a"
+        },
+        {
+          "id": "y-sen-17",
+          "word": "Трамвай едет по улице.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-sen-17.m4a"
+        },
+        {
+          "id": "y-sen-18",
+          "word": "Попугай кричит: «Привет! Привет!»",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-sen-18.m4a"
+        },
+        {
+          "id": "y-sen-19",
+          "word": "Зайчик сидит под кустом.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-sen-19.m4a"
+        },
+        {
+          "id": "y-sen-20",
+          "word": "Ягнёнок бегает по лугу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-sen-20.m4a"
+        },
+        {
+          "id": "y-sen-21",
+          "word": "Соловей поёт красиво в саду.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-sen-21.m4a"
+        },
+        {
+          "id": "y-sen-22",
+          "word": "Яхта плывёт по синему морю.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-sen-22.m4a"
+        },
+        {
+          "id": "y-sen-23",
+          "word": "Чай с лимоном согревает в мороз.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-sen-23.m4a"
+        },
+        {
+          "id": "y-sen-24",
+          "word": "Урожай яблок в этом году большой.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-sen-24.m4a"
+        },
+        {
+          "id": "y-sen-25",
+          "word": "Юный художник рисует ёлку.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-sen-25.m4a"
+        },
+        {
+          "id": "y-sen-26",
+          "word": "Якорь держит лодку у берега.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-sen-26.m4a"
+        },
+        {
+          "id": "y-sen-27",
+          "word": "Яркие огни украшают ёлочку.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-sen-27.m4a"
+        },
+        {
+          "id": "y-sen-28",
+          "word": "Ёж нашёл яблоко и яблоню.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-sen-28.m4a"
+        },
+        {
+          "id": "y-sen-29",
+          "word": "Маша поливает яблоню из лейки.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-sen-29.m4a"
+        },
+        {
+          "id": "y-sen-30",
+          "word": "Чайка кричит над морем.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-sen-30.m4a"
+        },
+        {
+          "id": "y-sen-31",
+          "word": "Майка намокла под дождём.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Y/y-sen-31.m4a"
+        },
+        {
+          "id": "y-sen-32",
+          "word": "Январь — самый холодный месяц.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Y/y-sen-32.m4a"
+        },
+        {
+          "id": "y-sen-33",
+          "word": "Ягуар прыгнул высоко.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-sen-33.m4a"
+        },
+        {
+          "id": "y-sen-34",
+          "word": "В музее стоят красивые картины.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-sen-34.m4a"
+        },
+        {
+          "id": "y-sen-35",
+          "word": "Воробей клюёт зёрна на скамейке.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Y/y-sen-35.m4a"
+        },
+        {
+          "id": "y-sen-36",
+          "word": "Юная певица поёт красивую песню.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Y/y-sen-36.m4a"
+        },
+        {
+          "id": "y-sen-37",
+          "word": "Юнга смотрит в подзорную трубу.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Y/y-sen-37.m4a"
+        },
+        {
+          "id": "y-sen-38",
+          "word": "Зайчонок прыгнул в ямку под ёлкой.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Y/y-sen-38.m4a"
+        },
+        {
+          "id": "y-sen-39",
+          "word": "Ёлочка украшена яркими игрушками.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Y/y-sen-39.m4a"
+        }
       ]
     }
   },
   "templateCompatibility": {
-    "prep":      ["articulation-imitation", "breathing", "rhythm", "ar-activity"],
-    "isolated":  ["repeat-after-model", "listen-and-choose", "sorting", "ar-activity"],
-    "syllable":  ["listen-and-choose", "sorting", "repeat-after-model", "bingo", "rhythm"],
-    "wordInit":  ["listen-and-choose", "repeat-after-model", "drag-and-match", "memory", "bingo", "sound-hunter", "puzzle-reveal", "visual-acoustic", "minimal-pairs"],
-    "wordMed":   ["listen-and-choose", "repeat-after-model", "drag-and-match", "memory", "sound-hunter"],
-    "wordFinal": ["listen-and-choose", "repeat-after-model", "minimal-pairs", "sorting"],
-    "phrase":    ["story-completion", "drag-and-match", "repeat-after-model", "sorting", "minimal-pairs"],
-    "sentence":  ["repeat-after-model", "story-completion", "narrative-quest"]
+    "prep": [
+      "articulation-imitation",
+      "breathing",
+      "rhythm",
+      "ar-activity"
+    ],
+    "isolated": [
+      "repeat-after-model",
+      "listen-and-choose",
+      "sorting",
+      "ar-activity"
+    ],
+    "syllable": [
+      "listen-and-choose",
+      "sorting",
+      "repeat-after-model",
+      "bingo",
+      "rhythm"
+    ],
+    "wordInit": [
+      "listen-and-choose",
+      "repeat-after-model",
+      "drag-and-match",
+      "memory",
+      "bingo",
+      "sound-hunter",
+      "puzzle-reveal",
+      "visual-acoustic",
+      "minimal-pairs"
+    ],
+    "wordMed": [
+      "listen-and-choose",
+      "repeat-after-model",
+      "drag-and-match",
+      "memory",
+      "sound-hunter"
+    ],
+    "wordFinal": [
+      "listen-and-choose",
+      "repeat-after-model",
+      "minimal-pairs",
+      "sorting"
+    ],
+    "phrase": [
+      "story-completion",
+      "drag-and-match",
+      "repeat-after-model",
+      "sorting",
+      "minimal-pairs"
+    ],
+    "sentence": [
+      "repeat-after-model",
+      "story-completion",
+      "narrative-quest"
+    ]
   }
 }
