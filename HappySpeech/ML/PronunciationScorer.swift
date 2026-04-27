@@ -2,6 +2,7 @@ import Accelerate
 @preconcurrency import AVFoundation
 @preconcurrency import CoreML
 import OSLog
+import os.signpost
 
 // MARK: - Domain Types
 
@@ -67,14 +68,62 @@ protocol PronunciationScorerProtocol: Sendable {
 // MARK: - MFCC Feature Extraction
 
 /// Извлечение MFCC через vDSP/Accelerate (native iOS, без Python зависимостей).
+///
+/// Performance оптимизации (M10.5 v7):
+///   - vDSP FFT setup кэшируется как static let — ранее создавался 150 раз (на каждый из tSteps фреймов).
+///     vDSP_create_fftsetup — дорогая операция (аллокация + инициализация таблиц twiddle).
+///   - Mel filterbank кэшируется как static let (статичен для фиксированных параметров SR/nFFT).
 enum MFCCExtractor {
-    static let nMFCC = 40
-    static let hopLength = 160     // 10ms при 16kHz
-    static let nFFT = 400          // 25ms при 16kHz
+    static let nMFCC        = 40
+    static let hopLength    = 160     // 10ms при 16kHz
+    static let nFFT         = 400     // 25ms при 16kHz
     static let targetSR: Double = 16000
     static let targetDuration: Double = 1.5
-    static let targetSamples = Int(targetSR * targetDuration)  // 24000
-    static let tSteps = (targetSamples + hopLength - 1) / hopLength  // 150
+    static let targetSamples = Int(targetSR * targetDuration)   // 24000
+    static let tSteps        = (targetSamples + hopLength - 1) / hopLength  // 150
+
+    // MARK: Кэшированный FFT setup.
+    // До оптимизации: vDSP_create_fftsetup + vDSP_destroy_fftsetup вызывались 150 раз
+    // за один инференс (внутри computePowerSpectrum в цикле for frameIdx in 0..<tSteps).
+    //
+    // nFFT=400 → ближайшая степень двойки = 512 → log2(512) = 9.
+    // FFT работает на буфере padded до fftSize=512, not nFFT=400.
+    static let fftSize: Int = {
+        var size = 1
+        while size < nFFT { size <<= 1 }
+        return size   // = 512 для nFFT=400
+    }()
+
+    private static let fftLog2n: vDSP_Length = {
+        var size = fftSize
+        var log2n: vDSP_Length = 0
+        while size > 1 { size >>= 1; log2n += 1 }
+        return log2n   // = 9 для fftSize=512
+    }()
+
+    private nonisolated(unsafe) static let fftSetup: FFTSetup? = {
+        vDSP_create_fftsetup(fftLog2n, FFTRadix(kFFTRadix2))
+    }()
+
+    // MARK: Кэшированный Mel filterbank [nMFCC, nFFT/2+1].
+    private static let cachedMelFilterbank: (melPoints: [Float], hzPoints: [Float], binPoints: [Int]) = {
+        let melMin: Float = 0
+        let melMax = hzToMel(Float(targetSR / 2))
+        let melPts = (0...nMFCC + 1).map { i in
+            melMin + Float(i) * (melMax - melMin) / Float(nMFCC + 1)
+        }
+        let hzPts  = melPts.map { melToHz($0) }
+        let binPts = hzPts.map { Int($0 / Float(targetSR) * Float(nFFT)) }
+        return (melPts, hzPts, binPts)
+    }()
+
+    // MARK: Кэшированное окно Хэммминга [nFFT].
+    private static let hammingWindow: [Float] = {
+        let n = nFFT
+        return (0 ..< n).map { i in
+            0.54 - 0.46 * cos(2 * Float.pi * Float(i) / Float(n - 1))
+        }
+    }()
 
     /// Извлекает MFCC из PCM-буфера.
     /// - Returns: MLMultiArray shape [1, 40, 150] или nil при ошибке
@@ -105,7 +154,7 @@ enum MFCCExtractor {
         // Pre-emphasis filter
         var preEmphasized = [Float](repeating: 0, count: samples.count)
         preEmphasized[0] = samples[0]
-        for i in 1..<samples.count {
+        for i in 1 ..< samples.count {
             preEmphasized[i] = samples[i] - 0.97 * samples[i - 1]
         }
 
@@ -121,9 +170,9 @@ enum MFCCExtractor {
             dataType: .float32
         )
 
-        for coeff in 0..<nMFCC {
-            for t in 0..<tSteps {
-                let idx = coeff * tSteps + t
+        for coeff in 0 ..< nMFCC {
+            for t in 0 ..< tSteps {
+                let idx      = coeff * tSteps + t
                 let arrayIdx = [0, coeff, t] as [NSNumber]
                 multiArray[arrayIdx] = NSNumber(value: idx < normalized.count ? normalized[idx] : 0)
             }
@@ -139,12 +188,12 @@ enum MFCCExtractor {
         fromSR: Double,
         toSR: Double
     ) -> [Float] {
-        let ratio = toSR / fromSR
+        let ratio       = toSR / fromSR
         let outputCount = Int(Double(samples.count) * ratio)
-        var output = [Float](repeating: 0, count: outputCount)
+        var output      = [Float](repeating: 0, count: outputCount)
 
         // Линейная интерполяция (простой ресемплинг)
-        for i in 0..<outputCount {
+        for i in 0 ..< outputCount {
             let pos = Double(i) / ratio
             let idx = Int(pos)
             let frac = Float(pos - Double(idx))
@@ -158,47 +207,40 @@ enum MFCCExtractor {
     }
 
     private static func computeMFCC(signal: [Float]) -> [Float] {
-        let numFrames = tSteps
-        var mfcc = [Float](repeating: 0, count: nMFCC * numFrames)
-        let nMelBands = 40
+        let numFrames  = tSteps
+        var mfcc       = [Float](repeating: 0, count: nMFCC * numFrames)
+        let nMelBands  = 40
+        let binPoints  = cachedMelFilterbank.binPoints
 
-        // Mel filterbank параметры
-        let melMin: Float = 0
-        let melMax = hzToMel(Float(targetSR / 2))
-        let melPoints = (0...nMelBands + 1).map { i in
-            melMin + Float(i) * (melMax - melMin) / Float(nMelBands + 1)
-        }
-        let hzPoints = melPoints.map { melToHz($0) }
-        let binPoints = hzPoints.map { Int($0 / Float(targetSR) * Float(nFFT)) }
-
-        for frameIdx in 0..<numFrames {
-            let start = frameIdx * hopLength
-            let end = min(start + nFFT, signal.count)
-            var frame = [Float](repeating: 0, count: nFFT)
+        for frameIdx in 0 ..< numFrames {
+            let start   = frameIdx * hopLength
+            let end     = min(start + nFFT, signal.count)
+            var frame   = [Float](repeating: 0, count: nFFT)
             let copyLen = end - start
             if copyLen > 0 {
-                frame.replaceSubrange(0..<copyLen, with: signal[start..<end])
+                frame.replaceSubrange(0 ..< copyLen, with: signal[start ..< end])
             }
 
-            // Hamming window
-            var windowed = applyHamming(frame)
+            // Применяем кэшированное окно Хэмминга
+            var windowed = [Float](repeating: 0, count: nFFT)
+            vDSP_vmul(frame, 1, hammingWindow, 1, &windowed, 1, vDSP_Length(nFFT))
 
-            // Power spectrum через vDSP FFT
+            // Power spectrum через кэшированный vDSP FFT setup
             let powerSpectrum = computePowerSpectrum(&windowed)
 
             // Mel filterbank
             var melEnergies = [Float](repeating: 0, count: nMelBands)
-            for m in 0..<nMelBands {
-                let lo = binPoints[m]
+            for m in 0 ..< nMelBands {
+                let lo     = binPoints[m]
                 let center = binPoints[m + 1]
-                let hi = binPoints[m + 2]
+                let hi     = binPoints[m + 2]
 
                 var energy: Float = 0
-                for k in lo..<center where k < powerSpectrum.count {
+                for k in lo ..< center where k < powerSpectrum.count {
                     let weight = Float(k - lo) / Float(max(center - lo, 1))
                     energy += weight * powerSpectrum[k]
                 }
-                for k in center..<hi where k < powerSpectrum.count {
+                for k in center ..< hi where k < powerSpectrum.count {
                     let weight = Float(hi - k) / Float(max(hi - center, 1))
                     energy += weight * powerSpectrum[k]
                 }
@@ -207,9 +249,9 @@ enum MFCCExtractor {
 
             // DCT для MFCC
             let nCoeffs = min(nMFCC, nMelBands)
-            for n in 0..<nCoeffs {
+            for n in 0 ..< nCoeffs {
                 var sum: Float = 0
-                for m in 0..<nMelBands {
+                for m in 0 ..< nMelBands {
                     sum += melEnergies[m] * cos(Float.pi * Float(n) * (Float(m) + 0.5) / Float(nMelBands))
                 }
                 mfcc[n * numFrames + frameIdx] = sum
@@ -227,39 +269,38 @@ enum MFCCExtractor {
         return 700 * (pow(10, mel / 2595) - 1)
     }
 
-    private static func applyHamming(_ frame: [Float]) -> [Float] {
-        let n = frame.count
-        return frame.enumerated().map { i, sample in
-            sample * (0.54 - 0.46 * cos(2 * Float.pi * Float(i) / Float(n - 1)))
-        }
-    }
-
+    /// Вычисляет мощностной спектр через кэшированный FFT setup.
+    /// До M10.5 v7: vDSP_create_fftsetup вызывался здесь на каждый фрейм (150 вызовов за инференс).
+    ///
+    /// Фрейм дополняется нулями до fftSize=512 (ближайшая степень двойки для nFFT=400).
+    /// Возвращает fftSize/2 значений (спектральных бинов).
     private static func computePowerSpectrum(_ frame: inout [Float]) -> [Float] {
-        let n = frame.count
-        let log2n = vDSP_Length(log2(Float(n)))
-        guard let setup = vDSP_create_fftsetup(log2n, FFTRadix(kFFTRadix2)) else {
-            return [Float](repeating: 0, count: n / 2 + 1)
+        guard let setup = fftSetup else {
+            return [Float](repeating: 0, count: fftSize / 2)
         }
-        defer { vDSP_destroy_fftsetup(setup) }
 
-        var real = [Float](repeating: 0, count: n / 2)
-        var imag = [Float](repeating: 0, count: n / 2)
+        // Pad до fftSize (степень двойки) — vDSP требует размер = 2^log2n
+        var paddedFrame = frame
+        if paddedFrame.count < fftSize {
+            paddedFrame += [Float](repeating: 0, count: fftSize - paddedFrame.count)
+        }
 
-        frame.withUnsafeBytes { rawPtr in
+        let halfN = fftSize / 2
+        var real  = [Float](repeating: 0, count: halfN)
+        var imag  = [Float](repeating: 0, count: halfN)
+
+        paddedFrame.withUnsafeBytes { rawPtr in
             guard let baseAddress = rawPtr.baseAddress else { return }
-            var splitComplex = DSPSplitComplex(
-                realp: &real,
-                imagp: &imag
-            )
-            baseAddress.withMemoryRebound(to: DSPComplex.self, capacity: n / 2) { complexPtr in
-                vDSP_ctoz(complexPtr, 2, &splitComplex, 1, vDSP_Length(n / 2))
+            var splitComplex = DSPSplitComplex(realp: &real, imagp: &imag)
+            baseAddress.withMemoryRebound(to: DSPComplex.self, capacity: halfN) { complexPtr in
+                vDSP_ctoz(complexPtr, 2, &splitComplex, 1, vDSP_Length(halfN))
             }
-            vDSP_fft_zrip(setup, &splitComplex, 1, log2n, FFTDirection(FFT_FORWARD))
+            vDSP_fft_zrip(setup, &splitComplex, 1, fftLog2n, FFTDirection(FFT_FORWARD))
         }
 
-        var magnitudes = [Float](repeating: 0, count: n / 2)
+        var magnitudes   = [Float](repeating: 0, count: halfN)
         var splitComplex = DSPSplitComplex(realp: &real, imagp: &imag)
-        vDSP_zvmags(&splitComplex, 1, &magnitudes, 1, vDSP_Length(n / 2))
+        vDSP_zvmags(&splitComplex, 1, &magnitudes, 1, vDSP_Length(halfN))
 
         return magnitudes
     }
@@ -269,8 +310,8 @@ enum MFCCExtractor {
         var stddev: Float = 0
         vDSP_meanv(mfcc, 1, &mean, vDSP_Length(mfcc.count))
         var variance: Float = 0
-        var meanArr = [Float](repeating: mean, count: mfcc.count)
-        var diff = [Float](repeating: 0, count: mfcc.count)
+        let meanArr = [Float](repeating: mean, count: mfcc.count)
+        var diff    = [Float](repeating: 0, count: mfcc.count)
         vDSP_vsub(meanArr, 1, mfcc, 1, &diff, 1, vDSP_Length(mfcc.count))
         vDSP_measqv(diff, 1, &variance, vDSP_Length(mfcc.count))
         stddev = sqrt(variance) + 1e-8
@@ -304,21 +345,38 @@ enum PronunciationScorerError: LocalizedError, Sendable {
 
 /// Реальная реализация PronunciationScorer через Core ML.
 /// Загружает по одной модели на группу звуков лениво (при первом запросе).
+///
+/// Performance оптимизации (M10.5 v7):
+///   - os_signpost для Instruments: name "ScorerInference", category "Performance"
+///   - Использует кэшированный FFT setup из MFCCExtractor (static let)
 actor LivePronunciationScorer: PronunciationScorerProtocol {
-    private let logger = Logger(subsystem: "HappySpeech", category: "PronunciationScorer")
+    private let logger  = Logger(subsystem: "HappySpeech", category: "PronunciationScorer")
+    private let perfLog = OSLog(subsystem: "ru.happyspeech.app", category: "Performance")
     private var loadedModels: [PhonemeGroup: MLModel] = [:]
 
     func score(
         audio buffer: AVAudioPCMBuffer,
         phonemeGroup group: PhonemeGroup
     ) async throws -> PronunciationResult {
-        let model = try loadModel(for: group)
-        let mfcc = try MFCCExtractor.extract(from: buffer)
+        let signID = OSSignpostID(log: perfLog)
+        os_signpost(.begin, log: perfLog, name: "ScorerInference", signpostID: signID,
+                    "group=%{public}@", group.rawValue)
 
-        let input = try MLDictionaryFeatureProvider(dictionary: ["mfcc": mfcc])
-        let output = try await model.prediction(from: input)
+        do {
+            let model  = try loadModel(for: group)
+            let mfcc   = try MFCCExtractor.extract(from: buffer)
+            let input  = try MLDictionaryFeatureProvider(dictionary: ["mfcc": mfcc])
+            let output = try await model.prediction(from: input)
+            let result = try Self.parseOutput(output, group: group)
 
-        return try Self.parseOutput(output, group: group)
+            os_signpost(.end, log: perfLog, name: "ScorerInference", signpostID: signID,
+                        "score=%.2f", result.correctProbability)
+            return result
+        } catch {
+            os_signpost(.end, log: perfLog, name: "ScorerInference", signpostID: signID,
+                        "error=%{public}@", error.localizedDescription)
+            throw error
+        }
     }
 
     // MARK: Private
@@ -333,7 +391,7 @@ actor LivePronunciationScorer: PronunciationScorerProtocol {
             forResource: modelName,
             withExtension: "mlpackage"
         ) else {
-            logger.error("Model not found: \(modelName).mlpackage")
+            logger.error("Модель не найдена: \(modelName).mlpackage")
             throw PronunciationScorerError.modelNotFound(group)
         }
 
@@ -342,7 +400,7 @@ actor LivePronunciationScorer: PronunciationScorerProtocol {
 
         let model = try MLModel(contentsOf: modelURL, configuration: config)
         loadedModels[group] = model
-        logger.info("Loaded model: \(modelName)")
+        logger.info("Загружена модель: \(modelName)")
         return model
     }
 
@@ -352,19 +410,19 @@ actor LivePronunciationScorer: PronunciationScorerProtocol {
     ) throws -> PronunciationResult {
         // Ожидаем выход "output" — float32 [1, 2] (logits)
         guard let outputFeature = output.featureValue(for: "output"),
-              let multiArray = outputFeature.multiArrayValue else {
+              let multiArray    = outputFeature.multiArrayValue else {
             throw PronunciationScorerError.inferenceFailure("Missing output feature")
         }
 
         // Softmax вручную
-        let logit0 = multiArray[[0, 0] as [NSNumber]].floatValue
-        let logit1 = multiArray[[0, 1] as [NSNumber]].floatValue
-        let maxLogit = max(logit0, logit1)
-        let exp0 = exp(logit0 - maxLogit)
-        let exp1 = exp(logit1 - maxLogit)
-        let sumExp = exp0 + exp1
+        let logit0    = multiArray[[0, 0] as [NSNumber]].floatValue
+        let logit1    = multiArray[[0, 1] as [NSNumber]].floatValue
+        let maxLogit  = max(logit0, logit1)
+        let exp0      = exp(logit0 - maxLogit)
+        let exp1      = exp(logit1 - maxLogit)
+        let sumExp    = exp0 + exp1
 
-        let correctProb = exp0 / sumExp
+        let correctProb   = exp0 / sumExp
         let incorrectProb = exp1 / sumExp
 
         return PronunciationResult(
@@ -395,7 +453,7 @@ final class MockPronunciationScorer: PronunciationScorerProtocol, @unchecked Sen
             try await Task.sleep(for: .seconds(simulatedLatency))
         }
 
-        let correctProb = alwaysCorrect ? fixedProbability : (1 - fixedProbability)
+        let correctProb   = alwaysCorrect ? fixedProbability : (1 - fixedProbability)
         let incorrectProb = 1 - correctProb
 
         return PronunciationResult(
