@@ -1621,6 +1621,13 @@
 		3CDE418A12085FC7C22D7E78 /* dwh-ph-16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 29AB188A9EBC018E087D0D73 /* dwh-ph-16.m4a */; };
 		3CE217D959A8B82F15CF81B6 /* phon-vc-18.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ACEA1B7DE11E6B7894627068 /* phon-vc-18.m4a */; };
 		3CE657ABF3E707D994AE074B /* SyncServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E65767FF108F1ADE357BEF /* SyncServiceTests.swift */; };
+		D1EB36C28AA548F7948E26EC /* FirebaseEmulatorTestsBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A7C6B13A104F7E80374F61 /* FirebaseEmulatorTestsBase.swift */; };
+		2A7A956F6B874C0D8A094497 /* FirestoreCRUDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51795B86EC3944D9A89B335B /* FirestoreCRUDTests.swift */; };
+		9935ABC541374F4D9DBA13AA /* AuthFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A41FE62318498F9EE804C0 /* AuthFlowTests.swift */; };
+		4399063A55DB4B178D2D78A4 /* SyncServiceIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D95C6F5F1F94C00A6666B99 /* SyncServiceIntegrationTests.swift */; };
+		F7551268E67E4F60ADB52781 /* ContentPackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AB725958804DCE92F1CC0B /* ContentPackTests.swift */; };
+		C5E29DF082664DB8A6E93EF4 /* VoiceOverLabelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12933794DE5745C5AE3F5E80 /* VoiceOverLabelsTests.swift */; };
+		E3F70FC28E914D488B0405D7 /* TouchTargetsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A1A66EB635C45C5B9E43D0C /* TouchTargetsTests.swift */; };
 		3CE707D3482A6E58B9DF30E8 /* g-ph-18.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7E7D56DE7789BBAE2901A55E /* g-ph-18.m4a */; };
 		3CE91DC96719A7798781B22A /* r-ph-47.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1A503505D817C1B4B3CCE5FA /* r-ph-47.m4a */; };
 		3CEF8F96705B023251833BEA /* zh-wf-5.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7D4BCE37492951FEF9DF36D0 /* zh-wf-5.m4a */; };
@@ -7100,6 +7107,13 @@
 		14C1CC4870618960BE762CF4 /* l-wf-19.m4a */ = {isa = PBXFileReference; path = "l-wf-19.m4a"; sourceTree = "<group>"; };
 		14C489F6E01352B367684518 /* lex-bp-14.m4a */ = {isa = PBXFileReference; path = "lex-bp-14.m4a"; sourceTree = "<group>"; };
 		14E65767FF108F1ADE357BEF /* SyncServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncServiceTests.swift; sourceTree = "<group>"; };
+		48A7C6B13A104F7E80374F61 /* FirebaseEmulatorTestsBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseEmulatorTestsBase.swift; sourceTree = "<group>"; };
+		51795B86EC3944D9A89B335B /* FirestoreCRUDTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreCRUDTests.swift; sourceTree = "<group>"; };
+		C3A41FE62318498F9EE804C0 /* AuthFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlowTests.swift; sourceTree = "<group>"; };
+		0D95C6F5F1F94C00A6666B99 /* SyncServiceIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncServiceIntegrationTests.swift; sourceTree = "<group>"; };
+		C7AB725958804DCE92F1CC0B /* ContentPackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentPackTests.swift; sourceTree = "<group>"; };
+		12933794DE5745C5AE3F5E80 /* VoiceOverLabelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceOverLabelsTests.swift; sourceTree = "<group>"; };
+		0A1A66EB635C45C5B9E43D0C /* TouchTargetsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchTargetsTests.swift; sourceTree = "<group>"; };
 		14E891A630244F81712F945C /* lex-bp-5.m4a */ = {isa = PBXFileReference; path = "lex-bp-5.m4a"; sourceTree = "<group>"; };
 		1506D2FE67966BB9CBE12009 /* br-153.m4a */ = {isa = PBXFileReference; path = "br-153.m4a"; sourceTree = "<group>"; };
 		150A01643F5D7D9CAC49CCF1 /* r-wf-63.m4a */ = {isa = PBXFileReference; path = "r-wf-63.m4a"; sourceTree = "<group>"; };
@@ -17182,6 +17196,8 @@
 			isa = PBXGroup;
 			children = (
 				1DA970F74C0E5B8DD084846B /* Games */,
+				A1B2C3D4E5F60000AAAABBBB /* Integration */,
+				A1B2C3D4E5F60000AAAACCCC /* Accessibility */,
 				6D8B6802705E41176E531AFB /* ML */,
 				1C1918C54E95B94F11E4DE63 /* Mocks */,
 				62E9545F8ED20B1F8BE07B7F /* Snapshot */,
@@ -17189,6 +17205,27 @@
 				E86C9045FC13026A18A66467 /* Info.plist */,
 			);
 			path = HappySpeechTests;
+			sourceTree = "<group>";
+		};
+		A1B2C3D4E5F60000AAAABBBB /* Integration */ = {
+			isa = PBXGroup;
+			children = (
+				48A7C6B13A104F7E80374F61 /* FirebaseEmulatorTestsBase.swift */,
+				51795B86EC3944D9A89B335B /* FirestoreCRUDTests.swift */,
+				C3A41FE62318498F9EE804C0 /* AuthFlowTests.swift */,
+				0D95C6F5F1F94C00A6666B99 /* SyncServiceIntegrationTests.swift */,
+				C7AB725958804DCE92F1CC0B /* ContentPackTests.swift */,
+			);
+			path = Integration;
+			sourceTree = "<group>";
+		};
+		A1B2C3D4E5F60000AAAACCCC /* Accessibility */ = {
+			isa = PBXGroup;
+			children = (
+				12933794DE5745C5AE3F5E80 /* VoiceOverLabelsTests.swift */,
+				0A1A66EB635C45C5B9E43D0C /* TouchTargetsTests.swift */,
+			);
+			path = Accessibility;
 			sourceTree = "<group>";
 		};
 		77ECA8A109653D64253BA23A /* Migrations */ = {
@@ -27018,6 +27055,13 @@
 				4483DD898EA1E091C9107EBA /* SpacedRepetitionEngineTests.swift in Sources */,
 				5F4BC8E52DEB1910D4156E6F /* StoryCompletionInteractorTests.swift in Sources */,
 				3CE657ABF3E707D994AE074B /* SyncServiceTests.swift in Sources */,
+				D1EB36C28AA548F7948E26EC /* FirebaseEmulatorTestsBase.swift in Sources */,
+				2A7A956F6B874C0D8A094497 /* FirestoreCRUDTests.swift in Sources */,
+				9935ABC541374F4D9DBA13AA /* AuthFlowTests.swift in Sources */,
+				4399063A55DB4B178D2D78A4 /* SyncServiceIntegrationTests.swift in Sources */,
+				F7551268E67E4F60ADB52781 /* ContentPackTests.swift in Sources */,
+				C5E29DF082664DB8A6E93EF4 /* VoiceOverLabelsTests.swift in Sources */,
+				E3F70FC28E914D488B0405D7 /* TouchTargetsTests.swift in Sources */,
 				020F3A1951CAE3A411BB7582 /* TonguePostureClassifierMLTests.swift in Sources */,
 				D87E689589C1111B41B7C0A9 /* VisualAcousticInteractorTests.swift in Sources */,
 				0F0EF501CE8B59A737BC9DF9 /* WorldMapInteractorTests.swift in Sources */,
