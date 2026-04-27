@@ -81,7 +81,12 @@ public struct HSRiveView: View {
     // MARK: - Body
 
     public var body: some View {
-        Group {
+        // Performance-профилирование: DISABLE_RIVE=1 обходит RiveRuntime при cold-start замерах.
+        // Используется только через xcrun simctl launch с env-переменной, в проде значение всегда nil.
+        if ProcessInfo.processInfo.environment["DISABLE_RIVE"] == "1" {
+            return AnyView(EmptyView())
+        }
+        return AnyView(Group {
             if riveModel.isLoaded, let vm = riveModel.viewModel {
                 vm.view()
                     .onChange(of: mood) { _, newMood in
@@ -104,7 +109,7 @@ public struct HSRiveView: View {
             }
             // Fallback — пустой контейнер: HSMascotView покажет SwiftUI ButterflyShape
         }
-        .accessibilityHidden(true)
+        .accessibilityHidden(true))
     }
 }
 

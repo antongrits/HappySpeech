@@ -2,6 +2,7 @@ import Accelerate
 @preconcurrency import AVFoundation
 @preconcurrency import CoreML
 import OSLog
+import os.signpost
 
 // MARK: - Domain Types
 
@@ -68,6 +69,64 @@ enum AudioAnalysisError: LocalizedError, Sendable {
     }
 }
 
+// MARK: - Предвычисленные константы (на уровне модуля)
+
+/// Параметры STFT (должны совпадать с train_sound_classifier.py).
+private enum AudioAnalysisConstants {
+    static let nMels      = 64
+    static let nFrames    = 64
+    static let nFft       = 512
+    static let sampleRate = 16_000
+    static let nSamples   = sampleRate               // 1 сек = 16 000 сэмплов
+    static let hopLength  = nSamples / nFrames       // 250
+
+    // MARK: Кэшированное окно Хэннинга [nFft] — вычисляется один раз при старте.
+    // Filterbank статичен: sampleRate и nMels не меняются в runtime.
+    // До кэширования buildMelFilterbank() вызывался для каждого classifySound(),
+    // что порождало nFrames=64 аллокаций [[Float]] на каждый буфер.
+    static let hanningWindow: [Float] = {
+        (0 ..< nFft).map { i in
+            0.5 * (1.0 - cos(2.0 * .pi * Float(i) / Float(nFft - 1)))
+        }
+    }()
+
+    // MARK: Кэшированный Mel-фильтрбанк [[Float]] размером [nMels, nFft/2+1].
+    // Был главным bottleneck: вычислялся заново при каждом вызове computeLogMel.
+    static let melFilterbank: [[Float]] = {
+        let halfN  = nFft / 2 + 1
+        let fMin: Float = 0.0
+        let fMax: Float = Float(sampleRate) / 2.0
+
+        let melMin = 2595 * log10(1 + fMin / 700)
+        let melMax = 2595 * log10(1 + fMax / 700)
+
+        var melPts = [Float](repeating: 0, count: nMels + 2)
+        for i in 0 ..< nMels + 2 {
+            melPts[i] = melMin + Float(i) * (melMax - melMin) / Float(nMels + 1)
+        }
+
+        var binPts = [Int](repeating: 0, count: nMels + 2)
+        for i in 0 ..< nMels + 2 {
+            let hz    = 700 * (pow(10, melPts[i] / 2595) - 1)
+            binPts[i] = Int(floor(Float(nFft + 1) * hz / Float(sampleRate)))
+        }
+
+        var fb = [[Float]](repeating: [Float](repeating: 0, count: halfN), count: nMels)
+        for m in 0 ..< nMels {
+            let left   = binPts[m]
+            let center = binPts[m + 1]
+            let right  = binPts[m + 2]
+            for k in left ..< center where k < halfN {
+                fb[m][k] = Float(k - left) / Float(max(center - left, 1))
+            }
+            for k in center ..< right where k < halfN {
+                fb[m][k] = Float(right - k) / Float(max(right - center, 1))
+            }
+        }
+        return fb
+    }()
+}
+
 // MARK: - Live Implementation
 
 /// Реализация через Core ML SoundClassifier.mlpackage.
@@ -78,18 +137,24 @@ enum AudioAnalysisError: LocalizedError, Sendable {
 /// Модель обучена M4.5 pipeline на синтетическом датасете:
 ///   speech=1500, noise=1500, silence=750, breathing=750 сэмплов.
 ///   Accuracy: 85.8% | Macro F1: 85.2% (2026-04-24).
+///
+/// Performance оптимизации (M10.5 v7):
+///   - Mel-фильтрбанк кэшируется как static let (ранее пересчитывался при каждом вызове)
+///   - Окно Хэннинга кэшируется как static let
+///   - os_signpost для Instruments: category "Performance", name "SoundClassify"
 public actor LiveAudioAnalysisService: AudioAnalysisService {
 
-    private let logger = Logger(subsystem: "HappySpeech", category: "AudioAnalysisService")
+    private let logger  = Logger(subsystem: "HappySpeech", category: "AudioAnalysisService")
+    private let perfLog = OSLog(subsystem: "ru.happyspeech.app", category: "Performance")
     private var model: MLModel?
 
-    // STFT параметры (должны совпадать с train_sound_classifier.py)
-    private let nMels   = 64
-    private let nFrames = 64
-    private let nFft    = 512
-    private let sampleRate = 16_000
-    private var nSamples: Int { sampleRate }   // 1 сек = 16 000 сэмплов
-    private var hopLength: Int { nSamples / nFrames }
+    // Удобные алиасы констант (сохраняем читаемость кода)
+    private let nMels      = AudioAnalysisConstants.nMels
+    private let nFrames    = AudioAnalysisConstants.nFrames
+    private let nFft       = AudioAnalysisConstants.nFft
+    private let nSamples   = AudioAnalysisConstants.nSamples
+    private let hopLength  = AudioAnalysisConstants.hopLength
+    private let sampleRate = AudioAnalysisConstants.sampleRate
 
     public init() {}
 
@@ -101,6 +166,13 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
         }
         let frameCount = Int(buffer.frameLength)
         let samples    = Array(UnsafeBufferPointer(start: channelData[0], count: frameCount))
+
+        let signID = OSSignpostID(log: perfLog)
+        os_signpost(.begin, log: perfLog, name: "SoundClassify", signpostID: signID,
+                    "frames=%d", frameCount)
+        defer {
+            os_signpost(.end, log: perfLog, name: "SoundClassify", signpostID: signID)
+        }
 
         do {
             let model   = try await loadModel()
@@ -127,7 +199,7 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
             forResource: "SoundClassifier",
             withExtension: "mlpackage"
         ) else {
-            logger.error("SoundClassifier.mlpackage not found in bundle")
+            logger.error("SoundClassifier.mlpackage не найден в bundle")
             throw AudioAnalysisError.modelNotFound
         }
 
@@ -135,7 +207,7 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
         config.computeUnits = .cpuAndNeuralEngine
         let loaded          = try MLModel(contentsOf: modelURL, configuration: config)
         model = loaded
-        logger.info("SoundClassifier model loaded")
+        logger.info("SoundClassifier модель загружена")
         return loaded
     }
 
@@ -143,6 +215,9 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
 
     /// Вычисляет Log Mel-spectrogram из raw samples.
     /// Должен совпадать с audio_to_logmel() в train_sound_classifier.py.
+    ///
+    /// Оптимизация M10.5 v7: filterbank и окно Хэннинга берутся из кэша
+    /// (AudioAnalysisConstants), а не вычисляются заново на каждый вызов.
     private func computeLogMel(samples: [Float]) -> [[Float]] {
         // Pad / trim до nSamples
         var audio = samples
@@ -152,37 +227,31 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
             audio = Array(audio.prefix(nSamples))
         }
 
-        // Окно Хэннинга
-        var window = [Float](repeating: 0, count: nFft)
-        for i in 0 ..< nFft {
-            window[i] = 0.5 * (1.0 - cos(2.0 * .pi * Float(i) / Float(nFft - 1)))
-        }
-
-        // Mel-filterbank (упрощённая версия)
-        let melFB = buildMelFilterbank()   // [nMels, nFft/2+1]
+        // Кэшированное окно Хэннинга и Mel-фильтрбанк
+        let window = AudioAnalysisConstants.hanningWindow
+        let melFB  = AudioAnalysisConstants.melFilterbank
 
         var melFrames = [[Float]](repeating: [Float](repeating: 0, count: nMels), count: nFrames)
+        let halfN     = nFft / 2 + 1
 
         for frameIdx in 0 ..< nFrames {
             let start = frameIdx * hopLength
             var frame = [Float](repeating: 0, count: nFft)
 
-            // Копируем сэмплы с окном
+            // Применяем окно сразу при копировании
             for k in 0 ..< nFft {
                 let pos = start + k
                 let sample: Float = pos < audio.count ? audio[pos] : 0.0
                 frame[k] = sample * window[k]
             }
 
-            // Мощность спектра через vDSP
-            let halfN    = nFft / 2 + 1
-            var power    = [Float](repeating: 0, count: halfN)
-            let frameCopy = Array(frame)
+            // Мощность спектра (упрощённый подход — элемент в квадрате)
+            var power = [Float](repeating: 0, count: halfN)
             for k in 0 ..< halfN {
-                power[k] = frameCopy[k] * frameCopy[k]
+                power[k] = frame[k] * frame[k]
             }
 
-            // Применяем Mel-фильтрбанк
+            // Применяем Mel-фильтрбанк из кэша
             for melIdx in 0 ..< nMels {
                 var energy: Float = 0
                 for k in 0 ..< halfN {
@@ -193,42 +262,6 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
         }
 
         return melFrames   // [nFrames, nMels]
-    }
-
-    /// Строит треугольный Mel-фильтрбанк [nMels, nFft/2+1].
-    private func buildMelFilterbank() -> [[Float]] {
-        let halfN = nFft / 2 + 1
-        let fMin: Float = 0.0
-        let fMax: Float = Float(sampleRate) / 2.0
-
-        let melMin = 2595 * log10(1 + fMin / 700)
-        let melMax = 2595 * log10(1 + fMax / 700)
-
-        var melPts = [Float](repeating: 0, count: nMels + 2)
-        for i in 0 ..< nMels + 2 {
-            melPts[i] = melMin + Float(i) * (melMax - melMin) / Float(nMels + 1)
-        }
-
-        // Mel → Hz → bin
-        var binPts = [Int](repeating: 0, count: nMels + 2)
-        for i in 0 ..< nMels + 2 {
-            let hz      = 700 * (pow(10, melPts[i] / 2595) - 1)
-            binPts[i]   = Int(floor(Float(nFft + 1) * hz / Float(sampleRate)))
-        }
-
-        var fb = [[Float]](repeating: [Float](repeating: 0, count: halfN), count: nMels)
-        for m in 0 ..< nMels {
-            let left   = binPts[m]
-            let center = binPts[m + 1]
-            let right  = binPts[m + 2]
-            for k in left ..< center where k < halfN {
-                fb[m][k] = Float(k - left) / Float(max(center - left, 1))
-            }
-            for k in center ..< right where k < halfN {
-                fb[m][k] = Float(right - k) / Float(max(right - center, 1))
-            }
-        }
-        return fb
     }
 
     // MARK: Private — Inference
@@ -258,7 +291,7 @@ public actor LiveAudioAnalysisService: AudioAnalysisService {
             }
         }
 
-        let input = try MLDictionaryFeatureProvider(dictionary: ["logmel": multiArray])
+        let input  = try MLDictionaryFeatureProvider(dictionary: ["logmel": multiArray])
         let output = try await model.prediction(from: input)
 
         // Разбираем classLabel и classProbability
