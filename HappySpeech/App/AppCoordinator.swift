@@ -330,11 +330,19 @@ struct AppCoordinatorView: View {
             case "worldMap":         target = .worldMap(childId: "demo-child", targetSound: "Р")
             case "sessionHistory":   target = .sessionHistory(childId: "demo-child")
             case "sessionComplete":  target = .sessionComplete
+            case "arZone":           target = .arZone
             default:                 target = .auth
             }
             coordinator.navigate(to: target)
             return
         }
+        // UI-test: при -UITestOffline сразу открываем OfflineStateView — NetworkMonitor
+        // уже выставлен в isConnected=false в AppContainer.makeContainer().
+        if ProcessInfo.processInfo.arguments.contains("-UITestOffline") {
+            coordinator.navigate(to: .offlineState)
+            return
+        }
+
         // Auto-transition from splash after delay.
         // First launch (онбординг не пройден) → показываем 10-шаговый онбординг.
         // В противном случае идём в auth — пользователь либо войдёт, либо
