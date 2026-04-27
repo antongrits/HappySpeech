@@ -1202,6 +1202,10 @@
 		2AF1CEDC4D7E2B89583D8B2C /* lex-num-19.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 157EFDAC120FD77866AFF72C /* lex-num-19.m4a */; };
 		2AFF120B183A75A30B622309 /* gr-sen-29.m4a in Resources */ = {isa = PBXBuildFile; fileRef = EB1E13D5FF8AED215F9E1981 /* gr-sen-29.m4a */; };
 		2B03DB48BAB5C0BE6D230A2F /* NavigationFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2823292CC309386CF6FB9E1F /* NavigationFlowUITests.swift */; };
+		85B9723B639241D69B61359A /* DemoEndToEndUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C657AA204E4BAA951818F8 /* DemoEndToEndUITest.swift */; };
+		F84F7A4F3E72452A881E42A7 /* ThemeToggleUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6C1CF90FBE41D3A640974B /* ThemeToggleUITest.swift */; };
+		EC6A2C28BC104904856585D8 /* OfflineReconnectUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E683BD707F0A43C0B3D6BC22 /* OfflineReconnectUITest.swift */; };
+		0330E2E720EC4548BCDD137D /* ARSessionSmokeUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005AD47A1CE14259B97ECB0F /* ARSessionSmokeUITest.swift */; };
 		2B055D6C79340152005F3C63 /* g-wi-30.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ABC6EFEB00D431EF899C93AA /* g-wi-30.m4a */; };
 		2B0CAB042305B473CFA069C6 /* kh-sen-9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4D4780CA30B7CF8B810DDA27 /* kh-sen-9.m4a */; };
 		2B1725B1776830572D11DB6A /* r-sen-19.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2C735D14059B1A83770CFBE4 /* r-sen-19.m4a */; };
@@ -8014,6 +8018,10 @@
 		2816E4C0F6542432E592D9D0 /* lex-tr-16.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "lex-tr-16.m4a"; sourceTree = "<group>"; };
 		2821CC0F0D0DC5895FE93C73 /* s-wf-0.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "s-wf-0.m4a"; sourceTree = "<group>"; };
 		2823292CC309386CF6FB9E1F /* NavigationFlowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationFlowUITests.swift; sourceTree = "<group>"; };
+		88C657AA204E4BAA951818F8 /* DemoEndToEndUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoEndToEndUITest.swift; sourceTree = "<group>"; };
+		6B6C1CF90FBE41D3A640974B /* ThemeToggleUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeToggleUITest.swift; sourceTree = "<group>"; };
+		E683BD707F0A43C0B3D6BC22 /* OfflineReconnectUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineReconnectUITest.swift; sourceTree = "<group>"; };
+		005AD47A1CE14259B97ECB0F /* ARSessionSmokeUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARSessionSmokeUITest.swift; sourceTree = "<group>"; };
 		282AB5B2B8D642C97EDD45FA /* z-prep-2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "z-prep-2.m4a"; sourceTree = "<group>"; };
 		28453D291043A4CEF994DB7D /* k-prep-4.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "k-prep-4.m4a"; sourceTree = "<group>"; };
 		2847964DAE58AF1A2517A62D /* lex-rh-13.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "lex-rh-13.m4a"; sourceTree = "<group>"; };
@@ -13905,9 +13913,45 @@
 			isa = PBXGroup;
 			children = (
 				5DA73ABFD3FE01C7040B28EF /* Flows */,
+				3BEBCC7B3B35440BA0EAA873 /* Demo */,
+				02D4E48190334B98805178A0 /* Theme */,
+				E3159B463B5341E2AB6204C2 /* Offline */,
+				9812702AB3994C1D8734C91B /* AR */,
 				B2C992C0289E6549E835D04D /* Info.plist */,
 			);
 			path = HappySpeechUITests;
+			sourceTree = "<group>";
+		};
+		3BEBCC7B3B35440BA0EAA873 /* Demo */ = {
+			isa = PBXGroup;
+			children = (
+				88C657AA204E4BAA951818F8 /* DemoEndToEndUITest.swift */,
+			);
+			path = Demo;
+			sourceTree = "<group>";
+		};
+		02D4E48190334B98805178A0 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				6B6C1CF90FBE41D3A640974B /* ThemeToggleUITest.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		E3159B463B5341E2AB6204C2 /* Offline */ = {
+			isa = PBXGroup;
+			children = (
+				E683BD707F0A43C0B3D6BC22 /* OfflineReconnectUITest.swift */,
+			);
+			path = Offline;
+			sourceTree = "<group>";
+		};
+		9812702AB3994C1D8734C91B /* AR */ = {
+			isa = PBXGroup;
+			children = (
+				005AD47A1CE14259B97ECB0F /* ARSessionSmokeUITest.swift */,
+			);
+			path = AR;
 			sourceTree = "<group>";
 		};
 		1033D0EDD185E9A28193ECD0 /* HappySpeech */ = {
@@ -28374,6 +28418,10 @@
 				2B03DB48BAB5C0BE6D230A2F /* NavigationFlowUITests.swift in Sources */,
 				3EB3D6CC6FC5B73E8AC35489 /* OnboardingFlowUITests.swift in Sources */,
 				4C4D9E3E94BE055E2A5F362A /* OnboardingToFirstLessonUITests.swift in Sources */,
+				85B9723B639241D69B61359A /* DemoEndToEndUITest.swift in Sources */,
+				F84F7A4F3E72452A881E42A7 /* ThemeToggleUITest.swift in Sources */,
+				EC6A2C28BC104904856585D8 /* OfflineReconnectUITest.swift in Sources */,
+				0330E2E720EC4548BCDD137D /* ARSessionSmokeUITest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
