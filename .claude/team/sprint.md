@@ -120,3 +120,97 @@ M6 App Store      Sprint 12  tests+content DONE, Firestore deploy DONE, TestFlig
 - [x] 0 SwiftLint нарушений в Features/Services/App
 - [x] App Store metadata — DONE (docs/appstore-metadata.md)
 - [x] Firestore deploy — DONE (happyspeech-dfd95, eur3, Email/Password Auth, iOS app + plist)
+
+---
+
+## Sprint 12.6 — Final Polish (Plan v6) — 2026-04-26 to 2026-04-27
+
+### Цель
+Закрыть все documentation и audit задачи перед M12 polish. App Store + Diploma ready final pass.
+
+### Коммиты Plan v6 (хронологический порядок)
+
+| Хеш | Описание |
+|-----|----------|
+| a5f774b | chore: финальный polish — design-specs, UI-доработки LessonPlayer/WorldMap/Rewards, sprint статус S12-022 |
+| ddbf313 | fix(rules): S12-022 — Firestore+Storage rules валидированы (0 ошибок), README финальная статистика |
+| 86cbc90 | docs(readme): финальная статистика — 422 файла, 82541 LOC, 6250 контент-айтемов, 1381 ключ |
+| 949c869 | docs(appstore): S12-019 — полные App Store метаданные ru+en; статус S12-005/019/023 → DONE |
+| 850491d | feat(firebase): S12-022 DONE — Firebase project happyspeech-dfd95 deployed |
+| c4a46a0 | M9.1+M9.2 — Remotion videos (15 MP4, 5.3 MB) |
+| 3ce5e92 | M9.3 — lyalya.riv 79 KB |
+| ab38a72 | M8.2-M8.6 — SwiftLint 0/0 |
+| 5552101 | test M10.1-M10.3 fixes |
+| c6f1a1f | test M10.4+M10.6 — Firebase + Accessibility |
+
+### Закрытые M-задачи в Plan v6
+
+| M-задача | Название | Статус |
+|----------|----------|--------|
+| M2 | All 16 templates VIP | DONE |
+| M3 | Dashboard + Firestore | DONE |
+| M4 | AR+ML (.mlpackage 6 шт) | DONE |
+| M5.2 | AdaptivePlannerService | DONE |
+| M5.3 | PDF/CSV export (SpecialistExportService) | DONE |
+| M5.4 | LLMDecisionService full | DONE |
+| M6.15 | AppPrivacyInfo.xcprivacy | DONE |
+| M6.16 | ScreeningOutcomeRepository | DONE |
+| M7.5 | SwiftLint 0/0 final | DONE |
+| M7.6 | Design audit + Liquid Glass rollout | DONE |
+| M8.2 | Unit tests Interactors | DONE |
+| M8.3 | Unit tests Services | DONE |
+| M8.4 | Snapshot tests 16 templates | DONE |
+| M8.5 | Snapshot tests key screens | DONE |
+| M8.6 | Accessibility audit (Dynamic Type + VoiceOver + Reduced Motion) | DONE |
+| M8.7 | Seed data fallback (ChildHome) | DONE |
+| M9.1 | Remotion videos (15 MP4) | DONE |
+| M9.2 | Lyalya animations suite | DONE |
+| M9.3 | lyalya.riv (79 KB) | DONE |
+| M9.4 | Sound assets (UI + Lyalya + Content) | DONE |
+| M10.1 | Firebase deploy + rules | DONE |
+| M10.2 | Auth smoke test | DONE |
+| M10.3 | Firestore indexes | DONE |
+| M10.4 | Firebase App Check | DONE |
+| M10.5 | Performance audit (статический) | **DONE — 2026-04-26** |
+| M10.6 | Accessibility final audit | DONE |
+| M11.3 | Screenshots organize (marketing/) | **DONE — 2026-04-26** |
+
+### Финальная статистика (Plan v6, 2026-04-26)
+
+| Метрика | Значение |
+|---------|---------|
+| Swift файлов | 422 |
+| Total LOC | 82 541 |
+| Git коммитов | 135+ |
+| Локализационных ключей | 1 381 |
+| Контент-айтемов | 6 250+ |
+| .mlpackage моделей | 6 |
+| Unit + snapshot тестов | 200+ |
+| Marketing screenshots | 10 (docs/screenshots/marketing/) |
+| BUILD | SUCCEEDED |
+| SwiftLint | 0/0 |
+| Firebase | happyspeech-dfd95 (eur3) — deployed |
+
+### Что остаётся для M12+M13 (после диплома)
+
+- TestFlight build (нужен Apple Developer Account)
+- iPhone SE screenshots (live capture после фикса Rive crash)
+- LessonPlayer game screenshots (3+ типов)
+- AudioActor рефакторинг (убрать @unchecked Sendable)
+- LazyLocalLLMService (перенести из eager в factory closure)
+- MXMetricManager для prod cold start мониторинга
+
+### Acceptance Criteria M6 — Финальный статус
+
+- [x] Unit coverage >= 70% на Interactors — DONE
+- [x] Snapshot тесты зелёные (light+dark) 16 шаблонов + 8 экранов — DONE
+- [x] Контент: S-пак + Sh-пак >= 200 + R-пак >= 200 — DONE
+- [x] .mlpackage файлы в Resources/Models/ (все 6) — DONE
+- [x] BUILD SUCCEEDED на симуляторе — DONE
+- [x] 0 SwiftLint warnings — DONE
+- [x] App Store metadata (ru + en) — DONE
+- [x] AppPrivacyInfo.xcprivacy — DONE
+- [x] Firestore rules deployed + verified — DONE
+- [x] Performance audit — DONE (статический, .claude/team/performance-audit.md)
+- [x] Screenshots curated (marketing/) — DONE (10 hero shots)
+- [!] TestFlight build — BLOCKED (Apple Developer Account)
