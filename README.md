@@ -7,6 +7,27 @@
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)](/)
 [![Kids Category](https://img.shields.io/badge/App%20Store-Kids%20Category-ff69b4)](/)
+[![SwiftLint](https://img.shields.io/badge/SwiftLint-0%2F0-brightgreen.svg)](/)
+[![Firebase](https://img.shields.io/badge/Firebase-happyspeech--dfd95-orange.svg)](/)
+[![Russian Only](https://img.shields.io/badge/Language-Russian%20Only-blue.svg)](/)
+
+---
+
+## Screenshots
+
+| Splash | Онбординг | Детский экран |
+|--------|-----------|---------------|
+| ![Splash](docs/screenshots/01_splash.png) | ![Onboarding](docs/screenshots/02_onboarding_welcome.png) | ![ChildHome](docs/screenshots/11_child_home.png) |
+
+| Dark mode | Карта миров | Награды |
+|-----------|-------------|---------|
+| ![ChildHome Dark](docs/screenshots/10_childHome_dark.png) | ![WorldMap](docs/screenshots/13_worldMap.png) | ![Rewards](docs/screenshots/12_rewards.png) |
+
+| Сессия завершена | Demo / Тур | Настройки |
+|-----------------|------------|----------|
+| ![Session Complete](docs/screenshots/15_sessionComplete.png) | ![Demo](docs/screenshots/04_demoMode.png) | ![Settings](docs/screenshots/08_settings.png) |
+
+> Все скриншоты сняты на симуляторе iPhone 17 Pro. Маркетинговый отбор — [docs/screenshots/marketing/index.md](docs/screenshots/marketing/index.md).
 
 ---
 
@@ -158,17 +179,36 @@ swiftlint --strict
 |---|---|
 | Swift файлов | 422 |
 | Строк кода (LOC) | 82 541 |
-| Git коммитов | 127 |
+| Git коммитов | 135+ |
 | Экраны (VIP-фичи) | 30+ |
 | Типы упражнений | 16 |
+| AR игр | 7 + ARStoryQuest |
 | Контент-паки | 21 |
 | Контент-единиц | 6 250+ |
 | Фразы маскота Ляли | 121 |
 | DesignSystem компоненты | 28 |
 | Unit + snapshot тестов | 200+ |
 | Ключей локализации | 1 381 (ru) |
+| Core ML моделей | 6 (.mlpackage) |
 | Размер Release build | ~177 MB |
 | Целевая аудитория | Дети 5–8 лет |
+
+### Production Status
+
+| Компонент | Статус |
+|-----------|--------|
+| Build (iPhone 17 Pro sim) | passing |
+| SwiftLint | 0 warnings / 0 errors |
+| Язык (sourceLanguage) | Russian only |
+| Firebase project | happyspeech-dfd95 (eur3) |
+| Firestore rules | deployed |
+| Firebase Auth | Email/Password enabled |
+| .mlpackage в Resources/Models/ | 6 моделей |
+| 16 game templates (VIP) | done |
+| 7 AR games + ARStoryQuest | done |
+| App Store metadata | done (ru + en) |
+| AppPrivacyInfo.xcprivacy | done |
+| TestFlight build | pending (нужен Apple Developer Account) |
 
 ---
 
