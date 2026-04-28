@@ -175,23 +175,48 @@ swiftlint --strict
 
 ---
 
+## Plan v9 (2026-04-28) — финальные расширения
+
+Все 5 M13 extensions реализованы в рамках Plan v9 (15 коммитов, ветка `main`).
+
+| Extension | Коммит | LOC | Unit-тестов |
+|---|---|---|---|
+| F1 Grammar games (4 интерактивные игры) | `5f15cb3` | 2 329 | 34 |
+| F2 Customization Ляли | `8feb574` | 1 364 | 21 |
+| F3 Family Calendar (Swift Charts heatmap) | `76942b9` | 1 850 | 28 |
+| F4 Parent-child режим (AVAudioRecorder) | `3d4ffd7` | 1 805 | 25 |
+| F5 Stuttering module (MetronomeWorker) | `ece212d` | 2 730 | 24 |
+| **Итого Plan v9** | — | **~10 078** | **132** |
+
+**BUILD SUCCEEDED** iPhone 17 Pro + iPhone SE 3rd gen на каждом коммите.
+
+Дополнительно в Plan v9:
+- +183 ключа локализации (ru only, 0 en) — итого 1 784 ключа
+- +44 snapshot PNG — итого 469 PNG
+- Realm schema v3 → v6 (3 новых объекта)
+- 20 Remotion MP4 stories + 13 voice-over + 5 phrases + 3 voice previews
+
+---
+
 ## Статистика проекта
 
 | Метрика | Значение |
 |---|---|
-| Swift файлов | 422 |
-| Строк кода (LOC) | 82 541 |
-| Git коммитов | 135+ |
-| Экраны (VIP-фичи) | 30+ |
+| Swift файлов | 422+ |
+| Строк кода (LOC) | ~92 000 |
+| Git коммитов | 150+ |
+| Экраны (VIP-фичи) | 35+ |
 | Типы упражнений | 16 |
 | AR игр | 7 + ARStoryQuest |
 | Контент-паки | 21 |
 | Контент-единиц | 6 250+ |
 | Фразы маскота Ляли | 121 |
 | DesignSystem компоненты | 28 |
-| Unit + snapshot тестов | 200+ |
-| Ключей локализации | 1 381 (ru) |
+| Unit + snapshot тестов | ~970 |
+| Snapshot PNG | 469 |
+| Ключей локализации | 1 784 (ru) |
 | Core ML моделей | 6 (.mlpackage) |
+| Remotion MP4 stories | 35 (15 + 20) |
 | Размер Release build | ~177 MB |
 | Целевая аудитория | Дети 5–8 лет |
 

@@ -258,3 +258,19 @@ M6 App Store      Sprint 12  tests+content DONE, Firestore deploy DONE, TestFlig
 
 - F2 (Customization Ляли) — следующий extension
 - F3, F4, F5 — ждут завершения F1
+
+---
+
+## Plan v9 (2026-04-28) — ЗАВЕРШЁН
+
+**Все 5 extensions реализованы:**
+
+[x] Grammar games (5f15cb3) — 2329 LOC + 34 теста
+[x] Customization Ляли (8feb574) — 1364 LOC + 21 тест
+[x] Family Calendar (76942b9) — 1850 LOC + 28 тестов
+[x] Parent-child режим (3d4ffd7) — 1805 LOC + 25 тестов
+[x] Stuttering module (ece212d) — 2730 LOC + 24 теста
+
+**Total Plan v9:** 15 коммитов, ~10 078 LOC новый код, 970 test functions, 469 snapshot PNG.
+
+**Готовность к v1.1.0 release tag:** READY
