@@ -537,6 +537,7 @@ private struct ARQuickTipsCarousel: View {
     let tips: [ARQuickTip]
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @State private var index: Int = 0
     @State private var task: Task<Void, Never>?
 
@@ -562,6 +563,15 @@ private struct ARQuickTipsCarousel: View {
                 tipDots
             }
         }
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                .strokeBorder(
+                    colorScheme == .light
+                        ? ColorTokens.Brand.sky.opacity(0.40)
+                        : Color.white.opacity(0.12),
+                    lineWidth: 1
+                )
+        )
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(tip.text))
         .id(tip.id)

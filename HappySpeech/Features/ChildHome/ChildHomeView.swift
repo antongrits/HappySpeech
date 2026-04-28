@@ -104,6 +104,7 @@ struct ChildHomeView: View {
                 .animation(reduceMotion ? nil : .easeInOut(duration: 0.25),
                            value: viewModel.hasAchievement)
             }
+            .safeAreaInset(edge: .bottom) { Color.clear.frame(height: SpacingTokens.sp8) }
             .refreshable {
                 await interactor?.refreshData(childId: childId)
             }

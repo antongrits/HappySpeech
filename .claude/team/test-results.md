@@ -258,3 +258,100 @@
 **File:** `HSRiveView.swift:171` → `RiveViewModel.init(fileName:stateMachineName:)`  
 **Подробности:** см. `.claude/team/performance-audit.md`
 
+
+
+---
+
+## Screenshot Tour M10.7 v9 RETRY (2026-04-28)
+
+**Total PNG captured:** 28 (7 scenes × 2 themes × 2 devices)
+**Devices:** iPhone 17 Pro (1206×2622) + iPhone SE 3rd gen (750×1334)
+**Themes:** light + dark
+**Method:** xcrun simctl io ... screenshot (DISABLE_RIVE=1, -HSStartRoute arg)
+**Build:** BUILD SUCCEEDED
+
+### Manifest Location
+
+`_workshop/screenshots/m10.7/manifest.tsv` — TSV: device / theme / scene / path / size_bytes / w_h
+
+### Scenes captured
+
+| Scene | Devices × Themes | iPhone 17 Pro | iPhone SE |
+|---|---|---|---|
+| auth | 4 (2×2) | 733–793 KB | 332–369 KB |
+| childHome | 4 | 1028–1289 KB | 403–514 KB |
+| parentHome | 4 | 380–511 KB | 145–191 KB |
+| arZone | 4 | 1369–1386 KB | 578–583 KB |
+| lessonPlayer | 4 | 733–793 KB | 332–369 KB |
+| demoMode | 4 | 1932–1954 KB | 740–741 KB |
+| offlineState | 4 | 429–559 KB | 224–308 KB |
+
+### Total size on disk
+
+115 MB в `_workshop/screenshots/m10.7/`
+
+### Visual Analysis
+
+**TODO** — `cto` сделает выборочный анализ PNG в следующей итерации (Блок D step 2).
+PNG не читались в контекст намеренно (RETRY: capture-only режим).
+
+---
+
+### Visual Analysis (iPhone SE 3rd gen sample)
+
+**Дата анализа:** 2026-04-28  
+**Аналитик:** cto (Блок D step 2)  
+**Прочитано PNG:** 14 из 14 (все 7 сцен × 2 темы, iPhone SE 750×1334)  
+iPhone 17 Pro PNG (1206×2622) не читались — превышают лимит Read tool 2000px.  
+iPhone SE даёт самое узкое разрешение — layout-баги видны раньше всего.
+
+#### Bugs Found
+
+| # | Scene | Theme | Severity | Issue | Recommendation |
+|---|---|---|---|---|---|
+| VA-01 | offlineState | light | HIGH | Заголовок "Нет подключения к интер..." — текст обрезан по правому краю, суффикс "нету" не виден. Ни `lineLimit(nil)`, ни `.minimumScaleFactor` не спасают на SE при однострочном layout | ios-developer: переписать заголовок как двустрочный (`.lineLimit(2)`) или сократить строку до "Нет интернета" |
+| VA-02 | offlineState | dark | HIGH | Тот же overflow-обрыв заголовка в dark теме. Дополнительно: debug-строка `offline.auto_retry.3` отображается в user-facing UI прямо под текстом body — это локализационный ключ, не переведён | ios-developer: убрать/скрыть debug label; дизайн-токен для заголовка — max 24 символа |
+| VA-03 | offlineState | light + dark | MEDIUM | Debug-строка `offline.auto_retry.3` видна под body-текстом — это сырой String Catalog ключ вместо локализованной строки | ios-developer: исправить String Catalog для ключа `offline.auto_retry`, добавить `.3` как pluralization suffix |
+| VA-04 | lessonPlayer | light + dark | CRITICAL | Сцена lessonPlayer показывает экран Auth "С возвращением!" вместо реального LessonPlayer — роутинг сломан / сцена не зарегистрирована в -HSStartRoute | ios-developer: проверить регистрацию маршрута `lessonPlayer` в AppCoordinator, добавить fallback без требования auth |
+| VA-05 | childHome | light | MEDIUM | Нижняя часть экрана обрезана — видна только половина плашки "МИССИЯ ДНЯ" и кнопка "Осталось 9 ч 39 мин" не имеет достаточного bottom padding от edge экрана SE; таб-бар отсутствует (Kid circuit без tab bar — OK), но контент упирается в home indicator area | ios-developer: добавить `.safeAreaInset(edge: .bottom)` или padding для bottomBar |
+| VA-06 | childHome | dark | MEDIUM | Аналогично VA-05 — плашка "МИССИЯ ДНЯ" обрезана снизу в dark теме. Дополнительно: аватар пользователя (top-right) выглядит как тёмное пятно без border/fallback — возможно Asset не загружен | ios-developer: добавить placeholder для аватара (SF Symbol person.circle), добавить bottom safe area padding |
+| VA-07 | parentHome | light | LOW | ProfileCard показывает "0 лет ·" с пустым именем ребёнка — mock data не подставлены. Для App Store скриншотов нужно seed-data | designer / pm: создать PreviewProvider с реалистичным mock child для App Store скриншотов |
+| VA-08 | parentHome | dark | LOW | Аналогично VA-07. Дополнительно: в dark теме ProfileCard avatar — тёмно-коричневый круг без изображения, тёмный background карточки сливается с тёмным avatar-placeholder — низкий контраст | designer: добавить stroke или tinted background для avatar-placeholder в dark теме |
+| VA-09 | arZone | light + dark | LOW | AR-зона выглядит корректно. Единственный момент: hint "Лучше играть в наушниках — Ляля услышит тебя точнее." в light теме не имеет border/card вокруг текста — текст плавает без визуального контейнера, иконка наушников слева но layout выглядит сырым | designer: оформить hint как InfoCard с background и cornerRadius согласно DesignSystem |
+| VA-10 | demoMode | dark | LOW | Пузырь с текстом Ляли (speech bubble) в dark теме почти не виден — светлый текст на светло-сером bubble фоне с низким контрастом относительно тёмного card background. Кнопка "> Далее" частично перекрыта нижним краем контент-карточки | ios-developer: проверить z-index / layout порядок кнопки "Далее" в dark режиме; designer: пересмотреть цвет bubble в dark теме |
+
+#### Scenes Without Bugs
+
+- auth (light + dark) — корректный layout, все элементы в пределах bounds, контраст приемлемый, все строки на русском
+- arZone (light + dark) — layout корректен, небольшая косметическая рекомендация (VA-09, low)
+- demoMode (light) — layout корректен, readable
+
+#### Critical Issues Summary
+
+| Severity | Count |
+|---|---|
+| CRITICAL | 1 (VA-04: lessonPlayer → Auth редирект) |
+| HIGH | 2 (VA-01, VA-02: overflow заголовка offlineState) |
+| MEDIUM | 4 (VA-03, VA-05, VA-06, VA-10) |
+| LOW | 3 (VA-07, VA-08, VA-09) |
+| **Итого** | **10** |
+
+#### Recommendations for Block E (M12 Polish loop)
+
+**ios-developer** — 7 багов:
+- VA-01: offlineState заголовок overflow (light)
+- VA-02: offlineState debug label + overflow (dark)
+- VA-03: String Catalog `offline.auto_retry` исправить pluralization
+- VA-04: CRITICAL — lessonPlayer маршрут не работает (Auth редирект)
+- VA-05: childHome bottom padding / safeAreaInset (light)
+- VA-06: childHome bottom padding + avatar placeholder (dark)
+- VA-10: demoMode button z-index / layout в dark
+
+**designer** — 3 бага:
+- VA-07: ParentHome mock data для App Store скриншотов
+- VA-08: ProfileCard avatar dark theme контраст
+- VA-09: AR-зона hint оформить как InfoCard
+
+**animator** — 0 багов (Rive анимации не видны в DISABLE_RIVE=1 режиме — отдельная итерация)
+
+**Примечание:** Анализ Rive/Lottie анимаций невозможен в текущих скриншотах, так как сборка выполнялась с `DISABLE_RIVE=1`. После фикса VA-04 (lessonPlayer) и Rive краша (BUG-05 из предыдущей секции) нужна отдельная итерация screenshot tour с включённым Rive для оценки animator-задач.
