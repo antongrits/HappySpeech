@@ -182,4 +182,232 @@ final class SettingsInteractorTests: XCTestCase {
         XCTAssertTrue(spy.loadLicensesCalled)
         XCTAssertFalse(spy.lastLoadLicenses?.licenses.isEmpty ?? true)
     }
+
+    // MARK: - 11. updateContent обновляет audioQuality
+
+    func test_updateContent_updatesAudioQuality() {
+        let (sut, spy) = makeSUT()
+        sut.loadSettings(.init())
+        sut.updateContent(.init(autoDownload: nil, audioQuality: .high))
+        XCTAssertTrue(spy.updateContentCalled)
+    }
+
+    // MARK: - 12. updateContent обновляет autoDownload
+
+    func test_updateContent_updatesAutoDownload() {
+        let (sut, spy) = makeSUT()
+        sut.loadSettings(.init())
+        sut.updateContent(.init(autoDownload: false, audioQuality: nil))
+        XCTAssertTrue(spy.updateContentCalled)
+    }
+
+    // MARK: - 13. updateProfile — только возраст
+
+    func test_updateProfile_onlyAge() {
+        let (sut, spy) = makeSUT()
+        sut.loadSettings(.init())
+        sut.updateProfile(.init(name: nil, age: 8, avatar: nil))
+        XCTAssertTrue(spy.updateProfileCalled)
+        XCTAssertEqual(spy.lastUpdateProfile?.settings.childAge, 8)
+    }
+
+    // MARK: - 14. updateProfile — только аватар
+
+    func test_updateProfile_onlyAvatar() {
+        let (sut, spy) = makeSUT()
+        sut.loadSettings(.init())
+        sut.updateProfile(.init(name: nil, age: nil, avatar: "🐰"))
+        XCTAssertTrue(spy.updateProfileCalled)
+        XCTAssertEqual(spy.lastUpdateProfile?.settings.childAvatar, "🐰")
+    }
+
+    // MARK: - 15. connectSpecialist с кодом с пробелами — trim → valid
+
+    func test_connectSpecialist_withSpaces_trimsAndSucceeds() {
+        let (sut, spy) = makeSUT()
+        sut.loadSettings(.init())
+        sut.connectSpecialist(.init(code: " 123456 "))
+        XCTAssertTrue(spy.lastConnectSpecialist?.success ?? false)
+    }
+
+    // MARK: - 16. connectSpecialist с 7 цифрами → failure
+
+    func test_connectSpecialist_sevenDigits_failure() {
+        let (sut, spy) = makeSUT()
+        sut.loadSettings(.init())
+        sut.connectSpecialist(.init(code: "1234567"))
+        XCTAssertFalse(spy.lastConnectSpecialist?.success ?? true)
+    }
+
+    // MARK: - 17. loadModelPacks без менеджеров — возвращает пустые stub-списки
+
+    func test_loadModelPacks_noManagers_returnsStubs() async throws {
+        let (sut, spy) = makeSUT()
+        sut.loadModelPacks(.init())
+        // Даём Task внутри loadModelPacks шанс выполниться.
+        try await Task.sleep(nanoseconds: 50_000_000)
+        XCTAssertTrue(spy.loadModelPacksCalled)
+    }
+
+    // MARK: - 18. loadModelPacks с MockWhisperKitModelManager и MockLLMModelManager
+
+    func test_loadModelPacks_withManagers_callsPresenter() async throws {
+        let whisperMock = MockWhisperKitModelManager(installed: [.tiny])
+        let llmMock = MockLLMModelManager(installed: [.qwen15b])
+        let sut = SettingsInteractor(
+            themeManager: ThemeManager(),
+            notificationService: MockNotificationService(),
+            whisperKitModelManager: whisperMock,
+            llmModelManager: llmMock,
+            defaults: UserDefaults(suiteName: "test-\(UUID().uuidString)")!
+        )
+        let spy = SpyPresenter()
+        sut.presenter = spy
+        sut.loadModelPacks(.init())
+        try await Task.sleep(nanoseconds: 100_000_000)
+        XCTAssertTrue(spy.loadModelPacksCalled)
+    }
+
+    // MARK: - 19. downloadModelPack ASR — без менеджера → failure
+
+    func test_downloadModelPack_asr_noManager_callsPresenterFailure() async throws {
+        let (sut, spy) = makeSUT()
+        sut.downloadModelPack(.init(family: .asr(.tiny)))
+        try await Task.sleep(nanoseconds: 50_000_000)
+        XCTAssertTrue(spy.downloadModelPackCalled)
+    }
+
+    // MARK: - 20. downloadModelPack LLM — без менеджера → failure
+
+    func test_downloadModelPack_llm_noManager_callsPresenterFailure() async throws {
+        let (sut, spy) = makeSUT()
+        sut.downloadModelPack(.init(family: .llm(.qwen15b)))
+        try await Task.sleep(nanoseconds: 50_000_000)
+        XCTAssertTrue(spy.downloadModelPackCalled)
+    }
+
+    // MARK: - 21. deleteModelPack ASR — без менеджера → failure
+
+    func test_deleteModelPack_asr_noManager_callsPresenterFailure() async throws {
+        let (sut, spy) = makeSUT()
+        sut.deleteModelPack(.init(family: .asr(.tiny)))
+        try await Task.sleep(nanoseconds: 50_000_000)
+        XCTAssertTrue(spy.deleteModelPackCalled)
+    }
+
+    // MARK: - 22. deleteModelPack LLM — без менеджера → failure
+
+    func test_deleteModelPack_llm_noManager_callsPresenterFailure() async throws {
+        let (sut, spy) = makeSUT()
+        sut.deleteModelPack(.init(family: .llm(.qwen15b)))
+        try await Task.sleep(nanoseconds: 50_000_000)
+        XCTAssertTrue(spy.deleteModelPackCalled)
+    }
+
+    // MARK: - 23. downloadModelPack с менеджером → success
+
+    func test_downloadModelPack_asr_withManager_succeeds() async throws {
+        let whisperMock = MockWhisperKitModelManager(installed: [])
+        let sut = SettingsInteractor(
+            themeManager: ThemeManager(),
+            notificationService: MockNotificationService(),
+            whisperKitModelManager: whisperMock,
+            llmModelManager: nil,
+            defaults: UserDefaults(suiteName: "test-\(UUID().uuidString)")!
+        )
+        let spy = SpyPresenter()
+        sut.presenter = spy
+        sut.downloadModelPack(.init(family: .asr(.tiny)))
+        try await Task.sleep(nanoseconds: 200_000_000)
+        XCTAssertTrue(spy.downloadModelPackCalled)
+    }
+
+    // MARK: - 24. deleteModelPack с менеджером → success
+
+    func test_deleteModelPack_asr_withManager_succeeds() async throws {
+        let whisperMock = MockWhisperKitModelManager(installed: [.base])
+        let sut = SettingsInteractor(
+            themeManager: ThemeManager(),
+            notificationService: MockNotificationService(),
+            whisperKitModelManager: whisperMock,
+            llmModelManager: nil,
+            defaults: UserDefaults(suiteName: "test-\(UUID().uuidString)")!
+        )
+        let spy = SpyPresenter()
+        sut.presenter = spy
+        sut.deleteModelPack(.init(family: .asr(.base)))
+        try await Task.sleep(nanoseconds: 200_000_000)
+        XCTAssertTrue(spy.deleteModelPackCalled)
+    }
+
+    // MARK: - 25. exportShare записывает файл и вызывает presenter
+
+    func test_exportShare_writesFileAndCallsPresenter() async throws {
+        let (sut, spy) = makeSUT()
+        sut.exportShare(.init(userId: "user-123"))
+        try await Task.sleep(nanoseconds: 100_000_000)
+        XCTAssertTrue(spy.exportShareCalled)
+    }
+
+    // MARK: - 26. toggleNotifications off → cancelAllReminders
+
+    func test_toggleNotifications_off_callsPresenter() async throws {
+        let mock = MockNotificationService()
+        let sut = SettingsInteractor(
+            themeManager: ThemeManager(),
+            notificationService: mock,
+            defaults: UserDefaults(suiteName: "test-\(UUID().uuidString)")!
+        )
+        let spy = SpyPresenter()
+        sut.presenter = spy
+        sut.toggleNotifications(.init(enabled: false, reminderTime: Date()))
+        try await Task.sleep(nanoseconds: 100_000_000)
+        XCTAssertTrue(spy.toggleNotificationsCalled)
+    }
+
+    // MARK: - 27. toggleNotifications on → scheduleDailyReminder
+
+    func test_toggleNotifications_on_callsPresenter() async throws {
+        let mock = MockNotificationService()
+        let sut = SettingsInteractor(
+            themeManager: ThemeManager(),
+            notificationService: mock,
+            defaults: UserDefaults(suiteName: "test-\(UUID().uuidString)")!
+        )
+        let spy = SpyPresenter()
+        sut.presenter = spy
+        var components = DateComponents()
+        components.hour = 18
+        components.minute = 0
+        let reminderTime = Calendar.current.date(from: components) ?? Date()
+        sut.toggleNotifications(.init(enabled: true, reminderTime: reminderTime))
+        try await Task.sleep(nanoseconds: 100_000_000)
+        XCTAssertTrue(spy.toggleNotificationsCalled)
+    }
+
+    // MARK: - 28. readFromDefaults — сохранённые данные читаются
+
+    func test_readFromDefaults_persistedData_isLoaded() {
+        let suite = "test-\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: suite)!
+        defaults.set("Катя", forKey: SettingsKey.childName)
+        defaults.set(7, forKey: SettingsKey.childAge)
+        defaults.set("🐼", forKey: SettingsKey.childAvatar)
+        defaults.set(true, forKey: SettingsKey.specialistConnected)
+        defaults.set("654321", forKey: SettingsKey.specialistCode)
+
+        let sut = SettingsInteractor(
+            themeManager: ThemeManager(),
+            notificationService: MockNotificationService(),
+            defaults: defaults
+        )
+        let spy = SpyPresenter()
+        sut.presenter = spy
+        sut.loadSettings(.init())
+
+        XCTAssertEqual(spy.lastLoadSettings?.settings.childName, "Катя")
+        XCTAssertEqual(spy.lastLoadSettings?.settings.childAge, 7)
+        XCTAssertEqual(spy.lastLoadSettings?.settings.childAvatar, "🐼")
+        XCTAssertTrue(spy.lastLoadSettings?.settings.specialistConnected ?? false)
+    }
 }

@@ -449,6 +449,7 @@
 		11129A4EC61704EC621C4E45 /* r-wf-3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 60DD9D37693B391C492C946F /* r-wf-3.m4a */; };
 		111AA67C18A602ADF01AC7D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5EBAEFCAF11720803D9FAE13 /* Assets.xcassets */; };
 		113313232CBBD4F99B929666 /* BreathingInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5667E2B2C7F50F3653A23C41 /* BreathingInteractorTests.swift */; };
+		1CD891432C9B47C1A0DCCC19 /* SettingsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79EFA07328394E3CB7F5E8A9 /* SettingsPresenterTests.swift */; };
 		1139C629ECF0F932A5A9FB30 /* r-sen-42.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 96C1FA93B2D37CECD93A2150 /* r-sen-42.m4a */; };
 		113CD1F671DFBD15DD411AF7 /* lex-fe-15.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 578DC5905ECFEFEC3744029C /* lex-fe-15.m4a */; };
 		11441A63D2B6E538C4735112 /* sound_y_pack.json in Resources */ = {isa = PBXBuildFile; fileRef = 74D2B24A775D2AC1BFDD9954 /* sound_y_pack.json */; };
@@ -9259,6 +9260,7 @@
 		5653A5EE46745B36D3F9A920 /* c-ph-22.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "c-ph-22.m4a"; sourceTree = "<group>"; };
 		565ACC2E35A70F6FF3FE8917 /* y-sen-13.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "y-sen-13.m4a"; sourceTree = "<group>"; };
 		5667E2B2C7F50F3653A23C41 /* BreathingInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingInteractorTests.swift; sourceTree = "<group>"; };
+		79EFA07328394E3CB7F5E8A9 /* SettingsPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenterTests.swift; sourceTree = "<group>"; };
 		56831172B6D45E44683B634B /* rl-iso-1.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "rl-iso-1.m4a"; sourceTree = "<group>"; };
 		5689A4C67536EA47A2B5FD8B /* dwh-wf-4.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "dwh-wf-4.m4a"; sourceTree = "<group>"; };
 		56A0932B891D70BE12A6ED69 /* zh-wi-31.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "zh-wi-31.m4a"; sourceTree = "<group>"; };
@@ -19382,6 +19384,7 @@
 				B0D8E6C164D6DC27259DBF30 /* ScreeningScoringEngineTests.swift */,
 				977600B5F0C81F3877664D6E /* SessionReviewInteractorTests.swift */,
 				FE18FE14E4D236D979AEE21E /* SessionShellInteractorTests.swift */,
+				79EFA07328394E3CB7F5E8A9 /* SettingsPresenterTests.swift */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -28488,6 +28491,7 @@
 				A5B9BDCF602F68F5AA47CC3B /* SessionReviewInteractorTests.swift in Sources */,
 				AC3B326BA781E72B1ADBB42D /* SessionShellInteractorTests.swift in Sources */,
 				A2B1AB305B71353727F12572 /* SettingsInteractorTests.swift in Sources */,
+				1CD891432C9B47C1A0DCCC19 /* SettingsPresenterTests.swift in Sources */,
 				70B0EA634CE493980163053B /* SortingInteractorTests.swift in Sources */,
 				802AF8FDFDCC0386A8B09F16 /* SoundHunterInteractorTests.swift in Sources */,
 				ACD1F44A0DBF2CF20A855595 /* SoundServiceTests.swift in Sources */,
