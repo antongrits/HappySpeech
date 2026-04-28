@@ -93,7 +93,8 @@ final class ProgramEditorInteractorTests: XCTestCase {
         await sut.loadProgram(.init(childId: "c1"))
         let firstId = spy.lastBlocks.first!.id
         await sut.moveBlock(.init(blockId: firstId, targetIndex: 3))
-        XCTAssertEqual(spy.lastBlocks[2].id, firstId)   // inserted at index 3 after removal shifts
+        // После remove(at:0) и insert(at:3): firstBlock стоит на индексе 3
+        XCTAssertEqual(spy.lastBlocks[3].id, firstId)
     }
 
     // MARK: - Save
