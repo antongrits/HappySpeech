@@ -22,6 +22,10 @@ enum RealmMigrations {
             // v4: added CustomizationObject (skin/colorVariant/voice/updatedAt).
             // Realm создаёт схему автоматически, дефолты заданы в модели.
         }
+        if oldSchemaVersion < 5 {
+            // v5: added FamilyRecordingObject (word/audioFilePath/recordedAt/durationSeconds/parentProfileId).
+            // Realm создаёт схему автоматически, дефолты заданы в модели.
+        }
     }
 }
 
