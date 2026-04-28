@@ -64,7 +64,8 @@ struct HappySpeechApp: App {
     /// используется AppContainer.preview() с MockNetworkMonitor.
     private static func makeContainer() -> AppContainer {
         let args = ProcessInfo.processInfo.arguments
-        let useMock = args.contains("-UITestMockServices") || args.contains("-UITestOffline")
+        let hasStartRoute = args.contains("-HSStartRoute")
+        let useMock = args.contains("-UITestMockServices") || args.contains("-UITestOffline") || hasStartRoute
         if useMock {
             let container = AppContainer.preview()
             // При -UITestOffline принудительно отключаем сеть в MockNetworkMonitor
