@@ -10,7 +10,7 @@
 | Категория | Файлов | Размер | Placement | Статус |
 |---|---|---|---|---|
 | UI sounds (.caf) | 16 | ~150 KB | `HappySpeech/Resources/Audio/UI/` (в репо) | ✅ M3.2 done |
-| Ляля voice brand (.m4a) | 168 | ~5.6 MB | `HappySpeech/Resources/Audio/Lyalya/` (в репо) | ✅ M3.3 + M3.7 + M3.7b + M3.7c + M3.7d done |
+| Ляля voice brand (.m4a) | 171 | ~5.7 MB | `HappySpeech/Resources/Audio/Lyalya/` (в репо) | ✅ M3.3 + M3.7 + M3.7b + M3.7c + M3.7d + M3.7e done |
 | Content audio batch 1 (.m4a) | 1000 | 12.65 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 1 |
 | Content audio batch 2 (.m4a) | 1028 | 11.1 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 2 |
 | Content audio batch 3 (.m4a) | 681 | 8.36 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 3 |
@@ -380,11 +380,30 @@ COPYRIGHT RULE: каждый звук должен иметь verified CC0/Apach
 
 ---
 
+## M3.7e — Customization Voice Previews (3 файла) ✅
+
+**Дата:** 2026-04-28
+**Задача:** F2-009 (Plan v9, Блок F2 step 3)
+**Генерация:** edge-tts `ru-RU-SvetlanaNeural` (rate/pitch variants) → ffmpeg loudnorm -16 LUFS → AAC 32k 16kHz mono
+**Лицензия:** Microsoft edge-tts (outputs без copyright — cleared для App Store)
+**Интеграция:** `CustomizationVoicePreviewWorker.swift` — воспроизводит m4a вместо TTS-fallback
+
+| Файл | Текст | Rate | Pitch | Размер | Длит. |
+|---|---|---|---|---|---|
+| `lyalya_voice_classic_preview.m4a` | Привет! Я Ляля. Давай играть! | +0% | +0Hz | 23.3 KB | 5.7s |
+| `lyalya_voice_soft_preview.m4a` | Привет! Я Ляля. Давай играть! | -10% | -50Hz | 22.4 KB | 6.3s |
+| `lyalya_voice_cheerful_preview.m4a` | Привет! Я Ляля. Давай играть! | +15% | +50Hz | 21.8 KB | 4.9s |
+
+**Ляля total:** 168 → 171
+
+---
+
 ## Следующие шаги
 
 - **M3.4 batch 5** — ✅ DONE — lexical (700) + grammar (200) = 900 новых файлов (16.9 MB)
 - **M3.5 Эталоны** — ✅ DONE — 665 файлов (7.9 MB) в Refs/ (в репо)
 - **M3.7b** — ✅ DONE — Ляля +30 фраз (итого 150, все в LyalyaPhrase enum)
+- **M3.7e** — ✅ DONE — 3 Customization voice preview m4a (classic/soft/cheerful), Lyalya 168→171
 - **M3.6 ambient** — 4 трека CC0 для world_map/lesson/AR/reward (⏳ pending M9)
 - **Firebase Storage upload** — delegated to backend-developer M11.4
 

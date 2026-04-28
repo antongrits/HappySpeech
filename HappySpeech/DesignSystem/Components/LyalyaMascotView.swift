@@ -95,6 +95,7 @@ public struct LyalyaMascotView: View {
     // MARK: - Environment
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(LyalyaCustomizationStorage.self) private var customization: LyalyaCustomizationStorage?
 
     // MARK: - Init
 
@@ -115,12 +116,17 @@ public struct LyalyaMascotView: View {
     // MARK: - Body
 
     public var body: some View {
-        HSMascotView(
-            mood: state.mascotMood,
-            size: size,
-            audioAmplitude: mouthAmplitude,
-            pointingDirection: pointingDirection
-        )
+        ZStack(alignment: .top) {
+            HSMascotView(
+                mood: state.mascotMood,
+                size: size,
+                audioAmplitude: mouthAmplitude,
+                pointingDirection: pointingDirection
+            )
+            .colorMultiply(skinTintColor)
+
+            skinDecorativeOverlay
+        }
         .frame(width: size, height: size)
         .contentShape(Rectangle())
         .onTapGesture {
@@ -130,6 +136,14 @@ public struct LyalyaMascotView: View {
             reduceMotion ? .none : MotionTokens.spring,
             value: state
         )
+        .animation(
+            reduceMotion ? .none : MotionTokens.spring,
+            value: customization?.skin
+        )
+        .animation(
+            reduceMotion ? .none : MotionTokens.spring,
+            value: customization?.colorVariant
+        )
         .accessibilityLabel(String(localized: "lyalya.mascot.accessibility.label"))
         .accessibilityHint(
             state == .idle
@@ -137,6 +151,59 @@ public struct LyalyaMascotView: View {
                 : ""
         )
         .accessibilityAddTraits(onTap != nil ? .isButton : [])
+    }
+
+    // MARK: - Skin tint
+
+    private var skinTintColor: Color {
+        switch customization?.colorVariant {
+        case .warm:
+            return Color(red: 1.0, green: 0.95, blue: 0.95)
+        case .cool:
+            return Color(red: 0.95, green: 0.97, blue: 1.0)
+        case .nature:
+            return Color(red: 0.95, green: 1.0, blue: 0.95)
+        case .none:
+            return .white
+        }
+    }
+
+    // MARK: - Decorative overlay
+
+    @ViewBuilder
+    private var skinDecorativeOverlay: some View {
+        let overlaySize = size * 0.22
+        let topOffset = -(size * 0.42)
+
+        switch customization?.skin {
+        case .princess:
+            Image(systemName: "crown.fill")
+                .font(.system(size: overlaySize))
+                .foregroundStyle(Color.yellow)
+                .shadow(color: .yellow.opacity(0.4), radius: 3, y: 1)
+                .offset(y: topOffset)
+                .accessibilityHidden(true)
+        case .scientist:
+            Image(systemName: "eyeglasses")
+                .font(.system(size: overlaySize * 1.2))
+                .foregroundStyle(Color.gray)
+                .offset(y: -(size * 0.08))
+                .accessibilityHidden(true)
+        case .athlete:
+            Image(systemName: "figure.run")
+                .font(.system(size: overlaySize))
+                .foregroundStyle(Color.red)
+                .offset(y: topOffset)
+                .accessibilityHidden(true)
+        case .artist:
+            Image(systemName: "paintbrush.pointed.fill")
+                .font(.system(size: overlaySize))
+                .foregroundStyle(Color.purple)
+                .offset(y: topOffset)
+                .accessibilityHidden(true)
+        case .classic, .none:
+            EmptyView()
+        }
     }
 }
 
@@ -183,6 +250,45 @@ extension LyalyaState: Equatable {}
         }
         .padding()
     }
+    .environment(LyalyaCustomizationStorage.shared)
+}
+
+#Preview("LyalyaMascotView — skin variants") {
+    VStack(spacing: 24) {
+        Text("Варианты облика Ляли")
+            .font(.headline)
+
+        HStack(spacing: 20) {
+            ForEach(LyalyaSkin.allCases) { skin in
+                VStack(spacing: 6) {
+                    LyalyaMascotView(state: .idle, size: 80)
+                        .environment(LyalyaCustomizationStorage.shared)
+                    Text(skin.localizedName)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                }
+                .frame(width: 90)
+            }
+        }
+
+        HStack(spacing: 20) {
+            ForEach(LyalyaColorVariant.allCases) { colorVariant in
+                VStack(spacing: 6) {
+                    LyalyaMascotView(state: .idle, size: 60)
+                        .environment(LyalyaCustomizationStorage.shared)
+                    Text(colorVariant.localizedName)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                }
+                .frame(width: 80)
+            }
+        }
+    }
+    .padding()
 }
 
 #Preview("LyalyaMascotView — lip-sync") {
