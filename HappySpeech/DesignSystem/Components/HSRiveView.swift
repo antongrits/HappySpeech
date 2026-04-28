@@ -193,18 +193,30 @@ final class RiveModel: ObservableObject {
             return
         }
 
-        // Пробуем SM в порядке приоритета
-        let smNamesToTry = ["LyalyaSM", "State Machine 1"]
+        // Определяем реально существующие SM через stateMachineNames (без бросания исключений),
+        // чтобы не передавать несуществующее имя в RiveViewModel
+        // (это вызывает fatal error внутри RiveRuntime при первом render).
+        let smCandidates = ["LyalyaSM", "State Machine 1"]
         var loadedVM: RiveViewModel?
         var detectedSMType: StateMachineType = .none
 
-        for smName in smNamesToTry {
+        let availableSMNames: [String]
+        if let riveFile = try? RiveFile(name: fileName, in: .main),
+           let artboard = try? riveFile.artboard() {
+            availableSMNames = artboard.stateMachineNames() as? [String] ?? []
+        } else {
+            availableSMNames = []
+        }
+
+        if let smName = smCandidates.first(where: { availableSMNames.contains($0) }) {
             let candidate = RiveViewModel(fileName: fileName, stateMachineName: smName)
-            // RiveViewModel не бросает при неверном имени SM — проверяем косвенно
-            // через попытку setInput (сделаем при первом use)
             loadedVM = candidate
             detectedSMType = smName == "LyalyaSM" ? .lyalyaSM : .skillsSM
-            break
+        } else {
+            // Ни одна из известных SM не найдена — запускаем без SM (autoPlay default)
+            let candidate = RiveViewModel(fileName: fileName)
+            loadedVM = candidate
+            detectedSMType = .genericNoControl
         }
 
         guard let vm = loadedVM else { return }

@@ -38,6 +38,7 @@ struct SettingsView: View {
     @State private var selectedLicense: OpenSourceLicenseVM?
     @State private var showShareSheet = false
     @State private var pendingDeletePackId: String?
+    @State private var showCustomizationSheet = false
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "SettingsView")
 
@@ -50,6 +51,7 @@ struct SettingsView: View {
 
                 List {
                     appearanceSection
+                    lyalyaCustomizationSection
                     profileSection
                     notificationsSection
                     contentSection
@@ -185,6 +187,14 @@ struct SettingsView: View {
             .onChange(of: display.shareFileURL) { _, newValue in
                 if newValue != nil { showShareSheet = true }
             }
+            .sheet(isPresented: $showCustomizationSheet) {
+                NavigationStack {
+                    CustomizationView()
+                        .environment(container)
+                        .environment(\.circuitContext, .parent)
+                }
+                .presentationDetents([.large])
+            }
         }
         .environment(\.circuitContext, .parent)
         .task { await bootstrap() }
@@ -220,6 +230,42 @@ struct SettingsView: View {
                 .font(TypographyTokens.caption(12).weight(.semibold))
                 .foregroundStyle(ColorTokens.Parent.inkMuted)
                 .textCase(.uppercase)
+        }
+    }
+
+    // MARK: - Section 1.5: Lyalya Customization
+
+    private var lyalyaCustomizationSection: some View {
+        Section {
+            Button {
+                showCustomizationSheet = true
+            } label: {
+                HStack(spacing: SpacingTokens.regular) {
+                    Label {
+                        VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                            Text(String(localized: "settings.customization.label"))
+                                .font(TypographyTokens.body(15))
+                                .foregroundStyle(ColorTokens.Parent.ink)
+                            Text(LyalyaCustomizationStorage.shared.settingsSubtitle)
+                                .font(TypographyTokens.caption(12))
+                                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        }
+                    } icon: {
+                        Image(systemName: "paintpalette.fill")
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                    }
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(ColorTokens.Parent.inkSoft)
+                        .accessibilityHidden(true)
+                }
+                .frame(minHeight: 56)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(String(localized: "settings.customization.label"))
+            .accessibilityHint(String(localized: "settings.customization.hint"))
         }
     }
 

@@ -3552,6 +3552,9 @@
 		876A3018A15D46749930CE60 /* GrammarScoringWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAC2FA2B81C4E0388F04C2B /* GrammarScoringWorkerTests.swift */; };
 		C44DF7F1C7D349B2B412712D /* GrammarGameSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C6AE21EA03442E8A239C32 /* GrammarGameSnapshotTests.swift */; };
 		52A79FBC35FD4A78B7546E62 /* GrammarGameSmokeUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DBAD4C1ED6458199045257 /* GrammarGameSmokeUITest.swift */; };
+		DD4A5F6B7C8D9E0123EFAB01 /* CustomizationInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1F2C3D4E5B6A7890ABCDEF /* CustomizationInteractorTests.swift */; };
+		EE5B6A7C8D9E0F1234FABC12 /* CustomizationSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2E3D4F5A6B7C8901BCDEFA /* CustomizationSnapshotTests.swift */; };
+		FF6C7B8D9E0F102345ABCD23 /* CustomizationSmokeUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3F4E5A6B7C8D9012CDEFAB /* CustomizationSmokeUITest.swift */; };
 		8393CB472CF2AEE7765123DA /* y-sen-36.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A29794B1A64BD8EC991EC293 /* y-sen-36.m4a */; };
 		839943CFD4946AA26431BC98 /* br-182.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 54FFB1E07804D2BA61499449 /* br-182.m4a */; };
 		839ECA0C730FA303A59F8314 /* narr-si-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9B62B37EECCA016C8196CDA5 /* narr-si-6.m4a */; };
@@ -6908,7 +6911,17 @@
 		FFEF75549075E74689C6A889 /* br-018.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CFD6FCD5E94C3F13D619508C /* br-018.m4a */; };
 		FFF13580E10DF93EFAEE75CA /* lex-pr-9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 017397A5903D0634EA8D7823 /* lex-pr-9.m4a */; };
 		FFF82BB3100FAAEFA13E69AE /* phon-fs-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 19B9E3B5CD051508014A6747 /* phon-fs-0.m4a */; };
-/* End PBXBuildFile section */
+		246EBC6501534CDBB12A7F72 /* CustomizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED790AC8C514B7D95881181 /* CustomizationView.swift */; };
+		CC1BDCAD044043BAA763664B /* CustomizationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C1BA4ACCA04799A37145B9 /* CustomizationInteractor.swift */; };
+		953E5F20AD7B4FBDA2CECBC4 /* CustomizationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8FF8AB787495B9533F239 /* CustomizationPresenter.swift */; };
+		2D44E074A9C84174B7302739 /* CustomizationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B431DFE78CB64F8590E8A2EA /* CustomizationRouter.swift */; };
+		3CA00D2F1FCA456491EE7570 /* CustomizationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D55211F0954C23ACEE41E0 /* CustomizationModels.swift */; };
+		F448E10CA69B4700A8EBA4D8 /* CustomizationDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29545B4206AB4DF18ED818A4 /* CustomizationDisplayLogic.swift */; };
+		C16F429E0D904F469244E7C5 /* LyalyaCustomizationStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 429060F2E0FB4656A2630349 /* LyalyaCustomizationStorage.swift */; };
+		96D724083B3D494E87F0FC54 /* CustomizationStorageWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F05B374EED4B538C4E3C44 /* CustomizationStorageWorker.swift */; };
+		7C4F2836D0B3477AB1ABC0BE /* CustomizationVoicePreviewWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02BFDD988F04989915FD5D2 /* CustomizationVoicePreviewWorker.swift */; };
+		157E5837F0E240B0B09E9C05 /* CustomizationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8143240CEFD04504A08C5BFD /* CustomizationDTO.swift */; };
+		/* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		63808DCBCDE48B10A011CF43 /* PBXContainerItemProxy */ = {
@@ -9769,6 +9782,9 @@
 		3FAC2FA2B81C4E0388F04C2B /* GrammarScoringWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarScoringWorkerTests.swift; sourceTree = "<group>"; };
 		69C6AE21EA03442E8A239C32 /* GrammarGameSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarGameSnapshotTests.swift; sourceTree = "<group>"; };
 		88DBAD4C1ED6458199045257 /* GrammarGameSmokeUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarGameSmokeUITest.swift; sourceTree = "<group>"; };
+		AA1F2C3D4E5B6A7890ABCDEF /* CustomizationInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizationInteractorTests.swift; sourceTree = "<group>"; };
+		BB2E3D4F5A6B7C8901BCDEFA /* CustomizationSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizationSnapshotTests.swift; sourceTree = "<group>"; };
+		CC3F4E5A6B7C8D9012CDEFAB /* CustomizationSmokeUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizationSmokeUITest.swift; sourceTree = "<group>"; };
 		69C012FC9D30011B83311429 /* s-wm-47.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "s-wm-47.m4a"; sourceTree = "<group>"; };
 		69EF847BB1F5E993DDFB13EA /* z-sen-10.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "z-sen-10.m4a"; sourceTree = "<group>"; };
 		69F30E1458EF3AD6E7A319BF /* br-283.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "br-283.m4a"; sourceTree = "<group>"; };
@@ -13834,7 +13850,17 @@
 		FFFC2ADCFD00AE0D371C3E34 /* zh-wf-1.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "zh-wf-1.m4a"; sourceTree = "<group>"; };
 		FFFDF55D80679E483C7C6BAB /* r-prep-29.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "r-prep-29.m4a"; sourceTree = "<group>"; };
 		FFFFC85AC46291BB5FD4F18F /* k-prep-14.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "k-prep-14.m4a"; sourceTree = "<group>"; };
-/* End PBXFileReference section */
+		EED790AC8C514B7D95881181 /* CustomizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomizationView.swift"; sourceTree = "<group>"; };
+		D9C1BA4ACCA04799A37145B9 /* CustomizationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomizationInteractor.swift"; sourceTree = "<group>"; };
+		D4C8FF8AB787495B9533F239 /* CustomizationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomizationPresenter.swift"; sourceTree = "<group>"; };
+		B431DFE78CB64F8590E8A2EA /* CustomizationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomizationRouter.swift"; sourceTree = "<group>"; };
+		B6D55211F0954C23ACEE41E0 /* CustomizationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomizationModels.swift"; sourceTree = "<group>"; };
+		29545B4206AB4DF18ED818A4 /* CustomizationDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomizationDisplayLogic.swift"; sourceTree = "<group>"; };
+		429060F2E0FB4656A2630349 /* LyalyaCustomizationStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LyalyaCustomizationStorage.swift"; sourceTree = "<group>"; };
+		C3F05B374EED4B538C4E3C44 /* CustomizationStorageWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomizationStorageWorker.swift"; sourceTree = "<group>"; };
+		D02BFDD988F04989915FD5D2 /* CustomizationVoicePreviewWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomizationVoicePreviewWorker.swift"; sourceTree = "<group>"; };
+		8143240CEFD04504A08C5BFD /* CustomizationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomizationDTO.swift"; sourceTree = "<group>"; };
+		/* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		354B334438CBBE5386FB1A3E /* Frameworks */ = {
@@ -16792,6 +16818,7 @@
 			isa = PBXGroup;
 			children = (
 				2677F19D84BC44A4B945AF0A /* GrammarGame */,
+				D70E4797817148BEAAC038F0 /* Customization */,
 				CD2F9787A9FA9C1A4A347083 /* AR */,
 				D42A631EA884BCDDFFA6630E /* ARZone */,
 				329AF7DECB48DC3FCED95A38 /* Auth */,
@@ -18214,6 +18241,7 @@
 			children = (
 				0A4F0435CD3E2E3211592457 /* __Snapshots__ */,
 				0C059AB746DD7B289BDB92A4 /* Accessibility */,
+				A0B1C2D3E4F567890ABCDE01 /* Customization */,
 				1DA970F74C0E5B8DD084846B /* Games */,
 				59957EF4F2E240E0BE292022 /* GrammarGame */,
 				B86BE800DF238528DA16E6CF /* Integration */,
@@ -21136,6 +21164,7 @@
 			children = (
 				C6BF9C3167825E9315EB359D /* LLMDecisionLog.swift */,
 				699FC20B5B2E0CFD1AE4A1D8 /* RealmModels.swift */,
+				8143240CEFD04504A08C5BFD /* CustomizationDTO.swift */,
 				47F5ECCD23D76C5EF07F7659 /* ScreeningOutcomeObject.swift */,
 			);
 			path = Models;
@@ -21967,6 +21996,41 @@
 				88DBAD4C1ED6458199045257 /* GrammarGameSmokeUITest.swift */,
 			);
 			path = GrammarGame;
+			sourceTree = "<group>";
+		};
+		A0B1C2D3E4F567890ABCDE01 /* Customization */ = {
+			isa = PBXGroup;
+			children = (
+				AA1F2C3D4E5B6A7890ABCDEF /* CustomizationInteractorTests.swift */,
+				BB2E3D4F5A6B7C8901BCDEFA /* CustomizationSnapshotTests.swift */,
+				CC3F4E5A6B7C8D9012CDEFAB /* CustomizationSmokeUITest.swift */,
+			);
+			path = Customization;
+			sourceTree = "<group>";
+		};
+		
+		9FDD8B5645104891A17EFD7D /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				C3F05B374EED4B538C4E3C44 /* CustomizationStorageWorker.swift */,
+				D02BFDD988F04989915FD5D2 /* CustomizationVoicePreviewWorker.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
+		D70E4797817148BEAAC038F0 /* Customization */ = {
+			isa = PBXGroup;
+			children = (
+				EED790AC8C514B7D95881181 /* CustomizationView.swift */,
+				D9C1BA4ACCA04799A37145B9 /* CustomizationInteractor.swift */,
+				D4C8FF8AB787495B9533F239 /* CustomizationPresenter.swift */,
+				B431DFE78CB64F8590E8A2EA /* CustomizationRouter.swift */,
+				B6D55211F0954C23ACEE41E0 /* CustomizationModels.swift */,
+				29545B4206AB4DF18ED818A4 /* CustomizationDisplayLogic.swift */,
+				429060F2E0FB4656A2630349 /* LyalyaCustomizationStorage.swift */,
+				9FDD8B5645104891A17EFD7D /* Workers */,
+			);
+			path = Customization;
 			sourceTree = "<group>";
 		};
 		/* End PBXGroup section */
@@ -28525,6 +28589,9 @@
 				876A3018A15D46749930CE60 /* GrammarScoringWorkerTests.swift in Sources */,
 				C44DF7F1C7D349B2B412712D /* GrammarGameSnapshotTests.swift in Sources */,
 				52A79FBC35FD4A78B7546E62 /* GrammarGameSmokeUITest.swift in Sources */,
+				DD4A5F6B7C8D9E0123EFAB01 /* CustomizationInteractorTests.swift in Sources */,
+				EE5B6A7C8D9E0F1234FABC12 /* CustomizationSnapshotTests.swift in Sources */,
+				FF6C7B8D9E0F102345ABCD23 /* CustomizationSmokeUITest.swift in Sources */,
 				113313232CBBD4F99B929666 /* BreathingInteractorTests.swift in Sources */,
 				53593C793A82F0D8945834E9 /* ChildHomeInteractorTests.swift in Sources */,
 				54B03D688C02BAD9442277B6 /* ColdStartSignpostTests.swift in Sources */,
@@ -28709,6 +28776,16 @@
 				4661DE1F23421547D127142C /* FaceAnalysisService.swift in Sources */,
 				EF593BFD58DBA9B549391570 /* GoogleSignInWorker.swift in Sources */,
 				32CD08CB4A7E4789AF739379 /* GrammarGameView.swift in Sources */,
+				246EBC6501534CDBB12A7F72 /* CustomizationView.swift in Sources */,
+				CC1BDCAD044043BAA763664B /* CustomizationInteractor.swift in Sources */,
+				953E5F20AD7B4FBDA2CECBC4 /* CustomizationPresenter.swift in Sources */,
+				2D44E074A9C84174B7302739 /* CustomizationRouter.swift in Sources */,
+				3CA00D2F1FCA456491EE7570 /* CustomizationModels.swift in Sources */,
+				F448E10CA69B4700A8EBA4D8 /* CustomizationDisplayLogic.swift in Sources */,
+				C16F429E0D904F469244E7C5 /* LyalyaCustomizationStorage.swift in Sources */,
+				96D724083B3D494E87F0FC54 /* CustomizationStorageWorker.swift in Sources */,
+				7C4F2836D0B3477AB1ABC0BE /* CustomizationVoicePreviewWorker.swift in Sources */,
+				157E5837F0E240B0B09E9C05 /* CustomizationDTO.swift in Sources */,
 				038CACD0B92C4BE38AD15DF8 /* GrammarGameInteractor.swift in Sources */,
 				7E67BEF229614B8FAE6EAF53 /* GrammarGamePresenter.swift in Sources */,
 				2A029A42189B4F4E8C345100 /* GrammarGameRouter.swift in Sources */,

@@ -18,6 +18,10 @@ enum RealmMigrations {
             // v3: added ScreeningOutcomeObject — same as above, новый объект не требует
             // миграционных действий, Realm создаёт схему автоматически.
         }
+        if oldSchemaVersion < 4 {
+            // v4: added CustomizationObject (skin/colorVariant/voice/updatedAt).
+            // Realm создаёт схему автоматически, дефолты заданы в модели.
+        }
     }
 }
 

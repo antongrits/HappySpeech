@@ -7559,3 +7559,425 @@ grammar.game.dative.question        → «Кому нужен %@?»
 - **animator F1-008:** PluralPreviewGrid анимация удвоения (Lottie/Pow), PartyGuestsGrid bounce, GenitiveScene открытие контейнера
 - **sound-curator F1-009:** voice-over Ляли — ~120 фраз (4 игры × 10 items × 3 варианта), формат m4a 22050Гц моно
 - AudioPlayButton: 72×72pt
+
+---
+
+## Кастомизация Ляли — UI спека (Plan v9 Блок F2, M13 extension #2)
+
+**Дата:** 2026-04-28
+**LOC цель кода:** ~1 500 LOC (VIP + cloud sync)
+**Контур:** parent (точка входа) + kid (preview Ляли)
+**Статус:** ⚠️ нужна спека → передаётся ios-developer F2-002..F2-007
+
+---
+
+### Точка входа в SettingsView
+
+В секцию `appearanceSection` (или отдельная секция «Ляля») добавить новую ячейку:
+
+```
+Label("Кастомизация Ляли", systemImage: "paintpalette.fill")
+    .foregroundStyle(ColorTokens.Brand.primary)
+```
+
+Тап → `showCustomizationSheet = true` → `.sheet(isPresented:)` → `CustomizationView`.
+Альтернативно: NavigationLink push если SettingsView использует NavigationStack (что верно по коду).
+
+**Ячейка Settings:**
+- Иконка: `paintpalette.fill`, цвет `Brand.primary` (coral-apricot)
+- Заголовок: «Кастомизация Ляли»
+- Subtitle: текущий активный скин, например «Классическая · Тёплая»
+- Шеврон вправо (стандартный List NavigationLink)
+- Минимальная высота ячейки: 56pt (kid-friendly, хотя контур parent)
+
+---
+
+### CustomizationView — главный экран
+
+**Контейнер:** NavigationStack → NavigationLink из Settings.
+**Background:** `ColorTokens.Kid.bg` (тёплый фон, т.к. экран про Лялю, дочерний контур).
+
+#### 1. Header — анимированный preview Ляли
+
+```
+LyalyaMascotView(state: .idle, skin: selectedSkin, colorVariant: selectedColor)
+    .frame(width: 200, height: 200)
+    .background(
+        RoundedRectangle(cornerRadius: RadiusTokens.large) // 16pt
+            .fill(headerGradient(for: selectedColor))
+            .frame(width: 240, height: 240)
+    )
+    .padding(.top, SpacingTokens.xl) // 20pt
+```
+
+- При смене скина: анимация `.transition(.scale(scale: 0.85).combined(with: .opacity))` + `MotionTokens.springFast`
+- При смене цвета: градиент header обновляется с `withAnimation(.easeInOut(0.25))`
+- Reduced Motion: scale-переход заменяется на opacity fade (0.3s)
+
+**headerGradient(for:):**
+| colorVariant | from | to |
+|---|---|---|
+| warm | `Color(hex: "#FFE0C8")` | `Color(hex: "#FFD0B0")` |
+| cool | `Color(hex: "#C8E8FF")` | `Color(hex: "#B0D8F8")` |
+| nature | `Color(hex: "#C8F0D8")` | `Color(hex: "#B0E8C8")` |
+
+---
+
+#### 2. Секция «Костюмы» — горизонтальный ScrollView
+
+```
+ScrollView(.horizontal, showsIndicators: false) {
+    HStack(spacing: SpacingTokens.m) { // 12pt между карточками
+        ForEach(LyalyaSkin.allCases) { skin in
+            SkinCard(skin: skin, isSelected: selectedSkin == skin)
+                .onTapGesture { selectSkin(skin) }
+        }
+    }
+    .padding(.horizontal, SpacingTokens.l) // 16pt
+}
+```
+
+**SkinCard (120×160pt):**
+```
+VStack(spacing: SpacingTokens.s) { // 8pt
+    ZStack(alignment: .topTrailing) {
+        // Иллюстрация Ляли в скине — из Resources/Illustrations/lyalya_<skin>.png
+        Image("lyalya_\(skin.rawValue)")
+            .resizable()
+            .scaledToFill()
+            .frame(width: 80, height: 100)
+            .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card)) // 12pt
+
+        // Checkmark если выбран
+        if isSelected {
+            Image(systemName: "checkmark.circle.fill")
+                .font(.system(size: 22, weight: .bold))
+                .foregroundStyle(ColorTokens.Brand.primary)
+                .background(Circle().fill(Color.white).padding(-2))
+                .padding(SpacingTokens.xs) // 4pt
+        }
+    }
+
+    Text(skin.localizedName)
+        .font(TypographyTokens.caption) // 12pt Regular
+        .foregroundStyle(ColorTokens.Kid.ink)
+        .lineLimit(1)
+}
+.frame(width: 120, height: 160)
+.background(
+    RoundedRectangle(cornerRadius: RadiusTokens.card)
+        .fill(isSelected ? ColorTokens.Brand.primary.opacity(0.12) : ColorTokens.Kid.surface)
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.card)
+                .strokeBorder(
+                    isSelected ? ColorTokens.Brand.primary : Color.clear,
+                    lineWidth: 2
+                )
+        )
+)
+.accessibilityElement(children: .combine)
+.accessibilityLabel("Скин: \(skin.localizedName)\(isSelected ? ", выбран" : "")")
+.accessibilityHint("Дважды нажмите чтобы выбрать")
+.accessibilityAddTraits(isSelected ? [.isSelected] : [])
+```
+
+**LyalyaSkin enum:**
+```swift
+enum LyalyaSkin: String, CaseIterable, Identifiable {
+    case classic, princess, scientist, athlete, artist
+    var id: String { rawValue }
+    var localizedName: String { /* String(localized: "customization.skin.\(rawValue)") */ }
+    var illustrationName: String { "lyalya_\(rawValue)" } // PNG в Assets
+}
+```
+
+**Иллюстрации для скинов** (заглушки из `Resources/Illustrations/`):
+| Скин | Файл | Описание |
+|---|---|---|
+| classic | `lyalya_classic.png` | Ляля в привычном виде (голубое платье) |
+| princess | `lyalya_princess.png` | Корона, розовое платье с пышной юбкой |
+| scientist | `lyalya_scientist.png` | Белый халат, очки, колба |
+| athlete | `lyalya_athlete.png` | Кроссовки, майка, мяч |
+| artist | `lyalya_artist.png` | Берет, фартук с красками, кисть |
+
+> Если FLUX.1-schnell иллюстрации ещё не созданы — использовать цветной placeholder (`ZStack` с градиентным фоном + SF Symbol `figure.stand`).
+
+---
+
+#### 3. Секция «Цветовая палитра»
+
+```
+HStack(spacing: SpacingTokens.l) { // 16pt между кружками
+    ForEach(LyalyaColorVariant.allCases) { variant in
+        ColorPaletteCircle(variant: variant, isSelected: selectedColor == variant)
+            .onTapGesture { selectColor(variant) }
+    }
+}
+.padding(.horizontal, SpacingTokens.l)
+```
+
+**ColorPaletteCircle (56×56pt, touch target):**
+```
+ZStack {
+    Circle()
+        .fill(variant.previewGradient) // LinearGradient из двух оттенков
+        .frame(width: 44, height: 44)
+
+    if isSelected {
+        Circle()
+            .strokeBorder(ColorTokens.Brand.primary, lineWidth: 3)
+            .frame(width: 50, height: 50)
+    }
+}
+.frame(width: 56, height: 56) // touch target ≥56pt
+.accessibilityLabel("\(variant.localizedName)\(isSelected ? ", выбрана" : "")")
+.accessibilityHint("Дважды нажмите чтобы выбрать цветовую палитру")
+```
+
+**LyalyaColorVariant enum:**
+```swift
+enum LyalyaColorVariant: String, CaseIterable, Identifiable {
+    case warm, cool, nature
+    var id: String { rawValue }
+    var localizedName: String { /* String(localized: "customization.color.\(rawValue)") */ }
+    var previewGradient: LinearGradient { /* см. headerGradient выше */ }
+}
+```
+
+---
+
+#### 4. Секция «Голос Ляли» — Picker + preview
+
+```
+VStack(alignment: .leading, spacing: SpacingTokens.s) { // 8pt
+    // Заголовок секции
+    Text(String(localized: "customization.section.voice"))
+        .font(TypographyTokens.headline) // 18pt Semibold Rounded
+        .foregroundStyle(ColorTokens.Kid.ink)
+        .padding(.horizontal, SpacingTokens.l)
+
+    // Ряды голосов
+    ForEach(LyalyaVoice.allCases) { voice in
+        VoiceRow(voice: voice, isSelected: selectedVoice == voice, isPlaying: playingVoice == voice)
+            .onTapGesture { selectVoice(voice) }
+    }
+}
+```
+
+**VoiceRow (высота 56pt):**
+```
+HStack(spacing: SpacingTokens.m) { // 12pt
+    // Radio circle
+    ZStack {
+        Circle().strokeBorder(
+            isSelected ? ColorTokens.Brand.primary : ColorTokens.Kid.line,
+            lineWidth: 2
+        ).frame(width: 24, height: 24)
+        if isSelected {
+            Circle().fill(ColorTokens.Brand.primary).frame(width: 14, height: 14)
+        }
+    }
+
+    // Название
+    Text(voice.localizedName)
+        .font(TypographyTokens.body) // 15pt Regular
+        .foregroundStyle(ColorTokens.Kid.ink)
+
+    Spacer()
+
+    // Кнопка «Послушать»
+    Button {
+        previewVoice(voice)
+    } label: {
+        Label(
+            String(localized: "customization.voice.preview"),
+            systemImage: isPlaying ? "stop.circle.fill" : "play.circle.fill"
+        )
+        .font(TypographyTokens.caption) // 12pt
+        .foregroundStyle(ColorTokens.Brand.primary)
+    }
+    .frame(minWidth: 56, minHeight: 44)
+    .accessibilityLabel("Послушать голос \(voice.localizedName)")
+}
+.frame(minHeight: 56)
+.padding(.horizontal, SpacingTokens.l)
+.background(
+    RoundedRectangle(cornerRadius: RadiusTokens.card)
+        .fill(isSelected ? ColorTokens.Brand.primary.opacity(0.08) : Color.clear)
+)
+.padding(.horizontal, SpacingTokens.m)
+```
+
+**Preview phrase при нажатии «Послушать»:**
+- Фраза: «Привет! Я Ляля! Давай заниматься!»
+- Файл: `lyalya_voice_<voice.rawValue>_preview.m4a` в `Resources/Audio/Voice/`
+- Если файл недоступен → AVSpeechSynthesizer fallback (ru-RU, pitch зависит от варианта)
+
+**LyalyaVoice enum:**
+```swift
+enum LyalyaVoice: String, CaseIterable, Identifiable {
+    case classic, soft, cheerful
+    var id: String { rawValue }
+    var localizedName: String { /* String(localized: "customization.voice.\(rawValue)") */ }
+    var previewFile: String { "lyalya_voice_\(rawValue)_preview" }
+    var speechPitch: Float { switch self { case .classic: 1.0; case .soft: 0.85; case .cheerful: 1.2 } }
+}
+```
+
+---
+
+#### 5. CTA «Сохранить» — HSButton
+
+```
+HSButton(
+    title: String(localized: "customization.cta.save"),
+    style: .primary,
+    action: { interactor?.saveCustomization(.init(skin: selectedSkin, color: selectedColor, voice: selectedVoice)) }
+)
+.frame(maxWidth: .infinity)
+.frame(height: 56)
+.padding(.horizontal, SpacingTokens.l) // 16pt
+.padding(.bottom, SpacingTokens.xl) // 20pt над safe area
+```
+
+- После сохранения → HSToast «Кастомизация сохранена!» (`.success`, 2.6с)
+- Если cloud sync активен → второй toast «Синхронизировано с облаком» через 0.5с
+- LyalyaMascotView переходит в состояние `.celebrating` на 2с после сохранения
+
+---
+
+### Полный layout CustomizationView (сверху вниз)
+
+```
+NavigationStack
+└── ScrollView(.vertical)
+    └── VStack(spacing: 0)
+        ├── [Header] LyalyaMascotView preview          h≈260pt
+        ├── [Section title] «Костюмы»                  h≈44pt
+        ├── [Skins] ScrollView(.horizontal)            h≈180pt
+        ├── [Section title] «Цветовая палитра»         h≈44pt
+        ├── [Colors] HStack с 3 кружками               h≈72pt
+        ├── [Section title] «Голос Ляли»               h≈44pt
+        ├── [Voice] 3 × VoiceRow                       h≈168pt
+        └── [CTA] HSButton «Сохранить»                 h≈92pt
+    Total scrollable height: ≈904pt (iPhone 17 Pro: 932pt viewport — умещается без scroll)
+    На iPhone SE (667pt): требуется scroll, все элементы доступны
+```
+
+---
+
+### Состояния экрана
+
+| Состояние | Описание |
+|---|---|
+| loading | Skeleton-заглушки пока Realm загружает текущие настройки (0.1–0.3с) |
+| idle | Нормальное состояние, изменения не сохранены — кнопка active |
+| unchanged | Открыт экран, ничего не менялось — кнопка «Сохранить» disabled |
+| saving | Нажата «Сохранить» → HSButton .loading state, spinner внутри |
+| saved | Toast «Кастомизация сохранена!» + Ляля celebrating |
+| error | Toast красный «Не удалось сохранить» + interactor retry |
+
+---
+
+### Анимации
+
+| Действие | Анимация | Токен |
+|---|---|---|
+| Tap на SkinCard | scale 0.95→1.0 + header preview смена | `MotionTokens.springFast` (0.25s, bounce 0.15) |
+| Tap на ColorCircle | gradient header fade | `MotionTokens.standard` (easeInOut 0.25s) |
+| Сохранить | Ляля → `.celebrating`, confetti Lottie overlay | `MotionTokens.reward` (0.6s, bounce 0.35) |
+| Экран появляется | opacity 0→1 + translateY(16→0) | `MotionTokens.spring` (0.4s, bounce 0.2) |
+| Reduced Motion | все spring → opacity fade 0.3s | `@Environment(\.accessibilityReduceMotion)` |
+
+---
+
+### Accessibility
+
+- Все интерактивные элементы: минимум 56×56pt tap target
+- SkinCard: `accessibilityLabel("Скин: Принцесса, выбран")`, `accessibilityHint("Дважды нажмите чтобы выбрать")`
+- ColorPaletteCircle: `accessibilityLabel("Тёплая палитра, выбрана")`
+- VoiceRow: `accessibilityLabel("Голос Мягкая")` + кнопка preview отдельный элемент
+- HSButton Save: `accessibilityLabel("Сохранить кастомизацию Ляли")`
+- VoiceOver order: Header → секция Костюмы → 5 карточек → секция Цвета → 3 кружка → секция Голос → 3 ряда → Сохранить
+- Dynamic Type: заголовки секций через `TypographyTokens.headline`, тело через `TypographyTokens.body` — оба поддерживают Dynamic Type
+
+---
+
+### iPhone SE адаптация (width 375pt, height 667pt)
+
+- Header LyalyaMascotView: уменьшается до 160×160pt (вместо 200×200pt)
+- SkinCard: 100×136pt (вместо 120×160pt), шрифт caption остаётся
+- Skins ScrollView: видны 2.5 карточки → свайп для остальных
+- ColorPaletteCircle: 48pt touch target (уменьшение с 56pt, допустимо для parent контура)
+- ScrollView обязателен — контент не умещается в 667pt viewport
+
+---
+
+### Локализация (только ru, 18 ключей)
+
+```
+customization.title              → «Кастомизация Ляли»
+customization.section.skins      → «Костюмы»
+customization.section.colors     → «Цветовая палитра»
+customization.section.voice      → «Голос Ляли»
+customization.skin.classic       → «Классическая»
+customization.skin.princess      → «Принцесса»
+customization.skin.scientist     → «Учёная»
+customization.skin.athlete       → «Спортсменка»
+customization.skin.artist        → «Художница»
+customization.color.warm         → «Тёплая»
+customization.color.cool         → «Холодная»
+customization.color.nature       → «Природная»
+customization.voice.classic      → «Классическая»
+customization.voice.soft         → «Мягкая»
+customization.voice.cheerful     → «Бодрая»
+customization.voice.preview      → «Послушать»
+customization.cta.save           → «Сохранить»
+customization.cta.cancel         → «Отмена»
+customization.feedback.saved     → «Кастомизация сохранена!»
+customization.feedback.cloud_synced → «Синхронизировано с облаком»
+```
+
+> Итого 20 ключей (18 основных + 2 feedback toast). Добавить в `Resources/Localizable.xcstrings` раздел `customization.*`.
+
+---
+
+### Cloud sync — Firestore схема
+
+**Коллекция:** `users/{uid}/customization` (single document)
+
+```json
+{
+  "skin": "classic",
+  "colorVariant": "warm",
+  "voice": "classic",
+  "updatedAt": "<Firestore Timestamp>"
+}
+```
+
+**Логика sync через SyncService:**
+1. При сохранении: `CustomizationRepository.save(local: realm)` → если `authState == .authenticated` → `SyncService.push(customization)`
+2. При запуске приложения (если authenticated): `SyncService.fetchCustomization()` → merge strategy: **remote wins** (последняя запись по `updatedAt`)
+3. Если `authState == .anonymous`: только Realm, без Firestore
+4. Conflict: оба устройства изменили за offline период → берём с более поздним `updatedAt`
+
+**Realm модель `CustomizationObject`:**
+```swift
+class CustomizationObject: Object {
+    @Persisted(primaryKey: true) var id: String = "local"
+    @Persisted var skin: String = LyalyaSkin.classic.rawValue
+    @Persisted var colorVariant: String = LyalyaColorVariant.warm.rawValue
+    @Persisted var voice: String = LyalyaVoice.classic.rawValue
+    @Persisted var updatedAt: Date = Date()
+}
+```
+
+---
+
+### Передача дальше
+
+- **ios-developer F2-002..F2-007:** VIP реализация в `HappySpeech/Features/Customization/` — `CustomizationView`, `CustomizationInteractor`, `CustomizationPresenter`, `CustomizationRouter`, `CustomizationModels`, `Workers/CustomizationSyncWorker`; Realm модель `CustomizationObject` в `Data/Models/`; интеграция в `SettingsView.swift` (новая ячейка + NavigationLink)
+- **animator F2-008:** обновление `LyalyaMascotView` — добавить `skin` параметр; Rive state machine layer switching для 5 скинов; если Rive не поддерживает — PNG overlay swap
+- **backend-developer F2-010:** Firestore security rules для `users/{uid}/customization` — только владелец читает/пишет; добавить в `firestore.rules`
+- **sound-curator F2-009:** 3 файла preview голосов — `lyalya_voice_classic_preview.m4a`, `lyalya_voice_soft_preview.m4a`, `lyalya_voice_cheerful_preview.m4a`; фраза «Привет! Я Ляля! Давай заниматься!»; формат m4a 22050Гц моно; длина ~3с
+- **code-reviewer + qa-engineer:** snapshot тесты для SkinCard (selected/unselected × 5 скинов), ColorPaletteCircle (×3), VoiceRow (×3); light + dark тема; iPhone SE + iPhone 17 Pro
