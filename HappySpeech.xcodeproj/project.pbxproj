@@ -3555,6 +3555,10 @@
 		DD4A5F6B7C8D9E0123EFAB01 /* CustomizationInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1F2C3D4E5B6A7890ABCDEF /* CustomizationInteractorTests.swift */; };
 		EE5B6A7C8D9E0F1234FABC12 /* CustomizationSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2E3D4F5A6B7C8901BCDEFA /* CustomizationSnapshotTests.swift */; };
 		FF6C7B8D9E0F102345ABCD23 /* CustomizationSmokeUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3F4E5A6B7C8D9012CDEFAB /* CustomizationSmokeUITest.swift */; };
+		F401A2B3C4D5E6F701234581 /* FamilyVoiceInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F401A2B3C4D5E6F701234580 /* FamilyVoiceInteractorTests.swift */; };
+		F401A2B3C4D5E6F701234583 /* FamilyScoringWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F401A2B3C4D5E6F701234582 /* FamilyScoringWorkerTests.swift */; };
+		F401A2B3C4D5E6F701234585 /* ParentChildSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F401A2B3C4D5E6F701234584 /* ParentChildSnapshotTests.swift */; };
+		F401A2B3C4D5E6F701234587 /* FamilyVoiceSmokeUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F401A2B3C4D5E6F701234586 /* FamilyVoiceSmokeUITest.swift */; };
 		F301A2B3C4D5E6F701234560 /* FamilyCalendarInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A301B2C3D4E5F6A701234561 /* FamilyCalendarInteractorTests.swift */; };
 		F301A2B3C4D5E6F701234562 /* FamilyStatsWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A301B2C3D4E5F6A701234563 /* FamilyStatsWorkerTests.swift */; };
 		F301A2B3C4D5E6F701234564 /* FamilyCalendarSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A301B2C3D4E5F6A701234565 /* FamilyCalendarSnapshotTests.swift */; };
@@ -6933,6 +6937,16 @@
 		BF5A5D87A27C44D990CE3465 /* FamilyCalendarDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8175A2A8B4F548CD32981 /* FamilyCalendarDisplayLogic.swift */; };
 		0F5101B9DA1945768D1BE22C /* FamilyStatsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE947358D2C94C12826013C0 /* FamilyStatsWorker.swift */; };
 		377A2F5C6557434EBE3DC0C6 /* FamilyInsightsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6F437FAB184E95AB9BC5BF /* FamilyInsightsWorker.swift */; };
+		3454B9E9F094AB72DBA3567B /* FamilyVoiceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B08DC15BAE74BF85B9D2CB7 /* FamilyVoiceModels.swift */; };
+		5957629F6D6412BE522EC707 /* FamilyVoiceDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A6BB3523B5AAEFFA907D2F /* FamilyVoiceDisplayLogic.swift */; };
+		AEA414688CADF066A6D28AF0 /* FamilyVoicePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3603253F07F35A81A2A0775 /* FamilyVoicePresenter.swift */; };
+		DDA000569EA805290515BBC1 /* FamilyVoiceInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0215E3509BFD373530BF1236 /* FamilyVoiceInteractor.swift */; };
+		75C2E4F98329F03FF0012670 /* FamilyVoiceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E8E3407D471D71A2CBD8AAC /* FamilyVoiceRouter.swift */; };
+		C1415A301584D95E67502F3D /* FamilyVoiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 014BB1EC190AF3CBF88772CE /* FamilyVoiceView.swift */; };
+		E99DD76A7F3474A5982B984F /* FamilyVoiceSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A6A5C74CC8F347D1EDA2D7 /* FamilyVoiceSplitView.swift */; };
+		85B687914DA7EA90F2FAB041 /* FamilyVoiceRecorderWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF30E5A1DC4D26EEB78A08A /* FamilyVoiceRecorderWorker.swift */; };
+		C0E22529F9AC9D8A444CCEB2 /* FamilyVoiceScoringWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A09835A6005F71BF0E3E1BEB /* FamilyVoiceScoringWorker.swift */; };
+		A6B1EB84A4107CC03BC48F7D /* FamilyRecordingObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FF7577F64E613F15449012 /* FamilyRecordingObject.swift */; };
 		/* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -9797,6 +9811,10 @@
 		AA1F2C3D4E5B6A7890ABCDEF /* CustomizationInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizationInteractorTests.swift; sourceTree = "<group>"; };
 		BB2E3D4F5A6B7C8901BCDEFA /* CustomizationSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizationSnapshotTests.swift; sourceTree = "<group>"; };
 		CC3F4E5A6B7C8D9012CDEFAB /* CustomizationSmokeUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizationSmokeUITest.swift; sourceTree = "<group>"; };
+		F401A2B3C4D5E6F701234580 /* FamilyVoiceInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyVoiceInteractorTests.swift; sourceTree = "<group>"; };
+		F401A2B3C4D5E6F701234582 /* FamilyScoringWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyScoringWorkerTests.swift; sourceTree = "<group>"; };
+		F401A2B3C4D5E6F701234584 /* ParentChildSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentChildSnapshotTests.swift; sourceTree = "<group>"; };
+		F401A2B3C4D5E6F701234586 /* FamilyVoiceSmokeUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyVoiceSmokeUITest.swift; sourceTree = "<group>"; };
 		A301B2C3D4E5F6A701234561 /* FamilyCalendarInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyCalendarInteractorTests.swift; sourceTree = "<group>"; };
 		A301B2C3D4E5F6A701234563 /* FamilyStatsWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyStatsWorkerTests.swift; sourceTree = "<group>"; };
 		A301B2C3D4E5F6A701234565 /* FamilyCalendarSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyCalendarSnapshotTests.swift; sourceTree = "<group>"; };
@@ -13884,6 +13902,16 @@
 		9DA8175A2A8B4F548CD32981 /* FamilyCalendarDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyCalendarDisplayLogic.swift; sourceTree = "<group>"; };
 		BE947358D2C94C12826013C0 /* FamilyStatsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyStatsWorker.swift; sourceTree = "<group>"; };
 		5A6F437FAB184E95AB9BC5BF /* FamilyInsightsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyInsightsWorker.swift; sourceTree = "<group>"; };
+		0B08DC15BAE74BF85B9D2CB7 /* FamilyVoiceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyVoiceModels.swift; sourceTree = "<group>"; };
+		18A6BB3523B5AAEFFA907D2F /* FamilyVoiceDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyVoiceDisplayLogic.swift; sourceTree = "<group>"; };
+		A3603253F07F35A81A2A0775 /* FamilyVoicePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyVoicePresenter.swift; sourceTree = "<group>"; };
+		0215E3509BFD373530BF1236 /* FamilyVoiceInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyVoiceInteractor.swift; sourceTree = "<group>"; };
+		5E8E3407D471D71A2CBD8AAC /* FamilyVoiceRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyVoiceRouter.swift; sourceTree = "<group>"; };
+		014BB1EC190AF3CBF88772CE /* FamilyVoiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyVoiceView.swift; sourceTree = "<group>"; };
+		08A6A5C74CC8F347D1EDA2D7 /* FamilyVoiceSplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyVoiceSplitView.swift; sourceTree = "<group>"; };
+		7DF30E5A1DC4D26EEB78A08A /* FamilyVoiceRecorderWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyVoiceRecorderWorker.swift; sourceTree = "<group>"; };
+		A09835A6005F71BF0E3E1BEB /* FamilyVoiceScoringWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyVoiceScoringWorker.swift; sourceTree = "<group>"; };
+		83FF7577F64E613F15449012 /* FamilyRecordingObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyRecordingObject.swift; sourceTree = "<group>"; };
 		/* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -16843,6 +16871,7 @@
 			children = (
 				2677F19D84BC44A4B945AF0A /* GrammarGame */,
 				D70E4797817148BEAAC038F0 /* Customization */,
+				DDD1658AD82B7F245762CD88 /* ParentChild */,
 				346EF380BBBE44E299E7745F /* FamilyCalendar */,
 				CD2F9787A9FA9C1A4A347083 /* AR */,
 				D42A631EA884BCDDFFA6630E /* ARZone */,
@@ -18268,6 +18297,7 @@
 				0C059AB746DD7B289BDB92A4 /* Accessibility */,
 				A0B1C2D3E4F567890ABCDE01 /* Customization */,
 				F301A2B3C4D5E6F701234570 /* FamilyCalendar */,
+				F401A2B3C4D5E6F701234588 /* ParentChild */,
 				1DA970F74C0E5B8DD084846B /* Games */,
 				59957EF4F2E240E0BE292022 /* GrammarGame */,
 				B86BE800DF238528DA16E6CF /* Integration */,
@@ -21191,6 +21221,7 @@
 				C6BF9C3167825E9315EB359D /* LLMDecisionLog.swift */,
 				699FC20B5B2E0CFD1AE4A1D8 /* RealmModels.swift */,
 				8143240CEFD04504A08C5BFD /* CustomizationDTO.swift */,
+				83FF7577F64E613F15449012 /* FamilyRecordingObject.swift */,
 				47F5ECCD23D76C5EF07F7659 /* ScreeningOutcomeObject.swift */,
 			);
 			path = Models;
@@ -22034,6 +22065,17 @@
 			path = Customization;
 			sourceTree = "<group>";
 		};
+		F401A2B3C4D5E6F701234588 /* ParentChild */ = {
+			isa = PBXGroup;
+			children = (
+				F401A2B3C4D5E6F701234580 /* FamilyVoiceInteractorTests.swift */,
+				F401A2B3C4D5E6F701234582 /* FamilyScoringWorkerTests.swift */,
+				F401A2B3C4D5E6F701234584 /* ParentChildSnapshotTests.swift */,
+				F401A2B3C4D5E6F701234586 /* FamilyVoiceSmokeUITest.swift */,
+			);
+			path = ParentChild;
+			sourceTree = "<group>";
+		};
 		F301A2B3C4D5E6F701234570 /* FamilyCalendar */ = {
 			isa = PBXGroup;
 			children = (
@@ -22091,6 +22133,30 @@
 				5A6F437FAB184E95AB9BC5BF /* FamilyInsightsWorker.swift */,
 			);
 			path = Workers;
+			sourceTree = "<group>";
+		};
+		A271A123842F8ED3887A75FF /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				7DF30E5A1DC4D26EEB78A08A /* FamilyVoiceRecorderWorker.swift */,
+				A09835A6005F71BF0E3E1BEB /* FamilyVoiceScoringWorker.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
+		DDD1658AD82B7F245762CD88 /* ParentChild */ = {
+			isa = PBXGroup;
+			children = (
+				014BB1EC190AF3CBF88772CE /* FamilyVoiceView.swift */,
+				08A6A5C74CC8F347D1EDA2D7 /* FamilyVoiceSplitView.swift */,
+				0215E3509BFD373530BF1236 /* FamilyVoiceInteractor.swift */,
+				A3603253F07F35A81A2A0775 /* FamilyVoicePresenter.swift */,
+				5E8E3407D471D71A2CBD8AAC /* FamilyVoiceRouter.swift */,
+				0B08DC15BAE74BF85B9D2CB7 /* FamilyVoiceModels.swift */,
+				18A6BB3523B5AAEFFA907D2F /* FamilyVoiceDisplayLogic.swift */,
+				A271A123842F8ED3887A75FF /* Workers */,
+			);
+			path = ParentChild;
 			sourceTree = "<group>";
 		};
 		/* End PBXGroup section */
@@ -28656,6 +28722,10 @@
 				F301A2B3C4D5E6F701234562 /* FamilyStatsWorkerTests.swift in Sources */,
 				F301A2B3C4D5E6F701234564 /* FamilyCalendarSnapshotTests.swift in Sources */,
 				F301A2B3C4D5E6F701234566 /* FamilyCalendarSmokeUITest.swift in Sources */,
+				F401A2B3C4D5E6F701234581 /* FamilyVoiceInteractorTests.swift in Sources */,
+				F401A2B3C4D5E6F701234583 /* FamilyScoringWorkerTests.swift in Sources */,
+				F401A2B3C4D5E6F701234585 /* ParentChildSnapshotTests.swift in Sources */,
+				F401A2B3C4D5E6F701234587 /* FamilyVoiceSmokeUITest.swift in Sources */,
 				113313232CBBD4F99B929666 /* BreathingInteractorTests.swift in Sources */,
 				53593C793A82F0D8945834E9 /* ChildHomeInteractorTests.swift in Sources */,
 				54B03D688C02BAD9442277B6 /* ColdStartSignpostTests.swift in Sources */,
@@ -28851,6 +28921,16 @@
 				7C4F2836D0B3477AB1ABC0BE /* CustomizationVoicePreviewWorker.swift in Sources */,
 				157E5837F0E240B0B09E9C05 /* CustomizationDTO.swift in Sources */,
 				53840ABFE5FB4C2B86F563EE /* FamilyCalendarView.swift in Sources */,
+				3454B9E9F094AB72DBA3567B /* FamilyVoiceModels.swift in Sources */,
+				5957629F6D6412BE522EC707 /* FamilyVoiceDisplayLogic.swift in Sources */,
+				AEA414688CADF066A6D28AF0 /* FamilyVoicePresenter.swift in Sources */,
+				DDA000569EA805290515BBC1 /* FamilyVoiceInteractor.swift in Sources */,
+				75C2E4F98329F03FF0012670 /* FamilyVoiceRouter.swift in Sources */,
+				C1415A301584D95E67502F3D /* FamilyVoiceView.swift in Sources */,
+				E99DD76A7F3474A5982B984F /* FamilyVoiceSplitView.swift in Sources */,
+				85B687914DA7EA90F2FAB041 /* FamilyVoiceRecorderWorker.swift in Sources */,
+				C0E22529F9AC9D8A444CCEB2 /* FamilyVoiceScoringWorker.swift in Sources */,
+				A6B1EB84A4107CC03BC48F7D /* FamilyRecordingObject.swift in Sources */,
 				AF2A7F89E2524FDC8B4143AD /* FamilyCalendarInteractor.swift in Sources */,
 				E304E94B8918472586BB17A0 /* FamilyCalendarPresenter.swift in Sources */,
 				728343AC1B024122A0B0C050 /* FamilyCalendarRouter.swift in Sources */,

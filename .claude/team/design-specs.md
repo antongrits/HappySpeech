@@ -8453,3 +8453,461 @@ struct FamilyCalendarViewModel {
 - **code-reviewer:** архитектура VIP для агрегированных данных (несколько детей), async LLM вызов с таймаутом
 - **qa-engineer:** snapshot тесты для `ChildAvatarCard` (selected/unselected), `DayCell` (today/active/empty), `HeatmapView` (full/empty); light + dark; iPhone SE + iPhone 17 Pro
 - **ios-debugger:** проверить memory leak в `Chart` с большим количеством `RectangleMark` (12 нед × 7 дней = 84 элемента × количество детей)
+
+---
+
+## Parent-child режим — UI спека (Plan v9 Блок F4, M13 extension #4)
+
+**Дата:** 2026-04-28
+**LOC цель кода:** ~1 400 LOC (VIP + recorder)
+**Контур:** parent (запись голоса) + kid (совместная игра)
+**Статус:** ⚠️ нужна спека → передать ios-developer F4-002
+
+---
+
+### Концепция
+
+Дети 5–8 лет лучше воспринимают речь близкого человека (родителя), чем синтетический TTS. Parent-child режим даёт **родителю записать голос-эталон** для конкретного слова/звука, а потом ребёнок играет в RepeatAfterModel с **голосом мамы или папы** вместо Ляли.
+
+Режим состоит из двух последовательных экранов:
+1. `FamilyVoiceView` — родитель записывает эталоны (RecorderMode, parent-контур).
+2. `FamilyVoiceSplitView` — совместная игра: ребёнок повторяет, родитель наблюдает (split-screen, kid + parent).
+
+---
+
+### Точка входа
+
+`ParentHome` → новая `HSCard` «Семейный голос» (SF Symbol `mic.circle.fill`, акцент `ColorTokens.Brand.primary`).
+Tap → push на `FamilyVoiceView` (NavigationStack).
+
+**Карточка точки входа:**
+```
+HSCard (style: .elevated)
+  ├── HStack
+  │     ├── Image(systemName: "mic.circle.fill")  // 28pt, Brand.primary
+  │     ├── VStack(leading)
+  │     │     ├── Text(parent_child.entry.title)   // TypographyTokens.headline
+  │     │     └── Text(parent_child.entry.subtitle) // TypographyTokens.caption, inkMuted
+  │     └── Image(systemName: "chevron.right")     // 14pt, inkMuted
+  └── frame(maxWidth: .infinity), padding: SpacingTokens.cardPadding (16pt)
+```
+
+---
+
+### FamilyVoiceView — экран записи (RecorderMode)
+
+**Контур:** parent
+**Background:** `ColorTokens.Parent.bg`
+**Navigation title:** `parent_child.recorder.title` (inline)
+
+#### Layout (сверху вниз, ScrollView)
+
+```
+NavigationStack
+  └── ScrollView(.vertical)
+        ├── [1] HeaderCard           — SpacingTokens.sectionSpacing (24pt) top
+        ├── [2] WordPickerSection    — SpacingTokens.sectionSpacing (24pt)
+        ├── [3] RecorderSection      — SpacingTokens.sectionSpacing (24pt)
+        ├── [4] RecordingsList       — SpacingTokens.sectionSpacing (24pt)
+        └── [5] DoneCTA              — SpacingTokens.xxxl (32pt) bottom safe area
+```
+
+#### [1] HeaderCard
+
+```
+HSCard (style: .soft)
+  ├── Illustration (из Assets, SF Symbol "waveform.circle" как fallback)
+  │     size: 80×80pt, tint: Brand.primary
+  ├── Text(parent_child.recorder.title)
+  │     TypographyTokens.title (24pt Semibold Rounded)
+  └── Text(parent_child.recorder.subtitle)
+        TypographyTokens.body (15pt Regular), inkMuted
+        .multilineTextAlignment(.center)
+```
+
+#### [2] WordPickerSection
+
+```
+VStack(alignment: .leading, spacing: SpacingTokens.s (8pt))
+  ├── Text("Выберите слово")  // TypographyTokens.caption, inkMuted
+  └── Picker(selection: $selectedWord)    // .segmented style
+        options: 10 target words
+        // мяч, собака, рыба, шар, корова, лиса, машина, кот, рука, лодка
+        frame(maxWidth: .infinity)
+```
+
+Picker реализован как горизонтальный ScrollView с `HSChip`-кнопками (не UISegmentedControl — слишком мелкие tap targets на 10 слов):
+
+```
+ScrollView(.horizontal, showsIndicators: false)
+  └── HStack(spacing: SpacingTokens.s (8pt))
+        ForEach(targetWords) { word in
+          HSChip(
+            label: word,
+            isSelected: selectedWord == word,
+            action: { selectedWord = word }
+          )
+          // .frame(minWidth: 56pt, minHeight: 36pt) — min tap target
+        }
+```
+
+#### [3] RecorderSection
+
+Центральный блок — переиспользует `HSAudioRecorderView` (существующий компонент, `buttonDiameter: 96pt`).
+
+```
+VStack(spacing: SpacingTokens.xl (20pt))
+  ├── HSAudioRecorderView(
+  │     isListening: $isRecording,
+  │     state: recorderState,          // idle / listening / processing
+  │     onToggle: handleRecordToggle
+  │   )
+  │   // buttonDiameter = 96pt (существующий дефолт)
+  │   // Waveform visualization под кнопкой — HSAudioWaveform
+  ├── HSAudioWaveform(levels: $waveformLevels)
+  │     frame(height: 40pt)
+  └── HStack(spacing: SpacingTokens.m (12pt))
+        ├── HSButton(parent_child.recorder.cta.play, style: .secondary)
+        │     // активна только если есть preview-запись для selectedWord
+        └── HSButton(parent_child.recorder.cta.delete, style: .ghost, role: .destructive)
+              // активна только если есть запись для selectedWord
+```
+
+**Состояния кнопки записи:**
+| recorderState | Цвет кольца | Подпись |
+|---|---|---|
+| `.idle` | `ColorTokens.Brand.mint` | `parent_child.recorder.cta.start` |
+| `.listening` | `ColorTokens.Brand.lilac` + pulse ring | `parent_child.recorder.cta.stop` |
+| `.processing` | серый + spinner | ... |
+
+Pulse ring анимация: `.animation(MotionTokens.spring, value: isRecording)`, Reduced Motion — только цвет меняется без scale.
+
+#### [4] RecordingsList
+
+```
+VStack(alignment: .leading, spacing: SpacingTokens.s (8pt))
+  ├── HStack
+  │     ├── Text(parent_child.recordings.count)  // "Записей: N"
+  │     │     TypographyTokens.caption, inkMuted
+  │     └── Spacer()
+  │         // если N == 20: Text(parent_child.recordings.max_warning)
+  │         //   TypographyTokens.caption, Semantic.warning
+  └── ForEach(recordings) { rec in
+        RecordingRowView(recording: rec)
+          // HStack: иконка play + слово + длительность + кнопка удалить
+          // frame(minHeight: 52pt) — touch target
+      }
+```
+
+**RecordingRowView:**
+```
+HStack(spacing: SpacingTokens.l (16pt))
+  ├── Button { playRecording(rec) }
+  │     label: Image(systemName: "play.circle.fill")
+  │       font: .title2, Brand.primary
+  │       .frame(minWidth: 44pt, minHeight: 44pt)
+  ├── VStack(alignment: .leading, spacing: 2pt)
+  │     ├── Text(rec.word)   // TypographyTokens.headline
+  │     └── Text(rec.duration)  // TypographyTokens.caption, inkMuted
+  ├── Spacer()
+  └── Button { deleteRecording(rec) }
+        label: Image(systemName: "trash")
+          font: .body, Semantic.error
+          .frame(minWidth: 44pt, minHeight: 44pt)
+```
+
+Если список пуст: `HSEmptyState(icon: "mic.slash", text: parent_child.recordings.empty)`.
+
+#### [5] DoneCTA
+
+```
+HSButton(parent_child.recorder.cta.done, style: .primary)
+  .frame(maxWidth: .infinity, minHeight: 56pt)
+  // активна только если recordings.count > 0
+  // action: push FamilyVoiceSplitView
+```
+
+---
+
+### FamilyVoiceSplitView — совместная игра
+
+**Контур:** kid (top) + parent (bottom)
+**Background:** `ColorTokens.Kid.bg` (top) / `ColorTokens.Parent.bg` (bottom)
+
+#### Layout iPhone (VSplit ~60/40)
+
+```
+GeometryReader { proxy in
+  VStack(spacing: 0)
+    ├── ChildAreaView()
+    │     .frame(height: proxy.size.height * 0.60)
+    │     .background(ColorTokens.Kid.bg)
+    ├── Divider()  // 1pt, ColorTokens.Kid.line
+    └── ParentAreaView()
+          .frame(height: proxy.size.height * 0.40)
+          .background(ColorTokens.Parent.bg)
+}
+```
+
+**iPhone SE адаптация:** ratio 65/35 (child больше — крупнее элементы).
+**iPad адаптация:** `HSplit 50/50` горизонтально через `HStack`.
+
+#### ChildAreaView
+
+```
+ZStack(alignment: .center)
+  ColorTokens.Kid.bg.ignoresSafeArea(edges: .top)
+
+  VStack(spacing: SpacingTokens.xxl (24pt))
+    ├── [A] IllustrationCard    — картинка target word
+    ├── [B] PlayParentButton    — послушать родителя
+    ├── [C] RecordChildButton   — ребёнок записывает
+    └── [D] ScoreFeedback       — звёзды / грустная рожица
+```
+
+**[A] IllustrationCard:**
+```
+HSCard(style: .soft)
+  ├── Image("illustration_\(currentWord)")   // из Resources/Illustrations/
+  │     .resizable().scaledToFit()
+  │     .frame(maxWidth: 160pt, maxHeight: 160pt)
+  └── Text(currentWord)
+        TypographyTokens.kidDisplay (40pt Black Rounded)
+        ColorTokens.Kid.ink
+```
+
+**[B] PlayParentButton:**
+```
+HSButton(parent_child.split.cta.play_parent, style: .secondary)
+  .frame(minWidth: 200pt, minHeight: 64pt)
+  // SF Symbol: "play.circle.fill" leading
+  // action: playFamilyRecording(currentWord)
+```
+
+**[C] RecordChildButton — главная кнопка ребёнка:**
+```
+HSAudioRecorderView(
+  isListening: $childIsRecording,
+  state: childRecorderState,
+  onToggle: handleChildRecordToggle
+)
+// buttonDiameter = 96pt (стандарт)
+// .accessibilityLabel(parent_child.a11y.recorder_button)
+```
+
+**[D] ScoreFeedback:**
+- Правильный ответ (score >= 0.75): `HSSticker` confetti + Text(parent_child.split.feedback.great) + haptic `.success` + `MotionTokens.reward` spring
+- Неверный ответ (score < 0.75): Text(parent_child.split.feedback.try) + haptic `.warning` + маскот «Ляля» `encouraging` state (если HSMascotView встроен)
+
+```
+// Feedback overlay
+if showFeedback {
+  FeedbackOverlay(isCorrect: lastScore >= 0.75)
+    .transition(.scale(scale: 0.8).combined(with: .opacity))
+    .animation(MotionTokens.reward, value: showFeedback)
+}
+```
+
+#### ParentAreaView
+
+```
+VStack(spacing: SpacingTokens.l (16pt))
+  ├── [E] TranscriptRow   — mini live transcript / RMS visualization
+  ├── [F] ScoreRow        — точность последней попытки
+  └── [G] ControlButtons  — Reset / Skip / Next
+```
+
+**[E] TranscriptRow:**
+```
+HStack(spacing: SpacingTokens.m (12pt))
+  ├── Image(systemName: "text.bubble")  // Parent.inkMuted, 16pt
+  └── Text(liveTranscript ?? "...")
+        TypographyTokens.body (15pt)
+        ColorTokens.Parent.ink
+        .lineLimit(2)
+        .animation(.easeInOut(duration: 0.15), value: liveTranscript)
+```
+Если WhisperKit недоступен — показывать `HSAudioWaveform(levels: $rmsLevels, frame(height: 28pt))`.
+
+**[F] ScoreRow:**
+```
+HStack
+  ├── Text(parent_child.split.score.format)  // "Точность: N%"
+  │     TypographyTokens.mono (13pt)
+  └── HSProgressBar(value: lastScore, total: 1.0)
+        frame(maxWidth: 120pt, height: 8pt)
+        ColorTokens.Brand.mint (success) / Brand.rose (retry)
+```
+
+**[G] ControlButtons:**
+```
+HStack(spacing: SpacingTokens.m (12pt))
+  ├── HSButton(parent_child.split.cta.reset, style: .ghost)
+  │     .frame(minWidth: 80pt, minHeight: 44pt)
+  ├── HSButton(parent_child.split.cta.skip, style: .ghost)
+  │     .frame(minWidth: 80pt, minHeight: 44pt)
+  └── HSButton(parent_child.split.cta.next_word, style: .secondary)
+        .frame(minWidth: 100pt, minHeight: 44pt)
+        // активна после того как ребёнок ответил
+```
+
+---
+
+### Токены
+
+| Элемент | Токен |
+|---|---|
+| Child area background | `ColorTokens.Kid.bg` |
+| Parent area background | `ColorTokens.Parent.bg` |
+| Parent area surface | `ColorTokens.Parent.surface` |
+| Divider | `ColorTokens.Kid.line` |
+| CTA button | `ColorTokens.Brand.primary` |
+| Success feedback | `ColorTokens.Brand.mint` |
+| Retry feedback | `ColorTokens.Brand.rose` |
+| Target word | `TypographyTokens.kidDisplay` (40pt) |
+| Parent labels | `TypographyTokens.caption` |
+| Score value | `TypographyTokens.mono` |
+| Transition | `MotionTokens.spring` |
+| Reward | `MotionTokens.reward` |
+| Card radius | `RadiusTokens.card` (12pt) |
+| Button radius | `RadiusTokens.button` (10pt) |
+
+---
+
+### Анимации
+
+| Событие | Анимация |
+|---|---|
+| Появление FamilyVoiceView | scale 0.95→1.0 + opacity 0→1, `MotionTokens.springFast` |
+| Выбор слова в Picker | `MotionTokens.standard` easeInOut(0.25) |
+| Кнопка «Записать» активируется | pulse ring expand, `MotionTokens.spring` |
+| Правильный ответ | `MotionTokens.reward` spring(0.6, bounce:0.35) + HSSticker confetti |
+| Смена слова в split | slide + fade, `MotionTokens.spring` |
+| Появление ScoreFeedback | scale 0.8→1.0, `MotionTokens.reward` |
+| Reduced Motion | все scale → opacity fade, длительность 0.2s |
+
+---
+
+### Accessibility
+
+| Элемент | Требование |
+|---|---|
+| Chip-кнопки слов | `.accessibilityLabel("Слово: \(word)")` + minHeight 36pt |
+| Кнопка записи (родитель) | `.accessibilityLabel(parent_child.a11y.recorder_button)` |
+| Child area | `.accessibilityLabel(parent_child.a11y.split_child_area)` |
+| Parent area | `.accessibilityLabel(parent_child.a11y.split_parent_area)` |
+| ScoreFeedback | `.accessibilityAnnouncement` при появлении (Dynamic announcement) |
+| Illustration | `.accessibilityLabel("Картинка: \(currentWord)")` |
+| PlayParent button | `.accessibilityHint("Нажмите чтобы услышать образец от родителя")` |
+| Минимальный touch target (kid area) | ≥ 80×80pt для RecordChildButton |
+| Минимальный touch target (parent area) | ≥ 44×44pt |
+| VoiceOver порядок | child area сверху → parent area снизу (`.accessibilitySortPriority`) |
+| Dynamic Type | `kidDisplay` масштабируется до `.accessibilityLarge` через `@ScaledMetric` |
+
+---
+
+### Локализация (~25 ключей, только ru)
+
+```
+parent_child.entry.title              → «Семейный голос»
+parent_child.entry.subtitle           → «Запишите голос для совместных игр»
+parent_child.recorder.title           → «Запиши голос для ребёнка»
+parent_child.recorder.subtitle        → «Ребёнок будет повторять за вами»
+parent_child.recorder.cta.start       → «Записать»
+parent_child.recorder.cta.stop        → «Остановить»
+parent_child.recorder.cta.play        → «Прослушать»
+parent_child.recorder.cta.delete      → «Удалить»
+parent_child.recorder.cta.done        → «Готово»
+parent_child.split.title              → «Совместная игра»
+parent_child.split.cta.play_parent    → «Послушать родителя»
+parent_child.split.cta.record_child   → «Скажи слово!»
+parent_child.split.cta.next_word      → «Следующее»
+parent_child.split.cta.reset          → «Сначала»
+parent_child.split.cta.skip           → «Пропустить»
+parent_child.split.score.format       → «Точность: %d%%»
+parent_child.split.feedback.great     → «Молодец!»
+parent_child.split.feedback.try       → «Попробуй ещё»
+parent_child.split.empty              → «Сначала запишите голос»
+parent_child.recordings.empty         → «Пока нет записей»
+parent_child.recordings.count         → «Записей: %d»
+parent_child.recordings.max_warning   → «Максимум 20 записей»
+parent_child.error.mic_permission     → «Нужен доступ к микрофону»
+parent_child.error.recording_failed   → «Не удалось записать»
+parent_child.error.playback_failed    → «Не удалось воспроизвести»
+parent_child.a11y.recorder_button     → «Кнопка записи. Удерживайте для записи слова»
+parent_child.a11y.split_child_area    → «Зона ребёнка»
+parent_child.a11y.split_parent_area   → «Зона родителя»
+```
+
+Итого 28 ключей (25 основных + 3 a11y). Добавить в `Resources/Localizable.xcstrings` раздел `parent_child.*`.
+
+---
+
+### Realm-модель (для ios-developer)
+
+```swift
+// Data/Models/FamilyRecordingObject.swift
+class FamilyRecordingObject: Object {
+    @Persisted(primaryKey: true) var id: String          // UUID
+    @Persisted var word: String                           // целевое слово
+    @Persisted var audioFilePath: String                  // относительный путь к m4a
+    @Persisted var recordedAt: Date
+    @Persisted var durationSeconds: Double
+    @Persisted var parentProfileId: String               // привязка к профилю родителя
+}
+```
+
+Максимум 20 записей на профиль родителя — проверять в Interactor перед сохранением.
+
+---
+
+### VIP структура (для разработчика)
+
+```
+HappySpeech/Features/ParentChild/
+├── FamilyVoiceView.swift              ← RecorderMode (родитель, NavigationStack)
+├── FamilyVoiceSplitView.swift         ← SplitMode (совместная игра)
+├── FamilyVoiceInteractor.swift        ← запись/воспроизведение/scoring
+├── FamilyVoicePresenter.swift         ← форматирование display (waveform, score, feedback)
+├── FamilyVoiceRouter.swift            ← push FamilyVoiceSplitView, pop to ParentHome
+├── FamilyVoiceModels.swift            ← Request / Response / ViewModel / RecordingItem
+└── Workers/
+    ├── FamilyVoiceRecorderWorker.swift  ← обёртка над AudioAnalysisService (запись)
+    └── FamilyVoiceScoringWorker.swift   ← вызов PronunciationScorer / simple RMS match
+```
+
+**FamilyVoiceDisplay (@Observable, ключевые поля):**
+```swift
+@Observable class FamilyVoiceDisplay {
+    var selectedWord: String = "мяч"
+    var recordings: [RecordingItemViewModel] = []
+    var recorderState: HSAudioRecorderState = .idle
+    var waveformLevels: [Float] = []
+    var isRecording: Bool = false
+    var canDone: Bool = false            // recordings.count > 0
+    var toastMessage: String?
+    // SplitMode:
+    var currentWord: String = ""
+    var liveTranscript: String?
+    var lastScore: Float = 0
+    var showFeedback: Bool = false
+    var feedbackIsCorrect: Bool = false
+    var childRecorderState: HSAudioRecorderState = .idle
+}
+```
+
+**Зависимости Interactor:**
+- `AudioAnalysisService` — запись и воспроизведение m4a
+- `FamilyRecordingRepository` — CRUD FamilyRecordingObject (Realm)
+- `PronunciationScorer` (ML) — scoring детской записи vs эталон родителя
+- `HapticService` — .success / .warning feedback
+
+---
+
+### Передача дальше
+
+- **ios-developer F4-002:** VIP реализация в `HappySpeech/Features/ParentChild/`; переиспользовать `HSAudioRecorderView` (buttonDiameter default 96pt); добавить `FamilyRecordingObject` в Realm-миграцию M+1; добавить точку входа `HSCard` в `ParentHomeView`
+- **ios-developer F4-003:** `AppCoordinator` route `.familyVoice` → push `FamilyVoiceView`; `.familyVoiceSplit(recordings:)` → push `FamilyVoiceSplitView`
+- **code-reviewer:** проверить thread-safety AVAudioRecorder в `FamilyVoiceRecorderWorker`; Realm write на background actor
+- **qa-engineer:** snapshot тесты `FamilyVoiceView` (empty/has-recordings), `FamilyVoiceSplitView` (iPhone SE/iPhone 17 Pro, light/dark); unit тест `FamilyVoiceScoringWorker` (mock scorer)
+- **ios-debugger:** проверить корректное освобождение AVAudioSession при dismiss `FamilyVoiceSplitView`

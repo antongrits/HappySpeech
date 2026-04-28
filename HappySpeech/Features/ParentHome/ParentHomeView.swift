@@ -129,6 +129,9 @@ private struct ParentDashboardTab: View {
                         homeTaskCard(homeTask)
                     }
 
+                    // Family Voice card
+                    familyVoiceCard
+
                     // Family Calendar card
                     familyCalendarCard
 
@@ -394,6 +397,44 @@ private struct ParentDashboardTab: View {
         case "moderate": return ColorTokens.Brand.gold
         default:          return ColorTokens.Semantic.success
         }
+    }
+
+    // MARK: - Family Voice Card
+
+    private var familyVoiceCard: some View {
+        HSCard(style: .elevated) {
+            HStack(spacing: SpacingTokens.sp3) {
+                Image(systemName: "mic.circle.fill")
+                    .font(.system(size: 28, weight: .semibold))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "parent_child.entry.title"))
+                        .font(TypographyTokens.headline())
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                    Text(String(localized: "parent_child.entry.subtitle"))
+                        .font(TypographyTokens.body())
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .ctaTextStyle()
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 14))
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp4)
+        }
+        .onTapGesture {
+            coordinator.navigate(to: .familyVoice)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            String(localized: "parent_child.entry.title") + ". " +
+            String(localized: "parent_child.entry.subtitle")
+        )
+        .accessibilityAddTraits(.isButton)
+        .environment(\.circuitContext, .parent)
     }
 
     // MARK: - Family Calendar Card
