@@ -183,6 +183,10 @@ private struct ParentDashboardTab: View {
                             .font(.system(size: 22, weight: .bold, design: .rounded))
                             .foregroundStyle(ColorTokens.Brand.primary)
                     )
+                    .overlay(
+                        Circle()
+                            .strokeBorder(ColorTokens.Brand.primary.opacity(0.35), lineWidth: 1.5)
+                    )
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(viewModel.childName)
@@ -420,4 +424,12 @@ private struct ParentDashboardTab: View {
     ParentHomeView()
         .environment(AppCoordinator())
         .environment(AppContainer.preview())
+}
+
+#Preview("Parent Home — Mock Data") {
+    let container = AppContainer.preview()
+    container.currentChildId = "preview-child-1"
+    return ParentHomeView()
+        .environment(AppCoordinator())
+        .environment(container)
 }

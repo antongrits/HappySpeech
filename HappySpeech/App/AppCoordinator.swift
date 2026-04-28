@@ -331,6 +331,7 @@ struct AppCoordinatorView: View {
             case "sessionHistory":   target = .sessionHistory(childId: "demo-child")
             case "sessionComplete":  target = .sessionComplete
             case "arZone":           target = .arZone
+            case "lessonPlayer":     target = .lessonPlayer(templateType: "bingo", childId: "demo-child")
             default:                 target = .auth
             }
             coordinator.navigate(to: target)

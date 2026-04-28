@@ -388,7 +388,7 @@ struct DemoModeView: View {
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
-            .frame(maxHeight: .infinity)
+            .frame(maxHeight: 420)
             .accessibilityIdentifier("demo.carousel")
         }
     }
@@ -456,7 +456,7 @@ struct DemoModeView: View {
             }
         }
         .padding(SpacingTokens.large)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .frame(maxWidth: .infinity, alignment: .center)
         .background(
             RoundedRectangle(cornerRadius: 28, style: .continuous)
                 .fill(ColorTokens.Kid.surface)
