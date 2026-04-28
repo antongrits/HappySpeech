@@ -148,6 +148,9 @@ struct OfflineStateView: View {
                 .font(TypographyTokens.title(24))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
 
             Text(String(localized: "offline.body"))
                 .font(TypographyTokens.body(15))
@@ -175,10 +178,10 @@ struct OfflineStateView: View {
             }
             .accessibilityElement(children: .combine)
         } else if retryCountdown > 0 {
-            Text(String(localized: "offline.auto_retry.\(retryCountdown)"))
+            Text(autoRetryText(for: retryCountdown))
                 .font(TypographyTokens.caption(13))
                 .foregroundStyle(ColorTokens.Kid.inkSoft)
-                .accessibilityLabel(String(localized: "offline.auto_retry.\(retryCountdown)"))
+                .accessibilityLabel(autoRetryText(for: retryCountdown))
         } else {
             Color.clear.frame(height: 16)
         }
@@ -259,6 +262,17 @@ struct OfflineStateView: View {
     }
 
     // MARK: - Auto-retry countdown
+
+    private func autoRetryText(for seconds: Int) -> String {
+        switch seconds {
+        case 0: return String(localized: "offline.auto_retry.0")
+        case 1: return String(localized: "offline.auto_retry.1")
+        case 2: return String(localized: "offline.auto_retry.2")
+        case 3: return String(localized: "offline.auto_retry.3")
+        case 4: return String(localized: "offline.auto_retry.4")
+        default: return String(localized: "offline.auto_retry.5")
+        }
+    }
 
     private func startAutoRetryCountdown() {
         cancelCountdown()
