@@ -256,9 +256,15 @@ struct AppCoordinatorView: View {
                 onReplay: { coordinator.pop() }
             )
 
-        case .lessonPlayer(let templateType, _):
-            Text("LessonPlayer: \(templateType)")
-                .font(TypographyTokens.title())
+        case .lessonPlayer(_, let childId):
+            SessionShellView(
+                childId: childId,
+                targetSoundId: "Р",
+                sessionType: .adaptive,
+                container: container,
+                coordinator: coordinator
+            )
+            .environment(\.circuitContext, .kid)
 
         case .worldMap(let childId, let targetSound):
             WorldMapView(childId: childId, targetSound: targetSound)
@@ -324,14 +330,14 @@ struct AppCoordinatorView: View {
             case "onboarding":       target = .onboarding
             case "settings":         target = .settings
             case "offlineState":     target = .offlineState
-            case "childHome":        target = .childHome(childId: "demo-child")
-            case "progressDashboard": target = .progressDashboard(childId: "demo-child")
-            case "rewards":          target = .rewards(childId: "demo-child")
-            case "worldMap":         target = .worldMap(childId: "demo-child", targetSound: "Р")
-            case "sessionHistory":   target = .sessionHistory(childId: "demo-child")
+            case "childHome":        target = .childHome(childId: "preview-child-1")
+            case "progressDashboard": target = .progressDashboard(childId: "preview-child-1")
+            case "rewards":          target = .rewards(childId: "preview-child-1")
+            case "worldMap":         target = .worldMap(childId: "preview-child-1", targetSound: "Р")
+            case "sessionHistory":   target = .sessionHistory(childId: "preview-child-1")
             case "sessionComplete":  target = .sessionComplete
             case "arZone":           target = .arZone
-            case "lessonPlayer":     target = .lessonPlayer(templateType: "bingo", childId: "demo-child")
+            case "lessonPlayer":     target = .lessonPlayer(templateType: "bingo", childId: "preview-child-1")
             default:                 target = .auth
             }
             coordinator.navigate(to: target)
