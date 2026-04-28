@@ -13816,6 +13816,17 @@
         }
       }
     },
+    "story.video.error": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось загрузить видео"
+          }
+        }
+      }
+    },
     "story.title": {
       "extractionState": "manual",
       "localizations": {
