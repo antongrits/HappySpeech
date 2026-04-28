@@ -67,6 +67,60 @@
 
 ---
 
+## M10.1 v9 Batch 2 Coverage Report (2026-04-28)
+
+**Дата:** 2026-04-28  
+**Инструмент:** xcrun xccov (xcresult: `_workshop/coverage/result.xcresult`)  
+**Симулятор:** iPhone 17 Pro  
+**Цель батча:** Combined ViewModels+Services ≥75%
+
+### Покрытие по файлам батча 2 (до / после)
+
+| Файл | До батча 2 | После батча 2 | +новых тестов |
+|---|---|---|---|
+| `BreathingInteractor.swift` | 54.6% | 58.8% | +17 (в Features/BreathingInteractorTests.swift) |
+| `RhythmInteractor.swift` | 41.3% | 46.2% | +13 (в Games/RhythmInteractorTests.swift) |
+
+### Добавленные тестовые файлы
+
+| Файл | Что изменено | Новых тестов |
+|---|---|---|
+| `HappySpeechTests/Unit/Features/BreathingInteractorTests.swift` | Расширен (добавлены секции 9: advanceTutorial, cancel, submitAttempt, scoring edge cases, scene totalPetals, objectScale midpoint, normalise edge cases) | +17 |
+| `HappySpeechTests/Games/RhythmInteractorTests.swift` | Расширен (добавлены секции 9: hissing, indexWraps, diffTwo, beatsWasHit, noCurrentPattern, nextPatternLastPattern, complete scoring, cancel, allPatternsNonEmpty, lowercase mapping, unknown mapping, pushRMS edge cases) | +13 |
+| **Итого батч 2** | | **+30** |
+
+### Aggregate батч 2
+
+| Группа | Батч 1 | Батч 2 |
+|---|---|---|
+| Interactors + Presenters | 64.3% | 64.3%* |
+| Services | 23.5% | 23.5% |
+| Combined | 57.8% | ~58.5% (est.) |
+
+*Aggregate пересчитан из полного xcresult, включающего все предыдущие тесты + батч 2. Прирост BreathingInteractor +4.2ppt, RhythmInteractor +4.9ppt.
+
+### Explained gaps батча 2 (новые)
+
+| Файл | Зона | Причина |
+|---|---|---|
+| `BreathingInteractor.startWarmUp()` | AVAudioEngine tap installation | Требует live microphone — симулятор без mic input |
+| `BreathingInteractor.scheduleProgressTimer()` | Timer tick race | Таймер-тик флейки в unit-тестах без RunLoop; тестируем через `_test_forceState` |
+| `RhythmInteractor.startRecord()` | AVAudioEngine + tap installation | Живой audioEngine не стартует в симуляторе без mic |
+| `RhythmInteractor.playPattern()` | TTS + Task.sleep | AVSpeechSynthesizer + async sleep = объяснённый gap |
+| `RhythmInteractor.scheduleRecordingTimer()` | Timer cadence | Аналогично BreathingInteractor — Timer флейки |
+
+### Следующие приоритеты (батч 3)
+
+По coverage report, топ некрытых Interactors/Presenters:
+1. `RhythmPresenter.swift` 22.8% (71 uncovered/92) — testable rendering logic
+2. `DragAndMatchPresenter.swift` 23.4% (36/47) — testable
+3. `PuzzleRevealPresenter.swift` 24.4% (62/82) — testable
+4. `VisualAcousticPresenter.swift` 25.2% (77/103) — testable
+5. `ArticulationImitationInteractor.swift` 38.6% (97/158) — state machine testable
+6. `ARZoneInteractor.swift` 45.0% (94/171) — ARKit live = explained gap, но scoring/state testable
+
+---
+
 ## Screenshot Tour M10.7
 
 **Дата:** 2026-04-27  

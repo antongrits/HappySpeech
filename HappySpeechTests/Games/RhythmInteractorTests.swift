@@ -133,4 +133,140 @@ final class RhythmInteractorTests: XCTestCase {
         XCTAssertTrue(spy.completeCalled)
         XCTAssertEqual(spy.lastComplete?.finalScore, 0.0)
     }
+
+    // MARK: - 9. Batch 2 additional tests
+
+    func test_loadPattern_hissing_callsPresenter() async {
+        let (sut, spy) = makeSUT(group: "hissing")
+        await sut.loadPattern(.init(soundGroup: "hissing", index: 1))
+        XCTAssertTrue(spy.loadPatternCalled)
+        XCTAssertEqual(spy.lastLoadPattern?.pattern.soundGroup, "hissing")
+    }
+
+    func test_loadPattern_indexWraps_doesNotCrash() async {
+        let (sut, spy) = makeSUT(group: "whistling")
+        // whistling has 5 patterns; index=7 → 7%5=2
+        await sut.loadPattern(.init(soundGroup: "whistling", index: 7))
+        XCTAssertTrue(spy.loadPatternCalled)
+    }
+
+    func test_evaluate_diffTwo_score0_6() async {
+        let (sut, spy) = makeSUT()
+        let pattern = RhythmInteractor.patternCatalog["sonants"]!.first(where: { $0.beats.count >= 3 })!
+        sut._test_setCurrentPattern(pattern)
+        let expected = pattern.beats.count
+        await sut.evaluateRhythm(.init(detectedBeats: expected - 2, expectedBeats: expected))
+        XCTAssertEqual(spy.lastEvaluate?.score, 0.6)
+    }
+
+    func test_evaluate_beatsWasHit_filledCorrectly() async {
+        let (sut, spy) = makeSUT()
+        let threeBeats = RhythmPattern(
+            id: UUID(),
+            beats: [.strong, .weak, .weak],
+            syllableWord: "РА-ке-та",
+            targetWord: "ракета",
+            soundGroup: "sonants",
+            emoji: "🚀",
+            displayPattern: "ТА • та • та"
+        )
+        sut._test_setCurrentPattern(threeBeats)
+        await sut.evaluateRhythm(.init(detectedBeats: 2, expectedBeats: 3))
+        let hits = spy.lastEvaluate?.beatsWasHit ?? []
+        XCTAssertEqual(hits.count, 3)
+        XCTAssertTrue(hits[0])
+        XCTAssertTrue(hits[1])
+        XCTAssertFalse(hits[2])
+    }
+
+    func test_evaluate_noCurrentPattern_doesNotCallPresenter() async {
+        // Create sut without setting currentPattern
+        let sut = RhythmInteractor(soundGroup: "sonants", totalPatternsPerSession: 3)
+        let spy = SpyRhythmPresenter()
+        sut.presenter = spy
+        // Do NOT call loadPattern or _test_setCurrentPattern
+
+        await sut.evaluateRhythm(.init(detectedBeats: 2, expectedBeats: 2))
+
+        XCTAssertFalse(spy.evalCalled, "evaluateRhythm без паттерна не должен вызывать presenter")
+    }
+
+    func test_nextPattern_lastPattern_triggersComplete() async {
+        // totalPatternsPerSession=1 → первый nextPattern (0→1 ≥ 1) → complete
+        let sut = RhythmInteractor(soundGroup: "sonants", totalPatternsPerSession: 1)
+        let spy = SpyRhythmPresenter()
+        sut.presenter = spy
+
+        await sut.nextPattern(.init())
+
+        XCTAssertTrue(spy.completeCalled)
+    }
+
+    func test_complete_oneCorrectOf2_score0_5() async {
+        let (sut, spy) = makeSUT(group: "sonants")
+        // Делаем одну правильную оценку
+        let pattern = RhythmInteractor.patternCatalog["sonants"]![0]
+        sut._test_setCurrentPattern(pattern)
+        let expected = pattern.beats.count
+        await sut.evaluateRhythm(.init(detectedBeats: expected, expectedBeats: expected))
+        // Завершаем с totalPatterns=2
+        let sut2 = RhythmInteractor(soundGroup: "sonants", totalPatternsPerSession: 2)
+        sut2.presenter = spy
+        sut2._test_setCurrentPattern(pattern)
+        await sut2.evaluateRhythm(.init(detectedBeats: expected, expectedBeats: expected))
+        await sut2.complete(.init())
+        XCTAssertEqual(spy.lastComplete?.correctPatterns, 1)
+        XCTAssertEqual(spy.lastComplete?.finalScore ?? -1, 0.5, accuracy: 0.001)
+    }
+
+    func test_cancel_doesNotCallComplete() async {
+        let (sut, spy) = makeSUT()
+
+        await sut.cancel()
+
+        XCTAssertFalse(spy.completeCalled)
+    }
+
+    func test_patternCatalog_allPatternsNonEmptyWord() {
+        for (_, patterns) in RhythmInteractor.patternCatalog {
+            for pattern in patterns {
+                XCTAssertFalse(pattern.targetWord.isEmpty)
+                XCTAssertFalse(pattern.syllableWord.isEmpty)
+                XCTAssertFalse(pattern.beats.isEmpty)
+            }
+        }
+    }
+
+    func test_soundGroupMapping_lowercaseNormalized() {
+        XCTAssertEqual(RhythmInteractor.soundGroup(for: "с"), "whistling")
+        XCTAssertEqual(RhythmInteractor.soundGroup(for: "ш"), "hissing")
+        XCTAssertEqual(RhythmInteractor.soundGroup(for: "р"), "sonants")
+        XCTAssertEqual(RhythmInteractor.soundGroup(for: "к"), "velar")
+    }
+
+    func test_soundGroupMapping_unknownFallsToSonants() {
+        XCTAssertEqual(RhythmInteractor.soundGroup(for: "Б"), "sonants")
+        XCTAssertEqual(RhythmInteractor.soundGroup(for: ""), "sonants")
+    }
+
+    func test_pushRMS_noRecording_detectsNoBeat() {
+        let (sut, _) = makeSUT()
+        sut._test_forceRecording(false)
+
+        // Высокий → тихий RMS, но запись не идёт → beats остаются 0
+        sut._test_pushRMS(0.9)
+        sut._test_pushRMS(0.0)
+
+        XCTAssertEqual(sut._test_currentDetectedBeats(), 0)
+    }
+
+    func test_pushRMS_zeroRMS_noBeatsWithoutBurst() {
+        let (sut, _) = makeSUT()
+        sut._test_forceRecording(true)
+
+        // rms=0 < beatOffThreshold — beatActiveSince=nil → нет beat
+        sut._test_pushRMS(0.0)
+
+        XCTAssertEqual(sut._test_currentDetectedBeats(), 0)
+    }
 }
