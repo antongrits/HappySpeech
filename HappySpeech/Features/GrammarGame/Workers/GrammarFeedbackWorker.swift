@@ -1,0 +1,158 @@
+import AVFoundation
+import Foundation
+import OSLog
+import UIKit
+
+// MARK: - GrammarFeedbackWorker
+
+/// Воспроизводит звуковую и тактильную обратную связь при ответах.
+/// Использует профессиональные m4a-фразы Ляли (Resources/Audio/Lyalya/),
+/// с откатом на AVSpeechSynthesizer TTS если файл не найден.
+@MainActor
+final class GrammarFeedbackWorker: NSObject {
+
+    private let logger = Logger(subsystem: "ru.happyspeech", category: "GrammarFeedback")
+    private let synthesizer = AVSpeechSynthesizer()
+    private var audioPlayer: AVAudioPlayer?
+
+    // MARK: - Lyalya asset names
+
+    private enum LyalyaAsset {
+        static let intro = "lyalya_grammar_intro"
+        static let correctVariants = [
+            "lyalya_grammar_correct_1",
+            "lyalya_grammar_correct_2",
+            "lyalya_grammar_correct_3",
+        ]
+        static let tryAgain = "lyalya_grammar_try_again"
+        static let hint = "lyalya_grammar_hint"
+        static let completeEasy = "lyalya_grammar_complete_easy"
+        static let completeMedium = "lyalya_grammar_complete_medium"
+        static let completeHard = "lyalya_grammar_complete_hard"
+
+        static func modeIntro(for mode: String) -> String {
+            "lyalya_grammar_\(mode)_intro"
+        }
+    }
+
+    // MARK: - Haptic
+
+    func playSelectionHaptic() {
+        let generator = UISelectionFeedbackGenerator()
+        generator.prepare()
+        generator.selectionChanged()
+    }
+
+    func playSuccessHaptic() {
+        let generator = UINotificationFeedbackGenerator()
+        generator.prepare()
+        generator.notificationOccurred(.success)
+    }
+
+    func playErrorHaptic() {
+        let generator = UINotificationFeedbackGenerator()
+        generator.prepare()
+        generator.notificationOccurred(.warning)
+    }
+
+    // MARK: - Lyalya voice-over (m4a assets + TTS fallback)
+
+    /// Озвучивает вводную фразу для игрового режима.
+    /// mode — суффикс файла: "one_many", "dative", "genitive", "instrumental".
+    func speakQuestion(_ text: String, mode: String? = nil) {
+        if let mode {
+            let assetName = LyalyaAsset.modeIntro(for: mode)
+            if playLyalyaAsset(named: assetName) { return }
+        }
+        if playLyalyaAsset(named: LyalyaAsset.intro) { return }
+        speakTTS(text, rate: 0.45, pitch: 1.10)
+    }
+
+    /// Озвучивает подтверждение правильного ответа (случайная из 3 вариаций).
+    func speakCorrectFeedback(_ text: String) {
+        let variant = LyalyaAsset.correctVariants.randomElement() ?? LyalyaAsset.correctVariants[0]
+        if playLyalyaAsset(named: variant) { return }
+        speakTTS(text, rate: 0.50, pitch: 1.15)
+    }
+
+    /// Озвучивает поощрение при неверном ответе.
+    func speakIncorrectFeedback(_ text: String) {
+        if playLyalyaAsset(named: LyalyaAsset.tryAgain) { return }
+        speakTTS(text, rate: 0.48, pitch: 1.05)
+    }
+
+    /// Озвучивает подсказку.
+    func speakHint(_ text: String) {
+        if playLyalyaAsset(named: LyalyaAsset.hint) { return }
+        speakTTS(text, rate: 0.42, pitch: 1.05)
+    }
+
+    /// Озвучивает завершение уровня.
+    func speakLevelComplete(difficulty: String) {
+        let assetName: String
+        switch difficulty {
+        case "easy":   assetName = LyalyaAsset.completeEasy
+        case "hard":   assetName = LyalyaAsset.completeHard
+        default:       assetName = LyalyaAsset.completeMedium
+        }
+        if playLyalyaAsset(named: assetName) { return }
+        speakTTS(String(localized: "grammar.game.feedback.level_complete", bundle: .main), rate: 0.50, pitch: 1.15)
+    }
+
+    func stopSpeaking() {
+        audioPlayer?.stop()
+        audioPlayer = nil
+        if synthesizer.isSpeaking {
+            synthesizer.stopSpeaking(at: .immediate)
+        }
+    }
+
+    // MARK: - System sound fallback
+
+    /// Воспроизводит системный звук успеха.
+    func playSuccessSound() {
+        AudioServicesPlaySystemSound(1057)    // "Tink"
+    }
+
+    /// Воспроизводит мягкий звук ошибки.
+    func playErrorSound() {
+        AudioServicesPlaySystemSound(1073)    // мягкий отказ
+    }
+
+    // MARK: - Private
+
+    /// Воспроизводит m4a-файл из Resources/Audio/Lyalya/.
+    /// Возвращает true если файл найден и воспроизведение запущено.
+    @discardableResult
+    private func playLyalyaAsset(named name: String) -> Bool {
+        guard let url = Bundle.main.url(
+            forResource: name,
+            withExtension: "m4a",
+            subdirectory: "Lyalya"
+        ) else {
+            logger.debug("Lyalya asset not found: \(name, privacy: .public) — falling back to TTS")
+            return false
+        }
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer?.prepareToPlay()
+            audioPlayer?.play()
+            logger.debug("Lyalya playing: \(name, privacy: .public)")
+            return true
+        } catch {
+            logger.error("AVAudioPlayer failed for \(name, privacy: .public): \(error)")
+            return false
+        }
+    }
+
+    private func speakTTS(_ text: String, rate: Float, pitch: Float) {
+        stopSpeaking()
+        let utterance = AVSpeechUtterance(string: text)
+        utterance.voice = AVSpeechSynthesisVoice(language: "ru-RU")
+        utterance.rate = rate
+        utterance.pitchMultiplier = pitch
+        utterance.volume = 0.9
+        synthesizer.speak(utterance)
+        logger.debug("TTS fallback: '\(text, privacy: .private)' rate=\(rate)")
+    }
+}
