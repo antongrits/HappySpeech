@@ -32,6 +32,8 @@ enum AppRoute: Hashable {
     case familyCalendar
     case familyVoice
     case familyVoiceSplit
+    case stutteringHome
+    case fluencyDiaryParent
 }
 
 enum PermissionType: Hashable {
@@ -323,6 +325,18 @@ struct AppCoordinatorView: View {
                 )
             }
             .environment(\.circuitContext, .parent)
+
+        case .stutteringHome:
+            NavigationStack {
+                StutteringView()
+            }
+            .environment(\.circuitContext, .kid)
+
+        case .fluencyDiaryParent:
+            NavigationStack {
+                FluencyDiaryParentView()
+            }
+            .environment(\.circuitContext, .parent)
         }
     }
 
@@ -364,6 +378,8 @@ struct AppCoordinatorView: View {
             case "arZone":           target = .arZone
             case "lessonPlayer":     target = .lessonPlayer(templateType: "bingo", childId: "preview-child-1")
             case "familyVoice":      target = .familyVoice
+            case "stuttering":       target = .stutteringHome
+            case "fluencyDiary":     target = .fluencyDiaryParent
             default:                 target = .auth
             }
             coordinator.navigate(to: target)

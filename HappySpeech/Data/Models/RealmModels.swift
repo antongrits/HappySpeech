@@ -136,9 +136,22 @@ final class RewardRecord: Object, @unchecked Sendable {
     @Persisted var sessionId: String?
 }
 
+// MARK: - FluencySessionObject (v6)
+// Stores Fluency Diary session data for StutteringModule.
+// Metrics shown only in Parent Dashboard, not in kid UI.
+
+final class FluencySessionObject: Object, @unchecked Sendable {
+    @Persisted(primaryKey: true) var id: String = UUID().uuidString
+    @Persisted var date: Date = Date()
+    @Persisted var dysfluencyCount: Int = 0
+    @Persisted var totalSyllables: Int = 0
+    @Persisted var rate: Float = 0              // dysfluencyCount * 100 / totalSyllables
+    @Persisted var transcript: String = ""
+}
+
 // MARK: - SchemaVersion
 
 /// Current Realm schema version. Increment with each migration.
 enum RealmSchemaVersion {
-    static let current: UInt64 = 5   // v5: added FamilyRecordingObject
+    static let current: UInt64 = 6   // v6: added FluencySessionObject (StutteringModule)
 }
