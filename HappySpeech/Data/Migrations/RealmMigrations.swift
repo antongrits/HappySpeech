@@ -26,6 +26,10 @@ enum RealmMigrations {
             // v5: added FamilyRecordingObject (word/audioFilePath/recordedAt/durationSeconds/parentProfileId).
             // Realm создаёт схему автоматически, дефолты заданы в модели.
         }
+        if oldSchemaVersion < 6 {
+            // v6: added FluencySessionObject (StutteringModule Fluency Diary).
+            // Realm создаёт схему автоматически, дефолты заданы в модели.
+        }
     }
 }
 
@@ -43,5 +47,21 @@ public extension RealmActor {
     func write(_ block: @escaping (Realm) -> Void) async {
         guard let realmInstance = try? await Realm(actor: self) else { return }
         try? realmInstance.write { block(realmInstance) }
+    }
+
+    /// Fetches FluencySessionObject as value-type DTOs — Sendable-safe.
+    internal func fetchFluencySessions() async -> [FluencySessionData] {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return [] }
+        return Array(realmInstance.objects(FluencySessionObject.self)).map { obj in
+            FluencySessionData(
+                id: obj.id,
+                date: obj.date,
+                dysfluencyCount: obj.dysfluencyCount,
+                totalSyllables: obj.totalSyllables,
+                rate: obj.rate,
+                transcript: obj.transcript
+            )
+        }
     }
 }
