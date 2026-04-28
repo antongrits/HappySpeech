@@ -15,19 +15,21 @@
 
 ## Screenshots
 
-| Splash | Онбординг | Детский экран |
-|--------|-----------|---------------|
-| ![Splash](docs/screenshots/01_splash.png) | ![Onboarding](docs/screenshots/02_onboarding_welcome.png) | ![ChildHome](docs/screenshots/11_child_home.png) |
+Hero set — iPhone SE (3rd generation) + iPhone 17 Pro симуляторы:
 
-| Dark mode | Карта миров | Награды |
-|-----------|-------------|---------|
-| ![ChildHome Dark](docs/screenshots/10_childHome_dark.png) | ![WorldMap](docs/screenshots/13_worldMap.png) | ![Rewards](docs/screenshots/12_rewards.png) |
+| ChildHome | LessonPlayer | AR Mirror | WorldMap |
+|---|---|---|---|
+| ![ChildHome](docs/screenshots/marketing/01_childhome_se.png) | ![LessonPlayer](docs/screenshots/marketing/02_lesson_player_se.png) | ![AR Mirror](docs/screenshots/marketing/03_ar_mirror_se.png) | ![WorldMap](docs/screenshots/marketing/04_worldmap_se.png) |
 
-| Сессия завершена | Demo / Тур | Настройки |
-|-----------------|------------|----------|
-| ![Session Complete](docs/screenshots/15_sessionComplete.png) | ![Demo](docs/screenshots/04_demoMode.png) | ![Settings](docs/screenshots/08_settings.png) |
+| SoundMap | Progress | Rewards | Specialist |
+|---|---|---|---|
+| ![SoundMap](docs/screenshots/marketing/05_soundmap_se.png) | ![Progress](docs/screenshots/marketing/06_progress_dashboard_se.png) | ![Rewards](docs/screenshots/marketing/07_reward_se.png) | ![Specialist](docs/screenshots/marketing/08_specialist_se.png) |
 
-> Все скриншоты сняты на симуляторе iPhone 17 Pro. Маркетинговый отбор — [docs/screenshots/marketing/index.md](docs/screenshots/marketing/index.md).
+| Demo | Story Quest |
+|---|---|
+| ![Demo](docs/screenshots/marketing/09_demo_se.png) | ![Story Quest](docs/screenshots/marketing/10_story_quest_se.png) |
+
+> Снято на iPhone SE (3rd generation) + iPhone 17 Pro симуляторах, 2026-04-28. Полный набор и сопоставление устройств — [docs/screenshots/marketing/index.md](docs/screenshots/marketing/index.md).
 
 ---
 
