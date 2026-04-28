@@ -3555,6 +3555,10 @@
 		DD4A5F6B7C8D9E0123EFAB01 /* CustomizationInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1F2C3D4E5B6A7890ABCDEF /* CustomizationInteractorTests.swift */; };
 		EE5B6A7C8D9E0F1234FABC12 /* CustomizationSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2E3D4F5A6B7C8901BCDEFA /* CustomizationSnapshotTests.swift */; };
 		FF6C7B8D9E0F102345ABCD23 /* CustomizationSmokeUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3F4E5A6B7C8D9012CDEFAB /* CustomizationSmokeUITest.swift */; };
+		F301A2B3C4D5E6F701234560 /* FamilyCalendarInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A301B2C3D4E5F6A701234561 /* FamilyCalendarInteractorTests.swift */; };
+		F301A2B3C4D5E6F701234562 /* FamilyStatsWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A301B2C3D4E5F6A701234563 /* FamilyStatsWorkerTests.swift */; };
+		F301A2B3C4D5E6F701234564 /* FamilyCalendarSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A301B2C3D4E5F6A701234565 /* FamilyCalendarSnapshotTests.swift */; };
+		F301A2B3C4D5E6F701234566 /* FamilyCalendarSmokeUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A301B2C3D4E5F6A701234567 /* FamilyCalendarSmokeUITest.swift */; };
 		8393CB472CF2AEE7765123DA /* y-sen-36.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A29794B1A64BD8EC991EC293 /* y-sen-36.m4a */; };
 		839943CFD4946AA26431BC98 /* br-182.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 54FFB1E07804D2BA61499449 /* br-182.m4a */; };
 		839ECA0C730FA303A59F8314 /* narr-si-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9B62B37EECCA016C8196CDA5 /* narr-si-6.m4a */; };
@@ -6921,6 +6925,14 @@
 		96D724083B3D494E87F0FC54 /* CustomizationStorageWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F05B374EED4B538C4E3C44 /* CustomizationStorageWorker.swift */; };
 		7C4F2836D0B3477AB1ABC0BE /* CustomizationVoicePreviewWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02BFDD988F04989915FD5D2 /* CustomizationVoicePreviewWorker.swift */; };
 		157E5837F0E240B0B09E9C05 /* CustomizationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8143240CEFD04504A08C5BFD /* CustomizationDTO.swift */; };
+		53840ABFE5FB4C2B86F563EE /* FamilyCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4EC898B5245458CA7FB9961 /* FamilyCalendarView.swift */; };
+		AF2A7F89E2524FDC8B4143AD /* FamilyCalendarInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3C9599B847E468C8C6B5CC9 /* FamilyCalendarInteractor.swift */; };
+		E304E94B8918472586BB17A0 /* FamilyCalendarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78318154BACC47C6BE9BB533 /* FamilyCalendarPresenter.swift */; };
+		728343AC1B024122A0B0C050 /* FamilyCalendarRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA00A62FCDB4BD5AE4D419A /* FamilyCalendarRouter.swift */; };
+		57F2A3444FCF483BA8B1AA3D /* FamilyCalendarModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69984EB68EA42E2947C3EE8 /* FamilyCalendarModels.swift */; };
+		BF5A5D87A27C44D990CE3465 /* FamilyCalendarDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA8175A2A8B4F548CD32981 /* FamilyCalendarDisplayLogic.swift */; };
+		0F5101B9DA1945768D1BE22C /* FamilyStatsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE947358D2C94C12826013C0 /* FamilyStatsWorker.swift */; };
+		377A2F5C6557434EBE3DC0C6 /* FamilyInsightsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6F437FAB184E95AB9BC5BF /* FamilyInsightsWorker.swift */; };
 		/* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -9785,6 +9797,10 @@
 		AA1F2C3D4E5B6A7890ABCDEF /* CustomizationInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizationInteractorTests.swift; sourceTree = "<group>"; };
 		BB2E3D4F5A6B7C8901BCDEFA /* CustomizationSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizationSnapshotTests.swift; sourceTree = "<group>"; };
 		CC3F4E5A6B7C8D9012CDEFAB /* CustomizationSmokeUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizationSmokeUITest.swift; sourceTree = "<group>"; };
+		A301B2C3D4E5F6A701234561 /* FamilyCalendarInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyCalendarInteractorTests.swift; sourceTree = "<group>"; };
+		A301B2C3D4E5F6A701234563 /* FamilyStatsWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyStatsWorkerTests.swift; sourceTree = "<group>"; };
+		A301B2C3D4E5F6A701234565 /* FamilyCalendarSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyCalendarSnapshotTests.swift; sourceTree = "<group>"; };
+		A301B2C3D4E5F6A701234567 /* FamilyCalendarSmokeUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyCalendarSmokeUITest.swift; sourceTree = "<group>"; };
 		69C012FC9D30011B83311429 /* s-wm-47.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "s-wm-47.m4a"; sourceTree = "<group>"; };
 		69EF847BB1F5E993DDFB13EA /* z-sen-10.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "z-sen-10.m4a"; sourceTree = "<group>"; };
 		69F30E1458EF3AD6E7A319BF /* br-283.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "br-283.m4a"; sourceTree = "<group>"; };
@@ -13860,6 +13876,14 @@
 		C3F05B374EED4B538C4E3C44 /* CustomizationStorageWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomizationStorageWorker.swift"; sourceTree = "<group>"; };
 		D02BFDD988F04989915FD5D2 /* CustomizationVoicePreviewWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomizationVoicePreviewWorker.swift"; sourceTree = "<group>"; };
 		8143240CEFD04504A08C5BFD /* CustomizationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomizationDTO.swift"; sourceTree = "<group>"; };
+		E4EC898B5245458CA7FB9961 /* FamilyCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyCalendarView.swift; sourceTree = "<group>"; };
+		B3C9599B847E468C8C6B5CC9 /* FamilyCalendarInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyCalendarInteractor.swift; sourceTree = "<group>"; };
+		78318154BACC47C6BE9BB533 /* FamilyCalendarPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyCalendarPresenter.swift; sourceTree = "<group>"; };
+		5BA00A62FCDB4BD5AE4D419A /* FamilyCalendarRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyCalendarRouter.swift; sourceTree = "<group>"; };
+		E69984EB68EA42E2947C3EE8 /* FamilyCalendarModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyCalendarModels.swift; sourceTree = "<group>"; };
+		9DA8175A2A8B4F548CD32981 /* FamilyCalendarDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyCalendarDisplayLogic.swift; sourceTree = "<group>"; };
+		BE947358D2C94C12826013C0 /* FamilyStatsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyStatsWorker.swift; sourceTree = "<group>"; };
+		5A6F437FAB184E95AB9BC5BF /* FamilyInsightsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyInsightsWorker.swift; sourceTree = "<group>"; };
 		/* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -16819,6 +16843,7 @@
 			children = (
 				2677F19D84BC44A4B945AF0A /* GrammarGame */,
 				D70E4797817148BEAAC038F0 /* Customization */,
+				346EF380BBBE44E299E7745F /* FamilyCalendar */,
 				CD2F9787A9FA9C1A4A347083 /* AR */,
 				D42A631EA884BCDDFFA6630E /* ARZone */,
 				329AF7DECB48DC3FCED95A38 /* Auth */,
@@ -18242,6 +18267,7 @@
 				0A4F0435CD3E2E3211592457 /* __Snapshots__ */,
 				0C059AB746DD7B289BDB92A4 /* Accessibility */,
 				A0B1C2D3E4F567890ABCDE01 /* Customization */,
+				F301A2B3C4D5E6F701234570 /* FamilyCalendar */,
 				1DA970F74C0E5B8DD084846B /* Games */,
 				59957EF4F2E240E0BE292022 /* GrammarGame */,
 				B86BE800DF238528DA16E6CF /* Integration */,
@@ -22008,6 +22034,17 @@
 			path = Customization;
 			sourceTree = "<group>";
 		};
+		F301A2B3C4D5E6F701234570 /* FamilyCalendar */ = {
+			isa = PBXGroup;
+			children = (
+				A301B2C3D4E5F6A701234561 /* FamilyCalendarInteractorTests.swift */,
+				A301B2C3D4E5F6A701234563 /* FamilyStatsWorkerTests.swift */,
+				A301B2C3D4E5F6A701234565 /* FamilyCalendarSnapshotTests.swift */,
+				A301B2C3D4E5F6A701234567 /* FamilyCalendarSmokeUITest.swift */,
+			);
+			path = FamilyCalendar;
+			sourceTree = "<group>";
+		};
 		
 		9FDD8B5645104891A17EFD7D /* Workers */ = {
 			isa = PBXGroup;
@@ -22031,6 +22068,29 @@
 				9FDD8B5645104891A17EFD7D /* Workers */,
 			);
 			path = Customization;
+			sourceTree = "<group>";
+		};
+		346EF380BBBE44E299E7745F /* FamilyCalendar */ = {
+			isa = PBXGroup;
+			children = (
+				E4EC898B5245458CA7FB9961 /* FamilyCalendarView.swift */,
+				B3C9599B847E468C8C6B5CC9 /* FamilyCalendarInteractor.swift */,
+				78318154BACC47C6BE9BB533 /* FamilyCalendarPresenter.swift */,
+				5BA00A62FCDB4BD5AE4D419A /* FamilyCalendarRouter.swift */,
+				E69984EB68EA42E2947C3EE8 /* FamilyCalendarModels.swift */,
+				9DA8175A2A8B4F548CD32981 /* FamilyCalendarDisplayLogic.swift */,
+				C48509FC1E854E6C98A78CB5 /* Workers */,
+			);
+			path = FamilyCalendar;
+			sourceTree = "<group>";
+		};
+		C48509FC1E854E6C98A78CB5 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				BE947358D2C94C12826013C0 /* FamilyStatsWorker.swift */,
+				5A6F437FAB184E95AB9BC5BF /* FamilyInsightsWorker.swift */,
+			);
+			path = Workers;
 			sourceTree = "<group>";
 		};
 		/* End PBXGroup section */
@@ -28592,6 +28652,10 @@
 				DD4A5F6B7C8D9E0123EFAB01 /* CustomizationInteractorTests.swift in Sources */,
 				EE5B6A7C8D9E0F1234FABC12 /* CustomizationSnapshotTests.swift in Sources */,
 				FF6C7B8D9E0F102345ABCD23 /* CustomizationSmokeUITest.swift in Sources */,
+				F301A2B3C4D5E6F701234560 /* FamilyCalendarInteractorTests.swift in Sources */,
+				F301A2B3C4D5E6F701234562 /* FamilyStatsWorkerTests.swift in Sources */,
+				F301A2B3C4D5E6F701234564 /* FamilyCalendarSnapshotTests.swift in Sources */,
+				F301A2B3C4D5E6F701234566 /* FamilyCalendarSmokeUITest.swift in Sources */,
 				113313232CBBD4F99B929666 /* BreathingInteractorTests.swift in Sources */,
 				53593C793A82F0D8945834E9 /* ChildHomeInteractorTests.swift in Sources */,
 				54B03D688C02BAD9442277B6 /* ColdStartSignpostTests.swift in Sources */,
@@ -28786,6 +28850,14 @@
 				96D724083B3D494E87F0FC54 /* CustomizationStorageWorker.swift in Sources */,
 				7C4F2836D0B3477AB1ABC0BE /* CustomizationVoicePreviewWorker.swift in Sources */,
 				157E5837F0E240B0B09E9C05 /* CustomizationDTO.swift in Sources */,
+				53840ABFE5FB4C2B86F563EE /* FamilyCalendarView.swift in Sources */,
+				AF2A7F89E2524FDC8B4143AD /* FamilyCalendarInteractor.swift in Sources */,
+				E304E94B8918472586BB17A0 /* FamilyCalendarPresenter.swift in Sources */,
+				728343AC1B024122A0B0C050 /* FamilyCalendarRouter.swift in Sources */,
+				57F2A3444FCF483BA8B1AA3D /* FamilyCalendarModels.swift in Sources */,
+				BF5A5D87A27C44D990CE3465 /* FamilyCalendarDisplayLogic.swift in Sources */,
+				0F5101B9DA1945768D1BE22C /* FamilyStatsWorker.swift in Sources */,
+				377A2F5C6557434EBE3DC0C6 /* FamilyInsightsWorker.swift in Sources */,
 				038CACD0B92C4BE38AD15DF8 /* GrammarGameInteractor.swift in Sources */,
 				7E67BEF229614B8FAE6EAF53 /* GrammarGamePresenter.swift in Sources */,
 				2A029A42189B4F4E8C345100 /* GrammarGameRouter.swift in Sources */,
