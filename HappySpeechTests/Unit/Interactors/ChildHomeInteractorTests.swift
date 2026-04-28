@@ -15,10 +15,13 @@ final class ChildHomeInteractorTests: XCTestCase {
     @MainActor
     private final class SpyPresenter: ChildHomePresentationLogic {
         var fetchResponses: [ChildHomeModels.Fetch.Response] = []
+        var mascotTapCalled = false
         func presentFetch(_ response: ChildHomeModels.Fetch.Response) {
             fetchResponses.append(response)
         }
-        func presentMascotTap(_ response: ChildHomeModels.MascotTap.Response) {}
+        func presentMascotTap(_ response: ChildHomeModels.MascotTap.Response) {
+            mascotTapCalled = true
+        }
     }
 
     private func makeSUT() -> (ChildHomeInteractor, SpyPresenter) {
@@ -55,4 +58,98 @@ final class ChildHomeInteractorTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(progress, 0.0)
         XCTAssertLessThanOrEqual(progress, 1.0)
     }
+
+    // MARK: - dismissAchievement
+
+    func test_dismissAchievement_triggersRefetch() async {
+        let (sut, spy) = makeSUT()
+        await sut.fetchChildData(.init(childId: "preview-child-1"))
+        let countBefore = spy.fetchResponses.count
+        await sut.dismissAchievement(id: "seed-first-session")
+        XCTAssertGreaterThan(spy.fetchResponses.count, countBefore)
+    }
+
+    func test_dismissAchievement_withoutPriorFetch_noPresenterCall() async {
+        let (sut, spy) = makeSUT()
+        // lastChildId nil → dismissAchievement не должна падать
+        await sut.dismissAchievement(id: "seed-first-session")
+        XCTAssertTrue(spy.fetchResponses.isEmpty)
+    }
+
+    // MARK: - tapMascot
+
+    func test_tapMascot_callsPresenter() async {
+        let (sut, spy) = makeSUT()
+        await sut.tapMascot()
+        XCTAssertTrue(spy.mascotTapCalled)
+    }
+
+    // MARK: - refreshData
+
+    func test_refreshData_callsPresentFetch() async {
+        let (sut, spy) = makeSUT()
+        await sut.refreshData(childId: "preview-child-1")
+        XCTAssertEqual(spy.fetchResponses.count, 1)
+    }
+
+    // MARK: - recordMissionTap
+
+    func test_recordMissionTap_doesNotCrash() async {
+        let (sut, _) = makeSUT()
+        await sut.recordMissionTap()
+        // Метод — только логирование, проверяем что не падает
+    }
+
+    // MARK: - Fetch fallback (repository error)
+
+    func test_fetchChildData_repositoryError_fallsBackToSeed() async {
+        let interactor = ChildHomeInteractor(
+            childRepository: FailingChildRepository(),
+            sessionRepository: MockSessionRepository()
+        )
+        let spy = SpyPresenter()
+        interactor.presenter = spy
+        await interactor.fetchChildData(.init(childId: "nonexistent"))
+        // Должен вернуть seed-данные без crash
+        XCTAssertEqual(spy.fetchResponses.count, 1)
+        XCTAssertFalse(spy.fetchResponses.first?.childName.isEmpty ?? true)
+    }
+
+    // MARK: - Helpers
+
+    private func makeDate(hour: Int) -> Date {
+        var components = Calendar.current.dateComponents([.year, .month, .day], from: Date())
+        components.hour = hour
+        components.minute = 0
+        return Calendar.current.date(from: components) ?? Date()
+    }
+
+    private func makeSession(successRate: Double) -> SessionDTO {
+        SessionDTO(
+            id: UUID().uuidString,
+            childId: "c1",
+            date: Date(),
+            templateType: "listenAndChoose",
+            targetSound: "Р",
+            stage: "syllables",
+            durationSeconds: 300,
+            totalAttempts: 10,
+            correctAttempts: Int(successRate * 10),
+            fatigueDetected: false,
+            isSynced: false,
+            attempts: []
+        )
+    }
+}
+
+
+private final class FailingChildRepository: ChildRepository, @unchecked Sendable {
+    func fetch(id: String) async throws -> ChildProfileDTO {
+        throw NSError(domain: "Test", code: 404, userInfo: nil)
+    }
+    func fetchAll() async throws -> [ChildProfileDTO] { [] }
+    func save(_ profile: ChildProfileDTO) async throws {}
+    func delete(id: String) async throws {}
+    func updateProgress(childId: String, sound: String, rate: Double) async throws {}
+    func updateStreak(childId: String, streak: Int) async throws {}
 }

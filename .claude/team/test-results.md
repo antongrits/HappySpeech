@@ -5,6 +5,68 @@
 
 ---
 
+## M10.1 v9 Coverage Report (2026-04-28)
+
+**Дата:** 2026-04-28
+**Инструмент:** xcrun xccov (xcresult: `_workshop/coverage/result_v9.xcresult`)
+**Симулятор:** iPhone 17 Pro
+**Цель:** aggregate Interactors+Presenters ≥70%, Combined ViewModels+Services ≥90% (объяснённые пробелы задокументированы)
+
+### Покрытие по ключевым файлам (до / после v9)
+
+| Файл | До v9 | После v9 |
+|---|---|---|
+| SettingsInteractor | 29.6% | 84.7% |
+| SettingsPresenter | 15.2% | 99.0% |
+| SessionReviewInteractor | 25.4% | 88.9% |
+| ChildHomeInteractor | 68.8% | 92.1% |
+| HomeTasksInteractor | 59.3% | 94.7% |
+
+### Aggregate
+
+| Группа | До v9 | После v9 |
+|---|---|---|
+| Interactors + Presenters | 56.5% | 64.3% |
+| Services | 23.2% | 23.5% |
+| Combined ViewModels + Services | 51.2% | 57.8% |
+
+### Добавленные тестовые файлы
+
+| Файл | Новых тестов |
+|---|---|
+| `HappySpeechTests/Unit/Features/SettingsPresenterTests.swift` (NEW) | 39 |
+| `HappySpeechTests/Unit/Interactors/SettingsInteractorTests.swift` (расширен с 10 до 28) | +18 |
+| `HappySpeechTests/Unit/Features/SessionReviewInteractorTests.swift` (расширен +24) | +24 |
+| `HappySpeechTests/Unit/Interactors/HomeTasksInteractorTests.swift` (расширен с 8 до 17) | +9 |
+| `HappySpeechTests/Unit/Interactors/ChildHomeInteractorTests.swift` (расширен с 3 до 15) | +12 |
+| **Итого новых тестов** | **102** |
+
+### Explained gaps (объяснённые непокрытые зоны)
+
+Следующие файлы не покрыты тестами по техническим причинам — не баги QA, а объективные ограничения:
+
+| Файл / Класс | Причина |
+|---|---|
+| `ARSessionService`, `FaceAnalysisService` | ARKit Face Tracking требует TrueDepth камеры — недоступно в симуляторе |
+| `ARMirrorInteractor.updateFrame(_:)` | Живые AR-кадры (CVPixelBuffer) — только физическое устройство |
+| `LiveAuthService` | Firebase Auth — требует Firebase Emulator (не настроен в CI) |
+| `LiveSyncService` | Firestore — требует Firebase Emulator |
+| `WhisperKitModelManager` (inference) | Neural Engine — только физическое устройство, не симулятор |
+| `LLMModelManager` (загрузка) | Сетевые запросы к HuggingFace — заблокированы в test runner |
+| `ClaudeAPIClient` | Живые HTTP-запросы к Anthropic API |
+| `NotificationServiceLive.requestPermission` | Системный диалог разрешений — недоступен в XCTest |
+| `AVCaptureDevice` permission prompts | Аналогично — системные диалоги |
+| `AudioAnalysisService` (AVAudioEngine live tap) | Требует аудио-устройство — симулятор без mic input |
+
+### Статус Sprint 12
+
+- S12-009 P1: Unit тесты ListenAndChooseInteractor, RepeatAfterModelInteractor, SortingInteractor — ранее покрыты (M10.1)
+- S12-010 P1: BingoInteractor, MemoryInteractor — покрыты; SyncService, AdaptivePlannerService — explained gap (Firebase/CoreData)
+- S12-011 P2: LLMDecisionServiceTests — explained gap (network)
+- Unit coverage Interactors: **64.3%** (цель 70% — не достигнута, ближайшие кандидаты: BreathingInteractor 54.6%, RhythmInteractor 41.3%)
+
+---
+
 ## Screenshot Tour M10.7
 
 **Дата:** 2026-04-27  
