@@ -6903,4 +6903,659 @@ ZStack {
 - ChoiceCard: minHeight 110pt (вместо 130pt)
 - Иллюстрация в карточке: 64pt (вместо 80pt)
 - Маскот: 80×80pt
+
+---
+
+## Grammar Games — UI спека (Plan v9 Блок F1, Sprint 13.1 / F1-001)
+
+**Дата:** 2026-04-28
+**Контур:** kid
+**Статус:** спека готова, ожидает реализации F1-002..F1-007
+**Источник методики:** `.claude/team/grammar-games-tz.md` (speech-specialist)
+**VIP-путь:** `Features/GrammarGame/` (Вариант А — единый GrammarGameInteractor)
+**LOC цель:** ~2 800 LOC (4 воркера + общий VIP)
+
+---
+
+### Общая структура экрана (применима ко всем 4 играм)
+
+**Background:** `LinearGradient(Kid.bg, Kid.bgDeep)` light / `Kid.bgDeep` dark — полноэкранный, игнорирует safe area.
+
+**ZStack-иерархия (снизу вверх):**
+```
+ZStack(alignment: .top) {
+    // 1. Фон
+    LinearGradient(Kid.bg → Kid.bgDeep, startPoint: .top, endPoint: .bottom)
+        .ignoresSafeArea()
+
+    // 2. Контент
+    VStack(spacing: 0) {
+        GrammarTopBar(...)          // высота 52pt + safe area top
+        GrammarContentArea(...)     // flex, игровая зона
+        GrammarActionArea(...)      // фиксированная высота 100pt + safe area bottom
+    }
+
+    // 3. Маскот (overlay, не вытесняет контент)
+    LyalyaMascotView(state: mascotState)
+        .frame(width: 96, height: 96)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+        .padding(.top, 60)
+        .padding(.trailing, SpacingTokens.l)
+        .allowsHitTesting(false)
+
+    // 4. Reward overlay (conditional)
+    if showReward {
+        HSRewardBurst()
+            .transition(.opacity)
+            .zIndex(10)
+    }
+}
+```
+
+**GrammarTopBar:**
+```
+HStack(alignment: .center) {
+    Button { router.dismiss() } label: {
+        Image(systemName: "xmark.circle.fill")
+            .font(.system(size: 24))
+            .foregroundStyle(Kid.inkMuted)
+    }
+    .frame(width: 44, height: 44)                 // HIG min tap target
+
+    Spacer()
+
+    // Прогресс раундов
+    HStack(spacing: SpacingTokens.xs) {
+        ForEach(0..<totalRounds) { i in
+            RoundedRectangle(cornerRadius: 4)
+                .fill(i < completedRounds ? Brand.primary : Kid.line)
+                .frame(width: 20, height: 8)
+        }
+    }
+
+    Spacer()
+
+    // Уровень сложности
+    Capsule()
+        .fill(difficultyColor.opacity(0.15))
+        .overlay(
+            Text(difficultyLabel)                  // caption(12), Bold, Rounded
+                .foregroundStyle(difficultyColor)
+                .padding(.horizontal, SpacingTokens.s)
+        )
+        .frame(height: 28)
+}
+.padding(.horizontal, SpacingTokens.l)
+.frame(height: 52)
+```
+`difficultyLabel`: «Легко» / «Средне» / «Сложно»
+`difficultyColor`: `Semantic.success` / `Brand.butter` / `Brand.rose`
+
+**GrammarActionArea:**
+```
+VStack(spacing: SpacingTokens.m) {
+    HSButton(actionLabel, style: .primary)         // .infinity × 56pt
+        .disabled(!answerSelected)
+        .padding(.horizontal, SpacingTokens.l)
+}
+.frame(maxWidth: .infinity)
+.padding(.bottom, SpacingTokens.xxl)
+.background(.ultraThinMaterial)                    // iOS 26: .glassBackgroundEffect()
+```
+`actionLabel`: «Далее» / «Проверить» зависит от типа игры и состояния.
+
+**Маскот-состояния per ситуация:**
+| Ситуация | Состояние LyalyaMascotView |
+|---|---|
+| Экран открылся | `.idle` |
+| Произносит вопрос | `.speaking` |
+| Ребёнок выбирает | `.listening` |
+| Правильный ответ | `.celebrating` |
+| Неверный ответ (1-я попытка) | `.encouraging` |
+| 2-я неверная → подсказка | `.thinking` |
+| Серия завершена | `.celebrating` |
+
+**Reward overlay — HSRewardBurst:**
+- Активируется при правильном ответе: `.bounce` анимация + HSRewardBurst конфетти
+- Haptic: `HapticService.play(.success)` — обязательно
+- Звук: `AudioService.play("success.caf")`
+- Длительность: 1.4s, затем auto-dismiss
+- При Reduced Motion: только opacity flash + haptic (без scale, без конфетти)
+
+---
+
+### Игра 1. «Один — много» (Именительный падеж, мн.ч.)
+
+**Feature path:** `Features/GrammarGame/Workers/PluralGameWorker.swift`
+**Контент:** `pack_grammar.json`, stage `plural`, items gr-pl-0..gr-pl-19
+
+**Layout:**
+```
+VStack(spacing: SpacingTokens.xl) {
+
+    // Речевое облачко Ляли
+    HSSpeechBubble(text: lyalyaQuestion)           // title(24), Kid.ink, центр
+        .padding(.horizontal, SpacingTokens.l)
+        .frame(maxWidth: .infinity)
+
+    // Центральная зона — трансформация предмета
+    HStack(spacing: SpacingTokens.l) {
+        HSPictTile(imageName: item.imageSingle)     // 160×160pt, Kid.surface bg
+            .frame(width: 160, height: 160)
+
+        Image(systemName: "arrow.right.circle.fill")
+            .font(.system(size: 28))
+            .foregroundStyle(Brand.primary)
+
+        ZStack {
+            if answerSelected && isCorrect {
+                // Анимация удвоения: 5 копий предмета в сетке 2×2+1
+                PluralPreviewGrid(imageName: item.imageSingle)  // 160×160pt
+                    .transition(.scale(scale: 0.7).combined(with: .opacity))
+            } else {
+                RoundedRectangle(cornerRadius: RadiusTokens.card)
+                    .strokeBorder(style: StrokeStyle(lineWidth: 2, dash: [6]))
+                    .foregroundStyle(Kid.line)
+                    .frame(width: 160, height: 160)
+                    .overlay(
+                        Image(systemName: "questionmark")
+                            .font(.system(size: 36))
+                            .foregroundStyle(Kid.inkSoft)
+                    )
+            }
+        }
+        .frame(width: 160, height: 160)
+    }
+
+    // Варианты ответов
+    VStack(spacing: SpacingTokens.m) {
+        ForEach(choices) { choice in
+            PluralChoiceButton(
+                label: choice.text,
+                state: buttonState(for: choice)
+            )
+            .frame(maxWidth: .infinity, minHeight: 56)
+            // Easy: 2 варианта, Medium: 3, Hard/Extra: 4
+        }
+    }
+    .padding(.horizontal, SpacingTokens.l)
+}
+.padding(.top, SpacingTokens.xxl)
+```
+
+**PluralChoiceButton — состояния:**
+| Состояние | Background | Border | Text color |
+|---|---|---|---|
+| `.normal` | `Kid.surface` | `Kid.line` 1.5pt | `Kid.ink` |
+| `.selected` | `Brand.primary.opacity(0.12)` | `Brand.primary` 2pt | `Brand.primary` |
+| `.correct` | `Semantic.successBg` | `Semantic.success` 2pt | `Semantic.success` |
+| `.incorrect` | `Semantic.errorBg` | `Semantic.error` 2pt | `Semantic.error` |
+
+Шрифт кнопок: `title(24)`, SF Pro Rounded — крупно для детей.
+Corner radius: `RadiusTokens.button (10pt)`.
+
+**Подсказка (2-я неудача):**
+```
+// В тексте варианта выделяется окончание цветом
+// "кот" + Text("ы").foregroundStyle(Brand.primary)
+// Реализуется через AttributedString
+```
+
+**Взаимодействия:**
+- Tap по варианту (<300ms feedback): haptic `.selection` + border transition `.outQuick`
+- Правильный: HSRewardBurst + PluralPreviewGrid появляется через `.bounce` + `success.caf`
+- Неверный: shake animation (`MotionTokens.spring` + offset(-8,0,8,0, 0.3s)) + `wrong_soft.caf` + Ляля `.encouraging`
+- 2-я неудача: подсказка появляется fade-in + Ляля `.thinking`
+
+**Reward серия (5 правильных):**
+- LyalyaMascotView переходит в `.celebrating` на 2s
+- `level_complete.caf` + `reward_fanfare.caf` последовательно
+- HSRewardBurst максимальный вариант (confetti burst)
+
+**Accessibility:**
+```swift
+// Весь экран
+.accessibilityLabel("Игра «Один — много». \(lyalyaQuestion)")
+
+// Каждая кнопка
+PluralChoiceButton(...)
+    .accessibilityLabel(choice.text)
+    .accessibilityHint("Нажмите, чтобы выбрать этот вариант")
+    .accessibilityAddTraits(isSelected ? .isSelected : [])
+
+// Картинка предмета
+HSPictTile(...)
+    .accessibilityLabel("Один \(item.singularWord)")
+
+// Плейсхолдер результата
+.accessibilityLabel(isCorrect ? "Много \(item.pluralWord)" : "Выберите правильный вариант")
+```
+
+---
+
+### Игра 2. «Кому что нужно?» (Дательный падеж)
+
+**Feature path:** `Features/GrammarGame/Workers/DativeGameWorker.swift`
+**Контент:** `cases` + `grammar_cases` + `sentences_grammar`
+
+**Layout:**
+```
+VStack(spacing: SpacingTokens.xl) {
+
+    // Речевое облачко
+    HSSpeechBubble(text: lyalyaQuestion)           // title(24), центр
+        .padding(.horizontal, SpacingTokens.l)
+
+    // Ряд персонажей — drop targets
+    HStack(spacing: SpacingTokens.m) {
+        ForEach(characters) { char in
+            DativeDropTarget(character: char, isHighlighted: hoveredTarget == char.id)
+        }
+    }
+    .padding(.horizontal, SpacingTokens.l)
+
+    // Draggable предмет
+    DraggableItemTile(item: currentItem)            // 160×160pt, центр
+        .frame(width: 160, height: 160)
+
+    Spacer()
+}
+.padding(.top, SpacingTokens.xxl)
+```
+
+**DativeDropTarget:**
+```
+VStack(spacing: SpacingTokens.s) {
+    ZStack {
+        RoundedRectangle(cornerRadius: RadiusTokens.large)
+            .fill(isHighlighted ? Brand.primary.opacity(0.15) : Kid.surface)
+            .overlay(
+                RoundedRectangle(cornerRadius: RadiusTokens.large)
+                    .strokeBorder(isHighlighted ? Brand.primary : Kid.line,
+                                  lineWidth: isHighlighted ? 3 : 1.5)
+            )
+            .frame(width: 100, height: 120)
+
+        // Иллюстрация персонажа из Resources/Illustrations/
+        Image(character.imageName)
+            .resizable()
+            .scaledToFit()
+            .frame(width: 80, height: 80)
+    }
+
+    Text(character.dativeName)                      // headline(18), Kid.ink
+        // Маша → «Маше», папа → «папе», собака → «собаке»
+}
+.accessibilityLabel("\(character.dativeName), поле для перетаскивания")
+.accessibilityHint("Перетащите предмет сюда")
+```
+
+**DraggableItemTile:**
+```
+HSPictTile(imageName: currentItem.imageName)
+    .frame(width: 160, height: 160)
+    .scaleEffect(isDragging ? 1.1 : 1.0)
+    .shadow(color: isDragging ? Brand.primary.opacity(0.3) : .clear, radius: 12)
+    .animation(.spring, value: isDragging)
+    .gesture(
+        DragGesture(minimumDistance: 4)
+            .onChanged { ... }    // isDragging = true, обновить position
+            .onEnded { ... }      // проверить попадание в drop zone (radius ≥ 80pt)
+    )
+```
+
+**Drop логика:**
+- Drop radius ≥ 80pt от центра DativeDropTarget
+- Правильный target: предмет «вручается» анимацией (предмет летит к персонажу, уменьшаясь) + `success.caf` + Ляля озвучивает полную фразу («Маше нужна книга!»)
+- Неправильный target: предмет возвращается на исходную позицию `.spring` + `wrong_soft.caf` + Ляля `.encouraging`
+- После успеха: следующий предмет появляется через `.outQuick` transition
+
+**Reward серия («Праздничный стол»):**
+- После каждого правильного ответа стол пополняется: анимация нового элемента через `.bounce`
+- Финал серии: стол полный → `reward_fanfare.caf` + HSRewardBurst + Ляля `.celebrating`
+
+**Accessibility:**
+- `accessibilityLabel("Игра «Кому что нужно?»")`
+- DraggableItemTile: `accessibilityLabel("\(item.name), предмет для перетаскивания")`
+- При выборе через VoiceOver (альтернатива drag): каждый target доступен как кнопка
+
+---
+
+### Игра 3. «Откуда взял?» (Родительный падеж)
+
+**Feature path:** `Features/GrammarGame/Workers/GenitiveGameWorker.swift`
+**Контент:** `grammar_cases` gr-gc-5..gr-gc-17 + `prepositions` gr-prep-0..gr-prep-10
+
+**Layout:**
+```
+VStack(spacing: SpacingTokens.xl) {
+
+    // Анимационная сцена
+    GenitiveSceneView(
+        lyalyaHoldsItem: currentItem,
+        containers: containers                      // 3–4 контейнера
+    )
+    .frame(maxWidth: .infinity)
+    .frame(height: 280)
+    .background(
+        RoundedRectangle(cornerRadius: RadiusTokens.large)
+            .fill(Kid.surfaceAlt)
+    )
+    .padding(.horizontal, SpacingTokens.l)
+
+    // Речевое облачко
+    HSSpeechBubble(text: lyalyaQuestion)
+        .padding(.horizontal, SpacingTokens.l)
+
+    Spacer()
+}
+.padding(.top, SpacingTokens.xxl)
+```
+
+**GenitiveSceneView — внутренняя структура:**
+```
+ZStack {
+    // Фон сцены — иллюстрация комнаты/улицы
+    Image("scene_\(currentScene)")
+        .resizable()
+        .scaledToFill()
+        .clipped()
+        .opacity(0.4)
+
+    // Ляля держит предмет — центр верхней части
+    Image("lyalya_holding")
+        .frame(width: 64, height: 64)
+        .position(x: geometry.size.width * 0.5, y: 60)
+
+    // Контейнеры — tap targets, расположены в нижней части сцены
+    HStack(spacing: SpacingTokens.l) {
+        ForEach(containers) { c in
+            ContainerTapTarget(container: c, isHighlighted: selectedContainer == c.id)
+        }
+    }
+    .frame(maxWidth: .infinity)
+    .padding(.horizontal, SpacingTokens.xl)
+    .frame(maxHeight: .infinity, alignment: .bottom)
+    .padding(.bottom, SpacingTokens.xl)
+}
+```
+
+**ContainerTapTarget:**
+```
+VStack(spacing: SpacingTokens.xs) {
+    ZStack {
+        RoundedRectangle(cornerRadius: RadiusTokens.card)
+            .fill(isHighlighted ? Brand.primary.opacity(0.15) : Kid.surface)
+            .overlay(
+                RoundedRectangle(cornerRadius: RadiusTokens.card)
+                    .strokeBorder(isHighlighted ? Brand.primary : Kid.line,
+                                  lineWidth: isHighlighted ? 3 : 1.5)
+            )
+        Image(container.imageName)
+            .resizable()
+            .scaledToFit()
+            .frame(width: 56, height: 56)
+    }
+    .frame(width: 80, height: 88)                  // >56pt min touch target
+
+    Text(container.genitiveName)                    // caption(12), Kid.inkMuted
+        // «из ящика» / «со стола» / «от мамы»
+}
+.accessibilityLabel("\(container.genitiveName), нажмите чтобы выбрать")
+```
+
+**Взаимодействия:**
+- Tap на контейнер (<300ms): `HapticService.play(.selection)` + highlight border `.outQuick`
+- Правильный: анимация открытия контейнера (keyframe: scale 1→1.1→1) + стрелка указывает → `success.caf` + Ляля произносит «Взяла из ящика! Молодец!»
+- Неверный: shake контейнера + `wrong_soft.caf` + Ляля `.encouraging` + стрелка появляется через 1.5s указывая на правильный
+
+**Режим «Детектив» (Hard/Extra):**
+- Ляля прячет предмет за спиной: вопрос-анимация (Ляля `.thinking`)
+- Дополнительный шаг: после выбора контейнера нужно подтвердить предлог через HSChip выбор («из» / «с» / «от»)
+- Финальная фраза формируется из выбора ребёнка
+
+**Reward серия («Рюкзак Ляли»):**
+- После каждого правильного ответа предмет летит в рюкзак (анимация `.spring`)
+- Счётчик рюкзака в top bar: маленький бейдж HSBadge с числом
+- Финал: рюкзак «полный» → `reward_fanfare.caf` + HSRewardBurst
+
+**Accessibility:**
+- `accessibilityLabel("Игра «Откуда взял?»")`
+- ContainerTapTarget: `accessibilityRole(.button)` + label с предлогом
+- После ответа: `UIAccessibility.post(.announcement, "Правильно! \(correctPhrase)")`
+
+---
+
+### Игра 4. «С кем дружу?» (Творительный падеж)
+
+**Feature path:** `Features/GrammarGame/Workers/InstrumentalGameWorker.swift`
+**Контент:** `cases` gr-case-4..gr-case-19 + `grammar_cases` gr-gc-4 + `sentences_grammar`
+
+**Layout (стандартный режим):**
+```
+VStack(spacing: SpacingTokens.xl) {
+
+    // Карточка-вопрос с Лялей
+    HSLiquidGlassCard {
+        HStack(spacing: SpacingTokens.l) {
+            LyalyaMascotView(state: .listening)
+                .frame(width: 72, height: 72)
+
+            VStack(alignment: .leading, spacing: SpacingTokens.xs) {
+                Text(lyalyaQuestion)               // title(24), Kid.ink
+                Text(questionHint)                 // body(15), Kid.inkMuted (опционально)
+            }
+        }
+        .padding(SpacingTokens.l)
+    }
+    .padding(.horizontal, SpacingTokens.l)
+
+    // Варианты ответа — 3 карточки с иллюстрациями
+    VStack(spacing: SpacingTokens.m) {
+        ForEach(choices) { choice in
+            InstrumentalChoiceCard(
+                imageName: choice.imageName,
+                label: choice.instrumentalLabel,   // «с Ваней», «с собакой», «карандашом»
+                state: cardState(for: choice)
+            )
+            .frame(maxWidth: .infinity, minHeight: 72)
+        }
+    }
+    .padding(.horizontal, SpacingTokens.l)
+
+    Spacer()
+}
+.padding(.top, SpacingTokens.xxl)
+```
+
+**InstrumentalChoiceCard:**
+```
+HStack(spacing: SpacingTokens.l) {
+    Image(choice.imageName)
+        .resizable()
+        .scaledToFill()
+        .frame(width: 56, height: 56)
+        .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card))
+
+    Text(choice.instrumentalLabel)                 // title(24), Kid.ink
+        .lineLimit(nil)
+        .minimumScaleFactor(0.85)
+
+    Spacer()
+
+    // Индикатор состояния
+    Image(systemName: stateIcon)
+        .foregroundStyle(stateColor)
+        .font(.system(size: 22))
+}
+.padding(SpacingTokens.l)
+.background(
+    RoundedRectangle(cornerRadius: RadiusTokens.card)
+        .fill(cardBackground)
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.card)
+                .strokeBorder(cardBorder, lineWidth: cardBorderWidth)
+        )
+)
+```
+
+Состояния карточки — аналогично PluralChoiceButton (normal / selected / correct / incorrect).
+`stateIcon`: circle / checkmark.circle.fill / xmark.circle.fill
+`stateColor`: Kid.inkSoft / Semantic.success / Semantic.error
+
+**Layout — режим «Вечеринка»:**
+```
+ZStack {
+    // Фон сцены вечеринки
+    Image("scene_party")
+        .resizable()
+        .scaledToFill()
+        .opacity(0.35)
+        .ignoresSafeArea()
+
+    VStack(spacing: SpacingTokens.xl) {
+        // Заголовок
+        Text("Вечеринка Ляли!")                    // display(36), Kid.ink
+            .padding(.top, SpacingTokens.xxxl)
+
+        // Зона вечеринки — персонажи появляются по мере правильных ответов
+        PartyGuestsGrid(confirmedGuests: confirmedGuests)
+            .frame(height: 200)
+            .padding(.horizontal, SpacingTokens.l)
+
+        // Карточка текущего гостя
+        HSLiquidGlassCard {
+            HStack {
+                Image(nextGuest.imageName)
+                    .frame(width: 56, height: 56)
+                Text("Пригласить \(nextGuest.instrumentalLabel)?")
+                    .font(.title(24))
+            }
+            .padding(SpacingTokens.l)
+        }
+        .padding(.horizontal, SpacingTokens.l)
+
+        // Кнопки — упрощённые 2 варианта
+        HStack(spacing: SpacingTokens.m) {
+            HSButton("Да", style: .primary)         // 0.5 ширины − m/2
+            HSButton("Нет", style: .secondary)
+        }
+        .padding(.horizontal, SpacingTokens.l)
+
+        Spacer()
+    }
+}
+```
+
+**PartyGuestsGrid:**
+- LazyVGrid(columns: 3 × 72pt) — гости появляются через `.bounce` по мере правильных ответов
+- Пустые места: dashed border `Kid.line`, иконка `person.badge.plus` `Kid.inkSoft`
+
+**Взаимодействия:**
+- Tap по InstrumentalChoiceCard: haptic `.selection` + border `.outQuick`
+- Правильный: Ляля анимированно «обнимается» или «играет» с персонажем (Rive trigger `celebrate`) + `success.caf`
+- Неверный: shake + `wrong_soft.caf` + Ляля `.encouraging` «Подумай ещё!»
+- Режим «Вечеринка» — правильный: новый гость появляется в PartyGuestsGrid с `.bounce`
+
+**Reward финал «Вечеринки»:**
+- Все гости собрались → полноэкранная анимация HSRewardBurst с конфетти
+- Ляля `.celebrating` + `reward_fanfare.caf`
+- Звучит: «Молодец! Ляля рада всем гостям!» (voice-over)
+
+**Accessibility:**
+- `accessibilityLabel("Игра «С кем дружу?»")`
+- InstrumentalChoiceCard: `accessibilityLabel(choice.instrumentalLabel)`, `.isButton` trait
+- PartyGuestsGrid: `accessibilityLabel("Вечеринка. \(confirmedGuests.count) гостей из \(totalGuests)")`
+
+---
+
+### Переходы между играми и экранами
+
+**Открытие игры из GrammarWorldView:**
+```swift
+// Hero transition (MotionTokens.hero: response 0.5, damping 0.8)
+.navigationTransition(.zoom(sourceID: gameCard.id, in: namespace))
+```
+Reduced Motion: `.push(from: .bottom)` вместо zoom.
+
+**Переход к следующему раунду:**
+- Контент area: slide влево + fade, `.page (easeOut 0.35s)`
+- Маскот остаётся на месте (не анимируется при смене раунда)
+- Top bar прогресс: filled dot появляется через `.outQuick`
+
+**Выход из игры:**
+- Кнопка xmark.circle.fill → sheet подтверждения (если прогресс > 0):
+  - «Завершить игру?» (title(24))
+  - «Твой прогресс сохранится» (body(15), Kid.inkMuted)
+  - «Выйти» (HSButton .secondary) / «Продолжить» (HSButton .primary)
+
+---
+
+### Адаптивная сложность — UI индикатор
+
+Capsule в GrammarTopBar:
+| successRate | Лейбл | Цвет |
+|---|---|---|
+| < 60% | «Легко» | `Semantic.success` (зелёный) |
+| 60–79% | «Средне» | `Brand.butter` (жёлтый) |
+| ≥ 80% | «Сложно» | `Brand.rose` (розово-красный) |
+
+Параметры per уровень (UI-последствия):
+| Уровень | Раундов | Вариантов | Подсказка после |
+|---|---|---|---|
+| Легко | 5 | 2 | 1-й ошибки |
+| Средне | 7 | 3 | 2-х ошибок |
+| Сложно | 10 | 4 | 2-х ошибок |
+
+---
+
+### Ключи локализации (только ru, ~24 ключа)
+
+Добавить в `HappySpeech/Resources/Localizable.xcstrings` секцию Grammar:
+
+```
+grammar.game.title.one_many         → «Один — много»
+grammar.game.title.dative           → «Кому что нужно?»
+grammar.game.title.genitive         → «Откуда взял?»
+grammar.game.title.instrumental     → «С кем дружу?»
+grammar.game.cta.next               → «Далее»
+grammar.game.cta.check              → «Проверить»
+grammar.game.cta.confirm            → «Подтвердить»
+grammar.game.feedback.correct       → «Молодец!»
+grammar.game.feedback.try_again     → «Почти! Попробуй ещё»
+grammar.game.feedback.hint          → «Подскажу: смотри на окончание»
+grammar.game.difficulty.easy        → «Легко»
+grammar.game.difficulty.medium      → «Средне»
+grammar.game.difficulty.hard        → «Сложно»
+grammar.game.round.progress         → «Раунд %lld из %lld»
+grammar.game.exit.title             → «Завершить игру?»
+grammar.game.exit.body              → «Твой прогресс сохранится»
+grammar.game.exit.confirm           → «Выйти»
+grammar.game.exit.cancel            → «Продолжить»
+grammar.game.reward.series          → «Молодец! Ляля рада!»
+grammar.game.reward.level_complete  → «Уровень пройден!»
+grammar.game.party.title            → «Вечеринка Ляли!»
+grammar.game.party.invite           → «Пригласить %@?»
+grammar.game.detective.hint         → «Откуда Ляля взяла %@?»
+grammar.game.plural.question        → «Вот один %@. А если много?»
+grammar.game.dative.question        → «Кому нужен %@?»
+```
+
+---
+
+### iPhone SE адаптация (width < 375pt)
+
+- HSPictTile: 120×120pt (вместо 160×160pt)
+- DativeDropTarget: 80×100pt (вместо 100×120pt)
+- InstrumentalChoiceCard: minHeight 60pt
+- LyalyaMascotView overlay: скрывается при width < 375pt (место экономится)
+- PluralChoiceButton: minHeight 48pt
+
+---
+
+### Передача дальше
+
+- **ios-developer F1-002..F1-007:** реализация VIP в `Features/GrammarGame/` по данной спеке; архитектура Вариант А (единый GrammarGameInteractor + 4 воркера)
+- **animator F1-008:** PluralPreviewGrid анимация удвоения (Lottie/Pow), PartyGuestsGrid bounce, GenitiveScene открытие контейнера
+- **sound-curator F1-009:** voice-over Ляли — ~120 фраз (4 игры × 10 items × 3 варианта), формат m4a 22050Гц моно
 - AudioPlayButton: 72×72pt

@@ -214,3 +214,47 @@ M6 App Store      Sprint 12  tests+content DONE, Firestore deploy DONE, TestFlig
 - [x] Performance audit — DONE (статический, .claude/team/performance-audit.md)
 - [x] Screenshots curated (marketing/) — DONE (10 hero shots)
 - [!] TestFlight build — BLOCKED (Apple Developer Account)
+
+---
+
+## Sprint 13.1 — Grammar games (Plan v9 Блок F1, M13 extension #1)
+
+**Цель:** реализовать 4 интерактивные игры на грамматику русского языка для детей 5–8 лет.
+**ТЗ:** `.claude/team/grammar-games-tz.md` (306 LOC, speech-specialist 2026-04-28)
+**LOC цель:** ~2 800 LOC total
+**Дедлайн:** до конца Plan v9 (как часть M13 top-5 extensions)
+
+### Stories
+
+| ID | Title | Story | Acceptance Criteria | Assignee | LOC | Status |
+|---|---|---|---|---|---|---|
+| F1-001 | Designer — UI спеки 4 игр | Как дизайнер, я создаю спеки экранов для 4 grammar games через design:design-system + design:design-handoff | Спеки добавлены в .claude/team/design-specs.md секция Grammar Games. 4 экрана × 4 уровня прогрессии + reward анимации описаны | designer | — | TODO |
+| F1-002 | iOS Dev — Models + протоколы | Как iOS разработчик, я создаю Models.swift с GameRequest/Response/ViewModel/State + DisplayLogic протокол через engineering:system-design | Models.swift и DisplayLogic.swift в Features/Extensions/Grammar/ созданы | ios-developer | ~200 | TODO |
+| F1-003 | iOS Dev — Interactor (4 sub-modes) | Реализация Interactor с 4 sub-modes для 4 игр (или 4 Interactor'а на выбор) — state machine, scoring, fatigue tracking, AdaptivePlanner integration | Interactor 800+ LOC, 10 unit тестов min | ios-developer | ~800 | TODO |
+| F1-004 | iOS Dev — Presenter + ViewModel | ViewModel formation из Response, Russian-only тексты, accessibility labels | Presenter 200+ LOC, 5 unit тестов | ios-developer | ~200 | TODO |
+| F1-005 | iOS Dev — View SwiftUI | 4 game screens — multiple choice, drag-and-drop, tap-to-select | View 800+ LOC, 4 snapshot light/dark × 2 device = 16 PNG | ios-developer | ~800 | TODO |
+| F1-006 | iOS Dev — Router | Навигация между играми + reward + back to dashboard | Router 50+ LOC | ios-developer | ~50 | TODO |
+| F1-007 | iOS Dev — Workers | ContentLoaderWorker + ScorerWorker + AnimationWorker | Workers 200+ LOC | ios-developer | ~200 | TODO |
+| F1-008 | Animator — Lottie/Pow анимации | Анимации удвоения предметов, drag transitions, reward burst, character expressions | 4–6 Lottie/Pow эффектов готовы и интегрированы | animator | — | TODO |
+| F1-009 | Sound-curator — voice-over Ляли | Новые phrases Ляли (10–15 новых .m4a) — обращения к ребёнку с вопросом + 4 типа reward feedback | 10–15 .m4a в Resources/Audio/Lyalya/ | sound-curator | — | TODO |
+| F1-010 | Code-reviewer — независимое ревью | Ревью Clean Swift, Russian-only, no antipatterns | APPROVE / fix loop завершён | code-reviewer | — | TODO |
+| F1-011 | QA-engineer — тесты | 10 unit + 16 snapshot + 1 UI smoke | 27 тестов всего, ≥85% coverage на новой фиче | qa-engineer | — | TODO |
+| F1-012 | iOS-debugger — smoke iPhone SE 3rd gen + iPhone 17 Pro | Запуск 4 игр на обоих симуляторах через -HSStartRoute grammarGames | Smoke screenshots без crash | ios-debugger | — | TODO |
+| F1-013 | CTO — финальное решение + commit | Принять/отклонить + commit feat(extensions): M13 v9 — Grammar games (4 интерактивные игры, 2500+ LOC) | Commit pushed | cto | — | TODO |
+
+### Risks
+
+- LOC цель 2 800 может превысить time budget — план разрешает 1 200–2 500+ для F1
+- Контент `pack_grammar.json` имеет 200 units — дистракторы генерируются программно (подтверждено speech-specialist)
+
+### Зависит от
+
+- pack_grammar.json (200 units) — готов
+- AdaptivePlannerService — готов (M1.1)
+- DesignSystem 29 компонентов — готов (M7.1)
+- HSLiquidGlassCard / Lottie / Rive — готовы
+
+### Блокирует
+
+- F2 (Customization Ляли) — следующий extension
+- F3, F4, F5 — ждут завершения F1
