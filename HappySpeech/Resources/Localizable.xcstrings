@@ -18047,6 +18047,325 @@
           }
         }
       }
+    },
+    "customization.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кастомизация Ляли"
+          }
+        }
+      }
+    },
+    "customization.section.skins": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Костюмы"
+          }
+        }
+      }
+    },
+    "customization.section.colors": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Цветовая палитра"
+          }
+        }
+      }
+    },
+    "customization.section.voice": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Голос Ляли"
+          }
+        }
+      }
+    },
+    "customization.skin.classic": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Классическая"
+          }
+        }
+      }
+    },
+    "customization.skin.princess": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Принцесса"
+          }
+        }
+      }
+    },
+    "customization.skin.scientist": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Учёная"
+          }
+        }
+      }
+    },
+    "customization.skin.athlete": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спортсменка"
+          }
+        }
+      }
+    },
+    "customization.skin.artist": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Художница"
+          }
+        }
+      }
+    },
+    "customization.color.warm": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тёплая"
+          }
+        }
+      }
+    },
+    "customization.color.cool": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Холодная"
+          }
+        }
+      }
+    },
+    "customization.color.nature": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Природная"
+          }
+        }
+      }
+    },
+    "customization.voice.classic": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Классическая"
+          }
+        }
+      }
+    },
+    "customization.voice.soft": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мягкая"
+          }
+        }
+      }
+    },
+    "customization.voice.cheerful": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Бодрая"
+          }
+        }
+      }
+    },
+    "customization.voice.preview": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Послушать"
+          }
+        }
+      }
+    },
+    "customization.cta.save": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сохранить"
+          }
+        }
+      }
+    },
+    "customization.cta.cancel": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отмена"
+          }
+        }
+      }
+    },
+    "customization.feedback.saved": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кастомизация сохранена!"
+          }
+        }
+      }
+    },
+    "customization.feedback.cloud_synced": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Синхронизировано с облаком"
+          }
+        }
+      }
+    },
+    "customization.feedback.error_save": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось сохранить"
+          }
+        }
+      }
+    },
+    "settings.customization.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кастомизация Ляли"
+          }
+        }
+      }
+    },
+    "settings.customization.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть настройки внешности Ляли"
+          }
+        }
+      }
+    },
+    "customization.a11y.preview": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ляля в костюме %@, %@ палитра"
+          }
+        }
+      }
+    },
+    "customization.a11y.skin_card_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дважды нажмите чтобы выбрать костюм"
+          }
+        }
+      }
+    },
+    "customization.a11y.color_card_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дважды нажмите чтобы выбрать цветовую палитру"
+          }
+        }
+      }
+    },
+    "customization.a11y.voice_preview": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Послушать голос %@"
+          }
+        }
+      }
+    },
+    "customization.a11y.no_changes": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Изменений нет"
+          }
+        }
+      }
+    },
+    "customization.a11y.save_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дважды нажмите чтобы сохранить кастомизацию Ляли"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
