@@ -1,9 +1,13 @@
+import AVKit
 import SwiftUI
 
 // MARK: - AnimatedStoryPlayerView
 //
 // Полноэкранный плеер анимированной истории.
-// Показывает 3 сцены последовательно с emoji-персонажами и SwiftUI-анимациями.
+//
+// Режим выбора:
+//   • AVPlayer mode  — если в bundle найден Videos/stories/<id>.mp4
+//   • Native fallback — SwiftUI-анимации сцен (3 сцены последовательно)
 //
 // Reduced Motion: все анимации сводятся к opacity-переходу.
 // MotionTokens: все длительности и кривые берутся из MotionTokens.
@@ -16,7 +20,12 @@ struct AnimatedStoryPlayerView: View {
     let story: AnimatedStory
     var onComplete: (() -> Void)?
 
-    // MARK: - State
+    // MARK: - AVPlayer state
+
+    @State private var avPlayer: AVPlayer?
+    @State private var isVideoFinished: Bool = false
+
+    // MARK: - Native fallback state
 
     @State private var currentSceneIndex: Int = 0
     @State private var characterOffset: CGFloat = 0
@@ -29,6 +38,18 @@ struct AnimatedStoryPlayerView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     // MARK: - Computed
+
+    private static func mp4URL(for storyId: String) -> URL? {
+        Bundle.main.url(
+            forResource: storyId,
+            withExtension: "mp4",
+            subdirectory: "stories"
+        )
+    }
+
+    private var hasVideo: Bool {
+        Self.mp4URL(for: story.id) != nil
+    }
 
     private var currentScene: AnimatedStoryScene {
         story.scenes[currentSceneIndex]
@@ -45,21 +66,105 @@ struct AnimatedStoryPlayerView: View {
     // MARK: - Body
 
     var body: some View {
-        ZStack {
-            backgroundLayer
-            contentLayer
+        Group {
+            if hasVideo {
+                avPlayerContainer
+            } else {
+                nativeFallbackContainer
+            }
         }
         .ignoresSafeArea()
-        .onAppear {
-            showScene()
-        }
         .accessibilityElement(children: .contain)
         .accessibilityLabel(
             String(localized: "story.player.accessibility_label \(story.title)")
         )
     }
 
-    // MARK: - Background
+    // MARK: - AVPlayer container
+
+    private var avPlayerContainer: some View {
+        ZStack(alignment: .topTrailing) {
+            avPlayerLayer
+            skipButton
+                .padding(.top, 56)
+                .padding(.trailing, 20)
+        }
+        .onAppear {
+            setupAVPlayer()
+        }
+        .onDisappear {
+            avPlayer?.pause()
+            avPlayer = nil
+        }
+    }
+
+    @ViewBuilder
+    private var avPlayerLayer: some View {
+        if let player = avPlayer {
+            VideoPlayer(player: player)
+                .onReceive(
+                    NotificationCenter.default.publisher(
+                        for: AVPlayerItem.didPlayToEndTimeNotification
+                    )
+                ) { _ in
+                    isVideoFinished = true
+                    onComplete?()
+                }
+        } else {
+            videoErrorView
+        }
+    }
+
+    private var videoErrorView: some View {
+        ZStack {
+            Color.black
+            Text(String(localized: "story.video.error"))
+                .font(.system(size: 16, weight: .medium, design: .rounded))
+                .foregroundStyle(.white)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 32)
+        }
+    }
+
+    private var skipButton: some View {
+        Button {
+            avPlayer?.pause()
+            onComplete?()
+        } label: {
+            Text(String(localized: "story_player.skip"))
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .foregroundStyle(.white)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 8)
+                .background(
+                    Capsule()
+                        .fill(Color.black.opacity(0.45))
+                )
+        }
+        .accessibilityLabel(String(localized: "story_player.skip.accessibility"))
+        .accessibilityAddTraits(.isButton)
+    }
+
+    private func setupAVPlayer() {
+        guard let url = Self.mp4URL(for: story.id) else { return }
+        let player = AVPlayer(url: url)
+        avPlayer = player
+        player.play()
+    }
+
+    // MARK: - Native fallback container
+
+    private var nativeFallbackContainer: some View {
+        ZStack {
+            backgroundLayer
+            contentLayer
+        }
+        .onAppear {
+            showScene()
+        }
+    }
+
+    // MARK: - Background (native)
 
     private var backgroundLayer: some View {
         LinearGradient(
@@ -71,7 +176,7 @@ struct AnimatedStoryPlayerView: View {
         )
     }
 
-    // MARK: - Content
+    // MARK: - Content (native)
 
     private var contentLayer: some View {
         VStack(spacing: 0) {
@@ -260,7 +365,7 @@ struct AnimatedStoryPlayerView: View {
         )
     }
 
-    // MARK: - Transitions
+    // MARK: - Transitions (native)
 
     private func showScene() {
         resetCharacter()
@@ -305,7 +410,7 @@ struct AnimatedStoryPlayerView: View {
         characterRotation = 0
     }
 
-    // MARK: - Animation dispatch
+    // MARK: - Animation dispatch (native)
 
     private func playAnimation(for type: StoryAnimationType) {
         switch type {
@@ -381,14 +486,14 @@ struct AnimatedStoryPlayerView: View {
 
 // MARK: - Preview
 
-#Preview("Шипящая история") {
+#Preview("AVPlayer mode (shustray-shishka)") {
     AnimatedStoryPlayerView(
         story: StoryLibrary.shared.allStories[0],
         onComplete: { }
     )
 }
 
-#Preview("Сонорная история") {
+#Preview("Native fallback (Р)") {
     if let story = StoryLibrary.shared.stories(for: "Р").first {
         AnimatedStoryPlayerView(
             story: story,

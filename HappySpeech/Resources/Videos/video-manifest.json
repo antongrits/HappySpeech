@@ -15,5 +15,207 @@
     {"id": "celebrate_firsttime", "duration": 3.0, "description": "Первый раз"},
     {"id": "celebrate_weekly", "duration": 3.0, "description": "Неделя"},
     {"id": "onboarding_hero", "duration": 7.0, "description": "Онбординг hero"}
+  ],
+  "stories": [
+    {
+      "id": "shustray-shishka",
+      "path": "stories/shustray-shishka.mp4",
+      "title": "Шустрая шишка",
+      "target_sound": "Ш",
+      "duration_sec": 20.05,
+      "size_bytes": 644306,
+      "has_audio": true,
+      "audio_file": "lyalya_story_01.m4a"
+    },
+    {
+      "id": "zhukov-v-luzhe",
+      "path": "stories/zhukov-v-luzhe.mp4",
+      "title": "Жучок в луже",
+      "target_sound": "Ж",
+      "duration_sec": 20.05,
+      "size_bytes": 785408,
+      "has_audio": true,
+      "audio_file": "lyalya_story_02.m4a"
+    },
+    {
+      "id": "shchenok-i-shchetka",
+      "path": "stories/shchenok-i-shchetka.mp4",
+      "title": "Щенок и щётка",
+      "target_sound": "Щ",
+      "duration_sec": 20.05,
+      "size_bytes": 635904,
+      "has_audio": true,
+      "audio_file": "lyalya_story_03.m4a"
+    },
+    {
+      "id": "chaynik-chudak",
+      "path": "stories/chaynik-chudak.mp4",
+      "title": "Чайник-чудак",
+      "target_sound": "Ч",
+      "duration_sec": 20.05,
+      "size_bytes": 645120,
+      "has_audio": true,
+      "audio_file": "lyalya_story_04.m4a"
+    },
+    {
+      "id": "sinyaya-sobaka",
+      "path": "stories/sinyaya-sobaka.mp4",
+      "title": "Синяя собака",
+      "target_sound": "С",
+      "duration_sec": 20.05,
+      "size_bytes": 659456,
+      "has_audio": true,
+      "audio_file": "lyalya_story_05.m4a"
+    },
+    {
+      "id": "zaychik-na-zaryadke",
+      "path": "stories/zaychik-na-zaryadke.mp4",
+      "title": "Зайчик на зарядке",
+      "target_sound": "З",
+      "duration_sec": 20.05,
+      "size_bytes": 669696,
+      "has_audio": true,
+      "audio_file": "lyalya_story_06.m4a"
+    },
+    {
+      "id": "tsyplyonok-tsezar",
+      "path": "stories/tsyplyonok-tsezar.mp4",
+      "title": "Цыплёнок Цезарь",
+      "target_sound": "Ц",
+      "duration_sec": 20.05,
+      "size_bytes": 694272,
+      "has_audio": true,
+      "audio_file": "lyalya_story_07.m4a"
+    },
+    {
+      "id": "rybka-rita",
+      "path": "stories/rybka-rita.mp4",
+      "title": "Рыбка Рита",
+      "target_sound": "Р",
+      "duration_sec": 20.05,
+      "size_bytes": 708608,
+      "has_audio": true,
+      "audio_file": "lyalya_story_08.m4a"
+    },
+    {
+      "id": "raketa-ryzhik",
+      "path": "stories/raketa-ryzhik.mp4",
+      "title": "Ракета Рыжик",
+      "target_sound": "Р",
+      "duration_sec": 20.05,
+      "size_bytes": 740352,
+      "has_audio": true,
+      "audio_file": "lyalya_story_09.m4a"
+    },
+    {
+      "id": "lisa-i-lyagushka",
+      "path": "stories/lisa-i-lyagushka.mp4",
+      "title": "Лиса и лягушка",
+      "target_sound": "Л",
+      "duration_sec": 20.05,
+      "size_bytes": 689152,
+      "has_audio": true,
+      "audio_file": "lyalya_story_10.m4a"
+    },
+    {
+      "id": "luna-i-lena",
+      "path": "stories/luna-i-lena.mp4",
+      "title": "Луна Лена",
+      "target_sound": "Л",
+      "duration_sec": 20.05,
+      "size_bytes": 699392,
+      "has_audio": true,
+      "audio_file": "lyalya_story_11.m4a"
+    },
+    {
+      "id": "kot-kuzma",
+      "path": "stories/kot-kuzma.mp4",
+      "title": "Кот Кузьма",
+      "target_sound": "К",
+      "duration_sec": 20.05,
+      "size_bytes": 640000,
+      "has_audio": true,
+      "audio_file": "lyalya_story_12.m4a"
+    },
+    {
+      "id": "gus-grisha",
+      "path": "stories/gus-grisha.mp4",
+      "title": "Гусь Гриша",
+      "target_sound": "Г",
+      "duration_sec": 20.05,
+      "size_bytes": 630784,
+      "has_audio": true,
+      "audio_file": "lyalya_story_13.m4a"
+    },
+    {
+      "id": "khomyak-khrabry",
+      "path": "stories/khomyak-khrabry.mp4",
+      "title": "Хомяк Храбрый",
+      "target_sound": "Х",
+      "duration_sec": 20.05,
+      "size_bytes": 666624,
+      "has_audio": true,
+      "audio_file": "lyalya_story_14.m4a"
+    },
+    {
+      "id": "mishka-i-mishutka",
+      "path": "stories/mishka-i-mishutka.mp4",
+      "title": "Мишка и мишутка",
+      "target_sound": "Ш",
+      "duration_sec": 20.05,
+      "size_bytes": 658432,
+      "has_audio": true,
+      "audio_file": "lyalya_story_15.m4a"
+    },
+    {
+      "id": "pingvin-pyotr",
+      "path": "stories/pingvin-pyotr.mp4",
+      "title": "Пингвин Пётр",
+      "target_sound": "П",
+      "duration_sec": 20.01,
+      "size_bytes": 650240,
+      "has_audio": true,
+      "audio_file": "lyalya_story_16.m4a"
+    },
+    {
+      "id": "yozhik-egor",
+      "path": "stories/yozhik-egor.mp4",
+      "title": "Ёжик Егор",
+      "target_sound": "Е",
+      "duration_sec": 20.00,
+      "size_bytes": 658432,
+      "has_audio": true,
+      "audio_file": "lyalya_story_17.m4a"
+    },
+    {
+      "id": "babochka-bella",
+      "path": "stories/babochka-bella.mp4",
+      "title": "Бабочка Белла",
+      "target_sound": "Б",
+      "duration_sec": 20.03,
+      "size_bytes": 722944,
+      "has_audio": true,
+      "audio_file": "lyalya_story_18.m4a"
+    },
+    {
+      "id": "drakon-dima",
+      "path": "stories/drakon-dima.mp4",
+      "title": "Дракон Дима",
+      "target_sound": "Д",
+      "duration_sec": 20.03,
+      "size_bytes": 760832,
+      "has_audio": true,
+      "audio_file": "lyalya_story_19.m4a"
+    },
+    {
+      "id": "tigr-timur",
+      "path": "stories/tigr-timur.mp4",
+      "title": "Тигр Тимур",
+      "target_sound": "Т",
+      "duration_sec": 20.00,
+      "size_bytes": 713728,
+      "has_audio": true,
+      "audio_file": "lyalya_story_20.m4a"
+    }
   ]
 }
