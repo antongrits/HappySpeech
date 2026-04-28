@@ -45,11 +45,20 @@ final class SyncServiceTests: XCTestCase {
 
     /// Создаёт RealmActor с изолированной in-memory Realm —
     /// каждый тест получает чистое хранилище.
+    ///
+    /// ВАЖНО: устанавливает `Realm.Configuration.defaultConfiguration` в этот же
+    /// in-memory identifier, чтобы `asyncFetchMapped`/`asyncWrite` (которые
+    /// внутри используют `Realm(actor:)` → defaultConfiguration) видели
+    /// те же данные, что и sync `open(configuration:)`.
+    /// SyncServiceIntegrationTests также меняет defaultConfiguration — без этой
+    /// установки unit тесты, идущие после Integration, читают чужой Realm.
     private func makeRealmActor() async throws -> RealmActor {
-        let actor = RealmActor()
+        let memId = "sync-unit-\(UUID().uuidString)"
         var config = Realm.Configuration()
-        config.inMemoryIdentifier = UUID().uuidString
+        config.inMemoryIdentifier = memId
         config.schemaVersion = RealmSchemaVersion.current
+        Realm.Configuration.defaultConfiguration = config
+        let actor = RealmActor()
         try await actor.open(configuration: config)
         return actor
     }
@@ -128,6 +137,8 @@ final class SyncServiceTests: XCTestCase {
     func testDrainQueueEmptiesOnSuccess() async throws {
         let realm = try await makeRealmActor()
         let sut = makeSUT(realmActor: realm)
+        // Дать hydratePendingCount() из init завершиться до enqueue
+        try await Task.sleep(nanoseconds: 500_000_000)
 
         try await sut.enqueue(operation: makeOperation())
         try await sut.drainQueue()
@@ -155,6 +166,8 @@ final class SyncServiceTests: XCTestCase {
         }
 
         let sut = makeSUT(realmActor: realm)
+        // Дать hydratePendingCount() из init завершиться
+        try await Task.sleep(nanoseconds: 500_000_000)
         try await sut.drainQueue()
 
         let dtos = await realm.asyncFetchMapped(SyncQueueItem.self) { item in
@@ -215,12 +228,16 @@ final class SyncServiceTests: XCTestCase {
     func testSyncStatePublishesSyncing() async throws {
         let realm = try await makeRealmActor()
         let sut = makeSUT(realmActor: realm)
+        // Дать hydratePendingCount() завершиться
+        try await Task.sleep(nanoseconds: 500_000_000)
         try await sut.enqueue(operation: makeOperation())
 
         let (collectTask, collector) = startCollecting(from: sut)
+        // Дать collector-Task успеть подписаться на stream до начала drain
+        try await Task.sleep(nanoseconds: 200_000_000)
         try await sut.drainQueue()
         // Даём Task время обработать последние события
-        try await Task.sleep(nanoseconds: 80_000_000)
+        try await Task.sleep(nanoseconds: 500_000_000)
         collectTask.cancel()
 
         let hasSyncing = await collector.contains { state in
@@ -387,6 +404,9 @@ final class SyncServiceTests: XCTestCase {
                 await recorder.record(delay)
             }
         )
+
+        // Дать hydratePendingCount() из init завершиться
+        try await Task.sleep(nanoseconds: 500_000_000)
 
         // Items с retryCount 1, 2, 3 — sleeper срабатывает для каждого (retryCount > 0)
         for retryCount in 1...3 {
