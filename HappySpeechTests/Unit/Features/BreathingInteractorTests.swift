@@ -217,4 +217,136 @@ final class BreathingInteractorTests: XCTestCase {
         XCTAssertEqual(lo, 1.0, accuracy: 0.001)
         XCTAssertEqual(hi, 3.0, accuracy: 0.001)
     }
+
+    // MARK: - 9. Additional batch 2 tests
+
+    func test_normalise_zeroThreshold_returnsZero() {
+        let result = BreathingInteractor.normalise(0.5, threshold: 0)
+        XCTAssertEqual(result, 0)
+    }
+
+    func test_normalise_amplitudeEqualToThreshold_returns0_5() {
+        // amplitude=t, threshold=t → t/(t*2) = 0.5
+        let result = BreathingInteractor.normalise(0.1, threshold: 0.1)
+        XCTAssertEqual(result, 0.5, accuracy: 0.001)
+    }
+
+    func test_normalise_negativeAmplitude_clampedTo0() {
+        let result = BreathingInteractor.normalise(-1.0, threshold: 0.1)
+        XCTAssertEqual(result, 0)
+    }
+
+    func test_objectScale_halfNormalised_returnsMidpoint() {
+        // 1 + 0.5*(3-1) = 2.0
+        let result = BreathingInteractor.objectScale(for: 0.5, cap: 3.0)
+        XCTAssertEqual(result, 2.0, accuracy: 0.001)
+    }
+
+    func test_scoring_zeroRequired_returnsZero() {
+        let score = BreathingScoring.score(stableRatio: 1.0, durationSec: 10, required: 0)
+        XCTAssertEqual(score, 0)
+    }
+
+    func test_scoring_durationBeyondRequired_clampedToFull() {
+        let score = BreathingScoring.score(stableRatio: 1.0, durationSec: 100, required: 10)
+        XCTAssertEqual(score, 1.0, accuracy: 0.001)
+    }
+
+    func test_breathingScene_totalPetals_dandelion() {
+        XCTAssertEqual(BreathingScene.dandelion.totalPetals, 12)
+        XCTAssertEqual(BreathingScene.candle.totalPetals, 1)
+        XCTAssertEqual(BreathingScene.balloon.totalPetals, 10)
+    }
+
+    func test_advanceTutorial_fromStep0_goesToStep1() async {
+        let (sut, _, _, _) = makeSUT(micGranted: true)
+        await sut.beginGame(activityId: "adv-001", difficulty: .easy)
+
+        await sut.advanceTutorial()
+
+        if case .tutorial(let step) = sut.state {
+            XCTAssertEqual(step, 1)
+        } else {
+            XCTFail("Expected tutorial(1), got \(sut.state)")
+        }
+    }
+
+    func test_advanceTutorial_fromStep1_goesToStep2() async {
+        let (sut, _, _, _) = makeSUT(micGranted: true)
+        await sut.beginGame(activityId: "adv-002", difficulty: .easy)
+        await sut.advanceTutorial()
+
+        await sut.advanceTutorial()
+
+        if case .tutorial(let step) = sut.state {
+            XCTAssertEqual(step, 2)
+        } else {
+            XCTFail("Expected tutorial(2), got \(sut.state)")
+        }
+    }
+
+    func test_advanceTutorial_whenNotInTutorial_doesNothing() async {
+        let (sut, _, _, _) = makeSUT()
+        // state = .idle
+
+        await sut.advanceTutorial()
+
+        XCTAssertEqual(sut.state, .idle)
+    }
+
+    func test_cancel_resetsToIdle() async {
+        let (sut, _, _, _) = makeSUT()
+        await sut.beginGame(activityId: "cancel-001", difficulty: .easy)
+
+        await sut.cancel()
+
+        XCTAssertEqual(sut.state, .idle)
+    }
+
+    func test_cancel_stopsAudioWorker() async {
+        let (sut, _, audio, _) = makeSUT()
+        await sut.beginGame(activityId: "cancel-002", difficulty: .easy)
+
+        await sut.cancel()
+
+        XCTAssertGreaterThanOrEqual(audio.stopCount, 1)
+    }
+
+    func test_submitAttempt_callsPresenter() {
+        let (sut, spy, _, _) = makeSUT()
+
+        sut.submitAttempt(.init())
+
+        XCTAssertFalse(spy.submitResponses.isEmpty)
+    }
+
+    func test_pushAmplitude_aboveThreshold_triggersBlowStartHaptic() {
+        let (sut, _, _, haptic) = makeSUT()
+        // threshold = max(0.03, 0.05 * 2.0) = 0.1
+        sut._test_forceEnterPlaying(baseline: 0.05)
+
+        sut._test_pushAmplitude(0.2)
+
+        XCTAssertEqual(haptic.blowStartCount, 1)
+    }
+
+    func test_gameConfig_easyRequiredDuration() {
+        let config = BreathingGameConfig.forDifficulty(.easy)
+        XCTAssertEqual(config.requiredDurationSec, 5, accuracy: 0.001)
+    }
+
+    func test_gameConfig_hardThresholdMultiplierHigherThanEasy() {
+        let easy = BreathingGameConfig.forDifficulty(.easy)
+        let hard = BreathingGameConfig.forDifficulty(.hard)
+        XCTAssertGreaterThan(hard.thresholdMultiplier, easy.thresholdMultiplier)
+    }
+
+    func test_stableRatio_allBelowThreshold_isZero() {
+        let (sut, _, _, _) = makeSUT()
+        sut._test_forceEnterPlaying(baseline: 0.1)
+        // threshold ~ 0.2; push only quiet samples
+        for _ in 0..<10 { sut._test_pushAmplitude(0.01) }
+
+        XCTAssertEqual(sut._test_currentStableRatio(), 0.0, accuracy: 0.001)
+    }
 }
