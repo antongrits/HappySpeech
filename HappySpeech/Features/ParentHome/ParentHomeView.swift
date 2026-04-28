@@ -129,6 +129,9 @@ private struct ParentDashboardTab: View {
                         homeTaskCard(homeTask)
                     }
 
+                    // Family Calendar card
+                    familyCalendarCard
+
                     // Recommendations
                     recommendationsSection
                 }
@@ -391,6 +394,42 @@ private struct ParentDashboardTab: View {
         case "moderate": return ColorTokens.Brand.gold
         default:          return ColorTokens.Semantic.success
         }
+    }
+
+    // MARK: - Family Calendar Card
+
+    private var familyCalendarCard: some View {
+        HSCard(style: .elevated) {
+            HStack(spacing: SpacingTokens.sp3) {
+                Image(systemName: "calendar.badge.checkmark")
+                    .font(.system(size: 28, weight: .semibold))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "family_calendar.card.title"))
+                        .font(TypographyTokens.headline())
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                    Text(String(localized: "family_calendar.card.subtitle"))
+                        .font(TypographyTokens.body())
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp4)
+        }
+        .onTapGesture {
+            coordinator.navigate(to: .familyCalendar)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            String(localized: "family_calendar.card.title") + ". " +
+            String(localized: "family_calendar.card.subtitle")
+        )
+        .accessibilityHint(String(localized: "family_calendar.a11y.open_hint"))
+        .environment(\.circuitContext, .parent)
     }
 
     private var recommendationsSection: some View {

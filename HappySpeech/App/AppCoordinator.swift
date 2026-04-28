@@ -29,6 +29,7 @@ enum AppRoute: Hashable {
     case homeTasks
     /// M6.16: Повторный скрининг из ParentHome.
     case screening(childId: String)
+    case familyCalendar
 }
 
 enum PermissionType: Hashable {
@@ -297,6 +298,12 @@ struct AppCoordinatorView: View {
                 onFinish: { _ in coordinator.navigate(to: .parentHome) },
                 onCancel: { coordinator.navigate(to: .parentHome) }
             )
+            .environment(\.circuitContext, .parent)
+
+        case .familyCalendar:
+            NavigationStack {
+                FamilyCalendarView()
+            }
             .environment(\.circuitContext, .parent)
         }
     }

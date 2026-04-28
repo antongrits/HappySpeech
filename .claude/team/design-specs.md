@@ -7981,3 +7981,475 @@ class CustomizationObject: Object {
 - **backend-developer F2-010:** Firestore security rules для `users/{uid}/customization` — только владелец читает/пишет; добавить в `firestore.rules`
 - **sound-curator F2-009:** 3 файла preview голосов — `lyalya_voice_classic_preview.m4a`, `lyalya_voice_soft_preview.m4a`, `lyalya_voice_cheerful_preview.m4a`; фраза «Привет! Я Ляля! Давай заниматься!»; формат m4a 22050Гц моно; длина ~3с
 - **code-reviewer + qa-engineer:** snapshot тесты для SkinCard (selected/unselected × 5 скинов), ColorPaletteCircle (×3), VoiceRow (×3); light + dark тема; iPhone SE + iPhone 17 Pro
+
+---
+
+## Семейный календарь — UI спека (Plan v9 Блок F3, M13 extension #3)
+
+**Дата:** 2026-04-28
+**Контур:** parent
+**Статус:** спека готова, ожидает VIP реализации
+**LOC цель кода:** ~1 800 LOC (VIP + Swift Charts heatmap + custom calendar grid)
+
+---
+
+### Точка входа
+
+`ParentHomeView` → вкладка `.dashboard` → `ParentDashboardTab`.
+Добавить новую карточку-CTA **в верхнюю секцию** дашборда (после summary-карточек, до weekly chart):
+
+```swift
+// ParentDashboardTab — новый элемент
+HSCard {
+    HStack(spacing: SpacingTokens.medium) {
+        Image(systemName: "calendar.badge.checkmark")
+            .font(.system(size: 28, weight: .semibold))
+            .foregroundStyle(ColorTokens.Brand.primary)
+        VStack(alignment: .leading, spacing: SpacingTokens.xs) {
+            Text(String(localized: "family_calendar.card.title"))
+                .font(TypographyTokens.headline())
+                .foregroundStyle(ColorTokens.Parent.ink)
+            Text(String(localized: "family_calendar.card.subtitle"))
+                .font(TypographyTokens.caption())
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+        }
+        Spacer()
+        Image(systemName: "chevron.right")
+            .foregroundStyle(ColorTokens.Parent.inkSoft)
+    }
+    .padding(SpacingTokens.cardPadding)
+}
+.onTapGesture { coordinator.push(.familyCalendar) }
+```
+
+SF Symbol: `calendar.badge.checkmark` (iOS 17+).
+NavigationStack push → `FamilyCalendarView`.
+
+---
+
+### FamilyCalendarView — главный экран
+
+**Контейнер:** `NavigationStack` → `ScrollView(.vertical, showsIndicators: false)`
+**Background:** `ColorTokens.Parent.bg` (ignoresSafeArea)
+**Nav title:** `String(localized: "family_calendar.title")` — «Семейный календарь», `.inline`
+**Nav bar trailing:** кнопка «Фильтр» (SF `line.3.horizontal.decrease.circle`) — reserved, F3 scope
+
+**VStack(alignment: .leading, spacing: SpacingTokens.sectionSpacing):**
+1. ChildrenStrip
+2. MonthCalendarView
+3. HeatmapView
+4. ComparisonCard (conditional, если выбраны 2+ детей)
+5. InsightsList
+
+Внешние отступы: `.padding(.horizontal, SpacingTokens.contentMarginH)` + `.padding(.vertical, SpacingTokens.large)`.
+
+---
+
+### Секция 1 — ChildrenStrip
+
+**Назначение:** выбор ребёнка (или «Все») для фильтрации данных во всех секциях ниже.
+
+**Layout:**
+```
+SectionHeader("family_calendar.children.title")  ← TypographyTokens.title(), Parent.ink
+ScrollView(.horizontal, showsIndicators: false) {
+    HStack(spacing: SpacingTokens.medium) {
+        ChildAvatarCard("Все")   // всегда первый
+        ChildAvatarCard(child1)
+        ChildAvatarCard(child2)
+        ...
+        AddChildCapsule()        // всегда последний
+    }
+    .padding(.horizontal, SpacingTokens.contentMarginH)
+}
+```
+
+**ChildAvatarCard — размер 80×100pt:**
+- Фото: `AsyncImage` 56×56pt круглый clip, либо initials-заглушка (`ColorTokens.Brand.primary.opacity(0.15)` фон + инициалы `TypographyTokens.headline()`)
+- Имя: `TypographyTokens.caption()`, `Parent.ink`, `.lineLimit(1)`, ширина 80pt
+- Streak badge: если `streak > 0` → маленький HStack внизу: SF `flame.fill` (Brand.primary, 10pt) + число + «д»; если `streak == 0` → пусто
+- Selected state: `RoundedRectangle(cornerRadius: RadiusTokens.card).stroke(ColorTokens.Brand.primary, lineWidth: 2)` + `Brand.primary.opacity(0.08)` overlay
+- Unselected: `ColorTokens.Parent.surface` фон, `RadiusTokens.card` угол
+- Анимация смены выбора: `withAnimation(MotionTokens.spring)`
+- Touch target: 80×100pt (≥56pt — ok для parent контура)
+- Accessibility: `accessibilityLabel("family_calendar.a11y.child_card")` → «Ребёнок: \(name). \(streak) дней подряд. Дважды нажмите чтобы выбрать»
+- `accessibilityAddTraits(isSelected ? .isSelected : [])` 
+
+**AddChildCapsule:**
+- Размер 80×100pt, пунктирная рамка `Parent.line`, цвет фона `Parent.surface`
+- Иконка SF `plus.circle` (24pt, `Parent.inkMuted`) + текст `caption()` «Добавить»
+- Tap: `coordinator.push(.onboarding)` (deep-link создание ребёнка, вне scope F3)
+- Accessibility: `accessibilityLabel(String(localized: "family_calendar.children.add"))`
+
+**Состояние «Все»** (selectedChildId == nil):
+- ChildAvatarCard с иконкой SF `person.2.fill` вместо фото
+- Имя: «Все»
+- При выборе «Все» → все секции ниже агрегируют данные по всем детям
+
+---
+
+### Секция 2 — MonthCalendarView
+
+**Назначение:** визуализация дней с активностью за текущий / выбранный месяц.
+
+**Layout:**
+```
+VStack(spacing: SpacingTokens.medium) {
+    MonthHeader           ← HStack: «← Апрель 2026 →»
+    WeekdayLabels         ← HStack 7 колонок: «Пн Вт Ср Чт Пт Сб Вс»
+    LazyVGrid(columns: 7 × GridItem(.flexible()))  ← 6 строк max
+}
+.padding(SpacingTokens.cardPadding)
+.background(ColorTokens.Parent.surface)
+.clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card))
+```
+
+**SectionHeader:** `String(localized: "family_calendar.month.label")` — «Календарь активности».
+
+**MonthHeader:**
+- `TypographyTokens.headline()`, `Parent.ink`
+- Кнопки «←» / «→»: `HSButton(.ghost)`, SF `chevron.left` / `chevron.right`, 44×44pt touch target
+- Текущий месяц + год центром
+
+**WeekdayLabels:** 7 меток `TypographyTokens.caption()`, `Parent.inkMuted`, ширина = 1/7 доступной ширины, выравнивание `.center`.
+На iPhone SE (375pt): каждая колонка ≈ (375−32−32)/7 ≈ 44pt — умещается.
+
+**Ячейка дня (DayCell) — ~44×44pt:**
+- Число дня: `TypographyTokens.caption()`, цвет зависит от типа:
+  - Обычный: `Parent.ink`
+  - Чужой месяц (leading/trailing): `Parent.inkSoft.opacity(0.4)`
+  - Сегодня: белый текст на `Brand.primary` круге 32pt
+  - Будущий: `Parent.inkSoft.opacity(0.35)`
+- Точка-индикатор активности (внизу ячейки, 5pt diameter):
+  - 0 сессий: нет точки
+  - 1–3 сессии: `Brand.primary.opacity(0.35)`
+  - 4–6 сессий: `Brand.primary.opacity(0.65)`
+  - 7+ сессий: `Brand.primary` (насыщенный)
+- Tap → `bottomSheetDayDetail(date:)` — bottom sheet с деталями дня
+- Accessibility: `accessibilityLabel(String(format: NSLocalizedString("family_calendar.a11y.calendar_cell", comment: ""), dateString, sessionCount))`
+
+**Переключение месяца:**
+- Анимация: `withAnimation(.page)` → `.transition(.asymmetric(insertion: .move(edge: nextMonth ? .trailing : .leading), removal: .move(edge: nextMonth ? .leading : .trailing)))`
+- Reduced Motion: `.opacity` fade вместо slide
+
+**DayDetailSheet (bottom sheet):**
+- `.presentationDetents([.medium])`, `dragIndicator: .visible`
+- Заголовок: дата (TypographyTokens.headline)
+- Список сессий за день: `String(format: "family_calendar.detail.day_format", childName, sessionCount, accuracyPercent)`
+- Если 0 сессий: empty label «Нет занятий»
+
+---
+
+### Секция 3 — HeatmapView (Swift Charts)
+
+**Назначение:** история активности за последние 12 недель — тепловая карта по дням.
+
+**SectionHeader:** `String(localized: "family_calendar.heatmap.title")` — «История за 12 недель».
+
+**Chart структура:**
+```swift
+Chart(heatmapData) { entry in
+    RectangleMark(
+        x: .value("Неделя", entry.weekIndex),
+        y: .value("День", entry.weekday)
+    )
+    .foregroundStyle(colorScale(entry.sessionCount))
+    .cornerRadius(3)
+}
+.chartXAxis { ... }   // неделя (1..12), labels: "−12н" .. "Сейчас"
+.chartYAxis { ... }   // дни недели
+.frame(height: 120)
+```
+
+**Цветовая шкала sessionCount → Color:**
+| Значение | Цвет |
+|---|---|
+| 0 | `Parent.surface` (пусто) |
+| 1 | `Brand.primary.opacity(0.15)` |
+| 2–3 | `Brand.primary.opacity(0.35)` |
+| 4–6 | `Brand.primary.opacity(0.60)` |
+| 7+ | `Brand.primary` |
+
+**Оси:**
+- X axis (неделя): labels через `AxisMarks(values: .stride(by: 3))` — показывать каждую 3-ю неделю, `TypographyTokens.caption()`, `Parent.inkMuted`
+- Y axis (день): 7 меток «Пн»..«Вс», локализованные ключи `family_calendar.heatmap.day_mon`..`day_sun`
+
+**Tap-взаимодействие:**
+```swift
+.chartOverlay { proxy in
+    GeometryReader { geo in
+        Rectangle().fill(.clear).contentShape(Rectangle())
+            .onTapGesture { location in
+                // resolve weekIndex + weekday из координат
+                // → showDayDetail(resolvedDate)
+            }
+    }
+}
+```
+Tap по ячейке → `bottomSheetDayDetail(date:)` (тот же sheet что в MonthCalendar).
+
+**iPhone SE адаптация (375pt):** уменьшить до 8 недель вместо 12.
+Детект: `@Environment(\.horizontalSizeClass)` `.compact` + screenWidth < 390 → `weeksCount = 8`.
+
+**Accessibility:**
+- `accessibilityLabel` для каждой ячейки: «\(weekdayName), \(dateString): \(sessionCount) занятий»
+- `accessibilityHint`: «Дважды нажмите для деталей»
+- Reduced Motion: нет специальных анимаций (chart статичен)
+
+---
+
+### Секция 4 — ComparisonCard (conditional)
+
+**Условие отображения:** `selectedChildId == nil` (выбран «Все») И детей в семье ≥ 2.
+
+**SectionHeader:** `String(localized: "family_calendar.comparison.title")` — «Сравнение».
+
+**Layout:**
+```
+ScrollView(.horizontal, showsIndicators: false) {
+    HStack(alignment: .top, spacing: SpacingTokens.medium) {
+        ForEach(children) { child in
+            ChildSummaryCard(child: child)
+        }
+    }
+    .padding(.horizontal, SpacingTokens.contentMarginH)
+}
+```
+
+**ChildSummaryCard — 160×200pt:**
+- Фото / initials (56×56pt, круглый) — центр сверху
+- Имя: `TypographyTokens.headline()`, `Parent.ink`
+- Top achievement line: SF `star.fill` (Brand.gold, 12pt) + текст «Лучший звук: Ш (87%)» — `caption()`, `Parent.inkMuted`
+- Comparison delta (если есть): «на 20% лучше с Ш» — `caption()`, `Semantic.success` или `Semantic.error` в зависимости от знака
+- Фон: `Parent.surface`, `RadiusTokens.card`, shadow `Parent.line.opacity(0.3)`
+
+**Comparison delta:**
+- Вычисляется в Presenter: для каждого звука → лучший ребёнок → delta vs среднее семьи
+- Формат: `String(format: NSLocalizedString("family_calendar.comparison.format", comment: ""), childName, soundName, deltaPercent)`
+- Пример: «Вася — Ш на 20% лучше»
+
+**CTA «Сравнить всех»:**
+- `HSButton(.secondary, title: "family_calendar.cta.compare_all")`
+- Ширина `.infinity`, высота 56pt
+- Зарезервировано для будущего drill-down экрана (F3 scope: только показ карточек)
+
+---
+
+### Секция 5 — InsightsList
+
+**Назначение:** LLM-generated insights о прогрессе семьи (3–5 пунктов).
+
+**SectionHeader:** `String(localized: "family_calendar.insights.title")` — «Подсказки».
+
+**Layout:**
+```
+VStack(alignment: .leading, spacing: SpacingTokens.medium) {
+    ForEach(insights) { insight in
+        InsightRow(insight: insight)
+    }
+}
+.padding(SpacingTokens.cardPadding)
+.background(ColorTokens.Parent.surface)
+.clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card))
+```
+
+**InsightRow:**
+- HStack(spacing: SpacingTokens.medium)
+- Иконка: SF symbol из `insight.iconName` (системный, 20pt, `Brand.primary`)
+- Текст: `TypographyTokens.body()`, `Parent.ink`, `.lineLimit(nil)`
+- Пример иконок: `flame.fill` (streak), `star.fill` (достижение), `lightbulb.fill` (рекомендация)
+
+**Данные:**
+- Генерируются через `LLMDecisionService.generateInsights(familyStats:)` — добавить decision point если метод отсутствует
+- Фолбэк (оффлайн / LLM недоступен): статичный список из Presenter на основе правил:
+  - `streak > 4` → «[Имя] играл [N] дней подряд — отличный темп!»
+  - `bestImprovedSound != nil` → «[Имя] освоил звук [X] за [N] дней — молодец!»
+  - Нет данных за последние 7 дней → «Попробуйте позаниматься сегодня!»
+- Максимум 5 insights, минимум 1 (fallback)
+
+**Loading state:** `ProgressView()` 24pt, `Brand.primary` tint, по центру карточки — пока LLM генерирует.
+
+**Empty state всей FamilyCalendarView** (нет ни одной сессии у всех детей):
+```
+VStack(spacing: SpacingTokens.xxl) {
+    Image(systemName: "calendar.badge.exclamationmark")
+        .font(.system(size: 56))
+        .foregroundStyle(ColorTokens.Parent.inkSoft)
+    Text(String(localized: "family_calendar.empty.title"))
+        .font(TypographyTokens.title())
+        .foregroundStyle(ColorTokens.Parent.ink)
+    Text(String(localized: "family_calendar.empty.subtitle"))
+        .font(TypographyTokens.body())
+        .foregroundStyle(ColorTokens.Parent.inkMuted)
+        .multilineTextAlignment(.center)
+}
+.frame(maxWidth: .infinity, maxHeight: .infinity)
+.padding(SpacingTokens.contentMarginH)
+```
+
+---
+
+### Токены (сводка для разработчика)
+
+| Элемент | Токен |
+|---|---|
+| Фон экрана | `ColorTokens.Parent.bg` |
+| Фон карточек | `ColorTokens.Parent.surface` |
+| Акцент / точки / выбор | `ColorTokens.Brand.primary` |
+| Текст заголовков | `ColorTokens.Parent.ink` |
+| Текст вторичный | `ColorTokens.Parent.inkMuted` |
+| Текст третичный | `ColorTokens.Parent.inkSoft` |
+| Успех (delta +) | `ColorTokens.Semantic.success` |
+| Награды delta | `ColorTokens.Brand.gold` |
+| Секции заголовок | `TypographyTokens.title()` |
+| Карточки заголовок | `TypographyTokens.headline()` |
+| Тело текста | `TypographyTokens.body()` |
+| Мелкий текст | `TypographyTokens.caption()` |
+| Внешние отступы | `SpacingTokens.contentMarginH = 16pt` |
+| Padding карточек | `SpacingTokens.cardPadding = 16pt` |
+| Между секциями | `SpacingTokens.sectionSpacing = 24pt` |
+| Радиус карточек | `RadiusTokens.card = 12pt` |
+| Анимация смены child | `MotionTokens.spring` |
+| Анимация смены месяца | `MotionTokens.page` |
+
+---
+
+### Анимации
+
+| Событие | Анимация | Reduced Motion |
+|---|---|---|
+| Смена выбранного ребёнка | `MotionTokens.spring` — пересчёт данных всех секций | opacity fade 0.15s |
+| Переключение месяца | `.asymmetric` slide `.page` | opacity fade 0.15s |
+| Появление InsightsList | staggered `spring` c delay 0.05s на каждый row | одновременный opacity |
+| Tap по ячейке heatmap/calendar | `MotionTokens.outQuick` scale 0.96→1.0 | нет scale |
+| Bottom sheet появление | нативный `.sheet` | нативный |
+
+---
+
+### Accessibility
+
+**VoiceOver порядок (accessibilityElement + sortPriority):**
+1. Nav title «Семейный календарь»
+2. ChildrenStrip — каждый ChildAvatarCard слева направо
+3. SectionHeader «Календарь активности»
+4. MonthHeader (кнопки «назад» / «вперёд» + текущий месяц)
+5. Ячейки дней — слева направо, сверху вниз (нативный порядок LazyVGrid)
+6. SectionHeader «История за 12 недель»
+7. Heatmap ячейки — с доступными метками
+8. SectionHeader «Сравнение» (если visible)
+9. ChildSummaryCard-ы
+10. SectionHeader «Подсказки»
+11. InsightRow-ы
+
+**Touch targets:**
+- ChildAvatarCard: 80×100pt — ok (≥56pt)
+- DayCell: ~44×44pt — в рамках parent контура (не детский, 44pt допустимо)
+- MonthHeader кнопки: 44×44pt — минимум HIG
+- InsightRow: не интерактивны, нет требования
+
+**Dynamic Type:**
+- Все тексты через `TypographyTokens` — поддерживают Dynamic Type автоматически
+- MonthCalendar WeekdayLabels и DayCell числа: `.minimumScaleFactor(0.7)` чтобы не сломать сетку на `.accessibilityLarge`
+- ChildAvatarCard имя: `.lineLimit(1)`, `.minimumScaleFactor(0.75)`
+
+**Цветовой контраст:**
+- `Parent.ink` on `Parent.surface`: соответствует WCAG AA (≥4.5:1)
+- `Brand.primary` as dot: декоративный элемент, контраст не требуется
+- Сегодня-ячейка: белый (#FFFFFF) on `Brand.primary` — проверить, что Brand.primary достаточно тёмный (CR ≥ 3:1 для крупных элементов)
+
+---
+
+### iPhone SE адаптация (width 375pt)
+
+| Секция | Изменение |
+|---|---|
+| ChildrenStrip | 3.5 карточки видимо (overflow scroll), без изменений размеров |
+| MonthCalendarView | 7 колонок ≈ 44pt каждая — умещается, DayCell числа `.minimumScaleFactor(0.75)` |
+| HeatmapView | `weeksCount = 8` вместо 12 (детект `screenWidth < 390`) |
+| ComparisonCard | ChildSummaryCard 140×180pt вместо 160×200pt |
+| InsightsList | без изменений |
+
+---
+
+### Локализация (только ru, 25 ключей)
+
+```
+family_calendar.title                → «Семейный календарь»
+family_calendar.card.title           → «Семейный календарь»
+family_calendar.card.subtitle        → «Прогресс всех детей»
+family_calendar.children.title       → «Дети»
+family_calendar.children.all         → «Все»
+family_calendar.children.add         → «Добавить ребёнка»
+family_calendar.month.label          → «Календарь активности»
+family_calendar.heatmap.title        → «История за 12 недель»
+family_calendar.heatmap.day_mon      → «Пн»
+family_calendar.heatmap.day_tue      → «Вт»
+family_calendar.heatmap.day_wed      → «Ср»
+family_calendar.heatmap.day_thu      → «Чт»
+family_calendar.heatmap.day_fri      → «Пт»
+family_calendar.heatmap.day_sat      → «Сб»
+family_calendar.heatmap.day_sun      → «Вс»
+family_calendar.comparison.title     → «Сравнение»
+family_calendar.comparison.format    → «%1$@ — %2$@ на %3$@%% лучше»
+family_calendar.insights.title       → «Подсказки»
+family_calendar.empty.title          → «Пока никто не играл»
+family_calendar.empty.subtitle       → «Зайди завтра — мы покажем ваш прогресс!»
+family_calendar.streak.format        → «%d дней подряд»
+family_calendar.streak.today         → «Сегодня играл!»
+family_calendar.detail.day_format    → «%1$@: %2$d занятий, %3$@%% правильных»
+family_calendar.cta.compare_all      → «Сравнить всех»
+family_calendar.error.load           → «Не удалось загрузить статистику»
+family_calendar.a11y.child_card      → «Ребёнок: %1$@. %2$d дней подряд. Дважды нажмите чтобы выбрать»
+family_calendar.a11y.calendar_cell   → «%1$@: %2$d занятий»
+family_calendar.a11y.today           → «Сегодня»
+```
+
+Итого 28 ключей. Добавить в `Resources/Localizable.xcstrings` раздел `family_calendar.*`.
+
+---
+
+### VIP структура (для разработчика)
+
+```
+HappySpeech/Features/FamilyCalendar/
+├── FamilyCalendarView.swift          ← главный экран (ScrollView + 5 секций)
+├── FamilyCalendarInteractor.swift    ← загрузка данных по всем детям
+├── FamilyCalendarPresenter.swift     ← форматирование: heatmap entries, comparisons, insights
+├── FamilyCalendarRouter.swift        ← push на dayDetail sheet, deeplink add-child
+├── FamilyCalendarModels.swift        ← Request / Response / ViewModel / HeatmapEntry / InsightItem
+└── Workers/
+    ├── FamilyStatsWorker.swift       ← агрегирует SessionRepository по childIds
+    └── FamilyInsightsWorker.swift    ← вызывает LLMDecisionService.generateInsights
+```
+
+**FamilyCalendarViewModel (ключевые поля):**
+```swift
+struct FamilyCalendarViewModel {
+    var children: [ChildAvatarViewModel]       // имя, фото URL, streak
+    var selectedChildId: String?               // nil = «Все»
+    var currentMonth: Date
+    var calendarDays: [CalendarDayViewModel]   // дата + sessionCount
+    var heatmapEntries: [HeatmapEntryViewModel] // weekIndex + weekday + sessionCount
+    var comparisonCards: [ChildSummaryViewModel] // топ звук + delta
+    var insights: [InsightItemViewModel]        // icon + text
+    var isLoading: Bool
+    var isLoadingInsights: Bool
+    var toastMessage: String?
+    var isEmpty: Bool
+}
+```
+
+**Зависимости Interactor:**
+- `ChildRepository` — список детей семьи
+- `SessionRepository` — история сессий (фильтр по childId + dateRange)
+- `LLMDecisionService` — generateInsights (async, может быть nil при оффлайн)
+
+---
+
+### Передача дальше
+
+- **ios-developer F3-002..F3-007:** VIP реализация в `HappySpeech/Features/FamilyCalendar/`; интеграция точки входа в `ParentDashboardTab`; Swift Charts heatmap (HSChart wrapper или прямой Chart); custom calendar grid через `LazyVGrid`; `LLMDecisionService.generateInsights` — добавить метод если отсутствует (минимум rule-based fallback)
+- **ios-developer F3-008:** добавить `AppCoordinator` route `.familyCalendar` → push `FamilyCalendarView`
+- **code-reviewer:** архитектура VIP для агрегированных данных (несколько детей), async LLM вызов с таймаутом
+- **qa-engineer:** snapshot тесты для `ChildAvatarCard` (selected/unselected), `DayCell` (today/active/empty), `HeatmapView` (full/empty); light + dark; iPhone SE + iPhone 17 Pro
+- **ios-debugger:** проверить memory leak в `Chart` с большим количеством `RectangleMark` (12 нед × 7 дней = 84 элемента × количество детей)
