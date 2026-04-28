@@ -78,13 +78,33 @@ public struct HSRiveView: View {
         ))
     }
 
+    // MARK: - Screenshot / test mode helpers
+
+    private var isScreenshotMode: Bool {
+        ProcessInfo.processInfo.environment["DISABLE_RIVE"] == "1"
+    }
+
+    private var isRunningTests: Bool {
+        ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+            || ProcessInfo.processInfo.arguments.contains("-UITestDisableAnimations")
+            || ProcessInfo.processInfo.arguments.contains("-UITestDemoMode")
+    }
+
+    private var shouldDisableRive: Bool {
+        isScreenshotMode || isRunningTests
+    }
+
     // MARK: - Body
 
     public var body: some View {
-        // Performance-профилирование: DISABLE_RIVE=1 обходит RiveRuntime при cold-start замерах.
-        // Используется только через xcrun simctl launch с env-переменной, в проде значение всегда nil.
-        if ProcessInfo.processInfo.environment["DISABLE_RIVE"] == "1" {
-            return AnyView(EmptyView())
+        // DISABLE_RIVE=1 — screenshot / marketing capture mode (xcrun simctl launch с env).
+        // XCTest / UITest окружения — RiveRuntime крашится на невалидных .riv файлах.
+        // В обоих случаях заменяем Rive на прозрачный placeholder того же размера.
+        if shouldDisableRive {
+            return AnyView(
+                Color.clear
+                    .accessibilityHidden(true)
+            )
         }
         return AnyView(Group {
             if riveModel.isLoaded, let vm = riveModel.viewModel {
@@ -148,14 +168,16 @@ final class RiveModel: ObservableObject {
     // MARK: - Init
 
     init(fileName: String, stateMachine: String) {
-        // В тестовом окружении RiveRuntime крашится на невалидных .riv файлах.
-        // XCTest устанавливает XCTestConfigurationFilePath в env (unit тесты).
-        // UITest host-процесс передаёт -UITestDisableAnimations как launch argument.
-        let isRunningTests =
-            ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+        // В тестовом и screenshot-окружениях RiveRuntime не инициализируем.
+        //   DISABLE_RIVE=1  — screenshot / marketing capture (xcrun simctl launch)
+        //   XCTestConfigurationFilePath — unit-тесты
+        //   -UITestDisableAnimations / -UITestDemoMode — UI-тесты
+        let shouldSkip =
+            ProcessInfo.processInfo.environment["DISABLE_RIVE"] == "1"
+            || ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
             || ProcessInfo.processInfo.arguments.contains("-UITestDisableAnimations")
             || ProcessInfo.processInfo.arguments.contains("-UITestDemoMode")
-        guard !isRunningTests else { return }
+        guard !shouldSkip else { return }
 
         guard let url = Bundle.main.url(forResource: fileName, withExtension: "riv") else {
             return
@@ -236,6 +258,15 @@ final class RiveModel: ObservableObject {
                 self?.scheduleNextBlink()
             }
         }
+    }
+}
+
+// MARK: - ProcessInfo helper
+
+extension ProcessInfo {
+    /// Возвращает `true` когда приложение запущено с `DISABLE_RIVE=1` (screenshot / marketing mode).
+    static var isScreenshotMode: Bool {
+        processInfo.environment["DISABLE_RIVE"] == "1"
     }
 }
 
