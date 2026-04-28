@@ -8911,3 +8911,436 @@ HappySpeech/Features/ParentChild/
 - **code-reviewer:** проверить thread-safety AVAudioRecorder в `FamilyVoiceRecorderWorker`; Realm write на background actor
 - **qa-engineer:** snapshot тесты `FamilyVoiceView` (empty/has-recordings), `FamilyVoiceSplitView` (iPhone SE/iPhone 17 Pro, light/dark); unit тест `FamilyVoiceScoringWorker` (mock scorer)
 - **ios-debugger:** проверить корректное освобождение AVAudioSession при dismiss `FamilyVoiceSplitView`
+
+---
+
+## Заикание module — UI спека (Plan v9 Блок F5, M13 extension #5)
+
+**Дата:** 2026-04-28
+**Контур:** parent (точка входа) + kid (4 упражнения)
+**Статус:** ⚠️ нужна реализация
+**LOC цель кода:** ~1 330 LOC (VIP + 4 sub-modes)
+**Связан с:** `stuttering-module-tz.md` (speech-specialist), `BreathingInteractor.swift` (reuse)
+
+---
+
+### Точка входа — ParentHomeView
+
+В ParentHomeView добавляется новая `HSCard` (секция «Специальные упражнения»):
+
+**HSCard «Тренировка плавной речи»**
+- SF Symbol: `waveform.path`
+- Цвет иконки: `ColorTokens.Brand.sky`
+- Заголовок: `TypographyTokens.headline(18)`, `ColorTokens.Parent.ink`
+- Подзаголовок: «4 упражнения для дома», `TypographyTokens.caption(12)`, `ColorTokens.Parent.inkMuted`
+- Corner radius: `RadiusTokens.card` (12pt)
+- Background: `ColorTokens.Parent.surface`
+- Видна только если `childProfile.hasFluencyGoal == true` (флаг в настройках родителя)
+
+При нажатии — показывается **welcome sheet** (модальный `.sheet`):
+
+**Welcome sheet (onboarding-предупреждение)**
+- Иллюстрация: Ляля с «открытой ладонью» (состояние `idle`)
+- Заголовок: `stuttering.welcome.title` («Перед началом»), `TypographyTokens.title(24)`
+- Текст: `stuttering.welcome.disclaimer`, `TypographyTokens.body(15)`, `ColorTokens.Parent.inkMuted`
+- CTA кнопка: `stuttering.welcome.cta` («Начать»), `HSButton` primary, высота 56pt
+- При tap «Начать» → dismiss sheet → push `StutteringView`
+- Повторно не показывается (флаг `hasSeenStutteringWelcome` в UserDefaults)
+
+---
+
+### StutteringView — главный экран модуля
+
+**Контур:** kid
+**Маскот «Ляля»:** присутствует вверху, состояние `idle` → `speaking` при tap на карточку
+
+**Layout:**
+- Background: `ColorTokens.Kid.bg`
+- Safe area top: NavigationBar с title `stuttering.entry.title` («Тренировка плавной речи»), `TypographyTokens.title(24)`, `.navigationBarTitleDisplayMode(.large)`
+- Под NavigationBar: `HSMascotView` 100×100pt, состояние `idle`, центр экрана по горизонтали
+- Ниже: `LazyVGrid` 2 колонки, `spacing: SpacingTokens.m (12pt)`, `padding: SpacingTokens.l (16pt)`
+
+**4 ExerciseCard (HSCard):**
+
+Каждая карточка:
+- Размер: `.infinity × 130pt` (ширина — по ячейке сетки)
+- Background: `ColorTokens.Kid.surface`
+- Corner radius: `RadiusTokens.large (16pt)`
+- Tap target: вся карточка, min 56×56pt (touch target соблюдён)
+- Внутри (VStack, spacing: SpacingTokens.s = 8pt):
+  - Иллюстрация SF Symbol или локальный ассет, 40×40pt
+  - Заголовок: `TypographyTokens.headline(18)`, `ColorTokens.Kid.ink`, `.lineLimit(2)`, `.minimumScaleFactor(0.85)`
+  - Длительность: `TypographyTokens.caption(12)`, `ColorTokens.Kid.inkMuted`
+
+| Карточка | SF Symbol | Цвет символа | Ключ заголовка | Длительность |
+|---|---|---|---|---|
+| Метроном | `metronome` | `Brand.primary` | `stuttering.exercise.metronome.title` | ~5 мин |
+| Дыхание | `leaf.fill` | `Brand.mint` | `stuttering.exercise.breathing.title` | ~3 мин |
+| Плавный старт | `light.beacon.max` | `Brand.butter` | `stuttering.exercise.soft_start.title` | ~5 мин |
+| Дневник | `book.fill` | `Brand.sky` | `stuttering.exercise.diary.title` | ~1 мин |
+
+**Адаптивность iPhone SE (width < 375pt):**
+- LazyVGrid переключается на 1 колонку через `@Environment(\.horizontalSizeClass)` или GeometryReader `width < 400pt`
+- Карточки: `.infinity × 100pt` в 1-колоночной сетке
+
+**Анимации:**
+- Появление карточек: `.spring` (MotionTokens), scale 0.9→1.0 + opacity 0→1, stagger 80ms между карточками
+- Reduced Motion: только opacity 0→1, duration 0.15s
+
+---
+
+### MetronomeView — упражнение 1 («Шагай за словом»)
+
+**Контур:** kid
+**Маскот «Ляля»:** вверху справа, 80×80pt, состояние:
+- `idle` — до старта
+- `listening` — во время тика и ожидания слога
+- `celebrating` — после прохождения всего слова
+
+**Layout (VStack, spacing: SpacingTokens.xxl = 24pt):**
+
+**1. Target word (верх)**
+- Текущее слово крупным шрифтом: `TypographyTokens.kidDisplay(40+)`, `ColorTokens.Kid.ink`
+- Разбивка на слоги через дефис (пример: «МА-ШИ-НА»), `ColorTokens.Brand.primary` для текущего активного слога
+- `TypographyTokens.display(36)`, `.lineLimit(1)`, `.minimumScaleFactor(0.7)`
+
+**2. Metronome track (центр)**
+- HStack из N ячеек (по числу слогов в слове), `spacing: SpacingTokens.m (12pt)`
+- Каждая ячейка: 48×48pt, corner radius `RadiusTokens.card (12pt)`
+- Состояния ячейки:
+  - Ожидание: `ColorTokens.Kid.surfaceAlt`, border `ColorTokens.Kid.line` 1pt
+  - Активная (текущий тик): `ColorTokens.Brand.primary`, scale 1.0→1.15 spring bounce, glow `Brand.primary` opacity 0.3, blur 8pt
+  - Засчитана: `ColorTokens.Brand.mint`, SF Symbol `checkmark` 16pt white
+- Ляля-персонаж делает «шаг» над дорожкой при каждом засчитанном слоге (translateX анимация)
+
+**3. Audio waveform**
+- `HSAudioWaveform` компонент, height 56pt, color `ColorTokens.Brand.primary`
+- Показывает RMS амплитуду микрофона в реальном времени
+- Порог подсвечивается горизонтальной линией `ColorTokens.Semantic.success` при превышении
+
+**4. Progress label (низ)**
+- `stuttering.metronome.progress.format` («Слог %d из %d»), `TypographyTokens.caption(12)`, `ColorTokens.Kid.inkMuted`
+
+**5. Start/Stop кнопка**
+- `HSButton` primary, ширина `.infinity`, высота 56pt, corner radius `RadiusTokens.button (10pt)`
+- «Начать» / «Стоп», `TypographyTokens.cta(17)`
+- Haptic: `.success` при засчитанном слоге, `UIImpactFeedbackGenerator(.light)` при каждом тике
+
+**6. Reward burst (после complete)**
+- `HSSticker` конфетти + Ляля `celebrating`
+- `MotionTokens.bounce` spring
+- 3 звезды (SF Symbol `star.fill` `ColorTokens.Brand.butter`), scale 0→1 с stagger 100ms
+
+**BPM уровни:**
+- Easy: 75 BPM → tick каждые 800 мс
+- Medium: 90 BPM → tick каждые 667 мс
+- Hard: 105 BPM → tick каждые 571 мс
+
+**Accessibility:**
+- Min touch target кнопки: 56×56pt
+- VoiceOver tick: `stuttering.metronome.tick` («Тик. Скажи слог»), `accessibilityLabel`
+- Reduced Motion: активная ячейка не масштабируется, только смена цвета Background
+
+---
+
+### BreathingTreeView — упражнение 2 («Длинный выдох»)
+
+**Контур:** kid
+**Reuse:** полный паттерн `BreathingView` + `BreathingInteractor`. Меняются только визуальные ассеты.
+
+**Отличия от базового BreathingView:**
+- Lottie-ассет: `breathing_tree.json` вместо `breathing_dandelion.json`
+  - Параметр `progress` 0.0–1.0 управляет распусканием листьев (аналогично одуванчику)
+  - При прерывании выдоха (амплитуда ниже порога >300 мс): листья «замирают» (progress не растёт)
+  - При 5-м успешном выдохе: дерево полностью в цвету, Ляля `celebrating`
+- Scene enum: `.tree` (добавить в `BreathingScene` enum)
+- Goal текст: «Поливай дерево долгим выдохом — дольше, чем до 3-х!»
+- Lottie-файл создаёт animator (F5-008)
+
+**Layout:** идентичен `BreathingView`, без изменений в структуре.
+
+**Токены:** без изменений, наследует от BreathingView.
+
+---
+
+### SoftOnsetView — упражнение 3 («Начни мягко»)
+
+**Контур:** kid
+**Маскот «Ляля»:** 100×100pt, центр вверху, состояния:
+- `speaking` — воспроизводит аудио-эталон
+- `listening` — ждёт ответа ребёнка
+- `celebrating` — soft onset засчитан
+- `encouraging` — hard onset, подбадривает
+
+**Layout (VStack, spacing: SpacingTokens.xl = 20pt):**
+
+**1. Target word**
+- Слово крупно: `TypographyTokens.kidDisplay(40+)`, `ColorTokens.Kid.ink`
+- Примеры (Easy stage): «АРБУЗ», «ОБЛАКО», «ЛУНА», «МАМА», «НЕБО»
+- `accessibilityLabel`: само слово + «Нажми на Лялю, чтобы услышать»
+
+**2. Lantern illustration**
+- Lottie `soft_onset_lantern.json`, 120×120pt, центр
+- 3 keyframe: `off` (выключен) → `flicker` (мигает при hard onset) → `bright` (горит при soft)
+- По умолчанию: `off`
+
+**3. Audio waveform — onset visualizer**
+- `HSAudioWaveform` height 72pt, первые 500 мс записи подсвечены:
+  - Зелёный (`Brand.mint`): attackTime ≥ 100 мс → soft onset
+  - Красный (`Semantic.error`): attackTime < 50 мс → hard onset
+  - Жёлтый (`Brand.butter`): attackTime 50–99 мс → borderline
+
+**4. Listen button (Ляля воспроизводит эталон)**
+- `HSButton` secondary, 56×56pt квадрат, SF Symbol `speaker.wave.2.fill`
+- Tap → `lya_stut_onset_go` m4a + Ляля `speaking`
+- Повторный tap допускается в любой момент
+
+**5. Record button**
+- `HSButton` primary, 80×80pt круг, SF Symbol `mic.fill` (idle) / `stop.fill` (recording)
+- Background: `Brand.primary` (idle), `Semantic.error` (recording)
+- Haptic: `.medium` при начале записи
+
+**6. Feedback label**
+- После анализа (≤500 мс задержка):
+  - Soft: `stuttering.soft_start.feedback.soft`, `ColorTokens.Semantic.success`, `TypographyTokens.title(24)`
+  - Hard: `stuttering.soft_start.feedback.hard`, `ColorTokens.Semantic.error`, `TypographyTokens.headline(18)`
+  - Borderline: «Почти! Ещё чуть плавнее», `Brand.butter`
+- Анимация появления: scale 0.8→1.0, `MotionTokens.bounce`
+
+**7. Attempt counter**
+- «Попытка %d из 5», `TypographyTokens.caption(12)`, `ColorTokens.Kid.inkMuted`
+
+**Accessibility:**
+- Min touch target: Record button 80×80pt (превышает минимум 56pt)
+- VoiceOver Listen button: «Послушать пример, кнопка»
+- VoiceOver Record button (idle): «Записать ответ, кнопка»; (recording): «Остановить запись, кнопка»
+- Reduced Motion: waveform — статичные цветные блоки вместо анимированного waveform
+
+---
+
+### FluencyDiaryView — упражнение 4 («Считаем спотыкания»)
+
+**Контур:** kid (запись) + parent (результаты, отдельный экран)
+
+#### FluencyDiaryView (детский интерфейс)
+
+**Маскот «Ляля»:** 100×100pt, вверху центр, состояния:
+- `idle` — до старта
+- `listening` — во время записи («Ляля слушает»)
+- `celebrating` — после окончания (нейтральный позитив, без цифр)
+
+**Layout (VStack, spacing: SpacingTokens.xl = 20pt):**
+
+**1. Instruction**
+- «Прочти текст вслух», `TypographyTokens.title(24)`, `ColorTokens.Kid.ink`
+- Только если ребёнок умеет читать; иначе «Повтори за Лялей» (режим переключается родителем в настройках)
+
+**2. Text block**
+- Карточка `HSCard`, padding `SpacingTokens.l (16pt)`, corner radius `RadiusTokens.card (12pt)`
+- Background: `ColorTokens.Kid.surface`
+- Текст 3–5 предложений, `TypographyTokens.body(15)` scaled → минимум 18pt в детском контуре
+- `ColorTokens.Kid.ink`, `.lineSpacing(LineSpacing.relaxed * 1.5)`, `.lineLimit(nil)`
+- 5 hardcoded текстов (MVP), пример: «Кошка спит на диване. Она мягкая и тёплая. Мама гладит кошку.»
+
+**3. HSAudioWaveform**
+- height: 56pt, color `ColorTokens.Brand.primary`
+- Активен только во время записи
+
+**4. Record button**
+- `HSButton` primary, ширина `.infinity`, высота 64pt
+- Idle: `stuttering.diary.cta.start` («Начать запись»), SF Symbol `mic.fill`
+- Recording: `stuttering.diary.cta.stop` («Готово»), SF Symbol `stop.fill`, background `Semantic.error`
+- Haptic: `.medium` при start, `.success` при stop
+
+**5. После остановки записи**
+- Ляля `celebrating` + нейтральная анимация «Молодец!»
+- Ребёнку НЕ показываются цифры спотыканий — только «Отлично!» (`stuttering.feedback.complete`)
+- Кнопка «Готово» → pop to StutteringView
+
+#### FluencyDiaryParentView (родительский интерфейс)
+
+Доступен через: Parent Dashboard → «История речи» → «Дневник плавности»
+
+**Layout:**
+- NavigationTitle: «Дневник плавности», `.navigationBarTitleDisplayMode(.inline)`
+- Background: `ColorTokens.Parent.bg`
+- Контент: `ScrollView` (VStack, spacing: `SpacingTokens.xxl = 24pt`)
+
+**Swift Charts — тренд «спотыканий на 100 слогов»**
+- `Chart` компонент, height: 200pt
+- X: дата сессии (последние 4 недели)
+- Y: `stuttering.diary.metric.format` («Спотыканий: %d на 100 слогов»)
+- Линия: `ColorTokens.Brand.primary`, lineWidth 2pt
+- Точки: `ColorTokens.Brand.primary` filled circle 6pt
+- Референсная линия Y=5: `ColorTokens.Semantic.warning` dashed, label «Норма ≤5»
+- Tooltip при tap на точку: дата + значение + `stuttering.diary.metric.normal` / `.elevated`
+
+**История сессий (список)**
+- `List` (или `LazyVStack`), каждая ячейка: дата + значение + статус нормы/превышения
+- Статус: SF Symbol `checkmark.circle.fill` `Semantic.success` (≤5) / `exclamationmark.circle.fill` `Semantic.warning` (>5)
+
+**Токены:**
+- `TypographyTokens.title(24)` — заголовок графика
+- `TypographyTokens.body(15)` — подписи осей
+- `TypographyTokens.caption(12)` — дата в ячейках
+
+---
+
+### Shared tokens для всего Stuttering module
+
+| Элемент | Токен |
+|---|---|
+| CTA кнопки | `ColorTokens.Brand.primary` |
+| Card backgrounds | `ColorTokens.Surface.elevated` / `Kid.surface` |
+| Заголовки упражнений | `TypographyTokens.headline(18)` |
+| Успех | `ColorTokens.Semantic.success` |
+| Ошибка | `ColorTokens.Semantic.error` |
+| Предупреждение | `ColorTokens.Semantic.warning` |
+| Прогресс-бар | `ColorTokens.Session.progressBar` |
+| Reward анимация | `MotionTokens.bounce` (response:0.4, damping:0.55) |
+
+---
+
+### Accessibility — весь модуль
+
+- **Min touch target:** 56×56pt для всех интерактивных элементов (kid контур); record button 80×80pt
+- **VoiceOver:**
+  - Tick метронома: `accessibilityLabel("Тик. Скажи слог")`, `accessibilityHint("Произнеси следующий слог")`
+  - Кнопка «Начать запись»: `accessibilityLabel("Начать запись")`, `accessibilityHint("Прочти текст вслух, я буду слушать")`
+  - Кнопка «Послушать пример»: `accessibilityLabel("Послушать пример Ляли")`
+  - Ячейка метронома (засчитана): `accessibilityLabel("Слог засчитан")`
+- **Dynamic Type:** минимум `title(24)` для целевых слов, `body(15)` → масштабируется до `accessibilityLarge`
+- **Reduced Motion:**
+  - MetronomeView: активная ячейка — только смена цвета (без scale)
+  - SoftOnsetView: waveform — статичные цветные блоки
+  - StutteringView: карточки появляются без scale, только opacity 0→1 за 0.15s
+  - BreathingTreeView: наследует логику Reduced Motion от BreathingView
+
+---
+
+### Адаптивность iPhone SE (width < 375pt)
+
+| Экран | Изменение |
+|---|---|
+| StutteringView | LazyVGrid 2 col → 1 col; карточка `.infinity × 100pt` |
+| MetronomeView | Track 5 ячеек × 48pt + 4 × 12pt gap = 288pt — помещается |
+| SoftOnsetView | Lantern 120→80pt; record button 80→64pt |
+| FluencyDiaryView | Text block font scale 0.9; record button 64→56pt |
+
+---
+
+### Локализация (ru-only, ~25 ключей)
+
+| Ключ | Значение |
+|---|---|
+| `stuttering.entry.title` | Тренировка плавной речи |
+| `stuttering.entry.subtitle` | 4 упражнения для дома |
+| `stuttering.welcome.title` | Перед началом |
+| `stuttering.welcome.disclaimer` | Это упражнения для домашней практики. Если у ребёнка серьёзное заикание — обратитесь к логопеду |
+| `stuttering.welcome.cta` | Начать |
+| `stuttering.exercise.metronome.title` | Шагай за словом |
+| `stuttering.exercise.metronome.subtitle` | Произноси слова в такт |
+| `stuttering.exercise.breathing.title` | Длинный выдох |
+| `stuttering.exercise.breathing.subtitle` | Дыши спокойно и плавно |
+| `stuttering.exercise.soft_start.title` | Начни мягко |
+| `stuttering.exercise.soft_start.subtitle` | Не начинай резко |
+| `stuttering.exercise.diary.title` | Считаем спотыкания |
+| `stuttering.exercise.diary.subtitle` | Прочти текст вслух |
+| `stuttering.metronome.tick` | Тик |
+| `stuttering.metronome.progress.format` | Слог %d из %d |
+| `stuttering.soft_start.feedback.soft` | Плавно! Молодец |
+| `stuttering.soft_start.feedback.hard` | Резко начал. Попробуй мягче |
+| `stuttering.soft_start.feedback.borderline` | Почти! Ещё чуть плавнее |
+| `stuttering.diary.cta.start` | Начать запись |
+| `stuttering.diary.cta.stop` | Готово |
+| `stuttering.diary.metric.format` | Спотыканий: %d на 100 слогов |
+| `stuttering.diary.metric.normal` | Норма (≤5) |
+| `stuttering.diary.metric.elevated` | Повышенно (>5) |
+| `stuttering.feedback.complete` | Отлично! |
+| `stuttering.feedback.try_again` | Попробуй ещё раз |
+| `stuttering.error.mic_permission` | Нужен доступ к микрофону |
+
+---
+
+### VIP структура (для разработчика)
+
+```
+HappySpeech/Features/StutteringModule/
+├── StutteringView.swift                     ← root, LazyVGrid 4 карточки
+├── StutteringInteractor.swift               ← координация, routing по sub-mode
+├── StutteringPresenter.swift                ← ViewModel для root
+├── StutteringRouter.swift                   ← push Metronome/Breathing/SoftOnset/Diary
+├── StutteringModels.swift                   ← Request / Response / ViewModel
+├── Metronome/
+│   ├── MetronomeView.swift                  ← track, waveform, reward burst
+│   ├── MetronomeInteractor.swift            ← BPM timer, RMS window detection
+│   └── MetronomeModels.swift
+├── BreathingExtended/
+│   └── BreathingExtendedInteractor.swift    ← composition BreathingInteractor, scene: .tree
+├── SoftOnset/
+│   ├── SoftOnsetView.swift                  ← lantern, waveform onset-colorizer, feedback
+│   ├── SoftOnsetInteractor.swift            ← attackTime analysis, attempt counter
+│   └── SoftOnsetModels.swift
+├── FluencyDiary/
+│   ├── FluencyDiaryView.swift               ← kid UI: текст, RMS waveform, record button
+│   ├── FluencyDiaryParentView.swift         ← Swift Charts тренд, история сессий
+│   ├── FluencyDiaryInteractor.swift         ← WhisperKit → FluencyAnalyzerWorker → Realm
+│   └── FluencyDiaryModels.swift
+└── Workers/
+    ├── MetronomeWorker.swift                ← AVAudioPlayer tick, Timer BPM
+    ├── FluencyAnalyzerWorker.swift          ← attackTime, prolongation, block detection
+    └── SpeechRecordWorker.swift             ← запись → WhisperKit transcript
+```
+
+**StutteringDisplay (@Observable, ключевые поля):**
+```swift
+@Observable class StutteringDisplay {
+    var selectedMode: StutteringMode? = nil        // metronome / breathing / softOnset / diary
+    var exerciseCards: [ExerciseCardViewModel] = []
+    var isWelcomeShown: Bool = false
+}
+
+@Observable class MetronomeDisplay {
+    var currentWord: String = ""
+    var syllables: [SyllableViewModel] = []        // ячейки дорожки
+    var currentSyllableIndex: Int = 0
+    var waveformLevels: [Float] = []
+    var isRunning: Bool = false
+    var progressLabel: String = ""
+    var showReward: Bool = false
+    var bpm: Int = 75
+}
+
+@Observable class SoftOnsetDisplay {
+    var currentWord: String = ""
+    var lanternState: LanternState = .off          // off / flicker / bright
+    var waveformColorMode: OnsetColorMode = .neutral // neutral / soft / borderline / hard
+    var feedbackText: String? = nil
+    var feedbackStyle: FeedbackStyle = .neutral
+    var attemptNumber: Int = 1
+    var isListening: Bool = false
+    var isRecording: Bool = false
+}
+
+@Observable class FluencyDiaryDisplay {
+    var currentText: String = ""
+    var waveformLevels: [Float] = []
+    var isRecording: Bool = false
+    var showComplete: Bool = false
+    // Parent only:
+    var sessions: [FluencySessionViewModel] = []
+    var chartData: [ChartPoint] = []
+}
+```
+
+---
+
+### Передача дальше
+
+- **ios-developer (F5-002):** VIP реализация в `HappySpeech/Features/StutteringModule/`; `BreathingExtended` как composition (не subclass) `BreathingInteractor`; добавить `FluencySessionObject` в Realm-миграцию M+1; добавить точку входа `HSCard` в `ParentHomeView` (условно по `hasFluencyGoal`)
+- **ios-developer (F5-003):** `AppCoordinator` route `.stutteringHome` → push `StutteringView`; `.fluencyDiaryParent` → push `FluencyDiaryParentView`
+- **animator (F5-008):** Lottie `breathing_tree.json` (progress 0.0–1.0, листья распускаются); Lottie `soft_onset_lantern.json` (3 keyframe: off/flicker/bright)
+- **sound-curator (F5-009):** 7 voice-over Ляли (lya_stut_intro, metro_go, breath_go, onset_go, onset_retry, diary_go, well_done) в формате .m4a 16kHz mono; `metronome_tick.caf` 50 мс 440 Гц; опционально `metronome_accent.caf`
+- **code-reviewer:** проверить thread-safety `MetronomeWorker` (Timer на main actor); Realm write `FluencySessionObject` на background actor; AVAudioSession deactivation при pop
+- **qa-engineer:** snapshot тесты `StutteringView` (light/dark), `MetronomeView` (Easy, light/dark), `SoftOnsetView` (idle + hard-onset feedback, light/dark), `FluencyDiaryView` (recording, light/dark); 15 unit-тестов по ТЗ speech-specialist; 1 UI smoke-тест
+- **ios-debugger:** проверить корректное освобождение AVAudioEngine при pop из каждого sub-mode

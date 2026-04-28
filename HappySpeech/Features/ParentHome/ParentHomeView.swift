@@ -135,6 +135,9 @@ private struct ParentDashboardTab: View {
                     // Family Calendar card
                     familyCalendarCard
 
+                    // Stuttering / Fluency module (if hasFluencyGoal enabled)
+                    stutteringCard
+
                     // Recommendations
                     recommendationsSection
                 }
@@ -471,6 +474,52 @@ private struct ParentDashboardTab: View {
         )
         .accessibilityHint(String(localized: "family_calendar.a11y.open_hint"))
         .environment(\.circuitContext, .parent)
+    }
+
+    // MARK: - Stuttering / Fluency card
+    //
+    // Visible only when `childProfile.hasFluencyGoal == true`.
+    // MVP: always shown (flag storage via UserDefaults key "hasFluencyGoal").
+
+    @ViewBuilder
+    private var stutteringCard: some View {
+        let hasFluencyGoal = UserDefaults.standard.bool(forKey: "hasFluencyGoal")
+        if hasFluencyGoal {
+            HSCard(style: .elevated) {
+                HStack(spacing: SpacingTokens.sp3) {
+                    Image(systemName: "waveform.path")
+                        .font(.system(size: 24, weight: .semibold))
+                        .foregroundStyle(ColorTokens.Brand.sky)
+                        .frame(width: 40, height: 40)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(String(localized: "stuttering.entry.title"))
+                            .font(TypographyTokens.headline(18))
+                            .foregroundStyle(ColorTokens.Parent.ink)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
+                        Text(String(localized: "stuttering.entry.subtitle"))
+                            .font(TypographyTokens.caption(12))
+                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    }
+
+                    Spacer()
+
+                    Image(systemName: "chevron.right")
+                        .foregroundStyle(ColorTokens.Parent.inkSoft)
+                        .accessibilityHidden(true)
+                }
+            }
+            .onTapGesture {
+                coordinator.navigate(to: .stutteringHome)
+            }
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel(
+                String(localized: "stuttering.entry.title") + ". " +
+                String(localized: "stuttering.entry.subtitle")
+            )
+            .environment(\.circuitContext, .parent)
+        }
     }
 
     private var recommendationsSection: some View {

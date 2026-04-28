@@ -19289,6 +19289,372 @@
           }
         }
       }
+    },
+    "stuttering.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тренировка плавной речи"
+          }
+        }
+      }
+    },
+    "stuttering.entry.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "4 упражнения для дома"
+          }
+        }
+      }
+    },
+    "stuttering.welcome.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перед началом"
+          }
+        }
+      }
+    },
+    "stuttering.welcome.disclaimer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Это упражнения для домашней практики. Если у ребёнка серьёзное заикание — обратитесь к логопеду"
+          }
+        }
+      }
+    },
+    "stuttering.welcome.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать"
+          }
+        }
+      }
+    },
+    "stuttering.exercise.metronome.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шагай за словом"
+          }
+        }
+      }
+    },
+    "stuttering.exercise.metronome.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Произноси слова в такт"
+          }
+        }
+      }
+    },
+    "stuttering.exercise.breathing.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Длинный выдох"
+          }
+        }
+      }
+    },
+    "stuttering.exercise.breathing.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дыши спокойно и плавно"
+          }
+        }
+      }
+    },
+    "stuttering.exercise.soft_start.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начни мягко"
+          }
+        }
+      }
+    },
+    "stuttering.exercise.soft_start.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не начинай резко"
+          }
+        }
+      }
+    },
+    "stuttering.exercise.diary.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Считаем спотыкания"
+          }
+        }
+      }
+    },
+    "stuttering.exercise.diary.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прочти текст вслух"
+          }
+        }
+      }
+    },
+    "stuttering.metronome.tick": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тик"
+          }
+        }
+      }
+    },
+    "stuttering.metronome.progress.format": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слог %lld из %lld"
+          }
+        }
+      }
+    },
+    "stuttering.soft_start.feedback.soft": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Плавно! Молодец"
+          }
+        }
+      }
+    },
+    "stuttering.soft_start.feedback.hard": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Резко начал. Попробуй мягче"
+          }
+        }
+      }
+    },
+    "stuttering.soft_start.feedback.borderline": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почти! Ещё чуть плавнее"
+          }
+        }
+      }
+    },
+    "stuttering.diary.cta.start": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать запись"
+          }
+        }
+      }
+    },
+    "stuttering.diary.cta.stop": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        }
+      }
+    },
+    "stuttering.diary.metric.format": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спотыканий: %lld на 100 слогов"
+          }
+        }
+      }
+    },
+    "stuttering.diary.metric.normal": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Норма (≤5)"
+          }
+        }
+      }
+    },
+    "stuttering.diary.metric.elevated": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повышенно (>5)"
+          }
+        }
+      }
+    },
+    "stuttering.feedback.complete": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отлично!"
+          }
+        }
+      }
+    },
+    "stuttering.feedback.try_again": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попробуй ещё раз"
+          }
+        }
+      }
+    },
+    "stuttering.error.mic_permission": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нужен доступ к микрофону"
+          }
+        }
+      }
+    },
+    "stuttering.soft_start.attempt_counter": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попытка %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "stuttering.soft_start.word_accessibility": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@. Нажми на Лялю, чтобы услышать"
+          }
+        }
+      }
+    },
+    "stuttering.metronome.syllable_counted": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слог засчитан"
+          }
+        }
+      }
+    },
+    "stuttering.diary.instruction": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прочти текст вслух"
+          }
+        }
+      }
+    },
+    "stuttering.diary.stub_banner": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Анализ временно использует тестовые данные. WhisperKit интеграция в разработке."
+          }
+        }
+      }
+    },
+    "stuttering.exercise.control.stop": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Стоп"
+          }
+        }
+      }
+    },
+    "stuttering.exercise.control.start": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать"
+          }
+        }
+      }
+    },
+    "stuttering.soft_start.listen_button": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Послушать пример Ляли"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
