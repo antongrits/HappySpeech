@@ -123,7 +123,8 @@ final class AuthInteractorTests: XCTestCase {
 
     func test_signUp_success_callsPresenter() async {
         let (sut, spy, _) = makeSUT()
-        await sut.signUp(.init(email: "new@mail.com", password: "pass", name: "Новый"))
+        // password >= 6 символов (требование EmailAuthWorker.validate)
+        await sut.signUp(.init(email: "new@mail.com", password: "pass123", name: "Новый"))
         XCTAssertTrue(spy.signUpCalled)
         XCTAssertFalse(spy.errorCalled)
     }

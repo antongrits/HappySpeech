@@ -21,12 +21,15 @@ final class ColdStartSignpostTests: XCTestCase {
         XCTAssertFalse(category.isEmpty, "Category не должна быть пустой")
     }
 
-    /// Проверяем что DISABLE_RIVE env-переменная ожидаемо "1" или nil.
+    /// Проверяем что DISABLE_RIVE env-переменная, если установлена, имеет валидное значение.
     func testDisableRiveEnvKey() {
-        // В тестовом окружении DISABLE_RIVE не должна быть установлена
         let value = ProcessInfo.processInfo.environment["DISABLE_RIVE"]
-        XCTAssertNil(value,
-                     "DISABLE_RIVE не должна быть установлена в обычном тестовом окружении")
+        // Допустимые значения: nil (не задана) или "1" (задана в scheme для cold-start профилирования)
+        if let value = value {
+            XCTAssertEqual(value, "1",
+                "DISABLE_RIVE должна быть '1' или nil, получено: '\(value)'")
+        }
+        // nil тоже приемлем — тест просто документирует ожидаемые значения ключа
     }
 
     /// AR Memory — NOT_MEASURABLE на симуляторе.

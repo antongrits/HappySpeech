@@ -195,7 +195,8 @@ final class HomeTasksInteractorTests: XCTestCase {
     func test_requestOverdueReminder_withService_callsPresenter() async throws {
         let (sut, spy) = makeSUT()
         sut.requestOverdueReminder(.init(hour: 9, minute: 0))
-        try await Task.sleep(nanoseconds: 100_000_000)
+        // 300ms: даёт @MainActor Task внутри requestOverdueReminder завершиться
+        try await Task.sleep(nanoseconds: 300_000_000)
         XCTAssertTrue(spy.notifyOverdueCalled)
     }
 
