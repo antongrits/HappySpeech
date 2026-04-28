@@ -18366,6 +18366,457 @@
           }
         }
       }
+    },
+    "family_calendar.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Семейный календарь"
+          }
+        }
+      }
+    },
+    "family_calendar.card.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Семейный календарь"
+          }
+        }
+      }
+    },
+    "family_calendar.card.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прогресс всех детей"
+          }
+        }
+      }
+    },
+    "family_calendar.children.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дети"
+          }
+        }
+      }
+    },
+    "family_calendar.children.all": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все"
+          }
+        }
+      }
+    },
+    "family_calendar.children.add": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавить ребёнка"
+          }
+        }
+      }
+    },
+    "family_calendar.month.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Календарь активности"
+          }
+        }
+      }
+    },
+    "family_calendar.month.previous": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Предыдущий месяц"
+          }
+        }
+      }
+    },
+    "family_calendar.month.next": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Следующий месяц"
+          }
+        }
+      }
+    },
+    "family_calendar.heatmap.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "История за 12 недель"
+          }
+        }
+      }
+    },
+    "family_calendar.heatmap.day_mon": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пн"
+          }
+        }
+      }
+    },
+    "family_calendar.heatmap.day_tue": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вт"
+          }
+        }
+      }
+    },
+    "family_calendar.heatmap.day_wed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ср"
+          }
+        }
+      }
+    },
+    "family_calendar.heatmap.day_thu": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чт"
+          }
+        }
+      }
+    },
+    "family_calendar.heatmap.day_fri": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пт"
+          }
+        }
+      }
+    },
+    "family_calendar.heatmap.day_sat": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сб"
+          }
+        }
+      }
+    },
+    "family_calendar.heatmap.day_sun": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вс"
+          }
+        }
+      }
+    },
+    "family_calendar.heatmap.week_label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неделя"
+          }
+        }
+      }
+    },
+    "family_calendar.heatmap.day_label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "День"
+          }
+        }
+      }
+    },
+    "family_calendar.heatmap.now": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сейчас"
+          }
+        }
+      }
+    },
+    "family_calendar.comparison.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сравнение"
+          }
+        }
+      }
+    },
+    "family_calendar.comparison.format": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ — %2$@ на %3$@%% лучше"
+          }
+        }
+      }
+    },
+    "family_calendar.insights.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подсказки"
+          }
+        }
+      }
+    },
+    "family_calendar.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока никто не играл"
+          }
+        }
+      }
+    },
+    "family_calendar.empty.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зайди завтра — мы покажем ваш прогресс!"
+          }
+        }
+      }
+    },
+    "family_calendar.streak.format": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ играл %2$d дней подряд — отличный темп!"
+          }
+        }
+      }
+    },
+    "family_calendar.streak.today": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодня играл!"
+          }
+        }
+      }
+    },
+    "family_calendar.detail.day_format": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@: %2$d занятий, %3$d%% правильных"
+          }
+        }
+      }
+    },
+    "family_calendar.detail.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нет занятий"
+          }
+        }
+      }
+    },
+    "family_calendar.cta.compare_all": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сравнить всех"
+          }
+        }
+      }
+    },
+    "family_calendar.error.load": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось загрузить статистику"
+          }
+        }
+      }
+    },
+    "family_calendar.filter.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фильтр"
+          }
+        }
+      }
+    },
+    "family_calendar.a11y.child_card": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ребёнок: %1$@. %2$d дней подряд. Дважды нажмите чтобы выбрать"
+          }
+        }
+      }
+    },
+    "family_calendar.a11y.calendar_cell": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@: %2$d занятий"
+          }
+        }
+      }
+    },
+    "family_calendar.a11y.today": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодня"
+          }
+        }
+      }
+    },
+    "family_calendar.insight.best_sound": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ отлично справляется со звуком %2$@ — точность %3$d%%!"
+          }
+        }
+      }
+    },
+    "family_calendar.insight.no_recent": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попробуйте позаниматься сегодня!"
+          }
+        }
+      }
+    },
+    "family_calendar.insight.played_today": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ уже позанимался сегодня — молодец!"
+          }
+        }
+      }
+    },
+    "family_calendar.insight.high_accuracy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ показывает отличную точность — %2$d%%!"
+          }
+        }
+      }
+    },
+    "family_calendar.insight.start_today": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начните занятие сегодня, чтобы видеть прогресс!"
+          }
+        }
+      }
+    },
+    "family_calendar.a11y.open_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дважды нажмите чтобы открыть семейный календарь"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
