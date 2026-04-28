@@ -10,7 +10,7 @@
 | Категория | Файлов | Размер | Placement | Статус |
 |---|---|---|---|---|
 | UI sounds (.caf) | 16 | ~150 KB | `HappySpeech/Resources/Audio/UI/` (в репо) | ✅ M3.2 done |
-| Ляля voice brand (.m4a) | 150 | ~5.1 MB | `HappySpeech/Resources/Audio/Lyalya/` (в репо) | ✅ M3.3 + M3.7 + M3.7b done |
+| Ляля voice brand (.m4a) | 155 | ~5.4 MB | `HappySpeech/Resources/Audio/Lyalya/` (в репо) | ✅ M3.3 + M3.7 + M3.7b + M3.7c done |
 | Content audio batch 1 (.m4a) | 1000 | 12.65 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 1 |
 | Content audio batch 2 (.m4a) | 1028 | 11.1 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 2 |
 | Content audio batch 3 (.m4a) | 681 | 8.36 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 3 |
@@ -328,6 +328,26 @@ COPYRIGHT RULE: каждый звук должен иметь verified CC0/Apach
 - AAC LC, 16000 Hz mono ✅
 - Размер 8–50 KB ✅
 - 30/30 сгенерировано, 0 ошибок ✅
+
+---
+
+## M3.7c — Story voice-over фразы 16-20 (+5, итого 155 фраз) ✅
+
+**Дата:** 2026-04-28
+**Генерация:** edge-tts `ru-RU-SvetlanaNeural` → ffmpeg loudnorm -16 LUFS → AAC 16kHz mono 32kbps
+**Формат:** 16kHz mono AAC, 16–19 KB/файл (все < 50 KB)
+**Длительность:** 4.2–4.4s
+**Путь:** `HappySpeech/Resources/Audio/Lyalya/`
+
+| Файл | Текст | Размер | LUFS |
+|---|---|---|---|
+| `lyalya_story_16.m4a` | Пингвин Пётр жил на льдине и поймал рыбок для пингвинят | 17 KB | -16.83 |
+| `lyalya_story_17.m4a` | Ёжик Егор ел ежевику и нашёл грибы на иголки | 17 KB | -16.73 |
+| `lyalya_story_18.m4a` | Бабочка Белла летела сквозь радугу и рисовала букву Б | 18 KB | -17.14 |
+| `lyalya_story_19.m4a` | Дракон Дима добрый и дружелюбный стал другом долины | 16 KB | -16.91 |
+| `lyalya_story_20.m4a` | Тигр Тимур тихо ходил по тропинке и рассказывал сказки | 19 KB | -17.35 |
+
+**Назначение:** voice-over для Remotion stories 16-20 (Block A, Plan v9). Передаётся animator'у для перерендеринга MP4.
 
 ---
 
