@@ -49,7 +49,7 @@ final class DesignSystemSnapshotTests: XCTestCase {
     }
 
     private func snapshotURL(component: String, device: String, appearance: String) -> URL {
-        let base = SnapshotTestHelper.baseDir(for: Self.self)
+        let base = SnapshotTestHelper.snapshotsBaseDir
             .appendingPathComponent(component)
         try? FileManager.default.createDirectory(at: base, withIntermediateDirectories: true)
         return base.appendingPathComponent("\(device)_\(appearance).png")

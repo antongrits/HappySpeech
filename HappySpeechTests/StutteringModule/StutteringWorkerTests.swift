@@ -14,10 +14,11 @@ final class MetronomeWorkerTests: XCTestCase {
     // MARK: - 11. start вызывает onTick и сохраняет BPM
 
     func test_metronomeWorker_start_capturesOnTickAndBPM() {
+        final class Box: @unchecked Sendable { var value = false }
         let worker = MockMetronomeWorker()
-        var tickFired = false
+        let box = Box()
 
-        worker.start(bpm: 75) { tickFired = true }
+        worker.start(bpm: 75) { box.value = true }
 
         XCTAssertEqual(worker.startCount, 1,   "start должен быть вызван один раз")
         XCTAssertEqual(worker.lastBPM, 75,     "BPM должен быть 75")
@@ -25,7 +26,7 @@ final class MetronomeWorkerTests: XCTestCase {
 
         // Ручной триггер тика
         worker.fireTick()
-        XCTAssertTrue(tickFired, "fireTick должен вызвать зарегистрированный onTick")
+        XCTAssertTrue(box.value, "fireTick должен вызвать зарегистрированный onTick")
     }
 
     // MARK: - 12. stop инкрементирует stopCount

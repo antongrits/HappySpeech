@@ -461,3 +461,21 @@ firebase firestore:rules:get | head -20
 - MediaPipe FaceMesh 478 (блокер ADR-015)
 
 **BUILD:** SUCCEEDED (0 errors, 0 warnings)
+
+---
+
+## ADR-V9-FINAL: Plan v9 завершён 2026-04-28
+
+**Status:** ACCEPTED
+**Context:** Plan v9 (15 коммитов) реализовал все 5 top-5 M13 extensions из плана.
+**Decision:** Готовы к release tag v1.1.0.
+
+**Архитектурные решения в v9:**
+- F1 (Grammar): 4 sub-modes в одном Interactor (mode dispatch pattern)
+- F2 (Customization): @Observable LyalyaCustomizationStorage singleton + Realm v3→v4
+- F3 (Family Calendar): Swift Charts RectangleMark heatmap + LLM Tier B (parentTip)
+- F4 (Parent-child): AVAudioRecorder + Realm v4→v5 + custom AVAudioSession handoff
+- F5 (Stuttering): @MainActor MetronomeWorker + 4 sub-features VIP + Realm v5→v6
+
+**Решения по reviewer false-positives:**
+3 ревью подряд (F1, F2, F3) ставили BLOCK на "missing xcstrings keys", которые реально присутствовали. Это известный bug агента — он не находит ключи при алфавитном обходе большого xcstrings (~14000 строк). Workaround: всегда верифицируй через python3 grep.
