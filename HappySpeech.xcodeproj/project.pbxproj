@@ -580,6 +580,8 @@
 		15B8C18378D7CF2B80442A53 /* kh-wi-7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3D84F60DCCD921B3A9AEBAEC /* kh-wi-7.m4a */; };
 		15BD93C758C9BD31A207E654 /* OfflineStateInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A8BC87DFF344E15F29ED77 /* OfflineStateInteractorTests.swift */; };
 		15D7CFD34278746C23E35A24 /* SpecialistSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A307CA9A7B53F748861C645 /* SpecialistSnapshotTests.swift */; };
+		AC0EA169624534942E103128 /* AccessibilityVariantsSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273B2B815515DE4FCAAF207A /* AccessibilityVariantsSnapshotTests.swift */; };
+		2B3BA379245B6B41D13CF613 /* FocusStateSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BED5A77D467D1CD531C79EA /* FocusStateSnapshotTests.swift */; };
 		15DC0C7670FBCFA80D0073B4 /* shch-ph-32.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7AA293D3BECC8E2BD153DC91 /* shch-ph-32.m4a */; };
 		15DCB133B550EB337857F5BD /* ch-wi-31.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3BC7757968E83247A7A4C76 /* ch-wi-31.m4a */; };
 		15E1549ED13397C5890D2004 /* ErrorStatesSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7083A11A9B1958EA8D992D02 /* ErrorStatesSnapshotTests.swift */; };
@@ -10214,6 +10216,8 @@
 		7A2B6B9F94FB1BF270CD19D4 /* lex-rh-12.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "lex-rh-12.m4a"; sourceTree = "<group>"; };
 		7A2DEF22631D9009865C1BA1 /* lex-cs-11.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "lex-cs-11.m4a"; sourceTree = "<group>"; };
 		7A307CA9A7B53F748861C645 /* SpecialistSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialistSnapshotTests.swift; sourceTree = "<group>"; };
+		273B2B815515DE4FCAAF207A /* AccessibilityVariantsSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityVariantsSnapshotTests.swift; sourceTree = "<group>"; };
+		3BED5A77D467D1CD531C79EA /* FocusStateSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusStateSnapshotTests.swift; sourceTree = "<group>"; };
 		7A3C7F3F74DDB0DCADB20CE3 /* br-291.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "br-291.m4a"; sourceTree = "<group>"; };
 		7A4A489340A043E4B7D3DD65 /* y-ph-9.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "y-ph-9.m4a"; sourceTree = "<group>"; };
 		7A57FAA6E664238F5DEF0004 /* kh-sen-26.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "kh-sen-26.m4a"; sourceTree = "<group>"; };
@@ -17206,6 +17210,8 @@
 				5E24FC3F00ECDF635383DB20 /* OnboardingSnapshotTests.swift */,
 				BC03EDAE065AB35A7426EEC2 /* ParentFlowSnapshotTests.swift */,
 				7A307CA9A7B53F748861C645 /* SpecialistSnapshotTests.swift */,
+				273B2B815515DE4FCAAF207A /* AccessibilityVariantsSnapshotTests.swift */,
+				3BED5A77D467D1CD531C79EA /* FocusStateSnapshotTests.swift */,
 			);
 			path = Snapshot;
 			sourceTree = "<group>";
@@ -28498,6 +28504,8 @@
 				4483DD898EA1E091C9107EBA /* SpacedRepetitionEngineTests.swift in Sources */,
 				8BA531EA19467F975717F084 /* SpecialistInteractorTests.swift in Sources */,
 				15D7CFD34278746C23E35A24 /* SpecialistSnapshotTests.swift in Sources */,
+				AC0EA169624534942E103128 /* AccessibilityVariantsSnapshotTests.swift in Sources */,
+				2B3BA379245B6B41D13CF613 /* FocusStateSnapshotTests.swift in Sources */,
 				5F4BC8E52DEB1910D4156E6F /* StoryCompletionInteractorTests.swift in Sources */,
 				0E49CF38E7D2F05DDFD499C3 /* SyncServiceIntegrationTests.swift in Sources */,
 				3CE657ABF3E707D994AE074B /* SyncServiceTests.swift in Sources */,
