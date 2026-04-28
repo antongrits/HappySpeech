@@ -10,7 +10,7 @@
 | Категория | Файлов | Размер | Placement | Статус |
 |---|---|---|---|---|
 | UI sounds (.caf) | 16 | ~150 KB | `HappySpeech/Resources/Audio/UI/` (в репо) | ✅ M3.2 done |
-| Ляля voice brand (.m4a) | 155 | ~5.4 MB | `HappySpeech/Resources/Audio/Lyalya/` (в репо) | ✅ M3.3 + M3.7 + M3.7b + M3.7c done |
+| Ляля voice brand (.m4a) | 168 | ~5.6 MB | `HappySpeech/Resources/Audio/Lyalya/` (в репо) | ✅ M3.3 + M3.7 + M3.7b + M3.7c + M3.7d done |
 | Content audio batch 1 (.m4a) | 1000 | 12.65 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 1 |
 | Content audio batch 2 (.m4a) | 1028 | 11.1 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 2 |
 | Content audio batch 3 (.m4a) | 681 | 8.36 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 3 |
@@ -348,6 +348,35 @@ COPYRIGHT RULE: каждый звук должен иметь verified CC0/Apach
 | `lyalya_story_20.m4a` | Тигр Тимур тихо ходил по тропинке и рассказывал сказки | 19 KB | -17.35 |
 
 **Назначение:** voice-over для Remotion stories 16-20 (Block A, Plan v9). Передаётся animator'у для перерендеринга MP4.
+
+---
+
+## M3.7d — Grammar games voice-over (13 файлов, F1-009) ✅
+
+**Дата:** 2026-04-28
+**Генерация:** edge-tts `ru-RU-SvetlanaNeural` → ffmpeg loudnorm -16 LUFS → AAC 16kHz mono 32kbps
+**Формат:** 16kHz mono AAC, 9–21 KB/файл (все < 50 KB)
+**LUFS:** -15.0 … -16.2 (цель -16 ±1.5)
+**Путь:** `HappySpeech/Resources/Audio/Lyalya/`
+**Итого Ляля:** 155 → **168 фраз**
+
+| Файл | Текст | Размер |
+|---|---|---|
+| `lyalya_grammar_intro.m4a` | Привет! Давай учиться правильно говорить! | 21 KB |
+| `lyalya_grammar_correct_1.m4a` | Молодец! Правильно! | 13 KB |
+| `lyalya_grammar_correct_2.m4a` | Здорово получилось! | 9 KB |
+| `lyalya_grammar_correct_3.m4a` | Умница! У тебя отлично! | 14 KB |
+| `lyalya_grammar_try_again.m4a` | Попробуй ещё раз | 9 KB |
+| `lyalya_grammar_hint.m4a` | Подумай как сказать про много | 12 KB |
+| `lyalya_grammar_complete_easy.m4a` | Отлично! Ты прошёл лёгкий уровень! | 17 KB |
+| `lyalya_grammar_complete_medium.m4a` | Супер! Средний уровень покорён! | 15 KB |
+| `lyalya_grammar_complete_hard.m4a` | Это просто блестяще! Сложный уровень — твой! | 19 KB |
+| `lyalya_grammar_one_many_intro.m4a` | Игра один и много — выбери правильную форму | 17 KB |
+| `lyalya_grammar_dative_intro.m4a` | Кому что нужно? Перетащи предмет | 16 KB |
+| `lyalya_grammar_genitive_intro.m4a` | Откуда взяли? Найди правильное место | 17 KB |
+| `lyalya_grammar_instrumental_intro.m4a` | С кем играем? Выбери друга | 14 KB |
+
+**Интеграция:** `GrammarFeedbackWorker.swift` обновлён — методы `speakQuestion(mode:)`, `speakCorrectFeedback`, `speakIncorrectFeedback`, `speakHint`, `speakLevelComplete(difficulty:)` используют m4a-ассеты через `Bundle.main.url(forResource:withExtension:subdirectory:)` с TTS-fallback.
 
 ---
 

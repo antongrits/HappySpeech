@@ -17688,6 +17688,365 @@
           }
         }
       }
+    },
+    "grammar.game.title.one_many": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Один — много"
+          }
+        }
+      }
+    },
+    "grammar.game.title.dative": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кому что нужно?"
+          }
+        }
+      }
+    },
+    "grammar.game.title.genitive": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Откуда взял?"
+          }
+        }
+      }
+    },
+    "grammar.game.title.instrumental": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "С кем дружу?"
+          }
+        }
+      }
+    },
+    "grammar.game.cta.next": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Далее"
+          }
+        }
+      }
+    },
+    "grammar.game.cta.check": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проверить"
+          }
+        }
+      }
+    },
+    "grammar.game.cta.confirm": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подтвердить"
+          }
+        }
+      }
+    },
+    "grammar.game.feedback.correct": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец!"
+          }
+        }
+      }
+    },
+    "grammar.game.feedback.try_again": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почти! Попробуй ещё"
+          }
+        }
+      }
+    },
+    "grammar.game.feedback.hint": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подскажу: смотри на окончание"
+          }
+        }
+      }
+    },
+    "grammar.game.difficulty.easy": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Легко"
+          }
+        }
+      }
+    },
+    "grammar.game.difficulty.medium": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Средне"
+          }
+        }
+      }
+    },
+    "grammar.game.difficulty.hard": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сложно"
+          }
+        }
+      }
+    },
+    "grammar.game.round.progress": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Раунд %lld из %lld"
+          }
+        }
+      }
+    },
+    "grammar.game.exit.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завершить игру?"
+          }
+        }
+      }
+    },
+    "grammar.game.exit.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Твой прогресс сохранится"
+          }
+        }
+      }
+    },
+    "grammar.game.exit.confirm": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выйти"
+          }
+        }
+      }
+    },
+    "grammar.game.exit.cancel": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжить"
+          }
+        }
+      }
+    },
+    "grammar.game.reward.series": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец! Ляля рада!"
+          }
+        }
+      }
+    },
+    "grammar.game.reward.level_complete": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Уровень пройден!"
+          }
+        }
+      }
+    },
+    "grammar.game.party.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вечеринка Ляли!"
+          }
+        }
+      }
+    },
+    "grammar.game.party.invite": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пригласить %@?"
+          }
+        }
+      }
+    },
+    "grammar.game.detective.hint": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Откуда Ляля взяла %@?"
+          }
+        }
+      }
+    },
+    "grammar.game.plural.question": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вот один %@. А если много?"
+          }
+        }
+      }
+    },
+    "grammar.game.dative.question": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кому нужен %@?"
+          }
+        }
+      }
+    },
+    "grammar.game.accessibility.one_item": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Один предмет"
+          }
+        }
+      }
+    },
+    "grammar.game.accessibility.many_items": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Много предметов"
+          }
+        }
+      }
+    },
+    "grammar.game.accessibility.select_variant": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите правильный вариант"
+          }
+        }
+      }
+    },
+    "grammar.game.accessibility.tap_to_select": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите, чтобы выбрать этот вариант"
+          }
+        }
+      }
+    },
+    "grammar.game.accessibility.drag_item": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Предмет для перетаскивания"
+          }
+        }
+      }
+    },
+    "grammar.game.accessibility.drag_to_character": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перетащите к нужному персонажу"
+          }
+        }
+      }
+    },
+    "grammar.game.accessibility.drop_here": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перетащите предмет сюда"
+          }
+        }
+      }
+    },
+    "grammar.game.error.load": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось загрузить задания"
+          }
+        }
+      }
+    },
+    "grammar.game.feedback.level_complete": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец! Уровень пройден!"
+          }
+        }
+      }
+    },
+    "grammar.game.feedback.dative_correct": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ нужен %2$@!"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

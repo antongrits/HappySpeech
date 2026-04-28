@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		32CD08CB4A7E4789AF739379 /* GrammarGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 597B1CDE80D944A6A8C2FDE8 /* GrammarGameView.swift */; };
+		038CACD0B92C4BE38AD15DF8 /* GrammarGameInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA78997390C4514A9E46CBB /* GrammarGameInteractor.swift */; };
+		7E67BEF229614B8FAE6EAF53 /* GrammarGamePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 368C63520E7C4BB7A3A66A59 /* GrammarGamePresenter.swift */; };
+		2A029A42189B4F4E8C345100 /* GrammarGameRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF584AFB25F94E46A32BE603 /* GrammarGameRouter.swift */; };
+		313FC5D494E247528ADE4BBD /* GrammarGameModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7ADE3C2B75345B2AF3C3962 /* GrammarGameModels.swift */; };
+		9EFC9627750548B2A0B54160 /* GrammarGameDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87083B02EF0548A48FE9098C /* GrammarGameDisplayLogic.swift */; };
+		CB212356045F4DAD8B25FE2B /* GrammarContentLoaderWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B710F780F54802B2334162 /* GrammarContentLoaderWorker.swift */; };
+		F2DDA4B232154D83A985C2B2 /* GrammarScoringWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C996436DB94FD0A99DA485 /* GrammarScoringWorker.swift */; };
+		E286B282DEAB4C769109D990 /* GrammarFeedbackWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ED88C5C69C49D9AB898B8F /* GrammarFeedbackWorker.swift */; };
 		00112A27D7AB88D4237331FA /* r-prep-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3A39F3603CA69D888A831F14 /* r-prep-6.m4a */; };
 		00128F2EB7A449A9480CF6D0 /* g-sen-11.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AF2137D61973CF656B49C2CE /* g-sen-11.m4a */; };
 		00164C85E5912CC9EC5F8603 /* g-wi-33.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7DE6533EB16ED58F89DED6BB /* g-wi-33.m4a */; };
@@ -3539,6 +3548,10 @@
 		837E63890B339771FB7BB19A /* ag-014.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BA8A970281BE4F3B7DE3208B /* ag-014.m4a */; };
 		8386E5BBD7A9B23431FC781E /* c-ph-49.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 33BF9BAB26D0FEA69ABFD657 /* c-ph-49.m4a */; };
 		838D952BEE85D459C9D22306 /* BingoInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B9F22794174DAAF34CFDCD /* BingoInteractorTests.swift */; };
+		A1D707CAF63C441187C508F9 /* GrammarGameInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242DBB84F3A04ABE9F900D3D /* GrammarGameInteractorTests.swift */; };
+		876A3018A15D46749930CE60 /* GrammarScoringWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FAC2FA2B81C4E0388F04C2B /* GrammarScoringWorkerTests.swift */; };
+		C44DF7F1C7D349B2B412712D /* GrammarGameSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C6AE21EA03442E8A239C32 /* GrammarGameSnapshotTests.swift */; };
+		52A79FBC35FD4A78B7546E62 /* GrammarGameSmokeUITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88DBAD4C1ED6458199045257 /* GrammarGameSmokeUITest.swift */; };
 		8393CB472CF2AEE7765123DA /* y-sen-36.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A29794B1A64BD8EC991EC293 /* y-sen-36.m4a */; };
 		839943CFD4946AA26431BC98 /* br-182.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 54FFB1E07804D2BA61499449 /* br-182.m4a */; };
 		839ECA0C730FA303A59F8314 /* narr-si-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9B62B37EECCA016C8196CDA5 /* narr-si-6.m4a */; };
@@ -6929,6 +6942,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		597B1CDE80D944A6A8C2FDE8 /* GrammarGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GrammarGameView.swift"; sourceTree = "<group>"; };
+		4AA78997390C4514A9E46CBB /* GrammarGameInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GrammarGameInteractor.swift"; sourceTree = "<group>"; };
+		368C63520E7C4BB7A3A66A59 /* GrammarGamePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GrammarGamePresenter.swift"; sourceTree = "<group>"; };
+		DF584AFB25F94E46A32BE603 /* GrammarGameRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GrammarGameRouter.swift"; sourceTree = "<group>"; };
+		D7ADE3C2B75345B2AF3C3962 /* GrammarGameModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GrammarGameModels.swift"; sourceTree = "<group>"; };
+		87083B02EF0548A48FE9098C /* GrammarGameDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GrammarGameDisplayLogic.swift"; sourceTree = "<group>"; };
+		77B710F780F54802B2334162 /* GrammarContentLoaderWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GrammarContentLoaderWorker.swift"; sourceTree = "<group>"; };
+		11C996436DB94FD0A99DA485 /* GrammarScoringWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GrammarScoringWorker.swift"; sourceTree = "<group>"; };
+		37ED88C5C69C49D9AB898B8F /* GrammarFeedbackWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GrammarFeedbackWorker.swift"; sourceTree = "<group>"; };
 		0008342172B50F1D28EBEA9B /* lex-vf-0.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "lex-vf-0.m4a"; sourceTree = "<group>"; };
 		0011EA0D6676E233D1FE5F1C /* shch-ph-8.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "shch-ph-8.m4a"; sourceTree = "<group>"; };
 		0013E1E2D35D994BF96009E0 /* l-wi-54.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "l-wi-54.m4a"; sourceTree = "<group>"; };
@@ -9743,6 +9765,10 @@
 		699FC20B5B2E0CFD1AE4A1D8 /* RealmModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModels.swift; sourceTree = "<group>"; };
 		69A490C509E8539F2DF613F4 /* narr-s-2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "narr-s-2.m4a"; sourceTree = "<group>"; };
 		69B9F22794174DAAF34CFDCD /* BingoInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BingoInteractorTests.swift; sourceTree = "<group>"; };
+		242DBB84F3A04ABE9F900D3D /* GrammarGameInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarGameInteractorTests.swift; sourceTree = "<group>"; };
+		3FAC2FA2B81C4E0388F04C2B /* GrammarScoringWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarScoringWorkerTests.swift; sourceTree = "<group>"; };
+		69C6AE21EA03442E8A239C32 /* GrammarGameSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarGameSnapshotTests.swift; sourceTree = "<group>"; };
+		88DBAD4C1ED6458199045257 /* GrammarGameSmokeUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarGameSmokeUITest.swift; sourceTree = "<group>"; };
 		69C012FC9D30011B83311429 /* s-wm-47.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "s-wm-47.m4a"; sourceTree = "<group>"; };
 		69EF847BB1F5E993DDFB13EA /* z-sen-10.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "z-sen-10.m4a"; sourceTree = "<group>"; };
 		69F30E1458EF3AD6E7A319BF /* br-283.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "br-283.m4a"; sourceTree = "<group>"; };
@@ -16765,6 +16791,7 @@
 		5B531D571D163E1A79956EFD /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				2677F19D84BC44A4B945AF0A /* GrammarGame */,
 				CD2F9787A9FA9C1A4A347083 /* AR */,
 				D42A631EA884BCDDFFA6630E /* ARZone */,
 				329AF7DECB48DC3FCED95A38 /* Auth */,
@@ -18188,6 +18215,7 @@
 				0A4F0435CD3E2E3211592457 /* __Snapshots__ */,
 				0C059AB746DD7B289BDB92A4 /* Accessibility */,
 				1DA970F74C0E5B8DD084846B /* Games */,
+				59957EF4F2E240E0BE292022 /* GrammarGame */,
 				B86BE800DF238528DA16E6CF /* Integration */,
 				6D8B6802705E41176E531AFB /* ML */,
 				1C1918C54E95B94F11E4DE63 /* Mocks */,
@@ -21904,7 +21932,44 @@
 			path = KH;
 			sourceTree = "<group>";
 		};
-/* End PBXGroup section */
+
+		44A330B2C0D34172A8E8F1F3 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				77B710F780F54802B2334162 /* GrammarContentLoaderWorker.swift */,
+				11C996436DB94FD0A99DA485 /* GrammarScoringWorker.swift */,
+				37ED88C5C69C49D9AB898B8F /* GrammarFeedbackWorker.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
+
+		2677F19D84BC44A4B945AF0A /* GrammarGame */ = {
+			isa = PBXGroup;
+			children = (
+				597B1CDE80D944A6A8C2FDE8 /* GrammarGameView.swift */,
+				4AA78997390C4514A9E46CBB /* GrammarGameInteractor.swift */,
+				368C63520E7C4BB7A3A66A59 /* GrammarGamePresenter.swift */,
+				DF584AFB25F94E46A32BE603 /* GrammarGameRouter.swift */,
+				D7ADE3C2B75345B2AF3C3962 /* GrammarGameModels.swift */,
+				87083B02EF0548A48FE9098C /* GrammarGameDisplayLogic.swift */,
+				44A330B2C0D34172A8E8F1F3 /* Workers */,
+			);
+			path = GrammarGame;
+			sourceTree = "<group>";
+		};
+		59957EF4F2E240E0BE292022 /* GrammarGame */ = {
+			isa = PBXGroup;
+			children = (
+				242DBB84F3A04ABE9F900D3D /* GrammarGameInteractorTests.swift */,
+				3FAC2FA2B81C4E0388F04C2B /* GrammarScoringWorkerTests.swift */,
+				69C6AE21EA03442E8A239C32 /* GrammarGameSnapshotTests.swift */,
+				88DBAD4C1ED6458199045257 /* GrammarGameSmokeUITest.swift */,
+			);
+			path = GrammarGame;
+			sourceTree = "<group>";
+		};
+		/* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
 		80409027269012E01A4CED5F /* HappySpeechTests */ = {
@@ -28456,6 +28521,10 @@
 				836FD72182B53B22D571AC7B /* AuthFlowTests.swift in Sources */,
 				2AA1853CBE2840D311EECDFA /* AuthInteractorTests.swift in Sources */,
 				838D952BEE85D459C9D22306 /* BingoInteractorTests.swift in Sources */,
+				A1D707CAF63C441187C508F9 /* GrammarGameInteractorTests.swift in Sources */,
+				876A3018A15D46749930CE60 /* GrammarScoringWorkerTests.swift in Sources */,
+				C44DF7F1C7D349B2B412712D /* GrammarGameSnapshotTests.swift in Sources */,
+				52A79FBC35FD4A78B7546E62 /* GrammarGameSmokeUITest.swift in Sources */,
 				113313232CBBD4F99B929666 /* BreathingInteractorTests.swift in Sources */,
 				53593C793A82F0D8945834E9 /* ChildHomeInteractorTests.swift in Sources */,
 				54B03D688C02BAD9442277B6 /* ColdStartSignpostTests.swift in Sources */,
@@ -28639,6 +28708,15 @@
 				782DAC71E696332431E04DE7 /* EmailAuthWorker.swift in Sources */,
 				4661DE1F23421547D127142C /* FaceAnalysisService.swift in Sources */,
 				EF593BFD58DBA9B549391570 /* GoogleSignInWorker.swift in Sources */,
+				32CD08CB4A7E4789AF739379 /* GrammarGameView.swift in Sources */,
+				038CACD0B92C4BE38AD15DF8 /* GrammarGameInteractor.swift in Sources */,
+				7E67BEF229614B8FAE6EAF53 /* GrammarGamePresenter.swift in Sources */,
+				2A029A42189B4F4E8C345100 /* GrammarGameRouter.swift in Sources */,
+				313FC5D494E247528ADE4BBD /* GrammarGameModels.swift in Sources */,
+				9EFC9627750548B2A0B54160 /* GrammarGameDisplayLogic.swift in Sources */,
+				CB212356045F4DAD8B25FE2B /* GrammarContentLoaderWorker.swift in Sources */,
+				F2DDA4B232154D83A985C2B2 /* GrammarScoringWorker.swift in Sources */,
+				E286B282DEAB4C769109D990 /* GrammarFeedbackWorker.swift in Sources */,
 				C6DA29ABB54179A09B2CE39B /* GuidedTourContainer.swift in Sources */,
 				DC02F154775B85D993FFDAA1 /* GuidedTourCoordinator.swift in Sources */,
 				7BDB3E2D9E1DB8ECAB656832 /* GuidedTourModels.swift in Sources */,
