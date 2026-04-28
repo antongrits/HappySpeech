@@ -18817,6 +18817,478 @@
           }
         }
       }
+    },
+    "parent_child.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Семейный голос"
+          }
+        }
+      }
+    },
+    "parent_child.entry.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запишите голос для совместных игр"
+          }
+        }
+      }
+    },
+    "parent_child.recorder.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запиши голос для ребёнка"
+          }
+        }
+      }
+    },
+    "parent_child.recorder.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ребёнок будет повторять за вами"
+          }
+        }
+      }
+    },
+    "parent_child.recorder.cta.start": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Записать"
+          }
+        }
+      }
+    },
+    "parent_child.recorder.cta.stop": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остановить"
+          }
+        }
+      }
+    },
+    "parent_child.recorder.cta.play": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прослушать"
+          }
+        }
+      }
+    },
+    "parent_child.recorder.cta.delete": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалить"
+          }
+        }
+      }
+    },
+    "parent_child.recorder.cta.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        }
+      }
+    },
+    "parent_child.split.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Совместная игра"
+          }
+        }
+      }
+    },
+    "parent_child.split.cta.play_parent": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Послушать родителя"
+          }
+        }
+      }
+    },
+    "parent_child.split.cta.record_child": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скажи слово!"
+          }
+        }
+      }
+    },
+    "parent_child.split.cta.next_word": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Следующее"
+          }
+        }
+      }
+    },
+    "parent_child.split.cta.reset": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сначала"
+          }
+        }
+      }
+    },
+    "parent_child.split.cta.skip": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пропустить"
+          }
+        }
+      }
+    },
+    "parent_child.split.score.format": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Точность: %d%%"
+          }
+        }
+      }
+    },
+    "parent_child.split.feedback.great": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец!"
+          }
+        }
+      }
+    },
+    "parent_child.split.feedback.try": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попробуй ещё"
+          }
+        }
+      }
+    },
+    "parent_child.split.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сначала запишите голос"
+          }
+        }
+      }
+    },
+    "parent_child.recordings.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока нет записей"
+          }
+        }
+      }
+    },
+    "parent_child.recordings.count": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Записей: %d"
+          }
+        }
+      }
+    },
+    "parent_child.recordings.max_warning": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Максимум 20 записей"
+          }
+        }
+      }
+    },
+    "parent_child.error.mic_permission": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нужен доступ к микрофону"
+          }
+        }
+      }
+    },
+    "parent_child.error.recording_failed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось записать"
+          }
+        }
+      }
+    },
+    "parent_child.error.playback_failed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось воспроизвести"
+          }
+        }
+      }
+    },
+    "parent_child.a11y.recorder_button": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кнопка записи. Удерживайте для записи слова"
+          }
+        }
+      }
+    },
+    "parent_child.a11y.split_child_area": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зона ребёнка"
+          }
+        }
+      }
+    },
+    "parent_child.a11y.split_parent_area": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зона родителя"
+          }
+        }
+      }
+    },
+    "parent_child.word.picker.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите слово"
+          }
+        }
+      }
+    },
+    "parent_child.a11y.word_chip_prefix": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слово: "
+          }
+        }
+      }
+    },
+    "parent_child.a11y.play_parent_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите чтобы услышать образец от родителя"
+          }
+        }
+      }
+    },
+    "parent_child.a11y.illustration_prefix": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Картинка: "
+          }
+        }
+      }
+    },
+    "parent_child.word.ball": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "мяч"
+          }
+        }
+      }
+    },
+    "parent_child.word.dog": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "собака"
+          }
+        }
+      }
+    },
+    "parent_child.word.fish": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "рыба"
+          }
+        }
+      }
+    },
+    "parent_child.word.balloon": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "шар"
+          }
+        }
+      }
+    },
+    "parent_child.word.cow": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "корова"
+          }
+        }
+      }
+    },
+    "parent_child.word.fox": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "лиса"
+          }
+        }
+      }
+    },
+    "parent_child.word.car": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "машина"
+          }
+        }
+      }
+    },
+    "parent_child.word.cat": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "кот"
+          }
+        }
+      }
+    },
+    "parent_child.word.hand": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "рука"
+          }
+        }
+      }
+    },
+    "parent_child.word.boat": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "лодка"
+          }
+        }
+      }
+    },
+    "parent_child.error.file_not_found": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Файл не найден: %@"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

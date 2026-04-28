@@ -30,6 +30,8 @@ enum AppRoute: Hashable {
     /// M6.16: Повторный скрининг из ParentHome.
     case screening(childId: String)
     case familyCalendar
+    case familyVoice
+    case familyVoiceSplit
 }
 
 enum PermissionType: Hashable {
@@ -305,6 +307,22 @@ struct AppCoordinatorView: View {
                 FamilyCalendarView()
             }
             .environment(\.circuitContext, .parent)
+
+        case .familyVoice:
+            NavigationStack {
+                FamilyVoiceView(parentId: "local-parent")
+            }
+            .environment(\.circuitContext, .parent)
+
+        case .familyVoiceSplit:
+            NavigationStack {
+                FamilyVoiceSplitView(
+                    recordings: [],
+                    parentId: "local-parent",
+                    realmActor: container.realmActor
+                )
+            }
+            .environment(\.circuitContext, .parent)
         }
     }
 
@@ -345,6 +363,7 @@ struct AppCoordinatorView: View {
             case "sessionComplete":  target = .sessionComplete
             case "arZone":           target = .arZone
             case "lessonPlayer":     target = .lessonPlayer(templateType: "bingo", childId: "preview-child-1")
+            case "familyVoice":      target = .familyVoice
             default:                 target = .auth
             }
             coordinator.navigate(to: target)
