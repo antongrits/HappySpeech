@@ -1,4 +1,3 @@
-import AVFoundation
 import Foundation
 import OSLog
 
@@ -31,14 +30,6 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
 
     var presenter: (any NarrativeQuestPresentationLogic)?
 
-    // MARK: - TTS
-
-    private let synthesizer = AVSpeechSynthesizer()
-    private static let voiceLocale = "ru-RU"
-    private static let utteranceRate: Float = 0.45
-    private static let utterancePitch: Float = 1.0
-    private static let utteranceVolume: Float = 1.0
-
     // MARK: - State
 
     private var script: NarrativeQuestScript?
@@ -49,6 +40,7 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
 
     // Отложенные задачи между фазами (auto-advance, feedback delay).
     private var pendingTask: Task<Void, Never>?
+    private var speakTask: Task<Void, Never>?
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "NarrativeQuest")
 
@@ -64,8 +56,8 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
     }
 
     deinit {
-        // Нельзя безопасно останавливать синтезатор из deinit (он не Sendable),
-        // поэтому полагаемся на `cancel()` из View.onDisappear.
+        pendingTask?.cancel()
+        speakTask?.cancel()
     }
 
     // MARK: - LoadQuest
@@ -234,10 +226,10 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
     func cancel() {
         pendingTask?.cancel()
         pendingTask = nil
+        speakTask?.cancel()
+        speakTask = nil
         isListening = false
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
-        }
+        LessonVoiceWorker.shared.stop()
     }
 
     // MARK: - Private helpers
@@ -253,23 +245,16 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
 
     private func speak(_ text: String) {
         guard !text.isEmpty else { return }
-        let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = AVSpeechSynthesisVoice(language: Self.voiceLocale)
-        utterance.rate = Self.utteranceRate
-        utterance.pitchMultiplier = Self.utterancePitch
-        utterance.volume = Self.utteranceVolume
-        utterance.postUtteranceDelay = 0.1
-
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
+        speakTask?.cancel()
+        speakTask = Task { @MainActor [weak self] in
+            guard let self else { return }
+            await LessonVoiceWorker.shared.speak(text, lessonType: "narrative_quest")
+            self.speakTask = nil
         }
-        synthesizer.speak(utterance)
     }
 
     private func stopSpeaking() {
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
-        }
+        LessonVoiceWorker.shared.stop()
     }
 
     // MARK: - Sound group resolution

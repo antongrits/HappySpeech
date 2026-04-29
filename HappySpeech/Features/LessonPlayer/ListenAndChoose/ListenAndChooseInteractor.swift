@@ -1,4 +1,3 @@
-import AVFoundation
 import Foundation
 import OSLog
 
@@ -49,16 +48,10 @@ final class ListenAndChooseInteractor: NSObject, ListenAndChooseBusinessLogic {
     private let streakThresholdSmall: Int = 3
     private let retryFirstTryScoreCap: Float = 0.66
 
-    // MARK: - TTS
-
-    private let synthesizer = AVSpeechSynthesizer()
-    private static let voiceLocale = "ru-RU"
-    private static let replayRate: Float = 0.40
-    private static let replayPitch: Float = 1.05
-
     // MARK: - Session state
 
     private var soundGroup: String = "whistling"
+    private var speakTask: Task<Void, Never>?
     private var questions: [Question] = []
     private var retryQueue: [Question] = []
     private var currentRound: Question?
@@ -81,6 +74,10 @@ final class ListenAndChooseInteractor: NSObject, ListenAndChooseBusinessLogic {
     init(contentService: any ContentService) {
         self.contentService = contentService
         super.init()
+    }
+
+    deinit {
+        speakTask?.cancel()
     }
 
     // MARK: - ListenAndChooseBusinessLogic
@@ -193,15 +190,13 @@ final class ListenAndChooseInteractor: NSObject, ListenAndChooseBusinessLogic {
             logger.notice("replayCurrentWord called with no active round")
             return
         }
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
+        speakTask?.cancel()
+        speakTask = Task { @MainActor [weak self] in
+            guard let self else { return }
+            await LessonVoiceWorker.shared.speak(current.targetWord, lessonType: "listen_and_choose")
+            self.speakTask = nil
         }
-        let utterance = AVSpeechUtterance(string: current.targetWord)
-        utterance.voice = AVSpeechSynthesisVoice(language: Self.voiceLocale)
-        utterance.rate = Self.replayRate
-        utterance.pitchMultiplier = Self.replayPitch
-        synthesizer.speak(utterance)
-        logger.debug("Replay TTS for word='\(current.targetWord, privacy: .private)'")
+        logger.debug("Replay Lyalya voice for word='\(current.targetWord, privacy: .private)'")
     }
 
     // MARK: - Scoring helpers
