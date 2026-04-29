@@ -312,6 +312,12 @@ HappySpeechUITests/
 
 ---
 
+### ADR-V11-LOTTIE — Real Lottie hand-composed tutorials (Block A)
+
+> Полный ADR в `.claude/team/decisions.md`. Кратко: 8 tutorial Lottie JSON v5.x написаны вручную (python-lottie deprecated API → отказ). Commit `dc6dc82`.
+
+---
+
 ### ADR-V11-BODY-TRACKING — ARKit body pose в PoseSequence
 
 **Дата:** 2026-04-29
@@ -538,3 +544,46 @@ Plan v11 #13 — реализовать Live Activity для сессии уро
 - `HappySpeechWidgetExtension/HappySpeechWidgetBundle.swift` (обновлён)
 - `HappySpeech/Features/Extensions/Widget/DailyMissionSyncService.swift`
 - `HappySpeechTests/Features/Extensions/Widget/DailyMissionSyncServiceTests.swift`
+
+---
+
+## Plan v11 итог — ЗАВЕРШЁН 2026-04-29
+
+Все 15 блоков A–N выполнены (17 коммитов, от dc6dc82 до финального Block O).
+
+### Список ADR-V11
+
+| ADR | Блок | Краткое описание |
+|-----|------|-----------------|
+| ADR-V11-LOTTIE | A | 8 Lottie tutorial JSON v5.x hand-composed (python-lottie deprecated) |
+| ADR-V11-RIVE-V2 | B | Lyalya multi-layer wrapper (skills.riv + illustration overlay + lip-sync) |
+| ADR-V11-FACEMESH-DEFER | C.4 | FaceMesh 478 окончательно defer — Apple Vision 76 + ARKit достаточно |
+| ADR-V11-FIREBASE-FULL | D | Firebase 5 services: RC + FCM + Storage + App Check + Performance |
+| ADR-V11-BIG-LIBS | E | SPM: Lottie 4.5+ real API + Down 0.11 Markdown + native confetti Canvas |
+| ADR-V11-LIPSYNC | F | Real-time lip-sync ARFaceAnchor → MascotLipSyncState → MouthBubbleOverlay |
+| ADR-V11-BODY-TRACKING | G | ARBodyTrackingConfiguration (A12+) + PoseSequence cosine similarity |
+| ADR-V11-LLM-KID | H | Qwen2.5 kid circuit: KidLLMNarrationService + KidSafetyFilter + COPPA |
+| ADR-V11-APPLE-GUIDELINES | I | Kids Category polish: ParentalGate + LSApplicationCategoryType |
+| ADR-V11-HEALTHKIT | J | HealthKit mindful sessions (parent opt-in, write-only, COPPA-safe) |
+| ADR-V11-SPOTLIGHT | K | CoreSpotlight: 3 домена, COPPA-safe, deep link routing |
+| ADR-V11-APPINTENTS | L | Siri AppShortcuts: 5 intents, DeepLinkRouter, Russian-only |
+| ADR-V11-LIVEACTIVITY | M | Live Activities + Dynamic Island (ActivityKit, iOS 16.1+) |
+| ADR-V11-WIDGET | N | Real Widget Extension Small/Medium/Large (App Group shared UserDefaults) |
+
+### Bundle metrics после Plan v11
+
+| Метрика | Значение |
+|---------|---------|
+| Resources total | 237 MB |
+| Audio .m4a (Lyalya) | 1 526 фраз |
+| Audio .m4a (content + refs) | 6 509 файлов |
+| Video MP4 | 80 |
+| ML models (.mlpackage) | 7 шт (48 MB) |
+| Voice clone reference | voice_clone_reference.wav (47.4 MB) |
+| Lottie JSON tutorials | 8 (~360 KB) |
+| HD illustrations (FLUX) | 18+ (Assets.xcassets/Illustrations/) |
+| Localization ru keys | 1 944+ (0 en) |
+
+### Tag
+
+`v1.0.0-pro` — Plan v11 ФИНАЛ

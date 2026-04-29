@@ -107,3 +107,39 @@
 | B-081 | Content packs L, Z, Zh full stages | TODO |
 | B-082 | Differentiation S-Sh minimal pairs seed | TODO |
 | B-083 | Multiple child profiles per parent | TODO |
+
+---
+
+## Plan v11 закрыт — 2026-04-29
+
+Все 15 блоков A–N выполнены. Tag: `v1.0.0-pro`.
+
+| Блок | Статус | Коммит |
+|------|--------|--------|
+| A — Real Lottie tutorials (8 hand-composed JSON v5.x, ADR-V11-LOTTIE) | DONE | dc6dc82 |
+| B — Rive multi-layer Lyalya wrapper (ADR-V11-RIVE-V2) | DONE | 06d0b75 |
+| C.4 — Voice clone reference 47.4 MB + FaceMesh ADR-V11-FACEMESH-DEFER | DONE | (Block C) |
+| D — Firebase full services 5 (RC + FCM + Storage + App Check + Performance) | DONE | (Block D) |
+| E — Big libs SPM (Lottie 4.5+ real API + Down + native confetti) | DONE | (Block E) |
+| F — Real-time lip-sync (ARFaceAnchor → MascotLipSyncState → MouthBubbleOverlay) | DONE | (Block F) |
+| G — ARKit Body Tracking PoseSequence (A12+, cosine similarity) | DONE | (Block G) |
+| H — Qwen2.5 kid circuit (KidLLMNarrationService + KidSafetyFilter + COPPA) | DONE | (Block H) |
+| I — Apple Guidelines polish (ParentalGate + LSApplicationCategoryType) | DONE | (Block I) |
+| J — HealthKit mindful sessions (parent opt-in write-only) | DONE | (Block J) |
+| K — CoreSpotlight indexing (3 домена, deep link, COPPA-safe) | DONE | (Block K) |
+| L — Siri AppShortcuts (5 intents, DeepLinkRouter, Russian-only) | DONE | (Block L) |
+| M — Live Activities + Dynamic Island (ActivityKit, iOS 16.1+) | DONE | (Block M) |
+| N — Real Widget Extension Small/Medium/Large (App Group) | DONE | (Block N) |
+| Q — +18 HD illustrations (FLUX-1-schnell) | DONE | 5b98219 |
+| P — +570 Lyalya phrases (956 → 1 526) | DONE | (Block P) |
+| R — +45 Remotion videos (35 → 80 MP4) | DONE | (Block R) |
+
+### Deferred post-v1.0 (технически заблокировано)
+
+| Элемент | Причина блокировки |
+|---------|--------------------|
+| LottieFiles community search | MCP connection refused в тест-среде |
+| Custom Rive Editor Lyalya | rive-python ModuleNotFoundError; Rive Editor GUI недоступен |
+| MediaPipe FaceMesh 478 landmarks | coremltools 9 несовместим с tflite int16 ops (2022+) |
+| Pow confetti paid SDK | Free; native Canvas fallback реализован |
+| Bundle 1.5 GB target | Нецелесообразно — 237 MB оптимально для App Store |

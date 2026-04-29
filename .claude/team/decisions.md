@@ -654,6 +654,51 @@ Plan v10 L7 (M13 extension #12) углубляет M5.3 Vision ML stack — об
 
 ---
 
+## ADR-V11-LOTTIE: Real Lottie hand-composed tutorials (Plan v11 Block A)
+
+**Дата:** 2026-04-29
+**Status:** ACCEPTED (Plan v11 Block A)
+
+### Context
+
+Plan v10 Block B создал 8 процедурных анимаций через python-lottie. При ревью Plan v11 выяснилось, что python-lottie (CLI-инструмент, не airbnb/lottie-ios) генерировал JSON-структуры неактуальные для Lottie iOS 4.5+. Блок A переписывает все 8 tutorial анимаций вручную в формате Lottie JSON 5.x.
+
+### Decision
+
+Все 8 tutorial animations написаны вручную как Lottie JSON v5.x:
+- `tutorial_listen.json` — звуковые волны (3 концентрических круга, opacity 1→0, stagger 0.4s)
+- `tutorial_repeat.json` — микрофон c пульсом (scale 0.95→1.05, loop)
+- `tutorial_ar.json` — ARKit face mesh wireframe (bezier face outline, mouth-open bounce)
+- `tutorial_breathing.json` — диафрагмальная стрелка (path morph вниз–вверх, lung opacity)
+- `tutorial_drag.json` — рука с drag trail (position + rotation, easing)
+- `tutorial_memory.json` — переворот карты (rotateY 0→180→0 через scale trick, back-face color swap)
+- `tutorial_rhythm.json` — метроном + нотки (pendulum rotation ±30°, notes stagger)
+- `tutorial_sorting.json` — стрелки к двум корзинам (split-path route animation)
+
+Каждый файл: ~31–50 KB, precomp-слои, 60fps, loop по умолчанию.
+
+`HSLottieView` (ADR-V11-BIG-LIBS E.1) загружает анимации через `LottieAnimation.named(_:)`.
+`@Environment(\.accessibilityReduceMotion)` отключает воспроизведение — статичный первый кадр.
+
+### Rationale
+
+- python-lottie CLI генерировал Shape Layer структуры, несовместимые с Lottie iOS 4.5+ (deprecated `ty: "rc"` вместо `ty: "sh"`)
+- Ручная компоновка JSON даёт полный контроль over layer order, easing curves, precomp structure
+- LottieFiles API заблокирован в тест-среде — community анимации недоступны без MCP
+- 8 анимаций × 30–50 KB = ~360 KB (приемлемо для bundle)
+
+### Consequences
+
+- Все 8 `.json` файлов размещены в `HappySpeech/Resources/Animations/Lottie/`
+- `HSLottieContainer` и `HSLottieView` используют эти файлы через `.named(name)` API
+- python-lottie артефакты архивированы в `_workshop/animations/procedural/` (не в репо)
+
+### Commit
+
+`dc6dc82` feat(animations): A v11 — Improved Lottie tutorials (8 hand-composed, precomp assets, 60fps, ADR-V11-LOTTIE)
+
+---
+
 ## ADR-V11-RIVE-V2: Custom Lyalya — illustration overlay approach
 
 **Дата:** 2026-04-29
