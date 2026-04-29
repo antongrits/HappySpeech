@@ -46,6 +46,7 @@ final class BreathingInteractor: BreathingBusinessLogic {
 
     private let audioWorker: any BreathingAudioWorkerProtocol
     private let hapticWorker: any BreathingHapticWorkerProtocol
+    private let healthKitWorker: any BreathingHealthKitWorkerProtocol
     private let logger = HSLogger.audio
 
     // MARK: - Tuning
@@ -61,6 +62,7 @@ final class BreathingInteractor: BreathingBusinessLogic {
     private var config: BreathingGameConfig = .medium
     private var scene: BreathingScene = .dandelion
     private var activityId: String = ""
+    private var sessionStartDate: Date = Date()
 
     // Warm-up calibration buffer (last ~3 s of amplitude).
     private var warmUpBuffer: [Float] = []
@@ -87,10 +89,12 @@ final class BreathingInteractor: BreathingBusinessLogic {
 
     init(
         audioWorker: any BreathingAudioWorkerProtocol,
-        hapticWorker: any BreathingHapticWorkerProtocol
+        hapticWorker: any BreathingHapticWorkerProtocol,
+        healthKitWorker: any BreathingHealthKitWorkerProtocol = MockBreathingHealthKitWorker()
     ) {
         self.audioWorker = audioWorker
         self.hapticWorker = hapticWorker
+        self.healthKitWorker = healthKitWorker
     }
 
     // MARK: - Scaffold contract
@@ -128,6 +132,7 @@ final class BreathingInteractor: BreathingBusinessLogic {
     func beginGame(activityId: String, difficulty: BreathingDifficulty) async {
         self.activityId = activityId
         self.config = .forDifficulty(difficulty)
+        self.sessionStartDate = Date()
         self.resetRuntimeState()
 
         // First ask for mic permission before doing anything else.
@@ -243,6 +248,10 @@ final class BreathingInteractor: BreathingBusinessLogic {
         presenter?.presentFinish(.init(result: result))
         await emitCurrentSnapshot()
         logger.info("Breathing: success score=\(score) duration=\(duration)")
+
+        // Логируем mindful session в Apple Health (parent opt-in, COPPA-safe).
+        let sessionEnd = Date()
+        await healthKitWorker.logSessionIfEnabled(start: sessionStartDate, end: sessionEnd)
     }
 
     private func fail(with reason: BreathingFailureReason) async {
