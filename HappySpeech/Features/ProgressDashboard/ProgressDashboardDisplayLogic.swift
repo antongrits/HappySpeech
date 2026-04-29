@@ -8,6 +8,8 @@ protocol ProgressDashboardDisplayLogic: AnyObject {
     func displayLoadDashboard(_ viewModel: ProgressDashboardModels.LoadDashboard.ViewModel)
     func displayLoadSoundDetail(_ viewModel: ProgressDashboardModels.LoadSoundDetail.ViewModel)
     func displayRequestLLMSummary(_ viewModel: ProgressDashboardModels.RequestLLMSummary.ViewModel)
+    func displayLoadInsights(_ viewModel: ProgressDashboardModels.LoadInsights.ViewModel)
+    func displayInsightsLoading(_ isLoading: Bool)
     func displayFailure(_ viewModel: ProgressDashboardModels.Failure.ViewModel)
     func displayLoading(_ isLoading: Bool)
     func displayLLMLoading(_ isLoading: Bool)
@@ -32,6 +34,9 @@ final class ProgressDashboardDisplay: ProgressDashboardDisplayLogic {
 
     var llmSummary: LLMSummaryViewModel?
     var isLLMLoading: Bool = false
+
+    var insightCards: [ParentInsightCardViewModel] = []
+    var isInsightsLoading: Bool = false
 
     var pendingSoundDetail: SoundDetailViewModel?
 
@@ -70,10 +75,20 @@ final class ProgressDashboardDisplay: ProgressDashboardDisplayLogic {
         isLLMLoading = false
     }
 
+    func displayLoadInsights(_ viewModel: ProgressDashboardModels.LoadInsights.ViewModel) {
+        insightCards = viewModel.insightCards
+        isInsightsLoading = false
+    }
+
+    func displayInsightsLoading(_ isLoading: Bool) {
+        isInsightsLoading = isLoading
+    }
+
     func displayFailure(_ viewModel: ProgressDashboardModels.Failure.ViewModel) {
         toastMessage = viewModel.toastMessage
         isLoading = false
         isLLMLoading = false
+        isInsightsLoading = false
     }
 
     func displayLoading(_ isLoading: Bool) {

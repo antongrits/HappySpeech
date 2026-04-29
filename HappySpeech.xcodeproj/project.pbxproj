@@ -2922,6 +2922,7 @@
 		55A23FD4D148D13446E526D0 /* s-wf-13.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FF072F84EE14C525C22342B3 /* s-wf-13.m4a */; };
 		55A433948DDF277AF65151CE /* c-wi-13.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 37CC576EE5363A7B97A7B2A7 /* c-wi-13.m4a */; };
 		55B627DCDF10D270B6D8FD91 /* SpotlightRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6633F92B41FB5E45725C0E31 /* SpotlightRegistry.swift */; };
+		55B870655A744E6981A36DE5 /* ParentInsightsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7623A59598AB58EBB099C9C /* ParentInsightsWorker.swift */; };
 		55B9CF0F1E578DC12E7C167F /* iPhone17Pro_Light.png in Resources */ = {isa = PBXBuildFile; fileRef = 391CFDC06BE3A468CBB35957 /* iPhone17Pro_Light.png */; };
 		55CE072C909956BDF4BAC862 /* lex-wb-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 6EA11F4C3811A86EE32EE321 /* lex-wb-2.m4a */; };
 		55D3441A80DEFB671F1739E4 /* StoryPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72B3B7435E11B4006B2A5E1 /* StoryPlayerView.swift */; };
@@ -17050,6 +17051,7 @@
 		F75253878DF4F93DD43D9FE6 /* s-wi-4.m4a */ = {isa = PBXFileReference; path = "s-wi-4.m4a"; sourceTree = "<group>"; };
 		F756DEE19426BB938C3AF19D /* narr-dl-1.m4a */ = {isa = PBXFileReference; path = "narr-dl-1.m4a"; sourceTree = "<group>"; };
 		F75BEE992457BD6BB67B5695 /* SettingsDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDisplayLogic.swift; sourceTree = "<group>"; };
+		F7623A59598AB58EBB099C9C /* ParentInsightsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentInsightsWorker.swift; sourceTree = "<group>"; };
 		F7723F80BA6F6B887D2DD3FD /* kh-wi-32.m4a */ = {isa = PBXFileReference; path = "kh-wi-32.m4a"; sourceTree = "<group>"; };
 		F77395BF3EE40D0C517895B3 /* c-sen-1.m4a */ = {isa = PBXFileReference; path = "c-sen-1.m4a"; sourceTree = "<group>"; };
 		F7809FE5D89693E92DA471F2 /* z-diff-17.m4a */ = {isa = PBXFileReference; path = "z-diff-17.m4a"; sourceTree = "<group>"; };
@@ -17460,6 +17462,14 @@
 				A666C81921560D7D253FFC2B /* iPhoneSE3_Light.png */,
 			);
 			path = emptyState;
+			sourceTree = "<group>";
+		};
+		090F1619FBC53354B68348E5 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				F7623A59598AB58EBB099C9C /* ParentInsightsWorker.swift */,
+			);
+			path = Workers;
 			sourceTree = "<group>";
 		};
 		0A4F0435CD3E2E3211592457 /* __Snapshots__ */ = {
@@ -19823,6 +19833,7 @@
 		3DC1B40B350AFC6FA160D1B8 /* ProgressDashboard */ = {
 			isa = PBXGroup;
 			children = (
+				090F1619FBC53354B68348E5 /* Workers */,
 				24AB3D7BD8F40C832747D6BA /* ProgressDashboardDisplayLogic.swift */,
 				C9723DE0985E027973B98E64 /* ProgressDashboardInteractor.swift */,
 				F342C93D66D88CF6A1889348 /* ProgressDashboardModels.swift */,
@@ -37175,6 +37186,7 @@
 				895531C42876C80B81DD1FAD /* ParentHomeSubViews.swift in Sources */,
 				F708DA54580AED72C7D729DD /* ParentHomeView.swift in Sources */,
 				71E4081555D2C86977D302D1 /* ParentHomeViewModel.swift in Sources */,
+				55B870655A744E6981A36DE5 /* ParentInsightsWorker.swift in Sources */,
 				2BF98C6D0A6AF80FE65C3DB7 /* PermissionFlowView.swift in Sources */,
 				3C653F46398472086EEA807A /* PermissionsDisplayLogic.swift in Sources */,
 				AC7087A0CF78E060C16E13C0 /* PermissionsInteractor.swift in Sources */,
