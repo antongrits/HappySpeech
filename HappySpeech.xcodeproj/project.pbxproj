@@ -1428,6 +1428,7 @@
 		297FD245FF732298DDCA46BC /* phon-sa-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9B189BD6A90690C2BA43B087 /* phon-sa-8.m4a */; };
 		2981C5EB4148DF9E86A3392D /* ScreeningPrompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 911A06C575EDE334497F12F5 /* ScreeningPrompts.swift */; };
 		298E40FE3E4BBEB6FD7DE9A5 /* kh-sen-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 75B2538146EC8A48C678F1E7 /* kh-sen-0.m4a */; };
+		298F518FF158B3088D7E0DF1 /* SeasonalEventsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D09F90621A1F7EE74ED5F7 /* SeasonalEventsModels.swift */; };
 		299A632C09466E4F81D3F613 /* HSBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DF33FE6E34AF77A3217A6F /* HSBadge.swift */; };
 		29A9960B0C5DC9193223ACF3 /* br-v-039.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 30C0C9D779FE9465300B61BA /* br-v-039.m4a */; };
 		29AE8489E34B74F102449B10 /* c-wm-36.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C7493390F17156B4CA4CF7E6 /* c-wm-36.m4a */; };
@@ -2971,6 +2972,7 @@
 		57A605C5ABD5F29186FA9119 /* s-wi-14.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B7E57EEAEDCDAF0B91503A68 /* s-wi-14.m4a */; };
 		57AC64E06D56ACC1D5637DC5 /* br-012.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 6BD24FA7F8EC9227087FCAF0 /* br-012.m4a */; };
 		57B0F57914D401E74A8F6F49 /* br-031.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0F8B98E1CE70960ACC3F9E86 /* br-031.m4a */; };
+		57B6DBE8BF7484A19FECE540 /* pack_easter.json in Resources */ = {isa = PBXBuildFile; fileRef = B5F6D4864C033297E0B4F0FB /* pack_easter.json */; };
 		57D2FB0C5F87683925E7C27E /* lyalya_encourage_10.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A89AE0B4551B73FCEA957DD8 /* lyalya_encourage_10.m4a */; };
 		57D388AE56B242DC58F8675D /* sh-ph-13.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B5F5E9CFE02CEBAC729C53DE /* sh-ph-13.m4a */; };
 		57D6DD7015E387DAFD6F06B5 /* lyalya_praise_20.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 342AA57840091CCFAFDB7600 /* lyalya_praise_20.m4a */; };
@@ -3195,6 +3197,7 @@
 		5EA28FCC5869746FB4EF4C60 /* lex-vb-11.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B6A374F73820317D90CD18C2 /* lex-vb-11.m4a */; };
 		5EA2BF17A5C756745D3AED27 /* FluencyDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7741038A6B538C9BF55769 /* FluencyDiaryView.swift */; };
 		5EACCCF7CA38D6A09DE260FC /* lyalya_na_ferme.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8B582D29B5D9C0A95358A8A3 /* lyalya_na_ferme.m4a */; };
+		5EB4BC244E40FAD452F39026 /* pack_halloween.json in Resources */ = {isa = PBXBuildFile; fileRef = 8A44568AB3E5EC10AA7BE0C3 /* pack_halloween.json */; };
 		5EC6716F2674B0C368ED0C8C /* br-204.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 597233F856E5DAD635CC4F87 /* br-204.m4a */; };
 		5ECF60D37F19E852B9E9E087 /* z-wm-36.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FEFCC19EB2D2C52C0378BA6B /* z-wm-36.m4a */; };
 		5ED9A20539880D1F89306AE5 /* k-wi-16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9D204DA618C22B1DB76DF8D9 /* k-wi-16.m4a */; };
@@ -3341,6 +3344,7 @@
 		6337EAED840DF58E62FE6057 /* z-wi-22.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 289B6B3DE64147356BF15627 /* z-wi-22.m4a */; };
 		63448C7F799AC60A20733036 /* br-278.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 29A3E25B915F7196295493C9 /* br-278.m4a */; };
 		6349BDA5E246A5B4537CF669 /* predlozhnyy_o_kom_o_chyom.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B8307B8B34E3BE100B0F876A /* predlozhnyy_o_kom_o_chyom.m4a */; };
+		6354D17C9FAAE71C9125EA68 /* seasonal in Resources */ = {isa = PBXBuildFile; fileRef = BBA6C89938A42DD12C6CE1E9 /* seasonal */; };
 		6358F17DB42BF2E197D2AC57 /* ch-df-17.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0BC027098621CE4C7805F110 /* ch-df-17.m4a */; };
 		636CA26EDA83350A6348C990 /* narr-m-1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7CC38ED982A6CC282D25AA37 /* narr-m-1.m4a */; };
 		636D7E746FAECC74A1FFE001 /* dwh-syl-10.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9B4FFF115A1128B24F853AAA /* dwh-syl-10.m4a */; };
@@ -4329,6 +4333,7 @@
 		80827590ACE9F54D25726026 /* ch-tt-23.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C5C80A5FB5FEFF0D8A1B9C63 /* ch-tt-23.m4a */; };
 		80872C9795E42E21EFD20BCC /* lex-cl-16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = EAC3070D2B2EE9FDF9C44972 /* lex-cl-16.m4a */; };
 		808C4C288C313E5DAAF29AB5 /* ch-prep-9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 75B40C4E691260936914EEE7 /* ch-prep-9.m4a */; };
+		80954C37651841E0EDEC3F3E /* SeasonalEventsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8FA467CA3C5B06EE15CA30 /* SeasonalEventsRouter.swift */; };
 		80A3582A7669F4D2F33EABD5 /* sh-wm-21.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0DEB498890A0C0A082BB8472 /* sh-wm-21.m4a */; };
 		80ADD3083371A5586EFB8DE2 /* r-wi-44.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 01A8577C4A97F8EE44B1D408 /* r-wi-44.m4a */; };
 		80AF1DC2DA1AB89FB29EE360 /* br-126.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F71C4D6D1CF64F69D3D3C4F5 /* br-126.m4a */; };
@@ -6989,6 +6994,7 @@
 		CE662CDCA0D290C417D1E4B2 /* r-syl-12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 61E852C17A99C32D69208CE0 /* r-syl-12.m4a */; };
 		CE66B62DF2E9FB967E4AF5C2 /* korova_mychit_mu_u_u.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D79EDE4D2E5B26C903DE114E /* korova_mychit_mu_u_u.m4a */; };
 		CE6B41F28E04C8BE1BB50020 /* r-syl-45.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 69540674E207BE1D19F4FA97 /* r-syl-45.m4a */; };
+		CE6D248C4BBB3BD880B17A34 /* SeasonalEventsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206EA125D69649E392AF78AE /* SeasonalEventsManager.swift */; };
 		CE7AC615C98B84C18D1C9A32 /* s-wi-52.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 731819DF18BC5F8498F730AF /* s-wi-52.m4a */; };
 		CE83E61978FD004E350C7E3F /* l-sen-19.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 916E5C72C95AA7A6FD7E8D2D /* l-sen-19.m4a */; };
 		CE8A512E5E8C8C38AF85BC2A /* odna_ovtsa_mnogo_ovets.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 37B9E03A02AD99F6228FC605 /* odna_ovtsa_mnogo_ovets.m4a */; };
@@ -7194,6 +7200,7 @@
 		D48B1E095055E9F01EEC0B3B /* s-ph-10.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FF4FCAA0139AB1005CED50A1 /* s-ph-10.m4a */; };
 		D48DE5AA659C1C92929C5849 /* ch-ph-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = EACD3C751D0C4531F6ECDF5D /* ch-ph-6.m4a */; };
 		D493C17D3C302567EAD481DC /* l-ph-1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D94C2395C96C4EF24A2D81BD /* l-ph-1.m4a */; };
+		D495034EF1CE1E957485AAA3 /* SeasonalContentLoaderWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C23F44EAEABF194DFBA9261A /* SeasonalContentLoaderWorker.swift */; };
 		D49B4054B4AF4989F28D87FB /* skazhi_laskovo_derevo.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4FC0E73F8A95878D185EA940 /* skazhi_laskovo_derevo.m4a */; };
 		D4A48C34CE9FB01B57AB23DB /* zh-sen-12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0E694C9147CFE25A5AC0E90F /* zh-sen-12.m4a */; };
 		D4A7B04AD7AAB5FC49B9C6D3 /* br-102.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E9C19185636FCBA581C4AC76 /* br-102.m4a */; };
@@ -8384,6 +8391,7 @@
 		F79ABCE5D7CF45477B4CBDA4 /* y-prep-12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 672E269AAE4DEDF342896B19 /* y-prep-12.m4a */; };
 		F7A24506EF07AC0DA291C493 /* lyalya_permission_mic.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 443EB62B02CB420FD4ABEE0C /* lyalya_permission_mic.m4a */; };
 		F7BE4FECA896309C6F20974E /* lex-num-9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2E169909D6D5D15B87176A7A /* lex-num-9.m4a */; };
+		F7C60718F785989203BA17E8 /* pack_new_year.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A2E9C4967152B2E1ECC6182 /* pack_new_year.json */; };
 		F7C6B40BDAF6EFE28814E1D1 /* g-ph-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8B13A1981D7D5BD3C2780681 /* g-ph-2.m4a */; };
 		F7D259CF79BA8E473AC7CB76 /* lyalya_hint_18.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0DD3223A59CA1F98CCF2E8E7 /* lyalya_hint_18.m4a */; };
 		F7D26710E579CFC545220F21 /* z-sen-19.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0BA3116EE1C093DCC2C44100 /* z-sen-19.m4a */; };
@@ -8562,6 +8570,7 @@
 		FD4E00BD1672B99CA631F8B4 /* sh-wm-38.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A3B22F66F4DDCE3F86D5EE6D /* sh-wm-38.m4a */; };
 		FD53E8C33A22D812A4EA6D70 /* kh-wi-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0DAF3B4D1C67E6285B58D89F /* kh-wi-0.m4a */; };
 		FD5DD65DEF89F0ECF9A5C807 /* l-diff-17.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 96E9CCCC359101E76AB944E1 /* l-diff-17.m4a */; };
+		FD6E067F10028E1CA35CCBC9 /* SeasonalBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88DC6E7C48CE85BC2D9C843 /* SeasonalBannerView.swift */; };
 		FD7860EDC3EFE9E8A26D1ED6 /* ru.m4a in Resources */ = {isa = PBXBuildFile; fileRef = DFD3825ECAC6FB771ACD3D8D /* ru.m4a */; };
 		FD7B18B33B8DADB8B68A6572 /* shch-sen-18.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 73DABBA03654A4223C434F82 /* shch-sen-18.m4a */; };
 		FD85430298180F0DCA61D42C /* r-wf-64.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C3ABCAD03937AAC6F6B5FEFA /* r-wf-64.m4a */; };
@@ -9769,6 +9778,7 @@
 		20679013137BB105CDA1512F /* dwh-wm-1.m4a */ = {isa = PBXFileReference; path = "dwh-wm-1.m4a"; sourceTree = "<group>"; };
 		206B097C312B66C881CE7B9D /* y-wi-25.m4a */ = {isa = PBXFileReference; path = "y-wi-25.m4a"; sourceTree = "<group>"; };
 		206BA8855D090F2FDA7DB2DC /* l-syl-19.m4a */ = {isa = PBXFileReference; path = "l-syl-19.m4a"; sourceTree = "<group>"; };
+		206EA125D69649E392AF78AE /* SeasonalEventsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonalEventsManager.swift; sourceTree = "<group>"; };
 		206FED58BF0B20FF23803BD9 /* lex-bp-1.m4a */ = {isa = PBXFileReference; path = "lex-bp-1.m4a"; sourceTree = "<group>"; };
 		2072C09DFEC1C7E1BDF8763C /* ch-syl-22.m4a */ = {isa = PBXFileReference; path = "ch-syl-22.m4a"; sourceTree = "<group>"; };
 		20750D394C8918689422ED22 /* kh-prep-2.m4a */ = {isa = PBXFileReference; path = "kh-prep-2.m4a"; sourceTree = "<group>"; };
@@ -10669,6 +10679,7 @@
 		3C7F05F7302889E2798925CC /* zh-wi-47.m4a */ = {isa = PBXFileReference; path = "zh-wi-47.m4a"; sourceTree = "<group>"; };
 		3C82C328E89F26D68052E568 /* krasnaya_kukla.m4a */ = {isa = PBXFileReference; path = krasnaya_kukla.m4a; sourceTree = "<group>"; };
 		3C87E8C690AD43F71DE7BCB5 /* phon-sp-24.m4a */ = {isa = PBXFileReference; path = "phon-sp-24.m4a"; sourceTree = "<group>"; };
+		3C8FA467CA3C5B06EE15CA30 /* SeasonalEventsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonalEventsRouter.swift; sourceTree = "<group>"; };
 		3C9995F6CAB8832449F728CA /* lex-vf-21.m4a */ = {isa = PBXFileReference; path = "lex-vf-21.m4a"; sourceTree = "<group>"; };
 		3C9F7E817D94D3C989115865 /* ch-wm-13.m4a */ = {isa = PBXFileReference; path = "ch-wm-13.m4a"; sourceTree = "<group>"; };
 		3CA01B7B3B260AF7CDDF140C /* y-ph-7.m4a */ = {isa = PBXFileReference; path = "y-ph-7.m4a"; sourceTree = "<group>"; };
@@ -11161,6 +11172,7 @@
 		4A17398CA7DE541D0B0F4C18 /* StutteringWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StutteringWorkerTests.swift; sourceTree = "<group>"; };
 		4A2534A401EAD9CE8FE75524 /* zh-wi-32.m4a */ = {isa = PBXFileReference; path = "zh-wi-32.m4a"; sourceTree = "<group>"; };
 		4A2AACB64475337ED263939E /* ch-wf-11.m4a */ = {isa = PBXFileReference; path = "ch-wf-11.m4a"; sourceTree = "<group>"; };
+		4A2E9C4967152B2E1ECC6182 /* pack_new_year.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pack_new_year.json; sourceTree = "<group>"; };
 		4A312C88E9CCE4904AD68BDA /* zhuk.m4a */ = {isa = PBXFileReference; path = zhuk.m4a; sourceTree = "<group>"; };
 		4A3F6BEE81CA638C1351F635 /* pack_breathing.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pack_breathing.json; sourceTree = "<group>"; };
 		4A5B916B29B33EF62F3C5969 /* r-wm-54.m4a */ = {isa = PBXFileReference; path = "r-wm-54.m4a"; sourceTree = "<group>"; };
@@ -13332,6 +13344,7 @@
 		8A26DFA82B1BF80EACF2549D /* ag-110.m4a */ = {isa = PBXFileReference; path = "ag-110.m4a"; sourceTree = "<group>"; };
 		8A2B8179CB411C55A83B71D7 /* s-sto-3.m4a */ = {isa = PBXFileReference; path = "s-sto-3.m4a"; sourceTree = "<group>"; };
 		8A3D72052AA75214147919FA /* iPhoneSE3_Light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhoneSE3_Light.png; sourceTree = "<group>"; };
+		8A44568AB3E5EC10AA7BE0C3 /* pack_halloween.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pack_halloween.json; sourceTree = "<group>"; };
 		8A46D65CD978A002EB4DE3F2 /* lex-hf-18.m4a */ = {isa = PBXFileReference; path = "lex-hf-18.m4a"; sourceTree = "<group>"; };
 		8A47362726C7EDE63353B3C2 /* Default_Light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default_Light.png; sourceTree = "<group>"; };
 		8A48A325CB752386E2A10F9E /* r-ph-63.m4a */ = {isa = PBXFileReference; path = "r-ph-63.m4a"; sourceTree = "<group>"; };
@@ -14787,6 +14800,7 @@
 		B5EEFF1E6B2B10538AFC18E7 /* k-ph-15.m4a */ = {isa = PBXFileReference; path = "k-ph-15.m4a"; sourceTree = "<group>"; };
 		B5F560DCD2C998182EE67D1C /* lex-pr-10.m4a */ = {isa = PBXFileReference; path = "lex-pr-10.m4a"; sourceTree = "<group>"; };
 		B5F5E9CFE02CEBAC729C53DE /* sh-ph-13.m4a */ = {isa = PBXFileReference; path = "sh-ph-13.m4a"; sourceTree = "<group>"; };
+		B5F6D4864C033297E0B4F0FB /* pack_easter.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pack_easter.json; sourceTree = "<group>"; };
 		B6030ED259D06CA2C3CC48B8 /* r-syl-0.m4a */ = {isa = PBXFileReference; path = "r-syl-0.m4a"; sourceTree = "<group>"; };
 		B6096F14FF4E11909247DCB9 /* l-wm-43.m4a */ = {isa = PBXFileReference; path = "l-wm-43.m4a"; sourceTree = "<group>"; };
 		B60985503410697652554378 /* z-sen-3.m4a */ = {isa = PBXFileReference; path = "z-sen-3.m4a"; sourceTree = "<group>"; };
@@ -14981,6 +14995,7 @@
 		BB6D00489672CC6F40170286 /* y-sen-34.m4a */ = {isa = PBXFileReference; path = "y-sen-34.m4a"; sourceTree = "<group>"; };
 		BB85B31624E32704CE3092E5 /* belka.m4a */ = {isa = PBXFileReference; path = belka.m4a; sourceTree = "<group>"; };
 		BB8812E0D9729070F48FB479 /* iPhoneSE3_Dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhoneSE3_Dark.png; sourceTree = "<group>"; };
+		BBA6C89938A42DD12C6CE1E9 /* seasonal */ = {isa = PBXFileReference; lastKnownFileType = folder; name = seasonal; path = HappySpeech/Content/Seed/seasonal; sourceTree = SOURCE_ROOT; };
 		BBC40EF42F220AA6EE592B8A /* z-prep-20.m4a */ = {isa = PBXFileReference; path = "z-prep-20.m4a"; sourceTree = "<group>"; };
 		BBC57432147D199784F53E37 /* lyalya_session_end_01.m4a */ = {isa = PBXFileReference; path = lyalya_session_end_01.m4a; sourceTree = "<group>"; };
 		BBC771BF85558718B185007F /* iPhone17Pro_Light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone17Pro_Light.png; sourceTree = "<group>"; };
@@ -15199,6 +15214,7 @@
 		C2333310DB14AEFC418DACC6 /* narr-d-4.m4a */ = {isa = PBXFileReference; path = "narr-d-4.m4a"; sourceTree = "<group>"; };
 		C2348E637F9446CC0BAC6DF0 /* DT_AccessibilityL_Light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DT_AccessibilityL_Light.png; sourceTree = "<group>"; };
 		C239758159D0045601A2DEC5 /* phon-ss-10.m4a */ = {isa = PBXFileReference; path = "phon-ss-10.m4a"; sourceTree = "<group>"; };
+		C23F44EAEABF194DFBA9261A /* SeasonalContentLoaderWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonalContentLoaderWorker.swift; sourceTree = "<group>"; };
 		C258000E4E31EFFFF4EDD37C /* iPhone17Pro_Dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone17Pro_Dark.png; sourceTree = "<group>"; };
 		C2583CEFDFEFBB4430A3CAFE /* rl-syl-12.m4a */ = {isa = PBXFileReference; path = "rl-syl-12.m4a"; sourceTree = "<group>"; };
 		C25DFB1177C07B6DACC21894 /* phon-sa-0.m4a */ = {isa = PBXFileReference; path = "phon-sa-0.m4a"; sourceTree = "<group>"; };
@@ -15682,6 +15698,7 @@
 		D0ADA14F489C14952B8A98BA /* s-wi-39.m4a */ = {isa = PBXFileReference; path = "s-wi-39.m4a"; sourceTree = "<group>"; };
 		D0B6B8EB922751A2DD107F9D /* grammar_try_again.m4a */ = {isa = PBXFileReference; path = grammar_try_again.m4a; sourceTree = "<group>"; };
 		D0BE82DCBBC2B3D344362490 /* lyalya_skazhi_mne_dobroe_slovo.m4a */ = {isa = PBXFileReference; path = lyalya_skazhi_mne_dobroe_slovo.m4a; sourceTree = "<group>"; };
+		D0D09F90621A1F7EE74ED5F7 /* SeasonalEventsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonalEventsModels.swift; sourceTree = "<group>"; };
 		D0D1F03E639EB1ABCF0335DA /* lyalya_story_03.m4a */ = {isa = PBXFileReference; path = lyalya_story_03.m4a; sourceTree = "<group>"; };
 		D0D6C9368720D999EC940ACD /* c-syl-6.m4a */ = {isa = PBXFileReference; path = "c-syl-6.m4a"; sourceTree = "<group>"; };
 		D0DA6C6F6228346270BC0BF4 /* narr-rt-3.m4a */ = {isa = PBXFileReference; path = "narr-rt-3.m4a"; sourceTree = "<group>"; };
@@ -17041,6 +17058,7 @@
 		F86AB375CCDA6AC2408F1ED1 /* z-wf-18.m4a */ = {isa = PBXFileReference; path = "z-wf-18.m4a"; sourceTree = "<group>"; };
 		F87FB5C1C617C063C2447443 /* r-wf-62.m4a */ = {isa = PBXFileReference; path = "r-wf-62.m4a"; sourceTree = "<group>"; };
 		F88A0E5F49A7EF19AD7CCE2E /* y-ph-29.m4a */ = {isa = PBXFileReference; path = "y-ph-29.m4a"; sourceTree = "<group>"; };
+		F88DC6E7C48CE85BC2D9C843 /* SeasonalBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonalBannerView.swift; sourceTree = "<group>"; };
 		F8999F1CA246AE7868430479 /* sh-st-6.m4a */ = {isa = PBXFileReference; path = "sh-st-6.m4a"; sourceTree = "<group>"; };
 		F89CDB2EFB469C110E2A1DFC /* lex-syn-14.m4a */ = {isa = PBXFileReference; path = "lex-syn-14.m4a"; sourceTree = "<group>"; };
 		F8AC73034E038A8995059977 /* s-sen-13.m4a */ = {isa = PBXFileReference; path = "s-sen-13.m4a"; sourceTree = "<group>"; };
@@ -19346,6 +19364,18 @@
 			path = skin_artist_warm;
 			sourceTree = "<group>";
 		};
+		376ADD3B4670AEF52D195E82 /* SeasonalEvents */ = {
+			isa = PBXGroup;
+			children = (
+				FF0A033072E371B3AA7CF353 /* Workers */,
+				F88DC6E7C48CE85BC2D9C843 /* SeasonalBannerView.swift */,
+				206EA125D69649E392AF78AE /* SeasonalEventsManager.swift */,
+				D0D09F90621A1F7EE74ED5F7 /* SeasonalEventsModels.swift */,
+				3C8FA467CA3C5B06EE15CA30 /* SeasonalEventsRouter.swift */,
+			);
+			path = SeasonalEvents;
+			sourceTree = "<group>";
+		};
 		378D0A5162342BA08DBE94CE /* Accessibility */ = {
 			isa = PBXGroup;
 			children = (
@@ -20169,6 +20199,7 @@
 				77BF565C569EBAF859859F67 /* HappySpeechTests */,
 				0E7A2FF8298CAF48103863A5 /* HappySpeechUITests */,
 				A6F14C93433CC65C38C21A70 /* Resources */,
+				BBA6C89938A42DD12C6CE1E9 /* seasonal */,
 				080A0AE1AFD66C215CD4F9DB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -20999,6 +21030,7 @@
 				97D05532C22B7CA8A928774F /* Common */,
 				E1D1078C2C0EEAA0ACDB2ABB /* Customization */,
 				69E2BA8210818595466ABED4 /* Demo */,
+				90A494B192648F99F73356C9 /* Extensions */,
 				D96A9A427139860D3472134D /* FamilyCalendar */,
 				1783E2DD1B0AA7E60890FDE1 /* GrammarGame */,
 				C0B43A80294C36A939AAC3AE /* GuidedTour */,
@@ -23281,6 +23313,14 @@
 				A739E4220CBEF06B5F2EE637 /* iPhoneSE3_Light.png */,
 			);
 			path = oneMany_easy;
+			sourceTree = "<group>";
+		};
+		90A494B192648F99F73356C9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				376ADD3B4670AEF52D195E82 /* SeasonalEvents */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		92089A6BE5F4DDE754A85B75 /* UI */ = {
@@ -26815,6 +26855,7 @@
 		DC2FC5765773B5BD19C1B625 /* Seed */ = {
 			isa = PBXGroup;
 			children = (
+				F1A8DBD59DFBFF44C1519229 /* seasonal */,
 				7A87F44A7274D198A21281AD /* pack_articulation_gymnastics.json */,
 				4A3F6BEE81CA638C1351F635 /* pack_breathing.json */,
 				F79621783CA9EDE3B1DCA810 /* pack_diff_whistling_hissing.json */,
@@ -27612,6 +27653,16 @@
 				3276779485AEFB780903A4A0 /* iPhoneSE3_Light.png */,
 			);
 			path = SessionCompleteView_3stars;
+			sourceTree = "<group>";
+		};
+		F1A8DBD59DFBFF44C1519229 /* seasonal */ = {
+			isa = PBXGroup;
+			children = (
+				B5F6D4864C033297E0B4F0FB /* pack_easter.json */,
+				8A44568AB3E5EC10AA7BE0C3 /* pack_halloween.json */,
+				4A2E9C4967152B2E1ECC6182 /* pack_new_year.json */,
+			);
+			path = seasonal;
 			sourceTree = "<group>";
 		};
 		F2BC849B34D3241117CC899B /* Types */ = {
@@ -28438,6 +28489,14 @@
 				AA09A85A1E3A4937BD8F1F1A /* kh-wm-39.m4a */,
 			);
 			path = KH;
+			sourceTree = "<group>";
+		};
+		FF0A033072E371B3AA7CF353 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				C23F44EAEABF194DFBA9261A /* SeasonalContentLoaderWorker.swift */,
+			);
+			path = Workers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -33449,10 +33508,13 @@
 				B3EC7A073B01353297434E04 /* pack_articulation_gymnastics.json in Resources */,
 				BC1DDA6B5BAEA37BCA0A11D5 /* pack_breathing.json in Resources */,
 				17826CD9DFD918BECED1B22D /* pack_diff_whistling_hissing.json in Resources */,
+				57B6DBE8BF7484A19FECE540 /* pack_easter.json in Resources */,
 				38DA7B37BDA430CFD4BF4010 /* pack_general_phonemic.json in Resources */,
 				08820DDFAFEF7E736FC6E070 /* pack_grammar.json in Resources */,
+				5EB4BC244E40FAD452F39026 /* pack_halloween.json in Resources */,
 				70EE526FD1FDD30D5E2CBA9A /* pack_lexical.json in Resources */,
 				C6C6400F485EA2657EACD0BF /* pack_narrative.json in Resources */,
+				F7C60718F785989203BA17E8 /* pack_new_year.json in Resources */,
 				BE0722AA1526054BD6292668 /* palto.m4a in Resources */,
 				132D85918445333740699F68 /* papa.m4a in Resources */,
 				13B7734EC5BDAC42ECF17B44 /* papa_nadel_tyopluyu_propusk_i_poshyol_gulyat.m4a in Resources */,
@@ -34908,6 +34970,7 @@
 				53C505AE611029266C9B23A6 /* sani.m4a in Resources */,
 				5D10F341D67E4084C562805A /* sanki.m4a in Resources */,
 				2A0A89FDAF2E5AFF8BAAB30C /* sdelal_dlya_mamy_podarok_dlya_kogo.m4a in Resources */,
+				6354D17C9FAAE71C9125EA68 /* seasonal in Resources */,
 				E0DB66F93B049D2F19459445 /* serdityy_volk_dobryy_zayats.m4a in Resources */,
 				0B730B8F2BC5810FC2FC18CF /* session_excellent.m4a in Resources */,
 				9C56872773E7E6B167E19EB6 /* session_good.m4a in Resources */,
@@ -37105,6 +37168,11 @@
 				FB5E3165D1DFAB07CF7B107F /* ScreeningRouter.swift in Sources */,
 				36949DE1F0B9B6E3BA6D2AF5 /* ScreeningScoringEngine.swift in Sources */,
 				2C77A721E891D4F10690A255 /* ScreeningView.swift in Sources */,
+				FD6E067F10028E1CA35CCBC9 /* SeasonalBannerView.swift in Sources */,
+				D495034EF1CE1E957485AAA3 /* SeasonalContentLoaderWorker.swift in Sources */,
+				CE6D248C4BBB3BD880B17A34 /* SeasonalEventsManager.swift in Sources */,
+				298F518FF158B3088D7E0DF1 /* SeasonalEventsModels.swift in Sources */,
+				80954C37651841E0EDEC3F3E /* SeasonalEventsRouter.swift in Sources */,
 				771111F312A095B1B4FEF9BB /* SessionCompleteDisplayLogic.swift in Sources */,
 				7F08842FDFEC0AF615D78713 /* SessionCompleteInteractor.swift in Sources */,
 				7050D35B06E9283A5F72252D /* SessionCompleteModels.swift in Sources */,

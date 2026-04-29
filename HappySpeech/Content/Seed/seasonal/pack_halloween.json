@@ -1,0 +1,418 @@
+{
+  "id": "pack_halloween",
+  "soundTarget": "seasonal_halloween",
+  "group": "сезонные",
+  "version": 1,
+  "description": "Хэллоуин — тыквы, призраки, «БУ-у». Целевые звуки: Ш, Ж, Х, С (шипящие и заднеязычные).",
+  "season": "halloween",
+  "active_months": [10, 11],
+  "stages": {
+    "stage_halloween": {
+      "stageId": "stage_halloween",
+      "title": "Хэллоуинский лес",
+      "note": "Слова на шипящие (Ш, Ж) и заднеязычные (Х) в Хэллоуинском контексте.",
+      "units": [
+        {
+          "id": "hw_001",
+          "word": "Тыква",
+          "imageAssetId": "halloween_pumpkin",
+          "soundTarget": "Т",
+          "examplePhrase": "Большая оранжевая тыква",
+          "difficulty": 1
+        },
+        {
+          "id": "hw_002",
+          "word": "Призрак",
+          "imageAssetId": "halloween_ghost",
+          "soundTarget": "Р",
+          "examplePhrase": "Белый призрак летит по ночи",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_003",
+          "word": "Маска",
+          "imageAssetId": "halloween_mask",
+          "soundTarget": "С",
+          "examplePhrase": "Страшная маска с зубами",
+          "difficulty": 1
+        },
+        {
+          "id": "hw_004",
+          "word": "Костюм",
+          "imageAssetId": "halloween_costume",
+          "soundTarget": "С",
+          "examplePhrase": "Смешной костюм ведьмы",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_005",
+          "word": "Ведьма",
+          "imageAssetId": "halloween_witch",
+          "soundTarget": "В",
+          "examplePhrase": "Ведьма летит на метле",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_006",
+          "word": "Паук",
+          "imageAssetId": "halloween_spider",
+          "soundTarget": "П",
+          "examplePhrase": "Паук плетёт паутину",
+          "difficulty": 1
+        },
+        {
+          "id": "hw_007",
+          "word": "Метла",
+          "imageAssetId": "halloween_broom",
+          "soundTarget": "М",
+          "examplePhrase": "Метла у ведьмы быстрая",
+          "difficulty": 1
+        },
+        {
+          "id": "hw_008",
+          "word": "Котёл",
+          "imageAssetId": "halloween_cauldron",
+          "soundTarget": "К",
+          "examplePhrase": "В котле кипит зелье",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_009",
+          "word": "Зелье",
+          "imageAssetId": "halloween_potion",
+          "soundTarget": "З",
+          "examplePhrase": "Зелёное зелье шипит и булькает",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_010",
+          "word": "Фонарь",
+          "imageAssetId": "halloween_lantern",
+          "soundTarget": "Ф",
+          "examplePhrase": "Фонарь из тыквы светит в темноте",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_011",
+          "word": "Конфета",
+          "imageAssetId": "halloween_candy",
+          "soundTarget": "К",
+          "examplePhrase": "Вкусная конфета в обёртке",
+          "difficulty": 1
+        },
+        {
+          "id": "hw_012",
+          "word": "Шуршать",
+          "imageAssetId": "halloween_rustle",
+          "soundTarget": "Ш",
+          "examplePhrase": "Листья шуршат под ногами — ш-ш-ш",
+          "difficulty": 3
+        },
+        {
+          "id": "hw_013",
+          "word": "Шёпот",
+          "imageAssetId": "halloween_whisper",
+          "soundTarget": "Ш",
+          "examplePhrase": "Тихий шёпот в темноте — ш-ш-ш",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_014",
+          "word": "Шорох",
+          "imageAssetId": "halloween_rustle2",
+          "soundTarget": "Ш",
+          "examplePhrase": "Шорох в кустах — кто там?",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_015",
+          "word": "Шипеть",
+          "imageAssetId": "halloween_hiss",
+          "soundTarget": "Ш",
+          "examplePhrase": "Кошка шипит: ш-ш-ш!",
+          "difficulty": 3
+        },
+        {
+          "id": "hw_016",
+          "word": "Жуть",
+          "imageAssetId": "halloween_fright",
+          "soundTarget": "Ж",
+          "examplePhrase": "Какая жуть — кругом темно!",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_017",
+          "word": "Жужжать",
+          "imageAssetId": "halloween_buzz",
+          "soundTarget": "Ж",
+          "examplePhrase": "Летучая мышь жужжит: жжж",
+          "difficulty": 3
+        },
+        {
+          "id": "hw_018",
+          "word": "Жуткий",
+          "imageAssetId": "halloween_scary",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жуткий лес в тёмную ночь",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_019",
+          "word": "Летучая мышь",
+          "imageAssetId": "halloween_bat",
+          "soundTarget": "Л",
+          "examplePhrase": "Летучая мышь летит ночью",
+          "difficulty": 3
+        },
+        {
+          "id": "hw_020",
+          "word": "Черепаха",
+          "imageAssetId": "halloween_tortoise",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чёрная черепаха в темноте",
+          "difficulty": 3
+        },
+        {
+          "id": "hw_021",
+          "word": "Хэллоуин",
+          "imageAssetId": "halloween_title",
+          "soundTarget": "Х",
+          "examplePhrase": "Хэллоуин — праздник страха и конфет",
+          "difficulty": 3
+        },
+        {
+          "id": "hw_022",
+          "word": "Хохот",
+          "imageAssetId": "halloween_laugh",
+          "soundTarget": "Х",
+          "examplePhrase": "Страшный хохот в ночи: ха-ха-ха!",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_023",
+          "word": "Скелет",
+          "imageAssetId": "halloween_skeleton",
+          "soundTarget": "С",
+          "examplePhrase": "Скелет стоит в углу",
+          "difficulty": 3
+        },
+        {
+          "id": "hw_024",
+          "word": "Череп",
+          "imageAssetId": "halloween_skull",
+          "soundTarget": "Ч",
+          "examplePhrase": "Белый череп на полке",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_025",
+          "word": "Сладость",
+          "imageAssetId": "halloween_treat",
+          "soundTarget": "С",
+          "examplePhrase": "Сладость или пакость?",
+          "difficulty": 3
+        },
+        {
+          "id": "hw_026",
+          "word": "Чудовище",
+          "imageAssetId": "halloween_monster",
+          "soundTarget": "Ч",
+          "examplePhrase": "Большое зелёное чудовище рычит",
+          "difficulty": 3
+        },
+        {
+          "id": "hw_027",
+          "word": "Страх",
+          "imageAssetId": "halloween_fear",
+          "soundTarget": "С",
+          "examplePhrase": "Страх прячется в темноте",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_028",
+          "word": "Звезда",
+          "imageAssetId": "halloween_star",
+          "soundTarget": "З",
+          "examplePhrase": "Звёзды светят в тёмном небе",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_029",
+          "word": "Кот чёрный",
+          "imageAssetId": "halloween_black_cat",
+          "soundTarget": "К",
+          "examplePhrase": "Чёрный кот перебежал дорогу",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_030",
+          "word": "Паутина",
+          "imageAssetId": "halloween_cobweb",
+          "soundTarget": "П",
+          "examplePhrase": "Паутина висит в тёмном углу",
+          "difficulty": 3
+        },
+        {
+          "id": "hw_031",
+          "word": "Ночь",
+          "imageAssetId": "halloween_night",
+          "soundTarget": "Ч",
+          "examplePhrase": "Тёмная страшная ночь",
+          "difficulty": 1
+        },
+        {
+          "id": "hw_032",
+          "word": "Луна",
+          "imageAssetId": "halloween_moon",
+          "soundTarget": "Л",
+          "examplePhrase": "Большая луна светит ярко",
+          "difficulty": 1
+        },
+        {
+          "id": "hw_033",
+          "word": "Замок",
+          "imageAssetId": "halloween_castle",
+          "soundTarget": "З",
+          "examplePhrase": "Старый замок стоит на горе",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_034",
+          "word": "Шляпа",
+          "imageAssetId": "halloween_hat",
+          "soundTarget": "Ш",
+          "examplePhrase": "Остроконечная шляпа ведьмы",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_035",
+          "word": "Тень",
+          "imageAssetId": "halloween_shadow",
+          "soundTarget": "Т",
+          "examplePhrase": "Страшная тень на стене",
+          "difficulty": 1
+        },
+        {
+          "id": "hw_036",
+          "word": "Кладбище",
+          "imageAssetId": "halloween_graveyard",
+          "soundTarget": "К",
+          "examplePhrase": "На кладбище тихо и жутко",
+          "difficulty": 3
+        },
+        {
+          "id": "hw_037",
+          "word": "Жаба",
+          "imageAssetId": "halloween_toad",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жаба сидит у котла ведьмы",
+          "difficulty": 1
+        },
+        {
+          "id": "hw_038",
+          "word": "Зомби",
+          "imageAssetId": "halloween_zombie",
+          "soundTarget": "З",
+          "examplePhrase": "Зомби медленно идёт",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_039",
+          "word": "Вампир",
+          "imageAssetId": "halloween_vampire",
+          "soundTarget": "В",
+          "examplePhrase": "Вампир спит в гробу",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_040",
+          "word": "Шёлк",
+          "imageAssetId": "halloween_silk",
+          "soundTarget": "Ш",
+          "examplePhrase": "Шёлковый плащ шелестит — ш-ш-ш",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_041",
+          "word": "Жест",
+          "imageAssetId": "halloween_gesture",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жуткий жест руками",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_042",
+          "word": "Хижина",
+          "imageAssetId": "halloween_hut",
+          "soundTarget": "Х",
+          "examplePhrase": "Хижина ведьмы в лесу",
+          "difficulty": 3
+        },
+        {
+          "id": "hw_043",
+          "word": "Светлячок",
+          "imageAssetId": "halloween_firefly",
+          "soundTarget": "С",
+          "examplePhrase": "Светлячок светится в темноте",
+          "difficulty": 3
+        },
+        {
+          "id": "hw_044",
+          "word": "Шаг",
+          "imageAssetId": "halloween_step",
+          "soundTarget": "Ш",
+          "examplePhrase": "Слышу шаги — ш-ш-шаг",
+          "difficulty": 1
+        },
+        {
+          "id": "hw_045",
+          "word": "Жутко",
+          "imageAssetId": "halloween_creepy",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жутко идти одному ночью",
+          "difficulty": 2
+        },
+        {
+          "id": "hw_046",
+          "word": "Ховрах",
+          "imageAssetId": "halloween_gopher",
+          "soundTarget": "Х",
+          "examplePhrase": "Хитрый ховрах прячется в норе",
+          "difficulty": 3
+        },
+        {
+          "id": "hw_047",
+          "word": "Сова",
+          "imageAssetId": "halloween_owl",
+          "soundTarget": "С",
+          "examplePhrase": "Сова кричит: «Ух-ух!»",
+          "difficulty": 1
+        },
+        {
+          "id": "hw_048",
+          "word": "Шум",
+          "imageAssetId": "halloween_noise",
+          "soundTarget": "Ш",
+          "examplePhrase": "Страшный шум в темноте — ш-ш-ш",
+          "difficulty": 1
+        },
+        {
+          "id": "hw_049",
+          "word": "Жидкость",
+          "imageAssetId": "halloween_liquid",
+          "soundTarget": "Ж",
+          "examplePhrase": "Зелёная жидкость в бутылке",
+          "difficulty": 3
+        },
+        {
+          "id": "hw_050",
+          "word": "Хлопок",
+          "imageAssetId": "halloween_pop",
+          "soundTarget": "Х",
+          "examplePhrase": "Громкий хлопок — бу-у-у!",
+          "difficulty": 2
+        }
+      ]
+    }
+  }
+}

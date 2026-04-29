@@ -1,0 +1,338 @@
+{
+  "id": "pack_easter",
+  "soundTarget": "seasonal_easter",
+  "group": "сезонные",
+  "version": 1,
+  "description": "Пасха — зайчики, яйца, цветы. Целевые звуки: П, Б (билабиальные), В, Р, Л (сонорные).",
+  "season": "easter",
+  "active_months": [3, 4, 5],
+  "stages": {
+    "stage_easter": {
+      "stageId": "stage_easter",
+      "title": "Весенний праздник",
+      "note": "Слова на билабиальные (П, Б), щелевые (В) и сонорные (Р, Л) в пасхальном контексте.",
+      "units": [
+        {
+          "id": "ea_001",
+          "word": "Заяц",
+          "imageAssetId": "easter_bunny",
+          "soundTarget": "З",
+          "examplePhrase": "Белый заяц скачет по лугу",
+          "difficulty": 1
+        },
+        {
+          "id": "ea_002",
+          "word": "Яйцо",
+          "imageAssetId": "easter_egg",
+          "soundTarget": "Й",
+          "examplePhrase": "Красивое пасхальное яйцо",
+          "difficulty": 1
+        },
+        {
+          "id": "ea_003",
+          "word": "Цветок",
+          "imageAssetId": "easter_flower",
+          "soundTarget": "Ц",
+          "examplePhrase": "Яркий цветок расцвёл весной",
+          "difficulty": 2
+        },
+        {
+          "id": "ea_004",
+          "word": "Бабочка",
+          "imageAssetId": "easter_butterfly",
+          "soundTarget": "Б",
+          "examplePhrase": "Бабочка летит над цветком",
+          "difficulty": 3
+        },
+        {
+          "id": "ea_005",
+          "word": "Пасха",
+          "imageAssetId": "easter_holiday",
+          "soundTarget": "П",
+          "examplePhrase": "Пасха — весенний праздник",
+          "difficulty": 2
+        },
+        {
+          "id": "ea_006",
+          "word": "Кулич",
+          "imageAssetId": "easter_bread",
+          "soundTarget": "К",
+          "examplePhrase": "Сладкий кулич с изюмом",
+          "difficulty": 2
+        },
+        {
+          "id": "ea_007",
+          "word": "Цыплёнок",
+          "imageAssetId": "easter_chick",
+          "soundTarget": "Ц",
+          "examplePhrase": "Жёлтый цыплёнок пищит: пи-пи",
+          "difficulty": 3
+        },
+        {
+          "id": "ea_008",
+          "word": "Гнездо",
+          "imageAssetId": "easter_nest",
+          "soundTarget": "Г",
+          "examplePhrase": "В гнезде лежат яйца",
+          "difficulty": 2
+        },
+        {
+          "id": "ea_009",
+          "word": "Корзина",
+          "imageAssetId": "easter_basket",
+          "soundTarget": "К",
+          "examplePhrase": "Корзина с яйцами и куличом",
+          "difficulty": 3
+        },
+        {
+          "id": "ea_010",
+          "word": "Радуга",
+          "imageAssetId": "easter_rainbow",
+          "soundTarget": "Р",
+          "examplePhrase": "Радуга после дождя — красота!",
+          "difficulty": 3
+        },
+        {
+          "id": "ea_011",
+          "word": "Венок",
+          "imageAssetId": "easter_wreath",
+          "soundTarget": "В",
+          "examplePhrase": "Венок из весенних цветов",
+          "difficulty": 2
+        },
+        {
+          "id": "ea_012",
+          "word": "Ручей",
+          "imageAssetId": "easter_stream",
+          "soundTarget": "Р",
+          "examplePhrase": "Ручей журчит по камушкам",
+          "difficulty": 2
+        },
+        {
+          "id": "ea_013",
+          "word": "Птенец",
+          "imageAssetId": "easter_nestling",
+          "soundTarget": "П",
+          "examplePhrase": "Птенец только что вылупился",
+          "difficulty": 3
+        },
+        {
+          "id": "ea_014",
+          "word": "Пчела",
+          "imageAssetId": "easter_bee",
+          "soundTarget": "П",
+          "examplePhrase": "Пчела жужжит над цветком: жжж",
+          "difficulty": 2
+        },
+        {
+          "id": "ea_015",
+          "word": "Весна",
+          "imageAssetId": "easter_spring",
+          "soundTarget": "В",
+          "examplePhrase": "Весна пришла — всё расцветает",
+          "difficulty": 1
+        },
+        {
+          "id": "ea_016",
+          "word": "Бутон",
+          "imageAssetId": "easter_bud",
+          "soundTarget": "Б",
+          "examplePhrase": "Бутон розы ещё не раскрылся",
+          "difficulty": 2
+        },
+        {
+          "id": "ea_017",
+          "word": "Берёза",
+          "imageAssetId": "easter_birch",
+          "soundTarget": "Б",
+          "examplePhrase": "Белая берёза зазеленела",
+          "difficulty": 3
+        },
+        {
+          "id": "ea_018",
+          "word": "Прогулка",
+          "imageAssetId": "easter_walk",
+          "soundTarget": "П",
+          "examplePhrase": "Прогулка в парке весной",
+          "difficulty": 3
+        },
+        {
+          "id": "ea_019",
+          "word": "Ветер",
+          "imageAssetId": "easter_wind",
+          "soundTarget": "В",
+          "examplePhrase": "Ветер дует и качает цветы",
+          "difficulty": 2
+        },
+        {
+          "id": "ea_020",
+          "word": "Листья",
+          "imageAssetId": "easter_leaves",
+          "soundTarget": "Л",
+          "examplePhrase": "Маленькие листья на деревьях",
+          "difficulty": 2
+        },
+        {
+          "id": "ea_021",
+          "word": "Лужа",
+          "imageAssetId": "easter_puddle",
+          "soundTarget": "Л",
+          "examplePhrase": "Лужа после весеннего дождя",
+          "difficulty": 1
+        },
+        {
+          "id": "ea_022",
+          "word": "Рябина",
+          "imageAssetId": "easter_rowan",
+          "soundTarget": "Р",
+          "examplePhrase": "Рябина расцветает весной",
+          "difficulty": 3
+        },
+        {
+          "id": "ea_023",
+          "word": "Поляна",
+          "imageAssetId": "easter_glade",
+          "soundTarget": "П",
+          "examplePhrase": "Поляна покрыта цветами",
+          "difficulty": 3
+        },
+        {
+          "id": "ea_024",
+          "word": "Бегать",
+          "imageAssetId": "easter_run",
+          "soundTarget": "Б",
+          "examplePhrase": "Бегать по лугу весело!",
+          "difficulty": 2
+        },
+        {
+          "id": "ea_025",
+          "word": "Верба",
+          "imageAssetId": "easter_willow",
+          "soundTarget": "В",
+          "examplePhrase": "Верба цветёт пушистыми комочками",
+          "difficulty": 2
+        },
+        {
+          "id": "ea_026",
+          "word": "Расцветать",
+          "imageAssetId": "easter_bloom",
+          "soundTarget": "Р",
+          "examplePhrase": "Цветы расцветают на солнце",
+          "difficulty": 3
+        },
+        {
+          "id": "ea_027",
+          "word": "Луг",
+          "imageAssetId": "easter_meadow",
+          "soundTarget": "Л",
+          "examplePhrase": "Зелёный луг весной",
+          "difficulty": 1
+        },
+        {
+          "id": "ea_028",
+          "word": "Птица",
+          "imageAssetId": "easter_bird",
+          "soundTarget": "П",
+          "examplePhrase": "Птица поёт весенние песни",
+          "difficulty": 2
+        },
+        {
+          "id": "ea_029",
+          "word": "Голубь",
+          "imageAssetId": "easter_dove",
+          "soundTarget": "Г",
+          "examplePhrase": "Белый голубь — символ мира",
+          "difficulty": 2
+        },
+        {
+          "id": "ea_030",
+          "word": "Блин",
+          "imageAssetId": "easter_pancake",
+          "soundTarget": "Б",
+          "examplePhrase": "Блин со сметаной — вкусно!",
+          "difficulty": 1
+        },
+        {
+          "id": "ea_031",
+          "word": "Прыгать",
+          "imageAssetId": "easter_jump",
+          "soundTarget": "П",
+          "examplePhrase": "Заяц любит прыгать по лужайке",
+          "difficulty": 3
+        },
+        {
+          "id": "ea_032",
+          "word": "Ворона",
+          "imageAssetId": "easter_crow",
+          "soundTarget": "В",
+          "examplePhrase": "Ворона кричит: кар-кар!",
+          "difficulty": 3
+        },
+        {
+          "id": "ea_033",
+          "word": "Лиловый",
+          "imageAssetId": "easter_lilac_color",
+          "soundTarget": "Л",
+          "examplePhrase": "Лиловые цветы сирени",
+          "difficulty": 3
+        },
+        {
+          "id": "ea_034",
+          "word": "Барашек",
+          "imageAssetId": "easter_lamb",
+          "soundTarget": "Б",
+          "examplePhrase": "Барашек щиплет травку на лугу",
+          "difficulty": 3
+        },
+        {
+          "id": "ea_035",
+          "word": "Роса",
+          "imageAssetId": "easter_dew",
+          "soundTarget": "Р",
+          "examplePhrase": "Роса на траве ранним утром",
+          "difficulty": 2
+        },
+        {
+          "id": "ea_036",
+          "word": "Перо",
+          "imageAssetId": "easter_feather",
+          "soundTarget": "П",
+          "examplePhrase": "Лёгкое перо упало с птицы",
+          "difficulty": 2
+        },
+        {
+          "id": "ea_037",
+          "word": "Ласточка",
+          "imageAssetId": "easter_swallow",
+          "soundTarget": "Л",
+          "examplePhrase": "Ласточка вернулась из тёплых стран",
+          "difficulty": 3
+        },
+        {
+          "id": "ea_038",
+          "word": "Бегония",
+          "imageAssetId": "easter_begonia",
+          "soundTarget": "Б",
+          "examplePhrase": "Розовая бегония в горшке",
+          "difficulty": 3
+        },
+        {
+          "id": "ea_039",
+          "word": "Речка",
+          "imageAssetId": "easter_river",
+          "soundTarget": "Р",
+          "examplePhrase": "Речка разлилась после снега",
+          "difficulty": 2
+        },
+        {
+          "id": "ea_040",
+          "word": "Праздник",
+          "imageAssetId": "easter_celebration",
+          "soundTarget": "П",
+          "examplePhrase": "Пасха — радостный праздник весны",
+          "difficulty": 3
+        }
+      ]
+    }
+  }
+}

@@ -19864,6 +19864,116 @@
           }
         }
       }
+    },
+    "seasonal.banner.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Особое событие сейчас!"
+          }
+        }
+      }
+    },
+    "seasonal.banner.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Играть"
+          }
+        }
+      }
+    },
+    "seasonal.event.halloween": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хэллоуин"
+          }
+        }
+      }
+    },
+    "seasonal.event.new_year": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новый год"
+          }
+        }
+      }
+    },
+    "seasonal.event.easter": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пасха"
+          }
+        }
+      }
+    },
+    "seasonal.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сейчас нет активных событий"
+          }
+        }
+      }
+    },
+    "seasonal.override.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Активное событие"
+          }
+        }
+      }
+    },
+    "seasonal.override.none": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нет (по календарю)"
+          }
+        }
+      }
+    },
+    "seasonal.a11y.banner_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть сезонный урок"
+          }
+        }
+      }
+    },
+    "seasonal.a11y.no_event": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нет активных сезонных событий"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
