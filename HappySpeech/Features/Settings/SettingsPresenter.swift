@@ -19,6 +19,9 @@ protocol SettingsPresentationLogic: AnyObject {
     func presentLoadLicenses(_ response: SettingsModels.LoadLicenses.Response)
     func presentExportShare(_ response: SettingsModels.ExportShare.Response)
     func presentFailure(_ response: SettingsModels.Failure.Response)
+    /// L9
+    func presentToggleKidDailyReminder(_ response: SettingsModels.ToggleKidDailyReminder.Response)
+    func presentToggleWeeklyParentSummary(_ response: SettingsModels.ToggleWeeklyParentSummary.Response)
 }
 
 // MARK: - SettingsPresenter
@@ -256,6 +259,16 @@ final class SettingsPresenter: SettingsPresentationLogic {
     func presentFailure(_ response: SettingsModels.Failure.Response) {
         logger.error("failure: \(response.message, privacy: .public)")
         display?.displayFailure(.init(toastMessage: response.message))
+    }
+
+    // MARK: - L9: Kid daily + Weekly parent summary
+
+    func presentToggleKidDailyReminder(_ response: SettingsModels.ToggleKidDailyReminder.Response) {
+        display?.displayToggleKidDailyReminder(.init(settings: response.settings))
+    }
+
+    func presentToggleWeeklyParentSummary(_ response: SettingsModels.ToggleWeeklyParentSummary.Response) {
+        display?.displayToggleWeeklyParentSummary(.init(settings: response.settings))
     }
 
     // MARK: - Helpers
