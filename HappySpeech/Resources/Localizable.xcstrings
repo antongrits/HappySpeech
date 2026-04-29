@@ -21613,6 +21613,116 @@
           }
         }
       }
+    },
+    "parental_gate.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Только для взрослых"
+          }
+        }
+      }
+    },
+    "parental_gate.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Реши пример, чтобы продолжить"
+          }
+        }
+      }
+    },
+    "parental_gate.cancel": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отмена"
+          }
+        }
+      }
+    },
+    "parental_gate.continue": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжить"
+          }
+        }
+      }
+    },
+    "parental_gate.continue_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Введи правильный ответ и нажми для продолжения"
+          }
+        }
+      }
+    },
+    "parental_gate.try_again": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попробуй ещё раз"
+          }
+        }
+      }
+    },
+    "parental_gate.accessibility_label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Родительская проверка"
+          }
+        }
+      }
+    },
+    "parental_gate.answer_placeholder": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "?"
+          }
+        }
+      }
+    },
+    "parental_gate.problem.accessibility_prefix": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пример:"
+          }
+        }
+      }
+    },
+    "parental_gate.external_link_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Откроет внешнюю ссылку после родительской проверки"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
