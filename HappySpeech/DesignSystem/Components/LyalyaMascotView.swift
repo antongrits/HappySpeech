@@ -96,6 +96,7 @@ public struct LyalyaMascotView: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(LyalyaCustomizationStorage.self) private var customization: LyalyaCustomizationStorage?
+    @Environment(\.mascotLipSyncState) private var lipSyncState
 
     // MARK: - Breathing animation state
 
@@ -121,6 +122,7 @@ public struct LyalyaMascotView: View {
 
     public var body: some View {
         ZStack(alignment: .top) {
+            // Layer 1-5: Rive/SwiftUI маскот + skin tint + skin overlay
             HSMascotView(
                 mood: state.mascotMood,
                 size: size,
@@ -130,6 +132,21 @@ public struct LyalyaMascotView: View {
             .colorMultiply(skinTintColor)
 
             skinDecorativeOverlay
+
+            // Layer 6: Real-time lip-sync оверлей (ARFaceAnchor → MascotLipSyncState).
+            // Отображается только когда ARSession активна (isTracking = true).
+            // Reduced Motion: анимация внутри оверлея отключается, форма статична.
+            // Устройства без TrueDepth: isTracking всегда false → оверлей скрыт.
+            if lipSyncState.isTracking {
+                MouthBubbleOverlay(
+                    openValue: lipSyncState.mouthOpen,
+                    viseme: lipSyncState.viseme,
+                    mascotSize: size
+                )
+                .opacity(Double(lipSyncState.confidence))
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
+            }
         }
         .frame(width: size, height: size)
         .scaleEffect(breathingScale)

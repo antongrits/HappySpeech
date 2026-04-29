@@ -96,6 +96,7 @@ struct HappySpeechApp: App {
                 .environment(container.themeManager)
                 .environment(coordinator)
                 .environment(container)
+                .environment(\.mascotLipSyncState, container.mascotLipSyncState)
                 .preferredColorScheme(container.themeManager.preferredColorScheme)
                 .onAppear {
                     Task { await bootstrapApp() }
