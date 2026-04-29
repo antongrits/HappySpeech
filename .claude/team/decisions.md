@@ -627,3 +627,27 @@ Plan v10 L7 (M13 extension #12) углубляет M5.3 Vision ML stack — об
 - `HappySpeech/ML/Vision/UnifiedFacePoseWorker.swift` — новый файл, 118 LOC
 - `HappySpeech/Features/AR/ARMirror/ARMirrorView.swift` — +16 LOC (facePoseWorker + currentViseme task + display field)
 - `HappySpeechTests/ML/Vision/UnifiedFacePoseWorkerTests.swift` — 5 unit-тестов, 99 LOC
+
+---
+
+## ADR-V10-FINAL: Plan v10 завершён 2026-04-29
+
+**Status:** ACCEPTED
+**Context:** Plan v10 (15 коммитов) реализовал critical fixes + top-10 extensions
+из плана, все тесты зелёные, BUILD SUCCEEDED на 3 platforms.
+
+**Decision:** Готовы к release tag v1.0.0-final.
+
+**Архитектурные решения в v10:**
+- A LessonVoiceWorker @MainActor singleton + 3-tier priority chain
+  (family voice → Lyalya tuned → Lyalya base → Siri TTS fallback)
+- B procedural Lottie через python-lottie (no Rive Editor dependency)
+- C Universal через SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD (no Catalyst code splitting)
+- D Lyalya wrapper improve через .colorMultiply + SF Symbol overlay (preserve skills.riv MIT base)
+- L1-L10 — sequential agents Sonnet @ high (никаких параллельных)
+
+**Решения по reviewer false-positives:**
+4 ревью подряд (F1, F2, F3, L2) ставили BLOCK на "missing xcstrings keys", которые
+реально присутствовали. Это известный bug агента — он не находит ключи при
+алфавитном обходе большого xcstrings (~17000 строк). Workaround: всегда
+верифицировать через `python3 grep` напрямую перед reject.

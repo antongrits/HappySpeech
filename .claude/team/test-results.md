@@ -48,6 +48,39 @@ READY for Блок F (M13 extensions). 3 failures = pre-existing environmental (
 
 ---
 
+## Plan v10 ФИНАЛЬНЫЙ QA RUN (2026-04-29)
+
+After all 14 v10 commits (d3aa51f → 8970076).
+
+### Build status
+- iPhone 17 Pro: BUILD SUCCEEDED
+- iPhone SE 3rd gen: BUILD SUCCEEDED
+- Mac (Designed for iPhone): BUILD SUCCEEDED
+
+### Russian-only
+- 1935 total / 0 en PASS
+
+### Assets
+- Lyalya base: 171
+- Lyalya lessons: 735 (Plan v10 A)
+- Lyalya tuned: 50 (Plan v10 L1)
+- Total Lyalya: 956
+- Lottie Tutorials: 8 real (31–50 KB each, все ≥10 KB)
+- Stories MP4: 20
+- Content audio: 6509
+- Seasonal packs: 3 (Halloween / New Year / Easter)
+- Core ML models: 7 (PronunciationScorer x4, SileroVAD, SoundClassifier, TonguePostureClassifier)
+
+### Tests
+- Unit test functions: 904
+- Snapshot PNG: 469
+- UI test functions: 49
+
+### Verdict
+READY for v1.0.0-final release tag
+
+---
+
 ## M10.1 v9 Coverage Report (2026-04-28)
 
 **Дата:** 2026-04-28

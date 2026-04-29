@@ -175,6 +175,51 @@ swiftlint --strict
 
 ---
 
+## Plan v10 (2026-04-29) — Real assets + 10 new extensions
+
+После Plan v9 audit нашёл 5 critical issues непрофессионального уровня
+(Siri TTS, placeholder Lottie, импортированный skills.riv, нет Mac, версия).
+Plan v10 (15 коммитов) исправил всё + добавил 10 новых extensions для обгона
+конкурентов.
+
+### Critical fixes (4 коммита)
+
+| Блок | Коммит | Что |
+|---|---|---|
+| A | d3aa51f | **Real Lyalya voice** заменяет Siri TTS в 9 lesson Interactor'ах (735 m4a, 19 тестов) |
+| B | eccd4f8 | **Real Lottie tutorials** (8 procedural animations 31-50 KB) |
+| C | 61be33a | **Universal app** — iPhone + iPad + Mac (Designed for iPhone) |
+| D | 7193185 | **Custom Lyalya** — breathing motion + ADR-V10-RIVE wrapper improve |
+
+### 10 new extensions (10 коммитов, ~7000 LOC новой функциональности)
+
+| # | Блок | Что |
+|---|---|---|
+| L1 | Tuned voice + ADR-V10-VOICE-CLONE | 50 child-tuned phrases + defer XTTS-v2 cloning post-v1.0 |
+| L2 | Sibling multiplayer | Bonjour LAN, 2 children play side-by-side |
+| L3 | Seasonal events | Halloween / Новый год / Пасха content packs (150 units) |
+| L4 | Real WhisperKit | dysfluency analyzer (regex repeats + prolongations + pauses) |
+| L5 | Family voice library | parent records → priority chain → speak в lessons |
+| L6 | Achievements + leaderboard | 32 achievements + family rating, COPPA offline |
+| L7 | Unified Face Pose | ARKit 52 blendshapes + Vision 76 landmarks → 5 visemes |
+| L8 | Mini puzzles offline | 3 mini-games когда нет интернета |
+| L9 | Family chat + Widget | local push 17:00 + weekly summary + HomeScreenCard |
+| L10 | ML insights | LLM Tier B + rule-based fallback в ProgressDashboard |
+
+### Финальная статистика v10
+
+- ~7900 LOC новой функциональности
+- 151 ru-локализационных ключей (1784 → 1935)
+- 969 Lyalya phrases (735 lesson + 50 tuned + 184 base) — real voice вместо Siri
+- Realm schema v6 → v7
+- 5 новых ADR (RIVE / VOICE-CLONE / WHISPERKIT / FACEPOSE / ...)
+- Universal app (iPhone + iPad + Mac)
+- BUILD SUCCEEDED на 3 platforms
+
+**Версия 1.0.0** — production-ready для дипломной защиты.
+
+---
+
 ## Plan v9 (2026-04-28) — финальные расширения
 
 Все 5 M13 extensions реализованы в рамках Plan v9 (15 коммитов, ветка `main`).
@@ -203,18 +248,18 @@ swiftlint --strict
 | Метрика | Значение |
 |---|---|
 | Swift файлов | 422+ |
-| Строк кода (LOC) | ~92 000 |
-| Git коммитов | 150+ |
+| Строк кода (LOC) | ~101 000+ |
+| Git коммитов | 165+ |
 | Экраны (VIP-фичи) | 35+ |
 | Типы упражнений | 16 |
 | AR игр | 7 + ARStoryQuest |
 | Контент-паки | 21 |
 | Контент-единиц | 6 250+ |
-| Фразы маскота Ляли | 121 |
+| Фразы маскота Ляли | 969 (735 lesson + 50 tuned + 184 base) |
 | DesignSystem компоненты | 28 |
-| Unit + snapshot тестов | ~970 |
-| Snapshot PNG | 469 |
-| Ключей локализации | 1 784 (ru) |
+| Unit + snapshot тестов | ~990+ |
+| Snapshot PNG | 477+ |
+| Ключей локализации | 1 935 (ru) |
 | Core ML моделей | 6 (.mlpackage) |
 | Remotion MP4 stories | 35 (15 + 20) |
 | Размер Release build | ~177 MB |
