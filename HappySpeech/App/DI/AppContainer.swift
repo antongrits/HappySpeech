@@ -70,6 +70,9 @@ public final class AppContainer {
     // Block J: HealthKitService — parent opt-in only, COPPA-safe.
     private var _healthKitService: (any HealthKitServiceProtocol)?
 
+    // Block K: SpotlightIndexer — CoreSpotlight indexing, COPPA-safe (нет имени ребёнка).
+    private var _spotlightIndexer: (any SpotlightIndexerProtocol)?
+
     // MascotLipSyncState — singleton для real-time lip-sync оверлея маскота (Block F)
     public let mascotLipSyncState: MascotLipSyncState = MascotLipSyncState()
 
@@ -358,6 +361,14 @@ public final class AppContainer {
         return new
     }
 
+    // Block K: SpotlightIndexer — CoreSpotlight, COPPA-safe.
+    public var spotlightIndexer: any SpotlightIndexerProtocol {
+        if let existing = _spotlightIndexer { return existing }
+        let new = LiveSpotlightIndexer()
+        _spotlightIndexer = new
+        return new
+    }
+
     /// Библиотека анимированных историй. Singleton — создаётся один раз для всего приложения.
     public var storyLibrary: StoryLibrary { StoryLibrary.shared }
 
@@ -503,6 +514,8 @@ public extension AppContainer {
         container._kidLLMNarrationService = MockKidLLMNarrationService()
         // Block J: HealthKit mock для preview/tests.
         container._healthKitService = MockHealthKitService()
+        // Block K: Spotlight mock для preview/tests.
+        container._spotlightIndexer = MockSpotlightIndexer()
         return container
     }
 }

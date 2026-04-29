@@ -1,3 +1,4 @@
+import CoreSpotlight
 import FirebaseAppCheck
 import FirebaseCore
 import GoogleSignIn
@@ -69,6 +70,7 @@ struct HappySpeechApp: App {
 
     @State private var container: AppContainer = HappySpeechApp.makeContainer()
     @State private var coordinator: AppCoordinator = AppCoordinator()
+    @State private var spotlightCoordinator: SpotlightIndexCoordinator?
 
     /// Выбирает production или preview-контейнер в зависимости от launch arguments.
     /// При запуске UI-тестов с флагами -UITestMockServices или -UITestOffline
@@ -105,6 +107,9 @@ struct HappySpeechApp: App {
                     // Callback Google Sign-In redirect.
                     _ = GIDSignIn.sharedInstance.handle(url)
                 }
+                .onContinueUserActivity(CSSearchableItemActionType) { activity in
+                    handleSpotlightActivity(activity)
+                }
         }
     }
 
@@ -119,8 +124,37 @@ struct HappySpeechApp: App {
             // Логируем uptime для расчёта интервала вручную из log stream:
             // cold_start_ms = (end_uptime - begin_uptime) * 1000
             HSLogger.app.info("ColdStart end uptime=\(ProcessInfo.processInfo.systemUptime, format: .fixed(precision: 3)) — Realm открыт")
+
+            // K.4 — Запуск Spotlight-индексации после успешного открытия Realm.
+            let coordinator = SpotlightIndexCoordinator(
+                indexer: container.spotlightIndexer,
+                contentService: container.contentService,
+                sessionRepository: container.sessionRepository
+            )
+            spotlightCoordinator = coordinator
+            coordinator.start()
         } catch {
             HSLogger.app.critical("ColdStart error — Realm open failed: \(error)")
+        }
+    }
+
+    // MARK: - K.5 — Deep Link Handling
+
+    private func handleSpotlightActivity(_ activity: NSUserActivity) {
+        guard let identifier = activity.userInfo?[CSSearchableItemActivityIdentifier] as? String else {
+            return
+        }
+        HSLogger.app.info("Spotlight deep link: \(identifier, privacy: .public)")
+
+        if identifier.hasPrefix("lesson_") {
+            let lessonId = String(identifier.dropFirst("lesson_".count))
+            coordinator.navigateToLesson(id: lessonId)
+        } else if identifier.hasPrefix("achievement_") {
+            let achId = String(identifier.dropFirst("achievement_".count))
+            coordinator.navigateToAchievement(id: achId)
+        } else if identifier.hasPrefix("session_") {
+            let sessionId = String(identifier.dropFirst("session_".count))
+            coordinator.navigateToSession(id: sessionId)
         }
     }
 }
