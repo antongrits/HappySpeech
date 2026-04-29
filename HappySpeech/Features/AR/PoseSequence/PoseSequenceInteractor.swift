@@ -1,33 +1,89 @@
+import ARKit
 import Foundation
 import OSLog
+
+// MARK: - PoseSequenceBusinessLogic
 
 @MainActor
 protocol PoseSequenceBusinessLogic: AnyObject {
     func startGame(_ request: PoseSequenceModels.StartGame.Request)
     func updateFrame(_ request: PoseSequenceModels.UpdateFrame.Request)
+    func updateBodyPose(_ request: PoseSequenceModels.UpdateBodyPose.Request)
     func scoreAttempt(_ request: PoseSequenceModels.ScoreAttempt.Request)
 }
+
+// MARK: - PoseSequenceInteractor
 
 @MainActor
 final class PoseSequenceInteractor: PoseSequenceBusinessLogic {
 
     var presenter: (any PoseSequencePresentationLogic)?
+
+    // MARK: Face-mode state
+
     private let classifier = TonguePostureClassifier()
     private var postures: [ArticulationPosture] = []
-    private var currentIndex: Int = 0
     private var holdFrames: Int = 0
     private let holdFramesRequired = 20
 
+    // MARK: Body-mode state
+
+    private var targetPoses: [TargetPose] = []
+    private let similarityWorker = PoseSimilarityWorker()
+    /// Количество кадров подряд с score >= порога. Нужно удержать позу ~2 секунды (~20 кадров).
+    private var bodyHoldFrames: Int = 0
+    private let bodyHoldFramesRequired = 20
+    private let bodyScoreThreshold = 65
+
+    // MARK: Shared state
+
+    private var currentIndex: Int = 0
+    private var mode: PoseSequenceMode = .face
+
+    // MARK: - StartGame
+
     func startGame(_ request: PoseSequenceModels.StartGame.Request) {
+        if ARBodyTrackingConfiguration.isSupported, request.postures.isEmpty {
+            startBodyGame()
+        } else {
+            startFaceGame(request)
+        }
+    }
+
+    private func startFaceGame(_ request: PoseSequenceModels.StartGame.Request) {
+        mode = .face
         postures = request.postures.isEmpty
             ? [.smile, .pucker, .cupShape, .mushroom]
             : request.postures
         currentIndex = 0
         holdFrames = 0
-        presenter?.presentStartGame(.init(postures: postures, currentIndex: currentIndex))
+        HSLogger.ar.info("PoseSequence startFaceGame postures=\(self.postures.count)")
+        presenter?.presentStartGame(.init(
+            postures: postures,
+            currentIndex: currentIndex,
+            mode: .face,
+            targetPoses: []
+        ))
     }
 
+    private func startBodyGame() {
+        mode = .body
+        targetPoses = TargetPosesRepository.allPoses
+        currentIndex = 0
+        bodyHoldFrames = 0
+        HSLogger.ar.info("PoseSequence startBodyGame poses=\(self.targetPoses.count)")
+        presenter?.presentStartGame(.init(
+            postures: [],
+            currentIndex: currentIndex,
+            mode: .body,
+            targetPoses: targetPoses
+        ))
+    }
+
+    // MARK: - Face UpdateFrame
+
     func updateFrame(_ request: PoseSequenceModels.UpdateFrame.Request) {
+        guard mode == .face else { return }
         guard currentIndex < postures.count else { return }
         let current = postures[currentIndex]
         let confidence = classifier.confidence(request.blendshapes, for: current)
@@ -51,10 +107,62 @@ final class PoseSequenceInteractor: PoseSequenceBusinessLogic {
         }
     }
 
+    // MARK: - Body UpdateBodyPose
+
+    func updateBodyPose(_ request: PoseSequenceModels.UpdateBodyPose.Request) {
+        guard mode == .body else { return }
+        guard currentIndex < targetPoses.count else { return }
+
+        let target = targetPoses[currentIndex]
+
+        // Вычисляем score синхронно, создавая snapshot для actor
+        let joints = request.update.joints
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            let score = await self.similarityWorker.score(current: joints, target: target)
+
+            if score >= self.bodyScoreThreshold {
+                self.bodyHoldFrames += 1
+            } else {
+                self.bodyHoldFrames = max(0, self.bodyHoldFrames - 1)
+            }
+
+            let advanced = self.bodyHoldFrames >= self.bodyHoldFramesRequired
+            if advanced {
+                self.currentIndex += 1
+                self.bodyHoldFrames = 0
+                HSLogger.ar.info("PoseSequence body pose advanced index=\(self.currentIndex) score=\(score)")
+            }
+
+            let hint: String
+            if self.currentIndex < self.targetPoses.count {
+                hint = self.targetPoses[self.currentIndex].hint
+            } else {
+                hint = ""
+            }
+
+            self.presenter?.presentUpdateBodyPose(.init(
+                currentIndex: self.currentIndex,
+                score: score,
+                advanced: advanced,
+                currentHint: hint
+            ))
+
+            if self.currentIndex >= self.targetPoses.count {
+                self.scoreAttempt(.init(
+                    completedCount: self.targetPoses.count,
+                    totalCount: self.targetPoses.count
+                ))
+            }
+        }
+    }
+
+    // MARK: - ScoreAttempt
+
     func scoreAttempt(_ request: PoseSequenceModels.ScoreAttempt.Request) {
         let ratio = Double(request.completedCount) / Double(max(request.totalCount, 1))
         let stars = ratio >= 1 ? 3 : ratio >= 0.7 ? 2 : 1
-        HSLogger.ar.info("PoseSequence stars=\(stars) completed=\(request.completedCount)/\(request.totalCount)")
+        HSLogger.ar.info("PoseSequence stars=\(stars) completed=\(request.completedCount)/\(request.totalCount) mode=\(String(describing: self.mode))")
         presenter?.presentScoreAttempt(.init(stars: stars))
     }
 }

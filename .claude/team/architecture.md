@@ -309,3 +309,33 @@ HappySpeechUITests/
 └── ScreenshotTour/
     └── ScreenshotTourTests.swift
 ```
+
+---
+
+### ADR-V11-BODY-TRACKING — ARKit body pose в PoseSequence
+
+**Дата:** 2026-04-29
+**Статус:** Accepted
+**Автор:** ios-dev-arch (Block G, Plan v11)
+
+**Контекст:** Plan v11 Block G — замена mock body tracking реальным ARKit ARBodyTrackingConfiguration для игры PoseSequence.
+
+**Решение:**
+- `ARBodyTrackingConfiguration` на A12+ устройствах (iPhone XS, XR и новее)
+- 8 отслеживаемых суставов: root, head, leftHand, rightHand, leftFoot, rightFoot, leftShoulder, rightShoulder
+- Cosine similarity per joint (relative to root), weighted average → score 0...100
+- Порог удержания позы: score >= 65 на протяжении 20 кадров (~2 секунды при 10fps mock, ~0.7 секунды при 30fps)
+- Graceful fallback: `isAvailable == false` → mock-обновления (~10fps) для работы на симуляторе и старых устройствах
+- Face-режим (blendshapes) сохранён и выбирается автоматически если ARBodyTrackingConfiguration не поддерживается
+- 5 эталонных поз в `TargetPosesRepository`: armsUp, handsOnHips, cobra, warrior, tree
+
+**Альтернативы рассмотрены:**
+1. `VNDetectHumanBodyPoseRequest` (Vision) — 2D-only, менее точно для 3D-поз, отложено
+2. `ARBodyAnchor` через дополнительный `ARView` с body-конфигурацией — сложнее в интеграции с существующим ARFaceViewContainer, отложено
+
+**Следствия:**
+- iPhone XS+ (A12+) требуется для real body tracking
+- Старые устройства и симулятор: автоматический mock (graceful degradation)
+- `PoseSequenceModels` расширены новым case `UpdateBodyPose`
+- `PoseSequencePresenter` расширен методом `presentUpdateBodyPose`
+- Новые файлы: `Workers/BodyPoseWorker.swift`, `Workers/PoseSimilarityWorker.swift`, `TargetPosesRepository.swift`
