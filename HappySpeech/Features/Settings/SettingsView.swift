@@ -39,6 +39,8 @@ struct SettingsView: View {
     @State private var showShareSheet = false
     @State private var pendingDeletePackId: String?
     @State private var showCustomizationSheet = false
+    @State private var showParentalGate = false
+    @State private var parentalGatePendingURL: URL?
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "SettingsView")
 
@@ -173,7 +175,11 @@ struct SettingsView: View {
                 )
             }
             .sheet(item: $selectedLicense) { license in
-                SettingsLicenseDetailSheet(license: license)
+                SettingsLicenseDetailSheet(license: license) { url in
+                    selectedLicense = nil
+                    parentalGatePendingURL = url
+                    showParentalGate = true
+                }
             }
             .sheet(
                 isPresented: $showShareSheet,
@@ -194,6 +200,14 @@ struct SettingsView: View {
                         .environment(\.circuitContext, .parent)
                 }
                 .presentationDetents([.large])
+            }
+            .sheet(isPresented: $showParentalGate) {
+                if let url = parentalGatePendingURL {
+                    ParentalGate(isPresented: $showParentalGate) {
+                        UIApplication.shared.open(url)
+                        parentalGatePendingURL = nil
+                    }
+                }
             }
         }
         .environment(\.circuitContext, .parent)
@@ -1200,8 +1214,13 @@ private struct SettingsLicensesListSheet: View {
 private struct SettingsLicenseDetailSheet: View {
 
     @Environment(\.dismiss) private var dismiss
-    @Environment(\.openURL) private var openURL
     let license: OpenSourceLicenseVM
+    let onOpenURL: (URL) -> Void
+
+    init(license: OpenSourceLicenseVM, onOpenURL: @escaping (URL) -> Void) {
+        self.license = license
+        self.onOpenURL = onOpenURL
+    }
 
     var body: some View {
         NavigationStack {
@@ -1218,7 +1237,7 @@ private struct SettingsLicenseDetailSheet: View {
 
                     if let url = license.url {
                         Button {
-                            openURL(url)
+                            onOpenURL(url)
                         } label: {
                             Label {
                                 Text(String(localized: "settings.licenses.openRepo"))
@@ -1229,6 +1248,8 @@ private struct SettingsLicenseDetailSheet: View {
                         }
                         .buttonStyle(.plain)
                         .foregroundStyle(ColorTokens.Brand.primary)
+                        .accessibilityLabel(String(localized: "settings.licenses.openRepo"))
+                        .accessibilityHint(String(localized: "parental_gate.external_link_hint"))
                     }
 
                     Text(license.bodyText)

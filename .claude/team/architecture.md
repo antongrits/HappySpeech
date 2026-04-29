@@ -339,3 +339,38 @@ HappySpeechUITests/
 - `PoseSequenceModels` расширены новым case `UpdateBodyPose`
 - `PoseSequencePresenter` расширен методом `presentUpdateBodyPose`
 - Новые файлы: `Workers/BodyPoseWorker.swift`, `Workers/PoseSimilarityWorker.swift`, `TargetPosesRepository.swift`
+
+---
+
+### ADR-V11-APPLE-GUIDELINES — Kids Category compliance polish
+
+**Дата:** 2026-04-29
+**Статус:** Accepted
+**Контекст:** Plan v11 Block I — финальная полировка для App Store Kids Category review (Sprint 12).
+
+**Решение:**
+- `ParentalGate` (math-problem verification) добавлен в `DesignSystem/Components/ParentalGate.swift`
+- Все внешние ссылки в Settings проходят через `ParentalGate` (licenses → GitHub repo URL)
+- `NSUserTrackingUsageDescription` удалён из Info.plist и project.yml (Kids Category запрещает трекинг)
+- `LSApplicationCategoryType = public.app-category.education` добавлен в Info.plist и project.yml
+- Добавлены: `NSHealthShareUsageDescription`, `NSHealthUpdateUsageDescription`, `NSUserNotificationsUsageDescription` на русском
+- `ITSAppUsesNonExemptEncryption = false` подтверждён (уже присутствовал)
+- `CFBundleDevelopmentRegion = ru` подтверждён (уже присутствовал)
+- `docs/app-privacy-checklist.md` — чеклист для App Store Connect Privacy Nutrition Label
+- Локализационные ключи `parental_gate.*` добавлены в `Localizable.xcstrings`
+
+**Apple guidelines покрытые:**
+- App Review 1.3: Kids Category
+- App Review 5.1.4: Apps in Kids Category — no external links without parental gate
+- App Review 4.5: Compatibility — math problem как доступный parental gate (не жест, не пароль)
+- COPPA: дети не вводят личные данные напрямую
+
+**Выбор типа Parental Gate:**
+- Math problem (выбран): accessible, не требует родительского пароля, достаточно сложен для 5–8 лет
+- Sustained press gesture: менее accessible для пользователей с motor disabilities
+- Device password: требует системных API, не App Store Kids compliant без MFI
+
+**Следствия:**
+- `SettingsLicenseDetailSheet` получил `onOpenURL: (URL) -> Void` callback вместо прямого `@Environment(\.openURL)`
+- `SettingsView` управляет `showParentalGate` и `parentalGatePendingURL` state
+- Unit тесты: `HappySpeechTests/DesignSystem/ParentalGateTests.swift`

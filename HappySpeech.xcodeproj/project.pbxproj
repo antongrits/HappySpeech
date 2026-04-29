@@ -2505,6 +2505,7 @@
 		4661DE1F23421547D127142C /* FaceAnalysisService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75215535F2D8BB7B4F566CC7 /* FaceAnalysisService.swift */; };
 		466329A436FD250A74842605 /* k-wf-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D7D1ED0C01E093DA6E7112D0 /* k-wf-6.m4a */; };
 		4666CA620B780A503FD69383 /* r-wi-46.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 99E3EC2A23BD77F40118DD2D /* r-wi-46.m4a */; };
+		4675BB37F1EF498FCAB0B239 /* ParentalGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B13ECE521BFD8F575785A14 /* ParentalGate.swift */; };
 		468D663A2A553572C6813035 /* phon-sa-3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4913E826154722ECF4A3BC91 /* phon-sa-3.m4a */; };
 		46912ABA4DA706D463EF9827 /* r-wm-36.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D09BB7EC58881F21FB6D9D51 /* r-wm-36.m4a */; };
 		469DBA037772536986DE8046 /* lyalya_seasonal_halloween_8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F99438CB738E4EFD718B629E /* lyalya_seasonal_halloween_8.m4a */; };
@@ -7449,6 +7450,7 @@
 		D7A1919B355A55E28FB7276E /* kholm.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 811E4BE4C50A47311BD06A08 /* kholm.m4a */; };
 		D7AFE35AB78FA1616DC70B9E /* r-wi-60.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9A833F5D75CDB22599F9232C /* r-wi-60.m4a */; };
 		D7B2CC6BC58B573D772FF777 /* r-syl-41.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 67C55D4F5FCE87255ADF82BE /* r-syl-41.m4a */; };
+		D7B4EAAE42DE191CF6E6CA22 /* ParentalGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F15BAC7C522A453678BDFB /* ParentalGateTests.swift */; };
 		D7B61D43AFFDAF13845A4932 /* shch-ph-1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 023489347729823F8D3875EF /* shch-ph-1.m4a */; };
 		D7BCA6FAA136BDE583E9B112 /* narr-ms-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3BEDF58055842060AC97F07D /* narr-ms-8.m4a */; };
 		D7C5A03208546B457A81408C /* lyalya_transition_retry_5.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F933F2E205E2901A3C04C851 /* lyalya_transition_retry_5.m4a */; };
@@ -10877,6 +10879,7 @@
 		3AF444561E48BBC1613042E9 /* lyalya_setting_reset_progress.m4a */ = {isa = PBXFileReference; path = lyalya_setting_reset_progress.m4a; sourceTree = "<group>"; };
 		3AFACBCDA9257938D50A0549 /* MemoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryView.swift; sourceTree = "<group>"; };
 		3AFC12D8793A497D1C1FA056 /* lex-hf-24.m4a */ = {isa = PBXFileReference; path = "lex-hf-24.m4a"; sourceTree = "<group>"; };
+		3B13ECE521BFD8F575785A14 /* ParentalGate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentalGate.swift; sourceTree = "<group>"; };
 		3B15812C9A0A5D448BE5E27A /* lyalya_celebration_50_6.m4a */ = {isa = PBXFileReference; path = lyalya_celebration_50_6.m4a; sourceTree = "<group>"; };
 		3B18F548803600BE50B5A2B4 /* shchiptsy.m4a */ = {isa = PBXFileReference; path = shchiptsy.m4a; sourceTree = "<group>"; };
 		3B1B77B58FBB5A267699AE98 /* br-v-029.m4a */ = {isa = PBXFileReference; path = "br-v-029.m4a"; sourceTree = "<group>"; };
@@ -12257,6 +12260,7 @@
 		63D77632DCF4BC84FC0B4249 /* lex-ms-17.m4a */ = {isa = PBXFileReference; path = "lex-ms-17.m4a"; sourceTree = "<group>"; };
 		63EA3525930118A7A7F2607E /* lex-hf-22.m4a */ = {isa = PBXFileReference; path = "lex-hf-22.m4a"; sourceTree = "<group>"; };
 		63F00EEB8BDD1ABCC20266BA /* y-wf-15.m4a */ = {isa = PBXFileReference; path = "y-wf-15.m4a"; sourceTree = "<group>"; };
+		63F15BAC7C522A453678BDFB /* ParentalGateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentalGateTests.swift; sourceTree = "<group>"; };
 		63F27B05CF6671B001EE2003 /* r-iso-17.m4a */ = {isa = PBXFileReference; path = "r-iso-17.m4a"; sourceTree = "<group>"; };
 		64100505E39F7D217C8499BF /* PronunciationScorer_velar.mlpackage */ = {isa = PBXFileReference; path = PronunciationScorer_velar.mlpackage; sourceTree = "<group>"; };
 		6419D47861C02ECF0B191DAC /* lex-np-16.m4a */ = {isa = PBXFileReference; path = "lex-np-16.m4a"; sourceTree = "<group>"; };
@@ -17783,6 +17787,14 @@
 			path = Workers;
 			sourceTree = "<group>";
 		};
+		09E651B9B1E8307BBAB1B4AE /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				63F15BAC7C522A453678BDFB /* ParentalGateTests.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
 		0C059AB746DD7B289BDB92A4 /* Accessibility */ = {
 			isa = PBXGroup;
 			children = (
@@ -22777,6 +22789,7 @@
 				0C059AB746DD7B289BDB92A4 /* Accessibility */,
 				34FFFA6204AEABF6C328AA60 /* Common */,
 				9763A6D298BA9FA4F11B1DC5 /* Customization */,
+				09E651B9B1E8307BBAB1B4AE /* DesignSystem */,
 				5F1F78567C802AD9B378CE19 /* FamilyCalendar */,
 				A1E0B0612AB8E14F69C3A19D /* Features */,
 				1DA970F74C0E5B8DD084846B /* Games */,
@@ -23454,6 +23467,7 @@
 				FA4A71D407C04D88D150E837 /* HSSticker.swift */,
 				3E6F01EB480BB165DBCD668A /* LyalyaMascotView.swift */,
 				04F55C1C22A740467EEA8475 /* MouthBubbleOverlay.swift */,
+				3B13ECE521BFD8F575785A14 /* ParentalGate.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -36561,6 +36575,7 @@
 				5C971BA48F270FE4AF77B932 /* ParentChildSnapshotTests.swift in Sources */,
 				6D824D419F4CD45FAF2399DE /* ParentFlowSnapshotTests.swift in Sources */,
 				3113524455FFD6138841BD1B /* ParentHomeInteractorTests.swift in Sources */,
+				D7B4EAAE42DE191CF6E6CA22 /* ParentalGateTests.swift in Sources */,
 				3EA3385EA1810424AD12CE53 /* PermissionsInteractorTests.swift in Sources */,
 				861102947CFF813C913A0016 /* PoseSimilarityWorkerTests.swift in Sources */,
 				59C5E82DBEA874490F58974C /* ProgramEditorInteractorTests.swift in Sources */,
@@ -36915,6 +36930,7 @@
 				F708DA54580AED72C7D729DD /* ParentHomeView.swift in Sources */,
 				71E4081555D2C86977D302D1 /* ParentHomeViewModel.swift in Sources */,
 				55B870655A744E6981A36DE5 /* ParentInsightsWorker.swift in Sources */,
+				4675BB37F1EF498FCAB0B239 /* ParentalGate.swift in Sources */,
 				66534504603D589AAC87B075 /* PerformanceMonitorService.swift in Sources */,
 				2BF98C6D0A6AF80FE65C3DB7 /* PermissionFlowView.swift in Sources */,
 				3C653F46398472086EEA807A /* PermissionsDisplayLogic.swift in Sources */,
