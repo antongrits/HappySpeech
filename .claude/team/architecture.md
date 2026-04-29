@@ -415,3 +415,46 @@ Plan v11 Block K — индексация уроков / достижений / 
 - `Features/Extensions/Spotlight/SpotlightIndexCoordinator.swift`
 - `Features/Extensions/Spotlight/SpotlightDeepLinkHandler.swift`
 - `HappySpeechTests/Unit/Services/SpotlightIndexerTests.swift`
+
+---
+
+## ADR-V11-APPINTENTS — Siri App Shortcuts
+
+**Дата:** 2026-04-29
+**Статус:** Accepted
+**Автор:** iOS Lead (Plan v11 Block L)
+
+### Контекст
+
+Plan v11 Block L — голосовое управление приложением через Siri Shortcuts.
+Пользователь говорит "Сири, открой урок звука Ш в HappySpeech" → приложение открывается на нужном экране.
+
+### Решение
+
+- **AppShortcutsProvider** (`HappySpeechAppShortcuts`) — 5 статических shortcuts, iOS регистрирует их автоматически без действий пользователя.
+- **5 AppIntents:** OpenLessonIntent (с параметром soundId), ShowChildProgressIntent, StartBreathingIntent, PlayWithLyalyaIntent, ShowTodaysMissionIntent.
+- **DeepLinkRouter** — `@MainActor final class`, singleton, хранит pending actions до регистрации coordinator, воспроизводит по FIFO.
+- **AppCoordinatorBridge** — протокол-мост, изолирует intents от конкретного класса AppCoordinator.
+- **SiriDeepLinkHandler.swift** — extension `AppCoordinator: AppCoordinatorBridge`, аналогично SpotlightDeepLinkHandler (K-блок).
+- **Регистрация:** `DeepLinkRouter.shared.register(coordinator:)` вызывается в `bootstrapApp()` после `Realm.open()`.
+- **iOS 17+** — все типы помечены `@available(iOS 17.0, *)`. Регистрация в `bootstrapApp` завёрнута в `if #available(iOS 17.0, *)`.
+- **Все фразы / заголовки / описания — на русском** (Russian-only mandate).
+- **Параметр soundId** в OpenLessonIntent нормализует регистр и мягкий знак (РЬ → Рь, ЛЬ → Ль).
+
+### Альтернативы отклонены
+
+- **Старый Intents framework (INExtension):** deprecated в iOS 18, требует отдельный extension target.
+- **Custom URL scheme:** менее интегрирован с Siri, нет Shortcuts.app интеграции.
+- **SiriKit Domains (messaging/workout):** не подходит для логопедического контента.
+
+### Файлы
+
+- `Features/Extensions/SiriShortcuts/AppShortcutsProvider.swift`
+- `Features/Extensions/SiriShortcuts/DeepLinkRouter.swift`
+- `Features/Extensions/SiriShortcuts/SiriDeepLinkHandler.swift`
+- `Features/Extensions/SiriShortcuts/Intents/OpenLessonIntent.swift`
+- `Features/Extensions/SiriShortcuts/Intents/ShowChildProgressIntent.swift`
+- `Features/Extensions/SiriShortcuts/Intents/StartBreathingIntent.swift`
+- `Features/Extensions/SiriShortcuts/Intents/PlayWithLyalyaIntent.swift`
+- `Features/Extensions/SiriShortcuts/Intents/ShowTodaysMissionIntent.swift`
+- `HappySpeechTests/Unit/Features/Extensions/AppShortcutsTests.swift`
