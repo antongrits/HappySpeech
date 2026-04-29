@@ -20,6 +20,7 @@ struct AchievementsView: View {
     @State private var selectedTab: AchievementsTab = .list
     @State private var toastViewModel: AchievementsModels.ToastUnlocked.ViewModel?
     @State private var showToast: Bool = false
+    @State private var showUnlockConfetti: Bool = false
 
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(AppContainer.self) private var container
@@ -62,6 +63,11 @@ struct AchievementsView: View {
                     .padding(.bottom, SpacingTokens.sp6)
                     .transition(.move(edge: .bottom).combined(with: .opacity))
             }
+
+            // Конфетти при разблокировке ачивки (medal preset)
+            HSConfettiView(preset: .medal, isActive: $showUnlockConfetti)
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
         }
         .navigationTitle(String(localized: "achievements.tab.list"))
         .navigationBarTitleDisplayMode(.large)
@@ -336,6 +342,7 @@ struct AchievementsView: View {
                 withAnimation(reduceMotion ? .none : .spring(response: 0.4, dampingFraction: 0.75)) {
                     showToast = true
                 }
+                showUnlockConfetti = true
                 Task {
                     try? await Task.sleep(for: .seconds(3))
                     withAnimation { showToast = false }
