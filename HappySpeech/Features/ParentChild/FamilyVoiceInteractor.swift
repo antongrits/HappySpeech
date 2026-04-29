@@ -307,7 +307,7 @@ final class FamilyVoiceInteractor {
 // MARK: - FamilyRecordingStore (actor-isolated helpers)
 
 /// Nonisolated static helpers that run on RealmActor — avoids @MainActor → actor boundary closure issues.
-private enum FamilyRecordingStore {
+enum FamilyRecordingStore {
 
     static func fetchAll(parentId: String, realmActor: RealmActor) async -> [RecordingDTO] {
         let predicate = NSPredicate(format: "parentProfileId == %@", parentId)

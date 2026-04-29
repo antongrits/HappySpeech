@@ -43,6 +43,12 @@ final class LessonVoiceWorker: NSObject {
     /// text (нормализованный) → phrase_id
     private let phraseMapping: [String: String]
 
+    /// RealmActor для поиска семейных записей (Priority 1). Устанавливается из AppContainer.
+    var realmActor: RealmActor?
+
+    /// parentId для поиска семейных записей.
+    var familyParentId: String = "local-parent"
+
     // MARK: - TTS defaults
 
     private static let defaultTTSRate: Float = AVSpeechUtteranceDefaultSpeechRate * 0.9
@@ -78,33 +84,21 @@ final class LessonVoiceWorker: NSObject {
 
         let logContext = lessonType.map { "[\($0)] " } ?? ""
 
-        if let phraseId = phraseId(for: text),
-           let url = Self.lyalyaURL(for: phraseId) {
-            await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
-                do {
-                    player?.stop()
-                    // Завершаем предыдущий continuation, если он остался висеть (stop() был вызван без ожидания).
-                    playbackContinuation?.resume()
-                    playbackContinuation = continuation
-                    let newPlayer = try AVAudioPlayer(contentsOf: url)
-                    newPlayer.delegate = self
-                    newPlayer.prepareToPlay()
-                    if rate != 1.0 {
-                        newPlayer.enableRate = true
-                        newPlayer.rate = max(0.5, min(2.0, rate))
-                    }
-                    player = newPlayer
-                    newPlayer.play()
-                    logger.debug("\(logContext, privacy: .public)Lyalya voice: '\(text, privacy: .private)' → \(phraseId, privacy: .public)")
-                } catch {
-                    logger.warning("\(logContext, privacy: .public)AVAudioPlayer failed for \(phraseId, privacy: .public): \(error.localizedDescription)")
-                    playbackContinuation = nil
-                    continuation.resume()
-                }
-            }
+        // Priority 1: семейная запись родителя (если Realm доступен и запись найдена)
+        if let familyURL = await familyRecordingURL(for: text) {
+            await playFileURL(familyURL, rate: rate, logContext: logContext + "[family] ")
             return
         }
 
+        // Priority 2: Lyalya m4a
+        if let phraseId = phraseId(for: text),
+           let url = Self.lyalyaURL(for: phraseId) {
+            logger.debug("\(logContext, privacy: .public)Lyalya voice: '\(text, privacy: .private)' → \(phraseId, privacy: .public)")
+            await playFileURL(url, rate: rate, logContext: logContext)
+            return
+        }
+
+        // Priority 3 (TTS)
         logger.debug("\(logContext, privacy: .public)No Lyalya file for '\(text, privacy: .private)' — TTS fallback")
         await speakViaSynthesizer(text, rate: rate)
     }
@@ -137,6 +131,51 @@ final class LessonVoiceWorker: NSObject {
             try AVAudioSession.sharedInstance().setActive(true, options: [])
         } catch {
             logger.warning("Failed to set AVAudioSession to playback: \(error.localizedDescription)")
+        }
+    }
+
+    // MARK: - Private: family recording lookup
+
+    /// Ищет семейную запись для слова (точное совпадение после normalize).
+    /// Возвращает URL если файл существует, иначе nil.
+    private func familyRecordingURL(for text: String) async -> URL? {
+        guard let realm = realmActor else { return nil }
+        let normalized = Self.normalize(text)
+        let dtos = await FamilyRecordingStore.fetchAll(parentId: familyParentId, realmActor: realm)
+        guard let match = dtos.first(where: { Self.normalize($0.word) == normalized }) else {
+            return nil
+        }
+        guard let url = try? FamilyVoiceRecorderWorker.resolveFilePath(match.audioFilePath),
+              FileManager.default.fileExists(atPath: url.path) else {
+            return nil
+        }
+        return url
+    }
+
+    // MARK: - Private: shared file playback
+
+    /// Воспроизводит файл по URL через AVAudioPlayer, ожидает завершения.
+    private func playFileURL(_ url: URL, rate: Float, logContext: String) async {
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            do {
+                player?.stop()
+                playbackContinuation?.resume()
+                playbackContinuation = continuation
+                let newPlayer = try AVAudioPlayer(contentsOf: url)
+                newPlayer.delegate = self
+                newPlayer.prepareToPlay()
+                if rate != 1.0 {
+                    newPlayer.enableRate = true
+                    newPlayer.rate = max(0.5, min(2.0, rate))
+                }
+                player = newPlayer
+                newPlayer.play()
+                logger.debug("\(logContext, privacy: .public)playing: \(url.lastPathComponent, privacy: .public)")
+            } catch {
+                logger.warning("\(logContext, privacy: .public)AVAudioPlayer failed: \(error.localizedDescription)")
+                playbackContinuation = nil
+                continuation.resume()
+            }
         }
     }
 
