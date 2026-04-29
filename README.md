@@ -175,6 +175,58 @@ swiftlint --strict
 
 ---
 
+## Plan v11 (2026-04-29) — Production Polish
+
+После Plan v10 выполнен финальный production pass — Real assets, Firebase full services, 10 новых углублений.
+
+### 15 блоков A–N
+
+| Блок | Что сделано | Метрики |
+|------|-------------|---------|
+| A — Real Lottie tutorials | 8 Lottie JSON v5.x hand-composed (60fps, precomp layers) | ~360 KB |
+| B — Rive multi-layer Lyalya | 6-layer HSMascotView wrapper (Rive + illustration + lip-sync) | ADR-V11-RIVE-V2 |
+| C.4 — Voice clone reference | voice_clone_reference.wav + FaceMesh defer ADR | 47.4 MB wav |
+| D — Firebase full services | Remote Config + FCM + Storage + App Check + Performance | 4 новых Swift сервиса |
+| E — Big libs SPM | Lottie 4.5+ real API + Down markdown + native confetti Canvas | 3 новых компонента |
+| F — Real-time lip-sync | ARFaceAnchor blendshapes → MascotLipSyncState → MouthBubbleOverlay | 5 тестов |
+| G — ARKit Body Tracking | PoseSequence с ARBodyTrackingConfiguration (A12+), cosine similarity | 5 эталонных поз |
+| H — Qwen kid circuit | KidLLMNarrationService + KidSafetyFilter + PrecannedNarrations | 20 тестов, COPPA |
+| I — Apple Guidelines | ParentalGate + LSApplicationCategoryType + NSHealth*UsageDescription | Kids Category |
+| J — HealthKit | Mindful sessions write-only (parent opt-in) | 14 тестов |
+| K — Spotlight | CoreSpotlight 3 домена + deep link (уроки/достижения/сессии) | COPPA-safe |
+| L — Siri Shortcuts | 5 AppIntents + DeepLinkRouter + SiriDeepLinkHandler | Russian-only |
+| M — Live Activities | LessonSession ActivityKit + Dynamic Island (Lock Screen + compact/expanded) | iOS 16.1+ |
+| N — Widget Extension | DailyMissionWidget Small/Medium/Large (App Group UserDefaults) | WidgetKit |
+| Q — HD illustrations | +18 HD achievement illustrations (FLUX-1-schnell) | +18 PNG |
+| P — Lyalya phrases | 956 → 1 526 фраз (.m4a) | +570 файлов |
+| R — Remotion videos | 35 → 80 MP4 tutorial stories | +45 видео |
+
+### Bundle metrics v11
+
+| Ресурсы | Размер |
+|---------|--------|
+| Resources total | 237 MB |
+| Audio .m4a (1 526 Lyalya + 6 509 content) | ~8 035 файлов |
+| Video MP4 | 80 |
+| ML models (.mlpackage) | 7 шт (48 MB) |
+| Voice clone reference | 47.4 MB |
+
+### Architecture extensions
+
+- **Firebase:** 5 сервисов (было 2: Auth + Firestore)
+- **SPM:** +2 реальные библиотеки (Down, Lottie 4.5+ API-switch)
+- **Siri Intents:** 5 AppIntents с Russian-only фразами
+- **New skills:** real-lottie-importer, firebase-services-architect, computer-vision-realtime
+- **14 ADR-V11:** полный список в `.claude/team/architecture.md` → "Plan v11 итог"
+
+### Russian-only mandate
+
+1 944+ ru ключей, 0 en ключей. sourceLanguage = ru.
+
+**Tag:** `v1.0.0-pro`
+
+---
+
 ## Plan v10 (2026-04-29) — Real assets + 10 new extensions
 
 После Plan v9 audit нашёл 5 critical issues непрофессионального уровня
@@ -255,14 +307,15 @@ Plan v10 (15 коммитов) исправил всё + добавил 10 но�
 | AR игр | 7 + ARStoryQuest |
 | Контент-паки | 21 |
 | Контент-единиц | 6 250+ |
-| Фразы маскота Ляли | 969 (735 lesson + 50 tuned + 184 base) |
+| Фразы маскота Ляли | 1 526 (956 base/lesson/tuned + 570 v11) |
 | DesignSystem компоненты | 28 |
 | Unit + snapshot тестов | ~990+ |
 | Snapshot PNG | 477+ |
 | Ключей локализации | 1 935 (ru) |
 | Core ML моделей | 6 (.mlpackage) |
-| Remotion MP4 stories | 35 (15 + 20) |
-| Размер Release build | ~177 MB |
+| Remotion MP4 stories | 80 (35 + 45 v11) |
+| HD illustrations | 18+ (FLUX-1-schnell, v11) |
+| Размер Resources | 237 MB |
 | Целевая аудитория | Дети 5–8 лет |
 
 ### Production Status

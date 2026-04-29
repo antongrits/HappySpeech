@@ -277,6 +277,58 @@ M6 App Store      Sprint 12  tests+content DONE, Firestore deploy DONE, TestFlig
 
 ---
 
+## Plan v11 — Завершён 2026-04-29
+
+**Цель:** Production Polish — Real assets + Firebase full + 10 углублений.
+**Коммитов:** 17 (dc6dc82 → Block O)
+**Tag:** v1.0.0-pro
+
+### Блоки и коммиты
+
+| Блок | Коммит | Что сделано | Метрики |
+|------|--------|-------------|---------|
+| A — Lottie tutorials | dc6dc82 | 8 Lottie JSON v5.x hand-composed (precomp, 60fps) | 8 файлов ~360 KB |
+| B — Rive multi-layer | 06d0b75 | HSMascotView 6-layer wrapper + ADR-V11-RIVE-V2 | Layer 1–6 архитектура |
+| C.4 — Voice clone + FaceMesh | (Block C) | voice_clone_reference.wav 47.4 MB + ADR-V11-FACEMESH-DEFER | 1 wav файл |
+| D — Firebase full | (Block D) | 5 сервисов: RC + FCM + Storage + App Check + Performance | 4 новых Swift файла |
+| E — Big libs SPM | (Block E) | Lottie 4.5+ real API + Down 0.11 + native confetti | 3 новых компонента |
+| F — Real-time lip-sync | (Block F) | ARFaceAnchor → MascotLipSyncState → MouthBubbleOverlay | 3 новых файла + 5 тестов |
+| G — ARKit body tracking | (Block G) | PoseSequence ARBodyTrackingConfiguration (A12+) | cosine similarity scoring |
+| H — Qwen kid circuit | (Block H) | KidLLMNarrationService + KidSafetyFilter + PrecannedNarrations | 20 тестов |
+| I — Apple Guidelines | (Block I) | ParentalGate + LSApplicationCategoryType + privacy keys | Kids Category compliant |
+| J — HealthKit | (Block J) | Mindful sessions write-only, parent opt-in | 14 тестов |
+| K — Spotlight | (Block K) | CoreSpotlight 3 домена + deep link | COPPA-safe |
+| L — Siri Shortcuts | (Block L) | 5 AppIntents + DeepLinkRouter | Russian-only фразы |
+| M — Live Activities | (Block M) | ActivityKit LessonSession + Dynamic Island | iOS 16.1+ |
+| N — Widget Extension | (Block N) | DailyMissionWidget Small/Medium/Large | App Group shared |
+| Q — +18 HD illustrations | 5b98219 | FLUX-1-schnell 18 HD achievement illustrations | +18 PNG в xcassets |
+| P — +570 Lyalya phrases | (Block P) | 956 → 1 526 фраз (.m4a) | +570 файлов |
+| R — +45 Remotion videos | (Block R) | 35 → 80 MP4 | +45 видео |
+| O — README + sprint + tag | (Block O) | Документация финал, v1.0.0-pro tag | Этот блок |
+
+### Финальные метрики Plan v11
+
+| Метрика | До v11 | После v11 |
+|---------|--------|-----------|
+| Resources | ~100 MB | 237 MB |
+| Lyalya фразы | 956 | 1 526 |
+| Remotion MP4 | 35 | 80 |
+| ML models | 6 .mlpackage | 7 .mlpackage + voice_clone_reference.wav |
+| HD illustrations | 0 | 18+ |
+| Firebase services | 2 (Auth + Firestore) | 5 (+RC +FCM +Performance) |
+| ADR-V11 записей | 0 | 14 |
+| SPM библиотек | Lottie (старый API) | Lottie 4.5+ + Down + native confetti |
+
+### Deferred post-v1.0
+
+- LottieFiles community search (MCP connection refused в тест-среде)
+- Custom Rive Editor Lyalya (rive-python ModuleNotFoundError)
+- MediaPipe FaceMesh 478 (coremltools 9 несовместим с tflite int16 ops)
+- Pow paid SDK (native Canvas fallback использован)
+- Bundle 1.5 GB target (нецелесообразно расширять)
+
+---
+
 ## Plan v10 (2026-04-29) — ЗАВЕРШЁН
 
 **Все Critical fixes + 10 extensions реализованы:**
