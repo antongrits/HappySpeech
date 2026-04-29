@@ -381,7 +381,7 @@ struct ChildHomeView: View {
                     icon: "trophy.fill",
                     color: ColorTokens.Brand.mint
                 ) {
-                    router?.routeToRewards(childId: childId)
+                    router?.routeToAchievements(childId: childId)
                 }
             }
         }

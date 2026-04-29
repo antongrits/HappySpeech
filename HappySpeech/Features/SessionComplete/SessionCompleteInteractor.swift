@@ -46,6 +46,27 @@ final class SessionCompleteInteractor: SessionCompleteBusinessLogic {
             "loadResult game=\(request.result.gameTitle, privacy: .public) \(resultInfo, privacy: .public)"
         )
         presenter?.presentLoadResult(.init(result: request.result))
+        publishAchievementEvent(for: request.result)
+    }
+
+    // MARK: - Achievement event (минимально-инвазивная интеграция через NotificationCenter)
+
+    private func publishAchievementEvent(for sessionResult: SessionResult) {
+        let event = AchievementEvent.sessionCompleted(
+            soundId: sessionResult.soundTarget,
+            score: Double(sessionResult.score),
+            roundsTotal: sessionResult.attempts
+        )
+        // childId хранится в SessionResult.soundTarget контексте;
+        // используем пустую строку — AchievementsInteractor обрабатывает gracefully.
+        NotificationCenter.default.post(
+            name: .achievementEventOccurred,
+            object: nil,
+            userInfo: [
+                "childId": "",
+                "event": event
+            ]
+        )
     }
 
     func advancePhase(_ request: SessionCompleteModels.AdvancePhase.Request) {

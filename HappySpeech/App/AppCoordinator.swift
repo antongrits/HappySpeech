@@ -36,6 +36,7 @@ enum AppRoute: Hashable {
     case stutteringHome
     case fluencyDiaryParent
     case siblingMultiplayer(childId: String)
+    case achievements(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -349,6 +350,12 @@ struct AppCoordinatorView: View {
         case .siblingMultiplayer(let childId):
             SiblingMultiplayerView(childId: childId)
                 .environment(\.circuitContext, .kid)
+
+        case .achievements(let childId):
+            NavigationStack {
+                AchievementsView(childId: childId)
+            }
+            .environment(\.circuitContext, .kid)
         }
     }
 

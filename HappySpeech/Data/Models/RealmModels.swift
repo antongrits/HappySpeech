@@ -149,9 +149,36 @@ final class FluencySessionObject: Object, @unchecked Sendable {
     @Persisted var transcript: String = ""
 }
 
+// MARK: - UnlockedAchievementObject (v7)
+// Stores per-child unlocked achievements. Offline-only, COPPA compliant.
+
+final class UnlockedAchievementObject: Object, @unchecked Sendable {
+    @Persisted(primaryKey: true) var id: String = UUID().uuidString
+    @Persisted var childId: String = ""
+    @Persisted var achievementKey: String = ""    // Achievement.rawValue
+    @Persisted var unlockedAt: Date = Date()
+}
+
+// MARK: - UnlockedAchievementData (Sendable DTO)
+
+struct UnlockedAchievementData: Sendable {
+    let id: String
+    let childId: String
+    let achievementKey: String
+    let unlockedAt: Date
+}
+
+// MARK: - ChildProfileData (minimal Sendable DTO for sibling leaderboard)
+
+struct ChildProfileData: Sendable {
+    let id: String
+    let name: String
+    let parentId: String
+}
+
 // MARK: - SchemaVersion
 
 /// Current Realm schema version. Increment with each migration.
 enum RealmSchemaVersion {
-    static let current: UInt64 = 6   // v6: added FluencySessionObject (StutteringModule)
+    static let current: UInt64 = 7   // v7: added UnlockedAchievementObject (Achievements L6)
 }
