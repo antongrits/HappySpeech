@@ -16,14 +16,25 @@ struct BreathingView: View {
     @State private var store: BreathingStore
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    init(activity: SessionActivity, onComplete: @escaping (Float) -> Void) {
+    init(
+        activity: SessionActivity,
+        onComplete: @escaping (Float) -> Void,
+        healthKitService: (any HealthKitServiceProtocol)? = nil
+    ) {
         self.activity = activity
         self.onComplete = onComplete
         let audioWorker = BreathingAudioWorker()
         let hapticWorker = BreathingHapticWorker(haptic: LiveHapticService())
+        let hkWorker: any BreathingHealthKitWorkerProtocol
+        if let service = healthKitService {
+            hkWorker = BreathingHealthKitWorker(healthKitService: service)
+        } else {
+            hkWorker = MockBreathingHealthKitWorker()
+        }
         let interactor = BreathingInteractor(
             audioWorker: audioWorker,
-            hapticWorker: hapticWorker
+            hapticWorker: hapticWorker,
+            healthKitWorker: hkWorker
         )
         let presenter = BreathingPresenter()
         interactor.presenter = presenter

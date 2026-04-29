@@ -123,6 +123,9 @@ targets:
               - com.googleusercontent.apps.PLACEHOLDER-REVERSED-CLIENT-ID
     entitlements:
       path: HappySpeech/Resources/HappySpeech.entitlements
+      properties:
+        com.apple.developer.healthkit: true
+        com.apple.developer.healthkit.access: []
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: ru.happyspeech.app

@@ -1274,6 +1274,7 @@
 		243C88313F2F93D0C093FAF2 /* lyalya_session_end_08.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 6FE8DA48D27D2B90F0142727 /* lyalya_session_end_08.m4a */; };
 		2448855E549CC532F958A07A /* sh-wf-11.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2DC1CB8B528E1C848332B17F /* sh-wf-11.m4a */; };
 		244A596835ADCC6E8DA8290F /* kh-wm-5.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4520ED7E76261FFABEDD107E /* kh-wm-5.m4a */; };
+		244E76449E21B218C68F6672 /* HealthKitServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A556F671CE6B2994C6A9284C /* HealthKitServiceTests.swift */; };
 		24559CF1CC2402E55B495428 /* br-130.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 984C4C0011EBF4600C8B6A21 /* br-130.m4a */; };
 		245F6AC81CFFA3664008D0E9 /* shch-sen-21.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 41BB0B55E421DA3D012D5F66 /* shch-sen-21.m4a */; };
 		2460790C6B0488FC4455F3B3 /* c-syl-27.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FE856441E63D5E84670FD43D /* c-syl-27.m4a */; };
@@ -3837,6 +3838,7 @@
 		6F70EEDBDA90D41DF64FF1F3 /* rl-wm-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2D8C16716B541F4DC4318F98 /* rl-wm-0.m4a */; };
 		6F71F2BDB35DDA4696F71B06 /* sh-syl-5.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F815925245B5E8DE167D3474 /* sh-syl-5.m4a */; };
 		6F7342690434BCC02A4F62E5 /* g-wi-29.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 47F2D2FF36F182B9C6536A28 /* g-wi-29.m4a */; };
+		6F7816B980055F5A1A37E0E0 /* HealthKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15D833E62F2C932D5C6C0B0 /* HealthKitService.swift */; };
 		6F7C8C9A6309CBA0562E7D2F /* g-ph-32.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 66A9CF6F91BF36F7FECB6D09 /* g-ph-32.m4a */; };
 		6F86087B8A01EE2418BABA4B /* bets.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 53DE42FF38B48D33FD4E76BF /* bets.m4a */; };
 		6F8731231EB5336A108348F5 /* lyalya_story_12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A61464D19D752EB23EDA5788 /* lyalya_story_12.m4a */; };
@@ -4916,6 +4918,7 @@
 		8E8601FD1304856DB9ECB0A5 /* k-ph-17.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FAC9DB965EA5AAFCC8B36066 /* k-ph-17.m4a */; };
 		8E8E62A37D6AE0CDFA0ACEC0 /* y-wm-23.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CB742E20FCFC8D8DF9A6A859 /* y-wm-23.m4a */; };
 		8E958B9474332D6C62C59C0C /* lex-np-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 482D8386AC25C72A55EFA29E /* lex-np-6.m4a */; };
+		8E96BFEEC47078B4C89E82AC /* BreathingHealthKitWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CCAE192D29EB149092D9396 /* BreathingHealthKitWorker.swift */; };
 		8E995AAC7214644A494A194D /* lex-cl-24.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F157B0F4AF1A15D630BF8BA8 /* lex-cl-24.m4a */; };
 		8E9A8CB878051273D82B7164 /* r-syl-4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FE29AFF768ADC5531F4756EC /* r-syl-4.m4a */; };
 		8E9DA32A1F9568C6315140C9 /* shchenok.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B81C7C3CF41AA6B802A71242 /* shchenok.m4a */; };
@@ -9871,6 +9874,7 @@
 		1C9F8BAAD6BA600AD6803BFA /* lyalya_hint_pr_9.m4a */ = {isa = PBXFileReference; path = lyalya_hint_pr_9.m4a; sourceTree = "<group>"; };
 		1CB3920D2C78E29489D97F5E /* br-292.m4a */ = {isa = PBXFileReference; path = "br-292.m4a"; sourceTree = "<group>"; };
 		1CC7DCF556FB3723DF8BFF5A /* ag-131.m4a */ = {isa = PBXFileReference; path = "ag-131.m4a"; sourceTree = "<group>"; };
+		1CCAE192D29EB149092D9396 /* BreathingHealthKitWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingHealthKitWorker.swift; sourceTree = "<group>"; };
 		1CCFB076778E57C7D1946D88 /* z-ph-3.m4a */ = {isa = PBXFileReference; path = "z-ph-3.m4a"; sourceTree = "<group>"; };
 		1CDC57A0E1813712207BF12F /* r-ph-57.m4a */ = {isa = PBXFileReference; path = "r-ph-57.m4a"; sourceTree = "<group>"; };
 		1CE6B618A3A26573E389428B /* ch-tt-13.m4a */ = {isa = PBXFileReference; path = "ch-tt-13.m4a"; sourceTree = "<group>"; };
@@ -14572,6 +14576,7 @@
 		A52D2844632ECCCB4329BE7B /* c-sen-0.m4a */ = {isa = PBXFileReference; path = "c-sen-0.m4a"; sourceTree = "<group>"; };
 		A52D7256CD1279C50B7983B6 /* ch-df-12.m4a */ = {isa = PBXFileReference; path = "ch-df-12.m4a"; sourceTree = "<group>"; };
 		A553B97C8A11F34BA7EBCFB0 /* kh-prep-9.m4a */ = {isa = PBXFileReference; path = "kh-prep-9.m4a"; sourceTree = "<group>"; };
+		A556F671CE6B2994C6A9284C /* HealthKitServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitServiceTests.swift; sourceTree = "<group>"; };
 		A5700FA1DE5A3589AB38F050 /* kolokolchik.m4a */ = {isa = PBXFileReference; path = kolokolchik.m4a; sourceTree = "<group>"; };
 		A57625F33F3A1DC5E0AF83F2 /* c-ph-45.m4a */ = {isa = PBXFileReference; path = "c-ph-45.m4a"; sourceTree = "<group>"; };
 		A57B16065DCDCEDC598C333E /* y-wi-17.m4a */ = {isa = PBXFileReference; path = "y-wi-17.m4a"; sourceTree = "<group>"; };
@@ -17180,6 +17185,7 @@
 		F1569E7BF07C84FBF193CC7C /* rl-ph-0.m4a */ = {isa = PBXFileReference; path = "rl-ph-0.m4a"; sourceTree = "<group>"; };
 		F157B0F4AF1A15D630BF8BA8 /* lex-cl-24.m4a */ = {isa = PBXFileReference; path = "lex-cl-24.m4a"; sourceTree = "<group>"; };
 		F15D1A28DCD51B6222E8496E /* lyalya_insight_streak_5.m4a */ = {isa = PBXFileReference; path = lyalya_insight_streak_5.m4a; sourceTree = "<group>"; };
+		F15D833E62F2C932D5C6C0B0 /* HealthKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitService.swift; sourceTree = "<group>"; };
 		F16310C0C28D4E6344421BB4 /* lyalya_session_end_09.m4a */ = {isa = PBXFileReference; path = lyalya_session_end_09.m4a; sourceTree = "<group>"; };
 		F16316F9CCB1CB7252AD539B /* ag-240.m4a */ = {isa = PBXFileReference; path = "ag-240.m4a"; sourceTree = "<group>"; };
 		F1666AEB5E0E5CE0FEA61FE2 /* BreathingInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingInteractor.swift; sourceTree = "<group>"; };
@@ -21848,6 +21854,7 @@
 			children = (
 				C4AA24BEAAFFC9957F5F688E /* BreathingAudioWorker.swift */,
 				9126A0AFBABBFB6B2D8AA21B /* BreathingHapticWorker.swift */,
+				1CCAE192D29EB149092D9396 /* BreathingHealthKitWorker.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -23260,6 +23267,7 @@
 			isa = PBXGroup;
 			children = (
 				C0B3B1653E269D3A00AD4A7E /* Achievements */,
+				D453C625671DFD80410B42F3 /* Health */,
 				376ADD3B4670AEF52D195E82 /* SeasonalEvents */,
 			);
 			path = Extensions;
@@ -26031,6 +26039,7 @@
 				865559639DB1AC00CB54889E /* AdaptivePlannerServiceTests.swift */,
 				43F0FD43E9E9C355E349DB4C /* AppErrorTests.swift */,
 				891787FE84A8DE87DDFC404F /* ContentEngineTests.swift */,
+				A556F671CE6B2994C6A9284C /* HealthKitServiceTests.swift */,
 				AABD10350ECAA606782BE07D /* LLMDecisionServiceTests.swift */,
 				FAA882DF0FA0C8B522E021A6 /* MockRepositoryTests.swift */,
 				B7CEB879873995A9CF77F575 /* SoundServiceTests.swift */,
@@ -26126,6 +26135,14 @@
 				DCED672BBFE53B4FF9C351C2 /* OnboardingRouter.swift */,
 			);
 			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		D453C625671DFD80410B42F3 /* Health */ = {
+			isa = PBXGroup;
+			children = (
+				F15D833E62F2C932D5C6C0B0 /* HealthKitService.swift */,
+			);
+			path = Health;
 			sourceTree = "<group>";
 		};
 		D4A94C534D82C889E52A6F35 /* Unit */ = {
@@ -36554,6 +36571,7 @@
 				C9AC0FF29BB8FAB316DB6E73 /* GrammarScoringWorkerTests.swift in Sources */,
 				227A8DFCE0EAC0753D9F9871 /* GuidedTourCoordinatorTests.swift in Sources */,
 				BFCACC5B414C116DA41E7AFA /* HSMascotViewSnapshotTests.swift in Sources */,
+				244E76449E21B218C68F6672 /* HealthKitServiceTests.swift in Sources */,
 				9F5B77744EDCB4EEC7126789 /* HomeTasksInteractorTests.swift in Sources */,
 				845862C47F79315DC347A6DE /* KeyScreensSnapshotTests.swift in Sources */,
 				40F59440A61B3CBCD27DE5E4 /* KidLLMNarrationServiceTests.swift in Sources */,
@@ -36704,6 +36722,7 @@
 				5DEF7D04F11B25072DD1436E /* BreathingDisplayLogic.swift in Sources */,
 				7BDF3AAEC4ED300E34E48E5C /* BreathingExtendedInteractor.swift in Sources */,
 				6EE2C8772BA6CEDABCBA4B92 /* BreathingHapticWorker.swift in Sources */,
+				8E96BFEEC47078B4C89E82AC /* BreathingHealthKitWorker.swift in Sources */,
 				2F971B9FF29E56AAA6D7BB01 /* BreathingInteractor.swift in Sources */,
 				462388CDE4294B54CA3CF67A /* BreathingModels.swift in Sources */,
 				1A69FCD75147584306D47D18 /* BreathingPresenter.swift in Sources */,
@@ -36830,6 +36849,7 @@
 				EF3EA783082AE637917B190C /* HSSticker.swift in Sources */,
 				ED3DD5430B6834AF615AFF82 /* HSTypes.swift in Sources */,
 				C0B194EE78872654172813D1 /* HappySpeechApp.swift in Sources */,
+				6F7816B980055F5A1A37E0E0 /* HealthKitService.swift in Sources */,
 				040D77930D8D47E9C5497F77 /* HoldThePoseInteractor.swift in Sources */,
 				2B93D2D9D8756FB3DF41556F /* HoldThePoseModels.swift in Sources */,
 				2E3F062C282CCAB0D777FBF7 /* HoldThePosePresenter.swift in Sources */,
