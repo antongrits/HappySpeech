@@ -30,6 +30,10 @@ enum RealmMigrations {
             // v6: added FluencySessionObject (StutteringModule Fluency Diary).
             // Realm создаёт схему автоматически, дефолты заданы в модели.
         }
+        if oldSchemaVersion < 7 {
+            // v7: added UnlockedAchievementObject (L6 Achievements + offline leaderboard).
+            // Realm создаёт схему автоматически, дефолты заданы в модели.
+        }
     }
 }
 
@@ -63,5 +67,49 @@ public extension RealmActor {
                 transcript: obj.transcript
             )
         }
+    }
+
+    /// Fetches UnlockedAchievementObject as value-type DTOs for a given child — Sendable-safe.
+    internal func fetchUnlockedAchievements(childId: String) async -> [UnlockedAchievementData] {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return [] }
+        return Array(
+            realmInstance.objects(UnlockedAchievementObject.self)
+                .filter("childId == %@", childId)
+        ).map { obj in
+            UnlockedAchievementData(
+                id: obj.id,
+                childId: obj.childId,
+                achievementKey: obj.achievementKey,
+                unlockedAt: obj.unlockedAt
+            )
+        }
+    }
+
+    /// Fetches sibling ChildProfile objects for family leaderboard — Sendable-safe.
+    /// Returns objects with parentId == given parentId, excluding the current child.
+    internal func fetchSiblingProfiles(parentId: String, excludeId: String) async -> [ChildProfileData] {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return [] }
+        return Array(
+            realmInstance.objects(ChildProfile.self)
+                .filter("parentId == %@ AND id != %@ AND isArchived == false", parentId, excludeId)
+        ).map { obj in
+            ChildProfileData(id: obj.id, name: obj.name, parentId: obj.parentId)
+        }
+    }
+
+    /// Persists a newly unlocked achievement for a child — idempotent (noop if already exists).
+    internal func persistAchievementUnlock(childId: String, achievementKey: String) async {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return }
+        let existing = realmInstance.objects(UnlockedAchievementObject.self)
+            .filter("childId == %@ AND achievementKey == %@", childId, achievementKey)
+        guard existing.isEmpty else { return }
+        let obj = UnlockedAchievementObject()
+        obj.childId = childId
+        obj.achievementKey = achievementKey
+        obj.unlockedAt = Date()
+        try? realmInstance.write { realmInstance.add(obj) }
     }
 }

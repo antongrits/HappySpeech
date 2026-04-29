@@ -210,6 +210,7 @@
 		060D8D0D03B046A62C4FC492 /* ch-df-14.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FE02A7B72FD85E60025C1BE5 /* ch-df-14.m4a */; };
 		0614BCB048485EE000A4698D /* l-wm-32.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D5B981C404591A9C2C8C71D3 /* l-wm-32.m4a */; };
 		062A48EAB320D7CBB8BDF577 /* shchedryy.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 999B8FE8E566A3DE9FD733AC /* shchedryy.m4a */; };
+		064BB022398C81609433D0EB /* AchievementsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81626E39798A0A1B2CAC10D4 /* AchievementsModels.swift */; };
 		064EA55ADFA4CEC88EBCF565 /* yozh.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B6F6CFDCA9072C0E9EC06231 /* yozh.m4a */; };
 		06590D84FD3A8618365BB120 /* ag-004.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9B07EA9675E238D4A2A14564 /* ag-004.m4a */; };
 		06656D9AFE3E3102C6457DAF /* MinimalPairsInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7E783D0F611CBEFCE1D6FE /* MinimalPairsInteractorTests.swift */; };
@@ -332,6 +333,7 @@
 		0A38BBCF58956DD6853AD0E2 /* br-058.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 663F83A1A89D0B66CCDA2F7A /* br-058.m4a */; };
 		0A3C9BF3B2D3979B9B45A344 /* shch-iso-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8559AD054ACF9A38D67E2C05 /* shch-iso-0.m4a */; };
 		0A4D82D691FB8597DC4630E5 /* l-wi-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4184FB2D527C483B326866E8 /* l-wi-8.m4a */; };
+		0A6188E5ED3126A66543C567 /* AchievementsDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = E679EB4B30BACABC1E524EA9 /* AchievementsDisplayLogic.swift */; };
 		0A6662BCD21113082BA7047A /* koza.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 99CF985DB656337BBF5FD9A0 /* koza.m4a */; };
 		0A66D583EE2A90018752799A /* narr-s-10.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D85B3FAE6D61E9A38927CCC7 /* narr-s-10.m4a */; };
 		0A6783FE7AB51936B1016461 /* phon-re-15.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 535D58B72246B526AE575F36 /* phon-re-15.m4a */; };
@@ -618,6 +620,7 @@
 		1317E6317AED11ED570D8E6E /* rl-wm-18.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B4D336C59BECF9BF40A9EC03 /* rl-wm-18.m4a */; };
 		131AF6E93A9F2E8583CF70DD /* iPhone17Pro_Light.png in Resources */ = {isa = PBXBuildFile; fileRef = 18C65C9CC2438710764205CC /* iPhone17Pro_Light.png */; };
 		1320E0CFF9A4AB5F002A5FD3 /* ch-wi-11.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 337E2069DB340AC94E50DF15 /* ch-wi-11.m4a */; };
+		132473177DEE73D0E401029F /* AchievementUnlockerWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F509825B05EF11A3DDF0AD /* AchievementUnlockerWorker.swift */; };
 		132D85918445333740699F68 /* papa.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1C7BDA0BFC50F73332B57425 /* papa.m4a */; };
 		133144E07D3D5CDC1B09B18A /* l-ph-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ADD01596424B2D6F7D358DE9 /* l-ph-6.m4a */; };
 		133D34EC5891D4C3713008BC /* phon-re-10.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 920695C574E771BCE79C5D99 /* phon-re-10.m4a */; };
@@ -1111,6 +1114,7 @@
 		20993E9E686435086F9F74AE /* shch-wi-41.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 19FB61424D8F72C399E645DB /* shch-wi-41.m4a */; };
 		209F407D107396117D006DF3 /* sh-wm-12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 072B19141E4189EFC4D69C2D /* sh-wm-12.m4a */; };
 		20A1375483BF4D186D73E7E3 /* shch-df-21.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9E9A9C56B792A51D3BDD77C0 /* shch-df-21.m4a */; };
+		20AD4F482483FA67D0D2D436 /* AchievementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3092E89A5390DB8A5A6644DF /* AchievementsView.swift */; };
 		20AE88C71940DCD5FD5A8051 /* g-syl-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 357421C7A89ADAB27117173E /* g-syl-8.m4a */; };
 		20B169D5CD3A5895911F1156 /* rl-wi-22.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C3CC0446F39227251A93D333 /* rl-wi-22.m4a */; };
 		20BC89092DEE8D88A4B3DB13 /* cheburek.m4a in Resources */ = {isa = PBXBuildFile; fileRef = DB76BCD059E4242CCBE2091D /* cheburek.m4a */; };
@@ -2673,6 +2677,7 @@
 		4DAD909407ADAF5DBA9267BD /* phon-ls-10.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 51134F6B039AB20383FDF0FB /* phon-ls-10.m4a */; };
 		4DAF030E85EC9A65783523D1 /* StoryLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0E4441EFDC9521CB428A95 /* StoryLibrary.swift */; };
 		4DC888BADBB926E9AABE469E /* lex-tr-19.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5574C95DC72FC80C485307D9 /* lex-tr-19.m4a */; };
+		4DCDD9048AF4B914CC7F85B1 /* AchievementsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125EE56AF81186C1BF2D4845 /* AchievementsRouter.swift */; };
 		4DCEE778C400D8E6A4B67CB5 /* sravni_slona_i_myshku.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CD2654B7C2544EBCCC615961 /* sravni_slona_i_myshku.m4a */; };
 		4DDFDDBAD9A3F9630F759374 /* shch-wi-16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F6FCD27536AFDF30E0DB7BE4 /* shch-wi-16.m4a */; };
 		4DE1FF7AAA85FA579C61963A /* iPhone17Pro_Light.png in Resources */ = {isa = PBXBuildFile; fileRef = 558DE17C34DD9E14683788B4 /* iPhone17Pro_Light.png */; };
@@ -5207,6 +5212,7 @@
 		9A0C8503823B014D9C7617F4 /* dwh-wi-18.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 513C5BC915320B9C5148BAAB /* dwh-wi-18.m4a */; };
 		9A2282190AFBDE67A1DACE45 /* ag-120.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3B535B622F2F77263A3F5454 /* ag-120.m4a */; };
 		9A238B99CB5789B45E333B71 /* zh-wf-16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9A4BE1DC54A9A1C68A3F3120 /* zh-wf-16.m4a */; };
+		9A24787962A62DFA14C40C87 /* AchievementsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D098D30DFB6077A9175A36 /* AchievementsPresenter.swift */; };
 		9A27A09FC7ACFD71420CA80F /* br-269.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1699B97AC66668E79DCB7C0D /* br-269.m4a */; };
 		9A40CA61BBB00F9A33E1E406 /* kaktus.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C88CF197DA3308EAC1AFFBE3 /* kaktus.m4a */; };
 		9A432FC69C199855529C0F9E /* lex-hf-10.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D5D081BB5F49623EF3A3662C /* lex-hf-10.m4a */; };
@@ -6846,6 +6852,7 @@
 		C92A8BC3FB74108FFED5723A /* ch-ph-16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F3CDD829BA2D0840FFEAA385 /* ch-ph-16.m4a */; };
 		C9411628A0249DA783523465 /* ch-ph-12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C3A15A92C00B08371FED67F3 /* ch-ph-12.m4a */; };
 		C94DE6CEFE44BABEC6F33BFE /* r-sen-25.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 6CCCF52202568F389792A6F4 /* r-sen-25.m4a */; };
+		C956424534B86B0A590E760E /* AchievementsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331056FF7C2B312ECC198469 /* AchievementsInteractor.swift */; };
 		C95857D9AAD8E8075CB810B5 /* skameyka_okolo_fontana.m4a in Resources */ = {isa = PBXBuildFile; fileRef = EAED206E820ED114A9BB8670 /* skameyka_okolo_fontana.m4a */; };
 		C96D444161C74CC7974F081C /* gr-adj-18.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9F1FE566FAC0EDC2A45251E6 /* gr-adj-18.m4a */; };
 		C97F994915A52FC28E1FEF5C /* shch-wm-46.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 81D166603A1690CDC26F2339 /* shch-wm-46.m4a */; };
@@ -7705,6 +7712,7 @@
 		E3AA6AF5DAFD0A985C43BC58 /* phon-re-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1D93DCC13A7818D2CCB38402 /* phon-re-6.m4a */; };
 		E3BD821DF9AC211715796564 /* phon-st-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2ABBE38F817AD433C33485E3 /* phon-st-2.m4a */; };
 		E3C17FF3675922C6C072E2F9 /* iPhone17Pro_Light.png in Resources */ = {isa = PBXBuildFile; fileRef = FDF83B13C32C3F4DCDF6E476 /* iPhone17Pro_Light.png */; };
+		E3C64A9FAA6ECBAD8AB61BE6 /* AchievementCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7252E20BA5DED6FFCC1BE724 /* AchievementCardView.swift */; };
 		E3C7A3E53E02206BC295399E /* br-v-036.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AF585AD749E5DAF31294CE49 /* br-v-036.m4a */; };
 		E3D0791E056F907EC764B42A /* g-wm-35.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E6C81AB2E55F22EDE4AE69B1 /* g-wm-35.m4a */; };
 		E3DA13213E875618C731EF0A /* phon-mp-12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = DD119CB02C72B7B6FE013753 /* phon-mp-12.m4a */; };
@@ -9301,6 +9309,7 @@
 		12516EC7165B76E54BE02D76 /* l-prep-19.m4a */ = {isa = PBXFileReference; path = "l-prep-19.m4a"; sourceTree = "<group>"; };
 		1252400398EDD9B39EC01AD7 /* sani.m4a */ = {isa = PBXFileReference; path = sani.m4a; sourceTree = "<group>"; };
 		1258C28445EC63906F5EA3ED /* CustomizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizationView.swift; sourceTree = "<group>"; };
+		125EE56AF81186C1BF2D4845 /* AchievementsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsRouter.swift; sourceTree = "<group>"; };
 		1263B2A6ADB811DD8F62C011 /* rl-wi-28.m4a */ = {isa = PBXFileReference; path = "rl-wi-28.m4a"; sourceTree = "<group>"; };
 		1263E7EEC717BEA853F1784C /* iPhoneSE3_Light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhoneSE3_Light.png; sourceTree = "<group>"; };
 		12781C3ACDDF0255FEF0B7AA /* r-wf-24.m4a */ = {isa = PBXFileReference; path = "r-wf-24.m4a"; sourceTree = "<group>"; };
@@ -10289,6 +10298,7 @@
 		3085B2C93FE3187D5B5F40F5 /* HSSoundChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSSoundChip.swift; sourceTree = "<group>"; };
 		3088537ADF7454A916537F26 /* ag-142.m4a */ = {isa = PBXFileReference; path = "ag-142.m4a"; sourceTree = "<group>"; };
 		308C8EFF9B41710C9062CEA5 /* lex-num-1.m4a */ = {isa = PBXFileReference; path = "lex-num-1.m4a"; sourceTree = "<group>"; };
+		3092E89A5390DB8A5A6644DF /* AchievementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsView.swift; sourceTree = "<group>"; };
 		30A043B59E4B3C222D749454 /* r-wi-77.m4a */ = {isa = PBXFileReference; path = "r-wi-77.m4a"; sourceTree = "<group>"; };
 		30A1604170370FF70CD4CFDA /* s-sen-25.m4a */ = {isa = PBXFileReference; path = "s-sen-25.m4a"; sourceTree = "<group>"; };
 		30A899CC8F218C64115181D9 /* rl-sen-4.m4a */ = {isa = PBXFileReference; path = "rl-sen-4.m4a"; sourceTree = "<group>"; };
@@ -10383,6 +10393,7 @@
 		33048DCF5EE11BEE4A7975D0 /* br-065.m4a */ = {isa = PBXFileReference; path = "br-065.m4a"; sourceTree = "<group>"; };
 		330761AF8551EFBA153C0F39 /* z-iso-0.m4a */ = {isa = PBXFileReference; path = "z-iso-0.m4a"; sourceTree = "<group>"; };
 		331040BE18BFFECC9E3939B5 /* transition_4.mp4 */ = {isa = PBXFileReference; path = transition_4.mp4; sourceTree = "<group>"; };
+		331056FF7C2B312ECC198469 /* AchievementsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsInteractor.swift; sourceTree = "<group>"; };
 		3310F9F6A77A625F5A43CBBB /* br-266.m4a */ = {isa = PBXFileReference; path = "br-266.m4a"; sourceTree = "<group>"; };
 		33121F8C8D98724A3830ED97 /* shch-wf-11.m4a */ = {isa = PBXFileReference; path = "shch-wf-11.m4a"; sourceTree = "<group>"; };
 		33205B1B7E10F8F6414A7CFC /* ka.m4a */ = {isa = PBXFileReference; path = ka.m4a; sourceTree = "<group>"; };
@@ -10444,6 +10455,7 @@
 		34CC0BCFA33AA82599BF9F01 /* galka.m4a */ = {isa = PBXFileReference; path = galka.m4a; sourceTree = "<group>"; };
 		34D963F4B1468CE90BF540D8 /* lex-fe-6.m4a */ = {isa = PBXFileReference; path = "lex-fe-6.m4a"; sourceTree = "<group>"; };
 		34EDE2540BADA7CD80630E8D /* phon-hs-10.m4a */ = {isa = PBXFileReference; path = "phon-hs-10.m4a"; sourceTree = "<group>"; };
+		34F509825B05EF11A3DDF0AD /* AchievementUnlockerWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementUnlockerWorker.swift; sourceTree = "<group>"; };
 		34FAF951AD477F6CE55BBBA7 /* br-252.m4a */ = {isa = PBXFileReference; path = "br-252.m4a"; sourceTree = "<group>"; };
 		34FBA67C7E3919BB918649FD /* sh-ph-21.m4a */ = {isa = PBXFileReference; path = "sh-ph-21.m4a"; sourceTree = "<group>"; };
 		34FC2B9B447F7A0259F2421C /* r-sen-2.m4a */ = {isa = PBXFileReference; path = "r-sen-2.m4a"; sourceTree = "<group>"; };
@@ -12455,6 +12467,7 @@
 		724844313FC87A9F63460A6F /* lex-vf-13.m4a */ = {isa = PBXFileReference; path = "lex-vf-13.m4a"; sourceTree = "<group>"; };
 		72487020E3109815F51C4790 /* ch-sen-19.m4a */ = {isa = PBXFileReference; path = "ch-sen-19.m4a"; sourceTree = "<group>"; };
 		7249B2734B35B068A3CEB94A /* br-212.m4a */ = {isa = PBXFileReference; path = "br-212.m4a"; sourceTree = "<group>"; };
+		7252E20BA5DED6FFCC1BE724 /* AchievementCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementCardView.swift; sourceTree = "<group>"; };
 		7253427F8A89E3385B380122 /* g-ph-22.m4a */ = {isa = PBXFileReference; path = "g-ph-22.m4a"; sourceTree = "<group>"; };
 		725AA2C0CF67BF36136D2992 /* ag-051.m4a */ = {isa = PBXFileReference; path = "ag-051.m4a"; sourceTree = "<group>"; };
 		726483659E686A94CD95287A /* ch-ph-39.m4a */ = {isa = PBXFileReference; path = "ch-ph-39.m4a"; sourceTree = "<group>"; };
@@ -13009,6 +13022,7 @@
 		815495404DDE1D19E269EEC7 /* k-wf-22.m4a */ = {isa = PBXFileReference; path = "k-wf-22.m4a"; sourceTree = "<group>"; };
 		815616CFF4EF3E6B8A8B3E0D /* gr-pl-9.m4a */ = {isa = PBXFileReference; path = "gr-pl-9.m4a"; sourceTree = "<group>"; };
 		8157B7A16A61F96EF857C894 /* sh-wi-9.m4a */ = {isa = PBXFileReference; path = "sh-wi-9.m4a"; sourceTree = "<group>"; };
+		81626E39798A0A1B2CAC10D4 /* AchievementsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsModels.swift; sourceTree = "<group>"; };
 		8162B34C6CB97F836BB70DBB /* ch-ph-34.m4a */ = {isa = PBXFileReference; path = "ch-ph-34.m4a"; sourceTree = "<group>"; };
 		816BA6403D833DCABE696AE5 /* tvoritelnyy_kem_chem.m4a */ = {isa = PBXFileReference; path = tvoritelnyy_kem_chem.m4a; sourceTree = "<group>"; };
 		8173E431BB4F322CE14FDD6B /* lex-ms-22.m4a */ = {isa = PBXFileReference; path = "lex-ms-22.m4a"; sourceTree = "<group>"; };
@@ -15159,6 +15173,7 @@
 		C0BA38EBDBF8265AC537E8B8 /* rl-sen-15.m4a */ = {isa = PBXFileReference; path = "rl-sen-15.m4a"; sourceTree = "<group>"; };
 		C0BF56738462BA0D213663E8 /* kh-ph-37.m4a */ = {isa = PBXFileReference; path = "kh-ph-37.m4a"; sourceTree = "<group>"; };
 		C0C5FC62785761F72240B0E6 /* ch-wi-8.m4a */ = {isa = PBXFileReference; path = "ch-wi-8.m4a"; sourceTree = "<group>"; };
+		C0D098D30DFB6077A9175A36 /* AchievementsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsPresenter.swift; sourceTree = "<group>"; };
 		C0D0C11CEA7904A5446EF080 /* r-diff-15.m4a */ = {isa = PBXFileReference; path = "r-diff-15.m4a"; sourceTree = "<group>"; };
 		C0D5E26F5734E5D646FB7C74 /* lyalya_grammar_complete_easy.m4a */ = {isa = PBXFileReference; path = lyalya_grammar_complete_easy.m4a; sourceTree = "<group>"; };
 		C0E2270555D057DCAB47BC6F /* phon-vc-19.m4a */ = {isa = PBXFileReference; path = "phon-vc-19.m4a"; sourceTree = "<group>"; };
@@ -16419,6 +16434,7 @@
 		E66B9EF64D68A7F115C05BE8 /* shch-sen-25.m4a */ = {isa = PBXFileReference; path = "shch-sen-25.m4a"; sourceTree = "<group>"; };
 		E66F9012FA4790EC9FC668A4 /* lex-np-2.m4a */ = {isa = PBXFileReference; path = "lex-np-2.m4a"; sourceTree = "<group>"; };
 		E6754D51D4C99AA90345FF1A /* gr-adj-15.m4a */ = {isa = PBXFileReference; path = "gr-adj-15.m4a"; sourceTree = "<group>"; };
+		E679EB4B30BACABC1E524EA9 /* AchievementsDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsDisplayLogic.swift; sourceTree = "<group>"; };
 		E67B17BCE3C7A61B6190D53B /* lyalya_greeting_04.m4a */ = {isa = PBXFileReference; path = lyalya_greeting_04.m4a; sourceTree = "<group>"; };
 		E67EE3341EA170066B6DB2A2 /* shch-df-19.m4a */ = {isa = PBXFileReference; path = "shch-df-19.m4a"; sourceTree = "<group>"; };
 		E67F4765E124F5707545CEE0 /* zh-ph-27.m4a */ = {isa = PBXFileReference; path = "zh-ph-27.m4a"; sourceTree = "<group>"; };
@@ -22401,6 +22417,14 @@
 			path = RL;
 			sourceTree = "<group>";
 		};
+		7422760EC8921D24F7ADF2BC /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				34F509825B05EF11A3DDF0AD /* AchievementUnlockerWorker.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
 		74AFA2D40CE93F10AB95C4A4 /* Scorer */ = {
 			isa = PBXGroup;
 			children = (
@@ -23323,6 +23347,7 @@
 		90A494B192648F99F73356C9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				C0B3B1653E269D3A00AD4A7E /* Achievements */,
 				376ADD3B4670AEF52D195E82 /* SeasonalEvents */,
 			);
 			path = Extensions;
@@ -25656,6 +25681,21 @@
 				2E60F99F4C135521ACBE47B4 /* iPhone17Pro_Light.png */,
 			);
 			path = skin_athlete_warm;
+			sourceTree = "<group>";
+		};
+		C0B3B1653E269D3A00AD4A7E /* Achievements */ = {
+			isa = PBXGroup;
+			children = (
+				7422760EC8921D24F7ADF2BC /* Workers */,
+				7252E20BA5DED6FFCC1BE724 /* AchievementCardView.swift */,
+				E679EB4B30BACABC1E524EA9 /* AchievementsDisplayLogic.swift */,
+				331056FF7C2B312ECC198469 /* AchievementsInteractor.swift */,
+				81626E39798A0A1B2CAC10D4 /* AchievementsModels.swift */,
+				C0D098D30DFB6077A9175A36 /* AchievementsPresenter.swift */,
+				125EE56AF81186C1BF2D4845 /* AchievementsRouter.swift */,
+				3092E89A5390DB8A5A6644DF /* AchievementsView.swift */,
+			);
+			path = Achievements;
 			sourceTree = "<group>";
 		};
 		C0B43A80294C36A939AAC3AE /* GuidedTour */ = {
@@ -36850,6 +36890,14 @@
 				37B2996C1F8500A67893C10B /* ARZoneView.swift in Sources */,
 				F7E038E9DDFA1013EEA19716 /* ASRServiceLive.swift in Sources */,
 				D19296C854A04A66DAA711E0 /* AccessibilityModifiers.swift in Sources */,
+				E3C64A9FAA6ECBAD8AB61BE6 /* AchievementCardView.swift in Sources */,
+				132473177DEE73D0E401029F /* AchievementUnlockerWorker.swift in Sources */,
+				0A6188E5ED3126A66543C567 /* AchievementsDisplayLogic.swift in Sources */,
+				C956424534B86B0A590E760E /* AchievementsInteractor.swift in Sources */,
+				064BB022398C81609433D0EB /* AchievementsModels.swift in Sources */,
+				9A24787962A62DFA14C40C87 /* AchievementsPresenter.swift in Sources */,
+				4DCDD9048AF4B914CC7F85B1 /* AchievementsRouter.swift in Sources */,
+				20AD4F482483FA67D0D2D436 /* AchievementsView.swift in Sources */,
 				A273B837EF6C41C969853C0A /* AirStreamAnalyzer.swift in Sources */,
 				9166F991349EA025D462609E /* AirStreamDetector.swift in Sources */,
 				15E4ADCCBB55B9158EFF8B1B /* AnalyticsService.swift in Sources */,
