@@ -1,4 +1,3 @@
-import AVFoundation
 import Foundation
 import OSLog
 
@@ -42,12 +41,6 @@ final class MinimalPairsInteractor: MinimalPairsBusinessLogic {
     var presenter: (any MinimalPairsPresentationLogic)?
     private let logger = Logger(subsystem: "ru.happyspeech", category: "MinimalPairs")
 
-    // MARK: TTS
-
-    /// Синтезатор для озвучки целевого слова. Держим его как свойство, чтобы
-    /// переиспользовать между раундами и не пересоздавать утяжка объект.
-    private let synthesizer = AVSpeechSynthesizer()
-
     // MARK: Session state
 
     private var rounds: [MinimalPairRound] = []
@@ -55,6 +48,7 @@ final class MinimalPairsInteractor: MinimalPairsBusinessLogic {
     private var correctCount: Int = 0
     private var childName: String = ""
     private var advanceTask: Task<Void, Never>?
+    private var speakTask: Task<Void, Never>?
 
     // MARK: - loadSession
 
@@ -130,7 +124,9 @@ final class MinimalPairsInteractor: MinimalPairsBusinessLogic {
 
     func completeSession(_ request: MinimalPairsModels.CompleteSession.Request) async {
         advanceTask?.cancel()
-        synthesizer.stopSpeaking(at: .immediate)
+        speakTask?.cancel()
+        speakTask = nil
+        LessonVoiceWorker.shared.stop()
 
         let response = MinimalPairsModels.CompleteSession.Response(
             correctCount: correctCount,
@@ -151,14 +147,18 @@ final class MinimalPairsInteractor: MinimalPairsBusinessLogic {
         }
     }
 
-    /// Озвучивает целевое слово системным TTS (русский голос, нормальная скорость).
+    /// Озвучивает целевое слово голосом Ляли (с fallback на TTS).
     private func speakTargetWord(_ word: String) {
-        synthesizer.stopSpeaking(at: .immediate)
-        let utterance = AVSpeechUtterance(string: word)
-        utterance.voice = AVSpeechSynthesisVoice(language: "ru-RU")
-        utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 0.9
-        utterance.pitchMultiplier = 1.05
-        utterance.volume = 1.0
-        synthesizer.speak(utterance)
+        speakTask?.cancel()
+        speakTask = Task { @MainActor [weak self] in
+            guard let self else { return }
+            await LessonVoiceWorker.shared.speak(word, lessonType: "minimal_pairs")
+            self.speakTask = nil
+        }
+    }
+
+    deinit {
+        advanceTask?.cancel()
+        speakTask?.cancel()
     }
 }

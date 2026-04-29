@@ -1,4 +1,3 @@
-import AVFoundation
 import Foundation
 import OSLog
 
@@ -20,15 +19,12 @@ protocol BingoBusinessLogic: AnyObject {
 //      перемешивает их, формирует поле и очередь зачитывания, шлёт первое
 //      Response в Presenter.
 //   2) `callNextWord` — берёт следующее слово, озвучивает через
-//      AVSpeechSynthesizer (ru-RU), даёт ребёнку 5 с на ответ, после чего
-//      автоматически переходит к следующему.
+//      LessonVoiceWorker (голос Ляли → fallback TTS), даёт ребёнку 5 с на ответ,
+//      после чего автоматически переходит к следующему.
 //   3) `markCell` — помечает клетку, проверяет 12 линий бинго.
 //      Если линия собрана — фаза переходит в .bingo, начисляется бонусный
 //      score; если все 25 клеток помечены — игра завершена.
 //   4) `completeGame` — считает финальный score (hitRate), вызывает Presenter.
-//
-// AVSpeechSynthesizer хранится как instance-var, чтобы система не освобождала
-// его до завершения речи (типичная ловушка с локальной переменной).
 
 @MainActor
 final class BingoInteractor: NSObject, BingoBusinessLogic {
@@ -40,13 +36,8 @@ final class BingoInteractor: NSObject, BingoBusinessLogic {
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "BingoInteractor")
 
-    // MARK: - TTS
+    // MARK: - Voice
 
-    private let synthesizer = AVSpeechSynthesizer()
-    private static let voiceLocale = "ru-RU"
-    private static let utteranceRate: Float = 0.45        // чуть медленнее обычного
-    private static let utteranceVolume: Float = 1.0
-    private static let pitchMultiplier: Float = 1.05
     private static let autoAdvanceDelay: Duration = .seconds(5)
 
     // MARK: - Game state
@@ -60,6 +51,7 @@ final class BingoInteractor: NSObject, BingoBusinessLogic {
     private var isGameOver: Bool = false
 
     private var advanceTask: Task<Void, Never>?
+    private var speakTask: Task<Void, Never>?
 
     // MARK: - Word catalog
     //
@@ -97,6 +89,7 @@ final class BingoInteractor: NSObject, BingoBusinessLogic {
 
     deinit {
         advanceTask?.cancel()
+        speakTask?.cancel()
     }
 
     // MARK: - loadGame
@@ -213,7 +206,7 @@ final class BingoInteractor: NSObject, BingoBusinessLogic {
         isGameOver = true
         advanceTask?.cancel()
         advanceTask = nil
-        synthesizer.stopSpeaking(at: .immediate)
+        LessonVoiceWorker.shared.stop()
 
         let markedCount = cells.filter(\.isMarked).count
         let totalCount = max(cells.count, 1)
@@ -244,7 +237,9 @@ final class BingoInteractor: NSObject, BingoBusinessLogic {
         isGameOver = true
         advanceTask?.cancel()
         advanceTask = nil
-        synthesizer.stopSpeaking(at: .immediate)
+        speakTask?.cancel()
+        speakTask = nil
+        LessonVoiceWorker.shared.stop()
         logger.info("Bingo cancelled")
     }
 
@@ -289,18 +284,12 @@ final class BingoInteractor: NSObject, BingoBusinessLogic {
     // MARK: - TTS helpers
 
     private func speak(word: String) {
-        let utterance = AVSpeechUtterance(string: word)
-        utterance.voice = AVSpeechSynthesisVoice(language: Self.voiceLocale)
-        utterance.rate = Self.utteranceRate
-        utterance.volume = Self.utteranceVolume
-        utterance.pitchMultiplier = Self.pitchMultiplier
-        utterance.preUtteranceDelay = 0
-        utterance.postUtteranceDelay = 0.1
-
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
+        speakTask?.cancel()
+        speakTask = Task { @MainActor [weak self] in
+            guard let self else { return }
+            await LessonVoiceWorker.shared.speak(word, lessonType: "bingo")
+            self.speakTask = nil
         }
-        synthesizer.speak(utterance)
     }
 
     /// Планирует автоматический переход к следующему слову.

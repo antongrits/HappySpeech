@@ -1904,6 +1904,7 @@
 		3BF4CE8DA9A87096FFB40555 /* sh-wi-43.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8EFC90862CCB65A60F5A64CA /* sh-wi-43.m4a */; };
 		3BFAB3EA092C06484898BEFD /* s-iso-10.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A889A1CEC482353ED4A9F9E6 /* s-iso-10.m4a */; };
 		3BFFB8B347BD36CFB9520979 /* StutteringWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A17398CA7DE541D0B0F4C18 /* StutteringWorkerTests.swift */; };
+		7607C4958D8797490C50BBFB /* LessonVoiceWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD570836B6C2EB3A1DB26588 /* LessonVoiceWorkerTests.swift */; };
 		3C0A6B3763D599FA5800CE02 /* dwh-ph-9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 644A77D64B8D69C1B14C00F9 /* dwh-ph-9.m4a */; };
 		3C1794E579902E757EC341C4 /* lex-pr-16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 31BEAFB83C6FA6101CC695F5 /* lex-pr-16.m4a */; };
 		3C2D5CE4704D85C02F328BBA /* c-wi-28.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4E9EEEDBBE28A8995EC338AD /* c-wi-28.m4a */; };
@@ -2518,6 +2519,9 @@
 		507409BF8BD3F8F0A3DC2AE4 /* iPhone17Pro_Dark.png in Resources */ = {isa = PBXBuildFile; fileRef = B37B0ECD856A7BB17BEAB7A7 /* iPhone17Pro_Dark.png */; };
 		509115A8404A37A20CE11A7B /* c-wm-12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5D3F7DEC4E17ACC4A2D1E3FC /* c-wm-12.m4a */; };
 		509B9A9FC2B9D2AFBCE04A1B /* lyalya_worldmap_unlock.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 47EA5F7CEEF065AD846271BE /* lyalya_worldmap_unlock.m4a */; };
+		3C5AC5DD0A0848AF9A7923D2 /* lessons in Resources */ = {isa = PBXBuildFile; fileRef = B70F174FF5FE4D8D8C4AAAF1 /* lessons */; };
+		9EBB4FE4E3C048BE80B477E7 /* lyalya-phrase-mapping.json in Resources */ = {isa = PBXBuildFile; fileRef = 1548480423694DE79DACB8A4 /* lyalya-phrase-mapping.json */; };
+		26991CBA3411410F99E707F5 /* LessonVoiceWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003B6EF81B2B4800AF5390CA /* LessonVoiceWorker.swift */; };
 		50BEA70C55880C4A7B307E5A /* c-wi-5.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 763461BB8672E3A42FA5FAFD /* c-wi-5.m4a */; };
 		50D4A7025C0D8E1DEE0096BB /* br-292.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1CB3920D2C78E29489D97F5E /* br-292.m4a */; };
 		50E5F7AA6FBD44A39F2F3E9C /* phon-ss-3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B92B4A8FC67BE08EE9EAEADF /* phon-ss-3.m4a */; };
@@ -10053,6 +10057,9 @@
 		47E425253E7FAA3CC0F16792 /* dwh-wi-15.m4a */ = {isa = PBXFileReference; path = "dwh-wi-15.m4a"; sourceTree = "<group>"; };
 		47E8A4841DE73C9DAB54838C /* iPhoneSE3_Dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhoneSE3_Dark.png; sourceTree = "<group>"; };
 		47EA5F7CEEF065AD846271BE /* lyalya_worldmap_unlock.m4a */ = {isa = PBXFileReference; path = lyalya_worldmap_unlock.m4a; sourceTree = "<group>"; };
+		B70F174FF5FE4D8D8C4AAAF1 /* lessons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lessons; sourceTree = "<group>"; };
+		1548480423694DE79DACB8A4 /* lyalya-phrase-mapping.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "lyalya-phrase-mapping.json"; sourceTree = "<group>"; };
+		003B6EF81B2B4800AF5390CA /* LessonVoiceWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonVoiceWorker.swift; sourceTree = "<group>"; };
 		47EC3C0A3118E2E563F83E5B /* r-ph-14.m4a */ = {isa = PBXFileReference; path = "r-ph-14.m4a"; sourceTree = "<group>"; };
 		47EDE5555395EBE3CA26ACD9 /* StoryCompletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCompletionView.swift; sourceTree = "<group>"; };
 		47EEB753E1ACD81892A5A9BA /* dwh-wm-21.m4a */ = {isa = PBXFileReference; path = "dwh-wm-21.m4a"; sourceTree = "<group>"; };
@@ -10126,6 +10133,7 @@
 		4A0D24F1436A62AFD4702C56 /* zh-wm-37.m4a */ = {isa = PBXFileReference; path = "zh-wm-37.m4a"; sourceTree = "<group>"; };
 		4A1480A9BEE2E9A261D91088 /* lex-rh-24.m4a */ = {isa = PBXFileReference; path = "lex-rh-24.m4a"; sourceTree = "<group>"; };
 		4A17398CA7DE541D0B0F4C18 /* StutteringWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StutteringWorkerTests.swift; sourceTree = "<group>"; };
+		BD570836B6C2EB3A1DB26588 /* LessonVoiceWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonVoiceWorkerTests.swift; sourceTree = "<group>"; };
 		4A2534A401EAD9CE8FE75524 /* zh-wi-32.m4a */ = {isa = PBXFileReference; path = "zh-wi-32.m4a"; sourceTree = "<group>"; };
 		4A2AACB64475337ED263939E /* ch-wf-11.m4a */ = {isa = PBXFileReference; path = "ch-wf-11.m4a"; sourceTree = "<group>"; };
 		4A3F6BEE81CA638C1351F635 /* pack_breathing.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pack_breathing.json; sourceTree = "<group>"; };
@@ -15845,6 +15853,14 @@
 			path = Accessibility;
 			sourceTree = "<group>";
 		};
+		D1DFFFA5F30BCACFF5AB434D /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				BD570836B6C2EB3A1DB26588 /* LessonVoiceWorkerTests.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		0D758CEFD80375916583047D /* Errors */ = {
 			isa = PBXGroup;
 			children = (
@@ -17670,6 +17686,7 @@
 				7991EB3A5BB5B08AD441745B /* lyalya_worldmap_progress.m4a */,
 				47EA5F7CEEF065AD846271BE /* lyalya_worldmap_unlock.m4a */,
 				96B561DEAE989F2B39CE0C84 /* README.md */,
+				B70F174FF5FE4D8D8C4AAAF1 /* lessons */,
 			);
 			path = Lyalya;
 			sourceTree = "<group>";
@@ -20972,6 +20989,7 @@
 			children = (
 				0A4F0435CD3E2E3211592457 /* __Snapshots__ */,
 				0C059AB746DD7B289BDB92A4 /* Accessibility */,
+				D1DFFFA5F30BCACFF5AB434D /* Common */,
 				9763A6D298BA9FA4F11B1DC5 /* Customization */,
 				5F1F78567C802AD9B378CE19 /* FamilyCalendar */,
 				1DA970F74C0E5B8DD084846B /* Games */,
@@ -21637,10 +21655,19 @@
 			path = Customization;
 			sourceTree = "<group>";
 		};
+		29CDD12768FC433081ED6F35 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				003B6EF81B2B4800AF5390CA /* LessonVoiceWorker.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
 		97D05532C22B7CA8A928774F /* Common */ = {
 			isa = PBXGroup;
 			children = (
 				F770771F44C6BAB862A4348B /* Stories */,
+				29CDD12768FC433081ED6F35 /* Workers */,
 				C54EAB75688958DD2BB8CDD0 /* CelebrationOverlayView.swift */,
 				08E09C170B09C99ABE09CD18 /* LyalyaSceneView.swift */,
 				A72B3B7435E11B4006B2A5E1 /* StoryPlayerView.swift */,
@@ -22409,6 +22436,7 @@
 				3C000BFC52916C1D77729EDE /* GoogleService-Info.plist */,
 				99857E14D0C8A518E5543F16 /* GoogleService-Info.plist.template */,
 				31A09A9B58B0A077F11595A8 /* Localizable.xcstrings */,
+				1548480423694DE79DACB8A4 /* lyalya-phrase-mapping.json */,
 			);
 			name = Resources;
 			path = HappySpeech/Resources;
@@ -29784,6 +29812,8 @@
 				D5D4B9DBA7ACC7963D051B53 /* lyalya_worldmap_intro.m4a in Resources */,
 				44D46E760EB4DD5E0500624C /* lyalya_worldmap_progress.m4a in Resources */,
 				509B9A9FC2B9D2AFBCE04A1B /* lyalya_worldmap_unlock.m4a in Resources */,
+				3C5AC5DD0A0848AF9A7923D2 /* lessons in Resources */,
+				9EBB4FE4E3C048BE80B477E7 /* lyalya-phrase-mapping.json in Resources */,
 				D48299810664F90AB1205173 /* master-plan-v2.md in Resources */,
 				1C4BEB3F7192F10C7F5928A3 /* master-plan.md in Resources */,
 				DDBE973D9D09638123473F12 /* mimic-lyalya.json in Resources */,
@@ -32955,6 +32985,7 @@
 				7F634AA0DAE8720E5DF58379 /* StutteringSmokeUITest.swift in Sources */,
 				C67B166CFDB45FC4720A19C7 /* StutteringSnapshotTests.swift in Sources */,
 				3BFFB8B347BD36CFB9520979 /* StutteringWorkerTests.swift in Sources */,
+				7607C4958D8797490C50BBFB /* LessonVoiceWorkerTests.swift in Sources */,
 				0E49CF38E7D2F05DDFD499C3 /* SyncServiceIntegrationTests.swift in Sources */,
 				3CE657ABF3E707D994AE074B /* SyncServiceTests.swift in Sources */,
 				020F3A1951CAE3A411BB7582 /* TonguePostureClassifierMLTests.swift in Sources */,
@@ -33052,6 +33083,7 @@
 				31878B184637C093246CEF90 /* ButterflyCatchView.swift in Sources */,
 				576A723F9FE4C23601F13190 /* CardModifier.swift in Sources */,
 				65325CA7264CF49DACE55961 /* CelebrationOverlayView.swift in Sources */,
+				26991CBA3411410F99E707F5 /* LessonVoiceWorker.swift in Sources */,
 				AC276543B1346357125FBB31 /* ChildHomeDisplayLogic.swift in Sources */,
 				02DF6972C9C694DEA20EDE28 /* ChildHomeInteractor.swift in Sources */,
 				198C95BFE48F515AA1CC617B /* ChildHomeModels.swift in Sources */,

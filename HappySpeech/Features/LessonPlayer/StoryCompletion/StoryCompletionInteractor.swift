@@ -1,4 +1,3 @@
-import AVFoundation
 import Foundation
 import OSLog
 
@@ -38,19 +37,14 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "StoryCompletionInteractor")
 
-    // MARK: - TTS
+    // MARK: - Timing
 
-    private let synthesizer = AVSpeechSynthesizer()
-    private static let voiceLocale = "ru-RU"
-    private static let utteranceRate: Float = 0.45
-    private static let utteranceVolume: Float = 1.0
-    private static let pitchMultiplier: Float = 1.05
     /// Задержка перед автопереходом после правильного ответа.
     private static let advanceDelayCorrect: Duration = .milliseconds(1200)
     /// Задержка перед автопереходом после неправильного ответа
     /// (ребёнок успевает увидеть подсвеченный правильный вариант).
     private static let advanceDelayWrong: Duration = .milliseconds(1800)
-    /// Пауза между загрузкой сцены и стартом TTS.
+    /// Пауза между загрузкой сцены и стартом озвучки.
     private static let speakStartDelay: Duration = .milliseconds(350)
 
     // MARK: - Game state
@@ -114,9 +108,9 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
         guard scenes.indices.contains(sceneIndex) else { return }
         let scene = scenes[sceneIndex]
 
-        // Останавливаем TTS — ребёнок уже принял решение.
+        // Останавливаем воспроизведение — ребёнок уже принял решение.
         cancelSpeak()
-        synthesizer.stopSpeaking(at: .immediate)
+        LessonVoiceWorker.shared.stop()
 
         let isCorrect = request.choiceIndex == scene.correctIndex
         if isCorrect { correctCount += 1 }
@@ -179,7 +173,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
         isGameOver = true
         cancelAdvance()
         cancelSpeak()
-        synthesizer.stopSpeaking(at: .immediate)
+        LessonVoiceWorker.shared.stop()
 
         let total = max(totalScenes, 1)
         let score = Float(correctCount) / Float(total)
@@ -202,7 +196,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
         isGameOver = true
         cancelAdvance()
         cancelSpeak()
-        synthesizer.stopSpeaking(at: .immediate)
+        LessonVoiceWorker.shared.stop()
         logger.info("StoryCompletion cancelled")
     }
 
@@ -229,18 +223,12 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
             of: StoryPlaceholder.marker,
             with: String(localized: "пропуск")
         )
-        let utterance = AVSpeechUtterance(string: spoken)
-        utterance.voice = AVSpeechSynthesisVoice(language: Self.voiceLocale)
-        utterance.rate = Self.utteranceRate
-        utterance.volume = Self.utteranceVolume
-        utterance.pitchMultiplier = Self.pitchMultiplier
-        utterance.preUtteranceDelay = 0
-        utterance.postUtteranceDelay = 0.1
-
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
+        speakTask?.cancel()
+        speakTask = Task { @MainActor [weak self] in
+            guard let self else { return }
+            await LessonVoiceWorker.shared.speak(spoken, lessonType: "story_completion")
+            self.speakTask = nil
         }
-        synthesizer.speak(utterance)
     }
 
     // MARK: - Auto-advance
