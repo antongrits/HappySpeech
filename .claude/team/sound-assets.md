@@ -1,6 +1,6 @@
 # Sound Assets Registry — HappySpeech
 
-**Version 2.2 — 2026-04-26**
+**Version 2.3 — 2026-04-29**
 **Managed by:** Sound Curator. All sounds verified CC0 or royalty-free.
 
 ---
@@ -12,6 +12,7 @@
 | UI sounds (.caf) | 16 | ~150 KB | `HappySpeech/Resources/Audio/UI/` (в репо) | ✅ M3.2 done |
 | Ляля voice brand (.m4a) | 171 | ~5.7 MB | `HappySpeech/Resources/Audio/Lyalya/` (в репо) | ✅ M3.3 + M3.7 + M3.7b + M3.7c + M3.7d + M3.7e done |
 | Ляля tuned voice (.m4a) | 50 | ~852 KB | `HappySpeech/Resources/Audio/Lyalya/tuned/` (в репо) | ✅ Sprint 12 Блок L1 done |
+| Ляля Block P voice expansion (.m4a) | 570 | ~9.7 MB | `HappySpeech/Resources/Audio/Lyalya/<11 categories>/` (в репо) | ✅ Plan v11 Block P done |
 | Content audio batch 1 (.m4a) | 1000 | 12.65 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 1 |
 | Content audio batch 2 (.m4a) | 1028 | 11.1 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 2 |
 | Content audio batch 3 (.m4a) | 681 | 8.36 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 3 |
@@ -427,12 +428,42 @@ COPYRIGHT RULE: каждый звук должен иметь verified CC0/Apach
 
 ---
 
+## Plan v11 Block P — Ляля Voice Expansion (570 файлов, ~9.7 MB) ✅
+
+**Дата:** 2026-04-29
+**Скрипт:** `_workshop/scripts/block_p_voice_expansion.py`
+**Голос:** edge-tts `ru-RU-SvetlanaNeural`
+**Pipeline:** edge-tts → mp3 → WAV (24kHz mono) → ffmpeg loudnorm (I=-16, TP=-1.5, LRA=11) → ffmpeg AAC 16kHz mono 32kbps → .m4a
+**Формат:** AAC LC, 16000 Hz, 1ch mono, 7–40 KB/файл (все < 50 KB)
+**Итого .m4a в Lyalya/ после Block P:** 1526 файлов (target ≥1500 ✅)
+
+| Категория | Поддиректория | Кол-во |
+|---|---|---|
+| hints | `Lyalya/hints/` | 196 |
+| stuttering | `Lyalya/stuttering/` | 60 |
+| insights | `Lyalya/insights/` | 51 |
+| celebrations | `Lyalya/celebrations/` | 50 |
+| transitions | `Lyalya/transitions/` | 49 |
+| achievements | `Lyalya/achievements/` | 32 |
+| seasonal | `Lyalya/seasonal/` | 32 |
+| onboarding | `Lyalya/onboarding/` | 30 |
+| widget | `Lyalya/widget/` | 30 |
+| settings | `Lyalya/settings/` | 20 |
+| sibling | `Lyalya/sibling/` | 20 |
+| **ИТОГО Block P** | — | **570** |
+
+570/570 OK, 0 ошибок. Существующие 956 файлов не затронуты.
+Лог: `/Users/antongric/Downloads/HappySpeech/_workshop/logs/block_p_voice.log`
+
+---
+
 ## Следующие шаги
 
 - **M3.4 batch 5** — ✅ DONE — lexical (700) + grammar (200) = 900 новых файлов (16.9 MB)
 - **M3.5 Эталоны** — ✅ DONE — 665 файлов (7.9 MB) в Refs/ (в репо)
 - **M3.7b** — ✅ DONE — Ляля +30 фраз (итого 150, все в LyalyaPhrase enum)
 - **M3.7e** — ✅ DONE — 3 Customization voice preview m4a (classic/soft/cheerful), Lyalya 168→171
+- **Plan v11 Block P** — ✅ DONE — Ляля +570 фраз (1526 total .m4a, цель ≥1500 выполнена)
 - **M3.6 ambient** — 4 трека CC0 для world_map/lesson/AR/reward (⏳ pending M9)
 - **Firebase Storage upload** — delegated to backend-developer M11.4
 
