@@ -9344,3 +9344,435 @@ HappySpeech/Features/StutteringModule/
 - **code-reviewer:** проверить thread-safety `MetronomeWorker` (Timer на main actor); Realm write `FluencySessionObject` на background actor; AVAudioSession deactivation при pop
 - **qa-engineer:** snapshot тесты `StutteringView` (light/dark), `MetronomeView` (Easy, light/dark), `SoftOnsetView` (idle + hard-onset feedback, light/dark), `FluencyDiaryView` (recording, light/dark); 15 unit-тестов по ТЗ speech-specialist; 1 UI smoke-тест
 - **ios-debugger:** проверить корректное освобождение AVAudioEngine при pop из каждого sub-mode
+
+---
+
+## Sibling Multiplayer — UI спека (Plan v10 Блок L2, M13 extension #7)
+
+**Дата:** 2026-04-29
+**Контур:** kid
+**Статус:** ⚠️ нужна спека (реализация ожидает ios-developer L2-002)
+**LOC цель кода:** ~1 500 LOC (VIP + MultipeerConnectivity)
+
+### Концепция
+
+Двое детей в одной семье играют на двух iPhone/iPad через MultipeerConnectivity (Bonjour LAN, без интернета). Соревновательный режим: кто быстрее произнесёт слово правильно — получает очко. Пять раундов → итог. Никакого облака, никаких внешних соединений — COPPA-compliant.
+
+---
+
+### Точка входа — ChildHomeView
+
+Новая `HSCard` добавляется в `quickActionsSection` (ChildHomeView) между существующими карточками:
+
+| Поле | Значение |
+|---|---|
+| Иконка | SF Symbol `person.2.fill` |
+| Заголовок | `sibling.entry.title` («Игра вдвоём») |
+| Background | `ColorTokens.Brand.sky` (голубой — «инфо, связь») |
+| Corner radius | `RadiusTokens.card` (12pt) |
+| Size | `.infinity × 100pt` |
+| Min touch target | 56×56pt (child контур) |
+| Tap action | `router?.routeToSiblingDiscovery()` |
+
+---
+
+### Экран 1 — SiblingDiscoveryView (поиск партнёра)
+
+**Контур:** kid
+**Статус:** ⚠️ нужна реализация
+
+#### Layout
+
+- **Background:** `ColorTokens.Kid.bg`
+- **Safe area:** top стандартный, horizontal `SpacingTokens.screenEdge` (16pt)
+- **Структура:** `VStack(spacing: SpacingTokens.sectionSpacing)` внутри `ScrollView`
+
+#### Ключевые компоненты
+
+**1. NavigationBar**
+- Title: `sibling.discovery.nav_title` («Найдём друга»)
+- `.navigationBarTitleDisplayMode(.inline)`
+- Leading: кнопка «Назад» (SF Symbol `chevron.left`) → pop на ChildHome
+
+**2. Анимация-радар**
+- `LottieView(filename: "sibling_radar.json")` или `HSMascotView` в состоянии `thinking` пока нет Lottie
+- Size: 160×160pt, centre-aligned
+- Lottie loop: бесконечный — радарные круги расходятся от центра
+- Если `discoveredPeers.isEmpty`: анимация радара + текст `sibling.discovery.searching` («Ищем друга...»)
+- Если Reduced Motion: статичный SF Symbol `antenna.radiowaves.left.and.right` 80×80pt, `ColorTokens.Brand.sky`
+
+**3. Список найденных пиров**
+- `LazyVStack(spacing: SpacingTokens.sp3)` (12pt)
+- Каждая ячейка: `HSCard` style secondary
+  - Leading: avatar-круг (colorHash по displayName) 44×44pt
+  - Title: имя устройства (displayName из MCPeerID), `TypographyTokens.headline(18)`
+  - Trailing: SF Symbol `chevron.right` `ColorTokens.Kid.inkMuted`
+  - Size: `.infinity × 72pt`
+  - Min touch target: 72pt ≥ 56pt — ✓
+  - Tap: `interactor?.invitePeer(id:)` → показать `SiblingLobbyView`
+
+**4. Пустое состояние (нет пиров)**
+- `VStack(spacing: SpacingTokens.l)` центрирован по экрану
+- Иллюстрация: SF Symbol `person.2.slash` 60×60pt `ColorTokens.Kid.inkSoft`
+- Текст: `sibling.discovery.empty` («Подожди, пока друг откроет игру тоже!»)
+- `TypographyTokens.body(15)` → для kid контура масштабируется до min 22pt
+- `.multilineTextAlignment(.center)`
+
+**5. Кнопка «Отмена»**
+- `HSButton` style ghost, ширина `.infinity`, высота 56pt
+- Label: `sibling.discovery.cancel` («Вернуться»)
+- Tap → pop на ChildHome
+
+#### Маскот «Ляля»
+
+- Размер: 80×80pt (компактный, внутри карты-радара нет места для полного)
+- Состояние: `thinking` (наклон, мигание) пока идёт поиск
+- При нахождении первого пира: переход в `encouraging`
+- Позиция: над списком пиров, center-aligned
+
+#### Анимации
+
+- Появление ячейки пира: `scale(0.95)→1.0 + opacity 0→1`, `MotionTokens.springFast` (0.25s, bounce 0.15)
+- Каждая новая ячейка: staggered delay +0.05s на индекс
+- Reduced Motion: только `opacity 0→1 за 0.15s`
+
+#### Accessibility
+
+- Min touch target ячейки пира: 72pt ≥ 56pt ✓
+- VoiceOver ячейка: `accessibilityLabel("\(peerName), устройство рядом")`, `accessibilityHint("Нажми, чтобы пригласить играть")`
+- VoiceOver пустое состояние: `accessibilityLabel("Пиры не найдены. Попроси друга открыть игру.")`
+- Кнопка «Вернуться»: `accessibilityLabel("Вернуться на главную")`
+
+---
+
+### Экран 2 — SiblingLobbyView (ожидание готовности)
+
+**Контур:** kid
+**Статус:** ⚠️ нужна реализация
+
+#### Layout
+
+- **Background:** `ColorTokens.Kid.bg`
+- **Safe area:** top стандартный, horizontal 16pt
+- **Структура:** `VStack(spacing: SpacingTokens.xxl)` центрирован вертикально
+
+#### Ключевые компоненты
+
+**1. NavigationBar**
+- Title: `sibling.lobby.nav_title` («Лобби»)
+- Leading: кнопка «Выйти» → покинуть лобби → pop на SiblingDiscoveryView
+
+**2. Аватары игроков (горизонтальная пара)**
+- `HStack(spacing: SpacingTokens.xxxl)` (32pt между игроками)
+- Каждый игрок — `VStack(spacing: SpacingTokens.s)`:
+  - Avatar: круг 80×80pt, colorHash по displayName или emoji из child profile
+  - Имя: `TypographyTokens.headline(18)`, `ColorTokens.Kid.ink`
+  - Статус-badge: `HSBadge`
+    - Готов: background `ColorTokens.Semantic.successBg`, label `sibling.lobby.ready` («Готов»), SF Symbol `checkmark.circle.fill`
+    - Ожидание: background `ColorTokens.Semantic.warningBg`, label `sibling.lobby.waiting` («Ожидание...»), SF Symbol `clock.fill`
+
+**3. VS-разделитель**
+- `Text("VS")`, `TypographyTokens.display(36)`, `ColorTokens.Brand.primary`
+- `scaleEffect` пульсация 1.0→1.1→1.0, `MotionTokens.standard` (0.25s) repeat 2 при смене статуса обоих игроков
+
+**4. Кнопка «Я готов»**
+- `HSButton` style primary, ширина `.infinity`, высота 64pt
+- Label: `sibling.lobby.cta_ready` («Я готов!»), SF Symbol `hand.thumbsup.fill`
+- Background: `ColorTokens.Brand.primary`
+- После tap: кнопка переходит в состояние disabled + label «Жду друга...»
+- MPC отправка: `SiblingMessage.readyState(isReady: true)`
+
+**5. Таймер ожидания**
+- Countdown 60 секунд: `Text("\(countdown)")`, `TypographyTokens.mono(13)`
+- При достижении 0 → `HSToast` error «Друг не ответил. Попробуй снова» + автоматический pop
+
+**6. Ляля**
+- Размер: 100×100pt
+- Состояние: `idle` → при готовности обоих: `celebrating` 1.5s → автоматический push на SiblingGameView
+- Позиция: под парой аватаров, center
+
+#### Анимации
+
+- Смена badge статуса пира: `scale(0.8)→1.0 + opacity 0→1`, `MotionTokens.spring` (0.4s, bounce 0.2)
+- Оба игрока готовы: `MotionTokens.reward` (0.6s, bounce 0.35) на VS-метке + Ляля `celebrating`
+- Reduced Motion: смена badge → только смена цвета без scale
+
+#### Accessibility
+
+- Кнопка «Я готов»: `accessibilityLabel("Я готов играть")`, `accessibilityHint("Нажми, когда готов начать")`, min touch target 64pt ✓
+- Badge статуса пира: `accessibilityLabel("\(peerName) \(isReady ? "готов" : "ещё не готов")")`
+- Countdown: `accessibilityLabel("До старта \(countdown) секунд")`
+
+---
+
+### Экран 3 — SiblingGameView (соревновательная игра)
+
+**Контур:** kid
+**Статус:** ⚠️ нужна реализация
+
+#### Layout
+
+- **Background:** `ColorTokens.Kid.bgDeep`
+- **Safe area:** top стандартный, horizontal 16pt
+- **Структура:** `VStack(spacing: 0)` заполняет весь экран между safe areas
+
+#### Зоны (сверху вниз)
+
+```
+┌─────────────────────────────────────────────┐  ← safe area top
+│  [Раунд 1 из 5]   [Score: Маша 2 – Петя 1]  │  ← HeaderBar (52pt)
+├─────────────────────────────────────────────┤
+│                                             │
+│          🎯 Произнеси: «Мяч»               │  ← TargetWordZone (~180pt)
+│              [Ляля speakng → играет слово]   │
+│                                             │
+├─────────────────────────────────────────────┤
+│     [Mic button 80×80pt, pulse if active]   │  ← MicZone (120pt)
+├─────────────────────────────────────────────┤
+│  [──────── Маша 72% ────────]               │  ← ScoreBarsZone (100pt)
+│  [────── Петя 45%  ──────]                  │
+├─────────────────────────────────────────────┤
+│  [Выйти]                                    │  ← ExitZone (56pt)
+└─────────────────────────────────────────────┘  ← safe area bottom
+```
+
+#### Компоненты по зонам
+
+**HeaderBar (height: 52pt)**
+- Background: `ColorTokens.Kid.surface`, opacity 0.95
+- Leading: `sibling.game.round_format` («Раунд %d из %d»), `TypographyTokens.caption(12)`
+- Center: счёт «[имя_нас] %d — %d [имя_пира]», `TypographyTokens.mono(13)`, `ColorTokens.Kid.ink`
+- Trailing: `sibling.game.exit` SF Symbol `xmark.circle.fill` → confirm alert «Выйти из игры?»
+
+**TargetWordZone (~180pt)**
+- Background: прозрачный
+- Центральный `HSCard` size `.infinity × 140pt`, corner radius `RadiusTokens.large` (16pt)
+- Inside card:
+  - Label `sibling.game.instruction` («Произнеси:») `TypographyTokens.caption(12)` `ColorTokens.Kid.inkMuted`
+  - Target word `TypographyTokens.kidDisplay(40)` `ColorTokens.Kid.ink`, `lineLimit(1)`, `minimumScaleFactor(0.7)`
+  - Play-button «Послушать» (SF Symbol `speaker.wave.2.fill`) → `LessonVoiceWorker.playModel()` → Ляля в состоянии `speaking`
+- Transition между раундами: `scale(0.9)→1.0 + opacity 0→1`, `MotionTokens.springFast`
+
+**MicZone (height: 120pt)**
+- Центральная кнопка: круг 80×80pt, `ColorTokens.Brand.primary`
+- Idle: SF Symbol `mic.fill` белый 32pt
+- Active (запись): SF Symbol `stop.fill` белый 32pt + пульсирующий ring (`scale(1.0→1.3)`, opacity 1→0, loop, `MotionTokens.standard`)
+- Haptic: `.medium` при начале записи, `.success` при засчитанном ответе
+- `accessibilityLabel("Записать ответ")`, `accessibilityHint("Нажми и произнеси слово")`
+- ASR pipeline: `AudioService` → `WhisperKit` → `PronunciationScorer` → score Float 0…1
+
+**ScoreBarsZone (height: 100pt)**
+- `VStack(spacing: SpacingTokens.s)` (8pt)
+- Каждая строка: `HStack` имя (72pt fixed) + `HSProgressBar` `.infinity` + score-label (40pt fixed)
+- `HSProgressBar`:
+  - Наш: foreground `ColorTokens.Brand.primary`
+  - Пир: foreground `ColorTokens.Brand.sky`
+  - Высота 12pt, corner radius 6pt
+  - Анимация обновления: `MotionTokens.spring` (0.4s, bounce 0.2)
+- Score-label: `TypographyTokens.mono(13)`
+- Данные пира приходят через MPC `SiblingMessage.scoreUpdate(score:)`
+
+**Состояние «Раунд завершён» (overlay)**
+- Полупрозрачный `Color.black.opacity(0.35)` поверх всего
+- `HSCard` centre: победитель раунда «Маша: 92%! +1 очко» или «Ничья»
+- Ляля: победитель → `celebrating`; проигравший устройство → `encouraging`
+- Через 2.0s автоматически → следующий раунд (или итог)
+
+**Состояние «Конец игры» (EndGameView)**
+- Полноэкранный overlay, background `ColorTokens.Kid.bgDeep`
+- Ляля 140×140pt `celebrating` (если победили) или `encouraging` (ничья / поражение)
+- Заголовок: `sibling.game.win` («Победил %@!») или `sibling.game.tie` («Ничья!»), `TypographyTokens.display(36)`
+- Итоговый счёт: `HStack` оба игрока + итоговые очки, `TypographyTokens.headline(18)`
+- CTA primary 64pt: `sibling.game.rematch` («Ещё раз!») → reset и возврат на SiblingLobbyView
+- CTA ghost 56pt: `sibling.game.exit` («Выйти») → pop до ChildHome
+- Reward: `HSSticker` конфетти при победе + `MotionTokens.reward` (0.6s, bounce 0.35)
+- Haptic: `.success` при победе; `.warning` при ничье
+
+#### Анимации
+
+| Событие | Анимация | Токен |
+|---|---|---|
+| Новое целевое слово | scale 0.9→1.0 + opacity 0→1 | `MotionTokens.springFast` |
+| Правильный ответ | score bar растёт + Ляля celebrating | `MotionTokens.spring` |
+| Неправильный ответ | лёгкий shake (.horizontalShake) | custom 3× offset ±4pt, 0.05s |
+| Конец раунда overlay | fade in 0.3s | `MotionTokens.standard` |
+| Конец игры overlay | scale 0.95→1.0 + opacity 0→1 | `MotionTokens.reward` |
+| Reduced Motion | только opacity переходы, без scale/shake | — |
+
+#### Accessibility
+
+- HeaderBar score: `accessibilityLabel("Счёт: [имя_нас] \(ourScore) — \(peerScore) [имя_пира]")`
+- TargetWord card: `accessibilityLabel("Произнеси слово: \(targetWord)")`
+- Play-кнопка: `accessibilityLabel("Послушать как произносит Ляля")`
+- Mic-кнопка: `accessibilityLabel("Записать ответ")`, `accessibilityHint("Нажми и произнеси слово")`
+- ScoreBar наш: `accessibilityLabel("Твой результат \(Int(ourScore * 100)) процентов")`
+- ScoreBar пир: `accessibilityLabel("\(peerName): \(Int(peerScore * 100)) процентов")`
+
+---
+
+### Состояния Ляли (SiblingMultiplayer)
+
+| Экран | Событие | Состояние |
+|---|---|---|
+| SiblingDiscoveryView | идёт поиск | `thinking` |
+| SiblingDiscoveryView | найден первый пир | `encouraging` |
+| SiblingLobbyView | ожидание | `idle` |
+| SiblingLobbyView | оба готовы | `celebrating` (1.5s) |
+| SiblingGameView | воспроизводит слово | `speaking` |
+| SiblingGameView | слушает ответ | `listening` |
+| SiblingGameView | правильный ответ | `celebrating` |
+| SiblingGameView | неправильный ответ | `encouraging` |
+| SiblingGameView | конец игры (победа) | `celebrating` |
+| SiblingGameView | конец игры (ничья/поражение) | `encouraging` |
+
+---
+
+### MPC — архитектурный контракт (для ios-developer)
+
+```swift
+// SiblingMessage — типы сообщений через MultipeerConnectivity
+enum SiblingMessage: Codable {
+    case readyState(isReady: Bool)
+    case roundStart(word: String, roundIndex: Int)
+    case scoreUpdate(score: Float, roundIndex: Int)
+    case roundResult(winnerPeerID: String?)    // nil = ничья
+    case gameResult(finalScores: [String: Int])
+    case disconnect
+}
+
+// Транспорт: MCSession, serviceType: "hs-sibling"
+// Данные: JSONEncoder → Data → MCSession.send(.reliable)
+// Timeout lobby: 60 секунд → автоматический disconnect
+```
+
+---
+
+### Токены — сводная таблица
+
+| Элемент | Токен |
+|---|---|
+| Фоны всех экранов | `ColorTokens.Kid.bg / .bgDeep / .surface` |
+| CTA primary | `ColorTokens.Brand.primary` |
+| Score bar (наш) | `ColorTokens.Brand.primary` |
+| Score bar (пир) | `ColorTokens.Brand.sky` |
+| VS-метка | `ColorTokens.Brand.primary` |
+| Badge «Готов» | `ColorTokens.Semantic.successBg / .success` |
+| Badge «Ожидание» | `ColorTokens.Semantic.warningBg / .warning` |
+| Заголовки | `TypographyTokens.display(36) / .headline(18)` |
+| Target word | `TypographyTokens.kidDisplay(40)` |
+| Счёт / mono | `TypographyTokens.mono(13)` |
+| Reward spring | `MotionTokens.reward` (0.6s, bounce 0.35) |
+| Standard spring | `MotionTokens.spring` (0.4s, bounce 0.2) |
+| Fast spring | `MotionTokens.springFast` (0.25s, bounce 0.15) |
+
+---
+
+### Локализация (ru-only, 15 ключей)
+
+| Ключ | Значение |
+|---|---|
+| `sibling.entry.title` | Игра вдвоём |
+| `sibling.discovery.nav_title` | Найдём друга |
+| `sibling.discovery.searching` | Ищем друга... |
+| `sibling.discovery.empty` | Подожди, пока друг откроет игру тоже! |
+| `sibling.discovery.cancel` | Вернуться |
+| `sibling.lobby.nav_title` | Лобби |
+| `sibling.lobby.ready` | Готов |
+| `sibling.lobby.waiting` | Ожидание... |
+| `sibling.lobby.cta_ready` | Я готов! |
+| `sibling.game.round_format` | Раунд %d из %d |
+| `sibling.game.instruction` | Произнеси: |
+| `sibling.game.win` | Победил %@! |
+| `sibling.game.tie` | Ничья! |
+| `sibling.game.rematch` | Ещё раз! |
+| `sibling.game.exit` | Выйти |
+| `sibling.error.connection` | Связь потеряна |
+| `sibling.permission.bluetooth` | Нужно разрешение на Bluetooth |
+| `sibling.permission.local_network` | Нужно разрешение на локальную сеть |
+
+---
+
+### Privacy / COPPA
+
+- Имена игроков — только nickname из child profile (не real name, не email)
+- Никаких внешних соединений — только LAN Bonjour (MultipeerConnectivity)
+- Никакие данные не покидают устройства (нет Firestore, нет Analytics)
+- `NSBluetoothAlwaysUsageDescription` + `NSLocalNetworkUsageDescription` в Info.plist
+- Permission prompts появляются автоматически при первом `MCNearbyServiceBrowser.startBrowsingForPeers()`
+- При denial: `HSToast` error с ключом `sibling.permission.bluetooth` / `.local_network` + кнопка «Открыть настройки»
+
+---
+
+### Адаптивность iPhone SE (width < 375pt)
+
+| Элемент | Изменение |
+|---|---|
+| Target word | `minimumScaleFactor(0.65)` — слово уменьшается если длинное |
+| Аватары в Lobby | 80→60pt, VS-метка font 28pt |
+| Score bars | name label 60pt (вместо 72pt) |
+| Mic button | 80→70pt |
+| HeaderBar | compact layout, score в центр |
+
+---
+
+### VIP структура (для разработчика)
+
+```
+HappySpeech/Features/Extensions/SiblingMultiplayer/
+├── SiblingMultiplayerView.swift              ← root (navigation wrapper)
+├── Discovery/
+│   ├── SiblingDiscoveryView.swift            ← peer list, radar animation
+│   ├── SiblingDiscoveryInteractor.swift      ← MCNearbyServiceBrowser, invite handling
+│   ├── SiblingDiscoveryPresenter.swift       ← peer list ViewModel
+│   └── SiblingDiscoveryModels.swift
+├── Lobby/
+│   ├── SiblingLobbyView.swift                ← avatars, ready/waiting badges, countdown
+│   ├── SiblingLobbyInteractor.swift          ← readyState sync over MPC, 60s timeout
+│   ├── SiblingLobbyPresenter.swift
+│   └── SiblingLobbyModels.swift
+├── Game/
+│   ├── SiblingGameView.swift                 ← header, target word, mic, score bars
+│   ├── SiblingGameInteractor.swift           ← rounds logic, ASR, MPC score exchange
+│   ├── SiblingGamePresenter.swift
+│   └── SiblingGameModels.swift
+├── Workers/
+│   ├── SiblingMPCWorker.swift               ← MCSession wrapper, send/receive SiblingMessage
+│   └── SiblingRoundWorker.swift             ← round sequencer, word selection from ContentEngine
+└── SiblingMessage.swift                     ← Codable enum (MPC payload types)
+```
+
+**SiblingGameDisplay (@Observable, ключевые поля):**
+```swift
+@Observable class SiblingGameDisplay {
+    var currentWord: String = ""
+    var roundIndex: Int = 1
+    var totalRounds: Int = 5
+    var ourScore: Int = 0
+    var peerScore: Int = 0
+    var ourRoundResult: Float = 0.0       // 0…1 из PronunciationScorer
+    var peerRoundResult: Float = 0.0
+    var isListening: Bool = false
+    var roundPhase: RoundPhase = .idle    // idle / playing / listening / result / gameOver
+    var winnerName: String? = nil         // nil = ничья
+    var peerDisplayName: String = ""
+}
+```
+
+**AppCoordinator routes:**
+```swift
+case siblingDiscovery(childId: String)
+case siblingLobby(session: MCSession, peerID: MCPeerID)
+case siblingGame(session: MCSession, peerID: MCPeerID, childId: String)
+```
+
+---
+
+### Передача дальше
+
+- **ios-developer (L2-002):** VIP реализация в `HappySpeech/Features/Extensions/SiblingMultiplayer/`; добавить `HSCard` «Игра вдвоём» в `ChildHomeView.quickActionsSection`; добавить `NSBluetoothAlwaysUsageDescription` + `NSLocalNetworkUsageDescription` в Info.plist; добавить `sibling.*` ключи в `Localizable.xcstrings`
+- **ios-developer (L2-003):** `AppCoordinator` routes `.siblingDiscovery`, `.siblingLobby`, `.siblingGame`
+- **sound-curator (L2-010):** 3 voice-over Ляли (lya_sibling_intro, lya_sibling_win, lya_sibling_encourage) в .m4a 16kHz mono; victory_fanfare.caf 1.5s
+- **animator (L2-011):** Lottie `sibling_radar.json` (радар-сканер, бесконечный loop, ~15 KB)
+- **code-reviewer:** thread-safety MCSession callbacks (на background queue → dispatch to MainActor); Realm write score на background actor; MCSession cleanup при pop
+- **qa-engineer:** snapshot тесты `SiblingDiscoveryView` (empty/peers, light/dark), `SiblingLobbyView` (waiting/both-ready, light/dark), `SiblingGameView` (listening/result, light/dark); 10 unit-тестов `SiblingMPCWorker` (encode/decode SiblingMessage); 1 UI smoke-тест (2 симулятора)
+- **ios-debugger:** проверить корректное завершение MCSession при pop/backgrounding; проверить Bonjour visibility в iOS 17+ (потребует NSLocalNetworkUsageDescription approval)

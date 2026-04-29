@@ -19655,6 +19655,215 @@
           }
         }
       }
+    },
+    "sibling.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Игра вдвоём"
+          }
+        }
+      }
+    },
+    "sibling.discovery.nav_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Найдём друга"
+          }
+        }
+      }
+    },
+    "sibling.discovery.searching": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ищем друга..."
+          }
+        }
+      }
+    },
+    "sibling.discovery.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подожди, пока друг откроет игру тоже!"
+          }
+        }
+      }
+    },
+    "sibling.discovery.cancel": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вернуться"
+          }
+        }
+      }
+    },
+    "sibling.lobby.nav_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лобби"
+          }
+        }
+      }
+    },
+    "sibling.lobby.ready": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готов"
+          }
+        }
+      }
+    },
+    "sibling.lobby.waiting": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ожидание..."
+          }
+        }
+      }
+    },
+    "sibling.lobby.cta_ready": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Я готов!"
+          }
+        }
+      }
+    },
+    "sibling.game.round_format": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Раунд %d из %d"
+          }
+        }
+      }
+    },
+    "sibling.game.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Произнеси:"
+          }
+        }
+      }
+    },
+    "sibling.game.win": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Победил %@!"
+          }
+        }
+      }
+    },
+    "sibling.game.tie": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ничья!"
+          }
+        }
+      }
+    },
+    "sibling.game.rematch": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ещё раз!"
+          }
+        }
+      }
+    },
+    "sibling.game.exit": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выйти"
+          }
+        }
+      }
+    },
+    "sibling.error.connection": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Связь потеряна"
+          }
+        }
+      }
+    },
+    "sibling.permission.bluetooth": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нужно разрешение на Bluetooth"
+          }
+        }
+      }
+    },
+    "sibling.permission.local_network": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нужно разрешение на локальную сеть"
+          }
+        }
+      }
+    },
+    "sibling.a11y.score_format": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Счёт: %1$@ %2$d — %3$d %4$@"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

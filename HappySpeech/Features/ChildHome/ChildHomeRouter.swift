@@ -11,6 +11,7 @@ protocol ChildHomeRoutingLogic {
     func routeToLesson(childId: String, template: String)
     func routeToSessionHistory(childId: String)
     func routeToHomeTasks()
+    func routeToSiblingMultiplayer(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -60,5 +61,9 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
 
     func routeToHomeTasks() {
         coordinator?.navigate(to: .homeTasks)
+    }
+
+    func routeToSiblingMultiplayer(childId: String) {
+        coordinator?.navigate(to: .siblingMultiplayer(childId: childId))
     }
 }
