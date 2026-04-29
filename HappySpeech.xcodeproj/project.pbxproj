@@ -7184,6 +7184,7 @@
 		D3BE1C7987C14AD2550F787C /* z-prep-20.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BBC40EF42F220AA6EE592B8A /* z-prep-20.m4a */; };
 		D3C0DAC46864E23531865D08 /* s-wi-9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 300984FA478967C0B2EF68A0 /* s-wi-9.m4a */; };
 		D3C975D04CBB83F17F00E42B /* br-236.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 68A61DC581321D70A54535D1 /* br-236.m4a */; };
+		D3D0ADEEB352BF36526B0094 /* HomeScreenCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B076D23F9F13EAF4B4A54FC9 /* HomeScreenCard.swift */; };
 		D3DABBBACC54F3997378A818 /* ProgramEditorModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404194041F6597B9683E2BC2 /* ProgramEditorModels.swift */; };
 		D3DFC14DE44A22B71F9F237F /* zh-prep-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 526C35DAABA301632B181927 /* zh-prep-6.m4a */; };
 		D3E394A4034DD59F80BAADFA /* po_dorozhke_bezhit_pushistaya_propusk.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AC860C198A7E74BC2FF775B0 /* po_dorozhke_bezhit_pushistaya_propusk.m4a */; };
@@ -14642,6 +14643,7 @@
 		B0611465E9D4D97DB456F4AB /* lyalya_nashla_tropinku.m4a */ = {isa = PBXFileReference; path = lyalya_nashla_tropinku.m4a; sourceTree = "<group>"; };
 		B065FE4798CDFDE9084CD073 /* SessionReviewAnnotationViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionReviewAnnotationViews.swift; sourceTree = "<group>"; };
 		B06F7ADDCDCEC2FB1E8E21A9 /* r-wf-0.m4a */ = {isa = PBXFileReference; path = "r-wf-0.m4a"; sourceTree = "<group>"; };
+		B076D23F9F13EAF4B4A54FC9 /* HomeScreenCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenCard.swift; sourceTree = "<group>"; };
 		B08B400A2DD674E406944A31 /* sh-wi-15.m4a */ = {isa = PBXFileReference; path = "sh-wi-15.m4a"; sourceTree = "<group>"; };
 		B08B548A1AFF58937E97CA93 /* g-syl-3.m4a */ = {isa = PBXFileReference; path = "g-syl-3.m4a"; sourceTree = "<group>"; };
 		B096743F1A407100584EAC2A /* ListenAndChooseRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenAndChooseRouter.swift; sourceTree = "<group>"; };
@@ -23545,6 +23547,7 @@
 		9D30A6242A9E5A6D322C777F /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				B076D23F9F13EAF4B4A54FC9 /* HomeScreenCard.swift */,
 				C56674424930AA8D35C45334 /* HSAccessibleText.swift */,
 				B869FD9E5DE3A203C2524D2B /* HSARSceneView.swift */,
 				92FD883BB3B53EBB8A4EA7D1 /* HSAudioRecorderView.swift */,
@@ -37083,6 +37086,7 @@
 				2E3F062C282CCAB0D777FBF7 /* HoldThePosePresenter.swift in Sources */,
 				0846B39A303DCADFD71091AA /* HoldThePoseRouter.swift in Sources */,
 				A6F60578B172A8B7116D4ABF /* HoldThePoseView.swift in Sources */,
+				D3D0ADEEB352BF36526B0094 /* HomeScreenCard.swift in Sources */,
 				E15DE21E6EC9BE8910019E49 /* HomeTaskDetailSheet.swift in Sources */,
 				71FC4030EB2DD69DC043E0ED /* HomeTasksDisplayLogic.swift in Sources */,
 				BE68EDC1FD5D4571864C1BA8 /* HomeTasksInteractor.swift in Sources */,

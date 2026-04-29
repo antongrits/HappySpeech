@@ -350,6 +350,38 @@ struct SettingsView: View {
                 .frame(minHeight: 44)
                 .tint(ColorTokens.Parent.accent)
                 .accessibilityHint(String(localized: "settings.a11y.reminderTime.hint"))
+
+                Toggle(isOn: kidDailyReminderBinding) {
+                    Label {
+                        Text(String(localized: "notifications.toggle.daily"))
+                            .font(TypographyTokens.body(15))
+                    } icon: {
+                        Image(systemName: "bird.fill")
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                    }
+                }
+                .tint(ColorTokens.Brand.primary)
+                .frame(minHeight: 44)
+                .accessibilityLabel(String(localized: "notifications.toggle.daily"))
+                .accessibilityValue(display.settings.kidDailyReminderEnabled
+                                    ? String(localized: "settings.a11y.on")
+                                    : String(localized: "settings.a11y.off"))
+
+                Toggle(isOn: weeklyParentSummaryBinding) {
+                    Label {
+                        Text(String(localized: "notifications.toggle.weekly"))
+                            .font(TypographyTokens.body(15))
+                    } icon: {
+                        Image(systemName: "calendar.badge.checkmark")
+                            .foregroundStyle(ColorTokens.Parent.accent)
+                    }
+                }
+                .tint(ColorTokens.Brand.primary)
+                .frame(minHeight: 44)
+                .accessibilityLabel(String(localized: "notifications.toggle.weekly"))
+                .accessibilityValue(display.settings.weeklyParentSummaryEnabled
+                                    ? String(localized: "settings.a11y.on")
+                                    : String(localized: "settings.a11y.off"))
             }
         } header: {
             Text(String(localized: "settings.section.notifications"))
@@ -664,6 +696,24 @@ struct SettingsView: View {
                     enabled: true,
                     reminderTime: newDate
                 ))
+            }
+        )
+    }
+
+    private var kidDailyReminderBinding: Binding<Bool> {
+        Binding(
+            get: { display.settings.kidDailyReminderEnabled },
+            set: { newValue in
+                interactor?.toggleKidDailyReminder(.init(enabled: newValue))
+            }
+        )
+    }
+
+    private var weeklyParentSummaryBinding: Binding<Bool> {
+        Binding(
+            get: { display.settings.weeklyParentSummaryEnabled },
+            set: { newValue in
+                interactor?.toggleWeeklyParentSummary(.init(enabled: newValue))
             }
         )
     }

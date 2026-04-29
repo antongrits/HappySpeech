@@ -18,6 +18,9 @@ protocol SettingsBusinessLogic: AnyObject {
     func deleteModelPack(_ request: SettingsModels.DeleteModelPack.Request)
     func loadLicenses(_ request: SettingsModels.LoadLicenses.Request)
     func exportShare(_ request: SettingsModels.ExportShare.Request)
+    /// L9
+    func toggleKidDailyReminder(_ request: SettingsModels.ToggleKidDailyReminder.Request)
+    func toggleWeeklyParentSummary(_ request: SettingsModels.ToggleWeeklyParentSummary.Request)
 }
 
 // MARK: - SettingsInteractor
@@ -248,7 +251,52 @@ final class SettingsInteractor: SettingsBusinessLogic {
         }
         settings.specialistConnected = defaults.bool(forKey: SettingsKey.specialistConnected)
 
+        if defaults.object(forKey: SettingsKey.kidDailyReminderEnabled) != nil {
+            settings.kidDailyReminderEnabled = defaults.bool(forKey: SettingsKey.kidDailyReminderEnabled)
+        }
+        if defaults.object(forKey: SettingsKey.weeklyParentSummaryEnabled) != nil {
+            settings.weeklyParentSummaryEnabled = defaults.bool(forKey: SettingsKey.weeklyParentSummaryEnabled)
+        }
+
         return settings
+    }
+
+    // MARK: - L9: Kid daily reminder + Weekly parent summary toggles
+
+    func toggleKidDailyReminder(_ request: SettingsModels.ToggleKidDailyReminder.Request) {
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            settings.kidDailyReminderEnabled = request.enabled
+            defaults.set(request.enabled, forKey: SettingsKey.kidDailyReminderEnabled)
+
+            if let live = notificationService as? NotificationServiceLive {
+                if request.enabled {
+                    await live.scheduleDailyKidReminder(childName: settings.childName)
+                } else {
+                    await live.cancelDailyKidReminder(childName: settings.childName)
+                }
+            }
+            logger.info("kidDailyReminder toggled → \(request.enabled, privacy: .public)")
+            presenter?.presentToggleKidDailyReminder(.init(settings: settings))
+        }
+    }
+
+    func toggleWeeklyParentSummary(_ request: SettingsModels.ToggleWeeklyParentSummary.Request) {
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            settings.weeklyParentSummaryEnabled = request.enabled
+            defaults.set(request.enabled, forKey: SettingsKey.weeklyParentSummaryEnabled)
+
+            if let live = notificationService as? NotificationServiceLive {
+                if request.enabled {
+                    await live.scheduleWeeklyParentSummary(achievementsCount: 0, streakDays: 0)
+                } else {
+                    await live.cancelWeeklyParentSummary()
+                }
+            }
+            logger.info("weeklyParentSummary toggled → \(request.enabled, privacy: .public)")
+            presenter?.presentToggleWeeklyParentSummary(.init(settings: settings))
+        }
     }
 
     // MARK: - Model packs

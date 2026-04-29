@@ -74,6 +74,8 @@ struct ChildHomeView: View {
                         .transition(.scale.combined(with: .opacity))
                     }
 
+                    homeScreenCardSection
+
                     dailyMissionSection
                         .spotlightAnchor(key: "daily_mission_card")
 
@@ -250,6 +252,22 @@ struct ChildHomeView: View {
         .padding(.vertical, SpacingTokens.sp3)
         .frame(maxWidth: .infinity)
         .animation(reduceMotion ? nil : MotionTokens.spring, value: viewModel.mascotTapPhrase)
+    }
+
+    // MARK: - HomeScreen Widget card preview (L9)
+
+    private var homeScreenCardSection: some View {
+        HStack(spacing: SpacingTokens.sp3) {
+            HomeScreenCard(
+                dailyMission: viewModel.dailyMissionDetail.title.isEmpty
+                    ? viewModel.dailyMission.targetSound
+                    : viewModel.dailyMissionDetail.title,
+                streakDays: viewModel.currentStreak,
+                lyalyaIcon: "bird.fill"
+            )
+            Spacer(minLength: 0)
+        }
+        .padding(.vertical, SpacingTokens.sp1)
     }
 
     // MARK: - Daily Mission

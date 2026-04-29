@@ -20,6 +20,9 @@ protocol SettingsDisplayLogic: AnyObject {
     func displayExportShare(_ viewModel: SettingsModels.ExportShare.ViewModel)
     func displayFailure(_ viewModel: SettingsModels.Failure.ViewModel)
     func displayLoading(_ isLoading: Bool)
+    /// L9
+    func displayToggleKidDailyReminder(_ viewModel: SettingsModels.ToggleKidDailyReminder.ViewModel)
+    func displayToggleWeeklyParentSummary(_ viewModel: SettingsModels.ToggleWeeklyParentSummary.ViewModel)
 }
 
 // MARK: - SettingsDisplay (Observable Store)
@@ -129,6 +132,14 @@ final class SettingsDisplay: SettingsDisplayLogic {
 
     func displayLoading(_ isLoading: Bool) {
         self.isLoading = isLoading
+    }
+
+    func displayToggleKidDailyReminder(_ viewModel: SettingsModels.ToggleKidDailyReminder.ViewModel) {
+        settings = viewModel.settings
+    }
+
+    func displayToggleWeeklyParentSummary(_ viewModel: SettingsModels.ToggleWeeklyParentSummary.ViewModel) {
+        settings = viewModel.settings
     }
 
     func clearToast() {

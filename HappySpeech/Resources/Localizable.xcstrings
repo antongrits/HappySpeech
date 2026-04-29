@@ -21095,6 +21095,106 @@
           }
         }
       }
+    },
+    "notifications.kid.daily.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Привет от Ляли!"
+          }
+        }
+      }
+    },
+    "notifications.kid.daily.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, ты сегодня уже играл? Я скучаю!"
+          }
+        }
+      }
+    },
+    "notifications.parent.weekly.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отчёт за неделю"
+          }
+        }
+      }
+    },
+    "notifications.parent.weekly.body": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На этой неделе: %d достижений, %d дней подряд"
+          }
+        }
+      }
+    },
+    "notifications.toggle.daily": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ежедневное напоминание"
+          }
+        }
+      }
+    },
+    "notifications.toggle.weekly": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Еженедельный отчёт"
+          }
+        }
+      }
+    },
+    "notifications.toggle.disabled": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отключено"
+          }
+        }
+      }
+    },
+    "widget.a11y": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Виджет — миссия %@, %d дней подряд"
+          }
+        }
+      }
+    },
+    "widget.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Миссия дня"
+          }
+        }
+      }
+    },
+    "widget.streak.format": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d дней подряд"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
