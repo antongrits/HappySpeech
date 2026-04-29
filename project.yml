@@ -168,7 +168,10 @@ targets:
     type: bundle.unit-test
     platform: iOS
     sources:
-      - HappySpeechTests
+      - path: HappySpeechTests
+        excludes:
+          - "**/__Snapshots__/**/*.png"
+          - "__Snapshots__/**"
     plist:
       path: HappySpeechTests/Info.plist
       properties:
