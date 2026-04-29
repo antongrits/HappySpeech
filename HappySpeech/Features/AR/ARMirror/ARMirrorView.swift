@@ -18,6 +18,7 @@ struct ARMirrorView: View {
     @State private var presenter: ARMirrorPresenter?
     @State private var router: ARMirrorRouter?
     @State private var display = ARMirrorDisplay()
+    @State private var facePoseWorker = UnifiedFacePoseWorker()
 
     @State private var isSessionStarted = false
     @State private var startError: String?
@@ -205,6 +206,22 @@ struct ARMirrorView: View {
                 }
             }
         }
+        // Unified Face Pose: вычисляем viseme из FaceBlendshapes для lip-sync маскота.
+        // Используем тот же blendshapeStream — без изменений ARSessionService.
+        Task { @MainActor in
+            for await frame in service.blendshapeStream {
+                let pose = UnifiedFacePose(
+                    mouthOpen:   frame.jawOpen,
+                    lipsPucker:  frame.mouthPucker,
+                    lipsFunnel:  frame.mouthFunnel,
+                    lipsSmile:   (frame.mouthSmileLeft + frame.mouthSmileRight) / 2,
+                    tongueOut:   frame.tongueOut,
+                    lipSymmetry: frame.lipSymmetry,
+                    landmarks76: nil
+                )
+                display.currentViseme = facePoseWorker.currentViseme(pose)
+            }
+        }
     }
 
     private func teardown() {
@@ -224,6 +241,8 @@ final class ARMirrorDisplay: ARMirrorDisplayLogic {
     var lipSymmetry: Float = 1
     var shouldAdvance: Bool = false
     var lastStars: Int?
+    /// Текущая визема для real-time lip-sync маскота Ляли.
+    var currentViseme: Viseme = .closed
 
     func displayStartGame(_ viewModel: ARMirrorModels.StartGame.ViewModel) {
         self.start = viewModel
