@@ -28,6 +28,7 @@ struct OfflineStateView: View {
     @State private var retryCountdown: Int = 5
     @State private var countdownTask: Task<Void, Never>?
     @State private var isMascotPulsing: Bool = false
+    @State private var showMiniGame: Bool = false
 
     private static let autoRetrySeconds: Int = 5
 
@@ -215,6 +216,22 @@ struct OfflineStateView: View {
             .lineLimit(nil)
             .minimumScaleFactor(0.85)
             .accessibilityHint(String(localized: "offline.continue.a11y.hint"))
+
+            HSButton(
+                String(localized: "offline.minigame.cta"),
+                style: .ghost,
+                icon: "gamecontroller.fill"
+            ) {
+                showMiniGame = true
+            }
+            .lineLimit(nil)
+            .minimumScaleFactor(0.85)
+            .accessibilityHint(String(localized: "offline.minigame.cta.a11y.hint"))
+        }
+        .sheet(isPresented: $showMiniGame) {
+            OfflineMiniGameView()
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
         }
     }
 

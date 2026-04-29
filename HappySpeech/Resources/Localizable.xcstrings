@@ -20908,6 +20908,193 @@
           }
         }
       }
+    },
+    "offline.minigame.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поиграем пока ждём?"
+          }
+        }
+      }
+    },
+    "offline.minigame.cta.a11y.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите, чтобы открыть мини-игры офлайн"
+          }
+        }
+      }
+    },
+    "offline.minigame.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мини-игры"
+          }
+        }
+      }
+    },
+    "offline.minigame.tap.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поймай Лялю"
+          }
+        }
+      }
+    },
+    "offline.minigame.tap.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тапни Лялю — сколько раз успеешь за 5 секунд?"
+          }
+        }
+      }
+    },
+    "offline.minigame.tap.start": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажми на экран, чтобы начать"
+          }
+        }
+      }
+    },
+    "offline.minigame.drag.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лови облака"
+          }
+        }
+      }
+    },
+    "offline.minigame.drag.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перетащи облака к Ляле"
+          }
+        }
+      }
+    },
+    "offline.minigame.drag.cloud.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Облако — перетащи к Ляле"
+          }
+        }
+      }
+    },
+    "offline.minigame.pair.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пары"
+          }
+        }
+      }
+    },
+    "offline.minigame.pair.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Найди одинаковые картинки"
+          }
+        }
+      }
+    },
+    "offline.minigame.pair.card.hidden.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Карточка перевёрнута"
+          }
+        }
+      }
+    },
+    "offline.minigame.score.format": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Очки: %d"
+          }
+        }
+      }
+    },
+    "offline.minigame.again": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ещё раз"
+          }
+        }
+      }
+    },
+    "offline.minigame.exit": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выйти"
+          }
+        }
+      }
+    },
+    "offline.minigame.congrats.great": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отлично! Ляля гордится тобой!"
+          }
+        }
+      }
+    },
+    "offline.minigame.congrats.good": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец! Попробуй ещё раз!"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
