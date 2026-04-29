@@ -930,3 +930,48 @@ Kid circuit ранее использовал только RuleBasedDecisionServ
 - `HappySpeech/Features/LessonPlayer/RepeatAfterModel/RepeatAfterModelInteractor.swift` — narrationService + connect()
 - `HappySpeech/Features/LessonPlayer/RepeatAfterModel/RepeatAfterModelView.swift` — connect() в startSessionOnce
 - `HappySpeech/App/DI/AppContainer.swift` — kidLLMNarrationService lazy property
+
+---
+
+## ADR-V11-HEALTHKIT — HealthKit mindful sessions (parent opt-in COPPA-safe)
+
+**Дата:** 2026-04-29
+**Статус:** Accepted
+**Контекст:** Plan v11 Block J — логирование дыхательных и stuttering упражнений в Apple Health. NSHealth*UsageDescription уже добавлены в Info.plist в Block I.
+
+**Решение:**
+- Только write access (toShare: [mindfulSession], read: [])
+- Default OFF, требует explicit parent toggle в Settings → секция "Apple Health"
+- НЕТ kid data, НЕТ имени ребёнка в metadata
+- Sessions logged как HKCategoryTypeIdentifier.mindfulSession
+- Metadata: только sessionType (breathing/stutteringPractice/meditation)
+- BreathingInteractor получает BreathingHealthKitWorkerProtocol — слой изоляции между Feature и HealthKitServiceProtocol
+- UserDefaults gate ("happyspeech.healthkit.enabled") проверяется в worker перед каждым вызовом
+
+**COPPA:**
+- ТОЛЬКО parent аккаунт видит toggle (SettingsView — parent circuit)
+- Authorization request только при explicit opt-in в Settings
+- Скрыт от kid circuit (нет доступа из kid-facing Views)
+- Metadata не содержит PII
+
+**Альтернативы:**
+- HKWorkout — отклонено (mindful более подходящий тип для речевых упражнений)
+- iCloud KVS sync — отклонено (HealthKit native, понятнее для родителей)
+- Прямой вызов из SettingsInteractor — отклонено (нарушает Clean Swift, Feature не должна знать об HK деталях)
+
+**Files created:**
+- `HappySpeech/Features/Extensions/Health/HealthKitService.swift` — протокол + LiveHealthKitService (actor) + MockHealthKitService
+- `HappySpeech/Features/LessonPlayer/Breathing/Workers/BreathingHealthKitWorker.swift` — worker-обёртка с UserDefaults gate
+
+**Files updated:**
+- `HappySpeech/Features/LessonPlayer/Breathing/BreathingInteractor.swift` — healthKitWorker dependency + sessionStartDate + вызов в completeSuccess()
+- `HappySpeech/Features/LessonPlayer/Breathing/BreathingView.swift` — healthKitService param
+- `HappySpeech/Features/SessionShell/SessionShellView.swift` — передача container.healthKitService в BreathingView
+- `HappySpeech/Features/Settings/SettingsView.swift` — healthKitSection toggle + isHealthKitEnabled state
+- `HappySpeech/App/DI/AppContainer.swift` — healthKitService lazy property + preview mock
+- `HappySpeech/Resources/HappySpeech.entitlements` — com.apple.developer.healthkit
+- `project.yml` — entitlements properties
+- `HappySpeech/Resources/Localizable.xcstrings` — 5 новых ключей
+
+**Tests:**
+- `HappySpeechTests/Unit/Services/HealthKitServiceTests.swift` — 14 тестов Mock

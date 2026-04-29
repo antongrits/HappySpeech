@@ -21680,6 +21680,61 @@
         }
       }
     },
+    "settings.healthkit.toggle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сохранять упражнения в Apple Health"
+          }
+        }
+      }
+    },
+    "settings.healthkit.explanation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дыхательные упражнения и практика речи будут сохраняться как mindful sessions в Apple Health. Только для взрослых, отключено по умолчанию."
+          }
+        }
+      }
+    },
+    "settings.section.health": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Health"
+          }
+        }
+      }
+    },
+    "healthkit.error.not_available": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Health недоступен на этом устройстве"
+          }
+        }
+      }
+    },
+    "healthkit.error.not_authorized": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нет доступа к Apple Health"
+          }
+        }
+      }
+    },
     "parental_gate.accessibility_label": {
       "extractionState": "manual",
       "localizations": {
