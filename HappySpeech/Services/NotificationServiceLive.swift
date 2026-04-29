@@ -246,6 +246,103 @@ public final class NotificationServiceLive: NotificationService, @unchecked Send
         }
     }
 
+    // MARK: - L9: Kid daily reminder (17:00) + Weekly parent summary (Sunday 19:00)
+
+    /// Ежедневное напоминание ребёнку в 17:00 (после школы). Повторяется.
+    /// Identifier: `hs.kid.daily.<childName>`
+    public func scheduleDailyKidReminder(childName: String) async {
+        guard !isKidsModeActive else {
+            HSLogger.app.notice("Kid daily reminder skipped — Kids mode active")
+            return
+        }
+        guard await isAuthorized else {
+            HSLogger.app.notice("Kid daily reminder skipped — permission not granted")
+            return
+        }
+
+        let content = UNMutableNotificationContent()
+        content.title = String(localized: "notifications.kid.daily.title")
+        content.body = String(
+            format: String(localized: "notifications.kid.daily.body"),
+            childName
+        )
+        content.sound = .default
+        content.categoryIdentifier = "HS_KID_DAILY"
+
+        var trigger = DateComponents()
+        trigger.hour = 17
+        trigger.minute = 0
+
+        let identifier = "hs.kid.daily.\(childName)"
+        let request = UNNotificationRequest(
+            identifier: identifier,
+            content: content,
+            trigger: UNCalendarNotificationTrigger(dateMatching: trigger, repeats: true)
+        )
+        center.removePendingNotificationRequests(withIdentifiers: [identifier])
+        do {
+            try await center.add(request)
+            HSLogger.app.info("Kid daily reminder scheduled at 17:00 for child=\(childName, privacy: .private)")
+        } catch {
+            HSLogger.app.error("Kid daily reminder scheduling failed: \(error.localizedDescription)")
+        }
+    }
+
+    /// Отмена ежедневного напоминания ребёнку.
+    public func cancelDailyKidReminder(childName: String) async {
+        let identifier = "hs.kid.daily.\(childName)"
+        center.removePendingNotificationRequests(withIdentifiers: [identifier])
+        HSLogger.app.info("Kid daily reminder cancelled for child=\(childName, privacy: .private)")
+    }
+
+    /// Еженедельный итог для родителя — воскресенье 19:00 (локальное время). Повторяется.
+    /// Identifier: `hs.parent.weekly.summary`
+    public func scheduleWeeklyParentSummary(achievementsCount: Int, streakDays: Int) async {
+        guard !isKidsModeActive else {
+            HSLogger.app.notice("Weekly parent summary skipped — Kids mode active")
+            return
+        }
+        guard await isAuthorized else {
+            HSLogger.app.notice("Weekly parent summary skipped — permission not granted")
+            return
+        }
+
+        let content = UNMutableNotificationContent()
+        content.title = String(localized: "notifications.parent.weekly.title")
+        content.body = String(
+            format: String(localized: "notifications.parent.weekly.body"),
+            achievementsCount,
+            streakDays
+        )
+        content.sound = .default
+        content.categoryIdentifier = "HS_PARENT_WEEKLY"
+
+        var trigger = DateComponents()
+        trigger.weekday = 1   // Gregorian: 1 = воскресенье
+        trigger.hour = 19
+        trigger.minute = 0
+
+        let identifier = "hs.parent.weekly.summary"
+        let request = UNNotificationRequest(
+            identifier: identifier,
+            content: content,
+            trigger: UNCalendarNotificationTrigger(dateMatching: trigger, repeats: true)
+        )
+        center.removePendingNotificationRequests(withIdentifiers: [identifier])
+        do {
+            try await center.add(request)
+            HSLogger.app.info("Weekly parent summary scheduled Sunday 19:00 (achievements=\(achievementsCount) streak=\(streakDays))")
+        } catch {
+            HSLogger.app.error("Weekly parent summary scheduling failed: \(error.localizedDescription)")
+        }
+    }
+
+    /// Отмена еженедельного итога для родителя.
+    public func cancelWeeklyParentSummary() async {
+        center.removePendingNotificationRequests(withIdentifiers: ["hs.parent.weekly.summary"])
+        HSLogger.app.info("Weekly parent summary cancelled")
+    }
+
     // MARK: - Private helpers
 
     private var isKidsModeActive: Bool {

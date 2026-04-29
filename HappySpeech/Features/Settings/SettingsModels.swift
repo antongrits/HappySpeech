@@ -250,6 +250,34 @@ enum SettingsModels {
             let toastMessage: String
         }
     }
+
+    // MARK: - L9: ToggleKidDailyReminder
+
+    enum ToggleKidDailyReminder {
+        struct Request: Sendable {
+            let enabled: Bool
+        }
+        struct Response: Sendable {
+            let settings: AppSettings
+        }
+        struct ViewModel: Sendable {
+            let settings: AppSettings
+        }
+    }
+
+    // MARK: - L9: ToggleWeeklyParentSummary
+
+    enum ToggleWeeklyParentSummary {
+        struct Request: Sendable {
+            let enabled: Bool
+        }
+        struct Response: Sendable {
+            let settings: AppSettings
+        }
+        struct ViewModel: Sendable {
+            let settings: AppSettings
+        }
+    }
 }
 
 // MARK: - Model packs domain types
@@ -320,6 +348,10 @@ struct AppSettings: Sendable, Equatable {
     var autoDownload: Bool
     var specialistCode: String
     var specialistConnected: Bool
+    /// L9: ежедневное напоминание ребёнку в 17:00
+    var kidDailyReminderEnabled: Bool
+    /// L9: еженедельный итог для родителя в воскресенье 19:00
+    var weeklyParentSummaryEnabled: Bool
 
     static var `default`: AppSettings {
         var components = DateComponents()
@@ -337,7 +369,9 @@ struct AppSettings: Sendable, Equatable {
             audioQuality: .standard,
             autoDownload: true,
             specialistCode: "",
-            specialistConnected: false
+            specialistConnected: false,
+            kidDailyReminderEnabled: true,
+            weeklyParentSummaryEnabled: true
         )
     }
 }
@@ -358,13 +392,16 @@ enum AudioQuality: String, Sendable, CaseIterable, Equatable {
 // MARK: - Persistence keys
 
 enum SettingsKey {
-    static let childName            = "hs.settings.childName"
-    static let childAge             = "hs.settings.childAge"
-    static let childAvatar          = "hs.settings.childAvatar"
-    static let notificationsEnabled = "hs.settings.notificationsEnabled"
-    static let reminderTime         = "hs.settings.reminderTime"
-    static let audioQuality         = "hs.settings.audioQuality"
-    static let autoDownload         = "hs.settings.autoDownload"
-    static let specialistCode       = "hs.settings.specialistCode"
-    static let specialistConnected  = "hs.settings.specialistConnected"
+    static let childName                  = "hs.settings.childName"
+    static let childAge                   = "hs.settings.childAge"
+    static let childAvatar                = "hs.settings.childAvatar"
+    static let notificationsEnabled       = "hs.settings.notificationsEnabled"
+    static let reminderTime               = "hs.settings.reminderTime"
+    static let audioQuality               = "hs.settings.audioQuality"
+    static let autoDownload               = "hs.settings.autoDownload"
+    static let specialistCode             = "hs.settings.specialistCode"
+    static let specialistConnected        = "hs.settings.specialistConnected"
+    /// L9
+    static let kidDailyReminderEnabled    = "hs.settings.kidDailyReminderEnabled"
+    static let weeklyParentSummaryEnabled = "hs.settings.weeklyParentSummaryEnabled"
 }
