@@ -55,7 +55,9 @@ struct NarrativeQuestView: View {
 
         let display = NarrativeQuestDisplay()
         let presenter = NarrativeQuestPresenter()
-        let interactor = NarrativeQuestInteractor(presenter: presenter)
+        // Block H: narrationService подключается в .task через container,
+        // чтобы не зависеть от @Environment в init (недоступен вне body).
+        let interactor = NarrativeQuestInteractor(presenter: presenter, narrationService: nil)
         let bridge = NarrativeQuestStoreBridge(display: display)
         presenter.displayLogic = bridge
 
@@ -173,6 +175,14 @@ struct NarrativeQuestView: View {
                 lyalyaBubble(text: display.narration)
                 taskCard
                 targetWordChip
+
+                // Block H: кнопка-подсказки — загружает LLM hint в фоне.
+                HintButtonView(
+                    gameType: "narrative_quest",
+                    currentStep: "\(display.stageNumber)"
+                )
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .padding(.trailing, SpacingTokens.small)
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
 
@@ -488,6 +498,8 @@ struct NarrativeQuestView: View {
     private func bootstrapOnce() {
         guard !bootstrapped else { return }
         bootstrapped = true
+        // Block H: подключаем narrationService из AppContainer до loadQuest.
+        interactor.connect(narrationService: container.kidLLMNarrationService)
         interactor.loadQuest(.init(
             soundTarget: activity.soundTarget,
             childName: ""

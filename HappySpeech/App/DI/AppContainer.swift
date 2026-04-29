@@ -64,6 +64,9 @@ public final class AppContainer {
     // FaceAnalysisService — lazy, не требует изменения init
     private var _faceAnalysisService: (any FaceAnalysisService)?
 
+    // Block H: KidLLMNarrationService — lazy, использует llmDecisionService
+    var _kidLLMNarrationService: (any KidLLMNarrationServiceProtocol)?
+
     // MascotLipSyncState — singleton для real-time lip-sync оверлея маскота (Block F)
     public let mascotLipSyncState: MascotLipSyncState = MascotLipSyncState()
 
@@ -334,6 +337,16 @@ public final class AppContainer {
         return new
     }
 
+    // Block H: KidLLMNarrationService — on-demand, wraps llmDecisionService.
+    // Live: использует реальный LiveLLMDecisionService (Tier A только).
+    // Preview/Test: использует MockKidLLMNarrationService.
+    public var kidLLMNarrationService: any KidLLMNarrationServiceProtocol {
+        if let existing = _kidLLMNarrationService { return existing }
+        let new = LiveKidLLMNarrationService(llmService: llmDecisionService)
+        _kidLLMNarrationService = new
+        return new
+    }
+
     /// Библиотека анимированных историй. Singleton — создаётся один раз для всего приложения.
     public var storyLibrary: StoryLibrary { StoryLibrary.shared }
 
@@ -475,6 +488,8 @@ public extension AppContainer {
             contentPackDownload: MockContentPackDownloadService(),
             performance: MockPerformanceMonitorService()
         )
+        // Block H: использовать Mock для kid narration в preview/tests.
+        container._kidLLMNarrationService = MockKidLLMNarrationService()
         return container
     }
 }
