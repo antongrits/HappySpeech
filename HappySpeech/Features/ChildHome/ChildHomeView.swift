@@ -296,11 +296,51 @@ struct ChildHomeView: View {
         }
     }
 
-    // MARK: - Quick Actions (legacy 2x2 grid)
+    // MARK: - Quick Actions (legacy 2x2 grid + Sibling Multiplayer card)
 
     private var quickActionsSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
             sectionHeader(String(localized: "child.home.actions.section"), emoji: "✨")
+
+            // Sibling Multiplayer card (full-width, above grid)
+            Button {
+                router?.routeToSiblingMultiplayer(childId: childId)
+            } label: {
+                HStack(spacing: SpacingTokens.sp3) {
+                    Image(systemName: "person.2.fill")
+                        .font(TypographyTokens.headline(22))
+                        .foregroundStyle(.white)
+                        .frame(width: 44, height: 44)
+                        .background(Circle().fill(ColorTokens.Brand.sky.opacity(0.9)))
+                        .accessibilityHidden(true)
+
+                    Text(String(localized: "sibling.entry.title"))
+                        .font(TypographyTokens.headline(18))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+
+                    Spacer()
+
+                    Image(systemName: "chevron.right")
+                        .font(TypographyTokens.caption(14))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .accessibilityHidden(true)
+                }
+                .padding(.horizontal, SpacingTokens.sp4)
+                .frame(maxWidth: .infinity, minHeight: 100)
+                .background(
+                    RoundedRectangle(cornerRadius: RadiusTokens.card)
+                        .fill(ColorTokens.Brand.sky.opacity(0.12))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: RadiusTokens.card)
+                        .strokeBorder(ColorTokens.Brand.sky.opacity(0.3), lineWidth: 1)
+                )
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(String(localized: "sibling.entry.title"))
+            .accessibilityHint(String(localized: "sibling.discovery.nav_title"))
 
             LazyVGrid(
                 columns: [GridItem(.flexible()), GridItem(.flexible())],

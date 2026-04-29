@@ -88,6 +88,11 @@ targets:
         NSCameraUsageDescription: "HappySpeech использует камеру для AR-упражнений артикуляции и мимической гимнастики"
         NSFaceIDUsageDescription: "HappySpeech может использовать Face ID для быстрого входа родителей"
         NSSpeechRecognitionUsageDescription: "HappySpeech использует распознавание речи для оценки произношения"
+        NSLocalNetworkUsageDescription: "Чтобы найти друга для совместной игры по локальной сети"
+        NSBluetoothAlwaysUsageDescription: "HappySpeech использует Bluetooth для поиска партнёра по игре вблизи"
+        NSBonjourServices:
+          - "_hs-sibling._tcp"
+          - "_hs-sibling._udp"
         UIBackgroundModes:
           - audio
           - remote-notification
