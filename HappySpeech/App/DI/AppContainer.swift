@@ -52,6 +52,12 @@ public final class AppContainer {
     private var _networkClient: NetworkClient?
     private var _claudeAPIClient: (any ClaudeAPIClientProtocol)?
     private var _offlineQueueManager: OfflineQueueManager?
+    // Block D: Firebase full services
+    private var _remoteConfigService: (any RemoteConfigService)?
+    private var _fcmService: (any FCMService)?
+    private var _contentPackDownloadService: (any ContentPackDownloadService)?
+    private var _performanceMonitorService: (any PerformanceMonitorService)?
+
     // SoundService — lazy, не требует изменения init
     private var _soundService: (any SoundServiceProtocol)?
 
@@ -268,6 +274,49 @@ public final class AppContainer {
         return new
     }
 
+    // MARK: - Block D: Firebase Full Services
+
+    public var remoteConfigService: any RemoteConfigService {
+        if let existing = _remoteConfigService { return existing }
+        let new = LiveRemoteConfigService()
+        _remoteConfigService = new
+        return new
+    }
+
+    public var fcmService: any FCMService {
+        if let existing = _fcmService { return existing }
+        let new = LiveFCMService()
+        _fcmService = new
+        return new
+    }
+
+    public var contentPackDownloadService: any ContentPackDownloadService {
+        if let existing = _contentPackDownloadService { return existing }
+        let new = LiveContentPackDownloadService()
+        _contentPackDownloadService = new
+        return new
+    }
+
+    public var performanceMonitorService: any PerformanceMonitorService {
+        if let existing = _performanceMonitorService { return existing }
+        let new = LivePerformanceMonitorService()
+        _performanceMonitorService = new
+        return new
+    }
+
+    /// Позволяет Preview/Tests подменить Block D сервисы без изменения init.
+    public func overrideBlockDServices(
+        remoteConfig: (any RemoteConfigService)? = nil,
+        fcm: (any FCMService)? = nil,
+        contentPackDownload: (any ContentPackDownloadService)? = nil,
+        performance: (any PerformanceMonitorService)? = nil
+    ) {
+        if let rc = remoteConfig { _remoteConfigService = rc }
+        if let f = fcm { _fcmService = f }
+        if let cpd = contentPackDownload { _contentPackDownloadService = cpd }
+        if let p = performance { _performanceMonitorService = p }
+    }
+
     public var soundService: any SoundServiceProtocol {
         if let existing = _soundService { return existing }
         let new = LiveSoundService()
@@ -384,7 +433,7 @@ public extension AppContainer {
         let sharedNetworkClient = NetworkClient()
         let sharedSyncService: any SyncService = MockSyncService()
 
-        return AppContainer(
+        let container = AppContainer(
             realmActor: realmActor,
             childRepository: childRepo,
             sessionRepository: sessionRepo,
@@ -416,5 +465,13 @@ public extension AppContainer {
                 )
             }
         )
+        // Block D mocks — override Live implementations for preview/test environments.
+        container.overrideBlockDServices(
+            remoteConfig: MockRemoteConfigService(),
+            fcm: MockFCMService(),
+            contentPackDownload: MockContentPackDownloadService(),
+            performance: MockPerformanceMonitorService()
+        )
+        return container
     }
 }

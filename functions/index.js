@@ -351,3 +351,108 @@ exports.setAdminClaim = onCall(
     return setAdminClaimHandler(admin, request);
   },
 );
+
+// ------------------------------------------------------------------
+// HTTPS Callable: sendWeeklySummaryFCM
+// Input:  { parentId: string }
+// Output: { sent: boolean, messageId: string | null }
+//
+// Pulls weekly child progress for the given parent and sends an FCM push
+// to the parent's registered device token.
+//
+// COPPA / Kids Category:
+//   - Called only for authenticated, non-anonymous parent users.
+//   - Token is read from /users/{parentId}.fcmToken — stored by iOS FCMService
+//     only after explicit parent opt-in.
+//   - No child PII included in the notification payload body.
+// ------------------------------------------------------------------
+
+exports.sendWeeklySummaryFCM = onCall(
+  { enforceAppCheck: false, cors: true },
+  async (request) => {
+    const { parentId } = request.data || {};
+
+    if (typeof parentId !== 'string' || parentId.length === 0) {
+      throw new HttpsError('invalid-argument', 'parentId is required');
+    }
+
+    if (!request.auth || request.auth.uid !== parentId) {
+      throw new HttpsError('permission-denied', 'Only the parent can request their own summary');
+    }
+
+    const db = admin.firestore();
+    const messaging = admin.messaging();
+
+    // Read parent doc — check role and FCM token.
+    const parentDoc = await db.collection('users').doc(parentId).get();
+    if (!parentDoc.exists) {
+      throw new HttpsError('not-found', 'Parent document not found');
+    }
+    const parent = parentDoc.data() || {};
+
+    if (parent.role !== 'parent') {
+      throw new HttpsError('failed-precondition', 'User is not a parent');
+    }
+
+    const fcmToken = typeof parent.fcmToken === 'string' && parent.fcmToken.length > 0
+      ? parent.fcmToken
+      : null;
+
+    if (!fcmToken) {
+      return { sent: false, messageId: null };
+    }
+
+    // Collect weekly progress summary across children.
+    const childrenSnap = await db
+      .collection('users').doc(parentId)
+      .collection('children').get();
+
+    const childCount = childrenSnap.size;
+    let totalSessions = 0;
+
+    for (const childDoc of childrenSnap.docs) {
+      const childId = childDoc.id;
+      const weekAgo = new Date();
+      weekAgo.setDate(weekAgo.getDate() - 7);
+
+      const sessionsSnap = await db
+        .collection('users').doc(parentId)
+        .collection('children').doc(childId)
+        .collection('sessions')
+        .where('date', '>=', weekAgo.toISOString())
+        .get();
+
+      totalSessions += sessionsSnap.size;
+    }
+
+    // Build notification — no child names or PII in the body, only aggregate counts.
+    const body = childCount === 1
+      ? `На этой неделе проведено занятий: ${totalSessions}`
+      : `Детей: ${childCount}. Занятий за неделю: ${totalSessions}`;
+
+    try {
+      const messageId = await messaging.send({
+        token: fcmToken,
+        notification: {
+          title: 'Прогресс за неделю',
+          body,
+        },
+        data: {
+          type: 'weekly_summary',
+          parentId,
+        },
+        apns: {
+          payload: {
+            aps: { 'content-available': 1 },
+          },
+        },
+      });
+
+      logger.info('sendWeeklySummaryFCM sent', { parentId: '[REDACTED]', messageId });
+      return { sent: true, messageId };
+    } catch (error) {
+      logger.error('sendWeeklySummaryFCM failed', { error: String(error) });
+      throw new HttpsError('internal', 'Failed to send FCM message');
+    }
+  },
+);

@@ -739,3 +739,44 @@ Block Q реализует Layer 3 после генерации 10 state-илл
 
 **Files affected:**
 - `.claude/team/decisions.md` — этот ADR
+
+---
+
+### [2026-04-29] [backend-dev] ADR-V11-FIREBASE-FULL: Block D — Firebase Full Services Integration
+
+**Decision:** Интегрировать Remote Config, FCM, Firebase Storage (content packs), App Check enforcement и Firebase Performance в HappySpeech.
+
+**Scope:** Sprint 12 / Block D (D.1–D.5)
+
+**COPPA / Kids Category constraints:**
+- FCM: только parent, только opt-in (default OFF), токен в Firestore только при explicit consent
+- Performance: только parent screens, только opt-in (default OFF), MetricKit остаётся основным crash-механизмом
+- Remote Config: feature flags только, без PII в ключах/значениях
+- App Check: DeviceCheck в production, AppCheckDebugProvider в Debug/Simulator
+
+**Architecture decisions:**
+- Все 4 новых сервиса — protocol-based DI (RemoteConfigService, FCMService, ContentPackDownloadService, PerformanceMonitorService)
+- Lazy init в AppContainer без изменения init signature — паттерн аналогичен SoundService/FaceAnalysisService
+- `overrideBlockDServices()` метод для preview/test без factory closures в init
+- Storage rules расширены: `/content_packs/{packId}/**` (read: auth, write: false) и `/voice_clone_refs/{userId}/**` (owner)
+- App Check конфигурируется до `FirebaseApp.configure()` в HappySpeechApp.swift
+- Cloud Function `sendWeeklySummaryFCM` добавлена в functions/index.js — on-demand, не scheduled, без PII в payload
+
+**Files created:**
+- `~/.claude/skills/firebase-services-architect/SKILL.md` (NEW)
+- `HappySpeech/Services/RemoteConfigService.swift` (NEW)
+- `HappySpeech/Services/FCMService.swift` (NEW)
+- `HappySpeech/Services/ContentPackDownloadService.swift` (NEW)
+- `HappySpeech/Services/PerformanceMonitorService.swift` (NEW)
+- `HappySpeech/App/DI/AppContainer.swift` (UPDATE — Block D services + overrideBlockDServices)
+- `HappySpeech/App/HappySpeechApp.swift` (UPDATE — App Check setup before FirebaseApp.configure)
+- `functions/index.js` (UPDATE — sendWeeklySummaryFCM callable)
+- `storage.rules` (UPDATE — /content_packs + /voice_clone_refs paths)
+- `HappySpeech/Resources/Localizable.xcstrings` (UPDATE — 9 новых ru ключей для Settings UI)
+
+**Alternatives considered:**
+- Factory closures в AppContainer.init для Block D — отклонено: увеличивает сигнатуру init ещё на 4 параметра, при этом все 4 сервиса не требуют внешних зависимостей при создании
+- FirebaseAnalytics вместо Performance — запрещено COPPA/Kids Category
+
+**Risk:** FirebaseRemoteConfig SDK требует `import FirebaseRemoteConfig` — убедиться что он добавлен в Package.resolved (FirebaseRemoteConfig входит в firebase-ios-sdk пакет).
+**Risk mitigation:** Если RC не в SPM target — добавить `FirebaseRemoteConfig` в зависимости target в project.yml.

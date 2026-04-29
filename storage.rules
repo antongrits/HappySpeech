@@ -109,10 +109,26 @@ service firebase.storage {
       allow write: if isAdmin();
     }
 
-    // Downloadable content packs
+    // Downloadable content packs (legacy /content path)
     match /content/{path=**} {
       allow read: if isSignedIn();
       allow write: if isAdmin();
+    }
+
+    // Content packs — Block D.3 canonical path
+    // Read: any authenticated user (app downloads packs).
+    // Write: false — only admin SDK (Cloud Functions) can upload packs.
+    match /content_packs/{packId}/{file=**} {
+      allow read: if isSignedIn();
+      allow write: if false;
+    }
+
+    // Voice clone reference recordings — per-user, parent only uploads.
+    // Block D.3: voice_clone feature is flag-gated (feature_voice_clone_enabled = false in RC).
+    match /voice_clone_refs/{userId}/{file=**} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow write: if isOwner(userId) && isValidAudio();
+      allow delete: if isOwner(userId) || isAdmin();
     }
 
     // ------------------------------------------------------------------
