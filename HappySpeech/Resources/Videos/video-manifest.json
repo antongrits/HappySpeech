@@ -217,5 +217,391 @@
       "has_audio": true,
       "audio_file": "lyalya_story_20.m4a"
     }
+  ],
+  "lessons": [
+    {
+      "id": "listen-and-choose",
+      "path": "lessons/listen-and-choose.mp4",
+      "title": "Слушай и выбирай",
+      "template": "listen-and-choose",
+      "variant": null,
+      "duration_sec": 10.0,
+      "size_bytes": 573556
+    },
+    {
+      "id": "repeat-after-model",
+      "path": "lessons/repeat-after-model.mp4",
+      "title": "Повторяй за мной",
+      "template": "repeat-after-model",
+      "variant": null,
+      "duration_sec": 10.0,
+      "size_bytes": 562560
+    },
+    {
+      "id": "drag-and-match",
+      "path": "lessons/drag-and-match.mp4",
+      "title": "Перетащи и совмести",
+      "template": "drag-and-match",
+      "variant": null,
+      "duration_sec": 10.0,
+      "size_bytes": 568365
+    },
+    {
+      "id": "story-completion",
+      "path": "lessons/story-completion.mp4",
+      "title": "Закончи историю",
+      "template": "story-completion",
+      "variant": null,
+      "duration_sec": 12.0,
+      "size_bytes": 655462
+    },
+    {
+      "id": "puzzle-reveal",
+      "path": "lessons/puzzle-reveal.mp4",
+      "title": "Собери пазл",
+      "template": "puzzle-reveal",
+      "variant": null,
+      "duration_sec": 10.0,
+      "size_bytes": 574309
+    },
+    {
+      "id": "sorting",
+      "path": "lessons/sorting.mp4",
+      "title": "Сортировка",
+      "template": "sorting",
+      "variant": null,
+      "duration_sec": 10.0,
+      "size_bytes": 560237
+    },
+    {
+      "id": "memory",
+      "path": "lessons/memory.mp4",
+      "title": "Мемори",
+      "template": "memory",
+      "variant": null,
+      "duration_sec": 10.0,
+      "size_bytes": 551677
+    },
+    {
+      "id": "bingo",
+      "path": "lessons/bingo.mp4",
+      "title": "Бинго",
+      "template": "bingo",
+      "variant": null,
+      "duration_sec": 10.0,
+      "size_bytes": 548240
+    },
+    {
+      "id": "sound-hunter",
+      "path": "lessons/sound-hunter.mp4",
+      "title": "Охотник за звуком",
+      "template": "sound-hunter",
+      "variant": null,
+      "duration_sec": 10.0,
+      "size_bytes": 560191
+    },
+    {
+      "id": "articulation-imitation",
+      "path": "lessons/articulation-imitation.mp4",
+      "title": "Артикуляция",
+      "template": "articulation-imitation",
+      "variant": null,
+      "duration_sec": 12.0,
+      "size_bytes": 652355
+    },
+    {
+      "id": "AR-activity",
+      "path": "lessons/AR-activity.mp4",
+      "title": "AR-занятие",
+      "template": "AR-activity",
+      "variant": null,
+      "duration_sec": 12.0,
+      "size_bytes": 655878
+    },
+    {
+      "id": "visual-acoustic",
+      "path": "lessons/visual-acoustic.mp4",
+      "title": "Слухо-зрительный",
+      "template": "visual-acoustic",
+      "variant": null,
+      "duration_sec": 10.0,
+      "size_bytes": 565859
+    },
+    {
+      "id": "breathing",
+      "path": "lessons/breathing.mp4",
+      "title": "Дыхание",
+      "template": "breathing",
+      "variant": null,
+      "duration_sec": 15.0,
+      "size_bytes": 778270
+    },
+    {
+      "id": "rhythm",
+      "path": "lessons/rhythm.mp4",
+      "title": "Ритм",
+      "template": "rhythm",
+      "variant": null,
+      "duration_sec": 10.0,
+      "size_bytes": 540836
+    },
+    {
+      "id": "narrative-quest",
+      "path": "lessons/narrative-quest.mp4",
+      "title": "Нарративный квест",
+      "template": "narrative-quest",
+      "variant": null,
+      "duration_sec": 12.0,
+      "size_bytes": 649209
+    },
+    {
+      "id": "minimal-pairs",
+      "path": "lessons/minimal-pairs.mp4",
+      "title": "Минимальные пары",
+      "template": "minimal-pairs",
+      "variant": null,
+      "duration_sec": 10.0,
+      "size_bytes": 564210
+    },
+    {
+      "id": "repeat-after-model_S",
+      "path": "lessons/repeat-after-model_S.mp4",
+      "title": "Повторяй: звук С",
+      "template": "repeat-after-model",
+      "variant": "S",
+      "duration_sec": 10.0,
+      "size_bytes": 562912
+    },
+    {
+      "id": "repeat-after-model_R",
+      "path": "lessons/repeat-after-model_R.mp4",
+      "title": "Повторяй: звук Р",
+      "template": "repeat-after-model",
+      "variant": "R",
+      "duration_sec": 10.0,
+      "size_bytes": 559529
+    },
+    {
+      "id": "repeat-after-model_L",
+      "path": "lessons/repeat-after-model_L.mp4",
+      "title": "Повторяй: звук Л",
+      "template": "repeat-after-model",
+      "variant": "L",
+      "duration_sec": 10.0,
+      "size_bytes": 551992
+    },
+    {
+      "id": "bingo_Sh",
+      "path": "lessons/bingo_Sh.mp4",
+      "title": "Бинго: звук Ш",
+      "template": "bingo",
+      "variant": "Sh",
+      "duration_sec": 10.0,
+      "size_bytes": 555742
+    },
+    {
+      "id": "bingo_Z",
+      "path": "lessons/bingo_Z.mp4",
+      "title": "Бинго: звук З",
+      "template": "bingo",
+      "variant": "Z",
+      "duration_sec": 10.0,
+      "size_bytes": 559133
+    },
+    {
+      "id": "minimal-pairs_S_Sh",
+      "path": "lessons/minimal-pairs_S_Sh.mp4",
+      "title": "Пары: С / Ш",
+      "template": "minimal-pairs",
+      "variant": "S_Sh",
+      "duration_sec": 10.0,
+      "size_bytes": 548253
+    },
+    {
+      "id": "minimal-pairs_R_L",
+      "path": "lessons/minimal-pairs_R_L.mp4",
+      "title": "Пары: Р / Л",
+      "template": "minimal-pairs",
+      "variant": "R_L",
+      "duration_sec": 10.0,
+      "size_bytes": 546087
+    },
+    {
+      "id": "minimal-pairs_S_Z",
+      "path": "lessons/minimal-pairs_S_Z.mp4",
+      "title": "Пары: С / З",
+      "template": "minimal-pairs",
+      "variant": "S_Z",
+      "duration_sec": 10.0,
+      "size_bytes": 541055
+    },
+    {
+      "id": "sorting_whistles",
+      "path": "lessons/sorting_whistles.mp4",
+      "title": "Сортировка: свистящие",
+      "template": "sorting",
+      "variant": "whistles",
+      "duration_sec": 10.0,
+      "size_bytes": 577195
+    },
+    {
+      "id": "sorting_hisses",
+      "path": "lessons/sorting_hisses.mp4",
+      "title": "Сортировка: шипящие",
+      "template": "sorting",
+      "variant": "hisses",
+      "duration_sec": 10.0,
+      "size_bytes": 560662
+    },
+    {
+      "id": "sorting_sonors",
+      "path": "lessons/sorting_sonors.mp4",
+      "title": "Сортировка: соноры",
+      "template": "sorting",
+      "variant": "sonors",
+      "duration_sec": 10.0,
+      "size_bytes": 552884
+    },
+    {
+      "id": "articulation-imitation_S",
+      "path": "lessons/articulation-imitation_S.mp4",
+      "title": "Артикуляция: С",
+      "template": "articulation-imitation",
+      "variant": "S",
+      "duration_sec": 12.0,
+      "size_bytes": 645256
+    },
+    {
+      "id": "articulation-imitation_R",
+      "path": "lessons/articulation-imitation_R.mp4",
+      "title": "Артикуляция: Р",
+      "template": "articulation-imitation",
+      "variant": "R",
+      "duration_sec": 12.0,
+      "size_bytes": 657025
+    },
+    {
+      "id": "AR-activity_breathing",
+      "path": "lessons/AR-activity_breathing.mp4",
+      "title": "AR: дыхание",
+      "template": "AR-activity",
+      "variant": "breathing",
+      "duration_sec": 15.0,
+      "size_bytes": 798745
+    }
+  ],
+  "achievements": [
+    {
+      "id": "reward_first_sound",
+      "path": "achievements/reward_first_sound.mp4",
+      "title": "Первый звук!",
+      "duration_sec": 5.0,
+      "size_bytes": 553704
+    },
+    {
+      "id": "reward_streak_7",
+      "path": "achievements/reward_streak_7.mp4",
+      "title": "Неделя занятий!",
+      "duration_sec": 5.0,
+      "size_bytes": 538757
+    },
+    {
+      "id": "reward_streak_30",
+      "path": "achievements/reward_streak_30.mp4",
+      "title": "Месяц занятий!",
+      "duration_sec": 5.0,
+      "size_bytes": 566557
+    },
+    {
+      "id": "reward_first_ar",
+      "path": "achievements/reward_first_ar.mp4",
+      "title": "Первая AR-игра!",
+      "duration_sec": 5.0,
+      "size_bytes": 549694
+    },
+    {
+      "id": "reward_grammar_master",
+      "path": "achievements/reward_grammar_master.mp4",
+      "title": "Мастер грамматики!",
+      "duration_sec": 5.0,
+      "size_bytes": 529592
+    },
+    {
+      "id": "reward_family_voice",
+      "path": "achievements/reward_family_voice.mp4",
+      "title": "Семейный голос!",
+      "duration_sec": 5.0,
+      "size_bytes": 530421
+    },
+    {
+      "id": "reward_explorer",
+      "path": "achievements/reward_explorer.mp4",
+      "title": "Исследователь!",
+      "duration_sec": 5.0,
+      "size_bytes": 565248
+    },
+    {
+      "id": "reward_perfectionist",
+      "path": "achievements/reward_perfectionist.mp4",
+      "title": "Перфекционист!",
+      "duration_sec": 5.0,
+      "size_bytes": 529747
+    },
+    {
+      "id": "reward_champion",
+      "path": "achievements/reward_champion.mp4",
+      "title": "Чемпион!",
+      "duration_sec": 5.0,
+      "size_bytes": 543806
+    },
+    {
+      "id": "reward_first_star",
+      "path": "achievements/reward_first_star.mp4",
+      "title": "Первая звезда!",
+      "duration_sec": 5.0,
+      "size_bytes": 467599
+    }
+  ],
+  "tutorials": [
+    {
+      "id": "tutorial_how_to_play",
+      "path": "tutorials/tutorial_how_to_play.mp4",
+      "title": "Как играть",
+      "audience": "child",
+      "duration_sec": 20.0,
+      "size_bytes": 1128941
+    },
+    {
+      "id": "tutorial_articulation",
+      "path": "tutorials/tutorial_articulation.mp4",
+      "title": "Артикуляционные упражнения",
+      "audience": "both",
+      "duration_sec": 25.0,
+      "size_bytes": 1365256
+    },
+    {
+      "id": "tutorial_breathing",
+      "path": "tutorials/tutorial_breathing.mp4",
+      "title": "Дыхательные упражнения",
+      "audience": "both",
+      "duration_sec": 25.0,
+      "size_bytes": 1342832
+    },
+    {
+      "id": "tutorial_progress_tracking",
+      "path": "tutorials/tutorial_progress_tracking.mp4",
+      "title": "Как следить за прогрессом",
+      "audience": "parent",
+      "duration_sec": 30.0,
+      "size_bytes": 1660204
+    },
+    {
+      "id": "tutorial_ar_setup",
+      "path": "tutorials/tutorial_ar_setup.mp4",
+      "title": "Как настроить AR",
+      "audience": "both",
+      "duration_sec": 20.0,
+      "size_bytes": 1176756
+    }
   ]
 }
