@@ -97,6 +97,10 @@ public struct LyalyaMascotView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(LyalyaCustomizationStorage.self) private var customization: LyalyaCustomizationStorage?
 
+    // MARK: - Breathing animation state
+
+    @State private var breathingScale: CGFloat = 1.0
+
     // MARK: - Init
 
     public init(
@@ -128,7 +132,14 @@ public struct LyalyaMascotView: View {
             skinDecorativeOverlay
         }
         .frame(width: size, height: size)
+        .scaleEffect(breathingScale)
         .contentShape(Rectangle())
+        .onAppear {
+            guard !reduceMotion else { return }
+            withAnimation(MotionTokens.idlePulse) {
+                breathingScale = 1.02
+            }
+        }
         .onTapGesture {
             onTap?()
         }
