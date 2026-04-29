@@ -25,9 +25,21 @@ public enum PointingDirection: Sendable {
 
 // MARK: - HSMascotView
 //
-// Двухуровневая архитектура:
-//   1. Primary: Rive state machine через HSRiveView (если lyalya.riv в бандле)
-//   2. Fallback: pure SwiftUI ButterflyShape (всегда работает без ассета)
+// ADR-V11-RIVE-V2: Multi-layer Lyalya overlay architecture (Plan v11 Block B)
+//
+// 6-слойная архитектура (снизу вверх в ZStack):
+//   Layer 1: lyalya.riv через HSRiveView — background motion, state machine (skills.riv MIT base)
+//   Layer 2: .colorMultiply tinting — warm/cool/nature/classic (Plan v9 F2 Customization)
+//   Layer 3: TODO post-Block Q — FLUX-generated 2D Lyalya character illustration overlay
+//            (PNG спрайт per MascotMood, Image("lyalya_\(mood)") из Assets.xcassets)
+//   Layer 4: mouth bubble overlay — Image(systemName: "bubble.left.fill") для visual lip-sync
+//            при .explaining / .singing, связан с UnifiedFacePoseWorker.currentViseme (ADR-V10-FACEPOSE)
+//            TODO post-Block F — real-time viseme → bubble animation
+//   Layer 5: SF Symbol decorative skin overlay — princess/scientist/athlete/artist/classic (Plan v10 D)
+//   Layer 6: breathing motion .scaleEffect 1.0 → 1.02 каждые 3 сек (Plan v10 D)
+//
+// Primary: Rive state machine через HSRiveView (если lyalya.riv в бандле)
+// Fallback: pure SwiftUI ButterflyShape (всегда работает без ассета)
 //
 // Lip-sync: при передаче audioAmplitude применяет low-pass фильтрацию (τ ≈ 50ms)
 // и передаёт нормализованное значение в Rive input "mouthOpen".

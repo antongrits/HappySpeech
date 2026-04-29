@@ -651,3 +651,56 @@ Plan v10 L7 (M13 extension #12) углубляет M5.3 Vision ML stack — об
 реально присутствовали. Это известный bug агента — он не находит ключи при
 алфавитном обходе большого xcstrings (~17000 строк). Workaround: всегда
 верифицировать через `python3 grep` напрямую перед reject.
+
+---
+
+## ADR-V11-RIVE-V2: Custom Lyalya — illustration overlay approach
+
+**Дата:** 2026-04-29
+**Status:** ACCEPTED (Plan v11 Block B)
+
+### Context
+
+ADR-V10-RIVE (2026-04-28) задокументировал defer custom Rive composition к post-v1.0 из-за отсутствия Rive Editor в dev среде. Plan v11 Block B выполнил попытку №2 через три альтернативных пути:
+
+1. **rive-python procedural** — `which rive` → not found; `python3 -c "import rive"` → ModuleNotFoundError. Недоступно.
+2. **CC0 Lottie character как замена .riv** — rive-python CLI и LottieFiles API не дают готового rigged персонажа нужного качества без ручной анимации. Не применимо без редактора.
+3. **2D illustration overlay** — выбранный путь (Step 2C). Архитектурно документируется сейчас; иллюстрации генерируются в отдельном Block Q.
+
+### Decision
+
+`skills.riv` (MIT licensed, 79 KB) остаётся base анимацией.
+`HSMascotView` (SwiftUI wrapper + `ButterflyShape` fallback) углубляется многослойным подходом:
+
+- **Layer 1** — `lyalya.riv` через `HSRiveView` (background motion, state machine discovery)
+- **Layer 2** — color tinting через `.colorMultiply` (warm / cool / nature / classic — ADR-V10-RIVE)
+- **Layer 3** — 2D иллюстрация Ляли (FLUX-generated PNG, выбор по `MascotMood`) — реализуется в Block Q после генерации спрайтов
+- **Layer 4** — mouth bubble overlay (`Image(systemName: "bubble.left.fill")`) для visual lip-sync в `.explaining` / `.singing`
+- **Layer 5** — SF Symbol decorative skin overlay (princess crown / scientist glasses / athlete / artist / classic — ADR-V10-RIVE)
+- **Layer 6** — breathing motion `.scaleEffect` 1.0 → 1.02 каждые 3 сек (ADR-V10-RIVE)
+
+Текущий Block B закрывает только архитектурный ADR + inline-комментарии в `HSMascotView.swift`.
+Block Q реализует Layer 3 после генерации 10 state-иллюстраций через icon-generator.
+
+### Rationale
+
+- `skills.riv` MIT licensed — production App Store legal
+- 2D FLUX иллюстрации → professional quality, не процедурный code art
+- Multi-layer overlay даёт визуально уникальную Лялю без изменения .riv бинаря
+- Real-time lip-sync через mouth bubble связан с `UnifiedFacePoseWorker.currentViseme` (ADR-V10-FACEPOSE)
+- Минимально-инвазивно: SwiftUI `.overlay` не ломает существующий Rive runtime
+- `@Environment(\.accessibilityReduceMotion)` уже реализован — все новые слои следуют той же логике
+
+### Consequences
+
+- ✅ Visual brand "Ляля" а не generic skills shapes
+- ✅ Все 10 `MascotMood` представлены через illustration variants (после Block Q)
+- ✅ Архитектура многослойная — каждый слой независимо заменяем
+- ⚠️ Layer 3 — placeholder до Block Q; в runtime используется `ButterflyShape` (pure SwiftUI)
+- ⚠️ Не настоящий Rive state machine character — но user-visible result эквивалентен
+- 📋 Future M14 (post-v1.0): Rive Designer hire для real .riv composition с антропоморфным персонажем
+
+### Files affected
+
+- `.claude/team/decisions.md` — этот ADR
+- `HappySpeech/DesignSystem/Components/HSMascotView.swift` — inline MARK-комментарии Layer архитектуры
