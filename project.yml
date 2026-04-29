@@ -74,6 +74,9 @@ targets:
           - "*.entitlements"
         type: group
         buildPhase: resources
+      - path: HappySpeech/Content/Seed/seasonal
+        type: folder
+        buildPhase: resources
     plist:
       path: HappySpeech/Resources/Info.plist
       properties:

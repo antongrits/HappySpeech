@@ -50,6 +50,12 @@ struct ChildHomeView: View {
                 VStack(spacing: SpacingTokens.sp5) {
                     heroSection
 
+                    SeasonalBannerView(manager: .shared) {
+                        guard let event = SeasonalEventsManager.shared.activeEvent else { return }
+                        router?.routeToSeasonalLesson(event: event, childId: childId)
+                    }
+                    .animation(.easeInOut(duration: 0.3), value: SeasonalEventsManager.shared.activeEvent?.rawValue)
+
                     mascotInteractionZone
                         .spotlightAnchor(key: "mascot_header")
 
