@@ -21195,6 +21195,116 @@
           }
         }
       }
+    },
+    "insights.best_sound": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ лучше всего справляется со звуком %2$@ — %3$d%% точности!"
+          }
+        }
+      }
+    },
+    "insights.worst_sound": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ нужна помощь со звуком %2$@ — точность %3$d%%"
+          }
+        }
+      }
+    },
+    "insights.declining_trend": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук %1$@ — точность падает на %2$d%%"
+          }
+        }
+      }
+    },
+    "insights.improving_trend": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук %1$@ улучшается!"
+          }
+        }
+      }
+    },
+    "insights.keep_practicing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжайте регулярно играть!"
+          }
+        }
+      }
+    },
+    "insights.streak_excellent": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отличная серия — %d дней подряд"
+          }
+        }
+      }
+    },
+    "dashboard.insights.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Персональные подсказки"
+          }
+        }
+      }
+    },
+    "dashboard.insights.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подсказки появятся после нескольких сессий"
+          }
+        }
+      }
+    },
+    "dashboard.insights.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Анализируем данные..."
+          }
+        }
+      }
+    },
+    "dashboard.insights.error": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось загрузить подсказки"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

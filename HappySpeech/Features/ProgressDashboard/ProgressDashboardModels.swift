@@ -118,6 +118,22 @@ enum ProgressDashboardModels {
         }
     }
 
+    // MARK: - LoadInsights
+
+    enum LoadInsights {
+        struct Request: Sendable {
+            let childName: String
+            let sounds: [SoundProgress]
+            let streakDays: Int
+        }
+        struct Response: Sendable {
+            let insights: [ParentInsight]
+        }
+        struct ViewModel: Sendable {
+            let insightCards: [ParentInsightCardViewModel]
+        }
+    }
+
     // MARK: - Failure
 
     enum Failure {
@@ -256,6 +272,16 @@ struct RecommendationViewModel: Sendable, Identifiable, Equatable, Hashable {
     let id: Int
     let text: String
     let iconName: String
+    let accessibilityLabel: String
+}
+
+// MARK: - Parent Insight Card view-model
+
+struct ParentInsightCardViewModel: Sendable, Identifiable, Equatable, Hashable {
+    let id: String
+    let icon: String
+    let toneRawValue: String  // "positive" | "neutral" | "warning"
+    let text: String
     let accessibilityLabel: String
 }
 

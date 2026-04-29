@@ -91,6 +91,7 @@ struct ProgressDashboardView: View {
                     dailyChartSection
                     weeklyChartSection
                     highlightsSection
+                    insightsSectionView
                     llmSummarySection
                     recommendationsSection
                     soundsGridSection
@@ -176,6 +177,43 @@ struct ProgressDashboardView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .accessibilityElement(children: .contain)
+    }
+
+    // MARK: - Insights
+
+    @ViewBuilder
+    private var insightsSectionView: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.regular) {
+            sectionHeader(
+                title: String(localized: "dashboard.insights.title"),
+                subtitle: nil
+            )
+
+            if display.isInsightsLoading {
+                HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.cardPad) {
+                    Text(String(localized: "dashboard.insights.loading"))
+                        .font(TypographyTokens.body(14))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+            } else if display.insightCards.isEmpty {
+                HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.cardPad) {
+                    Text(String(localized: "dashboard.insights.empty"))
+                        .font(TypographyTokens.body(14))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+            } else {
+                VStack(alignment: .leading, spacing: SpacingTokens.small) {
+                    ForEach(display.insightCards) { card in
+                        ParentInsightCard(card: card)
+                    }
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+            }
+        }
     }
 
     // MARK: - Recommendations
@@ -517,6 +555,25 @@ struct ProgressDashboardView: View {
             period: display.selectedPeriod
         ))
         requestLLMSummary()
+        requestInsights()
+    }
+
+    private func requestInsights() {
+        let sounds = display.soundCells.map { cell in
+            SoundProgress(
+                sound: cell.sound,
+                accuracy: Float(cell.accuracyValue / 100.0),
+                sessions: 0,
+                trend: cell.trend
+            )
+        }
+        let streak = display.summaryCards.first(where: { $0.kind == .streak })
+            .flatMap { Int($0.value) } ?? 0
+        interactor?.loadInsights(.init(
+            childName: container.themeManager.selectedTheme.displayName,
+            sounds: sounds,
+            streakDays: streak
+        ))
     }
 
     private func requestLLMSummary() {
@@ -562,9 +619,10 @@ struct ProgressDashboardView: View {
         self.router = router
 
         interactor.loadDashboard(.init(childId: childId, forceReload: true, period: .week))
-        // Запрашиваем LLM-сводку немного позже, чтобы основной UI успел отрисоваться.
+        // Запрашиваем LLM-сводку и insights немного позже, чтобы основной UI успел отрисоваться.
         try? await Task.sleep(for: .milliseconds(150))
         requestLLMSummary()
+        requestInsights()
     }
 }
 
@@ -946,6 +1004,42 @@ private struct RecommendationRowView: View {
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel(item.accessibilityLabel)
+    }
+}
+
+// MARK: - ParentInsightCard
+
+private struct ParentInsightCard: View {
+
+    let card: ParentInsightCardViewModel
+
+    var body: some View {
+        HSLiquidGlassCard(style: .tinted(toneColor), padding: SpacingTokens.cardPad) {
+            HStack(alignment: .top, spacing: SpacingTokens.sp4) {
+                Image(systemName: card.icon)
+                    .font(.title2)
+                    .foregroundStyle(toneColor)
+                    .accessibilityHidden(true)
+
+                Text(card.text)
+                    .font(TypographyTokens.body(15))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                    .lineSpacing(TypographyTokens.LineSpacing.normal)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(card.accessibilityLabel)
+    }
+
+    private var toneColor: Color {
+        switch card.toneRawValue {
+        case "positive": return ColorTokens.Semantic.success
+        case "warning":  return ColorTokens.Semantic.warning
+        default:         return ColorTokens.Brand.primary
+        }
     }
 }
 
