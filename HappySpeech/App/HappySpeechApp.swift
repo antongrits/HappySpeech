@@ -1,3 +1,4 @@
+import FirebaseAppCheck
 import FirebaseCore
 import GoogleSignIn
 import OSLog
@@ -40,8 +41,18 @@ struct HappySpeechApp: App {
                let plist = NSDictionary(contentsOf: plistURL),
                let apiKey = plist["API_KEY"] as? String,
                !apiKey.hasPrefix("REPLACE_") {
+
+                // D.4 — App Check: DeviceCheck в production, Debug provider в Debug/Simulator builds.
+                // Конфигурация App Check ДОЛЖНА быть установлена до FirebaseApp.configure().
+#if DEBUG
+                let appCheckFactory = AppCheckDebugProviderFactory()
+#else
+                let appCheckFactory = DeviceCheckProviderFactory()
+#endif
+                AppCheck.setAppCheckProviderFactory(appCheckFactory)
+
                 FirebaseApp.configure()
-                HSLogger.app.info("FirebaseApp.configure() вызван")
+                HSLogger.app.info("FirebaseApp.configure() вызван с App Check (\(String(describing: type(of: appCheckFactory)), privacy: .public))")
             } else {
                 HSLogger.app.warning("GoogleService-Info.plist содержит placeholder — Firebase пропущен (Debug/CI режим)")
             }

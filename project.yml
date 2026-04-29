@@ -137,6 +137,12 @@ targets:
         product: FirebaseStorage
       - package: FirebaseSDK
         product: FirebaseAppCheck
+      - package: FirebaseSDK
+        product: FirebaseRemoteConfig
+      - package: FirebaseSDK
+        product: FirebaseMessaging
+      - package: FirebaseSDK
+        product: FirebasePerformance
       - package: WhisperKit
         product: WhisperKit
       - package: Lottie

@@ -21305,6 +21305,105 @@
           }
         }
       }
+    },
+    "settings.notifications.section_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Уведомления"
+          }
+        }
+      }
+    },
+    "settings.notifications.weekly_summary_toggle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Еженедельные сводки прогресса"
+          }
+        }
+      }
+    },
+    "settings.notifications.weekly_summary_description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Получайте push-уведомления с итогами недели каждое воскресенье. Только для родителей."
+          }
+        }
+      }
+    },
+    "settings.performance.section_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Улучшение приложения"
+          }
+        }
+      }
+    },
+    "settings.performance.metrics_toggle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Анонимные метрики производительности"
+          }
+        }
+      }
+    },
+    "settings.performance.metrics_description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помогите улучшить приложение, разрешив сбор анонимных данных о скорости загрузки экранов. Только для взрослых экранов. Данные не содержат персональной информации."
+          }
+        }
+      }
+    },
+    "content_pack.error.not_found": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Контент-пак не найден"
+          }
+        }
+      }
+    },
+    "content_pack.error.disk_write": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ошибка сохранения контент-пака"
+          }
+        }
+      }
+    },
+    "content_pack.error.already_downloading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загрузка контент-пака уже выполняется"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
