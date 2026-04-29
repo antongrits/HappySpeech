@@ -146,6 +146,7 @@
 		038015A5D9F2FD04E8F3C040 /* phon-mp-5.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 6ABE00D75273AB22A584A057 /* phon-mp-5.m4a */; };
 		038AFBAEB069D8E3C3E388C2 /* narr-dl-14.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7A6F71E0F857429F0C5591C0 /* narr-dl-14.m4a */; };
 		0397A6558D2D531FFCDB1AC8 /* UnifiedFacePoseWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2068267F81DB9BC83F142D04 /* UnifiedFacePoseWorkerTests.swift */; };
+		80AB60DAEF737D4D63ACC567 /* MascotLipSyncStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131E5F281DE751E622ABB208 /* MascotLipSyncStateTests.swift */; };
 		039D46EB22E1A32D50F5AA57 /* lyalya_story_17.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 09FF5A65F2931B27D3018F72 /* lyalya_story_17.m4a */; };
 		039DE536082AF76172B3C22C /* r-wi-43.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E31DF892B32B051B341F20EA /* r-wi-43.m4a */; };
 		03A88040060670FE34860F77 /* ch-wi-37.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D15DFF8457845A7DF216A1BE /* ch-wi-37.m4a */; };
@@ -2512,6 +2513,9 @@
 		43CBCFF8651A63F6981F4C86 /* ag-092.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 149126E5B288FD3511C0E1A8 /* ag-092.m4a */; };
 		43D4E4F0668663A5E3DE7F88 /* l-iso-5.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7561328FE59AD5C320740AF3 /* l-iso-5.m4a */; };
 		43E40B280B7C233E6E5AFA52 /* UnifiedFacePoseWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAC021D014F210E98C0AA40 /* UnifiedFacePoseWorker.swift */; };
+		54B9316D58B043A181355CBA /* MascotLipSyncState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF2EBFC7E4B8C952D05FCBE /* MascotLipSyncState.swift */; };
+		C53EC4795FFA1FA2031B6B34 /* MouthBubbleOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3183D8A0D0D13C6A437CA4 /* MouthBubbleOverlay.swift */; };
+		790A81815241DBDDBE5FB5C3 /* EnvironmentValues+MascotLipSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1D7BA98C97DA9F7B126A3EB /* EnvironmentValues+MascotLipSync.swift */; };
 		43E8F762F3CA082B4F09027A /* l-wm-33.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 78A27A53B925BEF853F55767 /* l-wm-33.m4a */; };
 		43F08567A94546452C1AE864 /* lex-ad-7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C447A656F01F68F032257FDF /* lex-ad-7.m4a */; };
 		43F470BDEC3A3613FE2B0D9F /* lyalya_insight_generic_1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B8EE0A586C980BDEE9950E06 /* lyalya_insight_generic_1.m4a */; };
@@ -10492,6 +10496,7 @@
 		206623FDDB828047CCDC0C43 /* lex-aw-11.m4a */ = {isa = PBXFileReference; path = "lex-aw-11.m4a"; sourceTree = "<group>"; };
 		20679013137BB105CDA1512F /* dwh-wm-1.m4a */ = {isa = PBXFileReference; path = "dwh-wm-1.m4a"; sourceTree = "<group>"; };
 		2068267F81DB9BC83F142D04 /* UnifiedFacePoseWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedFacePoseWorkerTests.swift; sourceTree = "<group>"; };
+		131E5F281DE751E622ABB208 /* MascotLipSyncStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MascotLipSyncStateTests.swift; sourceTree = "<group>"; };
 		206B097C312B66C881CE7B9D /* y-wi-25.m4a */ = {isa = PBXFileReference; path = "y-wi-25.m4a"; sourceTree = "<group>"; };
 		206BA8855D090F2FDA7DB2DC /* l-syl-19.m4a */ = {isa = PBXFileReference; path = "l-syl-19.m4a"; sourceTree = "<group>"; };
 		206EA125D69649E392AF78AE /* SeasonalEventsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonalEventsManager.swift; sourceTree = "<group>"; };
@@ -11552,6 +11557,9 @@
 		3E9BDBC7B1B842EF2E25FFC0 /* ot_prilagatelnogo_sneg_snezhnyy.m4a */ = {isa = PBXFileReference; path = ot_prilagatelnogo_sneg_snezhnyy.m4a; sourceTree = "<group>"; };
 		3EA7A4B1602571C01DA3D7C3 /* z-sen-0.m4a */ = {isa = PBXFileReference; path = "z-sen-0.m4a"; sourceTree = "<group>"; };
 		3EAC021D014F210E98C0AA40 /* UnifiedFacePoseWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedFacePoseWorker.swift; sourceTree = "<group>"; };
+		4CF2EBFC7E4B8C952D05FCBE /* MascotLipSyncState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MascotLipSyncState.swift; sourceTree = "<group>"; };
+		DD3183D8A0D0D13C6A437CA4 /* MouthBubbleOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouthBubbleOverlay.swift; sourceTree = "<group>"; };
+		D1D7BA98C97DA9F7B126A3EB /* EnvironmentValues+MascotLipSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+MascotLipSync.swift"; sourceTree = "<group>"; };
 		3EAF9070DF2936F97DECA42F /* lex-si-1.m4a */ = {isa = PBXFileReference; path = "lex-si-1.m4a"; sourceTree = "<group>"; };
 		3EAFF99B859EA104790C97FA /* lyalya_stuttering_11.m4a */ = {isa = PBXFileReference; path = lyalya_stuttering_11.m4a; sourceTree = "<group>"; };
 		3EB4A3319DC83F564CB2311A /* dwh-df-37.m4a */ = {isa = PBXFileReference; path = "dwh-df-37.m4a"; sourceTree = "<group>"; };
@@ -18800,6 +18808,7 @@
 			isa = PBXGroup;
 			children = (
 				122A110B152D14EC900E7382 /* Color+Extensions.swift */,
+				D1D7BA98C97DA9F7B126A3EB /* EnvironmentValues+MascotLipSync.swift */,
 				821836C887225B399A00BF33 /* String+Extensions.swift */,
 				2A9A5ED6ECF78776CB3C2E09 /* UIApplication+TopVC.swift */,
 				C55F29B96D4493DC8E307F9B /* View+Extensions.swift */,
@@ -21842,8 +21851,17 @@
 				3E45C530543D70F981D6A583 /* ARMirrorPresenter.swift */,
 				728F71E672980B682E909514 /* ARMirrorRouter.swift */,
 				96B0233D5BD07F9CB74939A6 /* ARMirrorView.swift */,
+				8CA82AD385083A722775E28F /* Shared */,
 			);
 			path = ARMirror;
+			sourceTree = "<group>";
+		};
+		8CA82AD385083A722775E28F /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				4CF2EBFC7E4B8C952D05FCBE /* MascotLipSyncState.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		46A6CB068A4E8BD0BEEFD2D6 /* GameTemplates */ = {
@@ -23444,6 +23462,7 @@
 			isa = PBXGroup;
 			children = (
 				DF5F5AFDC4E5ABA8BFCD7DC0 /* Vision */,
+				131E5F281DE751E622ABB208 /* MascotLipSyncStateTests.swift */,
 			);
 			path = ML;
 			sourceTree = "<group>";
@@ -25350,6 +25369,7 @@
 				EF4AD77FF12CA94F5A0A0BB9 /* HSSpeechBubble.swift */,
 				FA4A71D407C04D88D150E837 /* HSSticker.swift */,
 				3E6F01EB480BB165DBCD668A /* LyalyaMascotView.swift */,
+				DD3183D8A0D0D13C6A437CA4 /* MouthBubbleOverlay.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -39494,6 +39514,7 @@
 				020F3A1951CAE3A411BB7582 /* TonguePostureClassifierMLTests.swift in Sources */,
 				1B78649F9D9FB9B503146410 /* TouchTargetsTests.swift in Sources */,
 				0397A6558D2D531FFCDB1AC8 /* UnifiedFacePoseWorkerTests.swift in Sources */,
+				80AB60DAEF737D4D63ACC567 /* MascotLipSyncStateTests.swift in Sources */,
 				D87E689589C1111B41B7C0A9 /* VisualAcousticInteractorTests.swift in Sources */,
 				92D589D630F1BE16150BB582 /* VoiceOverLabelsTests.swift in Sources */,
 				0F0EF501CE8B59A737BC9DF9 /* WorldMapInteractorTests.swift in Sources */,
@@ -39983,6 +40004,9 @@
 				82025982200D6BCD4BEC2A84 /* TypographyTokens.swift in Sources */,
 				2C44825261CD242B317E88DF /* UIApplication+TopVC.swift in Sources */,
 				43E40B280B7C233E6E5AFA52 /* UnifiedFacePoseWorker.swift in Sources */,
+				54B9316D58B043A181355CBA /* MascotLipSyncState.swift in Sources */,
+				C53EC4795FFA1FA2031B6B34 /* MouthBubbleOverlay.swift in Sources */,
+				790A81815241DBDDBE5FB5C3 /* EnvironmentValues+MascotLipSync.swift in Sources */,
 				FF80889BAA5E0724DED97F8F /* VADService.swift in Sources */,
 				DE82F98B5D551636967DD90E /* VideoPlayerService.swift in Sources */,
 				1111772D4625203CA1E4F6DD /* View+Extensions.swift in Sources */,

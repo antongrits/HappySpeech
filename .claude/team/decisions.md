@@ -833,5 +833,45 @@ Block Q реализует Layer 3 после генерации 10 state-илл
 - `HappySpeech/DesignSystem/Components/HSLottieContainer.swift` — refactored на real LottieView API
 - `HappySpeech/DesignSystem/Components/HSMarkdownView.swift` — NEW
 - `HappySpeech/DesignSystem/Components/HSConfettiView.swift` — NEW
+
+---
+
+### [2026-04-29] [ml-trainer] ADR-V11-LIPSYNC — Real-time mascot lip-sync (Plan v11 Block F)
+
+**Статус:** Accepted
+
+**Контекст:** Plan v11 Block F — реалтайм lip-sync маскота Ляли к ребёнку через ARFaceAnchor blendshapes.
+
+**Решение:**
+- `MascotLipSyncState` — `@MainActor @Observable` singleton через `AppContainer.mascotLipSyncState`
+- `ARMirrorView.startFrameStream` → blendshapeStream → `UnifiedFacePoseWorker.currentViseme` → `MascotLipSyncState`
+- `LipSyncViseme` — отдельный тип в Features-слое (изолирует DesignSystem от зависимости на ML-типы Viseme)
+- `MouthBubbleOverlay` — pure SwiftUI оверлей, 5 форм по виземам, `.spring(response:0.15)` анимация
+- `LyalyaMascotView` Layer 6: оверлей показывается только при `isTracking == true`
+- Battery: `isTracking = false` при `onDisappear` + `UIApplication.didEnterBackgroundNotification`
+- Устройства без TrueDepth (iPhone ниже XS): `ARFaceTrackingConfiguration.isSupported == false` → `isTracking` никогда не становится true → оверлей полностью скрыт
+- Reduced Motion: анимация внутри `MouthBubbleOverlay` отключается через `@Environment(\.accessibilityReduceMotion)`
+
+**Альтернативы:**
+- Avatar / RealityKit USDZ blendshapes — отложено post-v1.0 (требует rigged USDZ Ляля с blendshapes)
+- Прямое использование `Viseme` из ML в DesignSystem — отклонено (нарушает зависимость слоёв)
+
+**Последствия:**
+- Требует iPhone XS+ (TrueDepth camera)
+- Остальные устройства: overlay скрыт, деградация graceful
+- ARSession работает только в ARMirrorView — lip-sync активен только там
+- Throttling до 30 fps не реализован (ARKit сам управляет частотой через AsyncStream)
+
+**Files created:**
+- `HappySpeech/Features/AR/ARMirror/Shared/MascotLipSyncState.swift` — NEW
+- `HappySpeech/DesignSystem/Components/MouthBubbleOverlay.swift` — NEW
+- `HappySpeech/Core/Extensions/EnvironmentValues+MascotLipSync.swift` — NEW
+- `HappySpeechTests/ML/MascotLipSyncStateTests.swift` — NEW (5 tests)
+
+**Files updated:**
+- `HappySpeech/Features/AR/ARMirror/ARMirrorView.swift` — добавлен lip-sync в startFrameStream + battery
+- `HappySpeech/DesignSystem/Components/LyalyaMascotView.swift` — Layer 6 overlay
+- `HappySpeech/App/DI/AppContainer.swift` — `mascotLipSyncState` property
+- `HappySpeech/App/HappySpeechApp.swift` — `.environment(\.mascotLipSyncState, ...)`
 - `HappySpeech/Features/Extensions/Achievements/AchievementsView.swift` — +HSConfettiView medal preset
 - `project.yml` — +Down package + dependency
