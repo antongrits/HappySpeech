@@ -73,6 +73,9 @@ public final class AppContainer {
     // Block K: SpotlightIndexer — CoreSpotlight indexing, COPPA-safe (нет имени ребёнка).
     private var _spotlightIndexer: (any SpotlightIndexerProtocol)?
 
+    // Block N: DailyMissionSyncService — синхронизация виджета через App Group.
+    private var _dailyMissionSyncService: (any DailyMissionSyncServiceProtocol)?
+
     // MascotLipSyncState — singleton для real-time lip-sync оверлея маскота (Block F)
     public let mascotLipSyncState: MascotLipSyncState = MascotLipSyncState()
 
@@ -369,6 +372,14 @@ public final class AppContainer {
         return new
     }
 
+    // Block N: DailyMissionSyncService — Widget App Group sync, COPPA-safe.
+    public var dailyMissionSyncService: any DailyMissionSyncServiceProtocol {
+        if let existing = _dailyMissionSyncService { return existing }
+        let new = LiveDailyMissionSyncService()
+        _dailyMissionSyncService = new
+        return new
+    }
+
     /// Библиотека анимированных историй. Singleton — создаётся один раз для всего приложения.
     public var storyLibrary: StoryLibrary { StoryLibrary.shared }
 
@@ -516,6 +527,8 @@ public extension AppContainer {
         container._healthKitService = MockHealthKitService()
         // Block K: Spotlight mock для preview/tests.
         container._spotlightIndexer = MockSpotlightIndexer()
+        // Block N: DailyMissionSync mock для preview/tests.
+        container._dailyMissionSyncService = MockDailyMissionSyncService()
         return container
     }
 }

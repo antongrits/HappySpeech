@@ -505,3 +505,36 @@ Plan v11 #13 — реализовать Live Activity для сессии уро
 - `HappySpeechWidgetExtension/HappySpeechWidgetBundle.swift`
 - `HappySpeechWidgetExtension/LessonSessionLiveActivity.swift`
 - `HappySpeechTests/Features/LiveActivities/LessonSessionAttributesTests.swift`
+
+---
+
+## ADR-V11-WIDGET — Real Widget Extension (Small/Medium/Large)
+
+**Дата:** 2026-04-29
+**Статус:** Accepted
+**Контекст:** Plan v11 Block N — real Widget Extension вместо HomeScreenCard-imitation (Plan v10 L9).
+
+**Решение:**
+- `DailyMissionWidget`: поддержка Small / Medium / Large families
+- `DailyMissionProvider`: TimelineProvider с refresh-политикой `.after(1 hour)`
+- App Group `group.com.happyspeech.shared` — shared UserDefaults для передачи данных из main app в виджет
+- `LiveDailyMissionSyncService` (actor) вызывается из `ChildHomeInteractor` после успешного fetch
+- `WidgetCenter.shared.reloadTimelines(ofKind: "DailyMissionWidget")` — принудительный перерисунок
+- Tap deep link: `happyspeech://daily-mission` → `DeepLinkRouter.shared.handleShowTodaysMission()`
+- `HappySpeechWidgetBundle` обновлён: включает `DailyMissionWidget` + `LessonSessionLiveActivity`
+
+**COPPA compliance:**
+- В App Group UserDefaults НЕТ имени ребёнка, персональных данных или ID
+- Только: title (название звука), description (кол-во раундов), streak (число), lyalyaState (строка), progress (Double)
+
+**Альтернативы отклонены:**
+- HomeScreenCard mimics (Plan v10 L9) — оставлен как in-app preview, не является системным виджетом
+- Configurable intent widget — избыточен для MVP, добавить в backlog v1.1
+
+**Файлы:**
+- `HappySpeechWidgetExtension/DailyMissionWidget/DailyMissionProvider.swift`
+- `HappySpeechWidgetExtension/DailyMissionWidget/DailyMissionWidgetView.swift`
+- `HappySpeechWidgetExtension/DailyMissionWidget/DailyMissionWidget.swift`
+- `HappySpeechWidgetExtension/HappySpeechWidgetBundle.swift` (обновлён)
+- `HappySpeech/Features/Extensions/Widget/DailyMissionSyncService.swift`
+- `HappySpeechTests/Features/Extensions/Widget/DailyMissionSyncServiceTests.swift`
