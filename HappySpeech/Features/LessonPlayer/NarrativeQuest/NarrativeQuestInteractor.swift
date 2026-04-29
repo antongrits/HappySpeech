@@ -22,6 +22,10 @@ protocol NarrativeQuestBusinessLogic: AnyObject {
 // Все операции — @MainActor; отложенные переходы между фазами делаются
 // через отменяемые `Task` — чтобы при dismiss экрана не было «призрачных»
 // переходов.
+//
+// Block H: KidLLMNarrationService добавлен для динамической генерации
+// нарратива этапов. LLM нарратив загружается в фоне с timeout 2 сек,
+// при недоступности/unsafe — использует PrecannedNarrations.
 
 @MainActor
 final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
@@ -29,6 +33,10 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
     // MARK: - Collaborators
 
     var presenter: (any NarrativeQuestPresentationLogic)?
+
+    // MARK: - Dependencies (Block H)
+
+    private var narrationService: (any KidLLMNarrationServiceProtocol)?
 
     // MARK: - State
 
@@ -38,9 +46,13 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
     private var collectedEmojis: [String] = []
     private var isListening: Bool = false
 
+    // Кэш LLM нарративов для текущей сессии квеста (стек → нарратив).
+    private var llmNarrationCache: [Int: String] = [:]
+
     // Отложенные задачи между фазами (auto-advance, feedback delay).
     private var pendingTask: Task<Void, Never>?
     private var speakTask: Task<Void, Never>?
+    private var narrationPrefetchTask: Task<Void, Never>?
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "NarrativeQuest")
 
@@ -51,13 +63,24 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
 
     // MARK: - Init
 
-    init(presenter: (any NarrativeQuestPresentationLogic)? = nil) {
+    init(
+        presenter: (any NarrativeQuestPresentationLogic)? = nil,
+        narrationService: (any KidLLMNarrationServiceProtocol)? = nil
+    ) {
         self.presenter = presenter
+        self.narrationService = narrationService
     }
 
     deinit {
         pendingTask?.cancel()
         speakTask?.cancel()
+        narrationPrefetchTask?.cancel()
+    }
+
+    // MARK: - Block H: подключение narrationService из View (после init)
+
+    func connect(narrationService: any KidLLMNarrationServiceProtocol) {
+        self.narrationService = narrationService
     }
 
     // MARK: - LoadQuest
@@ -72,12 +95,16 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
         self.currentStageIndex = 0
         self.stageScores = []
         self.collectedEmojis = []
+        self.llmNarrationCache = [:]
 
         logger.info("NarrativeQuest loaded id=\(script.id, privacy: .public) stages=\(script.stages.count)")
         presenter?.presentLoadQuest(.init(script: script))
 
         // Озвучиваем вступление квеста.
         speak(script.introNarration)
+
+        // Prefetch LLM нарратив для первого этапа в фоне.
+        prefetchNarration(for: 0, script: script)
     }
 
     // MARK: - StartStage
@@ -103,9 +130,40 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
         )
         presenter?.presentStartStage(response)
 
-        // Озвучиваем этап: сначала narration, затем task.
-        let combined = stage.narration + " " + stage.task
+        // Если есть LLM нарратив для этого этапа — используем его, иначе статичный.
+        let dynamicNarration = llmNarrationCache[index]
+        let narrationText = dynamicNarration ?? stage.narration
+        let combined = narrationText + " " + stage.task
         speak(combined)
+
+        // Prefetch следующий этап в фоне.
+        prefetchNarration(for: index + 1, script: script)
+    }
+
+    // MARK: - Prefetch LLM narration (Block H)
+
+    private func prefetchNarration(for index: Int, script: NarrativeQuestScript) {
+        guard let narrationService,
+              script.stages.indices.contains(index),
+              llmNarrationCache[index] == nil else { return }
+
+        narrationPrefetchTask?.cancel()
+        narrationPrefetchTask = Task { @MainActor [weak self] in
+            guard let self else { return }
+            let stage = script.stages[index]
+            let context = NarrationContext(
+                questId: script.id,
+                currentStep: index + 1,
+                totalSteps: script.stages.count,
+                mood: index == script.stages.count - 1 ? .excited : .encouraging,
+                targetSound: stage.targetSoundGroup,
+                collectedItems: self.collectedEmojis
+            )
+            let narration = await narrationService.generatePlayfulNarration(context: context)
+            guard !Task.isCancelled else { return }
+            self.llmNarrationCache[index] = narration
+            self.logger.info("NarrativeQuest prefetched LLM narration step=\(index + 1)")
+        }
     }
 
     // MARK: - RecordWord

@@ -642,6 +642,8 @@ struct RepeatAfterModelView: View {
     private func startSessionOnce() {
         guard !sessionStarted else { return }
         sessionStarted = true
+        // Block H: подключаем narrationService из AppContainer.
+        interactor.connect(narrationService: container.kidLLMNarrationService)
         let soundGroup = Self.soundGroup(for: activity.soundTarget)
         interactor.loadSession(.init(soundGroup: soundGroup, childName: ""))
         interactor.startWord(.init(wordIndex: 0))
