@@ -164,6 +164,8 @@ targets:
         product: RiveRuntime
       - package: Down
         product: Down
+      - target: HappySpeechWidgetExtension
+        embed: true
     scheme:
       testTargets:
         - HappySpeechTests
@@ -198,6 +200,36 @@ targets:
         product: RealmSwift
     scheme:
       gatherCoverageData: true
+
+  HappySpeechWidgetExtension:
+    type: app-extension
+    platform: iOS
+    deploymentTarget:
+      iOS: "16.1"
+    sources:
+      - path: HappySpeechWidgetExtension
+        excludes:
+          - Info.plist
+        type: group
+      - path: HappySpeech/Features/Extensions/LiveActivities/LessonSessionAttributes.swift
+        type: file
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ru.happyspeech.app.WidgetExtension
+        INFOPLIST_FILE: HappySpeechWidgetExtension/Info.plist
+        PRODUCT_NAME: HappySpeechWidgetExtension
+        ENABLE_USER_SCRIPT_SANDBOXING: NO
+        LD_RUNPATH_SEARCH_PATHS:
+          - "$(inherited)"
+          - "@executable_path/Frameworks"
+          - "@executable_path/../../Frameworks"
+        SWIFT_VERSION: "6.0"
+        ENABLE_STRICT_CONCURRENCY: complete
+        SWIFT_STRICT_CONCURRENCY: complete
+    dependencies:
+      - sdk: WidgetKit.framework
+      - sdk: SwiftUI.framework
+      - sdk: ActivityKit.framework
 
   HappySpeechUITests:
     type: bundle.ui-testing
