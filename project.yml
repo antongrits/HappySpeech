@@ -90,10 +90,14 @@ targets:
         CFBundleShortVersionString: "1.0.0"
         UILaunchScreen:
           UIColorName: LaunchBackground
+        LSApplicationCategoryType: "public.app-category.education"
         NSMicrophoneUsageDescription: "HappySpeech использует микрофон для распознавания произношения и логопедических упражнений"
         NSCameraUsageDescription: "HappySpeech использует камеру для AR-упражнений артикуляции и мимической гимнастики"
         NSFaceIDUsageDescription: "HappySpeech может использовать Face ID для быстрого входа родителей"
         NSSpeechRecognitionUsageDescription: "HappySpeech использует распознавание речи для оценки произношения"
+        NSHealthShareUsageDescription: "HappySpeech показывает родителям сводку активности ребёнка в приложении Здоровье"
+        NSHealthUpdateUsageDescription: "HappySpeech записывает данные об активности речевых упражнений в приложение Здоровье"
+        NSUserNotificationsUsageDescription: "HappySpeech отправляет напоминания о ежедневных упражнениях и сводки для родителей"
         NSLocalNetworkUsageDescription: "Чтобы найти друга для совместной игры по локальной сети"
         NSBluetoothAlwaysUsageDescription: "HappySpeech использует Bluetooth для поиска партнёра по игре вблизи"
         NSBonjourServices:
@@ -108,7 +112,6 @@ targets:
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false
         ITSAppUsesNonExemptEncryption: false
-        NSUserTrackingUsageDescription: ""
         CFBundleLocalizations:
           - ru
         CFBundleDevelopmentRegion: ru

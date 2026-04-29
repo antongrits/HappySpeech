@@ -6,6 +6,8 @@
 	<string>ru</string>
 	<key>CFBundleDisplayName</key>
 	<string>HappySpeech</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.education</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -41,6 +43,12 @@
 	</array>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Чтобы найти друга для совместной игры по локальной сети</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>HappySpeech показывает родителям сводку активности ребёнка в приложении Здоровье</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>HappySpeech записывает данные об активности речевых упражнений в приложение Здоровье</string>
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>HappySpeech отправляет напоминания о ежедневных упражнениях и сводки для родителей</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>HappySpeech использует распознавание речи для оценки произношения</string>
 	<key>UIApplicationSceneManifest</key>
