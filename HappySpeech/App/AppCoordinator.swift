@@ -34,6 +34,7 @@ enum AppRoute: Hashable {
     case familyVoiceSplit
     case stutteringHome
     case fluencyDiaryParent
+    case siblingMultiplayer(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -337,6 +338,10 @@ struct AppCoordinatorView: View {
                 FluencyDiaryParentView()
             }
             .environment(\.circuitContext, .parent)
+
+        case .siblingMultiplayer(let childId):
+            SiblingMultiplayerView(childId: childId)
+                .environment(\.circuitContext, .kid)
         }
     }
 
@@ -378,9 +383,10 @@ struct AppCoordinatorView: View {
             case "arZone":           target = .arZone
             case "lessonPlayer":     target = .lessonPlayer(templateType: "bingo", childId: "preview-child-1")
             case "familyVoice":      target = .familyVoice
-            case "stuttering":       target = .stutteringHome
-            case "fluencyDiary":     target = .fluencyDiaryParent
-            default:                 target = .auth
+            case "stuttering":          target = .stutteringHome
+            case "fluencyDiary":        target = .fluencyDiaryParent
+            case "siblingMultiplayer":  target = .siblingMultiplayer(childId: "preview-child-1")
+            default:                    target = .auth
             }
             coordinator.navigate(to: target)
             return
