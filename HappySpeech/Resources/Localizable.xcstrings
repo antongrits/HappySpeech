@@ -21404,6 +21404,215 @@
           }
         }
       }
+    },
+    "ar.poseSequence.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Цепочка поз"
+          }
+        }
+      }
+    },
+    "ar.poseSequence.complete": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отлично! Все позы пройдены!"
+          }
+        }
+      }
+    },
+    "ar.stars": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "звёзды"
+          }
+        }
+      }
+    },
+    "ar.poseSequence.currentPose %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Текущая поза: %@"
+          }
+        }
+      }
+    },
+    "ar.poseSequence.score %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Совпадение: %lld процентов"
+          }
+        }
+      }
+    },
+    "ar.poseSequence.progress %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прогресс: %lld процентов"
+          }
+        }
+      }
+    },
+    "ar.poseSequence.chip.done %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выполнено: %@"
+          }
+        }
+      }
+    },
+    "ar.poseSequence.chip.current %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Текущая: %@"
+          }
+        }
+      }
+    },
+    "ar.poseSequence.chip.upcoming %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Предстоит: %@"
+          }
+        }
+      }
+    },
+    "pose.armsUp.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Руки вверх"
+          }
+        }
+      }
+    },
+    "pose.armsUp.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подними руки высоко над головой"
+          }
+        }
+      }
+    },
+    "pose.handsOnHips.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Руки на пояс"
+          }
+        }
+      }
+    },
+    "pose.handsOnHips.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поставь руки на пояс"
+          }
+        }
+      }
+    },
+    "pose.cobra.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кобра"
+          }
+        }
+      }
+    },
+    "pose.cobra.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вытяни руки вдоль тела, подними голову"
+          }
+        }
+      }
+    },
+    "pose.warrior.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Воин"
+          }
+        }
+      }
+    },
+    "pose.warrior.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разведи руки в стороны как самолёт"
+          }
+        }
+      }
+    },
+    "pose.tree.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дерево"
+          }
+        }
+      }
+    },
+    "pose.tree.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сложи руки перед грудью"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
