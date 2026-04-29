@@ -126,13 +126,20 @@ struct HappySpeechApp: App {
             HSLogger.app.info("ColdStart end uptime=\(ProcessInfo.processInfo.systemUptime, format: .fixed(precision: 3)) — Realm открыт")
 
             // K.4 — Запуск Spotlight-индексации после успешного открытия Realm.
-            let coordinator = SpotlightIndexCoordinator(
+            let spotlightCoord = SpotlightIndexCoordinator(
                 indexer: container.spotlightIndexer,
                 contentService: container.contentService,
                 sessionRepository: container.sessionRepository
             )
-            spotlightCoordinator = coordinator
-            coordinator.start()
+            spotlightCoordinator = spotlightCoord
+            spotlightCoord.start()
+
+            // L.4 — Регистрируем AppCoordinator в DeepLinkRouter для Siri App Intents.
+            // Выполняется после Realm.open() — coordinator уже инициализирован и готов.
+            if #available(iOS 17.0, *) {
+                DeepLinkRouter.shared.register(coordinator: coordinator)
+                HSLogger.app.info("DeepLinkRouter: AppCoordinator зарегистрирован для Siri Shortcuts")
+            }
         } catch {
             HSLogger.app.critical("ColdStart error — Realm open failed: \(error)")
         }
