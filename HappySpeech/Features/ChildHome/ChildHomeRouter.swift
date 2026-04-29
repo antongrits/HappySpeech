@@ -13,6 +13,7 @@ protocol ChildHomeRoutingLogic {
     func routeToHomeTasks()
     func routeToSiblingMultiplayer(childId: String)
     func routeToSeasonalLesson(event: SeasonalEvent, childId: String)
+    func routeToAchievements(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -70,5 +71,9 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
 
     func routeToSeasonalLesson(event: SeasonalEvent, childId: String) {
         coordinator?.navigate(to: .lessonPlayer(templateType: "repeat-after-model", childId: childId))
+    }
+
+    func routeToAchievements(childId: String) {
+        coordinator?.navigate(to: .achievements(childId: childId))
     }
 }

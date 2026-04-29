@@ -20083,6 +20083,831 @@
           }
         }
       }
+    },
+    "achievements.tab.list": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Достижения"
+          }
+        }
+      }
+    },
+    "achievements.tab.leaderboard": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прогресс"
+          }
+        }
+      }
+    },
+    "achievements.section.legendary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Легендарные"
+          }
+        }
+      }
+    },
+    "achievements.section.rare": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Редкие"
+          }
+        }
+      }
+    },
+    "achievements.section.common": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обычные"
+          }
+        }
+      }
+    },
+    "achievements.locked.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "???"
+          }
+        }
+      }
+    },
+    "achievements.unlocked.format": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Получено %@"
+          }
+        }
+      }
+    },
+    "achievements.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока нет достижений. Играй, чтобы получить первое!"
+          }
+        }
+      }
+    },
+    "achievements.toast.format": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🏆 %@!"
+          }
+        }
+      }
+    },
+    "achievements.progress.format": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d из %d"
+          }
+        }
+      }
+    },
+    "achievements.family.leaderboard.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Семейный рейтинг"
+          }
+        }
+      }
+    },
+    "achievement.title.firstSoundMastered": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Первый звук!"
+          }
+        }
+      }
+    },
+    "achievement.title.fiveSoundsMastered": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пять звуков!"
+          }
+        }
+      }
+    },
+    "achievement.title.allSoundsMastered": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мастер речи"
+          }
+        }
+      }
+    },
+    "achievement.title.streak3Days": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Три дня!"
+          }
+        }
+      }
+    },
+    "achievement.title.streak7Days": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неделя!"
+          }
+        }
+      }
+    },
+    "achievement.title.streak14Days": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Две недели!"
+          }
+        }
+      }
+    },
+    "achievement.title.streak30Days": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Месяц!"
+          }
+        }
+      }
+    },
+    "achievement.title.streak100Days": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сто дней!"
+          }
+        }
+      }
+    },
+    "achievement.title.played10Rounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Десять раундов"
+          }
+        }
+      }
+    },
+    "achievement.title.played50Rounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пятьдесят раундов"
+          }
+        }
+      }
+    },
+    "achievement.title.played100Rounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сто раундов"
+          }
+        }
+      }
+    },
+    "achievement.title.played500Rounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пятьсот раундов"
+          }
+        }
+      }
+    },
+    "achievement.title.played1000Rounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тысяча раундов"
+          }
+        }
+      }
+    },
+    "achievement.title.firstAR": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В AR!"
+          }
+        }
+      }
+    },
+    "achievement.title.allARGames": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AR-мастер"
+          }
+        }
+      }
+    },
+    "achievement.title.firstSpecialist": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "К логопеду"
+          }
+        }
+      }
+    },
+    "achievement.title.screeningCompleted": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скрининг пройден"
+          }
+        }
+      }
+    },
+    "achievement.title.firstFluencyDiary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Первый дневник"
+          }
+        }
+      }
+    },
+    "achievement.title.week5StutteringPractice": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пять недель практики"
+          }
+        }
+      }
+    },
+    "achievement.title.firstFamilyRecording": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Семейная запись"
+          }
+        }
+      }
+    },
+    "achievement.title.fiveFamilyRecordings": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пять записей"
+          }
+        }
+      }
+    },
+    "achievement.title.firstSiblingMultiplayer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Совместная игра"
+          }
+        }
+      }
+    },
+    "achievement.title.win5MultiplayerGames": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пять побед"
+          }
+        }
+      }
+    },
+    "achievement.title.firstSkinChange": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новый наряд"
+          }
+        }
+      }
+    },
+    "achievement.title.allSkinsTried": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Стилист"
+          }
+        }
+      }
+    },
+    "achievement.title.halloweenCompleted": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хэллоуин"
+          }
+        }
+      }
+    },
+    "achievement.title.newYearCompleted": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новый год"
+          }
+        }
+      }
+    },
+    "achievement.title.easterCompleted": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пасха"
+          }
+        }
+      }
+    },
+    "achievement.title.explorerAllZones": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Исследователь"
+          }
+        }
+      }
+    },
+    "achievement.title.perfectionist10Rounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перфекционист"
+          }
+        }
+      }
+    },
+    "achievement.title.earlyBird": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ранняя пташка"
+          }
+        }
+      }
+    },
+    "achievement.title.nightOwl": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ночная сова"
+          }
+        }
+      }
+    },
+    "achievement.description.firstSoundMastered": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ты освоил свой первый звук"
+          }
+        }
+      }
+    },
+    "achievement.description.fiveSoundsMastered": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Освоено пять звуков"
+          }
+        }
+      }
+    },
+    "achievement.description.allSoundsMastered": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все звуки освоены — ты настоящий мастер!"
+          }
+        }
+      }
+    },
+    "achievement.description.streak3Days": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 дня занятий подряд"
+          }
+        }
+      }
+    },
+    "achievement.description.streak7Days": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 дней подряд"
+          }
+        }
+      }
+    },
+    "achievement.description.streak14Days": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "14 дней подряд"
+          }
+        }
+      }
+    },
+    "achievement.description.streak30Days": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 дней подряд"
+          }
+        }
+      }
+    },
+    "achievement.description.streak100Days": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "100 дней подряд — невероятно!"
+          }
+        }
+      }
+    },
+    "achievement.description.played10Rounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сыграно 10 раундов"
+          }
+        }
+      }
+    },
+    "achievement.description.played50Rounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сыграно 50 раундов"
+          }
+        }
+      }
+    },
+    "achievement.description.played100Rounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сыграно 100 раундов"
+          }
+        }
+      }
+    },
+    "achievement.description.played500Rounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сыграно 500 раундов"
+          }
+        }
+      }
+    },
+    "achievement.description.played1000Rounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сыграно 1000 раундов"
+          }
+        }
+      }
+    },
+    "achievement.description.firstAR": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Первый раз в AR-зоне"
+          }
+        }
+      }
+    },
+    "achievement.description.allARGames": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пройдены все AR-игры"
+          }
+        }
+      }
+    },
+    "achievement.description.firstSpecialist": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Первый визит к специалисту"
+          }
+        }
+      }
+    },
+    "achievement.description.screeningCompleted": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пройден речевой скрининг"
+          }
+        }
+      }
+    },
+    "achievement.description.firstFluencyDiary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Первая запись в дневнике плавности"
+          }
+        }
+      }
+    },
+    "achievement.description.week5StutteringPractice": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5 недель практики плавности речи"
+          }
+        }
+      }
+    },
+    "achievement.description.firstFamilyRecording": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Первая семейная запись"
+          }
+        }
+      }
+    },
+    "achievement.description.fiveFamilyRecordings": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5 семейных записей"
+          }
+        }
+      }
+    },
+    "achievement.description.firstSiblingMultiplayer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Первая совместная игра с братом или сестрой"
+          }
+        }
+      }
+    },
+    "achievement.description.win5MultiplayerGames": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5 побед в совместных играх"
+          }
+        }
+      }
+    },
+    "achievement.description.firstSkinChange": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Примерил первый наряд Ляли"
+          }
+        }
+      }
+    },
+    "achievement.description.allSkinsTried": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Примерил все наряды Ляли"
+          }
+        }
+      }
+    },
+    "achievement.description.halloweenCompleted": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завершено Хэллоуин-задание"
+          }
+        }
+      }
+    },
+    "achievement.description.newYearCompleted": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завершено Новогоднее задание"
+          }
+        }
+      }
+    },
+    "achievement.description.easterCompleted": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завершено Пасхальное задание"
+          }
+        }
+      }
+    },
+    "achievement.description.explorerAllZones": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Побывал во всех зонах Карты мира"
+          }
+        }
+      }
+    },
+    "achievement.description.perfectionist10Rounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 раундов подряд с идеальным счётом"
+          }
+        }
+      }
+    },
+    "achievement.description.earlyBird": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Занятие начато до 9 утра"
+          }
+        }
+      }
+    },
+    "achievement.description.nightOwl": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Занятие начато после 21 вечера"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
