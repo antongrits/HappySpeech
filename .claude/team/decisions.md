@@ -479,3 +479,34 @@ firebase firestore:rules:get | head -20
 
 **Решения по reviewer false-positives:**
 3 ревью подряд (F1, F2, F3) ставили BLOCK на "missing xcstrings keys", которые реально присутствовали. Это известный bug агента — он не находит ключи при алфавитном обходе большого xcstrings (~14000 строк). Workaround: всегда верифицируй через python3 grep.
+
+---
+
+### [2026-04-28] [animator] ADR-V10-RIVE: Lyalya.riv остаётся skills.riv-based
+
+**Status:** ACCEPTED
+**Context:** Plan v10 Блок D требует custom Lyalya.riv. Полная Rive composition требует Rive Editor (visual GUI tool) — недоступен в текущей dev среде. Rive CLI (`which rive` → not found) и Python биндингов (`python3 -c "import rive"` → ModuleNotFoundError) нет.
+
+**Decision:** Оставить `lyalya.riv` (79 043 байт, MIT licensed, magic header `RIVE`) как character base. `LyalyaMascotView` оборачивает его в правильный brand API:
+- Color tinting через `.colorMultiply` (warm/cool/nature/classic)
+- SF Symbol decorative overlay для 5 skins (princess crown / scientist glasses / athlete / artist / classic)
+- Animated breathing: subtle `scaleEffect` 1.0 → 1.02 каждые 3 сек (SwiftUI, поверх Rive)
+- Skin transition: `MotionTokens.bounce` анимация при смене skin/color
+- Reduced Motion: все SwiftUI анимации отключаются, Rive рисует static first frame
+- Lip-sync через `mouthOpen` blendshape → `HSRiveView.setMouthOpen(_:)` (только для lyalyaSM)
+- `HSRiveView` Runtime SM Discovery: пробует LyalyaSM → State Machine 1 → autoPlay fallback
+
+**Rationale:**
+1. skills.riv лицензирован MIT — legal use в production App Store
+2. State machine discovery (HSRiveView.swift) корректно маппит 10 LyalyaState → Level 0/1/2
+3. Custom skin via tinting + overlay даёт уникальный brand без изменения .riv бинаря
+4. Breathing animation поверх Rive добавляет "живость" персонажа без Rive Editor
+5. Альтернатива (Rive Editor, процедурный riv-python) — недоступна в CI/dev среде
+6. Временные затраты на полную кастомизацию (Rive Designer hire) = post-v1.0 scope
+
+**Consequences:**
+- Skills.riv базовая геометрия — generic sphere meshes, не антропоморфный персонаж
+- LyalyaMascotView скрывает это через color tinting + accessibilityLabel "Ляля"
+- Future M14: hire Rive Designer → полная кастомизация с нуля (post-diploma)
+
+**Files affected:** `HappySpeech/DesignSystem/Components/LyalyaMascotView.swift` (breathing anim added)
