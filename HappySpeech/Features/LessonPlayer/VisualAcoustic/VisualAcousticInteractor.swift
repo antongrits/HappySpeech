@@ -1,4 +1,3 @@
-import AVFoundation
 import Foundation
 import OSLog
 
@@ -32,7 +31,7 @@ protocol VisualAcousticBusinessLogic: AnyObject {
 // освободила его до завершения речи (типичная ловушка с локальной переменной).
 
 @MainActor
-final class VisualAcousticInteractor: NSObject, VisualAcousticBusinessLogic {
+final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
 
     // MARK: - Dependencies
 
@@ -41,13 +40,8 @@ final class VisualAcousticInteractor: NSObject, VisualAcousticBusinessLogic {
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "VisualAcousticInteractor")
 
-    // MARK: - TTS
+    // MARK: - Timing
 
-    private let synthesizer = AVSpeechSynthesizer()
-    private static let voiceLocale = "ru-RU"
-    private static let utteranceRate: Float = 0.45
-    private static let utteranceVolume: Float = 1.0
-    private static let pitchMultiplier: Float = 1.05
     /// Задержка перед автопереходом после правильного ответа.
     private static let advanceDelayCorrect: Duration = .milliseconds(1200)
     /// Задержка перед автопереходом после ошибки
@@ -65,16 +59,15 @@ final class VisualAcousticInteractor: NSObject, VisualAcousticBusinessLogic {
     private var isGameOver: Bool = false
 
     private var advanceTask: Task<Void, Never>?
+    private var speakTask: Task<Void, Never>?
 
-    // MARK: - Lifecycle
+    // MARK: - Init
 
-    override init() {
-        super.init()
-        synthesizer.delegate = self
-    }
+    init() {}
 
     deinit {
         advanceTask?.cancel()
+        speakTask?.cancel()
     }
 
     // MARK: - loadRound
@@ -116,22 +109,25 @@ final class VisualAcousticInteractor: NSObject, VisualAcousticBusinessLogic {
         guard rounds.indices.contains(roundIndex) else { return }
         let round = rounds[roundIndex]
 
-        // Если TTS уже играет — останавливаем и стартуем заново.
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
-        }
-
-        let utterance = AVSpeechUtterance(string: round.ttsText)
-        utterance.voice = AVSpeechSynthesisVoice(language: Self.voiceLocale)
-        utterance.rate = Self.utteranceRate
-        utterance.volume = Self.utteranceVolume
-        utterance.pitchMultiplier = Self.pitchMultiplier
-        utterance.preUtteranceDelay = 0
-        utterance.postUtteranceDelay = 0.1
-        synthesizer.speak(utterance)
+        // Если уже играет — останавливаем и стартуем заново.
+        LessonVoiceWorker.shared.stop()
 
         presenter?.presentPlayAudio(VisualAcousticModels.PlayAudio.Response(isPlaying: true))
         logger.info("playAudio round=\(self.roundIndex, privacy: .public)")
+
+        speakTask?.cancel()
+        speakTask = Task { @MainActor [weak self] in
+            guard let self else { return }
+            await LessonVoiceWorker.shared.speak(
+                round.ttsText,
+                lessonType: "visual_acoustic"
+            )
+            guard !self.isGameOver, !Task.isCancelled else { return }
+            self.presenter?.presentPlayAudio(
+                VisualAcousticModels.PlayAudio.Response(isPlaying: false)
+            )
+            self.speakTask = nil
+        }
     }
 
     // MARK: - chooseWord
@@ -141,10 +137,8 @@ final class VisualAcousticInteractor: NSObject, VisualAcousticBusinessLogic {
         guard rounds.indices.contains(roundIndex) else { return }
         let round = rounds[roundIndex]
 
-        // Останавливаем TTS — ребёнок уже принял решение.
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
-        }
+        // Останавливаем воспроизведение — ребёнок уже принял решение.
+        LessonVoiceWorker.shared.stop()
 
         let isCorrect = request.choiceIndex == round.correctIndex
         if isCorrect { correctCount += 1 }
@@ -199,9 +193,7 @@ final class VisualAcousticInteractor: NSObject, VisualAcousticBusinessLogic {
         guard !isGameOver else { return }
         isGameOver = true
         cancelAdvance()
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
-        }
+        LessonVoiceWorker.shared.stop()
 
         let total = max(totalRounds, 1)
         let rawScore = Float(correctCount) / Float(total)
@@ -223,9 +215,9 @@ final class VisualAcousticInteractor: NSObject, VisualAcousticBusinessLogic {
     func cancel() {
         isGameOver = true
         cancelAdvance()
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
-        }
+        speakTask?.cancel()
+        speakTask = nil
+        LessonVoiceWorker.shared.stop()
         logger.info("VisualAcoustic cancelled")
     }
 
@@ -559,34 +551,5 @@ final class VisualAcousticInteractor: NSObject, VisualAcousticBusinessLogic {
                 )
             ]
         ]
-    }
-}
-
-// MARK: - AVSpeechSynthesizerDelegate
-
-extension VisualAcousticInteractor: AVSpeechSynthesizerDelegate {
-
-    nonisolated func speechSynthesizer(
-        _ synthesizer: AVSpeechSynthesizer,
-        didFinish utterance: AVSpeechUtterance
-    ) {
-        Task { @MainActor [weak self] in
-            guard let self, !self.isGameOver else { return }
-            self.presenter?.presentPlayAudio(
-                VisualAcousticModels.PlayAudio.Response(isPlaying: false)
-            )
-        }
-    }
-
-    nonisolated func speechSynthesizer(
-        _ synthesizer: AVSpeechSynthesizer,
-        didCancel utterance: AVSpeechUtterance
-    ) {
-        Task { @MainActor [weak self] in
-            guard let self else { return }
-            self.presenter?.presentPlayAudio(
-                VisualAcousticModels.PlayAudio.Response(isPlaying: false)
-            )
-        }
     }
 }

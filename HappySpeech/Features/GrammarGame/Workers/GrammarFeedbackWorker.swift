@@ -12,8 +12,8 @@ import UIKit
 final class GrammarFeedbackWorker: NSObject {
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "GrammarFeedback")
-    private let synthesizer = AVSpeechSynthesizer()
     private var audioPlayer: AVAudioPlayer?
+    private var speakTask: Task<Void, Never>?
 
     // MARK: - Lyalya asset names
 
@@ -22,7 +22,7 @@ final class GrammarFeedbackWorker: NSObject {
         static let correctVariants = [
             "lyalya_grammar_correct_1",
             "lyalya_grammar_correct_2",
-            "lyalya_grammar_correct_3",
+            "lyalya_grammar_correct_3"
         ]
         static let tryAgain = "lyalya_grammar_try_again"
         static let hint = "lyalya_grammar_hint"
@@ -100,11 +100,11 @@ final class GrammarFeedbackWorker: NSObject {
     }
 
     func stopSpeaking() {
+        speakTask?.cancel()
+        speakTask = nil
         audioPlayer?.stop()
         audioPlayer = nil
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
-        }
+        LessonVoiceWorker.shared.stop()
     }
 
     // MARK: - System sound fallback
@@ -146,13 +146,15 @@ final class GrammarFeedbackWorker: NSObject {
     }
 
     private func speakTTS(_ text: String, rate: Float, pitch: Float) {
-        stopSpeaking()
-        let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = AVSpeechSynthesisVoice(language: "ru-RU")
-        utterance.rate = rate
-        utterance.pitchMultiplier = pitch
-        utterance.volume = 0.9
-        synthesizer.speak(utterance)
-        logger.debug("TTS fallback: '\(text, privacy: .private)' rate=\(rate)")
+        speakTask?.cancel()
+        speakTask = Task { @MainActor [weak self] in
+            guard let self else { return }
+            await LessonVoiceWorker.shared.speak(text, lessonType: "grammar", rate: rate)
+            self.speakTask = nil
+        }
+    }
+
+    deinit {
+        speakTask?.cancel()
     }
 }

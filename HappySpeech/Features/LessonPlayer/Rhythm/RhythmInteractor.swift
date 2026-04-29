@@ -42,8 +42,6 @@ final class RhythmInteractor: RhythmBusinessLogic {
     private let totalPatternsPerSession: Int
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "Rhythm")
-    private let synthesizer = AVSpeechSynthesizer()
-
     // Audio engine — lazy-init, мы создаём его только когда нужен рекординг.
     private var audioEngine: AVAudioEngine?
     private var isTapInstalled: Bool = false
@@ -76,12 +74,17 @@ final class RhythmInteractor: RhythmBusinessLogic {
     private var beatActiveSince: Date?
     private var recordingStartedAt: Date?
     private var recordingTimer: Timer?
+    private var speakTask: Task<Void, Never>?
 
     // MARK: - Init
 
     init(soundGroup: String, totalPatternsPerSession: Int = 5) {
         self.soundGroup = soundGroup
         self.totalPatternsPerSession = totalPatternsPerSession
+    }
+
+    deinit {
+        speakTask?.cancel()
     }
 
     // MARK: - loadPattern
@@ -247,7 +250,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
 
     func complete(_ request: RhythmModels.Complete.Request) async {
         stopRecording()
-        synthesizer.stopSpeaking(at: .immediate)
+        LessonVoiceWorker.shared.stop()
         let final = Float(correctPatterns) / Float(max(1, totalPatternsPerSession))
         let response = RhythmModels.Complete.Response(
             finalScore: final,
@@ -262,7 +265,9 @@ final class RhythmInteractor: RhythmBusinessLogic {
 
     func cancel() async {
         stopRecording()
-        synthesizer.stopSpeaking(at: .immediate)
+        speakTask?.cancel()
+        speakTask = nil
+        LessonVoiceWorker.shared.stop()
         logger.info("Rhythm: cancelled")
     }
 
@@ -339,13 +344,16 @@ final class RhythmInteractor: RhythmBusinessLogic {
     // MARK: - TTS
 
     private func speakSyllable(_ syllable: String, isStrong: Bool) {
-        let utterance = AVSpeechUtterance(string: syllable)
-        utterance.voice = AVSpeechSynthesisVoice(language: "ru-RU")
-        // Сильный бит — чуть громче и ниже тембром.
-        utterance.volume = isStrong ? 1.0 : 0.75
-        utterance.pitchMultiplier = isStrong ? 1.05 : 0.95
-        utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 0.9
-        synthesizer.speak(utterance)
+        // Ритм-упражнение: отдельные слоги вряд ли есть в Lyalya-пуле,
+        // поэтому используем rate как подсказку силы: сильный бит = нормально,
+        // слабый = чуть медленнее.
+        let rate: Float = isStrong ? 1.0 : 0.85
+        speakTask?.cancel()
+        speakTask = Task { @MainActor [weak self] in
+            guard let self else { return }
+            await LessonVoiceWorker.shared.speak(syllable, lessonType: "rhythm", rate: rate)
+            self.speakTask = nil
+        }
     }
 
     // MARK: - RMS computation
