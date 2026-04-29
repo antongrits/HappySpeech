@@ -19626,6 +19626,16 @@
         }
       }
     },
+    "stuttering.diary.whisperkit_active": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Анализ через WhisperKit активен"
+          }
+        }
+      }
+    },
     "stuttering.exercise.control.stop": {
       "localizations": {
         "ru": {

@@ -133,4 +133,95 @@ final class FluencyAnalyzerWorker: FluencyAnalyzerWorkerProtocol, @unchecked Sen
         guard syllables > 0 else { return 0 }
         return Float(count * 100) / Float(syllables)
     }
+
+    // MARK: - Real transcript analysis (WhisperKit path)
+
+    /// Анализирует WhisperTranscript для детектирования дисфлюентностей.
+    /// Три класса: повторения (regex), пролонгации (сегмент > 300ms на 1–2 символа), внутрисловные паузы (> 800ms).
+    func analyzeRealTranscript(_ transcript: WhisperTranscript) -> DysfluencyAnalysis {
+        let repetitions = detectRepetitions(in: transcript.fullText)
+        let prolongations = detectProlongations(in: transcript.segments)
+        let insideWordPauses = detectInsideWordPauses(in: transcript.segments)
+
+        let vowels: Set<Character> = ["а", "е", "ё", "и", "о", "у", "ы", "э", "ю", "я"]
+        let totalSyllables = transcript.fullText.lowercased().filter { vowels.contains($0) }.count
+
+        let dysfluencyCount = repetitions + prolongations + insideWordPauses
+        let rate = totalSyllables > 0
+            ? Float(dysfluencyCount) * 100.0 / Float(totalSyllables)
+            : 0.0
+
+        logger.info(
+            "FluencyAnalyzer real: rep=\(repetitions, privacy: .public) prol=\(prolongations, privacy: .public) pauses=\(insideWordPauses, privacy: .public) syl=\(totalSyllables, privacy: .public) rate=\(rate, privacy: .public)"
+        )
+
+        return DysfluencyAnalysis(
+            repetitions: repetitions,
+            prolongations: prolongations,
+            insideWordPauses: insideWordPauses,
+            totalSyllables: totalSyllables,
+            rate: rate,
+            isStub: false
+        )
+    }
+
+    /// Stub-анализ для graceful fallback когда WhisperKit недоступен.
+    func makeStubAnalysis(text: String) -> DysfluencyAnalysis {
+        let (repetitions, _) = analyzeDysfluency(transcript: text)
+        let syllables = estimateSyllableCount(in: text)
+        let rate = dysfluencyRate(count: repetitions, syllables: syllables)
+        return DysfluencyAnalysis(
+            repetitions: repetitions,
+            prolongations: 0,
+            insideWordPauses: 0,
+            totalSyllables: syllables,
+            rate: rate,
+            isStub: true
+        )
+    }
+
+    // MARK: - Private helpers
+
+    private func detectRepetitions(in text: String) -> Int {
+        guard let regex = try? NSRegularExpression(pattern: #"\b(\w{2,})\s+\1\b"#) else { return 0 }
+        let range = NSRange(text.startIndex..., in: text)
+        return regex.numberOfMatches(in: text, range: range)
+    }
+
+    private func detectProlongations(in segments: [WhisperSegment]) -> Int {
+        // Короткий токен (≤2 видимых символа без пробелов) длительностью > 300ms → растяжение гласной
+        segments.filter { seg in
+            let trimmed = seg.text.trimmingCharacters(in: .whitespacesAndNewlines)
+            let durMs = seg.endMs - seg.startMs
+            return trimmed.count <= 2 && durMs > 300
+        }.count
+    }
+
+    private func detectInsideWordPauses(in segments: [WhisperSegment]) -> Int {
+        guard segments.count > 1 else { return 0 }
+        var count = 0
+        for i in 0..<(segments.count - 1) {
+            let cur = segments[i]
+            let next = segments[i + 1]
+            let gapMs = next.startMs - cur.endMs
+            // Внутрисловная пауза: текущий токен не заканчивается пробелом / пунктуацией
+            let lastChar = cur.text.last
+            let isContinuation = lastChar.map { !$0.isWhitespace && !$0.isPunctuation } ?? true
+            if isContinuation && gapMs > 800 {
+                count += 1
+            }
+        }
+        return count
+    }
+}
+
+// MARK: - DysfluencyAnalysis
+
+struct DysfluencyAnalysis: Sendable {
+    let repetitions: Int
+    let prolongations: Int
+    let insideWordPauses: Int
+    let totalSyllables: Int
+    let rate: Float        // спотыканий на 100 слогов
+    let isStub: Bool
 }
