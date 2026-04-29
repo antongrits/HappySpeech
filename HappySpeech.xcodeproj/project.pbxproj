@@ -529,6 +529,7 @@
 		0FD3F5E67211C9AA9E3B7EA6 /* sh-ph-1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1CF6B84391CB30DB158D8D39 /* sh-ph-1.m4a */; };
 		0FD4AA853F59DC038468A9E1 /* gr-pl-5.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D311450A72A9B8141DD749F6 /* gr-pl-5.m4a */; };
 		0FE362CC38753DB86469B315 /* g-wi-40.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 82FC705AEE2D99050A34E8E2 /* g-wi-40.m4a */; };
+		0FE9FFAB12B8883108675541 /* OfflineMiniGameInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20260B016372D915E9D2F9B8 /* OfflineMiniGameInteractor.swift */; };
 		0FF88463900E2C0D8835AF93 /* zavod.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 830E947F06EFB8823561BFE4 /* zavod.m4a */; };
 		0FFE1B0E8A47636482CAE319 /* lyalya_praise_16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = DAB54ECDDABA2CAFBC6302D4 /* lyalya_praise_16.m4a */; };
 		100682B3EC76BA4817253CD0 /* gr-prep-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C4D49CD189C5E579FB6A3AFB /* gr-prep-8.m4a */; };
@@ -4624,6 +4625,7 @@
 		88C0328854BC8FBC4078246E /* r-iso-1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D10F9E3D1D9914C31976A3D6 /* r-iso-1.m4a */; };
 		88C2AFB837CE735D377F22E7 /* lex-vb-7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A1EF2CA9983221EBE55C70D6 /* lex-vb-7.m4a */; };
 		88CC48B1F54815F200D09C3B /* kh-iso-3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 02B5F73C4549A118DD25590F /* kh-iso-3.m4a */; };
+		88D4E8DD1D1FC0F92D1E09B3 /* OfflineMiniGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1B616B190628800752A2D2 /* OfflineMiniGameView.swift */; };
 		88D4F130948A6D144CC26C7E /* lex-tr-17.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CD0D8B0A4CAB246A940B2113 /* lex-tr-17.m4a */; };
 		88DF038F787605B1B5141431 /* r-wi-28.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 884BB4C27A71C64335EE2C5B /* r-wi-28.m4a */; };
 		88F9589830DCFCFDD1087891 /* c-diff-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 800FB8C33654820F68E33964 /* c-diff-0.m4a */; };
@@ -6985,6 +6987,7 @@
 		CDDA99163C1865798508CC4B /* dwh-wm-15.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8BE3FA0E578BF3425C397A69 /* dwh-wm-15.m4a */; };
 		CDDBF09E0A1AB24DC2CE8E0A /* z-wm-32.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70B7B65D788A4399E416F74E /* z-wm-32.m4a */; };
 		CDDC1C068DCB14E9FC7263EB /* lex-an-3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4C2B766847239ECEC9BF797D /* lex-an-3.m4a */; };
+		CDE087E3DDBE9DB2C87138BA /* OfflineMiniGameModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E9776E8D4FDA884978FE9D5 /* OfflineMiniGameModels.swift */; };
 		CDE5C4E8F9967F6770B559A9 /* kh-wf-16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5152411D82094791FB71E9A3 /* kh-wf-16.m4a */; };
 		CDE8179191F20D8EAE631F1E /* NotificationServiceLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48236027D9CCCF6F9D287C1A /* NotificationServiceLive.swift */; };
 		CDF225AD27FA0D9A93238513 /* c-wf-27.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D0477E22D413EA5834ACE681 /* c-wf-27.m4a */; };
@@ -9780,6 +9783,7 @@
 		201B3E7572B55B5AA70FA7BC /* iPhone17Pro_Dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone17Pro_Dark.png; sourceTree = "<group>"; };
 		201F162BC7D3E3767A913C89 /* iPhone17Pro_Light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iPhone17Pro_Light.png; sourceTree = "<group>"; };
 		2024B1CCC3A14867A103F605 /* br-069.m4a */ = {isa = PBXFileReference; path = "br-069.m4a"; sourceTree = "<group>"; };
+		20260B016372D915E9D2F9B8 /* OfflineMiniGameInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineMiniGameInteractor.swift; sourceTree = "<group>"; };
 		2038C0BCB473D383458796C2 /* zh-syl-11.m4a */ = {isa = PBXFileReference; path = "zh-syl-11.m4a"; sourceTree = "<group>"; };
 		2046E3D36F0EAB7507575E63 /* r-ph-25.m4a */ = {isa = PBXFileReference; path = "r-ph-25.m4a"; sourceTree = "<group>"; };
 		20471CE71C2A6EEDA26F74CC /* ch-wi-47.m4a */ = {isa = PBXFileReference; path = "ch-wi-47.m4a"; sourceTree = "<group>"; };
@@ -12917,6 +12921,7 @@
 		7E772D4B7A9FFC4C74E32E0A /* r-sen-41.m4a */ = {isa = PBXFileReference; path = "r-sen-41.m4a"; sourceTree = "<group>"; };
 		7E7A6DDB5D1AD2F04D95C95F /* mo.m4a */ = {isa = PBXFileReference; path = mo.m4a; sourceTree = "<group>"; };
 		7E7D56DE7789BBAE2901A55E /* g-ph-18.m4a */ = {isa = PBXFileReference; path = "g-ph-18.m4a"; sourceTree = "<group>"; };
+		7E9776E8D4FDA884978FE9D5 /* OfflineMiniGameModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineMiniGameModels.swift; sourceTree = "<group>"; };
 		7E9B493F286622737A669192 /* gr-vb-17.m4a */ = {isa = PBXFileReference; path = "gr-vb-17.m4a"; sourceTree = "<group>"; };
 		7EA053B54E02E81B08EBD896 /* phon-sp-2.m4a */ = {isa = PBXFileReference; path = "phon-sp-2.m4a"; sourceTree = "<group>"; };
 		7EA0A717D30827664A457905 /* z-wi-8.m4a */ = {isa = PBXFileReference; path = "z-wi-8.m4a"; sourceTree = "<group>"; };
@@ -15552,6 +15557,7 @@
 		CBF64074DAFAA8E82E1CFFE9 /* z-wf-27.m4a */ = {isa = PBXFileReference; path = "z-wf-27.m4a"; sourceTree = "<group>"; };
 		CBFCAA5992B32C6778C084C0 /* ag-196.m4a */ = {isa = PBXFileReference; path = "ag-196.m4a"; sourceTree = "<group>"; };
 		CC0901DD42506CA9C907FAD7 /* shch-prep-12.m4a */ = {isa = PBXFileReference; path = "shch-prep-12.m4a"; sourceTree = "<group>"; };
+		CC1B616B190628800752A2D2 /* OfflineMiniGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineMiniGameView.swift; sourceTree = "<group>"; };
 		CC2623E586F5097339243571 /* ag-111.m4a */ = {isa = PBXFileReference; path = "ag-111.m4a"; sourceTree = "<group>"; };
 		CC38096D5E1D9AE69869AE83 /* c-wm-21.m4a */ = {isa = PBXFileReference; path = "c-wm-21.m4a"; sourceTree = "<group>"; };
 		CC389C767A205AF4284BF2D0 /* session_try_again.m4a */ = {isa = PBXFileReference; path = session_try_again.m4a; sourceTree = "<group>"; };
@@ -18746,6 +18752,9 @@
 		32539B05285F2042D1B31AAA /* OfflineState */ = {
 			isa = PBXGroup;
 			children = (
+				20260B016372D915E9D2F9B8 /* OfflineMiniGameInteractor.swift */,
+				7E9776E8D4FDA884978FE9D5 /* OfflineMiniGameModels.swift */,
+				CC1B616B190628800752A2D2 /* OfflineMiniGameView.swift */,
 				779529CD8C52BA3F14B1F6D9 /* OfflineStateDisplayLogic.swift */,
 				A5CAEB66586CD12C6F97EE48 /* OfflineStateInteractor.swift */,
 				5C1E272AE1A2FB3C9985CDD9 /* OfflineStateModels.swift */,
@@ -37139,6 +37148,9 @@
 				439ADE1EAA960BA27EACDB57 /* NetworkClient.swift in Sources */,
 				9E40CC5DD51581997FA8319B /* NetworkMonitor.swift in Sources */,
 				CDE8179191F20D8EAE631F1E /* NotificationServiceLive.swift in Sources */,
+				0FE9FFAB12B8883108675541 /* OfflineMiniGameInteractor.swift in Sources */,
+				CDE087E3DDBE9DB2C87138BA /* OfflineMiniGameModels.swift in Sources */,
+				88D4E8DD1D1FC0F92D1E09B3 /* OfflineMiniGameView.swift in Sources */,
 				D1E5A2870F488C2B39E7A225 /* OfflineQueueManager.swift in Sources */,
 				31BE6A208FE8B359DA90AB53 /* OfflineStateDisplayLogic.swift in Sources */,
 				2605DA6291D9F9429F1D01F9 /* OfflineStateInteractor.swift in Sources */,
