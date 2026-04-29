@@ -4470,6 +4470,7 @@
 		7B7D0B81EB8C0E9D73114361 /* z-wi-16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3B74B8AC138381BF9B6F714A /* z-wi-16.m4a */; };
 		7B9B07D335CD0E5AEFCF61DA /* dwh-st-15.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C20E8133D7FC4BA425753E3A /* dwh-st-15.m4a */; };
 		7BAE695B614177B2F2A23636 /* r-wf-76.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A59A6BBEFB333BFF46E99938 /* r-wf-76.m4a */; };
+		7BAFBCBB5DA9EE1389F62785 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 43C70A2CB4466E8B9439D0E4 /* Down */; };
 		7BB15209AF8EC7B90DC24E2E /* s-syl-18.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5E3A385B6801EF2EACB22E2B /* s-syl-18.m4a */; };
 		7BB1C57EF31CF7072ED4F4A5 /* sh-ph-19.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AB38FA9929473CD80A5C3C2A /* sh-ph-19.m4a */; };
 		7BB5968B0B5B5F76BA151E4E /* rl-prep-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D2B9E9766689AFAC3450579B /* rl-prep-8.m4a */; };
@@ -6824,6 +6825,7 @@
 		BB0B5673C00380B54F4CE2BF /* gr-st-11.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 12E331C7C44D864A04DC7779 /* gr-st-11.m4a */; };
 		BB0F088252DD42670DC173BC /* y-sen-39.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9B80824CFEA4EB29B9DBFCF2 /* y-sen-39.m4a */; };
 		BB109B0E77410D56918462F0 /* zh-df-4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D061C42664907F629316839F /* zh-df-4.m4a */; };
+		BB1110D00776358D3B3745A0 /* HSConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C906924AAA80B5A538138E /* HSConfettiView.swift */; };
 		BB1411CCCDBA76F31736E745 /* sh-ph-3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D491E9CEE5C0321CA75A131D /* sh-ph-3.m4a */; };
 		BB1EEE975710F734526951C9 /* iz_chego_delayut_maslo.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FBBDD43A706BF1AFBE002022 /* iz_chego_delayut_maslo.m4a */; };
 		BB2818333D7AEB4926562CCD /* ag-020.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F82B7A98B8A0F305CD827360 /* ag-020.m4a */; };
@@ -8768,6 +8770,7 @@
 		F19F38E7DF69188958510965 /* r-wi-24.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B9253728123905BDF4F11980 /* r-wi-24.m4a */; };
 		F19FE834282251FA1920C4C5 /* ch-prep-4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E7723A80AC984D4257EFF7AD /* ch-prep-4.m4a */; };
 		F1A28BE3F50D68E0447FD010 /* dwh-syl-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 838E1D05F042C7A0FD6CD4FD /* dwh-syl-2.m4a */; };
+		F1A45DB82E03E131F26EA8BA /* HSMarkdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AB1CEAB2C624894AF8AD361 /* HSMarkdownView.swift */; };
 		F1A60C55C6B1D84569BA8D1F /* ParentHomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9A77A1254C95FA88BFA6D59 /* ParentHomePresenter.swift */; };
 		F1AB108E4949F9B510EB5396 /* z-wm-41.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F3915646AFCCF92110A21F04 /* z-wm-41.m4a */; };
 		F1B676FE8BA4E4ECC1BFB312 /* lyalya_hint_14.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 6900572D809F8745ECDE2D64 /* lyalya_hint_14.m4a */; };
@@ -10852,6 +10855,7 @@
 		2A9A5ED6ECF78776CB3C2E09 /* UIApplication+TopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+TopVC.swift"; sourceTree = "<group>"; };
 		2A9F6DD9AC5CC9C21D1823A4 /* rl-ph-24.m4a */ = {isa = PBXFileReference; path = "rl-ph-24.m4a"; sourceTree = "<group>"; };
 		2AA11A67C250A84ABB41CA8A /* k-syl-20.m4a */ = {isa = PBXFileReference; path = "k-syl-20.m4a"; sourceTree = "<group>"; };
+		2AB1CEAB2C624894AF8AD361 /* HSMarkdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSMarkdownView.swift; sourceTree = "<group>"; };
 		2AB5A1C94826A68CC3455AD7 /* zh-wi-9.m4a */ = {isa = PBXFileReference; path = "zh-wi-9.m4a"; sourceTree = "<group>"; };
 		2ABBC98341367416448ACF66 /* c-wi-25.m4a */ = {isa = PBXFileReference; path = "c-wi-25.m4a"; sourceTree = "<group>"; };
 		2ABBE38F817AD433C33485E3 /* phon-st-2.m4a */ = {isa = PBXFileReference; path = "phon-st-2.m4a"; sourceTree = "<group>"; };
@@ -16282,6 +16286,7 @@
 		C0BCE9ED8D52CB88B4DEA5E2 /* lyalya_insight_tip_5.m4a */ = {isa = PBXFileReference; path = lyalya_insight_tip_5.m4a; sourceTree = "<group>"; };
 		C0BF56738462BA0D213663E8 /* kh-ph-37.m4a */ = {isa = PBXFileReference; path = "kh-ph-37.m4a"; sourceTree = "<group>"; };
 		C0C5FC62785761F72240B0E6 /* ch-wi-8.m4a */ = {isa = PBXFileReference; path = "ch-wi-8.m4a"; sourceTree = "<group>"; };
+		C0C906924AAA80B5A538138E /* HSConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSConfettiView.swift; sourceTree = "<group>"; };
 		C0D098D30DFB6077A9175A36 /* AchievementsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsPresenter.swift; sourceTree = "<group>"; };
 		C0D0C11CEA7904A5446EF080 /* r-diff-15.m4a */ = {isa = PBXFileReference; path = "r-diff-15.m4a"; sourceTree = "<group>"; };
 		C0D5E26F5734E5D646FB7C74 /* lyalya_grammar_complete_easy.m4a */ = {isa = PBXFileReference; path = lyalya_grammar_complete_easy.m4a; sourceTree = "<group>"; };
@@ -18618,6 +18623,7 @@
 				88A6EB97C50479F637348AD2 /* GoogleSignIn in Frameworks */,
 				E609641707A788487F18BCF2 /* GoogleSignInSwift in Frameworks */,
 				BF25494372E785026C33B31C /* RiveRuntime in Frameworks */,
+				7BAFBCBB5DA9EE1389F62785 /* Down in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -25322,12 +25328,14 @@
 				80991007FFA348A65559E1F9 /* HSButton.swift */,
 				D65D5A47523D4BA76DCBF6A2 /* HSCard.swift */,
 				0EE721B0622B2DB536B51D4E /* HSChart.swift */,
+				C0C906924AAA80B5A538138E /* HSConfettiView.swift */,
 				D24AE9929ED82C34528F1965 /* HSEmptyStateView.swift */,
 				52D2BDFB0F10928C8227798E /* HSErrorStateView.swift */,
 				F20A87358592858A889D44DB /* HSKidTabBar.swift */,
 				299FD665245C37A950CBDE4D /* HSLiquidGlassCard.swift */,
 				BFA060E9DFE272E246BC0C45 /* HSLoadingView.swift */,
 				74AF67F089B765285C33750F /* HSLottieContainer.swift */,
+				2AB1CEAB2C624894AF8AD361 /* HSMarkdownView.swift */,
 				98644AD8553B9E6BDD36A7D3 /* HSMascotView.swift */,
 				DA0951F7717AE643FC0A15FC /* HSMiniSpark.swift */,
 				B38B4F3571D6B0CF004CDB08 /* HSOfflineBanner.swift */,
@@ -30625,6 +30633,7 @@
 				BC08CCD97369739E47E30E58 /* GoogleSignIn */,
 				267379EC677EDD31D0FFBB82 /* GoogleSignInSwift */,
 				AE3C64EB285302CCD6118DCD /* RiveRuntime */,
+				43C70A2CB4466E8B9439D0E4 /* Down */,
 			);
 			productName = HappySpeech;
 			productReference = A99CE31486125C1F866D19DD /* HappySpeech.app */;
@@ -30662,6 +30671,7 @@
 			mainGroup = 45D93864A8C9F268493DA4B1;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				F809EDED0509C37F5F3776B4 /* XCRemoteSwiftPackageReference "Down" */,
 				8FFF13CD604653258317C257 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				3AEA6A22AE57EA7322BAE8E6 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				D1EC5DE530F40091B28EFE61 /* XCRemoteSwiftPackageReference "lottie-ios" */,
@@ -39673,6 +39683,7 @@
 				79FDD806936A8DF3A6DE1CAA /* HSButton.swift in Sources */,
 				4049695DEC1BE09BD83AA383 /* HSCard.swift in Sources */,
 				0DC263C546A3B03C41D5AB9E /* HSChart.swift in Sources */,
+				BB1110D00776358D3B3745A0 /* HSConfettiView.swift in Sources */,
 				8D0A6A0DB6A2C2B2BB96A7D0 /* HSEmptyStateView.swift in Sources */,
 				E1E3EC21E2E7801B14CA912D /* HSErrorStateView.swift in Sources */,
 				FD9A992FA276E2F3728596E0 /* HSKidTabBar.swift in Sources */,
@@ -39680,6 +39691,7 @@
 				44EF735C1CBE72B181394E40 /* HSLoadingView.swift in Sources */,
 				983B78147D6756C970E13A26 /* HSLogger.swift in Sources */,
 				B848D77BF95C397431F49E6F /* HSLottieContainer.swift in Sources */,
+				F1A45DB82E03E131F26EA8BA /* HSMarkdownView.swift in Sources */,
 				308B6F1DD872D38E9D12E8FF /* HSMascotView.swift in Sources */,
 				ABB07A86CFC41FACBFA8A556 /* HSMiniSpark.swift in Sources */,
 				DA992C4CCEE2EB453D0CEC07 /* HSOfflineBanner.swift in Sources */,
@@ -40227,6 +40239,14 @@
 				minimumVersion = 0.9.0;
 			};
 		};
+		F809EDED0509C37F5F3776B4 /* XCRemoteSwiftPackageReference "Down" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/johnxnguyen/Down";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.11.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -40244,6 +40264,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8FFF13CD604653258317C257 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebasePerformance;
+		};
+		43C70A2CB4466E8B9439D0E4 /* Down */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F809EDED0509C37F5F3776B4 /* XCRemoteSwiftPackageReference "Down" */;
+			productName = Down;
 		};
 		63EBD6BBBD1D80E61F1C9071 /* SnapshotTesting */ = {
 			isa = XCSwiftPackageProductDependency;
