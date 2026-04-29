@@ -704,3 +704,38 @@ Block Q реализует Layer 3 после генерации 10 state-илл
 
 - `.claude/team/decisions.md` — этот ADR
 - `HappySpeech/DesignSystem/Components/HSMascotView.swift` — inline MARK-комментарии Layer архитектуры
+
+---
+
+### [2026-04-29] [ml-engineer] ADR-V11-FACEMESH-DEFER: FaceMesh Attempt 2 — окончательный defer post-v1.0
+
+**Контекст:** Block C.4 Plan v11 — повторная попытка интеграции FaceMesh 478 landmarks (первая заблокирована ADR-015 от 2026-04-26).
+
+**Исследование (Attempt 2, 2026-04-29):**
+
+1. **Apple Vision 76 landmarks** — `VNDetectFaceLandmarksRequest` уже задеплоен (`AppleFaceLandmarksDetector.swift`, M5.3 2026-04-26). Даёт 76 точек: губы (12+8), нос, глаза, брови, челюсть. Достаточно для 5 классов висем (mouth open/closed/rounded/spread/protruded). Дублировать не нужно.
+
+2. **`face-alignment-mlx` / InsightFace Apple Silicon ports** — поиск на HuggingFace:
+   - `face-alignment-mlx`: проекта нет в публичном HuggingFace Hub по запросу. Библиотека `face-alignment` существует для PyTorch (CPU/CUDA), но не имеет MLX или CoreML экспорта.
+   - `InsightFace CoreML`: есть `deepinsight/insightface` репозиторий, но iOS/CoreML версия отсутствует. Имеющиеся .onnx модели (buffalo_l, buffalo_s) не имеют проверенного тракта в coremltools без onnxruntime на устройстве.
+   - `mediapipe-facemesh-coreml`: поиск возвращает только неофициальные скрипты 2021–2022 годов под tflite v2.8, несовместимые с coremltools 9.
+
+3. **Дополнительная оценка:** для логопедии 5–8 лет ключевые движения — jawOpen, mouthFunnel, tongueOut (ARKit blendshapes) + openness/roundedness губ (Apple Vision 76 точек). 478-точечная сетка FaceMesh добавила бы точность позиций уголков рта на ~15%, но не даёт нового клинического сигнала. ARKit `tongueOut` остаётся единственным tongue-сигналом согласно ADR-008 — FaceMesh его не улучшает.
+
+**Decision:** Окончательный defer FaceMesh 478 landmarks до post-v1.0 (M13+).
+
+**Мотивация:**
+- Apple Vision 76 + ARKit blendshapes покрывают все 5 классов висем, необходимых для текущих упражнений
+- Нет готового .mlpackage или надёжного конвертационного тракта под iOS 17 / coremltools 9
+- Клинический прирост от 478 точек для детей 5–8 лет незначителен при текущих упражнениях
+- Архитектура `TonguePostureClassifier` уже резервирует 27 слотов для FaceMesh дельт — Swift API не потребует изменений при будущей интеграции
+
+**Planned post-v1.0 (M13):**
+- Следить за Apple Vision Framework (WWDC 2026+) на предмет `VNDetectFaceLandmarksRequest` расширения до 300+ точек
+- Альтернатива: Google MediaPipe Tasks iOS SDK (если выйдет нативная CoreML интеграция без ONNX runtime)
+- При появлении: просто заполнить 27 зарезервированных слотов в TonguePostureClassifier без API-изменений
+
+**Supersedes / расширяет:** ADR-015 (2026-04-26)
+
+**Files affected:**
+- `.claude/team/decisions.md` — этот ADR

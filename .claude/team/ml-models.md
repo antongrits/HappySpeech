@@ -298,6 +298,30 @@
 - **Workaround:** AppleFaceLandmarksDetector (76 точек) как primary; TonguePostureClassifier принимает
   27 резервных слотов для будущих FaceMesh дельт.
 - **Planned:** M13 — если появится совместимый конвертер или Apple Vision добавит 478-point mode.
+- **ADR-V11-FACEMESH-DEFER (2026-04-29):** Attempt 2 (Block C.4) подтверждает defer. face-alignment-mlx не существует на HuggingFace. InsightFace CoreML отсутствует. Apple Vision 76 + ARKit blendshapes полностью покрывают нужды логопедии. Defer post-v1.0.
+
+---
+
+## Block C.4 Plan v11 (2026-04-29)
+
+### R-001: Voice Clone Reference Dataset
+
+- **Тип:** Reference audio corpus (не ML-модель)
+- **Путь:** HappySpeech/Resources/Models/voice_clone_reference.wav
+- **README:** HappySpeech/Resources/Models/VOICE_CLONE_README.md
+- **Назначение:** Референсный корпус русской речи для будущего voice cloning (XTTS-v2 / TortoiseTTS, post-v1.0)
+- **Формат:** 16kHz mono PCM_16 WAV
+- **Длительность:** 25.9 минут (1553 сек)
+- **Размер:** 47.4 MB
+- **Дикторов:** 10 синтетических вариантов (2 голоса × 5 rate/pitch вариантов)
+  - ru-RU-DmitryNeural: base, slow_high, fast, child_sim, bright
+  - ru-RU-SvetlanaNeural: base, slow_high, fast, child_sim, low
+- **Текстов:** 18 логопедических текстов (чистоговорки С/З/Ц, Ш/Ж/Ч/Щ, Р/Л, К/Г/Х + расширенные блоки)
+- **Источник синтеза:** Microsoft Azure Neural TTS via edge-tts (публичный браузерный API)
+- **Скрипт:** `_workshop/scripts/generate_voice_clone_reference.py`
+- **Лицензия:** академическое использование; для production voice cloning требуются реальные данные с согласия
+- **Дата:** 2026-04-29
+- **Статус:** reference_corpus (не production ML-модель)
 
 ---
 
