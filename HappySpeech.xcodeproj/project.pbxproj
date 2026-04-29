@@ -689,6 +689,7 @@
 		141717E6B917BD7C0FACDD6E /* OpenLessonIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08B101B98E1F071CAD48381 /* OpenLessonIntent.swift */; };
 		142BDABCDF0E3103F5F5803E /* lyalya_seasonal_spring_1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4F11E05CC572D4A48D743BBF /* lyalya_seasonal_spring_1.m4a */; };
 		142F80044569797551597ADD /* ch-sen-38.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 43B27C1DE2E562EF64C439EE /* ch-sen-38.m4a */; };
+		1435EC157B2A5501D43AE088 /* LessonSessionAttributesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D2E0C4F6B06D97C2D67F34 /* LessonSessionAttributesTests.swift */; };
 		14363ADB26430A9B9D3DBEB3 /* slon.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 17F631DC127CD4BDAD6826AE /* slon.m4a */; };
 		143968AB2DF8E4CC3C97BD51 /* k-sen-13.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5715598A607DA80D5371216C /* k-sen-13.m4a */; };
 		143E5F0A4B03EA6204B7FE97 /* FamilyInsightsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F720DDD9163D4935457941 /* FamilyInsightsWorker.swift */; };
@@ -774,6 +775,7 @@
 		168567529EECF45988600AB8 /* ch-ph-18.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 357A920D0DF636755B347EAE /* ch-ph-18.m4a */; };
 		168E24544B178386DAA50E61 /* khleb.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 48E1A036BAFA21D4C431246A /* khleb.m4a */; };
 		16965CF6457933CCCABED72C /* r-wm-50.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FD3339C7FF8FAE0EC5157F55 /* r-wm-50.m4a */; };
+		16A52F4BE57F610FA4EB9AA3 /* ActivityKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9A21F22624F88843E572A32 /* ActivityKit.framework */; };
 		16AD633C7C16002D0FC2B185 /* phon-vc-9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BF0E86B5680F0DFCCAEFED80 /* phon-vc-9.m4a */; };
 		16C7B8AADE205BA5151F4EDA /* z-wi-20.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1E4A6615EE273BDFC87E094E /* z-wi-20.m4a */; };
 		16D74847A015C35777863D50 /* g-wm-21.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 26815057EB508E3CB662DCBF /* g-wm-21.m4a */; };
@@ -2056,6 +2058,7 @@
 		3918CC142EE05057CF773517 /* lyalya_setting_backup.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C5A5C8AB4F021F83939249D1 /* lyalya_setting_backup.m4a */; };
 		391A7A8F8C5A8A8035DE3937 /* SoundHunterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F48BEB0F5512C857DF2248E /* SoundHunterPresenter.swift */; };
 		391BC86AF11DB9731A1BD61B /* g-wi-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9FCB829C4BB998B94E28F256 /* g-wi-0.m4a */; };
+		39235DCAB4D450D9AEFFF731 /* LessonSessionAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B28FA5E8CC3F396FF44B8B6 /* LessonSessionAttributes.swift */; };
 		393F21110E629A1E3E1C10EB /* br-055.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 763627355DE061EB1AF8BCAA /* br-055.m4a */; };
 		394C91BE54E2974707E495D5 /* odin_dom_mnogo_domov.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 28824F98BCB1AFA08C17F0C3 /* odin_dom_mnogo_domov.m4a */; };
 		394D50AF9F4E3760B26D0815 /* r-prep-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7767DC3225D393C61F4D9CE3 /* r-prep-0.m4a */; };
@@ -2560,6 +2563,7 @@
 		47CF77EF734972C9E0243BAE /* z-wi-4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ED1B79B93C6738BEECCD452D /* z-wi-4.m4a */; };
 		47D30C8C2FC7880BC071A01D /* z-wm-37.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2B7A8E307634512B4D79E345 /* z-wm-37.m4a */; };
 		47D48F63DA6B68287C51DD08 /* l-syl-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CD440784BE2D5E25A00E3737 /* l-syl-6.m4a */; };
+		47D7549C12EE5B3508A1B501 /* HappySpeechWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 4654C5EEC956CC5EA7BF9437 /* HappySpeechWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		47DA154DD3EFD9DDB90764B5 /* g-wi-36.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1F238B8387103E8000633B92 /* g-wi-36.m4a */; };
 		47DC9E91D3520EFE09F8E187 /* kh-prep-14.m4a in Resources */ = {isa = PBXBuildFile; fileRef = EAD67E5C12F233A7EDD90ABC /* kh-prep-14.m4a */; };
 		47E5D3E322946255FFD628B4 /* lex-cl-3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 38DBA593258996FB0D534E8B /* lex-cl-3.m4a */; };
@@ -3522,6 +3526,7 @@
 		6533AA7D8D84CDA45C036167 /* z-wi-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C22A9F0DAF075DBA7C24A496 /* z-wi-2.m4a */; };
 		65355E6029968EA355708087 /* rys.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A95237BEDC99917344A44858 /* rys.m4a */; };
 		653622D32FF1F7C5F61FA09A /* sh-iso-13.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C4198E4A2AF70916BF8161BA /* sh-iso-13.m4a */; };
+		654D7C6964A53A4DC8143789 /* HappySpeechWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5838EA7C1962F7377F415A2C /* HappySpeechWidgetBundle.swift */; };
 		6552CD0AA7C8136CE604E429 /* g-ph-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 03C4B16996735B664829A107 /* g-ph-0.m4a */; };
 		6554E8F5ECE82245710172EF /* br-052.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1874F0AE1F232378A4AABF7A /* br-052.m4a */; };
 		655637014469CD79291F3708 /* br-070.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A0171DAE0DFAAEA41218266D /* br-070.m4a */; };
@@ -3534,6 +3539,7 @@
 		659CCD9D803C3B4FAB2223B9 /* pridumay_imya_pingvinu.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CD9A36DD3DEB065478C2BA58 /* pridumay_imya_pingvinu.m4a */; };
 		659E23A23410A7076C0FC993 /* sh-st-4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 76091FC8DE0B9D2AD71694FF /* sh-st-4.m4a */; };
 		65A71C2559F84C0F651A418E /* s-wf-3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 067F3459226E5B3898EF8CA3 /* s-wf-3.m4a */; };
+		65AD9113EDA5A53523466449 /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114D4D1471ED5F8BF0BEADF2 /* LiveActivityManager.swift */; };
 		65B43902F0089516D479B5BC /* r-wm-44.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7026C33C6ADA78704F956EB2 /* r-wm-44.m4a */; };
 		65B51790FC6B2B7CC234A9D9 /* z-ph-16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 173E87273196DCB3C9A1A11C /* z-ph-16.m4a */; };
 		65B8192F68E2E3D5C96F9185 /* kh-syl-3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = DC2CBC92CE5A3079D4CAF198 /* kh-syl-3.m4a */; };
@@ -5219,6 +5225,7 @@
 		96D791DCC9CDD82AE73D9EAA /* sh-wi-54.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 65C07D5B9EB2FEB0B0C94DB4 /* sh-wi-54.m4a */; };
 		96DA2689D4E3F5AABEEA9C4A /* ag-052.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8CF7E1641484FCA5453076C7 /* ag-052.m4a */; };
 		96E6E4FE6F29A20F94542AE6 /* na_lugu_mirno_pasyotsya_belaya_propusk.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D37609A4F104D406E3C0587C /* na_lugu_mirno_pasyotsya_belaya_propusk.m4a */; };
+		96E931E87156483F4E170087 /* LessonSessionAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B28FA5E8CC3F396FF44B8B6 /* LessonSessionAttributes.swift */; };
 		96ECC752A0DF396E8EFF483B /* lyalya_hint_srt_6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 03FCCF9D546AEB92BC9B991D /* lyalya_hint_srt_6.m4a */; };
 		96EEDA447FEF72A763EDB1D3 /* ag-053.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 38317263CDCF1F887B16DE75 /* ag-053.m4a */; };
 		96FD4FAF84FA79DD04B1F444 /* phon-sc-4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 77DF3E62DBB14DF0C76A6823 /* phon-sc-4.m4a */; };
@@ -6770,6 +6777,7 @@
 		C2E715E5D82D664C5258ABF2 /* r-st-11.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7976229377C43B697EFAE040 /* r-st-11.m4a */; };
 		C2E97756EA09282DFC1BBFD9 /* l-wi-34.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3D7C01CC8C6DF17461DAD5C7 /* l-wi-34.m4a */; };
 		C2F0452F2146686263EC9D6B /* k-wi-48.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 420EB29665F0F7DFBBCFE18F /* k-wi-48.m4a */; };
+		C2F0D35CCD776D8ABE478F4E /* LessonSessionLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A4D97C82C4D63456A99F802 /* LessonSessionLiveActivity.swift */; };
 		C2F71A0A69ACF19F81DFE920 /* gr-wc-25.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B189E55DD2E1B6664F1B27BB /* gr-wc-25.m4a */; };
 		C2F91C15EB56F0D360C64691 /* rl-wm-16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 225F21772B3E825C4B0C7D13 /* rl-wm-16.m4a */; };
 		C2FF75A1C5F2208DEEE3E119 /* rl-wm-12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B2BA73852E8A14252D075BD4 /* rl-wm-12.m4a */; };
@@ -7579,6 +7587,7 @@
 		DABAAE03487F506AAF6D073F /* lyalya_session_excellent.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 23F47B7D4C7D564120BE579A /* lyalya_session_excellent.m4a */; };
 		DAC19EA9F5C8DFC7AD76D3D5 /* lex-num-15.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F108A2E628CF4C234DBF13E2 /* lex-num-15.m4a */; };
 		DACD5B2F959083D4308D8664 /* shch-df-7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3EE7751366E32DE13CE2064D /* shch-df-7.m4a */; };
+		DAD2AD2FFA93B0879F24AB06 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A42E34FDC5DC3D8924D6BD7 /* SwiftUI.framework */; };
 		DAD82976E2DEAB39C9BF2609 /* GrammarContentLoaderWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C67081A1E51BD94938D5E6 /* GrammarContentLoaderWorker.swift */; };
 		DAE5112888C97492BB72BD9A /* s-diff-23.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F906198D2CB4ED5D3F108A02 /* s-diff-23.m4a */; };
 		DAED9F7353EF8314F53AA3E7 /* LLMDecisionLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BF9C3167825E9315EB359D /* LLMDecisionLog.swift */; };
@@ -8280,6 +8289,7 @@
 		EFADE29CB6127180F817C840 /* o_gu_rets_udarenie_na_rets.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 019F3C2D7FAADE9E1CA69246 /* o_gu_rets_udarenie_na_rets.m4a */; };
 		EFB6438CB4EC2DCAF88C3E5F /* kogo_lyalya_vstretila_v_gorode.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 432AAF16C6D79494AB2E0CCA /* kogo_lyalya_vstretila_v_gorode.m4a */; };
 		EFB8D7821CF29D39BAF92025 /* OnboardingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCED672BBFE53B4FF9C351C2 /* OnboardingRouter.swift */; };
+		EFC04B6EF02266247BC5DD7F /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 914469D42D71B341B9D453E7 /* WidgetKit.framework */; };
 		EFC9986347E6D7DF1C075D28 /* z-wf-19.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1C6629C5D443158E9F97E340 /* z-wf-19.m4a */; };
 		EFD8883A7238AB3553A1066E /* r-wi-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 453E37DAD8734446579D5FF2 /* r-wi-6.m4a */; };
 		EFDA54395F800DF21E7186EC /* phon-vu-3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 178CCC2D9520ED1632C29FFC /* phon-vu-3.m4a */; };
@@ -8876,7 +8886,28 @@
 			remoteGlobalIDString = E693E860D757936401DB7BF8;
 			remoteInfo = HappySpeech;
 		};
+		F38C3BFA3864408D54C5A4E7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3226A8FDFDF5E11E0886FD1D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EDB22877E8320FEB0A980638;
+			remoteInfo = HappySpeechWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		93327F9921EF0A5C0157DD92 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				47D7549C12EE5B3508A1B501 /* HappySpeechWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0008342172B50F1D28EBEA9B /* lex-vf-0.m4a */ = {isa = PBXFileReference; path = "lex-vf-0.m4a"; sourceTree = "<group>"; };
@@ -9482,6 +9513,7 @@
 		11298998CD97F153A0EFBDAD /* sh-df-0.m4a */ = {isa = PBXFileReference; path = "sh-df-0.m4a"; sourceTree = "<group>"; };
 		112FAE7C324FF7C466736229 /* r-wi-63.m4a */ = {isa = PBXFileReference; path = "r-wi-63.m4a"; sourceTree = "<group>"; };
 		1145FA8F4B60FD130364E3FD /* rl-sen-26.m4a */ = {isa = PBXFileReference; path = "rl-sen-26.m4a"; sourceTree = "<group>"; };
+		114D4D1471ED5F8BF0BEADF2 /* LiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityManager.swift; sourceTree = "<group>"; };
 		114D5D5A93CC9DB98CE6016A /* phon-sp-16.m4a */ = {isa = PBXFileReference; path = "phon-sp-16.m4a"; sourceTree = "<group>"; };
 		1153EA6D4710E440DF84A532 /* kh-wf-22.m4a */ = {isa = PBXFileReference; path = "kh-wf-22.m4a"; sourceTree = "<group>"; };
 		1157CAA7A115CA41B712DA9C /* r-wi-10.m4a */ = {isa = PBXFileReference; path = "r-wi-10.m4a"; sourceTree = "<group>"; };
@@ -10336,6 +10368,7 @@
 		2A2BC3F7D1DC16EE84811B0B /* lex-ins-11.m4a */ = {isa = PBXFileReference; path = "lex-ins-11.m4a"; sourceTree = "<group>"; };
 		2A30E10067EC2F15C20763CA /* br-014.m4a */ = {isa = PBXFileReference; path = "br-014.m4a"; sourceTree = "<group>"; };
 		2A348D0F83A091184AA90419 /* r-ph-28.m4a */ = {isa = PBXFileReference; path = "r-ph-28.m4a"; sourceTree = "<group>"; };
+		2A4D97C82C4D63456A99F802 /* LessonSessionLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonSessionLiveActivity.swift; sourceTree = "<group>"; };
 		2A4EAB84614E0A8A16F2E553 /* g-st-11.m4a */ = {isa = PBXFileReference; path = "g-st-11.m4a"; sourceTree = "<group>"; };
 		2A577E3B88E321159D948DA8 /* l-wf-12.m4a */ = {isa = PBXFileReference; path = "l-wf-12.m4a"; sourceTree = "<group>"; };
 		2A64AE883BF4A86A2CCB2481 /* SoundHunterInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundHunterInteractor.swift; sourceTree = "<group>"; };
@@ -11290,6 +11323,7 @@
 		46456E1BB12A9C63FAE4A678 /* r-wf-23.m4a */ = {isa = PBXFileReference; path = "r-wf-23.m4a"; sourceTree = "<group>"; };
 		4649A7AA963CC85AB9C88927 /* k-wi-27.m4a */ = {isa = PBXFileReference; path = "k-wi-27.m4a"; sourceTree = "<group>"; };
 		464B22D868AA49763BEEA15A /* br-216.m4a */ = {isa = PBXFileReference; path = "br-216.m4a"; sourceTree = "<group>"; };
+		4654C5EEC956CC5EA7BF9437 /* HappySpeechWidgetExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = HappySpeechWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		466440BFF9538145FE5484E1 /* phon-sc-12.m4a */ = {isa = PBXFileReference; path = "phon-sc-12.m4a"; sourceTree = "<group>"; };
 		468851017E71EF5837E8BC38 /* lyalya_insight_pattern_2.m4a */ = {isa = PBXFileReference; path = lyalya_insight_pattern_2.m4a; sourceTree = "<group>"; };
 		4688C1A1FCA7B10BB911080C /* l-prep-7.m4a */ = {isa = PBXFileReference; path = "l-prep-7.m4a"; sourceTree = "<group>"; };
@@ -11356,6 +11390,7 @@
 		47BFA3B5ED4D78612C45D55D /* ag-246.m4a */ = {isa = PBXFileReference; path = "ag-246.m4a"; sourceTree = "<group>"; };
 		47C284CB72125FB4C9445120 /* kniga.m4a */ = {isa = PBXFileReference; path = kniga.m4a; sourceTree = "<group>"; };
 		47D050304ABD1836F3793996 /* lex-syn-6.m4a */ = {isa = PBXFileReference; path = "lex-syn-6.m4a"; sourceTree = "<group>"; };
+		47D2E0C4F6B06D97C2D67F34 /* LessonSessionAttributesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonSessionAttributesTests.swift; sourceTree = "<group>"; };
 		47D8C872392A6B9F8CC8C8DC /* zont.m4a */ = {isa = PBXFileReference; path = zont.m4a; sourceTree = "<group>"; };
 		47DA8CFDCBE6C54F2E3D57B8 /* na_stole_lezhat_tri_krasnykh_yabloka.m4a */ = {isa = PBXFileReference; path = na_stole_lezhat_tri_krasnykh_yabloka.m4a; sourceTree = "<group>"; };
 		47DB7FBE913485B3311646F1 /* ag-060.m4a */ = {isa = PBXFileReference; path = "ag-060.m4a"; sourceTree = "<group>"; };
@@ -11931,6 +11966,7 @@
 		58304D94460ECF1C974A0894 /* k-iso-4.m4a */ = {isa = PBXFileReference; path = "k-iso-4.m4a"; sourceTree = "<group>"; };
 		58322C3E07AA17ED75AB62CC /* lyalya_celebration_100_9.m4a */ = {isa = PBXFileReference; path = lyalya_celebration_100_9.m4a; sourceTree = "<group>"; };
 		58349B2F71F3788614875434 /* lex-si-21.m4a */ = {isa = PBXFileReference; path = "lex-si-21.m4a"; sourceTree = "<group>"; };
+		5838EA7C1962F7377F415A2C /* HappySpeechWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HappySpeechWidgetBundle.swift; sourceTree = "<group>"; };
 		583A6C33A68EC7A527462C5E /* aist.m4a */ = {isa = PBXFileReference; path = aist.m4a; sourceTree = "<group>"; };
 		583EF521D5B7496A223EACA2 /* l-syl-2.m4a */ = {isa = PBXFileReference; path = "l-syl-2.m4a"; sourceTree = "<group>"; };
 		58406A7DE1ACAD6965E8E7D8 /* shch-wm-1.m4a */ = {isa = PBXFileReference; path = "shch-wm-1.m4a"; sourceTree = "<group>"; };
@@ -12540,6 +12576,7 @@
 		6B0211806FC2D3B94B4CDA2F /* l-wm-36.m4a */ = {isa = PBXFileReference; path = "l-wm-36.m4a"; sourceTree = "<group>"; };
 		6B029D26D5A17BC4EB1BBB0A /* ch-sen-27.m4a */ = {isa = PBXFileReference; path = "ch-sen-27.m4a"; sourceTree = "<group>"; };
 		6B24E18B202D7ECAF2708953 /* r-wi-7.m4a */ = {isa = PBXFileReference; path = "r-wi-7.m4a"; sourceTree = "<group>"; };
+		6B28FA5E8CC3F396FF44B8B6 /* LessonSessionAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonSessionAttributes.swift; sourceTree = "<group>"; };
 		6B3727AE1E454A3363AEF5B4 /* GameTemplatesSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTemplatesSnapshotTests.swift; sourceTree = "<group>"; };
 		6B4287074197437BA89BA877 /* lyalya_transition_return_3.m4a */ = {isa = PBXFileReference; path = lyalya_transition_return_3.m4a; sourceTree = "<group>"; };
 		6B43B7822B2E35364AFC17E4 /* nozhi.m4a */ = {isa = PBXFileReference; path = nozhi.m4a; sourceTree = "<group>"; };
@@ -13914,6 +13951,7 @@
 		91287672E0AE450137578DE3 /* ARStoryQuestModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARStoryQuestModels.swift; sourceTree = "<group>"; };
 		9134B8E3AB141F8C6FAA1A9F /* lex-em-17.m4a */ = {isa = PBXFileReference; path = "lex-em-17.m4a"; sourceTree = "<group>"; };
 		913A23706CFE411F9D9A19C5 /* chemodan.m4a */ = {isa = PBXFileReference; path = chemodan.m4a; sourceTree = "<group>"; };
+		914469D42D71B341B9D453E7 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		915201D5D4B0140526FEA980 /* tvoritelnyy_igrayu_s_kotom.m4a */ = {isa = PBXFileReference; path = tvoritelnyy_igrayu_s_kotom.m4a; sourceTree = "<group>"; };
 		9158544118D344E87B4F9D54 /* rl-sen-2.m4a */ = {isa = PBXFileReference; path = "rl-sen-2.m4a"; sourceTree = "<group>"; };
 		91627B46CEBEB8760322A193 /* ch-sen-34.m4a */ = {isa = PBXFileReference; path = "ch-sen-34.m4a"; sourceTree = "<group>"; };
@@ -14240,6 +14278,7 @@
 		9A1622EC8340CD10D463F556 /* shch-wm-2.m4a */ = {isa = PBXFileReference; path = "shch-wm-2.m4a"; sourceTree = "<group>"; };
 		9A3969B7CE7BAC2293E1E8A6 /* dwh-df-35.m4a */ = {isa = PBXFileReference; path = "dwh-df-35.m4a"; sourceTree = "<group>"; };
 		9A3B27E2D177E93A827E3094 /* phon-ls-11.m4a */ = {isa = PBXFileReference; path = "phon-ls-11.m4a"; sourceTree = "<group>"; };
+		9A42E34FDC5DC3D8924D6BD7 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		9A42F54039EF497751BC62C0 /* s-prep-7.m4a */ = {isa = PBXFileReference; path = "s-prep-7.m4a"; sourceTree = "<group>"; };
 		9A489C041C47616B577277EA /* zh-syl-14.m4a */ = {isa = PBXFileReference; path = "zh-syl-14.m4a"; sourceTree = "<group>"; };
 		9A4BE1DC54A9A1C68A3F3120 /* zh-wf-16.m4a */ = {isa = PBXFileReference; path = "zh-wf-16.m4a"; sourceTree = "<group>"; };
@@ -15840,6 +15879,7 @@
 		C9723DE0985E027973B98E64 /* ProgressDashboardInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressDashboardInteractor.swift; sourceTree = "<group>"; };
 		C97BD26BB0CF668853E5B5D3 /* ch-tt-3.m4a */ = {isa = PBXFileReference; path = "ch-tt-3.m4a"; sourceTree = "<group>"; };
 		C985139B874DD86C079090C2 /* c-wf-2.m4a */ = {isa = PBXFileReference; path = "c-wf-2.m4a"; sourceTree = "<group>"; };
+		C9A21F22624F88843E572A32 /* ActivityKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ActivityKit.framework; path = System/Library/Frameworks/ActivityKit.framework; sourceTree = SDKROOT; };
 		C9A2894BD686948B414F5000 /* lyalya_setting_privacy.m4a */ = {isa = PBXFileReference; path = lyalya_setting_privacy.m4a; sourceTree = "<group>"; };
 		C9A4BB3200AB2A91653D9D53 /* sound_k_pack.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sound_k_pack.json; sourceTree = "<group>"; };
 		C9A87CF562011F2B940BAB63 /* ch-syl-27.m4a */ = {isa = PBXFileReference; path = "ch-syl-27.m4a"; sourceTree = "<group>"; };
@@ -17753,6 +17793,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CF5D965311FD5373C4E9906F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EFC04B6EF02266247BC5DD7F /* WidgetKit.framework in Frameworks */,
+				DAD2AD2FFA93B0879F24AB06 /* SwiftUI.framework in Frameworks */,
+				16A52F4BE57F610FA4EB9AA3 /* ActivityKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -17807,6 +17857,7 @@
 				A99CE31486125C1F866D19DD /* HappySpeech.app */,
 				D4017849D75AEA9F7FBF922A /* HappySpeechTests.xctest */,
 				5EB39DAFB6D720B283F5BF81 /* HappySpeechUITests.xctest */,
+				4654C5EEC956CC5EA7BF9437 /* HappySpeechWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -20596,8 +20647,10 @@
 				1033D0EDD185E9A28193ECD0 /* HappySpeech */,
 				77BF565C569EBAF859859F67 /* HappySpeechTests */,
 				0E7A2FF8298CAF48103863A5 /* HappySpeechUITests */,
+				A321F3F93C5112946925063F /* HappySpeechWidgetExtension */,
 				A6F14C93433CC65C38C21A70 /* Resources */,
 				BBA6C89938A42DD12C6CE1E9 /* seasonal */,
+				46A50FB43C906389CFF7BB3C /* Frameworks */,
 				080A0AE1AFD66C215CD4F9DB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -20613,6 +20666,16 @@
 				96B0233D5BD07F9CB74939A6 /* ARMirrorView.swift */,
 			);
 			path = ARMirror;
+			sourceTree = "<group>";
+		};
+		46A50FB43C906389CFF7BB3C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C9A21F22624F88843E572A32 /* ActivityKit.framework */,
+				9A42E34FDC5DC3D8924D6BD7 /* SwiftUI.framework */,
+				914469D42D71B341B9D453E7 /* WidgetKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		4C8B22D9EF06A6CD8430359D /* SoundHunter */ = {
@@ -23271,6 +23334,14 @@
 			path = Workers;
 			sourceTree = "<group>";
 		};
+		8BB081E95C2613D8DC71E8BE /* LiveActivities */ = {
+			isa = PBXGroup;
+			children = (
+				47D2E0C4F6B06D97C2D67F34 /* LessonSessionAttributesTests.swift */,
+			);
+			path = LiveActivities;
+			sourceTree = "<group>";
+		};
 		8BB5639061E0A451B1D5026D /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -23327,6 +23398,7 @@
 			children = (
 				C0B3B1653E269D3A00AD4A7E /* Achievements */,
 				D453C625671DFD80410B42F3 /* Health */,
+				C7CCC01C389A013685938D79 /* LiveActivities */,
 				376ADD3B4670AEF52D195E82 /* SeasonalEvents */,
 				558ABCA34FC5E40B5D51870E /* SiriShortcuts */,
 				1B88DB8B2276B49ACD5A7BFF /* Spotlight */,
@@ -24117,6 +24189,7 @@
 		A1E0B0612AB8E14F69C3A19D /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				8BB081E95C2613D8DC71E8BE /* LiveActivities */,
 				BAD07FAD38A5B23F2E080B03 /* PoseSequence */,
 			);
 			path = Features;
@@ -24133,6 +24206,15 @@
 				E488F39A296BFF7FA6082F6E /* ListenAndChooseView.swift */,
 			);
 			path = ListenAndChoose;
+			sourceTree = "<group>";
+		};
+		A321F3F93C5112946925063F /* HappySpeechWidgetExtension */ = {
+			isa = PBXGroup;
+			children = (
+				5838EA7C1962F7377F415A2C /* HappySpeechWidgetBundle.swift */,
+				2A4D97C82C4D63456A99F802 /* LessonSessionLiveActivity.swift */,
+			);
+			path = HappySpeechWidgetExtension;
 			sourceTree = "<group>";
 		};
 		A6F14C93433CC65C38C21A70 /* Resources */ = {
@@ -25766,6 +25848,15 @@
 				F530D217F8190A0253114AD1 /* lyalya_sibling_20.m4a */,
 			);
 			path = sibling;
+			sourceTree = "<group>";
+		};
+		C7CCC01C389A013685938D79 /* LiveActivities */ = {
+			isa = PBXGroup;
+			children = (
+				6B28FA5E8CC3F396FF44B8B6 /* LessonSessionAttributes.swift */,
+				114D4D1471ED5F8BF0BEADF2 /* LiveActivityManager.swift */,
+			);
+			path = LiveActivities;
 			sourceTree = "<group>";
 		};
 		C84AEEA450DCB0454A6A7D0F /* L */ = {
@@ -28293,10 +28384,12 @@
 				7A3494E97B86E05B4CF7837E /* Sources */,
 				ED9EFF263B036AB45CA5589D /* Resources */,
 				8F27177A9904315FEC107B89 /* Frameworks */,
+				93327F9921EF0A5C0157DD92 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				E505DE301E203D598A2519AF /* PBXTargetDependency */,
 			);
 			name = HappySpeech;
 			packageProductDependencies = (
@@ -28319,6 +28412,24 @@
 			productReference = A99CE31486125C1F866D19DD /* HappySpeech.app */;
 			productType = "com.apple.product-type.application";
 		};
+		EDB22877E8320FEB0A980638 /* HappySpeechWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 23B0454B475ACF9752621161 /* Build configuration list for PBXNativeTarget "HappySpeechWidgetExtension" */;
+			buildPhases = (
+				9BC93D743B861BCF7D2B9901 /* Sources */,
+				CF5D965311FD5373C4E9906F /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HappySpeechWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = HappySpeechWidgetExtension;
+			productReference = 4654C5EEC956CC5EA7BF9437 /* HappySpeechWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -28336,6 +28447,9 @@
 						TestTargetID = E693E860D757936401DB7BF8;
 					};
 					E693E860D757936401DB7BF8 = {
+						DevelopmentTeam = "";
+					};
+					EDB22877E8320FEB0A980638 = {
 						DevelopmentTeam = "";
 					};
 				};
@@ -28368,6 +28482,7 @@
 				E693E860D757936401DB7BF8 /* HappySpeech */,
 				80409027269012E01A4CED5F /* HappySpeechTests */,
 				A16D505572A70D1BDBEA0F10 /* HappySpeechUITests */,
+				EDB22877E8320FEB0A980638 /* HappySpeechWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -36649,6 +36764,7 @@
 				40F59440A61B3CBCD27DE5E4 /* KidLLMNarrationServiceTests.swift in Sources */,
 				3EA16BE5B0ACAF1963741734 /* KidSafetyFilterTests.swift in Sources */,
 				FC2608233C30F7C1894747BF /* LLMDecisionServiceTests.swift in Sources */,
+				1435EC157B2A5501D43AE088 /* LessonSessionAttributesTests.swift in Sources */,
 				6F0F59A1041EB9A64CD3E85A /* LessonVoiceWorkerTests.swift in Sources */,
 				126E41B7F4C8680E80C4CDAB /* LipSymmetryAnalyzerTests.swift in Sources */,
 				42F7F765CE94D97279813CA0 /* ListenAndChooseInteractorTests.swift in Sources */,
@@ -36949,6 +37065,7 @@
 				150D382504DB0B8C23E11B70 /* LLMInferenceActor.swift in Sources */,
 				7DDCE6EC79CEBB156DFE81FC /* LLMModelManager.swift in Sources */,
 				3A3F391FBBE19ADB876981B6 /* LLMPrompts.swift in Sources */,
+				96E931E87156483F4E170087 /* LessonSessionAttributes.swift in Sources */,
 				8128FE2E74229DB6912CF84B /* LessonVoiceWorker.swift in Sources */,
 				6D389035E02A752D8A52CF5C /* LipSymmetryAnalyzer.swift in Sources */,
 				FB93543132835971B9D4D0E0 /* ListenAndChooseDisplayLogic.swift in Sources */,
@@ -36957,6 +37074,7 @@
 				F2307462A7BCE3C538E35ED4 /* ListenAndChoosePresenter.swift in Sources */,
 				281846B6CE852982A7CC106C /* ListenAndChooseRouter.swift in Sources */,
 				5556AF63129ECDAA52CEB78E /* ListenAndChooseView.swift in Sources */,
+				65AD9113EDA5A53523466449 /* LiveActivityManager.swift in Sources */,
 				070FE8E55FABA421CC3ED543 /* LiveAuthService.swift in Sources */,
 				18CDB90C06F4A85BD83D6FF4 /* LiveServices.swift in Sources */,
 				AD0BA773540F50CBE89532D9 /* LocalLLMService.swift in Sources */,
@@ -37240,6 +37358,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9BC93D743B861BCF7D2B9901 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				654D7C6964A53A4DC8143789 /* HappySpeechWidgetBundle.swift in Sources */,
+				39235DCAB4D450D9AEFFF731 /* LessonSessionAttributes.swift in Sources */,
+				C2F0D35CCD776D8ABE478F4E /* LessonSessionLiveActivity.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -37252,6 +37380,11 @@
 			isa = PBXTargetDependency;
 			target = E693E860D757936401DB7BF8 /* HappySpeech */;
 			targetProxy = D0C690856F11C75D17CEBA8A /* PBXContainerItemProxy */;
+		};
+		E505DE301E203D598A2519AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EDB22877E8320FEB0A980638 /* HappySpeechWidgetExtension */;
+			targetProxy = F38C3BFA3864408D54C5A4E7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -37267,6 +37400,42 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HappySpeech.app/HappySpeech";
 			};
 			name = Debug;
+		};
+		37F5E391A42AC18851DA18DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_STRICT_CONCURRENCY = complete;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = HappySpeechWidgetExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ru.happyspeech.app.WidgetExtension;
+				PRODUCT_NAME = HappySpeechWidgetExtension;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		83465E1EB360AE6CD7D2DD05 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ENABLE_STRICT_CONCURRENCY = complete;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = HappySpeechWidgetExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ru.happyspeech.app.WidgetExtension;
+				PRODUCT_NAME = HappySpeechWidgetExtension;
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
 		};
 		8435D22B857BDCBAB068FAB8 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -37385,6 +37554,15 @@
 			buildConfigurations = (
 				8435D22B857BDCBAB068FAB8 /* Debug */,
 				EC80230CC64E5A2264C0F7C1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		23B0454B475ACF9752621161 /* Build configuration list for PBXNativeTarget "HappySpeechWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				37F5E391A42AC18851DA18DE /* Debug */,
+				83465E1EB360AE6CD7D2DD05 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

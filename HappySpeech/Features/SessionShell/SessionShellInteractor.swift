@@ -1,3 +1,4 @@
+import ActivityKit
 import Foundation
 import OSLog
 import UIKit
@@ -96,6 +97,16 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
             sessionStartTime: sessionStartTime
         )
         await presenter?.presentStartSession(response)
+
+        // Запускаем Live Activity (iOS 16.1+, без COPPA-данных)
+        if #available(iOS 16.1, *) {
+            await LiveActivityManager.shared.start(
+                sessionId: request.childId + "-" + UUID().uuidString,
+                lessonTitle: request.targetSoundId,
+                soundId: request.targetSoundId,
+                totalRounds: activities.count
+            )
+        }
     }
 
     func completeActivity(_ request: SessionShellModels.CompleteActivity.Request) async {
@@ -151,6 +162,21 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
 
         if response.isSessionComplete {
             await saveSession()
+            // Завершаем Live Activity
+            if #available(iOS 16.1, *) {
+                await LiveActivityManager.shared.end()
+            }
+        } else {
+            // Обновляем Live Activity после каждого раунда
+            if #available(iOS 16.1, *) {
+                let elapsed = Int(activeElapsedSeconds)
+                await LiveActivityManager.shared.update(
+                    round: currentIndex,
+                    score: Int(avgScoreValue() * 100),
+                    elapsed: elapsed,
+                    streak: consecutiveErrors == 0 ? (currentIndex - errorCount) : 0
+                )
+            }
         }
         await presenter?.presentCompleteActivity(response)
     }
@@ -192,6 +218,9 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
     func endSessionEarly() async {
         logger.info("Ending session early: \(self.currentIndex)/\(self.activities.count)")
         await saveSession()
+        if #available(iOS 16.1, *) {
+            await LiveActivityManager.shared.end()
+        }
     }
 
     // MARK: - Public read access (for SessionShellHost mirroring)
