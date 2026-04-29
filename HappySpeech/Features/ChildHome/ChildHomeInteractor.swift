@@ -21,6 +21,7 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
 
     private let childRepository: any ChildRepository
     private let sessionRepository: any SessionRepository
+    private let missionSyncService: any DailyMissionSyncServiceProtocol
     private let logger = Logger(subsystem: "ru.happyspeech", category: "ChildHome")
 
     /// Список ID скрытых ачивок (in-memory, на сессию).
@@ -31,10 +32,12 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
 
     init(
         childRepository: any ChildRepository,
-        sessionRepository: any SessionRepository
+        sessionRepository: any SessionRepository,
+        missionSyncService: any DailyMissionSyncServiceProtocol = MockDailyMissionSyncService()
     ) {
         self.childRepository = childRepository
         self.sessionRepository = sessionRepository
+        self.missionSyncService = missionSyncService
     }
 
     // MARK: - Public API
@@ -52,6 +55,8 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
 
             let response = buildResponse(profile: profile, recent: recentSessions)
             presenter?.presentFetch(response)
+            // Синхронизируем виджет: анонимные данные, без имени ребёнка (COPPA-safe)
+            await syncMissionWidget(response: response, streak: profile.currentStreak)
         } catch {
             logger.error("ChildHome fetch failed, fallback to seed: \(error.localizedDescription, privacy: .public)")
             // Fallback на seed-данные (M8.7) — гарантирует, что у ребёнка всегда есть что показать.
@@ -562,5 +567,37 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
                 isCompleted: true
             )
         ]
+    }
+
+    // MARK: - Widget Sync
+
+    /// Синхронизирует App Group UserDefaults для виджета.
+    /// COPPA: передаются только анонимные данные задания — без имени ребёнка.
+    private func syncMissionWidget(
+        response: ChildHomeModels.Fetch.Response,
+        streak: Int
+    ) async {
+        let mission = response.dailyMissionDetail
+        let title = response.dailyTargetSound.isEmpty ? "Звук Р" : "Звук \(response.dailyTargetSound)"
+        let description = String(localized: "\(mission.requiredReps) раундов")
+        let progress: Double = mission.requiredReps > 0
+            ? Double(mission.completedReps) / Double(mission.requiredReps)
+            : 0.0
+        let lyalyaState: String
+        switch response.mascotMood {
+        case .happy, .celebrating, .waving:
+            lyalyaState = "happy"
+        case .sad, .thinking:
+            lyalyaState = "sleepy"
+        default:
+            lyalyaState = "encouraging"
+        }
+        await missionSyncService.updateMission(
+            title: title,
+            description: description,
+            streakDays: streak,
+            lyalyaState: lyalyaState,
+            progress: min(progress, 1.0)
+        )
     }
 }

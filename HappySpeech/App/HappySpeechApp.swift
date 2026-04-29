@@ -106,6 +106,12 @@ struct HappySpeechApp: App {
                 .onOpenURL { url in
                     // Callback Google Sign-In redirect.
                     _ = GIDSignIn.sharedInstance.handle(url)
+                    // Deep link из виджета «Задание дня»
+                    if url.absoluteString == "happyspeech://daily-mission" {
+                        if #available(iOS 17.0, *) {
+                            DeepLinkRouter.shared.handleShowTodaysMission()
+                        }
+                    }
                 }
                 .onContinueUserActivity(CSSearchableItemActionType) { activity in
                     handleSpotlightActivity(activity)

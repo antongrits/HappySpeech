@@ -150,7 +150,8 @@ struct ChildHomeView: View {
         let presenter = ChildHomePresenter()
         let createdInteractor = ChildHomeInteractor(
             childRepository: container.childRepository,
-            sessionRepository: container.sessionRepository
+            sessionRepository: container.sessionRepository,
+            missionSyncService: container.dailyMissionSyncService
         )
         createdInteractor.presenter = presenter
         presenter.viewModel = viewModel
