@@ -8,15 +8,18 @@ struct ARZoneView: View {
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
 
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
     @State private var interactor: ARZoneInteractor?
     @State private var presenter: ARZonePresenter?
     @State private var router: ARZoneRouter?
     @State private var viewModelHolder = ARZoneDisplay()
 
-    /// Компактные устройства (iPhone SE, iPhone mini): < 375pt.
+    /// Компактные устройства (iPhone SE, iPhone mini) — compact horizontal size class.
     /// На них 3D-вид не грузим — слишком дорого и тесно, показываем 2D-эмодзи-фоллбэк.
+    /// На iPad (regular) — всегда показываем 3D.
     private var isCompactDevice: Bool {
-        UIScreen.main.bounds.width < 375
+        horizontalSizeClass == .compact
     }
 
     var body: some View {

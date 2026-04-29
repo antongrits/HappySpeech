@@ -204,14 +204,18 @@ struct CustomizationView: View {
                            : String(localized: "customization.a11y.save_hint"))
     }
 
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
     // MARK: - Responsive sizing
 
+    private var isCompactWidth: Bool { horizontalSizeClass == .compact }
+
     private var mascotSize: CGFloat {
-        UIScreen.main.bounds.width < 390 ? 160 : 200
+        isCompactWidth ? 160 : 200
     }
 
     private var skinScrollHeight: CGFloat {
-        UIScreen.main.bounds.width < 390 ? 156 : 180
+        isCompactWidth ? 156 : 180
     }
 
     // MARK: - Animation helpers
@@ -256,7 +260,10 @@ private struct SkinCard: View {
     let isSelected: Bool
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var isPressed = false
+
+    private var isCompactWidth: Bool { horizontalSizeClass == .compact }
 
     var body: some View {
         VStack(spacing: SpacingTokens.tiny) {
@@ -351,10 +358,10 @@ private struct SkinCard: View {
         }
     }
 
-    private var cardWidth: CGFloat  { UIScreen.main.bounds.width < 390 ? 100 : 120 }
-    private var cardHeight: CGFloat { UIScreen.main.bounds.width < 390 ? 136 : 160 }
-    private var skinWidth: CGFloat  { UIScreen.main.bounds.width < 390 ? 66  : 80  }
-    private var skinHeight: CGFloat { UIScreen.main.bounds.width < 390 ? 84  : 100 }
+    private var cardWidth: CGFloat  { isCompactWidth ? 100 : 120 }
+    private var cardHeight: CGFloat { isCompactWidth ? 136 : 160 }
+    private var skinWidth: CGFloat  { isCompactWidth ? 66  : 80  }
+    private var skinHeight: CGFloat { isCompactWidth ? 84  : 100 }
 }
 
 // MARK: - ColorPaletteCircle
@@ -365,9 +372,11 @@ private struct ColorPaletteCircle: View {
     let isSelected: Bool
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
-    private var touchTarget: CGFloat { UIScreen.main.bounds.width < 390 ? 48 : 56 }
-    private var circleSize: CGFloat  { UIScreen.main.bounds.width < 390 ? 40 : 44 }
+    private var isCompactWidth: Bool { horizontalSizeClass == .compact }
+    private var touchTarget: CGFloat { isCompactWidth ? 48 : 56 }
+    private var circleSize: CGFloat  { isCompactWidth ? 40 : 44 }
 
     var body: some View {
         ZStack {
