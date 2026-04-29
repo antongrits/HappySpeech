@@ -374,3 +374,44 @@ HappySpeechUITests/
 - `SettingsLicenseDetailSheet` получил `onOpenURL: (URL) -> Void` callback вместо прямого `@Environment(\.openURL)`
 - `SettingsView` управляет `showParentalGate` и `parentalGatePendingURL` state
 - Unit тесты: `HappySpeechTests/DesignSystem/ParentalGateTests.swift`
+
+---
+
+## ADR-V11-SPOTLIGHT — CoreSpotlight indexing
+
+**Дата:** 2026-04-29
+**Статус:** Accepted
+**Автор:** iOS Lead (Block K)
+
+### Контекст
+
+Plan v11 Block K — индексация уроков / достижений / сессий в iOS Spotlight Search.
+Пользователь ищет "звук Ш" в iOS → видит релевантные уроки и сессии в результатах.
+
+### Решение
+
+- **3 домена индексации:**
+  - `ru.happyspeech.spotlight.lessons` — все уроки из ContentService.allPacks()
+  - `ru.happyspeech.spotlight.achievements` — разблокированные достижения
+  - `ru.happyspeech.spotlight.sessions` — последние 30 сессий (prefix(30))
+- **COPPA-safe:** SpotlightSessionItem не содержит childName / childId. В индексе только soundId + score.
+- **Re-index throttle:** 5 минут между повторными индексациями
+- **Polling:** каждые 30 минут в фоне через Task.sleep
+- **Deep link:** onContinueUserActivity(CSSearchableItemActionType) → AppCoordinator routing
+  - `lesson_<id>` → LessonPlayer
+  - `achievement_<id>` → Achievements screen
+  - `session_<id>` → SessionHistory screen
+- **Actor isolation:** LiveSpotlightIndexer — `actor`, MockSpotlightIndexer — `actor`
+- **DI:** lazy property `spotlightIndexer` в AppContainer, mock в preview()
+
+### Альтернативы отклонены
+
+- **App Search (NSUserActivity search):** deprecated, менее гибкий
+- **Spotlight App Extension:** избыточен, требует отдельного extension target
+
+### Файлы
+
+- `Features/Extensions/Spotlight/SpotlightIndexer.swift`
+- `Features/Extensions/Spotlight/SpotlightIndexCoordinator.swift`
+- `Features/Extensions/Spotlight/SpotlightDeepLinkHandler.swift`
+- `HappySpeechTests/Unit/Services/SpotlightIndexerTests.swift`
