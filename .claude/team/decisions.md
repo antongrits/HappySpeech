@@ -592,3 +592,38 @@ Plan v10 Блок L1 (M13 extension #6) требует custom voice clone дет
 - `HappySpeech/Features/StutteringModule/FluencyDiary/FluencyDiaryInteractor.swift` — переписан (155 LOC), AVAudioRecorder + WhisperKit path
 - `HappySpeech/Features/StutteringModule/FluencyDiary/FluencyDiaryView.swift` — conditional analysisBanner
 - `HappySpeech/Resources/Localizable.xcstrings` — добавлен ключ `stuttering.diary.whisperkit_active`
+
+---
+
+## ADR-V10-FACEPOSE: Unified Face Pose (ARKit blendshapes + Vision landmarks)
+
+**Дата:** 2026-04-29
+**Status:** ACCEPTED
+
+### Context
+
+Plan v10 L7 (M13 extension #12) углубляет M5.3 Vision ML stack — объединяет ARKit 52 blendshapes (jawOpen / mouthPucker / mouthFunnel / mouthSmile / tongueOut) с Vision 76 landmarks через unified API.
+
+### Decision
+
+`UnifiedFacePoseWorker` предоставляет единый async API:
+- `analyze(faceAnchor:pixelBuffer:) async -> UnifiedFacePose` — ARKit blendshapes + Vision detect в одной структуре
+- `currentViseme(_ pose:) -> Viseme` — маппинг в 6 логопедических визем (closed/a/e/i/o/u) для real-time lip-sync маскота
+- Reuse существующих `AppleFaceLandmarksDetector` + `LipSymmetryAnalyzer` без изменений их API
+
+**ARMirror integration:** `ARMirrorDisplay.currentViseme: Viseme` — новое поле, обновляется из `blendshapeStream` (существующий поток) без создания нового `ARSession`. Минимально-инвазивно.
+
+**Fallback:** Vision landmarks = nil при недоступности — `lipSymmetry` дефолтно 1.0, остальные поля из ARKit.
+
+### Rationale
+
+- Combined data — ARKit blendshapes дают мышечное движение TrueDepth, Vision landmarks — fallback на фронтальную камеру без TrueDepth
+- 6 визем — стандарт логопедии для визуального feedback (закрыт/а/е/и/о/у)
+- Reuse существующих детекторов — нет новых ML-моделей, нет нового AVSession
+- COPPA-compliant — нет сохранения изображений, обработка in-memory per-frame
+
+### Files
+
+- `HappySpeech/ML/Vision/UnifiedFacePoseWorker.swift` — новый файл, 118 LOC
+- `HappySpeech/Features/AR/ARMirror/ARMirrorView.swift` — +16 LOC (facePoseWorker + currentViseme task + display field)
+- `HappySpeechTests/ML/Vision/UnifiedFacePoseWorkerTests.swift` — 5 unit-тестов, 99 LOC
