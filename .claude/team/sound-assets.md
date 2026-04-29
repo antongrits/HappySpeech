@@ -11,6 +11,7 @@
 |---|---|---|---|---|
 | UI sounds (.caf) | 16 | ~150 KB | `HappySpeech/Resources/Audio/UI/` (в репо) | ✅ M3.2 done |
 | Ляля voice brand (.m4a) | 171 | ~5.7 MB | `HappySpeech/Resources/Audio/Lyalya/` (в репо) | ✅ M3.3 + M3.7 + M3.7b + M3.7c + M3.7d + M3.7e done |
+| Ляля tuned voice (.m4a) | 50 | ~852 KB | `HappySpeech/Resources/Audio/Lyalya/tuned/` (в репо) | ✅ Sprint 12 Блок L1 done |
 | Content audio batch 1 (.m4a) | 1000 | 12.65 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 1 |
 | Content audio batch 2 (.m4a) | 1028 | 11.1 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 2 |
 | Content audio batch 3 (.m4a) | 681 | 8.36 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 3 |
@@ -395,6 +396,34 @@ COPYRIGHT RULE: каждый звук должен иметь verified CC0/Apach
 | `lyalya_voice_cheerful_preview.m4a` | Привет! Я Ляля. Давай играть! | +15% | +50Hz | 21.8 KB | 4.9s |
 
 **Ляля total:** 168 → 171
+
+---
+
+## Sprint 12 Блок L1 — Ляля Tuned Voice (50 файлов) ✅
+
+**Дата:** 2026-04-29
+**Генерация:** `_workshop/scripts/regen_lyalya_tuned.py` — edge-tts `ru-RU-SvetlanaNeural` + `rate=+20%` + `pitch=+100Hz` + `volume=+10%` → ffmpeg loudnorm -16 LUFS → AAC 16kHz mono 32kbps
+**Формат:** 16kHz mono AAC, 9–21 KB/файл
+**Путь:** `HappySpeech/Resources/Audio/Lyalya/tuned/`
+**Лицензия:** Microsoft edge-tts (outputs без copyright — cleared для App Store)
+**Назначение:** A/B compare с оригиналами; более child-like тембр для reward/encouragement моментов
+
+| Категория | Phrase IDs | Кол-во |
+|---|---|---|
+| Grammar feedback | grammar_correct_1/2/3, grammar_intro, grammar_try_again, grammar_hint, grammar_complete_easy/medium/hard | 9 |
+| Story voice-over | story_01..story_20 | 20 |
+| Rewards / session-end | session_excellent/good/try_again, reward_new/collection | 5 |
+| ChildHome / Encouragement | childhome_morning/play, encourage_01..04 | 6 |
+| Articulation instructions | artic_01/02/03 | 3 |
+| Transitions / WorldMap | transition_01/02, worldmap_intro/unlock | 4 |
+| Progress / Onboarding | progress_proud/keep_going, onboarding_start | 3 |
+| **ИТОГО** | — | **50** |
+
+**Валидация (grammar_correct_1.m4a):**
+- AAC LC, 16000 Hz, mono ✅
+- Estimated duration 2.976s ✅
+- audio bytes 10920 ✅ (< 50 KB)
+- Оригинальные файлы в `Lyalya/` и `Lyalya/lessons/` не изменены ✅
 
 ---
 
