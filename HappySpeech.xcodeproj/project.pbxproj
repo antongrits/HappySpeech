@@ -839,6 +839,7 @@
 		192CC15C0751129FC12FE1EB /* y-ph-27.m4a in Resources */ = {isa = PBXBuildFile; fileRef = EE5ABE386E6909F4F531843E /* y-ph-27.m4a */; };
 		192CE8E9456103F6C5B95E08 /* gr-case-4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7D4490B028DB594FD32621D7 /* gr-case-4.m4a */; };
 		192F1C134161594C818ED8B0 /* DiaryStorageWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A481A953C19E13DEF3920032 /* DiaryStorageWorker.swift */; };
+		3B7E2F1A9C4D5E6F7A8B9C0D /* WhisperTranscriptionWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5D6E7F8A9B0C1D2E3F4A5B /* WhisperTranscriptionWorker.swift */; };
 		193600B68FE0AC9A1AB40484 /* sh-wm-20.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F1047AFD9DD32D176780A2FA /* sh-wm-20.m4a */; };
 		1936095D0798600BC3F4A66D /* phon-mp-19.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 94CDE148D26DD07F83044F94 /* phon-mp-19.m4a */; };
 		1937E26A19DD2F52C7245A31 /* s-wi-63.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E74582C148E3B1BD89142EBE /* s-wi-63.m4a */; };
@@ -16270,6 +16271,7 @@
 		E1B108A346A320295FA50642 /* kh-wi-29.m4a */ = {isa = PBXFileReference; path = "kh-wi-29.m4a"; sourceTree = "<group>"; };
 		E1B7386A308FA56B41713B46 /* shar.m4a */ = {isa = PBXFileReference; path = shar.m4a; sourceTree = "<group>"; };
 		E1C4137D7BA450D7CECBCD31 /* FluencyAnalyzerWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FluencyAnalyzerWorker.swift; sourceTree = "<group>"; };
+		4C5D6E7F8A9B0C1D2E3F4A5B /* WhisperTranscriptionWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperTranscriptionWorker.swift; sourceTree = "<group>"; };
 		E1C5BA277A4B462C501C9F37 /* narr-c-2.m4a */ = {isa = PBXFileReference; path = "narr-c-2.m4a"; sourceTree = "<group>"; };
 		E1C75B6643DCBB07042DBBB1 /* lex-hf-8.m4a */ = {isa = PBXFileReference; path = "lex-hf-8.m4a"; sourceTree = "<group>"; };
 		E1D9B7DE962553C414BA3878 /* lex-sw-14.m4a */ = {isa = PBXFileReference; path = "lex-sw-14.m4a"; sourceTree = "<group>"; };
@@ -18579,6 +18581,7 @@
 				A481A953C19E13DEF3920032 /* DiaryStorageWorker.swift */,
 				E1C4137D7BA450D7CECBCD31 /* FluencyAnalyzerWorker.swift */,
 				47DD90904E526ECE336EF205 /* MetronomeWorker.swift */,
+				4C5D6E7F8A9B0C1D2E3F4A5B /* WhisperTranscriptionWorker.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -36957,6 +36960,7 @@
 				B38D7D51AA8F5B8C0C583F51 /* FamilyVoiceSplitView.swift in Sources */,
 				8777CF61DD7BFFCA8A9B97A9 /* FamilyVoiceView.swift in Sources */,
 				EA6176AC8F6CF3A49BDBCC87 /* FluencyAnalyzerWorker.swift in Sources */,
+				3B7E2F1A9C4D5E6F7A8B9C0D /* WhisperTranscriptionWorker.swift in Sources */,
 				8BDE22CB0234125CB8CAB599 /* FluencyDiaryInteractor.swift in Sources */,
 				074189D483D26A40098AD93D /* FluencyDiaryModels.swift in Sources */,
 				17ADFF448CBC76C068CB5B67 /* FluencyDiaryParentView.swift in Sources */,

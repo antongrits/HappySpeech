@@ -68,7 +68,7 @@ struct FluencyDiaryView: View {
         VStack(spacing: SpacingTokens.sp5) {
             mascotSection(interactor: interactor)
             instructionSection
-            stubAnalysisBanner
+            analysisBanner(interactor: interactor)
             textBlock(interactor: interactor)
             waveformSection(interactor: interactor)
             recordButton(interactor: interactor)
@@ -77,21 +77,39 @@ struct FluencyDiaryView: View {
         .padding(.vertical, SpacingTokens.sp5)
     }
 
-    private var stubAnalysisBanner: some View {
-        Label(
-            String(localized: "stuttering.diary.stub_banner"),
-            systemImage: "info.circle"
-        )
-        .font(TypographyTokens.caption(12))
-        .foregroundStyle(ColorTokens.Kid.inkMuted)
-        .multilineTextAlignment(.leading)
-        .padding(SpacingTokens.sp3)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
-                .fill(ColorTokens.Kid.surfaceAlt)
-        )
-        .accessibilityElement(children: .combine)
+    @ViewBuilder
+    private func analysisBanner(interactor: FluencyDiaryInteractor) -> some View {
+        if interactor.display.isStubAnalysis {
+            Label(
+                String(localized: "stuttering.diary.stub_banner"),
+                systemImage: "info.circle"
+            )
+            .font(TypographyTokens.caption(12))
+            .foregroundStyle(ColorTokens.Kid.inkMuted)
+            .multilineTextAlignment(.leading)
+            .padding(SpacingTokens.sp3)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                    .fill(ColorTokens.Kid.surfaceAlt)
+            )
+            .accessibilityElement(children: .combine)
+        } else {
+            Label(
+                String(localized: "stuttering.diary.whisperkit_active"),
+                systemImage: "checkmark.circle"
+            )
+            .font(TypographyTokens.caption(12))
+            .foregroundStyle(ColorTokens.Kid.inkMuted)
+            .multilineTextAlignment(.leading)
+            .padding(SpacingTokens.sp3)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                    .fill(ColorTokens.Kid.surfaceAlt)
+            )
+            .accessibilityElement(children: .combine)
+        }
     }
 
     private func mascotSection(interactor: FluencyDiaryInteractor) -> some View {
