@@ -25,6 +25,10 @@ protocol RepeatAfterModelBusinessLogic: AnyObject {
 //   passed=false) — чтобы не бесить ребёнка.
 // * Скоринг — `RepeatScoring.score(transcript:target:confidence:)`.
 // * Итог сессии: нормализованный средний лучший-за-слово score.
+//
+// Block H: KidLLMNarrationService интегрирован для адаптивного feedback.
+// Feedback строки больше не hardcoded — берутся из LLM (Tier A) с
+// fallback на PrecannedNarrations.
 
 @MainActor
 final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
@@ -33,6 +37,7 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
 
     var presenter: (any RepeatAfterModelPresentationLogic)?
 
+    private var narrationService: (any KidLLMNarrationServiceProtocol)?
     private let logger = HSLogger.asr
 
     // MARK: - Tunables
@@ -51,6 +56,18 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
     /// Лучший скор по каждому слову (по id). Используется для итогового
     /// усреднения.
     private var bestScorePerWord: [String: Float] = [:]
+
+    // MARK: - Init
+
+    init(narrationService: (any KidLLMNarrationServiceProtocol)? = nil) {
+        self.narrationService = narrationService
+    }
+
+    // MARK: - Block H: подключение narrationService из View
+
+    func connect(narrationService: any KidLLMNarrationServiceProtocol) {
+        self.narrationService = narrationService
+    }
 
     // MARK: - loadSession
 
@@ -134,25 +151,49 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
         attemptsLeft = max(0, attemptsLeft - 1)
         let canAdvance = passed || attemptsLeft == 0
 
-        let feedback: String
-        if passed {
-            feedback = String(localized: "repeat.feedback.great")
-        } else if attemptsLeft == 0 {
-            feedback = String(localized: "repeat.feedback.forced_advance")
-        } else {
-            feedback = String(localized: "repeat.feedback.try_again")
-        }
-
         logger.info("repeat evaluate word=\(word.id, privacy: .public) score=\(score) passed=\(passed) attemptsLeft=\(self.attemptsLeft)")
+
+        // Показываем presenter сразу со статичным feedback, затем обновляем
+        // через LLM в фоне (Block H).
+        let staticFeedback: String
+        if passed {
+            staticFeedback = String(localized: "repeat.feedback.great")
+        } else if attemptsLeft == 0 {
+            staticFeedback = String(localized: "repeat.feedback.forced_advance")
+        } else {
+            staticFeedback = String(localized: "repeat.feedback.try_again")
+        }
 
         let response = RepeatAfterModelModels.EvaluateAttempt.Response(
             score: score,
             passed: passed,
-            feedback: feedback,
+            feedback: staticFeedback,
             attemptsLeft: attemptsLeft,
             canAdvance: canAdvance
         )
         presenter?.presentEvaluateAttempt(response)
+
+        // Block H: если есть narrationService — загружаем LLM feedback асинхронно.
+        // Presenter обновится когда LLM ответит (не блокирует UI).
+        if let narrationService, !canAdvance {
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                let scoreInt = Int(score * 100)
+                let llmFeedback = await narrationService.generateAdaptiveFeedback(
+                    score: scoreInt,
+                    soundId: word.soundGroup
+                )
+                guard !Task.isCancelled else { return }
+                let updatedResponse = RepeatAfterModelModels.EvaluateAttempt.Response(
+                    score: score,
+                    passed: passed,
+                    feedback: llmFeedback,
+                    attemptsLeft: self.attemptsLeft,
+                    canAdvance: canAdvance
+                )
+                self.presenter?.presentEvaluateAttempt(updatedResponse)
+            }
+        }
     }
 
     // MARK: - advanceWord

@@ -875,3 +875,58 @@ Block Q реализует Layer 3 после генерации 10 state-илл
 - `HappySpeech/App/HappySpeechApp.swift` — `.environment(\.mascotLipSyncState, ...)`
 - `HappySpeech/Features/Extensions/Achievements/AchievementsView.swift` — +HSConfettiView medal preset
 - `project.yml` — +Down package + dependency
+---
+
+### [2026-04-29] [CTO] ADR-V11-LLM-KID — On-device Qwen в kid circuit (Block H)
+
+**Контекст:** Plan v11 Block H — углубление LLM usage в kid-facing screens.
+Kid circuit ранее использовал только RuleBasedDecisionService. Цель — добавить
+динамические повествования (NarrativeQuest), адаптивный feedback (RepeatAfterModel)
+и контекстные подсказки без нарушения COPPA.
+
+**Решение:**
+- `KidLLMNarrationService` (protocol + Live + Mock) поверх `LLMDecisionServiceProtocol`
+- `KidSafetyFilter` (actor) — output sanitization: banned words, max 30 слов / 3 предложения
+- `PrecannedNarrations` — 30+ hardcoded фраз как безопасный fallback
+- Strict system prompt через существующие decision points (#4 encouragement, #16 narrativeStep, #12 customPhrase)
+- NSCache<NSString, CacheEntry> с TTL 1 час для частых prompts
+- Timeout 2 сек для narration, 1.5 сек для feedback/hints — fallback при превышении
+- `HintButtonView` — переиспользуемая кнопка-подсказка для любой игры
+- `KidHintProvider` (@Observable) — Environment helper для hint management
+
+**COPPA соблюдение:**
+- На-device only (никаких HF API вызовов в kid circuit)
+- `childName = ""` в prompts — никаких личных данных
+- Output проходит через KidSafetyFilter перед показом
+- Fallback на PrecannedNarrations если LLM unsafe / timeout / unavailable
+
+**Интеграции:**
+- `NarrativeQuestInteractor` — prefetch LLM нарратив следующего этапа в фоне
+- `RepeatAfterModelInteractor` — async LLM feedback после оценки попытки
+- `NarrativeQuestView` — HintButtonView в stageNarrationView
+- `AppContainer` — lazy `kidLLMNarrationService`, mock в preview()
+
+**Альтернативы:**
+- Cloud LLM (OpenAI / Anthropic) — отклонено (COPPA, latency, cost, offline-first)
+- Только rule-based для детей — отклонено (теряем динамичность нарраций)
+- Отдельный LLM endpoint — отклонено (сложность, дублирование инфраструктуры)
+
+**Риски:**
+- Qwen не загружен на симуляторе → graceful fallback покрыт PrecannedNarrations
+- LLM генерирует нежелательный контент → KidSafetyFilter + banned words list
+- Latency слишком высокая → timeout 2с / 1.5с + prefetch для narration
+
+**Files created:**
+- `HappySpeech/ML/LLM/KidSafetyFilter.swift` — actor, output sanitization
+- `HappySpeech/ML/LLM/PrecannedNarrations.swift` — 30+ fallback фраз
+- `HappySpeech/ML/LLM/KidLLMNarrationService.swift` — protocol + Live + Mock
+- `HappySpeech/Features/LessonPlayer/Workers/KidHintProvider.swift` — Environment helper + HintButtonView
+- `HappySpeechTests/ML/KidSafetyFilterTests.swift` — 11 тестов
+- `HappySpeechTests/ML/KidLLMNarrationServiceTests.swift` — 9 тестов
+
+**Files updated:**
+- `HappySpeech/Features/LessonPlayer/NarrativeQuest/NarrativeQuestInteractor.swift` — narrationService + prefetch
+- `HappySpeech/Features/LessonPlayer/NarrativeQuest/NarrativeQuestView.swift` — HintButtonView + connect()
+- `HappySpeech/Features/LessonPlayer/RepeatAfterModel/RepeatAfterModelInteractor.swift` — narrationService + connect()
+- `HappySpeech/Features/LessonPlayer/RepeatAfterModel/RepeatAfterModelView.swift` — connect() в startSessionOnce
+- `HappySpeech/App/DI/AppContainer.swift` — kidLLMNarrationService lazy property
