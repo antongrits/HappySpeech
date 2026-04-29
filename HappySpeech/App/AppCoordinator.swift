@@ -32,6 +32,7 @@ enum AppRoute: Hashable {
     case familyCalendar
     case familyVoice
     case familyVoiceSplit
+    case familyVoiceLibrary
     case stutteringHome
     case fluencyDiaryParent
     case siblingMultiplayer(childId: String)
@@ -324,6 +325,12 @@ struct AppCoordinatorView: View {
                     parentId: "local-parent",
                     realmActor: container.realmActor
                 )
+            }
+            .environment(\.circuitContext, .parent)
+
+        case .familyVoiceLibrary:
+            NavigationStack {
+                FamilyVoiceLibraryView(parentId: "local-parent")
             }
             .environment(\.circuitContext, .parent)
 

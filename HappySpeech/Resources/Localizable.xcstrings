@@ -19984,6 +19984,105 @@
           }
         }
       }
+    },
+    "family.voice.library.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Семейные записи"
+          }
+        }
+      }
+    },
+    "family.voice.library.add": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Записать"
+          }
+        }
+      }
+    },
+    "family.voice.library.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока нет записей. Запишите голос — Ляля будет говорить им"
+          }
+        }
+      }
+    },
+    "family.voice.library.delete_confirm": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалить запись?"
+          }
+        }
+      }
+    },
+    "family.voice.library.rerecord": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перезаписать"
+          }
+        }
+      }
+    },
+    "family.voice.library.play": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Воспроизвести"
+          }
+        }
+      }
+    },
+    "family.voice.library.last_recorded": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Записано: %@"
+          }
+        }
+      }
+    },
+    "family.voice.priority_used": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Используется ваш голос"
+          }
+        }
+      }
+    },
+    "family.voice.library.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ляля говорит вашим голосом"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
