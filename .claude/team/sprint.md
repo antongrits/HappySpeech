@@ -274,3 +274,28 @@ M6 App Store      Sprint 12  tests+content DONE, Firestore deploy DONE, TestFlig
 **Total Plan v9:** 15 коммитов, ~10 078 LOC новый код, 970 test functions, 469 snapshot PNG.
 
 **Готовность к v1.1.0 release tag:** READY
+
+---
+
+## Plan v10 (2026-04-29) — ЗАВЕРШЁН
+
+**Все Critical fixes + 10 extensions реализованы:**
+
+[x] A Real Lyalya voice (d3aa51f) — 735 m4a + LessonVoiceWorker + 19 tests
+[x] B Real Lottie (eccd4f8) — 8 procedural animations
+[x] C Universal app (61be33a) — iPhone+iPad+Mac
+[x] D Lyalya wrapper improve (7193185) — breathing + ADR-V10-RIVE
+[x] L1 Tuned voice (5b5ede5) — 50 phrases + ADR-V10-VOICE-CLONE
+[x] L2 Sibling multiplayer (c649d05) — 2420 LOC + 19 tests
+[x] L3 Seasonal events (e03ed17) — 150 units + 320 LOC
+[x] L4 Real WhisperKit (935946c) — dysfluency analyzer
+[x] L5 Family voice library (516ee0d) — 380 LOC + priority chain
+[x] L6 Achievements (842b949) — 1360 LOC + Realm v7
+[x] L7 Unified Face Pose (e54c027) — ARKit + Vision
+[x] L8 Mini puzzles (4fce7a9) — 500 LOC + 3 games
+[x] L9 Family chat (7670da3) — 408 LOC + Widget-look
+[x] L10 ML insights (8970076) — 414 LOC
+
+**Total Plan v10:** 15 коммитов, ~7900 LOC новый код, 151 ru-ключей, 969 voice phrases.
+
+**Готовность к v1.0.0 release tag:** READY
