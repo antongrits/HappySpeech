@@ -510,3 +510,49 @@ firebase firestore:rules:get | head -20
 - Future M14: hire Rive Designer → полная кастомизация с нуля (post-diploma)
 
 **Files affected:** `HappySpeech/DesignSystem/Components/LyalyaMascotView.swift` (breathing anim added)
+
+---
+
+## ADR-V10-VOICE-CLONE: Custom voice clone Ляли отложен до post-v1.0
+
+**Дата:** 2026-04-29
+**Status:** ACCEPTED — DEFER
+
+### Context
+
+Plan v10 Блок L1 (M13 extension #6) требует custom voice clone детского голоса 10-12 лет для уникальной Ляли. researcher (agent abd5c4f26ee4e38d3) исследовал 4 open-source voice cloning solutions:
+
+| Модель | License | Размер | Russian | Zero-shot | iOS on-device |
+|---|---|---|---|---|---|
+| coqui-ai/XTTS-v2 | CPML (не-OSS) | 7+ GB | yes | yes | no |
+| ResembleAI/chatterbox | MIT | ~3.2 GB RAM | yes | yes | экспериментально |
+| snakers4/silero-tts | AGPLv3 (не App Store) | 85 MB | yes | no | no |
+| edge-tts SvetlanaNeural | Microsoft cloud | — | yes | no | только через embed |
+
+### Decision
+
+**Defer custom voice cloning to post-v1.0** (M14 — hire voice talent).
+
+Применён workaround **Variant B** в текущем Sprint 12:
+- Edge-tts SvetlanaNeural с extreme tuning (`rate=+20%`, `pitch=+100Hz`, `volume=+10%`)
+- Регенерированы top-50 most-used Lyalya phrases в `Audio/Lyalya/tuned/` (50 файлов, 852 KB)
+- Существующие 171 base + 735 lesson voices не трогаем (они уже хорошего качества)
+- В runtime LessonVoiceWorker может опционально использовать tuned-версии для наиболее эмоциональных моментов (reward / encouragement)
+
+### Rationale
+
+1. Ни один OSS voice clone не приемлем: license + size + iOS-compatibility
+2. CC0 детский голос (русский 10-12 лет) в открытом доступе не существует
+3. Tuned edge-tts уже делает SvetlanaNeural более child-like (выше тональность, быстрее темп)
+4. Real path вперёд (post-v1.0): нанять voice talent (~5-15k руб на фрилансе) для записи 200-300 фраз
+
+### Consequences
+
+- Sprint 12 closed без блокировки на ML research
+- License-clean (edge-tts проксирует через Microsoft cloud для генерации, выходные .m4a — owned by us, OK)
+- Voice — не уникальный child voice clone, но close enough после tuning
+- Future M14: hire voice talent, replay phrases through professional studio
+
+**Files affected:**
+- `HappySpeech/Resources/Audio/Lyalya/tuned/` — 50 новых tuned .m4a
+- `_workshop/scripts/regen_lyalya_tuned.py` — скрипт генерации
