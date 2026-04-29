@@ -21778,6 +21778,50 @@
           }
         }
       }
+    },
+    "spotlight.session.title %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Занятие на звук %@"
+          }
+        }
+      }
+    },
+    "spotlight.session.description %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Балл: %lld%%"
+          }
+        }
+      }
+    },
+    "spotlight.lesson.title %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Урок звука %@"
+          }
+        }
+      }
+    },
+    "spotlight.lesson.description %@ %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражнение на звук %@ — этап %@"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

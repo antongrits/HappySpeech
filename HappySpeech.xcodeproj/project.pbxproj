@@ -4502,6 +4502,7 @@
 		81E157ADBA18E7E46E5D5D2B /* sh-prep-18.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7150BB22F0D17F94F04BA07D /* sh-prep-18.m4a */; };
 		81E77E3BEF431ED548B29B62 /* repeat-after-model_S.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 39CA3922B758F4FCE95AC2C3 /* repeat-after-model_S.mp4 */; };
 		81EE45143E4F10714A06F88A /* kakaya_kholodnaya_voda.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4B83F98756695CD767413154 /* kakaya_kholodnaya_voda.m4a */; };
+		81F053638BD78EDFFEF9EEC7 /* SpotlightIndexerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC675E6B43C95A12BB139267 /* SpotlightIndexerTests.swift */; };
 		81FB4E0BAD15EE675C088E43 /* r-wi-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AEB5D3116F76321105288C12 /* r-wi-0.m4a */; };
 		82025982200D6BCD4BEC2A84 /* TypographyTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30EC50811607E83514091DFB /* TypographyTokens.swift */; };
 		82028684C06C4A49942137B4 /* rl-sen-34.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9383832CEDA34B9CE66FBC52 /* rl-sen-34.m4a */; };
@@ -5208,6 +5209,7 @@
 		96B8F99EDC2BD92271E08C01 /* phon-pg-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F80E04C2B1B43E65212FE699 /* phon-pg-0.m4a */; };
 		96BB456ED50786A5435C5058 /* ch-df-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 632ABF982B64801E6271BABC /* ch-df-6.m4a */; };
 		96CD23E7F3FA6674EFBE507E /* c-wf-4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FD96738BE21E72B4EDBF19F3 /* c-wf-4.m4a */; };
+		96D5343DA5FADA6EF73EE5F6 /* SpotlightIndexCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8A22DCB69824EC98C06A5C /* SpotlightIndexCoordinator.swift */; };
 		96D791DCC9CDD82AE73D9EAA /* sh-wi-54.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 65C07D5B9EB2FEB0B0C94DB4 /* sh-wi-54.m4a */; };
 		96DA2689D4E3F5AABEEA9C4A /* ag-052.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8CF7E1641484FCA5453076C7 /* ag-052.m4a */; };
 		96E6E4FE6F29A20F94542AE6 /* na_lugu_mirno_pasyotsya_belaya_propusk.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D37609A4F104D406E3C0587C /* na_lugu_mirno_pasyotsya_belaya_propusk.m4a */; };
@@ -5431,6 +5433,7 @@
 		9CFB7AE7689CC8732DF2BF34 /* lex-fe-12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C4D47F4FD89169CD94C2D263 /* lex-fe-12.m4a */; };
 		9D071B6A31262DAD9DFD8464 /* sh-st-7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9BB5C79392B0BE20E82904D5 /* sh-st-7.m4a */; };
 		9D1173D27BCEEEB925C4D7B7 /* phon-wb-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A78B38F4152F099722132DF5 /* phon-wb-6.m4a */; };
+		9D121DF3F5C152A3CD3D86CA /* SpotlightIndexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3604118EB3A2645FE843638 /* SpotlightIndexer.swift */; };
 		9D15F13A8877BAE1F3E77853 /* y-wf-19.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F473D691E3F03C670848C832 /* y-wf-19.m4a */; };
 		9D197EA47E94A2883F54B384 /* ag-191.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8C57DD91276118FD850F8F71 /* ag-191.m4a */; };
 		9D1DF91A9BCE29273986F109 /* br-201.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D1EAB470DB0DF15673908AB9 /* br-201.m4a */; };
@@ -7639,6 +7642,7 @@
 		DCA1686B6D81908D41D7B558 /* kh-syl-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F3517F52B52E5275EE215447 /* kh-syl-6.m4a */; };
 		DCA7D72E8519EE1201EAE70A /* ch-tt-26.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0B6C6F32CFFDD4AC935C9F93 /* ch-tt-26.m4a */; };
 		DCADC6F7EDFB36FD98941360 /* lyalya_praise_11.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BC35CF9267BEEEC5753A40DE /* lyalya_praise_11.m4a */; };
+		DCAE09CE129F366A6F7001B8 /* SpotlightDeepLinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AEAC5FEFC6DB835A46E097 /* SpotlightDeepLinkHandler.swift */; };
 		DCB7F80C73EA9A3B7A2CDABE /* story_13.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F656952793AC5AB5D0E430AB /* story_13.m4a */; };
 		DCB963E062D80DE2405C4CAF /* y-ph-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B6F9EE697C56855900131599 /* y-ph-0.m4a */; };
 		DCC3EAB7045A7FB83390A95D /* shch-wm-31.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 61B3C742537F484D064A95FF /* shch-wm-31.m4a */; };
@@ -12202,6 +12206,7 @@
 		61997617CCF0D1743C3488EF /* c-sen-31.m4a */ = {isa = PBXFileReference; path = "c-sen-31.m4a"; sourceTree = "<group>"; };
 		619F6495CA0D7EFBBA2925E1 /* lyalya_stuttering_19.m4a */ = {isa = PBXFileReference; path = lyalya_stuttering_19.m4a; sourceTree = "<group>"; };
 		61A1D06E4CBB93478DCD29D8 /* ptitsa_letit_ptitsy_letyat.m4a */ = {isa = PBXFileReference; path = ptitsa_letit_ptitsy_letyat.m4a; sourceTree = "<group>"; };
+		61AEAC5FEFC6DB835A46E097 /* SpotlightDeepLinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightDeepLinkHandler.swift; sourceTree = "<group>"; };
 		61B063F6DC93B651B6B927C2 /* MotionTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionTokens.swift; sourceTree = "<group>"; };
 		61B3595260A8EF2DCBA042DD /* l-diff-2.m4a */ = {isa = PBXFileReference; path = "l-diff-2.m4a"; sourceTree = "<group>"; };
 		61B3C742537F484D064A95FF /* shch-wm-31.m4a */ = {isa = PBXFileReference; path = "shch-wm-31.m4a"; sourceTree = "<group>"; };
@@ -14830,6 +14835,7 @@
 		AC4E91E24B8443920739D663 /* kh-wf-13.m4a */ = {isa = PBXFileReference; path = "kh-wf-13.m4a"; sourceTree = "<group>"; };
 		AC50C977DBBD7BF03F09D511 /* lex-bp-20.m4a */ = {isa = PBXFileReference; path = "lex-bp-20.m4a"; sourceTree = "<group>"; };
 		AC524A5753147A8FAC375826 /* phon-ls-6.m4a */ = {isa = PBXFileReference; path = "phon-ls-6.m4a"; sourceTree = "<group>"; };
+		AC675E6B43C95A12BB139267 /* SpotlightIndexerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightIndexerTests.swift; sourceTree = "<group>"; };
 		AC6CDAE23D99168FF4121A38 /* butterfly-catch.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "butterfly-catch.json"; sourceTree = "<group>"; };
 		AC7BE291865A2DBE493E6F49 /* shch-ph-3.m4a */ = {isa = PBXFileReference; path = "shch-ph-3.m4a"; sourceTree = "<group>"; };
 		AC7D04EDBD184297544E5BCF /* lyalya_hint_15.m4a */ = {isa = PBXFileReference; path = lyalya_hint_15.m4a; sourceTree = "<group>"; };
@@ -16458,6 +16464,7 @@
 		DC6BBC20925A2FB3F54650FA /* shch-syl-21.m4a */ = {isa = PBXFileReference; path = "shch-syl-21.m4a"; sourceTree = "<group>"; };
 		DC6E7A58E5ECCBF8C226A7A5 /* br-083.m4a */ = {isa = PBXFileReference; path = "br-083.m4a"; sourceTree = "<group>"; };
 		DC80E6AC8CA677EAED39D4C2 /* dwh-wf-2.m4a */ = {isa = PBXFileReference; path = "dwh-wf-2.m4a"; sourceTree = "<group>"; };
+		DC8A22DCB69824EC98C06A5C /* SpotlightIndexCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightIndexCoordinator.swift; sourceTree = "<group>"; };
 		DC952E00C6D99449A1E20D35 /* shch-wi-22.m4a */ = {isa = PBXFileReference; path = "shch-wi-22.m4a"; sourceTree = "<group>"; };
 		DCAC86E5BC3F0BB67DB19958 /* ch-wm-14.m4a */ = {isa = PBXFileReference; path = "ch-wm-14.m4a"; sourceTree = "<group>"; };
 		DCB285196B8051744B5A54E9 /* poschitay_ostanovki_raz_dva.m4a */ = {isa = PBXFileReference; path = poschitay_ostanovki_raz_dva.m4a; sourceTree = "<group>"; };
@@ -17243,6 +17250,7 @@
 		F347E06BF19089D5A454E686 /* lyalya_sibling_14.m4a */ = {isa = PBXFileReference; path = lyalya_sibling_14.m4a; sourceTree = "<group>"; };
 		F3517F52B52E5275EE215447 /* kh-syl-6.m4a */ = {isa = PBXFileReference; path = "kh-syl-6.m4a"; sourceTree = "<group>"; };
 		F35853C4123AF98A8FB21AFA /* ag-198.m4a */ = {isa = PBXFileReference; path = "ag-198.m4a"; sourceTree = "<group>"; };
+		F3604118EB3A2645FE843638 /* SpotlightIndexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightIndexer.swift; sourceTree = "<group>"; };
 		F3619E3F62654CA0DBAFECF1 /* k-wf-23.m4a */ = {isa = PBXFileReference; path = "k-wf-23.m4a"; sourceTree = "<group>"; };
 		F369226E7260702CC6072678 /* zh-sen-24.m4a */ = {isa = PBXFileReference; path = "zh-sen-24.m4a"; sourceTree = "<group>"; };
 		F36A0A56A66DB231CD7741D5 /* y-wf-3.m4a */ = {isa = PBXFileReference; path = "y-wf-3.m4a"; sourceTree = "<group>"; };
@@ -18657,6 +18665,16 @@
 				FBA3C98CEC9AB0F01CE6BF1A /* CustomizationVoicePreviewWorker.swift */,
 			);
 			path = Workers;
+			sourceTree = "<group>";
+		};
+		1B88DB8B2276B49ACD5A7BFF /* Spotlight */ = {
+			isa = PBXGroup;
+			children = (
+				61AEAC5FEFC6DB835A46E097 /* SpotlightDeepLinkHandler.swift */,
+				DC8A22DCB69824EC98C06A5C /* SpotlightIndexCoordinator.swift */,
+				F3604118EB3A2645FE843638 /* SpotlightIndexer.swift */,
+			);
+			path = Spotlight;
 			sourceTree = "<group>";
 		};
 		1C1918C54E95B94F11E4DE63 /* Mocks */ = {
@@ -23269,6 +23287,7 @@
 				C0B3B1653E269D3A00AD4A7E /* Achievements */,
 				D453C625671DFD80410B42F3 /* Health */,
 				376ADD3B4670AEF52D195E82 /* SeasonalEvents */,
+				1B88DB8B2276B49ACD5A7BFF /* Spotlight */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -26044,6 +26063,7 @@
 				FAA882DF0FA0C8B522E021A6 /* MockRepositoryTests.swift */,
 				B7CEB879873995A9CF77F575 /* SoundServiceTests.swift */,
 				66AF0C5720F5324DB99263BE /* SpacedRepetitionEngineTests.swift */,
+				AC675E6B43C95A12BB139267 /* SpotlightIndexerTests.swift */,
 				14E65767FF108F1ADE357BEF /* SyncServiceTests.swift */,
 			);
 			path = Services;
@@ -36622,6 +36642,7 @@
 				4483DD898EA1E091C9107EBA /* SpacedRepetitionEngineTests.swift in Sources */,
 				8BA531EA19467F975717F084 /* SpecialistInteractorTests.swift in Sources */,
 				15D7CFD34278746C23E35A24 /* SpecialistSnapshotTests.swift in Sources */,
+				81F053638BD78EDFFEF9EEC7 /* SpotlightIndexerTests.swift in Sources */,
 				5F4BC8E52DEB1910D4156E6F /* StoryCompletionInteractorTests.swift in Sources */,
 				7E77C4425BF38B00494E5CA2 /* StoryPlayerSmokeTests.swift in Sources */,
 				C82CB862A24EE37FB938E556 /* StutteringInteractorTests.swift in Sources */,
@@ -37109,6 +37130,9 @@
 				F42E0CCB5009FEB7DA4D5F76 /* SpecialistReportsView.swift in Sources */,
 				2A759E0EA4CE7F301532DD1B /* SpecialistRouter.swift in Sources */,
 				28BD9352B9C7FE7FC1F9AC2D /* SplashView.swift in Sources */,
+				DCAE09CE129F366A6F7001B8 /* SpotlightDeepLinkHandler.swift in Sources */,
+				96D5343DA5FADA6EF73EE5F6 /* SpotlightIndexCoordinator.swift in Sources */,
+				9D121DF3F5C152A3CD3D86CA /* SpotlightIndexer.swift in Sources */,
 				7FBFFAB7E3821278849ADFDA /* SpotlightOverlay.swift in Sources */,
 				55B627DCDF10D270B6D8FD91 /* SpotlightRegistry.swift in Sources */,
 				7A3E56D7FC0AC7DDC494B2B0 /* StoryCompletionDisplayLogic.swift in Sources */,
