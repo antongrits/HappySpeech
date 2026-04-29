@@ -556,3 +556,39 @@ Plan v10 Блок L1 (M13 extension #6) требует custom voice clone дет
 **Files affected:**
 - `HappySpeech/Resources/Audio/Lyalya/tuned/` — 50 новых tuned .m4a
 - `_workshop/scripts/regen_lyalya_tuned.py` — скрипт генерации
+
+---
+
+### [2026-04-29] [ml-trainer] ADR-V10-WHISPERKIT: Real WhisperKit ASR в FluencyDiary (F5 Stub → Real)
+
+**Status:** ACCEPTED with conditional graceful fallback
+
+**Context:** Plan v9 F5 (StutteringModule, commit ece212d) реализовал FluencyDiaryInteractor с stub-анализом — transcript = display.currentText (текст упражнения), а не реальная речь ребёнка. Баннер "Анализ временно использует тестовые данные" показывался всегда.
+
+**Decision:** Заменить stub-путь на реальный WhisperKit ASR + dysfluency heuristics с обязательным graceful fallback к stub при недоступности модели.
+
+**Implementation:**
+1. `WhisperTranscriptionWorker` — новый @MainActor worker, загружает `openai/whisper-tiny` при первом вызове, возвращает `WhisperTranscript?` (nil при ошибке).
+2. `FluencyAnalyzerWorker` расширен двумя методами: `analyzeRealTranscript(_:)` — три класса дисфлюентностей (regex-повторения, пролонгации по длительности сегмента, внутрисловные паузы); `makeStubAnalysis(text:)` — stub-путь с isStub=true.
+3. `FluencyDiaryInteractor` параллельно с RMS-тапом ведёт `AVAudioRecorder` → temp .m4a → передаёт URL в WhisperTranscriptionWorker → выбирает real или stub анализ → удаляет temp файл.
+4. `Display.isStubAnalysis: Bool` — новое поле для управления баннером в View.
+5. `FluencyDiaryView` — баннер conditional: stub → "тестовые данные", real → "Анализ через WhisperKit активен".
+
+**Dysfluency heuristics (real path):**
+- Повторения: NSRegularExpression `\b(\w{2,})\s+\1\b`
+- Пролонгации: сегмент ≤2 символа + длительность >300ms
+- Внутрисловные паузы: gap >800ms между сегментами без пробела/пунктуации между ними
+
+**Alternatives:**
+- Только stub навсегда — не даёт реального анализа, снижает ценность продукта
+- CoreML speech recognition — нет готовой русской модели нужного качества
+- SFSpeechRecognizer (Apple) — требует интернет, нарушает offline-first
+
+**Risk:** WhisperKit tiny не всегда доступен (не загружен пользователем). Mitigation: двойной путь, stub всегда работает. Temp .m4a удаляется после анализа — нет утечки приватных данных.
+
+**Files affected:**
+- `HappySpeech/Features/StutteringModule/Workers/WhisperTranscriptionWorker.swift` — новый файл (88 LOC)
+- `HappySpeech/Features/StutteringModule/Workers/FluencyAnalyzerWorker.swift` — расширен (+90 LOC), добавлен DysfluencyAnalysis struct
+- `HappySpeech/Features/StutteringModule/FluencyDiary/FluencyDiaryInteractor.swift` — переписан (155 LOC), AVAudioRecorder + WhisperKit path
+- `HappySpeech/Features/StutteringModule/FluencyDiary/FluencyDiaryView.swift` — conditional analysisBanner
+- `HappySpeech/Resources/Localizable.xcstrings` — добавлен ключ `stuttering.diary.whisperkit_active`
