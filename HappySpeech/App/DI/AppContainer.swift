@@ -64,6 +64,9 @@ public final class AppContainer {
     // FaceAnalysisService — lazy, не требует изменения init
     private var _faceAnalysisService: (any FaceAnalysisService)?
 
+    // MascotLipSyncState — singleton для real-time lip-sync оверлея маскота (Block F)
+    public let mascotLipSyncState: MascotLipSyncState = MascotLipSyncState()
+
     // Factory closures (injected at init)
     private let audioServiceFactory: () -> any AudioService
     private let asrServiceFactory: () -> any ASRService

@@ -11,6 +11,7 @@ struct ARMirrorView: View {
     @Environment(AppContainer.self) private var container
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.mascotLipSyncState) private var lipSyncState
 
     @State private var session: LiveARSessionService?
     @State private var mockSession: MockARSessionService?
@@ -41,6 +42,26 @@ struct ARMirrorView: View {
         }
         .task { await bootstrap() }
         .onDisappear { teardown() }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification)) { _ in
+            // Battery: останавливаем ARSession при уходе в background.
+            session?.stopSession()
+            mockSession?.stopSession()
+            lipSyncState.isTracking = false
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+            // Возобновляем ARSession при возврате из background (только если экран всё ещё показывается).
+            guard isSessionStarted else { return }
+            Task { @MainActor in
+                do {
+                    if let live = session {
+                        try await live.startSession()
+                        startFrameStream(service: live)
+                    }
+                } catch {
+                    HSLogger.ar.error("ARMirror resume failed: \(error.localizedDescription)")
+                }
+            }
+        }
         .navigationBarHidden(true)
     }
 
@@ -196,6 +217,9 @@ struct ARMirrorView: View {
     private func startFrameStream(service: any ARSessionService) {
         let interactor = self.interactor
         let display = self.display
+        let lipSyncState = self.lipSyncState
+        let facePoseWorker = self.facePoseWorker
+
         Task { @MainActor in
             for await frame in service.blendshapeStream {
                 display.lipSymmetry = frame.lipSymmetry
@@ -206,8 +230,11 @@ struct ARMirrorView: View {
                 }
             }
         }
-        // Unified Face Pose: вычисляем viseme из FaceBlendshapes для lip-sync маскота.
-        // Используем тот же blendshapeStream — без изменений ARSessionService.
+
+        // Unified Face Pose: вычисляем viseme из FaceBlendshapes и обновляем
+        // MascotLipSyncState для real-time lip-sync оверлея маскота Ляли.
+        // ARFaceTrackingConfiguration.isSupported гарантирует TrueDepth на устройстве.
+        // Confidence = мин. jawOpen*2 (чем больше открытие, тем выше уверенность).
         Task { @MainActor in
             for await frame in service.blendshapeStream {
                 let pose = UnifiedFacePose(
@@ -219,14 +246,24 @@ struct ARMirrorView: View {
                     lipSymmetry: frame.lipSymmetry,
                     landmarks76: nil
                 )
-                display.currentViseme = facePoseWorker.currentViseme(pose)
+                let viseme = facePoseWorker.currentViseme(pose)
+                display.currentViseme = viseme
+
+                // Обновляем shared lip-sync state для LyalyaMascotView
+                lipSyncState.mouthOpen  = frame.jawOpen
+                lipSyncState.viseme     = LipSyncViseme(from: viseme)
+                lipSyncState.confidence = min(frame.jawOpen * 2.5, 1.0)
+                lipSyncState.isTracking = true
             }
+            // Stream завершился — ARSession остановлена
+            lipSyncState.isTracking = false
         }
     }
 
     private func teardown() {
         session?.stopSession()
         mockSession?.stopSession()
+        lipSyncState.isTracking = false
     }
 }
 
