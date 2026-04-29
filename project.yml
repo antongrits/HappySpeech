@@ -58,6 +58,9 @@ packages:
   RiveRuntime:
     url: https://github.com/rive-app/rive-ios
     from: "6.0.0"
+  Down:
+    url: https://github.com/johnxnguyen/Down
+    from: "0.11.0"
 
 targets:
   HappySpeech:
@@ -153,6 +156,8 @@ targets:
         product: GoogleSignInSwift
       - package: RiveRuntime
         product: RiveRuntime
+      - package: Down
+        product: Down
     scheme:
       testTargets:
         - HappySpeechTests

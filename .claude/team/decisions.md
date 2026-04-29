@@ -780,3 +780,58 @@ Block Q реализует Layer 3 после генерации 10 state-илл
 
 **Risk:** FirebaseRemoteConfig SDK требует `import FirebaseRemoteConfig` — убедиться что он добавлен в Package.resolved (FirebaseRemoteConfig входит в firebase-ios-sdk пакет).
 **Risk mitigation:** Если RC не в SPM target — добавить `FirebaseRemoteConfig` в зависимости target в project.yml.
+
+---
+
+## ADR-V11-BIG-LIBS — SPM stack expansion
+
+**Дата:** 2026-04-29
+**Статус:** Accepted
+**Контекст:** Plan v11 Block E — расширение SPM stack.
+
+**Решение:**
+
+### E.1 — Lottie iOS 4.5.0+ real API
+`HSLottieContainer.swift` переписан на нативный `LottieView(animation:) API` из airbnb/lottie-ios 4.5+.
+- `HSLottieView` — новый primary компонент (`import Lottie`, `LottieView(animation: .named(name)).playing(loopMode: loopMode).resizable()`)
+- `HSLottieContainer` сохранён для обратной совместимости — теперь проверяет наличие `.named(name)` и рендерит `HSLottieView` при наличии анимации, иначе `fallback`
+- `@Environment(\.accessibilityReduceMotion)` поддержан: при Reduced Motion рисует первый кадр без воспроизведения
+
+### E.2 — Down 0.11.0 (Markdown rendering)
+- Добавлен в `project.yml` packages + HappySpeech dependencies
+- `HSMarkdownView.swift` — SwiftUI + `UIViewRepresentable` wrapping `DownView`
+- Стилизован через `StaticFontCollection` + `StaticColorCollection` (TypographyTokens размеры: h1=24pt, h2=20pt, h3=17pt, body=15pt)
+- Акцентный цвет — `ColorTokens.Brand.primary`
+- Light / Dark: `UITraitCollection.current.userInterfaceStyle` для динамического ink-цвета
+- Применение: Privacy Policy, Terms, FAQ — без WebView
+
+### E.3 — Confetti/Particles: native fallback (swiftui-particles недоступен)
+`swiftui-particles` не имеет стабильного SPM-тега (только pre-release `2.0-pre-x`, нет `1.0.0`). SPM `from: "1.0.0"` не разрешается. Выбран native `Canvas + TimelineView` fallback.
+
+`HSConfettiView.swift` реализован на:
+- `TimelineView(.animation)` + `Canvas` — 60fps анимированные частицы
+- 3 пресета: `.celebration` (60 частиц, multi-color, разные формы), `.streak` (40 частиц, золотые искры, радиальный burst), `.medal` (50 частиц, радиальный burst с золотым и primary)
+- `@Environment(\.accessibilityReduceMotion)` → статичный первый кадр без TimelineView
+- `allowsHitTesting(false)` — не блокирует UI
+- Интеграция: `AchievementsView` — `.medal` confetti при разблокировке ачивки
+
+**Отклонено:**
+- Pow (платный)
+- swiftui-particles (нет стабильного SPM-тега, только pre-release)
+- DGCharts vs Swift Charts: оставляем Swift Charts (Apple framework, iOS 16+)
+
+**Bundle size impact:**
+- Down 0.11.0: +~0.8 MB (libcmark статическая библиотека)
+- HSConfettiView: 0 MB (нативные SwiftUI-примитивы)
+- HSLottieView: 0 MB (переключение API внутри уже подключённого Lottie 4.5.0)
+
+**Compile time impact:** минимальный (Down — небольшая библиотека)
+
+**Лицензии:** Down (MIT), airbnb/lottie-ios (Apache 2.0), native SwiftUI (Apple)
+
+**Files affected:**
+- `HappySpeech/DesignSystem/Components/HSLottieContainer.swift` — refactored на real LottieView API
+- `HappySpeech/DesignSystem/Components/HSMarkdownView.swift` — NEW
+- `HappySpeech/DesignSystem/Components/HSConfettiView.swift` — NEW
+- `HappySpeech/Features/Extensions/Achievements/AchievementsView.swift` — +HSConfettiView medal preset
+- `project.yml` — +Down package + dependency

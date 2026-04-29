@@ -1,11 +1,58 @@
+import Lottie
 import SwiftUI
 
-// MARK: - HSLottieContainer
+// MARK: - HSLottieView
 
-/// Placeholder for future Lottie animations. Currently the Lottie SDK
-/// is not linked, so this view always renders the provided fallback.
-/// Once Lottie is integrated, swap the `body` to `LottieView(name:)` and
-/// keep the same public API so all call sites continue to work.
+/// Обёртка над `LottieView` из airbnb/lottie-ios 4.5+.
+///
+/// Использует нативный `LottieView(animation:)` API с поддержкой:
+/// - loop / playOnce / bounce
+/// - Reduced Motion (при `accessibilityReduceMotion` рисует первый кадр без анимации)
+/// - optional fallback View, если анимация не найдена в бандле
+///
+/// Пример использования:
+/// ```swift
+/// HSLottieView(name: "lyalya_celebrate", loopMode: .loop)
+///     .frame(width: 200, height: 200)
+/// ```
+public struct HSLottieView: View {
+
+    private let name: String
+    private let loopMode: LottieLoopMode
+    private let contentMode: UIView.ContentMode
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    public init(
+        name: String,
+        loopMode: LottieLoopMode = .loop,
+        contentMode: UIView.ContentMode = .scaleAspectFit
+    ) {
+        self.name = name
+        self.loopMode = loopMode
+        self.contentMode = contentMode
+    }
+
+    public var body: some View {
+        if reduceMotion {
+            // Reduced Motion: статичный первый кадр без воспроизведения
+            LottieView(animation: .named(name))
+                .animationSpeed(0)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        } else {
+            LottieView(animation: .named(name))
+                .playing(loopMode: loopMode)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        }
+    }
+}
+
+// MARK: - HSLottieContainer (обратная совместимость)
+
+/// Совместимая обёртка — используй `HSLottieView` для новых экранов.
+/// Если анимация `name` не найдена в бандле, отображает `fallback`.
 public struct HSLottieContainer: View {
 
     private let name: String
@@ -23,35 +70,33 @@ public struct HSLottieContainer: View {
     }
 
     public var body: some View {
-        fallback
-            .frame(width: size.width, height: size.height)
-            .onAppear {
-                HSLogger.ui.debug(
-                    "HSLottieContainer: Lottie not available, rendering fallback for '\(self.name, privacy: .public)'"
-                )
-            }
+        if LottieAnimation.named(name) != nil {
+            HSLottieView(name: name, loopMode: .loop)
+                .frame(width: size.width, height: size.height)
+        } else {
+            fallback
+                .frame(width: size.width, height: size.height)
+        }
     }
 }
 
 // MARK: - Preview
 
-#Preview("HSLottieContainer fallback") {
+#Preview("HSLottieView real API") {
     VStack(spacing: SpacingTokens.large) {
+        HSLottieView(name: "lyalya_celebrate", loopMode: .loop)
+            .frame(width: 200, height: 200)
+
+        HSLottieView(name: "loading_dots", loopMode: .loop)
+            .frame(width: 80, height: 80)
+
         HSLottieContainer(
-            name: "lyalya_celebrate",
+            name: "nonexistent_animation",
             fallback: AnyView(
                 Text(verbatim: "🎉")
                     .font(.system(size: 80))
             ),
             size: CGSize(width: 200, height: 200)
-        )
-        HSLottieContainer(
-            name: "loading_dots",
-            fallback: AnyView(
-                ProgressView()
-                    .progressViewStyle(.circular)
-            ),
-            size: CGSize(width: 80, height: 80)
         )
     }
     .padding()
