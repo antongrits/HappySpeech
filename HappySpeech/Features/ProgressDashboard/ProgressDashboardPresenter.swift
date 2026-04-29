@@ -8,6 +8,8 @@ protocol ProgressDashboardPresentationLogic: AnyObject {
     func presentLoadDashboard(_ response: ProgressDashboardModels.LoadDashboard.Response)
     func presentLoadSoundDetail(_ response: ProgressDashboardModels.LoadSoundDetail.Response)
     func presentRequestLLMSummary(_ response: ProgressDashboardModels.RequestLLMSummary.Response)
+    func presentLoadInsights(_ response: ProgressDashboardModels.LoadInsights.Response)
+    func presentInsightsLoading(_ isLoading: Bool)
     func presentLLMLoading(_ isLoading: Bool)
     func presentFailure(_ response: ProgressDashboardModels.Failure.Response)
 }
@@ -100,6 +102,23 @@ final class ProgressDashboardPresenter: ProgressDashboardPresentationLogic {
             accessibilityLabel: label
         )
         display?.displayRequestLLMSummary(.init(summary: viewModel))
+    }
+
+    func presentLoadInsights(_ response: ProgressDashboardModels.LoadInsights.Response) {
+        let cards = response.insights.map { insight in
+            ParentInsightCardViewModel(
+                id: insight.id.uuidString,
+                icon: insight.icon,
+                toneRawValue: toneRawValue(insight.tone),
+                text: insight.text,
+                accessibilityLabel: insight.text
+            )
+        }
+        display?.displayLoadInsights(.init(insightCards: cards))
+    }
+
+    func presentInsightsLoading(_ isLoading: Bool) {
+        display?.displayInsightsLoading(isLoading)
     }
 
     func presentLLMLoading(_ isLoading: Bool) {
@@ -280,6 +299,16 @@ final class ProgressDashboardPresenter: ProgressDashboardPresentationLogic {
                 iconName: "checkmark.circle.fill",
                 accessibilityLabel: text
             )
+        }
+    }
+
+    // MARK: - Insight tone
+
+    private func toneRawValue(_ tone: InsightTone) -> String {
+        switch tone {
+        case .positive: return "positive"
+        case .neutral:  return "neutral"
+        case .warning:  return "warning"
         }
     }
 

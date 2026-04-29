@@ -9,6 +9,7 @@ protocol ProgressDashboardBusinessLogic: AnyObject {
     func changePeriod(_ request: ProgressDashboardModels.ChangePeriod.Request)
     func loadSoundDetail(_ request: ProgressDashboardModels.LoadSoundDetail.Request)
     func requestLLMSummary(_ request: ProgressDashboardModels.RequestLLMSummary.Request)
+    func loadInsights(_ request: ProgressDashboardModels.LoadInsights.Request)
 }
 
 // MARK: - ProgressDashboardInteractor
@@ -28,6 +29,7 @@ final class ProgressDashboardInteractor: ProgressDashboardBusinessLogic {
 
     private let llmDecisionService: (any LLMDecisionServiceProtocol)?
     private let logger = Logger(subsystem: "ru.happyspeech", category: "ProgressDashboard")
+    private lazy var insightsWorker = ParentInsightsWorker(llmService: llmDecisionService)
 
     // MARK: - State
 
@@ -94,6 +96,21 @@ final class ProgressDashboardInteractor: ProgressDashboardBusinessLogic {
             history: history
         )
         presenter?.presentLoadSoundDetail(response)
+    }
+
+    func loadInsights(_ request: ProgressDashboardModels.LoadInsights.Request) {
+        logger.info("loadInsights childName=\(request.childName, privacy: .private(mask: .hash))")
+        presenter?.presentInsightsLoading(true)
+
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            let insights = await insightsWorker.generateInsights(
+                childName: request.childName,
+                sounds: request.sounds,
+                streakDays: request.streakDays
+            )
+            presenter?.presentLoadInsights(.init(insights: insights))
+        }
     }
 
     func requestLLMSummary(_ request: ProgressDashboardModels.RequestLLMSummary.Request) {
