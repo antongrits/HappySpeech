@@ -407,15 +407,15 @@ private struct ParentDashboardTab: View {
     private var familyVoiceCard: some View {
         HSCard(style: .elevated) {
             HStack(spacing: SpacingTokens.sp3) {
-                Image(systemName: "mic.circle.fill")
+                Image(systemName: "mic.badge.plus")
                     .font(.system(size: 28, weight: .semibold))
                     .foregroundStyle(ColorTokens.Brand.primary)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(String(localized: "parent_child.entry.title"))
+                    Text(String(localized: "family.voice.library.title"))
                         .font(TypographyTokens.headline())
                         .foregroundStyle(ColorTokens.Parent.ink)
-                    Text(String(localized: "parent_child.entry.subtitle"))
+                    Text(String(localized: "family.voice.library.subtitle"))
                         .font(TypographyTokens.body())
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
                         .ctaTextStyle()
@@ -429,12 +429,12 @@ private struct ParentDashboardTab: View {
             .padding(SpacingTokens.sp4)
         }
         .onTapGesture {
-            coordinator.navigate(to: .familyVoice)
+            coordinator.navigate(to: .familyVoiceLibrary)
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
-            String(localized: "parent_child.entry.title") + ". " +
-            String(localized: "parent_child.entry.subtitle")
+            String(localized: "family.voice.library.title") + ". " +
+            String(localized: "family.voice.library.subtitle")
         )
         .accessibilityAddTraits(.isButton)
         .environment(\.circuitContext, .parent)
