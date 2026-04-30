@@ -205,6 +205,10 @@ public protocol ARSessionService: AnyObject {
     /// Может быть `nil` у mock-реализации.
     var underlyingSession: ARSession? { get }
 
+    /// Block J: Поток сырых кадров камеры (CVPixelBuffer) для Vision hand pose.
+    /// `nil` у mock-реализации (симулятор не имеет камеры).
+    var pixelBufferStream: AsyncStream<CVPixelBuffer>? { get }
+
     /// Старт face-tracking. Бросает `ARSessionError` если AR не поддерживается или нет доступа.
     func startSession() async throws
 
@@ -236,16 +240,26 @@ public final class LiveARSessionService: NSObject, ARSessionService, @unchecked 
     public let blendshapeStream: AsyncStream<FaceBlendshapes>
     private let continuation: AsyncStream<FaceBlendshapes>.Continuation
 
+    // Block J: pixel buffer stream для Vision hand pose (nil у mock)
+    public let pixelBufferStream: AsyncStream<CVPixelBuffer>?
+    private let pixelBufferContinuation: AsyncStream<CVPixelBuffer>.Continuation?
+
     // MARK: ARKit
 
     private let session = ARSession()
 
+    // Block J: счётчик для прореживания кадров до ~15fps для Vision (каждый 2-й ARFrame)
+    private var frameSkipCounter: Int = 0
+
     // MARK: - Init
 
     public override init() {
-        let stream = AsyncStream<FaceBlendshapes>.makeStream()
-        self.blendshapeStream = stream.stream
-        self.continuation = stream.continuation
+        let blendStream = AsyncStream<FaceBlendshapes>.makeStream()
+        self.blendshapeStream = blendStream.stream
+        self.continuation = blendStream.continuation
+        let pbStream = AsyncStream<CVPixelBuffer>.makeStream()
+        self.pixelBufferStream = pbStream.stream
+        self.pixelBufferContinuation = pbStream.continuation
         super.init()
         self.session.delegate = self
         HSLogger.ar.debug("LiveARSessionService initialised (supported=\(self.isSupported))")
@@ -253,6 +267,7 @@ public final class LiveARSessionService: NSObject, ARSessionService, @unchecked 
 
     deinit {
         continuation.finish()
+        pixelBufferContinuation?.finish()
     }
 
     // MARK: - Lifecycle
@@ -314,6 +329,19 @@ extension LiveARSessionService: ARSessionDelegate {
         }
     }
 
+    // Block J: каждый ARFrame содержит capturedImage (pixelBuffer) от камеры.
+    // Пробрасываем его в pixelBufferStream с понижением до ~15fps (каждый 2-й кадр),
+    // чтобы Vision не перегружал CPU на старых устройствах.
+    public nonisolated func session(_ session: ARSession, didUpdate frame: ARFrame) {
+        // Атомарный счётчик: используем локальную переменную, не @MainActor поле
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            self.frameSkipCounter += 1
+            guard self.frameSkipCounter % 2 == 0 else { return }
+            self.pixelBufferContinuation?.yield(frame.capturedImage)
+        }
+    }
+
     public nonisolated func session(_ session: ARSession, didFailWithError error: Error) {
         HSLogger.ar.error("ARSession failed: \(error.localizedDescription)")
         Task { @MainActor [weak self] in
@@ -344,6 +372,9 @@ public final class MockARSessionService: ARSessionService, @unchecked Sendable {
     public private(set) var currentBlendshapes: FaceBlendshapes?
 
     public var underlyingSession: ARSession? { nil }
+
+    // Block J: симулятор не имеет камеры — pixelBufferStream отсутствует.
+    public let pixelBufferStream: AsyncStream<CVPixelBuffer>? = nil
 
     public let blendshapeStream: AsyncStream<FaceBlendshapes>
     private let continuation: AsyncStream<FaceBlendshapes>.Continuation

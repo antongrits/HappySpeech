@@ -76,6 +76,10 @@ public final class AppContainer {
     // Block N: DailyMissionSyncService — синхронизация виджета через App Group.
     private var _dailyMissionSyncService: (any DailyMissionSyncServiceProtocol)?
 
+    // Block J (v12): HandPoseWorker — Vision-based hand pose detection (iOS 14+, universal).
+    // Actor-typed, не требует factory — создаётся on-demand, лёгкий (один VNRequest).
+    private var _handPoseWorker: HandPoseWorker?
+
     // MascotLipSyncState — singleton для real-time lip-sync оверлея маскота (Block F)
     public let mascotLipSyncState: MascotLipSyncState = MascotLipSyncState()
 
@@ -377,6 +381,14 @@ public final class AppContainer {
         if let existing = _dailyMissionSyncService { return existing }
         let new = LiveDailyMissionSyncService()
         _dailyMissionSyncService = new
+        return new
+    }
+
+    // Block J (v12): HandPoseWorker — lazy singleton, один VNDetectHumanHandPoseRequest на всё приложение.
+    public var handPoseWorker: HandPoseWorker {
+        if let existing = _handPoseWorker { return existing }
+        let new = HandPoseWorker(maxHandCount: 1, confidenceThreshold: 0.6)
+        _handPoseWorker = new
         return new
     }
 

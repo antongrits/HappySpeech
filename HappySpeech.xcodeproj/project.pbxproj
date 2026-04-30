@@ -293,6 +293,7 @@
 		0846B39A303DCADFD71091AA /* HoldThePoseRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662FB833F5A652BC178C25AB /* HoldThePoseRouter.swift */; };
 		08518BE201776DD0087C9236 /* SessionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA015122A5BF78E6F5A8C5FB /* SessionRepository.swift */; };
 		085E3943BD46F2BF02B77AFE /* s-wf-33.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0091D11D1642929C06BCD065 /* s-wf-33.m4a */; };
+		085F839C644A8C15F442ED0C /* HandPoseWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67DE9F8403A205E7E3AA00EA /* HandPoseWorker.swift */; };
 		08693DBDB2720B76AB9D3198 /* gr-sen-10.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 47E3E08B8465A3D2654ADDD9 /* gr-sen-10.m4a */; };
 		0873405A3E631E71B2288E20 /* ch-sen-32.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A80666A07E5E4C13214F79E4 /* ch-sen-32.m4a */; };
 		087AB104AD00B09F6BD2AB99 /* z-syl-15.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 17255B92B540FDB93EFCBCC1 /* z-syl-15.m4a */; };
@@ -3693,6 +3694,7 @@
 		66FA45CAFDA1C7E028842163 /* PoseSequencePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BD09910CFF484456B1AB90 /* PoseSequencePresenter.swift */; };
 		67030A15ED653B0223770967 /* phon-vu-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 43AEFD9EDE8910BEE037FF13 /* phon-vu-0.m4a */; };
 		67090B25D8D923CC87AB9FD6 /* k-wf-17.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 47E3AB6AB4E26E46D6FBE110 /* k-wf-17.m4a */; };
+		6723E456B95B2A3AC037F61E /* HandPoseModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B035EF0142921473B67869 /* HandPoseModels.swift */; };
 		6730A137EF973EC54F09F9E0 /* sprygnul_s_dereva_zalez_na_derevo.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3DA82003910A5FF1A22B8309 /* sprygnul_s_dereva_zalez_na_derevo.m4a */; };
 		67311482FD1CD13DA0D5F7C1 /* rl-ph-21.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A0871526B8B9F5D0E51D8B67 /* rl-ph-21.m4a */; };
 		673CB28A6E26D6A3C0E952AA /* SettingsPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF4ECAC5F9352881B704437 /* SettingsPresenterTests.swift */; };
@@ -12843,6 +12845,7 @@
 		67C6B76B1C9694A9107B5336 /* ch-wi-24.m4a */ = {isa = PBXFileReference; path = "ch-wi-24.m4a"; sourceTree = "<group>"; };
 		67D124F25FF801EA6C4F26AE /* ch-ph-44.m4a */ = {isa = PBXFileReference; path = "ch-ph-44.m4a"; sourceTree = "<group>"; };
 		67D9B81A26677BEAE150364C /* DragAndMatchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndMatchRouter.swift; sourceTree = "<group>"; };
+		67DE9F8403A205E7E3AA00EA /* HandPoseWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandPoseWorker.swift; sourceTree = "<group>"; };
 		67E2B870F18AD0A4D6F849DF /* gr-gc-15.m4a */ = {isa = PBXFileReference; path = "gr-gc-15.m4a"; sourceTree = "<group>"; };
 		67F1A599DE35D8E49F789695 /* lex-bi-6.m4a */ = {isa = PBXFileReference; path = "lex-bi-6.m4a"; sourceTree = "<group>"; };
 		67F747DA524E63B7ECD9F328 /* sh-wf-34.m4a */ = {isa = PBXFileReference; path = "sh-wf-34.m4a"; sourceTree = "<group>"; };
@@ -13259,6 +13262,7 @@
 		738065CDDAFB795F1B6039E3 /* phon-st-4.m4a */ = {isa = PBXFileReference; path = "phon-st-4.m4a"; sourceTree = "<group>"; };
 		73858CD05DD456DA4CFA34F0 /* s-prep-1.m4a */ = {isa = PBXFileReference; path = "s-prep-1.m4a"; sourceTree = "<group>"; };
 		7391CDE62485F5DD41FD8578 /* gr-wc-9.m4a */ = {isa = PBXFileReference; path = "gr-wc-9.m4a"; sourceTree = "<group>"; };
+		73B035EF0142921473B67869 /* HandPoseModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandPoseModels.swift; sourceTree = "<group>"; };
 		73C65F77262384FA1FC754C5 /* kh-wm-37.m4a */ = {isa = PBXFileReference; path = "kh-wm-37.m4a"; sourceTree = "<group>"; };
 		73C962413BFAD2008B8618D2 /* sh-wi-59.m4a */ = {isa = PBXFileReference; path = "sh-wi-59.m4a"; sourceTree = "<group>"; };
 		73C98EFA2E4CADF31D4750DB /* sh-wf-14.m4a */ = {isa = PBXFileReference; path = "sh-wf-14.m4a"; sourceTree = "<group>"; };
@@ -18371,6 +18375,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		011EDC01E4EA9C4B436FB3BF /* HandPose */ = {
+			isa = PBXGroup;
+			children = (
+				73B035EF0142921473B67869 /* HandPoseModels.swift */,
+				67DE9F8403A205E7E3AA00EA /* HandPoseWorker.swift */,
+			);
+			path = HandPose;
+			sourceTree = "<group>";
+		};
 		01EEC28B6AC66876C7177671 /* SessionHistory */ = {
 			isa = PBXGroup;
 			children = (
@@ -27104,6 +27117,7 @@
 				9CF225CDB440FC0BC74C81B2 /* ARStoryQuest */,
 				67CCEC1269275CEC8BE01FD3 /* BreathingAR */,
 				555D6E4230BD3CADD8CB6F36 /* ButterflyCatch */,
+				011EDC01E4EA9C4B436FB3BF /* HandPose */,
 				6112BC3EF0FAD24FA252A612 /* HoldThePose */,
 				524E841D915DAF5F3A27849C /* Mascot3D */,
 				0349A5BA5CB79F465A734A2F /* MimicLyalya */,
@@ -38217,6 +38231,8 @@
 				57E2CE97EC672B8210B83B9F /* HSSpeechBubble.swift in Sources */,
 				EF3EA783082AE637917B190C /* HSSticker.swift in Sources */,
 				ED3DD5430B6834AF615AFF82 /* HSTypes.swift in Sources */,
+				6723E456B95B2A3AC037F61E /* HandPoseModels.swift in Sources */,
+				085F839C644A8C15F442ED0C /* HandPoseWorker.swift in Sources */,
 				C0B194EE78872654172813D1 /* HappySpeechApp.swift in Sources */,
 				6F7816B980055F5A1A37E0E0 /* HealthKitService.swift in Sources */,
 				040D77930D8D47E9C5497F77 /* HoldThePoseInteractor.swift in Sources */,
@@ -38599,8 +38615,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ru.happyspeech.app.WidgetExtension;
 				PRODUCT_NAME = HappySpeechWidgetExtension;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 6.0;
 			};
@@ -38620,8 +38634,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = ru.happyspeech.app.WidgetExtension;
 				PRODUCT_NAME = HappySpeechWidgetExtension;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 6.0;
 			};
@@ -38648,8 +38660,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = ru.happyspeech.app;
 				SDKROOT = iphoneos;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_STRICT_CONCURRENCY = complete;
@@ -38730,8 +38740,6 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ru.happyspeech.app;
 				SDKROOT = iphoneos;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
-				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_STRICT_CONCURRENCY = complete;

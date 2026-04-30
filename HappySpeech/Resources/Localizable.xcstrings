@@ -21855,6 +21855,94 @@
           }
         }
       }
+    },
+    "hand_pose.open_palm": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открытая ладонь"
+          }
+        }
+      }
+    },
+    "hand_pose.fist": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кулак"
+          }
+        }
+      }
+    },
+    "hand_pose.point": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Указательный палец"
+          }
+        }
+      }
+    },
+    "hand_pose.pinch": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Щепотка"
+          }
+        }
+      }
+    },
+    "hand_pose.wave": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помаши рукой"
+          }
+        }
+      }
+    },
+    "hand_pose.thumbs_up": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Большой палец вверх"
+          }
+        }
+      }
+    },
+    "hand_pose.detect.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Покажи руку в кадре"
+          }
+        }
+      }
+    },
+    "hand_pose.detect.matched": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Точно как у Ляли!"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
