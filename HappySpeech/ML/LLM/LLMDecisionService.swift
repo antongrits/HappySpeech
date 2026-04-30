@@ -63,7 +63,8 @@ public final class LiveLLMDecisionService: LLMDecisionServiceProtocol, @unchecke
                 age: context.age,
                 availableTemplates: context.availableTemplates.map(\.rawValue)
             )
-            if let resp = await withTimeout(ms: 2_000, { [inferenceActor] in
+            // Timeout 12 сек для iPhone SE 3 (A15, 4 GB) — MLX generation ~10–15 сек
+            if let resp = await withTimeout(ms: 12_000, { [inferenceActor] in
                 try? await inferenceActor.generateRoute(request)
             }) {
                 let steps = resp.route.compactMap { item -> RouteStepItem? in
@@ -104,7 +105,8 @@ public final class LiveLLMDecisionService: LLMDecisionServiceProtocol, @unchecke
                 age: context.age,
                 wordPool: context.wordPool
             )
-            if let resp = await withTimeout(ms: 2_500, { [inferenceActor] in
+            // Timeout 12 сек для iPhone SE 3 (A15, 4 GB) — MLX generation ~10–15 сек
+            if let resp = await withTimeout(ms: 12_000, { [inferenceActor] in
                 try? await inferenceActor.generateMicroStory(request)
             }) {
                 let story = MicroStory(
@@ -139,7 +141,8 @@ public final class LiveLLMDecisionService: LLMDecisionServiceProtocol, @unchecke
                 errorWords: session.errorWords,
                 sessionDurationSec: session.durationSec
             )
-            if let resp = await withTimeout(ms: 3_000, { [inferenceActor] in
+            // Timeout 12 сек для iPhone SE 3 (A15, 4 GB) — MLX generation ~10–15 сек
+            if let resp = await withTimeout(ms: 12_000, { [inferenceActor] in
                 try? await inferenceActor.generateParentSummary(request)
             }) {
                 let summary = ParentSummary(
