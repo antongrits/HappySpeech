@@ -150,7 +150,7 @@ private struct SiblingDiscoveryStubPeersView: View {
             displayName: "Ваня",
             peerID: MCPeerID(displayName: "Ваня")
         )
-        vm.displayPeers(.init(peers: [peer1.peerID, peer2.peerID]))
+        vm.displayPeers(.init(peers: [peer1, peer2], isSearching: false))
         return vm
     }()
 

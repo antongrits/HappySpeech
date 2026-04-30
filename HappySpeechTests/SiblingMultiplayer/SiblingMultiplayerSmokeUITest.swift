@@ -1,4 +1,6 @@
 @testable import HappySpeech
+import SwiftUI
+import UIKit
 import XCTest
 
 // MARK: - SiblingMultiplayerSmokeUITest

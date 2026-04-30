@@ -43,6 +43,8 @@ final class SettingsPresenterTests: XCTestCase {
         func displayExportShare(_ viewModel: SettingsModels.ExportShare.ViewModel) { exportShareVM = viewModel }
         func displayFailure(_ viewModel: SettingsModels.Failure.ViewModel) { failureVM = viewModel }
         func displayLoading(_ isLoading: Bool) {}
+        func displayToggleKidDailyReminder(_ viewModel: SettingsModels.ToggleKidDailyReminder.ViewModel) {}
+        func displayToggleWeeklyParentSummary(_ viewModel: SettingsModels.ToggleWeeklyParentSummary.ViewModel) {}
     }
 
     private func makeSUT() -> (SettingsPresenter, DisplaySpy) {
@@ -141,21 +143,22 @@ final class SettingsPresenterTests: XCTestCase {
 
     func test_presentExportData_success() {
         let (sut, spy) = makeSUT()
-        sut.presentExportData(.init(success: true, fileName: "export.json", errorMessage: nil))
+        let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("export.json")
+        sut.presentExportData(.init(success: true, fileURL: url, format: .json, errorMessage: nil))
         XCTAssertFalse(spy.exportDataVM?.toastIsError ?? true)
         XCTAssertFalse(spy.exportDataVM?.toastMessage.isEmpty ?? true)
     }
 
     func test_presentExportData_failure() {
         let (sut, spy) = makeSUT()
-        sut.presentExportData(.init(success: false, fileName: nil, errorMessage: "Ошибка"))
+        sut.presentExportData(.init(success: false, fileURL: nil, format: .pdf, errorMessage: "Ошибка"))
         XCTAssertTrue(spy.exportDataVM?.toastIsError ?? false)
         XCTAssertEqual(spy.exportDataVM?.toastMessage, "Ошибка")
     }
 
     func test_presentExportData_failure_nilError_usesDefaultMessage() {
         let (sut, spy) = makeSUT()
-        sut.presentExportData(.init(success: false, fileName: nil, errorMessage: nil))
+        sut.presentExportData(.init(success: false, fileURL: nil, format: .csv, errorMessage: nil))
         XCTAssertTrue(spy.exportDataVM?.toastIsError ?? false)
         XCTAssertFalse(spy.exportDataVM?.toastMessage.isEmpty ?? true)
     }

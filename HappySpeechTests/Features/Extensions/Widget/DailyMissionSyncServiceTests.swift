@@ -25,7 +25,7 @@ final class DailyMissionSyncServiceTests: XCTestCase {
         XCTAssertEqual(update?.description, "5 раундов")
         XCTAssertEqual(update?.streakDays, 7)
         XCTAssertEqual(update?.lyalyaState, "happy")
-        XCTAssertEqual(update?.progress, 0.6, accuracy: 0.001)
+        XCTAssertEqual(update?.progress ?? 0, 0.6, accuracy: 0.001)
     }
 
     /// Проверяет обновление при нулевом стрике и прогрессе.
@@ -43,7 +43,7 @@ final class DailyMissionSyncServiceTests: XCTestCase {
         let update = await sut.lastUpdate
         XCTAssertEqual(update?.streakDays, 0)
         XCTAssertEqual(update?.lyalyaState, "sleepy")
-        XCTAssertEqual(update?.progress, 0.0, accuracy: 0.001)
+        XCTAssertEqual(update?.progress ?? 0, 0.0, accuracy: 0.001)
     }
 
     /// Проверяет корректность данных при стопроцентном прогрессе и состоянии "encouraging".
@@ -63,6 +63,6 @@ final class DailyMissionSyncServiceTests: XCTestCase {
         XCTAssertEqual(update?.description, "10 раундов")
         XCTAssertEqual(update?.streakDays, 30)
         XCTAssertEqual(update?.lyalyaState, "encouraging")
-        XCTAssertEqual(update?.progress, 1.0, accuracy: 0.001)
+        XCTAssertEqual(update?.progress ?? 0, 1.0, accuracy: 0.001)
     }
 }
