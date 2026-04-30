@@ -304,6 +304,7 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         case .narrativeQuest:        return .narrativeQuest
         case .minimalPairs:          return .minimalPairs
         case .objectHunt:            return .objectHunt
+        case .letterTracing:         return .letterTracing
         }
     }
 
