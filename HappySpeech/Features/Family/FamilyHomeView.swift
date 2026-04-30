@@ -151,6 +151,34 @@ struct FamilyHomeView: View {
                 }
                 .accessibilityLabel(String(localized: "family.home.play_together"))
             }
+
+            HSLiquidGlassCard(style: .primary) {
+                Button {
+                    coordinator.navigate(to: .sharePlay)
+                } label: {
+                    HStack(spacing: SpacingTokens.sp3) {
+                        Image(systemName: "shareplay")
+                            .font(.system(size: 22, weight: .semibold))
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                            .accessibilityHidden(true)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(String(localized: "shareplay.startButton"))
+                                .font(TypographyTokens.headline(16))
+                                .foregroundStyle(ColorTokens.Parent.ink)
+                            Text(String(localized: "shareplay.family_home.subtitle"))
+                                .font(TypographyTokens.caption(12))
+                                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        }
+                        Spacer()
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 14))
+                            .foregroundStyle(ColorTokens.Parent.inkSoft)
+                            .accessibilityHidden(true)
+                    }
+                }
+                .accessibilityLabel(String(localized: "shareplay.startButton"))
+                .accessibilityHint(String(localized: "shareplay.family_home.a11y_hint"))
+            }
         }
     }
 

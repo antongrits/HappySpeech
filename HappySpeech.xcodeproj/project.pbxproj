@@ -1903,6 +1903,7 @@
 		335059EB038AE2D4D57CA160 /* ag-061.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2B543467252E1A02A763213A /* ag-061.m4a */; };
 		3355E0BA0084276F81316E8B /* lex-cs-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C4B85C1CA35750AFAAE6F481 /* lex-cs-2.m4a */; };
 		3356434CCF011C45C0973D58 /* rl-wm-22.m4a in Resources */ = {isa = PBXBuildFile; fileRef = DC619FFC21E77D1AE538E4E9 /* rl-wm-22.m4a */; };
+		3356708D16FC1CA286655919 /* SharePlayModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADBA9E9F1F142E22A34ADF4 /* SharePlayModels.swift */; };
 		335942DE5D55B86C356AEF46 /* g-ph-23.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 41439B6EDAD485CEA5AA6C52 /* g-ph-23.m4a */; };
 		335A0B88025D72B55713412C /* WorldMapPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CF63F664572E42A6B11BA1 /* WorldMapPresenter.swift */; };
 		336105F0A60D4B2B5C3BA578 /* l-wi-57.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 61400206D22A76C7714205F4 /* l-wi-57.m4a */; };
@@ -2414,6 +2415,7 @@
 		414FA697FBC00AD4F3F18AE9 /* lyalya_phoneme_l_song.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A0C8BF43C891E5C6111695A7 /* lyalya_phoneme_l_song.m4a */; };
 		4158E80977198B563A9EDFE7 /* br-080.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 24C0520527085E749D2E4372 /* br-080.m4a */; };
 		416FF11FEE3B7194EAD6F197 /* zh-df-14.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 011E7D76D8661016F70C4D1D /* zh-df-14.m4a */; };
+		418D396A87493E92710EFC34 /* SharePlayPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A266DF857F6F124CE77A9C /* SharePlayPresenter.swift */; };
 		41920896A5EEEF65D75C2A63 /* rl-syl-15.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 49DEABC4823161795A65AB05 /* rl-syl-15.m4a */; };
 		41ADA02B4EF4715E75A33A6E /* articulation-imitation.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 9C48E88539503385DD531CAE /* articulation-imitation.mp4 */; };
 		41B8E2E28A91CA65ADE38446 /* lex-gc-16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4C8145430AF30A7FA0A00536 /* lex-gc-16.m4a */; };
@@ -2831,6 +2833,7 @@
 		4D44AC53A3E27BD5458BFFBF /* ch-wf-34.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C9B11705F92F3A91A112AE32 /* ch-wf-34.m4a */; };
 		4D4557B4037A43B19C85B8EA /* r-wf-62.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F87FB5C1C617C063C2447443 /* r-wf-62.m4a */; };
 		4D4A58AA959FEDCB5D0BCA8B /* lyalya_sobiraet_yaytsa.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 6DC08CB7CCA274DAD2A9EB6F /* lyalya_sobiraet_yaytsa.m4a */; };
+		4D4AA541027B2F67B214AC34 /* SharePlaySessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 013879A472EC44165C63BEEB /* SharePlaySessionView.swift */; };
 		4D5AE519D3C38DA30CF13262 /* s-sto-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5894573943C4FFB5E8613225 /* s-sto-8.m4a */; };
 		4D61A8EA6189081F6DEA5B40 /* phon-fs-1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CCE7F1BF7FF0AF55CDCA857E /* phon-fs-1.m4a */; };
 		4D685356E19D9B8EA3B77C76 /* c-wi-18.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C85D1126E0755FD754F9EAFC /* c-wi-18.m4a */; };
@@ -4034,6 +4037,7 @@
 		70F8B166DD678C223FF076C1 /* dwh-ph-23.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F9448BBCA0BAAA7B87312211 /* dwh-ph-23.m4a */; };
 		71056C6DD91992EB7BDCE1E8 /* shchyoki.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4DE199D3CE077BA68B1FA88E /* shchyoki.m4a */; };
 		7110099675A9FA93FA600A42 /* l-wf-25.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AA2B8847984596FAC02CE244 /* l-wf-25.m4a */; };
+		7112203B5324587FEB45D514 /* SharePlayRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79BE0A6F8036A841A7F2A43 /* SharePlayRouter.swift */; };
 		711264F76D9DBD2A1FEA0267 /* c-sen-29.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 6083D11827AD309C698FD2FF /* c-sen-29.m4a */; };
 		711669D4DFE524448C76407E /* SortingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15492FE4DE4B3D8A69303885 /* SortingModels.swift */; };
 		71306EC91BE93C9CB555F4B0 /* zh-ph-1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4C0E7169B6A169AF23343B71 /* zh-ph-1.m4a */; };
@@ -4358,6 +4362,7 @@
 		79949CB4C2675E88A5F1FF0E /* repeat-after-model_L.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 057A92E5B2E49F68E8A36D28 /* repeat-after-model_L.mp4 */; };
 		799F884538E8D64FA503CDA7 /* r-wf-58.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B68AD6E372A159CC7F04C15F /* r-wf-58.m4a */; };
 		79A790DD3F8B9E21DBDE7544 /* narr-sp-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F16E9368D0A95CB8978975F8 /* narr-sp-8.m4a */; };
+		79AF6D53088491FBCE5402E8 /* FamilyShareplayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A6C5DEEF122C662C278051 /* FamilyShareplayController.swift */; };
 		79B0589063DCDA29CB0CAFA9 /* lex-fe-4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5287A496BB77614E18035495 /* lex-fe-4.m4a */; };
 		79B3DF0625C6A913925DA747 /* kh-wi-13.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4C5E2C2408A746DEDA7C2DAF /* kh-wi-13.m4a */; };
 		79C0A26D2D04033BF46DA722 /* kh-wf-19.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 80464A045F7642CA7C344803 /* kh-wf-19.m4a */; };
@@ -6142,6 +6147,7 @@
 		AB31369827B5A654705FBE2A /* sh-wi-9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8157B7A16A61F96EF857C894 /* sh-wi-9.m4a */; };
 		AB3482B6AE2C2448C80491F7 /* shch-sen-14.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 53EB16F40D384D0F3E829E0F /* shch-sen-14.m4a */; };
 		AB44C112ACAC19E898A01B3A /* lyalya_pridumay_vopros_dlya_menya.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 84AD73A64D879928CCBFF2A5 /* lyalya_pridumay_vopros_dlya_menya.m4a */; };
+		AB4C7CD40D6F958D39C05ED0 /* SharePlayInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457E45DED6BD79D1E51B043B /* SharePlayInteractor.swift */; };
 		AB5276BD46F9700D30A42A44 /* kh-wm-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B8AB15A8F73E9E456E4B0467 /* kh-wm-6.m4a */; };
 		AB5517F69C7D59F60E0807E3 /* phon-ls-4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FEFB23553B3545A758E08E01 /* phon-ls-4.m4a */; };
 		AB56DA7C5F7FE4C21771D1E9 /* klyuch.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2EE92689C54371039D270E54 /* klyuch.m4a */; };
@@ -7216,6 +7222,7 @@
 		C829BD63FF970DC27BD57EB2 /* g-ph-7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7E268605B9B0E37153AC164F /* g-ph-7.m4a */; };
 		C82CB862A24EE37FB938E556 /* StutteringInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCF3A9D4BEBDFA8B1A79FEE8 /* StutteringInteractorTests.swift */; };
 		C82FF89C99A973ABD91C65E7 /* k-syl-28.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E19EF12F333AA20AE8587DC7 /* k-syl-28.m4a */; };
+		C82FFA2B45997273E880FD6E /* SyncMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB03B845D0C88A0FF6029C4 /* SyncMessage.swift */; };
 		C830E5BD4D4A8C439299801C /* khokkey.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E2FF78892F0DE55667337262 /* khokkey.m4a */; };
 		C8353C6325B7374C07D30965 /* poschitay_monety_odin_dva.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5DA16621B46048B79B03DE1C /* poschitay_monety_odin_dva.m4a */; };
 		C836EAD5F4137430B4B9D74B /* k-syl-24.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2082285B142F13509A1D7166 /* k-syl-24.m4a */; };
@@ -7323,6 +7330,7 @@
 		CB145DF8E6D06AC7C2850BA6 /* ch-wm-41.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FF37A308A0E3046F66E154B3 /* ch-wm-41.m4a */; };
 		CB1DC7BA075BD0E41270AFA8 /* g-ph-35.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7EB457385027A17BD882FE04 /* g-ph-35.m4a */; };
 		CB28F0AA2948C3E23E6CB33F /* c-diff-25.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CF7FC190A6779C4B849917F7 /* c-diff-25.m4a */; };
+		CB398FCB52E916EC7A5698CF /* LessonGroupActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C35A1FB122A0AE20FD4BAF5 /* LessonGroupActivity.swift */; };
 		CB5DA57D11786884BC61F9B5 /* sh-wm-3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2C84BB2E68CD41130F9DBE0C /* sh-wm-3.m4a */; };
 		CB6AA3C3CA568CDDE79A14F4 /* lex-ss-3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 240EABEFCE59F9FCBA540028 /* lex-ss-3.m4a */; };
 		CB6B14ADB7C75034F3CBA845 /* lyalya_newyear_016.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A4FC4342D928D78B7AABF6B7 /* lyalya_newyear_016.m4a */; };
@@ -8903,6 +8911,7 @@
 		F7A24506EF07AC0DA291C493 /* lyalya_permission_mic.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 443EB62B02CB420FD4ABEE0C /* lyalya_permission_mic.m4a */; };
 		F7BE4FECA896309C6F20974E /* lex-num-9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2E169909D6D5D15B87176A7A /* lex-num-9.m4a */; };
 		F7C60718F785989203BA17E8 /* pack_new_year.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A2E9C4967152B2E1ECC6182 /* pack_new_year.json */; };
+		F7C6568B46053AFAD12AEDCC /* SharePlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756930F0982E7B9F855CE66E /* SharePlayView.swift */; };
 		F7C6B40BDAF6EFE28814E1D1 /* g-ph-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8B13A1981D7D5BD3C2780681 /* g-ph-2.m4a */; };
 		F7D259CF79BA8E473AC7CB76 /* lyalya_hint_18.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0DD3223A59CA1F98CCF2E8E7 /* lyalya_hint_18.m4a */; };
 		F7D26710E579CFC545220F21 /* z-sen-19.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0BA3116EE1C093DCC2C44100 /* z-sen-19.m4a */; };
@@ -9268,6 +9277,7 @@
 		01261B3BE8B05C0E239E97DA /* ch-wi-50.m4a */ = {isa = PBXFileReference; path = "ch-wi-50.m4a"; sourceTree = "<group>"; };
 		013271803B32F762AE565556 /* ag-018.m4a */ = {isa = PBXFileReference; path = "ag-018.m4a"; sourceTree = "<group>"; };
 		0134F4410E41733DB5AF952F /* lyalya_hint_tap_answer.m4a */ = {isa = PBXFileReference; path = lyalya_hint_tap_answer.m4a; sourceTree = "<group>"; };
+		013879A472EC44165C63BEEB /* SharePlaySessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePlaySessionView.swift; sourceTree = "<group>"; };
 		01570454C4CFF9DFEE58A370 /* krokodil.m4a */ = {isa = PBXFileReference; path = krokodil.m4a; sourceTree = "<group>"; };
 		0157619666C470C5FA4B167E /* lex-ad-19.m4a */ = {isa = PBXFileReference; path = "lex-ad-19.m4a"; sourceTree = "<group>"; };
 		015E71A1741238D4FDA49A9C /* VisualAcousticView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualAcousticView.swift; sourceTree = "<group>"; };
@@ -9868,6 +9878,7 @@
 		11991B4563C62E798277401D /* br-173.m4a */ = {isa = PBXFileReference; path = "br-173.m4a"; sourceTree = "<group>"; };
 		119AEA706485FAE73292E6EB /* ch-df-27.m4a */ = {isa = PBXFileReference; path = "ch-df-27.m4a"; sourceTree = "<group>"; };
 		11A69FD9354CDCF9A33CAE65 /* g-wm-10.m4a */ = {isa = PBXFileReference; path = "g-wm-10.m4a"; sourceTree = "<group>"; };
+		11A6C5DEEF122C662C278051 /* FamilyShareplayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyShareplayController.swift; sourceTree = "<group>"; };
 		11B2F6F28467D191959D5A9E /* r-sen-37.m4a */ = {isa = PBXFileReference; path = "r-sen-37.m4a"; sourceTree = "<group>"; };
 		11B39162C028EF46673703F6 /* AdvancedGameSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedGameSnapshotTests.swift; sourceTree = "<group>"; };
 		11BA3A80F2975C66B2929F58 /* mnogo_derevev_rastyot_v_lesu.m4a */ = {isa = PBXFileReference; path = mnogo_derevev_rastyot_v_lesu.m4a; sourceTree = "<group>"; };
@@ -11301,6 +11312,7 @@
 		3AA10E5E40BDD6CFE1E8478F /* kh-iso-10.m4a */ = {isa = PBXFileReference; path = "kh-iso-10.m4a"; sourceTree = "<group>"; };
 		3AAAFE3B683FDCAD87916ADF /* phon-sc-5.m4a */ = {isa = PBXFileReference; path = "phon-sc-5.m4a"; sourceTree = "<group>"; };
 		3AAE1FDE788CD5D2CB69D881 /* na_polyane_sidit_zelyonaya_propusk_i_smotrit_na_nas.m4a */ = {isa = PBXFileReference; path = na_polyane_sidit_zelyonaya_propusk_i_smotrit_na_nas.m4a; sourceTree = "<group>"; };
+		3AB03B845D0C88A0FF6029C4 /* SyncMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMessage.swift; sourceTree = "<group>"; };
 		3AC58CD59B7B201F0034E971 /* MemoryDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryDisplayLogic.swift; sourceTree = "<group>"; };
 		3AC8C94F7D7B36EB4657C884 /* ch-df-21.m4a */ = {isa = PBXFileReference; path = "ch-df-21.m4a"; sourceTree = "<group>"; };
 		3ACBCC92F43FFCB865F194E1 /* rl-sen-24.m4a */ = {isa = PBXFileReference; path = "rl-sen-24.m4a"; sourceTree = "<group>"; };
@@ -11549,6 +11561,7 @@
 		4188FC44D992E605B801B386 /* y-wm-1.m4a */ = {isa = PBXFileReference; path = "y-wm-1.m4a"; sourceTree = "<group>"; };
 		419A72E7B6B58CD96B0F0A08 /* sh-prep-10.m4a */ = {isa = PBXFileReference; path = "sh-prep-10.m4a"; sourceTree = "<group>"; };
 		419EFF936D7E497E09FC7488 /* zh-prep-10.m4a */ = {isa = PBXFileReference; path = "zh-prep-10.m4a"; sourceTree = "<group>"; };
+		41A266DF857F6F124CE77A9C /* SharePlayPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePlayPresenter.swift; sourceTree = "<group>"; };
 		41A60ACD88E6F10A765E8921 /* br-077.m4a */ = {isa = PBXFileReference; path = "br-077.m4a"; sourceTree = "<group>"; };
 		41A9710DDD3989825F5879EB /* lex-vb-5.m4a */ = {isa = PBXFileReference; path = "lex-vb-5.m4a"; sourceTree = "<group>"; };
 		41B237E6899D079E81D517DC /* session_excellent.m4a */ = {isa = PBXFileReference; path = session_excellent.m4a; sourceTree = "<group>"; };
@@ -11690,6 +11703,7 @@
 		4565AFCF18274307B349C694 /* zamok_raskoldovan.m4a */ = {isa = PBXFileReference; path = zamok_raskoldovan.m4a; sourceTree = "<group>"; };
 		4573C21F3D16BEAA89A5CD2A /* gr-pl-17.m4a */ = {isa = PBXFileReference; path = "gr-pl-17.m4a"; sourceTree = "<group>"; };
 		457E139BA6B059A1A8F1D9BF /* g-sen-13.m4a */ = {isa = PBXFileReference; path = "g-sen-13.m4a"; sourceTree = "<group>"; };
+		457E45DED6BD79D1E51B043B /* SharePlayInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePlayInteractor.swift; sourceTree = "<group>"; };
 		458EE0B3CE750F0AF8EAE1E4 /* rl-prep-9.m4a */ = {isa = PBXFileReference; path = "rl-prep-9.m4a"; sourceTree = "<group>"; };
 		4591A08C56E9701C70E87C88 /* zh-wi-28.m4a */ = {isa = PBXFileReference; path = "zh-wi-28.m4a"; sourceTree = "<group>"; };
 		459FB04C4DE841E46760123B /* c-syl-5.m4a */ = {isa = PBXFileReference; path = "c-syl-5.m4a"; sourceTree = "<group>"; };
@@ -13044,6 +13058,7 @@
 		6C1D25338C60BA5628E55D9D /* lyalya_easter_039.m4a */ = {isa = PBXFileReference; path = lyalya_easter_039.m4a; sourceTree = "<group>"; };
 		6C201CB1A3B5800F6E5DCD5B /* r-ph-62.m4a */ = {isa = PBXFileReference; path = "r-ph-62.m4a"; sourceTree = "<group>"; };
 		6C2A7EA9D3DB6CE4F98546BB /* ch-tt-40.m4a */ = {isa = PBXFileReference; path = "ch-tt-40.m4a"; sourceTree = "<group>"; };
+		6C35A1FB122A0AE20FD4BAF5 /* LessonGroupActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonGroupActivity.swift; sourceTree = "<group>"; };
 		6C39CF9CC4C8B7A3BC705293 /* phon-fs-13.m4a */ = {isa = PBXFileReference; path = "phon-fs-13.m4a"; sourceTree = "<group>"; };
 		6C469DB45448114F21F973BF /* gr-adj-13.m4a */ = {isa = PBXFileReference; path = "gr-adj-13.m4a"; sourceTree = "<group>"; };
 		6C50ED02078472D201B8C095 /* ag-151.m4a */ = {isa = PBXFileReference; path = "ag-151.m4a"; sourceTree = "<group>"; };
@@ -13382,6 +13397,7 @@
 		755E2F99D778FDC3CD534F43 /* br-289.m4a */ = {isa = PBXFileReference; path = "br-289.m4a"; sourceTree = "<group>"; };
 		7561328FE59AD5C320740AF3 /* l-iso-5.m4a */ = {isa = PBXFileReference; path = "l-iso-5.m4a"; sourceTree = "<group>"; };
 		756348D1AD233DC7D9AE1AEF /* drag-and-match.mp4 */ = {isa = PBXFileReference; path = "drag-and-match.mp4"; sourceTree = "<group>"; };
+		756930F0982E7B9F855CE66E /* SharePlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePlayView.swift; sourceTree = "<group>"; };
 		75722C4A4DB9BE1870E88134 /* sravni_leto_i_zimu.m4a */ = {isa = PBXFileReference; path = sravni_leto_i_zimu.m4a; sourceTree = "<group>"; };
 		7574F27049B088747159927A /* br-114.m4a */ = {isa = PBXFileReference; path = "br-114.m4a"; sourceTree = "<group>"; };
 		7575AC714E6E0B9D30EAEBDE /* ch-tt-6.m4a */ = {isa = PBXFileReference; path = "ch-tt-6.m4a"; sourceTree = "<group>"; };
@@ -16391,6 +16407,7 @@
 		C7779D74EAE54973591D9BC5 /* lyalya_onboarding_step10_transition.m4a */ = {isa = PBXFileReference; path = lyalya_onboarding_step10_transition.m4a; sourceTree = "<group>"; };
 		C77BF1451860726ACA19C430 /* zh-prep-1.m4a */ = {isa = PBXFileReference; path = "zh-prep-1.m4a"; sourceTree = "<group>"; };
 		C792A1A9E47FC4E52AF15B56 /* l-wf-2.m4a */ = {isa = PBXFileReference; path = "l-wf-2.m4a"; sourceTree = "<group>"; };
+		C79BE0A6F8036A841A7F2A43 /* SharePlayRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePlayRouter.swift; sourceTree = "<group>"; };
 		C79CC08FCD7D0B0785070941 /* rl-syl-4.m4a */ = {isa = PBXFileReference; path = "rl-syl-4.m4a"; sourceTree = "<group>"; };
 		C79D72C76C48916FE54D8EEF /* r-prep-16.m4a */ = {isa = PBXFileReference; path = "r-prep-16.m4a"; sourceTree = "<group>"; };
 		C7A2995470645E7CB877978B /* lex-hf-0.m4a */ = {isa = PBXFileReference; path = "lex-hf-0.m4a"; sourceTree = "<group>"; };
@@ -17049,6 +17066,7 @@
 		DACCC5D1CA6258B62D0C1CB0 /* kh-sen-17.m4a */ = {isa = PBXFileReference; path = "kh-sen-17.m4a"; sourceTree = "<group>"; };
 		DAD570731206C48027EA265A /* s-syl-13.m4a */ = {isa = PBXFileReference; path = "s-syl-13.m4a"; sourceTree = "<group>"; };
 		DADBA0FF253773695C03AB21 /* lex-bp-15.m4a */ = {isa = PBXFileReference; path = "lex-bp-15.m4a"; sourceTree = "<group>"; };
+		DADBA9E9F1F142E22A34ADF4 /* SharePlayModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePlayModels.swift; sourceTree = "<group>"; };
 		DAE19F2C258A11A752815687 /* zh-ph-36.m4a */ = {isa = PBXFileReference; path = "zh-ph-36.m4a"; sourceTree = "<group>"; };
 		DAE30783DB677E06E0ADAD5C /* vol_ki_udarenie_na_vol.m4a */ = {isa = PBXFileReference; path = vol_ki_udarenie_na_vol.m4a; sourceTree = "<group>"; };
 		DAE330EBD0CF01EB92FD6D2F /* mashina.m4a */ = {isa = PBXFileReference; path = mashina.m4a; sourceTree = "<group>"; };
@@ -19616,6 +19634,22 @@
 				D6509867AEF8239DFD73AA4A /* WhisperTranscriptionWorker.swift */,
 			);
 			path = Workers;
+			sourceTree = "<group>";
+		};
+		29FF15A04EB55A9DE23F9CC0 /* SharePlay */ = {
+			isa = PBXGroup;
+			children = (
+				AB538D28A1E7FBBF6C4C36FE /* Workers */,
+				6C35A1FB122A0AE20FD4BAF5 /* LessonGroupActivity.swift */,
+				457E45DED6BD79D1E51B043B /* SharePlayInteractor.swift */,
+				DADBA9E9F1F142E22A34ADF4 /* SharePlayModels.swift */,
+				41A266DF857F6F124CE77A9C /* SharePlayPresenter.swift */,
+				C79BE0A6F8036A841A7F2A43 /* SharePlayRouter.swift */,
+				013879A472EC44165C63BEEB /* SharePlaySessionView.swift */,
+				756930F0982E7B9F855CE66E /* SharePlayView.swift */,
+				3AB03B845D0C88A0FF6029C4 /* SyncMessage.swift */,
+			);
+			path = SharePlay;
 			sourceTree = "<group>";
 		};
 		2B84BB973840FAFE650923E8 /* Audio */ = {
@@ -22370,6 +22404,7 @@
 				01EEC28B6AC66876C7177671 /* SessionHistory */,
 				3F9194EB66A12C462314F248 /* SessionShell */,
 				2D1657A73DC59771CA8446B7 /* Settings */,
+				29FF15A04EB55A9DE23F9CC0 /* SharePlay */,
 				8E31874988856B0C17AF3BCB /* SiblingMultiplayer */,
 				DE6E70547D22B6112C4ED667 /* Specialist */,
 				5F8E19AF067D288747018C41 /* StutteringModule */,
@@ -25604,6 +25639,14 @@
 				0C5F29B75F1A582FF4FFC093 /* sh-wm-49.m4a */,
 			);
 			path = SH;
+			sourceTree = "<group>";
+		};
+		AB538D28A1E7FBBF6C4C36FE /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				11A6C5DEEF122C662C278051 /* FamilyShareplayController.swift */,
+			);
+			path = Workers;
 			sourceTree = "<group>";
 		};
 		AD33542C0DE90C83B37FC021 /* Interactors */ = {
@@ -38313,6 +38356,7 @@
 				35E4A50374049F1C9EDDBCC7 /* FamilyHomeView.swift in Sources */,
 				143E5F0A4B03EA6204B7FE97 /* FamilyInsightsWorker.swift in Sources */,
 				9CCD4091DFCDF2ACD914CD5C /* FamilyRecordingObject.swift in Sources */,
+				79AF6D53088491FBCE5402E8 /* FamilyShareplayController.swift in Sources */,
 				572F1B81396C836FE73B68D1 /* FamilyStatsWorker.swift in Sources */,
 				A408D58557B70B2345554349 /* FamilyVoiceDisplayLogic.swift in Sources */,
 				3F4E492162516EFEB3882C21 /* FamilyVoiceInteractor.swift in Sources */,
@@ -38404,6 +38448,7 @@
 				150D382504DB0B8C23E11B70 /* LLMInferenceActor.swift in Sources */,
 				7DDCE6EC79CEBB156DFE81FC /* LLMModelManager.swift in Sources */,
 				3A3F391FBBE19ADB876981B6 /* LLMPrompts.swift in Sources */,
+				CB398FCB52E916EC7A5698CF /* LessonGroupActivity.swift in Sources */,
 				96E931E87156483F4E170087 /* LessonSessionAttributes.swift in Sources */,
 				8128FE2E74229DB6912CF84B /* LessonVoiceWorker.swift in Sources */,
 				6D389035E02A752D8A52CF5C /* LipSymmetryAnalyzer.swift in Sources */,
@@ -38616,6 +38661,12 @@
 				1EA2D52F3CC6157A971FE923 /* SettingsRouter.swift in Sources */,
 				B9DCE04A1C152160177BB8A1 /* SettingsView.swift in Sources */,
 				98E03D1292586B4A43647B24 /* ShadowTokens.swift in Sources */,
+				AB4C7CD40D6F958D39C05ED0 /* SharePlayInteractor.swift in Sources */,
+				3356708D16FC1CA286655919 /* SharePlayModels.swift in Sources */,
+				418D396A87493E92710EFC34 /* SharePlayPresenter.swift in Sources */,
+				7112203B5324587FEB45D514 /* SharePlayRouter.swift in Sources */,
+				4D4AA541027B2F67B214AC34 /* SharePlaySessionView.swift in Sources */,
+				F7C6568B46053AFAD12AEDCC /* SharePlayView.swift in Sources */,
 				09AA940D27132D11DE71A27A /* ShowChildProgressIntent.swift in Sources */,
 				270C641FE5669EDF6355B66A /* ShowTodaysMissionIntent.swift in Sources */,
 				218459C026F450A83030312D /* SiblingDiscoveryView.swift in Sources */,
@@ -38684,6 +38735,7 @@
 				8342C1D01C630C6EE575E46D /* StutteringPresenter.swift in Sources */,
 				C1A28922EBB679320F3BDF3F /* StutteringRouter.swift in Sources */,
 				07876CF788DB66134F96ED18 /* StutteringView.swift in Sources */,
+				C82FFA2B45997273E880FD6E /* SyncMessage.swift in Sources */,
 				D08CCE2473943BEC6B0BD0F9 /* SyncService.swift in Sources */,
 				49DFE5ED1A5ADDD4F532547D /* SyncSnapshots.swift in Sources */,
 				D82FD4C61FD18F5C8A5D408B /* TargetPosesRepository.swift in Sources */,

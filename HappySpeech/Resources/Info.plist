@@ -47,6 +47,8 @@
 	</array>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Чтобы найти друга для совместной игры по локальной сети</string>
+	<key>NSFaceTimeUsageDescription</key>
+	<string>HappySpeech использует FaceTime для совместных логопедических занятий под контролем родителей</string>
 	<key>NSHealthShareUsageDescription</key>
 	<string>HappySpeech показывает родителям сводку активности ребёнка в приложении Здоровье</string>
 	<key>NSHealthUpdateUsageDescription</key>
