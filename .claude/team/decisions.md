@@ -1020,3 +1020,69 @@ Kid circuit ранее использовал только RuleBasedDecisionServ
 
 **Tests:**
 - `HappySpeechTests/Unit/Services/HealthKitServiceTests.swift` — 14 тестов Mock
+
+---
+
+## ADR-V12-RIVE — Mascot Ляля Rive Character Decision (Plan v12 Block A)
+
+**Дата:** 2026-04-30
+**Статус:** DECIDED — Outcome C (Composite Wrapper Improvement)
+**Принято:** CTO (Claude) в ходе автоматического Block A execution
+
+### Контекст
+
+Animator агент провёл discovery phase по decision tree из `~/.claude/skills/rive-character-builder/SKILL.md`:
+
+**Доступность инструментов:**
+- `rive-python` pip3/pip: **не установлена** (пустой вывод `pip3 show rive-python`)
+- Rive Editor `/Applications/Rive*`: **не найден** (не установлен на машине разработчика)
+- `lyalya.riv` текущий: **79 KB** — импортированный `skills.riv` (rive-app/rive-ios sample, MIT лицензия)
+- State machine в файле: **"State Machine 1"** с input "Level" (0/1/2) — НЕ "LyalyaSM"
+
+**Strategy A (rive-python custom):** недоступна. Официальная `rive-python` предназначена для server-side rendering, не для создания `.riv` файлов. Создание custom `.riv` программно невозможно без Rive Editor.
+
+**Strategy B (Community CC0/MIT):** не применена в данной итерации. Браузерный доступ к `rive.app/community` для скачивания verified-CC0 character требует ручной верификации лицензии — не может быть автоматизирован без риска нарушения лицензионных условий.
+
+**Strategy C (Composite Wrapper Improvement):** **ВЫБРАНА.**
+
+### Решение
+
+Оставить `lyalya.riv` (skills.riv MIT base, 79 KB) как motion backend. Существенно улучшить SwiftUI composite wrapper:
+
+**Новые компоненты в `HSMascotView.swift`:**
+1. `MoodAuraView` — ambient radial gradient-halo под маскотом, цвет зависит от `MascotMood`. Плавный переход при смене состояния через `MotionTokens.spring`.
+2. `EmotionParticlesView` — state-specific floating particles:
+   - `.celebrating` → `CelebrationStarsView` (8 звёзд по орбите)
+   - `.happy` → `FloatingHeartsView` (5 поднимающихся сердечек)
+   - `.thinking` → `ThinkingDotsView` (3 dots bounce с задержкой)
+   - `.encouraging` → `EncouragingPlusView` (4 плюса по орбите)
+   - `.singing` → `MusicNotesView` (3 ноты с подъёмом)
+3. `WavingHandOverlay` — SF Symbol `hand.wave.fill` при `.waving` с bounce анимацией
+4. `PointingArrowOverlay` — SF Symbol `arrowshape.right.fill` с pulse при `.pointing`, 3 направления
+5. `EntranceAnimation` — scale 0.82→1.0 + opacity 0→1 при `onAppear` и смене состояния
+6. `EncouragingShake` — мягкое горизонтальное покачивание при `.encouraging` (вместо любых вспышек/красных эффектов)
+
+**Новые возможности в `LyalyaMascotView.swift`:**
+- Haptic feedback при смене состояния: `.celebrating` → success notification, `.encouraging` → light impact, `.waving/.happy` → light impact 0.6
+- Отслеживание `previousState` для будущих mood-transition анимаций
+
+**Требования соблюдены:**
+- `@Environment(\.accessibilityReduceMotion)` — все новые анимации проверяются
+- `MotionTokens` — только токены, нет хардкода длительностей
+- Kids-friendly: мягкие, радостные эффекты, никаких вспышек, никаких красных/тёмных цветов при ошибке
+- `.encouraging` = поддерживающий shake (НЕ наказание)
+
+### Последствия
+
+- MVP маскот визуально богаче без custom `.riv`
+- `HSRiveView.swift` и `LyalyaMascotView.swift` готовы к замене `lyalya.riv` без изменений архитектуры
+- App Store submission не заблокирована
+- Дипломная защита обеспечена (маскот работает, анимации живые)
+
+### Post-v1.0 roadmap
+
+После защиты диплома — нанять Rive designer по `~/.claude/skills/rive-character-builder/references/lyalya-design-brief.md`. Бюджет ~$500–1500. Платформы: Upwork, Rive.app community Discord. Замена `.riv` потребует только обновления `HSRiveView.swift` (stateMachineName + input mapping).
+
+**Files changed:**
+- `HappySpeech/DesignSystem/Components/HSMascotView.swift` — 7-layer composite + MoodAuraView + EmotionParticlesView + waving/pointing overlays + entrance + encouraging shake
+- `HappySpeech/DesignSystem/Components/LyalyaMascotView.swift` — haptic feedback + previousState tracking

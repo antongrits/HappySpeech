@@ -98,9 +98,12 @@ public struct LyalyaMascotView: View {
     @Environment(LyalyaCustomizationStorage.self) private var customization: LyalyaCustomizationStorage?
     @Environment(\.mascotLipSyncState) private var lipSyncState
 
-    // MARK: - Breathing animation state
+    // MARK: - Animation state
 
     @State private var breathingScale: CGFloat = 1.0
+
+    // v12: haptic feedback при переходе между состояниями
+    @State private var previousState: LyalyaState = .idle
 
     // MARK: - Init
 
@@ -152,10 +155,16 @@ public struct LyalyaMascotView: View {
         .scaleEffect(breathingScale)
         .contentShape(Rectangle())
         .onAppear {
+            previousState = state
             guard !reduceMotion else { return }
             withAnimation(MotionTokens.idlePulse) {
                 breathingScale = 1.02
             }
+        }
+        .onChange(of: state) { oldState, newState in
+            guard !reduceMotion else { return }
+            playHapticFeedback(for: newState)
+            previousState = oldState
         }
         .onTapGesture {
             onTap?()
@@ -179,6 +188,24 @@ public struct LyalyaMascotView: View {
                 : ""
         )
         .accessibilityAddTraits(onTap != nil ? .isButton : [])
+    }
+
+    // MARK: - Haptic feedback (v12)
+    // Мягкая тактильная обратная связь при переходе между состояниями.
+    // Kids-friendly: лёгкая при обычных переходах, средняя при celebrating.
+    // Reduced Motion: не вызывается (проверка в onChange).
+
+    private func playHapticFeedback(for newState: LyalyaState) {
+        switch newState {
+        case .celebrating:
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
+        case .encouraging:
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        case .waving, .happy:
+            UIImpactFeedbackGenerator(style: .light).impactOccurred(intensity: 0.6)
+        case .idle, .thinking, .sad, .pointing, .explaining, .singing:
+            break
+        }
     }
 
     // MARK: - Skin tint
