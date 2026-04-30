@@ -23420,6 +23420,61 @@
           }
         }
       }
+    },
+    "settings.haptics.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тактильная отдача"
+          }
+        }
+      }
+    },
+    "settings.haptics.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вибрация при действиях"
+          }
+        }
+      }
+    },
+    "settings.haptics.off": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выкл"
+          }
+        }
+      }
+    },
+    "settings.haptics.subtle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лёгкая"
+          }
+        }
+      }
+    },
+    "settings.haptics.full": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Полная"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

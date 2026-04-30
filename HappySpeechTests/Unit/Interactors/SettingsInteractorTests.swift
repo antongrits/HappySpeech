@@ -80,12 +80,14 @@ final class SettingsInteractorTests: XCTestCase {
         }
         func presentToggleKidDailyReminder(_ response: SettingsModels.ToggleKidDailyReminder.Response) {}
         func presentToggleWeeklyParentSummary(_ response: SettingsModels.ToggleWeeklyParentSummary.Response) {}
+        func presentUpdateHaptics(_ response: SettingsModels.UpdateHaptics.Response) {}
     }
 
     private func makeSUT() -> (SettingsInteractor, SpyPresenter) {
         let sut = SettingsInteractor(
             themeManager: ThemeManager(),
             notificationService: MockNotificationService(),
+            hapticService: MockHapticService(),
             sessionRepository: MockSessionRepository(),
             defaults: UserDefaults(suiteName: "test-\(UUID().uuidString)")!
         )
@@ -260,6 +262,7 @@ final class SettingsInteractorTests: XCTestCase {
         let sut = SettingsInteractor(
             themeManager: ThemeManager(),
             notificationService: MockNotificationService(),
+            hapticService: MockHapticService(),
             sessionRepository: MockSessionRepository(),
             whisperKitModelManager: whisperMock,
             llmModelManager: llmMock,
@@ -315,6 +318,7 @@ final class SettingsInteractorTests: XCTestCase {
         let sut = SettingsInteractor(
             themeManager: ThemeManager(),
             notificationService: MockNotificationService(),
+            hapticService: MockHapticService(),
             sessionRepository: MockSessionRepository(),
             whisperKitModelManager: whisperMock,
             llmModelManager: nil,
@@ -334,6 +338,7 @@ final class SettingsInteractorTests: XCTestCase {
         let sut = SettingsInteractor(
             themeManager: ThemeManager(),
             notificationService: MockNotificationService(),
+            hapticService: MockHapticService(),
             sessionRepository: MockSessionRepository(),
             whisperKitModelManager: whisperMock,
             llmModelManager: nil,
@@ -362,6 +367,7 @@ final class SettingsInteractorTests: XCTestCase {
         let sut = SettingsInteractor(
             themeManager: ThemeManager(),
             notificationService: mock,
+            hapticService: MockHapticService(),
             sessionRepository: MockSessionRepository(),
             defaults: UserDefaults(suiteName: "test-\(UUID().uuidString)")!
         )
@@ -379,6 +385,7 @@ final class SettingsInteractorTests: XCTestCase {
         let sut = SettingsInteractor(
             themeManager: ThemeManager(),
             notificationService: mock,
+            hapticService: MockHapticService(),
             sessionRepository: MockSessionRepository(),
             defaults: UserDefaults(suiteName: "test-\(UUID().uuidString)")!
         )
@@ -407,6 +414,7 @@ final class SettingsInteractorTests: XCTestCase {
         let sut = SettingsInteractor(
             themeManager: ThemeManager(),
             notificationService: MockNotificationService(),
+            hapticService: MockHapticService(),
             sessionRepository: MockSessionRepository(),
             defaults: defaults
         )

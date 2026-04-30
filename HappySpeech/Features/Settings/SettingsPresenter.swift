@@ -22,6 +22,8 @@ protocol SettingsPresentationLogic: AnyObject {
     /// L9
     func presentToggleKidDailyReminder(_ response: SettingsModels.ToggleKidDailyReminder.Response)
     func presentToggleWeeklyParentSummary(_ response: SettingsModels.ToggleWeeklyParentSummary.Response)
+    /// T (v12)
+    func presentUpdateHaptics(_ response: SettingsModels.UpdateHaptics.Response)
 }
 
 // MARK: - SettingsPresenter
@@ -278,6 +280,10 @@ final class SettingsPresenter: SettingsPresentationLogic {
 
     func presentToggleWeeklyParentSummary(_ response: SettingsModels.ToggleWeeklyParentSummary.Response) {
         display?.displayToggleWeeklyParentSummary(.init(settings: response.settings))
+    }
+
+    func presentUpdateHaptics(_ response: SettingsModels.UpdateHaptics.Response) {
+        display?.displayUpdateHaptics(.init(settings: response.settings))
     }
 
     // MARK: - Helpers

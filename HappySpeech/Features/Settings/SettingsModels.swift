@@ -256,6 +256,20 @@ enum SettingsModels {
         }
     }
 
+    // MARK: - T (v12): UpdateHaptics
+
+    enum UpdateHaptics {
+        struct Request: Sendable {
+            let level: HapticIntensityLevel
+        }
+        struct Response: Sendable {
+            let settings: AppSettings
+        }
+        struct ViewModel: Sendable {
+            let settings: AppSettings
+        }
+    }
+
     // MARK: - L9: ToggleKidDailyReminder
 
     enum ToggleKidDailyReminder {
@@ -357,6 +371,8 @@ struct AppSettings: Sendable, Equatable {
     var kidDailyReminderEnabled: Bool
     /// L9: еженедельный итог для родителя в воскресенье 19:00
     var weeklyParentSummaryEnabled: Bool
+    /// T (v12): уровень тактильной отдачи
+    var hapticsLevel: HapticIntensityLevel
 
     static var `default`: AppSettings {
         var components = DateComponents()
@@ -376,7 +392,8 @@ struct AppSettings: Sendable, Equatable {
             specialistCode: "",
             specialistConnected: false,
             kidDailyReminderEnabled: true,
-            weeklyParentSummaryEnabled: true
+            weeklyParentSummaryEnabled: true,
+            hapticsLevel: .full
         )
     }
 }
@@ -418,4 +435,6 @@ enum SettingsKey {
     /// L9
     static let kidDailyReminderEnabled    = "hs.settings.kidDailyReminderEnabled"
     static let weeklyParentSummaryEnabled = "hs.settings.weeklyParentSummaryEnabled"
+    /// T (v12): тактильная отдача
+    static let hapticsLevel               = "Haptics.intensity"
 }

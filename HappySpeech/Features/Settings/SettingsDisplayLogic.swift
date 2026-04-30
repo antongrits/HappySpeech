@@ -23,6 +23,8 @@ protocol SettingsDisplayLogic: AnyObject {
     /// L9
     func displayToggleKidDailyReminder(_ viewModel: SettingsModels.ToggleKidDailyReminder.ViewModel)
     func displayToggleWeeklyParentSummary(_ viewModel: SettingsModels.ToggleWeeklyParentSummary.ViewModel)
+    /// T (v12)
+    func displayUpdateHaptics(_ viewModel: SettingsModels.UpdateHaptics.ViewModel)
 }
 
 // MARK: - SettingsDisplay (Observable Store)
@@ -142,6 +144,10 @@ final class SettingsDisplay: SettingsDisplayLogic {
     }
 
     func displayToggleWeeklyParentSummary(_ viewModel: SettingsModels.ToggleWeeklyParentSummary.ViewModel) {
+        settings = viewModel.settings
+    }
+
+    func displayUpdateHaptics(_ viewModel: SettingsModels.UpdateHaptics.ViewModel) {
         settings = viewModel.settings
     }
 

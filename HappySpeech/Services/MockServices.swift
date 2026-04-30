@@ -61,6 +61,21 @@ public final class MockAnalyticsService: AnalyticsService, @unchecked Sendable {
 // MARK: MockHapticService
 
 public final class MockHapticService: HapticService, @unchecked Sendable {
+    public private(set) var playedPatterns: [HapticPattern] = []
+    public private(set) var intensityScale: Float = 1.0
+    public var isAvailable: Bool { true }
+
+    public func play(pattern: HapticPattern) async {
+        playedPatterns.append(pattern)
+    }
+
+    public func setIntensityScale(_ scale: Float) {
+        intensityScale = max(0, min(1, scale))
+    }
+
+    public func stop() async {}
+
+    // MARK: - Legacy shim
     public func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {}
     public func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) {}
     public func selection() {}

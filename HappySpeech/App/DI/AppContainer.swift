@@ -1,3 +1,4 @@
+import CoreHaptics
 import Foundation
 import Observation
 import OSLog
@@ -485,7 +486,13 @@ public extension AppContainer {
             asrServiceFactory: { LiveASRService() },
             syncServiceFactory: { sharedSyncService },
             analyticsServiceFactory: { LocalAnalyticsService() },
-            hapticServiceFactory: { LiveHapticService() },
+            hapticServiceFactory: {
+                if CHHapticEngine.capabilitiesForHardware().supportsHaptics {
+                    return LiveHapticService()
+                } else {
+                    return FallbackHapticService()
+                }
+            },
             notificationServiceFactory: { NotificationServiceLive() },
             networkMonitorFactory: { sharedNetworkMonitor },
             pronunciationServiceFactory: { LivePronunciationScorerService() },

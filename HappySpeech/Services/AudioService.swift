@@ -265,8 +265,23 @@ public protocol NotificationService: Sendable {
 }
 
 // MARK: - HapticService Protocol
+//
+// Расширенный протокол — CHHapticEngine 15 AHAP паттернов + legacy UIKit shim.
+// Реализации: LiveHapticService (CoreHaptics), FallbackHapticService (UIImpactFeedbackGenerator),
+// MockHapticService (тесты / Preview).
+// Определён в HapticService.swift; здесь — только protocol declaration для backward compat.
 
 public protocol HapticService: Sendable {
+    /// Воспроизвести именованный AHAP-паттерн.
+    func play(pattern: HapticPattern) async
+    /// Масштаб интенсивности: 0.0 = выкл, 0.5 = мягко, 1.0 = полная.
+    func setIntensityScale(_ scale: Float)
+    /// Остановить текущий паттерн (актуально для длинных breathing паттернов).
+    func stop() async
+    /// Доступность CoreHaptics на устройстве.
+    var isAvailable: Bool { get }
+
+    // MARK: Legacy UIKit shim (backward compat)
     func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle)
     func notification(_ type: UINotificationFeedbackGenerator.FeedbackType)
     func selection()
