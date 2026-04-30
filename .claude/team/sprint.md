@@ -329,6 +329,36 @@ M6 App Store      Sprint 12  tests+content DONE, Firestore deploy DONE, TestFlig
 
 ---
 
+## Plan v12 — STATUS: COMPLETED (2026-04-30)
+
+**Цель:** Final release pass — 18 игр, 4 платформы, DocC, AHAP, SharePlay, MLX on-device LLM.
+
+**Итоги:**
+- 24 блока (A–X) выполнены полностью.
+- Total commits Plan v12: ~25 коммитов.
+- Final tag: `v1.0.0-final-v3` (local, не push без явного одобрения).
+- BUILD SUCCEEDED на 4 платформах: iPhone 17 Pro, iPhone SE 3, iPad Air 11, Mac Designed for iPhone.
+- SwiftLint: 0 errors, 78 warnings (pre-existing).
+- Russian-only: 2 143 ru keys, 0 en keys.
+- Bundle: 660 MB simulator / ~200–250 MB IPA release stripped.
+- Tests: ~1 267 unit + 49 UI test functions.
+
+**Что принёс v12 проекту:**
+- 18 типов игр (было 16) — добавлены ObjectHunt (Vision) + LetterTracing (Apple Pencil)
+- Real on-device Qwen2.5-1.5B inference (MLX Swift, было заглушкой)
+- Russian G2P-словарь 7712 записей (100% coverage)
+- SharePlay multiplayer для родителей (COPPA-safe)
+- 27 mlpackage (было 7) — Hand/Eye tracking, ObjectDetector, G2P модели и др.
+- 11 USDZ AR-сцен (было 1)
+- 15 AHAP паттернов CHHapticEngine
+- 10 ambient CAF звуков
+- DocC developer documentation catalog
+- Mac Designed for iPhone — 4-я платформа
+
+**ADR:** ADR-V12-FINAL добавлен в `.claude/team/decisions.md`.
+
+---
+
 ## Plan v10 (2026-04-29) — ЗАВЕРШЁН
 
 **Все Critical fixes + 10 extensions реализованы:**

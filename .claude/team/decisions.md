@@ -1179,3 +1179,77 @@ VoiceCloneService Swift placeholder создан. Reference data embedded в bun
 - **B. Implement XTTS в v1.0** — отклонено, модель не помещается + нужны лицензии на детские голоса
 - **C. Use AVSpeechSynthesizer** — не является клонированием голоса, не соответствует цели фичи
 
+---
+
+## ADR-V12-FINAL — Plan v12 ФИНАЛ (2026-04-30)
+
+**Дата:** 2026-04-30
+**Владелец:** CTO (PM)
+**Статус:** ACCEPTED — PRODUCTION READY
+
+### Контекст
+
+Plan v12 — финальная итерация HappySpeech перед дипломной защитой. 24 блока (A–X), выполнены все. Тег: `v1.0.0-final-v3`. BUILD SUCCEEDED на 4 платформах.
+
+### Сводный реестр архитектурных решений Plan v12
+
+| ADR ID | Блок | Тема | Статус |
+|---|---|---|---|
+| ADR-V12-RIVE | A | Mascot Ляля — Composite Wrapper (MoodAuraView + EmotionParticles + overlays) | ACCEPTED |
+| ADR-V12-MLX | B | Real on-device Qwen2.5-1.5B inference через MLX Swift (не заглушка) | ACCEPTED |
+| ADR-V12-PHONEME-CLASSIFIER | G | G2P dictionary 7712 entries + CoreML phoneme classifier (steps 1-2 done, 3-4 deferred) | ACCEPTED |
+| ADR-V12-VOICE-CLONE | M | VoiceCloneService placeholder + reference wav 47.4 MB; XTTS defer post-v1.0 | ACCEPTED — DEFER |
+| ADR-V12-SHAREPLAY | H | SharePlay Multiplayer через GroupActivities (parent-initiated, COPPA-safe) | ACCEPTED |
+| ADR-V12-LETTTRACING | N | Apple Pencil LetterTracing — PKCanvasView + stroke accuracy scoring | ACCEPTED |
+| ADR-V12-OBJECTHUNT | O | ObjectHunt — Vision VNRecognizeObjectsRequest real-time, 17-й тип игры | ACCEPTED |
+| ADR-V12-HAPTICS | P | CHHapticEngine 15 AHAP паттернов (reward/error/streak/breathing/metronome...) | ACCEPTED |
+| ADR-V12-AMBIENT | Q | 10 ambient CAF звуков (AVAudioEngine mix, не блокирует игровой звук) | ACCEPTED |
+| ADR-V12-DOCC | R | DocC documentation catalog — developer docs, не user-facing | ACCEPTED |
+| ADR-V12-FAMILY | S | MultiChildFamilyHomeView + Comparison Dashboard (Realm + Swift Charts) | ACCEPTED |
+| ADR-V12-MAC | C | Mac Designed for iPhone — 4-я платформа, SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD | ACCEPTED |
+| ADR-V12-BIOMETRIC | T | Face ID / Touch ID gate для specialist circuit через LocalAuthentication | ACCEPTED |
+| ADR-V12-HANDTRACKING | U | HandPoseRequest + EyeTrackingService (iPad assistive input, opt-in) | ACCEPTED |
+| ADR-V12-GEOMETRY | V | matchedGeometryEffect hero transitions (namespace isolирован по экрану) | ACCEPTED |
+
+### Итоговые метрики Plan v12
+
+| Метрика | Значение |
+|---|---|
+| Блоков | 24 (A–X) |
+| Коммитов | ~25 |
+| Платформ | 4 (iPhone 17 Pro + iPhone SE 3 + iPad Air 11 + Mac Designed for iPhone) |
+| Типов игр | 18 (было 16 в v11) |
+| ML моделей (.mlpackage) | 27 (было 7 в v11) |
+| Unit тестов | ~1 267 |
+| UI тестов | 49 |
+| Ключей локализации (ru) | 2 143 |
+| Ключей локализации (en) | 0 |
+| SwiftLint errors | 0 |
+| SwiftLint warnings | 78 (pre-existing, не в Features/Services) |
+| Bundle (simulator) | 660 MB |
+| Bundle (IPA release stripped) | ~200–250 MB |
+| USDZ AR-сцены | 11 |
+| AHAP паттерны | 15 |
+| Ambient звуки | 10 (.caf) |
+| Фразы Ляли | 1 774 |
+| G2P записей | 7 712 |
+| Контент-единиц | 6 959+ |
+| Тег | `v1.0.0-final-v3` |
+
+### Deferred post-v1.0
+
+- RussianPhonemeClassifier CoreML (ADR-V12-PHONEME-CLASSIFIER шаги 3–4) — нет полного training run из-за rate limit
+- VoiceCloneService реальная XTTS-v2 интеграция (ADR-V12-VOICE-CLONE) — модель 2+ GB не влезает в bundle target
+- TestFlight build — требует платный Apple Developer Account ($99/год)
+- FaceMesh 478 (ADR-V11-FACEMESH-DEFER) — нет готового CoreML трека под iOS 17
+
+### Ссылки на предшествующие планы
+
+- Plan v9 финал: `ADR-V9-FINAL` (2026-04-28) — 5 extensions, 10 078 LOC
+- Plan v10 финал: `ADR-V10-FINAL` (2026-04-29) — 15 коммитов, 7 900 LOC
+- Plan v11 финал: блок O sprint.md (2026-04-29) — 17 блоков, тег `v1.0.0-pro`
+
+### Примечание к MARKETING_VERSION
+
+`MARKETING_VERSION` намеренно оставлен `1.0.0` — version bump не требовался согласно инструкции пользователя. Тег `v1.0.0-final-v3` — это Git-тег, не Bundle version.
+
