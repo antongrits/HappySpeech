@@ -7,7 +7,11 @@ import UIKit
 private final class DragMockHaptic: HapticService, @unchecked Sendable {
     var selectionCount = 0
     var notificationCount = 0
+    var isAvailable: Bool { true }
 
+    func play(pattern: HapticPattern) async {}
+    func setIntensityScale(_ scale: Float) {}
+    func stop() async {}
     func selection() { selectionCount += 1 }
     func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) { notificationCount += 1 }
     func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {}

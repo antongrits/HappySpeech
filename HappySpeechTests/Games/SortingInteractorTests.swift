@@ -2,13 +2,18 @@
 import XCTest
 import UIKit
 
-// MARK: - Mock HapticService
+// MARK: - Mock HapticService (local override для SortingInteractorTests)
 
-private final class MockHapticService: HapticService, @unchecked Sendable {
+private final class SortingMockHapticService: HapticService, @unchecked Sendable {
     var selectionCount = 0
     var notificationCount = 0
     var impactCount = 0
+    var playedPatterns: [HapticPattern] = []
+    var isAvailable: Bool { true }
 
+    func play(pattern: HapticPattern) async { playedPatterns.append(pattern) }
+    func setIntensityScale(_ scale: Float) {}
+    func stop() async {}
     func selection() { selectionCount += 1 }
     func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) { notificationCount += 1 }
     func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle) { impactCount += 1 }
@@ -49,8 +54,8 @@ private final class SpySortingPresenter: SortingPresentationLogic {
 @MainActor
 final class SortingInteractorTests: XCTestCase {
 
-    private func makeSUT() -> (SortingInteractor, SpySortingPresenter, MockHapticService) {
-        let haptic = MockHapticService()
+    private func makeSUT() -> (SortingInteractor, SpySortingPresenter, SortingMockHapticService) {
+        let haptic = SortingMockHapticService()
         let sut = SortingInteractor(hapticService: haptic)
         let spy = SpySortingPresenter()
         sut.presenter = spy

@@ -18,6 +18,10 @@ import XCTest
 // MARK: - Local Mocks для Smoke-тестов
 
 private final class VWHapticMock: HapticService, @unchecked Sendable {
+    var isAvailable: Bool { true }
+    func play(pattern: HapticPattern) async {}
+    func setIntensityScale(_ scale: Float) {}
+    func stop() async {}
     func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {}
     func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) {}
     func selection() {}

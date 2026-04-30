@@ -119,27 +119,7 @@ public final class LiveAudioService: AudioService, @unchecked Sendable {
     }
 }
 
-// MARK: - LiveHapticService
-
-public final class LiveHapticService: HapticService, @unchecked Sendable {
-    public func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {
-        DispatchQueue.main.async {
-            UIImpactFeedbackGenerator(style: style).impactOccurred()
-        }
-    }
-
-    public func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) {
-        DispatchQueue.main.async {
-            UINotificationFeedbackGenerator().notificationOccurred(type)
-        }
-    }
-
-    public func selection() {
-        DispatchQueue.main.async {
-            UISelectionFeedbackGenerator().selectionChanged()
-        }
-    }
-}
+// LiveHapticService и FallbackHapticService перемещены в HapticService.swift (Block T v12).
 
 // MARK: - LocalAnalyticsService
 

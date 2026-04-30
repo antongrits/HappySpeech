@@ -8,7 +8,11 @@ private final class MemoryMockHaptic: HapticService, @unchecked Sendable {
     var selectionCount = 0
     var notificationSuccessCount = 0
     var notificationWarningCount = 0
+    var isAvailable: Bool { true }
 
+    func play(pattern: HapticPattern) async {}
+    func setIntensityScale(_ scale: Float) {}
+    func stop() async {}
     func selection() { selectionCount += 1 }
     func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) {
         if type == .success { notificationSuccessCount += 1 } else { notificationWarningCount += 1 }

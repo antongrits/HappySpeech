@@ -122,11 +122,11 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
 
         if isCorrect {
             consecutiveErrors = 0
-            hapticService.notification(.success)
+            Task { await hapticService.play(pattern: .celebration) }
         } else {
             consecutiveErrors += 1
             errorCount += request.errorCount
-            hapticService.notification(.warning)
+            Task { await hapticService.play(pattern: .wrong) }
 
             // Каждые `errorsPerHeart` подряд неправильных ответов — минус сердце.
             if consecutiveErrors > 0 && consecutiveErrors % errorsPerHeart == 0 {

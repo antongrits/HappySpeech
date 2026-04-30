@@ -57,6 +57,7 @@ struct SettingsView: View {
                     lyalyaCustomizationSection
                     profileSection
                     notificationsSection
+                    hapticsSection
                     contentSection
                     modelPacksSection
                     healthKitSection
@@ -414,6 +415,47 @@ struct SettingsView: View {
             Text(String(localized: "settings.notifications.footer"))
                 .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Parent.inkMuted)
+        }
+    }
+
+    // MARK: - Section 3.5: Haptics (T v12)
+
+    private var hapticsSection: some View {
+        Section {
+            HStack {
+                Label {
+                    VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                        Text(String(localized: "settings.haptics.title"))
+                            .font(TypographyTokens.body(15))
+                            .foregroundStyle(ColorTokens.Parent.ink)
+                        Text(String(localized: "settings.haptics.subtitle"))
+                            .font(TypographyTokens.caption(12))
+                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    }
+                } icon: {
+                    Image(systemName: "iphone.radiowaves.left.and.right")
+                        .foregroundStyle(ColorTokens.Parent.accent)
+                }
+                Spacer()
+                Picker("", selection: hapticsLevelBinding) {
+                    Text(String(localized: "settings.haptics.off"))
+                        .tag(HapticIntensityLevel.off)
+                    Text(String(localized: "settings.haptics.subtle"))
+                        .tag(HapticIntensityLevel.subtle)
+                    Text(String(localized: "settings.haptics.full"))
+                        .tag(HapticIntensityLevel.full)
+                }
+                .pickerStyle(.segmented)
+                .frame(maxWidth: 190)
+                .accessibilityLabel(String(localized: "settings.haptics.title"))
+                .accessibilityValue(display.settings.hapticsLevel.rawValue)
+            }
+            .frame(minHeight: 56)
+        } header: {
+            Text(String(localized: "settings.haptics.title"))
+                .font(TypographyTokens.caption(12).weight(.semibold))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .textCase(.uppercase)
         }
     }
 
@@ -805,6 +847,15 @@ struct SettingsView: View {
         )
     }
 
+    private var hapticsLevelBinding: Binding<HapticIntensityLevel> {
+        Binding(
+            get: { display.settings.hapticsLevel },
+            set: { newValue in
+                interactor?.updateHaptics(.init(level: newValue))
+            }
+        )
+    }
+
     // MARK: - Bootstrap
 
     @MainActor
@@ -815,6 +866,7 @@ struct SettingsView: View {
         let interactor = SettingsInteractor(
             themeManager: container.themeManager,
             notificationService: container.notificationService,
+            hapticService: container.hapticService,
             sessionRepository: container.sessionRepository,
             whisperKitModelManager: container.whisperKitModelManager,
             llmModelManager: container.llmModelManager

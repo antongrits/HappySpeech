@@ -21,6 +21,8 @@ protocol SettingsBusinessLogic: AnyObject {
     /// L9
     func toggleKidDailyReminder(_ request: SettingsModels.ToggleKidDailyReminder.Request)
     func toggleWeeklyParentSummary(_ request: SettingsModels.ToggleWeeklyParentSummary.Request)
+    /// T (v12): тактильная отдача
+    func updateHaptics(_ request: SettingsModels.UpdateHaptics.Request)
 }
 
 // MARK: - SettingsInteractor
@@ -38,6 +40,7 @@ final class SettingsInteractor: SettingsBusinessLogic {
 
     private let themeManager: ThemeManager
     private let notificationService: any NotificationService
+    private let hapticService: any HapticService
     private let whisperKitModelManager: (any WhisperKitModelManagerProtocol)?
     private let llmModelManager: (any LLMModelManagerProtocol)?
     private let defaults: UserDefaults
@@ -56,6 +59,7 @@ final class SettingsInteractor: SettingsBusinessLogic {
     init(
         themeManager: ThemeManager,
         notificationService: any NotificationService,
+        hapticService: any HapticService,
         sessionRepository: any SessionRepository,
         whisperKitModelManager: (any WhisperKitModelManagerProtocol)? = nil,
         llmModelManager: (any LLMModelManagerProtocol)? = nil,
@@ -63,6 +67,7 @@ final class SettingsInteractor: SettingsBusinessLogic {
     ) {
         self.themeManager = themeManager
         self.notificationService = notificationService
+        self.hapticService = hapticService
         self.whisperKitModelManager = whisperKitModelManager
         self.llmModelManager = llmModelManager
         self.defaults = defaults
@@ -294,7 +299,22 @@ final class SettingsInteractor: SettingsBusinessLogic {
             settings.weeklyParentSummaryEnabled = defaults.bool(forKey: SettingsKey.weeklyParentSummaryEnabled)
         }
 
+        if defaults.object(forKey: SettingsKey.hapticsLevel) != nil {
+            let scale = defaults.double(forKey: SettingsKey.hapticsLevel)
+            settings.hapticsLevel = HapticIntensityLevel.from(scale: scale)
+        }
+
         return settings
+    }
+
+    // MARK: - T (v12): Haptics level
+
+    func updateHaptics(_ request: SettingsModels.UpdateHaptics.Request) {
+        settings.hapticsLevel = request.level
+        defaults.set(request.level.scale, forKey: SettingsKey.hapticsLevel)
+        hapticService.setIntensityScale(request.level.scale)
+        logger.info("haptics → \(request.level.rawValue, privacy: .public)")
+        presenter?.presentUpdateHaptics(.init(settings: settings))
     }
 
     // MARK: - L9: Kid daily reminder + Weekly parent summary toggles
