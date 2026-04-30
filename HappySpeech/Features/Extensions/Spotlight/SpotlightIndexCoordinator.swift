@@ -46,7 +46,12 @@ public final class SpotlightIndexCoordinator {
     // MARK: - Public API
 
     /// Запускает одноразовую индексацию (throttled) и фоновый polling.
+    /// Пропускает индексацию при запуске в тестовом окружении (XCTest runner).
     public func start() {
+        guard !ProcessInfo.processInfo.environment.keys.contains("XCTestConfigurationFilePath") else {
+            logger.info("Spotlight: тестовое окружение — индексация пропущена")
+            return
+        }
         Task { await indexAllThrottled() }
         startPolling()
     }

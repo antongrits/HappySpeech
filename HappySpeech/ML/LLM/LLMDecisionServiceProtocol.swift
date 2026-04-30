@@ -31,7 +31,7 @@ import Foundation
 ///
 /// // Проверка готовности on-device модели
 /// if await decision.isOnDeviceModelReady {
-///     print("Qwen2.5 загружен, Tier A активен")
+///     HSLogger.llm.debug("Qwen2.5 загружен, Tier A активен")
 /// }
 /// ```
 ///

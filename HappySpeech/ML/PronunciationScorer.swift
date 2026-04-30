@@ -97,7 +97,7 @@ struct PronunciationResult: Sendable {
 /// if result.isCorrect {
 ///     await hapticService.play(pattern: .perfectRound)
 /// }
-/// print("Точность: \(result.displayScore)%")
+/// HSLogger.ml.debug("Точность: \(result.displayScore)%")
 /// ```
 ///
 /// ## See Also

@@ -66,7 +66,7 @@ public final class AppContainer {
     private var _faceAnalysisService: (any FaceAnalysisService)?
 
     // Block H: KidLLMNarrationService — lazy, использует llmDecisionService
-    var _kidLLMNarrationService: (any KidLLMNarrationServiceProtocol)?
+    var kidLLMNarrationServiceStorage: (any KidLLMNarrationServiceProtocol)?
 
     // Block J: HealthKitService — parent opt-in only, COPPA-safe.
     private var _healthKitService: (any HealthKitServiceProtocol)?
@@ -375,9 +375,9 @@ public final class AppContainer {
     // Live: использует реальный LiveLLMDecisionService (Tier A только).
     // Preview/Test: использует MockKidLLMNarrationService.
     public var kidLLMNarrationService: any KidLLMNarrationServiceProtocol {
-        if let existing = _kidLLMNarrationService { return existing }
+        if let existing = kidLLMNarrationServiceStorage { return existing }
         let new = LiveKidLLMNarrationService(llmService: llmDecisionService)
-        _kidLLMNarrationService = new
+        kidLLMNarrationServiceStorage = new
         return new
     }
 
@@ -586,7 +586,7 @@ public extension AppContainer {
             performance: MockPerformanceMonitorService()
         )
         // Block H: использовать Mock для kid narration в preview/tests.
-        container._kidLLMNarrationService = MockKidLLMNarrationService()
+        container.kidLLMNarrationServiceStorage = MockKidLLMNarrationService()
         // Block J: HealthKit mock для preview/tests.
         container._healthKitService = MockHealthKitService()
         // Block K: Spotlight mock для preview/tests.
