@@ -5,7 +5,7 @@ import SwiftUI
 // Полноэкранный overlay «отличная работа» — без видеофайлов, чистый SwiftUI.
 //
 // Состав:
-//   1. Конфетти (Canvas particles, 60 fps, 50 частиц)
+//   1. Конфетти (ConfettiEmitterCanvas, TimelineView+Canvas, 60 fps)
 //   2. Пульсирующая звезда (scaleEffect 1.0 → 1.3 → 1.0)
 //   3. Текст с bouncy spring
 //   4. LyalyaMascotView (состояние .celebrating)
@@ -29,18 +29,14 @@ struct CelebrationOverlayView: View {
     @State private var mascotVisible: Bool = false
     @State private var starScale: CGFloat = 0.7
     @State private var starPulse: Bool = false
-    @State private var confettiTick: Int = 0
     @State private var buttonVisible: Bool = false
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    // MARK: - Palette
-
-    private let confettiPalette: [Color] = [
-        .init(hex: "#FF6B6B"), .init(hex: "#FFD93D"),
-        .init(hex: "#6BCB77"), .init(hex: "#4D96FF"),
-        .init(hex: "#FF9E4F"), .init(hex: "#C77DFF")
-    ]
+    // confettiStyle определяет тип конфетти в зависимости от звёзд.
+    private var confettiStyle: ConfettiEmitterView.Style {
+        stars >= 3 ? .perfect : .celebration
+    }
 
     // MARK: - Init
 
@@ -57,15 +53,11 @@ struct CelebrationOverlayView: View {
             Color.black.opacity(0.45)
                 .ignoresSafeArea()
 
-            // Конфетти слой (только при reduceMotion == false)
+            // Конфетти слой через ConfettiEmitterView (только при reduceMotion == false)
             if !reduceMotion {
-                ConfettiCanvas(
-                    tick: confettiTick,
-                    palette: confettiPalette,
-                    particleCount: 50
-                )
-                .ignoresSafeArea()
-                .allowsHitTesting(false)
+                ConfettiEmitterView(style: confettiStyle)
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
             }
 
             VStack(spacing: 24) {
@@ -191,132 +183,13 @@ struct CelebrationOverlayView: View {
             }
         }
 
-        // 3. Запуск конфетти через таймер
-        if !reduceMotion {
-            let timer = Timer.scheduledTimer(
-                withTimeInterval: 1.0 / 60.0,
-                repeats: true
-            ) { tick in
-                confettiTick += 1
-                if confettiTick > 180 { tick.invalidate() }
-            }
-            RunLoop.main.add(timer, forMode: .common)
-        }
-
-        // 4. Кнопка появляется в конце
+        // 3. Кнопка появляется в конце (конфетти запускается через ConfettiEmitterCanvas.onAppear)
         let delay2 = reduceMotion ? 0.1 : MotionTokens.Duration.slow + MotionTokens.Duration.standard
         DispatchQueue.main.asyncAfter(deadline: .now() + delay2) {
             withAnimation(reduceMotion ? .none : MotionTokens.spring) {
                 buttonVisible = true
             }
         }
-    }
-}
-
-// MARK: - ConfettiCanvas
-
-/// Canvas-конфетти: 50 частиц случайного цвета, физика свободного падения.
-/// Обновляется через `tick` (каждый кадр).
-private struct ConfettiCanvas: View {
-
-    let tick: Int
-    let palette: [Color]
-    let particleCount: Int
-
-    // Заранее сгенерированные параметры частиц (случайные, но детерминированные)
-    private struct Particle {
-        let startX: CGFloat
-        let startY: CGFloat
-        let vx: CGFloat   // скорость по X
-        let vy: CGFloat   // начальная скорость по Y
-        let size: CGFloat
-        let colorIndex: Int
-        let rotation: Double
-        let rotationSpeed: Double
-        let shape: Int    // 0=circle, 1=rect, 2=triangle
-    }
-
-    private let particles: [Particle]
-
-    init(tick: Int, palette: [Color], particleCount: Int) {
-        self.tick = tick
-        self.palette = palette
-        self.particleCount = particleCount
-
-        var rng = SystemRandomNumberGenerator()
-        var list: [Particle] = []
-        for _ in 0..<particleCount {
-            list.append(Particle(
-                startX: CGFloat.random(in: 0...1, using: &rng),
-                startY: CGFloat.random(in: -0.3...0, using: &rng),
-                vx: CGFloat.random(in: -0.4...0.4, using: &rng),
-                vy: CGFloat.random(in: 0.3...0.9, using: &rng),
-                size: CGFloat.random(in: 6...12, using: &rng),
-                colorIndex: Int.random(in: 0..<palette.count, using: &rng),
-                rotation: Double.random(in: 0...360, using: &rng),
-                rotationSpeed: Double.random(in: -6...6, using: &rng),
-                shape: Int.random(in: 0...2, using: &rng)
-            ))
-        }
-        self.particles = list
-    }
-
-    var body: some View {
-        GeometryReader { geo in
-            let width = geo.size.width
-            let height = geo.size.height
-            let elapsed = CGFloat(tick) / 60.0  // время в секундах
-
-            Canvas { ctx, _ in
-                for particle in particles {
-                    let posX = (particle.startX + particle.vx * elapsed).truncatingRemainder(dividingBy: 1) * width
-                    let rawY = particle.startY * height + particle.vy * elapsed * height + 0.5 * 0.3 * elapsed * elapsed * height
-                    let posY = rawY.truncatingRemainder(dividingBy: height + 40)
-
-                    let alpha = max(0, 1 - max(0, elapsed - 2.0) / 1.0)
-                    let color = palette[particle.colorIndex].opacity(alpha)
-
-                    ctx.withCGContext { cgCtx in
-                        cgCtx.saveGState()
-                        cgCtx.translateBy(x: posX, y: posY)
-                        cgCtx.rotate(by: CGFloat(
-                            (particle.rotation + particle.rotationSpeed * Double(tick)).truncatingRemainder(dividingBy: 360)
-                        ) * .pi / 180)
-                        cgCtx.setFillColor(UIColor(color).cgColor)
-
-                        switch particle.shape {
-                        case 0:
-                            cgCtx.fillEllipse(in: CGRect(
-                                x: -particle.size / 2, y: -particle.size / 2,
-                                width: particle.size, height: particle.size
-                            ))
-                        case 1:
-                            cgCtx.fill(CGRect(
-                                x: -particle.size / 2, y: -particle.size / 4,
-                                width: particle.size, height: particle.size / 2
-                            ))
-                        default:
-                            let path = CGMutablePath()
-                            path.move(to: CGPoint(x: 0, y: -particle.size / 2))
-                            path.addLine(to: CGPoint(x: particle.size / 2, y: particle.size / 2))
-                            path.addLine(to: CGPoint(x: -particle.size / 2, y: particle.size / 2))
-                            path.closeSubpath()
-                            cgCtx.addPath(path)
-                            cgCtx.fillPath()
-                        }
-                        cgCtx.restoreGState()
-                    }
-                }
-            }
-        }
-    }
-}
-
-// MARK: - CGFloat.random(in:using:) helper
-
-private extension CGFloat {
-    static func random(in range: ClosedRange<CGFloat>, using rng: inout SystemRandomNumberGenerator) -> CGFloat {
-        CGFloat(Double.random(in: Double(range.lowerBound)...Double(range.upperBound), using: &rng))
     }
 }
 
