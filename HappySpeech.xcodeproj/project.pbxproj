@@ -6775,6 +6775,7 @@
 		C23607705829F42782C8AF21 /* gr-wc-14.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CD760A3644F5398A3F1C176A /* gr-wc-14.m4a */; };
 		C240B0D3DBFD73CDCF30721E /* gr-sen-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E4C78F27D17B2F1F7A8D2ACE /* gr-sen-2.m4a */; };
 		C2410382688D63222724C83A /* ch-df-4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 21124837603372AFC3ED2A28 /* ch-df-4.m4a */; };
+		C243C727660406D35A0121C1 /* ConfettiEmitterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE8EFD0DBFF96ABFAA73285 /* ConfettiEmitterView.swift */; };
 		C25F41AE1C5018DC9EE493C1 /* s-prep-5.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0D25B2064A56138193C36571 /* s-prep-5.m4a */; };
 		C26299D5E7F18FB1A2FC5844 /* s-diff-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9FE6554151F86F88D41AB672 /* s-diff-6.m4a */; };
 		C26529754594A146C1AF7B43 /* lex-tr-10.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FCF3B032694F368A738D64B7 /* lex-tr-10.m4a */; };
@@ -10428,6 +10429,7 @@
 		2BDE610E8D889E95E712620A /* z-wf-20.m4a */ = {isa = PBXFileReference; path = "z-wf-20.m4a"; sourceTree = "<group>"; };
 		2BE30A0B9D69FDC633E8B64D /* lyalya_onboarding_step3_transition.m4a */ = {isa = PBXFileReference; path = lyalya_onboarding_step3_transition.m4a; sourceTree = "<group>"; };
 		2BE3C16DC524C71195D9B332 /* ag-009.m4a */ = {isa = PBXFileReference; path = "ag-009.m4a"; sourceTree = "<group>"; };
+		2BE8EFD0DBFF96ABFAA73285 /* ConfettiEmitterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiEmitterView.swift; sourceTree = "<group>"; };
 		2BF87C7C298468FDB97A4BD6 /* gr-st-2.m4a */ = {isa = PBXFileReference; path = "gr-st-2.m4a"; sourceTree = "<group>"; };
 		2BFC4930AEE986889B6C0B5C /* lex-sw-23.m4a */ = {isa = PBXFileReference; path = "lex-sw-23.m4a"; sourceTree = "<group>"; };
 		2BFD67F16B93776A7A257F8F /* s-wm-17.m4a */ = {isa = PBXFileReference; path = "s-wm-17.m4a"; sourceTree = "<group>"; };
@@ -23569,6 +23571,7 @@
 				F770771F44C6BAB862A4348B /* Stories */,
 				B2579B99F043C2138D3A491A /* Workers */,
 				C54EAB75688958DD2BB8CDD0 /* CelebrationOverlayView.swift */,
+				2BE8EFD0DBFF96ABFAA73285 /* ConfettiEmitterView.swift */,
 				08E09C170B09C99ABE09CD18 /* LyalyaSceneView.swift */,
 				A72B3B7435E11B4006B2A5E1 /* StoryPlayerView.swift */,
 			);
@@ -37016,6 +37019,7 @@
 				204FCC9C55F4F36A8B3CAAF0 /* ClaudeAPIClient.swift in Sources */,
 				41BF4C740DEC910A074E112D /* Color+Extensions.swift in Sources */,
 				33B904F2F911ABC5A322DEAF /* ColorTokens.swift in Sources */,
+				C243C727660406D35A0121C1 /* ConfettiEmitterView.swift in Sources */,
 				D991F782694B4DE4DA856681 /* ContentEngine.swift in Sources */,
 				CEDBC936F1BA9E8AADD2F420 /* ContentPackDownloadService.swift in Sources */,
 				2DAA7CDECF324AAAA35F6308 /* CustomizationDTO.swift in Sources */,
