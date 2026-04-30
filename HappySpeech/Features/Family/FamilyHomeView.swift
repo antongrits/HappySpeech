@@ -16,6 +16,7 @@ struct FamilyHomeView: View {
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.horizontalSizeClass) private var hSizeClass
 
     // MARK: - VIP
 
@@ -30,11 +31,14 @@ struct FamilyHomeView: View {
     @State private var showingProfileEditor = false
 
     // MARK: - Layout
+    //
+    // Regular (iPad full/split ≥1/2): 3 columns.
+    // Compact (iPhone, Slide Over, narrow split): 2 columns.
 
-    private let columns = [
-        GridItem(.flexible(), spacing: SpacingTokens.sp4),
-        GridItem(.flexible(), spacing: SpacingTokens.sp4)
-    ]
+    private var columns: [GridItem] {
+        let colCount = hSizeClass == .regular ? 3 : 2
+        return Array(repeating: GridItem(.flexible(), spacing: SpacingTokens.sp4), count: colCount)
+    }
 
     // MARK: - Body
 
