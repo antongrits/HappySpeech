@@ -41,6 +41,8 @@ enum AppRoute: Hashable {
     case familyHome
     case comparisonDashboard
     case profileEditor(childId: String)
+    // Block P: SharePlay — родитель запускает, COPPA-safe
+    case sharePlay
 }
 
 enum PermissionType: Hashable {
@@ -371,6 +373,10 @@ struct AppCoordinatorView: View {
 
         case .profileEditor(let childId):
             ProfileEditorView(childId: childId)
+                .environment(\.circuitContext, .parent)
+
+        case .sharePlay:
+            SharePlayView()
                 .environment(\.circuitContext, .parent)
         }
     }

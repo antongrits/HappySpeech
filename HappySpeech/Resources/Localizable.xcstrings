@@ -22793,6 +22793,446 @@
           }
         }
       }
+    },
+    "shareplay.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Совместный урок"
+          }
+        }
+      }
+    },
+    "shareplay.startButton": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Играть вдвоём"
+          }
+        }
+      }
+    },
+    "shareplay.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Совместный урок с %@"
+          }
+        }
+      }
+    },
+    "shareplay.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Позвоните второму родителю через FaceTime, затем нажмите «Играть вдвоём»"
+          }
+        }
+      }
+    },
+    "shareplay.lessons.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите упражнение"
+          }
+        }
+      }
+    },
+    "shareplay.biometric.reason": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подтвердите, что вы родитель, чтобы начать совместную игру"
+          }
+        }
+      }
+    },
+    "shareplay.biometric.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для защиты детей потребуется Face ID или Touch ID"
+          }
+        }
+      }
+    },
+    "shareplay.activity.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HappySpeech: совместный урок"
+          }
+        }
+      }
+    },
+    "shareplay.activity.subtitle.с": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражняем звук С вместе"
+          }
+        }
+      }
+    },
+    "shareplay.activity.subtitle.з": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражняем звук З вместе"
+          }
+        }
+      }
+    },
+    "shareplay.activity.subtitle.ш": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражняем звук Ш вместе"
+          }
+        }
+      }
+    },
+    "shareplay.activity.subtitle.ж": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражняем звук Ж вместе"
+          }
+        }
+      }
+    },
+    "shareplay.activity.subtitle.р": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражняем звук Р вместе"
+          }
+        }
+      }
+    },
+    "shareplay.activity.subtitle.л": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражняем звук Л вместе"
+          }
+        }
+      }
+    },
+    "shareplay.activity.subtitle.ч": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражняем звук Ч вместе"
+          }
+        }
+      }
+    },
+    "shareplay.activity.subtitle.щ": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражняем звук Щ вместе"
+          }
+        }
+      }
+    },
+    "shareplay.activity.subtitle.generic": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражняем звук %@ вместе"
+          }
+        }
+      }
+    },
+    "shareplay.error.parentAuthRequired": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для совместной игры требуется подтверждение родителя"
+          }
+        }
+      }
+    },
+    "shareplay.error.notActivated": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось запустить совместную игру. Убедитесь, что FaceTime активен"
+          }
+        }
+      }
+    },
+    "shareplay.error.sessionUnavailable": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FaceTime недоступен на этом устройстве"
+          }
+        }
+      }
+    },
+    "shareplay.error.messengerUnavailable": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нет активной SharePlay-сессии"
+          }
+        }
+      }
+    },
+    "shareplay.alert.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Совместная игра"
+          }
+        }
+      }
+    },
+    "shareplay.fallback.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как начать совместную игру"
+          }
+        }
+      }
+    },
+    "shareplay.fallback.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1. Позвоните через FaceTime\n2. Откройте HappySpeech на обоих устройствах\n3. Выберите упражнение и нажмите «Играть вдвоём»"
+          }
+        }
+      }
+    },
+    "shareplay.participants.none": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ожидание участников…"
+          }
+        }
+      }
+    },
+    "shareplay.participants.one": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 участник"
+          }
+        }
+      }
+    },
+    "shareplay.participants.many": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d участника"
+          }
+        }
+      }
+    },
+    "shareplay.session.end": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завершить"
+          }
+        }
+      }
+    },
+    "shareplay.remote.scored": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Другой участник: %d%%"
+          }
+        }
+      }
+    },
+    "shareplay.remote.ready": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готов!"
+          }
+        }
+      }
+    },
+    "shareplay.remote.final_score": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Финальный счёт: %d%%"
+          }
+        }
+      }
+    },
+    "shareplay.celebration.together": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодцы оба!"
+          }
+        }
+      }
+    },
+    "shareplay.default.child": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ребёнок"
+          }
+        }
+      }
+    },
+    "shareplay.lesson.sound_s": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук С — повторяй за образцом"
+          }
+        }
+      }
+    },
+    "shareplay.lesson.sound_sh": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук Ш — выбери правильный"
+          }
+        }
+      }
+    },
+    "shareplay.lesson.sound_r": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук Р — повторяй за образцом"
+          }
+        }
+      }
+    },
+    "shareplay.lesson.card.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите, чтобы начать совместный урок"
+          }
+        }
+      }
+    },
+    "shareplay.family_home.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Через FaceTime с другим устройством"
+          }
+        }
+      }
+    },
+    "shareplay.family_home.a11y_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открывает совместный урок через FaceTime"
+          }
+        }
+      }
+    },
+    "facetime.usage.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HappySpeech использует FaceTime для совместных логопедических занятий под контролем родителей"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
