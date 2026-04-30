@@ -108,7 +108,7 @@ public enum CorrectionStage: String, CaseIterable, Codable, Sendable, Comparable
 
 // MARK: - Template Types
 
-/// The 16 game templates available in the lesson player.
+/// The 17 game templates available in the lesson player.
 public enum TemplateType: String, CaseIterable, Codable, Sendable {
     case listenAndChoose        = "listen-and-choose"
     case repeatAfterModel       = "repeat-after-model"
@@ -126,6 +126,8 @@ public enum TemplateType: String, CaseIterable, Codable, Sendable {
     case rhythm                 = "rhythm"
     case narrativeQuest         = "narrative-quest"
     case minimalPairs           = "minimal-pairs"
+    /// Block K (v12): 17-й шаблон — поиск предметов через Vision + VNClassifyImageRequest.
+    case objectHunt             = "object-hunt"
 
     public var displayName: String {
         switch self {
@@ -145,6 +147,7 @@ public enum TemplateType: String, CaseIterable, Codable, Sendable {
         case .rhythm:                return "Ритм речи"
         case .narrativeQuest:        return "Сказка"
         case .minimalPairs:          return "Похожие звуки"
+        case .objectHunt:            return "Найди предмет"
         }
     }
 }

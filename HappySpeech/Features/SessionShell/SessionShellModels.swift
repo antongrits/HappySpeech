@@ -129,7 +129,7 @@ struct SessionActivity: Identifiable, Sendable, Equatable {
     var score: Float?
 }
 
-/// Все 16 шаблонов игр, поддерживаемых проектом. Дублирование с
+/// Все 17 шаблонов игр, поддерживаемых проектом. Дублирование с
 /// `TemplateType` (контент-слой) — намеренно: фиче-слой и контент-слой
 /// разделены через мост `SessionShellInteractor.gameType(from:)`.
 enum GameType: String, Sendable, CaseIterable {
@@ -149,6 +149,8 @@ enum GameType: String, Sendable, CaseIterable {
     case storyCompletion        = "StoryCompletion"
     case articulationImitation  = "ArticulationImitation"
     case arActivity             = "ARActivity"
+    /// Block K (v12): 17-й шаблон — поиск предметов через Vision + VNClassifyImageRequest.
+    case objectHunt             = "ObjectHunt"
 }
 
 enum SessionType: String, Sendable {

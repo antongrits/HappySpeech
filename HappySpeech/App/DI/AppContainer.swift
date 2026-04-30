@@ -80,6 +80,10 @@ public final class AppContainer {
     // Actor-typed, не требует factory — создаётся on-demand, лёгкий (один VNRequest).
     private var _handPoseWorker: HandPoseWorker?
 
+    // Block K (v12): ObjectDetectionWorker — VNClassifyImageRequest + russian_object_mapping.json.
+    // Actor-typed, один экземпляр на приложение. Fallback на MockObjectDetectionWorker при ошибке init.
+    private var _objectDetectionWorker: (any ObjectDetectionWorkerProtocol)?
+
     // MascotLipSyncState — singleton для real-time lip-sync оверлея маскота (Block F)
     public let mascotLipSyncState: MascotLipSyncState = MascotLipSyncState()
 
@@ -392,6 +396,22 @@ public final class AppContainer {
         return new
     }
 
+    // Block K (v12): ObjectDetectionWorker — lazy singleton.
+    // Live: ObjectDetectionWorker (VNClassifyImageRequest + mapping JSON).
+    // Preview/Test: MockObjectDetectionWorker (deterministic, без Vision).
+    public var objectDetectionWorker: any ObjectDetectionWorkerProtocol {
+        if let existing = _objectDetectionWorker { return existing }
+        let worker: any ObjectDetectionWorkerProtocol
+        do {
+            worker = try ObjectDetectionWorker()
+        } catch {
+            HSLogger.ar.error("AppContainer: ObjectDetectionWorker init failed (\(error.localizedDescription)), using mock")
+            worker = MockObjectDetectionWorker()
+        }
+        _objectDetectionWorker = worker
+        return worker
+    }
+
     /// Библиотека анимированных историй. Singleton — создаётся один раз для всего приложения.
     public var storyLibrary: StoryLibrary { StoryLibrary.shared }
 
@@ -541,6 +561,8 @@ public extension AppContainer {
         container._spotlightIndexer = MockSpotlightIndexer()
         // Block N: DailyMissionSync mock для preview/tests.
         container._dailyMissionSyncService = MockDailyMissionSyncService()
+        // Block K (v12): ObjectDetectionWorker mock для preview/tests — без Vision.
+        container._objectDetectionWorker = MockObjectDetectionWorker()
         return container
     }
 }

@@ -21943,6 +21943,237 @@
           }
         }
       }
+    },
+    "object_hunt.find_sound": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Найди предмет на звук %@!"
+          }
+        }
+      }
+    },
+    "object_hunt.found": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ты нашёл %@! Звук %@!"
+          }
+        }
+      }
+    },
+    "object_hunt.scanning_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Направь камеру на предметы в комнате"
+          }
+        }
+      }
+    },
+    "object_hunt.scanning_a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сканирование комнаты"
+          }
+        }
+      }
+    },
+    "object_hunt.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готовим игру…"
+          }
+        }
+      }
+    },
+    "object_hunt.next_round": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дальше"
+          }
+        }
+      }
+    },
+    "object_hunt.next_round_a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перейти к следующему раунду"
+          }
+        }
+      }
+    },
+    "object_hunt.continue": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжить"
+          }
+        }
+      }
+    },
+    "object_hunt.finish": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завершить"
+          }
+        }
+      }
+    },
+    "object_hunt.finish_a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завершить игру и вернуться к занятию"
+          }
+        }
+      }
+    },
+    "object_hunt.round_badge": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Раунд %lld из %lld"
+          }
+        }
+      }
+    },
+    "object_hunt.score_label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Результат: %lld%%"
+          }
+        }
+      }
+    },
+    "object_hunt.summary.excellent": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Превосходно! Ты нашёл все предметы!"
+          }
+        }
+      }
+    },
+    "object_hunt.summary.good": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хорошая работа! Попробуй ещё раз."
+          }
+        }
+      }
+    },
+    "object_hunt.summary.ok": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец! Поищем вместе ещё?"
+          }
+        }
+      }
+    },
+    "object_hunt.target_sound_a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Целевой звук: %@"
+          }
+        }
+      }
+    },
+    "object_hunt.stars_a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Получено звёзд: %lld из 3"
+          }
+        }
+      }
+    },
+    "object_hunt.permission": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нужен доступ к камере, чтобы искать предметы"
+          }
+        }
+      }
+    },
+    "object_hunt.try_again": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поищи в другом месте"
+          }
+        }
+      }
+    },
+    "object_hunt.scene_change": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец! Найдём что-то ещё?"
+          }
+        }
+      }
+    },
+    "game.object_hunt": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Найди предмет"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
