@@ -37,6 +37,8 @@ final class ProgressDashboardInteractorTests: XCTestCase {
             llmSummaryCalled = true
             lastLLMResponse = response
         }
+        func presentLoadInsights(_ response: ProgressDashboardModels.LoadInsights.Response) {}
+        func presentInsightsLoading(_ isLoading: Bool) {}
         func presentLLMLoading(_ isLoading: Bool) {
             llmLoadingCalled = true
         }

@@ -1141,3 +1141,41 @@ Phoneme-level analysis это улучшение второго слоя (per-ph
 - KEEP: `HappySpeech/Content/G2P/russian_phonemes.json` — 7712 entries, готов к использованию
 - KEEP: `~/.claude/skills/russian-phoneme-analyzer/` — workflow для post-v1.0
 
+---
+
+## ADR-V12-VOICE-CLONE — Voice Cloning Roadmap (Plan v12 Block M)
+
+**Date:** 2026-04-30
+**Owner:** ios-developer + sound-curator
+**Status:** v1.0 placeholder готов, полная реализация post-v1.0
+
+### Decision
+
+VoiceCloneService Swift placeholder создан. Reference data embedded в bundle (Block C.4 v11, commit ed774f8). Полная XTTS-v2 / TortoiseTTS интеграция отложена post-v1.0.
+
+### Причины откладывания
+
+- XTTS-v2 модель ~2 GB не помещается в bundle (наш target 1.5 GB при существующих ML-моделях)
+- Требуется on-device inference engine + ONNX runtime (отдельная SPM-зависимость, не готова)
+- Реальные детские голоса с COPPA/GDPR-K consent — отдельный UX-флоу (parent consent screen)
+
+### Files
+
+- `HappySpeech/Services/VoiceCloneService.swift` — протокол + VoiceCloneSpeaker enum + Placeholder
+- `HappySpeech/App/DI/AppContainer.swift` — voiceCloneService lazy DI (Block M)
+- `HappySpeechTests/Unit/Services/VoiceCloneServiceTests.swift` — 9 unit-тестов placeholder
+- `HappySpeech/Resources/Models/voice_clone_reference.wav` — 47.4 MB embedded (v11 Block C.4)
+- `HappySpeech/Resources/Models/VOICE_CLONE_README.md` — документация corpus
+
+### Roadmap
+
+1. **post-v1.0 v1.1:** Integrate XTTS-v2 или TortoiseTTS Core ML model (~1.5 GB)
+2. **post-v1.0 v1.2:** Real child voice samples с parent consent UI (COPPA/GDPR-K compliant)
+3. **post-v1.0 v1.3:** Custom voice per child profile (Settings → "Настроить голос маскота")
+
+### Alternatives considered
+
+- **A. Skip Block M entirely** — отклонено, reference data уже 47 MB в bundle, нужно задокументировать API
+- **B. Implement XTTS в v1.0** — отклонено, модель не помещается + нужны лицензии на детские голоса
+- **C. Use AVSpeechSynthesizer** — не является клонированием голоса, не соответствует цели фичи
+

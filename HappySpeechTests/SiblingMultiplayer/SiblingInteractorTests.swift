@@ -219,7 +219,7 @@ final class SiblingInteractorTests: XCTestCase {
         sut.submitScore(0.85)
 
         XCTAssertTrue(spy.presentScoreUpdateCalled, "presenter должен получить ScoreUpdate после submitScore")
-        XCTAssertEqual(spy.lastScoreUpdate?.ourRoundResult, 0.85, accuracy: 0.001,
+        XCTAssertEqual(Double(spy.lastScoreUpdate?.ourRoundResult ?? 0), 0.85, accuracy: 0.001,
                        "ourRoundResult должен отразить переданный score 0.85")
     }
 

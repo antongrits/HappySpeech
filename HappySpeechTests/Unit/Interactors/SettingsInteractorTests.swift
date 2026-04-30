@@ -78,12 +78,15 @@ final class SettingsInteractorTests: XCTestCase {
         func presentFailure(_ response: SettingsModels.Failure.Response) {
             failureCalled = true
         }
+        func presentToggleKidDailyReminder(_ response: SettingsModels.ToggleKidDailyReminder.Response) {}
+        func presentToggleWeeklyParentSummary(_ response: SettingsModels.ToggleWeeklyParentSummary.Response) {}
     }
 
     private func makeSUT() -> (SettingsInteractor, SpyPresenter) {
         let sut = SettingsInteractor(
             themeManager: ThemeManager(),
             notificationService: MockNotificationService(),
+            sessionRepository: MockSessionRepository(),
             defaults: UserDefaults(suiteName: "test-\(UUID().uuidString)")!
         )
         let spy = SpyPresenter()
@@ -132,7 +135,7 @@ final class SettingsInteractorTests: XCTestCase {
 
     func test_exportData_callsPresenter() {
         let (sut, spy) = makeSUT()
-        sut.exportData(.init())
+        sut.exportData(.init(format: .pdf, childId: "test-child-id"))
         XCTAssertTrue(spy.exportDataCalled)
     }
 
@@ -257,6 +260,7 @@ final class SettingsInteractorTests: XCTestCase {
         let sut = SettingsInteractor(
             themeManager: ThemeManager(),
             notificationService: MockNotificationService(),
+            sessionRepository: MockSessionRepository(),
             whisperKitModelManager: whisperMock,
             llmModelManager: llmMock,
             defaults: UserDefaults(suiteName: "test-\(UUID().uuidString)")!
@@ -311,13 +315,14 @@ final class SettingsInteractorTests: XCTestCase {
         let sut = SettingsInteractor(
             themeManager: ThemeManager(),
             notificationService: MockNotificationService(),
+            sessionRepository: MockSessionRepository(),
             whisperKitModelManager: whisperMock,
             llmModelManager: nil,
             defaults: UserDefaults(suiteName: "test-\(UUID().uuidString)")!
         )
         let spy = SpyPresenter()
         sut.presenter = spy
-        sut.downloadModelPack(.init(family: .asr(.tiny)))
+        sut.downloadModelPack(SettingsModels.DownloadModelPack.Request(family: .asr(.tiny)))
         try await Task.sleep(nanoseconds: 200_000_000)
         XCTAssertTrue(spy.downloadModelPackCalled)
     }
@@ -329,13 +334,14 @@ final class SettingsInteractorTests: XCTestCase {
         let sut = SettingsInteractor(
             themeManager: ThemeManager(),
             notificationService: MockNotificationService(),
+            sessionRepository: MockSessionRepository(),
             whisperKitModelManager: whisperMock,
             llmModelManager: nil,
             defaults: UserDefaults(suiteName: "test-\(UUID().uuidString)")!
         )
         let spy = SpyPresenter()
         sut.presenter = spy
-        sut.deleteModelPack(.init(family: .asr(.base)))
+        sut.deleteModelPack(SettingsModels.DeleteModelPack.Request(family: .asr(.base)))
         try await Task.sleep(nanoseconds: 200_000_000)
         XCTAssertTrue(spy.deleteModelPackCalled)
     }
@@ -356,6 +362,7 @@ final class SettingsInteractorTests: XCTestCase {
         let sut = SettingsInteractor(
             themeManager: ThemeManager(),
             notificationService: mock,
+            sessionRepository: MockSessionRepository(),
             defaults: UserDefaults(suiteName: "test-\(UUID().uuidString)")!
         )
         let spy = SpyPresenter()
@@ -372,6 +379,7 @@ final class SettingsInteractorTests: XCTestCase {
         let sut = SettingsInteractor(
             themeManager: ThemeManager(),
             notificationService: mock,
+            sessionRepository: MockSessionRepository(),
             defaults: UserDefaults(suiteName: "test-\(UUID().uuidString)")!
         )
         let spy = SpyPresenter()
@@ -399,6 +407,7 @@ final class SettingsInteractorTests: XCTestCase {
         let sut = SettingsInteractor(
             themeManager: ThemeManager(),
             notificationService: MockNotificationService(),
+            sessionRepository: MockSessionRepository(),
             defaults: defaults
         )
         let spy = SpyPresenter()

@@ -59,7 +59,7 @@ final class UnifiedFacePoseWorkerTests: XCTestCase {
 
     /// lipsFunnel > 0.5, pucker не превышает порог → визема .u
     func test_currentViseme_lipsFunnel_returnsU() {
-        let pose = makePose(lipsFunnel: 0.8, lipsPucker: 0.1)
+        let pose = makePose(lipsPucker: 0.1, lipsFunnel: 0.8)
         let viseme = sut.currentViseme(pose)
         XCTAssertEqual(viseme, .u)
     }
@@ -77,7 +77,7 @@ final class UnifiedFacePoseWorkerTests: XCTestCase {
 
     /// lipsSmile > 0.4, mouth едва открыт, pucker/funnel < порога → визема .e
     func test_currentViseme_smile_returnsE() {
-        let pose = makePose(mouthOpen: 0.3, lipsSmile: 0.6, lipsPucker: 0.1, lipsFunnel: 0.1)
+        let pose = makePose(mouthOpen: 0.3, lipsPucker: 0.1, lipsFunnel: 0.1, lipsSmile: 0.6)
         let viseme = sut.currentViseme(pose)
         XCTAssertEqual(viseme, .e)
     }

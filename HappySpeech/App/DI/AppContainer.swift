@@ -90,6 +90,16 @@ public final class AppContainer {
     // Block L: MascotEyeContactState — singleton eye contact state (Block L)
     public let mascotEyeContactState: MascotEyeContactState = MascotEyeContactState()
 
+    // Block M (v12): VoiceCloneService — placeholder, полная реализация post-v1.0.
+    // Не требует factory — VoiceCloneServicePlaceholder легковесный struct без зависимостей.
+    private var _voiceCloneService: (any VoiceCloneService)?
+    public var voiceCloneService: any VoiceCloneService {
+        if let existing = _voiceCloneService { return existing }
+        let new = VoiceCloneServicePlaceholder()
+        _voiceCloneService = new
+        return new
+    }
+
     // Factory closures (injected at init)
     private let audioServiceFactory: () -> any AudioService
     private let asrServiceFactory: () -> any ASRService
