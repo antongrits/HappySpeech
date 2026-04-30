@@ -87,6 +87,9 @@ public final class AppContainer {
     // MascotLipSyncState — singleton для real-time lip-sync оверлея маскота (Block F)
     public let mascotLipSyncState: MascotLipSyncState = MascotLipSyncState()
 
+    // Block L: MascotEyeContactState — singleton eye contact state (Block L)
+    public let mascotEyeContactState: MascotEyeContactState = MascotEyeContactState()
+
     // Factory closures (injected at init)
     private let audioServiceFactory: () -> any AudioService
     private let asrServiceFactory: () -> any ASRService

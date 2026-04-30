@@ -22174,6 +22174,50 @@
           }
         }
       }
+    },
+    "eye_focus.hint.look_at_me": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Посмотри на меня!"
+          }
+        }
+      }
+    },
+    "eye_focus.hint.well_done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отлично, я тебя вижу!"
+          }
+        }
+      }
+    },
+    "eye_focus.attention_low": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сосредоточься!"
+          }
+        }
+      }
+    },
+    "ar.mirror.attention": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Уровень внимания"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
