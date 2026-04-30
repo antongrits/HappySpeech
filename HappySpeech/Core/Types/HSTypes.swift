@@ -128,6 +128,8 @@ public enum TemplateType: String, CaseIterable, Codable, Sendable {
     case minimalPairs           = "minimal-pairs"
     /// Block K (v12): 17-й шаблон — поиск предметов через Vision + VNClassifyImageRequest.
     case objectHunt             = "object-hunt"
+    /// Block Q (v12): 18-й шаблон — написание буквы PencilKit + Vision handwriting recognition.
+    case letterTracing          = "letter-tracing"
 
     public var displayName: String {
         switch self {
@@ -148,6 +150,7 @@ public enum TemplateType: String, CaseIterable, Codable, Sendable {
         case .narrativeQuest:        return "Сказка"
         case .minimalPairs:          return "Похожие звуки"
         case .objectHunt:            return "Найди предмет"
+        case .letterTracing:         return "Напиши букву"
         }
     }
 }

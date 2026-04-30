@@ -341,6 +341,7 @@ final class SessionHistoryPresenter: SessionHistoryPresentationLogic {
         case .dragAndMatch:           return "GameListenAndChoose"
         case .storyCompletion:        return "GameMemory"
         case .objectHunt:             return "GameAR"
+        case .letterTracing:          return "GameListenAndChoose"
         }
     }
 

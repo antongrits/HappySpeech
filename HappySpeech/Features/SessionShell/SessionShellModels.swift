@@ -151,6 +151,8 @@ enum GameType: String, Sendable, CaseIterable {
     case arActivity             = "ARActivity"
     /// Block K (v12): 17-й шаблон — поиск предметов через Vision + VNClassifyImageRequest.
     case objectHunt             = "ObjectHunt"
+    /// Block Q (v12): 18-й шаблон — написание буквы PencilKit + Vision handwriting recognition.
+    case letterTracing          = "LetterTracing"
 }
 
 enum SessionType: String, Sendable {

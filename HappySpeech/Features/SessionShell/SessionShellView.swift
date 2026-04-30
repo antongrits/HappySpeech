@@ -282,6 +282,8 @@ struct SessionShellBinder: View {
             return (ColorTokens.Brand.lilac.opacity(0.18), ColorTokens.Kid.bgSoft)
         case .arActivity, .articulationImitation, .visualAcoustic:
             return (ColorTokens.Brand.butter.opacity(0.18), ColorTokens.Kid.bgSoft)
+        case .letterTracing:
+            return (ColorTokens.Brand.sky.opacity(0.12), ColorTokens.Kid.bgSoft)
         default:
             return (ColorTokens.Kid.bgSoft, ColorTokens.Kid.bg)
         }
@@ -396,6 +398,10 @@ struct SessionShellBinder: View {
             }
         case .objectHunt:
             ObjectHuntView(activity: activity) { score in
+                Task { await onComplete(activity.id, score) }
+            }
+        case .letterTracing:
+            LetterTracingView(activity: activity) { score in
                 Task { await onComplete(activity.id, score) }
             }
         default:
@@ -826,6 +832,7 @@ extension GameType {
         case .articulationImitation: return String(localized: "game.articulation_imitation")
         case .arActivity:            return String(localized: "game.ar_activity")
         case .objectHunt:            return String(localized: "game.object_hunt")
+        case .letterTracing:         return String(localized: "game.letter_tracing")
         }
     }
 }

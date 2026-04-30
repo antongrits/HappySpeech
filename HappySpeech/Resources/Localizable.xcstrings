@@ -22175,6 +22175,193 @@
         }
       }
     },
+    "game.letter_tracing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Напиши букву"
+          }
+        }
+      }
+    },
+    "letter_tracing.instruction %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Напиши букву %@"
+          }
+        }
+      }
+    },
+    "letter_tracing.progress %lld %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задание %lld из %lld"
+          }
+        }
+      }
+    },
+    "letter_tracing.feedback.excellent": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отлично!"
+          }
+        }
+      }
+    },
+    "letter_tracing.feedback.good": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хорошо!"
+          }
+        }
+      }
+    },
+    "letter_tracing.feedback.try_again": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попробуй ещё раз!"
+          }
+        }
+      }
+    },
+    "letter_tracing.recognized %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Распознано: %@"
+          }
+        }
+      }
+    },
+    "letter_tracing.score_percent %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Результат: %lld%%"
+          }
+        }
+      }
+    },
+    "letter_tracing.session_complete %lld %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Правильно: %lld из %lld"
+          }
+        }
+      }
+    },
+    "letter_tracing.canvas.accessibility_label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Холст для рисования буквы"
+          }
+        }
+      }
+    },
+    "letter_tracing.canvas.accessibility_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рисуйте Apple Pencil или пальцем"
+          }
+        }
+      }
+    },
+    "letter_tracing.button.reset": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сбросить"
+          }
+        }
+      }
+    },
+    "letter_tracing.button.check": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проверить"
+          }
+        }
+      }
+    },
+    "letter_tracing.button.next": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Далее"
+          }
+        }
+      }
+    },
+    "letter_tracing.complete.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец! Задание выполнено!"
+          }
+        }
+      }
+    },
+    "letter_tracing.iphone_fallback.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражнение доступно на iPad"
+          }
+        }
+      }
+    },
+    "letter_tracing.iphone_fallback.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для написания букв используй iPad с Apple Pencil или пальцем"
+          }
+        }
+      }
+    },
     "eye_focus.hint.look_at_me": {
       "extractionState": "manual",
       "localizations": {
