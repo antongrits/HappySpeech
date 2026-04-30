@@ -98,21 +98,30 @@ final class SettingsPresenter: SettingsPresentationLogic {
     }
 
     func presentExportData(_ response: SettingsModels.ExportData.Response) {
-        if response.success, let fileName = response.fileName {
+        if response.success, let url = response.fileURL {
+            let formatLabel: String
+            switch response.format {
+            case .pdf: formatLabel = "PDF"
+            case .csv: formatLabel = "CSV"
+            case .json: formatLabel = "JSON"
+            }
             let message = String(
                 format: String(localized: "settings.export.toast.success"),
-                fileName
+                formatLabel
             )
-            display?.displayExportData(.init(toastMessage: message, toastIsError: false))
+            display?.displayExportData(.init(fileURL: url, toastMessage: message, toastIsError: false))
         } else {
             let message = response.errorMessage ?? String(localized: "settings.export.toast.error")
-            display?.displayExportData(.init(toastMessage: message, toastIsError: true))
+            display?.displayExportData(.init(fileURL: nil, toastMessage: message, toastIsError: true))
         }
     }
 
     func presentClearCache(_ response: SettingsModels.ClearCache.Response) {
-        let mb = Double(response.bytesFreed) / 1_048_576.0
-        let formatted = String(format: "%.1f", mb)
+        let formatter = ByteCountFormatter()
+        formatter.allowedUnits = [.useMB, .useKB]
+        formatter.countStyle = .file
+        formatter.allowsNonnumericFormatting = false
+        let formatted = formatter.string(fromByteCount: Int64(response.bytesFreed))
         let message = String(
             format: String(localized: "settings.cache.toast.cleared"),
             formatted

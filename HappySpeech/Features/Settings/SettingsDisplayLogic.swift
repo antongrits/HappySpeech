@@ -81,6 +81,9 @@ final class SettingsDisplay: SettingsDisplayLogic {
     }
 
     func displayExportData(_ viewModel: SettingsModels.ExportData.ViewModel) {
+        if let url = viewModel.fileURL {
+            shareFileURL = url
+        }
         toastMessage = viewModel.toastMessage
         toastIsError = viewModel.toastIsError
         isLoading = false

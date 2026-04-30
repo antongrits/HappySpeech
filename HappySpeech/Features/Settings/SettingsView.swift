@@ -99,11 +99,17 @@ struct SettingsView: View {
                 isPresented: $showExportConfirm,
                 titleVisibility: .visible
             ) {
-                Button(String(localized: "settings.export.confirm.action")) {
-                    let userId = display.settings.specialistConnected
-                        ? display.settings.specialistCode
-                        : "anonymous"
-                    interactor?.exportShare(.init(userId: userId))
+                Button(String(localized: "settings.export.format.pdf")) {
+                    let childId = container.currentChildId.isEmpty ? "unknown" : container.currentChildId
+                    interactor?.exportData(.init(format: .pdf, childId: childId))
+                }
+                Button(String(localized: "settings.export.format.csv")) {
+                    let childId = container.currentChildId.isEmpty ? "unknown" : container.currentChildId
+                    interactor?.exportData(.init(format: .csv, childId: childId))
+                }
+                Button(String(localized: "settings.export.format.json")) {
+                    let childId = container.currentChildId.isEmpty ? "unknown" : container.currentChildId
+                    interactor?.exportData(.init(format: .json, childId: childId))
                 }
                 Button(String(localized: "settings.export.confirm.cancel"), role: .cancel) {}
             } message: {
@@ -809,6 +815,7 @@ struct SettingsView: View {
         let interactor = SettingsInteractor(
             themeManager: container.themeManager,
             notificationService: container.notificationService,
+            sessionRepository: container.sessionRepository,
             whisperKitModelManager: container.whisperKitModelManager,
             llmModelManager: container.llmModelManager
         )

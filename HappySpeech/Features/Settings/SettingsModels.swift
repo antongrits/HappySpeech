@@ -95,13 +95,18 @@ enum SettingsModels {
     // MARK: - ExportData
 
     enum ExportData {
-        struct Request: Sendable {}
+        struct Request: Sendable {
+            let format: ExportFormat
+            let childId: String
+        }
         struct Response: Sendable {
             let success: Bool
-            let fileName: String?
+            let fileURL: URL?
+            let format: ExportFormat
             let errorMessage: String?
         }
         struct ViewModel: Sendable {
+            let fileURL: URL?
             let toastMessage: String
             let toastIsError: Bool
         }
@@ -387,6 +392,15 @@ enum AudioQuality: String, Sendable, CaseIterable, Equatable {
         case .high:     return String(localized: "settings.content.quality.high")
         }
     }
+}
+
+// MARK: - ExportFormat
+
+/// Формат экспорта данных пользователя.
+enum ExportFormat: String, Sendable, CaseIterable {
+    case pdf
+    case csv
+    case json
 }
 
 // MARK: - Persistence keys
