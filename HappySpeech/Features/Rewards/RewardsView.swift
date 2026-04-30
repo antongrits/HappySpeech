@@ -36,6 +36,12 @@ struct RewardsView: View {
     @State private var detailViewModel: StickerDetailViewModel?
     @State private var unlockOverlay: StickerUnlockViewModel?
 
+    // MARK: S12 Hero Transitions (Block S)
+    // Namespace для matchedGeometryEffect: sticker cell emoji → unlock overlay emoji.
+    @Namespace private var stickerNamespace
+    // ID стикера, который сейчас в анимированном unlock-overlay.
+    @State private var animatingStickerId: String?
+
     private let logger = Logger(subsystem: "ru.happyspeech", category: "RewardsView")
 
     // MARK: - Init
@@ -79,9 +85,15 @@ struct RewardsView: View {
             }
             .overlay {
                 if let unlock = unlockOverlay {
-                    StickerUnlockOverlay(unlock: unlock) {
-                        withAnimation(reduceMotion ? nil : .easeOut(duration: 0.25)) {
+                    // S12: передаём namespace и animatingStickerId в overlay для matchedGeometryEffect.
+                    StickerUnlockOverlay(
+                        unlock: unlock,
+                        heroNamespace: reduceMotion ? nil : stickerNamespace,
+                        heroSourceId: animatingStickerId
+                    ) {
+                        withAnimation(reduceMotion ? nil : .spring(response: 0.45, dampingFraction: 0.82)) {
                             unlockOverlay = nil
+                            animatingStickerId = nil
                         }
                     }
                     .transition(.opacity)
@@ -232,10 +244,21 @@ struct RewardsView: View {
                 spacing: SpacingTokens.medium
             ) {
                 ForEach(Array(display.cells.enumerated()), id: \.element.id) { index, cell in
-                    StickerCellView(cell: cell, appearIndex: index) {
+                    // S12: matchedGeometryEffect на emoji стикера.
+                    // StickerCellView получает namespace и флаг isAnimating для isSource.
+                    StickerCellView(
+                        cell: cell,
+                        appearIndex: index,
+                        heroNamespace: reduceMotion ? nil : stickerNamespace,
+                        isHeroSource: animatingStickerId != cell.id
+                    ) {
                         interactor?.openSticker(.init(id: cell.id))
                         if cell.isUnlocked && cell.isNew {
-                            // Auto-claim "new" badge when the kid taps the sticker.
+                            if !reduceMotion {
+                                withAnimation(.spring(response: 0.5, dampingFraction: 0.72)) {
+                                    animatingStickerId = cell.id
+                                }
+                            }
                             interactor?.claimReward(.init(id: cell.id))
                         }
                     }
@@ -269,10 +292,15 @@ struct RewardsView: View {
 }
 
 // MARK: - StickerCellView
+//
+// S12 Block S: принимает опциональный heroNamespace для matchedGeometryEffect
+// на emoji стикера. isHeroSource=false когда этот стикер летит в unlock overlay.
 
 private struct StickerCellView: View {
     let cell: StickerCellViewModel
     let appearIndex: Int
+    var heroNamespace: Namespace.ID? = nil
+    var isHeroSource: Bool = true
     let onTap: () -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -359,10 +387,8 @@ private struct StickerCellView: View {
                             .accessibilityHidden(true)
                     }
 
-                    Text(cell.emoji)
-                        .font(TypographyTokens.display(38))
-                        .scaleEffect(bounce ? 1.08 : 1.0)
-                        .accessibilityHidden(true)
+                    // S12: matchedGeometryEffect на emoji — source когда overlay закрыт.
+                    emojiView
 
                     if cell.isNew {
                         Circle()
@@ -388,6 +414,24 @@ private struct StickerCellView: View {
                 }
             }
             .frame(maxWidth: .infinity, minHeight: 88)
+        }
+    }
+
+    // S12: emoji с опциональным matchedGeometryEffect (source или destination).
+    @ViewBuilder
+    private var emojiView: some View {
+        let base = Text(cell.emoji)
+            .font(TypographyTokens.display(38))
+            .scaleEffect(bounce ? 1.08 : 1.0)
+            .accessibilityHidden(true)
+        if let ns = heroNamespace {
+            base.matchedGeometryEffect(
+                id: "sticker_\(cell.id)",
+                in: ns,
+                isSource: isHeroSource
+            )
+        } else {
+            base
         }
     }
 
@@ -524,9 +568,15 @@ private struct StickerDetailSheet: View {
 }
 
 // MARK: - StickerUnlockOverlay
+//
+// S12 Block S: добавлены параметры heroNamespace и heroSourceId для
+// matchedGeometryEffect на emoji стикера (destination в overlay).
+// Nil-безопасны — backward compatible.
 
 private struct StickerUnlockOverlay: View {
     let unlock: StickerUnlockViewModel
+    var heroNamespace: Namespace.ID? = nil
+    var heroSourceId: String? = nil
     let onDismiss: () -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -564,11 +614,8 @@ private struct StickerUnlockOverlay: View {
                     .textCase(.uppercase)
                     .tracking(1.0)
 
-                Text(unlock.emoji)
-                    .font(TypographyTokens.kidDisplay(120))
-                    .scaleEffect(stickerScale)
-                    .shadow(color: ColorTokens.Brand.gold.opacity(0.5), radius: 18)
-                    .accessibilityHidden(true)
+                // S12: emoji — destination matchedGeometryEffect (isSource=false).
+                unlockEmojiView
 
                 Text(unlock.name)
                     .font(TypographyTokens.title(28))
@@ -600,6 +647,25 @@ private struct StickerUnlockOverlay: View {
             withAnimation(.easeOut(duration: 1.6)) {
                 confettiAppeared = true
             }
+        }
+    }
+
+    // S12: emoji view с опциональным matchedGeometryEffect (isSource=false — destination).
+    @ViewBuilder
+    private var unlockEmojiView: some View {
+        let base = Text(unlock.emoji)
+            .font(TypographyTokens.kidDisplay(120))
+            .scaleEffect(heroNamespace != nil ? 1 : stickerScale)
+            .shadow(color: ColorTokens.Brand.gold.opacity(0.5), radius: 18)
+            .accessibilityHidden(true)
+        if let ns = heroNamespace, let sourceId = heroSourceId {
+            base.matchedGeometryEffect(
+                id: "sticker_\(sourceId)",
+                in: ns,
+                isSource: false
+            )
+        } else {
+            base
         }
     }
 }

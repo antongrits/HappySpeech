@@ -355,23 +355,25 @@ struct ChildHomeDifficultyStarsView: View {
 }
 
 // MARK: - QuickActionTile (legacy 2x2 tile)
+//
+// S12 Block S: принимает опциональный namespace для matchedGeometryEffect
+// на иконке-круге. heroId уникален для каждого тайла в сетке.
+// Если namespace не передан — работает как раньше (backward compatible).
 
 struct ChildHomeQuickActionTile: View {
 
     let title: String
     let icon: String
     let color: Color
+    var heroId: String? = nil
+    var namespace: Namespace.ID? = nil
+    var reduceMotion: Bool = false
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
             VStack(spacing: SpacingTokens.sp2) {
-                Image(systemName: icon)
-                    .font(TypographyTokens.title(26))
-                    .foregroundStyle(color)
-                    .frame(width: 56, height: 56)
-                    .background(Circle().fill(color.opacity(0.12)))
-                    .accessibilityHidden(true)
+                iconCircle
 
                 Text(title)
                     .font(TypographyTokens.body(13))
@@ -392,6 +394,23 @@ struct ChildHomeQuickActionTile: View {
         .buttonStyle(.plain)
         .tapFeedback()
         .accessibilityLabel(title)
+    }
+
+    // S12: icon circle с опциональным matchedGeometryEffect.
+    @ViewBuilder
+    private var iconCircle: some View {
+        let base = Image(systemName: icon)
+            .font(TypographyTokens.title(26))
+            .foregroundStyle(color)
+            .frame(width: 56, height: 56)
+            .background(Circle().fill(color.opacity(0.12)))
+            .accessibilityHidden(true)
+
+        if !reduceMotion, let heroId, let namespace {
+            base.matchedGeometryEffect(id: heroId, in: namespace)
+        } else {
+            base
+        }
     }
 }
 

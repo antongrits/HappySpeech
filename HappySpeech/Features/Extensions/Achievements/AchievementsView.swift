@@ -22,6 +22,11 @@ struct AchievementsView: View {
     @State private var showToast: Bool = false
     @State private var showUnlockConfetti: Bool = false
 
+    // MARK: S12 Hero Transitions (Block S)
+    // Namespace для matchedGeometryEffect: badge icon → expanded detail overlay.
+    @Namespace private var achievementNamespace
+    @State private var expandedAchievementId: String?
+
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -68,6 +73,16 @@ struct AchievementsView: View {
             HSConfettiView(preset: .medal, isActive: $showUnlockConfetti)
                 .ignoresSafeArea()
                 .allowsHitTesting(false)
+
+            // S12 Hero Overlay: expanded achievement badge detail.
+            if let expandedId = expandedAchievementId,
+               let vm = viewModel,
+               let section = vm.sections.first(where: { $0.items.contains(where: { $0.id == expandedId }) }),
+               let item = section.items.first(where: { $0.id == expandedId }) {
+                achievementHeroOverlay(item: item)
+                    .transition(.opacity)
+                    .zIndex(30)
+            }
         }
         .navigationTitle(String(localized: "achievements.tab.list"))
         .navigationBarTitleDisplayMode(.large)
@@ -157,8 +172,116 @@ struct AchievementsView: View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
             sectionHeader(section.rarity.localizedTitle)
             ForEach(section.items) { item in
+                // S12: matchedGeometryEffect — card is source while not expanded.
+                // Tap на unlocked ачивку — hero expand (если ReduceMotion off).
                 AchievementCardView(item: item)
+                    .matchedGeometryEffect(
+                        id: "achievement_\(item.id)",
+                        in: achievementNamespace,
+                        isSource: expandedAchievementId != item.id
+                    )
+                    .onTapGesture {
+                        guard item.isUnlocked else { return }
+                        if reduceMotion {
+                            // Без hero анимации — просто ничего не делаем (нет отдельного detail screen).
+                            return
+                        }
+                        withAnimation(.spring(response: 0.45, dampingFraction: 0.78)) {
+                            expandedAchievementId = item.id
+                        }
+                    }
+                    .accessibilityAddTraits(.isButton)
+                    .accessibilityHint(item.isUnlocked
+                                       ? String(localized: "achievements.card.expand.hint")
+                                       : "")
             }
+        }
+    }
+
+    // MARK: - Achievement Hero Overlay (S12 Block S)
+
+    @ViewBuilder
+    private func achievementHeroOverlay(item: AchievementCellViewModel) -> some View {
+        ZStack {
+            Color.black.opacity(0.5)
+                .ignoresSafeArea()
+                .onTapGesture {
+                    withAnimation(.spring(response: 0.4, dampingFraction: 0.82)) {
+                        expandedAchievementId = nil
+                    }
+                }
+                .accessibilityLabel(String(localized: "child.home.hero.dismiss.a11y"))
+                .accessibilityAddTraits(.isButton)
+
+            VStack(spacing: SpacingTokens.sp5) {
+                // Hero badge icon — большой круг с иконкой.
+                ZStack {
+                    Circle()
+                        .fill(heroRarityColor(item.rarity).opacity(0.20))
+                        .frame(width: 120, height: 120)
+                    Image(systemName: item.iconName)
+                        .font(.system(size: 52, weight: .semibold))
+                        .foregroundStyle(heroRarityColor(item.rarity))
+                }
+                .matchedGeometryEffect(
+                    id: "achievement_\(item.id)",
+                    in: achievementNamespace,
+                    isSource: expandedAchievementId == item.id
+                )
+                .accessibilityHidden(true)
+
+                VStack(spacing: SpacingTokens.sp2) {
+                    Text(item.title)
+                        .font(TypographyTokens.title(24))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .multilineTextAlignment(.center)
+                    if !item.description.isEmpty {
+                        Text(item.description)
+                            .font(TypographyTokens.body(15))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .multilineTextAlignment(.center)
+                    }
+                    if let dateText = item.unlockedDateFormatted {
+                        Text(dateText)
+                            .font(TypographyTokens.caption(13))
+                            .foregroundStyle(heroRarityColor(item.rarity))
+                    }
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+
+                Button {
+                    withAnimation(.spring(response: 0.4, dampingFraction: 0.82)) {
+                        expandedAchievementId = nil
+                    }
+                } label: {
+                    Text(String(localized: "rewards.detail.close"))
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, SpacingTokens.sp6)
+                        .padding(.vertical, SpacingTokens.sp3)
+                        .background(
+                            Capsule().fill(heroRarityColor(item.rarity))
+                        )
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(String(localized: "rewards.detail.close"))
+            }
+            .padding(SpacingTokens.screenEdge)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.card * 2, style: .continuous)
+                    .fill(Color(.systemBackground))
+                    .shadow(color: .black.opacity(0.18), radius: 24, x: 0, y: 8)
+            )
+            .padding(.horizontal, SpacingTokens.sp4)
+        }
+        .accessibilityElement(children: .contain)
+    }
+
+    private func heroRarityColor(_ rarity: AchievementRarity) -> Color {
+        switch rarity {
+        case .legendary: return ColorTokens.Brand.butter
+        case .rare:      return ColorTokens.Brand.lilac
+        case .common:    return ColorTokens.Brand.mint
         }
     }
 

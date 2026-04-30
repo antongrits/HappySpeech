@@ -30,6 +30,10 @@ struct FamilyHomeView: View {
     @State private var profileEditorChildId: String?
     @State private var showingProfileEditor = false
 
+    // MARK: S12 Hero Transitions (Block S)
+    // Namespace для matchedGeometryEffect: avatar circle → увеличение при переходе в ChildHome.
+    @Namespace private var familyAvatarNamespace
+
     // MARK: - Layout
     //
     // Regular (iPad full/split ≥1/2): 3 columns.
@@ -84,13 +88,23 @@ struct FamilyHomeView: View {
     private var childrenGrid: some View {
         LazyVGrid(columns: columns, spacing: SpacingTokens.sp4) {
             ForEach(viewModel.children) { child in
+                // S12: matchedGeometryEffect на аватар-круг карточки ребёнка.
+                // При tap avatar «летит» к ChildHome hero (если ReduceMotion off).
                 ChildCardView(
                     child: child,
                     themeColor: viewModel.themeColor(for: child),
-                    avatarEmoji: viewModel.avatarEmoji(for: child)
+                    avatarEmoji: viewModel.avatarEmoji(for: child),
+                    avatarHeroId: reduceMotion ? nil : "child_avatar_\(child.id)",
+                    avatarNamespace: reduceMotion ? nil : familyAvatarNamespace
                 )
                 .onTapGesture {
-                    handleChildTap(child)
+                    if !reduceMotion {
+                        withAnimation(.spring(response: 0.45, dampingFraction: 0.80)) {
+                            handleChildTap(child)
+                        }
+                    } else {
+                        handleChildTap(child)
+                    }
                 }
                 .onLongPressGesture {
                     profileEditorChildId = child.id
@@ -239,12 +253,17 @@ struct FamilyHomeView: View {
 }
 
 // MARK: - ChildCardView
+//
+// S12 Block S: добавлены параметры avatarHeroId и avatarNamespace для
+// matchedGeometryEffect на аватар-круг. Nil-безопасны — backward compatible.
 
 private struct ChildCardView: View {
 
     let child: FamilyHome.ChildSummary
     let themeColor: Color
     let avatarEmoji: String
+    var avatarHeroId: String? = nil
+    var avatarNamespace: Namespace.ID? = nil
 
     @State private var isPressed = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -252,7 +271,7 @@ private struct ChildCardView: View {
     var body: some View {
         HSLiquidGlassCard(style: .tinted(themeColor), padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-                // Avatar
+                // Avatar (S12: с matchedGeometryEffect если namespace передан)
                 avatarSection
 
                 // Name + age
@@ -291,13 +310,20 @@ private struct ChildCardView: View {
         .animation(reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7), value: isPressed)
     }
 
+    @ViewBuilder
     private var avatarSection: some View {
-        ZStack {
+        let baseCircle = ZStack {
             Circle()
                 .fill(themeColor.opacity(0.25))
                 .frame(width: 56, height: 56)
             Text(avatarEmoji)
                 .font(.system(size: 28))
+                .accessibilityHidden(true)
+        }
+        if let heroId = avatarHeroId, let ns = avatarNamespace {
+            baseCircle.matchedGeometryEffect(id: heroId, in: ns)
+        } else {
+            baseCircle
         }
     }
 }
