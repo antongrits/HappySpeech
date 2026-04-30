@@ -1365,6 +1365,16 @@
         }
       }
     },
+    "action.cancel": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отмена"
+          }
+        }
+      }
+    },
     "ar.game.arMirror.desc": {
       "extractionState": "manual",
       "localizations": {
@@ -1537,6 +1547,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Звук и лицо"
+          }
+        }
+      }
+    },
+    "ar.mirror.attention": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Уровень внимания"
           }
         }
       }
@@ -2950,6 +2971,56 @@
         }
       }
     },
+    "avatar.butterfly": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Бабочка"
+          }
+        }
+      }
+    },
+    "avatar.dragon": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дракон"
+          }
+        }
+      }
+    },
+    "avatar.rocket": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ракета"
+          }
+        }
+      }
+    },
+    "avatar.star": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звезда"
+          }
+        }
+      }
+    },
+    "avatar.unicorn": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Единорог"
+          }
+        }
+      }
+    },
     "bingo.finish": {
       "extractionState": "manual",
       "localizations": {
@@ -3034,6 +3105,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Превосходно!"
+          }
+        }
+      }
+    },
+    "child.age.label": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d лет"
           }
         }
       }
@@ -4100,6 +4181,146 @@
         }
       }
     },
+    "comparison.accuracy": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Точность"
+          }
+        }
+      }
+    },
+    "comparison.child": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ребёнок"
+          }
+        }
+      }
+    },
+    "comparison.day": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "День"
+          }
+        }
+      }
+    },
+    "comparison.empty.message": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавьте хотя бы одного ребёнка с занятиями"
+          }
+        }
+      }
+    },
+    "comparison.empty.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нет данных для сравнения"
+          }
+        }
+      }
+    },
+    "comparison.minutes": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Минуты"
+          }
+        }
+      }
+    },
+    "comparison.per_sound": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "По звукам"
+          }
+        }
+      }
+    },
+    "comparison.practice_time": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Время практики в день"
+          }
+        }
+      }
+    },
+    "comparison.sound": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук"
+          }
+        }
+      }
+    },
+    "comparison.success": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Успешность"
+          }
+        }
+      }
+    },
+    "comparison.success_per_week": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Успешность по неделям"
+          }
+        }
+      }
+    },
+    "comparison.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сравнение"
+          }
+        }
+      }
+    },
+    "comparison.week": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неделя"
+          }
+        }
+      }
+    },
+    "comparison.week.label": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нед. %d"
+          }
+        }
+      }
+    },
     "content_pack.error.already_downloading": {
       "extractionState": "manual",
       "localizations": {
@@ -4470,6 +4691,76 @@
           "stringUnit": {
             "state": "translated",
             "value": "Персональные подсказки"
+          }
+        }
+      }
+    },
+    "day.fri": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пт"
+          }
+        }
+      }
+    },
+    "day.mon": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пн"
+          }
+        }
+      }
+    },
+    "day.sat": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сб"
+          }
+        }
+      }
+    },
+    "day.sun": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вс"
+          }
+        }
+      }
+    },
+    "day.thu": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чт"
+          }
+        }
+      }
+    },
+    "day.tue": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вт"
+          }
+        }
+      }
+    },
+    "day.wed": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ср"
           }
         }
       }
@@ -5607,6 +5898,16 @@
         }
       }
     },
+    "error.generic": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Произошла ошибка. Попробуйте ещё раз."
+          }
+        }
+      }
+    },
     "exercise.type.articulationImitation": {
       "extractionState": "manual",
       "localizations": {
@@ -5702,6 +6003,120 @@
           "stringUnit": {
             "state": "translated",
             "value": "Дополни рассказ"
+          }
+        }
+      }
+    },
+    "eye_focus.attention_low": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сосредоточься!"
+          }
+        }
+      }
+    },
+    "eye_focus.hint.look_at_me": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Посмотри на меня!"
+          }
+        }
+      }
+    },
+    "eye_focus.hint.well_done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отлично, я тебя вижу!"
+          }
+        }
+      }
+    },
+    "facetime.usage.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HappySpeech использует FaceTime для совместных логопедических занятий под контролем родителей"
+          }
+        }
+      }
+    },
+    "family.home.add_child": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавить ребёнка"
+          }
+        }
+      }
+    },
+    "family.home.child_card.hint": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите, чтобы перейти к ребёнку. Удерживайте для редактирования."
+          }
+        }
+      }
+    },
+    "family.home.compare": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сравнить детей"
+          }
+        }
+      }
+    },
+    "family.home.greeting": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Привет, %@!"
+          }
+        }
+      }
+    },
+    "family.home.greeting.default": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добрый день!"
+          }
+        }
+      }
+    },
+    "family.home.play_together": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Играть вдвоём"
+          }
+        }
+      }
+    },
+    "family.home.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Семья"
           }
         }
       }
@@ -6344,6 +6759,17 @@
         }
       }
     },
+    "game.letter_tracing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Напиши букву"
+          }
+        }
+      }
+    },
     "game.listen_and_choose": {
       "extractionState": "manual",
       "localizations": {
@@ -6395,6 +6821,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Сюжетный квест"
+          }
+        }
+      }
+    },
+    "game.object_hunt": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Найди предмет"
           }
         }
       }
@@ -7007,6 +7444,94 @@
           "stringUnit": {
             "state": "translated",
             "value": "Один — много"
+          }
+        }
+      }
+    },
+    "hand_pose.detect.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Покажи руку в кадре"
+          }
+        }
+      }
+    },
+    "hand_pose.detect.matched": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Точно как у Ляли!"
+          }
+        }
+      }
+    },
+    "hand_pose.fist": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кулак"
+          }
+        }
+      }
+    },
+    "hand_pose.open_palm": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открытая ладонь"
+          }
+        }
+      }
+    },
+    "hand_pose.pinch": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Щепотка"
+          }
+        }
+      }
+    },
+    "hand_pose.point": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Указательный палец"
+          }
+        }
+      }
+    },
+    "hand_pose.thumbs_up": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Большой палец вверх"
+          }
+        }
+      }
+    },
+    "hand_pose.wave": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помаши рукой"
           }
         }
       }
@@ -7968,6 +8493,182 @@
         }
       }
     },
+    "letter_tracing.button.check": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проверить"
+          }
+        }
+      }
+    },
+    "letter_tracing.button.next": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Далее"
+          }
+        }
+      }
+    },
+    "letter_tracing.button.reset": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сбросить"
+          }
+        }
+      }
+    },
+    "letter_tracing.canvas.accessibility_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рисуйте Apple Pencil или пальцем"
+          }
+        }
+      }
+    },
+    "letter_tracing.canvas.accessibility_label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Холст для рисования буквы"
+          }
+        }
+      }
+    },
+    "letter_tracing.complete.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец! Задание выполнено!"
+          }
+        }
+      }
+    },
+    "letter_tracing.feedback.excellent": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отлично!"
+          }
+        }
+      }
+    },
+    "letter_tracing.feedback.good": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хорошо!"
+          }
+        }
+      }
+    },
+    "letter_tracing.feedback.try_again": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попробуй ещё раз!"
+          }
+        }
+      }
+    },
+    "letter_tracing.instruction %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Напиши букву %@"
+          }
+        }
+      }
+    },
+    "letter_tracing.iphone_fallback.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для написания букв используй iPad с Apple Pencil или пальцем"
+          }
+        }
+      }
+    },
+    "letter_tracing.iphone_fallback.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражнение доступно на iPad"
+          }
+        }
+      }
+    },
+    "letter_tracing.progress %lld %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задание %lld из %lld"
+          }
+        }
+      }
+    },
+    "letter_tracing.recognized %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Распознано: %@"
+          }
+        }
+      }
+    },
+    "letter_tracing.score_percent %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Результат: %lld%%"
+          }
+        }
+      }
+    },
+    "letter_tracing.session_complete %lld %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Правильно: %lld из %lld"
+          }
+        }
+      }
+    },
     "listen.audio.button.a11y": {
       "extractionState": "manual",
       "localizations": {
@@ -8162,6 +8863,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Попробуй ещё"
+          }
+        }
+      }
+    },
+    "minutes.short": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "мин"
           }
         }
       }
@@ -8452,6 +9163,226 @@
           "stringUnit": {
             "state": "translated",
             "value": "Еженедельный отчёт"
+          }
+        }
+      }
+    },
+    "object_hunt.continue": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжить"
+          }
+        }
+      }
+    },
+    "object_hunt.find_sound": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Найди предмет на звук %@!"
+          }
+        }
+      }
+    },
+    "object_hunt.finish": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завершить"
+          }
+        }
+      }
+    },
+    "object_hunt.finish_a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завершить игру и вернуться к занятию"
+          }
+        }
+      }
+    },
+    "object_hunt.found": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ты нашёл %@! Звук %@!"
+          }
+        }
+      }
+    },
+    "object_hunt.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готовим игру…"
+          }
+        }
+      }
+    },
+    "object_hunt.next_round": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дальше"
+          }
+        }
+      }
+    },
+    "object_hunt.next_round_a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перейти к следующему раунду"
+          }
+        }
+      }
+    },
+    "object_hunt.permission": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нужен доступ к камере, чтобы искать предметы"
+          }
+        }
+      }
+    },
+    "object_hunt.round_badge": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Раунд %lld из %lld"
+          }
+        }
+      }
+    },
+    "object_hunt.scanning_a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сканирование комнаты"
+          }
+        }
+      }
+    },
+    "object_hunt.scanning_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Направь камеру на предметы в комнате"
+          }
+        }
+      }
+    },
+    "object_hunt.scene_change": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец! Найдём что-то ещё?"
+          }
+        }
+      }
+    },
+    "object_hunt.score_label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Результат: %lld%%"
+          }
+        }
+      }
+    },
+    "object_hunt.stars_a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Получено звёзд: %lld из 3"
+          }
+        }
+      }
+    },
+    "object_hunt.summary.excellent": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Превосходно! Ты нашёл все предметы!"
+          }
+        }
+      }
+    },
+    "object_hunt.summary.good": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хорошая работа! Попробуй ещё раз."
+          }
+        }
+      }
+    },
+    "object_hunt.summary.ok": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец! Поищем вместе ещё?"
+          }
+        }
+      }
+    },
+    "object_hunt.target_sound_a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Целевой звук: %@"
+          }
+        }
+      }
+    },
+    "object_hunt.try_again": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поищи в другом месте"
           }
         }
       }
@@ -10701,6 +11632,50 @@
         }
       }
     },
+    "parental_gate.biometric.denied_generic": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Аутентификация не прошла"
+          }
+        }
+      }
+    },
+    "parental_gate.biometric.fallback_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не получилось — реши задачку"
+          }
+        }
+      }
+    },
+    "parental_gate.biometric.reason": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подтвердите личность, чтобы открыть родительский раздел"
+          }
+        }
+      }
+    },
+    "parental_gate.biometric.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Face ID активен"
+          }
+        }
+      }
+    },
     "parental_gate.cancel": {
       "extractionState": "manual",
       "localizations": {
@@ -11473,6 +12448,76 @@
         }
       }
     },
+    "profile.editor.age": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Возраст"
+          }
+        }
+      }
+    },
+    "profile.editor.avatar": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Аватар"
+          }
+        }
+      }
+    },
+    "profile.editor.name": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Имя"
+          }
+        }
+      }
+    },
+    "profile.editor.name.placeholder": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Введите имя"
+          }
+        }
+      }
+    },
+    "profile.editor.save": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сохранить"
+          }
+        }
+      }
+    },
+    "profile.editor.theme": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тема"
+          }
+        }
+      }
+    },
+    "profile.editor.title": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Редактировать профиль"
+          }
+        }
+      }
+    },
     "program.block.articulationGymnastics": {
       "extractionState": "manual",
       "localizations": {
@@ -11700,6 +12745,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Программа занятий"
+          }
+        }
+      }
+    },
+    "progress.label": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "прогресс"
           }
         }
       }
@@ -18128,6 +19183,72 @@
         }
       }
     },
+    "settings.ambient.full": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Полные"
+          }
+        }
+      }
+    },
+    "settings.ambient.medium": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Средние"
+          }
+        }
+      }
+    },
+    "settings.ambient.off": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выкл"
+          }
+        }
+      }
+    },
+    "settings.ambient.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Атмосферные звуки сцен"
+          }
+        }
+      }
+    },
+    "settings.ambient.subtle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лёгкие"
+          }
+        }
+      }
+    },
+    "settings.ambient.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фоновые звуки"
+          }
+        }
+      }
+    },
     "settings.cache.confirm.action": {
       "extractionState": "manual",
       "localizations": {
@@ -18454,6 +19575,61 @@
           "stringUnit": {
             "state": "translated",
             "value": "Готово: %@"
+          }
+        }
+      }
+    },
+    "settings.haptics.full": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Полная"
+          }
+        }
+      }
+    },
+    "settings.haptics.off": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выкл"
+          }
+        }
+      }
+    },
+    "settings.haptics.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вибрация при действиях"
+          }
+        }
+      }
+    },
+    "settings.haptics.subtle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лёгкая"
+          }
+        }
+      }
+    },
+    "settings.haptics.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тактильная отдача"
           }
         }
       }
@@ -18997,6 +20173,17 @@
         }
       }
     },
+    "settings.privacy.use_face_id": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Использовать Face ID для родительских разделов"
+          }
+        }
+      }
+    },
     "settings.profile.ageHeader": {
       "extractionState": "manual",
       "localizations": {
@@ -19444,6 +20631,435 @@
           "stringUnit": {
             "state": "translated",
             "value": "Версия приложения"
+          }
+        }
+      }
+    },
+    "shareplay.activity.subtitle.generic": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражняем звук %@ вместе"
+          }
+        }
+      }
+    },
+    "shareplay.activity.subtitle.ж": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражняем звук Ж вместе"
+          }
+        }
+      }
+    },
+    "shareplay.activity.subtitle.з": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражняем звук З вместе"
+          }
+        }
+      }
+    },
+    "shareplay.activity.subtitle.л": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражняем звук Л вместе"
+          }
+        }
+      }
+    },
+    "shareplay.activity.subtitle.р": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражняем звук Р вместе"
+          }
+        }
+      }
+    },
+    "shareplay.activity.subtitle.с": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражняем звук С вместе"
+          }
+        }
+      }
+    },
+    "shareplay.activity.subtitle.ч": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражняем звук Ч вместе"
+          }
+        }
+      }
+    },
+    "shareplay.activity.subtitle.ш": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражняем звук Ш вместе"
+          }
+        }
+      }
+    },
+    "shareplay.activity.subtitle.щ": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражняем звук Щ вместе"
+          }
+        }
+      }
+    },
+    "shareplay.activity.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HappySpeech: совместный урок"
+          }
+        }
+      }
+    },
+    "shareplay.alert.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Совместная игра"
+          }
+        }
+      }
+    },
+    "shareplay.biometric.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для защиты детей потребуется Face ID или Touch ID"
+          }
+        }
+      }
+    },
+    "shareplay.biometric.reason": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подтвердите, что вы родитель, чтобы начать совместную игру"
+          }
+        }
+      }
+    },
+    "shareplay.celebration.together": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодцы оба!"
+          }
+        }
+      }
+    },
+    "shareplay.default.child": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ребёнок"
+          }
+        }
+      }
+    },
+    "shareplay.error.messengerUnavailable": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нет активной SharePlay-сессии"
+          }
+        }
+      }
+    },
+    "shareplay.error.notActivated": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось запустить совместную игру. Убедитесь, что FaceTime активен"
+          }
+        }
+      }
+    },
+    "shareplay.error.parentAuthRequired": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для совместной игры требуется подтверждение родителя"
+          }
+        }
+      }
+    },
+    "shareplay.error.sessionUnavailable": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FaceTime недоступен на этом устройстве"
+          }
+        }
+      }
+    },
+    "shareplay.fallback.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1. Позвоните через FaceTime\n2. Откройте HappySpeech на обоих устройствах\n3. Выберите упражнение и нажмите «Играть вдвоём»"
+          }
+        }
+      }
+    },
+    "shareplay.fallback.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как начать совместную игру"
+          }
+        }
+      }
+    },
+    "shareplay.family_home.a11y_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открывает совместный урок через FaceTime"
+          }
+        }
+      }
+    },
+    "shareplay.family_home.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Через FaceTime с другим устройством"
+          }
+        }
+      }
+    },
+    "shareplay.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Позвоните второму родителю через FaceTime, затем нажмите «Играть вдвоём»"
+          }
+        }
+      }
+    },
+    "shareplay.lesson.card.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите, чтобы начать совместный урок"
+          }
+        }
+      }
+    },
+    "shareplay.lesson.sound_r": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук Р — повторяй за образцом"
+          }
+        }
+      }
+    },
+    "shareplay.lesson.sound_s": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук С — повторяй за образцом"
+          }
+        }
+      }
+    },
+    "shareplay.lesson.sound_sh": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук Ш — выбери правильный"
+          }
+        }
+      }
+    },
+    "shareplay.lessons.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите упражнение"
+          }
+        }
+      }
+    },
+    "shareplay.participants.many": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d участника"
+          }
+        }
+      }
+    },
+    "shareplay.participants.none": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ожидание участников…"
+          }
+        }
+      }
+    },
+    "shareplay.participants.one": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 участник"
+          }
+        }
+      }
+    },
+    "shareplay.remote.final_score": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Финальный счёт: %d%%"
+          }
+        }
+      }
+    },
+    "shareplay.remote.ready": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готов!"
+          }
+        }
+      }
+    },
+    "shareplay.remote.scored": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Другой участник: %d%%"
+          }
+        }
+      }
+    },
+    "shareplay.session.end": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завершить"
+          }
+        }
+      }
+    },
+    "shareplay.startButton": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Играть вдвоём"
+          }
+        }
+      }
+    },
+    "shareplay.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Совместный урок с %@"
+          }
+        }
+      }
+    },
+    "shareplay.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Совместный урок"
           }
         }
       }
@@ -19998,6 +21614,16 @@
         }
       }
     },
+    "streak.days.short": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "дн"
+          }
+        }
+      }
+    },
     "stuttering.diary.cta.start": {
       "extractionState": "manual",
       "localizations": {
@@ -20484,6 +22110,26 @@
         }
       }
     },
+    "theme.blue": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Синий"
+          }
+        }
+      }
+    },
+    "theme.coral": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Коралловый"
+          }
+        }
+      }
+    },
     "theme.dark": {
       "extractionState": "manual",
       "localizations": {
@@ -20491,6 +22137,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Тёмная"
+          }
+        }
+      }
+    },
+    "theme.green": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зелёный"
           }
         }
       }
@@ -20506,6 +22162,16 @@
         }
       }
     },
+    "theme.purple": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фиолетовый"
+          }
+        }
+      }
+    },
     "theme.system": {
       "extractionState": "manual",
       "localizations": {
@@ -20513,6 +22179,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Как в системе"
+          }
+        }
+      }
+    },
+    "theme.yellow": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Жёлтый"
           }
         }
       }
@@ -21581,6 +23257,16 @@
         }
       }
     },
+    "years.short": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "лет"
+          }
+        }
+      }
+    },
     "Аналитика": {
       "extractionState": "manual",
       "localizations": {
@@ -21852,1626 +23538,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Точность по звукам"
-          }
-        }
-      }
-    },
-    "hand_pose.open_palm": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Открытая ладонь"
-          }
-        }
-      }
-    },
-    "hand_pose.fist": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Кулак"
-          }
-        }
-      }
-    },
-    "hand_pose.point": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Указательный палец"
-          }
-        }
-      }
-    },
-    "hand_pose.pinch": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Щепотка"
-          }
-        }
-      }
-    },
-    "hand_pose.wave": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Помаши рукой"
-          }
-        }
-      }
-    },
-    "hand_pose.thumbs_up": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Большой палец вверх"
-          }
-        }
-      }
-    },
-    "hand_pose.detect.hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Покажи руку в кадре"
-          }
-        }
-      }
-    },
-    "hand_pose.detect.matched": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Точно как у Ляли!"
-          }
-        }
-      }
-    },
-    "object_hunt.find_sound": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Найди предмет на звук %@!"
-          }
-        }
-      }
-    },
-    "object_hunt.found": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ты нашёл %@! Звук %@!"
-          }
-        }
-      }
-    },
-    "object_hunt.scanning_hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Направь камеру на предметы в комнате"
-          }
-        }
-      }
-    },
-    "object_hunt.scanning_a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сканирование комнаты"
-          }
-        }
-      }
-    },
-    "object_hunt.loading": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Готовим игру…"
-          }
-        }
-      }
-    },
-    "object_hunt.next_round": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Дальше"
-          }
-        }
-      }
-    },
-    "object_hunt.next_round_a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Перейти к следующему раунду"
-          }
-        }
-      }
-    },
-    "object_hunt.continue": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Продолжить"
-          }
-        }
-      }
-    },
-    "object_hunt.finish": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Завершить"
-          }
-        }
-      }
-    },
-    "object_hunt.finish_a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Завершить игру и вернуться к занятию"
-          }
-        }
-      }
-    },
-    "object_hunt.round_badge": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Раунд %lld из %lld"
-          }
-        }
-      }
-    },
-    "object_hunt.score_label": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Результат: %lld%%"
-          }
-        }
-      }
-    },
-    "object_hunt.summary.excellent": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Превосходно! Ты нашёл все предметы!"
-          }
-        }
-      }
-    },
-    "object_hunt.summary.good": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Хорошая работа! Попробуй ещё раз."
-          }
-        }
-      }
-    },
-    "object_hunt.summary.ok": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Молодец! Поищем вместе ещё?"
-          }
-        }
-      }
-    },
-    "object_hunt.target_sound_a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Целевой звук: %@"
-          }
-        }
-      }
-    },
-    "object_hunt.stars_a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Получено звёзд: %lld из 3"
-          }
-        }
-      }
-    },
-    "object_hunt.permission": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нужен доступ к камере, чтобы искать предметы"
-          }
-        }
-      }
-    },
-    "object_hunt.try_again": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Поищи в другом месте"
-          }
-        }
-      }
-    },
-    "object_hunt.scene_change": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Молодец! Найдём что-то ещё?"
-          }
-        }
-      }
-    },
-    "game.object_hunt": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Найди предмет"
-          }
-        }
-      }
-    },
-    "game.letter_tracing": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Напиши букву"
-          }
-        }
-      }
-    },
-    "letter_tracing.instruction %@": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Напиши букву %@"
-          }
-        }
-      }
-    },
-    "letter_tracing.progress %lld %lld": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Задание %lld из %lld"
-          }
-        }
-      }
-    },
-    "letter_tracing.feedback.excellent": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отлично!"
-          }
-        }
-      }
-    },
-    "letter_tracing.feedback.good": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Хорошо!"
-          }
-        }
-      }
-    },
-    "letter_tracing.feedback.try_again": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Попробуй ещё раз!"
-          }
-        }
-      }
-    },
-    "letter_tracing.recognized %@": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Распознано: %@"
-          }
-        }
-      }
-    },
-    "letter_tracing.score_percent %lld": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Результат: %lld%%"
-          }
-        }
-      }
-    },
-    "letter_tracing.session_complete %lld %lld": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Правильно: %lld из %lld"
-          }
-        }
-      }
-    },
-    "letter_tracing.canvas.accessibility_label": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Холст для рисования буквы"
-          }
-        }
-      }
-    },
-    "letter_tracing.canvas.accessibility_hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Рисуйте Apple Pencil или пальцем"
-          }
-        }
-      }
-    },
-    "letter_tracing.button.reset": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сбросить"
-          }
-        }
-      }
-    },
-    "letter_tracing.button.check": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Проверить"
-          }
-        }
-      }
-    },
-    "letter_tracing.button.next": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Далее"
-          }
-        }
-      }
-    },
-    "letter_tracing.complete.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Молодец! Задание выполнено!"
-          }
-        }
-      }
-    },
-    "letter_tracing.iphone_fallback.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Упражнение доступно на iPad"
-          }
-        }
-      }
-    },
-    "letter_tracing.iphone_fallback.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Для написания букв используй iPad с Apple Pencil или пальцем"
-          }
-        }
-      }
-    },
-    "eye_focus.hint.look_at_me": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Посмотри на меня!"
-          }
-        }
-      }
-    },
-    "eye_focus.hint.well_done": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отлично, я тебя вижу!"
-          }
-        }
-      }
-    },
-    "eye_focus.attention_low": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сосредоточься!"
-          }
-        }
-      }
-    },
-    "ar.mirror.attention": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Уровень внимания"
-          }
-        }
-      }
-    },
-    "family.home.title": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Семья"
-          }
-        }
-      }
-    },
-    "family.home.greeting": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Привет, %@!"
-          }
-        }
-      }
-    },
-    "family.home.greeting.default": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Добрый день!"
-          }
-        }
-      }
-    },
-    "family.home.add_child": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Добавить ребёнка"
-          }
-        }
-      }
-    },
-    "family.home.compare": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сравнить детей"
-          }
-        }
-      }
-    },
-    "family.home.play_together": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Играть вдвоём"
-          }
-        }
-      }
-    },
-    "family.home.child_card.hint": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нажмите, чтобы перейти к ребёнку. Удерживайте для редактирования."
-          }
-        }
-      }
-    },
-    "profile.editor.title": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Редактировать профиль"
-          }
-        }
-      }
-    },
-    "profile.editor.avatar": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Аватар"
-          }
-        }
-      }
-    },
-    "profile.editor.theme": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Тема"
-          }
-        }
-      }
-    },
-    "profile.editor.name": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Имя"
-          }
-        }
-      }
-    },
-    "profile.editor.name.placeholder": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Введите имя"
-          }
-        }
-      }
-    },
-    "profile.editor.age": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Возраст"
-          }
-        }
-      }
-    },
-    "profile.editor.save": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сохранить"
-          }
-        }
-      }
-    },
-    "comparison.title": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сравнение"
-          }
-        }
-      }
-    },
-    "comparison.success_per_week": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Успешность по неделям"
-          }
-        }
-      }
-    },
-    "comparison.per_sound": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "По звукам"
-          }
-        }
-      }
-    },
-    "comparison.practice_time": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Время практики в день"
-          }
-        }
-      }
-    },
-    "comparison.empty.title": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нет данных для сравнения"
-          }
-        }
-      }
-    },
-    "comparison.empty.message": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Добавьте хотя бы одного ребёнка с занятиями"
-          }
-        }
-      }
-    },
-    "comparison.week.label": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нед. %d"
-          }
-        }
-      }
-    },
-    "comparison.week": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Неделя"
-          }
-        }
-      }
-    },
-    "comparison.success": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Успешность"
-          }
-        }
-      }
-    },
-    "comparison.sound": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Звук"
-          }
-        }
-      }
-    },
-    "comparison.accuracy": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Точность"
-          }
-        }
-      }
-    },
-    "comparison.child": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ребёнок"
-          }
-        }
-      }
-    },
-    "comparison.day": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "День"
-          }
-        }
-      }
-    },
-    "comparison.minutes": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Минуты"
-          }
-        }
-      }
-    },
-    "avatar.butterfly": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Бабочка"
-          }
-        }
-      }
-    },
-    "avatar.star": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Звезда"
-          }
-        }
-      }
-    },
-    "avatar.rocket": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ракета"
-          }
-        }
-      }
-    },
-    "avatar.dragon": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Дракон"
-          }
-        }
-      }
-    },
-    "avatar.unicorn": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Единорог"
-          }
-        }
-      }
-    },
-    "theme.coral": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Коралловый"
-          }
-        }
-      }
-    },
-    "theme.blue": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Синий"
-          }
-        }
-      }
-    },
-    "theme.green": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Зелёный"
-          }
-        }
-      }
-    },
-    "theme.yellow": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Жёлтый"
-          }
-        }
-      }
-    },
-    "theme.purple": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Фиолетовый"
-          }
-        }
-      }
-    },
-    "years.short": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "лет"
-          }
-        }
-      }
-    },
-    "streak.days.short": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "дн"
-          }
-        }
-      }
-    },
-    "minutes.short": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "мин"
-          }
-        }
-      }
-    },
-    "progress.label": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "прогресс"
-          }
-        }
-      }
-    },
-    "child.age.label": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%d лет"
-          }
-        }
-      }
-    },
-    "day.mon": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Пн"
-          }
-        }
-      }
-    },
-    "day.tue": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Вт"
-          }
-        }
-      }
-    },
-    "day.wed": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ср"
-          }
-        }
-      }
-    },
-    "day.thu": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Чт"
-          }
-        }
-      }
-    },
-    "day.fri": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Пт"
-          }
-        }
-      }
-    },
-    "day.sat": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сб"
-          }
-        }
-      }
-    },
-    "day.sun": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Вс"
-          }
-        }
-      }
-    },
-    "action.cancel": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отмена"
-          }
-        }
-      }
-    },
-    "error.generic": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Произошла ошибка. Попробуйте ещё раз."
-          }
-        }
-      }
-    },
-    "parental_gate.biometric.reason": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Подтвердите личность, чтобы открыть родительский раздел"
-          }
-        }
-      }
-    },
-    "parental_gate.biometric.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Face ID активен"
-          }
-        }
-      }
-    },
-    "parental_gate.biometric.fallback_hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Не получилось — реши задачку"
-          }
-        }
-      }
-    },
-    "parental_gate.biometric.denied_generic": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Аутентификация не прошла"
-          }
-        }
-      }
-    },
-    "settings.privacy.use_face_id": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Использовать Face ID для родительских разделов"
-          }
-        }
-      }
-    },
-    "shareplay.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Совместный урок"
-          }
-        }
-      }
-    },
-    "shareplay.startButton": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Играть вдвоём"
-          }
-        }
-      }
-    },
-    "shareplay.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Совместный урок с %@"
-          }
-        }
-      }
-    },
-    "shareplay.instruction": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Позвоните второму родителю через FaceTime, затем нажмите «Играть вдвоём»"
-          }
-        }
-      }
-    },
-    "shareplay.lessons.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Выберите упражнение"
-          }
-        }
-      }
-    },
-    "shareplay.biometric.reason": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Подтвердите, что вы родитель, чтобы начать совместную игру"
-          }
-        }
-      }
-    },
-    "shareplay.biometric.hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Для защиты детей потребуется Face ID или Touch ID"
-          }
-        }
-      }
-    },
-    "shareplay.activity.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "HappySpeech: совместный урок"
-          }
-        }
-      }
-    },
-    "shareplay.activity.subtitle.с": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Упражняем звук С вместе"
-          }
-        }
-      }
-    },
-    "shareplay.activity.subtitle.з": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Упражняем звук З вместе"
-          }
-        }
-      }
-    },
-    "shareplay.activity.subtitle.ш": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Упражняем звук Ш вместе"
-          }
-        }
-      }
-    },
-    "shareplay.activity.subtitle.ж": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Упражняем звук Ж вместе"
-          }
-        }
-      }
-    },
-    "shareplay.activity.subtitle.р": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Упражняем звук Р вместе"
-          }
-        }
-      }
-    },
-    "shareplay.activity.subtitle.л": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Упражняем звук Л вместе"
-          }
-        }
-      }
-    },
-    "shareplay.activity.subtitle.ч": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Упражняем звук Ч вместе"
-          }
-        }
-      }
-    },
-    "shareplay.activity.subtitle.щ": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Упражняем звук Щ вместе"
-          }
-        }
-      }
-    },
-    "shareplay.activity.subtitle.generic": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Упражняем звук %@ вместе"
-          }
-        }
-      }
-    },
-    "shareplay.error.parentAuthRequired": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Для совместной игры требуется подтверждение родителя"
-          }
-        }
-      }
-    },
-    "shareplay.error.notActivated": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Не удалось запустить совместную игру. Убедитесь, что FaceTime активен"
-          }
-        }
-      }
-    },
-    "shareplay.error.sessionUnavailable": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "FaceTime недоступен на этом устройстве"
-          }
-        }
-      }
-    },
-    "shareplay.error.messengerUnavailable": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нет активной SharePlay-сессии"
-          }
-        }
-      }
-    },
-    "shareplay.alert.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Совместная игра"
-          }
-        }
-      }
-    },
-    "shareplay.fallback.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Как начать совместную игру"
-          }
-        }
-      }
-    },
-    "shareplay.fallback.instruction": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "1. Позвоните через FaceTime\n2. Откройте HappySpeech на обоих устройствах\n3. Выберите упражнение и нажмите «Играть вдвоём»"
-          }
-        }
-      }
-    },
-    "shareplay.participants.none": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ожидание участников…"
-          }
-        }
-      }
-    },
-    "shareplay.participants.one": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "1 участник"
-          }
-        }
-      }
-    },
-    "shareplay.participants.many": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%d участника"
-          }
-        }
-      }
-    },
-    "shareplay.session.end": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Завершить"
-          }
-        }
-      }
-    },
-    "shareplay.remote.scored": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Другой участник: %d%%"
-          }
-        }
-      }
-    },
-    "shareplay.remote.ready": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Готов!"
-          }
-        }
-      }
-    },
-    "shareplay.remote.final_score": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Финальный счёт: %d%%"
-          }
-        }
-      }
-    },
-    "shareplay.celebration.together": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Молодцы оба!"
-          }
-        }
-      }
-    },
-    "shareplay.default.child": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ребёнок"
-          }
-        }
-      }
-    },
-    "shareplay.lesson.sound_s": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Звук С — повторяй за образцом"
-          }
-        }
-      }
-    },
-    "shareplay.lesson.sound_sh": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Звук Ш — выбери правильный"
-          }
-        }
-      }
-    },
-    "shareplay.lesson.sound_r": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Звук Р — повторяй за образцом"
-          }
-        }
-      }
-    },
-    "shareplay.lesson.card.hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нажмите, чтобы начать совместный урок"
-          }
-        }
-      }
-    },
-    "shareplay.family_home.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Через FaceTime с другим устройством"
-          }
-        }
-      }
-    },
-    "shareplay.family_home.a11y_hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Открывает совместный урок через FaceTime"
-          }
-        }
-      }
-    },
-    "facetime.usage.description": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "HappySpeech использует FaceTime для совместных логопедических занятий под контролем родителей"
-          }
-        }
-      }
-    },
-    "settings.haptics.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Тактильная отдача"
-          }
-        }
-      }
-    },
-    "settings.haptics.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Вибрация при действиях"
-          }
-        }
-      }
-    },
-    "settings.haptics.off": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Выкл"
-          }
-        }
-      }
-    },
-    "settings.haptics.subtle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Лёгкая"
-          }
-        }
-      }
-    },
-    "settings.haptics.full": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Полная"
           }
         }
       }
