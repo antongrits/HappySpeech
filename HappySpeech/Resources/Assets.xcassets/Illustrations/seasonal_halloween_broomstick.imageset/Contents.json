@@ -1,0 +1,11 @@
+{
+  "images": [
+    { "filename": "seasonal_halloween_broomstick@1x.png", "idiom": "universal", "scale": "1x" },
+    { "filename": "seasonal_halloween_broomstick@2x.png", "idiom": "universal", "scale": "2x" },
+    { "filename": "seasonal_halloween_broomstick@3x.png", "idiom": "universal", "scale": "3x" },
+    { "filename": "seasonal_halloween_broomstick-dark@1x.png", "idiom": "universal", "scale": "1x", "appearances": [{"appearance":"luminosity","value":"dark"}] },
+    { "filename": "seasonal_halloween_broomstick-dark@2x.png", "idiom": "universal", "scale": "2x", "appearances": [{"appearance":"luminosity","value":"dark"}] },
+    { "filename": "seasonal_halloween_broomstick-dark@3x.png", "idiom": "universal", "scale": "3x", "appearances": [{"appearance":"luminosity","value":"dark"}] }
+  ],
+  "info": { "version": 1, "author": "xcode" }
+}
