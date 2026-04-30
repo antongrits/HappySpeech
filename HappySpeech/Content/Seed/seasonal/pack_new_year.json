@@ -2,495 +2,1515 @@
   "id": "pack_new_year",
   "soundTarget": "seasonal_new_year",
   "group": "сезонные",
-  "version": 1,
-  "description": "Новый год — ёлки, снег, Дед Мороз. Целевые звуки: С, З (свистящие), Ш, Ж (шипящие).",
+  "version": 2,
+  "description": "Новый год — ёлки, снег, Дед Мороз. Целевые звуки: С, З (свистящие), М, Д, Г (шипящие и другие).",
   "season": "new_year",
   "active_months": [12, 1],
   "stages": {
     "stage_new_year": {
       "stageId": "stage_new_year",
       "title": "Новогодний праздник",
-      "note": "Слова на свистящие (С, З) и шипящие (Ш, Ж) в новогоднем контексте.",
+      "note": "Слова на свистящие (С, З) и другие звуки в новогоднем контексте. 60 слов + 50 фраз + 30 предложений + 10 историй = 150 items.",
       "units": [
         {
           "id": "ny_001",
           "word": "Ёлка",
           "imageAssetId": "ny_tree",
+          "audioAsset": "lyalya_newyear_001.m4a",
           "soundTarget": "Л",
           "examplePhrase": "Красивая зелёная ёлка",
-          "difficulty": 1
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "ny_002",
           "word": "Снег",
           "imageAssetId": "ny_snow",
+          "audioAsset": "lyalya_newyear_002.m4a",
           "soundTarget": "С",
           "examplePhrase": "Белый снег падает с неба",
-          "difficulty": 1
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "ny_003",
           "word": "Снеговик",
           "imageAssetId": "ny_snowman",
+          "audioAsset": "lyalya_newyear_003.m4a",
           "soundTarget": "С",
           "examplePhrase": "Снеговик стоит во дворе",
-          "difficulty": 3
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ny_004",
           "word": "Дед Мороз",
           "imageAssetId": "ny_father_frost",
+          "audioAsset": "lyalya_newyear_004.m4a",
           "soundTarget": "Д",
           "examplePhrase": "Дед Мороз принёс подарки",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_005",
           "word": "Снегурочка",
           "imageAssetId": "ny_snow_maiden",
+          "audioAsset": "lyalya_newyear_005.m4a",
           "soundTarget": "С",
           "examplePhrase": "Снегурочка рядом с Дедом Морозом",
-          "difficulty": 3
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ny_006",
           "word": "Подарок",
           "imageAssetId": "ny_gift",
+          "audioAsset": "lyalya_newyear_006.m4a",
           "soundTarget": "Д",
           "examplePhrase": "Под ёлкой лежит подарок",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_007",
           "word": "Звезда",
           "imageAssetId": "ny_star",
+          "audioAsset": "lyalya_newyear_007.m4a",
           "soundTarget": "З",
           "examplePhrase": "Золотая звезда на ёлке",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_008",
           "word": "Шар",
           "imageAssetId": "ny_ball",
+          "audioAsset": "lyalya_newyear_008.m4a",
           "soundTarget": "Ш",
           "examplePhrase": "Красный шар висит на ёлке",
-          "difficulty": 1
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "ny_009",
-          "word": "Иголки",
-          "imageAssetId": "ny_needles",
-          "soundTarget": "Г",
-          "examplePhrase": "Острые иголки у ёлки",
-          "difficulty": 2
+          "word": "Мандарин",
+          "imageAssetId": "ny_mandarin",
+          "audioAsset": "lyalya_newyear_009.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Сладкий мандарин пахнет праздником",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_010",
-          "word": "Игрушки",
-          "imageAssetId": "ny_ornaments",
+          "word": "Гирлянда",
+          "imageAssetId": "ny_garland",
+          "audioAsset": "lyalya_newyear_010.m4a",
           "soundTarget": "Г",
-          "examplePhrase": "Красивые игрушки на ёлке",
-          "difficulty": 2
+          "examplePhrase": "Гирлянда мигает огоньками",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ny_011",
-          "word": "Огоньки",
-          "imageAssetId": "ny_lights",
-          "soundTarget": "Г",
-          "examplePhrase": "Огоньки на ёлке мигают",
-          "difficulty": 2
+          "word": "Сани",
+          "imageAssetId": "ny_sleigh",
+          "audioAsset": "lyalya_newyear_011.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Дед Мороз едет на санях",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_012",
-          "word": "Хлопушка",
-          "imageAssetId": "ny_cracker",
-          "soundTarget": "Х",
-          "examplePhrase": "Хлопушка хлопнула громко — хлоп!",
-          "difficulty": 3
+          "word": "Санки",
+          "imageAssetId": "ny_sled",
+          "audioAsset": "lyalya_newyear_012.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Санки едут с горки быстро",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_013",
-          "word": "Мандарин",
-          "imageAssetId": "ny_mandarin",
-          "soundTarget": "М",
-          "examplePhrase": "Сладкий мандарин пахнет праздником",
-          "difficulty": 2
+          "word": "Зима",
+          "imageAssetId": "ny_winter",
+          "audioAsset": "lyalya_newyear_013.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Зима пришла — вокруг снег",
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "ny_014",
-          "word": "Колокольчик",
-          "imageAssetId": "ny_bell",
-          "soundTarget": "К",
-          "examplePhrase": "Колокольчик звенит: динь-динь",
-          "difficulty": 3
+          "word": "Сосулька",
+          "imageAssetId": "ny_icicle",
+          "audioAsset": "lyalya_newyear_014.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Сосулька висит с крыши",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ny_015",
-          "word": "Конфетти",
-          "imageAssetId": "ny_confetti",
-          "soundTarget": "К",
-          "examplePhrase": "Конфетти летит во все стороны",
-          "difficulty": 3
+          "word": "Шуба",
+          "imageAssetId": "ny_fur_coat",
+          "audioAsset": "lyalya_newyear_015.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Тёплая шуба у Деда Мороза",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_016",
-          "word": "Сани",
-          "imageAssetId": "ny_sleigh",
-          "soundTarget": "С",
-          "examplePhrase": "Дед Мороз едет на санях",
-          "difficulty": 2
+          "word": "Шапка",
+          "imageAssetId": "ny_hat",
+          "audioAsset": "lyalya_newyear_016.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Шапка у снеговика — ведро",
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "ny_017",
-          "word": "Санки",
-          "imageAssetId": "ny_sled",
+          "word": "Снежинка",
+          "imageAssetId": "ny_snowflake",
+          "audioAsset": "lyalya_newyear_017.m4a",
           "soundTarget": "С",
-          "examplePhrase": "Санки едут с горки быстро",
-          "difficulty": 2
+          "examplePhrase": "Снежинка тает на ладони",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ny_018",
-          "word": "Зима",
-          "imageAssetId": "ny_winter",
+          "word": "Зайка",
+          "imageAssetId": "ny_bunny",
+          "audioAsset": "lyalya_newyear_018.m4a",
           "soundTarget": "З",
-          "examplePhrase": "Зима пришла — вокруг снег",
-          "difficulty": 1
+          "examplePhrase": "Зайка в снегу прыгает",
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "ny_019",
-          "word": "Замёрзший",
-          "imageAssetId": "ny_frozen",
-          "soundTarget": "З",
-          "examplePhrase": "Замёрзший пруд блестит как зеркало",
-          "difficulty": 3
+          "word": "Сказка",
+          "imageAssetId": "ny_tale",
+          "audioAsset": "lyalya_newyear_019.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Новый год — сказка для детей",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_020",
-          "word": "Сосулька",
-          "imageAssetId": "ny_icicle",
+          "word": "Снежок",
+          "imageAssetId": "ny_snowball",
+          "audioAsset": "lyalya_newyear_020.m4a",
           "soundTarget": "С",
-          "examplePhrase": "Сосулька висит с крыши",
-          "difficulty": 3
+          "examplePhrase": "Кидаем снежки: раз-два-три!",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_021",
-          "word": "Шуба",
-          "imageAssetId": "ny_fur_coat",
+          "word": "Шарф",
+          "imageAssetId": "ny_scarf",
+          "audioAsset": "lyalya_newyear_021.m4a",
           "soundTarget": "Ш",
-          "examplePhrase": "Тёплая шуба у Деда Мороза",
-          "difficulty": 2
+          "examplePhrase": "Красный шарф греет шею",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_022",
-          "word": "Шарф",
-          "imageAssetId": "ny_scarf",
-          "soundTarget": "Ш",
-          "examplePhrase": "Красный шарф греет шею",
-          "difficulty": 2
+          "word": "Салют",
+          "imageAssetId": "ny_fireworks",
+          "audioAsset": "lyalya_newyear_022.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Салют в небе — бам-бам-бам!",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_023",
-          "word": "Шапка",
-          "imageAssetId": "ny_hat",
-          "soundTarget": "Ш",
-          "examplePhrase": "Шапка у снеговика — ведро",
-          "difficulty": 1
+          "word": "Золото",
+          "imageAssetId": "ny_gold",
+          "audioAsset": "lyalya_newyear_023.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Золотые украшения на ёлке",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_024",
-          "word": "Шорох",
-          "imageAssetId": "ny_rustle",
-          "soundTarget": "Ш",
-          "examplePhrase": "Шорох снега под ногами — ш-ш-ш",
-          "difficulty": 2
+          "word": "Серебро",
+          "imageAssetId": "ny_silver",
+          "audioAsset": "lyalya_newyear_024.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Серебряная мишура блестит",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ny_025",
-          "word": "Снежинка",
-          "imageAssetId": "ny_snowflake",
-          "soundTarget": "С",
-          "examplePhrase": "Снежинка тает на ладони",
-          "difficulty": 3
+          "word": "Звон",
+          "imageAssetId": "ny_chime",
+          "audioAsset": "lyalya_newyear_025.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Звон колоколов в праздник",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_026",
-          "word": "Звон",
-          "imageAssetId": "ny_chime",
-          "soundTarget": "З",
-          "examplePhrase": "Звон колоколов в праздник",
-          "difficulty": 2
+          "word": "Сугроб",
+          "imageAssetId": "ny_snowdrift",
+          "audioAsset": "lyalya_newyear_026.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Большой сугроб у дома",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ny_027",
-          "word": "Зайка",
-          "imageAssetId": "ny_bunny",
-          "soundTarget": "З",
-          "examplePhrase": "Зайка в снегу прыгает",
-          "difficulty": 1
+          "word": "Мороз",
+          "imageAssetId": "ny_frost",
+          "audioAsset": "lyalya_newyear_027.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Мороз щиплет нос — б-р-р!",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_028",
-          "word": "Журчание",
-          "imageAssetId": "ny_gurgle",
-          "soundTarget": "Ж",
-          "examplePhrase": "Журчание воды под льдом — жжж",
-          "difficulty": 3
+          "word": "Дары",
+          "imageAssetId": "ny_gifts",
+          "audioAsset": "lyalya_newyear_028.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Дары от Деда Мороза под ёлкой",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_029",
-          "word": "Жить",
-          "imageAssetId": "ny_live",
-          "soundTarget": "Ж",
-          "examplePhrase": "Жить в тепле и радости",
-          "difficulty": 2
+          "word": "Горка",
+          "imageAssetId": "ny_slide",
+          "audioAsset": "lyalya_newyear_029.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Горка ледяная и скользкая",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_030",
-          "word": "Стекло",
-          "imageAssetId": "ny_glass",
-          "soundTarget": "С",
-          "examplePhrase": "Стекло окна покрыто инеем",
-          "difficulty": 3
+          "word": "Мишура",
+          "imageAssetId": "ny_tinsel",
+          "audioAsset": "lyalya_newyear_030.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Мишура блестит на ёлке",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ny_031",
-          "word": "Сказка",
-          "imageAssetId": "ny_tale",
-          "soundTarget": "С",
-          "examplePhrase": "Новый год — сказка для детей",
-          "difficulty": 2
+          "word": "Дом",
+          "imageAssetId": "ny_house",
+          "audioAsset": "lyalya_newyear_031.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Дома тепло и уютно",
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "ny_032",
-          "word": "Золото",
-          "imageAssetId": "ny_gold",
-          "soundTarget": "З",
-          "examplePhrase": "Золотые украшения на ёлке",
-          "difficulty": 2
+          "word": "Гости",
+          "imageAssetId": "ny_guests",
+          "audioAsset": "lyalya_newyear_032.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Гости пришли на праздник",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_033",
-          "word": "Серебро",
-          "imageAssetId": "ny_silver",
+          "word": "Солнышко",
+          "imageAssetId": "ny_winter_sun",
+          "audioAsset": "lyalya_newyear_033.m4a",
           "soundTarget": "С",
-          "examplePhrase": "Серебряная мишура блестит",
-          "difficulty": 3
+          "examplePhrase": "Зимнее солнышко светит ярко",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_034",
-          "word": "Свечка",
-          "imageAssetId": "ny_candle",
-          "soundTarget": "С",
-          "examplePhrase": "Свечка горит мягким светом",
-          "difficulty": 2
+          "word": "Зеркало",
+          "imageAssetId": "ny_mirror",
+          "audioAsset": "lyalya_newyear_034.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Зеркало отражает огоньки",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ny_035",
-          "word": "Зеркало",
-          "imageAssetId": "ny_mirror",
-          "soundTarget": "З",
-          "examplePhrase": "Зеркало отражает огоньки",
-          "difficulty": 3
+          "word": "Шишка",
+          "imageAssetId": "ny_pinecone",
+          "audioAsset": "lyalya_newyear_035.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Шишка с ёлки упала в снег",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_036",
-          "word": "Шишка",
-          "imageAssetId": "ny_pinecone",
-          "soundTarget": "Ш",
-          "examplePhrase": "Шишка с ёлки упала в снег",
-          "difficulty": 2
+          "word": "Счастье",
+          "imageAssetId": "ny_happiness",
+          "audioAsset": "lyalya_newyear_036.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Счастье — получить подарок!",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ny_037",
-          "word": "Щит",
-          "imageAssetId": "ny_shield",
-          "soundTarget": "Щ",
-          "examplePhrase": "Щит снеговика — лопата",
-          "difficulty": 2
+          "word": "Маска",
+          "imageAssetId": "ny_mask",
+          "audioAsset": "lyalya_newyear_037.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Маска на новогоднем балу",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_038",
-          "word": "Счастье",
-          "imageAssetId": "ny_happiness",
-          "soundTarget": "С",
-          "examplePhrase": "Счастье — получить подарок!",
-          "difficulty": 3
+          "word": "Дверь",
+          "imageAssetId": "ny_door",
+          "audioAsset": "lyalya_newyear_038.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "В дверь стучит Дед Мороз",
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "ny_039",
-          "word": "Зорька",
-          "imageAssetId": "ny_dawn",
-          "soundTarget": "З",
-          "examplePhrase": "Новогодняя зорька — праздник начался!",
-          "difficulty": 3
+          "word": "Голубь",
+          "imageAssetId": "ny_dove",
+          "audioAsset": "lyalya_newyear_039.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Голубь на снегу",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_040",
-          "word": "Снег идёт",
-          "imageAssetId": "ny_snowfall",
+          "word": "Свечка",
+          "imageAssetId": "ny_candle",
+          "audioAsset": "lyalya_newyear_040.m4a",
           "soundTarget": "С",
-          "examplePhrase": "Снег идёт — с-с-снежинки летят",
-          "difficulty": 2
+          "examplePhrase": "Свечка горит мягким светом",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_041",
-          "word": "Запах",
-          "imageAssetId": "ny_smell",
-          "soundTarget": "З",
-          "examplePhrase": "Запах ёлки и мандаринов",
-          "difficulty": 2
+          "word": "Мороженое",
+          "imageAssetId": "ny_ice_cream",
+          "audioAsset": "lyalya_newyear_041.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Мороженое зимой тоже вкусное!",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ny_042",
-          "word": "Сюрприз",
-          "imageAssetId": "ny_surprise",
+          "word": "Сапоги",
+          "imageAssetId": "ny_boots",
+          "audioAsset": "lyalya_newyear_042.m4a",
           "soundTarget": "С",
-          "examplePhrase": "Приятный сюрприз под ёлкой",
-          "difficulty": 3
+          "examplePhrase": "Красные сапоги Деда Мороза",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ny_043",
-          "word": "Шёлковый",
-          "imageAssetId": "ny_silky",
-          "soundTarget": "Ш",
-          "examplePhrase": "Шёлковый бант на подарке",
-          "difficulty": 3
+          "word": "Дальний лес",
+          "imageAssetId": "ny_far_forest",
+          "audioAsset": "lyalya_newyear_043.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Дальний лес белый от снега",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ny_044",
-          "word": "Заря",
-          "imageAssetId": "ny_glow",
-          "soundTarget": "З",
-          "examplePhrase": "Новогодняя заря светится",
-          "difficulty": 2
+          "word": "Гора снега",
+          "imageAssetId": "ny_snow_mountain",
+          "audioAsset": "lyalya_newyear_044.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Гора снега у ворот",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_045",
-          "word": "Снежок",
-          "imageAssetId": "ny_snowball",
-          "soundTarget": "С",
-          "examplePhrase": "Кидаем снежки: раз-два-три!",
-          "difficulty": 2
+          "word": "Морозный воздух",
+          "imageAssetId": "ny_frosty_air",
+          "audioAsset": "lyalya_newyear_045.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Морозный воздух свежий",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ny_046",
-          "word": "Зелёный",
-          "imageAssetId": "ny_green",
-          "soundTarget": "З",
-          "examplePhrase": "Зелёная ёлка самая красивая",
-          "difficulty": 2
+          "word": "Детский праздник",
+          "imageAssetId": "ny_kids_party",
+          "audioAsset": "lyalya_newyear_046.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Детский новогодний праздник",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ny_047",
-          "word": "Жар-птица",
-          "imageAssetId": "ny_firebird",
-          "soundTarget": "Ж",
-          "examplePhrase": "Жар-птица из сказки прилетела",
-          "difficulty": 3
+          "word": "Зелёная ёлка",
+          "imageAssetId": "ny_green_tree",
+          "audioAsset": "lyalya_newyear_047.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Зелёная ёлка самая красивая",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ny_048",
-          "word": "Сапоги",
-          "imageAssetId": "ny_boots",
-          "soundTarget": "С",
-          "examplePhrase": "Красные сапоги Деда Мороза",
-          "difficulty": 3
+          "word": "Главный праздник",
+          "imageAssetId": "ny_main_holiday",
+          "audioAsset": "lyalya_newyear_048.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Новый год — главный праздник года",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ny_049",
-          "word": "Салют",
-          "imageAssetId": "ny_fireworks",
+          "word": "Серебристый",
+          "imageAssetId": "ny_silvery",
+          "audioAsset": "lyalya_newyear_049.m4a",
           "soundTarget": "С",
-          "examplePhrase": "Салют в небе — бам-бам-бам!",
-          "difficulty": 2
+          "examplePhrase": "Серебристый иней на ветках",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ny_050",
-          "word": "Зима-красавица",
-          "imageAssetId": "ny_winter_beauty",
+          "word": "Зябко",
+          "imageAssetId": "ny_chilly",
+          "audioAsset": "lyalya_newyear_050.m4a",
           "soundTarget": "З",
-          "examplePhrase": "Зима-красавица нарядила ёлку",
-          "difficulty": 3
+          "examplePhrase": "Зябко на морозе без шапки",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ny_051",
-          "word": "Свист ветра",
-          "imageAssetId": "ny_wind_whistle",
-          "soundTarget": "С",
-          "examplePhrase": "Свист ветра — с-с-с-вист!",
-          "difficulty": 2
+          "word": "Мандарин пахнет праздником",
+          "imageAssetId": "ny_mandarin_smell",
+          "audioAsset": "lyalya_newyear_051.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Мандарин пахнет праздником",
+          "difficulty": 2,
+          "itemType": "phrase"
         },
         {
           "id": "ny_052",
-          "word": "Шелест",
-          "imageAssetId": "ny_whisper2",
-          "soundTarget": "Ш",
-          "examplePhrase": "Шелест иголок на ёлке — ш-ш-ш",
-          "difficulty": 2
+          "word": "Снег скрипит",
+          "imageAssetId": "ny_snow_creak",
+          "audioAsset": "lyalya_newyear_052.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Снег скрипит под ногами",
+          "difficulty": 2,
+          "itemType": "phrase"
         },
         {
           "id": "ny_053",
-          "word": "Заснуть",
-          "imageAssetId": "ny_sleep",
-          "soundTarget": "З",
-          "examplePhrase": "Заснуть и ждать Деда Мороза",
-          "difficulty": 3
+          "word": "Дед Мороз идёт",
+          "imageAssetId": "ny_father_frost_walking",
+          "audioAsset": "lyalya_newyear_053.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Дед Мороз идёт с мешком",
+          "difficulty": 2,
+          "itemType": "phrase"
         },
         {
           "id": "ny_054",
-          "word": "Сугроб",
-          "imageAssetId": "ny_snowdrift",
-          "soundTarget": "С",
-          "examplePhrase": "Большой сугроб у дома",
-          "difficulty": 3
+          "word": "Гирлянда мигает",
+          "imageAssetId": "ny_garland_blinking",
+          "audioAsset": "lyalya_newyear_054.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Гирлянда мигает на ёлке",
+          "difficulty": 2,
+          "itemType": "phrase"
         },
         {
           "id": "ny_055",
-          "word": "Зябнуть",
-          "imageAssetId": "ny_shiver",
+          "word": "Звезда сверкает",
+          "imageAssetId": "ny_star_sparkles",
+          "audioAsset": "lyalya_newyear_055.m4a",
           "soundTarget": "З",
-          "examplePhrase": "Зябнуть на морозе — б-р-р",
-          "difficulty": 3
+          "examplePhrase": "Золотая звезда сверкает",
+          "difficulty": 2,
+          "itemType": "phrase"
         },
         {
           "id": "ny_056",
-          "word": "Шубка",
-          "imageAssetId": "ny_fur_coat2",
-          "soundTarget": "Ш",
-          "examplePhrase": "Шубка у зайчика белая",
-          "difficulty": 2
+          "word": "Снежинки летят",
+          "imageAssetId": "ny_snowflakes_falling",
+          "audioAsset": "lyalya_newyear_056.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Снежинки летят с неба",
+          "difficulty": 2,
+          "itemType": "phrase"
         },
         {
           "id": "ny_057",
-          "word": "Солнышко",
-          "imageAssetId": "ny_winter_sun",
-          "soundTarget": "С",
-          "examplePhrase": "Зимнее солнышко светит ярко",
-          "difficulty": 2
+          "word": "Мороз щиплет нос",
+          "imageAssetId": "ny_frost_nose",
+          "audioAsset": "lyalya_newyear_057.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Мороз щиплет нос — б-р-р!",
+          "difficulty": 2,
+          "itemType": "phrase"
         },
         {
           "id": "ny_058",
-          "word": "Зеркальный лёд",
-          "imageAssetId": "ny_mirror_ice",
-          "soundTarget": "З",
-          "examplePhrase": "Зеркальный лёд на реке",
-          "difficulty": 3
+          "word": "Дома тепло",
+          "imageAssetId": "ny_warm_home",
+          "audioAsset": "lyalya_newyear_058.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Дома тепло и уютно",
+          "difficulty": 2,
+          "itemType": "phrase"
         },
         {
           "id": "ny_059",
-          "word": "Шары",
-          "imageAssetId": "ny_balls",
-          "soundTarget": "Ш",
-          "examplePhrase": "Шары на ёлке всех цветов",
-          "difficulty": 1
+          "word": "Горка скользкая",
+          "imageAssetId": "ny_slide_slippery",
+          "audioAsset": "lyalya_newyear_059.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Горка очень скользкая",
+          "difficulty": 2,
+          "itemType": "phrase"
         },
         {
           "id": "ny_060",
-          "word": "Скрип снега",
-          "imageAssetId": "ny_snow_creak",
+          "word": "Зима белая",
+          "imageAssetId": "ny_white_winter",
+          "audioAsset": "lyalya_newyear_060.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Зима всё покрыла белым снегом",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_061",
+          "word": "Снеговик смеётся",
+          "imageAssetId": "ny_snowman_laugh",
+          "audioAsset": "lyalya_newyear_061.m4a",
           "soundTarget": "С",
-          "examplePhrase": "Скрип снега под ногами — с-кр-р-ип",
-          "difficulty": 3
+          "examplePhrase": "Снеговик смеётся у ворот",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_062",
+          "word": "Мишура блестит",
+          "imageAssetId": "ny_tinsel_shines",
+          "audioAsset": "lyalya_newyear_062.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Мишура блестит на ёлке",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_063",
+          "word": "Дети пляшут",
+          "imageAssetId": "ny_children_dance",
+          "audioAsset": "lyalya_newyear_063.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Дети пляшут вокруг ёлки",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_064",
+          "word": "Гости пришли",
+          "imageAssetId": "ny_guests_arrived",
+          "audioAsset": "lyalya_newyear_064.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Гости пришли с подарками",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_065",
+          "word": "Запах мандарина",
+          "imageAssetId": "ny_mandarin_aroma",
+          "audioAsset": "lyalya_newyear_065.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Запах мандарина везде",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_066",
+          "word": "Сани летят по снегу",
+          "imageAssetId": "ny_sleigh_snow",
+          "audioAsset": "lyalya_newyear_066.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Сани летят по белому снегу",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_067",
+          "word": "Маска на лице",
+          "imageAssetId": "ny_mask_face",
+          "audioAsset": "lyalya_newyear_067.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Маска зайчика на лице",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_068",
+          "word": "Дед Мороз с мешком",
+          "imageAssetId": "ny_father_frost_bag",
+          "audioAsset": "lyalya_newyear_068.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Дед Мороз с большим мешком",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_069",
+          "word": "Гирлянда на ёлке",
+          "imageAssetId": "ny_garland_tree",
+          "audioAsset": "lyalya_newyear_069.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Гирлянда горит на ёлке",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_070",
+          "word": "Зима-волшебница",
+          "imageAssetId": "ny_winter_magic",
+          "audioAsset": "lyalya_newyear_070.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Зима-волшебница укрыла всё снегом",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_071",
+          "word": "Снегурочка поёт",
+          "imageAssetId": "ny_snow_maiden_sings",
+          "audioAsset": "lyalya_newyear_071.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Снегурочка поёт весёлые песни",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_072",
+          "word": "Морозный узор",
+          "imageAssetId": "ny_frost_pattern",
+          "audioAsset": "lyalya_newyear_072.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Морозный узор на стекле",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_073",
+          "word": "Добрый Дед Мороз",
+          "imageAssetId": "ny_kind_father_frost",
+          "audioAsset": "lyalya_newyear_073.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Добрый Дед Мороз улыбается",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_074",
+          "word": "Горка из снега",
+          "imageAssetId": "ny_snow_slide",
+          "audioAsset": "lyalya_newyear_074.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Горка из снега во дворе",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_075",
+          "word": "Зелёная красавица",
+          "imageAssetId": "ny_green_beauty",
+          "audioAsset": "lyalya_newyear_075.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Зелёная красавица — наша ёлка",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_076",
+          "word": "Санки едут с горки",
+          "imageAssetId": "ny_sled_hill",
+          "audioAsset": "lyalya_newyear_076.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Санки едут быстро с горки",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_077",
+          "word": "Мандарин в кармане",
+          "imageAssetId": "ny_mandarin_pocket",
+          "audioAsset": "lyalya_newyear_077.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Мандарин лежит в кармане",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_078",
+          "word": "Дочка рада подарку",
+          "imageAssetId": "ny_girl_gift",
+          "audioAsset": "lyalya_newyear_078.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Дочка рада новому подарку",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_079",
+          "word": "Глубокий снег",
+          "imageAssetId": "ny_deep_snow",
+          "audioAsset": "lyalya_newyear_079.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Глубокий снег во дворе",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_080",
+          "word": "Зимняя ночь",
+          "imageAssetId": "ny_winter_night",
+          "audioAsset": "lyalya_newyear_080.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Зимняя звёздная ночь",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_081",
+          "word": "Снег падает на ёлку",
+          "imageAssetId": "ny_snow_tree_scene",
+          "audioAsset": "lyalya_newyear_081.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Снег падает на зелёную ёлку.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_082",
+          "word": "Мандарин лежит под ёлкой",
+          "imageAssetId": "ny_mandarin_tree_scene",
+          "audioAsset": "lyalya_newyear_082.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Сладкий мандарин лежит под ёлкой.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_083",
+          "word": "Дед Мороз принёс подарок",
+          "imageAssetId": "ny_father_frost_gift_scene",
+          "audioAsset": "lyalya_newyear_083.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Дед Мороз принёс большой подарок.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_084",
+          "word": "Гирлянда горит всю ночь",
+          "imageAssetId": "ny_garland_night_scene",
+          "audioAsset": "lyalya_newyear_084.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Гирлянда горит всю новогоднюю ночь.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_085",
+          "word": "Звезда блестит на ёлке",
+          "imageAssetId": "ny_star_tree_scene",
+          "audioAsset": "lyalya_newyear_085.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Золотая звезда блестит на ёлке.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_086",
+          "word": "Ляля лепит снеговика",
+          "imageAssetId": "ny_lyalya_snowman_scene",
+          "audioAsset": "lyalya_newyear_086.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Ляля лепит большого снеговика.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_087",
+          "word": "Мороз рисует узоры на стекле",
+          "imageAssetId": "ny_frost_window_scene",
+          "audioAsset": "lyalya_newyear_087.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Мороз рисует узоры на стекле.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_088",
+          "word": "Дети танцуют вокруг ёлки",
+          "imageAssetId": "ny_children_dance_scene",
+          "audioAsset": "lyalya_newyear_088.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Дети весело танцуют вокруг ёлки.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_089",
+          "word": "Горка ледяная у дома",
+          "imageAssetId": "ny_slide_home_scene",
+          "audioAsset": "lyalya_newyear_089.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Горка ледяная стоит у дома.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_090",
+          "word": "Зима укрыла всё белым",
+          "imageAssetId": "ny_winter_blanket_scene",
+          "audioAsset": "lyalya_newyear_090.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Зима укрыла всё белым снегом.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_091",
+          "word": "Снежинки кружатся в воздухе",
+          "imageAssetId": "ny_snowflakes_spin_scene",
+          "audioAsset": "lyalya_newyear_091.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Снежинки кружатся в морозном воздухе.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_092",
+          "word": "Маска Деда Мороза белая",
+          "imageAssetId": "ny_father_frost_mask_scene",
+          "audioAsset": "lyalya_newyear_092.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Борода Деда Мороза белая как снег.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_093",
+          "word": "Дома пахнет мандарином",
+          "imageAssetId": "ny_home_mandarin_scene",
+          "audioAsset": "lyalya_newyear_093.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Дома тепло и пахнет мандарином.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_094",
+          "word": "Ляля видит гирлянду",
+          "imageAssetId": "ny_lyalya_garland_scene",
+          "audioAsset": "lyalya_newyear_094.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Ляля видит красивую гирлянду на ёлке.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_095",
+          "word": "Зайка прыгает по снегу",
+          "imageAssetId": "ny_bunny_snow_scene",
+          "audioAsset": "lyalya_newyear_095.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Зайка весело прыгает по снегу.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_096",
+          "word": "Снегурочка рядом с ёлкой",
+          "imageAssetId": "ny_snow_maiden_tree_scene",
+          "audioAsset": "lyalya_newyear_096.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Снегурочка стоит рядом с ёлкой.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_097",
+          "word": "Мишура упала с ёлки",
+          "imageAssetId": "ny_tinsel_fell_scene",
+          "audioAsset": "lyalya_newyear_097.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Блестящая мишура упала с ёлки.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_098",
+          "word": "Дед Мороз слышит Лялю",
+          "imageAssetId": "ny_father_frost_lyalya_scene",
+          "audioAsset": "lyalya_newyear_098.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Дед Мороз слышит, как Ляля поёт.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_099",
+          "word": "Глубокий снег в лесу",
+          "imageAssetId": "ny_deep_snow_forest_scene",
+          "audioAsset": "lyalya_newyear_099.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "В лесу глубокий пушистый снег.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_100",
+          "word": "Зима нарядила ёлку",
+          "imageAssetId": "ny_winter_dressed_tree_scene",
+          "audioAsset": "lyalya_newyear_100.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Зима нарядила ёлку снегом и инеем.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_101",
+          "word": "История: Ляля и снеговик",
+          "imageAssetId": "ny_story_lyalya_snowman",
+          "audioAsset": "lyalya_newyear_101.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Ляля слепила снеговика. Снеговик сказал: «Спасибо!» Ляля засмеялась — снеговики не говорят. Но этот смог!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ny_102",
+          "word": "История: мандарин для Деда Мороза",
+          "imageAssetId": "ny_story_mandarin_frost",
+          "audioAsset": "lyalya_newyear_102.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Ляля оставила мандарин для Деда Мороза. Мороз нашёл мандарин и улыбнулся. Мандарин был вкусным!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ny_103",
+          "word": "История: Дед Мороз и Ляля",
+          "imageAssetId": "ny_story_father_frost_lyalya",
+          "audioAsset": "lyalya_newyear_103.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Ляля написала письмо Деду Морозу. Дед Мороз дошёл до ёлки и достал подарок. Ляля была довольна!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ny_104",
+          "word": "История: гирлянда погасла",
+          "imageAssetId": "ny_story_garland_broke",
+          "audioAsset": "lyalya_newyear_104.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Гирлянда вдруг погасла. Горько! Но Ляля нашла запасную. Гирлянда засветилась снова!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ny_105",
+          "word": "История: зима и звёзды",
+          "imageAssetId": "ny_story_winter_stars",
+          "audioAsset": "lyalya_newyear_105.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Зима разложила звёзды на небе. Зайка считал звёзды: раз, два, три. Звёзд было очень много!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ny_106",
+          "word": "История: Снегурочка поёт",
+          "imageAssetId": "ny_story_snow_maiden_song",
+          "audioAsset": "lyalya_newyear_106.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Снегурочка стояла у ёлки и пела. Снежинки кружились вокруг. Снеговик слушал и улыбался.",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ny_107",
+          "word": "История: морозный узор",
+          "imageAssetId": "ny_story_frost_pattern",
+          "audioAsset": "lyalya_newyear_107.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Мороз нарисовал узор на стекле. Ляля смотрела и удивлялась. Морозный рисунок был как сказка!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ny_108",
+          "word": "История: дети и ёлка",
+          "imageAssetId": "ny_story_children_tree",
+          "audioAsset": "lyalya_newyear_108.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Дети украшали ёлку. Каждый добавил игрушку. Ёлка стала самой красивой!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ny_109",
+          "word": "История: горка во дворе",
+          "imageAssetId": "ny_story_slide_yard",
+          "audioAsset": "lyalya_newyear_109.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Папа сделал горку во дворе. Ляля слезла с горки и засмеялась. Горка была классная!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ny_110",
+          "word": "История: зелёная ёлка и Ляля",
+          "imageAssetId": "ny_story_tree_lyalya",
+          "audioAsset": "lyalya_newyear_110.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Зелёная ёлка стояла в углу. Ляля надела на неё звезду. Звезда засияла — Новый год начался!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ny_111",
+          "word": "Снег идёт ночью",
+          "imageAssetId": "ny_night_snow",
+          "audioAsset": "lyalya_newyear_111.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Снег тихо идёт ночью",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_112",
+          "word": "Мороз крепкий",
+          "imageAssetId": "ny_strong_frost",
+          "audioAsset": "lyalya_newyear_112.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Мороз крепкий — щиплет щёки",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_113",
+          "word": "Дед Мороз спешит",
+          "imageAssetId": "ny_father_frost_hurrying",
+          "audioAsset": "lyalya_newyear_113.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Дед Мороз спешит с подарками",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_114",
+          "word": "Горка ждёт детей",
+          "imageAssetId": "ny_slide_waiting",
+          "audioAsset": "lyalya_newyear_114.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Горка ждёт детей после праздника",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_115",
+          "word": "Зима пришла надолго",
+          "imageAssetId": "ny_winter_long",
+          "audioAsset": "lyalya_newyear_115.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Зима пришла надолго",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_116",
+          "word": "Снеговик машет рукой",
+          "imageAssetId": "ny_snowman_wave",
+          "audioAsset": "lyalya_newyear_116.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Снеговик машет веточкой-рукой",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_117",
+          "word": "Маска Деда Мороза",
+          "imageAssetId": "ny_frost_mask",
+          "audioAsset": "lyalya_newyear_117.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Маска Деда Мороза белая",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_118",
+          "word": "Дом украшен гирляндой",
+          "imageAssetId": "ny_house_garland",
+          "audioAsset": "lyalya_newyear_118.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Дом красиво украшен гирляндой",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_119",
+          "word": "Грустный снеговик тает",
+          "imageAssetId": "ny_melting_snowman",
+          "audioAsset": "lyalya_newyear_119.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Грустный снеговик тает весной",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_120",
+          "word": "Зелёные ветки ёлки",
+          "imageAssetId": "ny_tree_branches",
+          "audioAsset": "lyalya_newyear_120.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Зелёные ветки пахнут лесом",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_121",
+          "word": "Снег скрипит под санками",
+          "imageAssetId": "ny_snow_sled_creak_scene",
+          "audioAsset": "lyalya_newyear_121.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Снег скрипит под санками.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_122",
+          "word": "Мишура упала на Лялю",
+          "imageAssetId": "ny_tinsel_fell_lyalya_scene",
+          "audioAsset": "lyalya_newyear_122.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Мишура упала прямо на Лялю!",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_123",
+          "word": "Дети получили подарки",
+          "imageAssetId": "ny_children_gifts_scene",
+          "audioAsset": "lyalya_newyear_123.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Дети получили подарки от Деда Мороза.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_124",
+          "word": "Горка блестит от льда",
+          "imageAssetId": "ny_slide_ice_scene",
+          "audioAsset": "lyalya_newyear_124.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Горка блестит от льда на солнце.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_125",
+          "word": "Зима украсила деревья",
+          "imageAssetId": "ny_winter_trees_scene",
+          "audioAsset": "lyalya_newyear_125.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Зима украсила деревья снегом.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_126",
+          "word": "Снежинки садятся на руку",
+          "imageAssetId": "ny_snowflakes_hand_scene",
+          "audioAsset": "lyalya_newyear_126.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Снежинки садятся на ладонь.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_127",
+          "word": "Мандарин кладут под ёлку",
+          "imageAssetId": "ny_mandarin_under_tree_scene",
+          "audioAsset": "lyalya_newyear_127.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Мандарин кладут под ёлку для Деда Мороза.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_128",
+          "word": "Дым идёт из трубы",
+          "imageAssetId": "ny_chimney_smoke_scene",
+          "audioAsset": "lyalya_newyear_128.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Дым идёт из трубы — дома тепло.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_129",
+          "word": "Гости поют песни",
+          "imageAssetId": "ny_guests_singing_scene",
+          "audioAsset": "lyalya_newyear_129.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Гости весело поют новогодние песни.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_130",
+          "word": "Зайка нашёл морковку",
+          "imageAssetId": "ny_bunny_carrot_scene",
+          "audioAsset": "lyalya_newyear_130.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Зайка нашёл морковку под снегом.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_131",
+          "word": "История: Ляля и снег",
+          "imageAssetId": "ny_story_lyalya_snow",
+          "audioAsset": "lyalya_newyear_131.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Ляля вышла на снег. Снег скрипел и блестел. Ляля засмеялась: снег красивый!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ny_132",
+          "word": "История: мандарин для зайца",
+          "imageAssetId": "ny_story_mandarin_bunny",
+          "audioAsset": "lyalya_newyear_132.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Ляля нашла мандарин. Заяц прибежал. Ляля отдала мандарин зайцу!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ny_133",
+          "word": "История: детский праздник",
+          "imageAssetId": "ny_story_kids_party",
+          "audioAsset": "lyalya_newyear_133.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Дети пришли на праздник. Дед Мороз пел песни. Дети танцевали вокруг ёлки!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ny_134",
+          "word": "История: горка для Ляли",
+          "imageAssetId": "ny_story_slide_lyalya",
+          "audioAsset": "lyalya_newyear_134.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Ляля съехала с горки. Громко закричала: «Ура!» Горка — лучший аттракцион!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ny_135",
+          "word": "История: Ляля и звезда",
+          "imageAssetId": "ny_story_lyalya_star",
+          "audioAsset": "lyalya_newyear_135.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Ляля взяла золотую звезду. Закрепила её на ёлке. Звезда засветилась — Новый год!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ny_136",
+          "word": "Снежная шапка",
+          "imageAssetId": "ny_snow_hat",
+          "audioAsset": "lyalya_newyear_136.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Снежная шапка на крыше",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_137",
+          "word": "Морозный запах",
+          "imageAssetId": "ny_frosty_smell",
+          "audioAsset": "lyalya_newyear_137.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Морозный запах свежего воздуха",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_138",
+          "word": "Дорожка ледяная",
+          "imageAssetId": "ny_icy_path",
+          "audioAsset": "lyalya_newyear_138.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Дорожка ледяная — скользко",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_139",
+          "word": "Громкий бой часов",
+          "imageAssetId": "ny_clock_chime",
+          "audioAsset": "lyalya_newyear_139.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Громкий бой часов в полночь",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_140",
+          "word": "Зимний узор",
+          "imageAssetId": "ny_winter_pattern",
+          "audioAsset": "lyalya_newyear_140.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Зимний узор на стекле красивый",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_141",
+          "word": "Снежный ком катится",
+          "imageAssetId": "ny_snowball_rolls",
+          "audioAsset": "lyalya_newyear_141.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Снежный ком катится по горке",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_142",
+          "word": "Мешок с подарками",
+          "imageAssetId": "ny_gift_bag",
+          "audioAsset": "lyalya_newyear_142.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Мешок с подарками у Деда Мороза",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_143",
+          "word": "Добрые слова",
+          "imageAssetId": "ny_kind_words",
+          "audioAsset": "lyalya_newyear_143.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Добрые слова на Новый год",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_144",
+          "word": "Глубокий сугроб",
+          "imageAssetId": "ny_deep_snowdrift",
+          "audioAsset": "lyalya_newyear_144.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Глубокий сугроб у забора",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_145",
+          "word": "Зима холодная",
+          "imageAssetId": "ny_cold_winter",
+          "audioAsset": "lyalya_newyear_145.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Зима холодная и снежная",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ny_146",
+          "word": "Снег лежит везде",
+          "imageAssetId": "ny_snow_everywhere_scene",
+          "audioAsset": "lyalya_newyear_146.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Снег лежит везде кругом.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_147",
+          "word": "Мороз нарисовал цветы",
+          "imageAssetId": "ny_frost_flowers_scene",
+          "audioAsset": "lyalya_newyear_147.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Мороз нарисовал цветы на окне.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_148",
+          "word": "Дед Мороз читает письма",
+          "imageAssetId": "ny_father_frost_letters_scene",
+          "audioAsset": "lyalya_newyear_148.m4a",
+          "soundTarget": "Д",
+          "examplePhrase": "Дед Мороз читает письма от детей.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_149",
+          "word": "Громкий смех у ёлки",
+          "imageAssetId": "ny_loud_laugh_tree_scene",
+          "audioAsset": "lyalya_newyear_149.m4a",
+          "soundTarget": "Г",
+          "examplePhrase": "Громкий смех у нарядной ёлки.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ny_150",
+          "word": "Зима — лучший праздник",
+          "imageAssetId": "ny_winter_best_holiday_scene",
+          "audioAsset": "lyalya_newyear_150.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Зима — лучший праздник для детей!",
+          "difficulty": 3,
+          "itemType": "sentence"
         }
       ]
     }
