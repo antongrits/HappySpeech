@@ -17,6 +17,11 @@ struct ComparisonDashboardView: View {
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.horizontalSizeClass) private var hSizeClass
+
+    // Adaptive chart height: regular = 180/160, compact = 140/120.
+    private var chartHeightLarge: CGFloat { hSizeClass == .regular ? 180 : 140 }
+    private var chartHeightSmall: CGFloat { hSizeClass == .regular ? 160 : 120 }
 
     // MARK: - VIP
 
@@ -150,7 +155,7 @@ struct ComparisonDashboardView: View {
                 }
                 .chartYScale(domain: 0...100)
                 .chartLegend(.hidden)
-                .frame(height: 180)
+                .frame(height: chartHeightLarge)
                 .animation(reduceMotion ? nil : .easeInOut(duration: 0.5), value: viewModel.children.count)
                 .accessibilityLabel(String(localized: "comparison.success_per_week"))
                 .accessibilityHidden(false)
@@ -208,7 +213,7 @@ struct ComparisonDashboardView: View {
                 }
                 .chartYScale(domain: 0...100)
                 .chartLegend(.hidden)
-                .frame(height: 180)
+                .frame(height: chartHeightLarge)
                 .animation(reduceMotion ? nil : .easeInOut(duration: 0.5), value: viewModel.children.count)
                 .accessibilityLabel(String(localized: "comparison.per_sound"))
             }
@@ -280,7 +285,7 @@ struct ComparisonDashboardView: View {
                     }
                 }
                 .chartLegend(.hidden)
-                .frame(height: 160)
+                .frame(height: chartHeightSmall)
                 .animation(reduceMotion ? nil : .easeInOut(duration: 0.5), value: viewModel.children.count)
                 .accessibilityLabel(String(localized: "comparison.practice_time"))
             }

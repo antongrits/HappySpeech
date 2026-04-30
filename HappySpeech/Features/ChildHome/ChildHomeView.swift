@@ -33,6 +33,7 @@ struct ChildHomeView: View {
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.horizontalSizeClass) private var hSizeClass
 
     private static let logger = Logger(subsystem: "ru.happyspeech", category: "ChildHome")
 
@@ -321,7 +322,10 @@ struct ChildHomeView: View {
         }
     }
 
-    // MARK: - Quick Actions (legacy 2x2 grid + Sibling Multiplayer card)
+    // MARK: - Quick Actions (adaptive grid + Sibling Multiplayer card)
+    //
+    // Regular width (iPad full/split 1/2 landscape): 4-column grid.
+    // Compact width (iPhone, iPad Slide Over, iPad split portrait/1/3): 2-column grid.
 
     private var quickActionsSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
@@ -367,10 +371,12 @@ struct ChildHomeView: View {
             .accessibilityLabel(String(localized: "sibling.entry.title"))
             .accessibilityHint(String(localized: "sibling.discovery.nav_title"))
 
-            LazyVGrid(
-                columns: [GridItem(.flexible()), GridItem(.flexible())],
-                spacing: SpacingTokens.sp3
-            ) {
+            let columns: [GridItem] = hSizeClass == .regular
+                ? [GridItem(.flexible()), GridItem(.flexible()),
+                   GridItem(.flexible()), GridItem(.flexible())]
+                : [GridItem(.flexible()), GridItem(.flexible())]
+
+            LazyVGrid(columns: columns, spacing: SpacingTokens.sp3) {
                 ChildHomeQuickActionTile(
                     title: String(localized: "child.home.action.worldmap"),
                     icon: "map.fill",

@@ -57,10 +57,12 @@
 	<string>HappySpeech отправляет напоминания о ежедневных упражнениях и сводки для родителей</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>HappySpeech использует распознавание речи для оценки произношения</string>
+	<key>UIRequiresFullScreen</key>
+	<false/>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
-		<false/>
+		<true/>
 	</dict>
 	<key>UIBackgroundModes</key>
 	<array>
@@ -84,6 +86,8 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 </dict>
 </plist>

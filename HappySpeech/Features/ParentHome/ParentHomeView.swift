@@ -5,8 +5,10 @@ import SwiftUI
 struct ParentHomeView: View {
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
+    @Environment(\.horizontalSizeClass) private var hSizeClass
     @State private var scene: ParentHomeScene?
     @State private var selectedTab: ParentTab = .dashboard
+    @State private var sidebarSelection: ParentTab? = .dashboard
 
     enum ParentTab: String, CaseIterable {
         case dashboard  = "Обзор"
@@ -25,13 +27,13 @@ struct ParentHomeView: View {
     }
 
     var body: some View {
-        TabView(selection: $selectedTab) {
-            ForEach(ParentTab.allCases, id: \.self) { tab in
-                tabContent(for: tab)
-                    .tabItem {
-                        Label(tab.rawValue, systemImage: tab.icon)
-                    }
-                    .tag(tab)
+        Group {
+            if hSizeClass == .regular {
+                // iPad full screen / large split: NavigationSplitView sidebar layout
+                sidebarLayout
+            } else {
+                // iPhone / compact: привычный TabView
+                tabLayout
             }
         }
         .tint(ColorTokens.Parent.accent)
@@ -45,6 +47,47 @@ struct ParentHomeView: View {
                 )
             }
             await scene?.interactor.fetchData(.init(preferredChildId: nil))
+        }
+    }
+
+    // MARK: - Tablet sidebar layout
+    //
+    // NavigationSplitView требует `Binding<Optional<Tag>>` для single-selection.
+    // Синхронизируем sidebarSelection с selectedTab через onChange.
+
+    private var sidebarLayout: some View {
+        NavigationSplitView {
+            List(selection: $sidebarSelection) {
+                ForEach(ParentTab.allCases, id: \.self) { tab in
+                    Label(tab.rawValue, systemImage: tab.icon)
+                        .tag(tab)
+                        .accessibilityLabel(tab.rawValue)
+                }
+            }
+            .navigationTitle(String(localized: "Родитель"))
+            .listStyle(.sidebar)
+        } detail: {
+            tabContent(for: selectedTab)
+        }
+        .navigationSplitViewStyle(.balanced)
+        .onChange(of: sidebarSelection) { _, newValue in
+            if let tab = newValue {
+                selectedTab = tab
+            }
+        }
+    }
+
+    // MARK: - Phone tab layout
+
+    private var tabLayout: some View {
+        TabView(selection: $selectedTab) {
+            ForEach(ParentTab.allCases, id: \.self) { tab in
+                tabContent(for: tab)
+                    .tabItem {
+                        Label(tab.rawValue, systemImage: tab.icon)
+                    }
+                    .tag(tab)
+            }
         }
     }
 
@@ -98,6 +141,8 @@ final class ParentHomeScene {
 private struct ParentDashboardTab: View {
     let viewModel: ParentHomeViewModel
     let coordinator: AppCoordinator
+
+    @Environment(\.horizontalSizeClass) private var hSizeClass
 
     var body: some View {
         NavigationStack {
@@ -271,26 +316,41 @@ private struct ParentDashboardTab: View {
     }
 
     private var statsRow: some View {
-        HStack(spacing: SpacingTokens.sp3) {
-            ParentStatCard(
-                value: "\(viewModel.currentStreak)",
-                label: String(localized: "Дней подряд"),
-                icon: "flame.fill",
-                color: .orange
-            )
-            ParentStatCard(
-                value: "\(viewModel.totalSessionMinutes)",
-                label: String(localized: "Минут всего"),
-                icon: "clock.fill",
-                color: ColorTokens.Brand.sky
-            )
-            ParentStatCard(
-                value: "\(Int((viewModel.overallRate) * 100))%",
-                label: String(localized: "Средний результат"),
-                icon: "checkmark.seal.fill",
-                color: ColorTokens.Semantic.success
-            )
+        // Regular (iPad): горизонтальный ряд из 3 карточек.
+        // Compact (iPhone / Slide Over): вертикальный стек 3 карточек.
+        Group {
+            if hSizeClass == .regular {
+                HStack(spacing: SpacingTokens.sp3) {
+                    statCards
+                }
+            } else {
+                VStack(spacing: SpacingTokens.sp3) {
+                    statCards
+                }
+            }
         }
+    }
+
+    @ViewBuilder
+    private var statCards: some View {
+        ParentStatCard(
+            value: "\(viewModel.currentStreak)",
+            label: String(localized: "Дней подряд"),
+            icon: "flame.fill",
+            color: .orange
+        )
+        ParentStatCard(
+            value: "\(viewModel.totalSessionMinutes)",
+            label: String(localized: "Минут всего"),
+            icon: "clock.fill",
+            color: ColorTokens.Brand.sky
+        )
+        ParentStatCard(
+            value: "\(Int((viewModel.overallRate) * 100))%",
+            label: String(localized: "Средний результат"),
+            icon: "checkmark.seal.fill",
+            color: ColorTokens.Semantic.success
+        )
     }
 
     private func homeTaskCard(_ task: String) -> some View {
