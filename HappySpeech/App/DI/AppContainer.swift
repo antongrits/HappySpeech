@@ -73,6 +73,9 @@ public final class AppContainer {
     // Block K: SpotlightIndexer — CoreSpotlight indexing, COPPA-safe (нет имени ребёнка).
     private var _spotlightIndexer: (any SpotlightIndexerProtocol)?
 
+    // Block O (v12): BiometricGateService — Face ID gate для родительских разделов.
+    private var _biometricGateService: (any BiometricGateService)?
+
     // Block N: DailyMissionSyncService — синхронизация виджета через App Group.
     private var _dailyMissionSyncService: (any DailyMissionSyncServiceProtocol)?
 
@@ -393,6 +396,15 @@ public final class AppContainer {
         return new
     }
 
+    // Block O (v12): BiometricGateService — Face ID для родительского gate.
+    // Лёгкий: не требует factory — LiveBiometricGateService() не имеет зависимостей.
+    public var biometricGateService: any BiometricGateService {
+        if let existing = _biometricGateService { return existing }
+        let new = LiveBiometricGateService()
+        _biometricGateService = new
+        return new
+    }
+
     // Block N: DailyMissionSyncService — Widget App Group sync, COPPA-safe.
     public var dailyMissionSyncService: any DailyMissionSyncServiceProtocol {
         if let existing = _dailyMissionSyncService { return existing }
@@ -576,6 +588,8 @@ public extension AppContainer {
         container._dailyMissionSyncService = MockDailyMissionSyncService()
         // Block K (v12): ObjectDetectionWorker mock для preview/tests — без Vision.
         container._objectDetectionWorker = MockObjectDetectionWorker()
+        // Block O (v12): BiometricGate mock — всегда fallback в preview (нет real device).
+        container._biometricGateService = MockBiometricGateService(available: false, result: .fallback)
         return container
     }
 }
