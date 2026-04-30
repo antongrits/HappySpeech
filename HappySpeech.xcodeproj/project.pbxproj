@@ -49,6 +49,7 @@
 		012D9AB71A23111FCC88042E /* ry.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BB263B3659E30D52F004D4E2 /* ry.m4a */; };
 		0136A4D927196C7980763673 /* g-sen-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 711D227E61B3307075753AEC /* g-sen-2.m4a */; };
 		014A7794D3DFFF733391F5D5 /* sravni_koshku_i_sobaku.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 62088451DA184884A99C09B8 /* sravni_koshku_i_sobaku.m4a */; };
+		01551DF592BC89626E2B2FAD /* MLXLMCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 37D5F3B95074FBEDF3FD72EF /* MLXLMCommon */; };
 		0159F3EC0298FC0E1585B997 /* dwh-df-40.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CF52346FE6B5B63FFC3857AD /* dwh-df-40.m4a */; };
 		016AB44050750860848022B2 /* lyalya_hint_bin_7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3E47DDDD4F4DA0F27175CD00 /* lyalya_hint_bin_7.m4a */; };
 		016C24540AABA9ECD1A1FEC4 /* phon-vc-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 509E83C5F6D66A8620EE3557 /* phon-vc-8.m4a */; };
@@ -1925,6 +1926,7 @@
 		35ABE1D03DC0292C9344AA4C /* lyalya_setting_therapist_mode.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D762FDFE83B134C8EB409EB2 /* lyalya_setting_therapist_mode.m4a */; };
 		35B00FFB1D232F4476A3A191 /* sound_sh_pack.json in Resources */ = {isa = PBXBuildFile; fileRef = D17A6ADD2F8C2FEAABA8336A /* sound_sh_pack.json */; };
 		35C74C5BEE2626DBE00CC328 /* lex-ss-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A4EA079672BE689C35FD7369 /* lex-ss-6.m4a */; };
+		35C8635F3F9D3C2ED5A6EEBD /* ChildSafetyValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5813780C871EC8D966AE56BF /* ChildSafetyValidator.swift */; };
 		35CB6949C555E03FC35957A0 /* k-syl-33.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1AACAF516C829CC183A17A0E /* k-syl-33.m4a */; };
 		35DC0B649815D158849266E1 /* kubik.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1A0D19C953FC1B4FE458B247 /* kubik.m4a */; };
 		35DC8B425DF308C7D2814641 /* lex-tp-17.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A7442AF364C470E24AF8DD7E /* lex-tp-17.m4a */; };
@@ -3563,6 +3565,7 @@
 		6618A9B973ACA6959C7B27B7 /* zh-iso-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5DD71FD0B3004CDFB5A08BD3 /* zh-iso-2.m4a */; };
 		6621D95232E82D764DCBAF2D /* z-wf-18.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F86AB375CCDA6AC2408F1ED1 /* z-wf-18.m4a */; };
 		6623FDD09B395959D6F30448 /* medved_rychit_r_r_r_r.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4A0E3E0AB55DA2E2C0E4A653 /* medved_rychit_r_r_r_r.m4a */; };
+		6629372EBF0A9ACBB5892E62 /* MLXNN in Frameworks */ = {isa = PBXBuildFile; productRef = 88CCAC019674AE135A0D05B0 /* MLXNN */; };
 		6629554A6E77BF8C9C04C634 /* lex-bi-22.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5290503EEAC34CDD3C2AFBB2 /* lex-bi-22.m4a */; };
 		662B2FFB5B831B80BA9A970E /* r-syl-26.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 83F00F5E280E6A69A309BFAB /* r-syl-26.m4a */; };
 		662D3F9F607000A52C8D3FF4 /* narr-s-7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C7053FEE1E402B12E9317DBA /* narr-s-7.m4a */; };
@@ -4464,6 +4467,7 @@
 		80872C9795E42E21EFD20BCC /* lex-cl-16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = EAC3070D2B2EE9FDF9C44972 /* lex-cl-16.m4a */; };
 		808C4C288C313E5DAAF29AB5 /* ch-prep-9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 75B40C4E691260936914EEE7 /* ch-prep-9.m4a */; };
 		80954C37651841E0EDEC3F3E /* SeasonalEventsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C8FA467CA3C5B06EE15CA30 /* SeasonalEventsRouter.swift */; };
+		80A1BA37B05B6E6F797399D6 /* MLXLLM in Frameworks */ = {isa = PBXBuildFile; productRef = 6B2C6FB8197A8352C9308B30 /* MLXLLM */; };
 		80A3582A7669F4D2F33EABD5 /* sh-wm-21.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0DEB498890A0C0A082BB8472 /* sh-wm-21.m4a */; };
 		80AB228B7DDAB2148B16F39C /* lyalya_transition_end_4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F53A37261152011825934447 /* lyalya_transition_end_4.m4a */; };
 		80ADD3083371A5586EFB8DE2 /* r-wi-44.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 01A8577C4A97F8EE44B1D408 /* r-wi-44.m4a */; };
@@ -4772,6 +4776,7 @@
 		898E7550309905D124EDA225 /* rl-ph-1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = DEA2471BD59B4E9CF0790F32 /* rl-ph-1.m4a */; };
 		89940755AB537C50C8AE48C3 /* lex-fe-14.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7A7DFA27644664659DC3732F /* lex-fe-14.m4a */; };
 		899E535C448844E26F3DE62D /* ch-tt-40.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 6C2A7EA9D3DB6CE4F98546BB /* ch-tt-40.m4a */; };
+		89A341E4B76B10EBC9E5F468 /* MLXEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DD71687CC7D6514156148B /* MLXEngine.swift */; };
 		89B723C8B5D35C9F6D339DFC /* l-prep-13.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F31296B21A111722D9E7DB76 /* l-prep-13.m4a */; };
 		89BA35D90D26E08154EAD675 /* lyalya_sibling_02.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A8D204FB13F84C0D79D86A43 /* lyalya_sibling_02.m4a */; };
 		89C7254133F0E00454A1134A /* br-100.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 23E2BFC7028AC0055DD7B396 /* br-100.m4a */; };
@@ -5946,6 +5951,7 @@
 		AB5B03A6ACB642D3B6F40AE2 /* lyalya_kak_nazyvayutsya_dni_nedeli.m4a in Resources */ = {isa = PBXBuildFile; fileRef = DD9D8031977EA1B24E965925 /* lyalya_kak_nazyvayutsya_dni_nedeli.m4a */; };
 		AB6177D61F036B64F44E2E14 /* babushka_dumaet_o_svoyom_lyubimom_kote.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 361D711D23D0B2956A08333B /* babushka_dumaet_o_svoyom_lyubimom_kote.m4a */; };
 		AB66D20CB8E67F51275F4326 /* narr-sp-9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 029E4C9D2679C2126BB0F332 /* narr-sp-9.m4a */; };
+		AB6C4406CC6276FA4533CAB9 /* Tokenizers in Frameworks */ = {isa = PBXBuildFile; productRef = F403E7352D71111D054BBAC1 /* Tokenizers */; };
 		AB7CC705D91311A7A516C2BF /* br-123.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 18073D76E4463CFDE241E35D /* br-123.m4a */; };
 		AB7D0383D832A6965F5395A5 /* lex-num-20.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5F8F7242887F8EF4DAD7315F /* lex-num-20.m4a */; };
 		AB8ACAC24981C3FDC6DF3873 /* z-wm-24.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FA3AB9009D7790BA276B8792 /* z-wm-24.m4a */; };
@@ -6186,6 +6192,7 @@
 		B25E963E38DB09B2380CD22A /* lyalya_widget_evening_3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 51D86EE1DE76FE4F7483D8CF /* lyalya_widget_evening_3.m4a */; };
 		B26023AF283BEAFB0B5FA553 /* vesna_chto_izmenilos.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5027FF4262B94649FF4E3C8A /* vesna_chto_izmenilos.m4a */; };
 		B2647E1AB2AFC62BB1399424 /* ogurets.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 74A64D3538C34F54C70B7A49 /* ogurets.m4a */; };
+		B272C12A1ADADD91827A4C0C /* MLXTokenizerBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAFE3B824353E89D923BAEE /* MLXTokenizerBridge.swift */; };
 		B27C958AFD97CA8197D29521 /* s-syl-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0C7EA9B5EB05F60261583E2D /* s-syl-2.m4a */; };
 		B27F56294EAE51B3C9485DD7 /* SiblingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F276AB26BC78859EF116CC /* SiblingRouter.swift */; };
 		B288803845CCA7495D0072E2 /* gr-adj-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 28A672DC2B0EB63348CDE911 /* gr-adj-8.m4a */; };
@@ -6980,6 +6987,7 @@
 		C843332E4D560A603BCA7550 /* s-diff-5.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ACE46701D4FF9A8F93AD1309 /* s-diff-5.m4a */; };
 		C84A5D30921F42A722279F28 /* lyalya_artic_09.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B1B9F3CE81E4C4C86B1E6909 /* lyalya_artic_09.m4a */; };
 		C84AE332B03F4C88B800D7A4 /* kosa.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0D181EB19557E99E1004B175 /* kosa.m4a */; };
+		C8554B8F1209E08A0600E9E8 /* MLX in Frameworks */ = {isa = PBXBuildFile; productRef = C0031A6FC6B85264688DDCCF /* MLX */; };
 		C85AD260DDA8A44BA7D90B5B /* lex-pr-22.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 37B5E5D266DFF0B2CCA47913 /* lex-pr-22.m4a */; };
 		C85C78E3A0A876965A1A0D4D /* zh-wi-33.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5223D2A43D4B93965A1321E8 /* zh-wi-33.m4a */; };
 		C86ABB73D8342DC0D803CF8F /* br-164.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CB757C916859E8B08E98FFBB /* br-164.m4a */; };
@@ -10068,6 +10076,7 @@
 		20D4E352F0B6A47A060AEB66 /* ag-190.m4a */ = {isa = PBXFileReference; path = "ag-190.m4a"; sourceTree = "<group>"; };
 		20D5B6768C36AFF5CEB98A10 /* l-iso-11.m4a */ = {isa = PBXFileReference; path = "l-iso-11.m4a"; sourceTree = "<group>"; };
 		20D7E32D79C8B062A66A1FF5 /* kaska.m4a */ = {isa = PBXFileReference; path = kaska.m4a; sourceTree = "<group>"; };
+		20DD71687CC7D6514156148B /* MLXEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLXEngine.swift; sourceTree = "<group>"; };
 		20DEEF8B8C83C7C8C3FFDCDD /* s-wi-61.m4a */ = {isa = PBXFileReference; path = "s-wi-61.m4a"; sourceTree = "<group>"; };
 		20EBBF07B7FFFA433715372A /* kh-sen-6.m4a */ = {isa = PBXFileReference; path = "kh-sen-6.m4a"; sourceTree = "<group>"; };
 		20F3340F83D1699DDD80B1A6 /* story-completion.mp4 */ = {isa = PBXFileReference; path = "story-completion.mp4"; sourceTree = "<group>"; };
@@ -11967,6 +11976,7 @@
 		57FF9EE2CB700F1E8A1703CB /* ag-116.m4a */ = {isa = PBXFileReference; path = "ag-116.m4a"; sourceTree = "<group>"; };
 		58039F310A1A15FE9F6CFFA2 /* z-diff-21.m4a */ = {isa = PBXFileReference; path = "z-diff-21.m4a"; sourceTree = "<group>"; };
 		58054E50D7EE596363455EC4 /* sh-iso-10.m4a */ = {isa = PBXFileReference; path = "sh-iso-10.m4a"; sourceTree = "<group>"; };
+		5813780C871EC8D966AE56BF /* ChildSafetyValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildSafetyValidator.swift; sourceTree = "<group>"; };
 		581BE9290A188B380E116079 /* sh-sen-15.m4a */ = {isa = PBXFileReference; path = "sh-sen-15.m4a"; sourceTree = "<group>"; };
 		5825308FD8E0C4AD77AD4F53 /* k-syl-7.m4a */ = {isa = PBXFileReference; path = "k-syl-7.m4a"; sourceTree = "<group>"; };
 		58274CBE080AC66F8FA44663 /* sh-wm-48.m4a */ = {isa = PBXFileReference; path = "sh-wm-48.m4a"; sourceTree = "<group>"; };
@@ -14871,6 +14881,7 @@
 		ABA8FB2110BA1917E6FB28C4 /* br-099.m4a */ = {isa = PBXFileReference; path = "br-099.m4a"; sourceTree = "<group>"; };
 		ABA9C475FCC99E0EEAAB6805 /* y-sen-23.m4a */ = {isa = PBXFileReference; path = "y-sen-23.m4a"; sourceTree = "<group>"; };
 		ABAB84A7E28B1B862718919E /* r-wi-15.m4a */ = {isa = PBXFileReference; path = "r-wi-15.m4a"; sourceTree = "<group>"; };
+		ABAFE3B824353E89D923BAEE /* MLXTokenizerBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLXTokenizerBridge.swift; sourceTree = "<group>"; };
 		ABB2247037D84F8D725B282D /* zh-ph-30.m4a */ = {isa = PBXFileReference; path = "zh-ph-30.m4a"; sourceTree = "<group>"; };
 		ABC5697D6511E3642522E23E /* ch-sen-18.m4a */ = {isa = PBXFileReference; path = "ch-sen-18.m4a"; sourceTree = "<group>"; };
 		ABC6EFEB00D431EF899C93AA /* g-wi-30.m4a */ = {isa = PBXFileReference; path = "g-wi-30.m4a"; sourceTree = "<group>"; };
@@ -17801,6 +17812,11 @@
 				E609641707A788487F18BCF2 /* GoogleSignInSwift in Frameworks */,
 				BF25494372E785026C33B31C /* RiveRuntime in Frameworks */,
 				7BAFBCBB5DA9EE1389F62785 /* Down in Frameworks */,
+				C8554B8F1209E08A0600E9E8 /* MLX in Frameworks */,
+				6629372EBF0A9ACBB5892E62 /* MLXNN in Frameworks */,
+				80A1BA37B05B6E6F797399D6 /* MLXLLM in Frameworks */,
+				01551DF592BC89626E2B2FAD /* MLXLMCommon in Frameworks */,
+				AB6C4406CC6276FA4533CAB9 /* Tokenizers in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -27453,6 +27469,7 @@
 		E4EE0D72A8DFE2E588E5AF6A /* LLM */ = {
 			isa = PBXGroup;
 			children = (
+				5813780C871EC8D966AE56BF /* ChildSafetyValidator.swift */,
 				DD3E76422585F44116D0DE64 /* HFInferenceClient.swift */,
 				F0CA74735B1003DBB48296BB /* KidLLMNarrationService.swift */,
 				958E507484440D2D3B5FD9F1 /* KidSafetyFilter.swift */,
@@ -27462,6 +27479,8 @@
 				29FB3BE0C34A7B7D31FC80B2 /* LLMModelManager.swift */,
 				20917AC99322752C266A6904 /* LLMPrompts.swift */,
 				5106167F6DF52AFB6900848F /* LocalLLMService.swift */,
+				20DD71687CC7D6514156148B /* MLXEngine.swift */,
+				ABAFE3B824353E89D923BAEE /* MLXTokenizerBridge.swift */,
 				83E51B239BE351141BC1BB75 /* MockLLMDecisionService.swift */,
 				0AC569384E5CAAEFD61CA704 /* MockLLMModelManager.swift */,
 				993650E13BEBEF9114C90A8F /* PrecannedNarrations.swift */,
@@ -28456,6 +28475,11 @@
 				267379EC677EDD31D0FFBB82 /* GoogleSignInSwift */,
 				AE3C64EB285302CCD6118DCD /* RiveRuntime */,
 				43C70A2CB4466E8B9439D0E4 /* Down */,
+				C0031A6FC6B85264688DDCCF /* MLX */,
+				88CCAC019674AE135A0D05B0 /* MLXNN */,
+				6B2C6FB8197A8352C9308B30 /* MLXLLM */,
+				37D5F3B95074FBEDF3FD72EF /* MLXLMCommon */,
+				F403E7352D71111D054BBAC1 /* Tokenizers */,
 			);
 			productName = HappySpeech;
 			productReference = A99CE31486125C1F866D19DD /* HappySpeech.app */;
@@ -28518,9 +28542,12 @@
 				8FFF13CD604653258317C257 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				3AEA6A22AE57EA7322BAE8E6 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				D1EC5DE530F40091B28EFE61 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				1EA30747460E81FF117EE8C9 /* XCRemoteSwiftPackageReference "mlx-swift" */,
+				A5869C274B32A3F7582C70FB /* XCRemoteSwiftPackageReference "mlx-swift-lm" */,
 				0B7C17FBABCA193DF672CE68 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				16E70049D80BE541F4D5428A /* XCRemoteSwiftPackageReference "rive-ios" */,
 				B5FA9074BB5CD73FE93EC0C9 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+				93B3C075921E2BE0CFE617B1 /* XCRemoteSwiftPackageReference "swift-transformers" */,
 				ED370E84B33B6AFBC5D664D0 /* XCRemoteSwiftPackageReference "WhisperKit" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -36985,6 +37012,7 @@
 				D1AD09F6FB5AE4A79D24A01F /* ChildHomeViewComponents.swift in Sources */,
 				C0E773F8DB3B8EE0BD08E703 /* ChildHomeViewModel.swift in Sources */,
 				D15C90D0BE5F4B888FE98D70 /* ChildRepository.swift in Sources */,
+				35C8635F3F9D3C2ED5A6EEBD /* ChildSafetyValidator.swift in Sources */,
 				204FCC9C55F4F36A8B3CAAF0 /* ClaudeAPIClient.swift in Sources */,
 				41BF4C740DEC910A074E112D /* Color+Extensions.swift in Sources */,
 				33B904F2F911ABC5A322DEAF /* ColorTokens.swift in Sources */,
@@ -37133,6 +37161,8 @@
 				1DE0F27B4C7FDA86C738DC11 /* LyalyaMascotView.swift in Sources */,
 				8DB6EFA1D2E32386CF9D651A /* LyalyaRealityView.swift in Sources */,
 				22D12E648CF98DD9749A376D /* LyalyaSceneView.swift in Sources */,
+				89A341E4B76B10EBC9E5F468 /* MLXEngine.swift in Sources */,
+				B272C12A1ADADD91827A4C0C /* MLXTokenizerBridge.swift in Sources */,
 				DE2D424E582B1B1E784EF401 /* MascotLipSyncState.swift in Sources */,
 				FEEE13F489DA245CD78DAAE2 /* MemoryDisplayLogic.swift in Sources */,
 				E76FFF50895B36D395AC2600 /* MemoryInteractor.swift in Sources */,
@@ -37669,6 +37699,14 @@
 				minimumVersion = 6.0.0;
 			};
 		};
+		1EA30747460E81FF117EE8C9 /* XCRemoteSwiftPackageReference "mlx-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ml-explore/mlx-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.31.3;
+			};
+		};
 		3AEA6A22AE57EA7322BAE8E6 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
@@ -37683,6 +37721,22 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 11.0.0;
+			};
+		};
+		93B3C075921E2BE0CFE617B1 /* XCRemoteSwiftPackageReference "swift-transformers" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/huggingface/swift-transformers";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.9;
+			};
+		};
+		A5869C274B32A3F7582C70FB /* XCRemoteSwiftPackageReference "mlx-swift-lm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ml-explore/mlx-swift-lm";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.31.3;
 			};
 		};
 		B5FA9074BB5CD73FE93EC0C9 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
@@ -37730,6 +37784,11 @@
 			package = 0B7C17FBABCA193DF672CE68 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
 		};
+		37D5F3B95074FBEDF3FD72EF /* MLXLMCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A5869C274B32A3F7582C70FB /* XCRemoteSwiftPackageReference "mlx-swift-lm" */;
+			productName = MLXLMCommon;
+		};
 		3C8823C71A32B424D2583F7E /* FirebasePerformance */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8FFF13CD604653258317C257 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -37750,6 +37809,11 @@
 			package = 8FFF13CD604653258317C257 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
 		};
+		6B2C6FB8197A8352C9308B30 /* MLXLLM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A5869C274B32A3F7582C70FB /* XCRemoteSwiftPackageReference "mlx-swift-lm" */;
+			productName = MLXLLM;
+		};
 		79EC18ED0970841147981C77 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8FFF13CD604653258317C257 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -37764,6 +37828,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = ED370E84B33B6AFBC5D664D0 /* XCRemoteSwiftPackageReference "WhisperKit" */;
 			productName = WhisperKit;
+		};
+		88CCAC019674AE135A0D05B0 /* MLXNN */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1EA30747460E81FF117EE8C9 /* XCRemoteSwiftPackageReference "mlx-swift" */;
+			productName = MLXNN;
 		};
 		AE3C64EB285302CCD6118DCD /* RiveRuntime */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -37785,6 +37854,11 @@
 			package = 3AEA6A22AE57EA7322BAE8E6 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignIn;
 		};
+		C0031A6FC6B85264688DDCCF /* MLX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1EA30747460E81FF117EE8C9 /* XCRemoteSwiftPackageReference "mlx-swift" */;
+			productName = MLX;
+		};
 		CC342B60D651603461304A0F /* FirebaseRemoteConfig */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8FFF13CD604653258317C257 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
@@ -37794,6 +37868,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8FFF13CD604653258317C257 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		F403E7352D71111D054BBAC1 /* Tokenizers */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 93B3C075921E2BE0CFE617B1 /* XCRemoteSwiftPackageReference "swift-transformers" */;
+			productName = Tokenizers;
 		};
 		FB0874288F65B032BACB1D24 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;

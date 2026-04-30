@@ -2,10 +2,19 @@ import Foundation
 import OSLog
 
 // MARK: - LocalLLMServiceLive
-// Uses a bundled Qwen2.5-1.5B-Instruct model via llama.cpp or MLX Swift bindings.
-// Falls back to rule-based generation when model is not available.
+// ==================================================================================
+// Реализует LocalLLMService через on-device Qwen2.5-1.5B-Instruct (MLX Swift).
+//
+// Tier A (arm64): MLX inference → ChildSafetyValidator → парсинг → rule-based если нужно.
+// Tier C (x86_64 / модель не скачана): rule-based напрямую.
+//
+// Загрузка модели — lazy, при первом обращении.
+// modelDirectoryName — имя папки в Application Support/HappySpeech/MLXModels/.
+// ==================================================================================
 
 public final class LocalLLMServiceLive: LocalLLMService, @unchecked Sendable {
+
+    // MARK: - State
 
     nonisolated(unsafe) private var _isModelDownloaded: Bool = false
     nonisolated(unsafe) private var _isModelLoaded: Bool = false
@@ -13,39 +22,190 @@ public final class LocalLLMServiceLive: LocalLLMService, @unchecked Sendable {
     public var isModelDownloaded: Bool { _isModelDownloaded }
     public var isModelLoaded: Bool { _isModelLoaded }
 
-    private let modelFileName = "qwen2.5-1.5b-instruct-q4_k_m.gguf"
-    private var modelPath: URL {
-        let modelsDir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-            .appendingPathComponent("HappySpeech/Models", isDirectory: true)
-        return modelsDir.appendingPathComponent(modelFileName)
+    /// Имя директории модели в Application Support.
+    let modelDirectoryName = "qwen2.5-1.5b-instruct-4bit"
+
+    var modelDirectory: URL {
+        let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+        return base
+            .appendingPathComponent("HappySpeech/MLXModels", isDirectory: true)
+            .appendingPathComponent(modelDirectoryName, isDirectory: true)
     }
 
     public init() {
-        _isModelDownloaded = FileManager.default.fileExists(atPath: modelPath.path)
+        _isModelDownloaded = FileManager.default.fileExists(atPath: modelDirectory.path)
     }
 
-    // MARK: - Download
+    // MARK: - Download (via Hub.snapshot)
 
     public func downloadModel() async throws {
-        guard let remoteURL = URL(string: "https://storage.googleapis.com/happyspeech-models/\(modelFileName)") else {
-            throw AppError.networkPermanent("Invalid model URL for \(modelFileName)")
-        }
-        HSLogger.llm.info("Downloading LLM from \(remoteURL)")
-        let (tempURL, _) = try await URLSession.shared.download(from: remoteURL)
-        let dir = modelPath.deletingLastPathComponent()
-        try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        if FileManager.default.fileExists(atPath: modelPath.path) {
-            try FileManager.default.removeItem(at: modelPath)
-        }
-        try FileManager.default.moveItem(at: tempURL, to: modelPath)
-        _isModelDownloaded = true
-        HSLogger.llm.info("LLM downloaded to \(self.modelPath.path)")
+        HSLogger.llm.info("LocalLLMService: starting Hub.snapshot for \(Self.mlxModelId)")
+        let destURL = try await LLMModelManager.downloadMLXModel(modelId: Self.mlxModelId)
+        _isModelDownloaded = FileManager.default.fileExists(atPath: destURL.path)
+        HSLogger.llm.info("LocalLLMService: model downloaded to \(destURL.path)")
     }
+
+    /// HuggingFace model ID для MLX 4-bit Qwen2.5-1.5B.
+    public static let mlxModelId = "mlx-community/Qwen2.5-1.5B-Instruct-4bit"
 
     // MARK: - Generate: Parent Summary
 
     public func generateParentSummary(request: ParentSummaryRequest) async throws -> ParentSummaryResponse {
-        // Rule-based fallback (used until model is loaded)
+#if arch(arm64)
+        do {
+            let prompt = buildParentSummaryPrompt(request: request)
+            let raw = try await MLXEngine.shared.generate(
+                prompt: prompt,
+                maxTokens: 256,
+                temperature: 0.3
+            )
+            if ChildSafetyValidator.validate(raw), let parsed = parseParentSummaryJSON(raw) {
+                _isModelLoaded = true
+                return parsed
+            }
+        } catch {
+            HSLogger.llm.warning("LocalLLMService: MLX parentSummary failed: \(error.localizedDescription), fallback")
+        }
+#endif
+        return _ruleBasedParentSummary(request: request)
+    }
+
+    // MARK: - Generate: Route
+
+    public func generateRoute(request: RoutePlannerRequest) async throws -> RoutePlannerResponse {
+#if arch(arm64)
+        do {
+            let prompt = buildRoutePrompt(request: request)
+            let raw = try await MLXEngine.shared.generate(
+                prompt: prompt,
+                maxTokens: 256,
+                temperature: 0.5
+            )
+            if ChildSafetyValidator.validate(raw), let parsed = parseRoutePlannerJSON(raw) {
+                _isModelLoaded = true
+                return parsed
+            }
+        } catch {
+            HSLogger.llm.warning("LocalLLMService: MLX generateRoute failed: \(error.localizedDescription), fallback")
+        }
+#endif
+        return _ruleBasedRoute(request: request)
+    }
+
+    // MARK: - Generate: Micro Story
+
+    public func generateMicroStory(request: MicroStoryRequest) async throws -> MicroStoryResponse {
+#if arch(arm64)
+        do {
+            let prompt = buildMicroStoryPrompt(request: request)
+            let raw = try await MLXEngine.shared.generate(
+                prompt: prompt,
+                maxTokens: 128,
+                temperature: 0.7
+            )
+            if ChildSafetyValidator.validate(raw) {
+                _isModelLoaded = true
+                return parseMicroStoryOrFallback(raw: raw, request: request)
+            }
+            HSLogger.llm.warning("LocalLLMService: ChildSafetyValidator rejected micro story, using rule-based")
+        } catch {
+            HSLogger.llm.warning("LocalLLMService: MLX microStory failed: \(error.localizedDescription), fallback")
+        }
+#endif
+        return _ruleBasedMicroStory(request: request)
+    }
+
+    // MARK: - Prompt Builders
+
+    private func buildParentSummaryPrompt(request: ParentSummaryRequest) -> String {
+        let rate = request.totalAttempts > 0
+            ? Int(Double(request.correctAttempts) / Double(request.totalAttempts) * 100)
+            : 0
+        return """
+        Ты помощник для родителей детей, занимающихся с логопедом.
+        Напиши краткое резюме занятия и домашнее задание в JSON формате.
+        Ребёнок: \(request.childName), звук: «\(request.targetSound)», \
+        правильно: \(rate)%, продолжительность: \(request.sessionDurationSec / 60) мин.
+        Ошибки: \(request.errorWords.prefix(3).joined(separator: ", ")).
+        Ответь только JSON: {"parent_summary": "...", "home_task": "..."}
+        """
+    }
+
+    private func buildRoutePrompt(request: RoutePlannerRequest) -> String {
+        return """
+        Составь план занятия для ребёнка \(request.age) лет.
+        Звук: «\(request.targetSound)», успешность: \(Int(request.recentSuccessRate * 100))%, \
+        усталость: \(request.fatigueLevel).
+        Выбери 3 шаблона из: \(request.availableTemplates.prefix(8).joined(separator: ", ")).
+        Ответь только JSON: {"route": [{"template": "...", "difficulty": 1, "wordCount": 8, "durationTargetSec": 180}], "sessionMaxDurationSec": 600}
+        """
+    }
+
+    private func buildMicroStoryPrompt(request: MicroStoryRequest) -> String {
+        let words = request.wordPool.prefix(5).joined(separator: ", ")
+        return """
+        Напиши короткую добрую историю для ребёнка \(request.age) лет \
+        про звук «\(request.targetSound)». \
+        Используй слова: \(words). Максимум 3 предложения. Только история, без пояснений.
+        """
+    }
+
+    // MARK: - JSON Parsers
+
+    private func parseParentSummaryJSON(_ text: String) -> ParentSummaryResponse? {
+        guard let data = extractJSON(text),
+              let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let summary = obj["parent_summary"] as? String,
+              let task = obj["home_task"] as? String,
+              !summary.isEmpty, !task.isEmpty else { return nil }
+        return ParentSummaryResponse(parentSummary: summary, homeTask: task)
+    }
+
+    private func parseRoutePlannerJSON(_ text: String) -> RoutePlannerResponse? {
+        guard let data = extractJSON(text),
+              let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let routeArr = obj["route"] as? [[String: Any]] else { return nil }
+        let items = routeArr.compactMap { item -> RoutePlannerResponse.RouteItem? in
+            guard let template = item["template"] as? String else { return nil }
+            return RoutePlannerResponse.RouteItem(
+                template: template,
+                difficulty: item["difficulty"] as? Int ?? 1,
+                wordCount: item["wordCount"] as? Int ?? 8,
+                durationTargetSec: item["durationTargetSec"] as? Int ?? 180
+            )
+        }
+        guard !items.isEmpty else { return nil }
+        let maxDur = obj["sessionMaxDurationSec"] as? Int ?? 600
+        return RoutePlannerResponse(route: items, sessionMaxDurationSec: maxDur)
+    }
+
+    private func parseMicroStoryOrFallback(raw: String, request: MicroStoryRequest) -> MicroStoryResponse {
+        // Разбиваем текст на предложения по . ! ?
+        let sentences = raw
+            .components(separatedBy: CharacterSet(charactersIn: ".!?"))
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { !$0.isEmpty }
+            .prefix(3)
+            .map { $0 }
+        guard !sentences.isEmpty else { return _ruleBasedMicroStory(request: request) }
+        let gaps = [MicroStoryResponse.GapPosition(
+            sentenceIndex: sentences.count - 1,
+            word: request.wordPool.first ?? request.targetSound,
+            imageHint: "story"
+        )]
+        return MicroStoryResponse(sentences: sentences, gapPositions: gaps)
+    }
+
+    private func extractJSON(_ text: String) -> Data? {
+        guard let firstBrace = text.firstIndex(of: "{"),
+              let lastBrace = text.lastIndex(of: "}"),
+              firstBrace < lastBrace else { return nil }
+        return String(text[firstBrace...lastBrace]).data(using: .utf8)
+    }
+
+    // MARK: - Rule-based Fallbacks
+
+    private func _ruleBasedParentSummary(request: ParentSummaryRequest) -> ParentSummaryResponse {
         let rate = request.totalAttempts > 0
             ? Int(Double(request.correctAttempts) / Double(request.totalAttempts) * 100)
             : 0
@@ -57,10 +217,7 @@ public final class LocalLLMServiceLive: LocalLLMService, @unchecked Sendable {
         return ParentSummaryResponse(parentSummary: summary, homeTask: task)
     }
 
-    // MARK: - Generate: Route
-
-    public func generateRoute(request: RoutePlannerRequest) async throws -> RoutePlannerResponse {
-        // Rule-based route selection based on success rate
+    private func _ruleBasedRoute(request: RoutePlannerRequest) -> RoutePlannerResponse {
         let templates: [TemplateType]
         switch request.recentSuccessRate {
         case 0.8...:
@@ -82,9 +239,7 @@ public final class LocalLLMServiceLive: LocalLLMService, @unchecked Sendable {
         return RoutePlannerResponse(route: Array(items), sessionMaxDurationSec: maxDuration)
     }
 
-    // MARK: - Generate: Micro Story
-
-    public func generateMicroStory(request: MicroStoryRequest) async throws -> MicroStoryResponse {
+    private func _ruleBasedMicroStory(request: MicroStoryRequest) -> MicroStoryResponse {
         let words = request.wordPool.prefix(3)
         let sound = request.targetSound
         let sentences = [
@@ -92,7 +247,11 @@ public final class LocalLLMServiceLive: LocalLLMService, @unchecked Sendable {
             "Он любил играть и \(words.dropFirst().first ?? "петь").",
             "Однажды он нашёл \(words.last ?? "друга")."
         ]
-        let gaps = [MicroStoryResponse.GapPosition(sentenceIndex: 2, word: words.last ?? sound, imageHint: "friend")]
+        let gaps = [MicroStoryResponse.GapPosition(
+            sentenceIndex: 2,
+            word: words.last ?? sound,
+            imageHint: "friend"
+        )]
         return MicroStoryResponse(sentences: sentences, gapPositions: gaps)
     }
 }

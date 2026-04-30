@@ -1,20 +1,42 @@
 import Foundation
 import OSLog
 
+// MARK: - LLMError
+
+public enum LLMError: Error, LocalizedError {
+    case notLoaded
+    case generationFailed(String)
+    case unsupportedArchitecture
+
+    public var errorDescription: String? {
+        switch self {
+        case .notLoaded:
+            return "Модель не загружена"
+        case .generationFailed(let reason):
+            return "Ошибка генерации: \(reason)"
+        case .unsupportedArchitecture:
+            return "MLX требует Apple Silicon (arm64)"
+        }
+    }
+}
+
 // MARK: - LLMInferenceActor
 // ==================================================================================
-// Serializes access to the on-device LLM (Qwen2.5-1.5B via MLC / llama.cpp).
-// MLC/llama.cpp engines are not reentrant — only ONE inference may run at a time.
-// The actor guarantees FIFO ordering and prevents GPU/ANE contention crashes.
+// Сериализует доступ к on-device LLM typed-endpoints.
 //
-// The actor does NOT own model lifecycle — that's LLMModelManager.
-// It only holds a reference to the underlying LocalLLMService (SPI into the engine).
+// Typed endpoints (generateParentSummary / generateRoute / generateMicroStory)
+// делегируют в LocalLLMService, который внутри использует MLXEngine для inference.
+//
+// MLXEngine.shared — отдельный актор для raw MLX text generation.
+// LLMInferenceActor — сериализует typed-endpoint вызовы + хранит isReady.
+//
+// Kid circuit ВСЕГДА на Tier A или C — НИКОГДА Tier B (COPPA).
 // ==================================================================================
 
 public actor LLMInferenceActor {
 
-    // MARK: - Model Identity
-    public static let modelId = "Qwen/Qwen2.5-1.5B-Instruct-q4"
+    // MARK: - Identity
+    public static let modelId = "mlx-community/Qwen2.5-1.5B-Instruct-4bit"
 
     // MARK: - State
     private let localLLM: any LocalLLMService
@@ -25,16 +47,12 @@ public actor LLMInferenceActor {
     }
 
     // MARK: - Readiness
+
     public var isReady: Bool {
-        localLLM.isModelDownloaded && localLLM.isModelLoaded
+        localLLM.isModelDownloaded || LLMModelManager.localMLXModelURL() != nil
     }
 
-    // MARK: - Raw generation
-    // The underlying LocalLLMService exposes 3 typed endpoints (parentSummary/route/microStory).
-    // For the other 9 decision points we use rule-based inside LiveLLMDecisionService and
-    // escalate ONLY the three native-typed endpoints to the on-device model.
-    // This keeps the actor minimal and avoids a free-form prompt/response layer that would
-    // require a JSON parser for every kind of output.
+    // MARK: - Typed Endpoints
 
     public func generateParentSummary(_ request: ParentSummaryRequest) async throws -> ParentSummaryResponse {
         try await serialized {
@@ -55,6 +73,7 @@ public actor LLMInferenceActor {
     }
 
     // MARK: - Serialization
+
     private func serialized<T: Sendable>(_ work: @Sendable () async throws -> T) async throws -> T {
         while isBusy {
             try await Task.sleep(nanoseconds: 30_000_000) // 30 ms
@@ -62,7 +81,7 @@ public actor LLMInferenceActor {
         }
         isBusy = true
         defer { isBusy = false }
-        HSLogger.llm.debug("Inference acquired")
+        HSLogger.llm.debug("LLMInferenceActor: inference acquired")
         return try await work()
     }
 }

@@ -1,4 +1,5 @@
 import Foundation
+import Hub
 import OSLog
 
 // MARK: - LLMModelPack
@@ -283,6 +284,66 @@ public actor LLMModelManager: LLMModelManagerProtocol {
     // поэтому используем плейсхолдер-пак `.tiny` как неинформативный.
     private func emitLLM(_ state: ModelDownloadState) {
         progressContinuation?.yield(state)
+    }
+}
+
+// MARK: - MLX Model Helpers (static)
+
+extension LLMModelManager {
+
+    // MARK: - MLX Local Directory
+
+    /// Директория для MLX-моделей (safetensors формат).
+    static var mlxModelsRoot: URL {
+        let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+        return base.appendingPathComponent("HappySpeech/MLXModels", isDirectory: true)
+    }
+
+    /// URL к конкретной MLX-модели по её HuggingFace id.
+    /// Пример: "mlx-community/Qwen2.5-1.5B-Instruct-4bit" → …/MLXModels/Qwen2.5-1.5B-Instruct-4bit/
+    public static func localMLXModelURL(modelId: String = LocalLLMServiceLive.mlxModelId) -> URL? {
+        let modelName = String(modelId.split(separator: "/").last ?? Substring(modelId))
+        let url = mlxModelsRoot.appendingPathComponent(modelName, isDirectory: true)
+        guard FileManager.default.fileExists(atPath: url.path) else { return nil }
+        return url
+    }
+
+    // MARK: - Hub.snapshot Download
+
+    /// Скачивает MLX-модель с HuggingFace через Hub.snapshot (swift-transformers).
+    /// Возвращает URL директории с safetensors + tokenizer файлами.
+    ///
+    /// Wi-Fi-only — бросает ModelDownloadError.cellularNotAllowed если не Wi-Fi.
+    public static func downloadMLXModel(modelId: String) async throws -> URL {
+        let modelName = String(modelId.split(separator: "/").last ?? Substring(modelId))
+        let targetDir = mlxModelsRoot.appendingPathComponent(modelName, isDirectory: true)
+
+        // Уже скачано?
+        if FileManager.default.fileExists(atPath: targetDir.path) {
+            HSLogger.llm.info("LLMModelManager: MLX model already at \(targetDir.path)")
+            return targetDir
+        }
+
+        // Создаём директорию назначения
+        try FileManager.default.createDirectory(at: mlxModelsRoot, withIntermediateDirectories: true)
+
+        HSLogger.llm.info("LLMModelManager: Hub.snapshot for \(modelId)")
+        let repo = Hub.Repo(id: modelId)
+        let downloadedURL = try await Hub.snapshot(
+            from: repo,
+            matching: ["*.safetensors", "*.json", "tokenizer.json", "*.model"]
+        )
+
+        // Hub.snapshot возвращает системный кэш-путь — копируем в наш MLXModels
+        if downloadedURL.path != targetDir.path {
+            if FileManager.default.fileExists(atPath: targetDir.path) {
+                try FileManager.default.removeItem(at: targetDir)
+            }
+            try FileManager.default.copyItem(at: downloadedURL, to: targetDir)
+        }
+
+        HSLogger.llm.info("LLMModelManager: MLX model ready at \(targetDir.path)")
+        return targetDir
     }
 }
 
