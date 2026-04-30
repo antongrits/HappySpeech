@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tutorials xmlns="https://developer.apple.com/tutorials/v1.0">
+
+    <Intro title="Туториалы HappySpeech">
+        <Paragraph>
+            Руководства для пользователей и разработчиков HappySpeech.
+            Пользовательские туториалы описывают работу с приложением,
+            разработческие — расширение контента и архитектуру.
+        </Paragraph>
+    </Intro>
+
+    <Volume name="Для пользователей">
+        <Chapter name="Начало работы">
+            <TutorialReference tutorial="tutorials/1-FirstSession"/>
+        </Chapter>
+    </Volume>
+
+    <Volume name="Для разработчиков">
+        <Chapter name="Контент">
+            <TutorialReference tutorial="tutorials/2-AddingNewSound"/>
+        </Chapter>
+        <Chapter name="Архитектура">
+            <TutorialReference tutorial="tutorials/3-IntegratingNewGame"/>
+        </Chapter>
+    </Volume>
+
+</Tutorials>

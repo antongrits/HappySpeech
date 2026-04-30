@@ -5,9 +5,29 @@ import Observation
 
 // MARK: - Protocol
 
-/// Provides feature flags and runtime configuration from Firebase Remote Config.
-/// fetch() + activate() should be called once at app launch (after FirebaseApp.configure()).
-/// All properties return bundled defaults until the first successful fetch + activate.
+/// Провайдер feature flags и runtime конфигурации через Firebase Remote Config.
+///
+/// `RemoteConfigService` позволяет управлять функциональностью приложения без
+/// обновления в App Store. Все свойства возвращают бандлированные дефолты до
+/// первого успешного `fetch() + activate()` при запуске.
+///
+/// `fetch()` + `activate()` вызывается один раз при старте приложения (после
+/// `FirebaseApp.configure()`). Кэш Remote Config — 12 часов.
+///
+/// ## Пример
+/// ```swift
+/// let rc: RemoteConfigService = LiveRemoteConfigService()
+/// try await rc.fetch()
+/// _ = try await rc.activate()
+///
+/// if rc.featureVoiceCloneEnabled {
+///     // показать UI клонирования голоса
+/// }
+/// ```
+///
+/// ## See Also
+/// - ``FCMService``
+/// - ``ContentPackDownloadService``
 public protocol RemoteConfigService: AnyObject, Sendable {
     // Feature flags
     var featureSeasonalEventsEnabled: Bool { get }

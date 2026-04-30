@@ -1,8 +1,37 @@
 import SwiftUI
 
 // MARK: - TypographyTokens
-// SF Pro Rounded for kid circuit; SF Pro Text for parent/specialist.
 
+/// Типографическая система HappySpeech — фонтовые стили для всех контуров.
+///
+/// `TypographyTokens` предоставляет готовые `Font` для каждого уровня иерархии текста.
+/// Детский контур использует `SF Pro Rounded` (playful, скруглённый);
+/// родительский и специалистский — `SF Pro Text` (строгий, читаемый).
+///
+/// Все методы принимают опциональный `size: CGFloat` для переопределения
+/// базового кегля — используй только при крайней необходимости.
+///
+/// > Note: Для Dynamic Type используй `scaledFont(_:textStyle:)` вместо
+/// > статических методов — они масштабируются вместе с системными настройками.
+///
+/// ## Пример
+/// ```swift
+/// Text("Привет!")
+///     .font(TypographyTokens.kidDisplay())      // 40pt, Black, Rounded
+///
+/// Text("Раздел")
+///     .font(TypographyTokens.title())           // 24pt, Semibold, Rounded
+///
+/// Text("Описание")
+///     .font(TypographyTokens.body())            // 15pt, Regular
+///
+/// Text("12.5 сек")
+///     .font(TypographyTokens.mono())            // 13pt, Monospaced
+/// ```
+///
+/// ## See Also
+/// - ``ColorTokens``
+/// - ``SpacingTokens``
 public enum TypographyTokens {
 
     // MARK: - Font Styles

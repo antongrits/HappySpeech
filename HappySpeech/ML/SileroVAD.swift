@@ -57,7 +57,41 @@ struct VADSession: Sendable {
 
 // MARK: - Protocol
 
-/// Сервис детекции голосовой активности.
+/// Детектор голосовой активности на базе Silero VAD (Core ML).
+///
+/// `VADProtocol` определяет API для on-device детекции речи перед запуском
+/// тяжёлого ASR-инференса (WhisperKit). Это снижает latency и энергопотребление
+/// при записи в тишине.
+///
+/// Модель: `SileroVAD.mlpackage` (0.008 MB, energy stub).
+/// Чанк: 512 сэмплов при 16kHz = 32ms, порог 0.5.
+///
+/// ### Типичный поток
+/// ```
+/// AudioEngine → chunkBuffer(512) → SileroVAD.detectSpeech()
+///    → isSpeech=true → WhisperKit.transcribe()
+///    → PronunciationScorer.score()
+/// ```
+///
+/// ## Пример
+/// ```swift
+/// let vad: VADProtocol = LiveSileroVAD()
+/// try await vad.prepare()
+///
+/// // Одиночный чанк
+/// let result = try await vad.detectSpeech(chunk: chunkBuffer, timestamp: 1.5)
+/// if result.isSpeech {
+///     // Передать в WhisperKit
+/// }
+///
+/// // Весь буфер
+/// let session = try await vad.processBuffer(recordingBuffer)
+/// print("Речь: \(session.speechDuration)с из \(session.chunks.count * 32)ms total")
+/// ```
+///
+/// ## See Also
+/// - ``PronunciationScorerProtocol``
+/// - ``MFCCExtractor``
 protocol VADProtocol: Sendable {
     /// Обрабатывает один 512-сэмпловый чанк.
     func detectSpeech(

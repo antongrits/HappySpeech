@@ -3,21 +3,41 @@ import OSLog
 import UserNotifications
 
 // MARK: - NotificationServiceLive
-//
-// Production-уровень уведомлений HappySpeech. Обёртка вокруг UNUserNotificationCenter
-// с поддержкой ежедневного напоминания, стрик-оповещения, еженедельного отчёта
-// для родителя и разового совета (parent tip). Kids-mode полностью отключает
-// планирование и отменяет pending-запросы — это гигиена для детского контура.
-//
-// Идентификаторы запросов:
-//   • hs.daily.reminder       — повторяется каждый день в установленное время
-//   • hs.streak.reminder      — одноразовое на ближайшее 19:00, обновляется каждый запуск
-//   • hs.weekly.report        — воскресенье 18:00 (Europe/Moscow), повторяется
-//   • hs.parent.tip.<uuid>    — одноразовые подсказки, живут до даты trigger
-//
-// Все тексты — на русском через String Catalog (`String(localized:)`). Никаких
-// debug-строк в user-facing payload. Логи — только через HSLogger (OSLog).
 
+/// Production-реализация ``NotificationService`` через UNUserNotificationCenter.
+///
+/// `NotificationServiceLive` управляет четырьмя типами уведомлений:
+///
+/// | Идентификатор | Тип | Расписание |
+/// |--------------|-----|-----------|
+/// | `hs.daily.reminder` | Повторяющееся | Ежедневно в заданное время |
+/// | `hs.streak.reminder` | Одноразовое | 19:00 ближайшего дня |
+/// | `hs.weekly.report` | Повторяющееся | Вс 18:00 Europe/Moscow |
+/// | `hs.parent.tip.<uuid>` | Одноразовое | По дате trigger |
+///
+/// ### Kids-mode
+/// Когда `UserDefaults["happyspeech.kidsModeActive"] == true`, сервис:
+/// - **не планирует** новые уведомления
+/// - **отменяет** все pending запросы
+///
+/// Все тексты через String Catalog (`String(localized:)`).
+/// Логи через ``HSLogger`` (OSLog). Нет debug-строк в user-facing payload.
+///
+/// ## Пример
+/// ```swift
+/// let service = NotificationServiceLive()
+/// let granted = await service.requestPermission()
+/// if granted {
+///     // Напоминание в 17:30
+///     try await service.scheduleDailyReminder(at: 17, minute: 30)
+/// }
+/// // Перед выходом из системы
+/// await service.cancelAllReminders()
+/// ```
+///
+/// ## See Also
+/// - ``NotificationService``
+/// - ``HapticService``
 public final class NotificationServiceLive: NotificationService, @unchecked Sendable {
 
     // MARK: - Identifiers

@@ -1,11 +1,28 @@
 import SwiftUI
 
 // MARK: - LyalyaState
-//
-// Типо-безопасный псевдоним над MascotMood для использования
-// в контексте конкретных экранов. Маппинг → MascotMood прямой.
-// Добавление нового состояния: обновить rivIndex в HSRiveView.swift.
 
+/// Типо-безопасные состояния маскота Ляли для использования на экранах фич.
+///
+/// `LyalyaState` — высокоуровневый псевдоним над ``MascotMood``. Каждый кейс
+/// маппируется в соответствующий `MascotMood` и передаётся в ``HSMascotView``
+/// через ``LyalyaMascotView``.
+///
+/// При добавлении нового состояния обновить:
+/// 1. `rivIndex` в `HSRiveView.swift` (Rive state machine input)
+/// 2. `fallbackEmoji` — для accessibility и SwiftUI-fallback
+/// 3. `localizedDescription` — для Preview и VoiceOver
+///
+/// ## Пример
+/// ```swift
+/// LyalyaMascotView(state: .celebrating, size: 160)
+/// LyalyaMascotView(state: .thinking)
+/// ```
+///
+/// ## See Also
+/// - ``LyalyaMascotView``
+/// - ``MascotMood``
+/// - ``HSMascotView``
 public enum LyalyaState: String, CaseIterable, Sendable {
     case idle
     case waving
@@ -69,19 +86,41 @@ public enum LyalyaState: String, CaseIterable, Sendable {
 }
 
 // MARK: - LyalyaMascotView
-//
-// Высокоуровневая обёртка над HSMascotView.
-//
-// API для экранов:
-//   LyalyaMascotView(state: .celebrating, size: 160)
-//   LyalyaMascotView(state: .explaining, size: 120, mouthAmplitude: $amplitude)
-//   LyalyaMascotView(state: .idle, onTap: { ... })
-//
-// Lip-sync: передай Binding<Float> (0.0–1.0) в mouthAmplitude
-//           для синхронизации с TTS/аудиоамплитудой.
-//
-// Reduced Motion: обрабатывается внутри HSMascotView → HSRiveView.
 
+/// Маскот Ляля — высокоуровневая обёртка над ``HSMascotView`` с lip-sync поддержкой.
+///
+/// `LyalyaMascotView` — основной способ отображать маскота на экранах детского контура.
+/// Принимает ``LyalyaState`` (10 состояний), размер и опциональный `Binding<Float>`
+/// для real-time синхронизации рта с аудиоамплитудой (TTS или запись голоса).
+///
+/// Внутри использует ``HSMascotView`` (7-слойный рендер: Rive + aura + particles)
+/// и `MouthBubbleOverlay` для ARFaceAnchor lip-sync, когда AR-сессия активна.
+///
+/// Поддерживает `@Environment(\.accessibilityReduceMotion)` — все анимации отключаются.
+/// Кастомизация (скин, цвет) читается из `@Environment(LyalyaCustomizationStorage.self)`.
+///
+/// ## Пример
+/// ```swift
+/// // Стандартное использование
+/// LyalyaMascotView(state: .celebrating, size: 160)
+///
+/// // С lip-sync при воспроизведении TTS
+/// LyalyaMascotView(
+///     state: .explaining,
+///     size: 120,
+///     mouthAmplitude: $audioAmplitude
+/// )
+///
+/// // С tap-обработчиком
+/// LyalyaMascotView(state: .idle, onTap: {
+///     interactor.lyalyaTapped()
+/// })
+/// ```
+///
+/// ## See Also
+/// - ``HSMascotView``
+/// - ``LyalyaState``
+/// - ``MascotLipSyncState``
 public struct LyalyaMascotView: View {
 
     // MARK: - Public API

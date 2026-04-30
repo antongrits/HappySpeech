@@ -1,8 +1,39 @@
 import SwiftUI
 
 // MARK: - SpacingTokens
-// 4pt base grid. Translated from tokens.jsx sp: { 1:4, 2:8, 3:12, 4:16, 5:20, 6:24, 8:32, 10:40, 12:48, 16:64 }
 
+/// Система отступов на базе 4pt-сетки.
+///
+/// `SpacingTokens` предоставляет именованные константы для всех отступов,
+/// выровненных на 4pt-сетку. Переведены из дизайн-прототипа `tokens.jsx`.
+///
+/// Используй **семантические алиасы** вместо числовых (`sp1`–`sp16`) —
+/// они явно выражают назначение:
+///
+/// | Алиас | Значение | Назначение |
+/// |-------|---------|-----------|
+/// | `micro` | 4pt | Иконка + текст |
+/// | `tiny` | 8pt | Внутри компонента |
+/// | `small` | 12pt | Между элементами списка |
+/// | `regular` | 16pt | Стандартный отступ |
+/// | `screenEdge` | 24pt | Горизонтальные поля экрана |
+/// | `cardPad` | 20pt | Внутренние отступы карточки |
+/// | `sectionGap` | 32pt | Между секциями |
+///
+/// ## Пример
+/// ```swift
+/// VStack(spacing: SpacingTokens.listGap) {
+///     ForEach(items) { item in
+///         HSCard { ... }
+///     }
+/// }
+/// .padding(.horizontal, SpacingTokens.screenEdge)
+/// .padding(.top, SpacingTokens.pageTop)
+/// ```
+///
+/// ## See Also
+/// - ``ColorTokens``
+/// - ``RadiusTokens``
 public enum SpacingTokens {
     public static let sp1: CGFloat = 4
     public static let sp2: CGFloat = 8

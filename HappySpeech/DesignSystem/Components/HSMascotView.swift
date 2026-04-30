@@ -24,35 +24,44 @@ public enum PointingDirection: Sendable {
 }
 
 // MARK: - HSMascotView
-//
-// ADR-V12-RIVE: Outcome C — Composite wrapper (Plan v12 Block A)
-//
-// 7-слойная архитектура (снизу вверх в ZStack):
-//   Layer 1: lyalya.riv через HSRiveView — background motion (skills.riv MIT base)
-//   Layer 2: .colorMultiply tinting — warm/cool/nature/classic
-//   Layer 3: MoodAuraView — state-specific ambient glow (новое в v12)
-//   Layer 4: EmotionParticlesView — state-specific floating particles (новое в v12)
-//   Layer 5: mouth bubble overlay — real-time lip-sync (ADR-V10-FACEPOSE)
-//   Layer 6: SF Symbol decorative skin overlay — princess/scientist/athlete/artist
-//   Layer 7: breathing motion .scaleEffect 1.0 → 1.03 (улучшено в v12: shake при encouraging)
-//
-// Улучшения v12 (Outcome C):
-//   - MoodAuraView: ambient radial glow под маскотом, цвет зависит от настроения
-//   - EmotionParticlesView: частицы для celebrating (звёзды), happy (сердечки),
-//     thinking (точки вопроса), encouraging (плюсы), singing (ноты)
-//   - EntranceModifier: scale-in + opacity при появлении нового состояния
-//   - ShakeEffect: мягкое горизонтальное покачивание при encouraging (заменяет bounce)
-//   - Waving hand overlay: SF Symbol машущей руки при waving
-//   - PointingArrow: анимированная стрелка при pointing
-//
-// Primary: Rive state machine через HSRiveView (если lyalya.riv в бандле)
-// Fallback: pure SwiftUI ButterflyShape (всегда работает без ассета)
-//
-// Lip-sync: при передаче audioAmplitude применяет low-pass фильтрацию (τ ≈ 50ms)
-// и передаёт нормализованное значение в Rive input "mouthOpen".
-//
-// Reduced Motion: все анимации отключаются, Rive показывает статичный первый кадр.
 
+/// 7-слойный рендер маскота Ляли: Rive + aura + particles + lip-sync.
+///
+/// `HSMascotView` — низкоуровневый рендер-компонент. На экранах фич используйте
+/// ``LyalyaMascotView`` вместо прямого обращения к `HSMascotView`.
+///
+/// ### Архитектура слоёв (снизу вверх в ZStack)
+///
+/// 1. `lyalya.riv` через HSRiveView — Rive state machine "LyalyaSM"
+/// 2. `.colorMultiply` tinting — warm / cool / nature / classic (кастомизация скина)
+/// 3. `MoodAuraView` — ambient radial glow под маскотом, цвет зависит от настроения
+/// 4. `EmotionParticlesView` — частицы: звёзды (.celebrating), сердечки (.happy),
+///    знаки вопроса (.thinking), плюсы (.encouraging), ноты (.singing)
+/// 5. Mouth bubble overlay — real-time lip-sync через ``MascotLipSyncState``
+/// 6. SF Symbol decorative skin overlay — princess / scientist / athlete / artist
+/// 7. Breathing motion `.scaleEffect 1.0 → 1.03` + shake при `.encouraging`
+///
+/// ### Fallback
+/// Если `lyalya.riv` отсутствует в бандле — используется чистый SwiftUI `ButterflyShape`.
+///
+/// ### Lip-sync
+/// При передаче `audioAmplitude` применяет low-pass фильтрацию (τ ≈ 50ms)
+/// и передаёт нормализованное значение в Rive input `"mouthOpen"`.
+///
+/// ## Пример
+/// ```swift
+/// // Обычно используется через LyalyaMascotView:
+/// LyalyaMascotView(state: .celebrating, size: 160)
+///
+/// // Прямое использование (только в компонентах DS):
+/// HSMascotView(mood: .happy, size: 120, audioAmplitude: $amplitude)
+/// ```
+///
+/// ## See Also
+/// - ``LyalyaMascotView``
+/// - ``MascotMood``
+/// - ``MascotLipSyncState``
+/// - ``MascotEyeContactState``
 public struct HSMascotView: View {
 
     // MARK: - Public API

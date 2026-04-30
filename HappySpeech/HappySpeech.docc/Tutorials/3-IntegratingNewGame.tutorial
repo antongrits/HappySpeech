@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tutorial xmlns="https://developer.apple.com/tutorials/v1.0"
+          time="20">
+
+    <Intro title="Новый шаблон игры в Clean Swift VIP">
+        <Description>
+            Узнайте, как добавить новый шаблон логопедической игры в HappySpeech.
+            Туториал охватывает полную Clean Swift VIP структуру: View, Interactor,
+            Presenter, Router, Models и Workers.
+        </Description>
+    </Intro>
+
+    <Section title="Создание структуры фичи">
+
+        <ContentAndMedia>
+            <Paragraph>
+                Каждый шаблон игры — отдельная фича в Features/LessonPlayer/Templates/.
+                Все фичи следуют единому Clean Swift паттерну с пятью обязательными
+                файлами и папкой Workers.
+            </Paragraph>
+        </ContentAndMedia>
+
+        <Step>
+            <Description>
+                Создайте папку Features/LessonPlayer/Templates/MyGame/.
+                Внутри создайте пять файлов: MyGameView.swift, MyGameInteractor.swift,
+                MyGamePresenter.swift, MyGameRouter.swift, MyGameModels.swift.
+                Также создайте папку Workers/.
+            </Description>
+        </Step>
+
+        <Step>
+            <Description>
+                Откройте MyGameModels.swift. Определите три вложенных enum:
+                Request (данные от View к Interactor), Response (данные от Interactor
+                к Presenter), ViewModel (данные от Presenter к View).
+            </Description>
+        </Step>
+
+        <Step>
+            <Description>
+                Пример структуры MyGameModels.swift:
+
+                enum MyGame {
+                    enum LoadContent {
+                        struct Request {}
+                        struct Response { let words: [ContentWord] }
+                        struct ViewModel { let displayWords: [String] }
+                    }
+                    enum SubmitAnswer {
+                        struct Request { let selectedWord: String }
+                        struct Response { let isCorrect: Bool; let score: Int }
+                        struct ViewModel { let feedbackText: String; let stars: Int }
+                    }
+                }
+            </Description>
+        </Step>
+
+    </Section>
+
+    <Section title="Interactor и Worker">
+
+        <ContentAndMedia>
+            <Paragraph>
+                Interactor содержит всю бизнес-логику. Вызовы сервисов изолируются
+                в отдельные Workers — это улучшает тестируемость и соответствует
+                Single Responsibility.
+            </Paragraph>
+        </ContentAndMedia>
+
+        <Step>
+            <Description>
+                Создайте Workers/MyGameContentWorker.swift. Worker принимает
+                ContentService через init-инъекцию и предоставляет async метод
+                loadWords(for soundGroup:) -> [ContentWord].
+            </Description>
+        </Step>
+
+        <Step>
+            <Description>
+                В MyGameInteractor.swift реализуйте протокол MyGameBusinessLogic
+                с методами loadContent(request:) и submitAnswer(request:).
+                Interactor хранит ссылку на Presenter (через протокол MyGamePresentationLogic).
+            </Description>
+        </Step>
+
+        <Step>
+            <Description>
+                Никогда не вызывайте сервисы из Data/, ML/, Sync/ напрямую из Interactor.
+                Только через Workers и протоколы Services.
+                Это правило из архитектурного слоя HappySpeech.
+            </Description>
+        </Step>
+
+    </Section>
+
+    <Section title="Presenter и View">
+
+        <ContentAndMedia>
+            <Paragraph>
+                Presenter трансформирует бизнес-данные (Response) в UI-данные (ViewModel).
+                View только рендерит ViewModel — никакой логики в View.
+            </Paragraph>
+        </ContentAndMedia>
+
+        <Step>
+            <Description>
+                В MyGamePresenter.swift реализуйте протокол MyGamePresentationLogic.
+                Метод presentContent(response:) должен сформировать ViewModel из Response
+                и передать её обратно в View через @Observable модель.
+            </Description>
+        </Step>
+
+        <Step>
+            <Description>
+                MyGameView.swift — SwiftUI View, наблюдает за @Observable ViewModel.
+                Использует только компоненты из DesignSystem: HSButton, HSCard,
+                LyalyaMascotView. Никаких hex-цветов, только ColorTokens.
+            </Description>
+        </Step>
+
+        <Step>
+            <Description>
+                Добавьте VoiceOver метки на все интерактивные элементы:
+                .accessibilityLabel(), .accessibilityHint(), .accessibilityRole().
+                Проверьте Dynamic Type — текст должен масштабироваться от .small
+                до .accessibilityLarge без обрезания.
+            </Description>
+        </Step>
+
+    </Section>
+
+    <Section title="Регистрация игры">
+
+        <ContentAndMedia>
+            <Paragraph>
+                После реализации VIP структуры нужно зарегистрировать новый шаблон
+                в LessonPlayer и ContentEngine, чтобы он появился в дневном маршруте.
+            </Paragraph>
+        </ContentAndMedia>
+
+        <Step>
+            <Description>
+                Откройте Features/LessonPlayer/LessonPlayerRouter.swift.
+                Добавьте кейс в switch по типу шаблона игры и навигацию
+                к MyGameView через NavigationStack.
+            </Description>
+        </Step>
+
+        <Step>
+            <Description>
+                Откройте Content/ContentEngine.swift. В методе gameTemplates()
+                добавьте новый шаблон с уникальным идентификатором — он будет
+                использоваться AdaptivePlannerService при построении дневного маршрута.
+            </Description>
+        </Step>
+
+        <Step>
+            <Description>
+                Напишите unit-тесты для Interactor и Presenter в HappySpeechTests/.
+                Используйте mock-реализации Workers и Services.
+                Цель: покрытие всех Request/Response сценариев.
+            </Description>
+        </Step>
+
+    </Section>
+
+    <Assessments>
+        <MultipleChoice>
+            <Prompt>Какой компонент Clean Swift отвечает за трансформацию бизнес-данных в UI-данные?</Prompt>
+            <Choices>
+                <Choice correct="true">
+                    <Text>Presenter</Text>
+                    <Justification>
+                        Presenter получает Response от Interactor и формирует
+                        ViewModel для View. Это его единственная ответственность.
+                    </Justification>
+                </Choice>
+                <Choice correct="false">
+                    <Text>Interactor</Text>
+                    <Justification>
+                        Interactor содержит бизнес-логику и формирует Response,
+                        но не занимается трансформацией для UI.
+                    </Justification>
+                </Choice>
+                <Choice correct="false">
+                    <Text>View</Text>
+                    <Justification>
+                        View только рендерит ViewModel — в ней нет логики
+                        трансформации данных.
+                    </Justification>
+                </Choice>
+            </Choices>
+        </MultipleChoice>
+    </Assessments>
+
+</Tutorial>

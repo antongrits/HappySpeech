@@ -4,19 +4,39 @@ import OSLog
 
 // MARK: - VoiceCloneService Protocol
 
-/// Протокол сервиса клонирования голоса — placeholder для post-v1.0.
-/// Reference data: HappySpeech/Resources/Models/voice_clone_reference.wav
+/// Сервис клонирования голоса маскота Ляли — placeholder для post-v1.0.
+///
+/// `VoiceCloneService` определяет API для синтеза речи с кастомным голосом.
+/// В v1.0 реализовано только `loadReference(speakerIndex:)` — загрузка
+/// эталонного аудио-файла. Клонирование голоса (`cloneVoice`) не реализовано.
+///
+/// Reference data: `Resources/Models/voice_clone_reference.wav`
 /// (47.4 MB, 25.9 минут синтетической русской речи, 10 голосов через edge-tts).
 ///
-/// v1.0 ограничения:
-/// - `isCloneSupported` возвращает false
+/// ### v1.0 ограничения
+/// - `isCloneSupported` возвращает `false`
 /// - `cloneVoice` бросает `VoiceCloneError.unsupportedInVersion10`
-/// - `loadReference` работает корректно — возвращает URL embedded reference файла
+/// - `loadReference` работает корректно
 ///
-/// Post-v1.0 roadmap:
-/// - v1.1: XTTS-v2 / TortoiseTTS Core ML integration
-/// - v1.2: Real child voice samples с parent consent UI
+/// ### Roadmap
+/// - v1.1: XTTS-v2 / TortoiseTTS Core ML интеграция
+/// - v1.2: Реальные голоса ребёнка с parent consent UI
 /// - v1.3: Per-child custom mascot voice в настройках
+///
+/// ## Пример
+/// ```swift
+/// let service: VoiceCloneService = LiveVoiceCloneService()
+///
+/// // Всегда работает в v1.0
+/// let url = try await service.loadReference(speakerIndex: 0)
+///
+/// // Выбрасывает unsupportedInVersion10 в v1.0
+/// let data = try await service.cloneVoice(text: "Привет!", speakerIndex: 0)
+/// ```
+///
+/// ## See Also
+/// - ``AmbientSoundService``
+/// - ``NotificationServiceLive``
 public protocol VoiceCloneService: Sendable {
     /// Возвращает URL embedded reference audio файла для указанного диктора.
     /// В v1.0 file существует но клонирование не поддерживается.

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tutorial xmlns="https://developer.apple.com/tutorials/v1.0"
+          time="15">
+
+    <Intro title="Добавление нового звука в контент-пак">
+        <Description>
+            Узнайте, как добавить новую звуковую группу в HappySpeech.
+            Туториал охватывает структуру JSON контент-пака, схему валидации,
+            загрузку через ContentEngine и регистрацию нового PronunciationScorer.
+        </Description>
+    </Intro>
+
+    <Section title="Структура контент-пака">
+
+        <ContentAndMedia>
+            <Paragraph>
+                Контент хранится в JSON-файлах в папке Content/Seed/.
+                Каждый пак описывает звуковую группу, список слов и метаданные упражнений.
+                Схема пака задокументирована в Content/Schemas/content-pack.schema.json.
+            </Paragraph>
+        </ContentAndMedia>
+
+        <Step>
+            <Description>
+                Откройте файл Content/Seed/sound_s_pack.json — это эталонный пак
+                для С-группы звуков (свистящие: С, З, Ц). Изучите структуру:
+                поля soundGroup, phonemes, words, exercises.
+            </Description>
+        </Step>
+
+        <Step>
+            <Description>
+                Создайте новый файл Content/Seed/sound_r_pack.json для Р-группы.
+                Укажите soundGroup: "sonants", phonemes: ["Р", "Рь"].
+                Добавьте не менее 20 слов по позиции звука (начало/середина/конец).
+            </Description>
+        </Step>
+
+        <Step>
+            <Description>
+                Каждое слово в паке должно содержать поля:
+                text (само слово), position (initial/medial/final),
+                syllableCount (количество слогов) и audioFile (путь к .m4a файлу).
+            </Description>
+        </Step>
+
+    </Section>
+
+    <Section title="Регистрация в ContentEngine">
+
+        <ContentAndMedia>
+            <Paragraph>
+                ContentEngine.swift отвечает за загрузку паков и сборку Lesson-объектов.
+                Новый пак нужно зарегистрировать в функции availablePacks().
+            </Paragraph>
+        </ContentAndMedia>
+
+        <Step>
+            <Description>
+                Откройте Content/ContentEngine.swift. Найдите метод
+                `availablePacks() -> [ContentPack]`. Добавьте новый пак:
+            </Description>
+            <Code file="ContentEngine.swift" name="ContentEngine.swift">
+                <Highlight start="1" end="5"/>
+            </Code>
+        </Step>
+
+        <Step>
+            <Description>
+                Убедитесь, что JSON-файл добавлен в target HappySpeech как ресурс
+                (Build Phases → Copy Bundle Resources). Иначе он не попадёт в бандл.
+            </Description>
+        </Step>
+
+        <Step>
+            <Description>
+                Запустите приложение в симуляторе. Зайдите в Settings → Debug →
+                Content Packs. Новый пак должен появиться в списке.
+            </Description>
+        </Step>
+
+    </Section>
+
+    <Section title="Подключение PronunciationScorer">
+
+        <ContentAndMedia>
+            <Paragraph>
+                Каждая звуковая группа требует отдельной Core ML модели.
+                Для Р-группы нужна модель PronunciationScorer_sonants.mlpackage —
+                она уже существует в Resources/Models/.
+            </Paragraph>
+        </ContentAndMedia>
+
+        <Step>
+            <Description>
+                Откройте ML/PronunciationScorer.swift. Найдите enum PhonemeGroup.
+                Убедитесь, что кейс .sonants присутствует и маппит правильный
+                .mlpackage через computed property modelName.
+            </Description>
+        </Step>
+
+        <Step>
+            <Description>
+                Проверьте вход модели: MFCC тензор [1, 40, 150] для 1.5 секунды
+                аудио при 16kHz. Запустите unit-тест HappySpeechTests/ML/
+                PronunciationScorerTests.swift для валидации.
+            </Description>
+        </Step>
+
+    </Section>
+
+    <Assessments>
+        <MultipleChoice>
+            <Prompt>Какой формат использует PronunciationScorer для входных данных?</Prompt>
+            <Choices>
+                <Choice correct="true">
+                    <Text>MFCC тензор [1, 40, 150], 16kHz mono, 1.5 секунды</Text>
+                    <Justification>
+                        Именно такой формат используют все четыре модели
+                        PronunciationScorer в проекте.
+                    </Justification>
+                </Choice>
+                <Choice correct="false">
+                    <Text>Raw PCM float32 массив, 44100 Hz стерео</Text>
+                    <Justification>
+                        44100 Hz — стандарт для музыки, но не для ML речи.
+                        HappySpeech использует 16kHz mono.
+                    </Justification>
+                </Choice>
+                <Choice correct="false">
+                    <Text>Mel-spectrogram [80, 3000], 22050 Hz</Text>
+                    <Justification>
+                        Mel-spectrogram используется в некоторых других системах,
+                        но не в PronunciationScorer HappySpeech.
+                    </Justification>
+                </Choice>
+            </Choices>
+        </MultipleChoice>
+    </Assessments>
+
+</Tutorial>

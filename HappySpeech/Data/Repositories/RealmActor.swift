@@ -4,9 +4,45 @@ import RealmSwift
 
 // MARK: - RealmActor
 
-/// Thread-safe Realm wrapper using Swift actors.
-/// All Realm operations must go through this actor.
-/// Results are always mapped to Sendable types inside the actor — Realm objects never cross actor boundaries.
+/// Thread-safe обёртка над Realm через Swift actor — единственный путь к локальной БД.
+///
+/// `RealmActor` обеспечивает изоляцию конкурентного доступа к Realm через actor-модель Swift 6.
+/// Все операции с Realm **обязаны** проходить через этот актор. Realm-объекты никогда
+/// не пересекают границу актора — только Sendable DTO, полученные через маппинг внутри актора.
+///
+/// ### Правила использования
+/// - Вызывай через `await realmActor.fetchAllMapped(...)` из сервисов
+/// - Никогда не передавай `RealmSwift.Object` напрямую — только Sendable DTOs
+/// - Открой Realm через `open(configuration:)` перед первым использованием
+///
+/// ### Основные операции
+/// - `fetchAllMapped(_:map:)` — все объекты типа T, смаппированные в DTO
+/// - `fetchMapped(_:primaryKey:map:)` — один объект по PK
+/// - `fetchFilteredMapped(_:predicate:map:)` — с фильтрацией
+/// - `writeVoid(_:)` — транзакция записи
+/// - `updateField(_:primaryKey:block:)` — обновление конкретного объекта
+///
+/// ## Пример
+/// ```swift
+/// let actor = RealmActor()
+/// try await actor.open()
+///
+/// // Чтение — маппинг внутри актора гарантирует Sendable
+/// let sessions: [SessionDTO] = try await actor.fetchAllMapped(
+///     SessionObject.self
+/// ) { obj in
+///     SessionDTO(id: obj.id, score: obj.score, date: obj.date)
+/// }
+///
+/// // Запись
+/// try await actor.writeVoid { realm in
+///     realm.add(newObject, update: .modified)
+/// }
+/// ```
+///
+/// ## See Also
+/// - ``AppError``
+/// - ``HSLogger``
 public actor RealmActor {
 
     private var realm: Realm?

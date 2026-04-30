@@ -13,12 +13,35 @@ public enum HSLiquidGlassStyle: Sendable, Equatable {
 
 // MARK: - HSLiquidGlassCard
 
-/// Glassmorphism card that adapts to the OS version:
-/// - iOS 26+: uses native `.glassEffect()` API for true system-level glass.
-/// - iOS 17–25: falls back to `.ultraThinMaterial` + tint overlay + hairline border.
+/// Glassmorphism-карточка с адаптацией к версии ОС.
 ///
-/// Padding and corner radius come from `SpacingTokens` / `RadiusTokens` so
-/// the card is always consistent with the rest of the design system.
+/// `HSLiquidGlassCard` автоматически выбирает рендер в зависимости от iOS:
+/// - **iOS 26+**: нативный `.glassEffect()` API — настоящее системное стекло с размытием.
+/// - **iOS 17–25**: fallback через `.ultraThinMaterial` + tint overlay + hairline border.
+///
+/// При `@Environment(\.accessibilityReduceMotion) == true` всегда переключается на
+/// статичный legacyBody без blur-анимаций — требование accessibility.
+///
+/// Отступы и радиус скругления берутся из ``SpacingTokens`` и ``RadiusTokens``,
+/// поэтому карточка всегда согласована с остальным Design System.
+///
+/// ## Пример
+/// ```swift
+/// HSLiquidGlassCard(style: .primary) {
+///     LyalyaMascotView(state: .happy, size: 120)
+///     Text("Привет!").font(TypographyTokens.headline())
+/// }
+///
+/// HSLiquidGlassCard(style: .tinted(ColorTokens.Brand.lilac)) {
+///     Text("AR-режим активен")
+/// }
+/// ```
+///
+/// ## See Also
+/// - ``HSCard``
+/// - ``HSLiquidGlassStyle``
+/// - ``SpacingTokens``
+/// - ``RadiusTokens``
 public struct HSLiquidGlassCard<Content: View>: View {
 
     private let style: HSLiquidGlassStyle

@@ -1,9 +1,38 @@
 import SwiftUI
 
 // MARK: - ColorTokens
-// Translated from happyspeech-design/project/tokens.jsx
-// All colors use semantic Asset Catalog names for light/dark adaptability.
 
+/// Семантическая цветовая система HappySpeech — единственный источник цветов в фичах.
+///
+/// `ColorTokens` содержит три пространства имён (контура) + Brand-палитру.
+/// Все цвета ссылаются на `Color(Asset Catalog name)` и автоматически
+/// адаптируются к Light / Dark теме через именованные ассеты.
+///
+/// > Important: Никогда не используй hex-литералы в фичах.
+/// > Только `ColorTokens.*` — это требование DoD и SwiftLint-правило.
+///
+/// ### Пространства имён
+/// - `ColorTokens.Brand` — брендовые акценты (coral, mint, lilac, gold...)
+/// - `ColorTokens.Kid` — тёплая кремовая палитра детского контура
+/// - `ColorTokens.Parent` — нейтральная холодная палитра родительского контура
+/// - `ColorTokens.Spec` — аналитическая палитра специалистского контура
+///
+/// ## Пример
+/// ```swift
+/// // CTA кнопка
+/// Text("Начать").foregroundStyle(ColorTokens.Brand.primary)
+///
+/// // Фон детского экрана
+/// Color(ColorTokens.Kid.bg)
+///
+/// // Акцент специалиста
+/// Rectangle().fill(ColorTokens.Spec.accent)
+/// ```
+///
+/// ## See Also
+/// - ``TypographyTokens``
+/// - ``SpacingTokens``
+/// - ``HSButton``
 public enum ColorTokens {
 
     // MARK: - Brand

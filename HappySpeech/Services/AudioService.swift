@@ -73,6 +73,32 @@ public struct ContentItem: Sendable, Identifiable {
 
 // MARK: - AdaptivePlannerService Protocol
 
+/// Сервис адаптивного планирования ежедневного маршрута обучения.
+///
+/// `AdaptivePlannerService` формирует персональный дневной маршрут (`AdaptiveRoute`)
+/// на основе прогресса ребёнка, алгоритма spaced repetition (SM-2) и уровня усталости.
+///
+/// ### Логика планирования
+/// - Читает последние N сессий из Realm через `RealmActor`
+/// - Вычисляет усталость (`FatigueLevel`): 3 подряд сессии с ошибками → короткий маршрут
+/// - SM-2 spaced repetition: звук < 80% → повторить через 1 день,
+///   80–95% → через 3 дня, > 95% → через 7 дней
+/// - Чередование шаблонов: два одинаковых шаблона подряд запрещены
+/// - Ограничение по возрасту: 5–6 лет = 7–10 мин, 6–7 = 10–12, 7–8 = 12–15
+///
+/// ## Пример
+/// ```swift
+/// let planner: AdaptivePlannerService = LiveAdaptivePlannerService(realm: actor)
+/// let route = try await planner.buildDailyRoute(for: childId)
+/// for step in route.steps {
+///     print(step.targetSound, step.templateType)
+/// }
+/// ```
+///
+/// ## See Also
+/// - ``AdaptiveRoute``
+/// - ``RealmActor``
+/// - ``SyncService``
 public protocol AdaptivePlannerService: Sendable {
     func buildDailyRoute(for childId: String) async throws -> AdaptiveRoute
     func recordCompletion(sessionId: String, route: AdaptiveRoute) async throws
@@ -111,6 +137,44 @@ public struct RouteStepItem: Sendable {
 
 // MARK: - SyncService Protocol
 
+/// Сервис двунаправленной синхронизации Realm ↔ Firestore.
+///
+/// `SyncService` обеспечивает offline-first работу: все изменения пишутся локально
+/// в Realm, затем ставятся в очередь `SyncOperation` и выгружаются в Firestore при
+/// наличии сети. Конфликты разрешаются стратегией merge-by-max для числовых полей.
+///
+/// ### Поток данных
+/// ```
+/// Realm (local) ──→ SyncQueue ──→ Firestore (cloud)
+///                       ↑
+///               при наличии сети
+/// ```
+///
+/// ### Состояния (`SyncState`)
+/// - `.idle` — нет активной синхронизации
+/// - `.syncing(progress:)` — текущий прогресс 0.0–1.0
+/// - `.failed(message:)` — последняя синхронизация провалилась
+/// - `.completed(itemsSynced:)` — успешно синхронизировано N записей
+///
+/// ## Пример
+/// ```swift
+/// // Подписка на состояние (Parent Home banner)
+/// for await state in syncService.syncState {
+///     switch state {
+///     case .syncing(let progress): showProgress(progress)
+///     case .completed(let count): showSuccess(count)
+///     default: break
+///     }
+/// }
+///
+/// // Ручная полная синхронизация
+/// try await syncService.syncUserProgress(userId: userId)
+/// ```
+///
+/// ## See Also
+/// - ``AdaptivePlannerService``
+/// - ``RealmActor``
+/// - ``AppError``
 public protocol SyncService: Sendable {
     /// Current count of queued items awaiting upload. Asynchronous to support actor-isolated conformers.
     func pendingCount() async -> Int
@@ -258,6 +322,27 @@ public struct MicroStoryResponse: Codable, Sendable {
 
 // MARK: - NotificationService Protocol
 
+/// Протокол сервиса локальных уведомлений через UNUserNotificationCenter.
+///
+/// `NotificationService` управляет ежедневными напоминаниями, стрик-оповещениями
+/// и еженедельными отчётами для родителей. Производственная реализация —
+/// ``NotificationServiceLive``.
+///
+/// > Important: В kids-mode (UserDefaults ключ `happyspeech.kidsModeActive = true`)
+/// > сервис не планирует уведомления и отменяет все pending запросы.
+///
+/// ## Пример
+/// ```swift
+/// let service: NotificationService = NotificationServiceLive()
+/// let granted = await service.requestPermission()
+/// if granted {
+///     try await service.scheduleDailyReminder(at: 17, minute: 0) // 17:00
+/// }
+/// ```
+///
+/// ## See Also
+/// - ``NotificationServiceLive``
+/// - ``HapticService``
 public protocol NotificationService: Sendable {
     func scheduleDailyReminder(at hour: Int, minute: Int) async throws
     func cancelAllReminders() async
@@ -265,12 +350,30 @@ public protocol NotificationService: Sendable {
 }
 
 // MARK: - HapticService Protocol
-//
-// Расширенный протокол — CHHapticEngine 15 AHAP паттернов + legacy UIKit shim.
-// Реализации: LiveHapticService (CoreHaptics), FallbackHapticService (UIImpactFeedbackGenerator),
-// MockHapticService (тесты / Preview).
-// Определён в HapticService.swift; здесь — только protocol declaration для backward compat.
 
+/// Протокол тактильной отдачи через CHHapticEngine с legacy UIKit shim.
+///
+/// `HapticService` предоставляет 15 именованных AHAP-паттернов и три уровня
+/// интенсивности. Производственная реализация — `LiveHapticService` (CoreHaptics);
+/// на устройствах без Taptic Engine — `FallbackHapticService` (UIImpactFeedbackGenerator).
+///
+/// Реализации:
+/// - `LiveHapticService` — CHHapticEngine, iPhone 8+, iPad mini 5+
+/// - `FallbackHapticService` — UIImpactFeedbackGenerator, старые iPad
+/// - `MockHapticService` — тесты и Preview
+///
+/// ## Пример
+/// ```swift
+/// let haptic: HapticService = LiveHapticService()
+/// await haptic.play(pattern: .celebration)    // при правильном ответе
+/// await haptic.play(pattern: .errorBuzz)      // при ошибке
+/// haptic.impact(.medium)                       // legacy short tap
+/// ```
+///
+/// ## See Also
+/// - ``HapticPattern``
+/// - ``HapticIntensityLevel``
+/// - ``NotificationService``
 public protocol HapticService: Sendable {
     /// Воспроизвести именованный AHAP-паттерн.
     func play(pattern: HapticPattern) async
