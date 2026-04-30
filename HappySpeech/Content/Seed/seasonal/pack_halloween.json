@@ -2,415 +2,1515 @@
   "id": "pack_halloween",
   "soundTarget": "seasonal_halloween",
   "group": "сезонные",
-  "version": 1,
-  "description": "Хэллоуин — тыквы, призраки, «БУ-у». Целевые звуки: Ш, Ж, Х, С (шипящие и заднеязычные).",
+  "version": 2,
+  "description": "Хэллоуин — тыквы, призраки, «БУ-у». Целевые звуки: Ш, Ж, Ч, С, К, М (шипящие, свистящие, заднеязычные).",
   "season": "halloween",
   "active_months": [10, 11],
   "stages": {
     "stage_halloween": {
       "stageId": "stage_halloween",
       "title": "Хэллоуинский лес",
-      "note": "Слова на шипящие (Ш, Ж) и заднеязычные (Х) в Хэллоуинском контексте.",
+      "note": "Слова на шипящие (Ш, Ж, Ч) и заднеязычные (К, Х) в Хэллоуинском контексте. 60 слов + 50 фраз + 30 предложений + 10 историй = 150 items.",
       "units": [
         {
           "id": "hw_001",
           "word": "Тыква",
           "imageAssetId": "halloween_pumpkin",
+          "audioAsset": "lyalya_halloween_001.m4a",
           "soundTarget": "Т",
           "examplePhrase": "Большая оранжевая тыква",
-          "difficulty": 1
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "hw_002",
           "word": "Призрак",
           "imageAssetId": "halloween_ghost",
+          "audioAsset": "lyalya_halloween_002.m4a",
           "soundTarget": "Р",
           "examplePhrase": "Белый призрак летит по ночи",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_003",
           "word": "Маска",
           "imageAssetId": "halloween_mask",
+          "audioAsset": "lyalya_halloween_003.m4a",
           "soundTarget": "С",
           "examplePhrase": "Страшная маска с зубами",
-          "difficulty": 1
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "hw_004",
           "word": "Костюм",
           "imageAssetId": "halloween_costume",
+          "audioAsset": "lyalya_halloween_004.m4a",
           "soundTarget": "С",
           "examplePhrase": "Смешной костюм ведьмы",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_005",
           "word": "Ведьма",
           "imageAssetId": "halloween_witch",
+          "audioAsset": "lyalya_halloween_005.m4a",
           "soundTarget": "В",
           "examplePhrase": "Ведьма летит на метле",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_006",
           "word": "Паук",
           "imageAssetId": "halloween_spider",
+          "audioAsset": "lyalya_halloween_006.m4a",
           "soundTarget": "П",
           "examplePhrase": "Паук плетёт паутину",
-          "difficulty": 1
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "hw_007",
           "word": "Метла",
           "imageAssetId": "halloween_broom",
+          "audioAsset": "lyalya_halloween_007.m4a",
           "soundTarget": "М",
           "examplePhrase": "Метла у ведьмы быстрая",
-          "difficulty": 1
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "hw_008",
           "word": "Котёл",
           "imageAssetId": "halloween_cauldron",
+          "audioAsset": "lyalya_halloween_008.m4a",
           "soundTarget": "К",
           "examplePhrase": "В котле кипит зелье",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_009",
           "word": "Зелье",
           "imageAssetId": "halloween_potion",
+          "audioAsset": "lyalya_halloween_009.m4a",
           "soundTarget": "З",
           "examplePhrase": "Зелёное зелье шипит и булькает",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_010",
           "word": "Фонарь",
           "imageAssetId": "halloween_lantern",
+          "audioAsset": "lyalya_halloween_010.m4a",
           "soundTarget": "Ф",
           "examplePhrase": "Фонарь из тыквы светит в темноте",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_011",
           "word": "Конфета",
           "imageAssetId": "halloween_candy",
+          "audioAsset": "lyalya_halloween_011.m4a",
           "soundTarget": "К",
           "examplePhrase": "Вкусная конфета в обёртке",
-          "difficulty": 1
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "hw_012",
           "word": "Шуршать",
           "imageAssetId": "halloween_rustle",
+          "audioAsset": "lyalya_halloween_012.m4a",
           "soundTarget": "Ш",
           "examplePhrase": "Листья шуршат под ногами — ш-ш-ш",
-          "difficulty": 3
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "hw_013",
           "word": "Шёпот",
           "imageAssetId": "halloween_whisper",
+          "audioAsset": "lyalya_halloween_013.m4a",
           "soundTarget": "Ш",
           "examplePhrase": "Тихий шёпот в темноте — ш-ш-ш",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_014",
           "word": "Шорох",
           "imageAssetId": "halloween_rustle2",
+          "audioAsset": "lyalya_halloween_014.m4a",
           "soundTarget": "Ш",
           "examplePhrase": "Шорох в кустах — кто там?",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_015",
           "word": "Шипеть",
           "imageAssetId": "halloween_hiss",
+          "audioAsset": "lyalya_halloween_015.m4a",
           "soundTarget": "Ш",
           "examplePhrase": "Кошка шипит: ш-ш-ш!",
-          "difficulty": 3
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "hw_016",
           "word": "Жуть",
           "imageAssetId": "halloween_fright",
+          "audioAsset": "lyalya_halloween_016.m4a",
           "soundTarget": "Ж",
           "examplePhrase": "Какая жуть — кругом темно!",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_017",
           "word": "Жужжать",
           "imageAssetId": "halloween_buzz",
+          "audioAsset": "lyalya_halloween_017.m4a",
           "soundTarget": "Ж",
           "examplePhrase": "Летучая мышь жужжит: жжж",
-          "difficulty": 3
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "hw_018",
           "word": "Жуткий",
           "imageAssetId": "halloween_scary",
+          "audioAsset": "lyalya_halloween_018.m4a",
           "soundTarget": "Ж",
           "examplePhrase": "Жуткий лес в тёмную ночь",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_019",
           "word": "Летучая мышь",
           "imageAssetId": "halloween_bat",
+          "audioAsset": "lyalya_halloween_019.m4a",
           "soundTarget": "Л",
           "examplePhrase": "Летучая мышь летит ночью",
-          "difficulty": 3
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "hw_020",
-          "word": "Черепаха",
-          "imageAssetId": "halloween_tortoise",
+          "word": "Чёрный кот",
+          "imageAssetId": "halloween_black_cat",
+          "audioAsset": "lyalya_halloween_020.m4a",
           "soundTarget": "Ч",
-          "examplePhrase": "Чёрная черепаха в темноте",
-          "difficulty": 3
+          "examplePhrase": "Чёрный кот смотрит жёлтыми глазами",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_021",
           "word": "Хэллоуин",
           "imageAssetId": "halloween_title",
+          "audioAsset": "lyalya_halloween_021.m4a",
           "soundTarget": "Х",
           "examplePhrase": "Хэллоуин — праздник страха и конфет",
-          "difficulty": 3
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "hw_022",
           "word": "Хохот",
           "imageAssetId": "halloween_laugh",
+          "audioAsset": "lyalya_halloween_022.m4a",
           "soundTarget": "Х",
           "examplePhrase": "Страшный хохот в ночи: ха-ха-ха!",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_023",
           "word": "Скелет",
           "imageAssetId": "halloween_skeleton",
+          "audioAsset": "lyalya_halloween_023.m4a",
           "soundTarget": "С",
           "examplePhrase": "Скелет стоит в углу",
-          "difficulty": 3
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "hw_024",
           "word": "Череп",
           "imageAssetId": "halloween_skull",
+          "audioAsset": "lyalya_halloween_024.m4a",
           "soundTarget": "Ч",
           "examplePhrase": "Белый череп на полке",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_025",
           "word": "Сладость",
           "imageAssetId": "halloween_treat",
+          "audioAsset": "lyalya_halloween_025.m4a",
           "soundTarget": "С",
           "examplePhrase": "Сладость или пакость?",
-          "difficulty": 3
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "hw_026",
           "word": "Чудовище",
           "imageAssetId": "halloween_monster",
+          "audioAsset": "lyalya_halloween_026.m4a",
           "soundTarget": "Ч",
           "examplePhrase": "Большое зелёное чудовище рычит",
-          "difficulty": 3
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "hw_027",
           "word": "Страх",
           "imageAssetId": "halloween_fear",
+          "audioAsset": "lyalya_halloween_027.m4a",
           "soundTarget": "С",
           "examplePhrase": "Страх прячется в темноте",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_028",
           "word": "Звезда",
           "imageAssetId": "halloween_star",
+          "audioAsset": "lyalya_halloween_028.m4a",
           "soundTarget": "З",
           "examplePhrase": "Звёзды светят в тёмном небе",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_029",
-          "word": "Кот чёрный",
-          "imageAssetId": "halloween_black_cat",
-          "soundTarget": "К",
-          "examplePhrase": "Чёрный кот перебежал дорогу",
-          "difficulty": 2
+          "word": "Паутина",
+          "imageAssetId": "halloween_cobweb",
+          "audioAsset": "lyalya_halloween_029.m4a",
+          "soundTarget": "П",
+          "examplePhrase": "Паутина висит в тёмном углу",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "hw_030",
-          "word": "Паутина",
-          "imageAssetId": "halloween_cobweb",
-          "soundTarget": "П",
-          "examplePhrase": "Паутина висит в тёмном углу",
-          "difficulty": 3
+          "word": "Ночь",
+          "imageAssetId": "halloween_night",
+          "audioAsset": "lyalya_halloween_030.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Тёмная страшная ночь",
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "hw_031",
-          "word": "Ночь",
-          "imageAssetId": "halloween_night",
-          "soundTarget": "Ч",
-          "examplePhrase": "Тёмная страшная ночь",
-          "difficulty": 1
+          "word": "Луна",
+          "imageAssetId": "halloween_moon",
+          "audioAsset": "lyalya_halloween_031.m4a",
+          "soundTarget": "Л",
+          "examplePhrase": "Большая луна светит ярко",
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "hw_032",
-          "word": "Луна",
-          "imageAssetId": "halloween_moon",
-          "soundTarget": "Л",
-          "examplePhrase": "Большая луна светит ярко",
-          "difficulty": 1
+          "word": "Замок",
+          "imageAssetId": "halloween_castle",
+          "audioAsset": "lyalya_halloween_032.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Старый замок стоит на горе",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_033",
-          "word": "Замок",
-          "imageAssetId": "halloween_castle",
-          "soundTarget": "З",
-          "examplePhrase": "Старый замок стоит на горе",
-          "difficulty": 2
+          "word": "Шляпа",
+          "imageAssetId": "halloween_hat",
+          "audioAsset": "lyalya_halloween_033.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Остроконечная шляпа ведьмы",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_034",
-          "word": "Шляпа",
-          "imageAssetId": "halloween_hat",
-          "soundTarget": "Ш",
-          "examplePhrase": "Остроконечная шляпа ведьмы",
-          "difficulty": 2
+          "word": "Тень",
+          "imageAssetId": "halloween_shadow",
+          "audioAsset": "lyalya_halloween_034.m4a",
+          "soundTarget": "Т",
+          "examplePhrase": "Страшная тень на стене",
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "hw_035",
-          "word": "Тень",
-          "imageAssetId": "halloween_shadow",
-          "soundTarget": "Т",
-          "examplePhrase": "Страшная тень на стене",
-          "difficulty": 1
+          "word": "Жаба",
+          "imageAssetId": "halloween_toad",
+          "audioAsset": "lyalya_halloween_035.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жаба сидит у котла ведьмы",
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "hw_036",
-          "word": "Кладбище",
-          "imageAssetId": "halloween_graveyard",
-          "soundTarget": "К",
-          "examplePhrase": "На кладбище тихо и жутко",
-          "difficulty": 3
+          "word": "Зомби",
+          "imageAssetId": "halloween_zombie",
+          "audioAsset": "lyalya_halloween_036.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Зомби медленно идёт",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_037",
-          "word": "Жаба",
-          "imageAssetId": "halloween_toad",
-          "soundTarget": "Ж",
-          "examplePhrase": "Жаба сидит у котла ведьмы",
-          "difficulty": 1
+          "word": "Вампир",
+          "imageAssetId": "halloween_vampire",
+          "audioAsset": "lyalya_halloween_037.m4a",
+          "soundTarget": "В",
+          "examplePhrase": "Вампир спит в гробу",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_038",
-          "word": "Зомби",
-          "imageAssetId": "halloween_zombie",
-          "soundTarget": "З",
-          "examplePhrase": "Зомби медленно идёт",
-          "difficulty": 2
+          "word": "Шёлк",
+          "imageAssetId": "halloween_silk",
+          "audioAsset": "lyalya_halloween_038.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Шёлковый плащ шелестит — ш-ш-ш",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_039",
-          "word": "Вампир",
-          "imageAssetId": "halloween_vampire",
-          "soundTarget": "В",
-          "examplePhrase": "Вампир спит в гробу",
-          "difficulty": 2
+          "word": "Хижина",
+          "imageAssetId": "halloween_hut",
+          "audioAsset": "lyalya_halloween_039.m4a",
+          "soundTarget": "Х",
+          "examplePhrase": "Хижина ведьмы в лесу",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "hw_040",
-          "word": "Шёлк",
-          "imageAssetId": "halloween_silk",
-          "soundTarget": "Ш",
-          "examplePhrase": "Шёлковый плащ шелестит — ш-ш-ш",
-          "difficulty": 2
+          "word": "Светлячок",
+          "imageAssetId": "halloween_firefly",
+          "audioAsset": "lyalya_halloween_040.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Светлячок светится в темноте",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "hw_041",
-          "word": "Жест",
-          "imageAssetId": "halloween_gesture",
-          "soundTarget": "Ж",
-          "examplePhrase": "Жуткий жест руками",
-          "difficulty": 2
+          "word": "Шаг",
+          "imageAssetId": "halloween_step",
+          "audioAsset": "lyalya_halloween_041.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Слышу шаги — ш-ш-шаг",
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "hw_042",
-          "word": "Хижина",
-          "imageAssetId": "halloween_hut",
-          "soundTarget": "Х",
-          "examplePhrase": "Хижина ведьмы в лесу",
-          "difficulty": 3
+          "word": "Жутко",
+          "imageAssetId": "halloween_creepy",
+          "audioAsset": "lyalya_halloween_042.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жутко идти одному ночью",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_043",
-          "word": "Светлячок",
-          "imageAssetId": "halloween_firefly",
+          "word": "Сова",
+          "imageAssetId": "halloween_owl",
+          "audioAsset": "lyalya_halloween_043.m4a",
           "soundTarget": "С",
-          "examplePhrase": "Светлячок светится в темноте",
-          "difficulty": 3
+          "examplePhrase": "Сова кричит: «Ух-ух!»",
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "hw_044",
-          "word": "Шаг",
-          "imageAssetId": "halloween_step",
+          "word": "Шум",
+          "imageAssetId": "halloween_noise",
+          "audioAsset": "lyalya_halloween_044.m4a",
           "soundTarget": "Ш",
-          "examplePhrase": "Слышу шаги — ш-ш-шаг",
-          "difficulty": 1
+          "examplePhrase": "Страшный шум в темноте — ш-ш-ш",
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "hw_045",
-          "word": "Жутко",
-          "imageAssetId": "halloween_creepy",
-          "soundTarget": "Ж",
-          "examplePhrase": "Жутко идти одному ночью",
-          "difficulty": 2
+          "word": "Мумия",
+          "imageAssetId": "halloween_mummy",
+          "audioAsset": "lyalya_halloween_045.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Мумия замотана в бинты",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "hw_046",
-          "word": "Ховрах",
-          "imageAssetId": "halloween_gopher",
-          "soundTarget": "Х",
-          "examplePhrase": "Хитрый ховрах прячется в норе",
-          "difficulty": 3
+          "word": "Чердак",
+          "imageAssetId": "halloween_attic",
+          "audioAsset": "lyalya_halloween_046.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "На чердаке живут летучие мыши",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "hw_047",
-          "word": "Сова",
-          "imageAssetId": "halloween_owl",
-          "soundTarget": "С",
-          "examplePhrase": "Сова кричит: «Ух-ух!»",
-          "difficulty": 1
+          "word": "Кошка",
+          "imageAssetId": "halloween_cat",
+          "audioAsset": "lyalya_halloween_047.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кошка мяукает в темноте",
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "hw_048",
-          "word": "Шум",
-          "imageAssetId": "halloween_noise",
-          "soundTarget": "Ш",
-          "examplePhrase": "Страшный шум в темноте — ш-ш-ш",
-          "difficulty": 1
+          "word": "Чёрный",
+          "imageAssetId": "halloween_black",
+          "audioAsset": "lyalya_halloween_048.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чёрный плащ ведьмы",
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "hw_049",
-          "word": "Жидкость",
-          "imageAssetId": "halloween_liquid",
+          "word": "Жук",
+          "imageAssetId": "halloween_beetle",
+          "audioAsset": "lyalya_halloween_049.m4a",
           "soundTarget": "Ж",
-          "examplePhrase": "Зелёная жидкость в бутылке",
-          "difficulty": 3
+          "examplePhrase": "Жук ползёт по листу — ж-ж-ж",
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "hw_050",
-          "word": "Хлопок",
-          "imageAssetId": "halloween_pop",
-          "soundTarget": "Х",
-          "examplePhrase": "Громкий хлопок — бу-у-у!",
-          "difficulty": 2
+          "word": "Сок тыквы",
+          "imageAssetId": "halloween_pumpkin_juice",
+          "audioAsset": "lyalya_halloween_050.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Сок из тыквы оранжевый и сладкий",
+          "difficulty": 2,
+          "itemType": "word"
+        },
+        {
+          "id": "hw_051",
+          "word": "Шар",
+          "imageAssetId": "halloween_ball",
+          "audioAsset": "lyalya_halloween_051.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Оранжевый шар на столе",
+          "difficulty": 1,
+          "itemType": "word"
+        },
+        {
+          "id": "hw_052",
+          "word": "Маг",
+          "imageAssetId": "halloween_magician",
+          "audioAsset": "lyalya_halloween_052.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Маг машет волшебной палочкой",
+          "difficulty": 2,
+          "itemType": "word"
+        },
+        {
+          "id": "hw_053",
+          "word": "Кладбище",
+          "imageAssetId": "halloween_graveyard",
+          "audioAsset": "lyalya_halloween_053.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "На кладбище тихо и жутко",
+          "difficulty": 3,
+          "itemType": "word"
+        },
+        {
+          "id": "hw_054",
+          "word": "Зуб",
+          "imageAssetId": "halloween_tooth",
+          "audioAsset": "lyalya_halloween_054.m4a",
+          "soundTarget": "З",
+          "examplePhrase": "Острый зуб вампира",
+          "difficulty": 1,
+          "itemType": "word"
+        },
+        {
+          "id": "hw_055",
+          "word": "Жидкость",
+          "imageAssetId": "halloween_liquid",
+          "audioAsset": "lyalya_halloween_055.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Зелёная жидкость в бутылке",
+          "difficulty": 3,
+          "itemType": "word"
+        },
+        {
+          "id": "hw_056",
+          "word": "Стон",
+          "imageAssetId": "halloween_groan",
+          "audioAsset": "lyalya_halloween_056.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Стон из темноты — о-о-о",
+          "difficulty": 2,
+          "itemType": "word"
+        },
+        {
+          "id": "hw_057",
+          "word": "Кол",
+          "imageAssetId": "halloween_stake",
+          "audioAsset": "lyalya_halloween_057.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кол на заборе скрипит",
+          "difficulty": 1,
+          "itemType": "word"
+        },
+        {
+          "id": "hw_058",
+          "word": "Шорты",
+          "imageAssetId": "halloween_shorts",
+          "audioAsset": "lyalya_halloween_058.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Шорты скелетика смешные",
+          "difficulty": 2,
+          "itemType": "word"
+        },
+        {
+          "id": "hw_059",
+          "word": "Жало",
+          "imageAssetId": "halloween_sting",
+          "audioAsset": "lyalya_halloween_059.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жало у паука острое",
+          "difficulty": 2,
+          "itemType": "word"
+        },
+        {
+          "id": "hw_060",
+          "word": "Чулок",
+          "imageAssetId": "halloween_stocking",
+          "audioAsset": "lyalya_halloween_060.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чулок с конфетами на Хэллоуин",
+          "difficulty": 2,
+          "itemType": "word"
+        },
+        {
+          "id": "hw_061",
+          "word": "Шляпа ведьмы",
+          "imageAssetId": "halloween_witch_hat",
+          "audioAsset": "lyalya_halloween_061.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Острая шляпа ведьмы",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_062",
+          "word": "Шипящий кот",
+          "imageAssetId": "halloween_hissing_cat",
+          "audioAsset": "lyalya_halloween_062.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Шипящий кот в темноте — ш-ш-ш!",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_063",
+          "word": "Жуткий шорох",
+          "imageAssetId": "halloween_scary_rustle",
+          "audioAsset": "lyalya_halloween_063.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жуткий шорох в кустах",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_064",
+          "word": "Чёрная паутина",
+          "imageAssetId": "halloween_black_web",
+          "audioAsset": "lyalya_halloween_064.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чёрная паутина в углу",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_065",
+          "word": "Страшный замок",
+          "imageAssetId": "halloween_scary_castle",
+          "audioAsset": "lyalya_halloween_065.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Страшный старый замок",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_066",
+          "word": "Кошка шипит",
+          "imageAssetId": "halloween_cat_hiss",
+          "audioAsset": "lyalya_halloween_066.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Кошка шипит на призрака",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_067",
+          "word": "Жёлтые глаза",
+          "imageAssetId": "halloween_yellow_eyes",
+          "audioAsset": "lyalya_halloween_067.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жёлтые глаза кота в темноте",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_068",
+          "word": "Чудо-тыква",
+          "imageAssetId": "halloween_wonder_pumpkin",
+          "audioAsset": "lyalya_halloween_068.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чудо-тыква со смешным лицом",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_069",
+          "word": "Сладкая конфета",
+          "imageAssetId": "halloween_sweet_candy",
+          "audioAsset": "lyalya_halloween_069.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Сладкая конфета в красивой обёртке",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_070",
+          "word": "Мышка летит",
+          "imageAssetId": "halloween_bat_flies",
+          "audioAsset": "lyalya_halloween_070.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Мышка летит над лесом",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_071",
+          "word": "Шёпот в темноте",
+          "imageAssetId": "halloween_dark_whisper",
+          "audioAsset": "lyalya_halloween_071.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Шёпот в тёмной комнате",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_072",
+          "word": "Жуткий лес",
+          "imageAssetId": "halloween_scary_forest",
+          "audioAsset": "lyalya_halloween_072.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жуткий тёмный лес",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_073",
+          "word": "Череп и кости",
+          "imageAssetId": "halloween_skull_bones",
+          "audioAsset": "lyalya_halloween_073.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Череп и кости у пиратов",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_074",
+          "word": "Скелет пляшет",
+          "imageAssetId": "halloween_dancing_skeleton",
+          "audioAsset": "lyalya_halloween_074.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Скелет смешно пляшет",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_075",
+          "word": "Котёл кипит",
+          "imageAssetId": "halloween_boiling_cauldron",
+          "audioAsset": "lyalya_halloween_075.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Котёл кипит — буль-буль-буль",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_076",
+          "word": "Шуршат листья",
+          "imageAssetId": "halloween_rustling_leaves",
+          "audioAsset": "lyalya_halloween_076.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Шуршат листья на ветру",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_077",
+          "word": "Жаба прыгает",
+          "imageAssetId": "halloween_jumping_toad",
+          "audioAsset": "lyalya_halloween_077.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жаба прыгает в котёл",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_078",
+          "word": "Чудовище рычит",
+          "imageAssetId": "halloween_roaring_monster",
+          "audioAsset": "lyalya_halloween_078.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чудовище рычит: р-р-р!",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_079",
+          "word": "Сладкая ночь",
+          "imageAssetId": "halloween_sweet_night",
+          "audioAsset": "lyalya_halloween_079.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Сладкая хэллоуинская ночь",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_080",
+          "word": "Мумия стонет",
+          "imageAssetId": "halloween_moaning_mummy",
+          "audioAsset": "lyalya_halloween_080.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Мумия стонет: о-о-о!",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_081",
+          "word": "Шляпа летит",
+          "imageAssetId": "halloween_flying_hat",
+          "audioAsset": "lyalya_halloween_081.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Шляпа ведьмы улетела",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_082",
+          "word": "Жук ползёт",
+          "imageAssetId": "halloween_crawling_bug",
+          "audioAsset": "lyalya_halloween_082.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жук ползёт по паутине",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_083",
+          "word": "Чёрная луна",
+          "imageAssetId": "halloween_black_moon",
+          "audioAsset": "lyalya_halloween_083.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чёрные тучи закрыли луну",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_084",
+          "word": "Страшная сказка",
+          "imageAssetId": "halloween_scary_tale",
+          "audioAsset": "lyalya_halloween_084.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Страшная, но смешная сказка",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_085",
+          "word": "Конфеты в мешке",
+          "imageAssetId": "halloween_candy_bag",
+          "audioAsset": "lyalya_halloween_085.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Конфеты в большом мешке",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_086",
+          "word": "Шипение зелья",
+          "imageAssetId": "halloween_hissing_potion",
+          "audioAsset": "lyalya_halloween_086.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Шипение зелья в котле",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_087",
+          "word": "Жуткая музыка",
+          "imageAssetId": "halloween_spooky_music",
+          "audioAsset": "lyalya_halloween_087.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жуткая музыка играет",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_088",
+          "word": "Чулки ведьмы",
+          "imageAssetId": "halloween_witch_stockings",
+          "audioAsset": "lyalya_halloween_088.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Полосатые чулки ведьмы",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_089",
+          "word": "Светится тыква",
+          "imageAssetId": "halloween_glowing_pumpkin",
+          "audioAsset": "lyalya_halloween_089.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Светится тыква в темноте",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_090",
+          "word": "Маски на лицах",
+          "imageAssetId": "halloween_masked_faces",
+          "audioAsset": "lyalya_halloween_090.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Маски на лицах детей",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_091",
+          "word": "Кошка шипит на призрака",
+          "imageAssetId": "halloween_cat_ghost_scene",
+          "audioAsset": "lyalya_halloween_091.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Кошка шипит на призрака — ш-ш-ш!",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_092",
+          "word": "Жаба прыгнула в котёл",
+          "imageAssetId": "halloween_toad_cauldron_scene",
+          "audioAsset": "lyalya_halloween_092.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жаба прыгнула прямо в котёл!",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_093",
+          "word": "Чёрный кот сидит на тыкве",
+          "imageAssetId": "halloween_cat_pumpkin_scene",
+          "audioAsset": "lyalya_halloween_093.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чёрный кот сидит на оранжевой тыкве.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_094",
+          "word": "Скелет танцует под луной",
+          "imageAssetId": "halloween_skeleton_moon_scene",
+          "audioAsset": "lyalya_halloween_094.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Скелет смешно танцует под луной.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_095",
+          "word": "Мумия любит конфеты",
+          "imageAssetId": "halloween_mummy_candy_scene",
+          "audioAsset": "lyalya_halloween_095.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Мумия очень любит конфеты!",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_096",
+          "word": "Шляпа улетела с головы ведьмы",
+          "imageAssetId": "halloween_hat_fly_scene",
+          "audioAsset": "lyalya_halloween_096.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Шляпа улетела с головы ведьмы.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_097",
+          "word": "Жук залез в котёл с зельем",
+          "imageAssetId": "halloween_bug_cauldron_scene",
+          "audioAsset": "lyalya_halloween_097.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жук залез в котёл с зельем.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_098",
+          "word": "Чудовище испугалось Ляли",
+          "imageAssetId": "halloween_monster_lyalya_scene",
+          "audioAsset": "lyalya_halloween_098.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чудовище испугалось маленькой Ляли!",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_099",
+          "word": "Светлячок помог найти дорогу",
+          "imageAssetId": "halloween_firefly_path_scene",
+          "audioAsset": "lyalya_halloween_099.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Светлячок помог найти дорогу домой.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_100",
+          "word": "Кот ищет конфеты",
+          "imageAssetId": "halloween_cat_candy_scene",
+          "audioAsset": "lyalya_halloween_100.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Чёрный кот ищет конфеты в темноте.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_101",
+          "word": "Ведьма шёпотом учит Лялю",
+          "imageAssetId": "halloween_witch_lyalya_scene",
+          "audioAsset": "lyalya_halloween_101.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Ведьма шёпотом учит Лялю варить зелье.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_102",
+          "word": "Жутко одному в лесу",
+          "imageAssetId": "halloween_alone_forest_scene",
+          "audioAsset": "lyalya_halloween_102.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жутко одному в тёмном лесу.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_103",
+          "word": "Чулки висят над камином",
+          "imageAssetId": "halloween_stockings_fireplace_scene",
+          "audioAsset": "lyalya_halloween_103.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чулки с конфетами висят над камином.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_104",
+          "word": "Сова смотрит на луну",
+          "imageAssetId": "halloween_owl_moon_scene",
+          "audioAsset": "lyalya_halloween_104.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Сова смотрит на большую луну.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_105",
+          "word": "Мумия тихо ходит",
+          "imageAssetId": "halloween_mummy_walk_scene",
+          "audioAsset": "lyalya_halloween_105.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Мумия тихо ходит по замку.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_106",
+          "word": "Паутина шевелится на ветру",
+          "imageAssetId": "halloween_web_wind_scene",
+          "audioAsset": "lyalya_halloween_106.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Паутина шевелится на ветру — ш-ш-ш!",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_107",
+          "word": "Жук нашёл конфету",
+          "imageAssetId": "halloween_bug_candy_scene",
+          "audioAsset": "lyalya_halloween_107.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жук нашёл большую конфету!",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_108",
+          "word": "Чёрный кот нашёл метлу",
+          "imageAssetId": "halloween_cat_broom_scene",
+          "audioAsset": "lyalya_halloween_108.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чёрный кот нашёл метлу ведьмы.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_109",
+          "word": "Скелет и мумия подружились",
+          "imageAssetId": "halloween_skeleton_mummy_friends",
+          "audioAsset": "lyalya_halloween_109.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Скелет и мумия подружились на Хэллоуин.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_110",
+          "word": "Конфеты кончились",
+          "imageAssetId": "halloween_no_candy_scene",
+          "audioAsset": "lyalya_halloween_110.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Все конфеты кончились — съели!",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_111",
+          "word": "История: Ляля и тыква",
+          "imageAssetId": "halloween_story_lyalya_pumpkin",
+          "audioAsset": "lyalya_halloween_111.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Ляля нашла большую тыкву. Она шептала: «Тыква, тыква, ш-ш-шурши!» Тыква засмеялась и подарила Ляле все конфеты.",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "hw_112",
+          "word": "История: Ляля и жуткий лес",
+          "imageAssetId": "halloween_story_lyalya_forest",
+          "audioAsset": "lyalya_halloween_112.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Ляля зашла в жуткий лес. Кто-то жужжал в темноте — ж-ж-ж. Это был добрый жук-светлячок!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "hw_113",
+          "word": "История: чёрный кот Чернышка",
+          "imageAssetId": "halloween_story_black_cat",
+          "audioAsset": "lyalya_halloween_113.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чёрный кот Чернышка любил Хэллоуин. Он чистил чулки с конфетами и чмокал. Чудесный праздник!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "hw_114",
+          "word": "История: скелет Сеня",
+          "imageAssetId": "halloween_story_skeleton",
+          "audioAsset": "lyalya_halloween_114.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Скелет Сеня был совсем не страшным. Он собирал конфеты в мешок и смеялся: «Сладость или пакость!»",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "hw_115",
+          "word": "История: мумия Матвей",
+          "imageAssetId": "halloween_story_mummy",
+          "audioAsset": "lyalya_halloween_115.m4a",
+          "soundTarget": "М",
+          "examplePhrase": "Мумия Матвей размотала бинты. Он оказался маленьким мальчиком! Мама очень обрадовалась.",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "hw_116",
+          "word": "История: котёл ведьмы",
+          "imageAssetId": "halloween_story_cauldron",
+          "audioAsset": "lyalya_halloween_116.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Ведьма варила зелье. В котёл прыгнула кошка. Кошка шипела: «ш-ш-ш!» Котёл закипел — и появилась гора конфет!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "hw_117",
+          "word": "История: шляпа-волшебница",
+          "imageAssetId": "halloween_story_magic_hat",
+          "audioAsset": "lyalya_halloween_117.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Шляпа ведьмы умела летать. Она шуршала и шептала шутки. Ляля надела шляпу — и полетела!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "hw_118",
+          "word": "История: жаба Женя",
+          "imageAssetId": "halloween_story_toad",
+          "audioAsset": "lyalya_halloween_118.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жаба Женя жила у замка. Она жевала жёлтые ягоды и пела. Жаба была весёлой!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "hw_119",
+          "word": "История: чудо на чердаке",
+          "imageAssetId": "halloween_story_attic",
+          "audioAsset": "lyalya_halloween_119.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "На чердаке было темно. Вдруг Ляля увидела чудо — там жили летучие мышки! Они были очень чуткими.",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "hw_120",
+          "word": "История: светлячок и сова",
+          "imageAssetId": "halloween_story_firefly_owl",
+          "audioAsset": "lyalya_halloween_120.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Светлячок и сова стали друзьями. Сова смотрела на звёзды, светлячок светил. Вместе им было совсем не страшно.",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "hw_121",
+          "word": "Шелест плаща",
+          "imageAssetId": "halloween_cloak_rustle",
+          "audioAsset": "lyalya_halloween_121.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Шелест плаща вампира в ночи",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_122",
+          "word": "Жёлтая луна",
+          "imageAssetId": "halloween_yellow_moon",
+          "audioAsset": "lyalya_halloween_122.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жёлтая луна светит в небе",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_123",
+          "word": "Чудная ночь",
+          "imageAssetId": "halloween_wonderful_night",
+          "audioAsset": "lyalya_halloween_123.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чудная и страшная ночь",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_124",
+          "word": "Страшный скелет",
+          "imageAssetId": "halloween_scary_skeleton",
+          "audioAsset": "lyalya_halloween_124.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Страшный скелет стоит у двери",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_125",
+          "word": "Кот на метле",
+          "imageAssetId": "halloween_cat_broom",
+          "audioAsset": "lyalya_halloween_125.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кот летит на метле ведьмы",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_126",
+          "word": "Шляпа с пауком",
+          "imageAssetId": "halloween_hat_spider",
+          "audioAsset": "lyalya_halloween_126.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "На шляпе сидит паук",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_127",
+          "word": "Жаба в зелье",
+          "imageAssetId": "halloween_toad_potion",
+          "audioAsset": "lyalya_halloween_127.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жаба плавает в зелье",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_128",
+          "word": "Чёрная кошка прыгает",
+          "imageAssetId": "halloween_black_cat_jump",
+          "audioAsset": "lyalya_halloween_128.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чёрная кошка прыгает на забор",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_129",
+          "word": "Сок из тыквы вкусный",
+          "imageAssetId": "halloween_pumpkin_drink",
+          "audioAsset": "lyalya_halloween_129.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Сок из тыквы очень вкусный",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_130",
+          "word": "Конфеты в котле",
+          "imageAssetId": "halloween_candy_cauldron",
+          "audioAsset": "lyalya_halloween_130.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "В котле варятся конфеты",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_131",
+          "word": "Ляля шипит как кошка",
+          "imageAssetId": "halloween_lyalya_hiss_scene",
+          "audioAsset": "lyalya_halloween_131.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Ляля надела маску и зашипела: ш-ш-ш!",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_132",
+          "word": "Жаба прыгнула на Лялю",
+          "imageAssetId": "halloween_toad_lyalya_scene",
+          "audioAsset": "lyalya_halloween_132.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жаба прыгнула прямо на Лялю!",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_133",
+          "word": "Чёрный кот спрятался",
+          "imageAssetId": "halloween_black_cat_hide_scene",
+          "audioAsset": "lyalya_halloween_133.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чёрный кот спрятался за тыкву.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_134",
+          "word": "Скелет помахал Ляле",
+          "imageAssetId": "halloween_skeleton_wave_scene",
+          "audioAsset": "lyalya_halloween_134.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Скелет помахал Ляле рукой.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_135",
+          "word": "Котёл закипел от смеха",
+          "imageAssetId": "halloween_cauldron_laugh_scene",
+          "audioAsset": "lyalya_halloween_135.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Котёл закипел от смеха!",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_136",
+          "word": "Шорох в тёмном углу",
+          "imageAssetId": "halloween_rustle_corner_scene",
+          "audioAsset": "lyalya_halloween_136.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Шорох раздался в тёмном углу.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_137",
+          "word": "Жуткий крик разбудил всех",
+          "imageAssetId": "halloween_scream_scene",
+          "audioAsset": "lyalya_halloween_137.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жуткий крик разбудил всех!",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_138",
+          "word": "Чудо случилось в полночь",
+          "imageAssetId": "halloween_midnight_miracle_scene",
+          "audioAsset": "lyalya_halloween_138.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чудо случилось ровно в полночь.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_139",
+          "word": "Сова увидела призрака",
+          "imageAssetId": "halloween_owl_ghost_scene",
+          "audioAsset": "lyalya_halloween_139.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Сова увидела призрака и улетела.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_140",
+          "word": "Кошка поймала паука",
+          "imageAssetId": "halloween_cat_spider_scene",
+          "audioAsset": "lyalya_halloween_140.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кошка поймала большого паука.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "hw_141",
+          "word": "История: ведьма и Ляля",
+          "imageAssetId": "halloween_story_witch_lyalya",
+          "audioAsset": "lyalya_halloween_141.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Ляля встретила ведьму. Ведьма сказала: «Ш-ш-ш, не бойся!» Она дала Ляле конфету и улетела на метле.",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "hw_142",
+          "word": "История: жаба и зелье",
+          "imageAssetId": "halloween_story_toad_potion",
+          "audioAsset": "lyalya_halloween_142.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жаба нашла котёл с зельем. Она попробовала и превратилась в принцессу! Жила-была жаба.",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "hw_143",
+          "word": "История: чудо-тыква",
+          "imageAssetId": "halloween_story_magic_pumpkin",
+          "audioAsset": "lyalya_halloween_143.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Тыква умела говорить. Она чётко сказала: «Чего хочешь?» Ляля попросила конфет — и конфеты появились!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "hw_144",
+          "word": "История: страшная сказка про сову",
+          "imageAssetId": "halloween_story_scary_owl",
+          "audioAsset": "lyalya_halloween_144.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Сова рассказывала страшные сказки. Скелет слушал и дрожал. Стало смешно всем!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "hw_145",
+          "word": "История: кот и конфеты",
+          "imageAssetId": "halloween_story_cat_candy",
+          "audioAsset": "lyalya_halloween_145.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кот утащил конфеты. Ведьма искала котёл, а конфеты кончились. Кот сидел довольный!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "hw_146",
+          "word": "Шуршащий лес",
+          "imageAssetId": "halloween_rustling_forest",
+          "audioAsset": "lyalya_halloween_146.m4a",
+          "soundTarget": "Ш",
+          "examplePhrase": "Шуршащий осенний лес",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_147",
+          "word": "Жёлтые листья",
+          "imageAssetId": "halloween_yellow_leaves",
+          "audioAsset": "lyalya_halloween_147.m4a",
+          "soundTarget": "Ж",
+          "examplePhrase": "Жёлтые листья падают с дерева",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_148",
+          "word": "Чёрная ночь",
+          "imageAssetId": "halloween_black_night",
+          "audioAsset": "lyalya_halloween_148.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чёрная ночь — время ведьм",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_149",
+          "word": "Стон призрака",
+          "imageAssetId": "halloween_ghost_moan",
+          "audioAsset": "lyalya_halloween_149.m4a",
+          "soundTarget": "С",
+          "examplePhrase": "Стон призрака слышен в темноте",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "hw_150",
+          "word": "Кот мяукает в темноте",
+          "imageAssetId": "halloween_cat_meow_dark",
+          "audioAsset": "lyalya_halloween_150.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кот громко мяукает в темноте",
+          "difficulty": 2,
+          "itemType": "phrase"
         }
       ]
     }

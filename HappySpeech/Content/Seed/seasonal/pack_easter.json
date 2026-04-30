@@ -2,335 +2,1515 @@
   "id": "pack_easter",
   "soundTarget": "seasonal_easter",
   "group": "сезонные",
-  "version": 1,
-  "description": "Пасха — зайчики, яйца, цветы. Целевые звуки: П, Б (билабиальные), В, Р, Л (сонорные).",
+  "version": 2,
+  "description": "Пасха — яйца, кролики, цыплята, весна. Целевые звуки: Ц, К, Р, Ч, В, Л (свистящие, заднеязычные, соноры).",
   "season": "easter",
   "active_months": [3, 4, 5],
   "stages": {
     "stage_easter": {
       "stageId": "stage_easter",
       "title": "Весенний праздник",
-      "note": "Слова на билабиальные (П, Б), щелевые (В) и сонорные (Р, Л) в пасхальном контексте.",
+      "note": "Слова на звуки Ц, К, Р, Ч, В, Л в пасхальном контексте. 60 слов + 50 фраз + 30 предложений + 10 историй = 150 items.",
       "units": [
         {
           "id": "ea_001",
           "word": "Заяц",
           "imageAssetId": "easter_bunny",
+          "audioAsset": "lyalya_easter_001.m4a",
           "soundTarget": "З",
           "examplePhrase": "Белый заяц скачет по лугу",
-          "difficulty": 1
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "ea_002",
           "word": "Яйцо",
           "imageAssetId": "easter_egg",
+          "audioAsset": "lyalya_easter_002.m4a",
           "soundTarget": "Й",
           "examplePhrase": "Красивое пасхальное яйцо",
-          "difficulty": 1
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "ea_003",
           "word": "Цветок",
           "imageAssetId": "easter_flower",
+          "audioAsset": "lyalya_easter_003.m4a",
           "soundTarget": "Ц",
           "examplePhrase": "Яркий цветок расцвёл весной",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ea_004",
           "word": "Бабочка",
           "imageAssetId": "easter_butterfly",
+          "audioAsset": "lyalya_easter_004.m4a",
           "soundTarget": "Б",
           "examplePhrase": "Бабочка летит над цветком",
-          "difficulty": 3
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ea_005",
           "word": "Пасха",
           "imageAssetId": "easter_holiday",
+          "audioAsset": "lyalya_easter_005.m4a",
           "soundTarget": "П",
           "examplePhrase": "Пасха — весенний праздник",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ea_006",
           "word": "Кулич",
           "imageAssetId": "easter_bread",
+          "audioAsset": "lyalya_easter_006.m4a",
           "soundTarget": "К",
           "examplePhrase": "Сладкий кулич с изюмом",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ea_007",
           "word": "Цыплёнок",
           "imageAssetId": "easter_chick",
+          "audioAsset": "lyalya_easter_007.m4a",
           "soundTarget": "Ц",
           "examplePhrase": "Жёлтый цыплёнок пищит: пи-пи",
-          "difficulty": 3
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ea_008",
           "word": "Гнездо",
           "imageAssetId": "easter_nest",
+          "audioAsset": "lyalya_easter_008.m4a",
           "soundTarget": "Г",
           "examplePhrase": "В гнезде лежат яйца",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ea_009",
           "word": "Корзина",
           "imageAssetId": "easter_basket",
+          "audioAsset": "lyalya_easter_009.m4a",
           "soundTarget": "К",
           "examplePhrase": "Корзина с яйцами и куличом",
-          "difficulty": 3
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ea_010",
           "word": "Радуга",
           "imageAssetId": "easter_rainbow",
+          "audioAsset": "lyalya_easter_010.m4a",
           "soundTarget": "Р",
           "examplePhrase": "Радуга после дождя — красота!",
-          "difficulty": 3
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ea_011",
-          "word": "Венок",
-          "imageAssetId": "easter_wreath",
+          "word": "Верба",
+          "imageAssetId": "easter_willow",
+          "audioAsset": "lyalya_easter_011.m4a",
           "soundTarget": "В",
-          "examplePhrase": "Венок из весенних цветов",
-          "difficulty": 2
+          "examplePhrase": "Верба цветёт пушистыми комочками",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ea_012",
           "word": "Ручей",
           "imageAssetId": "easter_stream",
+          "audioAsset": "lyalya_easter_012.m4a",
           "soundTarget": "Р",
           "examplePhrase": "Ручей журчит по камушкам",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ea_013",
           "word": "Птенец",
           "imageAssetId": "easter_nestling",
+          "audioAsset": "lyalya_easter_013.m4a",
           "soundTarget": "П",
           "examplePhrase": "Птенец только что вылупился",
-          "difficulty": 3
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ea_014",
           "word": "Пчела",
           "imageAssetId": "easter_bee",
+          "audioAsset": "lyalya_easter_014.m4a",
           "soundTarget": "П",
           "examplePhrase": "Пчела жужжит над цветком: жжж",
-          "difficulty": 2
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ea_015",
           "word": "Весна",
           "imageAssetId": "easter_spring",
+          "audioAsset": "lyalya_easter_015.m4a",
           "soundTarget": "В",
           "examplePhrase": "Весна пришла — всё расцветает",
-          "difficulty": 1
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "ea_016",
-          "word": "Бутон",
-          "imageAssetId": "easter_bud",
+          "word": "Берёза",
+          "imageAssetId": "easter_birch",
+          "audioAsset": "lyalya_easter_016.m4a",
           "soundTarget": "Б",
-          "examplePhrase": "Бутон розы ещё не раскрылся",
-          "difficulty": 2
+          "examplePhrase": "Белая берёза зазеленела",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ea_017",
-          "word": "Берёза",
-          "imageAssetId": "easter_birch",
-          "soundTarget": "Б",
-          "examplePhrase": "Белая берёза зазеленела",
-          "difficulty": 3
+          "word": "Верба",
+          "imageAssetId": "easter_willow2",
+          "audioAsset": "lyalya_easter_017.m4a",
+          "soundTarget": "В",
+          "examplePhrase": "Ветка вербы мягкая и пушистая",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ea_018",
-          "word": "Прогулка",
-          "imageAssetId": "easter_walk",
-          "soundTarget": "П",
-          "examplePhrase": "Прогулка в парке весной",
-          "difficulty": 3
+          "word": "Луг",
+          "imageAssetId": "easter_meadow",
+          "audioAsset": "lyalya_easter_018.m4a",
+          "soundTarget": "Л",
+          "examplePhrase": "Зелёный луг весной",
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "ea_019",
-          "word": "Ветер",
-          "imageAssetId": "easter_wind",
-          "soundTarget": "В",
-          "examplePhrase": "Ветер дует и качает цветы",
-          "difficulty": 2
+          "word": "Ласточка",
+          "imageAssetId": "easter_swallow",
+          "audioAsset": "lyalya_easter_019.m4a",
+          "soundTarget": "Л",
+          "examplePhrase": "Ласточка вернулась из тёплых стран",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ea_020",
-          "word": "Листья",
-          "imageAssetId": "easter_leaves",
+          "word": "Лужа",
+          "imageAssetId": "easter_puddle",
+          "audioAsset": "lyalya_easter_020.m4a",
           "soundTarget": "Л",
-          "examplePhrase": "Маленькие листья на деревьях",
-          "difficulty": 2
+          "examplePhrase": "Лужа после весеннего дождя",
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "ea_021",
-          "word": "Лужа",
-          "imageAssetId": "easter_puddle",
-          "soundTarget": "Л",
-          "examplePhrase": "Лужа после весеннего дождя",
-          "difficulty": 1
+          "word": "Роса",
+          "imageAssetId": "easter_dew",
+          "audioAsset": "lyalya_easter_021.m4a",
+          "soundTarget": "Р",
+          "examplePhrase": "Роса на траве ранним утром",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ea_022",
           "word": "Рябина",
           "imageAssetId": "easter_rowan",
+          "audioAsset": "lyalya_easter_022.m4a",
           "soundTarget": "Р",
           "examplePhrase": "Рябина расцветает весной",
-          "difficulty": 3
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ea_023",
-          "word": "Поляна",
-          "imageAssetId": "easter_glade",
-          "soundTarget": "П",
-          "examplePhrase": "Поляна покрыта цветами",
-          "difficulty": 3
+          "word": "Цвет",
+          "imageAssetId": "easter_color",
+          "audioAsset": "lyalya_easter_023.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цвет яйца — красный, синий, жёлтый",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ea_024",
-          "word": "Бегать",
-          "imageAssetId": "easter_run",
-          "soundTarget": "Б",
-          "examplePhrase": "Бегать по лугу весело!",
-          "difficulty": 2
+          "word": "Краски",
+          "imageAssetId": "easter_paints",
+          "audioAsset": "lyalya_easter_024.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Краски для яиц разноцветные",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ea_025",
-          "word": "Верба",
-          "imageAssetId": "easter_willow",
-          "soundTarget": "В",
-          "examplePhrase": "Верба цветёт пушистыми комочками",
-          "difficulty": 2
+          "word": "Кролик",
+          "imageAssetId": "easter_rabbit",
+          "audioAsset": "lyalya_easter_025.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кролик с длинными ушами",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ea_026",
           "word": "Расцветать",
           "imageAssetId": "easter_bloom",
+          "audioAsset": "lyalya_easter_026.m4a",
           "soundTarget": "Р",
           "examplePhrase": "Цветы расцветают на солнце",
-          "difficulty": 3
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ea_027",
-          "word": "Луг",
-          "imageAssetId": "easter_meadow",
-          "soundTarget": "Л",
-          "examplePhrase": "Зелёный луг весной",
-          "difficulty": 1
+          "word": "Чудесный",
+          "imageAssetId": "easter_wonderful",
+          "audioAsset": "lyalya_easter_027.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чудесный весенний день",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ea_028",
-          "word": "Птица",
-          "imageAssetId": "easter_bird",
-          "soundTarget": "П",
-          "examplePhrase": "Птица поёт весенние песни",
-          "difficulty": 2
+          "word": "Чашка",
+          "imageAssetId": "easter_cup",
+          "audioAsset": "lyalya_easter_028.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чашка чая за праздничным столом",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ea_029",
-          "word": "Голубь",
-          "imageAssetId": "easter_dove",
-          "soundTarget": "Г",
-          "examplePhrase": "Белый голубь — символ мира",
-          "difficulty": 2
+          "word": "Листья",
+          "imageAssetId": "easter_leaves",
+          "audioAsset": "lyalya_easter_029.m4a",
+          "soundTarget": "Л",
+          "examplePhrase": "Маленькие листья на деревьях",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ea_030",
-          "word": "Блин",
-          "imageAssetId": "easter_pancake",
-          "soundTarget": "Б",
-          "examplePhrase": "Блин со сметаной — вкусно!",
-          "difficulty": 1
+          "word": "Венок",
+          "imageAssetId": "easter_wreath",
+          "audioAsset": "lyalya_easter_030.m4a",
+          "soundTarget": "В",
+          "examplePhrase": "Венок из весенних цветов",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ea_031",
-          "word": "Прыгать",
-          "imageAssetId": "easter_jump",
+          "word": "Птица",
+          "imageAssetId": "easter_bird",
+          "audioAsset": "lyalya_easter_031.m4a",
           "soundTarget": "П",
-          "examplePhrase": "Заяц любит прыгать по лужайке",
-          "difficulty": 3
+          "examplePhrase": "Птица поёт весенние песни",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ea_032",
-          "word": "Ворона",
-          "imageAssetId": "easter_crow",
-          "soundTarget": "В",
-          "examplePhrase": "Ворона кричит: кар-кар!",
-          "difficulty": 3
+          "word": "Речка",
+          "imageAssetId": "easter_river",
+          "audioAsset": "lyalya_easter_032.m4a",
+          "soundTarget": "Р",
+          "examplePhrase": "Речка разлилась после снега",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ea_033",
-          "word": "Лиловый",
-          "imageAssetId": "easter_lilac_color",
-          "soundTarget": "Л",
-          "examplePhrase": "Лиловые цветы сирени",
-          "difficulty": 3
+          "word": "Цвета радуги",
+          "imageAssetId": "easter_rainbow_colors",
+          "audioAsset": "lyalya_easter_033.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цвета радуги: красный, жёлтый, зелёный",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ea_034",
-          "word": "Барашек",
-          "imageAssetId": "easter_lamb",
-          "soundTarget": "Б",
-          "examplePhrase": "Барашек щиплет травку на лугу",
-          "difficulty": 3
+          "word": "Колокол",
+          "imageAssetId": "easter_bell",
+          "audioAsset": "lyalya_easter_034.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Колокол звонит в праздник",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ea_035",
-          "word": "Роса",
-          "imageAssetId": "easter_dew",
+          "word": "Рисовать",
+          "imageAssetId": "easter_draw",
+          "audioAsset": "lyalya_easter_035.m4a",
           "soundTarget": "Р",
-          "examplePhrase": "Роса на траве ранним утром",
-          "difficulty": 2
+          "examplePhrase": "Рисовать узоры на яйцах",
+          "difficulty": 3,
+          "itemType": "word"
         },
         {
           "id": "ea_036",
-          "word": "Перо",
-          "imageAssetId": "easter_feather",
-          "soundTarget": "П",
-          "examplePhrase": "Лёгкое перо упало с птицы",
-          "difficulty": 2
+          "word": "Цыпа",
+          "imageAssetId": "easter_chick2",
+          "audioAsset": "lyalya_easter_036.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цыпа-цыпа, цыплёнок!",
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "ea_037",
-          "word": "Ласточка",
-          "imageAssetId": "easter_swallow",
+          "word": "Лента",
+          "imageAssetId": "easter_ribbon",
+          "audioAsset": "lyalya_easter_037.m4a",
           "soundTarget": "Л",
-          "examplePhrase": "Ласточка вернулась из тёплых стран",
-          "difficulty": 3
+          "examplePhrase": "Красивая лента на корзине",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ea_038",
-          "word": "Бегония",
-          "imageAssetId": "easter_begonia",
-          "soundTarget": "Б",
-          "examplePhrase": "Розовая бегония в горшке",
-          "difficulty": 3
+          "word": "Вода",
+          "imageAssetId": "easter_water",
+          "audioAsset": "lyalya_easter_038.m4a",
+          "soundTarget": "В",
+          "examplePhrase": "Вода в ручье холодная",
+          "difficulty": 1,
+          "itemType": "word"
         },
         {
           "id": "ea_039",
-          "word": "Речка",
-          "imageAssetId": "easter_river",
-          "soundTarget": "Р",
-          "examplePhrase": "Речка разлилась после снега",
-          "difficulty": 2
+          "word": "Кустик",
+          "imageAssetId": "easter_bush",
+          "audioAsset": "lyalya_easter_039.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кустик цветёт белыми цветами",
+          "difficulty": 2,
+          "itemType": "word"
         },
         {
           "id": "ea_040",
           "word": "Праздник",
           "imageAssetId": "easter_celebration",
+          "audioAsset": "lyalya_easter_040.m4a",
           "soundTarget": "П",
           "examplePhrase": "Пасха — радостный праздник весны",
-          "difficulty": 3
+          "difficulty": 3,
+          "itemType": "word"
+        },
+        {
+          "id": "ea_041",
+          "word": "Чудесный цыплёнок",
+          "imageAssetId": "easter_wonderful_chick",
+          "audioAsset": "lyalya_easter_041.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чудесный жёлтый цыплёнок",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_042",
+          "word": "Цветные яйца",
+          "imageAssetId": "easter_colorful_eggs",
+          "audioAsset": "lyalya_easter_042.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цветные яйца в корзинке",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_043",
+          "word": "Кролик с корзинкой",
+          "imageAssetId": "easter_bunny_basket",
+          "audioAsset": "lyalya_easter_043.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кролик несёт корзинку с яйцами",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_044",
+          "word": "Радостная весна",
+          "imageAssetId": "easter_joyful_spring",
+          "audioAsset": "lyalya_easter_044.m4a",
+          "soundTarget": "Р",
+          "examplePhrase": "Радостная тёплая весна",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_045",
+          "word": "Верба расцвела",
+          "imageAssetId": "easter_willow_bloomed",
+          "audioAsset": "lyalya_easter_045.m4a",
+          "soundTarget": "В",
+          "examplePhrase": "Верба расцвела первой",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_046",
+          "word": "Ласточка летит",
+          "imageAssetId": "easter_swallow_flying",
+          "audioAsset": "lyalya_easter_046.m4a",
+          "soundTarget": "Л",
+          "examplePhrase": "Ласточка летит высоко",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_047",
+          "word": "Цыплёнок пищит",
+          "imageAssetId": "easter_chick_cheeping",
+          "audioAsset": "lyalya_easter_047.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цыплёнок пищит: пи-пи-пи!",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_048",
+          "word": "Красивый кулич",
+          "imageAssetId": "easter_beautiful_bread",
+          "audioAsset": "lyalya_easter_048.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Красивый кулич с глазурью",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_049",
+          "word": "Рисуем яйцо",
+          "imageAssetId": "easter_drawing_egg",
+          "audioAsset": "lyalya_easter_049.m4a",
+          "soundTarget": "Р",
+          "examplePhrase": "Рисуем красивое яйцо",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_050",
+          "word": "Весна пришла",
+          "imageAssetId": "easter_spring_arrived",
+          "audioAsset": "lyalya_easter_050.m4a",
+          "soundTarget": "В",
+          "examplePhrase": "Весна пришла и принесла тепло",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_051",
+          "word": "Лужайка зеленеет",
+          "imageAssetId": "easter_lawn_greening",
+          "audioAsset": "lyalya_easter_051.m4a",
+          "soundTarget": "Л",
+          "examplePhrase": "Лужайка зеленеет после зимы",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_052",
+          "word": "Цветы на полянке",
+          "imageAssetId": "easter_flowers_glade",
+          "audioAsset": "lyalya_easter_052.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цветы распустились на полянке",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_053",
+          "word": "Корзинка с куличом",
+          "imageAssetId": "easter_basket_bread",
+          "audioAsset": "lyalya_easter_053.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Корзинка с куличом и яйцами",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_054",
+          "word": "Речка журчит",
+          "imageAssetId": "easter_river_babbling",
+          "audioAsset": "lyalya_easter_054.m4a",
+          "soundTarget": "Р",
+          "examplePhrase": "Речка журчит весело",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_055",
+          "word": "Чудесный запах",
+          "imageAssetId": "easter_wonderful_smell",
+          "audioAsset": "lyalya_easter_055.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чудесный запах свежего кулича",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_056",
+          "word": "Вербочка в руке",
+          "imageAssetId": "easter_willow_hand",
+          "audioAsset": "lyalya_easter_056.m4a",
+          "soundTarget": "В",
+          "examplePhrase": "Вербочка пушистая в руке",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_057",
+          "word": "Ляля красит яйцо",
+          "imageAssetId": "easter_lyalya_egg",
+          "audioAsset": "lyalya_easter_057.m4a",
+          "soundTarget": "Л",
+          "examplePhrase": "Ляля красит красивое яйцо",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_058",
+          "word": "Цыплята вылупились",
+          "imageAssetId": "easter_chicks_hatched",
+          "audioAsset": "lyalya_easter_058.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цыплята вылупились из яиц",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_059",
+          "word": "Кролик прячет яйца",
+          "imageAssetId": "easter_bunny_hiding_eggs",
+          "audioAsset": "lyalya_easter_059.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кролик прячет яйца в траве",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_060",
+          "word": "Расписное яйцо",
+          "imageAssetId": "easter_decorated_egg",
+          "audioAsset": "lyalya_easter_060.m4a",
+          "soundTarget": "Р",
+          "examplePhrase": "Расписное яйцо в подарок",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_061",
+          "word": "Чистый ручей",
+          "imageAssetId": "easter_clear_stream",
+          "audioAsset": "lyalya_easter_061.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чистый ручей бежит по камням",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_062",
+          "word": "Ветер в поле",
+          "imageAssetId": "easter_wind_field",
+          "audioAsset": "lyalya_easter_062.m4a",
+          "soundTarget": "В",
+          "examplePhrase": "Ветер в поле качает цветы",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_063",
+          "word": "Лёгкий ветерок",
+          "imageAssetId": "easter_light_breeze",
+          "audioAsset": "lyalya_easter_063.m4a",
+          "soundTarget": "Л",
+          "examplePhrase": "Лёгкий тёплый ветерок",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_064",
+          "word": "Цвет яйца красный",
+          "imageAssetId": "easter_red_egg",
+          "audioAsset": "lyalya_easter_064.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цвет пасхального яйца красный",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_065",
+          "word": "Колокол звонит",
+          "imageAssetId": "easter_bell_ringing",
+          "audioAsset": "lyalya_easter_065.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Колокол звонит в праздник",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_066",
+          "word": "Радостный кролик нашёл яйцо",
+          "imageAssetId": "easter_bunny_found_egg",
+          "audioAsset": "lyalya_easter_066.m4a",
+          "soundTarget": "Р",
+          "examplePhrase": "Радостный кролик нашёл яйцо в траве.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_067",
+          "word": "Цыплёнок вышел из яйца",
+          "imageAssetId": "easter_chick_hatching_scene",
+          "audioAsset": "lyalya_easter_067.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цыплёнок вышел из яйца и запищал.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_068",
+          "word": "Кулич стоит на столе",
+          "imageAssetId": "easter_bread_table_scene",
+          "audioAsset": "lyalya_easter_068.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кулич стоит на праздничном столе.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_069",
+          "word": "Ляля красит яйца красками",
+          "imageAssetId": "easter_lyalya_painting_scene",
+          "audioAsset": "lyalya_easter_069.m4a",
+          "soundTarget": "Л",
+          "examplePhrase": "Ляля красит яйца яркими красками.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_070",
+          "word": "Верба расцветает первой весной",
+          "imageAssetId": "easter_willow_first_scene",
+          "audioAsset": "lyalya_easter_070.m4a",
+          "soundTarget": "В",
+          "examplePhrase": "Верба расцветает первой весной.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_071",
+          "word": "Цветы расцвели на лугу",
+          "imageAssetId": "easter_flowers_meadow_scene",
+          "audioAsset": "lyalya_easter_071.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цветы расцвели на зелёном лугу.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_072",
+          "word": "Кролик прячет яйца в траве",
+          "imageAssetId": "easter_bunny_hiding_scene",
+          "audioAsset": "lyalya_easter_072.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кролик прячет яйца в высокой траве.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_073",
+          "word": "Речка журчит по камешкам",
+          "imageAssetId": "easter_river_stones_scene",
+          "audioAsset": "lyalya_easter_073.m4a",
+          "soundTarget": "Р",
+          "examplePhrase": "Речка весело журчит по камешкам.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_074",
+          "word": "Чудесный весенний день",
+          "imageAssetId": "easter_wonderful_day_scene",
+          "audioAsset": "lyalya_easter_074.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чудесный тёплый весенний день!",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_075",
+          "word": "Ветер несёт лепестки",
+          "imageAssetId": "easter_wind_petals_scene",
+          "audioAsset": "lyalya_easter_075.m4a",
+          "soundTarget": "В",
+          "examplePhrase": "Ветер несёт белые лепестки.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_076",
+          "word": "Ласточка вьёт гнездо",
+          "imageAssetId": "easter_swallow_nest_scene",
+          "audioAsset": "lyalya_easter_076.m4a",
+          "soundTarget": "Л",
+          "examplePhrase": "Ласточка вьёт гнездо под крышей.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_077",
+          "word": "Цыплята бегают за мамой",
+          "imageAssetId": "easter_chicks_running_scene",
+          "audioAsset": "lyalya_easter_077.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цыплята весело бегают за мамой.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_078",
+          "word": "Кулич с изюмом самый вкусный",
+          "imageAssetId": "easter_bread_raisins_scene",
+          "audioAsset": "lyalya_easter_078.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кулич с изюмом самый вкусный!",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_079",
+          "word": "Радуга появилась после дождя",
+          "imageAssetId": "easter_rainbow_rain_scene",
+          "audioAsset": "lyalya_easter_079.m4a",
+          "soundTarget": "Р",
+          "examplePhrase": "Радуга появилась после тёплого дождя.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_080",
+          "word": "Ляля чистит яйцо",
+          "imageAssetId": "easter_lyalya_peel_scene",
+          "audioAsset": "lyalya_easter_080.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Ляля чистит красивое яйцо.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_081",
+          "word": "Весна греет землю",
+          "imageAssetId": "easter_spring_warmth_scene",
+          "audioAsset": "lyalya_easter_081.m4a",
+          "soundTarget": "В",
+          "examplePhrase": "Весна греет землю тёплым солнцем.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_082",
+          "word": "Ляля рада весне",
+          "imageAssetId": "easter_lyalya_spring_scene",
+          "audioAsset": "lyalya_easter_082.m4a",
+          "soundTarget": "Л",
+          "examplePhrase": "Ляля очень рада тёплой весне!",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_083",
+          "word": "Цветочки качаются на ветру",
+          "imageAssetId": "easter_flowers_wind_scene",
+          "audioAsset": "lyalya_easter_083.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цветочки качаются на тёплом ветру.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_084",
+          "word": "Корзинка стоит в траве",
+          "imageAssetId": "easter_basket_grass_scene",
+          "audioAsset": "lyalya_easter_084.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Корзинка с яйцами стоит в траве.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_085",
+          "word": "Ручей разлился по полю",
+          "imageAssetId": "easter_stream_field_scene",
+          "audioAsset": "lyalya_easter_085.m4a",
+          "soundTarget": "Р",
+          "examplePhrase": "Весенний ручей разлился по полю.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_086",
+          "word": "Чашка чая на столе",
+          "imageAssetId": "easter_tea_table_scene",
+          "audioAsset": "lyalya_easter_086.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чашка горячего чая стоит на столе.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_087",
+          "word": "Ветер гонит облака",
+          "imageAssetId": "easter_wind_clouds_scene",
+          "audioAsset": "lyalya_easter_087.m4a",
+          "soundTarget": "В",
+          "examplePhrase": "Весенний ветер гонит белые облака.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_088",
+          "word": "Ляля нашла яйцо в гнезде",
+          "imageAssetId": "easter_lyalya_nest_scene",
+          "audioAsset": "lyalya_easter_088.m4a",
+          "soundTarget": "Л",
+          "examplePhrase": "Ляля нашла красивое яйцо в гнезде.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_089",
+          "word": "Цветные яйца в корзине",
+          "imageAssetId": "easter_colorful_eggs_basket_scene",
+          "audioAsset": "lyalya_easter_089.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цветные яйца лежат в красивой корзине.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_090",
+          "word": "Кролик принёс подарки",
+          "imageAssetId": "easter_bunny_gifts_scene",
+          "audioAsset": "lyalya_easter_090.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кролик принёс много подарков детям.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_091",
+          "word": "История: Ляля и цыплёнок Цыпа",
+          "imageAssetId": "easter_story_lyalya_chick",
+          "audioAsset": "lyalya_easter_091.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Ляля нашла яйцо в гнезде. Из него вылупился цыплёнок Цыпа. Цыпа запищал: «Пи-пи!» — и Ляля очень обрадовалась.",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ea_092",
+          "word": "История: кролик и корзинка",
+          "imageAssetId": "easter_story_bunny_basket",
+          "audioAsset": "lyalya_easter_092.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кролик взял корзинку и положил в неё красивые яйца. Каждое яйцо было своего цвета. Кролик отнёс корзинку детям.",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ea_093",
+          "word": "История: Ляля рисует яйцо",
+          "imageAssetId": "easter_story_lyalya_painting",
+          "audioAsset": "lyalya_easter_093.m4a",
+          "soundTarget": "Р",
+          "examplePhrase": "Ляля взяла краски и начала рисовать. На яйце появилась радуга. Рисунок получился красивый!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ea_094",
+          "word": "История: чудесный кулич",
+          "imageAssetId": "easter_story_bread",
+          "audioAsset": "lyalya_easter_094.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Бабушка испекла чудесный кулич. Он пах ванилью. Ляля чмокнула бабушку в щёку — вкусно!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ea_095",
+          "word": "История: верба и весна",
+          "imageAssetId": "easter_story_willow_spring",
+          "audioAsset": "lyalya_easter_095.m4a",
+          "soundTarget": "В",
+          "examplePhrase": "Верба стояла у ручья. Весна дунула на неё — и появились пушистые комочки. Весна пришла!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ea_096",
+          "word": "История: Ляля и ласточка",
+          "imageAssetId": "easter_story_lyalya_swallow",
+          "audioAsset": "lyalya_easter_096.m4a",
+          "soundTarget": "Л",
+          "examplePhrase": "Ласточка прилетела и начала вить гнездо. Ляля смотрела и улыбалась. Ласточка лепила гнездо из глины.",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ea_097",
+          "word": "История: цветочная поляна",
+          "imageAssetId": "easter_story_flower_glade",
+          "audioAsset": "lyalya_easter_097.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "На поляне расцвели цветы. Цвета были яркие: красный, жёлтый, синий. Цветы покачивались на ветру.",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ea_098",
+          "word": "История: кулич и кролик",
+          "imageAssetId": "easter_story_bread_bunny",
+          "audioAsset": "lyalya_easter_098.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кролик увидел кулич на столе. Кулич был очень красивый. Кролик решил испечь такой же!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ea_099",
+          "word": "История: радуга после дождя",
+          "imageAssetId": "easter_story_rainbow",
+          "audioAsset": "lyalya_easter_099.m4a",
+          "soundTarget": "Р",
+          "examplePhrase": "Прошёл тёплый дождик. Вдруг в небе появилась радуга. Ляля радостно закричала: «Радуга!»",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ea_100",
+          "word": "История: Ляля ищет яйца",
+          "imageAssetId": "easter_story_egg_hunt",
+          "audioAsset": "lyalya_easter_100.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Ляля искала яйца в саду. Вдруг нашла чудесное яйцо под кустиком. Чуть не прыгнула от радости!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ea_101",
+          "word": "Цыплёнок в гнезде",
+          "imageAssetId": "easter_chick_in_nest",
+          "audioAsset": "lyalya_easter_101.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цыплёнок сидит в тёплом гнезде",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_102",
+          "word": "Кролик несёт яйца",
+          "imageAssetId": "easter_bunny_carries_eggs",
+          "audioAsset": "lyalya_easter_102.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кролик несёт яйца детям",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_103",
+          "word": "Радостное утро",
+          "imageAssetId": "easter_joyful_morning",
+          "audioAsset": "lyalya_easter_103.m4a",
+          "soundTarget": "Р",
+          "examplePhrase": "Радостное пасхальное утро",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_104",
+          "word": "Чистое небо",
+          "imageAssetId": "easter_clear_sky",
+          "audioAsset": "lyalya_easter_104.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чистое голубое небо",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_105",
+          "word": "Верба в вазе",
+          "imageAssetId": "easter_willow_vase",
+          "audioAsset": "lyalya_easter_105.m4a",
+          "soundTarget": "В",
+          "examplePhrase": "Верба стоит в вазе с водой",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_106",
+          "word": "Луг зелёный",
+          "imageAssetId": "easter_green_meadow",
+          "audioAsset": "lyalya_easter_106.m4a",
+          "soundTarget": "Л",
+          "examplePhrase": "Луг зелёный и цветущий",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_107",
+          "word": "Цвет красный",
+          "imageAssetId": "easter_red_color",
+          "audioAsset": "lyalya_easter_107.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цвет яйца красный — символ Пасхи",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_108",
+          "word": "Кулич в корзинке",
+          "imageAssetId": "easter_bread_basket",
+          "audioAsset": "lyalya_easter_108.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кулич лежит в плетёной корзинке",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_109",
+          "word": "Речка разлилась",
+          "imageAssetId": "easter_flooded_river",
+          "audioAsset": "lyalya_easter_109.m4a",
+          "soundTarget": "Р",
+          "examplePhrase": "Речка разлилась по берегам",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_110",
+          "word": "Чудо в корзинке",
+          "imageAssetId": "easter_wonder_basket",
+          "audioAsset": "lyalya_easter_110.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "В корзинке чудесные яйца",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_111",
+          "word": "Весна поёт",
+          "imageAssetId": "easter_spring_singing",
+          "audioAsset": "lyalya_easter_111.m4a",
+          "soundTarget": "В",
+          "examplePhrase": "Весна поёт голосами птиц",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_112",
+          "word": "Лягушка прыгает",
+          "imageAssetId": "easter_frog_jump",
+          "audioAsset": "lyalya_easter_112.m4a",
+          "soundTarget": "Л",
+          "examplePhrase": "Лягушка прыгает по лугу",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_113",
+          "word": "Цветы в корзинке",
+          "imageAssetId": "easter_flowers_basket",
+          "audioAsset": "lyalya_easter_113.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цветы лежат в красивой корзинке",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_114",
+          "word": "Кролик прыгает",
+          "imageAssetId": "easter_bunny_hopping",
+          "audioAsset": "lyalya_easter_114.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кролик прыгает по полянке",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_115",
+          "word": "Радуга после дождя",
+          "imageAssetId": "easter_rainbow_after_rain",
+          "audioAsset": "lyalya_easter_115.m4a",
+          "soundTarget": "Р",
+          "examplePhrase": "Радуга появилась после дождя",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_116",
+          "word": "Цыплята кушают",
+          "imageAssetId": "easter_chicks_eating",
+          "audioAsset": "lyalya_easter_116.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цыплята весело кушают зёрнышки",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_117",
+          "word": "Кулич красиво украшен",
+          "imageAssetId": "easter_decorated_bread",
+          "audioAsset": "lyalya_easter_117.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кулич красиво украшен глазурью",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_118",
+          "word": "Ляля находит яйцо под кустом",
+          "imageAssetId": "easter_lyalya_egg_bush_scene",
+          "audioAsset": "lyalya_easter_118.m4a",
+          "soundTarget": "Л",
+          "examplePhrase": "Ляля находит яйцо под кустиком.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_119",
+          "word": "Цыплёнок пищит на весь двор",
+          "imageAssetId": "easter_chick_yard_scene",
+          "audioAsset": "lyalya_easter_119.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цыплёнок пищит на весь двор: пи-пи!",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_120",
+          "word": "Кролик спрятал яйцо",
+          "imageAssetId": "easter_bunny_hid_egg_scene",
+          "audioAsset": "lyalya_easter_120.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кролик спрятал яйцо в траве.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_121",
+          "word": "Радуга украсила небо",
+          "imageAssetId": "easter_rainbow_sky_scene",
+          "audioAsset": "lyalya_easter_121.m4a",
+          "soundTarget": "Р",
+          "examplePhrase": "Радуга украсила весеннее небо.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_122",
+          "word": "Чашка молока для кролика",
+          "imageAssetId": "easter_milk_bunny_scene",
+          "audioAsset": "lyalya_easter_122.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Ляля налила чашку молока для кролика.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_123",
+          "word": "Верба стоит в воде",
+          "imageAssetId": "easter_willow_water_scene",
+          "audioAsset": "lyalya_easter_123.m4a",
+          "soundTarget": "В",
+          "examplePhrase": "Ветка вербы стоит в воде.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_124",
+          "word": "Ляля лепит из теста",
+          "imageAssetId": "easter_lyalya_dough_scene",
+          "audioAsset": "lyalya_easter_124.m4a",
+          "soundTarget": "Л",
+          "examplePhrase": "Ляля лепит кулич из теста.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_125",
+          "word": "Цветы расцвели рано",
+          "imageAssetId": "easter_early_flowers_scene",
+          "audioAsset": "lyalya_easter_125.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цветы расцвели очень рано.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_126",
+          "word": "Корзинка полная яиц",
+          "imageAssetId": "easter_full_basket_scene",
+          "audioAsset": "lyalya_easter_126.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Корзинка полная красивых яиц.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_127",
+          "word": "Речка поёт весной",
+          "imageAssetId": "easter_singing_river_scene",
+          "audioAsset": "lyalya_easter_127.m4a",
+          "soundTarget": "Р",
+          "examplePhrase": "Речка поёт весело весной.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_128",
+          "word": "Чудесный кролик пришёл к Ляле",
+          "imageAssetId": "easter_bunny_lyalya_scene",
+          "audioAsset": "lyalya_easter_128.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чудесный кролик пришёл прямо к Ляле!",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_129",
+          "word": "Весна принесла тепло",
+          "imageAssetId": "easter_spring_warmth2_scene",
+          "audioAsset": "lyalya_easter_129.m4a",
+          "soundTarget": "В",
+          "examplePhrase": "Весна принесла тепло и свет.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_130",
+          "word": "Ляля любит весну",
+          "imageAssetId": "easter_lyalya_loves_spring_scene",
+          "audioAsset": "lyalya_easter_130.m4a",
+          "soundTarget": "Л",
+          "examplePhrase": "Ляля очень любит весну!",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_131",
+          "word": "Цыплята побежали за мамой",
+          "imageAssetId": "easter_chicks_mom_scene",
+          "audioAsset": "lyalya_easter_131.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цыплята побежали за мамой-курочкой.",
+          "difficulty": 4,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_132",
+          "word": "Кролик принёс цветы",
+          "imageAssetId": "easter_bunny_flowers_scene",
+          "audioAsset": "lyalya_easter_132.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кролик принёс цветы в подарок.",
+          "difficulty": 3,
+          "itemType": "sentence"
+        },
+        {
+          "id": "ea_133",
+          "word": "История: яйцо с секретом",
+          "imageAssetId": "easter_story_secret_egg",
+          "audioAsset": "lyalya_easter_133.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Ляля нашла яйцо с секретом. Внутри был цыплёнок-игрушка! Цвет у него был жёлтый.",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ea_134",
+          "word": "История: кролик потерял корзину",
+          "imageAssetId": "easter_story_lost_basket",
+          "audioAsset": "lyalya_easter_134.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кролик потерял корзину с яйцами. Ляля нашла её под кустиком. Кролик был рад!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ea_135",
+          "word": "История: радуга над рекой",
+          "imageAssetId": "easter_story_rainbow_river",
+          "audioAsset": "lyalya_easter_135.m4a",
+          "soundTarget": "Р",
+          "examplePhrase": "Над рекой появилась радуга. Ляля рисовала её. Рисунок получился радостный!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ea_136",
+          "word": "История: верба-помощница",
+          "imageAssetId": "easter_story_willow_helper",
+          "audioAsset": "lyalya_easter_136.m4a",
+          "soundTarget": "В",
+          "examplePhrase": "Верба помогла цыплёнку. Он упал в воду, а верба его поймала. Всё хорошо!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ea_137",
+          "word": "История: ласточка и Ляля",
+          "imageAssetId": "easter_story_swallow_lyalya2",
+          "audioAsset": "lyalya_easter_137.m4a",
+          "soundTarget": "Л",
+          "examplePhrase": "Ласточка летела мимо и уронила пёрышко. Ляля подняла и обрадовалась. Лёгкое пёрышко!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ea_138",
+          "word": "История: цветные цыплята",
+          "imageAssetId": "easter_story_colorful_chicks",
+          "audioAsset": "lyalya_easter_138.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цыплята были разные: красный, синий, жёлтый. Ляля удивилась. Цирк да и только!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ea_139",
+          "word": "История: кулич для кролика",
+          "imageAssetId": "easter_story_bread_for_bunny",
+          "audioAsset": "lyalya_easter_139.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Ляля испекла кулич для кролика. Кролик скушал кулич. Как вкусно!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ea_140",
+          "word": "История: речка и цветок",
+          "imageAssetId": "easter_story_river_flower",
+          "audioAsset": "lyalya_easter_140.m4a",
+          "soundTarget": "Р",
+          "examplePhrase": "Цветок упал в речку. Речка унесла его далеко. Там расцвёл целый сад!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ea_141",
+          "word": "История: Ляля и весна",
+          "imageAssetId": "easter_story_lyalya_spring",
+          "audioAsset": "lyalya_easter_141.m4a",
+          "soundTarget": "В",
+          "examplePhrase": "Ляля вышла на улицу весной. Всё цвело и пело. Весна — чудо!",
+          "difficulty": 4,
+          "itemType": "story"
+        },
+        {
+          "id": "ea_142",
+          "word": "Цыплёнок под листом",
+          "imageAssetId": "easter_chick_leaf",
+          "audioAsset": "lyalya_easter_142.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цыплёнок спрятался под листом",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_143",
+          "word": "Кролик смеётся",
+          "imageAssetId": "easter_bunny_laughing",
+          "audioAsset": "lyalya_easter_143.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Кролик смеётся над спрятанным яйцом",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_144",
+          "word": "Роса блестит",
+          "imageAssetId": "easter_shining_dew",
+          "audioAsset": "lyalya_easter_144.m4a",
+          "soundTarget": "Р",
+          "examplePhrase": "Роса блестит на траве",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_145",
+          "word": "Чашка молока",
+          "imageAssetId": "easter_cup_milk",
+          "audioAsset": "lyalya_easter_145.m4a",
+          "soundTarget": "Ч",
+          "examplePhrase": "Чашка тёплого молока утром",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_146",
+          "word": "Веточки распускаются",
+          "imageAssetId": "easter_branches_blooming",
+          "audioAsset": "lyalya_easter_146.m4a",
+          "soundTarget": "В",
+          "examplePhrase": "Веточки распускаются весной",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_147",
+          "word": "Лягушка квакает",
+          "imageAssetId": "easter_frog_croaking",
+          "audioAsset": "lyalya_easter_147.m4a",
+          "soundTarget": "Л",
+          "examplePhrase": "Лягушка квакает у ручья",
+          "difficulty": 2,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_148",
+          "word": "Цветочный запах",
+          "imageAssetId": "easter_floral_scent",
+          "audioAsset": "lyalya_easter_148.m4a",
+          "soundTarget": "Ц",
+          "examplePhrase": "Цветочный запах весны",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_149",
+          "word": "Корзина с сюрпризом",
+          "imageAssetId": "easter_surprise_basket",
+          "audioAsset": "lyalya_easter_149.m4a",
+          "soundTarget": "К",
+          "examplePhrase": "Корзина с сюрпризом для Ляли",
+          "difficulty": 3,
+          "itemType": "phrase"
+        },
+        {
+          "id": "ea_150",
+          "word": "Рисовать вместе весело",
+          "imageAssetId": "easter_drawing_together",
+          "audioAsset": "lyalya_easter_150.m4a",
+          "soundTarget": "Р",
+          "examplePhrase": "Рисовать яйца вместе весело!",
+          "difficulty": 3,
+          "itemType": "phrase"
         }
       ]
     }
