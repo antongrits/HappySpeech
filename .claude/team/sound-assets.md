@@ -1,6 +1,6 @@
 # Sound Assets Registry — HappySpeech
 
-**Version 2.4 — 2026-04-30**
+**Version 2.5 — 2026-04-30**
 **Managed by:** Sound Curator. All sounds verified CC0 or royalty-free.
 
 ---
@@ -20,7 +20,7 @@
 | Content audio batch 4 (.m4a) | 2568 | 40.09 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 4 |
 | Content audio batch 5 — lexical+grammar (.m4a) | 900 | 16.9 MB | `HappySpeech/Resources/Audio/Content/Lexical/` + `Grammar/` (локально, gitignored) | ✅ M3.4 batch 5 |
 | Эталоны для PronunciationScorer (ML refs) | 665 | 7.9 MB | `HappySpeech/Resources/Audio/Refs/` (в репо) | ✅ M3.5 done |
-| Ambient / background music | 0 / 4 | — | `Resources/Audio/Ambient/` | ⏳ pending M9 |
+| Ambient sounds (.caf) | 10 | 1.2 MB | `HappySpeech/Resources/Audio/Ambient/` (в репо) | ✅ Plan v12 Block U done |
 
 ---
 
@@ -223,16 +223,85 @@
 
 ---
 
-## M3.6 — Ambient / Background music (pending) ⏳
+## Plan v12 Block U — Ambient Sounds (10 файлов, 1.2 MB) ✅
 
-| Asset | Description | Status |
+**Дата:** 2026-04-30
+**Генерация:** scipy synthesis (алгоритмическая) → ffmpeg loudnorm -24 LUFS → afconvert CAF AAC
+**Формат:** CAF AAC, 32kHz stereo, 64 kbps, 20 сек, 108–128 KB/файл
+**Лицензия:** CC0 (алгоритмически сгенерированы, без сторонних источников)
+**Путь:**  (в репо)
+**Сервис:**  — actor-изолированный, AVAudioSession .ambient + .mixWithOthers
+
+| Файл | Тема | Экраны |
 |---|---|---|
-| world_map_ambient | Soft adventure music for world map screen | Needed (CC0) |
-| lesson_bgm | Gentle background music during lesson | Needed (CC0) |
-| ar_zone_ambient | Slightly playful, light music for AR zone | Needed (CC0) |
-| reward_music | Celebratory short loop for reward screen | Needed (CC0) |
+|  | Мягкий пэд + птички | ChildHome hero |
+|  | Шелест листьев + ветер | Forest scenes (Halloween) |
+|  | Волны + чайки | Underwater AR |
+|  | Космический дрон | NarrativeQuest space |
+|  | Отдалённый орган + толпа | Circus scenes |
+|  | Гудение + тиканье часов | Indoor scenes |
+|  | Пчёлы + листья | Easter spring |
+|  | Мягкий ветер | New Year scenes |
+|  | Отдалённые голоса детей | Sport ball game |
+|  | Тёплый пэд C-E-G | Default fallback |
 
-**Music spec:** Instrumental only, child-friendly, loopable, CC0 (Freesound, ccMixter, Free Music Archive).
+**Валидация:**
+- 10/10 файлов сгенерированы, 0 ошибок ✅
+- Все файлы ≤ 128 KB (лимит 500 KB) ✅
+- Длительность: 20 сек (лимит 30 сек) ✅
+- CAF AAC 32kHz stereo ✅
+- -24 LUFS (loudnorm), seamless fade-in/out 0.5 сек ✅
+
+**Локализация:** 6 ключей добавлены в :
+- , , 
+
+**AmbientVolumeSetting:** off (0.0) / subtle (0.15) / medium (0.3 default) / full (0.5)
+UserDefaults key: 
+
+Build iPhone 17 Pro: **BUILD SUCCEEDED** ✅
+
+---
+
+## Plan v12 Block U — Ambient Sounds (10 файлов, 1.2 MB) ✅
+
+**Дата:** 2026-04-30
+**Генерация:** scipy synthesis (алгоритмическая) → ffmpeg loudnorm -24 LUFS → afconvert CAF AAC
+**Формат:** CAF AAC, 32kHz stereo, ~64 kbps, 20 сек, 108–128 KB/файл
+**Лицензия:** CC0 (алгоритмически сгенерированы, без сторонних источников)
+**Путь:** `HappySpeech/Resources/Audio/Ambient/` (в репо)
+**Сервис:** `HappySpeech/Services/AmbientSoundService.swift` — actor-изолированный, Swift 6-ready
+
+| Файл | Тема | Экраны |
+|---|---|---|
+| `childhome.caf` | Мягкий пэд + птички | ChildHome hero |
+| `forest.caf` | Шелест листьев + ветер | Forest scenes (Halloween) |
+| `ocean.caf` | Волны + чайки | Underwater AR |
+| `space.caf` | Космический дрон | NarrativeQuest space |
+| `circus.caf` | Отдалённый орган + толпа | Circus scenes |
+| `home_quiet.caf` | Гудение + тиканье часов | Indoor scenes |
+| `garden.caf` | Пчёлы + листья | Easter spring |
+| `winter_wind.caf` | Мягкий ветер | New Year scenes |
+| `playground.caf` | Отдалённые голоса детей | Sport ball game |
+| `neutral_warm.caf` | Тёплый пэд C-E-G | Default fallback |
+
+**Валидация:**
+- 10/10 файлов сгенерированы, 0 ошибок ✅
+- Все файлы ≤ 128 KB (лимит 500 KB) ✅
+- Длительность: 20 сек (лимит 30 сек) ✅
+- CAF AAC 32kHz stereo, seamless fade-in/out 0.5 сек ✅
+- -24 LUFS (ffmpeg loudnorm) ✅
+
+**AmbientSoundService.swift:**
+- `AmbientScene` enum (10 кейсов)
+- `AmbientVolumeSetting` enum: off (0.0) / subtle (0.15) / medium (0.3 default) / full (0.5)
+- UserDefaults key: `AmbientSound.volumeSetting`
+- AVAudioSession .ambient + .mixWithOthers (не блокирует музыку пользователя)
+- Swift 6 strict concurrency: actor-изолирован, 0 предупреждений ✅
+
+**Локализация:** 6 ключей добавлены в `Localizable.xcstrings` (ru only, 0 en keys):
+`settings.ambient.title/subtitle/off/subtle/medium/full`
+
+Build iPhone 17 Pro: **BUILD SUCCEEDED** ✅
 
 ---
 
@@ -501,7 +570,7 @@ Russian-only: 0 en keys ✅
 - **M3.7e** — ✅ DONE — 3 Customization voice preview m4a (classic/soft/cheerful), Lyalya 168→171
 - **Plan v11 Block P** — ✅ DONE — Ляля +570 фраз (1526 total .m4a, цель ≥1500 выполнена)
 - **Plan v12 Block F.3** — ✅ DONE — Ляля +248 фраз (1774 total .m4a, seasonal/hints/ambient/phoneme)
-- **M3.6 ambient** — 4 трека CC0 для world_map/lesson/AR/reward (⏳ pending M9)
+- **Plan v12 Block U ambient** — ✅ DONE — 10 ambient .caf сцен (1.2 MB) + AmbientSoundService.swift
 - **Firebase Storage upload** — delegated to backend-developer M11.4
 
 ## См. также
