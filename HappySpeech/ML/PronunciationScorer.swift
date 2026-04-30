@@ -6,7 +6,22 @@ import os.signpost
 
 // MARK: - Domain Types
 
-/// Группа звуков русского языка для логопедической работы.
+/// Группа звуков русского языка для выбора нужной Core ML модели.
+///
+/// `PhonemeGroup` определяет, какая из четырёх `PronunciationScorer_*.mlpackage`
+/// моделей используется при оценке произношения. Каждая группа обучена на
+/// своём наборе звуков с разной точностью.
+///
+/// | Группа | Звуки | Accuracy |
+/// |--------|-------|---------|
+/// | `.whistling` | С, З, Ц | 95% |
+/// | `.hissing` | Ш, Ж, Ч, Щ | 100% |
+/// | `.sonants` | Р, Л | 93% |
+/// | `.velar` | К, Г, Х | 87% |
+///
+/// ## See Also
+/// - ``PronunciationScorerProtocol``
+/// - ``PronunciationResult``
 enum PhonemeGroup: String, CaseIterable, Sendable {
     case whistling  // С, З, Ц
     case hissing    // Ш, Ж, Ч, Щ
@@ -32,7 +47,17 @@ enum PhonemeGroup: String, CaseIterable, Sendable {
     }
 }
 
-/// Результат оценки произношения.
+/// Результат оценки произношения от Core ML модели.
+///
+/// `PronunciationResult` содержит вероятности правильного и неправильного произношения,
+/// предсказанный класс и удобные вычисляемые свойства для UI.
+///
+/// `isCorrect` — основной флаг для определения правильности произношения (порог 0.6).
+/// `displayScore` — нормированный 0–100 для progress bar в SessionComplete.
+///
+/// ## See Also
+/// - ``PhonemeGroup``
+/// - ``PronunciationScorerProtocol``
 struct PronunciationResult: Sendable {
     /// Вероятность правильного произношения (0.0–1.0).
     let correctProbability: Float
@@ -52,7 +77,34 @@ struct PronunciationResult: Sendable {
 
 // MARK: - Protocol
 
-/// Сервис оценки произношения. Все методы async для on-device ML inference.
+/// Сервис оценки произношения через on-device Core ML. Основной ML-компонент детского контура.
+///
+/// `PronunciationScorerProtocol` абстрагирует четыре Core ML модели под единый API.
+/// Правильная модель выбирается автоматически по `PhonemeGroup`.
+///
+/// **Вход модели:** MFCC тензор `[1, 40, 150]`, 16kHz mono, 1.5 сек.
+/// MFCC вычисляется через `MFCCExtractor` (vDSP/Accelerate, нет Python зависимостей).
+///
+/// **Latency:** ~15ms на iPhone 14 Pro (ANE ускорение).
+///
+/// ## Пример
+/// ```swift
+/// let scorer = PronunciationScorer()
+/// let result = try await scorer.score(
+///     audio: pcmBuffer,
+///     phonemeGroup: .whistling
+/// )
+/// if result.isCorrect {
+///     await hapticService.play(pattern: .perfectRound)
+/// }
+/// print("Точность: \(result.displayScore)%")
+/// ```
+///
+/// ## See Also
+/// - ``PhonemeGroup``
+/// - ``PronunciationResult``
+/// - ``MFCCExtractor``
+/// - ``SileroVAD``
 protocol PronunciationScorerProtocol: Sendable {
     /// Оценивает произношение из буфера аудио.
     /// - Parameters:
@@ -67,12 +119,25 @@ protocol PronunciationScorerProtocol: Sendable {
 
 // MARK: - MFCC Feature Extraction
 
-/// Извлечение MFCC через vDSP/Accelerate (native iOS, без Python зависимостей).
+/// Извлечение MFCC-признаков через vDSP/Accelerate — нативно, без Python-зависимостей.
 ///
-/// Performance оптимизации (M10.5 v7):
-///   - vDSP FFT setup кэшируется как static let — ранее создавался 150 раз (на каждый из tSteps фреймов).
-///     vDSP_create_fftsetup — дорогая операция (аллокация + инициализация таблиц twiddle).
-///   - Mel filterbank кэшируется как static let (статичен для фиксированных параметров SR/nFFT).
+/// `MFCCExtractor` вычисляет Mel-frequency cepstral coefficients из PCM-буфера
+/// и формирует входной тензор `[1, 40, 150]` для `PronunciationScorerProtocol`.
+///
+/// ### Параметры
+/// - Частота дискретизации: 16kHz
+/// - nMFCC: 40 коэффициентов
+/// - Окно: 25ms (nFFT=400), сдвиг 10ms (hopLength=160)
+/// - Выходной тензор: `[1, 40, 150]` (40 MFCC × 150 временных шагов)
+///
+/// ### Оптимизации (Sprint 10)
+/// - FFT setup кэшируется как `static let` — ранее создавался 150 раз за инференс
+/// - Mel filterbank кэшируется для фиксированных параметров SR/nFFT
+/// - Окно Хэмминга кэшируется как `static let`
+///
+/// ## See Also
+/// - ``PronunciationScorerProtocol``
+/// - ``SileroVAD``
 enum MFCCExtractor {
     static let nMFCC        = 40
     static let hopLength    = 160     // 10ms при 16kHz

@@ -3,8 +3,32 @@ import OSLog
 
 // MARK: - HSLogger
 
-/// Centralised logger wrapping OSLog. Use `HSLogger` everywhere instead of `print`.
-/// Each subsystem/category combination maps to a distinct log channel visible in Console.app.
+/// Централизованная система логирования HappySpeech на базе OSLog.
+///
+/// `HSLogger` — единственный разрешённый способ логирования в проекте.
+/// `print()` запрещён правилами кода и SwiftLint (custom rule `no_print`).
+///
+/// Каждая категория маппируется на отдельный канал в Console.app —
+/// фильтрация по категории даёт мгновенный контекст при дебаггинге.
+///
+/// Subsystem автоматически берётся из `Bundle.main.bundleIdentifier`
+/// (обычно `ru.happyspeech.app`).
+///
+/// ## Пример
+/// ```swift
+/// // Информационное сообщение
+/// HSLogger.audio.info("Запись начата, format: \(format)")
+///
+/// // Ошибка с деталями
+/// HSLogger.ml.error("PronunciationScorer не загружен: \(error.localizedDescription)")
+///
+/// // Debug (не попадает в release build)
+/// HSLogger.realm.debug("Realm открыт: \(filePath)")
+/// ```
+///
+/// ## See Also
+/// - ``AppError``
+/// - ``RealmActor``
 public enum HSLogger {
 
     // MARK: - Subsystems

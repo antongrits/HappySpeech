@@ -1,16 +1,44 @@
 import Foundation
 
 // MARK: - LLMDecisionServiceProtocol
-// ==================================================================================
-// Central "brain" of HappySpeech — 25 decision points across the app.
-//   Tier A (on-device Qwen2.5-1.5B via MLC)       — kid + adult circuits.
-//   Tier B (HF Inference API, Vikhr-Nemo-12B/3B)  — parent/specialist only (never kid).
-//   Tier C (RuleBasedDecisionService)             — always available, ultimate fallback.
-// All methods are `async` and return a result type (never throws) so the caller
-// always has something usable. Latency budgets (master-plan v2 §19.5) are enforced
-// inside LiveLLMDecisionService — if the LLM misses the budget, rule-based kicks in.
-// ==================================================================================
 
+/// Центральный "мозг" HappySpeech — маршрутизирует 25 точек принятия решений по трём уровням.
+///
+/// `LLMDecisionServiceProtocol` абстрагирует три уровня вывода:
+///
+/// | Уровень | Реализация | Контуры |
+/// |---------|-----------|---------|
+/// | **Tier A** | Qwen2.5-1.5B (MLX Swift, on-device) | Kid + Parent + Specialist |
+/// | **Tier B** | HF Inference API (Vikhr-Nemo-12B) | Parent + Specialist **ONLY** |
+/// | **Tier C** | `RuleBasedDecisionService` | Все (всегда доступен) |
+///
+/// > Warning: Tier B **никогда** не вызывается из детского контура (COPPA, ADR-001-REV1).
+/// > Все kid-facing методы принудительно используют Tier A или Tier C.
+///
+/// Все методы `async` и **никогда не бросают** — при ошибке или таймауте
+/// автоматически переключаются на `RuleBasedDecisionService`.
+/// Бюджеты latency определены в master-plan §19.5.
+///
+/// ## Пример
+/// ```swift
+/// let decision = container.llmDecisionService
+///
+/// // Kid circuit — Tier A или C
+/// let phrase = await decision.pickEncouragementPhrase(context: attemptCtx)
+///
+/// // Parent circuit — может использовать Tier B
+/// let summary = await decision.generateParentSummary(session: sessionInput)
+///
+/// // Проверка готовности on-device модели
+/// if await decision.isOnDeviceModelReady {
+///     print("Qwen2.5 загружен, Tier A активен")
+/// }
+/// ```
+///
+/// ## See Also
+/// - ``RuleBasedDecisionService``
+/// - ``LLMInferenceActor``
+/// - ``ChildSafetyValidator``
 public protocol LLMDecisionServiceProtocol: AnyObject, Sendable {
 
     // MARK: Model State

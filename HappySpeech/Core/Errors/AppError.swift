@@ -2,8 +2,43 @@ import Foundation
 
 // MARK: - AppError
 
-/// Unified application error type surfaced to the user with localised Russian descriptions.
-/// All services throw `AppError`; Features catch and pass to `Presenter` which formats `ViewModel.ErrorState`.
+/// Единый тип ошибок приложения с локализованными описаниями на русском языке.
+///
+/// `AppError` — единственный тип ошибок, который пересекает границу сервис/интерактор.
+/// Все сервисы бросают `AppError`; Interactor перехватывает и передаёт Presenter,
+/// который формирует `ViewModel.ErrorState` для отображения пользователю.
+///
+/// ### Группы ошибок
+/// - **Auth**: ошибки входа/выхода, токены, Google
+/// - **Network**: недоступность сети, таймауты, серверные ошибки
+/// - **Circuit/COPPA**: попытка вызова запрещённого API из детского контура
+/// - **Realm/Data**: ошибки чтения/записи в локальную БД
+/// - **Sync**: конфликты и сбои синхронизации с Firestore
+/// - **Audio**: запись, воспроизведение, формат
+/// - **ASR**: WhisperKit — модель не загружена, ошибка транскрипции
+/// - **AR**: ARKit — нет поддержки, потеря трекинга
+/// - **ML**: Core ML модели — не найдены, ошибка инференса
+/// - **Content**: контент-паки — не найдены, битый JSON
+///
+/// ## Пример
+/// ```swift
+/// // В сервисе:
+/// guard isNetworkAvailable else {
+///     throw AppError.networkUnavailable
+/// }
+///
+/// // В Interactor:
+/// do {
+///     let result = try await service.fetch()
+///     presenter.presentResult(.init(result: result))
+/// } catch let error as AppError {
+///     presenter.presentError(.init(error: error))
+/// }
+/// ```
+///
+/// ## See Also
+/// - ``HSLogger``
+/// - ``RealmActor``
 public enum AppError: LocalizedError, Equatable {
 
     // MARK: - Auth

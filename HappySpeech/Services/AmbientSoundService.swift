@@ -30,8 +30,35 @@ public enum AmbientScene: String, CaseIterable, Sendable {
 
 // MARK: - AmbientSoundService Protocol
 
-/// Сервис фонового ambient-звука.
-/// AVAudioSession category: `.ambient` + `.mixWithOthers` — не блокирует музыку пользователя.
+/// Сервис фонового ambient-звука для создания атмосферы на игровых экранах.
+///
+/// `AmbientSoundService` воспроизводит зациклённые ambient-треки через `AVAudioPlayer`.
+/// AVAudioSession категория `.ambient + .mixWithOthers` гарантирует, что фоновая
+/// музыка пользователя (Apple Music, Spotify) не прерывается.
+///
+/// 10 встроенных сцен (``AmbientScene``): детский дом, лес, океан, космос, цирк,
+/// тихий дом, сад, зимний ветер, площадка, нейтральный тёплый.
+///
+/// Смена сцены выполняется через fade-out старой + fade-in новой.
+/// Повторный вызов `play(scene:)` с той же сценой — no-op.
+///
+/// ## Пример
+/// ```swift
+/// let service: AmbientSoundService = LiveAmbientSoundService()
+///
+/// // При открытии экрана WorldMap
+/// await service.play(scene: .forest, fadeDuration: 1.5)
+///
+/// // Смена сцены при переходе в AR
+/// await service.play(scene: .ocean, fadeDuration: 0.8)
+///
+/// // Отключение при сворачивании
+/// await service.stop(fadeDuration: 0.5)
+/// ```
+///
+/// ## See Also
+/// - ``AmbientScene``
+/// - ``HapticService``
 public protocol AmbientSoundService: Sendable {
     /// Воспроизвести ambient-сцену с fade-in. Если уже играет та же сцена — ничего не делает.
     func play(scene: AmbientScene, fadeDuration: TimeInterval) async

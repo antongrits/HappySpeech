@@ -10,7 +10,35 @@ public enum HSCardStyle {
 
 // MARK: - HSCard
 
-/// Reusable card container. Adapts shadow/surface to circuit context.
+/// Переиспользуемый контейнер-карточка. Адаптирует тень и поверхность к контексту контура.
+///
+/// `HSCard` — базовый строительный блок UI HappySpeech. Принимает любой SwiftUI `Content`
+/// через `@ViewBuilder` и оборачивает его в скруглённый прямоугольник с правильным отступом,
+/// тенью и цветом поверхности для текущего контура (kid / parent / specialist).
+///
+/// Три стиля через ``HSCardStyle``:
+/// - `.elevated` — карточка с тенью (по умолчанию)
+/// - `.flat` — без тени, с тонкой границей
+/// - `.tinted(Color)` — тонированный фон с произвольным цветом
+///
+/// ## Пример
+/// ```swift
+/// HSCard(style: .elevated) {
+///     VStack(alignment: .leading) {
+///         Text("Сегодняшний урок").font(TypographyTokens.headline())
+///         Text("Звук С — слоги").font(TypographyTokens.body())
+///     }
+/// }
+///
+/// HSCard(style: .tinted(ColorTokens.Brand.mint.opacity(0.15))) {
+///     Text("Отличный результат!")
+/// }
+/// ```
+///
+/// ## See Also
+/// - ``HSLiquidGlassCard``
+/// - ``HSCardStyle``
+/// - ``ColorTokens``
 public struct HSCard<Content: View>: View {
 
     private let style: HSCardStyle

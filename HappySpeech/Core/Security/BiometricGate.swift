@@ -16,8 +16,37 @@ public enum AuthResult: Sendable, Equatable {
 
 // MARK: - BiometricGateService Protocol
 
-/// Сервис биометрической аутентификации для родительского gate.
-/// Протокол размещён в Core — доступен DesignSystem, Services, Features.
+/// Сервис биометрической аутентификации для входа в родительский раздел.
+///
+/// `BiometricGateService` используется как первый слой защиты перед `ParentalGate`
+/// (математический барьер). Face ID / Touch ID проверяется через `LAContext`.
+///
+/// Протокол размещён в `Core/Security/` — доступен из DesignSystem, Services, Features
+/// без нарушения слоевых зависимостей.
+///
+/// При `canUseBiometric() == false` — применяется резервный механизм `ParentalGate`
+/// (математический вопрос из `ParentalGate.swift`).
+///
+/// ## Пример
+/// ```swift
+/// let gate: BiometricGateService = LiveBiometricGateService()
+///
+/// if await gate.canUseBiometric() {
+///     let result = await gate.authenticate(reason: String(localized: "parent.gate.reason"))
+///     switch result {
+///     case .success: openParentHome()
+///     case .fallback: showMathGate()
+///     case .cancelled: break
+///     case .denied(let reason): showError(reason)
+///     }
+/// } else {
+///     showMathGate()
+/// }
+/// ```
+///
+/// ## See Also
+/// - ``AuthResult``
+/// - ``FCMService``
 public protocol BiometricGateService: Sendable {
     /// Проверяет, доступна ли биометрия (Face ID / Touch ID) на устройстве.
     func canUseBiometric() async -> Bool

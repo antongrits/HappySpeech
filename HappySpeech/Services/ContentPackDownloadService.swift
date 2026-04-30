@@ -4,14 +4,38 @@ import OSLog
 
 // MARK: - Protocol
 
-/// Downloads and caches content packs from Firebase Storage.
+/// Загружает и кэширует контент-паки из Firebase Storage.
 ///
-/// Storage path: /content_packs/{packId}/{file}
-/// Cache location: Documents/ContentPacks/{packId}/
+/// `ContentPackDownloadService` обеспечивает OTA (over-the-air) обновление контента
+/// без релиза в App Store. Загрузки возобновляемы — Firebase SDK автоматически
+/// использует HTTP range requests, прерванная загрузка продолжается с места остановки.
 ///
-/// Resumable download via StorageReference.write(toFile:) — Firebase SDK handles
-/// HTTP range requests automatically, so interrupted downloads resume without
-/// re-downloading from the start.
+/// ### Storage структура
+/// ```
+/// /content_packs/{packId}/words.json
+/// /content_packs/{packId}/audio/
+/// ```
+///
+/// ### Кэш
+/// `Documents/ContentPacks/{packId}/` — сохраняется между запусками,
+/// `cachedURL(for:)` возвращает локальный URL если пак уже скачан.
+///
+/// ## Пример
+/// ```swift
+/// let service: ContentPackDownloadService = LiveContentPackDownloadService()
+///
+/// // Скачать с прогрессом
+/// Task {
+///     for await progress in service.downloadProgress(id: "sound_r_pack") {
+///         updateProgressBar(progress)
+///     }
+/// }
+/// let url = try await service.downloadPack(id: "sound_r_pack")
+/// ```
+///
+/// ## See Also
+/// - ``RemoteConfigService``
+/// - ``SyncService``
 public protocol ContentPackDownloadService: AnyObject, Sendable {
     /// Downloads the pack with given id. Returns cached URL if already downloaded.
     /// Throws StorageError or ContentPackError on failure.

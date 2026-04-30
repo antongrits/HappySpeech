@@ -6,14 +6,34 @@ import UserNotifications
 
 // MARK: - Protocol
 
-/// Firebase Cloud Messaging service — PARENT ONLY (COPPA).
+/// Firebase Cloud Messaging сервис — только для родительского контура (COPPA).
 ///
-/// FCM токен синхронизируется с Firestore ТОЛЬКО если:
-///   1. Пользователь аутентифицирован (не anonymous)
-///   2. Роль пользователя — parent
-///   3. Пользователь явно включил уведомления в Settings (notificationsEnabled = true)
+/// `FCMService` управляет регистрацией push-уведомлений через FCM и синхронизацией
+/// токена в Firestore. FCM-токен сохраняется **только** при выполнении трёх условий:
 ///
-/// Детские профили и анонимные сессии не получают токен никогда.
+/// 1. Пользователь аутентифицирован (не anonymous)
+/// 2. Роль пользователя — parent
+/// 3. Уведомления явно включены в Settings (`notificationsEnabled = true`)
+///
+/// > Important: Детские профили и анонимные сессии **никогда** не получают
+/// > FCM-токен — это требование COPPA и Kids Category.
+///
+/// ## Пример
+/// ```swift
+/// let fcm: FCMService = LiveFCMService()
+/// let granted = await fcm.requestPermission()
+/// if granted {
+///     await fcm.registerForRemoteNotifications()
+///     try await fcm.syncTokenToFirestore(userId: currentUserId)
+/// }
+///
+/// // При выходе
+/// try await fcm.unregisterToken(userId: currentUserId)
+/// ```
+///
+/// ## See Also
+/// - ``NotificationService``
+/// - ``RemoteConfigService``
 public protocol FCMService: AnyObject, Sendable {
     /// Запрашивает разрешение UNUserNotificationCenter.
     /// Возвращает true если разрешение выдано.

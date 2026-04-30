@@ -2,8 +2,31 @@ import SwiftUI
 
 // MARK: - HSButton
 
-/// Primary CTA button used throughout the app.
-/// Adapts to kid / parent / specialist circuits.
+/// Основная кнопка-CTA, используемая во всём приложении.
+///
+/// `HSButton` автоматически адаптируется к трём контурам (kid / parent / specialist)
+/// через `@Environment(\.circuitContext)`. Поддерживает четыре стиля оформления,
+/// три размера и состояние загрузки. При `isLoading = true` заменяет текст
+/// на `ProgressView` и блокирует повторные нажатия.
+///
+/// Поддерживает `@Environment(\.accessibilityReduceMotion)` — нажатие без
+/// анимации пружины, если пользователь включил Reduced Motion.
+///
+/// ## Пример
+/// ```swift
+/// HSButton("Начать урок", style: .primary, size: .large) {
+///     interactor.startLesson()
+/// }
+///
+/// HSButton("Удалить", style: .danger, size: .medium, icon: "trash") {
+///     interactor.deleteProfile()
+/// }
+/// ```
+///
+/// ## See Also
+/// - ``HSCard``
+/// - ``ColorTokens``
+/// - ``SpacingTokens``
 public struct HSButton: View {
 
     public enum Style {
