@@ -394,6 +394,10 @@ struct SessionShellBinder: View {
             VisualAcousticView(activity: activity) { score in
                 Task { await onComplete(activity.id, score) }
             }
+        case .objectHunt:
+            ObjectHuntView(activity: activity) { score in
+                Task { await onComplete(activity.id, score) }
+            }
         default:
             placeholderGame(for: activity)
         }
@@ -821,6 +825,7 @@ extension GameType {
         case .storyCompletion:       return String(localized: "game.story_completion")
         case .articulationImitation: return String(localized: "game.articulation_imitation")
         case .arActivity:            return String(localized: "game.ar_activity")
+        case .objectHunt:            return String(localized: "game.object_hunt")
         }
     }
 }

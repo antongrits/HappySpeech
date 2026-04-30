@@ -340,6 +340,7 @@ final class SessionHistoryPresenter: SessionHistoryPresentationLogic {
         case .soundHunter:            return "GameRepeatAfterModel"
         case .dragAndMatch:           return "GameListenAndChoose"
         case .storyCompletion:        return "GameMemory"
+        case .objectHunt:             return "GameAR"
         }
     }
 

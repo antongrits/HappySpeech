@@ -303,6 +303,7 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
         case .rhythm:                return .rhythm
         case .narrativeQuest:        return .narrativeQuest
         case .minimalPairs:          return .minimalPairs
+        case .objectHunt:            return .objectHunt
         }
     }
 
