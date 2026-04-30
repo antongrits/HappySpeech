@@ -577,6 +577,7 @@
 		10A0A8E0241F4022AA59E020 /* br-074.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F55240EF5B1E846D705B3AC0 /* br-074.m4a */; };
 		10A353B6D41AFBCD5E98ACCA /* c-wi-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D30A85CE6B609F2F58A136BF /* c-wi-8.m4a */; };
 		10A831D8545862BC13313EEE /* z-ph-35.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7E00DEEB16A9F444ABC76B83 /* z-ph-35.m4a */; };
+		10BB7EB8C02A0FE7EA852436 /* BiometricGateServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B263DE19A6552F56D2158B08 /* BiometricGateServiceTests.swift */; };
 		10C7C08C037552390323C4A5 /* le.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CCC7D0DDDEDC37A1C519218E /* le.m4a */; };
 		10D8026FA8BF8A1E12E21CA8 /* s-diff-16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = EDB864A30647CDEC6BAB8850 /* s-diff-16.m4a */; };
 		10DEA4CF74F27DC1CB72F1B5 /* ch-ph-27.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 5E72A0F23000762405B79801 /* ch-ph-27.m4a */; };
@@ -5354,6 +5355,7 @@
 		954D1B3F501B5E18F60C4D6D /* l-wi-1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = EEDD56D62761137236F57394 /* l-wi-1.m4a */; };
 		955FD75375F098D51CCE5956 /* c-sen-25.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8AEF5157BBCCAED6D833F250 /* c-sen-25.m4a */; };
 		9560320F7CEE0EA7F2CC6996 /* dwh-wi-7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 023DDD1B14516A898825B052 /* dwh-wi-7.m4a */; };
+		956B7F145EE10EB940BEFCDB /* BiometricGateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EF543077114B3916857A9C /* BiometricGateService.swift */; };
 		956BA83D9998FDB327A502B4 /* kh-wi-3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 76F03BB4CA03C1831B87AFB0 /* kh-wi-3.m4a */; };
 		95711319789C5362555EABF5 /* lyalya_hint_dam_7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 08828ED615AA131448B9DC78 /* lyalya_hint_dam_7.m4a */; };
 		9572870752A24836B62B85CD /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 821836C887225B399A00BF33 /* String+Extensions.swift */; };
@@ -8848,6 +8850,7 @@
 		F652D1C9EBBA8F953F426B8F /* z-ph-27.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 58EBF898673AAF41290E32C1 /* z-ph-27.m4a */; };
 		F653F2C46C64299028257A37 /* z-wm-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 191248AE0B38FA530ED191C1 /* z-wm-8.m4a */; };
 		F65BE3B72D9D21D6ED4A7204 /* zh-df-19.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E5EF9A9DCE4B1FE3C7DC7555 /* zh-df-19.m4a */; };
+		F667F8BE6F86C1DAEC39084C /* BiometricGate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EC0CD9371720137E44BF8B /* BiometricGate.swift */; };
 		F6732F2F1E746361F7F841E7 /* zh-wf-27.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4CB8E47E0E10B20FAF7C6BAE /* zh-wf-27.m4a */; };
 		F67C08A8DE5A773A3FF5ED32 /* sh-prep-9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8255E1A00F4D0382F52FDD2D /* sh-prep-9.m4a */; };
 		F67DAD39D009914A157F11FA /* shapku.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 16D01DC88136B307C213454C /* shapku.m4a */; };
@@ -9257,6 +9260,7 @@
 		00BDB711E8DC008EFDAAD399 /* z-diff-11.m4a */ = {isa = PBXFileReference; path = "z-diff-11.m4a"; sourceTree = "<group>"; };
 		00DA69B282E6110CEF7C6B88 /* gr-gc-11.m4a */ = {isa = PBXFileReference; path = "gr-gc-11.m4a"; sourceTree = "<group>"; };
 		00E0177CE97A6E5E56DB2FC0 /* lex-fe-17.m4a */ = {isa = PBXFileReference; path = "lex-fe-17.m4a"; sourceTree = "<group>"; };
+		00EF543077114B3916857A9C /* BiometricGateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricGateService.swift; sourceTree = "<group>"; };
 		00F17252FC875E61BC6A8D96 /* k-wi-5.m4a */ = {isa = PBXFileReference; path = "k-wi-5.m4a"; sourceTree = "<group>"; };
 		00F22EB6A4540AD3DC0E3622 /* phon-mp-8.m4a */ = {isa = PBXFileReference; path = "phon-mp-8.m4a"; sourceTree = "<group>"; };
 		00FFC851ED5345FBC023926B /* opishi_svoy_den_rozhdeniya.m4a */ = {isa = PBXFileReference; path = opishi_svoy_den_rozhdeniya.m4a; sourceTree = "<group>"; };
@@ -11076,6 +11080,7 @@
 		33C8EA6C095F7E7638A89B37 /* br-021.m4a */ = {isa = PBXFileReference; path = "br-021.m4a"; sourceTree = "<group>"; };
 		33D9BADFFF9E545FBF977214 /* c-wm-27.m4a */ = {isa = PBXFileReference; path = "c-wm-27.m4a"; sourceTree = "<group>"; };
 		33DA98EE635A7A0A024E2664 /* sh-wf-31.m4a */ = {isa = PBXFileReference; path = "sh-wf-31.m4a"; sourceTree = "<group>"; };
+		33EC0CD9371720137E44BF8B /* BiometricGate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricGate.swift; sourceTree = "<group>"; };
 		33F0A4630A381CDBE417E541 /* ObjectDetectionWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectDetectionWorker.swift; sourceTree = "<group>"; };
 		33FB78954B32A136B8097AE7 /* s-sen-2.m4a */ = {isa = PBXFileReference; path = "s-sen-2.m4a"; sourceTree = "<group>"; };
 		33FBF912606081B7D0A71329 /* HSProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSProgressBar.swift; sourceTree = "<group>"; };
@@ -15614,6 +15619,7 @@
 		B24E980FEE1E6465C43E9DF4 /* y-wi-0.m4a */ = {isa = PBXFileReference; path = "y-wi-0.m4a"; sourceTree = "<group>"; };
 		B25644D37DF0C5A19C1DEB3E /* shch-wm-24.m4a */ = {isa = PBXFileReference; path = "shch-wm-24.m4a"; sourceTree = "<group>"; };
 		B25869AAB736A2F7B519408E /* narr-f-3.m4a */ = {isa = PBXFileReference; path = "narr-f-3.m4a"; sourceTree = "<group>"; };
+		B263DE19A6552F56D2158B08 /* BiometricGateServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricGateServiceTests.swift; sourceTree = "<group>"; };
 		B26961BF7A60E3E78C7F46D1 /* br-033.m4a */ = {isa = PBXFileReference; path = "br-033.m4a"; sourceTree = "<group>"; };
 		B27E123119ECA49C3E01F576 /* korova.m4a */ = {isa = PBXFileReference; path = korova.m4a; sourceTree = "<group>"; };
 		B2882B0D1B3C483E78DFF56D /* SessionReviewInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionReviewInteractor.swift; sourceTree = "<group>"; };
@@ -19644,6 +19650,7 @@
 				292EE5C0B310A1D47B2F4806 /* AudioAnalysisService.swift */,
 				1669AC3C06DA42F0D51F7D2A /* AudioService.swift */,
 				DF006D9CCB45EC4F1E84D1AF /* AuthService.swift */,
+				00EF543077114B3916857A9C /* BiometricGateService.swift */,
 				F5CDA40383ADC3E09FFA79CF /* ClaudeAPIClient.swift */,
 				D6A79A9714C62B33BD8A4866 /* ContentPackDownloadService.swift */,
 				75215535F2D8BB7B4F566CC7 /* FaceAnalysisService.swift */,
@@ -26812,6 +26819,7 @@
 		C4B1EA60FE267463F36AE0C8 /* Security */ = {
 			isa = PBXGroup;
 			children = (
+				33EC0CD9371720137E44BF8B /* BiometricGate.swift */,
 				74C610BC213CBDD91050EED5 /* KeychainStore.swift */,
 			);
 			path = Security;
@@ -27193,6 +27201,7 @@
 			children = (
 				865559639DB1AC00CB54889E /* AdaptivePlannerServiceTests.swift */,
 				43F0FD43E9E9C355E349DB4C /* AppErrorTests.swift */,
+				B263DE19A6552F56D2158B08 /* BiometricGateServiceTests.swift */,
 				891787FE84A8DE87DDFC404F /* ContentEngineTests.swift */,
 				A556F671CE6B2994C6A9284C /* HealthKitServiceTests.swift */,
 				AABD10350ECAA606782BE07D /* LLMDecisionServiceTests.swift */,
@@ -38034,6 +38043,7 @@
 				836FD72182B53B22D571AC7B /* AuthFlowTests.swift in Sources */,
 				2AA1853CBE2840D311EECDFA /* AuthInteractorTests.swift in Sources */,
 				838D952BEE85D459C9D22306 /* BingoInteractorTests.swift in Sources */,
+				10BB7EB8C02A0FE7EA852436 /* BiometricGateServiceTests.swift in Sources */,
 				113313232CBBD4F99B929666 /* BreathingInteractorTests.swift in Sources */,
 				53593C793A82F0D8945834E9 /* ChildHomeInteractorTests.swift in Sources */,
 				54B03D688C02BAD9442277B6 /* ColdStartSignpostTests.swift in Sources */,
@@ -38211,6 +38221,8 @@
 				434497749D9F369EC367589D /* BingoPresenter.swift in Sources */,
 				98686F92BDCD06B1C9110C05 /* BingoRouter.swift in Sources */,
 				65C42C2C5277F422B29F878B /* BingoView.swift in Sources */,
+				F667F8BE6F86C1DAEC39084C /* BiometricGate.swift in Sources */,
+				956B7F145EE10EB940BEFCDB /* BiometricGateService.swift in Sources */,
 				A56A745195B02814E3FE8434 /* BodyPoseWorker.swift in Sources */,
 				6AAF3490216A36393BBCB71B /* BreathingARInteractor.swift in Sources */,
 				F92DBDE33182DB60A921C089 /* BreathingARModels.swift in Sources */,

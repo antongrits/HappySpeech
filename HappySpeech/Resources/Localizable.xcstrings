@@ -22738,6 +22738,61 @@
           }
         }
       }
+    },
+    "parental_gate.biometric.reason": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подтвердите личность, чтобы открыть родительский раздел"
+          }
+        }
+      }
+    },
+    "parental_gate.biometric.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Face ID активен"
+          }
+        }
+      }
+    },
+    "parental_gate.biometric.fallback_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не получилось — реши задачку"
+          }
+        }
+      }
+    },
+    "parental_gate.biometric.denied_generic": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Аутентификация не прошла"
+          }
+        }
+      }
+    },
+    "settings.privacy.use_face_id": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Использовать Face ID для родительских разделов"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
