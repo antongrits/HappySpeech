@@ -199,6 +199,7 @@
 		054D08BB26383DFB84C6437C /* lex-fr-11.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 25969D7863AC7D7AAD1DB411 /* lex-fr-11.m4a */; };
 		054DA4AF29E5C0D6CADFD316 /* z-sen-21.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 6260D6794FBC38279574EC11 /* z-sen-21.m4a */; };
 		0551C5F51E1FC06F172400C5 /* phon-pg-1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0F184A0F673C467FA0144932 /* phon-pg-1.m4a */; };
+		055F6BBE0DC064031894AA2B /* ProfileEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DA3CB5C201759DDEAA43E0F /* ProfileEditorView.swift */; };
 		0562C1C441DE6F85FF6F395E /* shch-wf-21.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 74107CF2DF5D9358F570F5C3 /* shch-wf-21.m4a */; };
 		056EE633058331F3FB8C0938 /* dwh-wf-3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D34F7171D33C2759F3982695 /* dwh-wf-3.m4a */; };
 		0572BB6FC6BEE7F0D71096F8 /* lex-ms-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F1A5C66F8A1B5547B38CE63B /* lex-ms-0.m4a */; };
@@ -1187,6 +1188,7 @@
 		2118BFD294F2C4915B7D1020 /* lex-aw-3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 64770DB4B898476FFB33143E /* lex-aw-3.m4a */; };
 		211A729D96A3A2F512310587 /* sh-iso-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 61C2A45E527AB460EC049A1A /* sh-iso-2.m4a */; };
 		211ABFBDD32E86DBB9FE835E /* shch-iso-4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FF14A0308D24E16CC676BF56 /* shch-iso-4.m4a */; };
+		211F9D1796657D6F3D8C95E0 /* ComparisonDashboardInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24127CC79BC5795B1EFC4341 /* ComparisonDashboardInteractor.swift */; };
 		212F7A10B4B7AD676773C0FE /* lyalya_insight_recommend_3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 46FA4CCA434A0D4FEE349A9A /* lyalya_insight_recommend_3.m4a */; };
 		2134C40040CA8B148E734ABA /* zh-ph-26.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0C54BEB23389D1653BB045DD /* zh-ph-26.m4a */; };
 		213517D04108F0BC590B7480 /* br-089.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 26007B1F07874A0C3CD482C5 /* br-089.m4a */; };
@@ -1987,6 +1989,7 @@
 		35DC0B649815D158849266E1 /* kubik.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1A0D19C953FC1B4FE458B247 /* kubik.m4a */; };
 		35DC8B425DF308C7D2814641 /* lex-tp-17.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A7442AF364C470E24AF8DD7E /* lex-tp-17.m4a */; };
 		35E163622C37E39411C33798 /* zh-wi-10.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7F9CB83716601032B3E7B600 /* zh-wi-10.m4a */; };
+		35E4A50374049F1C9EDDBCC7 /* FamilyHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FCDC83757C473F551DB970 /* FamilyHomeView.swift */; };
 		35E65B67772D6F076C95FDAF /* istoriya_dozhd.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 6212B604041E6F986D92BF58 /* istoriya_dozhd.m4a */; };
 		35EB12B7C7E57F260F274590 /* zerkalo.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E63D87B5E7EDBDEF99DDD27A /* zerkalo.m4a */; };
 		35EE9BA65A210AA20AAF762D /* lyalya_sibling_20.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F530D217F8190A0253114AD1 /* lyalya_sibling_20.m4a */; };
@@ -2378,6 +2381,7 @@
 		40333B962DE012B103B4978B /* y-sen-12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D35662AC57AAF123D9534702 /* y-sen-12.m4a */; };
 		40494A5C690532D28471EDB2 /* lex-vb-22.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0CF2D98A2B44CEE7855EB5E1 /* lex-vb-22.m4a */; };
 		4049695DEC1BE09BD83AA383 /* HSCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65D5A47523D4BA76DCBF6A2 /* HSCard.swift */; };
+		404EAA54386230DFFD2B7174 /* ComparisonDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959859096EF2DB31216F82B3 /* ComparisonDashboardView.swift */; };
 		404FF437FCE428CF852F82E5 /* PuzzleRevealDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0C54D0E016A942D2CA5281 /* PuzzleRevealDisplayLogic.swift */; };
 		4050DBC489050E928DE541A6 /* narr-f-9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0A93FE0B8D189ADC3D1EE847 /* narr-f-9.m4a */; };
 		40547CDC5A41898488B5356B /* br-191.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 747296FDE8E5ADB9FE4317A8 /* br-191.m4a */; };
@@ -4415,6 +4419,7 @@
 		7B56C8B2099030BAE379E2B0 /* r-syl-9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9F6F456C43BABDB3786DD27B /* r-syl-9.m4a */; };
 		7B58668512E1376FDBDCC8F9 /* dwh-st-7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 43F35242A9406DDEBE26FA6A /* dwh-st-7.m4a */; };
 		7B5AFFF146FAEDC25920359A /* lex-em-5.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1B6868F1C4E92BFE1AF96457 /* lex-em-5.m4a */; };
+		7B5E780DA5F5F1700AC55914 /* ComparisonDashboardPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430E46705C7348D6EB6A65D3 /* ComparisonDashboardPresenter.swift */; };
 		7B63DDBF96B467088F51193E /* narr-rt-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F71BB3BB5D34731160D85605 /* narr-rt-8.m4a */; };
 		7B7D0B81EB8C0E9D73114361 /* z-wi-16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3B74B8AC138381BF9B6F714A /* z-wi-16.m4a */; };
 		7B9B07D335CD0E5AEFCF61DA /* dwh-st-15.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C20E8133D7FC4BA425753E3A /* dwh-st-15.m4a */; };
@@ -4960,6 +4965,7 @@
 		8ACD55E701789BE795E7B679 /* rl-sen-9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2E17968143189D591792ECEC /* rl-sen-9.m4a */; };
 		8AD7C468EE1627054D9624B8 /* br-225.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 98BE66E7AF81535F9A2998E0 /* br-225.m4a */; };
 		8ADE1205141D52F8F48FAB9E /* lyalya_hint_va_9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = ADE129E073EA66BDCBE2753D /* lyalya_hint_va_9.m4a */; };
+		8AF17D8959FE0C00C46D8F1E /* ProfileEditorInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77023DF8C28F28977B84CC38 /* ProfileEditorInteractor.swift */; };
 		8AF254D46C63525C8D8663E3 /* lex-vf-13.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 724844313FC87A9F63460A6F /* lex-vf-13.m4a */; };
 		8AF780EEFE11861B9E31227A /* lyalya_greeting_08.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F0F5D49F3894F8B7D304C9CD /* lyalya_greeting_08.m4a */; };
 		8AF94D8744DD9366E0AEE94B /* istoriya_tri_medvedya.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 50C28630F7B28B2EDE2136EF /* istoriya_tri_medvedya.m4a */; };
@@ -5191,6 +5197,7 @@
 		912870052F92A2A4B9A15844 /* shch-ph-46.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 98FAA67D25A2AD21E2E28CEA /* shch-ph-46.m4a */; };
 		912D5BE3C5D2437E12514941 /* lex-cl-21.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 503C68EB60FAE973E4294542 /* lex-cl-21.m4a */; };
 		913520FE1B7FE29D6B961354 /* phon-ss-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2659C157F1E3D29A25D49FA5 /* phon-ss-2.m4a */; };
+		913F989834AEC99D0FE22214 /* ProfileEditorRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A93CC6525CD76C0D0E97DEC /* ProfileEditorRouter.swift */; };
 		91406B77DA7494A72EFBC68F /* transition_4.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 331040BE18BFFECC9E3939B5 /* transition_4.mp4 */; };
 		9140F59AD704779D57670A59 /* phon-vc-14.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F930041266D203B42D7FAB4B /* phon-vc-14.m4a */; };
 		9144BA11D324EDFF7DF714D1 /* z-prep-11.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7EA5E924BE7E8A7AADB8C5E1 /* z-prep-11.m4a */; };
@@ -5305,6 +5312,7 @@
 		93EB6A2C4DAF3FC2466999BB /* kh-syl-9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2945BA79827E112CA1FB8408 /* kh-syl-9.m4a */; };
 		93F985BCE92B1042526237DE /* y-wi-21.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 88F7FB5721014A0AC14FF3FC /* y-wi-21.m4a */; };
 		93FC2F0BBC1C169E0E6723B5 /* k-prep-18.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 634347C443465BD8C444586E /* k-prep-18.m4a */; };
+		9402A0461C1BD539DDA3DF87 /* ComparisonDashboardRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE9081817196E660F62B8D6 /* ComparisonDashboardRouter.swift */; };
 		941051F8F116B2E908E5CC52 /* lyalya_achievement_first_star.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8874B6F3CF3268F8A6555C17 /* lyalya_achievement_first_star.m4a */; };
 		94169BC5E88C499DDC4A1791 /* rl-wi-4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 39AD621AF75D33BBAB68ACA1 /* rl-wi-4.m4a */; };
 		9420F8017D400553E184E60F /* s-wm-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1AF67E7DD278DE2FEE983FBE /* s-wm-2.m4a */; };
@@ -5395,6 +5403,7 @@
 		96B30ADED60574161E79A701 /* story_08.m4a in Resources */ = {isa = PBXBuildFile; fileRef = DD69B2A5FF35E38072ADCD37 /* story_08.m4a */; };
 		96B8F99EDC2BD92271E08C01 /* phon-pg-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F80E04C2B1B43E65212FE699 /* phon-pg-0.m4a */; };
 		96BB456ED50786A5435C5058 /* ch-df-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 632ABF982B64801E6271BABC /* ch-df-6.m4a */; };
+		96C9A25E6BF1AE23F78D5075 /* ComparisonDashboardModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8309C0A09AC0A90C46FBD825 /* ComparisonDashboardModels.swift */; };
 		96CD23E7F3FA6674EFBE507E /* c-wf-4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FD96738BE21E72B4EDBF19F3 /* c-wf-4.m4a */; };
 		96D5343DA5FADA6EF73EE5F6 /* SpotlightIndexCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8A22DCB69824EC98C06A5C /* SpotlightIndexCoordinator.swift */; };
 		96D791DCC9CDD82AE73D9EAA /* sh-wi-54.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 65C07D5B9EB2FEB0B0C94DB4 /* sh-wi-54.m4a */; };
@@ -5659,6 +5668,7 @@
 		9DD34163352541BF064E873F /* l-syl-42.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 58B65999C899BB329F6BFFC8 /* l-syl-42.m4a */; };
 		9DD36F1F4FED4336576761CF /* y-prep-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F5245E97E6EB298FEFF063EA /* y-prep-8.m4a */; };
 		9DDCAD581312319AD822CD4F /* CustomizationDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BACBDB65C50289795E2BDF /* CustomizationDisplayLogic.swift */; };
+		9DEA8A7D1ED738081028E0ED /* ProfileEditorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC22C115ABA2710C43D3D37 /* ProfileEditorPresenter.swift */; };
 		9DEACD0FD4C9C8C854E03BC2 /* RewardsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264AE6D760C574DCD8140A61 /* RewardsModels.swift */; };
 		9DEAFE55998319D2DA4C64F4 /* g-wi-20.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 59ADE90D06399837BD015DC4 /* g-wi-20.m4a */; };
 		9DEEA0339B3096A9C7171CB0 /* dwh-st-20.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7076DB8D4DCA229C4F87EB6B /* dwh-st-20.m4a */; };
@@ -5994,6 +6004,7 @@
 		A725BDBC4C317CB7E6D8EE87 /* s-sto-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8FC08AAFE0CFFD12BCE1DD4A /* s-sto-6.m4a */; };
 		A72617DD9C6CC952E5733817 /* AuthForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E5A44691E9411A16D81008 /* AuthForgotPasswordView.swift */; };
 		A72FDC1900686F03D66F157B /* ag-033.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2297EA2FCCD44DA2F4FAB4A1 /* ag-033.m4a */; };
+		A73512DD99D7BC7EEE9EAB80 /* FamilyHomeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A304220A40BB07D52CEACA9 /* FamilyHomeInteractor.swift */; };
 		A736429C614A2883B726D03C /* shch-wi-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A37E08CB17137D9D924E12AD /* shch-wi-6.m4a */; };
 		A74641977CE0AAA4F276ECBC /* AuthModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183D5F345AAFFCCED2DE0CC8 /* AuthModels.swift */; };
 		A76C7FA00A0833A829CCCE3D /* g-ph-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 469DE2EB9C26D419271F3B88 /* g-ph-6.m4a */; };
@@ -6153,6 +6164,7 @@
 		ABC5BB5D2AA4D4F9D3E31C7A /* g-wi-6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C7074A02F1890CCEAEC5F878 /* g-wi-6.m4a */; };
 		ABC7834709E15336155D1C75 /* y-wi-30.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D28FCCE1DE4824BBB1FAEF69 /* y-wi-30.m4a */; };
 		ABCA2261B6B415A348D6BDAC /* y-ph-3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 72A3D183956CCC5B9E204CA2 /* y-ph-3.m4a */; };
+		ABD53939B74089DF74D26533 /* FamilyHomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96835D84F9B83AE60BCCF60B /* FamilyHomeRouter.swift */; };
 		ABED32D99FE04084478250D4 /* lyalya_hint_rhy_9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 33018A849967867308E2DCA8 /* lyalya_hint_rhy_9.m4a */; };
 		ABED7838B86BF42FFBDA77E6 /* lex-ins-5.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 51376FF00E39E3A5B6EC715E /* lex-ins-5.m4a */; };
 		ABEE8F7958AD44D9AD19EC4B /* narr-ms-18.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CF51C7821C4CC9004D677F12 /* narr-ms-18.m4a */; };
@@ -6863,6 +6875,7 @@
 		BEBB374E95610999066FCA1F /* s-diff-26.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CD42F0D91F72F308C8655E48 /* s-diff-26.m4a */; };
 		BEC903D18227DE3C7FD01629 /* lex-ad-14.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A618A6ACF18E38CCCA23B0FF /* lex-ad-14.m4a */; };
 		BEC9868941A355893BC38C63 /* rl-diff-15.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 18973F3D344AD4C0015DAC62 /* rl-diff-15.m4a */; };
+		BECE921696EBCBF4E5B0A3D7 /* FamilyHomeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04662746A25FDC382B5C6D7E /* FamilyHomeModels.swift */; };
 		BED02E7E17C9D80EDFE40761 /* phon-vu-14.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FFCD41778F09E8A32454C45F /* phon-vu-14.m4a */; };
 		BED657E1D190E980C7987DDD /* dwh-df-52.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3998018F20B0791052A4761 /* dwh-df-52.m4a */; };
 		BEDD26BEB9ADA9C5A6116073 /* lyalya_hint_sc_6.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B6473C2E2352BA6EA7B7F44C /* lyalya_hint_sc_6.m4a */; };
@@ -7721,6 +7734,7 @@
 		D79CBA0B5E06217AF37C4FDF /* lyalya_stuttering_38.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3614C1064D7A936A2FC0C7C9 /* lyalya_stuttering_38.m4a */; };
 		D79FE7A3F9FEF3924A2FF17F /* opisanie_reki_kakaya_ona.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C5C2B2A166C45BC4E8004263 /* opisanie_reki_kakaya_ona.m4a */; };
 		D7A1919B355A55E28FB7276E /* kholm.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 811E4BE4C50A47311BD06A08 /* kholm.m4a */; };
+		D7A55F74A59B72E42C330940 /* FamilyHomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018FF8D727E64604BDB5593F /* FamilyHomePresenter.swift */; };
 		D7AFE35AB78FA1616DC70B9E /* r-wi-60.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9A833F5D75CDB22599F9232C /* r-wi-60.m4a */; };
 		D7B2CC6BC58B573D772FF777 /* r-syl-41.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 67C55D4F5FCE87255ADF82BE /* r-syl-41.m4a */; };
 		D7B4EAAE42DE191CF6E6CA22 /* ParentalGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F15BAC7C522A453678BDFB /* ParentalGateTests.swift */; };
@@ -8354,6 +8368,7 @@
 		E976EBCCBCF0E13982ED3B21 /* r-wf-32.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9D14B4DD2630B327A4F4CBA0 /* r-wf-32.m4a */; };
 		E984A232575596D5BBA1377C /* lyalya_transition_return_2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9F10A3B0CD5B5AC42DC16B7B /* lyalya_transition_return_2.m4a */; };
 		E987D3599BC1265D009AC0E5 /* ArticulationImitationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4E61B73B10D06F1D2F900A /* ArticulationImitationModels.swift */; };
+		E99132CC6929A73D51A8ACEA /* ProfileEditorModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556349EDA7F11176F74EA1ED /* ProfileEditorModels.swift */; };
 		E999AE0F5F8781290C1DEBB2 /* vyot.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 731E2E9E164B3488E06A2C0F /* vyot.m4a */; };
 		E9ADBF3A3F1313A935DEBB2D /* shch-df-20.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 628A10D46723DA7CF3A0B4F2 /* shch-df-20.m4a */; };
 		E9C20C8A666FD4F7D52CD541 /* lyalya_story_04.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0301F2B398DDEFAC915450C1 /* lyalya_story_04.m4a */; };
@@ -9260,6 +9275,7 @@
 		017CCC5311F6E0BF5E0F6DA9 /* khomyak.m4a */ = {isa = PBXFileReference; path = khomyak.m4a; sourceTree = "<group>"; };
 		018510A9118AE9E099903864 /* lyalya_insight_tip_1.m4a */ = {isa = PBXFileReference; path = lyalya_insight_tip_1.m4a; sourceTree = "<group>"; };
 		018C4C0435D949CA6D5009B7 /* s-ph-42.m4a */ = {isa = PBXFileReference; path = "s-ph-42.m4a"; sourceTree = "<group>"; };
+		018FF8D727E64604BDB5593F /* FamilyHomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyHomePresenter.swift; sourceTree = "<group>"; };
 		01961906FA6B92715CC92A56 /* DemoInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoInteractor.swift; sourceTree = "<group>"; };
 		019F3C2D7FAADE9E1CA69246 /* o_gu_rets_udarenie_na_rets.m4a */ = {isa = PBXFileReference; path = o_gu_rets_udarenie_na_rets.m4a; sourceTree = "<group>"; };
 		01A3CFBBCBD52A70D76F4D60 /* sh-iso-14.m4a */ = {isa = PBXFileReference; path = "sh-iso-14.m4a"; sourceTree = "<group>"; };
@@ -9361,6 +9377,7 @@
 		0461F1F62D4BA819626C0934 /* k-wi-0.m4a */ = {isa = PBXFileReference; path = "k-wi-0.m4a"; sourceTree = "<group>"; };
 		046230663E1303BB9F2821DA /* rl-sen-6.m4a */ = {isa = PBXFileReference; path = "rl-sen-6.m4a"; sourceTree = "<group>"; };
 		04651A6C56DF88ECC1CCE20A /* PoseSequenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseSequenceView.swift; sourceTree = "<group>"; };
+		04662746A25FDC382B5C6D7E /* FamilyHomeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyHomeModels.swift; sourceTree = "<group>"; };
 		046BF70E5D578BD1C0805940 /* zh-wf-10.m4a */ = {isa = PBXFileReference; path = "zh-wf-10.m4a"; sourceTree = "<group>"; };
 		04794770F9E31914DA22B88C /* lyalya_phoneme_r_word.m4a */ = {isa = PBXFileReference; path = lyalya_phoneme_r_word.m4a; sourceTree = "<group>"; };
 		0485717434D848F912720257 /* ARActivityModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARActivityModels.swift; sourceTree = "<group>"; };
@@ -10042,6 +10059,7 @@
 		16F826B87CF1BC92B4D3885A /* gr-gc-7.m4a */ = {isa = PBXFileReference; path = "gr-gc-7.m4a"; sourceTree = "<group>"; };
 		16FC4F41720805A313D3D7DB /* c-wi-27.m4a */ = {isa = PBXFileReference; path = "c-wi-27.m4a"; sourceTree = "<group>"; };
 		16FCC5158CC88E9BA83E55A5 /* c-wf-3.m4a */ = {isa = PBXFileReference; path = "c-wf-3.m4a"; sourceTree = "<group>"; };
+		16FCDC83757C473F551DB970 /* FamilyHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyHomeView.swift; sourceTree = "<group>"; };
 		16FF030A5E0CAF0AB2A0942E /* l-wi-14.m4a */ = {isa = PBXFileReference; path = "l-wi-14.m4a"; sourceTree = "<group>"; };
 		1707716C39EA62FA5E2D3C6D /* k-ph-16.m4a */ = {isa = PBXFileReference; path = "k-ph-16.m4a"; sourceTree = "<group>"; };
 		171132C77D5E63896E7FEE7B /* br-v-007.m4a */ = {isa = PBXFileReference; path = "br-v-007.m4a"; sourceTree = "<group>"; };
@@ -10513,6 +10531,7 @@
 		23FB06DEF2D9088783F3C2B4 /* narr-s-0.m4a */ = {isa = PBXFileReference; path = "narr-s-0.m4a"; sourceTree = "<group>"; };
 		240C1E4B3963355D0E385986 /* shch-wm-29.m4a */ = {isa = PBXFileReference; path = "shch-wm-29.m4a"; sourceTree = "<group>"; };
 		240EABEFCE59F9FCBA540028 /* lex-ss-3.m4a */ = {isa = PBXFileReference; path = "lex-ss-3.m4a"; sourceTree = "<group>"; };
+		24127CC79BC5795B1EFC4341 /* ComparisonDashboardInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComparisonDashboardInteractor.swift; sourceTree = "<group>"; };
 		242310C474A67AC4247E82D9 /* MemoryRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryRouter.swift; sourceTree = "<group>"; };
 		2425D7EF19A17EA1CAC62137 /* lex-ms-15.m4a */ = {isa = PBXFileReference; path = "lex-ms-15.m4a"; sourceTree = "<group>"; };
 		242D04D2A0A8461C90F2513A /* k-wm-7.m4a */ = {isa = PBXFileReference; path = "k-wm-7.m4a"; sourceTree = "<group>"; };
@@ -11576,6 +11595,7 @@
 		42F8F8D84FAECD578F27BF30 /* shch-prep-4.m4a */ = {isa = PBXFileReference; path = "shch-prep-4.m4a"; sourceTree = "<group>"; };
 		42FB23F923FE734F902C887E /* shch-iso-10.m4a */ = {isa = PBXFileReference; path = "shch-iso-10.m4a"; sourceTree = "<group>"; };
 		430D12FD28282143A5E22E40 /* kh-syl-2.m4a */ = {isa = PBXFileReference; path = "kh-syl-2.m4a"; sourceTree = "<group>"; };
+		430E46705C7348D6EB6A65D3 /* ComparisonDashboardPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComparisonDashboardPresenter.swift; sourceTree = "<group>"; };
 		430E999F9B4A279DBBEA0916 /* br-251.m4a */ = {isa = PBXFileReference; path = "br-251.m4a"; sourceTree = "<group>"; };
 		430EEFD284C8BD4E6F687BC1 /* lyalya_hint_10.m4a */ = {isa = PBXFileReference; path = lyalya_hint_10.m4a; sourceTree = "<group>"; };
 		431ACDF41212BD7C8E815260 /* g-syl-5.m4a */ = {isa = PBXFileReference; path = "g-syl-5.m4a"; sourceTree = "<group>"; };
@@ -12269,6 +12289,7 @@
 		555AB70B4180DC2164885E1E /* ch-wf-10.m4a */ = {isa = PBXFileReference; path = "ch-wf-10.m4a"; sourceTree = "<group>"; };
 		5561E64C44AD7C6D672101B2 /* lyalya_sibling_13.m4a */ = {isa = PBXFileReference; path = lyalya_sibling_13.m4a; sourceTree = "<group>"; };
 		55620726DCF72BF9FB4D9F06 /* shch-prep-8.m4a */ = {isa = PBXFileReference; path = "shch-prep-8.m4a"; sourceTree = "<group>"; };
+		556349EDA7F11176F74EA1ED /* ProfileEditorModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditorModels.swift; sourceTree = "<group>"; };
 		556735A805228C6A85C94C49 /* scene_playground_slide.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = scene_playground_slide.usdz; sourceTree = "<group>"; };
 		556785D1398CB5800DFFDA75 /* dwh-sen-1.m4a */ = {isa = PBXFileReference; path = "dwh-sen-1.m4a"; sourceTree = "<group>"; };
 		556E08F6F844305DAFA1A63C /* gr-prep-20.m4a */ = {isa = PBXFileReference; path = "gr-prep-20.m4a"; sourceTree = "<group>"; };
@@ -12967,6 +12988,7 @@
 		6A68C38F629C0A717C439AB4 /* lyalya_session_end_13.m4a */ = {isa = PBXFileReference; path = lyalya_session_end_13.m4a; sourceTree = "<group>"; };
 		6A6B3214BA6D3C2C0E6C82C6 /* r-prep-18.m4a */ = {isa = PBXFileReference; path = "r-prep-18.m4a"; sourceTree = "<group>"; };
 		6A7AD06E36F98576154F4BA3 /* FCMService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMService.swift; sourceTree = "<group>"; };
+		6A93CC6525CD76C0D0E97DEC /* ProfileEditorRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditorRouter.swift; sourceTree = "<group>"; };
 		6A9447864325F3EF289A0ADA /* otkuda_iz_lesa_s_gory_ot_reki_iz_za_ugla.m4a */ = {isa = PBXFileReference; path = otkuda_iz_lesa_s_gory_ot_reki_iz_za_ugla.m4a; sourceTree = "<group>"; };
 		6A9BEFCCD2DD1AE76A7E45A7 /* s-ph-1.m4a */ = {isa = PBXFileReference; path = "s-ph-1.m4a"; sourceTree = "<group>"; };
 		6AA0C3E5F74FEB0E78ADB4C0 /* r-sen-13.m4a */ = {isa = PBXFileReference; path = "r-sen-13.m4a"; sourceTree = "<group>"; };
@@ -13422,6 +13444,7 @@
 		76F30FB2CC95E59F8A0BE392 /* z-ph-25.m4a */ = {isa = PBXFileReference; path = "z-ph-25.m4a"; sourceTree = "<group>"; };
 		77001987BAA7DCDDCA1A1F29 /* z-wi-12.m4a */ = {isa = PBXFileReference; path = "z-wi-12.m4a"; sourceTree = "<group>"; };
 		7701317200A40F9E00D916AD /* br-093.m4a */ = {isa = PBXFileReference; path = "br-093.m4a"; sourceTree = "<group>"; };
+		77023DF8C28F28977B84CC38 /* ProfileEditorInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditorInteractor.swift; sourceTree = "<group>"; };
 		77094587A75E232FB086CFD9 /* notification.caf */ = {isa = PBXFileReference; path = notification.caf; sourceTree = "<group>"; };
 		77235CF26C4190A5274127C9 /* sh-wm-47.m4a */ = {isa = PBXFileReference; path = "sh-wm-47.m4a"; sourceTree = "<group>"; };
 		772434C2313C395D9ABB25CB /* gr-gc-19.m4a */ = {isa = PBXFileReference; path = "gr-gc-19.m4a"; sourceTree = "<group>"; };
@@ -13760,6 +13783,7 @@
 		7FA99FFD6E0C06BA08B219C1 /* k-wf-0.m4a */ = {isa = PBXFileReference; path = "k-wf-0.m4a"; sourceTree = "<group>"; };
 		7FAC1836A026963C12408342 /* k-wi-30.m4a */ = {isa = PBXFileReference; path = "k-wi-30.m4a"; sourceTree = "<group>"; };
 		7FBE462D5C0D32190492D5E2 /* lyalya_transition_02.m4a */ = {isa = PBXFileReference; path = lyalya_transition_02.m4a; sourceTree = "<group>"; };
+		7FC22C115ABA2710C43D3D37 /* ProfileEditorPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditorPresenter.swift; sourceTree = "<group>"; };
 		7FCA350CC9A22574AA07F783 /* r-ph-67.m4a */ = {isa = PBXFileReference; path = "r-ph-67.m4a"; sourceTree = "<group>"; };
 		7FCB87C7B85DD129C30564F2 /* g-sen-17.m4a */ = {isa = PBXFileReference; path = "g-sen-17.m4a"; sourceTree = "<group>"; };
 		7FD63A6678F82D782087A0F2 /* kogda_utrom_dnyom_vecherom.m4a */ = {isa = PBXFileReference; path = kogda_utrom_dnyom_vecherom.m4a; sourceTree = "<group>"; };
@@ -13878,6 +13902,7 @@
 		82FC705AEE2D99050A34E8E2 /* g-wi-40.m4a */ = {isa = PBXFileReference; path = "g-wi-40.m4a"; sourceTree = "<group>"; };
 		83001D52BABCE4D3A260357F /* br-168.m4a */ = {isa = PBXFileReference; path = "br-168.m4a"; sourceTree = "<group>"; };
 		8307AF87FE8334F2BBB76C46 /* r-wi-14.m4a */ = {isa = PBXFileReference; path = "r-wi-14.m4a"; sourceTree = "<group>"; };
+		8309C0A09AC0A90C46FBD825 /* ComparisonDashboardModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComparisonDashboardModels.swift; sourceTree = "<group>"; };
 		830D0C7C19D8B2C459F905E4 /* br-215.m4a */ = {isa = PBXFileReference; path = "br-215.m4a"; sourceTree = "<group>"; };
 		830E092463091AF919271E5D /* c-diff-24.m4a */ = {isa = PBXFileReference; path = "c-diff-24.m4a"; sourceTree = "<group>"; };
 		830E947F06EFB8823561BFE4 /* zavod.m4a */ = {isa = PBXFileReference; path = zavod.m4a; sourceTree = "<group>"; };
@@ -14577,6 +14602,7 @@
 		958A8A8F5C6D1539CB746FC0 /* lex-an-9.m4a */ = {isa = PBXFileReference; path = "lex-an-9.m4a"; sourceTree = "<group>"; };
 		958E507484440D2D3B5FD9F1 /* KidSafetyFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KidSafetyFilter.swift; sourceTree = "<group>"; };
 		95948F92E0C2EDFBA269C644 /* ag-096.m4a */ = {isa = PBXFileReference; path = "ag-096.m4a"; sourceTree = "<group>"; };
+		959859096EF2DB31216F82B3 /* ComparisonDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComparisonDashboardView.swift; sourceTree = "<group>"; };
 		9599D3B7FD2A5DF66BE96EA1 /* k-prep-1.m4a */ = {isa = PBXFileReference; path = "k-prep-1.m4a"; sourceTree = "<group>"; };
 		959E30F5C7A34B410223441F /* odin_rot_mnogo_rtov.m4a */ = {isa = PBXFileReference; path = odin_rot_mnogo_rtov.m4a; sourceTree = "<group>"; };
 		95A416953F15BBEF0AE48CF1 /* lex-bp-2.m4a */ = {isa = PBXFileReference; path = "lex-bp-2.m4a"; sourceTree = "<group>"; };
@@ -14616,6 +14642,7 @@
 		9675410FA465DA291A252E55 /* lyalya_onboarding_step9_transition.m4a */ = {isa = PBXFileReference; path = lyalya_onboarding_step9_transition.m4a; sourceTree = "<group>"; };
 		967C8F491E05A29666B17565 /* k-wi-42.m4a */ = {isa = PBXFileReference; path = "k-wi-42.m4a"; sourceTree = "<group>"; };
 		968152701AA506F2BABAC309 /* z-syl-30.m4a */ = {isa = PBXFileReference; path = "z-syl-30.m4a"; sourceTree = "<group>"; };
+		96835D84F9B83AE60BCCF60B /* FamilyHomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyHomeRouter.swift; sourceTree = "<group>"; };
 		9685D4062606898AB9B35E9D /* c-wi-21.m4a */ = {isa = PBXFileReference; path = "c-wi-21.m4a"; sourceTree = "<group>"; };
 		96973553CC95DE8536B81549 /* lyalya_praise_15.m4a */ = {isa = PBXFileReference; path = lyalya_praise_15.m4a; sourceTree = "<group>"; };
 		969CCC0A0DE2FDF3DC230722 /* y-wi-35.m4a */ = {isa = PBXFileReference; path = "y-wi-35.m4a"; sourceTree = "<group>"; };
@@ -14751,6 +14778,7 @@
 		99EF0558D99AD10D13FF8DB9 /* s-prep-12.m4a */ = {isa = PBXFileReference; path = "s-prep-12.m4a"; sourceTree = "<group>"; };
 		9A1114A2A4C217CD625291F4 /* lex-fe-10.m4a */ = {isa = PBXFileReference; path = "lex-fe-10.m4a"; sourceTree = "<group>"; };
 		9A1622EC8340CD10D463F556 /* shch-wm-2.m4a */ = {isa = PBXFileReference; path = "shch-wm-2.m4a"; sourceTree = "<group>"; };
+		9A304220A40BB07D52CEACA9 /* FamilyHomeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyHomeInteractor.swift; sourceTree = "<group>"; };
 		9A3969B7CE7BAC2293E1E8A6 /* dwh-df-35.m4a */ = {isa = PBXFileReference; path = "dwh-df-35.m4a"; sourceTree = "<group>"; };
 		9A3B27E2D177E93A827E3094 /* phon-ls-11.m4a */ = {isa = PBXFileReference; path = "phon-ls-11.m4a"; sourceTree = "<group>"; };
 		9A42E34FDC5DC3D8924D6BD7 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -14866,6 +14894,7 @@
 		9D860A595BC2FC1B10A6C778 /* rl-sen-7.m4a */ = {isa = PBXFileReference; path = "rl-sen-7.m4a"; sourceTree = "<group>"; };
 		9D9BD1DD314A8BC9BC2503C5 /* pridumay_kontsovku_istorii.m4a */ = {isa = PBXFileReference; path = pridumay_kontsovku_istorii.m4a; sourceTree = "<group>"; };
 		9D9DBDF6D0E7D73E7A7C3A05 /* pereskazhi_repku_po_poryadku.m4a */ = {isa = PBXFileReference; path = pereskazhi_repku_po_poryadku.m4a; sourceTree = "<group>"; };
+		9DA3CB5C201759DDEAA43E0F /* ProfileEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditorView.swift; sourceTree = "<group>"; };
 		9DBF234F44C99C81B71267F2 /* c-sen-19.m4a */ = {isa = PBXFileReference; path = "c-sen-19.m4a"; sourceTree = "<group>"; };
 		9DC2409435182F0541987952 /* kh-wf-4.m4a */ = {isa = PBXFileReference; path = "kh-wf-4.m4a"; sourceTree = "<group>"; };
 		9DCBBE8BA2D28BC63024E405 /* vesyolaya_lyalya.m4a */ = {isa = PBXFileReference; path = vesyolaya_lyalya.m4a; sourceTree = "<group>"; };
@@ -17689,6 +17718,7 @@
 		EDD669F40C68E40152D2ECB9 /* s-diff-4.m4a */ = {isa = PBXFileReference; path = "s-diff-4.m4a"; sourceTree = "<group>"; };
 		EDE303521B10F64E96A82E5D /* g-wf-16.m4a */ = {isa = PBXFileReference; path = "g-wf-16.m4a"; sourceTree = "<group>"; };
 		EDE8B224E635FCF62050BEB8 /* k-wi-38.m4a */ = {isa = PBXFileReference; path = "k-wi-38.m4a"; sourceTree = "<group>"; };
+		EDE9081817196E660F62B8D6 /* ComparisonDashboardRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComparisonDashboardRouter.swift; sourceTree = "<group>"; };
 		EDF9BE283394CBE644A175C0 /* z-wf-4.m4a */ = {isa = PBXFileReference; path = "z-wf-4.m4a"; sourceTree = "<group>"; };
 		EDFE6562383772FCF399818A /* r-wf-36.m4a */ = {isa = PBXFileReference; path = "r-wf-36.m4a"; sourceTree = "<group>"; };
 		EE0F296AA4E48CC2B757FD0A /* l-iso-12.m4a */ = {isa = PBXFileReference; path = "l-iso-12.m4a"; sourceTree = "<group>"; };
@@ -22315,6 +22345,7 @@
 				E1D1078C2C0EEAA0ACDB2ABB /* Customization */,
 				69E2BA8210818595466ABED4 /* Demo */,
 				90A494B192648F99F73356C9 /* Extensions */,
+				88C55EAA4411BED2BD2BB04A /* Family */,
 				D96A9A427139860D3472134D /* FamilyCalendar */,
 				1783E2DD1B0AA7E60890FDE1 /* GrammarGame */,
 				C0B43A80294C36A939AAC3AE /* GuidedTour */,
@@ -24245,6 +24276,28 @@
 				F385117BC16F3B73E56760C1 /* y-wm-39.m4a */,
 			);
 			path = Y;
+			sourceTree = "<group>";
+		};
+		88C55EAA4411BED2BD2BB04A /* Family */ = {
+			isa = PBXGroup;
+			children = (
+				24127CC79BC5795B1EFC4341 /* ComparisonDashboardInteractor.swift */,
+				8309C0A09AC0A90C46FBD825 /* ComparisonDashboardModels.swift */,
+				430E46705C7348D6EB6A65D3 /* ComparisonDashboardPresenter.swift */,
+				EDE9081817196E660F62B8D6 /* ComparisonDashboardRouter.swift */,
+				959859096EF2DB31216F82B3 /* ComparisonDashboardView.swift */,
+				9A304220A40BB07D52CEACA9 /* FamilyHomeInteractor.swift */,
+				04662746A25FDC382B5C6D7E /* FamilyHomeModels.swift */,
+				018FF8D727E64604BDB5593F /* FamilyHomePresenter.swift */,
+				96835D84F9B83AE60BCCF60B /* FamilyHomeRouter.swift */,
+				16FCDC83757C473F551DB970 /* FamilyHomeView.swift */,
+				77023DF8C28F28977B84CC38 /* ProfileEditorInteractor.swift */,
+				556349EDA7F11176F74EA1ED /* ProfileEditorModels.swift */,
+				7FC22C115ABA2710C43D3D37 /* ProfileEditorPresenter.swift */,
+				6A93CC6525CD76C0D0E97DEC /* ProfileEditorRouter.swift */,
+				9DA3CB5C201759DDEAA43E0F /* ProfileEditorView.swift */,
+			);
+			path = Family;
 			sourceTree = "<group>";
 		};
 		8A5943E7272DA290CF9DF77D /* Workers */ = {
@@ -38196,6 +38249,11 @@
 				204FCC9C55F4F36A8B3CAAF0 /* ClaudeAPIClient.swift in Sources */,
 				41BF4C740DEC910A074E112D /* Color+Extensions.swift in Sources */,
 				33B904F2F911ABC5A322DEAF /* ColorTokens.swift in Sources */,
+				211F9D1796657D6F3D8C95E0 /* ComparisonDashboardInteractor.swift in Sources */,
+				96C9A25E6BF1AE23F78D5075 /* ComparisonDashboardModels.swift in Sources */,
+				7B5E780DA5F5F1700AC55914 /* ComparisonDashboardPresenter.swift in Sources */,
+				9402A0461C1BD539DDA3DF87 /* ComparisonDashboardRouter.swift in Sources */,
+				404EAA54386230DFFD2B7174 /* ComparisonDashboardView.swift in Sources */,
 				C243C727660406D35A0121C1 /* ConfettiEmitterView.swift in Sources */,
 				D991F782694B4DE4DA856681 /* ContentEngine.swift in Sources */,
 				CEDBC936F1BA9E8AADD2F420 /* ContentPackDownloadService.swift in Sources */,
@@ -38236,6 +38294,11 @@
 				B013E682A6B71C9A9F784EE3 /* FamilyCalendarPresenter.swift in Sources */,
 				9A8D1267FD0F03ECF0CE5DAD /* FamilyCalendarRouter.swift in Sources */,
 				2D90CBC199532DDB0748E30C /* FamilyCalendarView.swift in Sources */,
+				A73512DD99D7BC7EEE9EAB80 /* FamilyHomeInteractor.swift in Sources */,
+				BECE921696EBCBF4E5B0A3D7 /* FamilyHomeModels.swift in Sources */,
+				D7A55F74A59B72E42C330940 /* FamilyHomePresenter.swift in Sources */,
+				ABD53939B74089DF74D26533 /* FamilyHomeRouter.swift in Sources */,
+				35E4A50374049F1C9EDDBCC7 /* FamilyHomeView.swift in Sources */,
 				143E5F0A4B03EA6204B7FE97 /* FamilyInsightsWorker.swift in Sources */,
 				9CCD4091DFCDF2ACD914CD5C /* FamilyRecordingObject.swift in Sources */,
 				572F1B81396C836FE73B68D1 /* FamilyStatsWorker.swift in Sources */,
@@ -38436,6 +38499,11 @@
 				EF8F22A60780AA042EB3C6F8 /* PoseSequenceView.swift in Sources */,
 				1EF1FF403ECD4FC920428355 /* PoseSimilarityWorker.swift in Sources */,
 				88A6661FC4FB955FA05884D3 /* PrecannedNarrations.swift in Sources */,
+				8AF17D8959FE0C00C46D8F1E /* ProfileEditorInteractor.swift in Sources */,
+				E99132CC6929A73D51A8ACEA /* ProfileEditorModels.swift in Sources */,
+				9DEA8A7D1ED738081028E0ED /* ProfileEditorPresenter.swift in Sources */,
+				913F989834AEC99D0FE22214 /* ProfileEditorRouter.swift in Sources */,
+				055F6BBE0DC064031894AA2B /* ProfileEditorView.swift in Sources */,
 				1D028C6AB0E3CA3FF07A74E0 /* ProgramEditorDisplayLogic.swift in Sources */,
 				2DF81A6B524B9DAE9C193E60 /* ProgramEditorInteractor.swift in Sources */,
 				D3DABBBACC54F3997378A818 /* ProgramEditorModels.swift in Sources */,

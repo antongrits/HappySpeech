@@ -37,6 +37,10 @@ enum AppRoute: Hashable {
     case fluencyDiaryParent
     case siblingMultiplayer(childId: String)
     case achievements(childId: String)
+    // Block N: Family features
+    case familyHome
+    case comparisonDashboard
+    case profileEditor(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -356,6 +360,18 @@ struct AppCoordinatorView: View {
                 AchievementsView(childId: childId)
             }
             .environment(\.circuitContext, .kid)
+
+        case .familyHome:
+            FamilyHomeView()
+                .environment(\.circuitContext, .parent)
+
+        case .comparisonDashboard:
+            ComparisonDashboardView()
+                .environment(\.circuitContext, .parent)
+
+        case .profileEditor(let childId):
+            ProfileEditorView(childId: childId)
+                .environment(\.circuitContext, .parent)
         }
     }
 
