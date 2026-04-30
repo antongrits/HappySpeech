@@ -1086,3 +1086,58 @@ Animator агент провёл discovery phase по decision tree из `~/.cla
 **Files changed:**
 - `HappySpeech/DesignSystem/Components/HSMascotView.swift` — 7-layer composite + MoodAuraView + EmotionParticlesView + waving/pointing overlays + entrance + encouraging shake
 - `HappySpeech/DesignSystem/Components/LyalyaMascotView.swift` — haptic feedback + previousState tracking
+
+---
+
+## ADR-V12-PHONEME-CLASSIFIER — Russian Phoneme Classifier CoreML (Plan v12 Block G)
+
+**Date:** 2026-04-30
+**Owner:** ml-engineer (deferred to post-v1.0)
+**Status:** Steps 1-2 done, Steps 3-4 deferred
+
+### Decision
+
+Block G Plan v12 разделён на 4 шага. Шаги 1-2 завершены полностью, шаги 3-4 отложены на post-v1.0:
+
+| Step | Описание | Статус | Артефакт |
+|---|---|---|---|
+| Step 1 | Skill `russian-phoneme-analyzer` | ✅ DONE | `~/.claude/skills/russian-phoneme-analyzer/` (SKILL.md + 5 references) |
+| Step 2 | G2P dictionary `russian_phonemes.json` | ✅ DONE (commit `a75dbca`) | 7712 entries, 100% coverage 24 content packs, 49 IPA phonemes, phonemizer + espeak-ng |
+| Step 3 | CoreML Phoneme classifier training | ⏸️ DEFERRED | — |
+| Step 4 | Swift `PhonemeAnalysisService` integration | ⏸️ DEFERRED (требует Step 3) | — |
+
+### Reason for deferral (Step 3)
+
+ml-engineer agent был залимитен (rate limit hit) во время training run. Артефакт остался incomplete — только `Manifest.json` (617 bytes) без weight tensors. Удалён.
+
+Reattempt в той же сессии не возможен из-за того же лимита. Полноценный training pipeline требует:
+- 30-60 минут реального wall-clock времени (PyTorch setup + dataset prep + 50 epochs MPS + CoreML conversion)
+- Стабильное окружение без token limits на полную длину operation
+
+### Workaround for v12
+
+Существующий `PronunciationScorer.swift` (466 LOC, 4 mlpackage files) **полностью функционален** и покрывает 4 группы русских звуков (свистящие/шипящие/соноры/заднеязычные) через MFCC+CoreML feature scoring. Это production-уровень анализ речи.
+
+Phoneme-level analysis это улучшение второго слоя (per-phoneme feedback), не критическое для v1.0. Дипломный проект защищается без него.
+
+### Roadmap (post-v1.0)
+
+1. Установить стабильное Python + PyTorch окружение (requirements.txt в `_workshop/ml/`)
+2. Собрать compact dataset через existing 1774 Lyalya .m4a + content pack annotations + augmentation (pitch/speed/noise)
+3. Trained Conv1d-BiLSTM (~500K params) на MPS, target accuracy ≥85%
+4. Convert to CoreML 7 → `RussianPhonemeClassifier.mlpackage` ≤30 MB
+5. Swift integration: `PhonemeAnalysisService` actor + `G2PWorker` reuse `MFCCExtractor` из `PronunciationScorer.swift`
+6. Opt-in integration в `RepeatAfterModelInteractor` без блокировки основного scoring
+
+### Alternatives considered
+
+- **A. Mock mlpackage stub** — отклонено, нечестно
+- **B. Use external pre-trained model** (Wav2Vec2 RU) — слишком большой (>500 MB), не помещается в bundle target
+- **C. Defer ENTIRE Block G** — отклонено, Steps 1-2 уже дают значимое значение (G2P используется и для Phoneme analysis в будущем, и для другие text-to-speech research)
+
+### Files
+
+- DELETED: `HappySpeech/Resources/Models/RussianPhonemeClassifier.mlpackage` (incomplete)
+- KEEP: `HappySpeech/Content/G2P/russian_phonemes.json` — 7712 entries, готов к использованию
+- KEEP: `~/.claude/skills/russian-phoneme-analyzer/` — workflow для post-v1.0
+
