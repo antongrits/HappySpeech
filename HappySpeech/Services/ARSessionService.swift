@@ -244,6 +244,10 @@ public final class LiveARSessionService: NSObject, ARSessionService, @unchecked 
     public let pixelBufferStream: AsyncStream<CVPixelBuffer>?
     private let pixelBufferContinuation: AsyncStream<CVPixelBuffer>.Continuation?
 
+    // Block L: raw ARFaceAnchor stream для EyeFocusWorker (~30 fps).
+    public let faceAnchorStream: AsyncStream<ARFaceAnchor>
+    private let faceAnchorContinuation: AsyncStream<ARFaceAnchor>.Continuation
+
     // MARK: ARKit
 
     private let session = ARSession()
@@ -260,6 +264,9 @@ public final class LiveARSessionService: NSObject, ARSessionService, @unchecked 
         let pbStream = AsyncStream<CVPixelBuffer>.makeStream()
         self.pixelBufferStream = pbStream.stream
         self.pixelBufferContinuation = pbStream.continuation
+        let faStream = AsyncStream<ARFaceAnchor>.makeStream()
+        self.faceAnchorStream = faStream.stream
+        self.faceAnchorContinuation = faStream.continuation
         super.init()
         self.session.delegate = self
         HSLogger.ar.debug("LiveARSessionService initialised (supported=\(self.isSupported))")
@@ -268,6 +275,7 @@ public final class LiveARSessionService: NSObject, ARSessionService, @unchecked 
     deinit {
         continuation.finish()
         pixelBufferContinuation?.finish()
+        faceAnchorContinuation.finish()
     }
 
     // MARK: - Lifecycle
@@ -326,6 +334,8 @@ extension LiveARSessionService: ARSessionDelegate {
             guard let self else { return }
             self.currentBlendshapes = snapshot
             self.continuation.yield(snapshot)
+            // Block L: пробрасываем raw anchor для EyeFocusWorker
+            self.faceAnchorContinuation.yield(faceAnchor)
         }
     }
 

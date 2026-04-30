@@ -12,6 +12,7 @@ struct ARMirrorView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.mascotLipSyncState) private var lipSyncState
+    @Environment(\.mascotEyeContactState) private var eyeContactState
 
     @State private var session: LiveARSessionService?
     @State private var mockSession: MockARSessionService?
@@ -20,9 +21,11 @@ struct ARMirrorView: View {
     @State private var router: ARMirrorRouter?
     @State private var display = ARMirrorDisplay()
     @State private var facePoseWorker = UnifiedFacePoseWorker()
+    @State private var eyeFocusWorker = EyeFocusWorker()
 
     @State private var isSessionStarted = false
     @State private var startError: String?
+    @State private var lastHintDate: Date = .distantPast
 
     private var arService: (any ARSessionService)? {
         session ?? mockSession
@@ -96,10 +99,28 @@ struct ARMirrorView: View {
 
                 symmetryBar
 
+                attentionIndicator
+
                 progressBar
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.bottom, SpacingTokens.xLarge)
+        }
+
+        if display.showAttentionHint {
+            VStack {
+                Spacer()
+                Text(String(localized: "eye_focus.hint.look_at_me"))
+                    .font(TypographyTokens.headline(15))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, SpacingTokens.medium)
+                    .padding(.vertical, SpacingTokens.small)
+                    .background(ColorTokens.Brand.primary.opacity(0.9), in: Capsule())
+                    .accessibilityLabel(Text("eye_focus.hint.look_at_me"))
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .padding(.bottom, SpacingTokens.xLarge * 2)
+            }
+            .animation(reduceMotion ? nil : .spring(duration: 0.35), value: display.showAttentionHint)
         }
 
         if let startError {
@@ -150,6 +171,34 @@ struct ARMirrorView: View {
             }
             .frame(height: 8)
         }
+    }
+
+    private var attentionIndicator: some View {
+        HStack(spacing: SpacingTokens.micro) {
+            Image(systemName: eyeContactState.isEyeContact ? "eye.fill" : "eye.slash")
+                .font(.system(size: 11))
+                .foregroundStyle(eyeContactState.isEyeContact
+                    ? ColorTokens.Brand.mint
+                    : .white.opacity(0.5))
+                .accessibilityHidden(true)
+            GeometryReader { proxy in
+                ZStack(alignment: .leading) {
+                    Capsule().fill(.white.opacity(0.2))
+                    Capsule()
+                        .fill(eyeContactState.attentionScore > 0.6
+                            ? ColorTokens.Brand.mint
+                            : ColorTokens.Brand.butter)
+                        .frame(width: proxy.size.width * CGFloat(eyeContactState.attentionScore))
+                        .animation(reduceMotion ? nil : .easeOut(duration: 0.3), value: eyeContactState.attentionScore)
+                }
+            }
+            .frame(height: 5)
+        }
+        .accessibilityLabel(Text("ar.mirror.attention"))
+        .accessibilityValue(Text(eyeContactState.isEyeContact
+            ? String(localized: "eye_focus.hint.well_done")
+            : String(localized: "eye_focus.attention_low")))
+        .accessibilityAddTraits(.updatesFrequently)
     }
 
     private var progressBar: some View {
@@ -219,6 +268,8 @@ struct ARMirrorView: View {
         let display = self.display
         let lipSyncState = self.lipSyncState
         let facePoseWorker = self.facePoseWorker
+        let eyeFocusWorker = self.eyeFocusWorker
+        let eyeContactState = self.eyeContactState
 
         Task { @MainActor in
             for await frame in service.blendshapeStream {
@@ -258,12 +309,41 @@ struct ARMirrorView: View {
             // Stream завершился — ARSession остановлена
             lipSyncState.isTracking = false
         }
+
+        // Block L: Eye/focus tracking через ARFaceAnchor.lookAtPoint.
+        // Используем LiveARSessionService.eyeFocusStream (доступен только при TrueDepth).
+        // На симуляторе / MockARSessionService → guard не пройдёт, worker не вызывается.
+        guard let liveService = service as? LiveARSessionService else { return }
+        Task { @MainActor in
+            for await anchor in liveService.faceAnchorStream {
+                let obs = await eyeFocusWorker.analyze(faceAnchor: anchor)
+                let history = await eyeFocusWorker.recentHistory()
+                let avgAttention = await eyeFocusWorker.computeAttention(history: history)
+                eyeContactState.update(isLookingAtCamera: obs.isLookingAtCamera, attention: avgAttention)
+
+                // Attention hint: если среднее внимание низкое >5 сек → подсказка Ляли
+                if avgAttention < 0.3 {
+                    let now = Date()
+                    if now.timeIntervalSince(lastHintDate) > 5.0 {
+                        lastHintDate = now
+                        display.showAttentionHint = true
+                        // Скрываем подсказку через 2 сек
+                        Task { @MainActor in
+                            try? await Task.sleep(nanoseconds: 2_000_000_000)
+                            display.showAttentionHint = false
+                        }
+                    }
+                }
+            }
+            eyeContactState.reset()
+        }
     }
 
     private func teardown() {
         session?.stopSession()
         mockSession?.stopSession()
         lipSyncState.isTracking = false
+        eyeContactState.reset()
     }
 }
 
@@ -280,6 +360,8 @@ final class ARMirrorDisplay: ARMirrorDisplayLogic {
     var lastStars: Int?
     /// Текущая визема для real-time lip-sync маскота Ляли.
     var currentViseme: Viseme = .closed
+    /// Block L: показывать attention hint «Посмотри на меня!»
+    var showAttentionHint: Bool = false
 
     func displayStartGame(_ viewModel: ARMirrorModels.StartGame.ViewModel) {
         self.start = viewModel
