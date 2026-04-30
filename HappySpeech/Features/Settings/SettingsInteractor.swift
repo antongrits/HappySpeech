@@ -41,6 +41,8 @@ final class SettingsInteractor: SettingsBusinessLogic {
     private let whisperKitModelManager: (any WhisperKitModelManagerProtocol)?
     private let llmModelManager: (any LLMModelManagerProtocol)?
     private let defaults: UserDefaults
+    private let cacheClearWorker: CacheClearWorker
+    private let exportWorker: SettingsExportWorker
     private let logger = Logger(subsystem: "ru.happyspeech", category: "Settings")
 
     // MARK: - State
@@ -54,6 +56,7 @@ final class SettingsInteractor: SettingsBusinessLogic {
     init(
         themeManager: ThemeManager,
         notificationService: any NotificationService,
+        sessionRepository: any SessionRepository,
         whisperKitModelManager: (any WhisperKitModelManagerProtocol)? = nil,
         llmModelManager: (any LLMModelManagerProtocol)? = nil,
         defaults: UserDefaults = .standard
@@ -63,6 +66,11 @@ final class SettingsInteractor: SettingsBusinessLogic {
         self.whisperKitModelManager = whisperKitModelManager
         self.llmModelManager = llmModelManager
         self.defaults = defaults
+        self.cacheClearWorker = CacheClearWorker()
+        self.exportWorker = SettingsExportWorker(
+            sessionRepository: sessionRepository,
+            exportService: SpecialistExportServiceLive()
+        )
     }
 
     // MARK: - BusinessLogic
@@ -167,23 +175,51 @@ final class SettingsInteractor: SettingsBusinessLogic {
     }
 
     func exportData(_ request: SettingsModels.ExportData.Request) {
-        // M7.2: stub — на M8 будет интеграция с SpecialistExportService.
-        // Эмулируем успешный экспорт.
-        logger.info("export requested (stub)")
-        let timestamp = Int(Date().timeIntervalSince1970)
-        let fileName = "happyspeech-export-\(timestamp).json"
-        presenter?.presentExportData(.init(
-            success: true,
-            fileName: fileName,
-            errorMessage: nil
-        ))
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            logger.info("exportData format=\(request.format.rawValue, privacy: .public)")
+            presenter?.presentLoadSettings(.init(
+                settings: settings,
+                appVersion: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0",
+                buildNumber: Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
+            ))
+            do {
+                let url: URL
+                switch request.format {
+                case .pdf:
+                    url = try await exportWorker.exportPDF(childId: request.childId)
+                case .csv:
+                    url = try await exportWorker.exportCSV(childId: request.childId)
+                case .json:
+                    url = try await exportWorker.exportJSON(childId: request.childId, settings: settings)
+                }
+                logger.info("exportData success url=\(url.lastPathComponent, privacy: .public)")
+                presenter?.presentExportData(.init(
+                    success: true,
+                    fileURL: url,
+                    format: request.format,
+                    errorMessage: nil
+                ))
+            } catch {
+                logger.error("exportData failed: \(error.localizedDescription, privacy: .public)")
+                presenter?.presentExportData(.init(
+                    success: false,
+                    fileURL: nil,
+                    format: request.format,
+                    errorMessage: error.localizedDescription
+                ))
+            }
+        }
     }
 
     func clearCache(_ request: SettingsModels.ClearCache.Request) {
-        // M7.2: stub — реальная очистка кэша моделей и аудио будет на M8.
-        logger.info("clearCache requested (stub)")
-        let bytesFreed = 47_104_000 // ~45 MB — типовой размер аудиокэша.
-        presenter?.presentClearCache(.init(bytesFreed: bytesFreed))
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            logger.info("clearCache requested")
+            let bytesFreed = await cacheClearWorker.clearAll()
+            logger.info("clearCache done bytesFreed=\(bytesFreed, privacy: .public)")
+            presenter?.presentClearCache(.init(bytesFreed: bytesFreed))
+        }
     }
 
     func connectSpecialist(_ request: SettingsModels.ConnectSpecialist.Request) {

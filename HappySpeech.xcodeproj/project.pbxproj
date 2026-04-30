@@ -2749,6 +2749,7 @@
 		4D695336449B49386DD9467D /* lex-tp-16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 82C38E93E2DE098F7190470B /* lex-tp-16.m4a */; };
 		4D6C3DCD2082EFD2530355F2 /* y-wm-1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4188FC44D992E605B801B386 /* y-wm-1.m4a */; };
 		4D76FDEE63AA497828874D60 /* lyalya_encourage_09.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E6E2EF4109DE2D31ADBE9267 /* lyalya_encourage_09.m4a */; };
+		4D770F26555F2C4BE6349CF0 /* SettingsExportWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 880DAB72A060A2D83E9BB5D5 /* SettingsExportWorker.swift */; };
 		4D7781E0CF1088C97C4A3CAA /* lyalya_hint_dam_4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A93A778A801487ECB3CF3FC9 /* lyalya_hint_dam_4.m4a */; };
 		4D7CCA804E5DFDBF6A1FCE38 /* kh-wm-28.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F0F9D9F775417743D4F9FB8F /* kh-wm-28.m4a */; };
 		4D8C4D1C39E7A1196A1A70BC /* lyalya_setting_difficulty.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 78B4570576A9B3C97CAA79A8 /* lyalya_setting_difficulty.m4a */; };
@@ -8022,6 +8023,7 @@
 		E72B74D5A65DEFF0C79D4D52 /* c-prep-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B65885A6EF88E3E4E19A3183 /* c-prep-2.m4a */; };
 		E72DAFCD639FC4DD6533B6EC /* narr-d-2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B3007FC6FE7B6FDAE52A74CA /* narr-d-2.m4a */; };
 		E72F914450A9C51DE3570582 /* k-wi-47.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 779FDFE2E2D0768D5BA62BB2 /* k-wi-47.m4a */; };
+		E733A15894C41A8B71464454 /* CacheClearWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9284158C688411D118392ED1 /* CacheClearWorker.swift */; };
 		E73817D10BB09F135F1B2F9A /* br-040.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A2838CA21C27FCA8D249C62D /* br-040.m4a */; };
 		E738EBA41070452CD0A4D84F /* lyalya_onboarding_step4_transition.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 140403E7785C89FC91B31B3F /* lyalya_onboarding_step4_transition.m4a */; };
 		E739D3C08EF5149C79E6039A /* dwh-ph-8.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 531E403A37A0DD35992CB18C /* dwh-ph-8.m4a */; };
@@ -13659,6 +13661,7 @@
 		87F4059596C9EB776381E3F5 /* lyalya_insight_progress_3.m4a */ = {isa = PBXFileReference; path = lyalya_insight_progress_3.m4a; sourceTree = "<group>"; };
 		8804DE729462D2B2CC11C8E4 /* zh-iso-4.m4a */ = {isa = PBXFileReference; path = "zh-iso-4.m4a"; sourceTree = "<group>"; };
 		8807D00A0168620E10CC5925 /* ch-wi-27.m4a */ = {isa = PBXFileReference; path = "ch-wi-27.m4a"; sourceTree = "<group>"; };
+		880DAB72A060A2D83E9BB5D5 /* SettingsExportWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsExportWorker.swift; sourceTree = "<group>"; };
 		88148742C7C587FE2133D020 /* dwh-df-49.m4a */ = {isa = PBXFileReference; path = "dwh-df-49.m4a"; sourceTree = "<group>"; };
 		8815D51F918B578F88658016 /* narr-ms-10.m4a */ = {isa = PBXFileReference; path = "narr-ms-10.m4a"; sourceTree = "<group>"; };
 		8817BC54035E4A9669B3ADFC /* narr-si-7.m4a */ = {isa = PBXFileReference; path = "narr-si-7.m4a"; sourceTree = "<group>"; };
@@ -14014,6 +14017,7 @@
 		926971170D709B25117F81CC /* zh-prep-11.m4a */ = {isa = PBXFileReference; path = "zh-prep-11.m4a"; sourceTree = "<group>"; };
 		927EE95412655F731AE4B513 /* s-diff-17.m4a */ = {isa = PBXFileReference; path = "s-diff-17.m4a"; sourceTree = "<group>"; };
 		927F4E03F5331362C3CC4EEC /* s-wm-5.m4a */ = {isa = PBXFileReference; path = "s-wm-5.m4a"; sourceTree = "<group>"; };
+		9284158C688411D118392ED1 /* CacheClearWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheClearWorker.swift; sourceTree = "<group>"; };
 		92871292E5B11BFB7BE3CC6E /* z-syl-2.m4a */ = {isa = PBXFileReference; path = "z-syl-2.m4a"; sourceTree = "<group>"; };
 		928AD23BC9FC73DE8F387BF6 /* c-wm-8.m4a */ = {isa = PBXFileReference; path = "c-wm-8.m4a"; sourceTree = "<group>"; };
 		928CACE576F86132C53C94C0 /* br-006.m4a */ = {isa = PBXFileReference; path = "br-006.m4a"; sourceTree = "<group>"; };
@@ -18986,6 +18990,7 @@
 		2D1657A73DC59771CA8446B7 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				56BC0AF885F6323B47018D8F /* Workers */,
 				F75BEE992457BD6BB67B5695 /* SettingsDisplayLogic.swift */,
 				ABA89CD106973F474C8710B3 /* SettingsInteractor.swift */,
 				9B8395773042A281E3CB2419 /* SettingsModels.swift */,
@@ -21406,6 +21411,15 @@
 				6D686B13665FDCE9D5A8C48F /* worldmap_unlock.m4a */,
 			);
 			path = tuned;
+			sourceTree = "<group>";
+		};
+		56BC0AF885F6323B47018D8F /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				9284158C688411D118392ED1 /* CacheClearWorker.swift */,
+				880DAB72A060A2D83E9BB5D5 /* SettingsExportWorker.swift */,
+			);
+			path = Workers;
 			sourceTree = "<group>";
 		};
 		5A74A20C956EB28FA1DB024E /* ProgramEditor */ = {
@@ -37004,6 +37018,7 @@
 				1B1FC813CA84884334DAAC48 /* ButterflyCatchPresenter.swift in Sources */,
 				E895443EB58420474DA04E89 /* ButterflyCatchRouter.swift in Sources */,
 				31878B184637C093246CEF90 /* ButterflyCatchView.swift in Sources */,
+				E733A15894C41A8B71464454 /* CacheClearWorker.swift in Sources */,
 				576A723F9FE4C23601F13190 /* CardModifier.swift in Sources */,
 				65325CA7264CF49DACE55961 /* CelebrationOverlayView.swift in Sources */,
 				AC276543B1346357125FBB31 /* ChildHomeDisplayLogic.swift in Sources */,
@@ -37339,6 +37354,7 @@
 				BEB37807CD324B99F5B7C70A /* SessionShellRouter.swift in Sources */,
 				32852FAFB512B5D2A2C63A26 /* SessionShellView.swift in Sources */,
 				992DE6CB3551B7D297A09599 /* SettingsDisplayLogic.swift in Sources */,
+				4D770F26555F2C4BE6349CF0 /* SettingsExportWorker.swift in Sources */,
 				30141797DE474F2347A3EB23 /* SettingsInteractor.swift in Sources */,
 				5DDF959DB70EDE8784B99E8A /* SettingsModels.swift in Sources */,
 				1BCE6EEF7E8599F3A91A5DEF /* SettingsPresenter.swift in Sources */,
