@@ -30,6 +30,12 @@ struct ChildHomeView: View {
     /// B13 — SOS-flow: alert «Позвать родителя?» перед фактическим переходом.
     @State private var showSOSAlert: Bool = false
 
+    // MARK: - S12 Hero Transitions (Block S)
+    // Namespace для matchedGeometryEffect: mission card → expanded hero overlay.
+    @Namespace private var heroNamespace
+    // Флаг: показывать развёрнутую mission-карточку поверх контента.
+    @State private var missionHeroExpanded: Bool = false
+
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -50,6 +56,7 @@ struct ChildHomeView: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: SpacingTokens.sp5) {
                     heroSection
+
 
                     SeasonalBannerView(manager: .shared) {
                         guard let event = SeasonalEventsManager.shared.activeEvent else { return }
@@ -120,6 +127,14 @@ struct ChildHomeView: View {
 
             parentButton
                 .spotlightAnchor(key: "parent_dashboard")
+
+            // MARK: — S12 Hero Overlay: expanded mission card
+            // Появляется поверх контента при tап на mission card (reduceMotion off).
+            if missionHeroExpanded {
+                missionHeroOverlay
+                    .transition(.opacity)
+                    .zIndex(20)
+            }
         }
         .accessibilityIdentifier("ChildHomeRoot")
         .onAppear { bootstrap() }
@@ -286,16 +301,109 @@ struct ChildHomeView: View {
                 }
             }
 
+            // S12: matchedGeometryEffect — card является source в свёрнутом состоянии.
+            // isSource=false когда hero overlay открыт (overlayCard сам становится source).
             ChildHomeDailyMissionDetailCard(
                 mission: viewModel.dailyMissionDetail
             ) {
-                guard let interactor, let router else { return }
-                Task { await interactor.recordMissionTap() }
-                router.routeToLesson(
-                    childId: childId,
-                    template: viewModel.dailyMissionDetail.templateType
-                )
+                if reduceMotion {
+                    // Reduced Motion: без hero, сразу в урок.
+                    guard let interactor, let router else { return }
+                    Task { await interactor.recordMissionTap() }
+                    router.routeToLesson(
+                        childId: childId,
+                        template: viewModel.dailyMissionDetail.templateType
+                    )
+                } else {
+                    // Hero expand: показываем overlay с matchedGeometryEffect.
+                    withAnimation(.spring(response: 0.45, dampingFraction: 0.78)) {
+                        missionHeroExpanded = true
+                    }
+                }
             }
+            .matchedGeometryEffect(
+                id: "mission_card",
+                in: heroNamespace,
+                isSource: !missionHeroExpanded
+            )
+        }
+    }
+
+    // MARK: - Mission Hero Overlay (S12 Block S)
+    //
+    // Развёрнутая карточка миссии с matchedGeometryEffect, занимает большую
+    // часть экрана. Tap «Начать» → маршрутизация через router, overlay закрывается.
+    // Tap по фону → collapse обратно.
+
+    @ViewBuilder
+    private var missionHeroOverlay: some View {
+        ZStack(alignment: .center) {
+            // Dim background
+            Color.black.opacity(0.45)
+                .ignoresSafeArea()
+                .onTapGesture {
+                    withAnimation(.spring(response: 0.4, dampingFraction: 0.82)) {
+                        missionHeroExpanded = false
+                    }
+                }
+                .accessibilityLabel(String(localized: "child.home.hero.dismiss.a11y"))
+                .accessibilityAddTraits(.isButton)
+
+            // Expanded mission card (matchedGeometryEffect destination)
+            VStack(spacing: SpacingTokens.sp4) {
+                ChildHomeDailyMissionDetailCard(
+                    mission: viewModel.dailyMissionDetail
+                ) {
+                    withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+                        missionHeroExpanded = false
+                    }
+                    guard let interactor, let router else { return }
+                    Task { await interactor.recordMissionTap() }
+                    router.routeToLesson(
+                        childId: childId,
+                        template: viewModel.dailyMissionDetail.templateType
+                    )
+                }
+                .matchedGeometryEffect(
+                    id: "mission_card",
+                    in: heroNamespace,
+                    isSource: missionHeroExpanded
+                )
+
+                // CTA «Начать» появляется только в развёрнутом состоянии
+                Button {
+                    withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+                        missionHeroExpanded = false
+                    }
+                    guard let interactor, let router else { return }
+                    Task { await interactor.recordMissionTap() }
+                    router.routeToLesson(
+                        childId: childId,
+                        template: viewModel.dailyMissionDetail.templateType
+                    )
+                } label: {
+                    HStack(spacing: SpacingTokens.sp2) {
+                        Image(systemName: "play.fill")
+                            .font(TypographyTokens.body(16))
+                            .accessibilityHidden(true)
+                        Text(String(localized: "child.home.mission.start"))
+                            .font(TypographyTokens.headline(17))
+                            .lineLimit(nil)
+                            .minimumScaleFactor(0.85)
+                    }
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, SpacingTokens.sp6)
+                    .padding(.vertical, SpacingTokens.sp3)
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        RoundedRectangle(cornerRadius: RadiusTokens.button, style: .continuous)
+                            .fill(ColorTokens.Brand.primary)
+                    )
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(String(localized: "child.home.mission.start"))
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
         }
     }
 
@@ -377,10 +485,15 @@ struct ChildHomeView: View {
                 : [GridItem(.flexible()), GridItem(.flexible())]
 
             LazyVGrid(columns: columns, spacing: SpacingTokens.sp3) {
+                // S12: matchedGeometryEffect на icon-круглые элементы QuickAction-тайлов.
+                // Namespace heroNamespace; каждый тайл несёт уникальный id иконки.
                 ChildHomeQuickActionTile(
                     title: String(localized: "child.home.action.worldmap"),
                     icon: "map.fill",
-                    color: ColorTokens.Brand.sky
+                    color: ColorTokens.Brand.sky,
+                    heroId: "quickaction_worldmap",
+                    namespace: heroNamespace,
+                    reduceMotion: reduceMotion
                 ) {
                     router?.routeToWorldMap(
                         childId: childId,
@@ -390,21 +503,30 @@ struct ChildHomeView: View {
                 ChildHomeQuickActionTile(
                     title: String(localized: "child.home.action.ar"),
                     icon: "camera.fill",
-                    color: ColorTokens.Brand.lilac
+                    color: ColorTokens.Brand.lilac,
+                    heroId: "quickaction_ar",
+                    namespace: heroNamespace,
+                    reduceMotion: reduceMotion
                 ) {
                     router?.routeToARZone()
                 }
                 ChildHomeQuickActionTile(
                     title: String(localized: "child.home.action.rewards"),
                     icon: "star.fill",
-                    color: ColorTokens.Brand.butter
+                    color: ColorTokens.Brand.butter,
+                    heroId: "quickaction_rewards",
+                    namespace: heroNamespace,
+                    reduceMotion: reduceMotion
                 ) {
                     router?.routeToRewards(childId: childId)
                 }
                 ChildHomeQuickActionTile(
                     title: String(localized: "child.home.action.achievements"),
                     icon: "trophy.fill",
-                    color: ColorTokens.Brand.mint
+                    color: ColorTokens.Brand.mint,
+                    heroId: "quickaction_achievements",
+                    namespace: heroNamespace,
+                    reduceMotion: reduceMotion
                 ) {
                     router?.routeToAchievements(childId: childId)
                 }
