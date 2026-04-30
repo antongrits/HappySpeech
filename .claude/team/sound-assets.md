@@ -1,6 +1,6 @@
 # Sound Assets Registry — HappySpeech
 
-**Version 2.3 — 2026-04-29**
+**Version 2.4 — 2026-04-30**
 **Managed by:** Sound Curator. All sounds verified CC0 or royalty-free.
 
 ---
@@ -13,6 +13,7 @@
 | Ляля voice brand (.m4a) | 171 | ~5.7 MB | `HappySpeech/Resources/Audio/Lyalya/` (в репо) | ✅ M3.3 + M3.7 + M3.7b + M3.7c + M3.7d + M3.7e done |
 | Ляля tuned voice (.m4a) | 50 | ~852 KB | `HappySpeech/Resources/Audio/Lyalya/tuned/` (в репо) | ✅ Sprint 12 Блок L1 done |
 | Ляля Block P voice expansion (.m4a) | 570 | ~9.7 MB | `HappySpeech/Resources/Audio/Lyalya/<11 categories>/` (в репо) | ✅ Plan v11 Block P done |
+| Ляля Block F.3 voice expansion (.m4a) | 248 | ~3.2 MB | `HappySpeech/Resources/Audio/Lyalya/` root + subdirs (в репо) | ✅ Plan v12 F.3 done |
 | Content audio batch 1 (.m4a) | 1000 | 12.65 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 1 |
 | Content audio batch 2 (.m4a) | 1028 | 11.1 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 2 |
 | Content audio batch 3 (.m4a) | 681 | 8.36 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 3 |
@@ -457,6 +458,41 @@ COPYRIGHT RULE: каждый звук должен иметь verified CC0/Apach
 
 ---
 
+
+---
+
+## Plan v12 Block F.3 — Ляля Voice Expansion +248 (итого 1774 файлов) ✅
+
+**Дата:** 2026-04-30
+**Скрипт:** `_workshop/scripts/generate_f3_voice.py`
+**Голос:** edge-tts `ru-RU-SvetlanaNeural`
+**Pipeline:** edge-tts → mp3 → ffmpeg loudnorm (I=-16, TP=-1.5, LRA=11) → AAC 16kHz mono 32kbps → .m4a
+**Формат:** AAC LC, 16000 Hz, 1ch mono, 8–20 KB/файл (все < 50 KB)
+**Итого .m4a в Lyalya/ после F.3:** 1774 файлов (было 1526 → +248)
+
+| Категория | Поддиректория | Кол-во | Описание |
+|---|---|---|---|
+| Seasonal Halloween | `Lyalya/` (root) | 50 | Паk halloween — 50 слов из pack_halloween.json (hw_001..hw_050) |
+| Seasonal Easter | `Lyalya/` (root) | 50 | Пак easter — 50 слов из pack_easter.json (ea_001..ea_050) |
+| Seasonal New Year | `Lyalya/` (root) | 50 | Пак new_year — 50 слов из pack_new_year.json (ny_001..ny_050) |
+| Hints для F.6 | `Lyalya/hints/` | 30 | Hand tracking, object detection, eye tracking, SharePlay, Pencil |
+| Ambient transitions | `Lyalya/transitions/` | 20 | 20 сцен — лес, океан, космос, джунгли, ... |
+| Phoneme hints для G | `Lyalya/hints/` | 48 | Р (12), С/З (12), Ш/Ж/Ч (11), К/Г/Х/Л/Ц (13) |
+| **ИТОГО F.3** | — | **248** | 0 ошибок, 0 пропущено |
+
+248/248 OK, 0 ошибок. Существующие 1526 файлов не затронуты.
+Лог: `/Users/antongric/Downloads/HappySpeech/_workshop/logs/f3_voice_gen.log`
+
+**Валидация (5 файлов, разные категории):**
+- `lyalya_halloween_012.m4a` — AAC LC, 16000 Hz mono, 2.86s, 12 KB ✅
+- `lyalya_easter_007.m4a` — AAC LC, 16000 Hz mono, 3.40s, 14 KB ✅
+- `lyalya_newyear_004.m4a` — AAC LC, 16000 Hz mono, 2.90s, 13 KB ✅
+- `hints/lyalya_phoneme_r_tongue_up.m4a` — AAC LC, 16000 Hz mono, 4.10s, 16 KB ✅
+- `transitions/lyalya_ambient_forest.m4a` — AAC LC, 16000 Hz mono, 2.02s, 8 KB ✅
+
+Build: SUCCEEDED iPhone 17 Pro ✅
+Russian-only: 0 en keys ✅
+
 ## Следующие шаги
 
 - **M3.4 batch 5** — ✅ DONE — lexical (700) + grammar (200) = 900 новых файлов (16.9 MB)
@@ -464,6 +500,7 @@ COPYRIGHT RULE: каждый звук должен иметь verified CC0/Apach
 - **M3.7b** — ✅ DONE — Ляля +30 фраз (итого 150, все в LyalyaPhrase enum)
 - **M3.7e** — ✅ DONE — 3 Customization voice preview m4a (classic/soft/cheerful), Lyalya 168→171
 - **Plan v11 Block P** — ✅ DONE — Ляля +570 фраз (1526 total .m4a, цель ≥1500 выполнена)
+- **Plan v12 Block F.3** — ✅ DONE — Ляля +248 фраз (1774 total .m4a, seasonal/hints/ambient/phoneme)
 - **M3.6 ambient** — 4 трека CC0 для world_map/lesson/AR/reward (⏳ pending M9)
 - **Firebase Storage upload** — delegated to backend-developer M11.4
 
