@@ -25,18 +25,25 @@ public enum PointingDirection: Sendable {
 
 // MARK: - HSMascotView
 //
-// ADR-V11-RIVE-V2: Multi-layer Lyalya overlay architecture (Plan v11 Block B)
+// ADR-V12-RIVE: Outcome C — Composite wrapper (Plan v12 Block A)
 //
-// 6-слойная архитектура (снизу вверх в ZStack):
-//   Layer 1: lyalya.riv через HSRiveView — background motion, state machine (skills.riv MIT base)
-//   Layer 2: .colorMultiply tinting — warm/cool/nature/classic (Plan v9 F2 Customization)
-//   Layer 3: TODO post-Block Q — FLUX-generated 2D Lyalya character illustration overlay
-//            (PNG спрайт per MascotMood, Image("lyalya_\(mood)") из Assets.xcassets)
-//   Layer 4: mouth bubble overlay — Image(systemName: "bubble.left.fill") для visual lip-sync
-//            при .explaining / .singing, связан с UnifiedFacePoseWorker.currentViseme (ADR-V10-FACEPOSE)
-//            TODO post-Block F — real-time viseme → bubble animation
-//   Layer 5: SF Symbol decorative skin overlay — princess/scientist/athlete/artist/classic (Plan v10 D)
-//   Layer 6: breathing motion .scaleEffect 1.0 → 1.02 каждые 3 сек (Plan v10 D)
+// 7-слойная архитектура (снизу вверх в ZStack):
+//   Layer 1: lyalya.riv через HSRiveView — background motion (skills.riv MIT base)
+//   Layer 2: .colorMultiply tinting — warm/cool/nature/classic
+//   Layer 3: MoodAuraView — state-specific ambient glow (новое в v12)
+//   Layer 4: EmotionParticlesView — state-specific floating particles (новое в v12)
+//   Layer 5: mouth bubble overlay — real-time lip-sync (ADR-V10-FACEPOSE)
+//   Layer 6: SF Symbol decorative skin overlay — princess/scientist/athlete/artist
+//   Layer 7: breathing motion .scaleEffect 1.0 → 1.03 (улучшено в v12: shake при encouraging)
+//
+// Улучшения v12 (Outcome C):
+//   - MoodAuraView: ambient radial glow под маскотом, цвет зависит от настроения
+//   - EmotionParticlesView: частицы для celebrating (звёзды), happy (сердечки),
+//     thinking (точки вопроса), encouraging (плюсы), singing (ноты)
+//   - EntranceModifier: scale-in + opacity при появлении нового состояния
+//   - ShakeEffect: мягкое горизонтальное покачивание при encouraging (заменяет bounce)
+//   - Waving hand overlay: SF Symbol машущей руки при waving
+//   - PointingArrow: анимированная стрелка при pointing
 //
 // Primary: Rive state machine через HSRiveView (если lyalya.riv в бандле)
 // Fallback: pure SwiftUI ButterflyShape (всегда работает без ассета)
@@ -69,7 +76,20 @@ public struct HSMascotView: View {
     @State private var bodyBounce: CGFloat = 0
     @State private var bodyRotation: Double = 0
     @State private var antennaDroop: Double = 0
-    @State private var wavingPhase: Double = 0
+
+    // v12: entrance / transition animation
+    @State private var entranceScale: CGFloat = 0.85
+    @State private var entranceOpacity: Double = 0
+    @State private var moodTransitionID: Int = 0
+
+    // v12: encouraging shake
+    @State private var shakeOffset: CGFloat = 0
+
+    // v12: waving hand bounce
+    @State private var wavingHandScale: CGFloat = 1.0
+
+    // v12: pointing arrow pulse
+    @State private var arrowPulse: CGFloat = 1.0
 
     // Rive asset availability check (once per launch)
     private static let riveAssetAvailable: Bool = {
@@ -95,21 +115,51 @@ public struct HSMascotView: View {
 
     public var body: some View {
         ZStack {
-            if Self.riveAssetAvailable {
-                riveLayer
-            } else {
-                swiftUIFallback
+            // Layer 3: ambient mood aura (под маскотом)
+            if !reduceMotion {
+                MoodAuraView(mood: mood, size: size)
+            }
+
+            // Layer 1–2: Rive или SwiftUI fallback
+            ZStack {
+                if Self.riveAssetAvailable {
+                    riveLayer
+                } else {
+                    swiftUIFallback
+                }
+            }
+            .scaleEffect(entranceScale)
+            .opacity(entranceOpacity)
+            .id(moodTransitionID)
+
+            // Layer 4: emotion particles
+            if !reduceMotion {
+                EmotionParticlesView(mood: mood, size: size)
+                    .allowsHitTesting(false)
+            }
+
+            // Layer 6a: waving hand (только для waving)
+            if mood == .waving, !reduceMotion {
+                wavingHandOverlay
+            }
+
+            // Layer 6b: pointing arrow (только для pointing)
+            if mood == .pointing, !reduceMotion {
+                pointingArrowOverlay
             }
         }
         .frame(width: size, height: size)
+        .offset(x: shakeOffset)
         .accessibilityLabel(accessibilityLabel)
         .accessibilityHidden(false)
-        .onChange(of: mood) { _, newMood in
-            riveMood = newMood
-            if !reduceMotion { startFallbackAnimation() }
-        }
         .onAppear {
             riveMood = mood
+            playEntrance()
+            if !reduceMotion { startFallbackAnimation() }
+        }
+        .onChange(of: mood) { _, newMood in
+            riveMood = newMood
+            playMoodTransition()
             if !reduceMotion { startFallbackAnimation() }
         }
         .onChange(of: audioAmplitude?.wrappedValue ?? 0) { _, amplitude in
@@ -129,6 +179,62 @@ public struct HSMascotView: View {
             mouthOpen: smoothedMouth
         )
         .frame(width: size, height: size)
+        .offset(y: bodyBounce)
+    }
+
+    // MARK: - Waving Hand Overlay (v12)
+
+    @ViewBuilder
+    private var wavingHandOverlay: some View {
+        Image(systemName: "hand.wave.fill")
+            .font(.system(size: size * 0.28))
+            .foregroundStyle(Color(hex: "#F97B50"))
+            .offset(x: size * 0.36, y: -size * 0.1)
+            .scaleEffect(wavingHandScale)
+            .rotationEffect(.degrees(wavingHandScale > 1.05 ? 12 : -6))
+            .onAppear {
+                withAnimation(
+                    MotionTokens.bounce.repeatCount(4, autoreverses: true)
+                ) {
+                    wavingHandScale = 1.18
+                }
+            }
+            .accessibilityHidden(true)
+    }
+
+    // MARK: - Pointing Arrow Overlay (v12)
+
+    @ViewBuilder
+    private var pointingArrowOverlay: some View {
+        let arrowAngle: Double = {
+            switch pointingDirection {
+            case .left:  return 180
+            case .right: return 0
+            case .up:    return -90
+            }
+        }()
+        let arrowOffset: CGSize = {
+            switch pointingDirection {
+            case .left:  return CGSize(width: -size * 0.44, height: 0)
+            case .right: return CGSize(width:  size * 0.44, height: 0)
+            case .up:    return CGSize(width: 0, height: -size * 0.44)
+            }
+        }()
+
+        Image(systemName: "arrowshape.right.fill")
+            .font(.system(size: size * 0.22))
+            .foregroundStyle(Color(hex: "#F97B50").opacity(0.9))
+            .offset(arrowOffset)
+            .rotationEffect(.degrees(arrowAngle))
+            .scaleEffect(arrowPulse)
+            .onAppear {
+                withAnimation(
+                    MotionTokens.bounce.repeatForever(autoreverses: true)
+                ) {
+                    arrowPulse = 1.22
+                }
+            }
+            .accessibilityHidden(true)
     }
 
     // MARK: - SwiftUI Fallback
@@ -158,6 +264,53 @@ public struct HSMascotView: View {
         }
     }
 
+    // MARK: - Entrance animation (v12)
+
+    private func playEntrance() {
+        guard !reduceMotion else {
+            entranceScale = 1.0
+            entranceOpacity = 1.0
+            return
+        }
+        entranceScale = 0.82
+        entranceOpacity = 0
+        withAnimation(MotionTokens.bounce) {
+            entranceScale = 1.0
+            entranceOpacity = 1.0
+        }
+    }
+
+    // MARK: - Mood transition (v12)
+
+    private func playMoodTransition() {
+        guard !reduceMotion else { return }
+        moodTransitionID += 1
+
+        if mood == .encouraging {
+            playEncouragingShake()
+        }
+
+        withAnimation(MotionTokens.bounce) {
+            entranceScale = 1.0
+            entranceOpacity = 1.0
+        }
+    }
+
+    // MARK: - Encouraging shake (v12 — мягкое покачивание вместо вспышек)
+
+    private func playEncouragingShake() {
+        let moves: [CGFloat] = [-6, 6, -4, 4, -2, 2, 0]
+        var delay = 0.0
+        for offset in moves {
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                withAnimation(.easeInOut(duration: MotionTokens.Duration.instant)) {
+                    shakeOffset = offset
+                }
+            }
+            delay += MotionTokens.Duration.instant
+        }
+    }
+
     // MARK: - Lip-sync (low-pass filter τ ≈ 50ms @ 60fps → α ≈ 0.17)
 
     private func applyLipSync(rawAmplitude: Float) {
@@ -169,7 +322,6 @@ public struct HSMascotView: View {
     // MARK: - SwiftUI fallback animations
 
     private func startFallbackAnimation() {
-        // Сброс
         isWingUp = false
         sparkleOffset = 0
         bodyBounce = 0
@@ -242,6 +394,276 @@ public struct HSMascotView: View {
         case .explaining:  return "Ляля объясняет"
         case .singing:     return "Ляля поёт"
         case .pointing:    return "Ляля показывает направление"
+        }
+    }
+}
+
+// MARK: - MoodAuraView (v12 — ambient glow под маскотом)
+
+/// Радиальный градиент-halo под маскотом — цвет и непрозрачность зависят от состояния.
+/// Reduced Motion: не отображается.
+private struct MoodAuraView: View {
+    let mood: MascotMood
+    let size: CGFloat
+
+    @State private var auraScale: CGFloat = 0.8
+    @State private var auraOpacity: Double = 0
+
+    private var auraColor: Color {
+        switch mood {
+        case .idle:        return Color(hex: "#B0C4FF")
+        case .happy:       return Color(hex: "#FFD700")
+        case .celebrating: return Color(hex: "#FF9E70")
+        case .thinking:    return Color(hex: "#C3B1E1")
+        case .sad:         return Color(hex: "#A8C8FF")
+        case .encouraging: return Color(hex: "#90EE90")
+        case .waving:      return Color(hex: "#FFD700")
+        case .explaining:  return Color(hex: "#FF9E70")
+        case .singing:     return Color(hex: "#FFB6D9")
+        case .pointing:    return Color(hex: "#FF9E70")
+        }
+    }
+
+    private var targetOpacity: Double {
+        switch mood {
+        case .celebrating: return 0.35
+        case .happy, .waving, .singing: return 0.25
+        case .idle, .thinking: return 0.12
+        case .encouraging: return 0.28
+        case .sad: return 0.10
+        default: return 0.18
+        }
+    }
+
+    var body: some View {
+        Ellipse()
+            .fill(
+                RadialGradient(
+                    colors: [auraColor.opacity(targetOpacity), auraColor.opacity(0)],
+                    center: .center,
+                    startRadius: 0,
+                    endRadius: size * 0.58
+                )
+            )
+            .frame(width: size * 1.4, height: size * 0.55)
+            .offset(y: size * 0.32)
+            .scaleEffect(auraScale)
+            .opacity(auraOpacity)
+            .animation(MotionTokens.spring, value: mood)
+            .onAppear {
+                withAnimation(MotionTokens.idlePulse) {
+                    auraScale = 1.08
+                    auraOpacity = 1.0
+                }
+            }
+    }
+}
+
+// MARK: - EmotionParticlesView (v12 — state-specific floating particles)
+
+/// Частицы-оверлей поверх маскота — только при активных состояниях.
+/// Reduced Motion: не отображается.
+private struct EmotionParticlesView: View {
+    let mood: MascotMood
+    let size: CGFloat
+
+    var body: some View {
+        ZStack {
+            switch mood {
+            case .celebrating:
+                CelebrationStarsView(size: size)
+            case .happy:
+                FloatingHeartsView(size: size)
+            case .thinking:
+                ThinkingDotsView(size: size)
+            case .encouraging:
+                EncouragingPlusView(size: size)
+            case .singing:
+                MusicNotesView(size: size)
+            default:
+                EmptyView()
+            }
+        }
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
+    }
+}
+
+// MARK: - CelebrationStarsView
+
+private struct CelebrationStarsView: View {
+    let size: CGFloat
+    @State private var phase: Double = 0
+
+    private let count = 8
+    private var scale: CGFloat { size / 120 }
+    private let symbols = ["star.fill", "sparkle", "star.fill", "sparkle",
+                           "star.fill", "sparkle", "star.fill", "sparkle"]
+    private let colors: [Color] = [
+        Color(hex: "#FFD700"), Color(hex: "#FF9E70"),
+        Color(hex: "#B0C4FF"), Color(hex: "#FFD700"),
+        Color(hex: "#FFB6D9"), Color(hex: "#FF9E70"),
+        Color(hex: "#90EE90"), Color(hex: "#C3B1E1")
+    ]
+
+    var body: some View {
+        ZStack {
+            ForEach(0..<count, id: \.self) { i in
+                let angle = Double(i) * (.pi * 2 / Double(count)) + phase
+                let radius = size * 0.58
+                Image(systemName: symbols[i])
+                    .font(.system(size: 9 * scale))
+                    .foregroundStyle(colors[i])
+                    .offset(
+                        x: CGFloat(cos(angle)) * radius,
+                        y: CGFloat(sin(angle)) * radius * 0.7
+                    )
+                    .scaleEffect(0.6 + 0.4 * sin(phase * 2.5 + Double(i) * 0.8))
+                    .opacity(0.7 + 0.3 * sin(phase * 2 + Double(i)))
+            }
+        }
+        .onAppear {
+            withAnimation(.linear(duration: 2.4).repeatForever(autoreverses: false)) {
+                phase = .pi * 2
+            }
+        }
+    }
+}
+
+// MARK: - FloatingHeartsView
+
+private struct FloatingHeartsView: View {
+    let size: CGFloat
+    @State private var phase: Double = 0
+
+    private let count = 5
+    private var scale: CGFloat { size / 120 }
+
+    var body: some View {
+        ZStack {
+            ForEach(0..<count, id: \.self) { i in
+                let baseX = CGFloat(i - count / 2) * size * 0.22
+                let riseY = -size * 0.5 * CGFloat(phase / (.pi * 2))
+                let delay = Double(i) * 0.4
+                let adjustedPhase = (phase + delay * .pi).truncatingRemainder(dividingBy: .pi * 2)
+                let y = -size * 0.4 * CGFloat(adjustedPhase / (.pi * 2))
+
+                Image(systemName: "heart.fill")
+                    .font(.system(size: 8 * scale))
+                    .foregroundStyle(Color(hex: "#FFB6D9").opacity(0.75))
+                    .offset(x: baseX + CGFloat(sin(adjustedPhase * 1.3)) * size * 0.1, y: y)
+                    .scaleEffect(0.5 + 0.5 * (1 - adjustedPhase / (.pi * 2)))
+                    .opacity(0.9 - adjustedPhase / (.pi * 2))
+            }
+        }
+        .frame(width: size, height: size)
+        .onAppear {
+            withAnimation(.linear(duration: 2.0).repeatForever(autoreverses: false)) {
+                phase = .pi * 2
+            }
+        }
+    }
+}
+
+// MARK: - ThinkingDotsView
+
+private struct ThinkingDotsView: View {
+    let size: CGFloat
+    @State private var dotScales: [CGFloat] = [1, 1, 1]
+
+    private var scale: CGFloat { size / 120 }
+
+    var body: some View {
+        HStack(spacing: 4 * scale) {
+            ForEach(0..<3, id: \.self) { i in
+                Circle()
+                    .fill(Color(hex: "#C3B1E1").opacity(0.8))
+                    .frame(width: 5 * scale, height: 5 * scale)
+                    .scaleEffect(dotScales[i])
+            }
+        }
+        .offset(y: -size * 0.54)
+        .onAppear {
+            for i in 0..<3 {
+                let delay = Double(i) * 0.22
+                DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                    withAnimation(MotionTokens.bounce.repeatForever(autoreverses: true)) {
+                        dotScales[i] = 1.5
+                    }
+                }
+            }
+        }
+    }
+}
+
+// MARK: - EncouragingPlusView
+
+private struct EncouragingPlusView: View {
+    let size: CGFloat
+    @State private var phase: Double = 0
+
+    private let count = 4
+    private var scale: CGFloat { size / 120 }
+
+    var body: some View {
+        ZStack {
+            ForEach(0..<count, id: \.self) { i in
+                let angle = Double(i) * (.pi / 2) + phase * 0.5
+                let radius = size * 0.48
+                Image(systemName: "plus.circle.fill")
+                    .font(.system(size: 10 * scale))
+                    .foregroundStyle(Color(hex: "#90EE90").opacity(0.8))
+                    .offset(
+                        x: CGFloat(cos(angle)) * radius,
+                        y: CGFloat(sin(angle)) * radius * 0.65
+                    )
+                    .scaleEffect(0.7 + 0.3 * cos(phase * 1.5 + Double(i)))
+            }
+        }
+        .onAppear {
+            withAnimation(.linear(duration: 2.8).repeatForever(autoreverses: false)) {
+                phase = .pi * 2
+            }
+        }
+    }
+}
+
+// MARK: - MusicNotesView
+
+private struct MusicNotesView: View {
+    let size: CGFloat
+    @State private var phase: Double = 0
+
+    private let notes = ["music.note", "music.quarternote.3", "music.note"]
+    private let offsets: [CGSize] = [
+        CGSize(width: -0.32, height: -0.45),
+        CGSize(width:  0.05, height: -0.52),
+        CGSize(width:  0.34, height: -0.40)
+    ]
+    private var scale: CGFloat { size / 120 }
+
+    var body: some View {
+        ZStack {
+            ForEach(0..<notes.count, id: \.self) { i in
+                let delay = Double(i) * 0.55
+                let adjustedPhase = (phase + delay).truncatingRemainder(dividingBy: .pi * 2)
+                let riseY = -size * 0.18 * CGFloat(adjustedPhase / (.pi * 2))
+
+                Image(systemName: notes[i])
+                    .font(.system(size: 9 * scale))
+                    .foregroundStyle(Color(hex: "#FFB6D9").opacity(0.85))
+                    .offset(
+                        x: offsets[i].width * size,
+                        y: offsets[i].height * size + riseY
+                    )
+                    .opacity(0.9 - 0.6 * (adjustedPhase / (.pi * 2)))
+                    .scaleEffect(0.8 + 0.2 * sin(adjustedPhase))
+            }
+        }
+        .onAppear {
+            withAnimation(.linear(duration: 2.2).repeatForever(autoreverses: false)) {
+                phase = .pi * 2
+            }
         }
     }
 }
@@ -341,7 +763,6 @@ private struct ButterflyShape: View {
         let mouthY: CGFloat = -8 * scale
 
         if mood == .sad {
-            // Грустный рот — дуга вниз
             Path { p in
                 p.move(to: CGPoint(x: -4 * scale, y: mouthY))
                 p.addQuadCurve(
@@ -351,13 +772,11 @@ private struct ButterflyShape: View {
             }
             .stroke(Color(hex: "#3A2820"), lineWidth: 1.2 * scale)
         } else if smoothedMouth > 0.05 || mood == .singing || mood == .explaining {
-            // Открытый рот (lip-sync / singing)
             Capsule()
                 .fill(Color(hex: "#3A2820"))
                 .frame(width: 6 * scale, height: max(2 * scale, openHeight + 2 * scale))
                 .offset(y: mouthY)
         } else {
-            // Нейтральная улыбка
             Path { p in
                 p.move(to: CGPoint(x: -4 * scale, y: mouthY))
                 p.addQuadCurve(
@@ -373,7 +792,6 @@ private struct ButterflyShape: View {
     private func antennaeView(droop: Double) -> some View {
         let droopAngle = Angle.degrees(droop)
         Group {
-            // Left antenna
             Path { p in
                 p.move(to: CGPoint(x: -3 * scale, y: -18 * scale))
                 p.addQuadCurve(
@@ -390,7 +808,6 @@ private struct ButterflyShape: View {
                 .offset(x: -16 * scale, y: -38 * scale)
                 .rotationEffect(droopAngle, anchor: UnitPoint(x: 0.5, y: 1.0))
 
-            // Right antenna
             Path { p in
                 p.move(to: CGPoint(x: 3 * scale, y: -18 * scale))
                 p.addQuadCurve(
@@ -518,6 +935,24 @@ extension MascotMood: CaseIterable {
             Text("Амплитуда")
         }
         .padding(.horizontal)
+    }
+    .padding()
+}
+
+#Preview("v12 — частицы и аура") {
+    @Previewable @State var selectedMood: MascotMood = .celebrating
+
+    VStack(spacing: 20) {
+        HSMascotView(mood: selectedMood, size: 180)
+            .frame(height: 220)
+
+        Picker("Настроение", selection: $selectedMood) {
+            ForEach(MascotMood.allCases, id: \.description) { mood in
+                Text(mood.description).tag(mood)
+            }
+        }
+        .pickerStyle(.wheel)
+        .frame(height: 100)
     }
     .padding()
 }
