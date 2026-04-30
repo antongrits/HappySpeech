@@ -91,7 +91,7 @@ public struct ContentItem: Sendable, Identifiable {
 /// let planner: AdaptivePlannerService = LiveAdaptivePlannerService(realm: actor)
 /// let route = try await planner.buildDailyRoute(for: childId)
 /// for step in route.steps {
-///     print(step.targetSound, step.templateType)
+///     HSLogger.planner.debug("\(step.targetSound) \(step.templateType)")
 /// }
 /// ```
 ///

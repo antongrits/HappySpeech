@@ -151,9 +151,8 @@ final class FluencyAnalyzerWorker: FluencyAnalyzerWorkerProtocol, @unchecked Sen
             ? Float(dysfluencyCount) * 100.0 / Float(totalSyllables)
             : 0.0
 
-        logger.info(
-            "FluencyAnalyzer real: rep=\(repetitions, privacy: .public) prol=\(prolongations, privacy: .public) pauses=\(insideWordPauses, privacy: .public) syl=\(totalSyllables, privacy: .public) rate=\(rate, privacy: .public)"
-        )
+        logger.info("FluencyAnalyzer real: rep=\(repetitions, privacy: .public) prol=\(prolongations, privacy: .public)")
+        logger.info("FluencyAnalyzer real: pauses=\(insideWordPauses, privacy: .public) syl=\(totalSyllables, privacy: .public) rate=\(rate, privacy: .public)")
 
         return DysfluencyAnalysis(
             repetitions: repetitions,

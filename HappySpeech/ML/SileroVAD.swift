@@ -86,7 +86,7 @@ struct VADSession: Sendable {
 ///
 /// // Весь буфер
 /// let session = try await vad.processBuffer(recordingBuffer)
-/// print("Речь: \(session.speechDuration)с из \(session.chunks.count * 32)ms total")
+/// HSLogger.ml.debug("Речь: \(session.speechDuration)с из \(session.chunks.count * 32)ms total")
 /// ```
 ///
 /// ## See Also
