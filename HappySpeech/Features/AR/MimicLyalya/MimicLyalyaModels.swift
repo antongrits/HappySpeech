@@ -19,4 +19,21 @@ enum MimicLyalyaModels {
         struct Response { let stars: Int }
         struct ViewModel { let stars: Int; let message: String }
     }
+
+    // MARK: - Hand Pose (Block J)
+
+    enum UpdateHandPose {
+        struct Request { let observation: HandPoseObservation }
+        struct Response {
+            let detectedPose: HandPose
+            let targetPose: HandPose?
+            let isMatching: Bool
+            let confidence: Float
+        }
+        struct ViewModel {
+            let hintKey: String       // String Catalog ключ для подсказки
+            let isMatching: Bool
+            let poseNameKey: String   // String Catalog ключ для имени позы
+        }
+    }
 }

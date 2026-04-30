@@ -7,6 +7,8 @@ protocol MimicLyalyaBusinessLogic: AnyObject {
     func updateFrame(_ request: MimicLyalyaModels.UpdateFrame.Request)
     func scoreAttempt(_ request: MimicLyalyaModels.ScoreAttempt.Request)
     func nextRound()
+    // Block J: Hand Pose
+    func updateHandPose(_ request: MimicLyalyaModels.UpdateHandPose.Request)
 }
 
 @MainActor
@@ -17,6 +19,11 @@ final class MimicLyalyaInteractor: MimicLyalyaBusinessLogic {
     private let postureCycle: [ArticulationPosture] = [.smile, .pucker, .cupShape, .tongueUp, .mushroom]
     private var currentRound: Int = 0
     private var totalRounds: Int = 5
+
+    // Block J: целевая поза руки для текущего раунда (опциональная — не все раунды требуют жест)
+    private var currentHandTarget: HandPose? = nil
+    // Порядок чередования: чётные раунды — лицевые, нечётные — жестовые
+    private let handPoseCycle: [HandPose] = [.openPalm, .point, .fist, .wave, .thumbsUp]
 
     func startGame(_ request: MimicLyalyaModels.StartGame.Request) {
         totalRounds = request.rounds
@@ -42,8 +49,43 @@ final class MimicLyalyaInteractor: MimicLyalyaBusinessLogic {
         emitCurrent()
     }
 
+    // MARK: - Block J: Hand Pose evaluation
+
+    /// Обрабатывает наблюдение позы руки от `HandPoseWorker`.
+    /// Вызывается из `MimicLyalyaView` каждый раз когда `HandPoseWorker` возвращает результат.
+    func updateHandPose(_ request: MimicLyalyaModels.UpdateHandPose.Request) {
+        let obs = request.observation
+        guard obs.pose != .unknown, obs.confidence > 0.6 else {
+            presenter?.presentHandPoseUpdate(.init(
+                detectedPose: obs.pose,
+                targetPose: currentHandTarget,
+                isMatching: false,
+                confidence: obs.confidence
+            ))
+            return
+        }
+
+        let isMatching = currentHandTarget.map { obs.pose == $0 } ?? false
+        if isMatching {
+            HSLogger.ar.info("HandPose matched: \(obs.pose.debugDescription) conf=\(obs.confidence, format: .fixed(precision: 2))")
+        }
+
+        presenter?.presentHandPoseUpdate(.init(
+            detectedPose: obs.pose,
+            targetPose: currentHandTarget,
+            isMatching: isMatching,
+            confidence: obs.confidence
+        ))
+    }
+
+    // MARK: - Private
+
     private func emitCurrent() {
         let target = postureCycle[currentRound % postureCycle.count]
+        // Каждый нечётный раунд добавляем жестовую цель (начиная с раунда 1)
+        currentHandTarget = currentRound % 2 == 1
+            ? handPoseCycle[currentRound % handPoseCycle.count]
+            : nil
         presenter?.presentStartGame(.init(
             targetPosture: target,
             roundNumber: currentRound + 1,
