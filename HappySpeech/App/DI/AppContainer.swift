@@ -99,6 +99,10 @@ public final class AppContainer {
     // Actor-typed, lazy. Требует G2PWorker (словарь 7712 слов) + RussianPhonemeClassifier (1.35 MB).
     private var _phonemeAnalysisService: (any PhonemeAnalysisService)?
 
+    // Block E v13: Wav2Vec2Service — Tier 3 CTC phonemic ASR (Wav2Vec2RuChild.mlpackage, ~302 MB).
+    // Actor-typed, lazy. Загружает модель при первом вызове transcribe. Graceful fallback на mock.
+    private var _wav2Vec2Service: (any Wav2Vec2Service)?
+
     // Block M (v12): VoiceCloneService — placeholder, полная реализация post-v1.0.
     // Не требует factory — VoiceCloneServicePlaceholder легковесный struct без зависимостей.
     private var _voiceCloneService: (any VoiceCloneService)?
@@ -456,6 +460,20 @@ public final class AppContainer {
             service = MockPhonemeAnalysisService()
         }
         _phonemeAnalysisService = service
+        return service
+    }
+
+    // MARK: - Block E v13: Wav2Vec2Service
+
+    /// Tier 3 CTC phonemic ASR через Wav2Vec2RuChild.mlpackage (~302 MB).
+    ///
+    /// Используется в ``PhonemeAnalysisServiceLive`` при confidence < 0.70 от Tier 1/2.
+    /// Модель загружается лениво при первом вызове — без задержки при запуске приложения.
+    /// Graceful fallback: если модель не найдена в bundle → ``Wav2Vec2ServiceMock``.
+    public var wav2Vec2Service: any Wav2Vec2Service {
+        if let existing = _wav2Vec2Service { return existing }
+        let service: any Wav2Vec2Service = Wav2Vec2ServiceLive()
+        _wav2Vec2Service = service
         return service
     }
 
