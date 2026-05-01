@@ -1,7 +1,6 @@
 import AVFoundation
 import Foundation
 import OSLog
-import UIKit
 
 // MARK: - GrammarFeedbackWorker
 
@@ -37,22 +36,22 @@ final class GrammarFeedbackWorker: NSObject {
 
     // MARK: - Haptic
 
+    private let hapticService: any HapticService
+
+    init(hapticService: any HapticService = LiveHapticService()) {
+        self.hapticService = hapticService
+    }
+
     func playSelectionHaptic() {
-        let generator = UISelectionFeedbackGenerator()
-        generator.prepare()
-        generator.selectionChanged()
+        Task { await hapticService.play(pattern: .cardSelect) }
     }
 
     func playSuccessHaptic() {
-        let generator = UINotificationFeedbackGenerator()
-        generator.prepare()
-        generator.notificationOccurred(.success)
+        Task { await hapticService.play(pattern: .perfectRound) }
     }
 
     func playErrorHaptic() {
-        let generator = UINotificationFeedbackGenerator()
-        generator.prepare()
-        generator.notificationOccurred(.warning)
+        Task { await hapticService.play(pattern: .wrong) }
     }
 
     // MARK: - Lyalya voice-over (m4a assets + TTS fallback)

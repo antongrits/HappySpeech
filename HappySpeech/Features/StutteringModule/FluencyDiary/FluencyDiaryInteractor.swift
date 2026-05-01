@@ -1,7 +1,6 @@
 import AVFoundation
 import Foundation
 import OSLog
-import UIKit
 
 // MARK: - FluencyDiaryInteractor
 
@@ -30,6 +29,7 @@ final class FluencyDiaryInteractor {
     private let analyzerWorker: any FluencyAnalyzerWorkerProtocol
     private let storageWorker: any DiaryStorageWorkerProtocol
     private let whisperWorker: WhisperTranscriptionWorker
+    private let hapticService: any HapticService
     private let logger = HSLogger.audio
 
     // MARK: - Session state
@@ -44,12 +44,14 @@ final class FluencyDiaryInteractor {
         audioWorker: BreathingAudioWorker = BreathingAudioWorker(),
         analyzerWorker: any FluencyAnalyzerWorkerProtocol = FluencyAnalyzerWorker(),
         storageWorker: any DiaryStorageWorkerProtocol,
-        whisperWorker: WhisperTranscriptionWorker = WhisperTranscriptionWorker()
+        whisperWorker: WhisperTranscriptionWorker = WhisperTranscriptionWorker(),
+        hapticService: any HapticService = LiveHapticService()
     ) {
         self.audioWorker = audioWorker
         self.analyzerWorker = analyzerWorker
         self.storageWorker = storageWorker
         self.whisperWorker = whisperWorker
+        self.hapticService = hapticService
     }
 
     // MARK: - Public API
@@ -74,7 +76,7 @@ final class FluencyDiaryInteractor {
         }
 
         display.isRecording = true
-        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        Task { await hapticService.play(pattern: .buttonTap) }
 
         startFileRecording()
 
@@ -99,7 +101,7 @@ final class FluencyDiaryInteractor {
         audioWorker.stop()
         stopFileRecording()
         display.isRecording = false
-        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        Task { await hapticService.play(pattern: .buttonTap) }
         analyzeAndSave()
         logger.info("FluencyDiary: recording stopped")
     }
@@ -189,7 +191,7 @@ final class FluencyDiaryInteractor {
                 self.display.isStubAnalysis = analysis.isStub
                 self.display.isAnalyzing = false
                 self.display.showComplete = true
-                UINotificationFeedbackGenerator().notificationOccurred(.success)
+                Task { await self.hapticService.play(pattern: .celebration) }
             }
         }
     }

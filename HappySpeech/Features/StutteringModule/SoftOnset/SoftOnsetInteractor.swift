@@ -2,7 +2,6 @@ import Accelerate
 import AVFoundation
 import Foundation
 import OSLog
-import UIKit
 
 // MARK: - SoftOnsetInteractor
 
@@ -34,6 +33,7 @@ final class SoftOnsetInteractor {
 
     private let audioWorker: BreathingAudioWorker
     private let analyzerWorker: any FluencyAnalyzerWorkerProtocol
+    private let hapticService: any HapticService
     private let logger = HSLogger.audio
 
     // MARK: - Session state
@@ -54,10 +54,12 @@ final class SoftOnsetInteractor {
 
     init(
         audioWorker: BreathingAudioWorker = BreathingAudioWorker(),
-        analyzerWorker: any FluencyAnalyzerWorkerProtocol = FluencyAnalyzerWorker()
+        analyzerWorker: any FluencyAnalyzerWorkerProtocol = FluencyAnalyzerWorker(),
+        hapticService: any HapticService = LiveHapticService()
     ) {
         self.audioWorker = audioWorker
         self.analyzerWorker = analyzerWorker
+        self.hapticService = hapticService
     }
 
     // MARK: - Public API
@@ -80,7 +82,7 @@ final class SoftOnsetInteractor {
         display.lanternState = .off
         display.waveformColorMode = .neutral
         display.feedbackText = nil
-        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        Task { await hapticService.play(pattern: .buttonTap) }
 
         let granted = await audioWorker.requestPermission()
         guard granted else {
@@ -151,21 +153,21 @@ final class SoftOnsetInteractor {
             display.feedbackText = String(localized: "stuttering.soft_start.feedback.soft")
             display.feedbackStyle = .success
             display.wordsSucceeded += 1
-            UINotificationFeedbackGenerator().notificationOccurred(.success)
+            Task { await hapticService.play(pattern: .perfectRound) }
 
         case .borderline:
             display.lanternState = .flicker
             display.waveformColorMode = .borderline
             display.feedbackText = String(localized: "stuttering.soft_start.feedback.borderline")
             display.feedbackStyle = .warning
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            Task { await hapticService.play(pattern: .buttonTap) }
 
         case .hard:
             display.lanternState = .flicker
             display.waveformColorMode = .hard
             display.feedbackText = String(localized: "stuttering.soft_start.feedback.hard")
             display.feedbackStyle = .error
-            UINotificationFeedbackGenerator().notificationOccurred(.error)
+            Task { await hapticService.play(pattern: .errorBuzz) }
         }
 
         logger.info("SoftOnset analysis: attackMs=\(attackTimeMs, privacy: .public) class=\(String(describing: classification), privacy: .public)")
