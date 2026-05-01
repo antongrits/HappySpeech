@@ -7118,6 +7118,9 @@
 		C54099353A51E5F9B138F6F2 /* gr-case-15.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AF8F943C34E5447D5DC5389B /* gr-case-15.m4a */; };
 		C559EAEAED15233C637BD136 /* edu_k_babushke_k_komu_priekhal_ot_babushki.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 029A90C03EB639367E406519 /* edu_k_babushke_k_komu_priekhal_ot_babushki.m4a */; };
 		C55DA2963AF93328F3851F3D /* ch-ph-29.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F1560F4E5DCA3A1D30B8EA12 /* ch-ph-29.m4a */; };
+		AA001BB2CC334DE5FF667799 /* LyalyaRealityKitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA001BB2CC334DE5FF667788 /* LyalyaRealityKitView.swift */; };
+		AA001BB2CC334DE5FF6677BB /* LyalyaLipSyncCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA001BB2CC334DE5FF6677AA /* LyalyaLipSyncCoordinator.swift */; };
+		AA001BB2CC334DE5FF6677DD /* LyalyaRealityKitViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA001BB2CC334DE5FF6677CC /* LyalyaRealityKitViewTests.swift */; };
 		C570876D55720FB71F07662D /* MouthBubbleOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F55C1C22A740467EEA8475 /* MouthBubbleOverlay.swift */; };
 		C587A7A390B1F345E74C850B /* g-wm-12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B8501CF2D2A8DF95E3BC6A5B /* g-wm-12.m4a */; };
 		C58B021E86C55771DE2D5FCD /* lyalya_stuttering_15.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 81E970FD5F42E1EF0D916E1E /* lyalya_stuttering_15.m4a */; };
@@ -9446,6 +9449,9 @@
 		04E274AB4DB22D221361D05A /* kh-ph-13.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "kh-ph-13.m4a"; sourceTree = "<group>"; };
 		04F38DAA3128F41C92D26868 /* shch-iso-8.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "shch-iso-8.m4a"; sourceTree = "<group>"; };
 		04F3F3B3B4F0F069C273F11F /* lyalya_insight_weekly_5.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = lyalya_insight_weekly_5.m4a; sourceTree = "<group>"; };
+		AA001BB2CC334DE5FF667788 /* LyalyaRealityKitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyalyaRealityKitView.swift; sourceTree = "<group>"; };
+		AA001BB2CC334DE5FF6677AA /* LyalyaLipSyncCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyalyaLipSyncCoordinator.swift; sourceTree = "<group>"; };
+		AA001BB2CC334DE5FF6677CC /* LyalyaRealityKitViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyalyaRealityKitViewTests.swift; sourceTree = "<group>"; };
 		04F55C1C22A740467EEA8475 /* MouthBubbleOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouthBubbleOverlay.swift; sourceTree = "<group>"; };
 		04F5AD341533CD96D6519BF6 /* gr-adj-4.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "gr-adj-4.m4a"; sourceTree = "<group>"; };
 		04F864F544AA67D1DAD21004 /* y-syl-17.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "y-syl-17.m4a"; sourceTree = "<group>"; };
@@ -18611,6 +18617,7 @@
 			isa = PBXGroup;
 			children = (
 				63F15BAC7C522A453678BDFB /* ParentalGateTests.swift */,
+				AA001BB2CC334DE5FF6677CC /* LyalyaRealityKitViewTests.swift */,
 			);
 			path = DesignSystem;
 			sourceTree = "<group>";
@@ -24741,6 +24748,8 @@
 				EF4AD77FF12CA94F5A0A0BB9 /* HSSpeechBubble.swift */,
 				FA4A71D407C04D88D150E837 /* HSSticker.swift */,
 				3E6F01EB480BB165DBCD668A /* LyalyaMascotView.swift */,
+				AA001BB2CC334DE5FF667788 /* LyalyaRealityKitView.swift */,
+				AA001BB2CC334DE5FF6677AA /* LyalyaLipSyncCoordinator.swift */,
 				04F55C1C22A740467EEA8475 /* MouthBubbleOverlay.swift */,
 				3B13ECE521BFD8F575785A14 /* ParentalGate.swift */,
 			);
@@ -38261,6 +38270,7 @@
 				6D824D419F4CD45FAF2399DE /* ParentFlowSnapshotTests.swift in Sources */,
 				3113524455FFD6138841BD1B /* ParentHomeInteractorTests.swift in Sources */,
 				D7B4EAAE42DE191CF6E6CA22 /* ParentalGateTests.swift in Sources */,
+				AA001BB2CC334DE5FF6677DD /* LyalyaRealityKitViewTests.swift in Sources */,
 				3EA3385EA1810424AD12CE53 /* PermissionsInteractorTests.swift in Sources */,
 				861102947CFF813C913A0016 /* PoseSimilarityWorkerTests.swift in Sources */,
 				59C5E82DBEA874490F58974C /* ProgramEditorInteractorTests.swift in Sources */,
@@ -38622,6 +38632,8 @@
 				2F725C4098A8DB8315DEEACB /* MockServices.swift in Sources */,
 				7CB5674C75BBC72285EEDE57 /* MockWhisperKitModelManager.swift in Sources */,
 				EF309042FEABA0BA7FDD21F1 /* MotionTokens.swift in Sources */,
+				AA001BB2CC334DE5FF667799 /* LyalyaRealityKitView.swift in Sources */,
+				AA001BB2CC334DE5FF6677BB /* LyalyaLipSyncCoordinator.swift in Sources */,
 				C570876D55720FB71F07662D /* MouthBubbleOverlay.swift in Sources */,
 				5E339FCE8D134E3372EA654C /* NarrativeQuestDisplayLogic.swift in Sources */,
 				5E9E2A77D10282B4591D9503 /* NarrativeQuestInteractor.swift in Sources */,
