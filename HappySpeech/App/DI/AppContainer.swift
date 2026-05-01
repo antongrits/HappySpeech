@@ -91,6 +91,10 @@ public final class AppContainer {
     // Block L: MascotEyeContactState — singleton eye contact state (Block L)
     public let mascotEyeContactState: MascotEyeContactState = MascotEyeContactState()
 
+    // Block B v13: LyalyaLipSyncCoordinator — 3D маскот lip-sync через AVAudioPlayer amplitude.
+    // Singleton: один координатор на приложение, передаётся во все LyalyaRealityKitView.
+    public let lyalyaLipSyncCoordinator: LyalyaLipSyncCoordinator = LyalyaLipSyncCoordinator()
+
     // Block M (v12): VoiceCloneService — placeholder, полная реализация post-v1.0.
     // Не требует factory — VoiceCloneServicePlaceholder легковесный struct без зависимостей.
     private var _voiceCloneService: (any VoiceCloneService)?
