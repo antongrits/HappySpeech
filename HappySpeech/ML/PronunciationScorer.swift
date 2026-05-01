@@ -1,8 +1,8 @@
 import Accelerate
 @preconcurrency import AVFoundation
 @preconcurrency import CoreML
-import OSLog
 import os.signpost
+import OSLog
 
 // MARK: - Domain Types
 

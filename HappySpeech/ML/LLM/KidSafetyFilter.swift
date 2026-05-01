@@ -41,11 +41,9 @@ public actor KidSafetyFilter {
         }
 
         let lowered = text.lowercased()
-        for banned in Self.bannedWords {
-            if lowered.contains(banned) {
-                logger.warning("KidSafetyFilter banned word detected: \(banned, privacy: .private)")
-                return .unsafe(reason: "banned_word:\(banned)")
-            }
+        for banned in Self.bannedWords where lowered.contains(banned) {
+            logger.warning("KidSafetyFilter banned word detected: \(banned, privacy: .private)")
+            return .unsafe(reason: "banned_word:\(banned)")
         }
 
         let wordCount = text.split(separator: " ").count

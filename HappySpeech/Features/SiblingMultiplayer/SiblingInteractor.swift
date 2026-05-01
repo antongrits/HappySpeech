@@ -364,9 +364,13 @@ final class SiblingGameInteractor: SiblingGameBusinessLogic {
                 ]
                 self.mpcWorker.send(.gameResult(finalScores: scores))
                 let winner: String?
-                if self.ourTotalPoints > self.peerTotalPoints { winner = self.localDisplayName }
-                else if self.peerTotalPoints > self.ourTotalPoints { winner = self.peerDisplayName }
-                else { winner = nil }
+                if self.ourTotalPoints > self.peerTotalPoints {
+                    winner = self.localDisplayName
+                } else if self.peerTotalPoints > self.ourTotalPoints {
+                    winner = self.peerDisplayName
+                } else {
+                    winner = nil
+                }
                 self.presenter?.presentGameResult(.init(
                     winnerName: winner,
                     ourFinalScore: self.ourTotalPoints,
@@ -422,9 +426,13 @@ extension SiblingGameInteractor: SiblingMPCWorkerDelegate {
             let ourScore = scores[localDisplayName] ?? 0
             let peerScore = scores[peerDisplayName] ?? 0
             let winner: String?
-            if ourScore > peerScore { winner = localDisplayName }
-            else if peerScore > ourScore { winner = peerDisplayName }
-            else { winner = nil }
+            if ourScore > peerScore {
+                winner = localDisplayName
+            } else if peerScore > ourScore {
+                winner = peerDisplayName
+            } else {
+                winner = nil
+            }
             presenter?.presentGameResult(.init(
                 winnerName: winner,
                 ourFinalScore: ourScore,

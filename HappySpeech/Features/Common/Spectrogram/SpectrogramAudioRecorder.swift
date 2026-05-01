@@ -1,5 +1,5 @@
-import AVFoundation
 import Accelerate
+import AVFoundation
 import Combine
 import OSLog
 
@@ -208,7 +208,9 @@ public final class SpectrogramAudioRecorder: @unchecked Sendable {
         windowed.withUnsafeMutableBufferPointer { ptr in
             real.withUnsafeMutableBufferPointer { realPtr in
                 imag.withUnsafeMutableBufferPointer { imagPtr in
+                    // swiftlint:disable:next force_unwrapping
                     var split = DSPSplitComplex(realp: realPtr.baseAddress!, imagp: imagPtr.baseAddress!)
+                    // swiftlint:disable:next force_unwrapping
                     ptr.baseAddress!.withMemoryRebound(to: DSPComplex.self, capacity: frameSize / 2) { complexPtr in
                         vDSP_ctoz(complexPtr, 2, &split, 1, vDSP_Length(frameSize / 2))
                     }
@@ -220,6 +222,7 @@ public final class SpectrogramAudioRecorder: @unchecked Sendable {
         var magnitudes = [Float](repeating: 0, count: frameSize / 2)
         real.withUnsafeMutableBufferPointer { realPtr in
             imag.withUnsafeMutableBufferPointer { imagPtr in
+                // swiftlint:disable:next force_unwrapping
                 var split = DSPSplitComplex(realp: realPtr.baseAddress!, imagp: imagPtr.baseAddress!)
                 vDSP_zvmags(&split, 1, &magnitudes, 1, vDSP_Length(frameSize / 2))
             }

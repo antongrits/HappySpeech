@@ -397,6 +397,7 @@ struct AppCoordinatorView: View {
         }
     }
 
+    // swiftlint:disable:next cyclomatic_complexity
     private func launchSplash() {
         // Debug screenshot-tour shortcut: launch with -HSStartRoute <route> to skip splash.
         let args = ProcessInfo.processInfo.arguments

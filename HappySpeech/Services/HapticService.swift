@@ -27,9 +27,9 @@ public enum HapticPattern: String, CaseIterable, Sendable {
 
 /// Три уровня интенсивности из Settings.
 public enum HapticIntensityLevel: String, CaseIterable, Sendable {
-    case off    = "off"
-    case subtle = "subtle"
-    case full   = "full"
+    case off
+    case subtle
+    case full
 
     public var scale: Float {
         switch self {

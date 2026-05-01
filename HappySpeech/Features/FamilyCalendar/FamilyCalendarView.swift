@@ -688,7 +688,7 @@ private struct HeatmapChartView: View {
         }
         .frame(height: 120)
         .chartOverlay { proxy in
-            GeometryReader { geo in
+            GeometryReader { _ in
                 Rectangle()
                     .fill(Color.clear)
                     .contentShape(Rectangle())

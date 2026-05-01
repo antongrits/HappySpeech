@@ -418,7 +418,7 @@ private struct DragCloudsGameView: View {
     }
 
     private func spawnClouds(in size: CGSize) {
-        clouds = (0..<7).map { i in
+        clouds = (0..<7).map { _ in
             let x = CGFloat.random(in: 60...(size.width - 60))
             let y = CGFloat.random(in: 80...(size.height * 0.6))
             return Cloud(position: CGPoint(x: x, y: y))

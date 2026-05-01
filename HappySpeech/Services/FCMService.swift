@@ -99,7 +99,7 @@ public final class LiveFCMService: NSObject, FCMService, MessagingDelegate, @unc
     public func unregisterToken(userId: String) async throws {
         try await db.collection("users").document(userId).updateData([
             "fcmToken": FieldValue.delete(),
-            "fcmTokenUpdatedAt": FieldValue.delete(),
+            "fcmTokenUpdatedAt": FieldValue.delete()
         ])
         logger.info("FCM token removed from Firestore")
     }

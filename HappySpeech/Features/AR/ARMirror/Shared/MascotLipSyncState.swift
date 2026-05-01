@@ -13,7 +13,7 @@ import SwiftUI
 /// что все свойства — value-types и изменяются только на MainActor.
 @MainActor
 @Observable
-public final class MascotLipSyncState: Sendable {
+public final class MascotLipSyncState {
 
     // MARK: - Mouth
 

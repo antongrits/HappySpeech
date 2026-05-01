@@ -358,10 +358,10 @@ private struct SkinCard: View {
         }
     }
 
-    private var cardWidth: CGFloat  { isCompactWidth ? 100 : 120 }
+    private var cardWidth: CGFloat { isCompactWidth ? 100 : 120 }
     private var cardHeight: CGFloat { isCompactWidth ? 136 : 160 }
-    private var skinWidth: CGFloat  { isCompactWidth ? 66  : 80  }
-    private var skinHeight: CGFloat { isCompactWidth ? 84  : 100 }
+    private var skinWidth: CGFloat { isCompactWidth ? 66 : 80 }
+    private var skinHeight: CGFloat { isCompactWidth ? 84 : 100 }
 }
 
 // MARK: - ColorPaletteCircle
@@ -376,7 +376,7 @@ private struct ColorPaletteCircle: View {
 
     private var isCompactWidth: Bool { horizontalSizeClass == .compact }
     private var touchTarget: CGFloat { isCompactWidth ? 48 : 56 }
-    private var circleSize: CGFloat  { isCompactWidth ? 40 : 44 }
+    private var circleSize: CGFloat { isCompactWidth ? 40 : 44 }
 
     var body: some View {
         ZStack {

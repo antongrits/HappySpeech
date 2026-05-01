@@ -154,6 +154,7 @@ final class FamilyCalendarPresenter {
         }
     }
 
+    // swiftlint:disable:next function_parameter_count
     private func buildViewModel(
         children: [ChildProfileDTO],
         sessions: [SessionDTO],

@@ -42,7 +42,7 @@ public final class LivePerformanceMonitorService: PerformanceMonitorService, @un
     private let userDefaultsKey = "happyspeech.performance.enabled"
 
     public var isEnabled: Bool {
-        get { UserDefaults.standard.bool(forKey: userDefaultsKey) }
+        UserDefaults.standard.bool(forKey: userDefaultsKey)
     }
 
     public init() {

@@ -50,14 +50,14 @@ final class WhisperTranscriptionWorker: @unchecked Sendable {
     // MARK: - Private
 
     private func runTranscription(audioURL: URL) async throws -> WhisperTranscript? {
-        guard whisperKit != nil else { return nil }
+        guard let kit = whisperKit else { return nil }
 
         let options = DecodingOptions(
             task: .transcribe,
             language: "ru",
             temperatureFallbackCount: 2
         )
-        let results = try await whisperKit!.transcribe(audioPath: audioURL.path, decodeOptions: options)
+        let results = try await kit.transcribe(audioPath: audioURL.path, decodeOptions: options)
 
         guard !results.isEmpty else {
             logger.info("WhisperTranscriptionWorker: пустой результат транскрипции")
