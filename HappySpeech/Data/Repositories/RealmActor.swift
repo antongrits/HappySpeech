@@ -51,9 +51,11 @@ public actor RealmActor {
 
     // MARK: - Open
 
-    public func open(configuration: Realm.Configuration? = nil) throws {
+    /// Открывает Realm через `Realm(actor: self)` — actor-safe async инициализация.
+    /// Гарантирует, что Realm привязан к executor этого actor, исключая thread mismatch.
+    public func open(configuration: Realm.Configuration? = nil) async throws {
         let config = configuration ?? defaultConfiguration
-        let opened = try Realm(configuration: config, queue: nil)
+        let opened = try await Realm(configuration: config, actor: self)
         self.realm = opened
         HSLogger.realm.info("Realm opened at: \(opened.configuration.fileURL?.path ?? "memory")")
     }
