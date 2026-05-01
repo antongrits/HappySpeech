@@ -1329,3 +1329,57 @@ lyalya3d_v2.usdz создан через usdzip --arkitAsset (15.2 KB, usdchecke
 
 Block B Step 3 compromise: material overrides + transform animations вместо mesh deformation.
 Post-v1.0: установить Blender, sculpt shapes, re-export — LyalyaRealityKitView API не меняется.
+
+---
+
+## ADR-V13-PHONEME-CLASSIFIER-PARTIAL
+
+**Дата:** 2026-05-01
+**Кто:** ml-engineer (Block C, Plan v13 Iteration 3)
+**Статус:** PARTIAL — val accuracy 83.94% (target >=85%)
+
+### Модель
+
+HappySpeech/Resources/Models/RussianPhonemeClassifier.mlpackage
+- Architecture: Conv1d(39->64) + Conv1d(64->128) + BiLSTM(2 layers, 128->256) + Linear(256->49)
+- Parameters: 704,689
+- Format: mlprogram, iOS 17+, ComputeUnit.ALL
+- Size: 1.35 MB
+
+### Датасет
+
+- Source 1: 264 Lyalya/lessons (lyalya-phrase-mapping.json + G2P)
+- Source 2: 2772 Content seed pack items (word -> audio_file + G2P)
+- Total base: 3036 samples @ 1.5s = 1.265h primary
+- Augmentation x3 (pitch +/-, speed+noise): +3.035h
+- Total effective: 4.300h
+
+### Training результаты
+
+- Device: MPS (Apple Silicon)
+- Epochs: 50 (full, model still improving at last epoch)
+- Best val acc: 83.94% (epoch 50)
+- Train acc: 95.95%
+- Gap to target: 1.06%
+
+### Root cause
+
+Uniform forced alignment вносит label noise: реальная речь не имеет равномерного распределения фонем по времени. С 3000 словарных образцов модель обучается хорошо, но не достигает 85% из-за неточной разметки.
+
+### Fallback для Block D (ios-developer)
+
+PhonemeAnalysisService использует модель с порогом уверенности:
+- argmax logit > 2.0 -> принимается как предсказание фонемы
+- ниже порога -> G2P dictionary fallback для текущего слова
+- 83.94% достаточно для образовательной обратной связи (не клинической диагностики)
+
+### Путь улучшения (post-v1.0)
+
+1. Montreal Forced Aligner для точной frame-level разметки (+5-10% ожидается)
+2. Добавить Common Voice RU (D-001) для расширения датасета
+3. Увеличить epochs (модель ещё улучшалась на epoch 50)
+
+### CoreML
+
+Конвертация: SUCCESS
+Верификация: PASSED — output shape (1, 150, 49), float32

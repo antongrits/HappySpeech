@@ -342,3 +342,32 @@
 | WhisperKit tiny | WER on child test set | < 25% | TBD | iPhone 15 Pro | TBD |
 | Qwen2.5-1.5B | JSON validity rate | 100% | TBD | iPhone 15 Pro | TBD |
 | Qwen2.5-1.5B | Latency (parent_summary) | < 3s | TBD | iPhone 15 Pro | TBD |
+
+
+---
+
+## RussianPhonemeClassifier v13
+
+- **Задача:** Frame-level phoneme classification — 49 Russian IPA phonemes from MFCC frames
+- **Путь:** HappySpeech/Resources/Models/RussianPhonemeClassifier.mlpackage
+- **Архитектура:** Conv1d(39->64) + Conv1d(64->128) + BiLSTM(2 layers, 128->256) + Linear(256->49)
+- **Параметров:** 704,689
+- **Вход:** mfcc [1, 39, 150] — 39-dim MFCC, 150 frames, 1.5 sec @ 16kHz mono
+- **Выход:** phoneme_logits [1, 150, 49] — 49 phoneme logits per frame (Russian IPA inventory)
+- **Формат:** .mlpackage (Core ML 7 mlprogram, iOS 17+, ComputeUnit.ALL)
+- **Размер:** 1.35 MB
+- **Датасет:**
+  - Primary: 264 Lyalya/lessons + 2772 Content seed pack items = 3036 base samples (1.265h)
+  - Augmentation x3 (pitch +/-, speed+noise): +3.035h
+  - Total effective: 4.300h
+  - G2P: russian_phonemes.json (7712 entries, 49 IPA phonemes)
+  - Forced alignment: uniform per word
+- **Training:** MPS (Apple Silicon), 50 epochs, Adam lr=1e-3
+- **Val accuracy:** 83.94% (target >=85%) | Train acc: 95.95%
+- **Val loss:** 0.7644 | Train loss: 0.1120
+- **CoreML verification:** PASSED — output shape (1, 150, 49), float32
+- **Дата:** 2026-05-01
+- **Статус:** PARTIAL (target 85%, delta 1.06%)
+- **ADR:** ADR-V13-PHONEME-CLASSIFIER-PARTIAL (decisions.md)
+- **Fallback:** argmax logit >2.0 threshold + G2P dictionary lookup (Block D PhonemeAnalysisService)
+- **Тренировочный скрипт:** _workshop/ml/train_phoneme_classifier_v13.py
