@@ -28,7 +28,7 @@ struct SettingsView: View {
 
     // MARK: - Local UI state
 
-    @State private var isHealthKitEnabled = UserDefaults.standard.bool(forKey: "happyspeech.healthkit.enabled")
+    // HealthKit удалён (ADR-V13-HEALTHKIT-REMOVED): нет paid Apple Developer аккаунта.
     @State private var showClearCacheConfirm = false
     @State private var showExportConfirm = false
     @State private var showProfileSheet = false
@@ -60,7 +60,6 @@ struct SettingsView: View {
                     hapticsSection
                     contentSection
                     modelPacksSection
-                    healthKitSection
                     dataSection
                     specialistSection
                     aboutSection
@@ -568,53 +567,6 @@ struct SettingsView: View {
         guard id.hasPrefix(prefix) else { return nil }
         let raw = String(id.dropFirst(prefix.count))
         return LLMModelPack(rawValue: raw)
-    }
-
-    // MARK: - Section 4.6: HealthKit (parent opt-in, COPPA-safe)
-
-    private var healthKitSection: some View {
-        Section {
-            Toggle(isOn: $isHealthKitEnabled) {
-                Label {
-                    Text(String(localized: "settings.healthkit.toggle"))
-                        .font(TypographyTokens.body(15))
-                } icon: {
-                    Image(systemName: "heart.fill")
-                        .foregroundStyle(.red)
-                }
-            }
-            .tint(ColorTokens.Brand.primary)
-            .frame(minHeight: 44)
-            .accessibilityLabel(String(localized: "settings.healthkit.toggle"))
-            .accessibilityValue(isHealthKitEnabled
-                                ? String(localized: "settings.a11y.on")
-                                : String(localized: "settings.a11y.off"))
-            .onChange(of: isHealthKitEnabled) { _, newValue in
-                if newValue {
-                    Task {
-                        do {
-                            try await container.healthKitService.requestAuthorization()
-                            UserDefaults.standard.set(true, forKey: "happyspeech.healthkit.enabled")
-                        } catch {
-                            await MainActor.run {
-                                isHealthKitEnabled = false
-                            }
-                        }
-                    }
-                } else {
-                    UserDefaults.standard.set(false, forKey: "happyspeech.healthkit.enabled")
-                }
-            }
-        } header: {
-            Text(String(localized: "settings.section.health"))
-                .font(TypographyTokens.caption(12).weight(.semibold))
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-                .textCase(.uppercase)
-        } footer: {
-            Text(String(localized: "settings.healthkit.explanation"))
-                .font(TypographyTokens.caption(12))
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-        }
     }
 
     // MARK: - Section 5: Data

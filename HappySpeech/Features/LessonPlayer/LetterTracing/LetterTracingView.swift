@@ -342,7 +342,6 @@ struct LetterTracingView: View {
     // MARK: - PKToolPicker
 
     private func setupToolPicker() {
-        guard UIDevice.current.userInterfaceIdiom == .pad else { return }
         let scene = UIApplication.shared.connectedScenes
             .compactMap { $0 as? UIWindowScene }
             .first
