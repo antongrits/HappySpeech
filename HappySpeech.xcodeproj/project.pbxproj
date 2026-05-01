@@ -9233,6 +9233,12 @@
 		FFEF75549075E74689C6A889 /* br-018.m4a in Resources */ = {isa = PBXBuildFile; fileRef = CFD6FCD5E94C3F13D619508C /* br-018.m4a */; };
 		FFF13580E10DF93EFAEE75CA /* lex-pr-9.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 017397A5903D0634EA8D7823 /* lex-pr-9.m4a */; };
 		FFF82BB3100FAAEFA13E69AE /* phon-fs-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 19B9E3B5CD051508014A6747 /* phon-fs-0.m4a */; };
+		C624BDFC4A064586BD6AD0A7 /* SpectrogramModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6B801E9E164673A9D35D95 /* SpectrogramModels.swift */; };
+		8F5793101B1749CA8F698C1B /* SpectrogramAudioRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777C96BAA68A46E6B2140A44 /* SpectrogramAudioRecorder.swift */; };
+		D34C0469E9B049DBBDDD1451 /* SpectrogramCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA29FA67E4A4A52B1F4C57F /* SpectrogramCanvasView.swift */; };
+		12C3BF34AB9E470DA858E110 /* StaticSpectrogramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838166E019904DC28CCA931C /* StaticSpectrogramView.swift */; };
+		7758A9038D8B469685601247 /* SpectrogramVisualizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758736F80A1545A8A1106443 /* SpectrogramVisualizerView.swift */; };
+		2CD443D393554AE4B5D7484F /* SpectrogramTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11235B07AAD9411EA6FDFC9C /* SpectrogramTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -18494,6 +18500,12 @@
 		FFFC2ADCFD00AE0D371C3E34 /* zh-wf-1.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "zh-wf-1.m4a"; sourceTree = "<group>"; };
 		FFFDF55D80679E483C7C6BAB /* r-prep-29.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "r-prep-29.m4a"; sourceTree = "<group>"; };
 		FFFFC85AC46291BB5FD4F18F /* k-prep-14.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "k-prep-14.m4a"; sourceTree = "<group>"; };
+		EA6B801E9E164673A9D35D95 /* SpectrogramModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectrogramModels.swift; sourceTree = "<group>"; };
+		777C96BAA68A46E6B2140A44 /* SpectrogramAudioRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectrogramAudioRecorder.swift; sourceTree = "<group>"; };
+		9AA29FA67E4A4A52B1F4C57F /* SpectrogramCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectrogramCanvasView.swift; sourceTree = "<group>"; };
+		838166E019904DC28CCA931C /* StaticSpectrogramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticSpectrogramView.swift; sourceTree = "<group>"; };
+		758736F80A1545A8A1106443 /* SpectrogramVisualizerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectrogramVisualizerView.swift; sourceTree = "<group>"; };
+		11235B07AAD9411EA6FDFC9C /* SpectrogramTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectrogramTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -24714,12 +24726,25 @@
 			children = (
 				F770771F44C6BAB862A4348B /* Stories */,
 				B2579B99F043C2138D3A491A /* Workers */,
+				5DFFA73368D24A3EAD71AB77 /* Spectrogram */,
 				C54EAB75688958DD2BB8CDD0 /* CelebrationOverlayView.swift */,
 				2BE8EFD0DBFF96ABFAA73285 /* ConfettiEmitterView.swift */,
 				08E09C170B09C99ABE09CD18 /* LyalyaSceneView.swift */,
 				A72B3B7435E11B4006B2A5E1 /* StoryPlayerView.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		5DFFA73368D24A3EAD71AB77 /* Spectrogram */ = {
+			isa = PBXGroup;
+			children = (
+				EA6B801E9E164673A9D35D95 /* SpectrogramModels.swift */,
+				777C96BAA68A46E6B2140A44 /* SpectrogramAudioRecorder.swift */,
+				9AA29FA67E4A4A52B1F4C57F /* SpectrogramCanvasView.swift */,
+				838166E019904DC28CCA931C /* StaticSpectrogramView.swift */,
+				758736F80A1545A8A1106443 /* SpectrogramVisualizerView.swift */,
+			);
+			path = Spectrogram;
 			sourceTree = "<group>";
 		};
 		98130AF29A119EE530BB4F9D /* Performance */ = {
@@ -26670,6 +26695,7 @@
 			isa = PBXGroup;
 			children = (
 				C3587A8BF5F4A21D0487F4C6 /* Extensions */,
+				A4E2C8D7F1234567890ABCDE /* Common */,
 				5667E2B2C7F50F3653A23C41 /* BreathingInteractorTests.swift */,
 				8716B6D61BE26A5C971005EB /* GuidedTourCoordinatorTests.swift */,
 				8B6BCF7E069DFC79F8CF41DE /* ProgramEditorInteractorTests.swift */,
@@ -26680,6 +26706,14 @@
 				FDF4ECAC5F9352881B704437 /* SettingsPresenterTests.swift */,
 			);
 			path = Features;
+			sourceTree = "<group>";
+		};
+		A4E2C8D7F1234567890ABCDE /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				11235B07AAD9411EA6FDFC9C /* SpectrogramTests.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		B86BE800DF238528DA16E6CF /* Integration */ = {
@@ -38284,6 +38318,7 @@
 				838D952BEE85D459C9D22306 /* BingoInteractorTests.swift in Sources */,
 				10BB7EB8C02A0FE7EA852436 /* BiometricGateServiceTests.swift in Sources */,
 				113313232CBBD4F99B929666 /* BreathingInteractorTests.swift in Sources */,
+				2CD443D393554AE4B5D7484F /* SpectrogramTests.swift in Sources */,
 				53593C793A82F0D8945834E9 /* ChildHomeInteractorTests.swift in Sources */,
 				54B03D688C02BAD9442277B6 /* ColdStartSignpostTests.swift in Sources */,
 				29F23788B7490EF452A5121A /* ContentEngineTests.swift in Sources */,
@@ -38491,6 +38526,11 @@
 				2138188911810F874CA19404 /* CanvasViewRepresentable.swift in Sources */,
 				576A723F9FE4C23601F13190 /* CardModifier.swift in Sources */,
 				65325CA7264CF49DACE55961 /* CelebrationOverlayView.swift in Sources */,
+				C624BDFC4A064586BD6AD0A7 /* SpectrogramModels.swift in Sources */,
+				8F5793101B1749CA8F698C1B /* SpectrogramAudioRecorder.swift in Sources */,
+				D34C0469E9B049DBBDDD1451 /* SpectrogramCanvasView.swift in Sources */,
+				12C3BF34AB9E470DA858E110 /* StaticSpectrogramView.swift in Sources */,
+				7758A9038D8B469685601247 /* SpectrogramVisualizerView.swift in Sources */,
 				AC276543B1346357125FBB31 /* ChildHomeDisplayLogic.swift in Sources */,
 				02DF6972C9C694DEA20EDE28 /* ChildHomeInteractor.swift in Sources */,
 				198C95BFE48F515AA1CC617B /* ChildHomeModels.swift in Sources */,
