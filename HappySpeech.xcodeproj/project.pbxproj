@@ -1067,6 +1067,12 @@
 		1D91715D0717641236E5B215 /* kh-wf-1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B7896B6768F4A9B2F4F09CEB /* kh-wf-1.m4a */; };
 		1D98D6B332F040148A711449 /* lyalya_transition_next_7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 2AC26D58D19CD3B2AE19CF53 /* lyalya_transition_next_7.m4a */; };
 		1D9D21047B2A99BF9686A5E9 /* PronunciationScorer_whistling.mlpackage in Resources */ = {isa = PBXBuildFile; fileRef = F53575BE3EC2ED96ABC149EB /* PronunciationScorer_whistling.mlpackage */; };
+		50D0436EF01E47CCB712856D /* Wav2Vec2Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = C350554FF6DD4560839F57C7 /* Wav2Vec2Models.swift */; };
+		BCA5C0078D504B62BA36E898 /* Wav2Vec2ServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE68EBF0740447618613B10C /* Wav2Vec2ServiceProtocol.swift */; };
+		8E83D25E110E42EAAD1A04AE /* CTCDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B538969929343CD9CE18EB8 /* CTCDecoder.swift */; };
+		74B982C25135469DBC97081F /* Wav2Vec2ServiceLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AD0625051E4E8391CE8EBE /* Wav2Vec2ServiceLive.swift */; };
+		520DBAFFA6CC48D69F1E8BF7 /* Wav2Vec2ServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC08A9BA73AE47DF8BC0C82A /* Wav2Vec2ServiceTests.swift */; };
+		1E9C42C4E2094D10AF15FC01 /* Wav2Vec2RuChild.mlpackage in Resources */ = {isa = PBXBuildFile; fileRef = CBEF1696732E485FB8F08DF1 /* Wav2Vec2RuChild.mlpackage */; };
 		1DA1593238343C82DC7978B7 /* ag-153.m4a in Resources */ = {isa = PBXBuildFile; fileRef = D3FDF39B8F48BABCA94FF6DA /* ag-153.m4a */; };
 		1DC8D95EC5066BA7918743F1 /* narr-fm-10.m4a in Resources */ = {isa = PBXBuildFile; fileRef = AF675B0E85D52408D79ACA8A /* narr-fm-10.m4a */; };
 		1DCCCA6B0E20B1EC475AD971 /* lex-tp-23.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 22B62BF87C6CAA5F028FCB4A /* lex-tp-23.m4a */; };
@@ -10213,6 +10219,12 @@
 		193883D3579F2D65E6600DB5 /* zh-wf-6.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "zh-wf-6.m4a"; sourceTree = "<group>"; };
 		1938B5E542A3BE70E5225871 /* lyalya_onboarding_step1_greet.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = lyalya_onboarding_step1_greet.m4a; sourceTree = "<group>"; };
 		193C07CF1E57AA1F55867205 /* SileroVAD.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = SileroVAD.mlpackage; sourceTree = "<group>"; };
+		C350554FF6DD4560839F57C7 /* Wav2Vec2Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wav2Vec2Models.swift; sourceTree = "<group>"; };
+		DE68EBF0740447618613B10C /* Wav2Vec2ServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wav2Vec2ServiceProtocol.swift; sourceTree = "<group>"; };
+		6B538969929343CD9CE18EB8 /* CTCDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCDecoder.swift; sourceTree = "<group>"; };
+		C4AD0625051E4E8391CE8EBE /* Wav2Vec2ServiceLive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wav2Vec2ServiceLive.swift; sourceTree = "<group>"; };
+		CC08A9BA73AE47DF8BC0C82A /* Wav2Vec2ServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wav2Vec2ServiceTests.swift; sourceTree = "<group>"; };
+		CBEF1696732E485FB8F08DF1 /* Wav2Vec2RuChild.mlpackage */ = {isa = PBXFileReference; lastKnownFileType = folder.mlpackage; path = Wav2Vec2RuChild.mlpackage; sourceTree = "<group>"; };
 		193CE94585A8311129B176DC /* lyalya_newyear_036.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = lyalya_newyear_036.m4a; sourceTree = "<group>"; };
 		19439ECD0FE18DDDAF644252 /* phon-sc-17.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "phon-sc-17.m4a"; sourceTree = "<group>"; };
 		1948C26BF121D5C4F2406321 /* ag-038.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ag-038.m4a"; sourceTree = "<group>"; };
@@ -19653,11 +19665,23 @@
 				CC78D3ED35DF0AFDBEA0F922 /* VAD */,
 				9E23BB2242B64C7B1AF86ADD /* Vision */,
 				9C737251BAE535186E26A696 /* WhisperKit */,
+				A1B2C3D4E5F601234567890A /* Wav2Vec2 */,
 				993D165C8E6C72D7E883F201 /* PronunciationScorer.swift */,
 				09218AD56722A8C66B797856 /* SileroVAD.swift */,
 				335DF37AC10B2B426FC17130 /* TonguePostureClassifier.swift */,
 			);
 			path = ML;
+			sourceTree = "<group>";
+		};
+		A1B2C3D4E5F601234567890A /* Wav2Vec2 */ = {
+			isa = PBXGroup;
+			children = (
+				C350554FF6DD4560839F57C7 /* Wav2Vec2Models.swift */,
+				DE68EBF0740447618613B10C /* Wav2Vec2ServiceProtocol.swift */,
+				6B538969929343CD9CE18EB8 /* CTCDecoder.swift */,
+				C4AD0625051E4E8391CE8EBE /* Wav2Vec2ServiceLive.swift */,
+			);
+			path = Wav2Vec2;
 			sourceTree = "<group>";
 		};
 		9775D1E5E2A04767BADB0810 /* PhonemeAnalysis */ = {
@@ -23105,11 +23129,20 @@
 			children = (
 				DF5F5AFDC4E5ABA8BFCD7DC0 /* Vision */,
 				15690C0F5ACA4246AA3E3F81 /* PhonemeAnalysis */,
+				B2C3D4E5F601234567890AB1 /* Wav2Vec2 */,
 				11EE78C8C86628957573BA7B /* KidLLMNarrationServiceTests.swift */,
 				957D46D47731862A6566FD5E /* KidSafetyFilterTests.swift */,
 				358B8E3F3B88A182C2BBE20C /* MascotLipSyncStateTests.swift */,
 			);
 			path = ML;
+			sourceTree = "<group>";
+		};
+		B2C3D4E5F601234567890AB1 /* Wav2Vec2 */ = {
+			isa = PBXGroup;
+			children = (
+				CC08A9BA73AE47DF8BC0C82A /* Wav2Vec2ServiceTests.swift */,
+			);
+			path = Wav2Vec2;
 			sourceTree = "<group>";
 		};
 		15690C0F5ACA4246AA3E3F81 /* PhonemeAnalysis */ = {
@@ -24165,6 +24198,7 @@
 				193C07CF1E57AA1F55867205 /* SileroVAD.mlpackage */,
 				23A48A24E4B896FBA5DC8EA7 /* SoundClassifier.mlpackage */,
 				1A4554894DCB65EFCA42D865 /* TonguePostureClassifier.mlpackage */,
+				CBEF1696732E485FB8F08DF1 /* Wav2Vec2RuChild.mlpackage */,
 				52B213CDB0E0B01889D2DA71 /* VOICE_CLONE_README.md */,
 				86F21E11509E59B81854AD6C /* voice_clone_reference.wav */,
 			);
@@ -29746,6 +29780,7 @@
 				4F2C7A995EDE2E930B3694D2 /* SileroVAD.mlpackage in Resources */,
 				BC6E42D98BD25C2AC19A1760 /* SoundClassifier.mlpackage in Resources */,
 				E76DEE5873DC2AD0AD850603 /* TonguePostureClassifier.mlpackage in Resources */,
+				1E9C42C4E2094D10AF15FC01 /* Wav2Vec2RuChild.mlpackage in Resources */,
 				DDDDAB1ACDDC4C3D16B2E6BE /* VOICE_CLONE_README.md in Resources */,
 				9306415C6794FD7446CF198D /* achievementUnlock.ahap in Resources */,
 				3C2FF554B89F42D894824932 /* ag-001.m4a in Resources */,
@@ -38286,6 +38321,7 @@
 				40F59440A61B3CBCD27DE5E4 /* KidLLMNarrationServiceTests.swift in Sources */,
 				3EA16BE5B0ACAF1963741734 /* KidSafetyFilterTests.swift in Sources */,
 				BB238A487955429B9D8F9CD8 /* PhonemeAnalysisServiceTests.swift in Sources */,
+				520DBAFFA6CC48D69F1E8BF7 /* Wav2Vec2ServiceTests.swift in Sources */,
 				FC2608233C30F7C1894747BF /* LLMDecisionServiceTests.swift in Sources */,
 				1435EC157B2A5501D43AE088 /* LessonSessionAttributesTests.swift in Sources */,
 				6F0F59A1041EB9A64CD3E85A /* LessonVoiceWorkerTests.swift in Sources */,
@@ -38753,6 +38789,10 @@
 				8DD106D2462A498AB96E68BE /* G2PWorker.swift in Sources */,
 				6ED81AD49132403FAA809578 /* RussianPhonemeClassifierWrapper.swift in Sources */,
 				7DEB17D5487948A0B4635D8D /* PhonemeAnalysisServiceLive.swift in Sources */,
+				50D0436EF01E47CCB712856D /* Wav2Vec2Models.swift in Sources */,
+				BCA5C0078D504B62BA36E898 /* Wav2Vec2ServiceProtocol.swift in Sources */,
+				8E83D25E110E42EAAD1A04AE /* CTCDecoder.swift in Sources */,
+				74B982C25135469DBC97081F /* Wav2Vec2ServiceLive.swift in Sources */,
 				404FF437FCE428CF852F82E5 /* PuzzleRevealDisplayLogic.swift in Sources */,
 				997D4D156F8427AAD78FCF85 /* PuzzleRevealInteractor.swift in Sources */,
 				6F9B3AA0CF92F12BE524C0B7 /* PuzzleRevealModels.swift in Sources */,
