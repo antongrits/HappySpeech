@@ -1290,3 +1290,42 @@ HealthKit полностью удалён из проекта HappySpeech. Mindf
 - Нет `HealthKit.framework` linkage — сборка проходит без entitlement
 - Нет регрессии для детского контура (HealthKit использовался только родительским контуром)
 
+
+---
+
+## ADR-V13-LYALYA-3D-BLENDSHAPES-DEFERRED
+
+**Дата:** 2026-05-01
+**Кто:** animator (Block B Step 2, Plan v13 Iteration 2)
+**Статус:** DEFERRED — причины технические, не продуктовые
+
+### Контекст
+
+Block B Step 2: создать lyalya3d_v2.usdz с 13 blendshapes (8 emotion + 5 viseme) + 3 baked idle анимациями.
+
+### Discovery
+
+| Инструмент | Статус |
+|---|---|
+| Blender 4.x | Не установлен |
+| Reality Composer Pro | GUI только, нет headless CLI |
+| pxr Python bindings | Недоступен (Apple USD Tools 0.25.2 = CLI only) |
+| xcrun usdz_converter | Не найден |
+
+Доступны: usdcat, usdchecker, usdtree, usdzip.
+
+### Анализ lyalya3d.usdz
+
+15 статичных Mesh примитивов. Нет SkelRoot, Skeleton, BlendShape примов. Head mesh: 2401 точек.
+BlendShape требует point3f[] offsets — это художественная скульптурная работа, невозможная без DCC.
+
+### Решение
+
+lyalya3d_v2.usdz создан через usdzip --arkitAsset (15.2 KB, usdchecker: Success):
+- 16 Mesh примитивов (оригинальные 15 + новый Mouth для lip-sync)
+- customData с реестром 13 blendshape имён + iOS implementation hints
+- Новый MouthMaterial + Mouth mesh (lip-sync target для scale transform)
+- ArmLeft customData: waveRole = wave-animation-target
+
+Block B Step 3 compromise: material overrides + transform animations вместо mesh deformation.
+Post-v1.0: установить Blender, sculpt shapes, re-export — LyalyaRealityKitView API не меняется.
