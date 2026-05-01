@@ -85,7 +85,8 @@ public final class LiveContentPackDownloadService: ContentPackDownloadService, @
     private let lock = NSLock()
 
     public init() {
-        let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+            ?? FileManager.default.temporaryDirectory
         cacheRoot = docs.appendingPathComponent("ContentPacks", isDirectory: true)
         try? FileManager.default.createDirectory(at: cacheRoot, withIntermediateDirectories: true)
     }

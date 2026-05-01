@@ -28,15 +28,26 @@ public enum GrammarDifficulty: Int, CaseIterable, Sendable {
     case hard   = 3   // ≥ 80%              — 10 раундов, 4 варианта, подсказка после 2 ошибок
 
     public var totalRounds: Int {
-        switch self { case .easy: 5; case .medium: 7; case .hard: 10 }
+        switch self {
+        case .easy: return 5
+        case .medium: return 7
+        case .hard: return 10
+        }
     }
 
     public var choiceCount: Int {
-        switch self { case .easy: 2; case .medium: 3; case .hard: 4 }
+        switch self {
+        case .easy: return 2
+        case .medium: return 3
+        case .hard: return 4
+        }
     }
 
     public var hintAfterErrors: Int {
-        switch self { case .easy: 1; default: 2 }
+        switch self {
+        case .easy: return 1
+        default: return 2
+        }
     }
 
     public var localizedLabel: String {

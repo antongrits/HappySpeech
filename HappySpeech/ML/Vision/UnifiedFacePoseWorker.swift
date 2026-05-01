@@ -33,6 +33,7 @@ public struct UnifiedFacePose: Sendable {
 
 // MARK: - Viseme
 
+// swiftlint:disable identifier_name
 /// Шесть базовых визем — стандарт логопедии для visual feedback.
 public enum Viseme: String, Sendable, CaseIterable {
     case closed  // рот закрыт / нейтральная поза
@@ -42,6 +43,7 @@ public enum Viseme: String, Sendable, CaseIterable {
     case o       // поджатие губ — «о» (lipsPucker > 0.5)
     case u       // воронка — «у» (lipsFunnel > 0.5)
 }
+// swiftlint:enable identifier_name
 
 // MARK: - UnifiedFacePoseWorker
 

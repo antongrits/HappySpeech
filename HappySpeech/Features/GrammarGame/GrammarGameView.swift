@@ -2,9 +2,10 @@ import SwiftUI
 
 // MARK: - GrammarGameView
 
-/// Корневой SwiftUI-экран Grammar Games.
-/// Объединяет 4 режима через GrammarGameMode enum.
-/// Соответствует Clean Swift VIP: View знает только ViewModel, вызывает Interactor.
+// Корневой SwiftUI-экран Grammar Games.
+// Объединяет 4 режима через GrammarGameMode enum.
+// Соответствует Clean Swift VIP: View знает только ViewModel, вызывает Interactor.
+
 // MARK: - GrammarGameDisplayLogicHost
 // Adapter: GrammarGameDisplayLogic требует AnyObject, GrammarGameView — struct.
 // View хранит ссылку на DisplayHost который пробрасывает вызовы через замыкания.
@@ -411,7 +412,7 @@ struct GrammarGameView: View {
                                 characters: characters
                             )
                         }
-                        .onEnded { value in
+                        .onEnded { _ in
                             isDragging = false
                             dragOffset = .zero
                             if let charId = hoveredCharacterId {

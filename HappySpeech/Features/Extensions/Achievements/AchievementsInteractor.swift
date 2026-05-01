@@ -98,7 +98,6 @@ final class AchievementsInteractor: AchievementsBusinessLogic {
                 siblingProfiles: siblings
             )
             presenter?.presentAchievements(response)
-
         } catch {
             logger.error("loadAchievements failed: \(error.localizedDescription, privacy: .public)")
             let emptyResponse = AchievementsModels.Load.Response(
@@ -143,7 +142,6 @@ final class AchievementsInteractor: AchievementsBusinessLogic {
                 )
                 logger.info("Achievement unlocked: \(achievement.rawValue, privacy: .public) for child \(childId, privacy: .private)")
             }
-
         } catch {
             logger.error("handleAchievementEvent error: \(error.localizedDescription, privacy: .public)")
         }

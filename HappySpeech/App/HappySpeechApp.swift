@@ -2,9 +2,9 @@ import CoreSpotlight
 import FirebaseAppCheck
 import FirebaseCore
 import GoogleSignIn
+import os.signpost
 import OSLog
 import SwiftUI
-import os.signpost
 
 // MARK: - HappySpeechApp
 

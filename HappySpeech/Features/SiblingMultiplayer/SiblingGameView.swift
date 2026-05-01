@@ -380,7 +380,6 @@ struct SiblingGameView: View {
                 HSButton(String(localized: "sibling.game.rematch"), style: .primary) {
                     showEndGame = false
                     interactor?.requestRematch()
-
                 }
                 .frame(maxWidth: .infinity, minHeight: 64)
                 .padding(.horizontal, SpacingTokens.screenEdge)

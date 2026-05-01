@@ -62,13 +62,11 @@ struct FamilyInsightsWorker {
 
         // Правило 4: Сегодня уже играл
         let today = calendar.startOfDay(for: Date())
-        for agg in relevantAggregations {
-            if (agg.dayActivities[today] ?? 0) > 0 {
-                insights.append(InsightItem(
-                    iconName: "checkmark.seal.fill",
-                    text: String(format: String(localized: "family_calendar.insight.played_today"), agg.childName)
-                ))
-            }
+        for agg in relevantAggregations where (agg.dayActivities[today] ?? 0) > 0 {
+            insights.append(InsightItem(
+                iconName: "checkmark.seal.fill",
+                text: String(format: String(localized: "family_calendar.insight.played_today"), agg.childName)
+            ))
         }
 
         // Правило 5: Высокий суммарный прогресс

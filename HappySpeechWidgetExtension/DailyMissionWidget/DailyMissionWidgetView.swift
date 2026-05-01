@@ -1,11 +1,17 @@
-import WidgetKit
 import SwiftUI
+import WidgetKit
 
 // MARK: - DailyMissionWidgetView
 
 struct DailyMissionWidgetView: View {
     @Environment(\.widgetFamily) private var family
     let entry: DailyMissionEntry
+
+    private var widgetAccessibilityLabel: String {
+        let progress = Int(entry.progressPercent * 100)
+        return "Задание дня: \(entry.missionTitle), \(entry.missionDescription). "
+            + "Серия \(entry.streakDays) дней. Прогресс \(progress)%"
+    }
 
     var body: some View {
         switch family {
@@ -53,7 +59,7 @@ struct DailyMissionWidgetView: View {
         .widgetURL(URL(string: "happyspeech://daily-mission"))
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
-            String(localized: "Задание дня: \(entry.missionTitle), \(entry.missionDescription). Серия \(entry.streakDays) дней. Прогресс \(Int(entry.progressPercent * 100))%")
+            widgetAccessibilityLabel
         )
     }
 
@@ -95,7 +101,7 @@ struct DailyMissionWidgetView: View {
         .widgetURL(URL(string: "happyspeech://daily-mission"))
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
-            String(localized: "Задание дня: \(entry.missionTitle), \(entry.missionDescription). Серия \(entry.streakDays) дней. Прогресс \(Int(entry.progressPercent * 100))%")
+            widgetAccessibilityLabel
         )
     }
 

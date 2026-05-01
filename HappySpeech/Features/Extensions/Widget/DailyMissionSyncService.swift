@@ -1,6 +1,6 @@
 import Foundation
-import WidgetKit
 import OSLog
+import WidgetKit
 
 // MARK: - DailyMissionSyncServiceProtocol
 

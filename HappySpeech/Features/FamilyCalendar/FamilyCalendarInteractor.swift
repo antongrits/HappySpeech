@@ -76,7 +76,6 @@ final class FamilyCalendarInteractor {
 
             // Запускаем генерацию инсайтов параллельно
             await generateInsights()
-
         } catch {
             logger.error("loadFamilyData failed: \(error.localizedDescription)")
             presenter?.presentError(response: FamilyCalendarResponse.ErrorOccurred(
@@ -174,12 +173,10 @@ final class FamilyCalendarInteractor {
                     return []
                 }
                 var firstResult: [InsightItem] = []
-                for await result in group {
-                    if !result.isEmpty {
-                        firstResult = result
-                        group.cancelAll()
-                        break
-                    }
+                for await result in group where !result.isEmpty {
+                    firstResult = result
+                    group.cancelAll()
+                    break
                 }
                 return firstResult
             }

@@ -1,7 +1,7 @@
 import FirebaseRemoteConfig
 import Foundation
-import OSLog
 import Observation
+import OSLog
 
 // MARK: - Protocol
 
@@ -80,8 +80,8 @@ public final class LiveRemoteConfigService: RemoteConfigService, @unchecked Send
         RCKey.featureRealtimeLipsync:     false as NSNumber,
         RCKey.lyalyaVoiceDefault:         "tuned" as NSString,
         RCKey.dailyReminderTime:          "17:00" as NSString,
-        RCKey.homeShowStreakCelebration:   true as NSNumber,
-        RCKey.parentDashboardShowMLInsights: true as NSNumber,
+        RCKey.homeShowStreakCelebration: true as NSNumber,
+        RCKey.parentDashboardShowMLInsights: true as NSNumber
     ]
 
     public init(minimumFetchInterval: TimeInterval = 3600) {

@@ -48,11 +48,11 @@ final class GrammarContentLoaderWorker {
     private func buildPluralRound(item: GrammarPackItem, difficulty: GrammarDifficulty) -> GrammarRound {
         let parts = item.word.components(separatedBy: " — ")
         let singular = parts.first.map { Self.extractNoun(from: $0) } ?? item.word
-        let plural   = parts.last.map  { Self.extractNoun(from: $0) } ?? item.word
+        let plural = parts.last.map { Self.extractNoun(from: $0) } ?? item.word
 
         let questionText = String(format: String(localized: "grammar.game.plural.question"), singular)
-        let distractors  = Self.pluralDistractors(for: singular, correct: plural, count: difficulty.choiceCount - 1)
-        var allChoices   = [GrammarChoice(id: "correct", text: plural, imageName: nil)]
+        let distractors = Self.pluralDistractors(for: singular, correct: plural, count: difficulty.choiceCount - 1)
+        var allChoices = [GrammarChoice(id: "correct", text: plural, imageName: nil)]
         allChoices += distractors.enumerated().map { idx, d in
             GrammarChoice(id: "d\(idx)", text: d, imageName: nil)
         }
@@ -123,8 +123,8 @@ final class GrammarContentLoaderWorker {
         difficulty: GrammarDifficulty
     ) -> GrammarRound {
         let parts = item.word.components(separatedBy: " — ")
-        let base         = parts.first.map { Self.extractNoun(from: $0) } ?? item.word
-        let instrumental = parts.last.map  { Self.extractNoun(from: $0) } ?? item.word
+        let base = parts.first.map { Self.extractNoun(from: $0) } ?? item.word
+        let instrumental = parts.last.map { Self.extractNoun(from: $0) } ?? item.word
 
         let isPartyMode = difficulty == .hard
         let question: String

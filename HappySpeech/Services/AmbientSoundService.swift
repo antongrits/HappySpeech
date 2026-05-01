@@ -179,13 +179,13 @@ public actor LiveAmbientSoundService: AmbientSoundService {
 /// Предустановки громкости ambient для Settings → Звук и тактильные отклики.
 public enum AmbientVolumeSetting: String, CaseIterable, Sendable {
     /// Выкл — ambient полностью отключён.
-    case off = "off"
+    case off
     /// Лёгкие — едва слышимый фон (volume 0.15).
-    case subtle = "subtle"
+    case subtle
     /// Средние — стандартная громкость (volume 0.3, default).
-    case medium = "medium"
+    case medium
     /// Полные — максимальная атмосфера (volume 0.5).
-    case full = "full"
+    case full
 
     public var volume: Float {
         switch self {

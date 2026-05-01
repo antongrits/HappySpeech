@@ -61,10 +61,10 @@ public final class MockBreathingHapticWorker: BreathingHapticWorkerProtocol, @un
 
     public init() {}
 
-    public func petalBlown()  { petalCount += 1 }
-    public func blowStart()   { blowStartCount += 1 }
-    public func inhale()      { inhaleCount += 1 }
-    public func exhale()      { exhaleCount += 1 }
-    public func success()     { successCount += 1 }
-    public func failure()     { failureCount += 1 }
+    public func petalBlown() { petalCount += 1 }
+    public func blowStart() { blowStartCount += 1 }
+    public func inhale() { inhaleCount += 1 }
+    public func exhale() { exhaleCount += 1 }
+    public func success() { successCount += 1 }
+    public func failure() { failureCount += 1 }
 }

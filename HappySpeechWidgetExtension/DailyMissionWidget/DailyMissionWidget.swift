@@ -1,5 +1,5 @@
-import WidgetKit
 import SwiftUI
+import WidgetKit
 
 // MARK: - DailyMissionWidget
 
