@@ -18,19 +18,13 @@ struct BreathingView: View {
 
     init(
         activity: SessionActivity,
-        onComplete: @escaping (Float) -> Void,
-        healthKitService: (any HealthKitServiceProtocol)? = nil
+        onComplete: @escaping (Float) -> Void
     ) {
         self.activity = activity
         self.onComplete = onComplete
         let audioWorker = BreathingAudioWorker()
         let hapticWorker = BreathingHapticWorker(haptic: LiveHapticService())
-        let hkWorker: any BreathingHealthKitWorkerProtocol
-        if let service = healthKitService {
-            hkWorker = BreathingHealthKitWorker(healthKitService: service)
-        } else {
-            hkWorker = MockBreathingHealthKitWorker()
-        }
+        let hkWorker: any BreathingHealthKitWorkerProtocol = MockBreathingHealthKitWorker()
         let interactor = BreathingInteractor(
             audioWorker: audioWorker,
             hapticWorker: hapticWorker,

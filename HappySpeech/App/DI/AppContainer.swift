@@ -68,9 +68,6 @@ public final class AppContainer {
     // Block H: KidLLMNarrationService — lazy, использует llmDecisionService
     var kidLLMNarrationServiceStorage: (any KidLLMNarrationServiceProtocol)?
 
-    // Block J: HealthKitService — parent opt-in only, COPPA-safe.
-    private var _healthKitService: (any HealthKitServiceProtocol)?
-
     // Block K: SpotlightIndexer — CoreSpotlight indexing, COPPA-safe (нет имени ребёнка).
     private var _spotlightIndexer: (any SpotlightIndexerProtocol)?
 
@@ -381,14 +378,6 @@ public final class AppContainer {
         return new
     }
 
-    // Block J: HealthKitService — lazy, write-only mindful sessions (parent opt-in).
-    public var healthKitService: any HealthKitServiceProtocol {
-        if let existing = _healthKitService { return existing }
-        let new = LiveHealthKitService()
-        _healthKitService = new
-        return new
-    }
-
     // Block K: SpotlightIndexer — CoreSpotlight, COPPA-safe.
     public var spotlightIndexer: any SpotlightIndexerProtocol {
         if let existing = _spotlightIndexer { return existing }
@@ -587,8 +576,6 @@ public extension AppContainer {
         )
         // Block H: использовать Mock для kid narration в preview/tests.
         container.kidLLMNarrationServiceStorage = MockKidLLMNarrationService()
-        // Block J: HealthKit mock для preview/tests.
-        container._healthKitService = MockHealthKitService()
         // Block K: Spotlight mock для preview/tests.
         container._spotlightIndexer = MockSpotlightIndexer()
         // Block N: DailyMissionSync mock для preview/tests.

@@ -345,8 +345,7 @@ struct SessionShellBinder: View {
         case .breathing:
             BreathingView(
                 activity: activity,
-                onComplete: { score in Task { await onComplete(activity.id, score) } },
-                healthKitService: container.healthKitService
+                onComplete: { score in Task { await onComplete(activity.id, score) } }
             )
         case .minimalPairs:
             MinimalPairsView(activity: activity) { score in

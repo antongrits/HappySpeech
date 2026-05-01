@@ -1253,3 +1253,40 @@ Plan v12 — финальная итерация HappySpeech перед дипл
 
 `MARKETING_VERSION` намеренно оставлен `1.0.0` — version bump не требовался согласно инструкции пользователя. Тег `v1.0.0-final-v3` — это Git-тег, не Bundle version.
 
+---
+
+## ADR-V13-HEALTHKIT-REMOVED (2026-05-01)
+
+**Статус:** Принято  
+**Автор:** CTO (Plan v13 Block A)
+
+### Причина
+
+Пользователь явно сообщил, что у него нет платного Apple Developer аккаунта ($99/год). HealthKit entitlement требует платной членства в Apple Developer Program — без него приложение не компилируется с HealthKit framework и entitlement на устройстве/TestFlight.
+
+### Решение
+
+HealthKit полностью удалён из проекта HappySpeech. Mindful-сессии из Breathing-упражнений теперь логируются исключительно локально в Realm (через `SessionRepository`).
+
+### Удалённые файлы
+
+- `HappySpeech/Features/Extensions/Health/HealthKitService.swift` — `HealthKitServiceProtocol`, `LiveHealthKitService`, `MockHealthKitService`
+- `HappySpeechTests/Unit/Services/HealthKitServiceTests.swift` — 11 тест-функций
+
+### Изменённые файлы
+
+- `HappySpeech/Features/LessonPlayer/Breathing/Workers/BreathingHealthKitWorker.swift` — удалён `BreathingHealthKitWorker` (live), оставлен только `MockBreathingHealthKitWorker` (no-op)
+- `HappySpeech/Features/LessonPlayer/Breathing/BreathingView.swift` — удалён параметр `healthKitService:`
+- `HappySpeech/Features/LessonPlayer/Breathing/BreathingInteractor.swift` — `healthKitWorker` остался как `BreathingHealthKitWorkerProtocol` (no-op)
+- `HappySpeech/Features/SessionShell/SessionShellView.swift` — удалён `healthKitService:` при создании `BreathingView`
+- `HappySpeech/Features/Settings/SettingsView.swift` — удалена секция `healthKitSection` (settings.section.health)
+- `HappySpeech/App/DI/AppContainer.swift` — удалены `_healthKitService` + `healthKitService` + `MockHealthKitService` из preview
+- `HappySpeech/Resources/Info.plist` — удалены `NSHealthShareUsageDescription` и `NSHealthUpdateUsageDescription`
+- `HappySpeech.xcodeproj/project.pbxproj` — удалены все ссылки (PBXBuildFile, PBXFileReference, group, Sources entries)
+
+### Последствия
+
+- Breathing-сессии всё ещё логируются в Realm — никакие данные не теряются
+- Нет `HealthKit.framework` linkage — сборка проходит без entitlement
+- Нет регрессии для детского контура (HealthKit использовался только родительским контуром)
+

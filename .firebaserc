@@ -1,9 +1,9 @@
 {
   "projects": {
-    "default": "hs-app-2026",
-    "prod": "hs-app-2026",
-    "dev": "hs-app-2026",
-    "staging": "hs-app-2026"
+    "default": "happyspeech-dfd95",
+    "prod": "happyspeech-dfd95",
+    "dev": "happyspeech-dfd95",
+    "staging": "happyspeech-dfd95"
   },
   "targets": {},
   "etags": {}
