@@ -42,6 +42,7 @@ struct SettingsView: View {
     @State private var showCustomizationSheet = false
     @State private var showParentalGate = false
     @State private var parentalGatePendingURL: URL?
+    @State private var showChangelog = false
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "SettingsView")
 
@@ -660,6 +661,20 @@ struct SettingsView: View {
 
     private var aboutSection: some View {
         Section {
+            NavigationLink(destination: ChangelogView()) {
+                Label {
+                    Text(String(localized: "settings.about.whatsNew"))
+                        .font(TypographyTokens.body(15))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                } icon: {
+                    Image(systemName: "sparkles")
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                }
+            }
+            .frame(minHeight: 44)
+            .accessibilityLabel(String(localized: "settings.about.whatsNew"))
+            .accessibilityHint(String(localized: "settings.about.whatsNew.hint"))
+
             HStack {
                 Label {
                     Text(String(localized: "settings.about.version"))
