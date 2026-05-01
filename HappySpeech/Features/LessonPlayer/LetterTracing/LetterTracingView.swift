@@ -19,16 +19,20 @@ enum LetterTracingPhase: Sendable, Equatable {
 
 // MARK: - LetterTracingView
 
-/// 18-й шаблон игры — «Напиши букву» (iPad-primary, finger fallback).
+/// 18-й шаблон игры — «Напиши букву» (iPhone и iPad).
 ///
 /// Поток:
 ///   1. `.loading` → `interactor.loadExercise()` → `.drawing`
-///   2. Ребёнок рисует Apple Pencil / пальцем поверх dotted-guide.
+///   2. Ребёнок рисует пальцем (iPhone) или Apple Pencil / пальцем (iPad) поверх dotted-guide.
 ///   3. Нажимает «Проверить» → `.feedback` (Vision распознаёт букву).
 ///   4. «Сбросить» → очищаем canvas, перезапускаем таймер.
 ///   5. После всех раундов → `onComplete(score)`.
 ///
-/// На iPhone: показываем fallback-заглушку (письмо недоступно на iPhone).
+/// Адаптация для iPhone:
+///   - Canvas: 85% ширины экрана, максимум 350pt.
+///   - Hint: «Веди пальцем по букве» вместо упоминания Apple Pencil.
+///   - Scoring: порог 65% вместо 80% (менее точный ввод пальцем).
+///   - PKToolPicker: отображается в bottom sheet автоматически (iOS behavior).
 struct LetterTracingView: View {
 
     // MARK: - Input
@@ -62,29 +66,23 @@ struct LetterTracingView: View {
     // MARK: - Body
 
     var body: some View {
-        Group {
-            if LetterTracingInteractor.isAvailable() {
-                iPadCanvas
-            } else {
-                iPhoneFallback
-            }
-        }
-        .task {
-            guard interactor == nil else { return }
-            setupVIP()
-            await interactor?.loadExercise(
-                LetterTracingModels.LoadExercise.Request(
-                    targetLetter: activity.soundTarget.uppercased(),
-                    difficulty: activity.difficulty
+        tracingCanvas
+            .task {
+                guard interactor == nil else { return }
+                setupVIP()
+                await interactor?.loadExercise(
+                    LetterTracingModels.LoadExercise.Request(
+                        targetLetter: activity.soundTarget.uppercased(),
+                        difficulty: activity.difficulty
+                    )
                 )
-            )
-        }
+            }
     }
 
-    // MARK: - iPad Canvas
+    // MARK: - Tracing Canvas (iPhone + iPad)
 
     @ViewBuilder
-    private var iPadCanvas: some View {
+    private var tracingCanvas: some View {
         GeometryReader { geo in
             ZStack(alignment: .top) {
                 // Background
@@ -133,6 +131,14 @@ struct LetterTracingView: View {
                     )
                     .padding(.horizontal, SpacingTokens.screenEdge)
 
+                    // Input hint (finger / pencil)
+                    Text(inputHintText)
+                        .font(TypographyTokens.caption())
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, SpacingTokens.screenEdge)
+                        .accessibilityHidden(true)
+
                     // Controls
                     controlsRow
                         .padding(.horizontal, SpacingTokens.screenEdge)
@@ -162,37 +168,6 @@ struct LetterTracingView: View {
             }
         }
         .onAppear(perform: setupToolPicker)
-    }
-
-    // MARK: - iPhone Fallback
-
-    private var iPhoneFallback: some View {
-        VStack(spacing: SpacingTokens.large) {
-            HSMascotView(mood: .thinking, size: 120)
-
-            Text(String(localized: "letter_tracing.iphone_fallback.title"))
-                .font(TypographyTokens.title())
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-
-            Text(String(localized: "letter_tracing.iphone_fallback.subtitle"))
-                .font(TypographyTokens.body())
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, SpacingTokens.screenEdge)
-
-            HSButton(
-                String(localized: "general.done"),
-                style: .primary,
-                icon: "checkmark.circle.fill"
-            ) {
-                onComplete(0.8)
-            }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .lineLimit(nil)
-            .minimumScaleFactor(0.85)
-        }
-        .padding()
     }
 
     // MARK: - Sub-views
@@ -334,9 +309,27 @@ struct LetterTracingView: View {
 
     // MARK: - Canvas size helper
 
+    /// Адаптивный размер холста.
+    /// iPhone: 85% ширины экрана, не более 350pt — компактно для одноручного удержания.
+    /// iPad: оригинальное поведение (55% высоты, минус padding по ширине).
     private func canvasSize(_ geo: GeometryProxy) -> CGSize {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            let screenWidth = UIScreen.main.bounds.width
+            let side = min(screenWidth * 0.85, 350)
+            return CGSize(width: side, height: side)
+        }
         let side = min(geo.size.width - SpacingTokens.screenEdge * 2, geo.size.height * 0.55)
         return CGSize(width: side, height: side)
+    }
+
+    // MARK: - Hint text helper
+
+    /// Текст подсказки ввода, зависящий от устройства.
+    private var inputHintText: String {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return String(localized: "letter_tracing.hint.finger")
+        }
+        return String(localized: "letter_tracing.hint.pencil")
     }
 
     // MARK: - PKToolPicker

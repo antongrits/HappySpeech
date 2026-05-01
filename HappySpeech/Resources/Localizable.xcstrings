@@ -23541,6 +23541,28 @@
           }
         }
       }
+    },
+    "letter_tracing.hint.finger": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Веди пальцем по букве"
+          }
+        }
+      }
+    },
+    "letter_tracing.hint.pencil": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Используй Apple Pencil или палец"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

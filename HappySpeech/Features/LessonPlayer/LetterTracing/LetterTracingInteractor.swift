@@ -14,8 +14,9 @@ import UIKit
 ///   | Stroke coverage   | 30% | пересечение bounding boxes / area буквы       |
 ///   | Speed bonus       | 20% | < 5с → 1.0, < 10с → 0.5, иначе 0.0           |
 ///
-/// iPad-only guard: `UIDevice.current.userInterfaceIdiom == .pad`.
-/// На iPhone routing заблокирован в SessionShellBinder.
+/// Пороги правильности:
+///   - iPhone (палец): 65% — более мягкий, учитывает неточность пальца.
+///   - iPad (Apple Pencil / палец): 80%.
 @MainActor
 final class LetterTracingInteractor: LetterTracingBusinessLogic {
 
@@ -26,6 +27,13 @@ final class LetterTracingInteractor: LetterTracingBusinessLogic {
 
     private let recognitionWorker = HandwritingRecognitionWorker()
     private let logger = Logger(subsystem: "ru.happyspeech", category: "LetterTracing")
+
+    // MARK: - Device-aware threshold
+
+    /// Порог правильности: iPhone (палец) — 0.65, iPad — 0.80.
+    private var scoreThreshold: Double {
+        UIDevice.current.userInterfaceIdiom == .phone ? 0.65 : 0.80
+    }
 
     // MARK: - Session state
 
@@ -92,7 +100,7 @@ final class LetterTracingInteractor: LetterTracingBusinessLogic {
 
         // 5. Composite.
         let finalScore = (recognitionScore * 0.5) + (coverage * 0.3) + (speed * 0.2)
-        let isCorrect = finalScore >= 0.4
+        let isCorrect = finalScore >= scoreThreshold
 
         scores.append(finalScore)
         logScore(
@@ -136,7 +144,7 @@ final class LetterTracingInteractor: LetterTracingBusinessLogic {
             let avg = self.scores.isEmpty
                 ? 0.0
                 : self.scores.reduce(0, +) / Double(self.scores.count)
-            let correct = self.scores.filter { $0 >= 0.4 }.count
+            let correct = self.scores.filter { $0 >= self.scoreThreshold }.count
 
             let completeResponse = LetterTracingModels.CompleteSession.Response(
                 averageScore: avg,
@@ -262,10 +270,11 @@ final class LetterTracingInteractor: LetterTracingBusinessLogic {
         }
     }
 
-    // MARK: - Static: iPad guard
+    // MARK: - Static: availability
 
-    /// Возвращает true если устройство — iPad (LetterTracing primary target).
+    /// Возвращает true для всех устройств — LetterTracing доступен на iPhone и iPad.
+    /// iPhone использует рисование пальцем с мягким порогом (65%), iPad — 80%.
     static func isAvailable() -> Bool {
-        UIDevice.current.userInterfaceIdiom == .pad
+        true
     }
 }
