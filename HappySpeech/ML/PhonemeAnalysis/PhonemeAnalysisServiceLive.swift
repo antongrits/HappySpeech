@@ -1,87 +1,25 @@
-import Accelerate
-import AVFoundation
 @preconcurrency import CoreML
 import Foundation
 import OSLog
 
 // MARK: - MFCCExtractorAdapter
 
-/// Адаптер, оборачивающий `MFCCExtractor` (AVAudioPCMBuffer API) для работы с сырым PCM Data.
+/// Адаптер над `RealMFCCExtractor` для работы с сырым PCM Data.
 ///
-/// **Block D placeholder:** конвертирует Data → AVAudioPCMBuffer → вызывает MFCCExtractor.
-/// Block G v13 заменит на real MFCC pipeline непосредственно из Data.
+/// Block G v13: заменяет placeholder (Data → AVAudioPCMBuffer → legacy MFCCExtractor)
+/// на прямое использование `RealMFCCExtractor` (Data → [Float] → 39-мерный MFCC pipeline).
 ///
-/// Выход: массив фреймов [[Float]] (39 коэффициентов каждый, 150 фреймов).
+/// Выход: массив фреймов [[Float]] (39 коэффициентов каждый = 13 base + 13 delta + 13 delta-delta).
 public struct MFCCExtractorAdapter: MFCCExtractorProtocol {
 
-    private static let sampleRate: Double = 16_000
-    /// Количество MFCC коэф. соответствует модели (39, не 40 — модель обучена на 39).
-    private static let nMFCC = RussianPhonemeClassifierWrapper.nMFCC
-    private static let nFrames = RussianPhonemeClassifierWrapper.nFrames
+    private let realExtractor: RealMFCCExtractor
 
-    public init() {}
-
-    public func extract(from audio: Data) async throws -> [[Float]] {
-        // Конвертируем сырой Float32 PCM Data в AVAudioPCMBuffer
-        let format = AVAudioFormat(
-            commonFormat: .pcmFormatFloat32,
-            sampleRate: Self.sampleRate,
-            channels: 1,
-            interleaved: false
-        )
-        guard let format else {
-            throw PhonemeAnalysisError.mfccExtractionFailed
-        }
-
-        let frameCount = audio.count / MemoryLayout<Float>.size
-        guard frameCount > 0 else {
-            throw PhonemeAnalysisError.mfccExtractionFailed
-        }
-
-        guard let buffer = AVAudioPCMBuffer(
-            pcmFormat: format,
-            frameCapacity: AVAudioFrameCount(frameCount)
-        ) else {
-            throw PhonemeAnalysisError.mfccExtractionFailed
-        }
-
-        buffer.frameLength = AVAudioFrameCount(frameCount)
-
-        // Копируем сырые Float32 семплы в буфер
-        audio.withUnsafeBytes { rawBytes in
-            guard let srcPtr = rawBytes.bindMemory(to: Float.self).baseAddress,
-                  let dstPtr = buffer.floatChannelData?[0] else { return }
-            dstPtr.update(from: srcPtr, count: frameCount)
-        }
-
-        // Используем существующий MFCCExtractor
-        let mlArray = try MFCCExtractor.extract(from: buffer)
-
-        // Транспонируем MLMultiArray [1, 40, 150] → [[Float]] 150×40
-        // Затем берём только nMFCC=39 коэффициентов (1 отбрасываем, 0-й коэф. обычно DC)
-        return convertMLArrayToFrames(mlArray)
+    public init() {
+        self.realExtractor = RealMFCCExtractor()
     }
 
-    // MARK: Private
-
-    /// Конвертирует MLMultiArray [1, nMFCC_full, T] в [[Float]] T×nMFCC_model.
-    private func convertMLArrayToFrames(_ array: MLMultiArray) -> [[Float]] {
-        let tSteps = Int(truncating: array.shape[2])
-        let nFull = Int(truncating: array.shape[1])
-        let take = min(nFull, Self.nMFCC)
-
-        var frames: [[Float]] = []
-        frames.reserveCapacity(tSteps)
-
-        for tIdx in 0 ..< tSteps {
-            var frame = [Float](repeating: 0, count: Self.nMFCC)
-            for coeff in 0 ..< take {
-                frame[coeff] = array[[0, coeff, tIdx] as [NSNumber]].floatValue
-            }
-            frames.append(frame)
-        }
-
-        return frames
+    public func extract(from audio: Data) async throws -> [[Float]] {
+        try await realExtractor.extract(from: audio)
     }
 }
 

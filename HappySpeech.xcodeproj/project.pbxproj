@@ -3568,6 +3568,8 @@
 		8DD106D2462A498AB96E68BE /* G2PWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40788F6C9BA46CF84AE4B71 /* G2PWorker.swift */; };
 		6ED81AD49132403FAA809578 /* RussianPhonemeClassifierWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77743A30D7C14DB1816720FB /* RussianPhonemeClassifierWrapper.swift */; };
 		7DEB17D5487948A0B4635D8D /* PhonemeAnalysisServiceLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B264CABB51042F3A571C414 /* PhonemeAnalysisServiceLive.swift */; };
+		52560FED4B764F4282C0E758 /* RealMFCCExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED5A2D3398445A3B0EF4B62 /* RealMFCCExtractor.swift */; };
+		BBAA44BB6E834FF5AEDCD58F /* RealMFCCExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B6CEB7D95740FC81C9548C /* RealMFCCExtractorTests.swift */; };
 		BB238A487955429B9D8F9CD8 /* PhonemeAnalysisServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5C13F0367E4F3485D40C37 /* PhonemeAnalysisServiceTests.swift */; };
 		62F843B6E26701F9901DA511 /* r-ph-72.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 445BC900711B1C52C10F6A57 /* r-ph-72.m4a */; };
 		62FE6DE83BA94F28B9186802 /* c-syl-16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BB6CF882CE8E32D73FD2E150 /* c-syl-16.m4a */; };
@@ -14856,6 +14858,8 @@
 		D40788F6C9BA46CF84AE4B71 /* G2PWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = G2PWorker.swift; sourceTree = "<group>"; };
 		77743A30D7C14DB1816720FB /* RussianPhonemeClassifierWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RussianPhonemeClassifierWrapper.swift; sourceTree = "<group>"; };
 		7B264CABB51042F3A571C414 /* PhonemeAnalysisServiceLive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhonemeAnalysisServiceLive.swift; sourceTree = "<group>"; };
+		4ED5A2D3398445A3B0EF4B62 /* RealMFCCExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMFCCExtractor.swift; sourceTree = "<group>"; };
+		80B6CEB7D95740FC81C9548C /* RealMFCCExtractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealMFCCExtractorTests.swift; sourceTree = "<group>"; };
 		6C5C13F0367E4F3485D40C37 /* PhonemeAnalysisServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhonemeAnalysisServiceTests.swift; sourceTree = "<group>"; };
 		993FAB5B19EF55379489B245 /* k-wi-4.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "k-wi-4.m4a"; sourceTree = "<group>"; };
 		994863953A584D5FCF143168 /* lama.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = lama.m4a; sourceTree = "<group>"; };
@@ -19671,6 +19675,7 @@
 			isa = PBXGroup;
 			children = (
 				B4B894F4F1B8A607C6C92207 /* ASR */,
+				76F150AE1FB544FD9A870E33 /* MFCC */,
 				E4EE0D72A8DFE2E588E5AF6A /* LLM */,
 				9775D1E5E2A04767BADB0810 /* PhonemeAnalysis */,
 				74AFA2D40CE93F10AB95C4A4 /* Scorer */,
@@ -19683,6 +19688,14 @@
 				335DF37AC10B2B426FC17130 /* TonguePostureClassifier.swift */,
 			);
 			path = ML;
+			sourceTree = "<group>";
+		};
+		76F150AE1FB544FD9A870E33 /* MFCC */ = {
+			isa = PBXGroup;
+			children = (
+				4ED5A2D3398445A3B0EF4B62 /* RealMFCCExtractor.swift */,
+			);
+			path = MFCC;
 			sourceTree = "<group>";
 		};
 		A1B2C3D4E5F601234567890A /* Wav2Vec2 */ = {
@@ -27590,8 +27603,25 @@
 				B7911B12A6F1EFA9378E238B /* Features */,
 				AD33542C0DE90C83B37FC021 /* Interactors */,
 				C8A016B5923955DD836C37EC /* Services */,
+				6580071E87894EB88EF55E04 /* ML */,
 			);
 			path = Unit;
+			sourceTree = "<group>";
+		};
+		6580071E87894EB88EF55E04 /* ML */ = {
+			isa = PBXGroup;
+			children = (
+				C80112E5F8DD49DC9B67660B /* MFCC */,
+			);
+			path = ML;
+			sourceTree = "<group>";
+		};
+		C80112E5F8DD49DC9B67660B /* MFCC */ = {
+			isa = PBXGroup;
+			children = (
+				80B6CEB7D95740FC81C9548C /* RealMFCCExtractorTests.swift */,
+			);
+			path = MFCC;
 			sourceTree = "<group>";
 		};
 		D4CAC8FE0DEB320F68A74B4A /* Workers */ = {
@@ -38356,6 +38386,7 @@
 				40F59440A61B3CBCD27DE5E4 /* KidLLMNarrationServiceTests.swift in Sources */,
 				3EA16BE5B0ACAF1963741734 /* KidSafetyFilterTests.swift in Sources */,
 				BB238A487955429B9D8F9CD8 /* PhonemeAnalysisServiceTests.swift in Sources */,
+				BBAA44BB6E834FF5AEDCD58F /* RealMFCCExtractorTests.swift in Sources */,
 				520DBAFFA6CC48D69F1E8BF7 /* Wav2Vec2ServiceTests.swift in Sources */,
 				FC2608233C30F7C1894747BF /* LLMDecisionServiceTests.swift in Sources */,
 				1435EC157B2A5501D43AE088 /* LessonSessionAttributesTests.swift in Sources */,
@@ -38824,6 +38855,7 @@
 				7636EFD4BEC0492B18A2E770 /* ProgressDashboardView.swift in Sources */,
 				62F27EC6D47ACDD50664D5A0 /* PronunciationScorer.swift in Sources */,
 				94D13F850A2B84B30B4DFA75 /* PronunciationScorerLive.swift in Sources */,
+				52560FED4B764F4282C0E758 /* RealMFCCExtractor.swift in Sources */,
 				0F1F9725035C4088B59712C5 /* PhonemeAnalysisModels.swift in Sources */,
 				FD2907DFD2994CA49E678AFE /* PhonemeAnalysisServiceProtocol.swift in Sources */,
 				8DD106D2462A498AB96E68BE /* G2PWorker.swift in Sources */,
