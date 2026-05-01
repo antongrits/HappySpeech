@@ -2,7 +2,6 @@ import Accelerate
 import AVFoundation
 import Foundation
 import OSLog
-import UIKit
 
 // MARK: - MetronomeInteractor
 
@@ -29,6 +28,7 @@ final class MetronomeInteractor {
 
     private let metronomeWorker: any MetronomeWorkerProtocol
     private let audioWorker: BreathingAudioWorker
+    private let hapticService: any HapticService
     private let logger = HSLogger.audio
 
     // MARK: - Session state
@@ -68,10 +68,12 @@ final class MetronomeInteractor {
 
     init(
         metronomeWorker: any MetronomeWorkerProtocol = MetronomeWorker(),
-        audioWorker: BreathingAudioWorker = BreathingAudioWorker()
+        audioWorker: BreathingAudioWorker = BreathingAudioWorker(),
+        hapticService: any HapticService = LiveHapticService()
     ) {
         self.metronomeWorker = metronomeWorker
         self.audioWorker = audioWorker
+        self.hapticService = hapticService
     }
 
     // MARK: - Public API
@@ -142,7 +144,7 @@ final class MetronomeInteractor {
             self.advanceToNextSyllable()
         }
 
-        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        Task { await hapticService.play(pattern: .buttonTap) }
     }
 
     // MARK: - Amplitude handling
@@ -166,7 +168,7 @@ final class MetronomeInteractor {
         if amplitude >= adaptiveThreshold && !syllableDetectedSet.contains(idx) {
             syllableDetectedSet.insert(idx)
             updateSyllableState(at: idx, state: .completed)
-            UINotificationFeedbackGenerator().notificationOccurred(.success)
+            Task { await hapticService.play(pattern: .cardSelect) }
             logger.info("MetronomeInteractor: syllable \(idx) detected")
         }
     }
@@ -190,7 +192,7 @@ final class MetronomeInteractor {
 
     private func completeWord() {
         display.showReward = true
-        UINotificationFeedbackGenerator().notificationOccurred(.success)
+        Task { await hapticService.play(pattern: .celebration) }
 
         Task { @MainActor in
             try? await Task.sleep(for: .seconds(1.5))

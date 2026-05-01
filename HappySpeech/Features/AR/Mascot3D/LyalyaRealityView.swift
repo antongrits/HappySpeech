@@ -215,6 +215,8 @@ public struct LyalyaRealityView: View {
         .offset(y: idleBobOffset)
         .scaleEffect(isVisible ? 1 : 0.85)
         .opacity(isVisible ? 1 : 0)
+        .accessibilityLabel(Text(String(localized: "lyalya.mascot.a11y")))
+        .accessibilityHint(Text(String(localized: "lyalya.mascot.a11y.hint")))
         .onAppear {
             withAnimation(reduceMotion ? .none : MotionTokens.bounce) {
                 isVisible = true

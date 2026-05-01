@@ -60,6 +60,8 @@ struct ARGameHUD: View {
                     .padding(SpacingTokens.small)
                     .background(.black.opacity(0.45), in: Circle())
             }
+            .frame(minWidth: 56, minHeight: 56)
+            .contentShape(Rectangle())
             .accessibilityLabel(Text("common.close"))
 
             Text(title)
