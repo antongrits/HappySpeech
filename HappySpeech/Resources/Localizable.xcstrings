@@ -23563,6 +23563,39 @@
           }
         }
       }
+    },
+    "settings.about.whatsNew": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что нового"
+          }
+        }
+      }
+    },
+    "settings.about.whatsNew.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть список изменений"
+          }
+        }
+      }
+    },
+    "changelog.loadError": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось загрузить список изменений"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
