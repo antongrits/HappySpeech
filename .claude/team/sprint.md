@@ -123,6 +123,15 @@ M6 App Store      Sprint 12  tests+content DONE, Firestore deploy DONE, TestFlig
 
 ---
 
+## Plan v13 — STATUS: COMPLETED (2026-05-01)
+
+Total commits: ~22 (включая P0 hotfix).
+Final tag: v1.0.0-final-v4
+
+All 19 blocks (A-S) completed либо ADR-deferred. 4 new skills.
+
+---
+
 ## Sprint 12.6 — Final Polish (Plan v6) — 2026-04-26 to 2026-04-27
 
 ### Цель

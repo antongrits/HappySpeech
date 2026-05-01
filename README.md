@@ -175,6 +175,108 @@ swiftlint --strict
 
 ---
 
+## v1.0.0-final-v4 — Plan v13 (2026-05-01)
+
+### Конфигурация
+
+- Bundle ID унификация → `com.mmf.bsu.HappySpeech`
+- Firebase migrate `hs-app-2026` → `happyspeech-dfd95`
+- HealthKit полностью удалён (no paid Apple Developer)
+- iPad target removed (TARGETED_DEVICE_FAMILY=1, iPhone-only)
+- Mac Designed for iPhone enabled (для self-test через MCP)
+
+### 3D Lyalya RealityKit
+
+- LyalyaRealityKitView UIViewRepresentable (replaces Rive wrapper)
+- LyalyaLipSyncCoordinator с AVAudioPlayer.averagePower → mouth scale
+- USDZ named entities (Mouth/PupilLeft/PupilRight/CheekLeft/CheekRight/ArmLeft)
+- ADR-V13-LYALYA-3D-BLENDSHAPES-DEFERRED (требует Blender для real blendshapes)
+
+### Phonemic + Spectrogram speech analyzer
+
+- RussianPhonemeClassifier CoreML CNN-BiLSTM (83.94% val accuracy, PARTIAL)
+- PhonemeAnalysisService Swift API (G2P + classifier + DTW alignment + scoring)
+- Wav2Vec2 CoreML русская речь (bond005/wav2vec2-large-ru-golos, 302 MB int8)
+- Real MFCC implementation (vDSP + Mel filterbank + DCT-II + deltas)
+- SpectrogramVisualizerView (real-time vDSP FFT + Canvas + TimelineView, 60 fps)
+
+### Контент
+
+- Lyalya voice 1 774 → 2 469 phrases (+695, 8 categories)
+- 3 Remotion onboarding tutorial videos
+- 25 HD Phoneme illustrations FLUX-1-schnell
+- 8 USDZ AR scenes (Apple AR Quick Look gallery exhausted, 20 total)
+- SoftOnset 310 words (3 difficulty levels)
+
+### Apple HIG
+
+- 25 screens audited
+- 2 P0 fixes (touch targets >=56pt, HapticService DI)
+- 2 P1 fixes (VoiceOver labels)
+- 8 P2 documented
+
+### Critical fixes
+
+- P0 RealmActor crash hotfix (verifyThread SIGABRT в SpotlightIndexCoordinator)
+- LetterTracing iPhone adaptation (finger drawing default)
+
+### Code quality
+
+- SwiftLint 85 → 0 warnings (target <=10 exceeded)
+- DocC catalog (от Plan v12)
+- Down Markdown changelog screen
+
+### Bundle stats v13
+
+| Категория | Значение |
+|---|---|
+| Bundle (simulator debug) | ~1.1 GB |
+| Bundle (IPA release estimate) | ~250 MB |
+| Resources | 851 MB |
+| ML Models (.mlpackage) | 9 шт |
+| USDZ AR scenes | 20 |
+| Lyalya voice phrases | 2 469 |
+| HD illustrations | 102 imagesets |
+| Платформы | 3 (iPhone 17 Pro + iPhone SE 3 + Mac Designed for iPhone) |
+
+### Итоговые метрики v13
+
+| Метрика | Значение |
+|---|---|
+| Типы игр | 18 (LetterTracing iPhone-adapted) |
+| Ключей локализации (ru) | 2 143+ |
+| Ключей локализации (en) | 0 |
+| SwiftLint ошибок | 0 |
+| SwiftLint предупреждений | 0 |
+| Bundle ID | `com.mmf.bsu.HappySpeech` |
+| Firebase project | `happyspeech-dfd95` (migrated) |
+
+**Тег:** `v1.0.0-final-v4`
+
+### Partial outcomes (честно)
+
+| Пункт | Факт | Target | Причина |
+|---|---|---|---|
+| RussianPhonemeClassifier accuracy | 83.94% | 85% | Uniform forced alignment label noise |
+| Wav2Vec2 размер | 302 MB | 200 MB | int8 quantization, качество важнее |
+| HD illustrations | 25 шт | 50 шт | HuggingFace quota 402 после 25 |
+
+### Deferred post-v1.0
+
+- Real Blender USDZ blendshapes (Lyalya 3D) — требует DCC инструмент
+- Wav2Vec2 fine-tuning на детскую речь
+- Voice clone XTTS (placeholder в v12)
+- Montreal Forced Aligner для улучшения PhonemeClassifier до >=85%
+
+### 4 новых skill в v13
+
+- `realitykit-blendshapes-character`
+- `wav2vec2-coreml-russian`
+- `spectrogram-visualizer-skill`
+- `apple-hig-audit-skill`
+
+---
+
 ## Что нового в v12 (Plan v12, 2026-04-30)
 
 Plan v12 — финальная итерация перед дипломной защитой. 24 блока (A–X), ~25 коммитов. Тег: `v1.0.0-final-v3`.
@@ -364,12 +466,12 @@ Plan v10 (15 коммитов) исправил всё + добавил 10 но�
 | AR игр | 8 + ARStoryQuest |
 | Контент-паки | 21 |
 | Контент-единиц | 6 959+ |
-| Фразы маскота Ляли | 1 774 (v12) |
+| Фразы маскота Ляли | 2 469 (v13) |
 | DesignSystem компоненты | 30+ |
 | Unit + UI тестов | ~1 316 (1 267 unit + 49 UI) |
 | Ключей локализации | 2 143 (ru only, 0 en) |
 | Core ML моделей | 27 (.mlpackage) |
-| USDZ AR-сцены | 11 |
+| USDZ AR-сцены | 20 (v13) |
 | Remotion MP4 stories | 86 |
 | HD illustrations | 110 imagesets (FLUX-1-schnell) |
 | Ambient звуки | 10 (.caf) |
@@ -383,10 +485,10 @@ Plan v10 (15 коммитов) исправил всё + добавил 10 но�
 |-----------|--------|
 | Build (iPhone 17 Pro sim) | passing |
 | Build (iPhone SE 3 sim) | passing |
-| Build (iPad Air 11 sim) | passing |
+| Build (iPad Air 11 sim) | removed (iPhone-only с v13) |
 | Build (Mac Designed for iPhone) | passing |
 | SwiftLint errors | 0 |
-| SwiftLint warnings | 78 (pre-existing, не в Features/Services) |
+| SwiftLint warnings | 0 (v13 — 85 → 0) |
 | Язык (sourceLanguage) | Russian only (2 143 ru, 0 en) |
 | Firebase project | happyspeech-dfd95 (eur3) |
 | Firestore rules | deployed |
