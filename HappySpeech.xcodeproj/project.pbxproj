@@ -3557,6 +3557,12 @@
 		62E9F7E3BB5F6BE1B1030A4A /* br-094.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 08174EFE989CCC9EC516A34C /* br-094.m4a */; };
 		62F0B24CDBF283218A68CD6E /* zh-df-7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1361FC9F8A04D38EB33E8C3E /* zh-df-7.m4a */; };
 		62F27EC6D47ACDD50664D5A0 /* PronunciationScorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993D165C8E6C72D7E883F201 /* PronunciationScorer.swift */; };
+		0F1F9725035C4088B59712C5 /* PhonemeAnalysisModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D42E8334F44BD7A37E0539 /* PhonemeAnalysisModels.swift */; };
+		FD2907DFD2994CA49E678AFE /* PhonemeAnalysisServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E56D276D8A48059196A952 /* PhonemeAnalysisServiceProtocol.swift */; };
+		8DD106D2462A498AB96E68BE /* G2PWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40788F6C9BA46CF84AE4B71 /* G2PWorker.swift */; };
+		6ED81AD49132403FAA809578 /* RussianPhonemeClassifierWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77743A30D7C14DB1816720FB /* RussianPhonemeClassifierWrapper.swift */; };
+		7DEB17D5487948A0B4635D8D /* PhonemeAnalysisServiceLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B264CABB51042F3A571C414 /* PhonemeAnalysisServiceLive.swift */; };
+		BB238A487955429B9D8F9CD8 /* PhonemeAnalysisServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5C13F0367E4F3485D40C37 /* PhonemeAnalysisServiceTests.swift */; };
 		62F843B6E26701F9901DA511 /* r-ph-72.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 445BC900711B1C52C10F6A57 /* r-ph-72.m4a */; };
 		62FE6DE83BA94F28B9186802 /* c-syl-16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BB6CF882CE8E32D73FD2E150 /* c-syl-16.m4a */; };
 		6308C1AA81A70F420742A559 /* phon-sc-3.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FEAC86415F43817E542999EA /* phon-sc-3.m4a */; };
@@ -14827,6 +14833,12 @@
 		99398A0F0F75EF9037D77B6E /* lex-bi-19.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "lex-bi-19.m4a"; sourceTree = "<group>"; };
 		993B2344ADDD40FB40D09048 /* c-wf-24.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "c-wf-24.m4a"; sourceTree = "<group>"; };
 		993D165C8E6C72D7E883F201 /* PronunciationScorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronunciationScorer.swift; sourceTree = "<group>"; };
+		92D42E8334F44BD7A37E0539 /* PhonemeAnalysisModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhonemeAnalysisModels.swift; sourceTree = "<group>"; };
+		38E56D276D8A48059196A952 /* PhonemeAnalysisServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhonemeAnalysisServiceProtocol.swift; sourceTree = "<group>"; };
+		D40788F6C9BA46CF84AE4B71 /* G2PWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = G2PWorker.swift; sourceTree = "<group>"; };
+		77743A30D7C14DB1816720FB /* RussianPhonemeClassifierWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RussianPhonemeClassifierWrapper.swift; sourceTree = "<group>"; };
+		7B264CABB51042F3A571C414 /* PhonemeAnalysisServiceLive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhonemeAnalysisServiceLive.swift; sourceTree = "<group>"; };
+		6C5C13F0367E4F3485D40C37 /* PhonemeAnalysisServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhonemeAnalysisServiceTests.swift; sourceTree = "<group>"; };
 		993FAB5B19EF55379489B245 /* k-wi-4.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "k-wi-4.m4a"; sourceTree = "<group>"; };
 		994863953A584D5FCF143168 /* lama.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = lama.m4a; sourceTree = "<group>"; };
 		9970E9948EF88700CB59488C /* ch-wi-43.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ch-wi-43.m4a"; sourceTree = "<group>"; };
@@ -19636,6 +19648,7 @@
 			children = (
 				B4B894F4F1B8A607C6C92207 /* ASR */,
 				E4EE0D72A8DFE2E588E5AF6A /* LLM */,
+				9775D1E5E2A04767BADB0810 /* PhonemeAnalysis */,
 				74AFA2D40CE93F10AB95C4A4 /* Scorer */,
 				CC78D3ED35DF0AFDBEA0F922 /* VAD */,
 				9E23BB2242B64C7B1AF86ADD /* Vision */,
@@ -19645,6 +19658,18 @@
 				335DF37AC10B2B426FC17130 /* TonguePostureClassifier.swift */,
 			);
 			path = ML;
+			sourceTree = "<group>";
+		};
+		9775D1E5E2A04767BADB0810 /* PhonemeAnalysis */ = {
+			isa = PBXGroup;
+			children = (
+				92D42E8334F44BD7A37E0539 /* PhonemeAnalysisModels.swift */,
+				38E56D276D8A48059196A952 /* PhonemeAnalysisServiceProtocol.swift */,
+				D40788F6C9BA46CF84AE4B71 /* G2PWorker.swift */,
+				77743A30D7C14DB1816720FB /* RussianPhonemeClassifierWrapper.swift */,
+				7B264CABB51042F3A571C414 /* PhonemeAnalysisServiceLive.swift */,
+			);
+			path = PhonemeAnalysis;
 			sourceTree = "<group>";
 		};
 		26FD138796898B1574CEEEB1 /* Reports */ = {
@@ -23079,11 +23104,20 @@
 			isa = PBXGroup;
 			children = (
 				DF5F5AFDC4E5ABA8BFCD7DC0 /* Vision */,
+				15690C0F5ACA4246AA3E3F81 /* PhonemeAnalysis */,
 				11EE78C8C86628957573BA7B /* KidLLMNarrationServiceTests.swift */,
 				957D46D47731862A6566FD5E /* KidSafetyFilterTests.swift */,
 				358B8E3F3B88A182C2BBE20C /* MascotLipSyncStateTests.swift */,
 			);
 			path = ML;
+			sourceTree = "<group>";
+		};
+		15690C0F5ACA4246AA3E3F81 /* PhonemeAnalysis */ = {
+			isa = PBXGroup;
+			children = (
+				6C5C13F0367E4F3485D40C37 /* PhonemeAnalysisServiceTests.swift */,
+			);
+			path = PhonemeAnalysis;
 			sourceTree = "<group>";
 		};
 		71F79EA4C66A7928CB757190 /* CH */ = {
@@ -38251,6 +38285,7 @@
 				845862C47F79315DC347A6DE /* KeyScreensSnapshotTests.swift in Sources */,
 				40F59440A61B3CBCD27DE5E4 /* KidLLMNarrationServiceTests.swift in Sources */,
 				3EA16BE5B0ACAF1963741734 /* KidSafetyFilterTests.swift in Sources */,
+				BB238A487955429B9D8F9CD8 /* PhonemeAnalysisServiceTests.swift in Sources */,
 				FC2608233C30F7C1894747BF /* LLMDecisionServiceTests.swift in Sources */,
 				1435EC157B2A5501D43AE088 /* LessonSessionAttributesTests.swift in Sources */,
 				6F0F59A1041EB9A64CD3E85A /* LessonVoiceWorkerTests.swift in Sources */,
@@ -38713,6 +38748,11 @@
 				7636EFD4BEC0492B18A2E770 /* ProgressDashboardView.swift in Sources */,
 				62F27EC6D47ACDD50664D5A0 /* PronunciationScorer.swift in Sources */,
 				94D13F850A2B84B30B4DFA75 /* PronunciationScorerLive.swift in Sources */,
+				0F1F9725035C4088B59712C5 /* PhonemeAnalysisModels.swift in Sources */,
+				FD2907DFD2994CA49E678AFE /* PhonemeAnalysisServiceProtocol.swift in Sources */,
+				8DD106D2462A498AB96E68BE /* G2PWorker.swift in Sources */,
+				6ED81AD49132403FAA809578 /* RussianPhonemeClassifierWrapper.swift in Sources */,
+				7DEB17D5487948A0B4635D8D /* PhonemeAnalysisServiceLive.swift in Sources */,
 				404FF437FCE428CF852F82E5 /* PuzzleRevealDisplayLogic.swift in Sources */,
 				997D4D156F8427AAD78FCF85 /* PuzzleRevealInteractor.swift in Sources */,
 				6F9B3AA0CF92F12BE524C0B7 /* PuzzleRevealModels.swift in Sources */,

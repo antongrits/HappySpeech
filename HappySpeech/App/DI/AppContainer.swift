@@ -95,6 +95,10 @@ public final class AppContainer {
     // Singleton: один координатор на приложение, передаётся во все LyalyaRealityKitView.
     public let lyalyaLipSyncCoordinator: LyalyaLipSyncCoordinator = LyalyaLipSyncCoordinator()
 
+    // Block D v13: PhonemeAnalysisService — фонемный анализ произношения (DTW + CoreML).
+    // Actor-typed, lazy. Требует G2PWorker (словарь 7712 слов) + RussianPhonemeClassifier (1.35 MB).
+    private var _phonemeAnalysisService: (any PhonemeAnalysisService)?
+
     // Block M (v12): VoiceCloneService — placeholder, полная реализация post-v1.0.
     // Не требует factory — VoiceCloneServicePlaceholder легковесный struct без зависимостей.
     private var _voiceCloneService: (any VoiceCloneService)?
@@ -431,6 +435,30 @@ public final class AppContainer {
         return worker
     }
 
+    // MARK: - Block D v13: PhonemeAnalysisService
+
+    /// Фонемный анализ произношения — DTW alignment + RussianPhonemeClassifier CoreML.
+    /// Live: G2PWorker (словарь) + RussianPhonemeClassifierWrapper + MFCCExtractorAdapter.
+    /// Preview/Test: MockPhonemeAnalysisService.
+    public var phonemeAnalysisService: any PhonemeAnalysisService {
+        if let existing = _phonemeAnalysisService { return existing }
+        let service: any PhonemeAnalysisService
+        do {
+            let g2p = try G2PWorker()
+            let classifier = try RussianPhonemeClassifierWrapper()
+            service = PhonemeAnalysisServiceLive(
+                g2p: g2p,
+                classifier: classifier,
+                mfccExtractor: MFCCExtractorAdapter()
+            )
+        } catch {
+            HSLogger.ml.error("AppContainer: PhonemeAnalysisService init failed (\(error.localizedDescription)), using mock")
+            service = MockPhonemeAnalysisService()
+        }
+        _phonemeAnalysisService = service
+        return service
+    }
+
     /// Библиотека анимированных историй. Singleton — создаётся один раз для всего приложения.
     public var storyLibrary: StoryLibrary { StoryLibrary.shared }
 
@@ -588,6 +616,8 @@ public extension AppContainer {
         container._objectDetectionWorker = MockObjectDetectionWorker()
         // Block O (v12): BiometricGate mock — всегда fallback в preview (нет real device).
         container._biometricGateService = MockBiometricGateService(available: false, result: .fallback)
+        // Block D v13: PhonemeAnalysis mock — без CoreML в preview/tests.
+        container._phonemeAnalysisService = MockPhonemeAnalysisService()
         return container
     }
 }
