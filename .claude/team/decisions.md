@@ -16,6 +16,14 @@
 
 ## Log
 
+### [2026-05-02] [CTO] ADR-V14-001: GoogleSignIn REVERSED_CLIENT_ID отсутствует
+**Decision:** Оставить PLACEHOLDER `com.googleusercontent.apps.PLACEHOLDER-REVERSED-CLIENT-ID` в CFBundleURLSchemes до ручного действия пользователя.
+**Reason:** GoogleService-Info.plist (`happyspeech-dfd95`) не содержит ключ `REVERSED_CLIENT_ID`. Этот ключ появляется только при явном включении Google Sign-In OAuth в Firebase Console → Authentication → Sign-in providers → Google. Без него GoogleSignIn SDK не сможет выполнять callback после авторизации.
+**Требуемое действие пользователя:** Войти в Firebase Console (happyspeech-dfd95), включить Google Sign-In provider, скачать обновлённый GoogleService-Info.plist, найти ключ REVERSED_CLIENT_ID (формат `com.googleusercontent.apps.<ID>`), заменить PLACEHOLDER в project.yml строке CFBundleURLSchemes, запустить `xcodegen generate`.
+**Risk:** До замены PLACEHOLDER Google Sign-In будет падать при попытке авторизации (callback URL не зарегистрирован). Firebase Auth / Apple Sign-In не затронуты.
+
+---
+
 ### [2026-04-21] [CTO] ADR-001: ASR Engine Selection
 **Decision:** GigaAM-v3 (ONNX via sherpa-onnx) as primary Russian ASR. WhisperKit (whisper-tiny) as fallback.
 **Reason:** GigaAM-v3 outperforms Whisper-large-v3 on Russian speech benchmarks. Provides word-level timestamps needed for pronunciation scoring. Apache 2.0 license.
