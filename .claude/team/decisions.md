@@ -3,6 +3,26 @@
 
 ---
 
+## ADR-H-V14-SPM-BIG-LIBS — Block H: Big Libraries SPM Integration (2026-05-02)
+
+**Context:** Plan v14 Block H — добавление professional open-source SPM библиотек.
+
+**Findings (по результатам аудита):**
+- Lottie iOS 4.6.0: УЖЕ в project.yml и Package.resolved. `HSLottieContainer.swift` использует нативный `LottieView` API — миграция не требуется.
+- RiveRuntime 6.19.0: УЖЕ в project.yml и Package.resolved. `HSRiveView.swift` корректно использует RiveViewModel — миграция не требуется.
+- swift-snapshot-testing 1.19.2: УЖЕ в project.yml, линкован в HappySpeechTests — уже готово.
+- Down 0.11.0: УЖЕ в project.yml. `HSMarkdownView.swift` использует DownStyler — миграция не требуется. `ChangelogView` уже рендерит changelog.md через `HSMarkdownView`.
+- **swiftui-particles 1.0.0 (benlmyers/swiftui-particles, MIT): ДОБАВЛЕНО.** `ConfettiCanvasView` в `SessionCompleteView` и `StickerUnlockOverlay` в `RewardsView` мигрированы на `Emitter<Confetti>` API. Реальный API 1.0.0: `Emitter(from:to:) { Confetti([colors]) }` + `.emitForever(intensity:)` + `.particleLifetime(:)` + `.emitSpread(:)`.
+- **Cuckoo 2.2.1: ПРОПУЩЕНО** — конфликт зависимостей. Cuckoo требует `swift-syntax "600.1.0"..<"603.0.0"`, проект зафиксирован на `swift-syntax 600.0.1` через WhisperKit/Firebase. Обновление swift-syntax потребует цепочечного обновления всего Firebase/WhisperKit stack — высокий риск для диплома.
+
+**Decisions:**
+- Добавить `SwiftuiParticles` в packages и линковать только `Particles` product (не `ParticlesPresets` — требует ресурсные файлы отдельно).
+- Cuckoo пропустить; mock-подход остаётся protocol-based через `Mock*` классы вручную.
+
+**Owner:** ios-dev-arch | **Status:** DONE | **Block:** H v14
+
+---
+
 ## Format
 ```
 [DATE] [WHO] DECISION-ID: Title

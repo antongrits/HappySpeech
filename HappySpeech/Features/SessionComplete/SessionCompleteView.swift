@@ -1,4 +1,5 @@
 import OSLog
+import Particles
 import SwiftUI
 
 // MARK: - SessionCompleteView
@@ -824,64 +825,27 @@ private struct AchievementPopupView: View {
 
 // MARK: - ConfettiCanvasView
 
-/// Простой confetti на Canvas + TimelineView. Без сторонних библиотек.
+/// Конфетти через swiftui-particles (benlmyers/swiftui-particles, MIT).
+/// Рендерит разноцветный confetti burst при высоком результате сессии.
+/// Использует Emitter API из Particles 1.0.0:
+///   from: .top → to: .bottom, emitForever(intensity:), particleLifetime, emitSpread.
 private struct ConfettiCanvasView: View {
 
-    private struct Particle: Identifiable {
-        let id: Int
-        let x: Double
-        let color: Color
-        let size: Double
-        let speed: Double
-        let rotation: Double
-        let rotationSpeed: Double
-    }
-
-    @State private var particles: [Particle] = (0..<60).map { idx in
-        Particle(
-            id: idx,
-            x: Double.random(in: 0...1),
-            color: [
-                ColorTokens.Brand.gold,
-                ColorTokens.Brand.primary,
-                ColorTokens.Brand.lilac,
-                ColorTokens.Feedback.correct,
-                ColorTokens.Brand.butter
-            ].randomElement() ?? ColorTokens.Brand.gold,
-            size: Double.random(in: 6...14),
-            speed: Double.random(in: 180...320),
-            rotation: Double.random(in: 0...360),
-            rotationSpeed: Double.random(in: 60...200)
-        )
-    }
+    private let confettiColors: [Color] = [
+        ColorTokens.Brand.gold,
+        ColorTokens.Brand.primary,
+        ColorTokens.Brand.lilac,
+        ColorTokens.Feedback.correct,
+        ColorTokens.Brand.butter
+    ]
 
     var body: some View {
-        TimelineView(.animation) { timeline in
-            Canvas { context, size in
-                let now = timeline.date.timeIntervalSinceReferenceDate
-                for particle in particles {
-                    let elapsed = now.truncatingRemainder(dividingBy: 3.0)
-                    let yProgress = elapsed * particle.speed / size.height
-                    let yPos = size.height * yProgress
-                    let xPos = size.width * particle.x + sin(elapsed * 2 + Double(particle.id)) * 20
-                    let rot = Angle.degrees(particle.rotation + particle.rotationSpeed * elapsed)
-
-                    context.drawLayer { layerCtx in
-                        layerCtx.translateBy(x: xPos, y: yPos)
-                        layerCtx.rotate(by: rot)
-                        layerCtx.fill(
-                            Path(CGRect(
-                                x: -particle.size / 2,
-                                y: -particle.size / 2,
-                                width: particle.size,
-                                height: particle.size * 0.5
-                            )),
-                            with: .color(particle.color.opacity(max(0, 1 - yProgress * 0.8)))
-                        )
-                    }
-                }
-            }
+        Emitter(from: .top, to: .bottom) {
+            Confetti(confettiColors, size: .large)
         }
+        .emitForever(intensity: 40)
+        .particleLifetime(3.0)
+        .emitSpread(0.8)
         .accessibilityHidden(true)
     }
 }
