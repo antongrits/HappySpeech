@@ -8,6 +8,9 @@ protocol RepeatAfterModelPresentationLogic: AnyObject {
     func presentStartWord(_ response: RepeatAfterModelModels.StartWord.Response)
     func presentRecordAttempt(_ response: RepeatAfterModelModels.RecordAttempt.Response)
     func presentEvaluateAttempt(_ response: RepeatAfterModelModels.EvaluateAttempt.Response)
+    func presentReplayModel(_ response: RepeatAfterModelModels.ReplayModel.Response)
+    func presentHint(_ response: RepeatAfterModelModels.Hint.Response)
+    func presentSloMo(_ response: RepeatAfterModelModels.SloMo.Response)
     func presentCompleteSession(_ response: RepeatAfterModelModels.CompleteSession.Response)
 }
 
@@ -51,7 +54,9 @@ final class RepeatAfterModelPresenter: RepeatAfterModelPresentationLogic {
             word: response.word,
             progressLabel: progressLabel,
             attemptsLabel: attemptsLabel,
-            syllabification: response.word.syllabification
+            syllabification: response.word.syllabification,
+            canReplay: response.canReplay,
+            replayCount: response.replayCount
         )
         viewModel?.displayStartWord(vm)
     }
@@ -74,14 +79,88 @@ final class RepeatAfterModelPresenter: RepeatAfterModelPresentationLogic {
     func presentEvaluateAttempt(_ response: RepeatAfterModelModels.EvaluateAttempt.Response) {
         let attemptsTemplate = String(localized: "repeat.attempts.format")
         let attemptsLabel = String(format: attemptsTemplate, response.attemptsLeft)
+
+        let diagnosticText: String? = buildDiagnosticText(response.diagnostic)
+        let hintAvailable = response.hintLevel != RepeatHintLevel.sloMoReplay
+
         let vm = RepeatAfterModelModels.EvaluateAttempt.ViewModel(
             score: response.score,
             passed: response.passed,
             feedbackText: response.feedback,
             attemptsLabel: attemptsLabel,
-            canAdvance: response.canAdvance
+            canAdvance: response.canAdvance,
+            diagnosticText: diagnosticText,
+            encouragement: response.encouragement,
+            hintAvailable: hintAvailable,
+            stars: response.stars
         )
         viewModel?.displayEvaluateAttempt(vm)
+    }
+
+    private func buildDiagnosticText(_ diagnostic: PronunciationDiagnostic) -> String? {
+        switch diagnostic {
+        case .none:         return nil
+        case .distortion:   return String(localized: "repeat.diagnostic.distortion")
+        case .substitution: return String(localized: "repeat.diagnostic.substitution")
+        case .omission:     return String(localized: "repeat.diagnostic.omission")
+        case .addition:     return String(localized: "repeat.diagnostic.addition")
+        }
+    }
+
+    // MARK: - ReplayModel
+
+    func presentReplayModel(_ response: RepeatAfterModelModels.ReplayModel.Response) {
+        let replayLabel: String
+        if response.replayLimitReached {
+            replayLabel = String(localized: "repeat.replay.limit_reached")
+        } else {
+            let template = String(localized: "repeat.replay.count_format")
+            replayLabel = String(format: template, response.replayCount)
+        }
+        let vm = RepeatAfterModelModels.ReplayModel.ViewModel(
+            audioFilename: response.audioFilename,
+            replayCount: response.replayCount,
+            replayLimitReached: response.replayLimitReached,
+            replayLabel: replayLabel
+        )
+        viewModel?.displayReplayModel(vm)
+    }
+
+    // MARK: - Hint
+
+    func presentHint(_ response: RepeatAfterModelModels.Hint.Response) {
+        let hintLabel: String
+        switch response.hintLevel {
+        case RepeatHintLevel.none:
+            hintLabel = ""
+        case RepeatHintLevel.syllabification:
+            hintLabel = String(localized: "repeat.hint.syllabification")
+        case RepeatHintLevel.articulationDiagram:
+            hintLabel = String(localized: "repeat.hint.articulation")
+        case RepeatHintLevel.sloMoReplay:
+            hintLabel = String(localized: "repeat.hint.slomo")
+        }
+        let vm = RepeatAfterModelModels.Hint.ViewModel(
+            hintLevel: response.hintLevel,
+            syllabificationText: response.syllabification,
+            articulationAsset: response.articulationAsset,
+            hintLabel: hintLabel
+        )
+        viewModel?.displayHint(vm)
+    }
+
+    // MARK: - SloMo
+
+    func presentSloMo(_ response: RepeatAfterModelModels.SloMo.Response) {
+        let ratePercent = Int(response.playbackRate * 100)
+        let template = String(localized: "repeat.slomo.rate_format")
+        let label = String(format: template, ratePercent)
+        let vm = RepeatAfterModelModels.SloMo.ViewModel(
+            audioFilename: response.audioFilename,
+            playbackRate: response.playbackRate,
+            sloMoLabel: label
+        )
+        viewModel?.displaySloMo(vm)
     }
 
     // MARK: - CompleteSession
@@ -93,21 +172,30 @@ final class RepeatAfterModelPresenter: RepeatAfterModelPresentationLogic {
 
         let message: String
         switch response.totalScore {
-        case 0.85...:
+        case 0.80...:
             message = String(localized: "repeat.message.excellent")
-        case 0.65..<0.85:
+        case 0.60..<0.80:
             message = String(localized: "repeat.message.good")
-        case 0.40..<0.65:
+        case 0.40..<0.60:
             message = String(localized: "repeat.message.keep_going")
         default:
             message = String(localized: "repeat.message.try_again")
         }
 
+        let statsTemplate = String(localized: "repeat.stats.format")
+        let statsLabel = String(
+            format: statsTemplate,
+            response.wordsCompleted,
+            response.totalAttempts,
+            response.wordsWithPerfectScore
+        )
+
         let vm = RepeatAfterModelModels.CompleteSession.ViewModel(
             starsEarned: response.starsEarned,
             scoreLabel: scoreLabel,
             message: message,
-            normalizedScore: max(0, min(response.totalScore, 1))
+            normalizedScore: max(0, min(response.totalScore, 1)),
+            statsLabel: statsLabel
         )
         viewModel?.displayCompleteSession(vm)
     }
