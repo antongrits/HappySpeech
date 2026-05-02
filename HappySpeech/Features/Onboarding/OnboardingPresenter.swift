@@ -11,10 +11,17 @@ protocol OnboardingPresentationLogic: AnyObject {
     func presentSetRole(_ response: OnboardingModels.SetRole.Response)
     func presentSetProfile(_ response: OnboardingModels.SetProfile.Response)
     func presentSetAge(_ response: OnboardingModels.SetAge.Response)
+    func presentSetGender(_ response: OnboardingModels.SetGender.Response)
     func presentToggleGoal(_ response: OnboardingModels.ToggleGoal.Response)
     func presentToggleSound(_ response: OnboardingModels.ToggleSound.Response)
     func presentSetSchedule(_ response: OnboardingModels.SetSchedule.Response)
+    func presentSetLyalyaPreset(_ response: OnboardingModels.SetLyalyaPreset.Response)
+    func presentPermissionsStatus(_ response: OnboardingModels.RequestPermission.Response)
     func presentSkipPermissions(_ response: OnboardingModels.SkipPermissions.Response)
+    func presentSetReminderTime(_ response: OnboardingModels.SetReminderTime.Response)
+    func presentPrivacyConsent(_ response: OnboardingModels.AcceptPrivacyConsent.Response)
+    func presentPrivacyConsentRequired(_ response: OnboardingModels.PrivacyConsentRequired.Response)
+    func presentScreeningChoice(_ response: OnboardingModels.SelectScreeningChoice.Response)
     func presentStartModelDownload(_ response: OnboardingModels.StartModelDownload.Response)
     func presentCompleteOnboarding(_ response: OnboardingModels.CompleteOnboarding.Response)
 }
@@ -34,28 +41,28 @@ final class OnboardingPresenter: OnboardingPresentationLogic {
 
     func presentLoadOnboarding(_ response: OnboardingModels.LoadOnboarding.Response) {
         let total = OnboardingStep.allCases.count
-        let canAdvance = canAdvance(from: response.initialStep, profile: response.profile)
+        let advance = canAdvance(from: response.initialStep, profile: response.profile)
         display?.displayLoadOnboarding(.init(
             currentStep: response.initialStep,
             totalSteps: total,
             progress: progress(from: response.initialStep, total: total),
             progressLabel: progressLabel(from: response.initialStep, total: total),
             profile: response.profile,
-            canAdvance: canAdvance,
+            canAdvance: advance,
             mascotText: mascotText(for: response.initialStep)
         ))
     }
 
     func presentAdvanceStep(_ response: OnboardingModels.AdvanceStep.Response) {
         let total = OnboardingStep.allCases.count
-        let canAdvance = canAdvance(from: response.currentStep, profile: response.profile)
+        let advance = canAdvance(from: response.currentStep, profile: response.profile)
         display?.displayAdvanceStep(.init(
             currentStep: response.currentStep,
             totalSteps: total,
             progress: progress(from: response.currentStep, total: total),
             progressLabel: progressLabel(from: response.currentStep, total: total),
             profile: response.profile,
-            canAdvance: canAdvance,
+            canAdvance: advance,
             isCompleted: response.isCompleted,
             mascotText: mascotText(for: response.currentStep)
         ))
@@ -63,13 +70,13 @@ final class OnboardingPresenter: OnboardingPresentationLogic {
 
     func presentGoBack(_ response: OnboardingModels.GoBack.Response) {
         let total = OnboardingStep.allCases.count
-        let canAdvance = canAdvance(from: response.currentStep, profile: response.profile)
+        let advance = canAdvance(from: response.currentStep, profile: response.profile)
         display?.displayGoBack(.init(
             currentStep: response.currentStep,
             totalSteps: total,
             progress: progress(from: response.currentStep, total: total),
             progressLabel: progressLabel(from: response.currentStep, total: total),
-            canAdvance: canAdvance,
+            canAdvance: advance,
             mascotText: mascotText(for: response.currentStep)
         ))
     }
@@ -156,6 +163,66 @@ final class OnboardingPresenter: OnboardingPresentationLogic {
         ))
     }
 
+    func presentSetGender(_ response: OnboardingModels.SetGender.Response) {
+        display?.displaySetGender(.init(
+            profile: response.profile,
+            canAdvance: true
+        ))
+    }
+
+    func presentSetLyalyaPreset(_ response: OnboardingModels.SetLyalyaPreset.Response) {
+        display?.displaySetLyalyaPreset(.init(
+            profile: response.profile,
+            canAdvance: true
+        ))
+    }
+
+    func presentPermissionsStatus(_ response: OnboardingModels.RequestPermission.Response) {
+        let status = response.permissionsStatus
+        display?.displayPermissionsStatus(.init(
+            permissionsStatus: status,
+            canAdvance: true,
+            micLabel: status.microphoneGranted
+                ? String(localized: "onboarding.permissions.mic.granted")
+                : String(localized: "onboarding.permissions.mic.denied"),
+            cameraLabel: status.cameraGranted
+                ? String(localized: "onboarding.permissions.camera.granted")
+                : String(localized: "onboarding.permissions.camera.denied"),
+            notificationsLabel: status.notificationsGranted
+                ? String(localized: "onboarding.permissions.notifications.granted")
+                : String(localized: "onboarding.permissions.notifications.denied")
+        ))
+    }
+
+    func presentSetReminderTime(_ response: OnboardingModels.SetReminderTime.Response) {
+        display?.displaySetReminderTime(.init(
+            profile: response.profile,
+            timeFormatted: response.profile.reminderTimeFormatted,
+            canAdvance: true
+        ))
+    }
+
+    func presentPrivacyConsent(_ response: OnboardingModels.AcceptPrivacyConsent.Response) {
+        display?.displayPrivacyConsent(.init(
+            profile: response.profile,
+            canAdvance: response.profile.privacyAccepted
+        ))
+    }
+
+    func presentPrivacyConsentRequired(_ response: OnboardingModels.PrivacyConsentRequired.Response) {
+        display?.displayPrivacyConsentRequired(.init(
+            errorMessage: String(localized: "onboarding.privacy.required.error")
+        ))
+    }
+
+    func presentScreeningChoice(_ response: OnboardingModels.SelectScreeningChoice.Response) {
+        display?.displayScreeningChoice(.init(
+            profile: response.profile,
+            wantsScreening: response.wantsScreening,
+            canAdvance: true
+        ))
+    }
+
     func presentCompleteOnboarding(_ response: OnboardingModels.CompleteOnboarding.Response) {
         display?.displayCompleteOnboarding(.init(profile: response.profile))
     }
@@ -183,10 +250,11 @@ final class OnboardingPresenter: OnboardingPresentationLogic {
         case .schedule:
             return OnboardingProfile.availableSchedules.contains(profile.dailyMinutes)
         case .permissions:
-            return true
+            return true   // разрешения можно пропустить
         case .modelDownload:
-            return true
+            return true   // модель можно пропустить
         case .completion:
+            // На экране завершения CTA активен всегда (consent проверяется в Interactor)
             return true
         }
     }

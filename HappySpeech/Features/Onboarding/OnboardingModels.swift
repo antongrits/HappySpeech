@@ -92,6 +92,64 @@ extension UserRole: CaseIterable, Identifiable {
     }
 }
 
+// MARK: - ChildGender
+
+/// Пол ребёнка — используется для выбора голосовой модели и грамматических форм.
+public enum ChildGender: String, Sendable, Equatable, CaseIterable, Identifiable {
+    case boy
+    case girl
+    case notSpecified
+
+    public var id: String { rawValue }
+
+    public var displayName: String {
+        switch self {
+        case .boy:          return String(localized: "onboarding.gender.boy")
+        case .girl:         return String(localized: "onboarding.gender.girl")
+        case .notSpecified: return String(localized: "onboarding.gender.notSpecified")
+        }
+    }
+
+    public var emoji: String {
+        switch self {
+        case .boy:          return "👦"
+        case .girl:         return "👧"
+        case .notSpecified: return "🧒"
+        }
+    }
+}
+
+// MARK: - LyalyaPreset
+
+/// Быстрые пресеты кастомизации маскота Ляли (цвет акцента + аксессуар).
+public enum LyalyaPreset: String, Sendable, Equatable, CaseIterable, Identifiable {
+    case `default` = "default"
+    case sunny = "sunny"
+    case ocean = "ocean"
+    case forest = "forest"
+
+    public var id: String { rawValue }
+
+    public var displayName: String {
+        switch self {
+        case .default: return String(localized: "onboarding.lyalya.preset.default")
+        case .sunny:   return String(localized: "onboarding.lyalya.preset.sunny")
+        case .ocean:   return String(localized: "onboarding.lyalya.preset.ocean")
+        case .forest:  return String(localized: "onboarding.lyalya.preset.forest")
+        }
+    }
+
+    /// Символьный идентификатор для LyalyaMascotView
+    public var mascotVariant: String {
+        switch self {
+        case .default: return "lyalya_default"
+        case .sunny:   return "lyalya_sunny"
+        case .ocean:   return "lyalya_ocean"
+        case .forest:  return "lyalya_forest"
+        }
+    }
+}
+
 // MARK: - OnboardingProfile
 
 public struct OnboardingProfile: Sendable, Equatable {
@@ -99,26 +157,59 @@ public struct OnboardingProfile: Sendable, Equatable {
     public var childName: String
     public var childAge: Int
     public var childAvatar: String
+    public var childGender: ChildGender
     public var goals: Set<String>
     public var difficultSounds: Set<String>
     public var dailyMinutes: Int
+
+    // Reminder
+    public var reminderEnabled: Bool
+    public var reminderHour: Int
+    public var reminderMinute: Int
+    /// Дни недели: 1 = Пн, 2 = Вт, ... 7 = Вс (Calendar.Component.weekday, ISO)
+    public var reminderDays: Set<Int>
+
+    // Privacy + legal
+    public var privacyAccepted: Bool
+
+    // Screening
+    public var screeningRequested: Bool
+
+    // Lyalya customization
+    public var lyalyaPreset: LyalyaPreset
 
     public init(
         role: UserRole = .parent,
         childName: String = "",
         childAge: Int = 6,
         childAvatar: String = "🐱",
+        childGender: ChildGender = .notSpecified,
         goals: Set<String> = [],
         difficultSounds: Set<String> = [],
-        dailyMinutes: Int = 10
+        dailyMinutes: Int = 10,
+        reminderEnabled: Bool = false,
+        reminderHour: Int = 17,
+        reminderMinute: Int = 0,
+        reminderDays: Set<Int> = [1, 2, 3, 4, 5],
+        privacyAccepted: Bool = false,
+        screeningRequested: Bool = false,
+        lyalyaPreset: LyalyaPreset = .default
     ) {
         self.role = role
         self.childName = childName
         self.childAge = childAge
         self.childAvatar = childAvatar
+        self.childGender = childGender
         self.goals = goals
         self.difficultSounds = difficultSounds
         self.dailyMinutes = dailyMinutes
+        self.reminderEnabled = reminderEnabled
+        self.reminderHour = reminderHour
+        self.reminderMinute = reminderMinute
+        self.reminderDays = reminderDays
+        self.privacyAccepted = privacyAccepted
+        self.screeningRequested = screeningRequested
+        self.lyalyaPreset = lyalyaPreset
     }
 
     public static let availableAvatars: [String] = ["🐱", "🐶", "🦊", "🐻", "🐼", "🦁"]
@@ -156,6 +247,17 @@ public struct OnboardingProfile: Sendable, Equatable {
 
     /// Варианты длительности занятий в минутах.
     public static let availableSchedules: [Int] = [5, 10, 15, 20]
+
+    /// Читаемое представление выбранного времени напоминания (для UI).
+    public var reminderTimeFormatted: String {
+        String(format: "%02d:%02d", reminderHour, reminderMinute)
+    }
+
+    /// Именованные дни недели для UI (1=Пн ... 7=Вс, ISO 8601).
+    public static let weekdayLabels: [(day: Int, short: String)] = [
+        (1, "Пн"), (2, "Вт"), (3, "Ср"), (4, "Чт"),
+        (5, "Пт"), (6, "Сб"), (7, "Вс")
+    ]
 }
 
 // MARK: - DailySchedulePreset
@@ -204,6 +306,7 @@ enum OnboardingModels {
         struct Response: Sendable {
             let initialStep: OnboardingStep
             let profile: OnboardingProfile
+            let permissionsStatus: OnboardingPermissionsStatus
         }
         struct ViewModel: Sendable {
             let currentStep: OnboardingStep
@@ -225,6 +328,7 @@ enum OnboardingModels {
         struct Response: Sendable {
             let currentStep: OnboardingStep
             let profile: OnboardingProfile
+            let permissionsStatus: OnboardingPermissionsStatus
             let isCompleted: Bool
         }
         struct ViewModel: Sendable {
@@ -246,6 +350,7 @@ enum OnboardingModels {
         struct Response: Sendable {
             let currentStep: OnboardingStep
             let profile: OnboardingProfile
+            let permissionsStatus: OnboardingPermissionsStatus
         }
         struct ViewModel: Sendable {
             let currentStep: OnboardingStep
@@ -380,6 +485,127 @@ enum OnboardingModels {
         }
     }
 
+    // MARK: - SetGender
+
+    enum SetGender {
+        struct Request: Sendable {
+            let gender: ChildGender
+        }
+        struct Response: Sendable {
+            let profile: OnboardingProfile
+        }
+        struct ViewModel: Sendable {
+            let profile: OnboardingProfile
+            let canAdvance: Bool
+        }
+    }
+
+    // MARK: - SetLyalyaPreset
+
+    enum SetLyalyaPreset {
+        struct Request: Sendable {
+            let preset: LyalyaPreset
+        }
+        struct Response: Sendable {
+            let profile: OnboardingProfile
+        }
+        struct ViewModel: Sendable {
+            let profile: OnboardingProfile
+            let canAdvance: Bool
+        }
+    }
+
+    // MARK: - RequestPermission
+
+    enum RequestPermission {
+        struct Request: Sendable {}
+        struct Response: Sendable {
+            let profile: OnboardingProfile
+            let permissionsStatus: OnboardingPermissionsStatus
+        }
+        struct ViewModel: Sendable {
+            let permissionsStatus: OnboardingPermissionsStatus
+            let canAdvance: Bool
+            let micLabel: String
+            let cameraLabel: String
+            let notificationsLabel: String
+        }
+    }
+
+    // MARK: - SetReminderTime
+
+    enum SetReminderTime {
+        struct Request: Sendable {
+            let hour: Int
+            let minute: Int
+        }
+        struct Response: Sendable {
+            let profile: OnboardingProfile
+        }
+        struct ViewModel: Sendable {
+            let profile: OnboardingProfile
+            let timeFormatted: String
+            let canAdvance: Bool
+        }
+    }
+
+    // MARK: - ToggleReminderDay
+
+    enum ToggleReminderDay {
+        struct Request: Sendable {
+            let weekday: Int
+        }
+        // Response и ViewModel — те же что SetReminderTime (через presentSetReminderTime)
+    }
+
+    // MARK: - AcceptPrivacyConsent
+
+    enum AcceptPrivacyConsent {
+        struct Request: Sendable {
+            let accepted: Bool
+        }
+        struct Response: Sendable {
+            let profile: OnboardingProfile
+        }
+        struct ViewModel: Sendable {
+            let profile: OnboardingProfile
+            let canAdvance: Bool
+        }
+    }
+
+    // MARK: - SelectScreeningChoice
+
+    enum SelectScreeningChoice {
+        struct Request: Sendable {
+            let wantsScreening: Bool
+        }
+        struct Response: Sendable {
+            let profile: OnboardingProfile
+            let wantsScreening: Bool
+        }
+        struct ViewModel: Sendable {
+            let profile: OnboardingProfile
+            let wantsScreening: Bool
+            let canAdvance: Bool
+        }
+    }
+
+    // MARK: - SkipModelDownload
+
+    enum SkipModelDownload {
+        struct Request: Sendable {}
+        // Response → StartModelDownload.Response (через presentStartModelDownload со статусом .skipped)
+    }
+
+    // MARK: - PrivacyConsentRequired
+
+    enum PrivacyConsentRequired {
+        struct Response: Sendable {}
+        struct ViewModel: Sendable {
+            let errorMessage: String
+        }
+    }
+
     // MARK: - CompleteOnboarding
 
     enum CompleteOnboarding {
@@ -429,39 +655,14 @@ public enum OnboardingState {
 
     // MARK: - Codec
 
-    private struct CodableProfile: Codable {
-        let role: String
-        let childName: String
-        let childAge: Int
-        let childAvatar: String
-        let goals: [String]
-        let difficultSounds: [String]
-        let dailyMinutes: Int
-    }
+    // CodableProfile объявлен в OnboardingInteractor.swift (fileprivate расширение)
+    // и здесь не дублируется — используем OnboardingState.encode/decode.
 
     private static func encodeProfile(_ profile: OnboardingProfile) throws -> Data {
-        let codable = CodableProfile(
-            role: profile.role.rawValue,
-            childName: profile.childName,
-            childAge: profile.childAge,
-            childAvatar: profile.childAvatar,
-            goals: Array(profile.goals).sorted(),
-            difficultSounds: Array(profile.difficultSounds).sorted(),
-            dailyMinutes: profile.dailyMinutes
-        )
-        return try JSONEncoder().encode(codable)
+        try encode(profile: profile)
     }
 
     private static func decodeProfile(_ data: Data) throws -> OnboardingProfile {
-        let decoded = try JSONDecoder().decode(CodableProfile.self, from: data)
-        return OnboardingProfile(
-            role: UserRole(rawValue: decoded.role) ?? .parent,
-            childName: decoded.childName,
-            childAge: decoded.childAge,
-            childAvatar: decoded.childAvatar,
-            goals: Set(decoded.goals),
-            difficultSounds: Set(decoded.difficultSounds),
-            dailyMinutes: decoded.dailyMinutes
-        )
+        try decode(data: data)
     }
 }
