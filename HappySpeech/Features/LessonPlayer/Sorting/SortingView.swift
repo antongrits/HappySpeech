@@ -3,27 +3,27 @@ import SwiftUI
 
 // MARK: - SortingView
 //
-// «Сортировка по категориям» — по центру слово (emoji + подпись), снизу две
-// кнопки-корзины (например, «Живое» / «Неживое»). Tap по кнопке классифицирует
-// слово, на экран на 0.7 с выходит мягкий цветной overlay (зелёный / коралловый),
-// затем индекс сдвигается на следующее слово. После 8 слов — экран результатов
-// со звёздами и CTA «Завершить». В шапке — таймер (90 с) и индикатор серии
-// правильных ответов.
+// «Сортировка по категориям» — по центру слово (emoji + подпись), снизу кнопки-
+// корзины (2–4 категории). Tap по кнопке классифицирует слово, на экран на 0.7 с
+// выходит мягкий цветной overlay (зелёный / коралловый), затем индекс сдвигается
+// на следующее слово. После всех слов — экран результатов со звёздами и
+// per-category breakdown. В шапке — таймер (90 с) и серия правильных ответов.
+// Кнопка «Подсказка» даёт 3 уровня помощи.
 
 struct SortingView: View {
 
-    // MARK: Inputs
+    // MARK: - Inputs
 
     let soundGroup: String
     let childName: String
     let onComplete: (Float) -> Void
 
-    // MARK: Environment
+    // MARK: - Environment
 
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    // MARK: State
+    // MARK: - State
 
     @State private var display: SortingDisplay
     @State private var interactor: SortingInteractor
@@ -68,6 +68,7 @@ struct SortingView: View {
             ColorTokens.Kid.bg.ignoresSafeArea()
             content
             feedbackOverlay
+            hintOverlay
         }
         .task {
             presenter.viewModel = display
@@ -103,7 +104,7 @@ struct SortingView: View {
         }
     }
 
-    // MARK: Loading
+    // MARK: - Loading
 
     private var loadingView: some View {
         VStack(spacing: SpacingTokens.medium) {
@@ -116,7 +117,7 @@ struct SortingView: View {
         }
     }
 
-    // MARK: Classifying
+    // MARK: - Classifying
 
     private var classifyingView: some View {
         VStack(spacing: SpacingTokens.large) {
@@ -125,6 +126,7 @@ struct SortingView: View {
             wordCard
             Spacer(minLength: 0)
             categoryButtons
+            hintButton
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
         .padding(.top, SpacingTokens.large)
@@ -211,6 +213,11 @@ struct SortingView: View {
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
+                if display.autoPlacedWords.contains(word.id) {
+                    Label(String(localized: "Авто"), systemImage: "wand.and.stars")
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                }
             }
             .padding(SpacingTokens.large)
             .frame(maxWidth: .infinity)
@@ -229,12 +236,15 @@ struct SortingView: View {
                 value: word.id
             )
             .accessibilityElement(children: .combine)
-            .accessibilityLabel(word.word)
+            .accessibilityLabel(String(localized: "\(word.word), перетащи в нужную корзину"))
         }
     }
 
     private var categoryButtons: some View {
-        HStack(spacing: SpacingTokens.medium) {
+        let columns = display.categories.count <= 2
+            ? [GridItem(.flexible()), GridItem(.flexible())]
+            : [GridItem(.flexible()), GridItem(.flexible())]
+        return LazyVGrid(columns: columns, spacing: SpacingTokens.medium) {
             ForEach(display.categories) { category in
                 categoryButton(category)
             }
@@ -242,7 +252,8 @@ struct SortingView: View {
     }
 
     private func categoryButton(_ category: SortingCategory) -> some View {
-        Button {
+        let isHighlighted = display.highlightedCategoryId == category.id
+        return Button {
             handleClassify(categoryId: category.id)
         } label: {
             VStack(spacing: SpacingTokens.small) {
@@ -260,21 +271,51 @@ struct SortingView: View {
             .padding(.vertical, SpacingTokens.small)
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                    .fill(ColorTokens.Kid.surface)
+                    .fill(isHighlighted
+                          ? ColorTokens.Brand.primary.opacity(0.15)
+                          : ColorTokens.Kid.surface)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                    .strokeBorder(ColorTokens.Kid.line, lineWidth: 2)
+                    .strokeBorder(
+                        isHighlighted ? ColorTokens.Brand.primary : ColorTokens.Kid.line,
+                        lineWidth: isHighlighted ? 3 : 2
+                    )
             )
             .shadow(color: .black.opacity(0.05), radius: 4, y: 2)
+            .scaleEffect(isHighlighted ? 1.03 : 1.0)
+            .animation(
+                reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7),
+                value: isHighlighted
+            )
         }
         .buttonStyle(.plain)
         .disabled(display.phase != .classifying)
         .accessibilityLabel(category.title)
-        .accessibilityHint(String(localized: "Положить слово сюда"))
+        .accessibilityHint(String(localized: "Положить слово в эту корзину"))
     }
 
-    // MARK: Feedback overlay
+    private var hintButton: some View {
+        Button {
+            requestHint()
+        } label: {
+            Label(String(localized: "Подсказка"), systemImage: "lightbulb.fill")
+                .font(TypographyTokens.caption(14))
+                .foregroundStyle(ColorTokens.Brand.primary)
+                .padding(.horizontal, SpacingTokens.medium)
+                .padding(.vertical, SpacingTokens.small)
+                .background(
+                    Capsule(style: .continuous)
+                        .fill(ColorTokens.Brand.primary.opacity(0.12))
+                )
+        }
+        .buttonStyle(.plain)
+        .disabled(display.phase != .classifying)
+        .accessibilityLabel(String(localized: "Попросить подсказку"))
+        .accessibilityHint(String(localized: "Три уровня подсказки доступны"))
+    }
+
+    // MARK: - Feedback overlay
 
     @ViewBuilder
     private var feedbackOverlay: some View {
@@ -313,33 +354,79 @@ struct SortingView: View {
         }
     }
 
-    // MARK: Completed
+    // MARK: - Hint overlay
+
+    @ViewBuilder
+    private var hintOverlay: some View {
+        if display.hintVisible {
+            VStack(spacing: SpacingTokens.small) {
+                Image(systemName: "lightbulb.fill")
+                    .font(.system(size: 32))
+                    .foregroundStyle(ColorTokens.Brand.butter)
+                Text(display.hintText)
+                    .font(TypographyTokens.body(16))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(3)
+                    .minimumScaleFactor(0.85)
+            }
+            .padding(SpacingTokens.large)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                    .fill(ColorTokens.Kid.surface)
+                    .shadow(color: .black.opacity(0.14), radius: 12, y: 3)
+            )
+            .padding(.horizontal, SpacingTokens.xLarge)
+            .transition(.move(edge: .top).combined(with: .opacity))
+            .animation(
+                reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.8),
+                value: display.hintVisible
+            )
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel(display.hintText)
+        }
+    }
+
+    // MARK: - Completed
 
     private var completedView: some View {
-        VStack(spacing: SpacingTokens.large) {
-            Spacer()
-            starsRow
-            Text(display.scoreLabel)
-                .font(TypographyTokens.title(28))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .monospacedDigit()
-            Text(display.completionMessage)
-                .font(TypographyTokens.body(17))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-                .padding(.horizontal, SpacingTokens.xLarge)
-            Spacer()
-            HSButton(
-                String(localized: "Завершить"),
-                style: .primary,
-                icon: "checkmark.circle.fill"
-            ) { finalize() }
-            .frame(maxWidth: 320)
-            .padding(.bottom, SpacingTokens.large)
+        ScrollView {
+            VStack(spacing: SpacingTokens.large) {
+                Spacer(minLength: SpacingTokens.large)
+                starsRow
+                Text(display.scoreLabel)
+                    .font(TypographyTokens.title(28))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .monospacedDigit()
+                Text(display.completionMessage)
+                    .font(TypographyTokens.body(17))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .padding(.horizontal, SpacingTokens.xLarge)
+
+                if !display.categoryBreakdown.isEmpty {
+                    categoryBreakdownView
+                }
+
+                if display.autoPlacedCount > 0 {
+                    Text(String(localized: "Помогли: \(display.autoPlacedCount) слова"))
+                        .font(TypographyTokens.caption(13))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                }
+
+                Spacer(minLength: SpacingTokens.large)
+                HSButton(
+                    String(localized: "Завершить"),
+                    style: .primary,
+                    icon: "checkmark.circle.fill"
+                ) { finalize() }
+                .frame(maxWidth: 320)
+                .padding(.bottom, SpacingTokens.large)
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
         }
-        .padding(.horizontal, SpacingTokens.screenEdge)
         .accessibilityElement(children: .contain)
         .accessibilityLabel(String(localized: "Игра завершена"))
     }
@@ -356,13 +443,50 @@ struct SortingView: View {
                     )
                     .scaleEffect(idx < display.starsEarned ? 1.0 : 0.85)
                     .animation(
-                        reduceMotion ? nil : .spring(response: 0.5, dampingFraction: 0.65).delay(Double(idx) * 0.12),
+                        reduceMotion ? nil : .spring(response: 0.5, dampingFraction: 0.65)
+                            .delay(Double(idx) * 0.12),
                         value: display.starsEarned
                     )
             }
         }
         .accessibilityLabel(
             String(localized: "Получено звёзд: \(display.starsEarned) из 3")
+        )
+    }
+
+    private var categoryBreakdownView: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.small) {
+            Text(String(localized: "По категориям"))
+                .font(TypographyTokens.headline(15))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+            ForEach(display.categoryBreakdown, id: \.categoryId) { stat in
+                HStack {
+                    Text(stat.title)
+                        .font(TypographyTokens.body(15))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                    Spacer()
+                    Text("\(stat.correct)/\(stat.total)")
+                        .font(TypographyTokens.mono(14))
+                        .foregroundStyle(
+                            stat.accuracy >= 0.7 ? ColorTokens.Feedback.correct : ColorTokens.Feedback.incorrect
+                        )
+                        .monospacedDigit()
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel(String(localized: "\(stat.title): \(stat.correct) из \(stat.total)"))
+            }
+            if let best = display.bestCategoryTitle {
+                Label(String(localized: "Лучшая: \(best)"), systemImage: "crown.fill")
+                    .font(TypographyTokens.caption(13))
+                    .foregroundStyle(ColorTokens.Brand.butter)
+            }
+        }
+        .padding(SpacingTokens.medium)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                .fill(ColorTokens.Kid.surface)
         )
     }
 
@@ -377,6 +501,14 @@ struct SortingView: View {
                 wordId: word.id,
                 categoryId: categoryId
             ))
+        }
+    }
+
+    private func requestHint() {
+        guard display.phase == .classifying else { return }
+        guard let word = currentWord else { return }
+        Task {
+            await interactor.requestHint(.init(wordId: word.id))
         }
     }
 
@@ -414,7 +546,6 @@ struct SortingView: View {
 
     // MARK: - Group key inference
 
-    /// Преобразует `soundTarget` из SessionActivity в ключ для `SortingSet.set`.
     private static func groupKey(for sound: String) -> String {
         switch sound.uppercased() {
         case "С", "З", "Ц":       return "whistling"
@@ -432,6 +563,8 @@ extension SortingDisplay: SortingDisplayLogic {
 
     func displayLoadSession(_ viewModel: SortingModels.LoadSession.ViewModel) {
         setTitle = viewModel.setTitle
+        taskDescription = viewModel.taskDescription
+        taskType = viewModel.taskType
         words = viewModel.words
         categories = viewModel.categories
         greeting = viewModel.greeting
@@ -439,15 +572,22 @@ extension SortingDisplay: SortingDisplayLogic {
         classifiedWords = [:]
         correctWords = []
         incorrectWords = []
+        autoPlacedWords = []
+        highlightedCategoryId = nil
         currentWordIndex = 0
         currentStreak = 0
         streakBadgeVisible = false
         feedbackText = ""
         lastClassificationCorrect = nil
+        hintText = ""
+        hintVisible = false
+        hintLevel = 0
         phase = .classifying
     }
 
     func displayClassifyWord(_ viewModel: SortingModels.ClassifyWord.ViewModel) {
+        highlightedCategoryId = nil
+        hintVisible = false
         if viewModel.correct {
             correctWords.insert(viewModel.wordId)
             incorrectWords.remove(viewModel.wordId)
@@ -460,16 +600,12 @@ extension SortingDisplay: SortingDisplayLogic {
         feedbackText = viewModel.feedbackText
         lastClassificationCorrect = viewModel.correct
         streakBadgeVisible = viewModel.streakBadgeVisible
-        classifiedWords[viewModel.wordId] = viewModel.correct ? "correct" : "incorrect"
+        classifiedWords[viewModel.wordId] = viewModel.categoryId
         phase = .feedback
 
-        // После 0.7 с — следующее слово. Если это было последнее (всё
-        // классифицировано), то Interactor уже вызвал completeSession и
-        // Presenter пришёл со starsEarned — мы просто не будем листать дальше.
         Task { @MainActor [weak self] in
             try? await Task.sleep(for: .milliseconds(700))
             guard let self else { return }
-            // Если пришёл completed — completeSession переключит phase.
             if phase == .feedback {
                 if currentWordIndex < words.count - 1 {
                     currentWordIndex += 1
@@ -479,6 +615,40 @@ extension SortingDisplay: SortingDisplayLogic {
                 streakBadgeVisible = false
             }
         }
+    }
+
+    func displayHint(_ viewModel: SortingModels.RequestHint.ViewModel) {
+        hintLevel = viewModel.hintLevel
+        hintText = viewModel.hintText
+        hintVisible = true
+        if viewModel.hintLevel == 1 {
+            highlightedCategoryId = viewModel.highlightCategoryId
+        }
+        // Скрыть подсказку через 3 секунды.
+        Task { @MainActor [weak self] in
+            try? await Task.sleep(for: .seconds(3))
+            guard let self else { return }
+            hintVisible = false
+            if hintLevel == 1 {
+                highlightedCategoryId = nil
+            }
+        }
+    }
+
+    func displayAutoPlace(_ viewModel: SortingModels.AutoPlace.ViewModel) {
+        classifiedWords[viewModel.wordId] = viewModel.categoryId
+        correctWords.insert(viewModel.wordId)
+        autoPlacedWords.insert(viewModel.wordId)
+        highlightedCategoryId = nil
+        hintVisible = false
+        if currentWordIndex < words.count - 1 {
+            currentWordIndex += 1
+        }
+    }
+
+    func displayStreakBonus(_ viewModel: SortingModels.StreakBonus.ViewModel) {
+        feedbackText = viewModel.bonusText
+        streakBadgeVisible = true
     }
 
     func displayTimerTick(_ viewModel: SortingModels.TimerTick.ViewModel) {
@@ -491,6 +661,10 @@ extension SortingDisplay: SortingDisplayLogic {
         scoreLabel = viewModel.scoreLabel
         completionMessage = viewModel.message
         finalScore = viewModel.finalScore
+        categoryBreakdown = viewModel.categoryBreakdown
+        bestCategoryTitle = viewModel.bestCategoryTitle
+        worstCategoryTitle = viewModel.worstCategoryTitle
+        autoPlacedCount = viewModel.autoPlacedCount
         phase = .completed
     }
 }
