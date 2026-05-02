@@ -4,17 +4,24 @@ import Foundation
 
 @MainActor
 protocol ArticulationImitationPresentationLogic: AnyObject {
+
+    // MARK: Deep VIP
     func presentLoadSession(_ response: ArticulationImitationModels.LoadSession.Response)
+    func presentStartPose(_ response: ArticulationImitationModels.StartPose.Response)
+    func presentBeginMirroring(_ mode: MirroringMode)
+    func presentBlendshapeUpdate(_ response: ArticulationImitationModels.BlendshapeUpdate.Response)
+    func presentConfirmPose(_ response: ArticulationImitationModels.ConfirmPose.Response)
+    func presentHint(_ response: ArticulationImitationModels.RequestHint.Response)
+    func presentParentConfirmRequest(_ pose: ArticulationPose)
+    func presentSessionComplete(_ response: ArticulationImitationModels.SessionComplete.Response)
+
+    // MARK: Legacy
     func presentStartExercise(_ response: ArticulationImitationModels.StartExercise.Response)
     func presentHoldProgress(_ response: ArticulationImitationModels.HoldProgress.Response)
     func presentCompleteExercise(_ response: ArticulationImitationModels.CompleteExercise.Response)
-    func presentSessionComplete(_ response: ArticulationImitationModels.SessionComplete.Response)
 }
 
 // MARK: - ArticulationImitationPresenter
-//
-// Чисто форматирующий слой: превращает Response в ViewModel.
-// Тексты — через String Catalog; числовые метки — через String(format:).
 
 @MainActor
 final class ArticulationImitationPresenter: ArticulationImitationPresentationLogic {
@@ -32,57 +39,95 @@ final class ArticulationImitationPresenter: ArticulationImitationPresentationLog
             greeting = String(format: template, response.childName)
         }
         let vm = ArticulationImitationModels.LoadSession.ViewModel(
-            exercises: response.exercises,
-            greeting: greeting
+            poses: response.poses,
+            greeting: greeting,
+            mirroringMode: response.mirroringMode
         )
         viewModel?.displayLoadSession(vm)
     }
 
-    // MARK: - StartExercise
+    // MARK: - StartPose
 
-    func presentStartExercise(_ response: ArticulationImitationModels.StartExercise.Response) {
+    func presentStartPose(_ response: ArticulationImitationModels.StartPose.Response) {
         let progressTemplate = String(localized: "articulation.progress.format")
         let progressLabel = String(
             format: progressTemplate,
-            response.exerciseNumber,
+            response.poseNumber,
             response.total
         )
-        let vm = ArticulationImitationModels.StartExercise.ViewModel(
-            exercise: response.exercise,
+        let attemptTemplate = String(localized: "articulation.attempt.format")
+        let attemptLabel = String(format: attemptTemplate, response.attemptNumber)
+        let vm = ArticulationImitationModels.StartPose.ViewModel(
+            pose: response.pose,
             progressLabel: progressLabel,
-            canStart: true
+            attemptLabel: attemptLabel,
+            voicePrompt: response.pose.voicePrompt
         )
-        viewModel?.displayStartExercise(vm)
+        viewModel?.displayStartPose(vm)
     }
 
-    // MARK: - HoldProgress
+    // MARK: - BeginMirroring
 
-    func presentHoldProgress(_ response: ArticulationImitationModels.HoldProgress.Response) {
-        let template = String(localized: "articulation.timer.format")
-        let timerLabel = String(format: template, response.remainingSeconds)
-        let vm = ArticulationImitationModels.HoldProgress.ViewModel(
-            fraction: response.fraction,
-            timerLabel: timerLabel,
-            completed: response.completed
-        )
-        viewModel?.displayHoldProgress(vm)
+    func presentBeginMirroring(_ mode: MirroringMode) {
+        viewModel?.displayBeginMirroring(mode)
     }
 
-    // MARK: - CompleteExercise
+    // MARK: - BlendshapeUpdate
 
-    func presentCompleteExercise(_ response: ArticulationImitationModels.CompleteExercise.Response) {
-        let feedback: String
-        if response.earnedStar {
-            feedback = String(localized: "articulation.feedback.earned_star")
-        } else {
-            feedback = String(localized: "articulation.feedback.try_again")
+    func presentBlendshapeUpdate(_ response: ArticulationImitationModels.BlendshapeUpdate.Response) {
+        let fraction = Double(response.matchResult.score) / 100.0
+        let scoreLabel = "\(response.matchResult.score)%"
+        let feedbackColor: String
+        switch response.matchResult.score {
+        case 75...:  feedbackColor = "success"
+        case 50..<75: feedbackColor = "warning"
+        default:     feedbackColor = "neutral"
         }
-        let vm = ArticulationImitationModels.CompleteExercise.ViewModel(
-            earnedStar: response.earnedStar,
+        let vm = ArticulationImitationModels.BlendshapeUpdate.ViewModel(
+            scoreFraction: fraction,
+            scoreLabel: scoreLabel,
+            feedbackColor: feedbackColor,
+            matchedChannels: response.matchResult.matchedChannels
+        )
+        viewModel?.displayBlendshapeUpdate(vm)
+    }
+
+    // MARK: - ConfirmPose
+
+    func presentConfirmPose(_ response: ArticulationImitationModels.ConfirmPose.Response) {
+        let feedback: String
+        if response.passed {
+            feedback = String(localized: "articulation.feedback.pose_passed")
+        } else {
+            feedback = String(localized: "articulation.feedback.pose_failed")
+        }
+        let scoreLabel = "\(response.score)%"
+        let vm = ArticulationImitationModels.ConfirmPose.ViewModel(
+            passed: response.passed,
             feedbackText: feedback,
+            scoreLabel: scoreLabel,
             allDone: response.allDone
         )
-        viewModel?.displayCompleteExercise(vm)
+        viewModel?.displayConfirmPose(vm)
+    }
+
+    // MARK: - Hint
+
+    func presentHint(_ response: ArticulationImitationModels.RequestHint.Response) {
+        let attemptsTemplate = String(localized: "articulation.attempts_left.format")
+        let attemptsLabel = String(format: attemptsTemplate, response.attemptsLeft)
+        let vm = ArticulationImitationModels.RequestHint.ViewModel(
+            hintText: response.hintText,
+            hintLevel: response.hintLevel,
+            attemptsLeftLabel: attemptsLabel
+        )
+        viewModel?.displayHint(vm)
+    }
+
+    // MARK: - ParentConfirmRequest
+
+    func presentParentConfirmRequest(_ pose: ArticulationPose) {
+        viewModel?.displayParentConfirmRequest(pose)
     }
 
     // MARK: - SessionComplete
@@ -105,13 +150,62 @@ final class ArticulationImitationPresenter: ArticulationImitationPresentationLog
             message = String(localized: "articulation.message.try_again")
         }
 
+        let showDetailed = response.perPoseRecords.count >= 3
         let vm = ArticulationImitationModels.SessionComplete.ViewModel(
             starsTotal: response.starsTotal,
             outOf: outOf,
             scoreLabel: scoreLabel,
             message: message,
-            normalizedScore: max(0, min(normalized, 1))
+            normalizedScore: max(0, min(normalized, 1)),
+            showDetailedStats: showDetailed
         )
         viewModel?.displaySessionComplete(vm)
+    }
+
+    // MARK: - Legacy: StartExercise
+
+    func presentStartExercise(_ response: ArticulationImitationModels.StartExercise.Response) {
+        let progressTemplate = String(localized: "articulation.progress.format")
+        let progressLabel = String(
+            format: progressTemplate,
+            response.exerciseNumber,
+            response.total
+        )
+        let vm = ArticulationImitationModels.StartExercise.ViewModel(
+            exercise: response.exercise,
+            progressLabel: progressLabel,
+            canStart: true
+        )
+        viewModel?.displayStartExercise(vm)
+    }
+
+    // MARK: - Legacy: HoldProgress
+
+    func presentHoldProgress(_ response: ArticulationImitationModels.HoldProgress.Response) {
+        let template = String(localized: "articulation.timer.format")
+        let timerLabel = String(format: template, response.remainingSeconds)
+        let vm = ArticulationImitationModels.HoldProgress.ViewModel(
+            fraction: response.fraction,
+            timerLabel: timerLabel,
+            completed: response.completed
+        )
+        viewModel?.displayHoldProgress(vm)
+    }
+
+    // MARK: - Legacy: CompleteExercise
+
+    func presentCompleteExercise(_ response: ArticulationImitationModels.CompleteExercise.Response) {
+        let feedback: String
+        if response.earnedStar {
+            feedback = String(localized: "articulation.feedback.earned_star")
+        } else {
+            feedback = String(localized: "articulation.feedback.try_again")
+        }
+        let vm = ArticulationImitationModels.CompleteExercise.ViewModel(
+            earnedStar: response.earnedStar,
+            feedbackText: feedback,
+            allDone: response.allDone
+        )
+        viewModel?.displayCompleteExercise(vm)
     }
 }
