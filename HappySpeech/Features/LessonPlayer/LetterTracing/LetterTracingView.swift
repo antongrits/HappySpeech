@@ -7,32 +7,23 @@ import UIKit
 
 /// Фазы одного упражнения написания буквы.
 enum LetterTracingPhase: Sendable, Equatable {
-    /// Загрузка задания.
     case loading
-    /// Ребёнок рисует букву.
     case drawing
-    /// Показываем результат распознавания.
     case feedback
-    /// Все раунды завершены.
     case complete
 }
 
 // MARK: - LetterTracingView
 
-/// 18-й шаблон игры — «Напиши букву» (iPhone и iPad).
+/// Шаблон «Напиши букву» (iPhone и iPad).
 ///
 /// Поток:
 ///   1. `.loading` → `interactor.loadExercise()` → `.drawing`
-///   2. Ребёнок рисует пальцем (iPhone) или Apple Pencil / пальцем (iPad) поверх dotted-guide.
+///   2. Ребёнок рисует пальцем / Apple Pencil поверх dotted-guide.
 ///   3. Нажимает «Проверить» → `.feedback` (Vision распознаёт букву).
 ///   4. «Сбросить» → очищаем canvas, перезапускаем таймер.
-///   5. После всех раундов → `onComplete(score)`.
-///
-/// Адаптация для iPhone:
-///   - Canvas: 85% ширины экрана, максимум 350pt.
-///   - Hint: «Веди пальцем по букве» вместо упоминания Apple Pencil.
-///   - Scoring: порог 65% вместо 80% (менее точный ввод пальцем).
-///   - PKToolPicker: отображается в bottom sheet автоматически (iOS behavior).
+///   5. «Подсказка» → 3 уровня: точка → стрелка → полный шаблон.
+///   6. После всех раундов → `onComplete(score)`.
 struct LetterTracingView: View {
 
     // MARK: - Input
@@ -57,6 +48,7 @@ struct LetterTracingView: View {
     @State private var phase: LetterTracingPhase = .loading
     @State private var exerciseVM: LetterTracingModels.LoadExercise.ViewModel?
     @State private var feedbackVM: LetterTracingModels.SubmitDrawing.ViewModel?
+    @State private var hintVM: LetterTracingModels.RequestHint.ViewModel?
     @State private var isProcessing: Bool = false
 
     // MARK: - Canvas
@@ -79,35 +71,34 @@ struct LetterTracingView: View {
             }
     }
 
-    // MARK: - Tracing Canvas (iPhone + iPad)
+    // MARK: - Tracing Canvas
 
     @ViewBuilder
     private var tracingCanvas: some View {
         GeometryReader { geo in
             ZStack(alignment: .top) {
-                // Background
                 ColorTokens.Kid.bg.ignoresSafeArea()
 
                 VStack(spacing: SpacingTokens.medium) {
-                    // HUD: прогресс + инструкция
                     if let vm = exerciseVM {
                         exerciseHeader(vm: vm)
                             .padding(.horizontal, SpacingTokens.screenEdge)
                     }
 
-                    // Canvas + template
                     ZStack {
-                        // 1. Dotted letter template
                         if let vm = exerciseVM {
-                            LetterTemplateView(letter: vm.targetLetter)
-                                .frame(
-                                    width: canvasSize(geo).width,
-                                    height: canvasSize(geo).height
-                                )
-                                .accessibilityHidden(true)
+                            LetterTemplateView(
+                                letter: vm.targetLetter,
+                                level: vm.tracingLevel,
+                                showFullOverlay: hintVM?.showFullTemplate ?? false
+                            )
+                            .frame(
+                                width: canvasSize(geo).width,
+                                height: canvasSize(geo).height
+                            )
+                            .accessibilityHidden(true)
                         }
 
-                        // 2. Drawing canvas поверх template
                         CanvasViewRepresentable(
                             canvas: $canvas,
                             allowsFinger: true
@@ -123,6 +114,12 @@ struct LetterTracingView: View {
                         .accessibilityHint(
                             String(localized: "letter_tracing.canvas.accessibility_hint")
                         )
+
+                        // Hint overlay: точка начала или стрелка направления.
+                        if let hint = hintVM {
+                            hintOverlay(hint: hint, size: canvasSize(geo))
+                                .allowsHitTesting(false)
+                        }
                     }
                     .background(
                         RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
@@ -131,7 +128,20 @@ struct LetterTracingView: View {
                     )
                     .padding(.horizontal, SpacingTokens.screenEdge)
 
-                    // Input hint (finger / pencil)
+                    // Строковые хинты + phoneme word
+                    if let vm = exerciseVM, !vm.phonemeWord.isEmpty {
+                        Text(
+                            String(localized: "letter_tracing.phoneme_example \(vm.phonemeWord)")
+                        )
+                        .font(TypographyTokens.caption())
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, SpacingTokens.screenEdge)
+                        .accessibilityLabel(
+                            String(localized: "letter_tracing.phoneme_accessibility \(vm.phonemeWord)")
+                        )
+                    }
+
                     Text(inputHintText)
                         .font(TypographyTokens.caption())
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
@@ -139,7 +149,6 @@ struct LetterTracingView: View {
                         .padding(.horizontal, SpacingTokens.screenEdge)
                         .accessibilityHidden(true)
 
-                    // Controls
                     controlsRow
                         .padding(.horizontal, SpacingTokens.screenEdge)
 
@@ -147,7 +156,6 @@ struct LetterTracingView: View {
                 }
                 .padding(.top, SpacingTokens.regular)
 
-                // Feedback overlay
                 if phase == .feedback, let vm = feedbackVM {
                     feedbackOverlay(vm: vm)
                         .transition(
@@ -183,31 +191,79 @@ struct LetterTracingView: View {
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
                 .minimumScaleFactor(0.85)
+
+            // Уровень обводки
+            Text(vm.tracingLevel.localizedTitle)
+                .font(TypographyTokens.caption())
+                .foregroundStyle(ColorTokens.Brand.sky)
+                .accessibilityLabel(
+                    String(localized: "letter_tracing.level_accessibility \(vm.tracingLevel.localizedTitle)")
+                )
         }
     }
 
     private var controlsRow: some View {
-        HStack(spacing: SpacingTokens.medium) {
-            // Сброс
-            HSButton(
-                String(localized: "letter_tracing.button.reset"),
-                style: .secondary,
-                icon: "arrow.counterclockwise"
-            ) {
-                handleReset()
-            }
-            .accessibilityLabel(String(localized: "letter_tracing.button.reset"))
+        VStack(spacing: SpacingTokens.small) {
+            HStack(spacing: SpacingTokens.medium) {
+                HSButton(
+                    String(localized: "letter_tracing.button.reset"),
+                    style: .secondary,
+                    icon: "arrow.counterclockwise"
+                ) {
+                    handleReset()
+                }
+                .accessibilityLabel(String(localized: "letter_tracing.button.reset"))
 
-            // Проверить
-            HSButton(
-                String(localized: "letter_tracing.button.check"),
-                style: .primary,
-                icon: "checkmark.circle.fill"
-            ) {
-                Task { await handleCheck() }
+                HSButton(
+                    String(localized: "letter_tracing.button.check"),
+                    style: .primary,
+                    icon: "checkmark.circle.fill"
+                ) {
+                    Task { await handleCheck() }
+                }
+                .disabled(isProcessing || canvas.drawing.strokes.isEmpty || phase == .feedback)
+                .accessibilityLabel(String(localized: "letter_tracing.button.check"))
             }
-            .disabled(isProcessing || canvas.drawing.strokes.isEmpty || phase == .feedback)
-            .accessibilityLabel(String(localized: "letter_tracing.button.check"))
+
+            // Кнопка подсказки (три уровня)
+            if phase == .drawing, let vm = exerciseVM {
+                HSButton(
+                    String(localized: "letter_tracing.button.hint"),
+                    style: .secondary,
+                    icon: "lightbulb.fill"
+                ) {
+                    interactor?.requestHint(
+                        LetterTracingModels.RequestHint.Request(letter: vm.targetLetter)
+                    )
+                }
+                .accessibilityLabel(String(localized: "letter_tracing.button.hint_accessibility"))
+                .accessibilityHint(String(localized: "letter_tracing.button.hint_hint"))
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func hintOverlay(
+        hint: LetterTracingModels.RequestHint.ViewModel,
+        size: CGSize
+    ) -> some View {
+        if hint.showStartDot {
+            Circle()
+                .fill(ColorTokens.Brand.mint.opacity(0.85))
+                .frame(width: 20, height: 20)
+                .position(x: size.width * 0.25, y: size.height * 0.25)
+                .animation(
+                    reduceMotion ? nil : .easeInOut(duration: 0.8).repeatForever(autoreverses: true),
+                    value: hint.showStartDot
+                )
+                .accessibilityHidden(true)
+        }
+        if hint.showDirectionArrow {
+            Image(systemName: "arrow.down.right.circle.fill")
+                .font(.system(size: 36))
+                .foregroundStyle(ColorTokens.Brand.sky.opacity(0.85))
+                .position(x: size.width * 0.3, y: size.height * 0.3)
+                .accessibilityHidden(true)
         }
     }
 
@@ -227,12 +283,21 @@ struct LetterTracingView: View {
             }
 
             Text(
-                String(
-                    localized: "letter_tracing.score_percent \(vm.scorePercent)"
-                )
+                String(localized: "letter_tracing.score_percent \(vm.scorePercent)")
             )
             .font(TypographyTokens.headline())
             .foregroundStyle(ColorTokens.Kid.ink)
+
+            // Попытка и лучший результат
+            if vm.attemptNumber > 1 {
+                Text(
+                    String(
+                        localized: "letter_tracing.attempt \(vm.attemptNumber) \(vm.bestScorePercent)"
+                    )
+                )
+                .font(TypographyTokens.caption())
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+            }
 
             HSButton(
                 String(localized: "letter_tracing.button.next"),
@@ -276,6 +341,7 @@ struct LetterTracingView: View {
 
     private func handleReset() {
         canvas.drawing = PKDrawing()
+        hintVM = nil
         interactor?.resetCanvas(LetterTracingModels.ResetCanvas.Request())
     }
 
@@ -296,6 +362,7 @@ struct LetterTracingView: View {
     private func handleNext() async {
         phase = .drawing
         feedbackVM = nil
+        hintVM = nil
         canvas.drawing = PKDrawing()
 
         guard let vm = exerciseVM, vm.roundIndex + 1 < vm.totalRounds else { return }
@@ -307,11 +374,8 @@ struct LetterTracingView: View {
         )
     }
 
-    // MARK: - Canvas size helper
+    // MARK: - Canvas size
 
-    /// Адаптивный размер холста.
-    /// iPhone: 85% ширины экрана, не более 350pt — компактно для одноручного удержания.
-    /// iPad: оригинальное поведение (55% высоты, минус padding по ширине).
     private func canvasSize(_ geo: GeometryProxy) -> CGSize {
         if UIDevice.current.userInterfaceIdiom == .phone {
             let screenWidth = UIScreen.main.bounds.width
@@ -322,9 +386,6 @@ struct LetterTracingView: View {
         return CGSize(width: side, height: side)
     }
 
-    // MARK: - Hint text helper
-
-    /// Текст подсказки ввода, зависящий от устройства.
     private var inputHintText: String {
         if UIDevice.current.userInterfaceIdiom == .phone {
             return String(localized: "letter_tracing.hint.finger")
@@ -364,6 +425,9 @@ struct LetterTracingView: View {
             onResetCanvas: { _ in
                 phase = .drawing
             },
+            onRequestHint: { vm in
+                hintVM = vm
+            },
             onCompleteSession: { _ in
                 phase = .complete
             }
@@ -385,24 +449,26 @@ struct LetterTracingView: View {
 
 // MARK: - LetterTracingViewDisplayAdapter
 
-/// Мост между протоколом `LetterTracingDisplayLogic` и SwiftUI-колбэками.
 @MainActor
 final class LetterTracingViewDisplayAdapter: LetterTracingDisplayLogic {
 
     private let onLoadExercise: (LetterTracingModels.LoadExercise.ViewModel) -> Void
     private let onSubmitDrawing: (LetterTracingModels.SubmitDrawing.ViewModel) -> Void
     private let onResetCanvas: (LetterTracingModels.ResetCanvas.ViewModel) -> Void
+    private let onRequestHint: (LetterTracingModels.RequestHint.ViewModel) -> Void
     private let onCompleteSession: (LetterTracingModels.CompleteSession.ViewModel) -> Void
 
     init(
         onLoadExercise: @escaping (LetterTracingModels.LoadExercise.ViewModel) -> Void,
         onSubmitDrawing: @escaping (LetterTracingModels.SubmitDrawing.ViewModel) -> Void,
         onResetCanvas: @escaping (LetterTracingModels.ResetCanvas.ViewModel) -> Void,
+        onRequestHint: @escaping (LetterTracingModels.RequestHint.ViewModel) -> Void,
         onCompleteSession: @escaping (LetterTracingModels.CompleteSession.ViewModel) -> Void
     ) {
         self.onLoadExercise = onLoadExercise
         self.onSubmitDrawing = onSubmitDrawing
         self.onResetCanvas = onResetCanvas
+        self.onRequestHint = onRequestHint
         self.onCompleteSession = onCompleteSession
     }
 
@@ -418,6 +484,10 @@ final class LetterTracingViewDisplayAdapter: LetterTracingDisplayLogic {
         onResetCanvas(viewModel)
     }
 
+    func displayRequestHint(_ viewModel: LetterTracingModels.RequestHint.ViewModel) {
+        onRequestHint(viewModel)
+    }
+
     func displayCompleteSession(_ viewModel: LetterTracingModels.CompleteSession.ViewModel) {
         onCompleteSession(viewModel)
     }
@@ -426,35 +496,51 @@ final class LetterTracingViewDisplayAdapter: LetterTracingDisplayLogic {
 // MARK: - LetterTemplateView
 
 /// Отображает большую полупрозрачную букву как guide для обводки.
-/// Шрифт: rounded bold, размером 85% короткой стороны холста.
+/// Поведение зависит от уровня:
+///   - overTemplate: полупрозрачная буква как guide.
+///   - dotsOnly: только точечный контур.
+///   - freeWrite: пустой фон (без guide).
 struct LetterTemplateView: View {
 
     let letter: String
+    var level: LetterTracingModels.TracingLevel = .overTemplate
+    var showFullOverlay: Bool = false
 
     var body: some View {
         GeometryReader { geo in
             let fontSize = min(geo.size.width, geo.size.height) * 0.82
             ZStack {
-                // Основная буква как guide
-                Text(letter)
-                    .font(.system(size: fontSize, weight: .bold, design: .rounded))
-                    .foregroundStyle(
-                        ColorTokens.Kid.inkMuted.opacity(0.14)
-                    )
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                switch level {
+                case .overTemplate:
+                    Text(letter)
+                        .font(.system(size: fontSize, weight: .bold, design: .rounded))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted.opacity(0.14))
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 
-                // Пунктирная обводка для визуального guide
-                Text(letter)
-                    .font(.system(size: fontSize, weight: .bold, design: .rounded))
-                    .foregroundStyle(Color.clear)
-                    .overlay(
-                        Text(letter)
-                            .font(.system(size: fontSize, weight: .bold, design: .rounded))
-                            .foregroundStyle(
-                                ColorTokens.Brand.sky.opacity(0.22)
-                            )
-                    )
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    Text(letter)
+                        .font(.system(size: fontSize, weight: .bold, design: .rounded))
+                        .foregroundStyle(ColorTokens.Brand.sky.opacity(0.22))
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+
+                case .dotsOnly:
+                    // Только контур точками — имитируем через пунктирный stroke.
+                    Text(letter)
+                        .font(.system(size: fontSize, weight: .ultraLight, design: .rounded))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted.opacity(0.10))
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+
+                case .freeWrite:
+                    // Пустой фон — ребёнок пишет самостоятельно.
+                    Color.clear
+                }
+
+                // Полный шаблон по запросу подсказки уровня 3.
+                if showFullOverlay {
+                    Text(letter)
+                        .font(.system(size: fontSize, weight: .bold, design: .rounded))
+                        .foregroundStyle(ColorTokens.Brand.mint.opacity(0.35))
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                }
             }
         }
         .allowsHitTesting(false)
