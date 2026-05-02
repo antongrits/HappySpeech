@@ -664,6 +664,7 @@
 		1184F8577C0EC0533602BC7D /* dwh-wm-28.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7766FB216EED254CB1A62353 /* dwh-wm-28.m4a */; };
 		11860865DCAB6071C2A66640 /* kh-wi-39.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8416D132C5E5FD9DCBF55A26 /* kh-wi-39.m4a */; };
 		11873F5EAF403A8DCB8BDBB2 /* c-ph-31.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1FB3877FD5A66E028F879D37 /* c-ph-31.m4a */; };
+		118DD9598389C008C62705A3 /* AchievementsSnapshotWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8A0EEB574F3E2E9009B80B /* AchievementsSnapshotWorker.swift */; };
 		11925BB1CB955C50AC4E5BC7 /* lex-num-4.m4a in Resources */ = {isa = PBXBuildFile; fileRef = F70D63A5FA7239C25B650188 /* lex-num-4.m4a */; };
 		119397C9A91F71BD4B506980 /* lex-sw-10.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0A07AA4C910D9568F59AD7AC /* lex-sw-10.m4a */; };
 		119CD8924E0340FE5E54889E /* gr-vb-5.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 732E847853DDDE6D1DE920AB /* gr-vb-5.m4a */; };
@@ -1665,6 +1666,7 @@
 		2A34ED6A6607B6ED5CE1C1BF /* y-prep-7.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 9D7EB4A9E14C169FA35B927D /* y-prep-7.m4a */; };
 		2A3A98DBBCFABC4C28104418 /* chto_delayut_vecherom_doma.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7A110E15374E4A60EE1AFD0E /* chto_delayut_vecherom_doma.m4a */; };
 		2A3C73209473C817FD054778 /* br-082.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 249B3D6DDECC9FBF143E0C0C /* br-082.m4a */; };
+		2A445CD9704E229C454EBB87 /* NotificationsHubWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11E6D90BB8B50F8E978584F /* NotificationsHubWorker.swift */; };
 		2A47CCF587786719A76A6FA9 /* sh-df-10.m4a in Resources */ = {isa = PBXBuildFile; fileRef = C5F1744877EEEDC2DDFB078D /* sh-df-10.m4a */; };
 		2A4BFBF49979FB6F176F9F38 /* zh-df-18.m4a in Resources */ = {isa = PBXBuildFile; fileRef = E8CE56B26A7880B1BBCE62AA /* zh-df-18.m4a */; };
 		2A58E71A4A3699C52505AAFA /* s-iso-11.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0EB17241C56E444EA99E7856 /* s-iso-11.m4a */; };
@@ -4821,6 +4823,7 @@
 		7C89BF4BC466D7A83388AB51 /* sh-wf-29.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1F1EFFC5B4F959EE343D85E1 /* sh-wf-29.m4a */; };
 		7C8E2B3BC32CDAE0C82E9557 /* lyalya_hint_va_10.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0F5B2F549337A5CA906E9445 /* lyalya_hint_va_10.m4a */; };
 		7C957CA388D6033D1D3DA48F /* lyalya_grammar_intro.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3D186650D1112FDBB9D48A99 /* lyalya_grammar_intro.m4a */; };
+		7C95A3A90EA484713A791288 /* WeeklySummaryWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E265231821009B1F01D8E23 /* WeeklySummaryWorker.swift */; };
 		7C9A06C012AF752032593431 /* lex-tp-10.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4B0FC82A42AE9BEC8F507ECD /* lex-tp-10.m4a */; };
 		7CA34A2C4B9BE9BCF470B10D /* narr-dl-19.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 96522D97186409697F9BDEC5 /* narr-dl-19.m4a */; };
 		7CB5674C75BBC72285EEDE57 /* MockWhisperKitModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526DFC0AFD703BCA91557469 /* MockWhisperKitModelManager.swift */; };
@@ -15555,6 +15558,7 @@
 		8E08027D4FD6C36CC03AC32F /* phon-ss-8.m4a */ = {isa = PBXFileReference; path = "phon-ss-8.m4a"; sourceTree = "<group>"; };
 		8E1AB892D06040BF05B25EA9 /* rl-ph-13.m4a */ = {isa = PBXFileReference; path = "rl-ph-13.m4a"; sourceTree = "<group>"; };
 		8E1B6988B3A49631D164A914 /* kh-ph-36.m4a */ = {isa = PBXFileReference; path = "kh-ph-36.m4a"; sourceTree = "<group>"; };
+		8E265231821009B1F01D8E23 /* WeeklySummaryWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklySummaryWorker.swift; sourceTree = "<group>"; };
 		8E29B8CE5912F02CA142CFC2 /* sh-ph-16.m4a */ = {isa = PBXFileReference; path = "sh-ph-16.m4a"; sourceTree = "<group>"; };
 		8E3F7273004E992247E5C728 /* lyalya_ambient_home.m4a */ = {isa = PBXFileReference; path = lyalya_ambient_home.m4a; sourceTree = "<group>"; };
 		8E46A61EF377F0B86BEA03F6 /* lo.m4a */ = {isa = PBXFileReference; path = lo.m4a; sourceTree = "<group>"; };
@@ -15621,6 +15625,7 @@
 		8F78340BBFB95079BBABBB55 /* ag-159.m4a */ = {isa = PBXFileReference; path = "ag-159.m4a"; sourceTree = "<group>"; };
 		8F7E2051162E3BBB2CE9D9B2 /* br-v-009.m4a */ = {isa = PBXFileReference; path = "br-v-009.m4a"; sourceTree = "<group>"; };
 		8F85E6AE479A6BF15EAC820B /* lyalya_hint_lac_2.m4a */ = {isa = PBXFileReference; path = lyalya_hint_lac_2.m4a; sourceTree = "<group>"; };
+		8F8A0EEB574F3E2E9009B80B /* AchievementsSnapshotWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsSnapshotWorker.swift; sourceTree = "<group>"; };
 		8F8A863C4483F9A575D24F4E /* l-sen-2.m4a */ = {isa = PBXFileReference; path = "l-sen-2.m4a"; sourceTree = "<group>"; };
 		8F901015B108A1EB45D0FA74 /* l-prep-15.m4a */ = {isa = PBXFileReference; path = "l-prep-15.m4a"; sourceTree = "<group>"; };
 		8FA0CE601D9059EE7E39C87D /* zh-iso-11.m4a */ = {isa = PBXFileReference; path = "zh-iso-11.m4a"; sourceTree = "<group>"; };
@@ -18750,6 +18755,7 @@
 		E0F3B5501FEDC8A3D5E6ADA5 /* r-syl-1.m4a */ = {isa = PBXFileReference; path = "r-syl-1.m4a"; sourceTree = "<group>"; };
 		E10DA173D9D4FE565EAE02C8 /* lyalya_celebration_100_8.m4a */ = {isa = PBXFileReference; path = lyalya_celebration_100_8.m4a; sourceTree = "<group>"; };
 		E11E0C3F71B4C905FAA385A1 /* lex-syn-15.m4a */ = {isa = PBXFileReference; path = "lex-syn-15.m4a"; sourceTree = "<group>"; };
+		E11E6D90BB8B50F8E978584F /* NotificationsHubWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsHubWorker.swift; sourceTree = "<group>"; };
 		E121AB6CB58824C3A6F5EB40 /* r-wm-24.m4a */ = {isa = PBXFileReference; path = "r-wm-24.m4a"; sourceTree = "<group>"; };
 		E1278D257C5A66973DE918B9 /* na_gryadke_vyros_krasnyy_spelyy_propusk.m4a */ = {isa = PBXFileReference; path = na_gryadke_vyros_krasnyy_spelyy_propusk.m4a; sourceTree = "<group>"; };
 		E128E8E4175AF08E3EC245B6 /* RewardsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardsInteractor.swift; sourceTree = "<group>"; };
@@ -24866,6 +24872,7 @@
 		6765C2160757DFEDC3D6C42E /* ParentHome */ = {
 			isa = PBXGroup;
 			children = (
+				C6555B0BB65A91B7AC075988 /* Workers */,
 				F8DD985EF4676F14BF5D560C /* ParentHomeDisplayLogic.swift */,
 				E6B64EC3BC720BB62956D401 /* ParentHomeInteractor.swift */,
 				F048839EA09E81476772DD80 /* ParentHomeModels.swift */,
@@ -29220,6 +29227,16 @@
 				74C610BC213CBDD91050EED5 /* KeychainStore.swift */,
 			);
 			path = Security;
+			sourceTree = "<group>";
+		};
+		C6555B0BB65A91B7AC075988 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				8F8A0EEB574F3E2E9009B80B /* AchievementsSnapshotWorker.swift */,
+				E11E6D90BB8B50F8E978584F /* NotificationsHubWorker.swift */,
+				8E265231821009B1F01D8E23 /* WeeklySummaryWorker.swift */,
+			);
+			path = Workers;
 			sourceTree = "<group>";
 		};
 		C71EC1E61699F4927A0535EB /* sibling */ = {
@@ -41500,6 +41517,7 @@
 				064BB022398C81609433D0EB /* AchievementsModels.swift in Sources */,
 				9A24787962A62DFA14C40C87 /* AchievementsPresenter.swift in Sources */,
 				4DCDD9048AF4B914CC7F85B1 /* AchievementsRouter.swift in Sources */,
+				118DD9598389C008C62705A3 /* AchievementsSnapshotWorker.swift in Sources */,
 				20AD4F482483FA67D0D2D436 /* AchievementsView.swift in Sources */,
 				A273B837EF6C41C969853C0A /* AirStreamAnalyzer.swift in Sources */,
 				9166F991349EA025D462609E /* AirStreamDetector.swift in Sources */,
@@ -41793,6 +41811,7 @@
 				439ADE1EAA960BA27EACDB57 /* NetworkClient.swift in Sources */,
 				9E40CC5DD51581997FA8319B /* NetworkMonitor.swift in Sources */,
 				CDE8179191F20D8EAE631F1E /* NotificationServiceLive.swift in Sources */,
+				2A445CD9704E229C454EBB87 /* NotificationsHubWorker.swift in Sources */,
 				C6A2AA2618EE99D9B2DB062E /* ObjectDetectionModels.swift in Sources */,
 				48BF1D843687416ED744EB1F /* ObjectDetectionWorker.swift in Sources */,
 				8E57095E80CB1C95B133A2A6 /* ObjectHuntDisplayLogic.swift in Sources */,
@@ -42055,6 +42074,7 @@
 				229826716592B27ED5AFDA6F /* Wav2Vec2Models.swift in Sources */,
 				7D4B51535067F7643765551E /* Wav2Vec2ServiceLive.swift in Sources */,
 				C582E122B7F8135E82C6DAE7 /* Wav2Vec2ServiceProtocol.swift in Sources */,
+				7C95A3A90EA484713A791288 /* WeeklySummaryWorker.swift in Sources */,
 				14B1B0994BE4E99C248D4D94 /* WhisperKitModelManager.swift in Sources */,
 				C9F9E750E30C605F71F6FC73 /* WhisperTranscriptionWorker.swift in Sources */,
 				744785353F1E2FC776253332 /* WorldMapDisplayLogic.swift in Sources */,

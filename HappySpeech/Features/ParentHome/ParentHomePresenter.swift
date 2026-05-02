@@ -7,6 +7,12 @@ protocol ParentHomePresentationLogic: AnyObject {
     func presentFetch(_ response: ParentHomeModels.Fetch.Response)
     func presentLoading(_ isLoading: Bool)
     func presentEmpty()
+    // A.6
+    func presentWeeklyInsight(_ response: ParentHomeModels.WeeklyInsightResponse)
+    func presentError(_ message: String)
+    func presentAddChild()
+    func presentExportSpecialist(childId: String)
+    func presentStartLesson(childId: String)
 }
 
 // MARK: - ParentHomePresenter
@@ -16,10 +22,17 @@ final class ParentHomePresenter: ParentHomePresentationLogic {
 
     weak var viewModel: (any ParentHomeDisplayLogic)?
 
+    // MARK: - presentFetch
+
     func presentFetch(_ response: ParentHomeModels.Fetch.Response) {
         let sessions = response.recentSessions.map { Self.summary(from: $0) }
+
         let soundProgress = response.targetSounds.map { sound in
-            Self.progress(sound: sound, summary: response.progressSummary)
+            Self.progress(
+                sound: sound,
+                summary: response.progressSummary,
+                sessions: response.weekSessions.filter { $0.targetSound == sound }.count
+            )
         }
 
         let recommendations = Self.recommendations(
@@ -28,6 +41,14 @@ final class ParentHomePresenter: ParentHomePresentationLogic {
         )
 
         let screeningCard = Self.makeScreeningCard(from: response.screeningOutcome)
+
+        let quickActions = Self.buildQuickActions(childId: response.childId)
+
+        let needsSpecialistReview = soundProgress.contains { $0.overallRate < 0.3 && $0.sessions >= 3 }
+
+        let calendar = Calendar.current
+        let todaySessions = response.weekSessions.filter { calendar.isDateInToday($0.date) }
+        let todayMinutes = todaySessions.reduce(0) { $0 + $1.durationSeconds / 60 }
 
         let vm = ParentHomeModels.Fetch.ViewModel(
             childId: response.childId,
@@ -43,7 +64,16 @@ final class ParentHomePresenter: ParentHomePresentationLogic {
             soundProgress: soundProgress,
             homeTask: response.homeTask,
             recommendations: recommendations,
-            screeningCard: screeningCard
+            screeningCard: screeningCard,
+            allChildren: response.allChildren,
+            weekStats: [],    // заполнится из presentWeeklyInsight
+            weeklyInsight: nil,
+            achievements: response.achievements,
+            notifications: response.notifications,
+            quickActions: quickActions,
+            needsSpecialistReview: needsSpecialistReview,
+            todaySessionsCount: todaySessions.count,
+            todayMinutes: todayMinutes
         )
         viewModel?.displayFetch(vm)
     }
@@ -54,6 +84,26 @@ final class ParentHomePresenter: ParentHomePresentationLogic {
 
     func presentEmpty() {
         viewModel?.displayEmptyState()
+    }
+
+    func presentWeeklyInsight(_ response: ParentHomeModels.WeeklyInsightResponse) {
+        viewModel?.displayWeeklyInsight(response)
+    }
+
+    func presentError(_ message: String) {
+        viewModel?.displayError(message)
+    }
+
+    func presentAddChild() {
+        viewModel?.displayNavigateToAddChild()
+    }
+
+    func presentExportSpecialist(childId: String) {
+        viewModel?.displayNavigateToSpecialistExport(childId: childId)
+    }
+
+    func presentStartLesson(childId: String) {
+        viewModel?.displayNavigateToStartLesson(childId: childId)
     }
 
     // MARK: - Helpers
@@ -74,13 +124,19 @@ final class ParentHomePresenter: ParentHomePresentationLogic {
         )
     }
 
-    private static func progress(sound: String, summary: [String: Double]) -> ParentHomeModels.SoundProgress {
+    private static func progress(
+        sound: String,
+        summary: [String: Double],
+        sessions: Int
+    ) -> ParentHomeModels.SoundProgress {
         let rate = summary[sound] ?? 0.0
         return ParentHomeModels.SoundProgress(
             sound: sound,
             familyName: familyName(for: sound),
             currentStage: stageName(for: rate),
-            overallRate: rate
+            overallRate: rate,
+            sessions: sessions,
+            trend: .stable
         )
     }
 
@@ -138,6 +194,35 @@ final class ParentHomePresenter: ParentHomePresentationLogic {
         }
     }
 
+    private static func buildQuickActions(childId: String) -> [ParentHomeModels.QuickAction] {
+        [
+            .init(
+                id: "start_lesson",
+                icon: "play.circle.fill",
+                title: String(localized: "parent.quickaction.start_lesson"),
+                destination: .startLesson(childId: childId)
+            ),
+            .init(
+                id: "export_specialist",
+                icon: "square.and.arrow.up",
+                title: String(localized: "parent.quickaction.export"),
+                destination: .exportToSpecialist(childId: childId)
+            ),
+            .init(
+                id: "view_history",
+                icon: "clock.arrow.circlepath",
+                title: String(localized: "parent.quickaction.history"),
+                destination: .viewHistory(childId: childId)
+            ),
+            .init(
+                id: "settings",
+                icon: "gearshape.fill",
+                title: String(localized: "parent.quickaction.settings"),
+                destination: .openSettings
+            )
+        ]
+    }
+
     // MARK: - M6.16: Screening Card
 
     private static func makeScreeningCard(
@@ -170,7 +255,6 @@ final class ParentHomePresenter: ParentHomePresentationLogic {
             recommendation = String(localized: "screening.card.reco.mild")
         }
 
-        // Показываем «Перепройти» если с момента скрининга прошло ≥ 14 дней.
         let daysSince = Calendar.current.dateComponents(
             [.day], from: outcome.completedAt, to: Date()
         ).day ?? 0
