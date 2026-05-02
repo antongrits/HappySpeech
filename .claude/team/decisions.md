@@ -16,6 +16,19 @@
 
 ## Log
 
+### [2026-05-02] [pm] ADR-V14-003: 4 новых ML skill для Block E Speech Analysis углубления
+**Decision:** Созданы 4 новых skill файла в `.claude/skills/` для Block E v14.
+**Skills:**
+- `russian-asr-pipeline` — ensemble Whisper + Wav2Vec2 + RussianPhonemeClassifier, confidence-based weighted voting, Tier A (kid) / Tier B (parent+specialist). Владельцы: ml-engineer + ios-developer.
+- `speaker-verification-coreml` — d-vector CNN (Conv1d + Bi-LSTM + 64-dim projection), cosine similarity 0.7, `SpeakerVerification.mlpackage` ~30 MB, COPPA-safe (embeddings только in-memory). Владелец: ml-engineer.
+- `emotion-detection-coreml` — Conv1d-LSTM, 4 класса (happy/sad/frustrated/neutral), `EmotionDetection.mlpackage` ~5 MB, интеграция с AdaptivePlannerService. Владелец: ml-engineer + ios-developer.
+- `gigaam-coreml-russian` — оценка GigaAM-v2-CTC конвертации через 3 пути (coremltools → sherpa-onnx → Vosk), ADR-V14-GIGAAM defer шаблон если не укладывается в дедлайн. Владелец: ml-engineer.
+**Reason:** Block E.0 v14 требует углубления Speech Analysis. Ensemble accuracy > single-model. Emotion detection нужен для AdaptivePlanner (S12-001). Speaker verification закрывает COPPA-safe parent/child разграничение.
+**Alternatives:** Использовать только WhisperKit — проще, но ниже точность на детской русской речи. Не принято.
+**Risk:** GigaAM может не конвертироваться (defer path предусмотрен). Speaker verification требует достаточного датасета (решено через Lyalya augmentation).
+
+---
+
 ### [2026-05-02] [CTO] ADR-V14-001: GoogleSignIn REVERSED_CLIENT_ID отсутствует
 **Decision:** Оставить PLACEHOLDER `com.googleusercontent.apps.PLACEHOLDER-REVERSED-CLIENT-ID` в CFBundleURLSchemes до ручного действия пользователя.
 **Reason:** GoogleService-Info.plist (`happyspeech-dfd95`) не содержит ключ `REVERSED_CLIENT_ID`. Этот ключ появляется только при явном включении Google Sign-In OAuth в Firebase Console → Authentication → Sign-in providers → Google. Без него GoogleSignIn SDK не сможет выполнять callback после авторизации.
