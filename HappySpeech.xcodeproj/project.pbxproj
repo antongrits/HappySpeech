@@ -7625,6 +7625,7 @@
 		C2F91C15EB56F0D360C64691 /* rl-wm-16.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 225F21772B3E825C4B0C7D13 /* rl-wm-16.m4a */; };
 		C2FF75A1C5F2208DEEE3E119 /* rl-wm-12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B2BA73852E8A14252D075BD4 /* rl-wm-12.m4a */; };
 		C306F6BE97F390A5577E385F /* lyalya_story_15.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 89C409BEC5AEE2434E7FA00C /* lyalya_story_15.m4a */; };
+		C3127EE5E5880E113D6EC524 /* MLPerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD8403BC669BABDBF83E624A /* MLPerformanceTests.swift */; };
 		C3130C4CCEFAC320B700C9C5 /* lex-wb-22.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 70A1EF1B2205230BF5D69846 /* lex-wb-22.m4a */; };
 		C33AB5D6F765696555A75CDC /* s-ph-18.m4a in Resources */ = {isa = PBXBuildFile; fileRef = EBF8F33D096EDC98D15DDEE1 /* s-ph-18.m4a */; };
 		C3447137E1292BDA53A56003 /* l-ph-5.m4a in Resources */ = {isa = PBXBuildFile; fileRef = BEC6D230F8930283021E13A8 /* l-ph-5.m4a */; };
@@ -8090,7 +8091,6 @@
 		CF7136FD45E6FDDE0B6657CA /* rl-prep-0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 7492EE3E4FE792D600D6EAF4 /* rl-prep-0.m4a */; };
 		CF7EC8C0431FA762EE0C4655 /* ya_dala_knigu_malenkoy_sestryonke.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 455DCED920ABFFF4BEA234B9 /* ya_dala_knigu_malenkoy_sestryonke.m4a */; };
 		CF8D7C301298C73CBDACCD4A /* MFCCPerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A60A7AAD540588FC09BD6E /* MFCCPerformanceTests.swift */; };
-		F1E2D3C4B5A6978869504132 /* MLPerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F1A2B3C4D5E6F7A8B9C0D1 /* MLPerformanceTests.swift */; };
 		CF8FAF8BE868D6428E14808E /* PoseSequenceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3852B7AD07291C7AD685E5EE /* PoseSequenceRouter.swift */; };
 		CF926E426F146D01DCCC0AE4 /* k-syl-17.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 86B0A462D7C6274464D01E2B /* k-syl-17.m4a */; };
 		CF955CE7C46E26C9DF42D0F7 /* zhasmin.m4a in Resources */ = {isa = PBXBuildFile; fileRef = FE256C3604336DDF51D6BEB4 /* zhasmin.m4a */; };
@@ -16557,7 +16557,6 @@
 		A79B2F7329A0F39C374874D7 /* k-wm-28.m4a */ = {isa = PBXFileReference; path = "k-wm-28.m4a"; sourceTree = "<group>"; };
 		A79EC417C6D06050626B20A8 /* na_chyom_letyat_v_kosmos_naydi_slovo_so_zvukom_r_samolyot_ra.m4a */ = {isa = PBXFileReference; path = na_chyom_letyat_v_kosmos_naydi_slovo_so_zvukom_r_samolyot_ra.m4a; sourceTree = "<group>"; };
 		A7A60A7AAD540588FC09BD6E /* MFCCPerformanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFCCPerformanceTests.swift; sourceTree = "<group>"; };
-		E4F1A2B3C4D5E6F7A8B9C0D1 /* MLPerformanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLPerformanceTests.swift; sourceTree = "<group>"; };
 		A7B07366431D080CB94083A9 /* y-prep-2.m4a */ = {isa = PBXFileReference; path = "y-prep-2.m4a"; sourceTree = "<group>"; };
 		A7B1AD430192AD1794DA480F /* lyalya_easter_021.m4a */ = {isa = PBXFileReference; path = lyalya_easter_021.m4a; sourceTree = "<group>"; };
 		A7B6785CA3E28C3F1B509017 /* lex-si-10.m4a */ = {isa = PBXFileReference; path = "lex-si-10.m4a"; sourceTree = "<group>"; };
@@ -18002,6 +18001,7 @@
 		CD7D660FCB237FB54F001AF9 /* speech-methodology.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "speech-methodology.md"; sourceTree = "<group>"; };
 		CD802DCA5293889D814E0B0A /* narr-ss-7.m4a */ = {isa = PBXFileReference; path = "narr-ss-7.m4a"; sourceTree = "<group>"; };
 		CD820DDE93CC5F67AD31015D /* r-wi-49.m4a */ = {isa = PBXFileReference; path = "r-wi-49.m4a"; sourceTree = "<group>"; };
+		CD8403BC669BABDBF83E624A /* MLPerformanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLPerformanceTests.swift; sourceTree = "<group>"; };
 		CD86543B5F65D99F3FFF609D /* kh-sen-21.m4a */ = {isa = PBXFileReference; path = "kh-sen-21.m4a"; sourceTree = "<group>"; };
 		CD8A7BD76EDA4BB778E467B1 /* dwh-prep-4.m4a */ = {isa = PBXFileReference; path = "dwh-prep-4.m4a"; sourceTree = "<group>"; };
 		CD8DC6BE4DCCC3CE9730EBC5 /* narr-fm-4.m4a */ = {isa = PBXFileReference; path = "narr-fm-4.m4a"; sourceTree = "<group>"; };
@@ -26726,7 +26726,7 @@
 			children = (
 				63045AB43EA39B580C076ADA /* ColdStartSignpostTests.swift */,
 				A7A60A7AAD540588FC09BD6E /* MFCCPerformanceTests.swift */,
-				E4F1A2B3C4D5E6F7A8B9C0D1 /* MLPerformanceTests.swift */,
+				CD8403BC669BABDBF83E624A /* MLPerformanceTests.swift */,
 			);
 			path = Performance;
 			sourceTree = "<group>";
@@ -41397,7 +41397,7 @@
 				42F7F765CE94D97279813CA0 /* ListenAndChooseInteractorTests.swift in Sources */,
 				6C857C3D2429B8F4F52B8A95 /* LyalyaRealityKitViewTests.swift in Sources */,
 				CF8D7C301298C73CBDACCD4A /* MFCCPerformanceTests.swift in Sources */,
-				F1E2D3C4B5A6978869504132 /* MLPerformanceTests.swift in Sources */,
+				C3127EE5E5880E113D6EC524 /* MLPerformanceTests.swift in Sources */,
 				57C9D44F4FC55AFE74444814 /* MascotLipSyncStateTests.swift in Sources */,
 				08BF3B8630155C62A9E5A608 /* MemoryInteractorTests.swift in Sources */,
 				06656D9AFE3E3102C6457DAF /* MinimalPairsInteractorTests.swift in Sources */,
@@ -42107,7 +42107,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = HappySpeechTests/Info.plist;
 				OTHER_LDFLAGS = "-Wl,-w";
-				PRODUCT_BUNDLE_IDENTIFIER = ru.happyspeech.tests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mmf.bsu.HappySpeechTests;
 				PRODUCT_NAME = HappySpeechTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HappySpeech.app/HappySpeech";
 			};
@@ -42125,7 +42125,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ru.happyspeech.app.WidgetExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mmf.bsu.HappySpeech.WidgetExtension;
 				PRODUCT_NAME = HappySpeechWidgetExtension;
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 6.0;
@@ -42144,7 +42144,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ru.happyspeech.app.WidgetExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mmf.bsu.HappySpeech.WidgetExtension;
 				PRODUCT_NAME = HappySpeechWidgetExtension;
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 6.0;
@@ -42170,12 +42170,13 @@
 				);
 				MARKETING_VERSION = 1.0.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.happyspeech.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mmf.bsu.HappySpeech;
 				SDKROOT = iphoneos;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -42183,7 +42184,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = HappySpeechUITests/Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.happyspeech.uitests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mmf.bsu.HappySpeechUITests;
 				PRODUCT_NAME = HappySpeechUITests;
 				TEST_TARGET_NAME = HappySpeech;
 			};
@@ -42194,7 +42195,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = HappySpeech/Resources/HappySpeech.entitlements;
 				INFOPLIST_FILE = HappySpeech/Resources/Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.happyspeech.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mmf.bsu.HappySpeech;
 				PRODUCT_NAME = HappySpeech;
 			};
 			name = Release;
@@ -42205,7 +42206,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = HappySpeechTests/Info.plist;
 				OTHER_LDFLAGS = "-Wl,-w";
-				PRODUCT_BUNDLE_IDENTIFIER = ru.happyspeech.tests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mmf.bsu.HappySpeechTests;
 				PRODUCT_NAME = HappySpeechTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HappySpeech.app/HappySpeech";
 			};
@@ -42217,7 +42218,7 @@
 				CODE_SIGN_ENTITLEMENTS = HappySpeech/Resources/HappySpeech.entitlements;
 				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = HappySpeech/Resources/Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.happyspeech.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mmf.bsu.HappySpeech;
 				PRODUCT_NAME = HappySpeech;
 			};
 			name = Debug;
@@ -42226,7 +42227,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = HappySpeechUITests/Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.happyspeech.uitests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mmf.bsu.HappySpeechUITests;
 				PRODUCT_NAME = HappySpeechUITests;
 				TEST_TARGET_NAME = HappySpeech;
 			};
@@ -42250,12 +42251,13 @@
 					"@executable_path/PackageFrameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = ru.happyspeech.app;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mmf.bsu.HappySpeech;
 				SDKROOT = iphoneos;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
