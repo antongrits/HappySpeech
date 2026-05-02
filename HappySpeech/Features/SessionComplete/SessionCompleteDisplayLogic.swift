@@ -13,6 +13,9 @@ protocol SessionCompleteDisplayLogic: AnyObject {
     func displayPlayAgain(_ viewModel: SessionCompleteModels.PlayAgain.ViewModel)
     func displayProceedToNext(_ viewModel: SessionCompleteModels.ProceedToNext.ViewModel)
     func displayFailure(_ viewModel: SessionCompleteModels.Failure.ViewModel)
+    func displayAchievementUnlocked(_ viewModel: SessionCompleteModels.AchievementUnlocked.ViewModel)
+    func displayStickerReveal(_ viewModel: SessionCompleteModels.StickerReveal.ViewModel)
+    func displayStreakUpdate(_ viewModel: SessionCompleteModels.StreakUpdate.ViewModel)
 }
 
 // MARK: - SessionCompleteDisplay (Observable Store)
@@ -23,41 +26,80 @@ protocol SessionCompleteDisplayLogic: AnyObject {
 @MainActor
 final class SessionCompleteDisplay: SessionCompleteDisplayLogic {
 
-    // Phase progression
-    var currentPhase: SessionCompletePhase = .mascot
+    // MARK: - Phase progression
 
-    // Score block
+    var currentPhase: RewardStage = .celebration
+
+    // MARK: - Score block
+
     var scoreInt: Int = 0
     var scoreLabel: String = ""
     var starsEarned: Int = 0
     var starsTotal: Int = 3
+    var isPerfect: Bool = false
+    var showConfetti: Bool = false
 
-    // Header
+    // MARK: - Score breakdown
+
+    var baseScoreLabel: String = ""
+    var streakBonusLabel: String = ""
+    var hintPenaltyLabel: String = ""
+    var totalScoreLabel: String = ""
+
+    // MARK: - Header
+
     var gameTitle: String = ""
     var soundLabel: String = ""
 
-    // Summary cards
-    var attemptsLabel: String = ""
-    var durationLabel: String = ""
+    // MARK: - Summary cards
 
-    // Next lesson preview
+    var attemptsLabel: String = ""
+    var correctLabel: String = ""
+    var durationLabel: String = ""
+    var hintsLabel: String = ""
+
+    // MARK: - Next lesson preview
+
     var nextLessonTitle: String?
 
-    // Mascot bubble
+    // MARK: - Mascot bubble
+
     var mascotTagline: String = ""
 
-    // Share
+    // MARK: - Achievement reveal (Stage 4)
+
+    var pendingAchievements: [UnlockedAchievementInfo] = []
+    var hasNewAchievements: Bool = false
+    var achievementToastMessage: String = ""
+
+    // MARK: - Sticker reveal (Stage 5)
+
+    var pendingSticker: StickerRevealInfo?
+    var stickerRevealLabel: String = ""
+
+    // MARK: - Streak update (Stage 6)
+
+    var streakInfo: StreakInfo?
+    var streakLabel: String = ""
+    var streakMilestoneLabel: String?
+    var streakIconName: String = "flame"
+
+    // MARK: - Share
+
     var pendingShareText: String?
 
-    // Routing intent
+    // MARK: - Routing intent
+
     var pendingPlayAgain: Bool = false
     var pendingProceed: Bool = false
     var pendingHasNext: Bool = false
 
-    // Toast
+    // MARK: - Toast
+
     var toastMessage: String?
 
-    // A11y
+    // MARK: - A11y
+
     var accessibilitySummary: String = ""
 
     // MARK: - SessionCompleteDisplayLogic
@@ -70,15 +112,41 @@ final class SessionCompleteDisplay: SessionCompleteDisplayLogic {
         gameTitle = viewModel.gameTitle
         soundLabel = viewModel.soundLabel
         attemptsLabel = viewModel.attemptsLabel
+        correctLabel = viewModel.correctLabel
         durationLabel = viewModel.durationLabel
+        hintsLabel = viewModel.hintsLabel
         nextLessonTitle = viewModel.nextLessonTitle
         mascotTagline = viewModel.mascotTagline
         accessibilitySummary = viewModel.accessibilitySummary
-        currentPhase = .mascot
+        isPerfect = viewModel.isPerfect
+        showConfetti = viewModel.showConfetti
+        baseScoreLabel = viewModel.baseScoreLabel
+        streakBonusLabel = viewModel.streakBonusLabel
+        hintPenaltyLabel = viewModel.hintPenaltyLabel
+        totalScoreLabel = viewModel.totalScoreLabel
+        currentPhase = .celebration
     }
 
     func displayAdvancePhase(_ viewModel: SessionCompleteModels.AdvancePhase.ViewModel) {
         currentPhase = viewModel.phase
+    }
+
+    func displayAchievementUnlocked(_ viewModel: SessionCompleteModels.AchievementUnlocked.ViewModel) {
+        pendingAchievements = viewModel.achievements
+        hasNewAchievements = viewModel.hasAchievements
+        achievementToastMessage = viewModel.toastMessage
+    }
+
+    func displayStickerReveal(_ viewModel: SessionCompleteModels.StickerReveal.ViewModel) {
+        pendingSticker = viewModel.sticker
+        stickerRevealLabel = viewModel.revealLabel
+    }
+
+    func displayStreakUpdate(_ viewModel: SessionCompleteModels.StreakUpdate.ViewModel) {
+        streakInfo = viewModel.streak
+        streakLabel = viewModel.streakLabel
+        streakMilestoneLabel = viewModel.milestoneLabel
+        streakIconName = viewModel.iconName
     }
 
     func displayShareResult(_ viewModel: SessionCompleteModels.ShareResult.ViewModel) {
@@ -108,8 +176,8 @@ final class SessionCompleteDisplay: SessionCompleteDisplayLogic {
         pendingHasNext = false
     }
 
-    /// Проверяет, должна ли быть видна указанная фаза.
-    func isPhaseVisible(_ phase: SessionCompletePhase) -> Bool {
+    /// Проверяет, должна ли быть видна указанная стадия.
+    func isPhaseVisible(_ phase: RewardStage) -> Bool {
         currentPhase >= phase
     }
 }
