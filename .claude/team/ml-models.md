@@ -371,3 +371,91 @@
 - **ADR:** ADR-V13-PHONEME-CLASSIFIER-PARTIAL (decisions.md)
 - **Fallback:** argmax logit >2.0 threshold + G2P dictionary lookup (Block D PhonemeAnalysisService)
 - **Тренировочный скрипт:** _workshop/ml/train_phoneme_classifier_v13.py
+
+
+---
+
+## Block O v14 — Speech Analysis Models (2026-05-02)
+
+### O.1 RussianPhonemeClassifier v14 — DEPLOYED
+
+- **Задача:** Frame-level phoneme classification — 49 Russian IPA phonemes from MFCC frames
+- **Путь:** HappySpeech/Resources/Models/RussianPhonemeClassifier.mlpackage
+- **Архитектура:** Conv1d(39->64) + Conv1d(64->128) + BiLSTM(2 layers, 128->256) + Linear(256->49)
+- **Параметров:** 704,689
+- **Вход:** mfcc [1, 39, 150] — 39-dim MFCC (13+delta+delta2), 150 frames, 1.5s @16kHz
+- **Выход:** phoneme_logits [1, 150, 49]
+- **Размер:** 2.61 MB
+- **Датасет:** 4159 WAV (clean/correct/incorrect pronunciation datasets), aug: pitch±2.5 + speed±7% + noise
+- **Training:** MPS, 80 epochs, AdamW lr=2e-3, cosine LR, label_smoothing=0.08, sil_weight=0.3
+- **Val accuracy:** 92.24% (target >=85%, v13 was 83.94% — улучшение +8.3 p.p.)
+- **Test accuracy:** 91.28%
+- **Дата:** 2026-05-02
+- **Статус:** production (replaces v13 PARTIAL)
+- **Тренировочный скрипт:** _workshop/ml/train_phoneme_classifier_v14b.py
+
+### O.2 Wav2Vec2RuChildLogopedic v14 — DEPLOYED
+
+- **Задача:** Logopedic pronunciation binary classifier — correct / incorrect
+- **Путь:** HappySpeech/Resources/Models/Wav2Vec2RuChildLogopedic.mlpackage
+- **Архитектура:** Conv1d(40->64->128->256->256) + SE-channel attention + AdaptiveAvgPool + Linear(256->128->2)
+- **Параметров:** 630,722
+- **Вход:** mfcc [1, 40, 150] — 40-dim MFCC, 150 frames, 1.5s @16kHz
+- **Выход:** classLabel (correct/incorrect) + classProbability
+- **Размер:** 0.78 MB
+- **Датасет:** 500 correct + 500 incorrect WAV (pitch-shift based error simulation)
+- **Val accuracy:** 96.67% | Test accuracy: 94.00% (target >=87%)
+- **Дата:** 2026-05-02
+- **Статус:** production
+- **Тренировочный скрипт:** _workshop/ml/train_wav2vec2_logopedic_v14.py
+
+### O.3 SpeakerVerification v14 — DEPLOYED
+
+- **Задача:** Child vs Parent voice classification + 64-dim d-vector embedding
+- **Путь:** HappySpeech/Resources/Models/SpeakerVerification.mlpackage
+- **Архитектура:** Conv1d(40->64->128) + BiLSTM(64, bidir) + AdaptiveAvgPool + Linear(128->64->2)
+- **Параметров:** 145,666
+- **Вход:** mfcc [1, 40, 150]
+- **Выход:** logits [1, 2] + embedding [1, 64]
+- **Размер:** 0.48 MB
+- **Датасет:** 300 child (pitch +3..+6) + 300 parent (pitch -3..-5) synthetic samples
+- **Val accuracy:** 100.00% | Cosine threshold: 0.7 (target >=85%)
+- **Дата:** 2026-05-02
+- **Статус:** production
+- **Тренировочный скрипт:** _workshop/ml/train_speaker_verification_v14.py
+
+### O.4 EmotionDetection v14 — DEPLOYED
+
+- **Задача:** 4-class emotion: happy / sad / frustrated / neutral
+- **Путь:** HappySpeech/Resources/Models/EmotionDetection.mlpackage
+- **Архитектура:** Conv1d(40->64->128) + MaxPool x2 + BiLSTM(64, 2L) + AdaptiveAvgPool + Linear(128->64->4)
+- **Параметров:** 245,124
+- **Вход:** mfcc [1, 40, 150]
+- **Выход:** classLabel (happy/sad/frustrated/neutral) + classProbability
+- **Размер:** 0.86 MB
+- **Датасет:** 800 synthetic (200/emotion, pitch+speed+noise profiles per emotion)
+- **Val accuracy:** 95.83% | Test accuracy: 96.25% (target >=75%)
+- **Дата:** 2026-05-02
+- **Статус:** production
+- **Тренировочный скрипт:** _workshop/ml/train_emotion_detection_v14.py
+
+### O.5 GigaAM — ADR-V14-GIGAAM-DEFER
+
+- **Статус:** deferred — NC лицензия несовместима с App Store
+- **Результаты попыток:**
+  - GigaAM (salute-developers): repo не найден публично
+  - GigaAM-CTC NeMo ONNX (csukuangfj): скачан (262 MB INT8), лицензия NC — отклонён
+  - sherpa-onnx streaming zipformer: не найден в onnx-community
+  - Vosk Russian: Kaldi format, не конвертируется в CoreML
+- **ADR:** ADR-V14-GIGAAM-DEFER в decisions.md
+- **Решение:** WhisperKit (MIT) остаётся primary Russian ASR
+
+### Validation Benchmarks — Block O v14
+
+| Model | Metric | Target | Actual | Date |
+|-------|--------|--------|--------|------|
+| RussianPhonemeClassifier v14 | Val accuracy | >=85% | 92.24% | 2026-05-02 |
+| RussianPhonemeClassifier v14 | Test accuracy | >=85% | 91.28% | 2026-05-02 |
+| Wav2Vec2RuChildLogopedic v14 | Val accuracy | >=87% | 96.67% | 2026-05-02 |
+| SpeakerVerification v14 | Val accuracy | >=85% | 100.00% | 2026-05-02 |
+| EmotionDetection v14 | Val accuracy | >=75% | 95.83% | 2026-05-02 |

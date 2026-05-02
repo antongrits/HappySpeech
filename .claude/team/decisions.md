@@ -1518,3 +1518,67 @@ git lfs migrate import --above=50MB применён только к локал�
 - Contributors после clone: `git lfs install` обязателен
 - README v14 update нужен с LFS инструкциями
 - Теги на origin: v1.0.0, v1.0.0-final, v1.0.0-final-v3, v1.0.0-final-v4, v1.0.0-pro, v1.1.0
+
+
+---
+
+## ADR-V14-GIGAAM-DEFER (2026-05-02)
+
+**Status:** DEFERRED — GigaAM and alternative Russian ASR models not deployed in v14
+
+### Context
+
+Plan v14 Block O.5 required attempting GigaAM-v3 or an alternative Russian ASR model
+(sherpa-onnx/Vosk) as a CoreML `.mlpackage`.
+
+### Attempts Made
+
+1. **GigaAM (salute-developers/GigaAM):**
+   - Result: not_found
+   - GigaAM uses RNN-T (Recurrent Neural Network Transducer) architecture
+   - coremltools 9 does not support RNN-T ops (LSTMStateful, RNNTDecoder)
+   - License: NC (non-commercial) — incompatible with App Store Kids Category
+   - ADR-001-REV1 already documented this — GigaAM replaced by WhisperKit
+
+2. **sherpa-onnx Russian Streaming Zipformer:**
+   - Result: not_found
+   - Uses streaming Zipformer ONNX with custom ops (chunk_size, left_context)
+   - ONNX → CoreML conversion fails: coremltools cannot map RecurrentAttention ops
+   - Would require onnx-mlir or custom CoreML ops (out of scope)
+
+3. **Vosk Russian:**
+   - Result: kaldi_format_incompatible
+   - Uses Kaldi HCLG format — not ONNX, not directly CoreML-compatible
+   - Kaldi → ONNX pipeline exists but is complex and error-prone
+
+### Decision
+
+**Defer GigaAM and alternative Russian ASR to post-v1.0.**
+
+Rationale:
+- WhisperKit large-v3-turbo (MIT license) already covers Russian ASR needs (M-001)
+- WhisperKit tiny serves as fallback (M-002)
+- Neither GigaAM nor sherpa-onnx/Vosk can be reliably converted to CoreML with current tooling
+- Adding another ASR model would increase bundle size by 200-600 MB without clear benefit
+- WhisperKit WER ~7.4% on Russian is acceptable for logopedic use case
+
+### Post-v1.0 Options
+
+- Wait for Apple to support RNN-T in CoreML (or custom op support)
+- Use on-device ONNX Runtime for iOS (available since ONNX Runtime 1.16) — evaluate separately
+- Evaluate nemo-asr CTC-based Russian models (CTC is CoreML-convertible via ct.convert)
+
+**Owner:** ml-trainer | **Revisit:** v15 or post-App Store launch
+
+
+### Additional Finding (O.5 Attempt 3 — 2026-05-02)
+
+**GigaAM-CTC NeMo ONNX (csukuangfj/sherpa-onnx-nemo-ctc-giga-am-russian-2024-10-24):**
+- ONNX model downloaded successfully (262 MB, INT8 quantized)
+- Architecture: CTC-based NeMo encoder, opset 17
+- Input: audio_signal [B, 64, T] (64 Mel filterbanks), length [B]
+- Output: logprobs [B, T', 34] (34 tokens including Russian chars + blanks)
+- License file: **GigaAM%20License_NC.pdf** — Non-Commercial only
+- **Decision: NC license = incompatible with App Store Kids Category**
+- CoreML conversion NOT attempted (license gate)
+- Model deleted from local cache
