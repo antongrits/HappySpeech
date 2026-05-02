@@ -10,6 +10,7 @@ protocol CustomizationDisplayLogic: AnyObject {
     func displaySaveResult(viewModel: CustomizationViewModel)
     func displaySelectionChanged(viewModel: CustomizationViewModel)
     func displayVoicePreviewState(playingVoice: LyalyaVoice?)
+    func displayLockedItemAttempt(viewModel: CustomizationViewModel)
 }
 
 // MARK: - CustomizationDisplay
@@ -36,5 +37,9 @@ final class CustomizationDisplay: CustomizationDisplayLogic {
 
     func displayVoicePreviewState(playingVoice: LyalyaVoice?) {
         self.viewModel.playingVoice = playingVoice
+    }
+
+    func displayLockedItemAttempt(viewModel: CustomizationViewModel) {
+        self.viewModel = viewModel
     }
 }

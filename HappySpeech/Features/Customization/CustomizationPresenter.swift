@@ -21,32 +21,82 @@ final class CustomizationPresenter {
     private var currentSkin: LyalyaSkin = .classic
     private var currentColor: LyalyaColorVariant = .warm
     private var currentVoice: LyalyaVoice = .classic
+    private var currentOutfit: LyalyaOutfit = .everyday
+    private var currentHairColor: LyalyaHairColor = .golden
+    private var currentEyeColor: LyalyaEyeColor = .blue
+    private var currentSkinTone: LyalyaSkinTone = .light
+    private var currentAccessories: Set<LyalyaAccessory> = []
+    private var currentBackground: LyalyaBackground = .bedroom
+
     private var originalSkin: LyalyaSkin = .classic
     private var originalColor: LyalyaColorVariant = .warm
     private var originalVoice: LyalyaVoice = .classic
+    private var originalOutfit: LyalyaOutfit = .everyday
+    private var originalHairColor: LyalyaHairColor = .golden
+    private var originalEyeColor: LyalyaEyeColor = .blue
+    private var originalSkinTone: LyalyaSkinTone = .light
+    private var originalAccessories: Set<LyalyaAccessory> = []
+    private var originalBackground: LyalyaBackground = .bedroom
+
+    private var currentOutfitItems: [OutfitItemViewModel] = []
+    private var currentAccessoryItems: [AccessoryItemViewModel] = []
+    private var currentBackgroundItems: [BackgroundItemViewModel] = []
 
     // MARK: - Present Load
 
-    func presentLoadedCustomization(response: Customization.LoadResponse) {
+    func presentLoadedCustomization(
+        response: Customization.LoadResponse,
+        outfitItems: [OutfitItemViewModel],
+        accessoryItems: [AccessoryItemViewModel],
+        backgroundItems: [BackgroundItemViewModel]
+    ) {
         currentSkin = response.skin
         currentColor = response.color
         currentVoice = response.voice
+        currentOutfit = response.outfit
+        currentHairColor = response.hairColor
+        currentEyeColor = response.eyeColor
+        currentSkinTone = response.skinTone
+        currentAccessories = response.enabledAccessories
+        currentBackground = response.background
+
         originalSkin = response.skin
         originalColor = response.color
         originalVoice = response.voice
+        originalOutfit = response.outfit
+        originalHairColor = response.hairColor
+        originalEyeColor = response.eyeColor
+        originalSkinTone = response.skinTone
+        originalAccessories = response.enabledAccessories
+        originalBackground = response.background
 
-        let viewModel = CustomizationViewModel(
-            selectedSkin: response.skin,
-            selectedColor: response.color,
-            selectedVoice: response.voice,
-            isSaving: false,
-            isUnchanged: true
-        )
+        currentOutfitItems = outfitItems
+        currentAccessoryItems = accessoryItems
+        currentBackgroundItems = backgroundItems
+
+        let viewModel = makeCurrentViewModel()
         display?.displayLoadedCustomization(viewModel: viewModel)
-        logger.info("Customization loaded: skin=\(response.skin.rawValue), color=\(response.color.rawValue), voice=\(response.voice.rawValue)")
+
+        logger.info(
+            "Customization loaded: skin=\(response.skin.rawValue) outfit=\(response.outfit.rawValue) bg=\(response.background.rawValue)"
+        )
     }
 
-    // MARK: - Present Selection Change
+    // MARK: - Present Outfit
+
+    func presentOutfitSelected(
+        outfit: LyalyaOutfit,
+        outfitItems: [OutfitItemViewModel],
+        lyalyaPrompt: String?
+    ) {
+        currentOutfit = outfit
+        currentOutfitItems = outfitItems
+        var vm = makeCurrentViewModel()
+        vm.lyalyaPrompt = lyalyaPrompt
+        display?.displaySelectionChanged(viewModel: vm)
+    }
+
+    // MARK: - Present Skin
 
     func presentSkinSelected(skin: LyalyaSkin) {
         currentSkin = skin
@@ -54,16 +104,80 @@ final class CustomizationPresenter {
         display?.displaySelectionChanged(viewModel: viewModel)
     }
 
-    func presentColorSelected(color: LyalyaColorVariant) {
+    // MARK: - Present Color
+
+    func presentColorSelected(color: LyalyaColorVariant, lyalyaPrompt: String?) {
         currentColor = color
-        let viewModel = makeCurrentViewModel()
-        display?.displaySelectionChanged(viewModel: viewModel)
+        var vm = makeCurrentViewModel()
+        vm.lyalyaPrompt = lyalyaPrompt
+        display?.displaySelectionChanged(viewModel: vm)
     }
 
-    func presentVoiceSelected(voice: LyalyaVoice) {
+    // MARK: - Present Voice
+
+    func presentVoiceSelected(voice: LyalyaVoice, lyalyaPrompt: String?) {
         currentVoice = voice
-        let viewModel = makeCurrentViewModel()
-        display?.displaySelectionChanged(viewModel: viewModel)
+        var vm = makeCurrentViewModel()
+        vm.lyalyaPrompt = lyalyaPrompt
+        display?.displaySelectionChanged(viewModel: vm)
+    }
+
+    // MARK: - Present Hair Color
+
+    func presentHairColorSelected(color: LyalyaHairColor) {
+        currentHairColor = color
+        let vm = makeCurrentViewModel()
+        display?.displaySelectionChanged(viewModel: vm)
+    }
+
+    // MARK: - Present Eye Color
+
+    func presentEyeColorSelected(color: LyalyaEyeColor) {
+        currentEyeColor = color
+        let vm = makeCurrentViewModel()
+        display?.displaySelectionChanged(viewModel: vm)
+    }
+
+    // MARK: - Present Skin Tone
+
+    func presentSkinToneSelected(tone: LyalyaSkinTone) {
+        currentSkinTone = tone
+        let vm = makeCurrentViewModel()
+        display?.displaySelectionChanged(viewModel: vm)
+    }
+
+    // MARK: - Present Accessory Toggle
+
+    func presentAccessoryToggled(
+        accessory: LyalyaAccessory,
+        accessoryItems: [AccessoryItemViewModel]
+    ) {
+        currentAccessoryItems = accessoryItems
+        // Синхронизируем currentAccessories из items
+        currentAccessories = Set(accessoryItems.filter { $0.isEnabled }.compactMap { $0.accessory })
+        let vm = makeCurrentViewModel()
+        display?.displaySelectionChanged(viewModel: vm)
+    }
+
+    // MARK: - Present Background
+
+    func presentBackgroundSelected(
+        background: LyalyaBackground,
+        backgroundItems: [BackgroundItemViewModel]
+    ) {
+        currentBackground = background
+        currentBackgroundItems = backgroundItems
+        let vm = makeCurrentViewModel()
+        display?.displaySelectionChanged(viewModel: vm)
+    }
+
+    // MARK: - Present Locked Item
+
+    func presentLockedItemAttempt(hint: String) {
+        var vm = makeCurrentViewModel()
+        vm.toastMessage = hint
+        vm.toastIsError = false
+        display?.displayLockedItemAttempt(viewModel: vm)
     }
 
     // MARK: - Present Saving state
@@ -76,11 +190,28 @@ final class CustomizationPresenter {
 
     // MARK: - Present Save Result
 
-    func presentSaveResult(response: Customization.SaveResponse) {
+    func presentSaveResult(
+        response: Customization.SaveResponse,
+        outfitItems: [OutfitItemViewModel],
+        accessoryItems: [AccessoryItemViewModel],
+        backgroundItems: [BackgroundItemViewModel],
+        lyalyaPrompt: String?
+    ) {
+        currentOutfitItems = outfitItems
+        currentAccessoryItems = accessoryItems
+        currentBackgroundItems = backgroundItems
+
         if response.success {
+            // После успешного сохранения original = current
             originalSkin = currentSkin
             originalColor = currentColor
             originalVoice = currentVoice
+            originalOutfit = currentOutfit
+            originalHairColor = currentHairColor
+            originalEyeColor = currentEyeColor
+            originalSkinTone = currentSkinTone
+            originalAccessories = currentAccessories
+            originalBackground = currentBackground
 
             var vm = makeCurrentViewModel()
             vm.isSaving = false
@@ -88,6 +219,7 @@ final class CustomizationPresenter {
             vm.toastMessage = String(localized: "customization.feedback.saved")
             vm.toastIsError = false
             vm.showCelebration = true
+            vm.lyalyaPrompt = lyalyaPrompt
             display?.displaySaveResult(viewModel: vm)
 
             if response.cloudSynced {
@@ -130,12 +262,28 @@ final class CustomizationPresenter {
 
     private func makeCurrentViewModel() -> CustomizationViewModel {
         let unchanged = (currentSkin == originalSkin
-                         && currentColor == originalColor
-                         && currentVoice == originalVoice)
+            && currentColor == originalColor
+            && currentVoice == originalVoice
+            && currentOutfit == originalOutfit
+            && currentHairColor == originalHairColor
+            && currentEyeColor == originalEyeColor
+            && currentSkinTone == originalSkinTone
+            && currentAccessories == originalAccessories
+            && currentBackground == originalBackground)
+
         return CustomizationViewModel(
             selectedSkin: currentSkin,
             selectedColor: currentColor,
             selectedVoice: currentVoice,
+            selectedOutfit: currentOutfit,
+            selectedHairColor: currentHairColor,
+            selectedEyeColor: currentEyeColor,
+            selectedSkinTone: currentSkinTone,
+            enabledAccessories: currentAccessories,
+            selectedBackground: currentBackground,
+            outfitItems: currentOutfitItems,
+            accessoryItems: currentAccessoryItems,
+            backgroundItems: currentBackgroundItems,
             isSaving: false,
             isUnchanged: unchanged
         )
