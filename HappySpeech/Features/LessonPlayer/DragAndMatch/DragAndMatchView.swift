@@ -80,7 +80,8 @@ struct DragAndMatchView: View {
             presenter.viewModel = display
             await interactor.loadSession(.init(
                 soundGroup: soundGroup,
-                childName: childName
+                childName: childName,
+                totalRounds: 3
             ))
         }
         .onChange(of: display.pendingFinalScore) { _, newValue in
@@ -120,18 +121,99 @@ struct DragAndMatchView: View {
     // MARK: Playing
 
     private var playingView: some View {
-        VStack(spacing: SpacingTokens.large) {
-            header
-            wordsPool
-            Spacer(minLength: 0)
-            bucketsRow
+        ZStack {
+            VStack(spacing: SpacingTokens.large) {
+                header
+                wordsPool
+                Spacer(minLength: 0)
+                bucketsRow
+                hintButton
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.top, SpacingTokens.large)
+            .padding(.bottom, SpacingTokens.large)
+            .animation(
+                reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.85),
+                value: display.placedWords
+            )
+
+            if display.showRoundComplete {
+                roundCompleteOverlay
+            }
         }
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .padding(.top, SpacingTokens.large)
-        .padding(.bottom, SpacingTokens.large)
+    }
+
+    // MARK: Hint button
+
+    private var hintButton: some View {
+        Button {
+            if let first = display.words.first(where: {
+                display.placedWords[$0.id] != $0.correctBucketId
+            }) {
+                Task {
+                    await interactor.requestHint(.init(wordId: first.id))
+                }
+            }
+        } label: {
+            Label(String(localized: "Подсказка"), systemImage: "lightbulb.fill")
+                .font(TypographyTokens.caption(14))
+                .foregroundStyle(ColorTokens.Brand.primary)
+        }
+        .buttonStyle(.plain)
+        .padding(.bottom, SpacingTokens.small)
+        .accessibilityLabel(String(localized: "Попросить подсказку"))
+        .accessibilityHint(String(localized: "Подсказывает в какую корзину положить слово"))
+    }
+
+    // MARK: Round complete overlay
+
+    private var roundCompleteOverlay: some View {
+        ZStack {
+            Color.black.opacity(0.35)
+                .ignoresSafeArea()
+                .transition(.opacity)
+
+            VStack(spacing: SpacingTokens.medium) {
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 56))
+                    .foregroundStyle(ColorTokens.Feedback.correct)
+                Text(display.roundCompleteAccuracyLabel)
+                    .font(TypographyTokens.title(20))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                Text(display.roundCompleteHintsLabel)
+                    .font(TypographyTokens.body(15))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                Text(display.roundCompleteDurationLabel)
+                    .font(TypographyTokens.caption(13))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                HSButton(
+                    display.roundCompleteCtaLabel,
+                    style: .primary
+                ) {
+                    display.showRoundComplete = false
+                    if display.roundCompleteHasNext {
+                        Task {
+                            await interactor.loadSession(.init(
+                                soundGroup: soundGroup,
+                                childName: childName,
+                                totalRounds: 3
+                            ))
+                        }
+                    }
+                }
+                .frame(maxWidth: 280)
+            }
+            .padding(SpacingTokens.xLarge)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                    .fill(ColorTokens.Kid.surface)
+                    .shadow(color: .black.opacity(0.15), radius: 20, y: 6)
+            )
+            .transition(.scale(scale: 0.85).combined(with: .opacity))
+        }
         .animation(
-            reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.85),
-            value: display.placedWords
+            reduceMotion ? nil : .spring(response: 0.45, dampingFraction: 0.8),
+            value: display.showRoundComplete
         )
     }
 
@@ -145,6 +227,17 @@ struct DragAndMatchView: View {
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .minimumScaleFactor(0.85)
+            if !display.roundLabel.isEmpty {
+                Text(display.roundLabel)
+                    .font(TypographyTokens.caption(14))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .monospacedDigit()
+            }
+            if let pairLabel = display.confusedPairLabel {
+                Text(pairLabel)
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+            }
             Text(progressLabel)
                 .font(TypographyTokens.caption(13))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
@@ -245,6 +338,7 @@ struct DragAndMatchView: View {
     private func bucketCard(_ bucket: DragBucket) -> some View {
         let contents = display.words.filter { display.placedWords[$0.id] == bucket.id }
         let isHovering = (hoveringBucketId == bucket.id)
+        let isHintTarget = (display.hintHighlightBucketId == bucket.id)
 
         return VStack(spacing: SpacingTokens.small) {
             HStack(spacing: SpacingTokens.tiny) {
@@ -269,19 +363,30 @@ struct DragAndMatchView: View {
         .frame(maxWidth: .infinity, minHeight: 180, alignment: .top)
         .background(
             RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                .fill(bucketBackground(for: bucket.color))
+                .fill(
+                    isHintTarget
+                        ? ColorTokens.Brand.butter.opacity(0.25)
+                        : bucketBackground(for: bucket.color)
+                )
         )
         .overlay(
             RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                 .strokeBorder(
-                    isHovering
-                        ? ColorTokens.Brand.primary
-                        : bucketBorder(for: bucket.color),
+                    isHintTarget
+                        ? ColorTokens.Brand.butter
+                        : isHovering
+                          ? ColorTokens.Brand.primary
+                          : bucketBorder(for: bucket.color),
                     style: StrokeStyle(
-                        lineWidth: isHovering ? 3 : 2,
-                        dash: isHovering ? [] : [6]
+                        lineWidth: (isHintTarget || isHovering) ? 3 : 2,
+                        dash: (isHintTarget || isHovering) ? [] : [6]
                     )
                 )
+        )
+        .scaleEffect(isHintTarget ? 1.03 : 1.0)
+        .animation(
+            reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.7),
+            value: isHintTarget
         )
         .dropDestination(for: DragWord.self) { items, _ in
             guard let word = items.first else { return false }
@@ -351,6 +456,24 @@ struct DragAndMatchView: View {
                 .lineLimit(nil)
                 .minimumScaleFactor(0.85)
                 .padding(.horizontal, SpacingTokens.xLarge)
+            if !display.accuracyPercent.isEmpty {
+                HStack(spacing: SpacingTokens.medium) {
+                    Label(display.accuracyPercent, systemImage: "target")
+                        .font(TypographyTokens.caption(13))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    if !display.hintsUsedLabel.isEmpty {
+                        Label(display.hintsUsedLabel, systemImage: "lightbulb")
+                            .font(TypographyTokens.caption(13))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    }
+                    if !display.durationLabel.isEmpty {
+                        Label(display.durationLabel, systemImage: "clock")
+                            .font(TypographyTokens.caption(13))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    }
+                }
+                .accessibilityElement(children: .combine)
+            }
             Spacer()
             HSButton(
                 String(localized: "Завершить"),
@@ -445,10 +568,14 @@ extension DragAndMatchDisplay: DragAndMatchDisplayLogic {
         words = viewModel.words
         buckets = viewModel.buckets
         greeting = viewModel.greeting
+        roundLabel = viewModel.roundLabel
+        confusedPairLabel = viewModel.confusedPairLabel
         placedWords = [:]
         correctWords = []
         incorrectWords = []
         feedbackText = ""
+        hintHighlightBucketId = nil
+        showRoundComplete = false
         phase = .playing
     }
 
@@ -463,12 +590,52 @@ extension DragAndMatchDisplay: DragAndMatchDisplayLogic {
             correctWords.remove(viewModel.wordId)
         }
         feedbackText = viewModel.feedbackText
+        hintHighlightBucketId = viewModel.hintBucketId
+
+        showStreakBonus = viewModel.showStreakBonus
+        streakBonusLabel = viewModel.streakLabel
+    }
+
+    func displayHint(_ viewModel: DragAndMatchModels.RequestHint.ViewModel) {
+        // Уровень 1: подсветка корзины.
+        hintHighlightBucketId = viewModel.targetBucketId
+
+        // Уровень 2: голосовой промпт — озвучиваем через LessonVoiceWorker.
+        if let text = viewModel.voicePromptText {
+            Task { @MainActor in
+                await LessonVoiceWorker.shared.speak(text, lessonType: "drag_and_match")
+            }
+        }
+
+        // Уровень 3: авто-решение — применяем размещение в display.
+        if let wordId = viewModel.autoSolvedWordId,
+           let bucketId = viewModel.autoSolvedBucketId {
+            placedWords[wordId] = bucketId
+            correctWords.insert(wordId)
+            incorrectWords.remove(wordId)
+            hintHighlightBucketId = nil
+        }
+
+        feedbackText = viewModel.hintsRemainingLabel
+    }
+
+    func displayCompleteRound(_ viewModel: DragAndMatchModels.CompleteRound.ViewModel) {
+        roundCompleteAccuracyLabel = viewModel.accuracyLabel
+        roundCompleteHintsLabel = viewModel.hintsLabel
+        roundCompleteDurationLabel = viewModel.durationLabel
+        roundCompleteHasNext = viewModel.hasNextRound
+        roundCompleteCtaLabel = viewModel.ctaLabel
+        showRoundComplete = true
     }
 
     func displayCompleteSession(_ viewModel: DragAndMatchModels.CompleteSession.ViewModel) {
         starsEarned = viewModel.starsEarned
         scoreLabel = viewModel.scoreLabel
         completionMessage = viewModel.message
+        accuracyPercent = viewModel.accuracyPercent
+        hintsUsedLabel = viewModel.hintsUsedLabel
+        durationLabel = viewModel.durationLabel
+        showRoundComplete = false
         phase = .completed
     }
 }
