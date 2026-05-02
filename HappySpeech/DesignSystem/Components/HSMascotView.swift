@@ -23,6 +23,26 @@ public enum PointingDirection: Sendable {
     case left, right, up
 }
 
+// MARK: - MascotMood+LyalyaState
+
+public extension MascotMood {
+    /// Маппинг MascotMood → LyalyaState для передачи в LyalyaRealityKitView.
+    var lyalyaState: LyalyaState {
+        switch self {
+        case .idle:        return .idle
+        case .happy:       return .happy
+        case .celebrating: return .celebrating
+        case .thinking:    return .thinking
+        case .sad:         return .sad
+        case .encouraging: return .encouraging
+        case .waving:      return .waving
+        case .explaining:  return .explaining
+        case .singing:     return .singing
+        case .pointing:    return .pointing
+        }
+    }
+}
+
 // MARK: - HSMascotView
 
 /// 7-слойный рендер маскота Ляли: Rive + aura + particles + lip-sync.
