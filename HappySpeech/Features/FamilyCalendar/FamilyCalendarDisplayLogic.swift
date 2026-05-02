@@ -14,4 +14,7 @@ protocol FamilyCalendarDisplayLogic {
     func displayLoadingState(isLoading: Bool)
     func displayInsightsLoading(isLoading: Bool)
     func displayClearToast()
+    func displayLessonScheduled(voiceHint: String)
+    func displayWeekSummary(viewModel: WeekSummaryViewModel)
+    func displayToast(message: String)
 }
