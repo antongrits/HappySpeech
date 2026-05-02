@@ -194,6 +194,7 @@ final class ObjectHuntInteractor: ObjectHuntBusinessLogic {
             }
 
             logger.info(
+                // swiftlint:disable:next line_length
                 "TapCorrect id=\(request.itemId.uuidString, privacy: .public) word=\(item.word, privacy: .public) streak=\(self.streakCount, privacy: .public) pts=\(pointsTotal, privacy: .public)"
             )
         } else {
@@ -277,6 +278,7 @@ final class ObjectHuntInteractor: ObjectHuntBusinessLogic {
             hintLevel: hintLevel
         )
         logger.info(
+            // swiftlint:disable:next line_length
             "UseHint level=\(hintLevel, privacy: .public) item=\(self.currentItems[hintIndex].word, privacy: .public) remaining=\(self.maxHints - self.hintsUsed, privacy: .public)"
         )
         presenter?.presentUseHint(response)
@@ -367,6 +369,7 @@ final class ObjectHuntInteractor: ObjectHuntBusinessLogic {
             isLastScene: isLastScene
         )
         logger.info(
+            // swiftlint:disable:next line_length
             "CompleteScene index=\(self.sceneIndex, privacy: .public) found=\(self.correctCount, privacy: .public)/\(self.targetCount, privacy: .public) timedOut=\(timedOut, privacy: .public)"
         )
         presenter?.presentCompleteScene(response)

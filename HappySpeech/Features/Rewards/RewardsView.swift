@@ -1,4 +1,5 @@
 import OSLog
+import Particles
 import SwiftUI
 
 // MARK: - RewardsView
@@ -592,17 +593,25 @@ private struct StickerUnlockOverlay: View {
                 .accessibilityAddTraits(.isButton)
                 .accessibilityLabel(String(localized: "a11y.button.close"))
 
-            // Confetti rain (emoji raining downward)
-            ForEach(0..<unlock.confettiEmojis.count * 3, id: \.self) { index in
-                let emoji = unlock.confettiEmojis[index % unlock.confettiEmojis.count]
-                Text(emoji)
-                    .font(.system(size: CGFloat.random(in: 22...36)))
-                    .offset(
-                        x: CGFloat.random(in: -160...160),
-                        y: confettiAppeared ? CGFloat.random(in: 200...500) : -CGFloat.random(in: 100...300)
+            // Confetti particles через swiftui-particles (benlmyers/swiftui-particles, MIT)
+            if confettiAppeared {
+                Emitter(from: .top, to: .bottom) {
+                    Confetti(
+                        [
+                            ColorTokens.Brand.gold,
+                            ColorTokens.Brand.primary,
+                            ColorTokens.Brand.lilac,
+                            ColorTokens.Feedback.correct
+                        ],
+                        size: .medium
                     )
-                    .opacity(confettiAppeared ? 0.85 : 0)
-                    .accessibilityHidden(true)
+                }
+                .emitForever(intensity: 30)
+                .particleLifetime(2.5)
+                .emitSpread(0.9)
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
             }
 
             VStack(spacing: SpacingTokens.large) {

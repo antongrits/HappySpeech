@@ -71,6 +71,9 @@ packages:
   MLXSwiftLM:
     url: https://github.com/ml-explore/mlx-swift-lm
     from: "3.31.3"
+  SwiftuiParticles:
+    url: https://github.com/benlmyers/swiftui-particles
+    from: "1.0.0"
 
 targets:
   HappySpeech:
@@ -184,6 +187,8 @@ targets:
         product: MLXLMCommon
       - package: SwiftTransformers
         product: Tokenizers
+      - package: SwiftuiParticles
+        product: Particles
       - target: HappySpeechWidgetExtension
         embed: true
     scheme:
