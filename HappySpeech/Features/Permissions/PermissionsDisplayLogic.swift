@@ -10,6 +10,8 @@ protocol PermissionsDisplayLogic: AnyObject {
     func displaySkip(_ viewModel: PermissionsModels.Skip.ViewModel)
     func displayOpenSettings(_ viewModel: PermissionsModels.OpenSettings.ViewModel)
     func displayCheckAllPermissions(_ viewModel: PermissionsModels.CheckAllPermissions.ViewModel)
+    func displayLyalyaPrompt(_ viewModel: PermissionsModels.LyalyaPrompt.ViewModel)
+    func displayDeniedGuidance(_ viewModel: PermissionsModels.DeniedGuidance.ViewModel)
     func displayFailure(_ viewModel: PermissionsModels.Failure.ViewModel)
     func displayLoading(_ isRequesting: Bool)
 }
@@ -39,6 +41,14 @@ final class PermissionsDisplay: PermissionsDisplayLogic {
     var overviewAllGranted: Bool = false
     var overviewGrantedCount: Int = 0
     var overviewTotalCount: Int = 0
+
+    // Lyalya prompt
+    var lyalyaPrompt: String = ""
+    var lyalyaPromptState: LyalyaState = .idle
+
+    // Denied guidance
+    var deniedGuidanceMessage: String = ""
+    var deniedGuidanceIcon: String = ""
 
     func displayStart(_ viewModel: PermissionsModels.Start.ViewModel) {
         steps = viewModel.steps
@@ -79,6 +89,16 @@ final class PermissionsDisplay: PermissionsDisplayLogic {
         overviewAllGranted = viewModel.allGranted
         overviewGrantedCount = viewModel.grantedCount
         overviewTotalCount = viewModel.totalCount
+    }
+
+    func displayLyalyaPrompt(_ viewModel: PermissionsModels.LyalyaPrompt.ViewModel) {
+        lyalyaPrompt = viewModel.prompt
+        lyalyaPromptState = viewModel.lyalyaState
+    }
+
+    func displayDeniedGuidance(_ viewModel: PermissionsModels.DeniedGuidance.ViewModel) {
+        deniedGuidanceMessage = viewModel.guidanceMessage
+        deniedGuidanceIcon = viewModel.guideIcon
     }
 
     func displayFailure(_ viewModel: PermissionsModels.Failure.ViewModel) {

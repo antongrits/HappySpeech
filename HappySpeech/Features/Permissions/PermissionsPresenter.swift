@@ -10,6 +10,8 @@ protocol PermissionsPresentationLogic: AnyObject {
     func presentSkip(_ response: PermissionsModels.Skip.Response)
     func presentOpenSettings(_ response: PermissionsModels.OpenSettings.Response)
     func presentCheckAllPermissions(_ response: PermissionsModels.CheckAllPermissions.Response)
+    func presentLyalyaPrompt(_ response: PermissionsModels.LyalyaPrompt.Response)
+    func presentDeniedGuidance(_ response: PermissionsModels.DeniedGuidance.Response)
     func presentFailure(_ response: PermissionsModels.Failure.Response)
     func presentLoading(_ isLoading: Bool)
 }
@@ -114,6 +116,42 @@ final class PermissionsPresenter: PermissionsPresentationLogic {
             grantedCount: granted,
             totalCount: total,
             summaryLabel: summaryLabel
+        ))
+    }
+
+    func presentLyalyaPrompt(_ response: PermissionsModels.LyalyaPrompt.Response) {
+        let lyalyaState: LyalyaState
+        switch response.type {
+        case .microphone:
+            // Mic — маскот "объясняет" важность микрофона.
+            lyalyaState = .explaining
+        case .camera, .faceTracking:
+            lyalyaState = .explaining
+        case .notifications:
+            // Уведомления — маскот более спокойный (опциональное разрешение).
+            lyalyaState = .idle
+        }
+        display?.displayLyalyaPrompt(.init(
+            type: response.type,
+            prompt: response.prompt,
+            lyalyaState: lyalyaState
+        ))
+    }
+
+    func presentDeniedGuidance(_ response: PermissionsModels.DeniedGuidance.Response) {
+        let icon: String
+        switch response.type {
+        case .microphone:
+            icon = "mic.slash.fill"
+        case .camera, .faceTracking:
+            icon = "camera.fill"
+        case .notifications:
+            icon = "bell.slash.fill"
+        }
+        display?.displayDeniedGuidance(.init(
+            type: response.type,
+            guidanceMessage: response.guidanceMessage,
+            guideIcon: icon
         ))
     }
 

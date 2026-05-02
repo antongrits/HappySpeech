@@ -112,6 +112,67 @@ enum PermissionsModels {
         }
     }
 
+    // MARK: - RetryPermission
+
+    /// Попытка повторного запроса. Interactor сам решает: re-request или → Settings.
+    enum RetryPermission {
+        struct Request: Sendable {
+            let type: PermissionType
+        }
+    }
+
+    // MARK: - CheckSingle
+
+    /// Точечная проверка одного разрешения без системного диалога.
+    enum CheckSingle {
+        struct Request: Sendable {
+            let type: PermissionType
+        }
+    }
+
+    // MARK: - LyalyaPrompt
+
+    /// Голосовая реплика маскота Ляли для конкретного шага.
+    enum LyalyaPrompt {
+        struct Request: Sendable {
+            let type: PermissionType
+            let state: PermissionState
+        }
+
+        struct Response: Sendable {
+            let type: PermissionType
+            let prompt: String
+        }
+
+        struct ViewModel: Sendable {
+            let type: PermissionType
+            let prompt: String
+            /// Состояние анимации маскота соответствующее реплике.
+            let lyalyaState: LyalyaState
+        }
+    }
+
+    // MARK: - DeniedGuidance
+
+    /// Пошаговая инструкция для denied-case.
+    enum DeniedGuidance {
+        struct Request: Sendable {
+            let type: PermissionType
+        }
+
+        struct Response: Sendable {
+            let type: PermissionType
+            let guidanceMessage: String
+        }
+
+        struct ViewModel: Sendable {
+            let type: PermissionType
+            let guidanceMessage: String
+            /// Системная иконка для визуального акцента инструкции.
+            let guideIcon: String
+        }
+    }
+
     // MARK: - Failure
 
     enum Failure {
