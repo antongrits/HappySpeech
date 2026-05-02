@@ -14,13 +14,19 @@ enum WorldMapModels {
         struct Request: Sendable {
             let childId: String
             let highlightedSound: String?
+            let childAge: Int?
         }
 
         struct Response: Sendable {
             let zones: [WorldZone]
+            let islands: [MapIsland]
+            let collectibles: [MapCollectible]
             let totalStars: Int
             let highlightedZoneId: String?
             let dailyStreak: Int
+            let lyalyaIslandId: String
+            let recommendedIslandId: String?
+            let recommendedLevelId: String?
         }
 
         struct ViewModel: Sendable {
@@ -31,6 +37,9 @@ enum WorldMapModels {
             let streakLabel: String
             let hasStreak: Bool
             let summaryAccessibilityLabel: String
+            let lyalyaIslandId: String
+            let recommendedIslandId: String?
+            let recommendedLevelId: String?
         }
     }
 
@@ -78,6 +87,9 @@ enum WorldMapModels {
             let recommendedLessonCount: Int
             let estimatedMinutesPerSession: Int
             let prerequisiteZoneName: String?
+            let levels: [MapLevel]
+            let recommendedLevelId: String?
+            let unlocksNeeded: Int
         }
 
         struct ViewModel: Sendable {
@@ -97,6 +109,9 @@ enum WorldMapModels {
             /// Имя цвета из палитры `ColorTokens.Brand.*` (маппинг — на стороне View).
             let colorName: String
             let accessibilityLabel: String
+            let levels: [MapLevel]
+            let recommendedLevelId: String?
+            let unlocksNeeded: Int
         }
     }
 
@@ -129,6 +144,108 @@ enum WorldMapModels {
     enum Failure {
         struct Response: Sendable { let message: String }
         struct ViewModel: Sendable { let toastMessage: String }
+    }
+
+    // MARK: - TapLyalya
+
+    enum TapLyalya {
+        struct Request: Sendable {}
+    }
+
+    // MARK: - CollectTreasure
+
+    enum CollectTreasure {
+        struct Request: Sendable { let collectibleId: String }
+        struct Response: Sendable {
+            let collectible: MapCollectible
+            let totalStars: Int
+            let remainingCollectibles: [MapCollectible]
+        }
+        struct ViewModel: Sendable {
+            let collectibleIcon: String
+            let totalStarsLabel: String
+            let toastMessage: String
+            let remainingCollectibles: [MapCollectible]
+        }
+    }
+
+    // MARK: - SelectLevel
+
+    enum SelectLevel {
+        struct Request: Sendable { let levelId: String }
+        struct Response: Sendable {
+            let level: MapLevel
+            let islandId: String
+            let zoneId: String
+        }
+        struct ViewModel: Sendable {
+            let levelId: String
+            let islandId: String
+            let zoneId: String
+            let levelName: String
+        }
+    }
+
+    // MARK: - AdaptiveRecommendation
+
+    enum AdaptiveRecommendation {
+        struct Request: Sendable { let childId: String }
+        struct Response: Sendable {
+            let recommendedIslandId: String?
+            let recommendedLevelId: String?
+            let voiceHint: String
+        }
+        struct ViewModel: Sendable {
+            let recommendedIslandId: String?
+            let recommendedLevelId: String?
+            let voiceHint: String
+        }
+    }
+
+    // MARK: - RecordSession
+
+    enum RecordSession {
+        struct Request: Sendable {
+            let islandId: String
+            let levelId: String
+            let successRate: Double
+            let fatigueDetected: Bool
+        }
+    }
+
+    // MARK: - VoicePrompt
+
+    enum VoicePrompt {
+        enum Context: Sendable {
+            case islandUnlocked(name: String)
+            case levelCompleted(levelName: String, islandName: String)
+            case nearUnlock(name: String, count: Int)
+            case firstVisit
+            case encouragement
+        }
+        struct Request: Sendable { let context: Context }
+        struct Response: Sendable {
+            let text: String
+            let isLyalya: Bool
+        }
+        struct ViewModel: Sendable {
+            let text: String
+            let isLyalya: Bool
+        }
+    }
+
+    // MARK: - LoadZoneDetail (extended)
+
+    enum LoadZoneDetailExtended {
+        struct Response: Sendable {
+            let zone: WorldZone
+            let recommendedLessonCount: Int
+            let estimatedMinutesPerSession: Int
+            let prerequisiteZoneName: String?
+            let levels: [MapLevel]
+            let recommendedLevelId: String?
+            let unlocksNeeded: Int
+        }
     }
 }
 

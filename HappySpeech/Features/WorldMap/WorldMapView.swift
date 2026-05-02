@@ -348,7 +348,8 @@ struct WorldMapView: View {
 
         interactor.loadMap(.init(
             childId: childId,
-            highlightedSound: targetSound.isEmpty ? nil : targetSound
+            highlightedSound: targetSound.isEmpty ? nil : targetSound,
+            childAge: nil
         ))
     }
 }
