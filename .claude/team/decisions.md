@@ -3,6 +3,33 @@
 
 ---
 
+## ADR-V14-GLIFXYZ — Glifxyz skill defer (2026-05-02)
+
+**Context:** Plan v14 Block N — исследование https://github.com/glifxyz для возможного создания skill и интеграции в проект HappySpeech.
+
+**Что делает Glif:** платформа "Creative Super Agent" для генерации мультимедиа через AI-воркфлоу: image generation (thumbnails, memes, logos, headshots), video generation, video editing. No-code workflow builder с веб-интерфейсом и REST API.
+
+**Репозитории glifxyz:**
+- `glif-mcp-server` (TypeScript, MIT) — MCP-сервер для запуска glif.app воркфлоу внутри LLM; **GLIF_API_TOKEN обязателен**.
+- `ComfyUI-GlifNodes` (Python, MIT) — custom nodes для ComfyUI; требует локального ComfyUI + GPU.
+- `glif-client-python` (Python, MIT) — клиент REST API; требует credentials.
+
+**API key:** обязателен для glif-mcp-server. Пользователь не может создать API key через сайт.
+
+**Decision:** **DEFERRED** — не интегрировать в Plan v14.
+
+**Причины:**
+1. API key обязателен; пользователь не может его получить.
+2. Image/video generation не релевантен для speech therapy iOS-приложения.
+3. ComfyUI требует GPU + локальную установку — overhead неоправдан.
+4. Дубликат существующего стека: FLUX-1-schnell (on-device), edge-tts, WhisperKit.
+
+**Consequences:** Skill `.claude/skills/glifxyz-skill-experiment/` НЕ создаётся. Продолжаем с FLUX-1-schnell (Block B) и edge-tts (Block F).
+
+**Owner:** research | **Status:** DEFERRED | **Block:** N v14
+
+---
+
 ## ADR-H-V14-SPM-BIG-LIBS — Block H: Big Libraries SPM Integration (2026-05-02)
 
 **Context:** Plan v14 Block H — добавление professional open-source SPM библиотек.
