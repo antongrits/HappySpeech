@@ -3,25 +3,21 @@ import SwiftUI
 
 // MARK: - MinimalPairsView
 //
-// «Минимальные пары» — экран из трёх фаз:
-//   1. loading   — прогресс-индикатор при подготовке раундов
+// «Минимальные пары» — экран из четырёх фаз:
+//   1. loading   — подготовка раундов
 //   2. round     — prompt + speaker + две emoji-карточки (target vs foil)
-//   3. feedback  — зелёный/красный overlay с текстом, auto-dismiss через 1.5 c
-//   4. completed — звёзды + счёт + кнопка «Завершить»
+//   3. feedback  — зелёный/красный баннер + автодисмисс через 1.5 с
+//   4. completed — звёзды + счёт + per-pair accuracy + кнопка «Завершить»
 //
-// View не содержит бизнес-логики. Через @State хранит триаду
-// interactor/presenter/display (Display — @Observable store). Все действия
-// проксируются в Interactor.
+// Доступность: touch targets ≥56pt, VoiceOver labels, Dynamic Type, Reduce Motion.
+// View не содержит бизнес-логики.
 
 struct MinimalPairsView: View {
 
     // MARK: Inputs
 
-    /// Целевой фонетический контраст ("Р-Л", "С-Ш", ""). Пустая строка — любой.
     let soundContrast: String
-    /// Имя ребёнка для приветствия в completed-фазе.
     let childName: String
-    /// Коллбек в SessionShell со итоговым скором 0…1.
     let onComplete: (Float) -> Void
 
     // MARK: Environment
@@ -37,7 +33,7 @@ struct MinimalPairsView: View {
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "MinimalPairsView")
 
-    // MARK: - Convenience init
+    // MARK: - Init
 
     @MainActor
     init(
@@ -57,7 +53,6 @@ struct MinimalPairsView: View {
         _display = State(initialValue: MinimalPairsDisplay())
     }
 
-    /// SessionShell-совместимый init — принимает `SessionActivity`.
     @MainActor
     init(activity: SessionActivity, onComplete: @escaping (Float) -> Void) {
         let contrast = Self.contrast(for: activity.soundTarget)
@@ -70,12 +65,23 @@ struct MinimalPairsView: View {
         ZStack {
             ColorTokens.Kid.bg.ignoresSafeArea()
             content
+            if let toast = display.toastMessage {
+                toastBanner(toast)
+                    .transition(.move(edge: .top).combined(with: .opacity))
+                    .zIndex(10)
+            }
         }
+        .animation(
+            reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.85),
+            value: display.toastMessage
+        )
         .task {
-            bindPresenter()
+            presenter.viewModel = display
             await interactor.loadSession(.init(
                 soundContrast: soundContrast,
-                childName: childName
+                childName: childName,
+                childId: "",
+                childAge: 6
             ))
             await interactor.startRound(.init(roundIndex: 0))
         }
@@ -91,7 +97,7 @@ struct MinimalPairsView: View {
         )
     }
 
-    // MARK: - Subviews
+    // MARK: - Content routing
 
     @ViewBuilder
     private var content: some View {
@@ -104,6 +110,8 @@ struct MinimalPairsView: View {
             completedView
         }
     }
+
+    // MARK: Loading
 
     private var loadingView: some View {
         VStack(spacing: SpacingTokens.medium) {
@@ -124,6 +132,7 @@ struct MinimalPairsView: View {
             progressHeader
             promptBlock
             optionsRow
+            hintReplayRow
             Spacer(minLength: 0)
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
@@ -147,13 +156,10 @@ struct MinimalPairsView: View {
                 .font(TypographyTokens.caption(13))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .monospacedDigit()
-            ProgressView(
-                value: roundProgress,
-                total: 1.0
-            )
-            .progressViewStyle(.linear)
-            .tint(ColorTokens.Brand.primary)
-            .frame(maxWidth: 260)
+            ProgressView(value: roundProgress, total: 1.0)
+                .progressViewStyle(.linear)
+                .tint(ColorTokens.Brand.primary)
+                .frame(maxWidth: 260)
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel(String(localized: "Прогресс сессии"))
@@ -166,15 +172,19 @@ struct MinimalPairsView: View {
                 Image(systemName: "speaker.wave.2.fill")
                     .font(.system(size: 22, weight: .semibold))
                     .foregroundStyle(.white)
-                    .frame(width: 52, height: 52)
-                    .background(
-                        Circle().fill(ColorTokens.Brand.primary)
-                    )
+                    .frame(width: 56, height: 56)
+                    .background(Circle().fill(ColorTokens.Brand.primary))
                     .shadow(color: .black.opacity(0.12), radius: 6, y: 3)
             }
             .buttonStyle(.plain)
+            .disabled(display.replaysRemaining == 0 && !display.isAnswered)
             .accessibilityLabel(String(localized: "Повторить слово"))
             .accessibilityHint(String(localized: "Нажмите, чтобы услышать слово ещё раз"))
+            .accessibilityValue(
+                display.replaysRemaining > 0
+                    ? String(localized: "Доступно повторов: \(display.replaysRemaining)")
+                    : String(localized: "Повторы закончились")
+            )
 
             Text(display.promptText)
                 .font(TypographyTokens.headline(18))
@@ -194,34 +204,19 @@ struct MinimalPairsView: View {
         HStack(spacing: SpacingTokens.medium) {
             if let pair = display.currentPair {
                 if pair.targetIsLeft {
-                    optionCard(
-                        word: pair.targetWord,
-                        emoji: pair.targetEmoji,
-                        isTarget: true
-                    )
-                    optionCard(
-                        word: pair.foilWord,
-                        emoji: pair.foilEmoji,
-                        isTarget: false
-                    )
+                    optionCard(word: pair.targetWord, emoji: pair.targetEmoji, isTarget: true)
+                    optionCard(word: pair.foilWord, emoji: pair.foilEmoji, isTarget: false)
                 } else {
-                    optionCard(
-                        word: pair.foilWord,
-                        emoji: pair.foilEmoji,
-                        isTarget: false
-                    )
-                    optionCard(
-                        word: pair.targetWord,
-                        emoji: pair.targetEmoji,
-                        isTarget: true
-                    )
+                    optionCard(word: pair.foilWord, emoji: pair.foilEmoji, isTarget: false)
+                    optionCard(word: pair.targetWord, emoji: pair.targetEmoji, isTarget: true)
                 }
             }
         }
     }
 
     private func optionCard(word: String, emoji: String, isTarget: Bool) -> some View {
-        Button {
+        let shouldHighlight = display.showHintHighlight && isTarget
+        return Button {
             selectOption(isTarget: isTarget)
         } label: {
             VStack(spacing: SpacingTokens.small) {
@@ -235,33 +230,101 @@ struct MinimalPairsView: View {
                     .minimumScaleFactor(0.7)
             }
             .frame(maxWidth: .infinity)
-            .frame(height: 200)
+            .frame(minHeight: 180)
+            .padding(.vertical, SpacingTokens.small)
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                    .fill(cardFill(isTarget: isTarget))
+                    .fill(cardFill(isTarget: isTarget, hintHighlight: shouldHighlight))
                     .shadow(color: .black.opacity(0.08), radius: 8, y: 4)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                    .strokeBorder(cardStroke(isTarget: isTarget), lineWidth: 3)
+                    .strokeBorder(cardStroke(isTarget: isTarget, hintHighlight: shouldHighlight), lineWidth: 3)
+            )
+            .scaleEffect(shouldHighlight ? 1.04 : 1.0)
+            .animation(
+                reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7),
+                value: shouldHighlight
             )
         }
         .buttonStyle(.plain)
         .disabled(display.isAnswered)
         .accessibilityLabel(word)
         .accessibilityHint(String(localized: "Нажмите, если это правильная картинка"))
+        .accessibilityAddTraits(shouldHighlight ? .isSelected : [])
     }
 
-    // MARK: Feedback
+    // MARK: Hint & Replay row
+
+    private var hintReplayRow: some View {
+        HStack(spacing: SpacingTokens.medium) {
+            // Кнопка подсказки
+            Button {
+                requestHint()
+            } label: {
+                Label(
+                    String(localized: "Подсказка (\(display.hintsAvailable))"),
+                    systemImage: "lightbulb.fill"
+                )
+                .font(TypographyTokens.caption(13))
+                .foregroundStyle(display.hintsAvailable > 0
+                    ? ColorTokens.Brand.primary
+                    : ColorTokens.Kid.inkMuted)
+                .padding(.horizontal, SpacingTokens.small)
+                .padding(.vertical, SpacingTokens.tiny)
+                .background(
+                    Capsule().fill(
+                        display.hintsAvailable > 0
+                            ? ColorTokens.Brand.primary.opacity(0.12)
+                            : ColorTokens.Kid.line.opacity(0.3)
+                    )
+                )
+            }
+            .buttonStyle(.plain)
+            .disabled(display.isAnswered || display.hintsAvailable == 0)
+            .accessibilityLabel(
+                String(localized: "Подсказка. Доступно: \(display.hintsAvailable)")
+            )
+
+            Spacer()
+
+            // Индикатор повторов
+            if display.replaysRemaining < 3 {
+                HStack(spacing: 3) {
+                    ForEach(0..<3, id: \.self) { idx in
+                        Circle()
+                            .fill(idx < display.replaysRemaining
+                                  ? ColorTokens.Brand.primary
+                                  : ColorTokens.Kid.line)
+                            .frame(width: 8, height: 8)
+                    }
+                }
+                .accessibilityLabel(
+                    String(localized: "Повторов осталось: \(display.replaysRemaining)")
+                )
+            }
+        }
+        .padding(.horizontal, SpacingTokens.small)
+        .opacity(display.isAnswered ? 0.4 : 1.0)
+    }
+
+    // MARK: Feedback overlay
 
     private var feedbackOverlay: some View {
-        HStack(spacing: SpacingTokens.small) {
-            Image(systemName: display.correct ? "checkmark.circle.fill" : "xmark.circle.fill")
-                .font(.system(size: 24, weight: .bold))
-            Text(display.feedbackText)
-                .font(TypographyTokens.headline(17))
-                .lineLimit(2)
-                .minimumScaleFactor(0.85)
+        VStack(spacing: SpacingTokens.tiny) {
+            HStack(spacing: SpacingTokens.small) {
+                Image(systemName: display.correct ? "checkmark.circle.fill" : "xmark.circle.fill")
+                    .font(.system(size: 24, weight: .bold))
+                Text(display.feedbackText)
+                    .font(TypographyTokens.headline(17))
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+            }
+            if let streak = display.streakLabel {
+                Text(streak)
+                    .font(TypographyTokens.caption(12))
+                    .opacity(0.9)
+            }
         }
         .padding(.horizontal, SpacingTokens.large)
         .padding(.vertical, SpacingTokens.medium)
@@ -280,32 +343,38 @@ struct MinimalPairsView: View {
     // MARK: Completed
 
     private var completedView: some View {
-        VStack(spacing: SpacingTokens.large) {
-            Spacer()
-            starsRow
-            Text(display.scoreLabel)
-                .font(TypographyTokens.title(28))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .monospacedDigit()
-            Text(display.completionMessage)
-                .font(TypographyTokens.body(17))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-                .padding(.horizontal, SpacingTokens.xLarge)
-            Spacer()
-            HSButton(
-                String(localized: "Завершить"),
-                style: .primary,
-                icon: "checkmark.circle.fill"
-            ) {
-                finalize()
+        ScrollView {
+            VStack(spacing: SpacingTokens.large) {
+                starsRow
+                    .padding(.top, SpacingTokens.xLarge)
+                Text(display.scoreLabel)
+                    .font(TypographyTokens.title(28))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .monospacedDigit()
+                Text(display.completionMessage)
+                    .font(TypographyTokens.body(17))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .padding(.horizontal, SpacingTokens.xLarge)
+
+                if !display.pairSummary.isEmpty {
+                    pairAccuracySection
+                }
+
+                HSButton(
+                    String(localized: "Завершить"),
+                    style: .primary,
+                    icon: "checkmark.circle.fill"
+                ) {
+                    finalize()
+                }
+                .frame(maxWidth: 320)
+                .padding(.bottom, SpacingTokens.large)
             }
-            .frame(maxWidth: 320)
-            .padding(.bottom, SpacingTokens.large)
+            .padding(.horizontal, SpacingTokens.screenEdge)
         }
-        .padding(.horizontal, SpacingTokens.screenEdge)
         .accessibilityElement(children: .contain)
         .accessibilityLabel(String(localized: "Раунд завершён"))
     }
@@ -322,7 +391,8 @@ struct MinimalPairsView: View {
                     )
                     .scaleEffect(idx < display.starsEarned ? 1.0 : 0.85)
                     .animation(
-                        reduceMotion ? nil : .spring(response: 0.5, dampingFraction: 0.65).delay(Double(idx) * 0.12),
+                        reduceMotion ? nil : .spring(response: 0.5, dampingFraction: 0.65)
+                            .delay(Double(idx) * 0.12),
                         value: display.starsEarned
                     )
             }
@@ -333,12 +403,62 @@ struct MinimalPairsView: View {
         )
     }
 
+    private var pairAccuracySection: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.small) {
+            Text(String(localized: "Точность по звукам"))
+                .font(TypographyTokens.caption(13))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .padding(.horizontal, SpacingTokens.small)
+
+            ForEach(display.pairSummary) { item in
+                HStack {
+                    Text(item.contrast)
+                        .font(TypographyTokens.body(15))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .frame(width: 60, alignment: .leading)
+                    ProgressView(value: Double(item.accuracyPercent), total: 100)
+                        .progressViewStyle(.linear)
+                        .tint(accuracyColor(item.accuracyPercent))
+                    Text(item.accuracyLabel)
+                        .font(TypographyTokens.caption(13))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .frame(width: 40, alignment: .trailing)
+                        .monospacedDigit()
+                }
+                .padding(.horizontal, SpacingTokens.small)
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel(
+                    String(localized: "Звуки \(item.contrast): \(item.accuracyLabel)")
+                )
+            }
+        }
+        .padding(SpacingTokens.cardPad)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                .fill(ColorTokens.Kid.surface)
+        )
+    }
+
+    // MARK: Toast
+
+    private func toastBanner(_ message: String) -> some View {
+        Text(message)
+            .font(TypographyTokens.caption(14))
+            .foregroundStyle(.white)
+            .padding(.horizontal, SpacingTokens.medium)
+            .padding(.vertical, SpacingTokens.small)
+            .background(Capsule().fill(Color.black.opacity(0.75)))
+            .padding(.top, SpacingTokens.medium)
+            .frame(maxWidth: .infinity)
+            .accessibilityLabel(message)
+    }
+
     // MARK: - Styling helpers
 
-    private func cardFill(isTarget: Bool) -> Color {
+    private func cardFill(isTarget: Bool, hintHighlight: Bool) -> Color {
+        if hintHighlight { return ColorTokens.Brand.primary.opacity(0.15) }
         guard display.isAnswered,
-              let selected = display.selectedIsTarget
-        else { return ColorTokens.Kid.surface }
+              let selected = display.selectedIsTarget else { return ColorTokens.Kid.surface }
         let cardIsSelected = (selected == isTarget)
         if !cardIsSelected { return ColorTokens.Kid.surface }
         return display.correct
@@ -346,10 +466,10 @@ struct MinimalPairsView: View {
             : ColorTokens.Feedback.incorrect.opacity(0.18)
     }
 
-    private func cardStroke(isTarget: Bool) -> Color {
+    private func cardStroke(isTarget: Bool, hintHighlight: Bool) -> Color {
+        if hintHighlight { return ColorTokens.Brand.primary }
         guard display.isAnswered,
-              let selected = display.selectedIsTarget
-        else { return .clear }
+              let selected = display.selectedIsTarget else { return .clear }
         let cardIsSelected = (selected == isTarget)
         if !cardIsSelected { return .clear }
         return display.correct
@@ -357,11 +477,15 @@ struct MinimalPairsView: View {
             : ColorTokens.Feedback.incorrect
     }
 
-    // MARK: - Actions
-
-    private func bindPresenter() {
-        presenter.viewModel = display
+    private func accuracyColor(_ percent: Int) -> Color {
+        switch percent {
+        case 80...:  return ColorTokens.Feedback.correct
+        case 60..<80: return ColorTokens.Brand.butter
+        default:     return ColorTokens.Feedback.incorrect
+        }
     }
+
+    // MARK: - Actions
 
     private func selectOption(isTarget: Bool) {
         guard !display.isAnswered else { return }
@@ -377,6 +501,12 @@ struct MinimalPairsView: View {
         Task { await interactor.replayCurrentWord() }
     }
 
+    private func requestHint() {
+        guard display.hintsAvailable > 0, !display.isAnswered else { return }
+        container.soundService.playUISound(.tap)
+        Task { await interactor.requestHint(.init()) }
+    }
+
     private func finalize() {
         guard display.pendingFinalScore == nil else { return }
         let correct = Float(display.correctCount)
@@ -388,7 +518,6 @@ struct MinimalPairsView: View {
 
     // MARK: - Helpers
 
-    /// Визуальный прогресс раунда для линейного ProgressView.
     private var roundProgress: Double {
         guard display.totalRounds > 0 else { return 0 }
         let parts = display.progressLabel.split(separator: "/")
@@ -398,25 +527,28 @@ struct MinimalPairsView: View {
         return Double(current) / Double(display.totalRounds)
     }
 
-    // MARK: - Contrast inference
-
-    /// Преобразует `soundTarget` из SessionActivity в фонетический контраст.
     private static func contrast(for sound: String) -> String {
         switch sound.uppercased() {
-        case "С", "С/Ш":   return "С-Ш"
-        case "Ш":           return "С-Ш"
-        case "Р", "Р/Л":   return "Р-Л"
-        case "Л":           return "Р-Л"
-        case "К", "К/Г":   return "К-Г"
-        case "Г":           return "К-Г"
-        case "З", "З/Ж":   return "З-Ж"
-        case "Ж":           return "З-Ж"
-        default:            return ""
+        case "С", "С/Ш":    return "С-Ш"
+        case "Ш":            return "С-Ш"
+        case "Р", "Р/Л":    return "Р-Л"
+        case "Л":            return "Р-Л"
+        case "К", "К/Г":    return "К-Г"
+        case "Г":            return "К-Г"
+        case "З", "З/Ж":    return "З-Ж"
+        case "Ж":            return "З-Ж"
+        case "Б", "Б/П":    return "Б-П"
+        case "П":            return "Б-П"
+        case "Д", "Д/Т":    return "Д-Т"
+        case "Т":            return "Д-Т"
+        case "В", "В/Ф":    return "В-Ф"
+        case "Ф":            return "В-Ф"
+        default:             return ""
         }
     }
 }
 
-// MARK: - Display: DisplayLogic adapter
+// MARK: - MinimalPairsDisplay: DisplayLogic adapter
 
 extension MinimalPairsDisplay: MinimalPairsDisplayLogic {
 
@@ -429,9 +561,15 @@ extension MinimalPairsDisplay: MinimalPairsDisplayLogic {
         currentPair = viewModel.pair
         progressLabel = viewModel.progressLabel
         promptText = viewModel.promptText
+        hintsAvailable = viewModel.hintsAvailable
         isAnswered = false
         selectedIsTarget = nil
         feedbackText = ""
+        streakLabel = nil
+        isStreakBonus = false
+        showHintHighlight = false
+        replaysRemaining = 3
+        toastMessage = nil
         phase = .round
     }
 
@@ -439,17 +577,58 @@ extension MinimalPairsDisplay: MinimalPairsDisplayLogic {
         correct = viewModel.correct
         feedbackText = viewModel.feedbackText
         correctAnswer = viewModel.correctAnswer
+        isStreakBonus = viewModel.isStreakBonus
+        streakLabel = viewModel.streakLabel
         isAnswered = true
+        showHintHighlight = false
         phase = .feedback
         answeredCount += 1
         if viewModel.correct { correctCount += 1 }
+    }
+
+    func displayReplayWord(_ viewModel: MinimalPairsModels.ReplayWord.ViewModel) {
+        replaysRemaining = viewModel.replaysRemaining
+        if let msg = viewModel.toastMessage {
+            showToast(msg)
+        }
+    }
+
+    func displayHint(_ viewModel: MinimalPairsModels.RequestHint.ViewModel) {
+        hintsAvailable = viewModel.hintsRemaining
+        showToast(viewModel.toastMessage)
+        if viewModel.level == .highlight && !viewModel.capReached {
+            showHintHighlight = true
+            hintHighlightDuration = viewModel.highlightDuration
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                try? await Task.sleep(for: .seconds(viewModel.highlightDuration))
+                self.showHintHighlight = false
+            }
+        }
+    }
+
+    func displayBonusRoundAdded(_ viewModel: MinimalPairsModels.BonusRoundAdded.ViewModel) {
+        totalRounds = viewModel.totalRounds
+        showToast(viewModel.toastMessage)
     }
 
     func displayCompleteSession(_ viewModel: MinimalPairsModels.CompleteSession.ViewModel) {
         starsEarned = viewModel.starsEarned
         scoreLabel = viewModel.scoreLabel
         completionMessage = viewModel.message
+        pairSummary = viewModel.pairSummary
         phase = .completed
+    }
+
+    // MARK: - Toast helper
+
+    private func showToast(_ message: String) {
+        toastMessage = message
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            try? await Task.sleep(for: .seconds(2.5))
+            self.toastMessage = nil
+        }
     }
 }
 
