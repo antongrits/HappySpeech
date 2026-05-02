@@ -43,7 +43,10 @@ struct ParentHomeView: View {
                 scene = ParentHomeScene(
                     childRepository: container.childRepository,
                     sessionRepository: container.sessionRepository,
-                    screeningOutcomeRepository: container.screeningOutcomeRepository
+                    screeningOutcomeRepository: container.screeningOutcomeRepository,
+                    llmDecisionService: container.llmDecisionService,
+                    adaptivePlannerService: container.adaptivePlannerService,
+                    notificationService: container.notificationService
                 )
             }
             await scene?.interactor.fetchData(.init(preferredChildId: nil))
@@ -119,14 +122,20 @@ final class ParentHomeScene {
     init(
         childRepository: any ChildRepository,
         sessionRepository: any SessionRepository,
-        screeningOutcomeRepository: (any ScreeningOutcomeRepository)? = nil
+        screeningOutcomeRepository: (any ScreeningOutcomeRepository)? = nil,
+        llmDecisionService: (any LLMDecisionServiceProtocol)? = nil,
+        adaptivePlannerService: (any AdaptivePlannerService)? = nil,
+        notificationService: (any NotificationService)? = nil
     ) {
         let viewModel = ParentHomeViewModel()
         let presenter = ParentHomePresenter()
         let interactor = ParentHomeInteractor(
             childRepository: childRepository,
             sessionRepository: sessionRepository,
-            screeningOutcomeRepository: screeningOutcomeRepository
+            screeningOutcomeRepository: screeningOutcomeRepository,
+            llmDecisionService: llmDecisionService,
+            adaptivePlannerService: adaptivePlannerService,
+            notificationService: notificationService
         )
         presenter.viewModel = viewModel
         interactor.presenter = presenter
