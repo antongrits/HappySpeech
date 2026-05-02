@@ -5,18 +5,18 @@ import Foundation
 // VIP Request/Response/ViewModel for the initial diagnostic flow.
 //
 // Methodology (source: HappySpeech/ResearchDocs/therapy-stages.md):
-// A screening consists of 20-30 prompts grouped into four blocks —
-//   A. Articulation imitation (8 prompts, one per sound group)
-//   B. Word pronunciation per position (initial / medial / final) — 12 prompts
-//   C. Minimal-pair discrimination (5 prompts)
-//   D. Breathing / duration hold (3 prompts)
-// The interactor scores each prompt 0…1 and aggregates the results into a
+// A screening covers 10 target phonemes in a single-word format:
+//   С, Ш, З, Ж, Р, Л, Ч, Щ, Ц, К
+// The interactor scores each recording 0…1 and aggregates the results into a
 // `ScreeningOutcome` that maps each target sound to a recommendation
 // (`.normal`, `.monitor`, `.intervention`).
+//
+// Adaptive early stop: if 2 consecutive scores < 0.40 → terminate early.
 
 enum ScreeningModels {
 
     // MARK: StartScreening
+
     enum StartScreening {
         struct Request {
             let childId: String
@@ -25,15 +25,69 @@ enum ScreeningModels {
         struct Response {
             let prompts: [ScreeningPrompt]
             let totalBlocks: Int
+            let lyalyaPhrase: String
         }
         struct ViewModel: Equatable {
             let prompts: [ScreeningPrompt]
             let progressText: String
             let estimatedMinutes: Int
+            let lyalyaPhrase: String
         }
     }
 
+    // MARK: PrepareStage
+
+    enum PrepareStage {
+        struct Request {
+            let stageIndex: Int
+        }
+        struct Response {
+            let stageIndex: Int
+            let totalStages: Int
+            let prompt: ScreeningPrompt
+            let lyalyaPhrase: String
+            let canRecord: Bool
+        }
+        struct ViewModel: Equatable {
+            let stageIndex: Int
+            let totalStages: Int
+            let progressFraction: Double
+            let targetWord: String
+            let targetSoundHint: String
+            let imageAsset: String?
+            let lyalyaPhrase: String
+            let showRecordButton: Bool
+        }
+    }
+
+    // MARK: StartRecording
+
+    enum StartRecording {
+        struct Request {
+            let stageIndex: Int
+        }
+        struct Response {
+            let stageIndex: Int
+            let maxDurationSec: Double
+        }
+        struct ViewModel: Equatable {
+            let stageIndex: Int
+            let isRecording: Bool
+            let timerLabelText: String
+        }
+    }
+
+    // MARK: StopRecording
+
+    enum StopRecording {
+        struct Request {
+            let stageIndex: Int
+        }
+        // Response delivered via SubmitAnswer after scoring completes
+    }
+
     // MARK: SubmitAnswer
+
     enum SubmitAnswer {
         struct Request {
             let promptId: String
@@ -44,33 +98,101 @@ enum ScreeningModels {
             let isBlockComplete: Bool
             let isScreeningComplete: Bool
             let currentPromptIndex: Int
+            /// Adaptive-stop был вызван досрочно (не последний промпт, но 2 wrong подряд)
+            let adaptiveStopTriggered: Bool
         }
         struct ViewModel: Equatable {
             let nextPromptIndex: Int?
             let shouldShowBlockTransition: Bool
             let shouldShowSummary: Bool
+            let adaptiveStopMessage: String?
         }
     }
 
+    // MARK: ReplayAudio
+
+    enum ReplayAudio {
+        struct Request {
+            let stageIndex: Int
+            let referenceAudioAsset: String?
+        }
+        // No response — fire and forget
+    }
+
     // MARK: FinishScreening
+
     enum FinishScreening {
         struct Request { let childId: String }
         struct Response {
             let outcome: ScreeningOutcome
+            /// Скрининг был прерван адаптивно (не дошёл до конца)
+            let wasAdaptiveStopped: Bool
+            let testedSoundsCount: Int
+            let totalSoundsCount: Int
+            let lyalyaFinishPhrase: String
         }
         struct ViewModel: Equatable {
             let outcomeSummary: String
             let perSoundVerdicts: [SoundVerdictViewModel]
             let recommendedSessionMinutes: Int
             let priorityTargetSounds: [String]
+            let wasAdaptiveStopped: Bool
+            let testedLabel: String
+            let lyalyaFinishPhrase: String
         }
     }
 
+    // MARK: RecordingError
+
+    struct RecordingError {
+        let errorMessage: String
+        let canContinueWithoutRecording: Bool
+    }
+
+    // MARK: MicrophonePermission
+
+    enum MicrophonePermission {
+        struct Response {
+            let isGranted: Bool
+        }
+        struct ViewModel: Equatable {
+            let isGranted: Bool
+            let deniedMessage: String?
+        }
+    }
+
+    // MARK: CheckRescreening
+
+    enum CheckRescreening {
+        struct Request {
+            let childId: String
+        }
+        struct Response {
+            let isEligible: Bool
+            let daysSinceLastScreening: Int?
+            let previousOutcomeSummary: PreviousOutcomeSummary?
+        }
+        struct ViewModel: Equatable {
+            let isEligible: Bool
+            let warningMessage: String?
+            let previousSummaryText: String?
+        }
+    }
+
+    // MARK: PreviousOutcomeSummary
+
+    struct PreviousOutcomeSummary: Equatable, Sendable {
+        let completedAt: Date
+        let severity: String
+        let problematicSounds: [String]
+        let daysSince: Int
+    }
+
     // MARK: CompleteRequest
-    //
-    // Финальный «акт сдачи»: после того, как презентер сформировал ViewModel и UI
-    // показал summary, родитель/специалист подтверждает запись результата. Этот
-    // запрос несёт в себе уже агрегированные поля для сохранения в Realm.
+
+    /// Финальный «акт сдачи»: после того, как презентер сформировал ViewModel и UI
+    /// показал summary, родитель/специалист подтверждает запись результата. Этот
+    /// запрос несёт в себе уже агрегированные поля для сохранения в Realm.
     struct CompleteRequest: Sendable {
         let childId: String
         /// "mild" | "moderate" | "severe" — выводится из количества звуков с
@@ -84,6 +206,8 @@ enum ScreeningModels {
         let recommendedPacks: [String]
         /// Свободные заметки. По умолчанию — пустая строка.
         let notes: String
+        /// Признак повторного скрининга (не первый раз).
+        let isRescreening: Bool
     }
 }
 
