@@ -112,4 +112,24 @@ public extension RealmActor {
         obj.unlockedAt = Date()
         try? realmInstance.write { realmInstance.add(obj) }
     }
+
+    /// Persists a sticker RewardRecord for a session — idempotent by sessionId.
+    internal func persistStickerReward(
+        childId: String,
+        sessionId: String,
+        stickerId: String
+    ) async {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return }
+        let existing = realmInstance.objects(RewardRecord.self)
+            .filter("sessionId == %@", sessionId)
+        guard existing.isEmpty else { return }
+        let record = RewardRecord()
+        record.childId = childId
+        record.type = "sticker"
+        record.rewardId = stickerId
+        record.earnedAt = Date()
+        record.sessionId = sessionId
+        try? realmInstance.write { realmInstance.add(record, update: .modified) }
+    }
 }
