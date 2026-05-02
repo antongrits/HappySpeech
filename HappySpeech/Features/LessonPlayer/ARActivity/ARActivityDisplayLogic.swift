@@ -8,6 +8,11 @@ import Foundation
 @MainActor
 protocol ARActivityDisplayLogic: AnyObject {
     func displayLoadActivity(_ viewModel: ARActivityModels.LoadActivity.ViewModel)
+    func displayRequestPermission(
+        _ viewModel: ARActivityModels.RequestPermission.ViewModel,
+        cards: [ARActivityGameCard]
+    )
+    func displaySelectGame(_ viewModel: ARActivityModels.SelectGame.ViewModel)
     func displayStartActivity(_ viewModel: ARActivityModels.StartActivity.ViewModel)
     func displayCompleteActivity(_ viewModel: ARActivityModels.CompleteActivity.ViewModel)
 }
@@ -15,25 +20,54 @@ protocol ARActivityDisplayLogic: AnyObject {
 // MARK: - ARActivityViewDisplay + ARActivityDisplayLogic
 
 extension ARActivityViewDisplay: ARActivityDisplayLogic {
+
     func displayLoadActivity(_ viewModel: ARActivityModels.LoadActivity.ViewModel) {
-        self.title = viewModel.title
-        self.description = viewModel.description
-        self.iconSystemName = viewModel.iconSystemName
-        self.estimatedLabel = viewModel.estimatedLabel
-        self.activityType = viewModel.activityType
-        self.phase = viewModel.previewReady ? .preview : .loading
+        screenTitle = viewModel.screenTitle
+        subtitle = viewModel.subtitle
+        gameCards = viewModel.gameCards
+        cameraPermission = viewModel.cameraPermissionState
+        microphonePermission = viewModel.microphonePermissionState
+        showPermissionBanner = viewModel.showPermissionBanner
+        permissionBannerMessage = viewModel.permissionBannerMessage
+        hasAnyAvailableGame = viewModel.hasAnyAvailableGame
+        // legacy compat
+        title = viewModel.screenTitle
+        phase = viewModel.previewReady ? .selection : .loading
+    }
+
+    func displayRequestPermission(
+        _ viewModel: ARActivityModels.RequestPermission.ViewModel,
+        cards: [ARActivityGameCard]
+    ) {
+        cameraPermission = viewModel.cameraPermission
+        microphonePermission = viewModel.microphonePermission
+        showPermissionBanner = viewModel.showPermissionBanner
+        permissionBannerMessage = viewModel.permissionBannerMessage
+        gameCards = cards
+        hasAnyAvailableGame = cards.contains { $0.isAvailable }
+        if viewModel.cameraPermission == .denied {
+            phase = .permissionDenied
+        } else if phase == .permissionDenied {
+            phase = .selection
+        }
+    }
+
+    func displaySelectGame(_ viewModel: ARActivityModels.SelectGame.ViewModel) {
+        activeGameKind = viewModel.kind
+        activityType = ARActivityType.from(kind: viewModel.kind)
+        phase = .active
     }
 
     func displayStartActivity(_ viewModel: ARActivityModels.StartActivity.ViewModel) {
-        self.activityType = viewModel.activityType
-        self.phase = .active
+        activityType = viewModel.activityType
+        phase = .active
     }
 
     func displayCompleteActivity(_ viewModel: ARActivityModels.CompleteActivity.ViewModel) {
-        self.starsEarned = viewModel.starsEarned
-        self.scoreLabel = viewModel.scoreLabel
-        self.completionMessage = viewModel.message
-        self.lastScore = viewModel.score
-        self.phase = .completed
+        starsEarned = viewModel.starsEarned
+        scoreLabel = viewModel.scoreLabel
+        completionMessage = viewModel.message
+        lastScore = viewModel.score
+        phase = .completed
     }
 }

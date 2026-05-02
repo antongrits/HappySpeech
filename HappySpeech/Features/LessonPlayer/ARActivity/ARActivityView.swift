@@ -2,14 +2,15 @@ import SwiftUI
 
 // MARK: - ARActivityView
 //
-// Точка входа для AR-упражнений внутри SessionShell.
-// Трёхфазовый UI:
-//   1. `preview` — карточка с иконкой, описанием и кнопкой «Начать».
-//   2. `active`  — fullScreenCover с дочерним AR-экраном (mirror / storyQuest).
-//   3. `completed` — итог: звёзды, процент, сообщение, кнопка «Завершить».
-// Контракт с родителем — как у остальных игр сессии:
-//   `ARActivityView(activity:, onComplete:)`, где `onComplete(score: Float)`
-//   вызывается после нажатия «Завершить».
+// Диспетчер AR-игр внутри SessionShell.
+// Фазы UI:
+//   1. `loading`          — строим capability + permissions + cards.
+//   2. `permissionDenied` — banner «Открыть Настройки».
+//   3. `selection`        — grid с 7 карточками AR-игр.
+//   4. `active`           — fullScreenCover с дочерним AR-экраном.
+//   5. `completed`        — итог: звёзды, процент, сообщение.
+// Контракт с родителем: `ARActivityView(activity:, onComplete:)`,
+// где `onComplete(score: Float)` вызывается после «Завершить».
 
 struct ARActivityView: View {
 
@@ -45,8 +46,10 @@ struct ARActivityView: View {
             switch display.phase {
             case .loading:
                 loadingView
-            case .preview:
-                previewContent
+            case .permissionDenied:
+                permissionDeniedView
+            case .selection:
+                selectionContent
             case .active:
                 activePlaceholder
             case .completed:
@@ -73,91 +76,160 @@ struct ARActivityView: View {
                 .progressViewStyle(.circular)
                 .tint(ColorTokens.Brand.primary)
                 .scaleEffect(1.4)
-            Text(String(localized: "Готовим AR-упражнение…"))
+            Text(String(localized: "Проверяем AR-возможности…"))
                 .font(TypographyTokens.body())
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
         }
         .accessibilityLabel(String(localized: "Загрузка"))
     }
 
-    // MARK: - Preview
+    // MARK: - Permission Denied
 
-    private var previewContent: some View {
+    private var permissionDeniedView: some View {
         VStack(spacing: SpacingTokens.large) {
-            Spacer(minLength: SpacingTokens.medium)
-
-            Image(systemName: display.iconSystemName)
-                .font(.system(size: 64, weight: .semibold))
-                .foregroundStyle(ColorTokens.Brand.primary)
-                .frame(width: 120, height: 120)
-                .background(
-                    Circle().fill(ColorTokens.Brand.lilac.opacity(0.2))
-                )
+            Spacer()
+            Image(systemName: "camera.fill")
+                .font(.system(size: 56, weight: .semibold))
+                .foregroundStyle(ColorTokens.Kid.inkSoft)
                 .accessibilityHidden(true)
 
-            Text(display.title)
-                .font(TypographyTokens.title(28))
+            Text(String(localized: "Нужна камера"))
+                .font(TypographyTokens.title(24))
                 .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, SpacingTokens.screenEdge)
 
-            Text(display.description)
+            Text(String(localized: "AR-упражнения работают через камеру. Разреши доступ в Настройках."))
                 .font(TypographyTokens.body())
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, SpacingTokens.screenEdge)
 
-            estimatedBadge
-
-            Spacer(minLength: SpacingTokens.medium)
-
-            cameraHint
-                .padding(.horizontal, SpacingTokens.screenEdge)
+            Spacer()
 
             HSButton(
-                String(localized: "Начать"),
+                String(localized: "Открыть Настройки"),
                 style: .primary,
-                icon: "play.fill"
+                icon: "gear"
             ) {
-                interactor?.startActivity(.init(activityType: display.activityType))
+                interactor?.openSettings(.init())
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .accessibilityHint(String(localized: "Открыть системные настройки для разрешения камеры"))
+
+            HSButton(
+                String(localized: "Назад"),
+                style: .ghost
+            ) {
+                onComplete(0)
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.bottom, SpacingTokens.large)
-            .accessibilityHint(String(localized: "Открыть AR-упражнение"))
         }
     }
 
-    private var estimatedBadge: some View {
-        HStack(spacing: SpacingTokens.tiny) {
-            Image(systemName: "clock")
-                .font(.system(size: 13, weight: .medium))
-            Text(display.estimatedLabel)
-                .font(TypographyTokens.body(14))
+    // MARK: - Selection Screen
+
+    private var selectionContent: some View {
+        ScrollView {
+            VStack(spacing: SpacingTokens.large) {
+                headerSection
+
+                if display.showPermissionBanner {
+                    permissionBanner
+                        .padding(.horizontal, SpacingTokens.screenEdge)
+                }
+
+                gameCardsGrid
+
+                Spacer(minLength: SpacingTokens.large)
+            }
+            .padding(.vertical, SpacingTokens.medium)
         }
-        .foregroundStyle(ColorTokens.Kid.inkSoft)
-        .padding(.horizontal, SpacingTokens.regular)
-        .padding(.vertical, SpacingTokens.tiny)
-        .background(
-            Capsule().fill(ColorTokens.Kid.surfaceAlt)
-        )
-        .accessibilityLabel(display.estimatedLabel)
+        .scrollIndicators(.hidden)
     }
 
-    private var cameraHint: some View {
+    private var headerSection: some View {
+        VStack(spacing: SpacingTokens.small) {
+            Text(display.screenTitle)
+                .font(TypographyTokens.title(26))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .accessibilityAddTraits(.isHeader)
+
+            Text(display.subtitle)
+                .font(TypographyTokens.body())
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .multilineTextAlignment(.center)
+        }
+        .padding(.horizontal, SpacingTokens.screenEdge)
+    }
+
+    private var permissionBanner: some View {
         HStack(spacing: SpacingTokens.small) {
-            Image(systemName: "camera.viewfinder")
-                .font(.system(size: 16, weight: .regular))
-                .foregroundStyle(ColorTokens.Kid.inkSoft)
-            Text(String(localized: "Готовься к камере!"))
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundStyle(ColorTokens.Semantic.warning)
+                .accessibilityHidden(true)
+
+            Text(display.permissionBannerMessage)
                 .font(TypographyTokens.body(14))
-                .foregroundStyle(ColorTokens.Kid.inkSoft)
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+
+            Spacer(minLength: 0)
+
+            Button {
+                interactor?.requestPermission(.init(kind: .camera))
+            } label: {
+                Text(String(localized: "Разрешить"))
+                    .font(TypographyTokens.body(14))
+                    .fontWeight(.semibold)
+                    .foregroundStyle(ColorTokens.Brand.primary)
+            }
+            .accessibilityLabel(String(localized: "Разрешить доступ к камере"))
         }
-        .padding(.vertical, SpacingTokens.small)
-        .padding(.horizontal, SpacingTokens.regular)
+        .padding(SpacingTokens.regular)
         .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.sm)
-                .stroke(ColorTokens.Kid.line, lineWidth: 1)
+            RoundedRectangle(cornerRadius: RadiusTokens.md)
+                .fill(ColorTokens.Kid.surfaceAlt)
+                .overlay(
+                    RoundedRectangle(cornerRadius: RadiusTokens.md)
+                        .stroke(ColorTokens.Semantic.warning.opacity(0.4), lineWidth: 1)
+                )
         )
+    }
+
+    private var gameCardsGrid: some View {
+        LazyVGrid(
+            columns: [
+                GridItem(.flexible(), spacing: SpacingTokens.small),
+                GridItem(.flexible(), spacing: SpacingTokens.small)
+            ],
+            spacing: SpacingTokens.small
+        ) {
+            ForEach(display.gameCards) { card in
+                ARActivityGameCardView(card: card) {
+                    guard card.isAvailable else { return }
+                    interactor?.selectGame(.init(kind: card.kind))
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel(gameCardAccessibilityLabel(for: card))
+                .accessibilityHint(card.isAvailable ? String(localized: "Начать игру") : card.unavailableReason)
+            }
+        }
+        .padding(.horizontal, SpacingTokens.screenEdge)
+    }
+
+    private func gameCardAccessibilityLabel(for card: ARActivityGameCard) -> String {
+        var label = card.title
+        if card.isRecommended {
+            label += ", " + String(localized: "рекомендуется")
+        }
+        if card.playedToday {
+            label += ", " + String(localized: "уже играли сегодня")
+        }
+        if !card.isAvailable {
+            label += ", " + String(localized: "недоступно")
+        }
+        return label
     }
 
     // MARK: - Active (placeholder shown while fullScreenCover transitions)
@@ -235,7 +307,11 @@ struct ARActivityView: View {
         guard !bootstrapped else { return }
         bootstrapped = true
 
-        let interactor = ARActivityInteractor()
+        let interactor = ARActivityInteractor(
+            adaptivePlanner: container.adaptivePlannerService,
+            sessionRepository: nil,
+            hapticService: container.hapticService
+        )
         let presenter = ARActivityPresenter()
         let router = ARActivityRouter()
 
@@ -243,15 +319,15 @@ struct ARActivityView: View {
         interactor.router = router
         presenter.viewModel = display
 
-        router.onRouteToMirror = {
-            showARMirror = true
-        }
-        router.onRouteToStoryQuest = {
-            showARStoryQuest = true
-        }
-        router.onDismiss = {
-            onComplete(display.lastScore)
-        }
+        router.onRouteToMirror = { showARMirror = true }
+        router.onRouteToStoryQuest = { showARStoryQuest = true }
+        router.onRouteToButterflyCatch = { showARStoryQuest = true }
+        router.onRouteToBreathingAR = { showARStoryQuest = true }
+        router.onRouteToMimicLyalya = { showARMirror = true }
+        router.onRouteToHoldThePose = { showARMirror = true }
+        router.onRouteToPoseSequence = { showARMirror = true }
+        router.onRouteToSoundAndFace = { showARMirror = true }
+        router.onDismiss = { onComplete(display.lastScore) }
 
         self.interactor = interactor
         self.presenter = presenter
@@ -265,53 +341,47 @@ struct ARActivityView: View {
             soundGroup: soundGroup,
             targetSound: activity.soundTarget,
             stage: stage,
-            childName: ""
+            childName: "",
+            childId: "",
+            childAge: 6
         ))
     }
 
     // MARK: - Dismiss handlers
 
     private func handleMirrorDismiss() {
-        // Симулятор/тесты не возвращают реальный score — используем «хороший» дефолт.
-        // На устройстве ARMirrorView отдаёт звёзды через свой отдельный pipeline;
-        // для упрощения интеграции в сессию считаем средний успех.
         interactor?.completeActivity(.init(
             activityType: .mirror,
+            gameKind: display.activeGameKind,
             score: 0.8,
-            attempts: 1
+            attempts: 1,
+            durationSec: 0
         ))
     }
 
     private func handleStoryQuestDismiss() {
         interactor?.completeActivity(.init(
             activityType: .storyQuest,
+            gameKind: display.activeGameKind,
             score: 0.8,
-            attempts: 1
+            attempts: 1,
+            durationSec: 0
         ))
     }
 
     // MARK: - Helpers
 
-    /// Определяет SoundFamily по целевому звуку (русской букве).
     static func resolveSoundGroup(for targetSound: String) -> String {
-        let upper = targetSound.uppercased()
-        let firstLetter = upper.prefix(1)
+        let firstLetter = targetSound.uppercased().prefix(1)
         switch firstLetter {
-        case "С", "З", "Ц":
-            return "whistling"
-        case "Ш", "Ж", "Ч", "Щ":
-            return "hissing"
-        case "Р", "Л":
-            return "sonants"
-        case "К", "Г", "Х":
-            return "velar"
-        default:
-            return ""
+        case "С", "З", "Ц":    return "whistling"
+        case "Ш", "Ж", "Ч", "Щ": return "hissing"
+        case "Р", "Л":          return "sonants"
+        case "К", "Г", "Х":    return "velar"
+        default:                return ""
         }
     }
 
-    /// Грубое отображение Int-сложности → строкового этапа коррекции.
-    /// 0–1 → isolated, 2 → syllable, 3 → wordInit, 4 → wordMed, 5+ → phrase.
     static func resolveStage(for difficulty: Int) -> String {
         switch difficulty {
         case ..<2:  return "isolated"
@@ -323,9 +393,112 @@ struct ARActivityView: View {
     }
 }
 
+// MARK: - ARActivityGameCardView
+
+private struct ARActivityGameCardView: View {
+
+    let card: ARActivityGameCard
+    let onTap: () -> Void
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    var body: some View {
+        Button(action: onTap) {
+            VStack(alignment: .leading, spacing: SpacingTokens.small) {
+                HStack {
+                    Image(systemName: card.iconSystemName)
+                        .font(.system(size: 24, weight: .semibold))
+                        .foregroundStyle(iconColor)
+                        .accessibilityHidden(true)
+
+                    Spacer(minLength: 0)
+
+                    if card.isRecommended {
+                        Image(systemName: "star.fill")
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundStyle(ColorTokens.Brand.gold)
+                            .accessibilityHidden(true)
+                    }
+
+                    if card.playedToday {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.system(size: 14, weight: .regular))
+                            .foregroundStyle(ColorTokens.Brand.primary.opacity(0.6))
+                            .accessibilityHidden(true)
+                    }
+                }
+
+                Text(card.title)
+                    .font(TypographyTokens.body(15))
+                    .fontWeight(.semibold)
+                    .foregroundStyle(titleColor)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+
+                Text(card.description)
+                    .font(TypographyTokens.body(12))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .lineLimit(3)
+                    .minimumScaleFactor(0.85)
+
+                Spacer(minLength: 0)
+
+                HStack {
+                    Image(systemName: "clock")
+                        .font(.system(size: 10, weight: .regular))
+                        .accessibilityHidden(true)
+                    Text(card.estimatedLabel)
+                        .font(TypographyTokens.body(11))
+                }
+                .foregroundStyle(ColorTokens.Kid.inkSoft)
+
+                if !card.isAvailable && !card.unavailableReason.isEmpty {
+                    Text(card.unavailableReason)
+                        .font(TypographyTokens.body(11))
+                        .foregroundStyle(ColorTokens.Semantic.warning)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.8)
+                }
+            }
+            .padding(SpacingTokens.regular)
+            .frame(maxWidth: .infinity, minHeight: 160, alignment: .topLeading)
+            .background(cardBackground)
+            .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.md))
+            .overlay(recommendedBorder)
+            .opacity(card.isAvailable ? 1.0 : 0.5)
+        }
+        .buttonStyle(.plain)
+        .disabled(!card.isAvailable)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: card.isAvailable)
+    }
+
+    private var iconColor: Color {
+        card.isAvailable ? ColorTokens.Brand.primary : ColorTokens.Kid.inkSoft
+    }
+
+    private var titleColor: Color {
+        card.isAvailable ? ColorTokens.Kid.ink : ColorTokens.Kid.inkMuted
+    }
+
+    private var cardBackground: some View {
+        RoundedRectangle(cornerRadius: RadiusTokens.md)
+            .fill(card.isRecommended
+                  ? ColorTokens.Brand.lilac.opacity(0.12)
+                  : ColorTokens.Kid.surface)
+    }
+
+    private var recommendedBorder: some View {
+        RoundedRectangle(cornerRadius: RadiusTokens.md)
+            .stroke(
+                card.isRecommended ? ColorTokens.Brand.primary.opacity(0.5) : Color.clear,
+                lineWidth: 1.5
+            )
+    }
+}
+
 // MARK: - Preview
 
-#Preview("Preview state") {
+#Preview("Selection screen") {
     ARActivityView(
         activity: SessionActivity(
             id: "ar-demo",

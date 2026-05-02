@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 // MARK: - ARActivityRoutingLogic
 
@@ -6,37 +7,75 @@ import SwiftUI
 protocol ARActivityRoutingLogic: AnyObject {
     func routeToARMirror()
     func routeToARStoryQuest()
+    func routeToButterflyCatch()
+    func routeToBreathingAR()
+    func routeToMimicLyalya()
+    func routeToHoldThePose()
+    func routeToPoseSequence()
+    func routeToSoundAndFace()
+    func routeToSystemSettings()
     func dismiss()
 }
 
 // MARK: - ARActivityRouter
 //
-// ARActivity не использует `AppCoordinator.navigate(...)`, потому что
-// дочерние AR-экраны открываются как `fullScreenCover` поверх SessionShell.
-// Router держит коллбеки, которые View-слой привязывает к собственным
-// `@State` флагам showARMirror / showARStoryQuest, а также коллбек
-// завершения (score, stars) для передачи в родительский `onComplete`.
+// AR-игры открываются как `fullScreenCover` поверх SessionShell.
+// Router хранит коллбеки для каждой из 7 игр; View-слой привязывает их к
+// собственным `@State` флагам `show<Game>`. Игры без отдельного VIP-модуля
+// направляются к ближайшему существующему экрану (ARMirror/ARStoryQuest).
 @MainActor
 final class ARActivityRouter: ARActivityRoutingLogic {
 
-    /// Показать ARMirrorView (артикуляционное зеркало).
-    var onRouteToMirror: (() -> Void)?
-    /// Показать ARStoryQuestView (нарративный квест).
-    var onRouteToStoryQuest: (() -> Void)?
-    /// Закрыть ARActivity и вернуться в SessionShell.
-    var onDismiss: (() -> Void)?
-    /// Упражнение завершено: (score, stars).
-    var onCompleted: ((Float, Int) -> Void)?
+    // MARK: - Callbacks
 
-    func routeToARMirror() {
-        onRouteToMirror?()
+    var onRouteToMirror:         (() -> Void)?
+    var onRouteToStoryQuest:     (() -> Void)?
+    var onRouteToButterflyCatch: (() -> Void)?
+    var onRouteToBreathingAR:    (() -> Void)?
+    var onRouteToMimicLyalya:    (() -> Void)?
+    var onRouteToHoldThePose:    (() -> Void)?
+    var onRouteToPoseSequence:   (() -> Void)?
+    var onRouteToSoundAndFace:   (() -> Void)?
+    var onDismiss:               (() -> Void)?
+    var onCompleted:             ((Float, Int) -> Void)?
+
+    // MARK: - ARActivityRoutingLogic
+
+    func routeToARMirror() { onRouteToMirror?() }
+
+    func routeToARStoryQuest() { onRouteToStoryQuest?() }
+
+    func routeToButterflyCatch() {
+        // Пока отдельный VIP не реализован — fallback к ARStoryQuest
+        onRouteToButterflyCatch?() ?? onRouteToStoryQuest?()
     }
 
-    func routeToARStoryQuest() {
-        onRouteToStoryQuest?()
+    func routeToBreathingAR() {
+        onRouteToBreathingAR?() ?? onRouteToStoryQuest?()
     }
 
-    func dismiss() {
-        onDismiss?()
+    func routeToMimicLyalya() {
+        onRouteToMimicLyalya?() ?? onRouteToMirror?()
     }
+
+    func routeToHoldThePose() {
+        onRouteToHoldThePose?() ?? onRouteToMirror?()
+    }
+
+    func routeToPoseSequence() {
+        onRouteToPoseSequence?() ?? onRouteToMirror?()
+    }
+
+    func routeToSoundAndFace() {
+        onRouteToSoundAndFace?() ?? onRouteToMirror?()
+    }
+
+    func routeToSystemSettings() {
+        guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+        Task { @MainActor in
+            await UIApplication.shared.open(url)
+        }
+    }
+
+    func dismiss() { onDismiss?() }
 }
