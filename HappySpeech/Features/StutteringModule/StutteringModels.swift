@@ -2,8 +2,7 @@ import Foundation
 
 // MARK: - StutteringModels
 //
-// VIP envelope types for the Stuttering module root screen and the four sub-modes:
-// metronome, breathing extended, soft onset, fluency diary.
+// VIP envelope types for the Stuttering module root screen and all sub-modes.
 
 enum StutteringModels {
 
@@ -32,6 +31,44 @@ enum StutteringModels {
             var mode: StutteringMode
         }
     }
+
+    // MARK: - LoadProgress
+    enum LoadProgress {
+        struct Request {}
+        struct Response {
+            var featureProgress: [StutteringMode: FeatureProgress]
+            var totalSessions: Int
+            var fluencyImprovementPct: Float
+        }
+        struct ViewModel {
+            var featureRows: [FeatureProgressViewModel]
+            var totalSessionsLabel: String
+            var fluencyLabel: String
+        }
+    }
+
+    // MARK: - LoadAdaptiveRecommendation
+    enum LoadAdaptiveRecommendation {
+        struct Request {}
+        struct Response {
+            var recommendedMode: StutteringMode
+            var voicePromptText: String
+            var shouldShowGlow: Bool
+        }
+        struct ViewModel {
+            var recommendedMode: StutteringMode
+            var voicePromptText: String
+            var showGlowAnimation: Bool
+        }
+    }
+
+    // MARK: - RecordSessionCompleted
+    enum RecordSessionCompleted {
+        struct Request {
+            var mode: StutteringMode
+            var fluencyScore: Float
+        }
+    }
 }
 
 // MARK: - StutteringMode
@@ -41,6 +78,9 @@ enum StutteringMode: String, CaseIterable, Sendable {
     case breathing
     case softOnset
     case diary
+    case pacing
+    case metronomeRhythm
+    case easySpeech
 }
 
 // MARK: - ExerciseCardData / ExerciseCardViewModel
@@ -55,7 +95,7 @@ struct ExerciseCardData: Sendable {
 }
 
 enum ExerciseSymbolColor: Sendable {
-    case primary, mint, butter, sky
+    case primary, mint, butter, sky, rose, lilac, gold
 }
 
 struct ExerciseCardViewModel: Identifiable, Sendable {
@@ -67,6 +107,34 @@ struct ExerciseCardViewModel: Identifiable, Sendable {
     var symbolColor: ExerciseSymbolColor
     var duration: String
     var accessibilityLabel: String
+    var isRecommended: Bool
+    var completedToday: Bool
+    var streak: Int
+}
+
+// MARK: - FeatureProgress / FeatureProgressViewModel
+
+struct FeatureProgress: Sendable {
+    var mode: StutteringMode
+    var streak: Int
+    var completedToday: Bool
+}
+
+struct FeatureProgressViewModel: Identifiable, Sendable {
+    var id: StutteringMode { mode }
+    var mode: StutteringMode
+    var modeTitle: String
+    var streakLabel: String
+    var completedToday: Bool
+    var streakAccessibilityLabel: String
+}
+
+// MARK: - InfoCardType
+
+enum InfoCardType: Sendable {
+    case whatIsStuttering
+    case howAppHelps
+    case techniques
 }
 
 // MARK: - MetronomeModels
