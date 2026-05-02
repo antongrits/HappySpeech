@@ -1562,6 +1562,17 @@
         }
       }
     },
+    "ar.mirror.lyalya.accessibility": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ляля повторяет движения твоих губ"
+          }
+        }
+      }
+    },
     "ar.poseSequence.chip.current %@": {
       "extractionState": "manual",
       "localizations": {
@@ -3105,6 +3116,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Превосходно!"
+          }
+        }
+      }
+    },
+    "changelog.loadError": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось загрузить список изменений"
           }
         }
       }
@@ -8592,6 +8614,28 @@
         }
       }
     },
+    "letter_tracing.hint.finger": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Веди пальцем по букве"
+          }
+        }
+      }
+    },
+    "letter_tracing.hint.pencil": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Используй Apple Pencil или палец"
+          }
+        }
+      }
+    },
     "letter_tracing.instruction %@": {
       "extractionState": "manual",
       "localizations": {
@@ -10901,6 +10945,83 @@
           "stringUnit": {
             "state": "translated",
             "value": "Прогресс"
+          }
+        }
+      }
+    },
+    "parent.home.date.today": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодня"
+          }
+        }
+      }
+    },
+    "parent.home.date.yesterday": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вчера"
+          }
+        }
+      }
+    },
+    "parent.home.duration.minutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d мин"
+          }
+        }
+      }
+    },
+    "parent.home.greeting.day": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добрый день!"
+          }
+        }
+      }
+    },
+    "parent.home.greeting.evening": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добрый вечер!"
+          }
+        }
+      }
+    },
+    "parent.home.greeting.morning": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Доброе утро!"
+          }
+        }
+      }
+    },
+    "parent.home.greeting.night": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Доброй ночи!"
           }
         }
       }
@@ -18083,6 +18204,17 @@
         }
       }
     },
+    "sessionComplete.breakdown.bonus": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Бонус"
+          }
+        }
+      }
+    },
     "sessionComplete.celebration.continue": {
       "extractionState": "manual",
       "localizations": {
@@ -18222,6 +18354,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "точности"
+          }
+        }
+      }
+    },
+    "sessionComplete.score.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Очки"
           }
         }
       }
@@ -19183,6 +19326,28 @@
         }
       }
     },
+    "settings.about.whatsNew": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что нового"
+          }
+        }
+      }
+    },
+    "settings.about.whatsNew.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть список изменений"
+          }
+        }
+      }
+    },
     "settings.ambient.full": {
       "extractionState": "manual",
       "localizations": {
@@ -19630,6 +19795,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Тактильная отдача"
+          }
+        }
+      }
+    },
+    "settings.header.greeting": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Настройки"
+          }
+        }
+      }
+    },
+    "settings.header.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Управляйте предпочтениями ребёнка"
           }
         }
       }
@@ -20107,6 +20294,39 @@
         }
       }
     },
+    "settings.performance.a11y.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Управляет сбором анонимных данных о производительности для родительских экранов"
+          }
+        }
+      }
+    },
+    "settings.performance.footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Данные не содержат персональной информации и не связаны с детским контентом. Собирается только для родительских экранов."
+          }
+        }
+      }
+    },
+    "settings.performance.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Аналитика производительности"
+          }
+        }
+      }
+    },
     "settings.performance.metrics_description": {
       "extractionState": "manual",
       "localizations": {
@@ -20140,17 +20360,6 @@
         }
       }
     },
-    "settings.performance.label": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Аналитика производительности"
-          }
-        }
-      }
-    },
     "settings.performance.subtitle": {
       "extractionState": "manual",
       "localizations": {
@@ -20158,28 +20367,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Анонимные данные о скорости работы приложения (только родительские экраны)"
-          }
-        }
-      }
-    },
-    "settings.performance.footer": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Данные не содержат персональной информации и не связаны с детским контентом. Собирается только для родительских экранов."
-          }
-        }
-      }
-    },
-    "settings.performance.toast.enabled": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Аналитика производительности включена"
           }
         }
       }
@@ -20195,24 +20382,13 @@
         }
       }
     },
-    "settings.performance.a11y.hint": {
+    "settings.performance.toast.enabled": {
       "extractionState": "manual",
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Управляет сбором анонимных данных о производительности для родительских экранов"
-          }
-        }
-      }
-    },
-    "settings.section.performance": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Аналитика"
+            "value": "Аналитика производительности включена"
           }
         }
       }
@@ -20466,6 +20642,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Уведомления"
+          }
+        }
+      }
+    },
+    "settings.section.performance": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Аналитика"
           }
         }
       }
@@ -21701,6 +21888,17 @@
         }
       }
     },
+    "stuttering.card.completed.accessibility": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выполнено сегодня"
+          }
+        }
+      }
+    },
     "stuttering.diary.cta.start": {
       "extractionState": "manual",
       "localizations": {
@@ -21883,6 +22081,28 @@
         }
       }
     },
+    "stuttering.exercise.easy_speech.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Говорим легко и без напряжения"
+          }
+        }
+      }
+    },
+    "stuttering.exercise.easy_speech.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лёгкое говорение"
+          }
+        }
+      }
+    },
     "stuttering.exercise.metronome.subtitle": {
       "extractionState": "manual",
       "localizations": {
@@ -21901,6 +22121,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "Шагай за словом"
+          }
+        }
+      }
+    },
+    "stuttering.exercise.metronome_rhythm.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Говорим в ритм метронома"
+          }
+        }
+      }
+    },
+    "stuttering.exercise.metronome_rhythm.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Речь и метроном"
+          }
+        }
+      }
+    },
+    "stuttering.exercise.pacing.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тренируем темп и паузы в речи"
+          }
+        }
+      }
+    },
+    "stuttering.exercise.pacing.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Темп речи"
           }
         }
       }
@@ -21949,207 +22213,13 @@
         }
       }
     },
-    "stuttering.metronome.progress.format": {
+    "stuttering.info.close": {
       "extractionState": "manual",
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Слог %lld из %lld"
-          }
-        }
-      }
-    },
-    "stuttering.metronome.syllable_counted": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Слог засчитан"
-          }
-        }
-      }
-    },
-    "stuttering.metronome.tick": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Тик"
-          }
-        }
-      }
-    },
-    "stuttering.soft_start.attempt_counter": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Попытка %1$d из %2$d"
-          }
-        }
-      }
-    },
-    "stuttering.soft_start.feedback.borderline": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Почти! Ещё чуть плавнее"
-          }
-        }
-      }
-    },
-    "stuttering.soft_start.feedback.hard": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Резко начал. Попробуй мягче"
-          }
-        }
-      }
-    },
-    "stuttering.soft_start.feedback.soft": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Плавно! Молодец"
-          }
-        }
-      }
-    },
-    "stuttering.soft_start.listen_button": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Послушать пример Ляли"
-          }
-        }
-      }
-    },
-    "stuttering.soft_start.word_accessibility": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@. Нажми на Лялю, чтобы услышать"
-          }
-        }
-      }
-    },
-    "stuttering.welcome.cta": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Начать"
-          }
-        }
-      }
-    },
-    "stuttering.welcome.disclaimer": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Это упражнения для домашней практики. Если у ребёнка серьёзное заикание — обратитесь к логопеду"
-          }
-        }
-      }
-    },
-    "stuttering.welcome.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Перед началом"
-          }
-        }
-      }
-    },
-    "stuttering.card.completed.accessibility": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Выполнено сегодня"
-          }
-        }
-      }
-    },
-    "stuttering.exercise.easy_speech.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Говорим легко и без напряжения"
-          }
-        }
-      }
-    },
-    "stuttering.exercise.easy_speech.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Лёгкое говорение"
-          }
-        }
-      }
-    },
-    "stuttering.exercise.metronome_rhythm.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Говорим в ритм метронома"
-          }
-        }
-      }
-    },
-    "stuttering.exercise.metronome_rhythm.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Речь и метроном"
-          }
-        }
-      }
-    },
-    "stuttering.exercise.pacing.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Тренируем темп и паузы в речи"
-          }
-        }
-      }
-    },
-    "stuttering.exercise.pacing.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Темп речи"
+            "value": "Закрыть"
           }
         }
       }
@@ -22231,6 +22301,38 @@
         }
       }
     },
+    "stuttering.metronome.progress.format": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слог %lld из %lld"
+          }
+        }
+      }
+    },
+    "stuttering.metronome.syllable_counted": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слог засчитан"
+          }
+        }
+      }
+    },
+    "stuttering.metronome.tick": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тик"
+          }
+        }
+      }
+    },
     "stuttering.progress.fluency": {
       "extractionState": "manual",
       "localizations": {
@@ -22297,6 +22399,69 @@
         }
       }
     },
+    "stuttering.soft_start.attempt_counter": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попытка %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "stuttering.soft_start.feedback.borderline": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почти! Ещё чуть плавнее"
+          }
+        }
+      }
+    },
+    "stuttering.soft_start.feedback.hard": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Резко начал. Попробуй мягче"
+          }
+        }
+      }
+    },
+    "stuttering.soft_start.feedback.soft": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Плавно! Молодец"
+          }
+        }
+      }
+    },
+    "stuttering.soft_start.listen_button": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Послушать пример Ляли"
+          }
+        }
+      }
+    },
+    "stuttering.soft_start.word_accessibility": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@. Нажми на Лялю, чтобы услышать"
+          }
+        }
+      }
+    },
     "stuttering.stub.back": {
       "extractionState": "manual",
       "localizations": {
@@ -22304,17 +22469,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Назад"
-          }
-        }
-      }
-    },
-    "stuttering.info.close": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Закрыть"
           }
         }
       }
@@ -22414,6 +22568,39 @@
           "stringUnit": {
             "state": "translated",
             "value": "Сегодня попробуем мягкую атаку — говорим плавно!"
+          }
+        }
+      }
+    },
+    "stuttering.welcome.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать"
+          }
+        }
+      }
+    },
+    "stuttering.welcome.disclaimer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Это упражнения для домашней практики. Если у ребёнка серьёзное заикание — обратитесь к логопеду"
+          }
+        }
+      }
+    },
+    "stuttering.welcome.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перед началом"
           }
         }
       }
@@ -23956,72 +24143,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Точность по звукам"
-          }
-        }
-      }
-    },
-    "letter_tracing.hint.finger": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Веди пальцем по букве"
-          }
-        }
-      }
-    },
-    "letter_tracing.hint.pencil": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Используй Apple Pencil или палец"
-          }
-        }
-      }
-    },
-    "settings.about.whatsNew": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Что нового"
-          }
-        }
-      }
-    },
-    "settings.about.whatsNew.hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Открыть список изменений"
-          }
-        }
-      }
-    },
-    "changelog.loadError": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Не удалось загрузить список изменений"
-          }
-        }
-      }
-    },
-    "ar.mirror.lyalya.accessibility": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ляля повторяет движения твоих губ"
           }
         }
       }
