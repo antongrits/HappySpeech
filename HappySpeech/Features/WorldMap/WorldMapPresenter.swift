@@ -10,6 +10,10 @@ protocol WorldMapPresentationLogic: AnyObject {
     func presentLoadZoneDetail(_ response: WorldMapModels.LoadZoneDetail.Response)
     func presentRefreshProgress(_ response: WorldMapModels.RefreshProgress.Response)
     func presentFailure(_ response: WorldMapModels.Failure.Response)
+    func presentVoicePrompt(_ response: WorldMapModels.VoicePrompt.Response)
+    func presentCollectTreasure(_ response: WorldMapModels.CollectTreasure.Response)
+    func presentSelectLevel(_ response: WorldMapModels.SelectLevel.Response)
+    func presentAdaptiveRecommendation(_ response: WorldMapModels.AdaptiveRecommendation.Response)
 }
 
 // MARK: - WorldMapPresenter
@@ -52,7 +56,10 @@ final class WorldMapPresenter: WorldMapPresentationLogic {
             totalProgressFraction: totalProgress,
             streakLabel: streakLabel,
             hasStreak: response.dailyStreak > 0,
-            summaryAccessibilityLabel: summaryA11y
+            summaryAccessibilityLabel: summaryA11y,
+            lyalyaIslandId: response.lyalyaIslandId,
+            recommendedIslandId: response.recommendedIslandId,
+            recommendedLevelId: response.recommendedLevelId
         )
         display?.displayLoadMap(viewModel)
     }
@@ -141,7 +148,10 @@ final class WorldMapPresenter: WorldMapPresentationLogic {
             prerequisiteHint: prereqHint,
             ctaTitle: ctaTitle,
             colorName: zone.colorName,
-            accessibilityLabel: a11yLabel
+            accessibilityLabel: a11yLabel,
+            levels: response.levels,
+            recommendedLevelId: response.recommendedLevelId,
+            unlocksNeeded: response.unlocksNeeded
         )
         display?.displayLoadZoneDetail(viewModel)
     }
@@ -184,6 +194,50 @@ final class WorldMapPresenter: WorldMapPresentationLogic {
     func presentFailure(_ response: WorldMapModels.Failure.Response) {
         logger.error("worldMap failure: \(response.message, privacy: .public)")
         display?.displayFailure(.init(toastMessage: response.message))
+    }
+
+    func presentVoicePrompt(_ response: WorldMapModels.VoicePrompt.Response) {
+        display?.displayVoicePrompt(.init(text: response.text, isLyalya: response.isLyalya))
+    }
+
+    func presentCollectTreasure(_ response: WorldMapModels.CollectTreasure.Response) {
+        let icon: String
+        switch response.collectible.type {
+        case .goldPebble: icon = "🪙"
+        case .magicShell: icon = "🐚"
+        case .speechCrystal: icon = "💎"
+        }
+        let toast = String(
+            format: String(localized: "worldMap.collectible.toast"),
+            icon, response.collectible.starValue
+        )
+        let starsLabel = String(
+            format: String(localized: "worldMap.stars.label"),
+            response.totalStars
+        )
+        display?.displayCollectTreasure(.init(
+            collectibleIcon: icon,
+            totalStarsLabel: starsLabel,
+            toastMessage: toast,
+            remainingCollectibles: response.remainingCollectibles
+        ))
+    }
+
+    func presentSelectLevel(_ response: WorldMapModels.SelectLevel.Response) {
+        display?.displaySelectLevel(.init(
+            levelId: response.level.id,
+            islandId: response.islandId,
+            zoneId: response.zoneId,
+            levelName: response.level.name
+        ))
+    }
+
+    func presentAdaptiveRecommendation(_ response: WorldMapModels.AdaptiveRecommendation.Response) {
+        display?.displayAdaptiveRecommendation(.init(
+            recommendedIslandId: response.recommendedIslandId,
+            recommendedLevelId: response.recommendedLevelId,
+            voiceHint: response.voiceHint
+        ))
     }
 
     // MARK: - Helpers

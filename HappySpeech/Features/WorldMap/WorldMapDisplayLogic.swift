@@ -11,6 +11,10 @@ protocol WorldMapDisplayLogic: AnyObject {
     func displayRefreshProgress(_ viewModel: WorldMapModels.RefreshProgress.ViewModel)
     func displayFailure(_ viewModel: WorldMapModels.Failure.ViewModel)
     func displayLoading(_ isLoading: Bool)
+    func displayVoicePrompt(_ viewModel: WorldMapModels.VoicePrompt.ViewModel)
+    func displayCollectTreasure(_ viewModel: WorldMapModels.CollectTreasure.ViewModel)
+    func displaySelectLevel(_ viewModel: WorldMapModels.SelectLevel.ViewModel)
+    func displayAdaptiveRecommendation(_ viewModel: WorldMapModels.AdaptiveRecommendation.ViewModel)
 }
 
 // MARK: - WorldMapDisplay
@@ -27,9 +31,15 @@ final class WorldMapDisplay: WorldMapDisplayLogic {
     var streakLabel: String = ""
     var hasStreak: Bool = false
     var summaryAccessibilityLabel: String = ""
+    var lyalyaIslandId: String = MapIslandID.vowels.rawValue
+    var recommendedIslandId: String?
+    var recommendedLevelId: String?
 
     var isLoading: Bool = false
     var toastMessage: String?
+    var voicePromptViewModel: WorldMapModels.VoicePrompt.ViewModel?
+    var isPresentingVoicePrompt: Bool = false
+    var pendingLevelNavigation: WorldMapModels.SelectLevel.ViewModel?
 
     // Детальный sheet зоны — заполняется при loadZoneDetail.
     var zoneDetailViewModel: WorldMapModels.LoadZoneDetail.ViewModel?
@@ -43,6 +53,9 @@ final class WorldMapDisplay: WorldMapDisplayLogic {
         streakLabel = viewModel.streakLabel
         hasStreak = viewModel.hasStreak
         summaryAccessibilityLabel = viewModel.summaryAccessibilityLabel
+        lyalyaIslandId = viewModel.lyalyaIslandId
+        recommendedIslandId = viewModel.recommendedIslandId
+        recommendedLevelId = viewModel.recommendedLevelId
         isLoading = false
     }
 
@@ -76,12 +89,43 @@ final class WorldMapDisplay: WorldMapDisplayLogic {
         self.isLoading = isLoading
     }
 
+    func displayVoicePrompt(_ viewModel: WorldMapModels.VoicePrompt.ViewModel) {
+        voicePromptViewModel = viewModel
+        isPresentingVoicePrompt = true
+    }
+
+    func displayCollectTreasure(_ viewModel: WorldMapModels.CollectTreasure.ViewModel) {
+        totalStarsLabel = viewModel.totalStarsLabel
+        toastMessage = viewModel.toastMessage
+    }
+
+    func displaySelectLevel(_ viewModel: WorldMapModels.SelectLevel.ViewModel) {
+        pendingLevelNavigation = viewModel
+    }
+
+    func displayAdaptiveRecommendation(_ viewModel: WorldMapModels.AdaptiveRecommendation.ViewModel) {
+        recommendedIslandId = viewModel.recommendedIslandId
+        recommendedLevelId = viewModel.recommendedLevelId
+        if !viewModel.voiceHint.isEmpty {
+            voicePromptViewModel = .init(text: viewModel.voiceHint, isLyalya: false)
+        }
+    }
+
     func clearToast() {
         toastMessage = nil
+    }
+
+    func dismissVoicePrompt() {
+        isPresentingVoicePrompt = false
+        voicePromptViewModel = nil
     }
 
     func dismissZoneDetailSheet() {
         isZoneDetailSheetPresented = false
         zoneDetailViewModel = nil
+    }
+
+    func clearLevelNavigation() {
+        pendingLevelNavigation = nil
     }
 }
