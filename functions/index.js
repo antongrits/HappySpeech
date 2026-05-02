@@ -2,15 +2,18 @@
  * HappySpeech — Firebase Cloud Functions entry point.
  *
  * Exports:
- *   - calculateProgress    (HTTPS callable)
- *   - generateReport       (HTTPS callable)
- *   - getUserStats         (HTTPS callable)
- *   - exportUserData       (HTTPS callable, GDPR)
- *   - deleteUserData       (HTTPS callable, GDPR hard delete)
- *   - setAdminClaim        (HTTPS callable, bootstrap)
- *   - onSessionComplete    (Firestore trigger, v2)
- *   - moderateUserContent  (Firestore trigger, v2, placeholder)
- *   - sendWeeklyReport     (scheduled, every Sunday 10:00 MSK)
+ *   - calculateProgress      (HTTPS callable)
+ *   - generateReport         (HTTPS callable)
+ *   - getUserStats           (HTTPS callable)
+ *   - exportUserData         (HTTPS callable, GDPR)
+ *   - deleteUserData         (HTTPS callable, GDPR hard delete)
+ *   - setAdminClaim          (HTTPS callable, bootstrap)
+ *   - sendWeeklySummaryFCM   (HTTPS callable, on-demand summary push)
+ *   - onSessionComplete      (Firestore trigger, v2)
+ *   - moderateUserContent    (Firestore trigger, v2, placeholder)
+ *   - sendWeeklyReport       (scheduled, every Sunday 10:00 MSK)
+ *   - sendDailyReminder      (scheduled, every day 17:00 UTC = 20:00 MSK)
+ *   - sendWeeklySummary      (scheduled, every Sunday 19:00 UTC = 22:00 MSK)
  *
  * Region: europe-west3
  * Contract source: .claude/team/api-contracts.md + M1.3 plan.
@@ -45,6 +48,8 @@ const { exportUserDataBundle } = require('./src/export');
 const { deleteUserDataCascade } = require('./src/delete');
 const { moderateUserDocument } = require('./src/moderation');
 const { setAdminClaimHandler } = require('./src/admin');
+const { runDailyReminder } = require('./src/sendDailyReminder');
+const { runWeeklySummary } = require('./src/sendWeeklySummary');
 
 // ------------------------------------------------------------------
 // HTTPS Callable: calculateProgress
@@ -243,8 +248,8 @@ exports.exportUserData = onCall(
         throw new HttpsError('unauthenticated', 'Sign in required');
       }
       const callerDoc = await admin.firestore().collection('users').doc(callerUid).get();
-      const isAdminCaller = (request.auth.token && request.auth.token.admin === true)
-        || (callerDoc.exists && callerDoc.data().role === 'admin');
+      const isAdminCaller = (request.auth.token && request.auth.token.admin === true) ||
+        (callerDoc.exists && callerDoc.data().role === 'admin');
       if (!isAdminCaller) {
         throw new HttpsError('permission-denied', 'Not allowed to export other users');
       }
@@ -288,8 +293,8 @@ exports.deleteUserData = onCall(
         throw new HttpsError('unauthenticated', 'Sign in required');
       }
       const callerDoc = await admin.firestore().collection('users').doc(callerUid).get();
-      const isAdminCaller = (request.auth.token && request.auth.token.admin === true)
-        || (callerDoc.exists && callerDoc.data().role === 'admin');
+      const isAdminCaller = (request.auth.token && request.auth.token.admin === true) ||
+        (callerDoc.exists && callerDoc.data().role === 'admin');
       if (!isAdminCaller) {
         throw new HttpsError('permission-denied', 'Not allowed to delete other users');
       }
@@ -353,6 +358,54 @@ exports.setAdminClaim = onCall(
 );
 
 // ------------------------------------------------------------------
+// Scheduled: sendDailyReminder
+// Every day at 17:00 UTC (= 20:00 MSK).
+// Sends a push to parents whose active child has not had a session today.
+// COPPA: only parents with explicit notificationsEnabled == true are targeted.
+// ------------------------------------------------------------------
+
+exports.sendDailyReminder = onSchedule(
+  {
+    schedule: '0 17 * * *', // every day at 17:00 UTC
+    timeZone: 'UTC',
+    region: REGION,
+    retryCount: 2,
+  },
+  async () => {
+    try {
+      await runDailyReminder(admin);
+    } catch (error) {
+      logger.error('sendDailyReminder failed', { error: String(error) });
+      throw error;
+    }
+  },
+);
+
+// ------------------------------------------------------------------
+// Scheduled: sendWeeklySummary
+// Every Sunday at 19:00 UTC (= 22:00 MSK).
+// Sends a weekly stats summary push to all parents with opt-in enabled.
+// COPPA: only parents are targeted; no kid PII in notification payload.
+// ------------------------------------------------------------------
+
+exports.sendWeeklySummary = onSchedule(
+  {
+    schedule: '0 19 * * 0', // Sundays at 19:00 UTC
+    timeZone: 'UTC',
+    region: REGION,
+    retryCount: 2,
+  },
+  async () => {
+    try {
+      await runWeeklySummary(admin);
+    } catch (error) {
+      logger.error('sendWeeklySummary failed', { error: String(error) });
+      throw error;
+    }
+  },
+);
+
+// ------------------------------------------------------------------
 // HTTPS Callable: sendWeeklySummaryFCM
 // Input:  { parentId: string }
 // Output: { sent: boolean, messageId: string | null }
@@ -394,9 +447,9 @@ exports.sendWeeklySummaryFCM = onCall(
       throw new HttpsError('failed-precondition', 'User is not a parent');
     }
 
-    const fcmToken = typeof parent.fcmToken === 'string' && parent.fcmToken.length > 0
-      ? parent.fcmToken
-      : null;
+    const fcmToken = typeof parent.fcmToken === 'string' && parent.fcmToken.length > 0 ?
+      parent.fcmToken :
+      null;
 
     if (!fcmToken) {
       return { sent: false, messageId: null };
@@ -426,9 +479,9 @@ exports.sendWeeklySummaryFCM = onCall(
     }
 
     // Build notification — no child names or PII in the body, only aggregate counts.
-    const body = childCount === 1
-      ? `На этой неделе проведено занятий: ${totalSessions}`
-      : `Детей: ${childCount}. Занятий за неделю: ${totalSessions}`;
+    const body = childCount === 1 ?
+      `На этой неделе проведено занятий: ${totalSessions}` :
+      `Детей: ${childCount}. Занятий за неделю: ${totalSessions}`;
 
     try {
       const messageId = await messaging.send({

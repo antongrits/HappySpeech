@@ -6,6 +6,9 @@
   "storage": {
     "rules": "storage.rules"
   },
+  "remoteconfig": {
+    "template": "firebase/remoteconfig.template.json"
+  },
   "functions": [
     {
       "source": "functions",

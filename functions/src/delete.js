@@ -82,9 +82,9 @@ async function deleteUserDataCascade(admin, userId) {
   await recursiveDeleteDoc(admin, db.collection('specialists').doc(userId)).catch(() => null);
 
   // 3) Delete Storage objects (two candidate prefixes).
-  const storageDeleted = (await deleteStoragePrefix(admin, `users/${userId}/`))
-    + (await deleteStoragePrefix(admin, `exports/${userId}/`))
-    + (await deleteStoragePrefix(admin, `uploads/users/${userId}/`));
+  const storageDeleted = (await deleteStoragePrefix(admin, `users/${userId}/`)) +
+    (await deleteStoragePrefix(admin, `exports/${userId}/`)) +
+    (await deleteStoragePrefix(admin, `uploads/users/${userId}/`));
 
   // 4) Delete Firebase Auth user.
   let deletedAuthUser = false;
@@ -105,7 +105,7 @@ async function deleteUserDataCascade(admin, userId) {
       deletedAuthUser,
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
     });
-  } catch (_) { /* best-effort */ }
+  } catch (_) {/* best-effort */}
 
   return {
     deletedDocuments,

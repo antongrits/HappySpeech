@@ -44,7 +44,7 @@ async function runWeeklyReport(admin) {
   let lastDoc = null;
   const BATCH = 100;
 
-  /* eslint-disable no-await-in-loop */
+  /* eslint-disable no-await-in-loop, no-constant-condition */
   while (true) {
     let q = db.collection('users').where('role', '==', 'parent').limit(BATCH);
     if (lastDoc) q = q.startAfter(lastDoc);
@@ -91,9 +91,9 @@ async function runWeeklyReport(admin) {
         };
 
         // Attempt FCM push if parent has a token.
-        const fcmToken = typeof parent.fcmToken === 'string' && parent.fcmToken.length > 0
-          ? parent.fcmToken
-          : null;
+        const fcmToken = typeof parent.fcmToken === 'string' && parent.fcmToken.length > 0 ?
+          parent.fcmToken :
+          null;
 
         if (fcmToken) {
           pushAttempts += 1;
@@ -130,7 +130,7 @@ async function runWeeklyReport(admin) {
 
     if (snap.size < BATCH) break;
   }
-  /* eslint-enable no-await-in-loop */
+  /* eslint-enable no-await-in-loop, no-constant-condition */
 
   return { parentsProcessed, childrenProcessed, pushAttempts, pushSuccess, weekStart: weekStartKey };
 }

@@ -28,8 +28,8 @@ const TEMPLATE_TYPES = [
   'visual-acoustic', 'breathing', 'rhythm', 'narrative-quest', 'minimal-pairs',
 ];
 
-const STAGE_PASS_THRESHOLD = 0.85;    // rate required to mark stage done
-const MIN_ATTEMPTS_FOR_STAGE = 20;    // minimum attempts before we trust the rate
+const STAGE_PASS_THRESHOLD = 0.85; // rate required to mark stage done
+const MIN_ATTEMPTS_FOR_STAGE = 20; // minimum attempts before we trust the rate
 
 module.exports = {
   STAGES,

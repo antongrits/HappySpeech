@@ -20140,6 +20140,83 @@
         }
       }
     },
+    "settings.performance.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Аналитика производительности"
+          }
+        }
+      }
+    },
+    "settings.performance.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Анонимные данные о скорости работы приложения (только родительские экраны)"
+          }
+        }
+      }
+    },
+    "settings.performance.footer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Данные не содержат персональной информации и не связаны с детским контентом. Собирается только для родительских экранов."
+          }
+        }
+      }
+    },
+    "settings.performance.toast.enabled": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Аналитика производительности включена"
+          }
+        }
+      }
+    },
+    "settings.performance.toast.disabled": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Аналитика производительности отключена"
+          }
+        }
+      }
+    },
+    "settings.performance.a11y.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Управляет сбором анонимных данных о производительности для родительских экранов"
+          }
+        }
+      }
+    },
+    "settings.section.performance": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Аналитика"
+          }
+        }
+      }
+    },
     "settings.privacy": {
       "extractionState": "manual",
       "localizations": {

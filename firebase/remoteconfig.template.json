@@ -1,0 +1,87 @@
+{
+  "parameters": {
+    "feature_seasonal_events_enabled": {
+      "defaultValue": {
+        "value": "true"
+      },
+      "valueType": "BOOLEAN",
+      "description": "Enables seasonal themed content and decorations"
+    },
+    "feature_voice_clone_enabled": {
+      "defaultValue": {
+        "value": "false"
+      },
+      "valueType": "BOOLEAN",
+      "description": "Enables parent voice cloning for Lyalya. Off by default until APNs key is configured."
+    },
+    "feature_body_tracking_enabled": {
+      "defaultValue": {
+        "value": "true"
+      },
+      "valueType": "BOOLEAN",
+      "description": "Enables ARKit body tracking features"
+    },
+    "feature_spectrogram_enabled": {
+      "defaultValue": {
+        "value": "true"
+      },
+      "valueType": "BOOLEAN",
+      "description": "Enables real-time spectrogram visualisation in LessonPlayer"
+    },
+    "feature_emotion_detection_enabled": {
+      "defaultValue": {
+        "value": "true"
+      },
+      "valueType": "BOOLEAN",
+      "description": "Enables on-device facial emotion detection via ARKit blendshapes"
+    },
+    "feature_speaker_verification_enabled": {
+      "defaultValue": {
+        "value": "true"
+      },
+      "valueType": "BOOLEAN",
+      "description": "Enables speaker verification to confirm child identity before session"
+    },
+    "lyalya_voice_default": {
+      "defaultValue": {
+        "value": "tuned"
+      },
+      "valueType": "STRING",
+      "description": "Default Lyalya voice variant: tuned | original | cloned"
+    },
+    "daily_reminder_time": {
+      "defaultValue": {
+        "value": "17:00"
+      },
+      "valueType": "STRING",
+      "description": "Default daily reminder time in HH:mm format (local device time)"
+    },
+    "weekly_summary_day": {
+      "defaultValue": {
+        "value": "Monday"
+      },
+      "valueType": "STRING",
+      "description": "Day of week for weekly summary push notification"
+    },
+    "min_app_version": {
+      "defaultValue": {
+        "value": "1.0.0"
+      },
+      "valueType": "STRING",
+      "description": "Minimum supported app version. Users below this will see a soft update prompt."
+    },
+    "force_update_min_version": {
+      "defaultValue": {
+        "value": "1.0.0"
+      },
+      "valueType": "STRING",
+      "description": "Hard minimum: users below this version cannot use the app until they update."
+    }
+  },
+  "version": {
+    "versionNumber": "1",
+    "updateTime": "2026-05-02T00:00:00.000Z",
+    "updateType": "INCREMENTAL_UPDATE",
+    "updateOrigin": "CONSOLE"
+  }
+}

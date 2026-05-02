@@ -23,6 +23,8 @@ protocol SettingsBusinessLogic: AnyObject {
     func toggleWeeklyParentSummary(_ request: SettingsModels.ToggleWeeklyParentSummary.Request)
     /// T (v12): тактильная отдача
     func updateHaptics(_ request: SettingsModels.UpdateHaptics.Request)
+    /// G (v14): Performance Monitoring opt-in (parent only, COPPA-safe)
+    func togglePerformanceMonitoring(_ request: SettingsModels.TogglePerformanceMonitoring.Request)
 }
 
 // MARK: - SettingsInteractor
@@ -41,6 +43,7 @@ final class SettingsInteractor: SettingsBusinessLogic {
     private let themeManager: ThemeManager
     private let notificationService: any NotificationService
     private let hapticService: any HapticService
+    private let performanceMonitorService: (any PerformanceMonitorService)?
     private let whisperKitModelManager: (any WhisperKitModelManagerProtocol)?
     private let llmModelManager: (any LLMModelManagerProtocol)?
     private let defaults: UserDefaults
@@ -61,6 +64,7 @@ final class SettingsInteractor: SettingsBusinessLogic {
         notificationService: any NotificationService,
         hapticService: any HapticService,
         sessionRepository: any SessionRepository,
+        performanceMonitorService: (any PerformanceMonitorService)? = nil,
         whisperKitModelManager: (any WhisperKitModelManagerProtocol)? = nil,
         llmModelManager: (any LLMModelManagerProtocol)? = nil,
         defaults: UserDefaults = .standard
@@ -68,6 +72,7 @@ final class SettingsInteractor: SettingsBusinessLogic {
         self.themeManager = themeManager
         self.notificationService = notificationService
         self.hapticService = hapticService
+        self.performanceMonitorService = performanceMonitorService
         self.whisperKitModelManager = whisperKitModelManager
         self.llmModelManager = llmModelManager
         self.defaults = defaults
@@ -304,6 +309,10 @@ final class SettingsInteractor: SettingsBusinessLogic {
             settings.hapticsLevel = HapticIntensityLevel.from(scale: scale)
         }
 
+        if defaults.object(forKey: SettingsKey.performanceMonitoringEnabled) != nil {
+            settings.performanceMonitoringEnabled = defaults.bool(forKey: SettingsKey.performanceMonitoringEnabled)
+        }
+
         return settings
     }
 
@@ -353,6 +362,16 @@ final class SettingsInteractor: SettingsBusinessLogic {
             logger.info("weeklyParentSummary toggled → \(request.enabled, privacy: .public)")
             presenter?.presentToggleWeeklyParentSummary(.init(settings: settings))
         }
+    }
+
+    // MARK: - G (v14): Performance Monitoring opt-in
+
+    func togglePerformanceMonitoring(_ request: SettingsModels.TogglePerformanceMonitoring.Request) {
+        settings.performanceMonitoringEnabled = request.enabled
+        defaults.set(request.enabled, forKey: SettingsKey.performanceMonitoringEnabled)
+        performanceMonitorService?.setEnabled(request.enabled)
+        logger.info("performanceMonitoring toggled → \(request.enabled, privacy: .public)")
+        presenter?.presentTogglePerformanceMonitoring(.init(settings: settings))
     }
 
     // MARK: - Model packs

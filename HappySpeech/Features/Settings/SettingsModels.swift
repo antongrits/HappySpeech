@@ -297,6 +297,21 @@ enum SettingsModels {
             let settings: AppSettings
         }
     }
+
+    // MARK: - G v14: TogglePerformanceMonitoring
+
+    enum TogglePerformanceMonitoring {
+        struct Request: Sendable {
+            let enabled: Bool
+        }
+        struct Response: Sendable {
+            let settings: AppSettings
+        }
+        struct ViewModel: Sendable {
+            let settings: AppSettings
+            let toastMessage: String
+        }
+    }
 }
 
 // MARK: - Model packs domain types
@@ -373,6 +388,8 @@ struct AppSettings: Sendable, Equatable {
     var weeklyParentSummaryEnabled: Bool
     /// T (v12): уровень тактильной отдачи
     var hapticsLevel: HapticIntensityLevel
+    /// G (v14): анонимная аналитика производительности (только parent, COPPA-safe, OFF by default)
+    var performanceMonitoringEnabled: Bool
 
     static var `default`: AppSettings {
         var components = DateComponents()
@@ -393,7 +410,8 @@ struct AppSettings: Sendable, Equatable {
             specialistConnected: false,
             kidDailyReminderEnabled: true,
             weeklyParentSummaryEnabled: true,
-            hapticsLevel: .full
+            hapticsLevel: .full,
+            performanceMonitoringEnabled: false
         )
     }
 }
@@ -437,4 +455,6 @@ enum SettingsKey {
     static let weeklyParentSummaryEnabled = "hs.settings.weeklyParentSummaryEnabled"
     /// T (v12): тактильная отдача
     static let hapticsLevel               = "Haptics.intensity"
+    /// G (v14): анонимный мониторинг производительности (parent only, COPPA-safe)
+    static let performanceMonitoringEnabled = "hs.settings.performanceMonitoringEnabled"
 }

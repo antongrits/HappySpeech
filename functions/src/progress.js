@@ -61,8 +61,8 @@ function groupSessionsBySound(sessionDocs) {
       const prevCorrect = (stageBucket.rate * (stageBucket.attempts - (data.totalAttempts || 0))) || 0;
       const newCorrect = prevCorrect + (data.correctAttempts || 0);
       stageBucket.rate = stageBucket.attempts > 0 ? newCorrect / stageBucket.attempts : 0;
-      stageBucket.done = stageBucket.attempts >= MIN_ATTEMPTS_FOR_STAGE
-        && stageBucket.rate >= STAGE_PASS_THRESHOLD;
+      stageBucket.done = stageBucket.attempts >= MIN_ATTEMPTS_FOR_STAGE &&
+        stageBucket.rate >= STAGE_PASS_THRESHOLD;
     }
   }
 
@@ -112,9 +112,9 @@ async function calculateProgressForChild(db, userId, childId, options = {}) {
       lastUpdatedAt: admin.firestore.FieldValue.serverTimestamp(),
       totalSessions: bucket.totalSessions,
       totalMinutes: bucket.totalMinutes,
-      overallRate: bucket.totalAttempts > 0
-        ? bucket.correctAttempts / bucket.totalAttempts
-        : 0,
+      overallRate: bucket.totalAttempts > 0 ?
+        bucket.correctAttempts / bucket.totalAttempts :
+        0,
       childId,
     };
     batch.set(docRef, payload, { merge: true });
