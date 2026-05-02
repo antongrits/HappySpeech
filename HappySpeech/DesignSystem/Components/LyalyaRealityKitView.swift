@@ -81,6 +81,11 @@ public struct LyalyaRealityKitView: UIViewRepresentable {
     /// Опциональная подписка на кастомизацию Ляли (скин, цвет).
     /// Если LyalyaCustomizationStorage не внедрён в environment — используются defaults.
     @Environment(LyalyaCustomizationStorage.self) private var customization: LyalyaCustomizationStorage?
+    /// Real-time lip-sync state из ARFaceAnchor blendshapes (Block L).
+    /// Если ARSession активна (isTracking = true) — переопределяет параметры mouthOpen и viseme
+    /// значениями из ARFaceAnchor для синхронизации рта маскота с ребёнком в реальном времени.
+    /// Если ARSession неактивна — используются параметры переданные в init.
+    @Environment(\.mascotLipSyncState) private var lipSyncState
 
     // MARK: - Init
 
@@ -119,11 +124,24 @@ public struct LyalyaRealityKitView: UIViewRepresentable {
     }
 
     public func updateUIView(_ uiView: ARView, context: Context) {
+        // Block L: когда ARSession активна — lip-sync из ARFaceAnchor blendshapes
+        // имеет приоритет над параметрами mouthOpen/viseme переданными в init.
+        // Плавная lerp-интерполяция (α=0.2) выполняется внутри Coordinator.applyLipSyncSmoothed.
+        // Reduced Motion: интерполяция отключается, mouth применяется мгновенно (snap).
+        let effectiveMouthOpen: Float
+        let effectiveViseme: LyalyaViseme
+        if lipSyncState.isTracking {
+            effectiveMouthOpen = lipSyncState.mouthOpen
+            effectiveViseme = lipSyncState.viseme.lyalyaViseme
+        } else {
+            effectiveMouthOpen = mouthOpen
+            effectiveViseme = viseme
+        }
         context.coordinator.applyState(
             state,
             mood: mood,
-            mouthOpen: mouthOpen,
-            viseme: viseme,
+            mouthOpen: effectiveMouthOpen,
+            viseme: effectiveViseme,
             reduceMotion: reduceMotion,
             colorVariant: customization?.colorVariant
         )
@@ -159,6 +177,15 @@ extension LyalyaRealityKitView {
         private var blinkTimer: Timer?
         private var idleAnimTask: Task<Void, Never>?
         private var currentState: LyalyaState = .idle
+
+        // MARK: - Lip-sync smoothing (Block L)
+
+        /// Текущее сглаженное значение открытости рта (lerp α=0.2 на 60 fps).
+        /// Хранится в Coordinator чтобы lerp работал между кадрами без jitter.
+        private var smoothedMouthOpen: Float = 0.0
+        /// Скорость интерполяции. Выбрана α=0.2 — баланс между отзывчивостью и плавностью.
+        /// При Reduce Motion applyLipSyncSmoothed переключается в snap-режим (α=1.0).
+        private static let lerpAlpha: Float = 0.2
 
         private let logger = Logger(subsystem: "ru.happyspeech", category: "LyalyaRealityKitView")
 
@@ -266,7 +293,7 @@ extension LyalyaRealityKitView {
                 applyEmotionState(newState, mood: mood, reduceMotion: reduceMotion)
             }
 
-            applyLipSync(mouthOpen: mouthOpen, viseme: viseme)
+            applyLipSync(mouthOpen: mouthOpen, viseme: viseme, reduceMotion: reduceMotion)
 
             // Применяем цветовой вариант кастомизации к телу маскота
             if let variant = colorVariant {
@@ -286,13 +313,23 @@ extension LyalyaRealityKitView {
 
         // MARK: - Lip-sync
 
-        /// Применяет lip-sync через scale Mouth entity.
+        /// Применяет lip-sync через scale Mouth entity с lerp-сглаживанием.
         /// Mapping (ADR-V13 compromise):
         ///   scaleY: 0.2 (closed) → 1.6 (viseme_a открытый)
-        private func applyLipSync(mouthOpen: Float, viseme: LyalyaViseme) {
+        ///
+        /// Smooth lerp (α=0.2): smoothedMouthOpen += α * (target - smoothedMouthOpen).
+        /// Reduced Motion: α=1.0 — мгновенный snap без анимации (WCAG 2.3.3 compliance).
+        /// Вызывается из applyState → applyLipSync каждый кадр через updateUIView (60 fps).
+        private func applyLipSync(mouthOpen: Float, viseme: LyalyaViseme, reduceMotion: Bool = false) {
             guard let mouth = mouthEntity else { return }
 
-            let (scaleX, scaleY) = visemeScale(viseme: viseme, mouthOpen: mouthOpen)
+            // Lerp-интерполяция: плавное движение рта без jitter между ARFrame-обновлениями.
+            // При Reduce Motion используем snap (α=1.0) — форма рта меняется мгновенно,
+            // что всё равно даёт ребёнку визуальный feedback без анимации.
+            let alpha = reduceMotion ? Float(1.0) : Self.lerpAlpha
+            smoothedMouthOpen += alpha * (mouthOpen - smoothedMouthOpen)
+
+            let (scaleX, scaleY) = visemeScale(viseme: viseme, mouthOpen: smoothedMouthOpen)
             mouth.transform.scale = SIMD3<Float>(scaleX, scaleY, 1.0)
         }
 

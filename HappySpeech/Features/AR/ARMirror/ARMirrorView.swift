@@ -107,6 +107,13 @@ struct ARMirrorView: View {
             .padding(.bottom, SpacingTokens.xLarge)
         }
 
+        // Block L: Маскот Ляля с real-time lip-sync из ARFaceAnchor.
+        // Размещается в правом нижнем углу поверх AR-камеры.
+        // mouthOpen и viseme получаем из lipSyncState, обновляемого в startFrameStream.
+        // При isTracking = false (нет TrueDepth, фон, симулятор) — состояние idle без lip-sync.
+        // Reduced Motion: анимация внутри LyalyaMascotView отключается автоматически.
+        lyalyaLipSyncMascot
+
         if display.showAttentionHint {
             VStack {
                 Spacer()
@@ -138,6 +145,38 @@ struct ARMirrorView: View {
             .background(ColorTokens.Kid.surface, in: RoundedRectangle(cornerRadius: RadiusTokens.md))
             .padding(SpacingTokens.screenEdge)
         }
+    }
+
+    // MARK: - Lyalya lip-sync mascot (Block L)
+
+    /// Маскот Ляля с real-time lip-sync из ARFaceAnchor blendshapes.
+    /// Позиционируется в правом нижнем углу экрана.
+    /// LyalyaMascotView читает lipSyncState через @Environment(\.mascotLipSyncState)
+    /// и рендерит MouthBubbleOverlay когда isTracking = true.
+    private var lyalyaLipSyncMascot: some View {
+        VStack {
+            Spacer()
+            HStack {
+                Spacer()
+                LyalyaMascotView(
+                    state: lyalyaMascotState,
+                    size: 88
+                )
+                .accessibilityLabel(Text("ar.mirror.lyalya.accessibility"))
+                .accessibilityHidden(false)
+                .padding(.trailing, SpacingTokens.screenEdge)
+                .padding(.bottom, SpacingTokens.xLarge * 2 + SpacingTokens.large)
+            }
+        }
+    }
+
+    /// Определяет эмоциональное состояние Ляли на основе прогресса упражнения.
+    /// Celebrating при завершении (stars есть), encouraging при хорошем прогрессе,
+    /// explaining в обычном режиме.
+    private var lyalyaMascotState: LyalyaState {
+        if display.lastStars != nil { return .celebrating }
+        if display.progress > 0.6 { return .encouraging }
+        return .explaining
     }
 
     @ViewBuilder

@@ -24014,6 +24014,17 @@
           }
         }
       }
+    },
+    "ar.mirror.lyalya.accessibility": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ляля повторяет движения твоих губ"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
