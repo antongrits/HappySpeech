@@ -122,7 +122,8 @@ struct RewardsView: View {
         VStack(alignment: .leading, spacing: SpacingTokens.small) {
             // Top row: Lyalya + counts + ring
             HStack(alignment: .center, spacing: SpacingTokens.medium) {
-                LyalyaMascotView(state: lyalyaHeaderState, size: 56)
+                LyalyaRealityKitView(state: lyalyaHeaderState, mood: 0.8)
+                    .frame(width: 56, height: 56)
                     .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: SpacingTokens.micro) {

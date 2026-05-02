@@ -78,6 +78,9 @@ public struct LyalyaRealityKitView: UIViewRepresentable {
     public let viseme: LyalyaViseme
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    /// Опциональная подписка на кастомизацию Ляли (скин, цвет).
+    /// Если LyalyaCustomizationStorage не внедрён в environment — используются defaults.
+    @Environment(LyalyaCustomizationStorage.self) private var customization: LyalyaCustomizationStorage?
 
     // MARK: - Init
 
@@ -121,7 +124,8 @@ public struct LyalyaRealityKitView: UIViewRepresentable {
             mood: mood,
             mouthOpen: mouthOpen,
             viseme: viseme,
-            reduceMotion: reduceMotion
+            reduceMotion: reduceMotion,
+            colorVariant: customization?.colorVariant
         )
     }
 
@@ -252,7 +256,8 @@ extension LyalyaRealityKitView {
             mood: Float,
             mouthOpen: Float,
             viseme: LyalyaViseme,
-            reduceMotion: Bool
+            reduceMotion: Bool,
+            colorVariant: LyalyaColorVariant? = nil
         ) {
             guard rootEntity != nil else { return }
 
@@ -262,6 +267,21 @@ extension LyalyaRealityKitView {
             }
 
             applyLipSync(mouthOpen: mouthOpen, viseme: viseme)
+
+            // Применяем цветовой вариант кастомизации к телу маскота
+            if let variant = colorVariant {
+                applyColorVariant(variant)
+            }
+        }
+
+        // MARK: - Color variant (кастомизация скина)
+
+        /// Применяет цвет тела из LyalyaCustomizationStorage.colorVariant.
+        private func applyColorVariant(_ variant: LyalyaColorVariant) {
+            guard let model = rootEntity?.findEntity(named: "Body") as? ModelEntity else { return }
+            var material = SimpleMaterial()
+            material.color = .init(tint: variant.uiColor)
+            model.model?.materials = [material]
         }
 
         // MARK: - Lip-sync

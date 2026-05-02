@@ -311,7 +311,8 @@ private struct OnboardingWelcomeStep: View {
     var body: some View {
         VStack(spacing: SpacingTokens.large) {
             Spacer()
-            LyalyaMascotView(state: .waving, size: 180)
+            LyalyaRealityKitView(state: .waving, mood: 0.7)
+                .frame(width: 180, height: 180)
                 .scaleEffect(appeared ? 1 : 0.6)
                 .opacity(appeared ? 1 : 0)
                 .accessibilityHidden(true)
@@ -1100,7 +1101,8 @@ private struct OnboardingCompletionStep: View {
             VStack(spacing: SpacingTokens.large) {
                 Spacer()
 
-                LyalyaMascotView(state: .celebrating, size: 150)
+                LyalyaRealityKitView(state: .celebrating, mood: 1.0)
+                    .frame(width: 150, height: 150)
                     .accessibilityHidden(true)
 
                 Text(profile.childAvatar)

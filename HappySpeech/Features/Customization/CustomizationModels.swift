@@ -253,6 +253,15 @@ public enum LyalyaColorVariant: String, CaseIterable, Identifiable, Sendable {
         let (from, to) = gradientColors
         return LinearGradient(colors: [from, to], startPoint: .topLeading, endPoint: .bottomTrailing)
     }
+
+    /// UIColor тела Ляли для передачи в RealityKit SimpleMaterial.
+    public var uiColor: UIColor {
+        switch self {
+        case .warm:   return UIColor(red: 0.788, green: 0.659, blue: 0.941, alpha: 1)
+        case .cool:   return UIColor(red: 0.612, green: 0.780, blue: 0.941, alpha: 1)
+        case .nature: return UIColor(red: 0.612, green: 0.851, blue: 0.710, alpha: 1)
+        }
+    }
 }
 
 // MARK: - LyalyaVoice

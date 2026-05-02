@@ -65,14 +65,18 @@ struct ChildHomeReactiveMascot: View {
     @State private var bobOffset: CGFloat = 0
 
     var body: some View {
-        // HSMascotView сам управляет внутренней анимацией крыльев / Rive.
-        // Для Home добавляем мягкое «парение» сверху (если ReduceMotion = off).
-        HSMascotView(mood: mood, size: 140)
-            .offset(y: bobOffset)
-            .onAppear { startBobbing() }
-            .onChange(of: mood) { _, _ in startBobbing() }
-            .accessibilityElement(children: .combine)
-            .accessibilityLabel(String(localized: "child.home.mascot.a11y"))
+        // LyalyaRealityKitView — 3D маскот на прозрачном фоне.
+        // Для Home добавляем мягкое «парение» по Y (если ReduceMotion = off).
+        LyalyaRealityKitView(
+            state: mood.lyalyaState,
+            mood: 0.6
+        )
+        .frame(width: 140, height: 140)
+        .offset(y: bobOffset)
+        .onAppear { startBobbing() }
+        .onChange(of: mood) { _, _ in startBobbing() }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(String(localized: "child.home.mascot.a11y"))
     }
 
     private func startBobbing() {
