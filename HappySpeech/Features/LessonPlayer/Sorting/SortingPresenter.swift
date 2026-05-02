@@ -6,6 +6,9 @@ import Foundation
 protocol SortingPresentationLogic: AnyObject {
     func presentLoadSession(_ response: SortingModels.LoadSession.Response)
     func presentClassifyWord(_ response: SortingModels.ClassifyWord.Response)
+    func presentHint(_ response: SortingModels.RequestHint.Response)
+    func presentAutoPlace(_ response: SortingModels.AutoPlace.Response)
+    func presentStreakBonus(_ response: SortingModels.StreakBonus.Response)
     func presentTimerTick(_ response: SortingModels.TimerTick.Response)
     func presentCompleteSession(_ response: SortingModels.CompleteSession.Response)
 }
@@ -13,7 +16,7 @@ protocol SortingPresentationLogic: AnyObject {
 // MARK: - SortingPresenter
 //
 // Конвертирует доменные Response в ViewModel с локализованными строками,
-// цветами таймера и формулой звёзд по итоговому скору.
+// цветами таймера, подсказками и формулой звёзд по итоговому скору.
 
 @MainActor
 final class SortingPresenter: SortingPresentationLogic {
@@ -24,10 +27,12 @@ final class SortingPresenter: SortingPresentationLogic {
 
     func presentLoadSession(_ response: SortingModels.LoadSession.Response) {
         let greeting = response.childName.isEmpty
-            ? String(localized: "Разложи слова по категориям!")
-            : String(localized: "Привет, \(response.childName)! Разложи слова.")
+            ? response.taskDescription
+            : String(localized: "Привет, \(response.childName)! \(response.taskDescription)")
         let vm = SortingModels.LoadSession.ViewModel(
             setTitle: response.setTitle,
+            taskType: response.taskType,
+            taskDescription: response.taskDescription,
             words: response.words,
             categories: response.categories,
             greeting: greeting,
@@ -43,17 +48,68 @@ final class SortingPresenter: SortingPresentationLogic {
         if response.correct {
             feedback = response.streakBonusTriggered
                 ? String(localized: "Вот это серия!")
-                : String(localized: "Верно!")
+                : response.feedback
         } else {
-            feedback = String(localized: "Не совсем. Идём дальше.")
+            feedback = response.feedback
         }
         let vm = SortingModels.ClassifyWord.ViewModel(
             correct: response.correct,
             wordId: response.wordId,
+            categoryId: response.categoryId,
             feedbackText: feedback,
-            streakBadgeVisible: response.streakBonusTriggered
+            streakBadgeVisible: response.streakBonusTriggered,
+            remainingCount: response.remainingCount
         )
         viewModel?.displayClassifyWord(vm)
+    }
+
+    // MARK: RequestHint
+
+    func presentHint(_ response: SortingModels.RequestHint.Response) {
+        let hintText: String
+        switch response.hintLevel {
+        case 1:
+            hintText = response.hintText
+        case 2:
+            hintText = response.hintText
+        default:
+            hintText = String(localized: "Я помогаю — кладу слово на место")
+        }
+        let vm = SortingModels.RequestHint.ViewModel(
+            wordId: response.wordId,
+            hintLevel: response.hintLevel,
+            highlightCategoryId: response.highlightCategoryId,
+            hintText: hintText,
+            isAutoPlace: response.isAutoPlace
+        )
+        viewModel?.displayHint(vm)
+    }
+
+    // MARK: AutoPlace
+
+    func presentAutoPlace(_ response: SortingModels.AutoPlace.Response) {
+        let vm = SortingModels.AutoPlace.ViewModel(
+            wordId: response.wordId,
+            categoryId: response.categoryId
+        )
+        viewModel?.displayAutoPlace(vm)
+    }
+
+    // MARK: StreakBonus
+
+    func presentStreakBonus(_ response: SortingModels.StreakBonus.Response) {
+        let bonusText: String
+        switch response.streak {
+        case 3:  bonusText = String(localized: "Три подряд! Отлично!")
+        case 4:  bonusText = String(localized: "Четыре подряд! Невероятно!")
+        case 5:  bonusText = String(localized: "Пять подряд! Ты супер!")
+        default: bonusText = String(localized: "Серия ×\(response.streak)! Продолжай!")
+        }
+        let vm = SortingModels.StreakBonus.ViewModel(
+            streak: response.streak,
+            bonusText: bonusText
+        )
+        viewModel?.displayStreakBonus(vm)
     }
 
     // MARK: TimerTick
@@ -64,10 +120,10 @@ final class SortingPresenter: SortingPresentationLogic {
         let label = String(format: "%02d:%02d", minutes, seconds)
         let color: String
         switch response.remaining {
-        case 0:      color = "red"
-        case 1...15: color = "red"
+        case 0:       color = "red"
+        case 1...15:  color = "red"
         case 16...30: color = "orange"
-        default:     color = "green"
+        default:      color = "green"
         }
         let vm = SortingModels.TimerTick.ViewModel(
             timerLabel: label,
@@ -99,6 +155,8 @@ final class SortingPresenter: SortingPresentationLogic {
             message = String(localized: "Хорошо! Продолжай тренироваться.")
         case (_, .timeExpired):
             message = String(localized: "Время вышло — попробуй ещё раз!")
+        case (_, .autoDistributed):
+            message = String(localized: "Я помог разложить. Попробуем ещё раз?")
         default:
             message = String(localized: "Давай попробуем ещё раз — у тебя получится!")
         }
@@ -106,7 +164,11 @@ final class SortingPresenter: SortingPresentationLogic {
             starsEarned: stars,
             scoreLabel: scoreLabel,
             message: message,
-            finalScore: score
+            finalScore: score,
+            categoryBreakdown: response.categoryBreakdown,
+            bestCategoryTitle: response.bestCategoryTitle,
+            worstCategoryTitle: response.worstCategoryTitle,
+            autoPlacedCount: response.autoPlacedCount
         )
         viewModel?.displayCompleteSession(vm)
     }

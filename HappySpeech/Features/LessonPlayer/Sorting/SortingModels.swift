@@ -3,20 +3,41 @@ import Observation
 
 // MARK: - Sorting VIP Models
 //
-// «Сортировка по категориям» — ребёнок раскладывает слова по 2 корзинам.
-// По каждому слову Interactor проверяет выбор, даёт haptic-фидбек и показывает
-// короткую подсветку. После N слов (или по таймеру) — авто-завершение и
-// звёзды по комбинированному скору hitRate + timeBonus + streakBonus.
+// «Сортировка по категориям» — ребёнок раскладывает слова по 2–4 корзинам.
+//
+// 5 типов задач (SortingTaskType):
+//   .firstSound       — по первому звуку (С / Ш / Р / Л)
+//   .soundPosition    — начало / середина / конец
+//   .syllableCount    — 1 / 2 / 3 слога
+//   .vowelConsonant   — гласные vs согласные
+//   .voicedUnvoiced   — звонкие vs глухие
+//   .semantic         — смысловые категории (живое/неживое, фрукт/овощ…)
+//
+// Hints (3 уровня):
+//   1 — подсветить правильную корзину
+//   2 — голосовая подсказка
+//   3 — авто-placement без баллов
+//
+// Auto-distribute: если бездействие 30 с — авторасставить оставшиеся слова.
 //
 // Скоринг:
-//   hitRate    = correct / total
-//   timeBonus  = max(0, (timeLimit - elapsed) / timeLimit) * 0.2
+//   hitRate    = correct / total  (авто-placed не считаются)
+//   timeBonus  = max(0, (timeLimit - elapsed) / timeLimit) * 0.15
 //   streakBon  = min(0.15, bestStreak * 0.03)
-//   score      = clamp(hitRate * 0.75 + timeBonus + streakBon, 0...1)
+//   autoPen    = (autoPlacedCount / 3) * 0.05
+//   score      = clamp(hitRate * 0.70 + timeBonus + streakBon - autoPen, 0...1)
 // Звёзды: ≥0.90 → 3, ≥0.70 → 2, ≥0.50 → 1, иначе 0.
-//
-// Файл содержит доменные типы (SortingWord / SortingCategory / SortingSet),
-// каталог из 6+ наборов, VIP-конверты и @Observable Display-store.
+
+// MARK: - SortingTaskType
+
+enum SortingTaskType: String, Sendable, Equatable, Hashable {
+    case firstSound       = "first_sound"
+    case soundPosition    = "sound_position"
+    case syllableCount    = "syllable_count"
+    case vowelConsonant   = "vowel_consonant"
+    case voicedUnvoiced   = "voiced_unvoiced"
+    case semantic         = "semantic"
+}
 
 // MARK: - Domain: SortingCategory
 
@@ -24,6 +45,8 @@ struct SortingCategory: Sendable, Identifiable, Equatable, Hashable {
     let id: String
     let title: String
     let emoji: String
+    /// Цветовой акцент для Drop Zone (accessibility color-coded).
+    let colorKey: String
 }
 
 // MARK: - Domain: SortingWord
@@ -35,6 +58,12 @@ struct SortingWord: Sendable, Identifiable, Equatable, Hashable {
     let correctCategory: String
     /// Фонетическая группа целевого звука в слове (для метаданных / телеметрии).
     let soundGroup: String
+    /// Количество слогов (для taskType=syllableCount).
+    let syllableCount: Int
+    /// Первый звук (для taskType=firstSound).
+    let firstSound: String
+    /// Позиция звука: "initial" | "medial" | "final" (для taskType=soundPosition).
+    let soundPosition: String
 
     /// Проверка — правильно ли слово положено в категорию `targetCategory`.
     func isCorrect(targetCategory: String) -> Bool {
@@ -44,12 +73,14 @@ struct SortingWord: Sendable, Identifiable, Equatable, Hashable {
 
 // MARK: - Domain: SortingSet
 
-/// Полный игровой набор: 8 слов + 2 категории.
-/// Название набора — человекочитаемая метка для логов и аналитики.
+/// Полный игровой набор: слова + категории + тип задачи.
 struct SortingSet: Sendable, Equatable, Hashable {
     let id: String
     let title: String
     let soundGroup: String
+    let taskType: SortingTaskType
+    /// Краткое описание задачи для ребёнка (показывается в начале раунда).
+    let taskDescription: String
     let categories: [SortingCategory]
     let words: [SortingWord]
 }
@@ -58,129 +89,196 @@ struct SortingSet: Sendable, Equatable, Hashable {
 
 extension SortingSet {
 
-    /// «Живое / Неживое» — универсальный, подходит для любой группы.
+    // MARK: Task 1: По первому звуку (С / Ш)
+
+    static let firstSoundSet = SortingSet(
+        id: "first_sound_s_sh",
+        title: "Начало слова",
+        soundGroup: "whistling",
+        taskType: .firstSound,
+        taskDescription: "Разложи слова: в синюю — на звук «С», в зелёную — на звук «Ш»",
+        categories: [
+            SortingCategory(id: "sound_s", title: "Звук С", emoji: "🔵", colorKey: "blue"),
+            SortingCategory(id: "sound_sh", title: "Звук Ш", emoji: "🟢", colorKey: "green")
+        ],
+        words: [
+            SortingWord(id: "sok_fs", word: "Сок", emoji: "🧃", correctCategory: "sound_s",
+                        soundGroup: "whistling", syllableCount: 1, firstSound: "С", soundPosition: "initial"),
+            SortingWord(id: "shapka_fs", word: "Шапка", emoji: "🎩", correctCategory: "sound_sh",
+                        soundGroup: "hissing", syllableCount: 2, firstSound: "Ш", soundPosition: "initial"),
+            SortingWord(id: "sumka_fs", word: "Сумка", emoji: "👜", correctCategory: "sound_s",
+                        soundGroup: "whistling", syllableCount: 2, firstSound: "С", soundPosition: "initial"),
+            SortingWord(id: "shina_fs", word: "Шина", emoji: "🛞", correctCategory: "sound_sh",
+                        soundGroup: "hissing", syllableCount: 2, firstSound: "Ш", soundPosition: "initial"),
+            SortingWord(id: "slon_fs", word: "Слон", emoji: "🐘", correctCategory: "sound_s",
+                        soundGroup: "whistling", syllableCount: 1, firstSound: "С", soundPosition: "initial"),
+            SortingWord(id: "shkaf_fs", word: "Шкаф", emoji: "🗄️", correctCategory: "sound_sh",
+                        soundGroup: "hissing", syllableCount: 1, firstSound: "Ш", soundPosition: "initial"),
+            SortingWord(id: "stol_fs", word: "Стол", emoji: "🪑", correctCategory: "sound_s",
+                        soundGroup: "whistling", syllableCount: 1, firstSound: "С", soundPosition: "initial"),
+            SortingWord(id: "sharf_fs", word: "Шарф", emoji: "🧣", correctCategory: "sound_sh",
+                        soundGroup: "hissing", syllableCount: 1, firstSound: "Ш", soundPosition: "initial")
+        ]
+    )
+
+    // MARK: Task 2: По положению звука (начало / конец)
+
+    static let soundPositionSet = SortingSet(
+        id: "position_s",
+        title: "Где звук «С»?",
+        soundGroup: "whistling",
+        taskType: .soundPosition,
+        taskDescription: "Звук «С» в начале или в конце слова?",
+        categories: [
+            SortingCategory(id: "initial", title: "В начале", emoji: "⬆️", colorKey: "purple"),
+            SortingCategory(id: "final", title: "В конце", emoji: "⬇️", colorKey: "orange")
+        ],
+        words: [
+            SortingWord(id: "sok_pos", word: "Сок", emoji: "🧃", correctCategory: "initial",
+                        soundGroup: "whistling", syllableCount: 1, firstSound: "С", soundPosition: "initial"),
+            SortingWord(id: "nos_pos", word: "Нос", emoji: "👃", correctCategory: "final",
+                        soundGroup: "whistling", syllableCount: 1, firstSound: "Н", soundPosition: "final"),
+            SortingWord(id: "sumka_pos", word: "Сумка", emoji: "👜", correctCategory: "initial",
+                        soundGroup: "whistling", syllableCount: 2, firstSound: "С", soundPosition: "initial"),
+            SortingWord(id: "les_pos", word: "Лес", emoji: "🌲", correctCategory: "final",
+                        soundGroup: "whistling", syllableCount: 1, firstSound: "Л", soundPosition: "final"),
+            SortingWord(id: "son_pos", word: "Сон", emoji: "💤", correctCategory: "initial",
+                        soundGroup: "whistling", syllableCount: 1, firstSound: "С", soundPosition: "initial"),
+            SortingWord(id: "pes_pos", word: "Пёс", emoji: "🐕", correctCategory: "final",
+                        soundGroup: "whistling", syllableCount: 1, firstSound: "П", soundPosition: "final"),
+            SortingWord(id: "sabaka_pos", word: "Собака", emoji: "🐶", correctCategory: "initial",
+                        soundGroup: "whistling", syllableCount: 3, firstSound: "С", soundPosition: "initial"),
+            SortingWord(id: "kolos_pos", word: "Колос", emoji: "🌾", correctCategory: "final",
+                        soundGroup: "whistling", syllableCount: 2, firstSound: "К", soundPosition: "final")
+        ]
+    )
+
+    // MARK: Task 3: По количеству слогов (1 / 2 / 3)
+
+    static let syllableCountSet = SortingSet(
+        id: "syllable_count",
+        title: "Сколько слогов?",
+        soundGroup: "any",
+        taskType: .syllableCount,
+        taskDescription: "Разложи слова по количеству слогов",
+        categories: [
+            SortingCategory(id: "one", title: "1 слог", emoji: "1️⃣", colorKey: "red"),
+            SortingCategory(id: "two", title: "2 слога", emoji: "2️⃣", colorKey: "blue"),
+            SortingCategory(id: "three", title: "3 слога", emoji: "3️⃣", colorKey: "green")
+        ],
+        words: [
+            SortingWord(id: "dom_sc", word: "Дом", emoji: "🏠", correctCategory: "one",
+                        soundGroup: "any", syllableCount: 1, firstSound: "Д", soundPosition: "initial"),
+            SortingWord(id: "koshka_sc", word: "Кошка", emoji: "🐱", correctCategory: "two",
+                        soundGroup: "any", syllableCount: 2, firstSound: "К", soundPosition: "initial"),
+            SortingWord(id: "sobaka_sc", word: "Собака", emoji: "🐶", correctCategory: "three",
+                        soundGroup: "any", syllableCount: 3, firstSound: "С", soundPosition: "initial"),
+            SortingWord(id: "les_sc", word: "Лес", emoji: "🌲", correctCategory: "one",
+                        soundGroup: "any", syllableCount: 1, firstSound: "Л", soundPosition: "initial"),
+            SortingWord(id: "reka_sc", word: "Река", emoji: "🌊", correctCategory: "two",
+                        soundGroup: "any", syllableCount: 2, firstSound: "Р", soundPosition: "initial"),
+            SortingWord(id: "malina_sc", word: "Малина", emoji: "🍓", correctCategory: "three",
+                        soundGroup: "any", syllableCount: 3, firstSound: "М", soundPosition: "initial"),
+            SortingWord(id: "kit_sc", word: "Кит", emoji: "🐋", correctCategory: "one",
+                        soundGroup: "any", syllableCount: 1, firstSound: "К", soundPosition: "initial"),
+            SortingWord(id: "ryba_sc", word: "Рыба", emoji: "🐟", correctCategory: "two",
+                        soundGroup: "any", syllableCount: 2, firstSound: "Р", soundPosition: "initial")
+        ]
+    )
+
+    // MARK: Task 4: Гласные vs Согласные
+
+    static let vowelConsonantSet = SortingSet(
+        id: "vowel_consonant",
+        title: "Гласный или согласный?",
+        soundGroup: "any",
+        taskType: .vowelConsonant,
+        taskDescription: "Послушай слово. Первый звук — гласный или согласный?",
+        categories: [
+            SortingCategory(id: "vowel", title: "Гласный", emoji: "🔴", colorKey: "red"),
+            SortingCategory(id: "consonant", title: "Согласный", emoji: "🔵", colorKey: "blue")
+        ],
+        words: [
+            SortingWord(id: "aist_vc", word: "Аист", emoji: "🦢", correctCategory: "vowel",
+                        soundGroup: "any", syllableCount: 2, firstSound: "А", soundPosition: "initial"),
+            SortingWord(id: "baran_vc", word: "Баран", emoji: "🐑", correctCategory: "consonant",
+                        soundGroup: "any", syllableCount: 2, firstSound: "Б", soundPosition: "initial"),
+            SortingWord(id: "utka_vc", word: "Утка", emoji: "🦆", correctCategory: "vowel",
+                        soundGroup: "any", syllableCount: 2, firstSound: "У", soundPosition: "initial"),
+            SortingWord(id: "gora_vc", word: "Гора", emoji: "⛰️", correctCategory: "consonant",
+                        soundGroup: "any", syllableCount: 2, firstSound: "Г", soundPosition: "initial"),
+            SortingWord(id: "orel_vc", word: "Орёл", emoji: "🦅", correctCategory: "vowel",
+                        soundGroup: "any", syllableCount: 2, firstSound: "О", soundPosition: "initial"),
+            SortingWord(id: "dom_vc", word: "Дом", emoji: "🏠", correctCategory: "consonant",
+                        soundGroup: "any", syllableCount: 1, firstSound: "Д", soundPosition: "initial"),
+            SortingWord(id: "igla_vc", word: "Игла", emoji: "🪡", correctCategory: "vowel",
+                        soundGroup: "any", syllableCount: 2, firstSound: "И", soundPosition: "initial"),
+            SortingWord(id: "kot_vc", word: "Кот", emoji: "🐱", correctCategory: "consonant",
+                        soundGroup: "any", syllableCount: 1, firstSound: "К", soundPosition: "initial")
+        ]
+    )
+
+    // MARK: Task 5: Звонкие vs Глухие
+
+    static let voicedUnvoicedSet = SortingSet(
+        id: "voiced_unvoiced",
+        title: "Звонкий или глухой?",
+        soundGroup: "any",
+        taskType: .voicedUnvoiced,
+        taskDescription: "Первый согласный звук — звонкий или глухой?",
+        categories: [
+            SortingCategory(id: "voiced", title: "Звонкий", emoji: "🔔", colorKey: "yellow"),
+            SortingCategory(id: "unvoiced", title: "Глухой", emoji: "🔕", colorKey: "gray")
+        ],
+        words: [
+            SortingWord(id: "bochka_vu", word: "Бочка", emoji: "🪣", correctCategory: "voiced",
+                        soundGroup: "any", syllableCount: 2, firstSound: "Б", soundPosition: "initial"),
+            SortingWord(id: "papa_vu", word: "Папа", emoji: "👨", correctCategory: "unvoiced",
+                        soundGroup: "any", syllableCount: 2, firstSound: "П", soundPosition: "initial"),
+            SortingWord(id: "dub_vu", word: "Дуб", emoji: "🌳", correctCategory: "voiced",
+                        soundGroup: "any", syllableCount: 1, firstSound: "Д", soundPosition: "initial"),
+            SortingWord(id: "tortik_vu", word: "Тортик", emoji: "🎂", correctCategory: "unvoiced",
+                        soundGroup: "any", syllableCount: 2, firstSound: "Т", soundPosition: "initial"),
+            SortingWord(id: "vaza_vu", word: "Ваза", emoji: "💐", correctCategory: "voiced",
+                        soundGroup: "any", syllableCount: 2, firstSound: "В", soundPosition: "initial"),
+            SortingWord(id: "futbol_vu", word: "Футбол", emoji: "⚽", correctCategory: "unvoiced",
+                        soundGroup: "any", syllableCount: 2, firstSound: "Ф", soundPosition: "initial"),
+            SortingWord(id: "gnom_vu", word: "Гном", emoji: "🧙", correctCategory: "voiced",
+                        soundGroup: "any", syllableCount: 1, firstSound: "Г", soundPosition: "initial"),
+            SortingWord(id: "korol_vu", word: "Король", emoji: "👑", correctCategory: "unvoiced",
+                        soundGroup: "any", syllableCount: 2, firstSound: "К", soundPosition: "initial")
+        ]
+    )
+
+    // MARK: Task 6: Семантика (живое / неживое) — универсальный
+
     static let animateSet = SortingSet(
         id: "animate",
         title: "Живое и неживое",
         soundGroup: "any",
+        taskType: .semantic,
+        taskDescription: "Разложи: живое или неживое?",
         categories: [
-            SortingCategory(id: "living", title: "Живое", emoji: "🌱"),
-            SortingCategory(id: "nonliving", title: "Неживое", emoji: "🪨")
+            SortingCategory(id: "living", title: "Живое", emoji: "🌱", colorKey: "green"),
+            SortingCategory(id: "nonliving", title: "Неживое", emoji: "🪨", colorKey: "gray")
         ],
         words: [
-            SortingWord(id: "kot", word: "Кот", emoji: "🐱", correctCategory: "living", soundGroup: "any"),
-            SortingWord(id: "stol", word: "Стол", emoji: "🪑", correctCategory: "nonliving", soundGroup: "any"),
-            SortingWord(id: "reka", word: "Река", emoji: "🌊", correctCategory: "nonliving", soundGroup: "any"),
-            SortingWord(id: "sobaka", word: "Собака", emoji: "🐶", correctCategory: "living", soundGroup: "whistling"),
-            SortingWord(id: "derevo", word: "Дерево", emoji: "🌳", correctCategory: "living", soundGroup: "any"),
-            SortingWord(id: "kniga", word: "Книга", emoji: "📚", correctCategory: "nonliving", soundGroup: "velar"),
-            SortingWord(id: "ryba", word: "Рыба", emoji: "🐟", correctCategory: "living", soundGroup: "sonorant"),
-            SortingWord(id: "dom", word: "Дом", emoji: "🏠", correctCategory: "nonliving", soundGroup: "any")
-        ]
-    )
-
-    /// Фрукты и овощи — слова со свистящими С/З/Ц.
-    static let fruitsVeggiesSet = SortingSet(
-        id: "fruits_veggies",
-        title: "Фрукты и овощи",
-        soundGroup: "whistling",
-        categories: [
-            SortingCategory(id: "fruit", title: "Фрукты", emoji: "🍎"),
-            SortingCategory(id: "veggie", title: "Овощи", emoji: "🥕")
-        ],
-        words: [
-            SortingWord(id: "sliva", word: "Слива", emoji: "🟣", correctCategory: "fruit", soundGroup: "whistling"),
-            SortingWord(id: "svekla", word: "Свёкла", emoji: "🟥", correctCategory: "veggie", soundGroup: "whistling"),
-            SortingWord(id: "apelsin", word: "Апельсин", emoji: "🍊", correctCategory: "fruit", soundGroup: "whistling"),
-            SortingWord(id: "kapusta", word: "Капуста", emoji: "🥬", correctCategory: "veggie", soundGroup: "whistling"),
-            SortingWord(id: "abrikos", word: "Абрикос", emoji: "🍑", correctCategory: "fruit", soundGroup: "whistling"),
-            SortingWord(id: "salat", word: "Салат", emoji: "🥗", correctCategory: "veggie", soundGroup: "whistling"),
-            SortingWord(id: "persik", word: "Персик", emoji: "🍑", correctCategory: "fruit", soundGroup: "whistling"),
-            SortingWord(id: "spar", word: "Спаржа", emoji: "🌾", correctCategory: "veggie", soundGroup: "whistling")
-        ]
-    )
-
-    /// Транспорт и животные — слова с шипящими Ш/Ж/Ч/Щ.
-    static let transportAnimalsSet = SortingSet(
-        id: "transport_animals",
-        title: "Транспорт и животные",
-        soundGroup: "hissing",
-        categories: [
-            SortingCategory(id: "transport", title: "Транспорт", emoji: "🚗"),
-            SortingCategory(id: "animal", title: "Животные", emoji: "🐾")
-        ],
-        words: [
-            SortingWord(id: "mashina", word: "Машина", emoji: "🚗", correctCategory: "transport", soundGroup: "hissing"),
-            SortingWord(id: "zhiraf", word: "Жираф", emoji: "🦒", correctCategory: "animal", soundGroup: "hissing"),
-            SortingWord(id: "shluka", word: "Шлюпка", emoji: "🛶", correctCategory: "transport", soundGroup: "hissing"),
-            SortingWord(id: "yozh", word: "Ёжик", emoji: "🦔", correctCategory: "animal", soundGroup: "hissing"),
-            SortingWord(id: "shina", word: "Шина", emoji: "🛞", correctCategory: "transport", soundGroup: "hissing"),
-            SortingWord(id: "medvezh", word: "Медвежонок", emoji: "🐻", correctCategory: "animal", soundGroup: "hissing"),
-            SortingWord(id: "parovoz", word: "Паровоз", emoji: "🚂", correctCategory: "transport", soundGroup: "hissing"),
-            SortingWord(id: "cherep", word: "Черепаха", emoji: "🐢", correctCategory: "animal", soundGroup: "hissing")
-        ]
-    )
-
-    /// Посуда и одежда — слова с сонорами Р/Л.
-    static let dishesClothesSet = SortingSet(
-        id: "dishes_clothes",
-        title: "Посуда и одежда",
-        soundGroup: "sonorant",
-        categories: [
-            SortingCategory(id: "dish", title: "Посуда", emoji: "🍽️"),
-            SortingCategory(id: "clothes", title: "Одежда", emoji: "👕")
-        ],
-        words: [
-            SortingWord(id: "tarelka", word: "Тарелка", emoji: "🍽️", correctCategory: "dish", soundGroup: "sonorant"),
-            SortingWord(id: "rubashka", word: "Рубашка", emoji: "👔", correctCategory: "clothes", soundGroup: "sonorant"),
-            SortingWord(id: "kastrul", word: "Кастрюля", emoji: "🥘", correctCategory: "dish", soundGroup: "sonorant"),
-            SortingWord(id: "plat", word: "Платье", emoji: "👗", correctCategory: "clothes", soundGroup: "sonorant"),
-            SortingWord(id: "lozhka", word: "Ложка", emoji: "🥄", correctCategory: "dish", soundGroup: "sonorant"),
-            SortingWord(id: "shlyapa", word: "Шляпа", emoji: "🎩", correctCategory: "clothes", soundGroup: "sonorant"),
-            SortingWord(id: "chaynik", word: "Чайник", emoji: "🫖", correctCategory: "dish", soundGroup: "sonorant"),
-            SortingWord(id: "kurtka", word: "Куртка", emoji: "🧥", correctCategory: "clothes", soundGroup: "sonorant")
-        ]
-    )
-
-    /// Небо и земля — слова с заднеязычными К/Г/Х.
-    static let skyEarthSet = SortingSet(
-        id: "sky_earth",
-        title: "Небо и земля",
-        soundGroup: "velar",
-        categories: [
-            SortingCategory(id: "sky", title: "Небо", emoji: "☁️"),
-            SortingCategory(id: "earth", title: "Земля", emoji: "🌍")
-        ],
-        words: [
-            SortingWord(id: "oblako", word: "Облако", emoji: "☁️", correctCategory: "sky", soundGroup: "velar"),
-            SortingWord(id: "kamen", word: "Камень", emoji: "🪨", correctCategory: "earth", soundGroup: "velar"),
-            SortingWord(id: "samolet", word: "Самолёт", emoji: "✈️", correctCategory: "sky", soundGroup: "velar"),
-            SortingWord(id: "gora", word: "Гора", emoji: "⛰️", correctCategory: "earth", soundGroup: "velar"),
-            SortingWord(id: "luna", word: "Луна", emoji: "🌙", correctCategory: "sky", soundGroup: "velar"),
-            SortingWord(id: "kust", word: "Куст", emoji: "🌳", correctCategory: "earth", soundGroup: "velar"),
-            SortingWord(id: "raduga", word: "Радуга", emoji: "🌈", correctCategory: "sky", soundGroup: "velar"),
-            SortingWord(id: "kolodets", word: "Колодец", emoji: "🪣", correctCategory: "earth", soundGroup: "velar")
-        ]
-    )
-
-    /// Начало и конец слова — тренировка позиции звука.
-    static let positionSet = SortingSet(
-        id: "position_s",
-        title: "Звук в начале или в конце",
-        soundGroup: "whistling",
-        categories: [
-            SortingCategory(id: "initial", title: "В начале", emoji: "🔤"),
-            SortingCategory(id: "final", title: "В конце", emoji: "🔚")
-        ],
-        words: [
-            SortingWord(id: "sok", word: "Сок", emoji: "🧃", correctCategory: "initial", soundGroup: "whistling"),
-            SortingWord(id: "nos", word: "Нос", emoji: "👃", correctCategory: "final", soundGroup: "whistling"),
-            SortingWord(id: "sumka", word: "Сумка", emoji: "👜", correctCategory: "initial", soundGroup: "whistling"),
-            SortingWord(id: "les", word: "Лес", emoji: "🌲", correctCategory: "final", soundGroup: "whistling"),
-            SortingWord(id: "son", word: "Сон", emoji: "💤", correctCategory: "initial", soundGroup: "whistling"),
-            SortingWord(id: "pes", word: "Пёс", emoji: "🐕", correctCategory: "final", soundGroup: "whistling"),
-            SortingWord(id: "sobaka", word: "Собака", emoji: "🐶", correctCategory: "initial", soundGroup: "whistling"),
-            SortingWord(id: "kolos", word: "Колос", emoji: "🌾", correctCategory: "final", soundGroup: "whistling")
+            SortingWord(id: "kot_an", word: "Кот", emoji: "🐱", correctCategory: "living",
+                        soundGroup: "any", syllableCount: 1, firstSound: "К", soundPosition: "initial"),
+            SortingWord(id: "stol_an", word: "Стол", emoji: "🪑", correctCategory: "nonliving",
+                        soundGroup: "any", syllableCount: 1, firstSound: "С", soundPosition: "initial"),
+            SortingWord(id: "reka_an", word: "Река", emoji: "🌊", correctCategory: "nonliving",
+                        soundGroup: "any", syllableCount: 2, firstSound: "Р", soundPosition: "initial"),
+            SortingWord(id: "sobaka_an", word: "Собака", emoji: "🐶", correctCategory: "living",
+                        soundGroup: "any", syllableCount: 3, firstSound: "С", soundPosition: "initial"),
+            SortingWord(id: "derevo_an", word: "Дерево", emoji: "🌳", correctCategory: "living",
+                        soundGroup: "any", syllableCount: 3, firstSound: "Д", soundPosition: "initial"),
+            SortingWord(id: "kniga_an", word: "Книга", emoji: "📚", correctCategory: "nonliving",
+                        soundGroup: "any", syllableCount: 2, firstSound: "К", soundPosition: "initial"),
+            SortingWord(id: "ryba_an", word: "Рыба", emoji: "🐟", correctCategory: "living",
+                        soundGroup: "any", syllableCount: 2, firstSound: "Р", soundPosition: "initial"),
+            SortingWord(id: "dom_an", word: "Дом", emoji: "🏠", correctCategory: "nonliving",
+                        soundGroup: "any", syllableCount: 1, firstSound: "Д", soundPosition: "initial")
         ]
     )
 
@@ -189,19 +287,34 @@ extension SortingSet {
     /// Весь каталог (6 наборов).
     static let catalog: [SortingSet] = [
         .animateSet,
-        .fruitsVeggiesSet,
-        .transportAnimalsSet,
-        .dishesClothesSet,
-        .skyEarthSet,
-        .positionSet
+        .firstSoundSet,
+        .soundPositionSet,
+        .syllableCountSet,
+        .vowelConsonantSet,
+        .voicedUnvoicedSet
     ]
 
     /// Выбирает подходящий набор для указанной фонетической группы.
-    /// Если для группы ничего нет — возвращает универсальный animateSet.
     static func set(for soundGroup: String) -> SortingSet {
-        let matches = catalog.filter { $0.soundGroup == soundGroup }
-        if let first = matches.first { return first }
-        return animateSet
+        switch soundGroup {
+        case "whistling": return soundPositionSet
+        case "hissing":   return firstSoundSet
+        case "sonorant":  return syllableCountSet
+        case "velar":     return voicedUnvoicedSet
+        default:          return animateSet
+        }
+    }
+}
+
+// MARK: - CategoryStat (per-task summary)
+
+extension SortingModels {
+    struct CategoryStat: Sendable, Equatable {
+        let categoryId: String
+        let title: String
+        let correct: Int
+        let total: Int
+        let accuracy: Float
     }
 }
 
@@ -210,6 +323,7 @@ extension SortingSet {
 enum SortingModels {
 
     // MARK: LoadSession
+
     enum LoadSession {
         struct Request: Sendable {
             let soundGroup: String
@@ -217,13 +331,17 @@ enum SortingModels {
         }
         struct Response: Sendable {
             let setTitle: String
+            let taskType: SortingTaskType
+            let taskDescription: String
             let words: [SortingWord]
             let categories: [SortingCategory]
             let childName: String
-            let timeLimit: Int      // секунды
+            let timeLimit: Int
         }
         struct ViewModel: Sendable {
             let setTitle: String
+            let taskType: SortingTaskType
+            let taskDescription: String
             let words: [SortingWord]
             let categories: [SortingCategory]
             let greeting: String
@@ -232,6 +350,7 @@ enum SortingModels {
     }
 
     // MARK: ClassifyWord
+
     enum ClassifyWord {
         struct Request: Sendable {
             let wordId: String
@@ -240,19 +359,71 @@ enum SortingModels {
         struct Response: Sendable {
             let correct: Bool
             let wordId: String
+            let categoryId: String
             let streak: Int
             let streakBonusTriggered: Bool
             let feedback: String
+            let remainingCount: Int
         }
         struct ViewModel: Sendable {
             let correct: Bool
             let wordId: String
+            let categoryId: String
             let feedbackText: String
             let streakBadgeVisible: Bool
+            let remainingCount: Int
+        }
+    }
+
+    // MARK: RequestHint
+
+    enum RequestHint {
+        struct Request: Sendable {
+            let wordId: String
+        }
+        struct Response: Sendable {
+            let wordId: String
+            let hintLevel: Int
+            let highlightCategoryId: String
+            let hintText: String
+            let isAutoPlace: Bool
+        }
+        struct ViewModel: Sendable {
+            let wordId: String
+            let hintLevel: Int
+            let highlightCategoryId: String
+            let hintText: String
+            let isAutoPlace: Bool
+        }
+    }
+
+    // MARK: AutoPlace
+
+    enum AutoPlace {
+        struct Response: Sendable {
+            let wordId: String
+            let categoryId: String
+        }
+        struct ViewModel: Sendable {
+            let wordId: String
+            let categoryId: String
+        }
+    }
+
+    // MARK: StreakBonus
+
+    enum StreakBonus {
+        struct Response: Sendable {
+            let streak: Int
+        }
+        struct ViewModel: Sendable {
+            let streak: Int
+            let bonusText: String
         }
     }
 
     // MARK: TimerTick
+
     enum TimerTick {
         struct Response: Sendable {
             let remaining: Int
@@ -266,26 +437,38 @@ enum SortingModels {
     }
 
     // MARK: CompleteSession
+
     enum CompleteSession {
         enum Reason: Sendable, Equatable {
             case allClassified
             case timeExpired
+            case autoDistributed
         }
         struct Request: Sendable {}
         struct Response: Sendable {
             let correctCount: Int
             let total: Int
+            let humanCorrect: Int
+            let humanTotal: Int
             let elapsedSeconds: Int
             let timeLimit: Int
             let bestStreak: Int
+            let autoPlacedCount: Int
             let reason: Reason
             let finalScore: Float
+            let categoryBreakdown: [CategoryStat]
+            let bestCategoryTitle: String?
+            let worstCategoryTitle: String?
         }
         struct ViewModel: Sendable {
             let starsEarned: Int
             let scoreLabel: String
             let message: String
             let finalScore: Float
+            let categoryBreakdown: [CategoryStat]
+            let bestCategoryTitle: String?
+            let worstCategoryTitle: String?
+            let autoPlacedCount: Int
         }
     }
 }
@@ -305,6 +488,8 @@ enum SortingPhase: Sendable, Equatable {
 @MainActor
 final class SortingDisplay {
     var setTitle: String = ""
+    var taskDescription: String = ""
+    var taskType: SortingTaskType = .semantic
     var words: [SortingWord] = []
     var categories: [SortingCategory] = []
     var greeting: String = ""
@@ -313,13 +498,17 @@ final class SortingDisplay {
     var classifiedWords: [String: String] = [:]
     var correctWords: Set<String> = []
     var incorrectWords: Set<String> = []
+    /// Подсвеченная корзина (hint level 1).
+    var highlightedCategoryId: String?
+    /// Слова, расставленные авто (hint level 3 / auto-distribute).
+    var autoPlacedWords: Set<String> = []
 
     /// Индекс текущего слова в `words` (0…words.count-1).
     var currentWordIndex: Int = 0
 
     /// Текущая серия правильных ответов подряд.
     var currentStreak: Int = 0
-    /// Видим ли сейчас значок «streak!» (сбрасывается с phase=classifying).
+    /// Видим ли сейчас значок «streak!».
     var streakBadgeVisible: Bool = false
 
     /// Таймер.
@@ -327,15 +516,24 @@ final class SortingDisplay {
     var timerLabel: String = "01:30"
     var timerColor: String = "green"
 
-    /// Текст для короткого feedback-оверлея («Верно!»/«Попробуй ещё…»).
+    /// Текст для короткого feedback-оверлея.
     var feedbackText: String = ""
-    /// Результат последнего классификационного хода (для подсветки оверлея).
+    /// Результат последнего классификационного хода.
     var lastClassificationCorrect: Bool?
+
+    /// Hint.
+    var hintText: String = ""
+    var hintVisible: Bool = false
+    var hintLevel: Int = 0
 
     var starsEarned: Int = 0
     var scoreLabel: String = ""
     var completionMessage: String = ""
     var finalScore: Float = 0
+    var categoryBreakdown: [SortingModels.CategoryStat] = []
+    var bestCategoryTitle: String?
+    var worstCategoryTitle: String?
+    var autoPlacedCount: Int = 0
     var phase: SortingPhase = .loading
 
     /// Финальный скор пробрасывается в SessionShell через `.onChange`.
