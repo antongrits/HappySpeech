@@ -159,6 +159,7 @@ enum RepeatAfterModelModels {
         struct Response: Sendable {
             let words: [TargetWordItem]
             let childName: String
+            let totalRounds: Int
         }
         struct ViewModel: Sendable {
             let totalWords: Int
@@ -176,12 +177,16 @@ enum RepeatAfterModelModels {
             let wordNumber: Int
             let total: Int
             let attemptsLeft: Int
+            let canReplay: Bool
+            let replayCount: Int
         }
         struct ViewModel: Sendable {
             let word: TargetWordItem
             let progressLabel: String
             let attemptsLabel: String
             let syllabification: String
+            let canReplay: Bool
+            let replayCount: Int
         }
     }
 
@@ -197,7 +202,7 @@ enum RepeatAfterModelModels {
         }
     }
 
-    // MARK: EvaluateAttempt
+    // MARK: EvaluateAttempt (ASR path)
     enum EvaluateAttempt {
         struct Request: Sendable {
             let transcript: String
@@ -209,6 +214,10 @@ enum RepeatAfterModelModels {
             let feedback: String
             let attemptsLeft: Int
             let canAdvance: Bool
+            let diagnostic: PronunciationDiagnostic
+            let encouragement: String?
+            let hintLevel: RepeatHintLevel
+            let stars: Int
         }
         struct ViewModel: Sendable {
             let score: Float
@@ -216,6 +225,69 @@ enum RepeatAfterModelModels {
             let feedbackText: String
             let attemptsLabel: String
             let canAdvance: Bool
+            let diagnosticText: String?
+            let encouragement: String?
+            let hintAvailable: Bool
+            let stars: Int
+        }
+    }
+
+    // MARK: MLEvaluate (PronunciationScorer path)
+    enum MLEvaluate {
+        struct Request: Sendable {
+            let wordId: String
+            let mlScore: Float
+        }
+    }
+
+    // MARK: ReplayModel
+    enum ReplayModel {
+        struct Request: Sendable {}
+        struct Response: Sendable {
+            let word: TargetWordItem
+            let replayCount: Int
+            let replayLimitReached: Bool
+            let audioFilename: String?
+        }
+        struct ViewModel: Sendable {
+            let audioFilename: String?
+            let replayCount: Int
+            let replayLimitReached: Bool
+            let replayLabel: String
+        }
+    }
+
+    // MARK: Hint
+    enum Hint {
+        struct Request: Sendable {}
+        struct Response: Sendable {
+            let hintLevel: RepeatHintLevel
+            let syllabification: String
+            let articulationAsset: String
+            let word: TargetWordItem
+        }
+        struct ViewModel: Sendable {
+            let hintLevel: RepeatHintLevel
+            let syllabificationText: String
+            let articulationAsset: String
+            let hintLabel: String
+        }
+    }
+
+    // MARK: SloMo
+    enum SloMo {
+        struct Request: Sendable {
+            let playbackRate: Float
+        }
+        struct Response: Sendable {
+            let audioFilename: String?
+            let playbackRate: Float
+            let word: TargetWordItem
+        }
+        struct ViewModel: Sendable {
+            let audioFilename: String?
+            let playbackRate: Float
+            let sloMoLabel: String
         }
     }
 
@@ -225,6 +297,9 @@ enum RepeatAfterModelModels {
         struct Response: Sendable {
             let totalScore: Float
             let starsEarned: Int
+            let totalAttempts: Int
+            let wordsWithPerfectScore: Int
+            let wordsCompleted: Int
         }
         struct ViewModel: Sendable {
             let starsEarned: Int
@@ -232,6 +307,7 @@ enum RepeatAfterModelModels {
             let message: String
             /// 0…1 — прокидывается наверх через SessionShell.onComplete.
             let normalizedScore: Float
+            let statsLabel: String
         }
     }
 }
@@ -256,7 +332,25 @@ final class RepeatAfterModelDisplay {
     var starsEarned: Int = 0
     var scoreLabel: String = ""
     var completionMessage: String = ""
+    var statsLabel: String = ""
     var phase: RepeatPhase = .loading
     /// Финальный 0…1 скор, который View передаёт в SessionShell.onComplete.
     var pendingFinalScore: Float?
+    // Replay
+    var canReplay: Bool = true
+    var replayLimitReached: Bool = false
+    var replayLabel: String = ""
+    // Feedback extras
+    var diagnosticText: String?
+    var encouragement: String?
+    var hintAvailable: Bool = true
+    var roundStars: Int = 0
+    // Hint
+    var hintLevel: RepeatHintLevel = .none
+    var hintLabel: String = ""
+    var articulationAsset: String = ""
+    // Slo-mo
+    var sloMoLabel: String = ""
+    var sloMoPending: Bool = false
+    var sloMoRate: Float = 0.75
 }

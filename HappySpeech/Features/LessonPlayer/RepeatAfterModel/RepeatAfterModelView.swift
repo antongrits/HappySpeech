@@ -179,14 +179,19 @@ struct RepeatAfterModelView: View {
 
     private var wordPreviewBottom: some View {
         VStack(spacing: SpacingTokens.small) {
+            // Кнопка «Послушать» — replay эталона (до 3 раз).
             HSButton(
-                String(localized: "repeat.button.listen"),
+                display.replayLimitReached
+                    ? String(localized: "repeat.replay.limit_reached")
+                    : String(localized: "repeat.button.listen"),
                 style: .secondary,
                 icon: "speaker.wave.2.fill"
             ) {
                 container.soundService.playUISound(.tap)
+                interactor.replayModel(.init())
                 triggerModelPlayback()
             }
+            .disabled(display.replayLimitReached)
             .accessibilityHint(String(localized: "repeat.button.listen.hint"))
 
             HSButton(
@@ -197,8 +202,99 @@ struct RepeatAfterModelView: View {
                 startRecording()
             }
             .accessibilityHint(String(localized: "repeat.button.record.hint"))
+
+            // Кнопка подсказки (только если ещё есть уровни).
+            if display.hintLevel != RepeatHintLevel.sloMoReplay {
+                Button {
+                    container.soundService.playUISound(.tap)
+                    interactor.requestHint(.init())
+                } label: {
+                    Label(
+                        String(localized: "repeat.button.hint"),
+                        systemImage: "lightbulb.fill"
+                    )
+                    .font(TypographyTokens.caption(14))
+                    .foregroundStyle(ColorTokens.Brand.sky)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(String(localized: "repeat.button.hint"))
+                .accessibilityHint(String(localized: "repeat.button.hint.a11y"))
+            }
+
+            // Hint panel (показывается если hintLevel != .none).
+            hintPanel
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
+    }
+
+    @ViewBuilder
+    private var hintPanel: some View {
+        switch display.hintLevel {
+        case RepeatHintLevel.none:
+            EmptyView()
+        case RepeatHintLevel.syllabification:
+            VStack(spacing: SpacingTokens.tiny) {
+                Text(String(localized: "repeat.hint.syllabification"))
+                    .font(TypographyTokens.caption(13))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                Text(display.syllabification)
+                    .font(TypographyTokens.headline(22).weight(.bold))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+            }
+            .padding(SpacingTokens.small)
+            .frame(maxWidth: .infinity)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.card)
+                    .fill(ColorTokens.Brand.primary.opacity(0.08))
+            )
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel(display.syllabification)
+        case RepeatHintLevel.articulationDiagram:
+            VStack(spacing: SpacingTokens.tiny) {
+                Text(String(localized: "repeat.hint.articulation"))
+                    .font(TypographyTokens.caption(13))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                Image(display.articulationAsset)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 100)
+                    .accessibilityLabel(String(localized: "repeat.hint.articulation.a11y"))
+            }
+            .padding(SpacingTokens.small)
+            .frame(maxWidth: .infinity)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.card)
+                    .fill(ColorTokens.Kid.surface)
+            )
+        case RepeatHintLevel.sloMoReplay:
+            VStack(spacing: SpacingTokens.tiny) {
+                Text(String(localized: "repeat.hint.slomo"))
+                    .font(TypographyTokens.caption(13))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                Button {
+                    container.soundService.playUISound(.tap)
+                    interactor.requestSloMo(.init(playbackRate: 0.75))
+                    triggerModelPlayback()
+                } label: {
+                    Label(
+                        String(localized: "repeat.button.slomo"),
+                        systemImage: "tortoise.fill"
+                    )
+                    .font(TypographyTokens.body(15))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(String(localized: "repeat.button.slomo"))
+            }
+            .padding(SpacingTokens.small)
+            .frame(maxWidth: .infinity)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.card)
+                    .fill(ColorTokens.Brand.primary.opacity(0.08))
+            )
+        }
     }
 
     // MARK: - Model playing (Ляля произносит эталон)
@@ -356,6 +452,10 @@ struct RepeatAfterModelView: View {
                     .foregroundStyle(ColorTokens.Brand.sky)
                     .accessibilityHidden(true)
             }
+
+            // Звёздочки за раунд.
+            roundStarsView
+
             Text(display.feedbackText)
                 .font(TypographyTokens.title(24))
                 .foregroundStyle(ColorTokens.Kid.ink)
@@ -363,13 +463,57 @@ struct RepeatAfterModelView: View {
                 .lineLimit(nil)
                 .minimumScaleFactor(0.85)
 
+            // Encouragement (показывается если есть прогресс).
+            if let enc = display.encouragement {
+                Text(enc)
+                    .font(TypographyTokens.body(15))
+                    .foregroundStyle(ColorTokens.Brand.mint)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+            }
+
             HSProgressBar(value: Double(display.score))
                 .frame(height: 10)
                 .padding(.horizontal, SpacingTokens.xLarge)
+
+            // Диагностика ошибки (мягко, без технического жаргона).
+            if let diag = display.diagnosticText, !display.passed {
+                Text(diag)
+                    .font(TypographyTokens.caption(13))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .padding(.horizontal, SpacingTokens.large)
+            }
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(display.feedbackText)
+    }
+
+    private var roundStarsView: some View {
+        HStack(spacing: SpacingTokens.tiny) {
+            ForEach(0..<3, id: \.self) { idx in
+                Image(systemName: idx < display.roundStars ? "star.fill" : "star")
+                    .font(TypographyTokens.title(22).weight(.semibold))
+                    .foregroundStyle(
+                        idx < display.roundStars
+                            ? ColorTokens.Brand.gold
+                            : ColorTokens.Kid.line
+                    )
+                    .scaleEffect(idx < display.roundStars && !reduceMotion ? 1.1 : 1.0)
+                    .animation(
+                        reduceMotion ? nil : .spring(duration: 0.35).delay(Double(idx) * 0.1),
+                        value: display.roundStars
+                    )
+            }
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(
+            String(localized: "repeat.round_stars.a11y \(display.roundStars)")
+        )
     }
 
     private var feedbackBottom: some View {
@@ -431,6 +575,17 @@ struct RepeatAfterModelView: View {
                 .lineLimit(nil)
                 .minimumScaleFactor(0.85)
                 .padding(.horizontal, SpacingTokens.screenEdge)
+
+            if !display.statsLabel.isEmpty {
+                Text(display.statsLabel)
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted.opacity(0.7))
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.8)
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .accessibilityLabel(display.statsLabel)
+            }
 
             Spacer(minLength: 0)
 
@@ -764,6 +919,13 @@ final class RepeatAfterModelStoreBridge: RepeatAfterModelDisplayLogic {
         display.score = 0
         display.passed = false
         display.canAdvance = false
+        display.canReplay = viewModel.canReplay
+        display.replayLimitReached = !viewModel.canReplay
+        display.diagnosticText = nil
+        display.encouragement = nil
+        display.hintLevel = RepeatHintLevel.none
+        display.hintLabel = ""
+        display.roundStars = 0
         display.phase = .wordPreview
     }
 
@@ -778,13 +940,37 @@ final class RepeatAfterModelStoreBridge: RepeatAfterModelDisplayLogic {
         display.feedbackText = viewModel.feedbackText
         display.attemptsLabel = viewModel.attemptsLabel
         display.canAdvance = viewModel.canAdvance
+        display.diagnosticText = viewModel.diagnosticText
+        display.encouragement = viewModel.encouragement
+        display.hintAvailable = viewModel.hintAvailable
+        display.roundStars = viewModel.stars
         display.phase = .feedback
+    }
+
+    func displayReplayModel(_ viewModel: RepeatAfterModelModels.ReplayModel.ViewModel) {
+        display.replayLabel = viewModel.replayLabel
+        display.replayLimitReached = viewModel.replayLimitReached
+        display.canReplay = !viewModel.replayLimitReached
+    }
+
+    func displayHint(_ viewModel: RepeatAfterModelModels.Hint.ViewModel) {
+        display.hintLevel = viewModel.hintLevel
+        display.hintLabel = viewModel.hintLabel
+        display.syllabification = viewModel.syllabificationText
+        display.articulationAsset = viewModel.articulationAsset
+    }
+
+    func displaySloMo(_ viewModel: RepeatAfterModelModels.SloMo.ViewModel) {
+        display.sloMoLabel = viewModel.sloMoLabel
+        display.sloMoRate = viewModel.playbackRate
+        display.sloMoPending = true
     }
 
     func displayCompleteSession(_ viewModel: RepeatAfterModelModels.CompleteSession.ViewModel) {
         display.starsEarned = viewModel.starsEarned
         display.scoreLabel = viewModel.scoreLabel
         display.completionMessage = viewModel.message
+        display.statsLabel = viewModel.statsLabel
         display.phase = .completed
         display.pendingFinalScore = viewModel.normalizedScore
     }
