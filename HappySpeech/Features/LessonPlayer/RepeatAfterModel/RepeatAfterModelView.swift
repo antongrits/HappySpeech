@@ -148,28 +148,25 @@ struct RepeatAfterModelView: View {
     @ViewBuilder
     private func wordCard(highlightActive: Bool) -> some View {
         if let word = display.currentWord {
-            VStack(spacing: SpacingTokens.medium) {
-                Text(word.emoji)
-                    .font(TypographyTokens.kidDisplay(96))
-                    .accessibilityHidden(true)
+            HSLiquidGlassCard(style: .primary, padding: SpacingTokens.large) {
+                VStack(spacing: SpacingTokens.medium) {
+                    Text(word.emoji)
+                        .font(TypographyTokens.kidDisplay(96))
+                        .accessibilityHidden(true)
 
-                LetterHighlightView(
-                    word: word.word,
-                    highlightedIndex: highlightActive ? highlightedLetterIndex : -1
-                )
+                    LetterHighlightView(
+                        word: word.word,
+                        highlightedIndex: highlightActive ? highlightedLetterIndex : -1
+                    )
 
-                Text(display.syllabification)
-                    .font(TypographyTokens.body(16))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
+                    Text(display.syllabification)
+                        .font(TypographyTokens.body(16))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                }
+                .frame(maxWidth: .infinity)
             }
-            .padding(SpacingTokens.large)
-            .frame(maxWidth: .infinity)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .fill(ColorTokens.Kid.surface)
-            )
             .padding(.horizontal, SpacingTokens.screenEdge)
             .accessibilityElement(children: .combine)
             .accessibilityLabel(word.word)

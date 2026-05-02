@@ -53,6 +53,7 @@ struct SettingsView: View {
                 ColorTokens.Parent.bg.ignoresSafeArea()
 
                 List {
+                    settingsHeaderSection
                     appearanceSection
                     lyalyaCustomizationSection
                     profileSection
@@ -221,6 +222,27 @@ struct SettingsView: View {
         }
         .environment(\.circuitContext, .parent)
         .task { await bootstrap() }
+    }
+
+    private var settingsHeaderSection: some View {
+        Section {
+            HStack(spacing: SpacingTokens.regular) {
+                LyalyaMascotView(state: .idle, size: 72).accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                    Text(String(localized: "settings.header.greeting"))
+                        .font(TypographyTokens.headline(17))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(2).minimumScaleFactor(0.85)
+                    Text(String(localized: "settings.header.subtitle"))
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(2).minimumScaleFactor(0.85)
+                }.frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .padding(.vertical, SpacingTokens.tiny)
+            .listRowBackground(Color.clear)
+        }
+        .listSectionSeparator(.hidden, edges: .bottom)
     }
 
     // MARK: - Section 1: Appearance
@@ -1410,16 +1432,11 @@ private struct SettingsLicenseDetailSheet: View {
 }
 
 // MARK: - SettingsShareSheet
-
-/// UIKit-обёртка вокруг `UIActivityViewController` для GDPR-экспорта.
 private struct SettingsShareSheet: UIViewControllerRepresentable {
-
     let items: [Any]
-
     func makeUIViewController(context: Context) -> UIActivityViewController {
         UIActivityViewController(activityItems: items, applicationActivities: nil)
     }
-
     func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
 

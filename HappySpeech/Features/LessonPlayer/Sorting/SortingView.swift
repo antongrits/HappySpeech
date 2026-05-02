@@ -223,9 +223,13 @@ struct SortingView: View {
             .frame(maxWidth: .infinity)
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                    .fill(ColorTokens.Kid.surface)
-                    .shadow(color: .black.opacity(0.06), radius: 8, y: 2)
+                    .fill(.ultraThinMaterial)
             )
+            .overlay(
+                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                    .strokeBorder(Color.white.opacity(0.2), lineWidth: 1)
+            )
+            .shadow(color: .black.opacity(0.08), radius: 12, y: 4)
             .id(word.id)
             .transition(.asymmetric(
                 insertion: .scale(scale: 0.9).combined(with: .opacity),
@@ -272,17 +276,20 @@ struct SortingView: View {
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                     .fill(isHighlighted
-                          ? ColorTokens.Brand.primary.opacity(0.15)
-                          : ColorTokens.Kid.surface)
+                          ? AnyShapeStyle(ColorTokens.Brand.primary.opacity(0.18))
+                          : AnyShapeStyle(.ultraThinMaterial))
             )
             .overlay(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                     .strokeBorder(
-                        isHighlighted ? ColorTokens.Brand.primary : ColorTokens.Kid.line,
-                        lineWidth: isHighlighted ? 3 : 2
+                        isHighlighted ? ColorTokens.Brand.primary : Color.white.opacity(0.2),
+                        lineWidth: isHighlighted ? 3 : 1
                     )
             )
-            .shadow(color: .black.opacity(0.05), radius: 4, y: 2)
+            .shadow(color: isHighlighted
+                    ? ColorTokens.Brand.primary.opacity(0.2)
+                    : .black.opacity(0.06),
+                    radius: isHighlighted ? 10 : 4, y: 2)
             .scaleEffect(isHighlighted ? 1.03 : 1.0)
             .animation(
                 reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7),

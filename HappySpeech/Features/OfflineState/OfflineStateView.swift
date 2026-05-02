@@ -112,9 +112,8 @@ struct OfflineStateView: View {
                 .foregroundStyle(ColorTokens.Semantic.warning.opacity(0.65))
                 .offset(y: -8)
 
-            // Lyalya butterfly mascot — sits beside the icon
-            Text("\u{1F98B}") // butterfly emoji
-                .font(.system(size: 48))
+            // Lyalya mascot — sits beside the icon
+            LyalyaMascotView(state: .encouraging, size: 72)
                 .offset(x: 70, y: 38)
                 .accessibilityHidden(true)
 

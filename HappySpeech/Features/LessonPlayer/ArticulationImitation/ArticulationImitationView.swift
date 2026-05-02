@@ -133,36 +133,33 @@ struct ArticulationImitationView: View {
     }
 
     private func poseCard(_ pose: ArticulationPose) -> some View {
-        VStack(spacing: SpacingTokens.medium) {
-            Text(pose.emoji)
-                .font(.system(size: 96))
-                .accessibilityHidden(true)
-            Text(pose.name)
-                .font(TypographyTokens.title(26))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-            Text(pose.instruction)
-                .font(TypographyTokens.body(16))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-                .padding(.horizontal, SpacingTokens.small)
-            if !display.attemptLabel.isEmpty {
-                Text(display.attemptLabel)
-                    .font(TypographyTokens.caption(13))
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                    .padding(.top, SpacingTokens.tiny)
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.large) {
+            VStack(spacing: SpacingTokens.medium) {
+                Text(pose.emoji)
+                    .font(.system(size: 96))
+                    .accessibilityHidden(true)
+                Text(pose.name)
+                    .font(TypographyTokens.title(26))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                Text(pose.instruction)
+                    .font(TypographyTokens.body(16))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .padding(.horizontal, SpacingTokens.small)
+                if !display.attemptLabel.isEmpty {
+                    Text(display.attemptLabel)
+                        .font(TypographyTokens.caption(13))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                        .padding(.top, SpacingTokens.tiny)
+                }
             }
+            .frame(maxWidth: .infinity)
         }
-        .padding(SpacingTokens.large)
-        .frame(maxWidth: .infinity)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Kid.surface)
-        )
         .padding(.horizontal, SpacingTokens.screenEdge)
     }
 

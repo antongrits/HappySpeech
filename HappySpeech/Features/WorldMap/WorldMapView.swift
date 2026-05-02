@@ -134,21 +134,24 @@ struct WorldMapView: View {
     // MARK: - Mascot header
 
     private var mascotHeader: some View {
-        VStack(spacing: SpacingTokens.tiny) {
-            Text(String(localized: "worldmap.title"))
-                .font(TypographyTokens.title(22).weight(.bold))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(1)
-                .minimumScaleFactor(0.8)
+        HStack(spacing: SpacingTokens.regular) {
+            LyalyaMascotView(state: .idle, size: 80)
+                .accessibilityHidden(true)
 
-            Text(String(localized: "worldMap.mascot.greeting"))
-                .font(TypographyTokens.body(15))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.85)
-                .padding(.horizontal, SpacingTokens.large)
+            VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
+                Text(String(localized: "worldmap.title"))
+                    .font(TypographyTokens.title(22).weight(.bold))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+
+                Text(String(localized: "worldMap.mascot.greeting"))
+                    .font(TypographyTokens.body(15))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
     }

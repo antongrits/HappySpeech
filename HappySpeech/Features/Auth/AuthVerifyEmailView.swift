@@ -9,6 +9,9 @@ struct AuthVerifyEmailView: View {
 
     @State private var scene: AuthScene?
     @State private var toastMessage: String?
+    @State private var appeared = false
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         ZStack {
@@ -19,8 +22,16 @@ struct AuthVerifyEmailView: View {
                 Spacer(minLength: SpacingTokens.sp16)
 
                 header
+                    .offset(y: appeared ? 0 : (reduceMotion ? 0 : -20))
+                    .opacity(appeared ? 1 : 0)
+
+                instructionCard
+                    .offset(y: appeared ? 0 : (reduceMotion ? 0 : 16))
+                    .opacity(appeared ? 1 : 0)
 
                 actionsSection
+                    .offset(y: appeared ? 0 : (reduceMotion ? 0 : 24))
+                    .opacity(appeared ? 1 : 0)
 
                 if let toast = toastMessage {
                     toastView(toast)
@@ -30,6 +41,7 @@ struct AuthVerifyEmailView: View {
                 Spacer()
 
                 signOutLink
+                    .opacity(appeared ? 1 : 0)
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.bottom, SpacingTokens.sp8)
@@ -44,6 +56,12 @@ struct AuthVerifyEmailView: View {
             actions: { Button(String(localized: "Понятно"), role: .cancel) {} },
             message: { Text(scene?.state.error?.message ?? "") }
         )
+        .onAppear {
+            guard !appeared else { return }
+            withAnimation(reduceMotion ? .easeIn(duration: 0.1) : MotionTokens.spring.delay(0.1)) {
+                appeared = true
+            }
+        }
         .task {
             if scene == nil {
                 scene = AuthScene(authService: container.authService)
@@ -115,28 +133,50 @@ struct AuthVerifyEmailView: View {
 
     private var header: some View {
         VStack(spacing: SpacingTokens.sp4) {
-            HSMascotView(mood: .thinking, size: 110)
+            LyalyaMascotView(state: .thinking, size: 110)
+                .accessibilityHidden(true)
 
             Text(String(localized: "Подтвердите почту"))
                 .font(TypographyTokens.title(26))
                 .foregroundStyle(ColorTokens.Kid.ink)
+        }
+    }
 
-            VStack(spacing: SpacingTokens.sp1) {
-                Text(String(localized: "Мы отправили письмо на"))
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-
-                Text(container.authService.currentUser?.email ?? "")
-                    .font(TypographyTokens.headline(16))
-                    .foregroundStyle(ColorTokens.Brand.primary)
-
+    private var instructionCard: some View {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp5) {
+            VStack(spacing: SpacingTokens.sp3) {
+                HStack(spacing: SpacingTokens.sp3) {
+                    Image(systemName: "envelope.badge.fill")
+                        .font(.system(size: 28, weight: .semibold))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                        .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+                        Text(String(localized: "Мы отправили письмо на"))
+                            .font(TypographyTokens.body(14))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        Text(container.authService.currentUser?.email ?? "")
+                            .font(TypographyTokens.headline(16))
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.8)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                Divider()
+                    .background(ColorTokens.Kid.line)
                 Text(String(localized: "Перейдите по ссылке в письме, затем вернитесь сюда."))
                     .font(TypographyTokens.body(13))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .multilineTextAlignment(.center)
-                    .padding(.top, SpacingTokens.sp2)
+                    .lineLimit(nil)
             }
         }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            String(localized: "Письмо отправлено на") + " " +
+            (container.authService.currentUser?.email ?? "") + ". " +
+            String(localized: "Перейдите по ссылке в письме, затем вернитесь сюда.")
+        )
     }
 
     private var actionsSection: some View {

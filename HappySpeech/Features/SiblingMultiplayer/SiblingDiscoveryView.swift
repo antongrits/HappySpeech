@@ -78,8 +78,8 @@ struct SiblingDiscoveryView: View {
     // MARK: - Mascot
 
     private var mascotSection: some View {
-        HSMascotView(
-            mood: viewModel.peers.isEmpty ? .thinking : .encouraging,
+        LyalyaMascotView(
+            state: viewModel.peers.isEmpty ? .thinking : .encouraging,
             size: 80
         )
         .frame(maxWidth: .infinity, alignment: .center)
@@ -106,29 +106,27 @@ struct SiblingDiscoveryView: View {
         Button {
             interactor?.invitePeer(displayName: peer.displayName)
         } label: {
-            HStack(spacing: SpacingTokens.sp3) {
-                avatarCircle(name: peer.displayName, size: 44)
+            HSLiquidGlassCard(style: .elevated, padding: 0) {
+                HStack(spacing: SpacingTokens.sp3) {
+                    avatarCircle(name: peer.displayName, size: 44)
 
-                Text(peer.displayName)
-                    .font(TypographyTokens.headline(18))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.85)
+                    Text(peer.displayName)
+                        .font(TypographyTokens.headline(18))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
 
-                Spacer()
+                    Spacer()
 
-                Image(systemName: "chevron.right")
-                    .font(TypographyTokens.caption(14))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .accessibilityHidden(true)
+                    Image(systemName: "chevron.right")
+                        .font(TypographyTokens.caption(14))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .accessibilityHidden(true)
+                }
+                .padding(.horizontal, SpacingTokens.sp4)
+                .padding(.vertical, SpacingTokens.sp3)
+                .frame(maxWidth: .infinity, minHeight: 72)
             }
-            .padding(.horizontal, SpacingTokens.sp4)
-            .padding(.vertical, SpacingTokens.sp3)
-            .frame(maxWidth: .infinity, minHeight: 72)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .fill(ColorTokens.Kid.surface)
-            )
         }
         .buttonStyle(.plain)
         .accessibilityLabel(

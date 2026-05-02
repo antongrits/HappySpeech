@@ -114,61 +114,58 @@ struct StoryCompletionView: View {
     }
 
     private var emojiTile: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                .fill(ColorTokens.Kid.surface)
-                .frame(height: 140)
+        HSLiquidGlassCard(style: .primary, padding: 0) {
+            ZStack {
+                Text(display.emoji)
+                    .font(.system(size: 84))
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 140)
+                    .accessibilityHidden(true)
 
-            Text(display.emoji)
-                .font(.system(size: 84))
-                .accessibilityHidden(true)
-
-            // Иконка TTS — показываем только в фазе reading.
-            if display.phase == .reading, display.isReading {
-                VStack {
-                    HStack {
+                // Иконка TTS — показываем только в фазе reading.
+                if display.phase == .reading, display.isReading {
+                    VStack {
+                        HStack {
+                            Spacer()
+                            Image(systemName: "speaker.wave.2.fill")
+                                .font(.system(size: 18, weight: .semibold))
+                                .foregroundStyle(ColorTokens.Brand.primary)
+                                .padding(SpacingTokens.small)
+                                .background(Circle().fill(.ultraThinMaterial))
+                                .padding(SpacingTokens.small)
+                                .scaleEffect(reduceMotion ? 1.0 : 1.08)
+                                .animation(
+                                    reduceMotion
+                                        ? nil
+                                        : .easeInOut(duration: 0.45).repeatForever(autoreverses: true),
+                                    value: display.isReading
+                                )
+                                .accessibilityLabel(String(localized: "Маскот читает историю"))
+                        }
                         Spacer()
-                        Image(systemName: "speaker.wave.2.fill")
-                            .font(.system(size: 18, weight: .semibold))
-                            .foregroundStyle(ColorTokens.Brand.primary)
-                            .padding(SpacingTokens.small)
-                            .background(
-                                Circle()
-                                    .fill(ColorTokens.Kid.surfaceAlt)
-                            )
-                            .padding(SpacingTokens.small)
-                            .scaleEffect(reduceMotion ? 1.0 : 1.08)
-                            .animation(
-                                reduceMotion
-                                    ? nil
-                                    : .easeInOut(duration: 0.45).repeatForever(autoreverses: true),
-                                value: display.isReading
-                            )
-                            .accessibilityLabel(String(localized: "Маскот читает историю"))
                     }
-                    Spacer()
                 }
             }
         }
     }
 
     private var storyCard: some View {
-        Text(display.displayText)
-            .font(TypographyTokens.title(20))
-            .foregroundStyle(ColorTokens.Kid.ink)
-            .multilineTextAlignment(.center)
-            .lineLimit(nil)
-            .minimumScaleFactor(0.85)
-            .padding(SpacingTokens.medium)
-            .frame(maxWidth: .infinity)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                    .fill(ColorTokens.Kid.surfaceAlt)
-            )
-            .accessibilityLabel(display.storyText.replacingOccurrences(
-                of: StoryPlaceholder.marker,
-                with: String(localized: "пропуск")
-            ))
+        HSLiquidGlassCard(
+            style: .tinted(ColorTokens.Brand.sky.opacity(0.15)),
+            padding: SpacingTokens.medium
+        ) {
+            Text(display.displayText)
+                .font(TypographyTokens.title(20))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .frame(maxWidth: .infinity)
+        }
+        .accessibilityLabel(display.storyText.replacingOccurrences(
+            of: StoryPlaceholder.marker,
+            with: String(localized: "пропуск")
+        ))
     }
 
     // MARK: - Choices
@@ -391,7 +388,9 @@ private struct ChoiceButton: View {
             .frame(maxWidth: .infinity, minHeight: 52)
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.button, style: .continuous)
-                    .fill(backgroundColor)
+                    .fill(state == .idle
+                          ? AnyShapeStyle(.ultraThinMaterial)
+                          : AnyShapeStyle(backgroundColor))
             )
             .overlay(
                 RoundedRectangle(cornerRadius: RadiusTokens.button, style: .continuous)
@@ -435,7 +434,7 @@ private struct ChoiceButton: View {
 
     private var backgroundColor: Color {
         switch state {
-        case .idle:     return ColorTokens.Kid.surface
+        case .idle:     return Color.clear
         case .correct:  return ColorTokens.Feedback.correct
         case .wrong:    return ColorTokens.Feedback.incorrect
         case .revealed: return ColorTokens.Brand.gold
