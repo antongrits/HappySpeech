@@ -261,6 +261,7 @@ targets:
       - sdk: WidgetKit.framework
       - sdk: SwiftUI.framework
       - sdk: ActivityKit.framework
+      - sdk: AppIntents.framework
 
   HappySpeechUITests:
     type: bundle.ui-testing

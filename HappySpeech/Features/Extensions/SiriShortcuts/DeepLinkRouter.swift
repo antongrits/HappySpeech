@@ -5,11 +5,17 @@ import OSLog
 
 /// Действия навигации, инициированные App Intents (Siri Shortcuts).
 public enum DeepLinkAction: Sendable {
-    case openLesson(soundId: String)
-    case showProgress
-    case startBreathing
+    case openLesson(soundId: String, difficulty: String)
+    case showProgress(childName: String?)
+    case startBreathing(duration: TimeInterval)
     case playWithLyalya
     case showTodaysMission
+    case startSession(gameTemplate: String?)
+    case listAchievements
+    case getWeeklySummary
+    case setReminder(hour: Int, minute: Int)
+    case openRewardAlbum
+    case startCustomSession(soundId: String, rounds: Int, difficulty: String)
 }
 
 // MARK: - AppCoordinatorBridge
@@ -57,16 +63,16 @@ public final class DeepLinkRouter {
 
     // MARK: - Intent handlers
 
-    public func handleOpenLesson(soundId: String) {
-        dispatch(.openLesson(soundId: soundId))
+    public func handleOpenLesson(soundId: String, difficulty: String = "medium") {
+        dispatch(.openLesson(soundId: soundId, difficulty: difficulty))
     }
 
-    public func handleShowProgress() {
-        dispatch(.showProgress)
+    public func handleShowProgress(childName: String? = nil) {
+        dispatch(.showProgress(childName: childName))
     }
 
-    public func handleStartBreathing() {
-        dispatch(.startBreathing)
+    public func handleStartBreathing(duration: TimeInterval = 60) {
+        dispatch(.startBreathing(duration: duration))
     }
 
     public func handlePlayWithLyalya() {
@@ -75,6 +81,30 @@ public final class DeepLinkRouter {
 
     public func handleShowTodaysMission() {
         dispatch(.showTodaysMission)
+    }
+
+    public func handleStartSession(gameTemplate: String? = nil) {
+        dispatch(.startSession(gameTemplate: gameTemplate))
+    }
+
+    public func handleListAchievements() {
+        dispatch(.listAchievements)
+    }
+
+    public func handleGetWeeklySummary() {
+        dispatch(.getWeeklySummary)
+    }
+
+    public func handleSetReminder(hour: Int, minute: Int) {
+        dispatch(.setReminder(hour: hour, minute: minute))
+    }
+
+    public func handleOpenRewardAlbum() {
+        dispatch(.openRewardAlbum)
+    }
+
+    public func handleStartCustomSession(soundId: String, rounds: Int, difficulty: String) {
+        dispatch(.startCustomSession(soundId: soundId, rounds: rounds, difficulty: difficulty))
     }
 
     // MARK: - Dispatch
