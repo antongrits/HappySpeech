@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: - ObjectHuntRouter
 
-/// Навигация ObjectHunt. Минимальная — только routeToComplete,
+/// Навигация ObjectHunt. Единственный переход — routeToComplete,
 /// который вызывает колбэк onComplete из SessionShell.
 @MainActor
 final class ObjectHuntRouter: ObjectHuntRoutingLogic {
@@ -14,12 +14,7 @@ final class ObjectHuntRouter: ObjectHuntRoutingLogic {
 
     // MARK: - ObjectHuntRoutingLogic
 
-    func routeToComplete() {
-        onComplete?(1.0)
-    }
-
-    /// Передаём точный итоговый score из Interactor.
-    func routeToCompleteWith(score: Float) {
+    func routeToComplete(score: Float) {
         onComplete?(score)
     }
 }
