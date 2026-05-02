@@ -5901,6 +5901,7 @@
 		9776B3036A21143C86BD2E62 /* lyalya_transition_general_1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0FE6E5462238B0870CE4F8F3 /* lyalya_transition_general_1.m4a */; };
 		977E11987D164C49B666D545 /* shch-wi-18.m4a in Resources */ = {isa = PBXBuildFile; fileRef = EBAF2FD58FFCCF23B6F086BF /* shch-wi-18.m4a */; };
 		9781B009A647FF5E8A2F6E4B /* yashchik.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 228AFC467EF382A7461B270E /* yashchik.m4a */; };
+		9783311E1CA4AF07EDE87E4A /* SessionHistorySubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CE9A73C2F121B1229C15FFB /* SessionHistorySubviews.swift */; };
 		9784C0B412FACEAB8748DF70 /* c-syl-12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3CA423C543455DD73CA7A2D6 /* c-syl-12.m4a */; };
 		978661480FEC79FCFE052D46 /* ScreeningScoringEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D8E6C164D6DC27259DBF30 /* ScreeningScoringEngineTests.swift */; };
 		978CADB5FB92E999C60D53E9 /* lyalya_celebrating_12.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 80F183C647F5BB8EE099D88D /* lyalya_celebrating_12.m4a */; };
@@ -12363,6 +12364,7 @@
 		3CB4F40A5113E4AEBEFEEDAF /* br-156.m4a */ = {isa = PBXFileReference; path = "br-156.m4a"; sourceTree = "<group>"; };
 		3CCD76AAB293637362A72016 /* lex-num-23.m4a */ = {isa = PBXFileReference; path = "lex-num-23.m4a"; sourceTree = "<group>"; };
 		3CD818FED22B85FD08B3895F /* shch-sen-12.m4a */ = {isa = PBXFileReference; path = "shch-sen-12.m4a"; sourceTree = "<group>"; };
+		3CE9A73C2F121B1229C15FFB /* SessionHistorySubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionHistorySubviews.swift; sourceTree = "<group>"; };
 		3CF9A6633EE71D867503632E /* z-syl-18.m4a */ = {isa = PBXFileReference; path = "z-syl-18.m4a"; sourceTree = "<group>"; };
 		3CF9EB37B6F45A0F45223393 /* childhome_play.m4a */ = {isa = PBXFileReference; path = childhome_play.m4a; sourceTree = "<group>"; };
 		3CFBCD1326F33C3F70089484 /* y-wf-5.m4a */ = {isa = PBXFileReference; path = "y-wf-5.m4a"; sourceTree = "<group>"; };
@@ -20018,6 +20020,7 @@
 				4C7CBD294EBA007294AA727C /* SessionHistoryModels.swift */,
 				6BEBB4BA4ABB66D0E16E520A /* SessionHistoryPresenter.swift */,
 				EB025CC6CF68962D9392B7C1 /* SessionHistoryRouter.swift */,
+				3CE9A73C2F121B1229C15FFB /* SessionHistorySubviews.swift */,
 				E223967A2C9765A32E6CC11A /* SessionHistoryView.swift */,
 			);
 			path = SessionHistory;
@@ -41948,6 +41951,7 @@
 				1B3E569789A4C51883BF31FC /* SessionHistoryModels.swift in Sources */,
 				F781AD2576E4C976E8E68E53 /* SessionHistoryPresenter.swift in Sources */,
 				3335F8DDCB2A66B6060BD5B7 /* SessionHistoryRouter.swift in Sources */,
+				9783311E1CA4AF07EDE87E4A /* SessionHistorySubviews.swift in Sources */,
 				A37BFE50E614D7C3960B89E4 /* SessionHistoryView.swift in Sources */,
 				08518BE201776DD0087C9236 /* SessionRepository.swift in Sources */,
 				51C21B461203D972582F9D2A /* SessionReviewAnnotationViews.swift in Sources */,

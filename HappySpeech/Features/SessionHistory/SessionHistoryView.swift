@@ -29,6 +29,7 @@ struct SessionHistoryView: View {
     // MARK: - Local UI State
 
     @State private var isFilterSheetOpen = false
+    @State private var isExportSheetOpen = false
     @State private var path: [SessionDetailRoute] = []
 
     // Optional childId — оставлено для будущей привязки к репозиторию.
@@ -63,6 +64,9 @@ struct SessionHistoryView: View {
                             }
                         }
                 }
+                if display.pendingShareURL != nil {
+                    shareSheetOverlay
+                }
             }
             .navigationTitle(String(localized: "sessionHistory.navTitle"))
             .navigationBarTitleDisplayMode(.large)
@@ -80,6 +84,14 @@ struct SessionHistoryView: View {
                     }
                 )
                 .presentationDetents([.medium, .large])
+            }
+            .sheet(isPresented: $isExportSheetOpen) {
+                SessionHistoryExportSheet(
+                    onPDF: { interactor?.exportPDF(.init(childId: childId ?? "child")) },
+                    onCSV: { interactor?.exportCSV(.init(childId: childId ?? "child")) },
+                    onJSON: { interactor?.exportJSON(.init(childId: childId ?? "child")) }
+                )
+                .presentationDetents([.height(280)])
             }
             .navigationDestination(for: SessionDetailRoute.self) { route in
                 SessionHistoryDetailView(detail: route.detail)
@@ -365,22 +377,34 @@ struct SessionHistoryView: View {
     @ToolbarContentBuilder
     private var filterToolbarItem: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
-            Button {
-                isFilterSheetOpen = true
-            } label: {
-                Image(systemName: display.activeFilter.isActive
-                      ? "line.3.horizontal.decrease.circle.fill"
-                      : "line.3.horizontal.decrease.circle")
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundStyle(display.activeFilter.isActive
-                                     ? ColorTokens.Parent.accent
-                                     : ColorTokens.Parent.inkMuted)
-                    .frame(width: 44, height: 44)
+            HStack(spacing: SpacingTokens.tiny) {
+                Button {
+                    isExportSheetOpen = true
+                } label: {
+                    Image(systemName: "square.and.arrow.up")
+                        .font(.system(size: 17, weight: .semibold))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .frame(width: 44, height: 44)
+                }
+                .accessibilityLabel(String(localized: "sessionHistory.a11y.openExport"))
+
+                Button {
+                    isFilterSheetOpen = true
+                } label: {
+                    Image(systemName: display.activeFilter.isActive
+                          ? "line.3.horizontal.decrease.circle.fill"
+                          : "line.3.horizontal.decrease.circle")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(display.activeFilter.isActive
+                                         ? ColorTokens.Parent.accent
+                                         : ColorTokens.Parent.inkMuted)
+                        .frame(width: 44, height: 44)
+                }
+                .accessibilityLabel(String(localized: "sessionHistory.a11y.openFilter"))
+                .accessibilityValue(display.activeFilter.isActive
+                                    ? String(localized: "sessionHistory.a11y.filterActive")
+                                    : String(localized: "sessionHistory.a11y.filterInactive"))
             }
-            .accessibilityLabel(String(localized: "sessionHistory.a11y.openFilter"))
-            .accessibilityValue(display.activeFilter.isActive
-                                ? String(localized: "sessionHistory.a11y.filterActive")
-                                : String(localized: "sessionHistory.a11y.filterInactive"))
         }
     }
 
@@ -404,6 +428,12 @@ struct SessionHistoryView: View {
                     ForEach(display.activeSoundChips, id: \.self) { sound in
                         SessionHistoryFilterChipBadge(label: sound, icon: "speaker.wave.2")
                     }
+                    if display.activeFilter.scoreRange != .all {
+                        SessionHistoryFilterChipBadge(
+                            label: scoreRangeLabel(display.activeFilter.scoreRange),
+                            icon: "target"
+                        )
+                    }
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
             }
@@ -421,6 +451,27 @@ struct SessionHistoryView: View {
         }
         .padding(.vertical, SpacingTokens.tiny)
         .background(ColorTokens.Parent.bg)
+    }
+
+    private func scoreRangeLabel(_ range: SessionHistoryFilter.ScoreRange) -> String {
+        switch range {
+        case .all:    return ""
+        case .high:   return String(localized: "sessionHistory.filter.scoreHigh")
+        case .medium: return String(localized: "sessionHistory.filter.scoreMedium")
+        case .low:    return String(localized: "sessionHistory.filter.scoreLow")
+        }
+    }
+
+    @ViewBuilder
+    private var shareSheetOverlay: some View {
+        Color.clear
+            .sheet(item: Binding(
+                get: { display.pendingShareURL.map(SessionHistoryShareItem.init) },
+                set: { _ in display.consumePendingShareURL() }
+            )) { item in
+                SessionHistoryShareSheet(url: item.url)
+                    .ignoresSafeArea()
+            }
     }
 
     // MARK: - Empty
@@ -579,7 +630,7 @@ private struct SessionHistoryRowContent: View {
 
             Spacer(minLength: SpacingTokens.tiny)
 
-            ScoreBadge(text: row.scoreText, tier: row.scoreTier)
+            SessionHistoryScoreBadge(text: row.scoreText, tier: row.scoreTier)
 
             Image(systemName: "chevron.right")
                 .font(.system(size: 13, weight: .semibold))
@@ -592,33 +643,6 @@ private struct SessionHistoryRowContent: View {
         .accessibilityLabel(row.accessibilityLabel)
         .accessibilityHint(row.accessibilityHint)
         .accessibilityAddTraits(.isButton)
-    }
-}
-
-// MARK: - ScoreBadge
-
-private struct ScoreBadge: View {
-    let text: String
-    let tier: ScoreTier
-
-    var body: some View {
-        Text(text)
-            .font(TypographyTokens.mono(13).weight(.bold))
-            .foregroundStyle(.white)
-            .padding(.horizontal, SpacingTokens.small)
-            .padding(.vertical, 4)
-            .background(
-                Capsule().fill(color)
-            )
-            .accessibilityHidden(true)
-    }
-
-    private var color: Color {
-        switch tier {
-        case .excellent: return ColorTokens.Semantic.success
-        case .ok:        return ColorTokens.Semantic.warning
-        case .low:       return ColorTokens.Semantic.error
-        }
     }
 }
 
@@ -654,13 +678,14 @@ private struct SessionHistoryFilterSheet: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    let initialFilter: SessionFilter
-    let onApply: (SessionFilter) -> Void
+    let initialFilter: SessionHistoryFilter
+    let onApply: (SessionHistoryFilter) -> Void
     let onClear: () -> Void
 
     @State private var fromDate: Date?
     @State private var toDate: Date?
     @State private var selectedSounds: Set<String> = []
+    @State private var selectedScoreRange: SessionHistoryFilter.ScoreRange = .all
     @State private var datePeriod: DatePeriodChoice = .all
 
     private let allSounds: [String] = ["С", "З", "Ц", "Ш", "Ж", "Ч", "Щ", "Р", "Л", "К", "Г", "Х"]
@@ -689,8 +714,8 @@ private struct SessionHistoryFilterSheet: View {
     }
 
     init(
-        initialFilter: SessionFilter,
-        onApply: @escaping (SessionFilter) -> Void,
+        initialFilter: SessionHistoryFilter,
+        onApply: @escaping (SessionHistoryFilter) -> Void,
         onClear: @escaping () -> Void
     ) {
         self.initialFilter = initialFilter
@@ -710,6 +735,7 @@ private struct SessionHistoryFilterSheet: View {
                     periodSection
                     customDateSection
                     soundsSection
+                    scoreRangeSection
 
                     Spacer(minLength: SpacingTokens.large)
 
@@ -734,6 +760,7 @@ private struct SessionHistoryFilterSheet: View {
             fromDate = initialFilter.fromDate
             toDate = initialFilter.toDate
             selectedSounds = initialFilter.sounds
+            selectedScoreRange = initialFilter.scoreRange
         }
     }
 
@@ -834,6 +861,36 @@ private struct SessionHistoryFilterSheet: View {
         }
     }
 
+    // MARK: Score range
+
+    private var scoreRangeSection: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.small) {
+            Text(String(localized: "sessionHistory.filter.scoreHeader"))
+                .font(TypographyTokens.caption(12).weight(.semibold))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .textCase(.uppercase)
+            HStack(spacing: SpacingTokens.tiny) {
+                ForEach(SessionHistoryFilter.ScoreRange.allCases, id: \.rawValue) { range in
+                    SessionFilterChipButton(
+                        title: scoreLabelShort(range),
+                        isSelected: selectedScoreRange == range
+                    ) {
+                        selectedScoreRange = range
+                    }
+                }
+            }
+        }
+    }
+
+    private func scoreLabelShort(_ range: SessionHistoryFilter.ScoreRange) -> String {
+        switch range {
+        case .all:    return String(localized: "sessionHistory.filter.period.all")
+        case .high:   return String(localized: "sessionHistory.filter.scoreHigh")
+        case .medium: return String(localized: "sessionHistory.filter.scoreMedium")
+        case .low:    return String(localized: "sessionHistory.filter.scoreLow")
+        }
+    }
+
     // MARK: Buttons
 
     private var applyAndClearButtons: some View {
@@ -844,10 +901,12 @@ private struct SessionHistoryFilterSheet: View {
                 size: .large,
                 icon: "checkmark"
             ) {
-                let filter = SessionFilter(
+                let filter = SessionHistoryFilter(
                     fromDate: fromDate,
                     toDate: toDate,
-                    sounds: selectedSounds
+                    sounds: selectedSounds,
+                    gameTypes: [],
+                    scoreRange: selectedScoreRange
                 )
                 onApply(filter)
             }
@@ -860,6 +919,7 @@ private struct SessionHistoryFilterSheet: View {
                 fromDate = nil
                 toDate = nil
                 selectedSounds = []
+                selectedScoreRange = .all
                 datePeriod = .all
                 onClear()
             }
@@ -1008,13 +1068,19 @@ private struct SessionHistoryDetailView: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
+    @State private var noteText: String = ""
+    @State private var isEditingNote: Bool = false
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: SpacingTokens.sectionGap) {
                 headerCard
                 metricsRow
+                if detail.hasAudioRecording {
+                    audioRow
+                }
                 attemptsSection
+                parentNoteSection
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.vertical, SpacingTokens.large)
@@ -1023,6 +1089,104 @@ private struct SessionHistoryDetailView: View {
         .navigationTitle(detail.titleLine)
         .navigationBarTitleDisplayMode(.inline)
         .accessibilityElement(children: .contain)
+        .onAppear {
+            noteText = detail.parentNote ?? ""
+        }
+    }
+
+    // MARK: Audio row
+
+    private var audioRow: some View {
+        HSCard(style: .flat, padding: SpacingTokens.regular) {
+            HStack(spacing: SpacingTokens.regular) {
+                Image(systemName: "waveform")
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundStyle(ColorTokens.Parent.accent)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "sessionHistory.detail.audioTitle"))
+                        .font(TypographyTokens.body(15).weight(.semibold))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                    Text(String(localized: "sessionHistory.detail.audioSubtitle"))
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                }
+                Spacer()
+                Image(systemName: "play.circle.fill")
+                    .font(.system(size: 32))
+                    .foregroundStyle(ColorTokens.Parent.accent)
+                    .frame(width: 44, height: 44)
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(String(localized: "sessionHistory.detail.audio.a11y"))
+        .accessibilityAddTraits(.isButton)
+    }
+
+    // MARK: Parent note
+
+    private var parentNoteSection: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.small) {
+            HStack {
+                Text(String(localized: "sessionHistory.detail.noteTitle"))
+                    .font(TypographyTokens.title(20))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                Spacer()
+                if !noteText.isEmpty {
+                    Button {
+                        isEditingNote = true
+                    } label: {
+                        Image(systemName: "pencil")
+                            .font(.system(size: 16, weight: .semibold))
+                            .foregroundStyle(ColorTokens.Parent.accent)
+                            .frame(width: 44, height: 44)
+                    }
+                    .accessibilityLabel(String(localized: "sessionHistory.detail.noteEdit"))
+                }
+            }
+
+            if noteText.isEmpty {
+                Button {
+                    isEditingNote = true
+                } label: {
+                    HStack(spacing: SpacingTokens.small) {
+                        Image(systemName: "plus.circle")
+                            .font(.system(size: 18))
+                            .foregroundStyle(ColorTokens.Parent.accent)
+                        Text(String(localized: "sessionHistory.detail.noteAdd"))
+                            .font(TypographyTokens.body(15))
+                            .foregroundStyle(ColorTokens.Parent.accent)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(SpacingTokens.regular)
+                    .frame(minHeight: 56)
+                    .background(
+                        RoundedRectangle(cornerRadius: RadiusTokens.md)
+                            .strokeBorder(ColorTokens.Parent.accent.opacity(0.4), lineWidth: 1.5, antialiased: true)
+                    )
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(String(localized: "sessionHistory.detail.noteAdd"))
+            } else {
+                HSCard(style: .flat, padding: SpacingTokens.regular) {
+                    Text(noteText)
+                        .font(TypographyTokens.body(15))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.9)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel(String(localized: "sessionHistory.detail.noteA11yPrefix") + noteText)
+            }
+        }
+        .sheet(isPresented: $isEditingNote) {
+            SessionHistoryNoteEditorSheet(initialText: noteText) { saved in
+                noteText = saved
+                isEditingNote = false
+            }
+            .presentationDetents([.medium])
+        }
     }
 
     // MARK: Header
@@ -1061,19 +1225,19 @@ private struct SessionHistoryDetailView: View {
                 .foregroundStyle(ColorTokens.Parent.ink)
 
             HStack(spacing: SpacingTokens.regular) {
-                MetricCard(
+                SessionHistoryMetricCard(
                     title: String(localized: "sessionHistory.detail.metric.accuracy"),
                     value: "\(detail.scorePercent)%",
                     color: scoreColor,
                     icon: "target"
                 )
-                MetricCard(
+                SessionHistoryMetricCard(
                     title: String(localized: "sessionHistory.detail.metric.attempts"),
                     value: "\(detail.attemptsCount)",
                     color: ColorTokens.Parent.accent,
                     icon: "list.number"
                 )
-                MetricCard(
+                SessionHistoryMetricCard(
                     title: String(localized: "sessionHistory.detail.metric.duration"),
                     value: detail.durationText,
                     color: ColorTokens.Brand.butter,
@@ -1093,7 +1257,7 @@ private struct SessionHistoryDetailView: View {
 
             VStack(spacing: SpacingTokens.tiny) {
                 ForEach(detail.attemptRows) { attempt in
-                    AttemptRowCard(row: attempt)
+                    SessionHistoryAttemptRowCard(row: attempt)
                 }
             }
         }
@@ -1105,79 +1269,6 @@ private struct SessionHistoryDetailView: View {
         case .ok:        return ColorTokens.Semantic.warning
         case .low:       return ColorTokens.Semantic.error
         }
-    }
-}
-
-// MARK: - MetricCard
-
-private struct MetricCard: View {
-
-    let title: String
-    let value: String
-    let color: Color
-    let icon: String
-
-    var body: some View {
-        HSCard(style: .flat, padding: SpacingTokens.regular) {
-            VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
-                Image(systemName: icon)
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundStyle(color)
-                Text(value)
-                    .font(TypographyTokens.headline(20))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
-                Text(title)
-                    .font(TypographyTokens.caption(11))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(title): \(value)")
-    }
-}
-
-// MARK: - AttemptRowCard
-
-private struct AttemptRowCard: View {
-    let row: AttemptDetailRowViewModel
-
-    var body: some View {
-        HSCard(style: .flat, padding: SpacingTokens.regular) {
-            HStack(spacing: SpacingTokens.regular) {
-                Text("#\(row.index)")
-                    .font(TypographyTokens.mono(13))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .frame(width: 28, alignment: .leading)
-
-                Text(row.word)
-                    .font(TypographyTokens.body(15).weight(.semibold))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.85)
-
-                Spacer(minLength: SpacingTokens.tiny)
-
-                Text(row.durationText)
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Parent.inkSoft)
-
-                ScoreBadge(text: "\(row.scorePercent)%", tier: row.scoreTier)
-
-                Image(systemName: row.isCorrect ? "checkmark.circle.fill" : "xmark.circle")
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundStyle(row.isCorrect
-                                     ? ColorTokens.Semantic.success
-                                     : ColorTokens.Semantic.error)
-                    .accessibilityHidden(true)
-            }
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(row.accessibilityLabel)
     }
 }
 
