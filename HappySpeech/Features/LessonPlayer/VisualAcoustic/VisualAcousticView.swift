@@ -117,36 +117,36 @@ struct VisualAcousticView: View {
     }
 
     private var emojiTile: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                .fill(ColorTokens.Kid.surface)
-                .frame(height: 160)
+        HSLiquidGlassCard(style: .primary, padding: 0) {
+            ZStack {
+                Text(display.imageEmoji)
+                    .font(TypographyTokens.kidDisplay(96))
+                    .shadow(color: .black.opacity(0.08), radius: 8, y: 4)
+                    .scaleEffect(reduceMotion ? 1.0 : (display.isPlaying ? 1.04 : 1.0))
+                    .animation(
+                        reduceMotion
+                            ? nil
+                            : .easeInOut(duration: 0.6).repeatForever(autoreverses: true),
+                        value: display.isPlaying
+                    )
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 160)
+                    .accessibilityLabel(display.imageLabel)
 
-            Text(display.imageEmoji)
-                .font(TypographyTokens.kidDisplay(96))
-                .shadow(color: .black.opacity(0.08), radius: 8, y: 4)
-                .scaleEffect(reduceMotion ? 1.0 : (display.isPlaying ? 1.04 : 1.0))
-                .animation(
-                    reduceMotion
-                        ? nil
-                        : .easeInOut(duration: 0.6).repeatForever(autoreverses: true),
-                    value: display.isPlaying
-                )
-                .accessibilityLabel(display.imageLabel)
-
-            if display.isPlaying {
-                VStack {
-                    HStack {
+                if display.isPlaying {
+                    VStack {
+                        HStack {
+                            Spacer()
+                            Image(systemName: "speaker.wave.2.fill")
+                                .font(TypographyTokens.body(18).weight(.semibold))
+                                .foregroundStyle(ColorTokens.Brand.primary)
+                                .padding(SpacingTokens.small)
+                                .background(Circle().fill(.ultraThinMaterial))
+                                .padding(SpacingTokens.small)
+                                .accessibilityLabel(String(localized: "Звук играет"))
+                        }
                         Spacer()
-                        Image(systemName: "speaker.wave.2.fill")
-                            .font(TypographyTokens.body(18).weight(.semibold))
-                            .foregroundStyle(ColorTokens.Brand.primary)
-                            .padding(SpacingTokens.small)
-                            .background(Circle().fill(ColorTokens.Kid.surfaceAlt))
-                            .padding(SpacingTokens.small)
-                            .accessibilityLabel(String(localized: "Звук играет"))
                     }
-                    Spacer()
                 }
             }
         }
@@ -440,7 +440,9 @@ private struct ChoiceTile: View {
             .frame(maxWidth: .infinity, minHeight: 56)
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.button, style: .continuous)
-                    .fill(backgroundColor)
+                    .fill(result == .none
+                          ? AnyShapeStyle(.ultraThinMaterial)
+                          : AnyShapeStyle(backgroundColor))
             )
             .overlay(
                 RoundedRectangle(cornerRadius: RadiusTokens.button, style: .continuous)
@@ -502,7 +504,7 @@ private struct ChoiceTile: View {
 
     private var backgroundColor: Color {
         switch result {
-        case .none:     return ColorTokens.Kid.surface
+        case .none:     return Color.clear
         case .correct:  return ColorTokens.Feedback.correct
         case .wrong:    return isRevealed
             ? ColorTokens.Brand.gold
