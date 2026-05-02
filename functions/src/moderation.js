@@ -23,9 +23,9 @@ async function moderateUserDocument(admin, ctx) {
   const { userId, childId, sessionId, attemptId, after } = ctx;
   const db = admin.firestore();
 
-  const transcript = after && typeof after.asrTranscript === 'string'
-    ? after.asrTranscript
-    : '';
+  const transcript = after && typeof after.asrTranscript === 'string' ?
+    after.asrTranscript :
+    '';
 
   const flagged = hasBannedContent(transcript);
 

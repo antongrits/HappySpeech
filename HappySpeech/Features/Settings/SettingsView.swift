@@ -3,13 +3,12 @@ import SwiftUI
 
 // MARK: - SettingsView
 //
-// Parent-контур. 7 секций настроек: оформление, профиль ребёнка, уведомления,
-// контент, данные, специалист, о приложении. Каждая ячейка управляется через
-// Interactor; `SettingsDisplay` хранит производное состояние, View использует
-// биндинги через специальные накладки (`localBindings`).
+// Parent-контур. 8 секций: оформление, профиль ребёнка, уведомления,
+// контент, данные, аналитика, специалист, о приложении.
 //
 // VIP: View → Interactor (запросы) → Presenter (форматирование) → Display.
 
+// swiftlint:disable type_body_length
 struct SettingsView: View {
 
     // MARK: - Environment
@@ -62,6 +61,7 @@ struct SettingsView: View {
                     contentSection
                     modelPacksSection
                     dataSection
+                    performanceSection
                     specialistSection
                     aboutSection
                 }
@@ -616,6 +616,46 @@ struct SettingsView: View {
         }
     }
 
+    // MARK: - Section 5.5: Performance Monitoring (G v14)
+
+    private var performanceSection: some View {
+        Section {
+            Toggle(isOn: performanceMonitoringBinding) {
+                Label {
+                    VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                        Text(String(localized: "settings.performance.label"))
+                            .font(TypographyTokens.body(15))
+                            .foregroundStyle(ColorTokens.Parent.ink)
+                        Text(String(localized: "settings.performance.subtitle"))
+                            .font(TypographyTokens.caption(12))
+                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                            .lineLimit(nil)
+                            .minimumScaleFactor(0.85)
+                    }
+                } icon: {
+                    Image(systemName: "gauge.with.dots.needle.67percent")
+                        .foregroundStyle(ColorTokens.Parent.accent)
+                }
+            }
+            .tint(ColorTokens.Brand.primary)
+            .frame(minHeight: 56)
+            .accessibilityLabel(String(localized: "settings.performance.label"))
+            .accessibilityValue(display.settings.performanceMonitoringEnabled
+                                ? String(localized: "settings.a11y.on")
+                                : String(localized: "settings.a11y.off"))
+            .accessibilityHint(String(localized: "settings.performance.a11y.hint"))
+        } header: {
+            Text(String(localized: "settings.section.performance"))
+                .font(TypographyTokens.caption(12).weight(.semibold))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .textCase(.uppercase)
+        } footer: {
+            Text(String(localized: "settings.performance.footer"))
+                .font(TypographyTokens.caption(12))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+        }
+    }
+
     // MARK: - Section 6: Specialist
 
     private var specialistSection: some View {
@@ -823,6 +863,15 @@ struct SettingsView: View {
         )
     }
 
+    private var performanceMonitoringBinding: Binding<Bool> {
+        Binding(
+            get: { display.settings.performanceMonitoringEnabled },
+            set: { newValue in
+                interactor?.togglePerformanceMonitoring(.init(enabled: newValue))
+            }
+        )
+    }
+
     // MARK: - Bootstrap
 
     @MainActor
@@ -835,6 +884,7 @@ struct SettingsView: View {
             notificationService: container.notificationService,
             hapticService: container.hapticService,
             sessionRepository: container.sessionRepository,
+            performanceMonitorService: container.performanceMonitorService,
             whisperKitModelManager: container.whisperKitModelManager,
             llmModelManager: container.llmModelManager
         )
@@ -1380,3 +1430,4 @@ private struct SettingsShareSheet: UIViewControllerRepresentable {
         .environment(AppContainer.preview())
         .environment(\.circuitContext, .parent)
 }
+// swiftlint:enable type_body_length

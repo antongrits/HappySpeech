@@ -25,6 +25,8 @@ protocol SettingsDisplayLogic: AnyObject {
     func displayToggleWeeklyParentSummary(_ viewModel: SettingsModels.ToggleWeeklyParentSummary.ViewModel)
     /// T (v12)
     func displayUpdateHaptics(_ viewModel: SettingsModels.UpdateHaptics.ViewModel)
+    /// G (v14): Performance Monitoring opt-in
+    func displayTogglePerformanceMonitoring(_ viewModel: SettingsModels.TogglePerformanceMonitoring.ViewModel)
 }
 
 // MARK: - SettingsDisplay (Observable Store)
@@ -149,6 +151,12 @@ final class SettingsDisplay: SettingsDisplayLogic {
 
     func displayUpdateHaptics(_ viewModel: SettingsModels.UpdateHaptics.ViewModel) {
         settings = viewModel.settings
+    }
+
+    func displayTogglePerformanceMonitoring(_ viewModel: SettingsModels.TogglePerformanceMonitoring.ViewModel) {
+        settings = viewModel.settings
+        toastMessage = viewModel.toastMessage
+        toastIsError = false
     }
 
     func clearToast() {

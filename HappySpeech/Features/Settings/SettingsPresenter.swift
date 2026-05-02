@@ -24,6 +24,8 @@ protocol SettingsPresentationLogic: AnyObject {
     func presentToggleWeeklyParentSummary(_ response: SettingsModels.ToggleWeeklyParentSummary.Response)
     /// T (v12)
     func presentUpdateHaptics(_ response: SettingsModels.UpdateHaptics.Response)
+    /// G (v14): Performance Monitoring opt-in
+    func presentTogglePerformanceMonitoring(_ response: SettingsModels.TogglePerformanceMonitoring.Response)
 }
 
 // MARK: - SettingsPresenter
@@ -284,6 +286,16 @@ final class SettingsPresenter: SettingsPresentationLogic {
 
     func presentUpdateHaptics(_ response: SettingsModels.UpdateHaptics.Response) {
         display?.displayUpdateHaptics(.init(settings: response.settings))
+    }
+
+    func presentTogglePerformanceMonitoring(_ response: SettingsModels.TogglePerformanceMonitoring.Response) {
+        let message = response.settings.performanceMonitoringEnabled
+            ? String(localized: "settings.performance.toast.enabled")
+            : String(localized: "settings.performance.toast.disabled")
+        display?.displayTogglePerformanceMonitoring(.init(
+            settings: response.settings,
+            toastMessage: message
+        ))
     }
 
     // MARK: - Helpers

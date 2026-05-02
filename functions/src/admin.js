@@ -24,15 +24,15 @@ async function setAdminClaimHandler(admin, request) {
     throw new HttpsError('invalid-argument', 'admin must be boolean');
   }
 
-  const callerIsAdmin = request.auth
-    && request.auth.token
-    && request.auth.token.admin === true;
+  const callerIsAdmin = request.auth &&
+    request.auth.token &&
+    request.auth.token.admin === true;
 
   const envSecret = process.env.ADMIN_BOOTSTRAP_SECRET || '';
-  const secretMatches = typeof secret === 'string'
-    && secret.length >= 16
-    && envSecret.length >= 16
-    && secret === envSecret;
+  const secretMatches = typeof secret === 'string' &&
+    secret.length >= 16 &&
+    envSecret.length >= 16 &&
+    secret === envSecret;
 
   if (!callerIsAdmin && !secretMatches) {
     throw new HttpsError('permission-denied', 'Admin or bootstrap secret required');
