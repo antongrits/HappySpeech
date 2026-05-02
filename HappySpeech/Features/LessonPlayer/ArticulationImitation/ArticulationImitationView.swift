@@ -114,8 +114,8 @@ struct ArticulationImitationView: View {
         VStack(spacing: SpacingTokens.large) {
             header
             Spacer(minLength: 0)
-            if let exercise = display.currentExercise {
-                exerciseCard(exercise)
+            if let pose = display.currentPose {
+                poseCard(pose)
             }
             Spacer(minLength: 0)
             HSButton(
@@ -124,9 +124,7 @@ struct ArticulationImitationView: View {
                 icon: "play.fill"
             ) {
                 container.soundService.playUISound(.tap)
-                display.phase = .holding
-                display.holdFraction = 0
-                interactor.beginHold()
+                interactor.beginMirroring()
             }
             .accessibilityHint(String(localized: "articulation.button.start.hint"))
             .padding(.horizontal, SpacingTokens.screenEdge)
@@ -134,28 +132,30 @@ struct ArticulationImitationView: View {
         .padding(.vertical, SpacingTokens.medium)
     }
 
-    private func exerciseCard(_ exercise: ArticulationExercise) -> some View {
+    private func poseCard(_ pose: ArticulationPose) -> some View {
         VStack(spacing: SpacingTokens.medium) {
-            Text(exercise.emoji)
+            Text(pose.emoji)
                 .font(.system(size: 96))
                 .accessibilityHidden(true)
-            Text(exercise.name)
+            Text(pose.name)
                 .font(TypographyTokens.title(26))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
                 .minimumScaleFactor(0.85)
-            Text(exercise.instruction)
+            Text(pose.instruction)
                 .font(TypographyTokens.body(16))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
                 .minimumScaleFactor(0.85)
                 .padding(.horizontal, SpacingTokens.small)
-            Text(String(localized: "articulation.hold_hint"))
-                .font(TypographyTokens.caption(13))
-                .foregroundStyle(ColorTokens.Brand.primary)
-                .padding(.top, SpacingTokens.tiny)
+            if !display.attemptLabel.isEmpty {
+                Text(display.attemptLabel)
+                    .font(TypographyTokens.caption(13))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .padding(.top, SpacingTokens.tiny)
+            }
         }
         .padding(SpacingTokens.large)
         .frame(maxWidth: .infinity)
@@ -197,7 +197,7 @@ struct ArticulationImitationView: View {
                         reduceMotion ? nil : .linear(duration: 0.1),
                         value: display.holdFraction
                     )
-                Text(display.currentExercise?.emoji ?? "")
+                Text(display.currentPose?.emoji ?? "")
                     .font(.system(size: 96))
                     .scaleEffect(reduceMotion ? 1.0 : (isPulsing ? 1.05 : 1.0))
                     .animation(
@@ -231,19 +231,53 @@ struct ArticulationImitationView: View {
     }
 
     private var holdingBottom: some View {
-        HSButton(
-            String(localized: "articulation.button.release"),
-            style: .secondary,
-            icon: "stop.fill"
-        ) {
-            container.soundService.playUISound(.tap)
-            interactor.completeExercise(.init(
-                exerciseId: display.currentExercise?.id ?? "",
-                held: false
-            ))
+        VStack(spacing: SpacingTokens.small) {
+            // Живой score-бар (AR режим)
+            if display.mirroringMode == .arFaceTracking {
+                VStack(spacing: SpacingTokens.tiny) {
+                    HSProgressBar(value: display.liveScoreFraction)
+                        .frame(height: 12)
+                        .padding(.horizontal, SpacingTokens.screenEdge)
+                    Text(display.liveScoreLabel)
+                        .font(TypographyTokens.caption(13))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .monospacedDigit()
+                        .accessibilityLabel(String(localized: "articulation.score.a11y"))
+                        .accessibilityValue(display.liveScoreLabel)
+                }
+            }
+            HStack(spacing: SpacingTokens.small) {
+                // Кнопка подсказки
+                Button {
+                    container.soundService.playUISound(.tap)
+                    let poseId = display.currentPose?.id ?? ""
+                    interactor.requestHint(.init(poseId: poseId))
+                } label: {
+                    Image(systemName: "lightbulb.fill")
+                        .font(.system(size: 24))
+                        .foregroundStyle(ColorTokens.Brand.mint)
+                        .frame(width: 56, height: 56)
+                        .background(
+                            RoundedRectangle(cornerRadius: RadiusTokens.button)
+                                .fill(ColorTokens.Kid.surface)
+                        )
+                }
+                .accessibilityLabel(String(localized: "articulation.button.hint.a11y"))
+                .accessibilityHint(String(localized: "articulation.button.hint.hint"))
+
+                HSButton(
+                    String(localized: "articulation.button.release"),
+                    style: .secondary,
+                    icon: "stop.fill"
+                ) {
+                    container.soundService.playUISound(.tap)
+                    let poseId = display.currentPose?.id ?? ""
+                    interactor.confirmPose(.init(poseId: poseId, confirmedByParent: false))
+                }
+                .accessibilityHint(String(localized: "articulation.button.release.hint"))
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
         }
-        .accessibilityHint(String(localized: "articulation.button.release.hint"))
-        .padding(.horizontal, SpacingTokens.screenEdge)
     }
 
     // MARK: - Feedback
@@ -376,40 +410,35 @@ struct ArticulationImitationView: View {
             soundGroup: soundGroup,
             childName: ""
         ))
-        // После loadSession bridge выставил phase=loading + populated
-        // store. Сразу просим первое упражнение.
-        interactor.startExercise(.init(exerciseIndex: 0))
+        // После loadSession bridge выставил phase=loading. Сразу стартуем первую позу.
+        interactor.startPose(.init(poseIndex: 0))
     }
 
     private func advanceAfterFeedback() async {
-        // Ловим фазу в начале, поскольку SwiftUI вызовет `.task` ещё
-        // раз при перезапуске view. Отлично фиксируем также allDone и
-        // текущий индекс, чтобы решение было согласованным.
-        let earned = display.earnedStar
         let wasAllDone = display.allDone
-        let currentId = display.currentExercise?.id
+        let currentPoseId = display.currentPose?.id
+        let earned = display.earnedStar
 
         container.soundService.playUISound(earned ? .correct : .tap)
         try? await Task.sleep(nanoseconds: 1_500_000_000)
 
         // Если фаза уже изменилась (например, view ушёл) — не мешаем.
         guard display.phase == .feedback else { return }
-        // Защита от двойного advance, если currentExercise уже ушёл дальше.
-        guard display.currentExercise?.id == currentId else { return }
+        guard display.currentPose?.id == currentPoseId else { return }
 
         if wasAllDone {
             interactor.completeSession()
         } else {
-            let nextIndex = nextExerciseIndex()
-            interactor.startExercise(.init(exerciseIndex: nextIndex))
+            let nextIndex = nextPoseIndex()
+            interactor.startPose(.init(poseIndex: nextIndex))
         }
     }
 
-    private func nextExerciseIndex() -> Int {
-        guard let current = display.currentExercise,
-              let index = interactor.exercises.firstIndex(where: { $0.id == current.id })
+    private func nextPoseIndex() -> Int {
+        guard let current = display.currentPose,
+              let index = interactor.poses.firstIndex(where: { $0.id == current.id })
         else { return 0 }
-        return min(index + 1, max(interactor.exercises.count - 1, 0))
+        return min(index + 1, max(interactor.poses.count - 1, 0))
     }
 
     // MARK: - Sound group resolution
@@ -441,12 +470,72 @@ final class ArticulationImitationStoreBridge: ArticulationImitationDisplayLogic 
         self.display = display
     }
 
+    // MARK: Deep VIP
+
     func displayLoadSession(_ viewModel: ArticulationImitationModels.LoadSession.ViewModel) {
         display.greeting = viewModel.greeting
-        display.totalExercises = viewModel.exercises.count
-        display.outOf = max(viewModel.exercises.count, 1)
+        display.totalPoses = viewModel.poses.count
+        display.outOf = max(viewModel.poses.count, 1)
         display.starsTotal = 0
+        display.mirroringMode = viewModel.mirroringMode
+        display.gamePhase = .loading
     }
+
+    func displayStartPose(_ viewModel: ArticulationImitationModels.StartPose.ViewModel) {
+        display.currentPose = viewModel.pose
+        display.progressLabel = viewModel.progressLabel
+        display.attemptLabel = viewModel.attemptLabel
+        display.voicePrompt = viewModel.voicePrompt
+        display.liveScoreFraction = 0
+        display.liveScoreLabel = "0%"
+        display.liveFeedbackColor = "neutral"
+        display.matchedChannels = []
+        display.gamePhase = .posePreview
+        // Legacy bridge
+        display.phase = .exercisePreview
+    }
+
+    func displayBeginMirroring(_ mode: MirroringMode) {
+        display.mirroringMode = mode
+        display.gamePhase = .mirroring
+        display.arSessionActive = (mode == .arFaceTracking)
+        display.phase = .holding
+    }
+
+    func displayBlendshapeUpdate(_ viewModel: ArticulationImitationModels.BlendshapeUpdate.ViewModel) {
+        display.liveScoreFraction = viewModel.scoreFraction
+        display.liveScoreLabel = viewModel.scoreLabel
+        display.liveFeedbackColor = viewModel.feedbackColor
+        display.matchedChannels = viewModel.matchedChannels
+        display.holdFraction = viewModel.scoreFraction
+    }
+
+    func displayConfirmPose(_ viewModel: ArticulationImitationModels.ConfirmPose.ViewModel) {
+        display.poseFeedbackText = viewModel.feedbackText
+        display.posePassed = viewModel.passed
+        display.allDone = viewModel.allDone
+        display.feedbackText = viewModel.feedbackText
+        display.earnedStar = viewModel.passed
+        if viewModel.passed {
+            display.starsTotal += 1
+        }
+        display.gamePhase = .poseFeedback
+        display.phase = .feedback
+    }
+
+    func displayHint(_ viewModel: ArticulationImitationModels.RequestHint.ViewModel) {
+        display.hintText = viewModel.hintText
+        display.hintLevel = viewModel.hintLevel
+        display.attemptsLeftLabel = viewModel.attemptsLeftLabel
+        display.gamePhase = .hintShowing(level: viewModel.hintLevel)
+    }
+
+    func displayParentConfirmRequest(_ pose: ArticulationPose) {
+        display.currentPose = pose
+        display.gamePhase = .parentConfirm
+    }
+
+    // MARK: Legacy
 
     func displayStartExercise(_ viewModel: ArticulationImitationModels.StartExercise.ViewModel) {
         display.currentExercise = viewModel.exercise
