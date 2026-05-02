@@ -22,6 +22,108 @@ enum ScreeningPromptFactory {
         articulationBlock() + wordBlock() + minimalPairsBlock() + breathingBlock(age: childAge)
     }
 
+    /// Returns a focused 10-sound screening set — one word per phoneme target.
+    /// Used in the deep VIP flow (S12-007 / Plan v14 Block A.7).
+    ///
+    /// Phonemes: С, Ш, З, Ж, Р, Л, Ч, Щ, Ц, К — the 10 most clinically
+    /// significant sounds in Russian for ages 5–8.
+    ///
+    /// Adaptive stop rule: if 2 consecutive scores < 0.40 → interrupt.
+    static func tenSoundPrompts(for childAge: Int) -> [ScreeningPrompt] {
+        [
+            ScreeningPrompt(
+                id: "ten_s",
+                block: .wordPronunciation,
+                targetSound: "С",
+                stimulus: "собака",
+                imageAsset: "word_dog",
+                referenceAudio: "ref_sobaka",
+                acceptableHoldSeconds: nil
+            ),
+            ScreeningPrompt(
+                id: "ten_sh",
+                block: .wordPronunciation,
+                targetSound: "Ш",
+                stimulus: "шапка",
+                imageAsset: "word_hat",
+                referenceAudio: "ref_shapka",
+                acceptableHoldSeconds: nil
+            ),
+            ScreeningPrompt(
+                id: "ten_z",
+                block: .wordPronunciation,
+                targetSound: "З",
+                stimulus: "зайка",
+                imageAsset: "word_hare",
+                referenceAudio: "ref_zayka",
+                acceptableHoldSeconds: nil
+            ),
+            ScreeningPrompt(
+                id: "ten_zh",
+                block: .wordPronunciation,
+                targetSound: "Ж",
+                stimulus: "жираф",
+                imageAsset: "word_giraffe",
+                referenceAudio: "ref_zhiraf",
+                acceptableHoldSeconds: nil
+            ),
+            ScreeningPrompt(
+                id: "ten_r",
+                block: .wordPronunciation,
+                targetSound: "Р",
+                stimulus: "рыба",
+                imageAsset: "word_fish",
+                referenceAudio: "ref_ryba",
+                acceptableHoldSeconds: nil
+            ),
+            ScreeningPrompt(
+                id: "ten_l",
+                block: .wordPronunciation,
+                targetSound: "Л",
+                stimulus: "луна",
+                imageAsset: "word_moon",
+                referenceAudio: "ref_luna",
+                acceptableHoldSeconds: nil
+            ),
+            ScreeningPrompt(
+                id: "ten_ch",
+                block: .wordPronunciation,
+                targetSound: "Ч",
+                stimulus: "чашка",
+                imageAsset: "word_cup",
+                referenceAudio: "ref_chashka",
+                acceptableHoldSeconds: nil
+            ),
+            ScreeningPrompt(
+                id: "ten_sch",
+                block: .wordPronunciation,
+                targetSound: "Щ",
+                stimulus: "щётка",
+                imageAsset: "word_brush",
+                referenceAudio: "ref_shjotka",
+                acceptableHoldSeconds: nil
+            ),
+            ScreeningPrompt(
+                id: "ten_ts",
+                block: .wordPronunciation,
+                targetSound: "Ц",
+                stimulus: "цапля",
+                imageAsset: "word_heron",
+                referenceAudio: "ref_tsaplya",
+                acceptableHoldSeconds: nil
+            ),
+            ScreeningPrompt(
+                id: "ten_k",
+                block: .wordPronunciation,
+                targetSound: "К",
+                stimulus: "кот",
+                imageAsset: "word_cat",
+                referenceAudio: "ref_kot",
+                acceptableHoldSeconds: nil
+            )
+        ]
+    }
+
     // MARK: - Blocks
 
     private static func articulationBlock() -> [ScreeningPrompt] {
