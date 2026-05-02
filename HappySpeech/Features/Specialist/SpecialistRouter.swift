@@ -6,26 +6,28 @@ import SwiftUI
 @MainActor
 protocol SpecialistRoutingLogic: AnyObject {
     func routeBack()
-    /// Открыть экран детального обзора сессии (B1).
-    /// Используется из списка занятий, чтобы перейти на `SessionReviewView`.
     func routeToSessionReview(sessionId: String)
+    func routeToChildDashboard(childId: String)
+    func routeToProgramEditor(childId: String)
 }
 
 // MARK: - SpecialistRouter
 
-/// Роутер специалистского контура. Контролирует переходы между списком детей,
-/// детальной страницей сессии и отчётами. В Specialist-флоу навигация идёт
-/// через `NavigationStack` (см. `SpecSessionListView` — `.navigationDestination
-/// (for: String.self) { sessionId in SessionReviewView(sessionId:) }`),
-/// поэтому роутер выставляет колбэк `onOpenSessionReview`, который
-/// инициирует переход во view-слое (push в NavigationPath).
+/// Роутер специалистского контура. Управляет переходами между:
+/// - caseload (список детей)
+/// - child dashboard
+/// - session review
+/// - program editor
+///
+/// Навигация через NavigationStack — колбэки инициируют push в view-слое.
 @MainActor
 final class SpecialistRouter: SpecialistRoutingLogic {
 
     weak var coordinator: AppCoordinator?
 
-    /// View подписывается, чтобы выполнить push при routeToSessionReview.
     var onOpenSessionReview: ((String) -> Void)?
+    var onOpenChildDashboard: ((String) -> Void)?
+    var onOpenProgramEditor: ((String) -> Void)?
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "Specialist.Router")
 
@@ -40,10 +42,34 @@ final class SpecialistRouter: SpecialistRoutingLogic {
             logger.warning("routeToSessionReview: empty sessionId — skip")
             return
         }
-        if let onOpenSessionReview {
-            onOpenSessionReview(sessionId)
+        if let handler = onOpenSessionReview {
+            handler(sessionId)
         } else {
-            logger.warning("routeToSessionReview: callback is not wired (sessionId=\(sessionId, privacy: .public))")
+            logger.warning("routeToSessionReview: callback not wired (sessionId=\(sessionId, privacy: .public))")
+        }
+    }
+
+    func routeToChildDashboard(childId: String) {
+        guard !childId.isEmpty else {
+            logger.warning("routeToChildDashboard: empty childId — skip")
+            return
+        }
+        if let handler = onOpenChildDashboard {
+            handler(childId)
+        } else {
+            logger.warning("routeToChildDashboard: callback not wired (childId=\(childId, privacy: .public))")
+        }
+    }
+
+    func routeToProgramEditor(childId: String) {
+        guard !childId.isEmpty else {
+            logger.warning("routeToProgramEditor: empty childId — skip")
+            return
+        }
+        if let handler = onOpenProgramEditor {
+            handler(childId)
+        } else {
+            logger.warning("routeToProgramEditor: callback not wired (childId=\(childId, privacy: .public))")
         }
     }
 }
