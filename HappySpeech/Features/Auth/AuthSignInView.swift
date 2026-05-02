@@ -24,15 +24,15 @@ struct AuthSignInView: View {
                 headerSection
 
                 ScrollView(showsIndicators: false) {
-                    VStack(spacing: SpacingTokens.sp5) {
+                    VStack(spacing: SpacingTokens.sp4) {
                         welcomeSection
                         formSection
                         authButtonsSection
                         footerLinks
                     }
                     .padding(.horizontal, SpacingTokens.screenEdge)
-                    .padding(.top, SpacingTokens.sp6)
-                    .padding(.bottom, SpacingTokens.sp12)
+                    .padding(.top, SpacingTokens.sp4)
+                    .padding(.bottom, SpacingTokens.sp8)
                 }
             }
         }
@@ -121,8 +121,8 @@ struct AuthSignInView: View {
 
     private var headerSection: some View {
         VStack(spacing: SpacingTokens.sp3) {
-            HSMascotView(mood: .happy, size: 110)
-                .padding(.top, SpacingTokens.sp16)
+            HSMascotView(mood: .happy, size: 96)
+                .padding(.top, SpacingTokens.sp8)
                 .accessibilityHidden(true)
 
             Text("HappySpeech")

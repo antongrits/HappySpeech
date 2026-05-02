@@ -60,9 +60,19 @@ struct OnboardingFlowView: View {
                         .transition(.opacity.combined(with: .move(edge: .bottom)))
                         .animation(reduceMotion ? nil : MotionTokens.spring, value: display.currentStep)
                 }
-
-                actionFooter
             }
+        }
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            actionFooter
+                .background(
+                    LinearGradient(
+                        colors: [gradientColors(for: display.currentStep).last?.opacity(0) ?? Color.clear,
+                                 gradientColors(for: display.currentStep).last ?? Color.clear],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .ignoresSafeArea(edges: .bottom)
+                )
         }
         .environment(\.circuitContext, .kid)
         .task { await bootstrap() }
@@ -246,7 +256,8 @@ struct OnboardingFlowView: View {
             }
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
-        .padding(.bottom, SpacingTokens.large)
+        .padding(.top, SpacingTokens.small)
+        .padding(.bottom, SpacingTokens.medium)
     }
 
     private var primaryButtonTitle: String {
