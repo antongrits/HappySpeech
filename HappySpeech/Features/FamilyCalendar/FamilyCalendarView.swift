@@ -5,7 +5,7 @@ import SwiftUI
 // MARK: - FamilyCalendarView
 //
 // Семейный календарь — агрегированная активность по детям семьи.
-// Parent-контур. 5 секций: ChildrenStrip, MonthCalendar, Heatmap, Comparison, Insights.
+// Parent-контур. 6 секций: ChildrenStrip, WeekStrip, GoalCards, Heatmap, Comparison, Insights.
 // VIP: View → Interactor (запросы) → Presenter (форматирование) → Display.
 
 struct FamilyCalendarView: View {
@@ -17,7 +17,7 @@ struct FamilyCalendarView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
-    // MARK: - VIP State (ViewModel + Scene)
+    // MARK: - VIP State
 
     @State private var scene: FamilyCalendarScene?
     @State private var viewModel: FamilyCalendarViewModel = .empty
@@ -25,7 +25,10 @@ struct FamilyCalendarView: View {
     // MARK: - Local UI State
 
     @State private var showDayDetail = false
-    @State private var isNextMonth = false
+    @State private var showScheduleSheet = false
+    @State private var showWeekSummarySheet = false
+    @State private var selectedDayForSchedule: Date?
+    @State private var voiceHintText: String?
 
     private var weeksCount: Int {
         horizontalSizeClass == .compact ? 8 : 12
@@ -47,7 +50,7 @@ struct FamilyCalendarView: View {
 
             // Toast
             if let toast = viewModel.toastMessage {
-                HSToast(toast, type: .error)
+                HSToast(toast, type: .success)
                     .padding(.bottom, SpacingTokens.large)
                     .transition(.move(edge: .bottom).combined(with: .opacity))
                     .task {
@@ -63,17 +66,52 @@ struct FamilyCalendarView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    // Зарезервировано для фильтра (F3 scope)
+                    if let weekStart = viewModel.weekDays.first?.date {
+                        Task {
+                            scene?.interactor.generateWeekSummary(request: .init(weekStart: weekStart))
+                        }
+                        showWeekSummarySheet = true
+                    }
                 } label: {
-                    Image(systemName: "line.3.horizontal.decrease.circle")
+                    Image(systemName: "chart.bar.doc.horizontal")
                         .foregroundStyle(ColorTokens.Parent.inkSoft)
                 }
-                .accessibilityLabel(String(localized: "family_calendar.filter.label"))
+                .accessibilityLabel(String(localized: "family_calendar.toolbar.week_summary"))
             }
         }
         .sheet(isPresented: $showDayDetail) {
             if let detail = viewModel.selectedDayDetail {
-                DayDetailSheet(detail: detail)
+                DayDetailSheet(
+                    detail: detail,
+                    onSchedule: { date in
+                        selectedDayForSchedule = date
+                        showDayDetail = false
+                        showScheduleSheet = true
+                    }
+                )
+            }
+        }
+        .sheet(isPresented: $showScheduleSheet) {
+            if let children = scene.map({ _ in viewModel.children.filter { !$0.isAll } }) {
+                ScheduleLessonSheet(
+                    date: selectedDayForSchedule ?? Date(),
+                    children: children
+                ) { childId, childName, date, template, reminder in
+                    Task {
+                        await scene?.interactor.scheduleLesson(request: .init(
+                            childId: childId,
+                            childName: childName,
+                            date: date,
+                            lessonTemplate: template,
+                            enableReminder: reminder
+                        ))
+                    }
+                }
+            }
+        }
+        .sheet(isPresented: $showWeekSummarySheet) {
+            if let summary = viewModel.weekSummary {
+                WeekSummarySheet(summary: summary)
             }
         }
         .task {
@@ -81,15 +119,14 @@ struct FamilyCalendarView: View {
                 let newScene = FamilyCalendarScene(
                     childRepository: container.childRepository,
                     sessionRepository: container.sessionRepository,
+                    notificationService: container.notificationService,
                     llmDecisionService: container.llmDecisionService,
                     coordinator: coordinator
                 )
                 newScene.display = self
                 scene = newScene
             }
-            await scene?.interactor.loadFamilyData(
-                request: .init(parentId: "")
-            )
+            await scene?.interactor.loadFamilyData(request: .init(parentId: ""))
         }
         .environment(\.circuitContext, .parent)
     }
@@ -100,7 +137,8 @@ struct FamilyCalendarView: View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: SpacingTokens.sectionGap) {
                 childrenStrip
-                monthCalendarSection
+                weekStripSection
+                weekGoalSection
                 heatmapSection
                 if viewModel.selectedChildId == nil && viewModel.comparisonCards.count >= 2 {
                     comparisonSection
@@ -166,7 +204,6 @@ struct FamilyCalendarView: View {
                             }
                         }
                     }
-
                     AddChildCapsule {
                         scene?.router.routeToAddChild()
                     }
@@ -178,103 +215,103 @@ struct FamilyCalendarView: View {
         }
     }
 
-    // MARK: - Section 2: MonthCalendar
+    // MARK: - Section 2: WeekStrip (±2 weeks navigation)
 
-    private var monthCalendarSection: some View {
+    private var weekStripSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.medium) {
-            SectionHeader(title: String(localized: "family_calendar.month.label"))
+            HStack {
+                SectionHeader(title: weekRangeTitle)
+                Spacer()
+                weekNavigationButtons
+            }
 
-            VStack(spacing: SpacingTokens.medium) {
-                // Month navigation header
-                monthNavigationHeader
-
-                // Weekday labels
-                weekdayLabels
-
-                // Calendar grid
-                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 4) {
-                    ForEach(viewModel.calendarDays) { dayVM in
-                        DayCell(day: dayVM) {
-                            Task { scene?.interactor.selectDay(request: .init(date: dayVM.date)) }
-                            showDayDetail = true
-                        }
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 6) {
+                ForEach(viewModel.weekDays) { day in
+                    WeekDayCell(day: day) {
+                        Task { scene?.interactor.selectDay(request: .init(date: day.date)) }
+                        showDayDetail = true
+                    } onLongPress: {
+                        selectedDayForSchedule = day.date
+                        showScheduleSheet = true
                     }
                 }
             }
             .padding(SpacingTokens.sp4)
             .background(ColorTokens.Parent.surface)
             .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card))
+
+            // Подсказка к планированию
+            Text(String(localized: "family_calendar.week.schedule_hint"))
+                .font(TypographyTokens.caption())
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .frame(maxWidth: .infinity, alignment: .center)
         }
     }
 
-    private var monthNavigationHeader: some View {
-        HStack {
+    private var weekNavigationButtons: some View {
+        HStack(spacing: SpacingTokens.tiny) {
             Button {
                 let animation: Animation = reduceMotion
                     ? .easeInOut(duration: 0.15)
                     : MotionTokens.page
-                isNextMonth = false
                 withAnimation(animation) {
-                    scene?.interactor.changeMonth(request: .init(direction: .previous))
+                    scene?.interactor.changeWeek(request: .init(direction: .previous))
                 }
             } label: {
                 Image(systemName: "chevron.left")
-                    .font(.system(size: 16, weight: .semibold))
+                    .font(.system(size: 14, weight: .semibold))
                     .foregroundStyle(ColorTokens.Brand.primary)
-                    .frame(width: 44, height: 44)
+                    .frame(width: 36, height: 36)
             }
-            .accessibilityLabel(String(localized: "family_calendar.month.previous"))
-
-            Spacer()
-
-            Text(monthYearString(viewModel.currentMonth))
-                .font(TypographyTokens.headline())
-                .foregroundStyle(ColorTokens.Parent.ink)
-                .accessibilityAddTraits(.isHeader)
-
-            Spacer()
+            .accessibilityLabel(String(localized: "family_calendar.week.previous"))
 
             Button {
                 let animation: Animation = reduceMotion
                     ? .easeInOut(duration: 0.15)
                     : MotionTokens.page
-                isNextMonth = true
                 withAnimation(animation) {
-                    scene?.interactor.changeMonth(request: .init(direction: .next))
+                    scene?.interactor.changeWeek(request: .init(direction: .next))
                 }
             } label: {
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 16, weight: .semibold))
+                    .font(.system(size: 14, weight: .semibold))
                     .foregroundStyle(ColorTokens.Brand.primary)
-                    .frame(width: 44, height: 44)
+                    .frame(width: 36, height: 36)
             }
-            .accessibilityLabel(String(localized: "family_calendar.month.next"))
+            .accessibilityLabel(String(localized: "family_calendar.week.next"))
         }
     }
 
-    private var weekdayLabels: some View {
-        let days = [
-            String(localized: "family_calendar.heatmap.day_mon"),
-            String(localized: "family_calendar.heatmap.day_tue"),
-            String(localized: "family_calendar.heatmap.day_wed"),
-            String(localized: "family_calendar.heatmap.day_thu"),
-            String(localized: "family_calendar.heatmap.day_fri"),
-            String(localized: "family_calendar.heatmap.day_sat"),
-            String(localized: "family_calendar.heatmap.day_sun")
-        ]
-        return HStack {
-            ForEach(days, id: \.self) { day in
-                Text(day)
-                    .font(TypographyTokens.caption())
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .minimumScaleFactor(0.7)
-                    .frame(maxWidth: .infinity)
-                    .multilineTextAlignment(.center)
+    private var weekRangeTitle: String {
+        guard let first = viewModel.weekDays.first, let last = viewModel.weekDays.last else {
+            return String(localized: "family_calendar.week.title")
+        }
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.dateFormat = "d MMM"
+        return "\(formatter.string(from: first.date)) – \(formatter.string(from: last.date))"
+    }
+
+    // MARK: - Section 3: WeekGoalCards
+
+    private var weekGoalSection: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.medium) {
+            SectionHeader(title: String(localized: "family_calendar.goals.title"))
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: SpacingTokens.medium) {
+                    ForEach(viewModel.weekGoalCards) { card in
+                        WeekGoalCard(card: card)
+                    }
+                }
+                .padding(.horizontal, SpacingTokens.regular)
+                .padding(.vertical, 4)
             }
+            .padding(.horizontal, -SpacingTokens.regular)
         }
     }
 
-    // MARK: - Section 3: HeatmapView
+    // MARK: - Section 4: HeatmapView
 
     private var heatmapSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.medium) {
@@ -293,7 +330,7 @@ struct FamilyCalendarView: View {
         }
     }
 
-    // MARK: - Section 4: ComparisonCard
+    // MARK: - Section 5: ComparisonCard
 
     private var comparisonSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.medium) {
@@ -309,16 +346,10 @@ struct FamilyCalendarView: View {
                 .padding(.vertical, 4)
             }
             .padding(.horizontal, -SpacingTokens.regular)
-
-            HSButton(String(localized: "family_calendar.cta.compare_all"), style: .secondary) {
-                // Зарезервировано для drill-down экрана
-            }
-            .frame(maxWidth: .infinity)
-            .frame(height: 56)
         }
     }
 
-    // MARK: - Section 5: InsightsList
+    // MARK: - Section 6: InsightsList
 
     private var insightsSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.medium) {
@@ -368,6 +399,7 @@ struct FamilyCalendarView: View {
 // MARK: - FamilyCalendarDisplayLogic
 
 extension FamilyCalendarView: FamilyCalendarDisplayLogic {
+
     @MainActor
     func displayFamilyData(viewModel: FamilyCalendarViewModel) {
         withAnimation(reduceMotion ? .easeInOut(duration: 0.15) : MotionTokens.spring) {
@@ -407,6 +439,23 @@ extension FamilyCalendarView: FamilyCalendarDisplayLogic {
     func displayClearToast() {
         viewModel.toastMessage = nil
     }
+
+    @MainActor
+    func displayLessonScheduled(voiceHint: String) {
+        voiceHintText = voiceHint
+    }
+
+    @MainActor
+    func displayWeekSummary(viewModel: WeekSummaryViewModel) {
+        self.viewModel.weekSummary = viewModel
+    }
+
+    @MainActor
+    func displayToast(message: String) {
+        withAnimation(.easeInOut(duration: 0.25)) {
+            viewModel.toastMessage = message
+        }
+    }
 }
 
 // MARK: - FamilyCalendarScene (VIP container)
@@ -424,6 +473,7 @@ final class FamilyCalendarScene {
     init(
         childRepository: any ChildRepository,
         sessionRepository: any SessionRepository,
+        notificationService: (any NotificationService)?,
         llmDecisionService: (any LLMDecisionServiceProtocol)?,
         coordinator: AppCoordinator
     ) {
@@ -431,6 +481,7 @@ final class FamilyCalendarScene {
         let interactor = FamilyCalendarInteractor(
             childRepository: childRepository,
             sessionRepository: sessionRepository,
+            notificationService: notificationService,
             llmDecisionService: llmDecisionService
         )
         let router = FamilyCalendarRouter()
@@ -473,10 +524,7 @@ private struct ChildAvatarCard: View {
                 }
                 .overlay(
                     Circle()
-                        .strokeBorder(
-                            isSelected ? ColorTokens.Brand.primary : Color.clear,
-                            lineWidth: 2
-                        )
+                        .strokeBorder(isSelected ? ColorTokens.Brand.primary : Color.clear, lineWidth: 2)
                 )
 
                 Text(child.name)
@@ -503,23 +551,18 @@ private struct ChildAvatarCard: View {
             .frame(width: 80, height: 100)
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .fill(isSelected
-                          ? ColorTokens.Brand.primary.opacity(0.08)
-                          : ColorTokens.Parent.surface)
+                    .fill(isSelected ? ColorTokens.Brand.primary.opacity(0.08) : ColorTokens.Parent.surface)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .strokeBorder(
-                        isSelected ? ColorTokens.Brand.primary : Color.clear,
-                        lineWidth: 2
-                    )
+                    .strokeBorder(isSelected ? ColorTokens.Brand.primary : Color.clear, lineWidth: 2)
             )
         }
         .buttonStyle(.plain)
         .accessibilityLabel(
             child.isAll
-            ? String(localized: "family_calendar.children.all")
-            : String(format: String(localized: "family_calendar.a11y.child_card"), child.name, child.streak)
+                ? String(localized: "family_calendar.children.all")
+                : String(format: String(localized: "family_calendar.a11y.child_card"), child.name, child.streak)
         )
         .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
@@ -549,21 +592,185 @@ private struct AddChildCapsule: View {
                     .minimumScaleFactor(0.75)
                     .frame(width: 80)
                     .multilineTextAlignment(.center)
-
                 Spacer().frame(height: 14)
             }
             .frame(width: 80, height: 100)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .fill(ColorTokens.Parent.surface)
-            )
+            .background(RoundedRectangle(cornerRadius: RadiusTokens.card).fill(ColorTokens.Parent.surface))
         }
         .buttonStyle(.plain)
         .accessibilityLabel(String(localized: "family_calendar.children.add"))
     }
 }
 
-// MARK: - DayCell
+// MARK: - WeekDayCell
+
+private struct WeekDayCell: View {
+    let day: WeekDayViewModel
+    let onTap: () -> Void
+    let onLongPress: () -> Void
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    private var bgColor: Color {
+        if day.isToday { return ColorTokens.Brand.primary }
+        if day.isFuture { return ColorTokens.Parent.surface.opacity(0.5) }
+        switch day.activityLevel {
+        case 1: return ColorTokens.Brand.primary.opacity(0.15)
+        case 2: return ColorTokens.Brand.primary.opacity(0.35)
+        case 3: return ColorTokens.Brand.primary.opacity(0.60)
+        default: return ColorTokens.Parent.surface
+        }
+    }
+
+    private var textColor: Color {
+        day.isToday ? .white : (day.isFuture ? ColorTokens.Parent.inkSoft.opacity(0.4) : ColorTokens.Parent.ink)
+    }
+
+    var body: some View {
+        Button(action: onTap) {
+            VStack(spacing: 2) {
+                Text(day.weekdayShort)
+                    .font(.system(size: 9, weight: .medium))
+                    .foregroundStyle(day.isToday ? .white.opacity(0.8) : ColorTokens.Parent.inkMuted)
+                    .minimumScaleFactor(0.7)
+
+                Text("\(day.dayNumber)")
+                    .font(TypographyTokens.caption())
+                    .foregroundStyle(textColor)
+                    .minimumScaleFactor(0.7)
+
+                // Индикатор сессий и планов
+                HStack(spacing: 2) {
+                    if day.sessionCount > 0 {
+                        Circle()
+                            .fill(day.isToday ? .white : ColorTokens.Brand.primary)
+                            .frame(width: 4, height: 4)
+                    }
+                    if day.plannedCount > 0 {
+                        Circle()
+                            .fill(day.isToday ? .white.opacity(0.7) : ColorTokens.Semantic.warning)
+                            .frame(width: 4, height: 4)
+                    }
+                    if day.hasSpecialistVisit {
+                        Circle()
+                            .fill(day.isToday ? .white.opacity(0.7) : ColorTokens.Semantic.success)
+                            .frame(width: 4, height: 4)
+                    }
+                    if day.sessionCount == 0 && day.plannedCount == 0 && !day.hasSpecialistVisit {
+                        Spacer().frame(width: 4, height: 4)
+                    }
+                }
+                .frame(height: 4)
+            }
+            .frame(maxWidth: .infinity)
+            .frame(height: 56)
+            .background(RoundedRectangle(cornerRadius: RadiusTokens.sm).fill(bgColor))
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .onLongPressGesture(minimumDuration: 0.5) {
+            if !reduceMotion {
+                let impact = UIImpactFeedbackGenerator(style: .medium)
+                impact.impactOccurred()
+            }
+            onLongPress()
+        }
+        .accessibilityLabel(weekDayCellA11yLabel)
+        .accessibilityHint(day.isFuture ? String(localized: "family_calendar.a11y.future_day_hint") : "")
+    }
+
+    private var weekDayCellA11yLabel: String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.dateStyle = .medium
+        let dateStr = formatter.string(from: day.date)
+        var parts: [String] = [dateStr]
+        if day.sessionCount > 0 {
+            parts.append(String(format: String(localized: "family_calendar.a11y.sessions_count"), day.sessionCount))
+        }
+        if day.plannedCount > 0 {
+            parts.append(String(format: String(localized: "family_calendar.a11y.plans_count"), day.plannedCount))
+        }
+        if day.hasSpecialistVisit {
+            parts.append(String(localized: "family_calendar.a11y.specialist_visit"))
+        }
+        return parts.joined(separator: ", ")
+    }
+}
+
+// MARK: - WeekGoalCard
+
+private struct WeekGoalCard: View {
+    let card: WeekGoalCardViewModel
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.small) {
+            HStack(spacing: SpacingTokens.small) {
+                ZStack {
+                    Circle()
+                        .fill(ColorTokens.Brand.primary.opacity(0.12))
+                        .frame(width: 36, height: 36)
+                    Text(card.initials)
+                        .font(TypographyTokens.caption())
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                }
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(card.childName)
+                        .font(TypographyTokens.headline())
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(1)
+                    if card.streakDays > 0 {
+                        HStack(spacing: 2) {
+                            Image(systemName: "flame.fill")
+                                .font(.system(size: 10))
+                                .foregroundStyle(ColorTokens.Brand.primary)
+                            Text("\(card.streakDays)д")
+                                .font(.system(size: 10))
+                                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        }
+                    }
+                }
+                Spacer()
+                if card.goalReached {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 20))
+                        .foregroundStyle(ColorTokens.Semantic.success)
+                        .accessibilityLabel(String(localized: "family_calendar.a11y.goal_reached"))
+                }
+            }
+
+            // Progress bar
+            VStack(alignment: .leading, spacing: 4) {
+                GeometryReader { geo in
+                    ZStack(alignment: .leading) {
+                        RoundedRectangle(cornerRadius: 3)
+                            .fill(ColorTokens.Parent.inkSoft.opacity(0.15))
+                            .frame(height: 6)
+                        RoundedRectangle(cornerRadius: 3)
+                            .fill(card.goalReached ? ColorTokens.Semantic.success : ColorTokens.Brand.primary)
+                            .frame(width: geo.size.width * card.progressFraction, height: 6)
+                    }
+                }
+                .frame(height: 6)
+
+                Text(String(format: String(localized: "family_calendar.goals.progress_format"),
+                            card.sessionsAchieved, card.sessionsGoal))
+                    .font(TypographyTokens.caption())
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+            }
+        }
+        .padding(SpacingTokens.medium)
+        .frame(width: 160)
+        .background(ColorTokens.Parent.surface)
+        .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card))
+        .shadow(color: ColorTokens.Parent.inkSoft.opacity(0.2), radius: 4, x: 0, y: 2)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(String(format: String(localized: "family_calendar.a11y.goal_card"),
+                                   card.childName, card.sessionsAchieved, card.sessionsGoal))
+    }
+}
+
+// MARK: - DayCell (для heatmap совместимости)
 
 private struct DayCell: View {
     let day: CalendarDayViewModel
@@ -593,9 +800,7 @@ private struct DayCell: View {
             VStack(spacing: 2) {
                 ZStack {
                     if day.isToday {
-                        Circle()
-                            .fill(ColorTokens.Brand.primary)
-                            .frame(width: 32, height: 32)
+                        Circle().fill(ColorTokens.Brand.primary).frame(width: 32, height: 32)
                     }
                     Text("\(day.dayNumber)")
                         .font(TypographyTokens.caption())
@@ -605,9 +810,7 @@ private struct DayCell: View {
                 .frame(width: 32, height: 32)
 
                 if let dot = dotColor {
-                    Circle()
-                        .fill(dot)
-                        .frame(width: 5, height: 5)
+                    Circle().fill(dot).frame(width: 5, height: 5)
                 } else {
                     Spacer().frame(height: 5)
                 }
@@ -617,7 +820,6 @@ private struct DayCell: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .scaleEffect(1.0)
         .accessibilityLabel(dayCellA11yLabel)
     }
 
@@ -726,16 +928,11 @@ private struct ChildSummaryCard: View {
 
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
-    private var cardWidth: CGFloat {
-        horizontalSizeClass == .compact ? 140 : 160
-    }
-    private var cardHeight: CGFloat {
-        horizontalSizeClass == .compact ? 180 : 200
-    }
+    private var cardWidth: CGFloat { horizontalSizeClass == .compact ? 140 : 160 }
+    private var cardHeight: CGFloat { horizontalSizeClass == .compact ? 180 : 200 }
 
     var body: some View {
         VStack(spacing: SpacingTokens.medium) {
-            // Avatar
             ZStack {
                 Circle()
                     .fill(ColorTokens.Brand.primary.opacity(0.12))
@@ -744,14 +941,10 @@ private struct ChildSummaryCard: View {
                     .font(TypographyTokens.headline())
                     .foregroundStyle(ColorTokens.Brand.primary)
             }
-
-            // Name
             Text(card.name)
                 .font(TypographyTokens.headline())
                 .foregroundStyle(ColorTokens.Parent.ink)
                 .lineLimit(1)
-
-            // Best sound
             HStack(spacing: 4) {
                 Image(systemName: "star.fill")
                     .font(.system(size: 12))
@@ -761,24 +954,16 @@ private struct ChildSummaryCard: View {
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                     .lineLimit(1)
             }
-
-            // Comparison delta
             if let delta = card.comparisonDelta {
                 let pct = Int(abs(delta) * 100)
-                let sound = card.bestSound
-                let text = String(
-                    format: String(localized: "family_calendar.comparison.format"),
-                    card.name,
-                    sound,
-                    pct
-                )
+                let text = String(format: String(localized: "family_calendar.comparison.format"),
+                                  card.name, card.bestSound, pct)
                 Text(text)
                     .font(TypographyTokens.caption())
                     .foregroundStyle(delta >= 0 ? ColorTokens.Semantic.success : ColorTokens.Semantic.error)
                     .lineLimit(2)
                     .multilineTextAlignment(.center)
             }
-
             Spacer()
         }
         .padding(SpacingTokens.medium)
@@ -801,13 +986,11 @@ private struct InsightRow: View {
                 .foregroundStyle(ColorTokens.Brand.primary)
                 .frame(width: 24)
                 .accessibilityHidden(true)
-
             Text(insight.text)
                 .font(TypographyTokens.body())
                 .foregroundStyle(ColorTokens.Parent.ink)
                 .lineLimit(nil)
                 .ctaTextStyle()
-
             Spacer()
         }
         .accessibilityElement(children: .combine)
@@ -831,50 +1014,323 @@ private struct SectionHeader: View {
 
 private struct DayDetailSheet: View {
     let detail: DayDetailViewModel
+    let onSchedule: (Date) -> Void
 
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: SpacingTokens.medium) {
-                if detail.isEmpty {
-                    Text(String(localized: "family_calendar.detail.empty"))
-                        .font(TypographyTokens.body())
-                        .foregroundStyle(ColorTokens.Parent.inkMuted)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .multilineTextAlignment(.center)
-                } else {
-                    List(detail.sessionItems) { item in
-                        HStack {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(item.childName)
-                                    .font(TypographyTokens.headline())
-                                    .foregroundStyle(ColorTokens.Parent.ink)
-                                Text(String(format: String(localized: "family_calendar.detail.day_format"),
-                                           item.childName, item.sessionCount, item.accuracyPercent))
-                                    .font(TypographyTokens.body())
-                                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                            }
-                            Spacer()
-                            Text("\(item.accuracyPercent)%")
-                                .font(TypographyTokens.headline())
-                                .foregroundStyle(
-                                    item.accuracyPercent >= 70
-                                    ? ColorTokens.Semantic.success
-                                    : ColorTokens.Semantic.warning
-                                )
-                        }
-                        .listRowBackground(ColorTokens.Parent.surface)
+            ScrollView {
+                VStack(alignment: .leading, spacing: SpacingTokens.large) {
+                    if detail.isEmpty {
+                        Text(String(localized: "family_calendar.detail.empty"))
+                            .font(TypographyTokens.body())
+                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                            .frame(maxWidth: .infinity)
+                            .multilineTextAlignment(.center)
+                            .padding(SpacingTokens.large)
                     }
-                    .listStyle(.insetGrouped)
-                    .scrollContentBackground(.hidden)
-                    .background(ColorTokens.Parent.bg)
+
+                    // Прошедшие сессии
+                    if !detail.sessionItems.isEmpty {
+                        VStack(alignment: .leading, spacing: SpacingTokens.small) {
+                            Text(String(localized: "family_calendar.detail.sessions_header"))
+                                .font(TypographyTokens.headline())
+                                .foregroundStyle(ColorTokens.Parent.ink)
+                                .accessibilityAddTraits(.isHeader)
+
+                            ForEach(detail.sessionItems) { item in
+                                HStack {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(item.childName)
+                                            .font(TypographyTokens.headline())
+                                            .foregroundStyle(ColorTokens.Parent.ink)
+                                        Text(String(format: String(localized: "family_calendar.detail.day_format"),
+                                                    item.childName, item.sessionCount, item.accuracyPercent))
+                                            .font(TypographyTokens.body())
+                                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                                    }
+                                    Spacer()
+                                    Text("\(item.accuracyPercent)%")
+                                        .font(TypographyTokens.headline())
+                                        .foregroundStyle(item.accuracyPercent >= 70
+                                            ? ColorTokens.Semantic.success : ColorTokens.Semantic.warning)
+                                }
+                                .padding(SpacingTokens.medium)
+                                .background(ColorTokens.Parent.surface)
+                                .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card))
+                            }
+                        }
+                        .padding(.horizontal, SpacingTokens.regular)
+                    }
+
+                    // Запланированные уроки
+                    if !detail.dayPlans.isEmpty {
+                        VStack(alignment: .leading, spacing: SpacingTokens.small) {
+                            Text(String(localized: "family_calendar.detail.plans_header"))
+                                .font(TypographyTokens.headline())
+                                .foregroundStyle(ColorTokens.Parent.ink)
+                                .accessibilityAddTraits(.isHeader)
+
+                            ForEach(detail.dayPlans) { plan in
+                                HStack {
+                                    Image(systemName: "clock.fill")
+                                        .foregroundStyle(ColorTokens.Semantic.warning)
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text(plan.childName)
+                                            .font(TypographyTokens.headline())
+                                            .foregroundStyle(ColorTokens.Parent.ink)
+                                        Text("\(plan.lessonTemplate) • \(plan.timeText)")
+                                            .font(TypographyTokens.caption())
+                                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                                    }
+                                    Spacer()
+                                }
+                                .padding(SpacingTokens.medium)
+                                .background(ColorTokens.Semantic.warning.opacity(0.08))
+                                .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card))
+                            }
+                        }
+                        .padding(.horizontal, SpacingTokens.regular)
+                    }
+
+                    // Визит к специалисту
+                    if let visit = detail.specialistVisit {
+                        VStack(alignment: .leading, spacing: SpacingTokens.small) {
+                            Text(String(localized: "family_calendar.detail.visit_header"))
+                                .font(TypographyTokens.headline())
+                                .foregroundStyle(ColorTokens.Parent.ink)
+                                .accessibilityAddTraits(.isHeader)
+
+                            HStack {
+                                Image(systemName: "stethoscope")
+                                    .foregroundStyle(ColorTokens.Semantic.success)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(visit.specialistName)
+                                        .font(TypographyTokens.headline())
+                                        .foregroundStyle(ColorTokens.Parent.ink)
+                                    if !visit.notes.isEmpty {
+                                        Text(visit.notes)
+                                            .font(TypographyTokens.caption())
+                                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                                    }
+                                }
+                                Spacer()
+                            }
+                            .padding(SpacingTokens.medium)
+                            .background(ColorTokens.Semantic.success.opacity(0.08))
+                            .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card))
+                        }
+                        .padding(.horizontal, SpacingTokens.regular)
+                    }
+
+                    // Кнопка добавить урок
+                    HSButton(String(localized: "family_calendar.detail.schedule_button"), style: .secondary) {
+                        onSchedule(detail.date)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 56)
+                    .padding(.horizontal, SpacingTokens.regular)
                 }
+                .padding(.vertical, SpacingTokens.large)
             }
             .navigationTitle(detail.dateText)
             .navigationBarTitleDisplayMode(.inline)
             .background(ColorTokens.Parent.bg.ignoresSafeArea())
         }
+        .presentationDetents([.medium, .large])
+        .presentationDragIndicator(.visible)
+    }
+}
+
+// MARK: - ScheduleLessonSheet
+
+private struct ScheduleLessonSheet: View {
+    let date: Date
+    let children: [ChildAvatarViewModel]
+    let onConfirm: (String, String, Date, String, Bool) -> Void
+
+    @Environment(\.dismiss) private var dismiss
+    @State private var selectedChildIdx = 0
+    @State private var selectedTemplate = "repeat-after-model"
+    @State private var reminderEnabled = true
+    @State private var selectedTime: Date
+
+    private let templates = [
+        "repeat-after-model",
+        "listen-and-choose",
+        "drag-and-match",
+        "sound-hunter",
+        "articulation-imitation"
+    ]
+
+    init(date: Date, children: [ChildAvatarViewModel], onConfirm: @escaping (String, String, Date, String, Bool) -> Void) {
+        self.date = date
+        self.children = children
+        self.onConfirm = onConfirm
+        _selectedTime = State(initialValue: date)
+    }
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section(String(localized: "family_calendar.schedule.child_section")) {
+                    if !children.isEmpty {
+                        Picker(String(localized: "family_calendar.schedule.child_picker"), selection: $selectedChildIdx) {
+                            ForEach(0..<children.count, id: \.self) { idx in
+                                Text(children[idx].name).tag(idx)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                    } else {
+                        Text(String(localized: "family_calendar.schedule.no_children"))
+                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    }
+                }
+
+                Section(String(localized: "family_calendar.schedule.template_section")) {
+                    Picker(String(localized: "family_calendar.schedule.template_picker"), selection: $selectedTemplate) {
+                        ForEach(templates, id: \.self) { tpl in
+                            Text(tpl).tag(tpl)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                }
+
+                Section(String(localized: "family_calendar.schedule.time_section")) {
+                    DatePicker(
+                        String(localized: "family_calendar.schedule.time_label"),
+                        selection: $selectedTime,
+                        displayedComponents: [.date, .hourAndMinute]
+                    )
+                    .environment(\.locale, Locale(identifier: "ru_RU"))
+                }
+
+                Section {
+                    Toggle(String(localized: "family_calendar.schedule.reminder_toggle"), isOn: $reminderEnabled)
+                }
+            }
+            .scrollContentBackground(.hidden)
+            .background(ColorTokens.Parent.bg.ignoresSafeArea())
+            .navigationTitle(String(localized: "family_calendar.schedule.title"))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(String(localized: "common.cancel")) { dismiss() }
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(String(localized: "common.save")) {
+                        guard !children.isEmpty else { return }
+                        let child = children[selectedChildIdx]
+                        onConfirm(child.id, child.name, selectedTime, selectedTemplate, reminderEnabled)
+                        dismiss()
+                    }
+                    .fontWeight(.semibold)
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .disabled(children.isEmpty)
+                }
+            }
+        }
         .presentationDetents([.medium])
         .presentationDragIndicator(.visible)
+    }
+}
+
+// MARK: - WeekSummarySheet
+
+private struct WeekSummarySheet: View {
+    let summary: WeekSummaryViewModel
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: SpacingTokens.large) {
+                    // Заголовок с итогами
+                    HStack {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(summary.weekRangeText)
+                                .font(TypographyTokens.caption())
+                                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                            Text(String(format: String(localized: "family_calendar.week_summary.total_sessions"),
+                                        summary.familyTotalSessions))
+                                .font(TypographyTokens.headline())
+                                .foregroundStyle(ColorTokens.Parent.ink)
+                        }
+                        Spacer()
+                        if summary.allGoalsReached {
+                            Image(systemName: "star.circle.fill")
+                                .font(.system(size: 40))
+                                .foregroundStyle(ColorTokens.Brand.gold)
+                                .accessibilityLabel(String(localized: "family_calendar.week_summary.all_goals_reached"))
+                        }
+                    }
+                    .padding(.horizontal, SpacingTokens.regular)
+
+                    // Строки по детям
+                    VStack(spacing: SpacingTokens.small) {
+                        ForEach(summary.childRows) { row in
+                            WeekSummaryRow(row: row)
+                        }
+                    }
+                    .padding(.horizontal, SpacingTokens.regular)
+                }
+                .padding(.vertical, SpacingTokens.large)
+            }
+            .background(ColorTokens.Parent.bg.ignoresSafeArea())
+            .navigationTitle(String(localized: "family_calendar.week_summary.title"))
+            .navigationBarTitleDisplayMode(.inline)
+        }
+        .presentationDetents([.medium, .large])
+        .presentationDragIndicator(.visible)
+    }
+}
+
+private struct WeekSummaryRow: View {
+    let row: WeekSummaryRowViewModel
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: SpacingTokens.small) {
+            HStack {
+                ZStack {
+                    Circle()
+                        .fill(ColorTokens.Brand.primary.opacity(0.12))
+                        .frame(width: 36, height: 36)
+                    Text(row.initials)
+                        .font(TypographyTokens.caption())
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                }
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(row.childName)
+                        .font(TypographyTokens.headline())
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                    Text("\(row.sessionsText) • \(row.durationText) • \(row.accuracyPercent)%")
+                        .font(TypographyTokens.caption())
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(nil)
+                }
+                Spacer()
+                if row.goalReached {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundStyle(ColorTokens.Semantic.success)
+                        .accessibilityLabel(String(localized: "family_calendar.a11y.goal_reached"))
+                }
+            }
+
+            GeometryReader { geo in
+                ZStack(alignment: .leading) {
+                    RoundedRectangle(cornerRadius: 3)
+                        .fill(ColorTokens.Parent.inkSoft.opacity(0.15))
+                        .frame(height: 6)
+                    RoundedRectangle(cornerRadius: 3)
+                        .fill(row.goalReached ? ColorTokens.Semantic.success : ColorTokens.Brand.primary)
+                        .frame(width: geo.size.width * row.progressFraction, height: 6)
+                }
+            }
+            .frame(height: 6)
+        }
+        .padding(SpacingTokens.medium)
+        .background(ColorTokens.Parent.surface)
+        .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card))
+        .accessibilityElement(children: .combine)
     }
 }
 
