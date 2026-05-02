@@ -11,10 +11,17 @@ protocol OnboardingDisplayLogic: AnyObject {
     func displaySetRole(_ viewModel: OnboardingModels.SetRole.ViewModel)
     func displaySetProfile(_ viewModel: OnboardingModels.SetProfile.ViewModel)
     func displaySetAge(_ viewModel: OnboardingModels.SetAge.ViewModel)
+    func displaySetGender(_ viewModel: OnboardingModels.SetGender.ViewModel)
     func displayToggleGoal(_ viewModel: OnboardingModels.ToggleGoal.ViewModel)
     func displayToggleSound(_ viewModel: OnboardingModels.ToggleSound.ViewModel)
     func displaySetSchedule(_ viewModel: OnboardingModels.SetSchedule.ViewModel)
+    func displaySetLyalyaPreset(_ viewModel: OnboardingModels.SetLyalyaPreset.ViewModel)
+    func displayPermissionsStatus(_ viewModel: OnboardingModels.RequestPermission.ViewModel)
     func displaySkipPermissions(_ viewModel: OnboardingModels.SkipPermissions.ViewModel)
+    func displaySetReminderTime(_ viewModel: OnboardingModels.SetReminderTime.ViewModel)
+    func displayPrivacyConsent(_ viewModel: OnboardingModels.AcceptPrivacyConsent.ViewModel)
+    func displayPrivacyConsentRequired(_ viewModel: OnboardingModels.PrivacyConsentRequired.ViewModel)
+    func displayScreeningChoice(_ viewModel: OnboardingModels.SelectScreeningChoice.ViewModel)
     func displayStartModelDownload(_ viewModel: OnboardingModels.StartModelDownload.ViewModel)
     func displayCompleteOnboarding(_ viewModel: OnboardingModels.CompleteOnboarding.ViewModel)
 }
@@ -33,6 +40,21 @@ final class OnboardingDisplay: OnboardingDisplayLogic {
 
     // Profile
     var profile: OnboardingProfile = OnboardingProfile()
+
+    // Permissions
+    var permissionsStatus: OnboardingPermissionsStatus = OnboardingPermissionsStatus()
+    var permissionsMicLabel: String = ""
+    var permissionsCameraLabel: String = ""
+    var permissionsNotificationsLabel: String = ""
+
+    // Reminder
+    var reminderTimeFormatted: String = "17:00"
+
+    // Privacy
+    var privacyConsentError: String = ""
+
+    // Screening
+    var screeningChoice: Bool = false
 
     // CTA
     var canAdvance: Bool = true
@@ -97,6 +119,11 @@ final class OnboardingDisplay: OnboardingDisplayLogic {
         canAdvance = viewModel.canAdvance
     }
 
+    func displaySetGender(_ viewModel: OnboardingModels.SetGender.ViewModel) {
+        profile = viewModel.profile
+        canAdvance = viewModel.canAdvance
+    }
+
     func displayToggleGoal(_ viewModel: OnboardingModels.ToggleGoal.ViewModel) {
         profile = viewModel.profile
         canAdvance = viewModel.canAdvance
@@ -112,6 +139,19 @@ final class OnboardingDisplay: OnboardingDisplayLogic {
         canAdvance = viewModel.canAdvance
     }
 
+    func displaySetLyalyaPreset(_ viewModel: OnboardingModels.SetLyalyaPreset.ViewModel) {
+        profile = viewModel.profile
+        canAdvance = viewModel.canAdvance
+    }
+
+    func displayPermissionsStatus(_ viewModel: OnboardingModels.RequestPermission.ViewModel) {
+        permissionsStatus = viewModel.permissionsStatus
+        permissionsMicLabel = viewModel.micLabel
+        permissionsCameraLabel = viewModel.cameraLabel
+        permissionsNotificationsLabel = viewModel.notificationsLabel
+        canAdvance = viewModel.canAdvance
+    }
+
     func displaySkipPermissions(_ viewModel: OnboardingModels.SkipPermissions.ViewModel) {
         currentStep = viewModel.currentStep
         totalSteps = viewModel.totalSteps
@@ -119,6 +159,27 @@ final class OnboardingDisplay: OnboardingDisplayLogic {
         progressLabel = viewModel.progressLabel
         canAdvance = viewModel.canAdvance
         mascotText = viewModel.mascotText
+    }
+
+    func displaySetReminderTime(_ viewModel: OnboardingModels.SetReminderTime.ViewModel) {
+        profile = viewModel.profile
+        reminderTimeFormatted = viewModel.timeFormatted
+        canAdvance = viewModel.canAdvance
+    }
+
+    func displayPrivacyConsent(_ viewModel: OnboardingModels.AcceptPrivacyConsent.ViewModel) {
+        profile = viewModel.profile
+        canAdvance = viewModel.canAdvance
+    }
+
+    func displayPrivacyConsentRequired(_ viewModel: OnboardingModels.PrivacyConsentRequired.ViewModel) {
+        privacyConsentError = viewModel.errorMessage
+    }
+
+    func displayScreeningChoice(_ viewModel: OnboardingModels.SelectScreeningChoice.ViewModel) {
+        profile = viewModel.profile
+        screeningChoice = viewModel.wantsScreening
+        canAdvance = viewModel.canAdvance
     }
 
     func displayStartModelDownload(_ viewModel: OnboardingModels.StartModelDownload.ViewModel) {
