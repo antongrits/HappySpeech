@@ -1,22 +1,21 @@
 import AVFoundation
-import CoreVideo
 import SwiftUI
 
 // MARK: - ObjectHuntView
 //
-// 17-й шаблон игры — «Найди предмет».
+// Игра «Найди предметы на звук» (ObjectHunt).
 //
 // Поток:
-//   1. Загрузка раунда (.loading)
-//   2. Ляля: "Найди предмет на звук Ш!" (.scanning)
-//   3. Rear camera кадры → ObjectDetectionWorker (1 fps)
-//   4. Найден предмет → celebration overlay (.matchFound)
-//   5. Ребёнок нажимает "Дальше" → следующий раунд
-//   6. Все 3 раунда → .gameComplete → onComplete(score)
+//   1. Загрузка сцены (.loading) — VIP loadScene
+//   2. Ляля: "Найди что начинается на Ш!" (.playing)
+//   3. Сцена: 9 предметов — ребёнок нажимает правильные
+//   4. Каждый тап → ObjectHuntInteractor.tapObject
+//   5. Таймер 60 сек — ObjectHuntInteractor.timerTick
+//   6. Найдены все → .sceneComplete → следующая сцена
+//   7. 5 сцен пройдены → .gameComplete → onComplete(score)
 //
-// Camera: AVCaptureSession (задняя камера) — не требует TrueDepth/Face ID.
-// Detection: VNClassifyImageRequest (Vision built-in, ~30ms/frame на A15+).
-// Рекомендуемая частота: 1 fps из CaptureOutput.
+// Camera: не используется — предметы отображаются иконками SF Symbols
+// на цветном фоне с декором сцены. Чистый tap-режим.
 
 struct ObjectHuntView: View {
 
@@ -38,44 +37,40 @@ struct ObjectHuntView: View {
     @State private var display = ObjectHuntViewDisplay()
     @State private var adapter: ObjectHuntDisplayAdapter?
 
-    // MARK: - Camera
+    // MARK: - Timer
 
-    @State private var captureSession: AVCaptureSession?
-    @State private var cameraService: ObjectHuntCameraService?
+    @State private var timerTask: Task<Void, Never>?
     @State private var bootstrapped = false
 
     // MARK: - Body
 
     var body: some View {
-        ZStack(alignment: .top) {
-            // Rear camera preview
-            cameraBackground
+        ZStack {
+            sceneBackground
                 .ignoresSafeArea()
 
             VStack(spacing: 0) {
-                promptCard
+                topBar
                     .padding(.horizontal, SpacingTokens.screenEdge)
-                    .padding(.top, SpacingTokens.medium)
+                    .padding(.top, SpacingTokens.small)
 
-                Spacer()
+                Spacer(minLength: SpacingTokens.small)
 
                 switch display.phase {
                 case .loading:
                     loadingView
-                        .padding(.bottom, SpacingTokens.xLarge)
-                case .scanning:
-                    scanningHint
-                        .padding(.bottom, SpacingTokens.xLarge)
-                case .matchFound:
-                    matchFoundOverlay
-                        .padding(.bottom, SpacingTokens.xLarge)
-                case .roundComplete:
-                    roundCompleteView
-                        .padding(.bottom, SpacingTokens.xLarge)
+                case .playing:
+                    itemsGrid
+                        .padding(.horizontal, SpacingTokens.screenEdge)
+                case .sceneComplete:
+                    sceneCompleteCard
+                        .padding(.horizontal, SpacingTokens.screenEdge)
                 case .gameComplete:
-                    gameCompleteView
-                        .padding(.bottom, SpacingTokens.xLarge)
+                    gameCompleteCard
+                        .padding(.horizontal, SpacingTokens.screenEdge)
                 }
+
+                Spacer(minLength: SpacingTokens.medium)
             }
         }
         .task { await bootstrap() }
@@ -83,57 +78,62 @@ struct ObjectHuntView: View {
         .accessibilityElement(children: .contain)
     }
 
-    // MARK: - Camera Background
+    // MARK: - Scene background
 
-    @ViewBuilder
-    private var cameraBackground: some View {
-        if let session = captureSession {
-            AVCapturePreviewView(session: session)
-        } else {
-            LinearGradient(
-                colors: [ColorTokens.Brand.sky.opacity(0.35), ColorTokens.Kid.bgSoft],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-        }
+    private var sceneBackground: some View {
+        LinearGradient(
+            colors: [ColorTokens.Brand.sky.opacity(0.28), ColorTokens.Kid.bgSoft],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
     }
 
-    // MARK: - Prompt Card
+    // MARK: - Top bar
 
-    private var promptCard: some View {
-        HSCard {
-            HStack(spacing: SpacingTokens.small) {
-                HSMascotView(mood: .explaining, size: 56)
-                    .accessibilityHidden(true)
+    private var topBar: some View {
+        HStack(spacing: SpacingTokens.small) {
+            HSMascotView(mood: .explaining, size: 48)
+                .accessibilityHidden(true)
 
-                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                    Text(display.roundBadge)
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(display.roundBadge)
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
 
-                    Text(display.promptText.isEmpty
-                        ? String(localized: "object_hunt.find_sound \(display.targetSoundLabel)")
-                        : display.promptText)
-                        .font(TypographyTokens.headline(17))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(nil)
-                        .minimumScaleFactor(0.85)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                Text(display.promptText.isEmpty
+                    ? String(localized: "object_hunt.find_sound \(display.targetSoundLabel)")
+                    : display.promptText)
+                    .font(TypographyTokens.headline(16))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
 
+            VStack(spacing: 2) {
                 if !display.targetSoundLabel.isEmpty {
                     Text(display.targetSoundLabel)
-                        .font(TypographyTokens.kidDisplay(38))
+                        .font(TypographyTokens.kidDisplay(32))
                         .foregroundStyle(ColorTokens.Brand.primary)
-                        .frame(width: 52, height: 52)
+                        .frame(width: 44, height: 44)
                         .background(Circle().fill(ColorTokens.Brand.lilac.opacity(0.25)))
                         .accessibilityLabel(
                             String(localized: "object_hunt.target_sound_a11y \(display.targetSoundLabel)")
                         )
                 }
+                Text(display.timerLabel)
+                    .font(TypographyTokens.caption(13).monospacedDigit())
+                    .foregroundStyle(
+                        display.isTimerWarning ? ColorTokens.Semantic.error : ColorTokens.Kid.inkMuted
+                    )
+                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: display.isTimerWarning)
             }
         }
+        .padding(SpacingTokens.small)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                .fill(ColorTokens.Kid.surface.opacity(0.88))
+        )
         .accessibilityElement(children: .contain)
     }
 
@@ -147,120 +147,93 @@ struct ObjectHuntView: View {
                 .scaleEffect(1.4)
             Text(String(localized: "object_hunt.loading"))
                 .font(TypographyTokens.body())
-                .foregroundStyle(.white)
-                .shadow(color: .black.opacity(0.3), radius: 4)
+                .foregroundStyle(ColorTokens.Kid.ink)
         }
     }
 
-    // MARK: - Scanning Hint
+    // MARK: - Items grid
 
-    private var scanningHint: some View {
-        VStack(spacing: SpacingTokens.small) {
-            Image(systemName: "viewfinder")
-                .font(.system(size: 44, weight: .ultraLight))
-                .foregroundStyle(.white.opacity(0.9))
-                .symbolEffect(.pulse, isActive: !reduceMotion)
-
-            Text(String(localized: "object_hunt.scanning_hint"))
-                .font(TypographyTokens.body(15))
-                .foregroundStyle(.white)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .shadow(color: .black.opacity(0.35), radius: 4)
+    private var itemsGrid: some View {
+        let columns = [
+            GridItem(.flexible(), spacing: SpacingTokens.small),
+            GridItem(.flexible(), spacing: SpacingTokens.small),
+            GridItem(.flexible(), spacing: SpacingTokens.small)
+        ]
+        return LazyVGrid(columns: columns, spacing: SpacingTokens.small) {
+            ForEach(display.items) { item in
+                SceneItemCell(
+                    item: item,
+                    reduceMotion: reduceMotion
+                ) {
+                    interactor?.tapObject(.init(itemId: item.id))
+                }
+                .frame(minWidth: 56, minHeight: 56)
+            }
         }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(String(localized: "object_hunt.scanning_a11y"))
     }
 
-    // MARK: - Match Found
+    // MARK: - Scene complete card
 
-    private var matchFoundOverlay: some View {
+    private var sceneCompleteCard: some View {
         VStack(spacing: SpacingTokens.medium) {
-            HSMascotView(mood: .celebrating, size: 96)
-                .scaleEffect(reduceMotion ? 1.0 : 1.08)
+            HSMascotView(mood: .celebrating, size: 80)
+                .scaleEffect(reduceMotion ? 1.0 : 1.06)
                 .animation(
                     reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.55),
                     value: display.phase
                 )
                 .accessibilityHidden(true)
 
-            if let label = display.matchedLabel {
-                Text(label)
-                    .font(TypographyTokens.kidDisplay(34))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .padding(.horizontal, SpacingTokens.medium)
-                    .padding(.vertical, SpacingTokens.small)
-                    .background(
-                        RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                            .fill(ColorTokens.Kid.surface.opacity(0.95))
-                    )
-                    .shadow(color: .black.opacity(0.12), radius: 10, y: 4)
+            Text(display.sceneResultText)
+                .font(TypographyTokens.title(20))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+
+            if !display.sceneTimeText.isEmpty {
+                Text(display.sceneTimeText)
+                    .font(TypographyTokens.body())
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
             }
 
-            if let celebration = display.celebrationText {
-                Text(celebration)
-                    .font(TypographyTokens.headline(17))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, SpacingTokens.screenEdge)
-                    .background(
-                        Capsule().fill(ColorTokens.Kid.surface.opacity(0.80))
-                            .padding(.horizontal, -SpacingTokens.small)
-                            .padding(.vertical, -SpacingTokens.tiny)
-                    )
+            if !display.sceneStreakBonusText.isEmpty {
+                Text(display.sceneStreakBonusText)
+                    .font(TypographyTokens.headline(15))
+                    .foregroundStyle(ColorTokens.Brand.gold)
             }
 
             HSButton(
-                String(localized: "object_hunt.next_round"),
+                String(localized: "object_hunt.next_scene"),
                 style: .primary,
                 icon: "arrow.right.circle.fill"
             ) {
-                advanceRound()
+                interactor?.advanceToNextScene()
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .accessibilityHint(String(localized: "object_hunt.next_round_a11y"))
+            .padding(.top, SpacingTokens.tiny)
         }
+        .padding(SpacingTokens.large)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                .fill(ColorTokens.Kid.surface.opacity(0.94))
+        )
         .accessibilityElement(children: .contain)
     }
 
-    // MARK: - Round Complete
+    // MARK: - Game complete card
 
-    private var roundCompleteView: some View {
-        VStack(spacing: SpacingTokens.medium) {
-            Text(display.completionMessage)
-                .font(TypographyTokens.headline(19))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.vertical, SpacingTokens.small)
-                .background(
-                    RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                        .fill(ColorTokens.Kid.surface.opacity(0.88))
-                )
-
-            HSButton(
-                String(localized: "object_hunt.continue"),
-                style: .primary,
-                icon: "play.fill"
-            ) {
-                startNextRound()
-            }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-        }
-    }
-
-    // MARK: - Game Complete
-
-    private var gameCompleteView: some View {
+    private var gameCompleteCard: some View {
         VStack(spacing: SpacingTokens.large) {
-            HSMascotView(mood: .celebrating, size: 110)
+            HSMascotView(mood: .celebrating, size: 100)
                 .accessibilityHidden(true)
 
             starsRow
 
-            Text(display.scoreLabel)
+            Text(display.finalScoreLabel)
                 .font(TypographyTokens.title(22))
                 .foregroundStyle(ColorTokens.Kid.ink)
+
+            Text(display.accuracyLabel)
+                .font(TypographyTokens.body())
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
 
             Text(display.summaryText)
                 .font(TypographyTokens.body())
@@ -275,15 +248,13 @@ struct ObjectHuntView: View {
             ) {
                 onComplete(display.lastScore)
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
             .accessibilityHint(String(localized: "object_hunt.finish_a11y"))
         }
         .padding(SpacingTokens.large)
         .background(
             RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                .fill(ColorTokens.Kid.surface.opacity(0.93))
+                .fill(ColorTokens.Kid.surface.opacity(0.94))
         )
-        .padding(.horizontal, SpacingTokens.screenEdge)
         .accessibilityElement(children: .contain)
     }
 
@@ -291,7 +262,7 @@ struct ObjectHuntView: View {
         HStack(spacing: SpacingTokens.small) {
             ForEach(0..<3, id: \.self) { index in
                 Image(systemName: index < display.starsEarned ? "star.fill" : "star")
-                    .font(.system(size: 42, weight: .semibold))
+                    .font(.system(size: 40, weight: .semibold))
                     .foregroundStyle(
                         index < display.starsEarned ? ColorTokens.Brand.gold : ColorTokens.Kid.line
                     )
@@ -313,8 +284,17 @@ struct ObjectHuntView: View {
         guard !bootstrapped else { return }
         bootstrapped = true
 
-        // VIP wiring
-        let interactor = ObjectHuntInteractor(detectionWorker: container.objectDetectionWorker)
+        let haptic = container.hapticService
+        let sound = container.soundService
+        let planner = container.adaptivePlannerService
+
+        let interactor = ObjectHuntInteractor(
+            targetSound: activity.soundTarget,
+            childId: container.currentChildId.isEmpty ? "default" : container.currentChildId,
+            hapticService: haptic,
+            soundService: sound,
+            adaptivePlanner: planner
+        )
         let presenter = ObjectHuntPresenter()
         let router = ObjectHuntRouter()
         let adapter = ObjectHuntDisplayAdapter(display: display)
@@ -323,8 +303,8 @@ struct ObjectHuntView: View {
         interactor.router = router
         presenter.display = adapter
 
-        router.onComplete = { [display] score in
-            display.lastScore = score
+        router.onComplete = { [weak adapter] score in
+            adapter?.updateLastScore(score)
         }
 
         self.interactor = interactor
@@ -332,85 +312,129 @@ struct ObjectHuntView: View {
         self.router = router
         self.adapter = adapter
 
-        // Rear camera setup
-        let cameraService = ObjectHuntCameraService()
-        self.cameraService = cameraService
+        let group = ObjectHuntInteractor.resolveSoundGroup(for: activity.soundTarget)
+        interactor.loadScene(.init(
+            soundGroup: group,
+            targetSound: activity.soundTarget,
+            sceneIndex: 0
+        ))
 
-        do {
-            let session = try cameraService.startCapture()
-            self.captureSession = session
-        } catch {
-            HSLogger.ar.error("ObjectHunt: camera start failed — \(error.localizedDescription)")
-        }
+        startTimer()
+    }
 
-        // Detection loop — 1 fps из камеры, фильтрация по текущему targetSound
-        let detectionWorker = container.objectDetectionWorker
-        Task { [weak interactor, weak cameraService, display] in
-            guard let pixelStream = cameraService?.pixelBufferStream else { return }
-            for await wrapper in pixelStream {
-                guard let interactor else { break }
-                guard display.phase == .scanning else { continue }
-                let targetSound = display.targetSoundLabel.lowercased()
-                do {
-                    let objects = try await detectionWorker.detect(
-                        in: wrapper.buffer,
-                        targetSound: targetSound.isEmpty ? nil : targetSound
-                    )
-                    await MainActor.run {
-                        interactor.analyzeFrame(.init(detectedObjects: objects))
-                    }
-                } catch {
-                    HSLogger.ar.error("ObjectHunt: detection failed — \(error.localizedDescription)")
-                }
+    // MARK: - Timer
+
+    private func startTimer() {
+        timerTask?.cancel()
+        timerTask = Task { @MainActor [weak interactor] in
+            while !Task.isCancelled {
+                try? await Task.sleep(nanoseconds: 1_000_000_000)
+                guard !Task.isCancelled else { break }
+                interactor?.timerTick(.init())
             }
         }
-
-        // Первый раунд
-        let group = Self.resolveSoundGroup(for: activity.soundTarget)
-        interactor.loadRound(.init(
-            soundGroup: group,
-            targetSound: activity.soundTarget,
-            roundIndex: 0
-        ))
-    }
-
-    // MARK: - Round navigation
-
-    private func advanceRound() {
-        guard let interactor, let matched = display.lastMatchedObject else { return }
-        interactor.confirmMatch(.init(
-            matchedObject: matched,
-            roundIndex: display.currentRoundIndex
-        ))
-    }
-
-    private func startNextRound() {
-        guard let interactor else { return }
-        let group = Self.resolveSoundGroup(for: activity.soundTarget)
-        interactor.loadRound(.init(
-            soundGroup: group,
-            targetSound: activity.soundTarget,
-            roundIndex: display.currentRoundIndex
-        ))
     }
 
     // MARK: - Teardown
 
     private func teardown() {
-        cameraService?.stopCapture()
+        timerTask?.cancel()
+        timerTask = nil
+    }
+}
+
+// MARK: - SceneItemCell
+
+private struct SceneItemCell: View {
+
+    let item: SceneItem
+    let reduceMotion: Bool
+    let onTap: () -> Void
+
+    @State private var isAnimating = false
+
+    var body: some View {
+        Button(action: {
+            triggerTapAnimation()
+            onTap()
+        }) {
+            VStack(spacing: SpacingTokens.tiny) {
+                Image(systemName: item.icon)
+                    .font(.system(size: 32, weight: .medium))
+                    .foregroundStyle(iconColor)
+                    .frame(width: 44, height: 44)
+
+                Text(item.word)
+                    .font(TypographyTokens.caption(11))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, SpacingTokens.small)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.button, style: .continuous)
+                    .fill(cellBackground)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: RadiusTokens.button, style: .continuous)
+                            .strokeBorder(borderColor, lineWidth: borderWidth)
+                    )
+            )
+            .scaleEffect(isAnimating && !reduceMotion ? (item.tapState == .wrong ? 0.92 : 1.05) : 1.0)
+            .animation(
+                reduceMotion ? nil : .spring(response: 0.25, dampingFraction: 0.55),
+                value: isAnimating
+            )
+        }
+        .buttonStyle(.plain)
+        .disabled(item.tapState == .correct)
+        .accessibilityLabel(item.word)
+        .accessibilityHint(
+            item.tapState == .correct
+                ? String(localized: "object_hunt.item_found_a11y")
+                : String(localized: "object_hunt.item_hint_a11y")
+        )
+        .accessibilityAddTraits(item.tapState == .correct ? .isStaticText : [])
     }
 
-    // MARK: - Helpers
-
-    static func resolveSoundGroup(for targetSound: String) -> String {
-        let first = targetSound.uppercased().prefix(1)
-        switch first {
-        case "С", "З", "Ц": return "whistling"
-        case "Ш", "Ж", "Ч", "Щ": return "hissing"
-        case "Р", "Л": return "sonorant"
-        case "К", "Г", "Х": return "velar"
-        default: return "hissing"
+    private func triggerTapAnimation() {
+        guard !reduceMotion else { return }
+        isAnimating = true
+        Task { @MainActor in
+            try? await Task.sleep(nanoseconds: 250_000_000)
+            isAnimating = false
         }
+    }
+
+    private var iconColor: Color {
+        switch item.tapState {
+        case .correct: return ColorTokens.Semantic.success
+        case .wrong:   return ColorTokens.Semantic.error
+        case .hinted:  return ColorTokens.Brand.primary
+        case .idle:    return ColorTokens.Kid.ink
+        }
+    }
+
+    private var cellBackground: Color {
+        switch item.tapState {
+        case .correct: return ColorTokens.Semantic.success.opacity(0.15)
+        case .wrong:   return ColorTokens.Semantic.error.opacity(0.12)
+        case .hinted:  return ColorTokens.Brand.lilac.opacity(0.20)
+        case .idle:    return ColorTokens.Kid.surface.opacity(0.85)
+        }
+    }
+
+    private var borderColor: Color {
+        switch item.tapState {
+        case .correct: return ColorTokens.Semantic.success.opacity(0.6)
+        case .wrong:   return ColorTokens.Semantic.error.opacity(0.5)
+        case .hinted:  return ColorTokens.Brand.primary.opacity(0.5)
+        case .idle:    return ColorTokens.Kid.line.opacity(0.3)
+        }
+    }
+
+    private var borderWidth: CGFloat {
+        item.tapState == .idle ? 1 : 2
     }
 }
 
@@ -420,178 +444,91 @@ struct ObjectHuntView: View {
 final class ObjectHuntDisplayAdapter: ObjectHuntDisplayLogic {
 
     private let display: ObjectHuntViewDisplay
-    var lastScore: Float = 0
 
     init(display: ObjectHuntViewDisplay) {
         self.display = display
     }
 
-    func displayLoadRound(_ viewModel: ObjectHuntModels.LoadRound.ViewModel) {
+    func updateLastScore(_ score: Float) {
+        display.lastScore = score
+    }
+
+    func displayLoadScene(_ viewModel: ObjectHuntModels.LoadScene.ViewModel) {
+        display.items = viewModel.items
         display.targetSoundLabel = viewModel.targetSoundLabel
-        display.promptText = viewModel.promptText
+        display.sceneName = viewModel.sceneName
+        display.sceneBackground = viewModel.sceneBackground
         display.roundBadge = viewModel.roundBadge
-        display.matchedLabel = nil
-        display.celebrationText = nil
-        display.lastMatchedObject = nil
-        display.phase = .scanning
+        display.promptText = viewModel.promptText
+        display.targetCount = viewModel.targetCount
+        display.correctCount = 0
+        display.streakCount = 0
+        display.timerLabel = timerString(viewModel.timeLimitSec)
+        display.isTimerWarning = false
+        display.hintsRemaining = 2
+        display.isHintAvailable = true
+        display.phase = .playing
     }
 
-    func displayFrameAnalyzed(_ viewModel: ObjectHuntModels.FrameAnalyzed.ViewModel) {
-        guard display.phase == .scanning else { return }
-        if viewModel.isMatch {
-            display.matchedLabel = viewModel.matchedLabel
-            display.celebrationText = viewModel.celebrationText
-            display.lastMatchedObject = viewModel.matchedObject
-            display.phase = .matchFound
-            HSLogger.ar.info("ObjectHunt: match '\(viewModel.matchedLabel ?? "")'")
+    func displayTapObject(_ viewModel: ObjectHuntModels.TapObject.ViewModel) {
+        guard let index = display.items.firstIndex(where: { $0.id == viewModel.itemId }) else { return }
+        display.items[index].tapState = viewModel.newState
+        display.items[index].isHintActive = false
+        display.correctCount = viewModel.correctCount
+        display.streakCount = viewModel.streakCount
+        display.scoreLabel = viewModel.scoreLabel
+    }
+
+    func displayUseHint(_ viewModel: ObjectHuntModels.UseHint.ViewModel) {
+        display.hintsRemaining = viewModel.hintsRemaining
+        display.isHintAvailable = viewModel.isHintAvailable
+        if let hintId = viewModel.hintedItemId,
+           let index = display.items.firstIndex(where: { $0.id == hintId }) {
+            display.items[index].tapState = .hinted
+            display.items[index].isHintActive = true
         }
     }
 
-    func displayCompleteRound(_ viewModel: ObjectHuntModels.CompleteRound.ViewModel) {
-        display.completionMessage = viewModel.celebrationMessage
-        if viewModel.shouldAdvance {
-            display.phase = .roundComplete
-            display.currentRoundIndex += 1
+    func displayTimerTick(_ viewModel: ObjectHuntModels.TimerTick.ViewModel) {
+        display.timerLabel = viewModel.timerLabel
+        display.isTimerWarning = viewModel.isWarning
+        if viewModel.isExpired && display.phase == .playing {
+            display.phase = .sceneComplete
         }
+    }
+
+    func displayCompleteScene(_ viewModel: ObjectHuntModels.CompleteScene.ViewModel) {
+        display.sceneResultText = viewModel.summaryText
+        display.sceneTimeText = viewModel.timeText
+        display.sceneStreakBonusText = viewModel.streakBonusText
+        display.phase = .sceneComplete
     }
 
     func displayCompleteGame(_ viewModel: ObjectHuntModels.CompleteGame.ViewModel) {
         display.starsEarned = viewModel.starsEarned
-        display.scoreLabel = viewModel.scoreLabel
+        display.finalScoreLabel = viewModel.scoreLabel
+        display.accuracyLabel = viewModel.accuracyLabel
         display.summaryText = viewModel.summaryText
         display.lastScore = Float(viewModel.starsEarned) / 3.0
         display.phase = .gameComplete
     }
-}
 
-// MARK: - ObjectHuntCameraService
+    // MARK: - Helper
 
-/// Управляет `AVCaptureSession` для задней камеры и публикует
-/// сырые `CVPixelBuffer` через `AsyncStream` с частотой ~1 fps.
-/// Детектирование (VNClassifyImageRequest) выполняется в вызывающем коде,
-/// чтобы можно было динамически менять targetSound между раундами.
-/// Потокобезопасная обёртка над `CVPixelBuffer` для передачи через `AsyncStream`.
-/// Swift 6: `CVPixelBuffer` не является `Sendable`, поэтому явно помечаем как `@unchecked Sendable`.
-/// Ответственность за thread-safety: Vision обрабатывает буфер на своём потоке, после чего
-/// буфер не используется снова.
-struct SendablePixelBuffer: @unchecked Sendable {
-    let buffer: CVPixelBuffer
-}
-
-/// Управляет `AVCaptureSession` для задней камеры.
-/// Не помечается `@MainActor` — `AVCaptureSession` и его делегат работают на фоновом потоке.
-/// Публикует `CVPixelBuffer` (1 fps) через `AsyncStream` обёрнутый в `SendablePixelBuffer`.
-final class ObjectHuntCameraService: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
-
-    // MARK: - Output
-
-    private let (stream, continuation) = AsyncStream<SendablePixelBuffer>.makeStream()
-    var pixelBufferStream: AsyncStream<SendablePixelBuffer> { stream }
-
-    // MARK: - State
-
-    private var session: AVCaptureSession?
-    private var frameCounter: Int = 0
-    private let lock = NSLock()
-
-    // MARK: - Public API
-
-    func startCapture() throws -> AVCaptureSession {
-        let captureSession = AVCaptureSession()
-        captureSession.sessionPreset = .medium
-
-        guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back),
-              let input = try? AVCaptureDeviceInput(device: device) else {
-            throw ObjectHuntCameraError.deviceNotAvailable
-        }
-
-        captureSession.addInput(input)
-
-        let output = AVCaptureVideoDataOutput()
-        output.videoSettings = [
-            kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA
-        ]
-        output.setSampleBufferDelegate(self, queue: DispatchQueue(label: "ru.happyspeech.objecthunt.capture", qos: .userInteractive))
-        output.alwaysDiscardsLateVideoFrames = true
-        captureSession.addOutput(output)
-
-        self.session = captureSession
-
-        // startRunning() должен вызываться не на Main Thread
-        DispatchQueue.global(qos: .userInitiated).async {
-            captureSession.startRunning()
-        }
-
-        HSLogger.ar.info("ObjectHuntCameraService: capture started")
-        return captureSession
-    }
-
-    func stopCapture() {
-        continuation.finish()
-        session?.stopRunning()
-        session = nil
-        HSLogger.ar.info("ObjectHuntCameraService: capture stopped")
-    }
-
-    // MARK: - AVCaptureVideoDataOutputSampleBufferDelegate
-
-    /// ~30fps capture → 1fps публикуем (каждый 30-й кадр).
-    func captureOutput(
-        _ output: AVCaptureOutput,
-        didOutput sampleBuffer: CMSampleBuffer,
-        from connection: AVCaptureConnection
-    ) {
-        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
-
-        lock.lock()
-        frameCounter += 1
-        let shouldYield = frameCounter % 30 == 0
-        lock.unlock()
-
-        guard shouldYield else { return }
-        continuation.yield(SendablePixelBuffer(buffer: pixelBuffer))
+    private func timerString(_ totalSec: Int) -> String {
+        let m = totalSec / 60
+        let s = totalSec % 60
+        return String(format: "%d:%02d", m, s)
     }
 }
 
-// MARK: - ObjectHuntCameraError
+// MARK: - ObjectHuntCameraError (legacy — kept for compatibility)
 
 enum ObjectHuntCameraError: LocalizedError {
     case deviceNotAvailable
 
     var errorDescription: String? {
         String(localized: "object_hunt.permission")
-    }
-}
-
-// MARK: - AVCapturePreviewView
-
-/// SwiftUI-обёртка для `AVCaptureVideoPreviewLayer`.
-struct AVCapturePreviewView: UIViewRepresentable {
-
-    let session: AVCaptureSession
-
-    func makeUIView(context: Context) -> AVPreviewUIView {
-        let view = AVPreviewUIView()
-        view.backgroundColor = .black
-        view.setup(session: session)
-        return view
-    }
-
-    func updateUIView(_ uiView: AVPreviewUIView, context: Context) {}
-}
-
-@MainActor
-final class AVPreviewUIView: UIView {
-
-    override class var layerClass: AnyClass { AVCaptureVideoPreviewLayer.self }  // swiftlint:disable:this static_over_final_class
-
-    var previewLayer: AVCaptureVideoPreviewLayer {
-        layer as! AVCaptureVideoPreviewLayer  // swiftlint:disable:this force_cast
-    }
-
-    func setup(session: AVCaptureSession) {
-        previewLayer.session = session
-        previewLayer.videoGravity = .resizeAspectFill
     }
 }
 

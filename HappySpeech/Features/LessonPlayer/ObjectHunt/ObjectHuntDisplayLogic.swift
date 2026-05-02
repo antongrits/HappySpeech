@@ -5,9 +5,11 @@ import Foundation
 /// Контракт между Presenter и View (display side).
 @MainActor
 protocol ObjectHuntDisplayLogic: AnyObject {
-    func displayLoadRound(_ viewModel: ObjectHuntModels.LoadRound.ViewModel)
-    func displayFrameAnalyzed(_ viewModel: ObjectHuntModels.FrameAnalyzed.ViewModel)
-    func displayCompleteRound(_ viewModel: ObjectHuntModels.CompleteRound.ViewModel)
+    func displayLoadScene(_ viewModel: ObjectHuntModels.LoadScene.ViewModel)
+    func displayTapObject(_ viewModel: ObjectHuntModels.TapObject.ViewModel)
+    func displayUseHint(_ viewModel: ObjectHuntModels.UseHint.ViewModel)
+    func displayTimerTick(_ viewModel: ObjectHuntModels.TimerTick.ViewModel)
+    func displayCompleteScene(_ viewModel: ObjectHuntModels.CompleteScene.ViewModel)
     func displayCompleteGame(_ viewModel: ObjectHuntModels.CompleteGame.ViewModel)
 }
 
@@ -16,9 +18,11 @@ protocol ObjectHuntDisplayLogic: AnyObject {
 /// Контракт со стороны Interactor → Presenter.
 @MainActor
 protocol ObjectHuntPresentationLogic: AnyObject {
-    func presentLoadRound(_ response: ObjectHuntModels.LoadRound.Response)
-    func presentFrameAnalyzed(_ response: ObjectHuntModels.FrameAnalyzed.Response)
-    func presentCompleteRound(_ response: ObjectHuntModels.CompleteRound.Response)
+    func presentLoadScene(_ response: ObjectHuntModels.LoadScene.Response)
+    func presentTapObject(_ response: ObjectHuntModels.TapObject.Response)
+    func presentUseHint(_ response: ObjectHuntModels.UseHint.Response)
+    func presentTimerTick(_ response: ObjectHuntModels.TimerTick.Response)
+    func presentCompleteScene(_ response: ObjectHuntModels.CompleteScene.Response)
     func presentCompleteGame(_ response: ObjectHuntModels.CompleteGame.Response)
 }
 
@@ -27,5 +31,5 @@ protocol ObjectHuntPresentationLogic: AnyObject {
 /// Навигационный контракт.
 @MainActor
 protocol ObjectHuntRoutingLogic: AnyObject {
-    func routeToComplete()
+    func routeToComplete(score: Float)
 }
