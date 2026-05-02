@@ -22000,6 +22000,347 @@
         }
       }
     },
+    "stuttering.card.completed.accessibility": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выполнено сегодня"
+          }
+        }
+      }
+    },
+    "stuttering.exercise.easy_speech.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Говорим легко и без напряжения"
+          }
+        }
+      }
+    },
+    "stuttering.exercise.easy_speech.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лёгкое говорение"
+          }
+        }
+      }
+    },
+    "stuttering.exercise.metronome_rhythm.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Говорим в ритм метронома"
+          }
+        }
+      }
+    },
+    "stuttering.exercise.metronome_rhythm.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Речь и метроном"
+          }
+        }
+      }
+    },
+    "stuttering.exercise.pacing.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тренируем темп и паузы в речи"
+          }
+        }
+      }
+    },
+    "stuttering.exercise.pacing.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Темп речи"
+          }
+        }
+      }
+    },
+    "stuttering.info.how.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражнения помогают освоить мягкую атаку, правильное дыхание и нужный темп речи. Каждый день — маленький шаг к плавной речи."
+          }
+        }
+      }
+    },
+    "stuttering.info.how.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как помогает приложение?"
+          }
+        }
+      }
+    },
+    "stuttering.info.techniques.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мягкая атака, плавное дыхание, контроль темпа, ритм метронома, лёгкое говорение — проверенные техники логопедии."
+          }
+        }
+      }
+    },
+    "stuttering.info.techniques.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Техники работы"
+          }
+        }
+      }
+    },
+    "stuttering.info.what.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заикание — это когда слова выходят не сразу. Это не страшно и не твоя вина. Многие дети справляются с помощью упражнений."
+          }
+        }
+      }
+    },
+    "stuttering.info.what.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что такое заикание?"
+          }
+        }
+      }
+    },
+    "stuttering.mascot.accessibility": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Маскот Ляля"
+          }
+        }
+      }
+    },
+    "stuttering.progress.fluency": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "улучшение плавности"
+          }
+        }
+      }
+    },
+    "stuttering.progress.sessions": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "занятий выполнено"
+          }
+        }
+      }
+    },
+    "stuttering.progress.streak.days": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "дней подряд"
+          }
+        }
+      }
+    },
+    "stuttering.progress.streak.none": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начни сегодня"
+          }
+        }
+      }
+    },
+    "stuttering.recommendation.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рекомендуем сегодня"
+          }
+        }
+      }
+    },
+    "stuttering.section.education.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Узнать больше"
+          }
+        }
+      }
+    },
+    "stuttering.stub.back": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Назад"
+          }
+        }
+      }
+    },
+    "stuttering.info.close": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть"
+          }
+        }
+      }
+    },
+    "stuttering.stub.coming_soon": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражнение скоро появится. Попробуй другие разделы!"
+          }
+        }
+      }
+    },
+    "stuttering.toolbar.progress.accessibility": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мой прогресс"
+          }
+        }
+      }
+    },
+    "stuttering.voice.recommend.breathing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Привет! Сегодня попробуем дыхательное упражнение"
+          }
+        }
+      }
+    },
+    "stuttering.voice.recommend.diary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Давай запишем в дневник, как идёт работа!"
+          }
+        }
+      }
+    },
+    "stuttering.voice.recommend.easy_speech": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попробуй говорить легко и без спешки!"
+          }
+        }
+      }
+    },
+    "stuttering.voice.recommend.metronome": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодня поработаем с метрономом — это весело!"
+          }
+        }
+      }
+    },
+    "stuttering.voice.recommend.metronome_rhythm": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Говорим в ритм — попробуй упражнение с метрономом!"
+          }
+        }
+      }
+    },
+    "stuttering.voice.recommend.pacing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Давай потренируем темп речи — не торопись!"
+          }
+        }
+      }
+    },
+    "stuttering.voice.recommend.soft_onset": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодня попробуем мягкую атаку — говорим плавно!"
+          }
+        }
+      }
+    },
     "sync.error.invalid_payload": {
       "extractionState": "manual",
       "localizations": {
