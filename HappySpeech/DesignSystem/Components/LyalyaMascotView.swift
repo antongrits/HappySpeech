@@ -68,20 +68,10 @@ public enum LyalyaState: String, CaseIterable, Sendable {
         }
     }
 
-    /// Человекочитаемое описание (для Preview / accessibility)
+    /// Человекочитаемое описание (для Preview / accessibility).
+    /// Ключи: `lyalya.state.idle`, `lyalya.state.waving`, и т.д.
     public var localizedDescription: String {
-        switch self {
-        case .idle:        return "Покой"
-        case .waving:      return "Привет"
-        case .pointing:    return "Указывает"
-        case .celebrating: return "Праздник"
-        case .thinking:    return "Думает"
-        case .explaining:  return "Объясняет"
-        case .singing:     return "Поёт"
-        case .sad:         return "Грустит"
-        case .happy:       return "Радость"
-        case .encouraging: return "Поддержка"
-        }
+        String(localized: String.LocalizationValue("lyalya.state.\(rawValue)"))
     }
 }
 
@@ -136,6 +126,7 @@ public struct LyalyaMascotView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(LyalyaCustomizationStorage.self) private var customization: LyalyaCustomizationStorage?
     @Environment(\.mascotLipSyncState) private var lipSyncState
+    // HapticServiceKey.defaultValue = FallbackHapticService() — crash-safe, работает без AppContainer.
     @Environment(\.hapticService) private var hapticService
 
     // MARK: - Animation state

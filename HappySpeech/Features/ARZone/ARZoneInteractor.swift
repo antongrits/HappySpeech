@@ -39,10 +39,17 @@ final class ARZoneInteractor: ARZoneBusinessLogic {
     /// Текущий childId — устанавливается в первом loadGames, используется в refresh.
     private var currentChildId: String = ""
 
+    /// Хранит фоновую задачу загрузки planner-advice.
+    /// Отменяется при повторном вызове loadGames или при deinit.
+    private var loadTask: Task<Void, Never>?
+
     // MARK: - loadGames
 
     func loadGames(_ request: ARZoneModels.LoadGames.Request) {
         currentChildId = request.childId
+
+        // Отменяем предыдущую задачу при повторном вызове (быстрая навигация назад/вперёд).
+        loadTask?.cancel()
 
         let games = ARGameCatalog.all
         let instructions = InstructionCatalog.seeds
@@ -53,9 +60,10 @@ final class ARZoneInteractor: ARZoneBusinessLogic {
         )
 
         // Запрашиваем рекомендацию планировщика асинхронно — не блокируем первый рендер.
-        Task { [weak self] in
+        loadTask = Task { [weak self] in
             guard let self else { return }
             let advice = await self.fetchPlannerAdvice(childId: request.childId, games: games)
+            guard !Task.isCancelled else { return }
             self.cachedAdvice = advice
 
             let response = ARZoneModels.LoadGames.Response(

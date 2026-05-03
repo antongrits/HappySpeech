@@ -65,7 +65,8 @@ public final class AppContainer {
     // FaceAnalysisService — lazy, не требует изменения init
     private var _faceAnalysisService: (any FaceAnalysisService)?
 
-    // Block H: KidLLMNarrationService — lazy, использует llmDecisionService
+    // Block H: KidLLMNarrationService — lazy, использует llmDecisionService.
+    // internal visibility for preview() factory access — намеренно не private.
     var kidLLMNarrationServiceStorage: (any KidLLMNarrationServiceProtocol)?
 
     // Block K: SpotlightIndexer — CoreSpotlight indexing, COPPA-safe (нет имени ребёнка).
@@ -511,6 +512,10 @@ public extension AppContainer {
         let sharedLocalLLM = LiveLocalLLMService()
         let sharedInferenceActor = LLMInferenceActor(localLLM: sharedLocalLLM)
         let sharedLLMLogRepo: any LLMDecisionLogRepository = LiveLLMDecisionLogRepository(realmActor: realmActor)
+        // COPPA: HFInferenceClient используется ТОЛЬКО в parent/specialist circuit (Tier B).
+        // LiveLLMDecisionService внутри блокирует Tier B для kid context через contextRole проверку.
+        // KidLLMNarrationService использует только Tier A (on-device) или Tier C (rule-based).
+        // Этот клиент НИКОГДА не должен вызываться напрямую из kid-контекста.
         let sharedHFClient = HFInferenceClient()
         let sharedNetworkClient = NetworkClient()
         let sharedSyncService: any SyncService = LiveSyncService(realmActor: realmActor, networkMonitor: sharedNetworkMonitor)

@@ -24190,6 +24190,127 @@
           }
         }
       }
+    },
+    "lyalya.state.idle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Покой"
+          }
+        }
+      }
+    },
+    "lyalya.state.waving": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Привет"
+          }
+        }
+      }
+    },
+    "lyalya.state.pointing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Указывает"
+          }
+        }
+      }
+    },
+    "lyalya.state.celebrating": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Праздник"
+          }
+        }
+      }
+    },
+    "lyalya.state.thinking": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Думает"
+          }
+        }
+      }
+    },
+    "lyalya.state.explaining": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Объясняет"
+          }
+        }
+      }
+    },
+    "lyalya.state.singing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поёт"
+          }
+        }
+      }
+    },
+    "lyalya.state.sad": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Грустит"
+          }
+        }
+      }
+    },
+    "lyalya.state.happy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Радость"
+          }
+        }
+      }
+    },
+    "lyalya.state.encouraging": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поддержка"
+          }
+        }
+      }
+    },
+    "widget.mission.default_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук Р"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
