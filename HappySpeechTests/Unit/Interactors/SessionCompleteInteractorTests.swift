@@ -65,7 +65,11 @@ final class SessionCompleteInteractorTests: XCTestCase {
     }
 
     private func makeSUT() -> (SessionCompleteInteractor, SpyPresenter) {
-        let sut = SessionCompleteInteractor()
+        let sut = SessionCompleteInteractor(
+            realmActor: RealmActor(),
+            sessionRepository: MockSessionRepository(),
+            childRepository: MockChildRepository()
+        )
         let spy = SpyPresenter()
         sut.presenter = spy
         return (sut, spy)
@@ -84,9 +88,9 @@ final class SessionCompleteInteractorTests: XCTestCase {
 
     func test_advancePhase_callsPresenter() {
         let (sut, spy) = makeSUT()
-        sut.advancePhase(.init(to: .summary))
+        sut.advancePhase(.init(to: .nextPreview))
         XCTAssertTrue(spy.advancePhaseCalled)
-        XCTAssertEqual(spy.lastAdvancePhase?.phase, .summary)
+        XCTAssertEqual(spy.lastAdvancePhase?.phase, .nextPreview)
     }
 
     // MARK: - 3. shareResult после loadResult → presenter получает shareText

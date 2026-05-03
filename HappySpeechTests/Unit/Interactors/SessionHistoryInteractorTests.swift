@@ -40,6 +40,17 @@ final class SessionHistoryInteractorTests: XCTestCase {
         func presentFailure(_ response: SessionHistoryModels.Failure.Response) {
             failureCalled = true
         }
+        func presentApplySort(_ response: SessionHistoryModels.ApplySort.Response) {}
+        func presentLoadNextPage(_ response: SessionHistoryModels.LoadNextPage.Response) {}
+        func presentAddNote(_ response: SessionHistoryModels.AddNote.Response) {}
+        func presentDeleteNote(_ response: SessionHistoryModels.DeleteNote.Response) {}
+        func presentExportPDF(_ response: SessionHistoryModels.ExportPDF.Response) {}
+        func presentExportCSV(_ response: SessionHistoryModels.ExportCSV.Response) {}
+        func presentExportJSON(_ response: SessionHistoryModels.ExportJSON.Response) {}
+        func presentAudioState(_ response: SessionHistoryModels.AudioState.Response) {}
+        func presentStatsSummary(_ response: SessionHistoryModels.LoadStatsSummary.Response) {}
+        func presentLyalyaComment(_ response: SessionHistoryModels.LoadLyalyaComment.Response) {}
+        func presentSearch(_ response: SessionHistoryModels.Search.Response) {}
     }
 
     private func makeSUT() -> (SessionHistoryInteractor, SpyPresenter) {
@@ -73,7 +84,7 @@ final class SessionHistoryInteractorTests: XCTestCase {
     func test_applyFilter_callsPresenter() {
         let (sut, spy) = makeSUT()
         sut.loadHistory(.init(forceReload: false))
-        let filter = SessionFilter(fromDate: nil, toDate: nil, sounds: ["Р"])
+        let filter = SessionHistoryFilter(fromDate: nil, toDate: nil, sounds: ["Р"], gameTypes: [], scoreRange: .all)
         sut.applyFilter(.init(filter: filter))
         XCTAssertTrue(spy.applyFilterCalled)
     }
@@ -83,7 +94,7 @@ final class SessionHistoryInteractorTests: XCTestCase {
     func test_clearFilter_callsPresenter() {
         let (sut, spy) = makeSUT()
         sut.loadHistory(.init(forceReload: false))
-        let filter = SessionFilter(fromDate: nil, toDate: nil, sounds: ["Р"])
+        let filter = SessionHistoryFilter(fromDate: nil, toDate: nil, sounds: ["Р"], gameTypes: [], scoreRange: .all)
         sut.applyFilter(.init(filter: filter))
         sut.clearFilter(.init())
         XCTAssertTrue(spy.clearFilterCalled)

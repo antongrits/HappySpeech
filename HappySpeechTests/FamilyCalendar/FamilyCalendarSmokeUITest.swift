@@ -20,15 +20,19 @@ final class FamilyCalendarSmokeUITest: XCTestCase {
             ],
             selectedChildId: nil,
             currentMonth: Date(),
+            weekOffset: 0,
+            weekDays: [],
             calendarDays: [],
             heatmapEntries: [],
             comparisonCards: [],
+            weekGoalCards: [],
             insights: [],
             isLoading: false,
             isLoadingInsights: false,
             toastMessage: nil,
             isEmpty: true,
-            selectedDayDetail: nil
+            selectedDayDetail: nil,
+            weekSummary: nil
         )
 
         let view = NavigationStack {
@@ -138,6 +142,7 @@ final class FamilyCalendarSmokeUITest: XCTestCase {
         let scene = FamilyCalendarScene(
             childRepository: childRepo,
             sessionRepository: sessionRepo,
+            notificationService: nil,
             llmDecisionService: nil,
             coordinator: coordinator
         )

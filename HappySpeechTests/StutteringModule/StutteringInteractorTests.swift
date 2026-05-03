@@ -26,6 +26,9 @@ private final class SpyStutteringPresenter: StutteringPresentationLogic {
         presentSelectModeCalled = true
         lastSelectResponse = response
     }
+
+    func presentLoadProgress(_ response: StutteringModels.LoadProgress.Response) {}
+    func presentAdaptiveRecommendation(_ response: StutteringModels.LoadAdaptiveRecommendation.Response) {}
 }
 
 // MARK: - StutteringInteractorTests
@@ -55,8 +58,8 @@ final class StutteringInteractorTests: XCTestCase {
         sut.loadScreen(.init())
 
         XCTAssertTrue(spy.presentLoadScreenCalled)
-        XCTAssertEqual(spy.lastLoadResponse?.cards.count, 4,
-                       "loadScreen должен передавать ровно 4 карточки упражнений")
+        XCTAssertEqual(spy.lastLoadResponse?.cards.count, 7,
+                       "loadScreen должен передавать 7 карточек упражнений")
     }
 
     // MARK: - 2. loadScreen: hasSeenWelcome=false при чистых UserDefaults

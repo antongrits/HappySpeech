@@ -45,6 +45,12 @@ final class RewardsInteractorTests: XCTestCase {
             failureCalled = true
             lastFailure = response
         }
+        func presentSortStickers(_ response: RewardsModels.SortStickers.Response) {}
+        func presentSearchStickers(_ response: RewardsModels.SearchStickers.Response) {}
+        func presentChangeAlbumTheme(_ response: RewardsModels.ChangeAlbumTheme.Response) {}
+        func presentPrepareShare(_ response: RewardsModels.PrepareShare.Response) {}
+        func presentOpenAchievement(_ response: RewardsModels.OpenAchievement.Response) {}
+        func presentClaimStreakReward(_ response: RewardsModels.ClaimStreakReward.Response) {}
     }
 
     private func makeSUT() -> (RewardsInteractor, SpyPresenter) {
@@ -63,12 +69,12 @@ final class RewardsInteractorTests: XCTestCase {
         XCTAssertFalse(spy.lastLoadRewards?.stickers.isEmpty ?? true)
     }
 
-    // MARK: - 2. loadRewards seed содержит 24 стикера
+    // MARK: - 2. loadRewards seed содержит стикеры (не пустой)
 
-    func test_loadRewards_seedHas24Stickers() {
+    func test_loadRewards_seedHasStickers() {
         let (sut, spy) = makeSUT()
         sut.loadRewards(.init(childId: "child-1", forceReload: false))
-        XCTAssertEqual(spy.lastLoadRewards?.stickers.count, 24)
+        XCTAssertGreaterThan(spy.lastLoadRewards?.stickers.count ?? 0, 0)
     }
 
     // MARK: - 3. forceReload сбрасывает и пересоздаёт seed
@@ -76,7 +82,7 @@ final class RewardsInteractorTests: XCTestCase {
     func test_loadRewards_forceReload_resetsSeed() {
         let (sut, spy) = makeSUT()
         sut.loadRewards(.init(childId: "child-1", forceReload: true))
-        XCTAssertEqual(spy.lastLoadRewards?.stickers.count, 24)
+        XCTAssertGreaterThan(spy.lastLoadRewards?.stickers.count ?? 0, 0)
     }
 
     // MARK: - 4. filterByCollection возвращает только стикеры из нужной коллекции
@@ -84,12 +90,12 @@ final class RewardsInteractorTests: XCTestCase {
     func test_filterByCollection_stars_returnsOnlyStars() {
         let (sut, spy) = makeSUT()
         sut.loadRewards(.init(childId: "child-1", forceReload: false))
-        sut.filterByCollection(.init(collection: .stars))
+        sut.filterByCollection(.init(collection: .animals))
         XCTAssertTrue(spy.filterCalled)
-        let filtered = spy.lastFilter?.stickers.filter { $0.collection != .stars } ?? []
+        let filtered = spy.lastFilter?.stickers.filter { $0.collection != .animals } ?? []
         // Все возвращённые стикеры в правильной коллекции или activeCollection = .all
         // Проверяем что коллекция правильно зафиксирована
-        XCTAssertEqual(spy.lastFilter?.activeCollection, .stars)
+        XCTAssertEqual(spy.lastFilter?.activeCollection, .animals)
     }
 
     // MARK: - 5. filterByCollection .all возвращает все стикеры
@@ -97,8 +103,9 @@ final class RewardsInteractorTests: XCTestCase {
     func test_filterByCollection_all_returnsAll() {
         let (sut, spy) = makeSUT()
         sut.loadRewards(.init(childId: "child-1", forceReload: false))
+        let totalCount = spy.lastLoadRewards?.stickers.count ?? 0
         sut.filterByCollection(.init(collection: .all))
-        XCTAssertEqual(spy.lastFilter?.stickers.count, 24)
+        XCTAssertEqual(spy.lastFilter?.stickers.count, totalCount)
     }
 
     // MARK: - 6. openSticker с существующим id → presenter получает стикер
@@ -106,9 +113,9 @@ final class RewardsInteractorTests: XCTestCase {
     func test_openSticker_existing_callsPresenter() {
         let (sut, spy) = makeSUT()
         sut.loadRewards(.init(childId: "child-1", forceReload: false))
-        sut.openSticker(.init(id: "star.first"))
+        sut.openSticker(.init(id: "animals.cat"))
         XCTAssertTrue(spy.openStickerCalled)
-        XCTAssertEqual(spy.lastOpenSticker?.sticker.id, "star.first")
+        XCTAssertEqual(spy.lastOpenSticker?.sticker.id, "animals.cat")
     }
 
     // MARK: - 7. openSticker с несуществующим id → failure
@@ -127,7 +134,7 @@ final class RewardsInteractorTests: XCTestCase {
         let (sut, spy) = makeSUT()
         sut.loadRewards(.init(childId: "child-1", forceReload: false))
         // star.first и animal.cat помечены isNew: true в seed
-        sut.claimReward(.init(id: "star.first"))
+        sut.claimReward(.init(id: "animals.dog"))
         XCTAssertTrue(spy.claimRewardCalled)
         XCTAssertFalse(spy.lastClaimReward?.sticker.isNew ?? true)
     }

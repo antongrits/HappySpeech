@@ -187,7 +187,16 @@ final class ParentHomeViewModelDisplayTests: XCTestCase {
             soundProgress: [],
             homeTask: nil,
             recommendations: [],
-            screeningCard: nil
+            screeningCard: nil,
+            allChildren: [],
+            weekStats: [],
+            weeklyInsight: nil,
+            achievements: [],
+            notifications: [],
+            quickActions: [],
+            needsSpecialistReview: false,
+            todaySessionsCount: 0,
+            todayMinutes: 0
         )
     }
 }
@@ -245,9 +254,9 @@ final class ProgressDashboardDisplayTests: XCTestCase {
 @MainActor
 final class SessionCompleteDisplayTests: XCTestCase {
 
-    func test_defaultPhase_isMascot() {
+    func test_defaultPhase_isCelebration() {
         let sut = SessionCompleteDisplay()
-        XCTAssertEqual(sut.currentPhase, .mascot)
+        XCTAssertEqual(sut.currentPhase, .celebration)
     }
 
     func test_defaultState_zeroCounts() {
@@ -263,22 +272,22 @@ final class SessionCompleteDisplayTests: XCTestCase {
         XCTAssertEqual(sut.scoreInt, 92)
         XCTAssertEqual(sut.starsEarned, 3)
         XCTAssertEqual(sut.gameTitle, "Слушай и выбирай")
-        XCTAssertEqual(sut.currentPhase, .mascot)
+        XCTAssertEqual(sut.currentPhase, .celebration)
     }
 
     func test_displayAdvancePhase_changesPhase() {
         let sut = SessionCompleteDisplay()
-        sut.displayAdvancePhase(.init(phase: .score))
-        XCTAssertEqual(sut.currentPhase, .score)
+        sut.displayAdvancePhase(.init(phase: .scoreReveal))
+        XCTAssertEqual(sut.currentPhase, .scoreReveal)
     }
 
     func test_isPhaseVisible_trueForEarlierPhases() {
         let sut = SessionCompleteDisplay()
-        sut.displayAdvancePhase(.init(phase: .summary))
-        XCTAssertTrue(sut.isPhaseVisible(.mascot))
-        XCTAssertTrue(sut.isPhaseVisible(.score))
+        sut.displayAdvancePhase(.init(phase: .nextPreview))
+        XCTAssertTrue(sut.isPhaseVisible(.celebration))
+        XCTAssertTrue(sut.isPhaseVisible(.scoreReveal))
         XCTAssertTrue(sut.isPhaseVisible(.stars))
-        XCTAssertTrue(sut.isPhaseVisible(.summary))
+        XCTAssertTrue(sut.isPhaseVisible(.nextPreview))
     }
 
     func test_consumeShare_nilsText() {
@@ -308,10 +317,18 @@ final class SessionCompleteDisplayTests: XCTestCase {
             gameTitle: "Слушай и выбирай",
             soundLabel: "Звук С",
             attemptsLabel: "10 попыток",
+            correctLabel: "\(stars * 3) правильных",
             durationLabel: "5 мин",
+            hintsLabel: "0 подсказок",
             nextLessonTitle: nil,
             mascotTagline: "Отлично!",
-            accessibilitySummary: "Результат: \(score)%, \(stars) звезды"
+            accessibilitySummary: "Результат: \(score)%, \(stars) звезды",
+            isPerfect: score == 100,
+            showConfetti: stars == 3,
+            baseScoreLabel: "\(score)",
+            streakBonusLabel: "+0",
+            hintPenaltyLabel: "0",
+            totalScoreLabel: "\(score)"
         )
     }
 }
@@ -375,7 +392,8 @@ final class RewardsDisplayTests: XCTestCase {
                 name: "Звезда \(i + 1)",
                 isUnlocked: i < unlocked,
                 isNew: false,
-                collection: .stars,
+                collection: .animals,
+                rarity: .common,
                 accessibilityLabel: "Стикер \(i + 1)"
             )
         }
@@ -384,10 +402,12 @@ final class RewardsDisplayTests: XCTestCase {
             title: "Все",
             emoji: "🗂",
             isActive: true,
-            count: cellCount
+            count: cellCount,
+            totalSlots: cellCount
         )
         return RewardsModels.LoadRewards.ViewModel(
             cells: cells,
+            achievementRows: [],
             collections: [tab],
             unlockedCount: unlocked,
             totalCount: cellCount,
@@ -396,7 +416,12 @@ final class RewardsDisplayTests: XCTestCase {
             isEmpty: cells.isEmpty,
             emptyTitle: "",
             emptyMessage: "",
-            activeCollection: .all
+            activeCollection: .all,
+            sortOrder: .byCollection,
+            albumTheme: .bright,
+            walletViewModel: StarsWalletViewModel(totalEarned: 0, spent: 0, available: 0, accessibilityLabel: ""),
+            streakBanners: [],
+            currentStreak: 0
         )
     }
 
@@ -406,9 +431,12 @@ final class RewardsDisplayTests: XCTestCase {
             emoji: "⭐️",
             name: "Золотая звезда",
             collectionName: "Звёзды",
+            rarityLabel: "Обычная",
+            rarityColor: .gray,
             unlockCondition: "7-дневная серия",
             unlockedDateLabel: "25.04.2026",
-            isUnlocked: true
+            isUnlocked: true,
+            linkedSoundId: nil
         )
     }
 }
@@ -494,7 +522,10 @@ final class WorldMapDisplayTests: XCTestCase {
             totalProgressFraction: 0.5,
             streakLabel: "7 дней",
             hasStreak: true,
-            summaryAccessibilityLabel: "Прогресс: 50%"
+            summaryAccessibilityLabel: "Прогресс: 50%",
+            lyalyaIslandId: "island-0",
+            recommendedIslandId: zones.first?.id,
+            recommendedLevelId: nil
         )
     }
 }
@@ -743,6 +774,8 @@ final class SessionHistoryDisplayTests: XCTestCase {
             attemptsCount: 10,
             durationText: "15 мин",
             attemptRows: [],
+            parentNote: nil,
+            hasAudioRecording: false,
             accessibilityHeader: "Итог: 85%"
         )
     }
@@ -754,11 +787,14 @@ final class SessionHistoryDisplayTests: XCTestCase {
             totalCount: total,
             filteredCount: total,
             activeFilter: .empty,
+            activeSort: .byDate,
             activeSoundChips: [],
             isEmpty: groups.isEmpty,
             emptyKind: emptyKind,
             emptyTitle: emptyKind == .noSessions ? "Нет сессий" : "",
-            emptyMessage: emptyKind == .noSessions ? "Начните первое занятие" : ""
+            emptyMessage: emptyKind == .noSessions ? "Начните первое занятие" : "",
+            currentPage: 0,
+            isLastPage: true
         )
     }
 
@@ -768,11 +804,14 @@ final class SessionHistoryDisplayTests: XCTestCase {
             totalCount: 0,
             filteredCount: 0,
             activeFilter: .empty,
+            activeSort: .byDate,
             activeSoundChips: [],
             isEmpty: true,
             emptyKind: .noSessions,
             emptyTitle: "Нет сессий",
-            emptyMessage: "Начните занятие"
+            emptyMessage: "Начните занятие",
+            currentPage: 0,
+            isLastPage: true
         )
     }
 }

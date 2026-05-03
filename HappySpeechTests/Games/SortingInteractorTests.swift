@@ -40,6 +40,9 @@ private final class SpySortingPresenter: SortingPresentationLogic {
         classifyWordCalled = true
         lastClassifyWord = response
     }
+    func presentHint(_ response: SortingModels.RequestHint.Response) {}
+    func presentAutoPlace(_ response: SortingModels.AutoPlace.Response) {}
+    func presentStreakBonus(_ response: SortingModels.StreakBonus.Response) {}
     func presentTimerTick(_ response: SortingModels.TimerTick.Response) {
         timerTickCalled = true
     }

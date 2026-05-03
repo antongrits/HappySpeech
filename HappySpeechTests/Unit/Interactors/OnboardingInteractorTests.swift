@@ -82,6 +82,13 @@ final class OnboardingInteractorTests: XCTestCase {
             completeOnboardingCalled = true
             lastComplete = response
         }
+        func presentSetGender(_ response: OnboardingModels.SetGender.Response) {}
+        func presentPermissionsStatus(_ response: OnboardingModels.RequestPermission.Response) {}
+        func presentSetReminderTime(_ response: OnboardingModels.SetReminderTime.Response) {}
+        func presentPrivacyConsent(_ response: OnboardingModels.AcceptPrivacyConsent.Response) {}
+        func presentPrivacyConsentRequired(_ response: OnboardingModels.PrivacyConsentRequired.Response) {}
+        func presentScreeningChoice(_ response: OnboardingModels.SelectScreeningChoice.Response) {}
+        func presentSetLyalyaPreset(_ response: OnboardingModels.SetLyalyaPreset.Response) {}
     }
 
     private func makeSUT() -> (OnboardingInteractor, SpyPresenter) {
@@ -158,14 +165,16 @@ final class OnboardingInteractorTests: XCTestCase {
 
     // MARK: - 7. toggleGoal добавляет/убирает цель
 
-    func test_toggleGoal_addsAndRemoves() {
+    func test_toggleGoal_addsAndRemoves() async throws {
         let (sut, spy) = makeSUT()
         sut.loadOnboarding(.init())
         sut.toggleGoal(.init(goalId: "correct_sounds"))
+        try await Task.sleep(nanoseconds: 100_000_000)
         XCTAssertTrue(spy.toggleGoalCalled)
         XCTAssertTrue(spy.lastToggleGoal?.profile.goals.contains("correct_sounds") ?? false)
         // Повторный вызов убирает
         sut.toggleGoal(.init(goalId: "correct_sounds"))
+        try await Task.sleep(nanoseconds: 100_000_000)
         XCTAssertFalse(spy.lastToggleGoal?.profile.goals.contains("correct_sounds") ?? true)
     }
 
@@ -191,10 +200,11 @@ final class OnboardingInteractorTests: XCTestCase {
 
     // MARK: - 10. completeOnboarding вызывает presentCompleteOnboarding
 
-    func test_completeOnboarding_callsPresenter() {
+    func test_completeOnboarding_callsPresenter() async throws {
         let (sut, spy) = makeSUT()
         sut.loadOnboarding(.init())
         sut.completeOnboarding(.init())
+        try await Task.sleep(nanoseconds: 300_000_000)
         XCTAssertTrue(spy.completeOnboardingCalled)
         XCTAssertNotNil(spy.lastComplete)
     }

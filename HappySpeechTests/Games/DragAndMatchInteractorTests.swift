@@ -37,6 +37,8 @@ private final class SpyDragPresenter: DragAndMatchPresentationLogic {
         dropWordCalled = true
         lastDropWord = response
     }
+    func presentHint(_ response: DragAndMatchModels.RequestHint.Response) {}
+    func presentCompleteRound(_ response: DragAndMatchModels.CompleteRound.Response) {}
     func presentCompleteSession(_ response: DragAndMatchModels.CompleteSession.Response) {
         completeCalled = true
         lastComplete = response
@@ -60,7 +62,7 @@ final class DragAndMatchInteractorTests: XCTestCase {
 
     func test_loadSession_loadsWordsAndBuckets() async {
         let (sut, spy, _) = makeSUT()
-        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 5))
         XCTAssertTrue(spy.loadSessionCalled)
         XCTAssertGreaterThan(spy.lastLoadSession?.words.count ?? 0, 0)
         XCTAssertGreaterThan(spy.lastLoadSession?.buckets.count ?? 0, 0)
@@ -80,7 +82,7 @@ final class DragAndMatchInteractorTests: XCTestCase {
 
     func test_dropWord_correct_hapticFires() async {
         let (sut, spy, haptic) = makeSUT()
-        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 5))
         guard let word = spy.lastLoadSession?.words.first else { return }
         await sut.dropWord(.init(wordId: word.id, bucketId: word.correctBucketId))
         XCTAssertTrue(spy.dropWordCalled)
@@ -92,7 +94,7 @@ final class DragAndMatchInteractorTests: XCTestCase {
 
     func test_dropWord_wrong_hapticWarning() async {
         let (sut, spy, haptic) = makeSUT()
-        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 5))
         guard let word = spy.lastLoadSession?.words.first,
               let wrongBucket = spy.lastLoadSession?.buckets.first(where: { $0.id != word.correctBucketId }) else { return }
         await sut.dropWord(.init(wordId: word.id, bucketId: wrongBucket.id))
@@ -104,7 +106,7 @@ final class DragAndMatchInteractorTests: XCTestCase {
 
     func test_dropWord_feedbackText_notEmpty() async {
         let (sut, spy, _) = makeSUT()
-        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 5))
         guard let word = spy.lastLoadSession?.words.first else { return }
         await sut.dropWord(.init(wordId: word.id, bucketId: word.correctBucketId))
         XCTAssertFalse(spy.lastDropWord?.feedbackText.isEmpty ?? true)
@@ -114,7 +116,7 @@ final class DragAndMatchInteractorTests: XCTestCase {
 
     func test_completeSession_noDrop_correctCountZero() async {
         let (sut, spy, _) = makeSUT()
-        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 5))
         await sut.completeSession(.init())
         XCTAssertTrue(spy.completeCalled)
         XCTAssertEqual(spy.lastComplete?.correctCount, 0)
@@ -124,7 +126,7 @@ final class DragAndMatchInteractorTests: XCTestCase {
 
     func test_completeSession_afterCorrectDrops_correctCountPositive() async {
         let (sut, spy, _) = makeSUT()
-        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 5))
         guard let words = spy.lastLoadSession?.words else { return }
         for word in words.prefix(2) {
             await sut.dropWord(.init(wordId: word.id, bucketId: word.correctBucketId))
@@ -137,7 +139,7 @@ final class DragAndMatchInteractorTests: XCTestCase {
 
     func test_dropWord_unknownWordId_doesNotCrash() async {
         let (sut, spy, _) = makeSUT()
-        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 5))
         await sut.dropWord(.init(wordId: "nonexistent-id", bucketId: "bucket-1"))
         XCTAssertFalse(spy.dropWordCalled)
     }

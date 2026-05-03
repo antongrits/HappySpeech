@@ -24,8 +24,8 @@ final class StutteringSmokeUITest: XCTestCase {
 
         XCTAssertTrue(spy.presentLoadScreenCalled,
                       "Smoke: loadScreen должен вызывать presenter без краша")
-        XCTAssertEqual(spy.cardCount, 4,
-                       "Smoke: должно быть 4 карточки упражнений")
+        XCTAssertEqual(spy.cardCount, 7,
+                       "Smoke: должно быть 7 карточек упражнений")
     }
 
     // MARK: - Spy
@@ -41,5 +41,7 @@ final class StutteringSmokeUITest: XCTestCase {
         }
 
         func presentSelectMode(_ response: StutteringModels.SelectMode.Response) {}
+        func presentLoadProgress(_ response: StutteringModels.LoadProgress.Response) {}
+        func presentAdaptiveRecommendation(_ response: StutteringModels.LoadAdaptiveRecommendation.Response) {}
     }
 }

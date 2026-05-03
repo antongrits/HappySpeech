@@ -44,6 +44,8 @@ private final class SpyMemoryPresenter: MemoryPresentationLogic {
     func presentTimerTick(_ response: MemoryModels.TimerTick.Response) {
         timerTickCalled = true
     }
+    func presentUseHint(_ response: MemoryModels.UseHint.Response) {}
+    func presentCompleteRound(_ request: MemoryModels.CompleteRound.Request) {}
     func presentCompleteSession(_ response: MemoryModels.CompleteSession.Request) {
         completeCalled = true
         lastComplete = response
@@ -67,7 +69,7 @@ final class MemoryInteractorTests: XCTestCase {
 
     func test_loadSession_loads16Cards() async {
         let (sut, spy, _) = makeSUT()
-        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", startDifficulty: .easy))
         XCTAssertTrue(spy.loadSessionCalled)
         XCTAssertEqual(spy.lastLoadSession?.cards.count, 16)
     }
@@ -76,7 +78,7 @@ final class MemoryInteractorTests: XCTestCase {
 
     func test_allCardsFaceDown_onLoad() async {
         let (sut, spy, _) = makeSUT()
-        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", startDifficulty: .easy))
         let faceUpCards = spy.lastLoadSession?.cards.filter(\.isFaceUp) ?? []
         XCTAssertTrue(faceUpCards.isEmpty)
     }
@@ -85,7 +87,7 @@ final class MemoryInteractorTests: XCTestCase {
 
     func test_flipCard_flipsOne() async {
         let (sut, spy, haptic) = makeSUT()
-        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", startDifficulty: .easy))
         guard let firstCard = spy.lastLoadSession?.cards.first else { return }
         await sut.flipCard(.init(cardId: firstCard.id))
         XCTAssertTrue(spy.flipCardCalled)
@@ -98,7 +100,7 @@ final class MemoryInteractorTests: XCTestCase {
 
     func test_flipMatchingPair_matchFoundTrue() async {
         let (sut, spy, haptic) = makeSUT()
-        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", startDifficulty: .easy))
         guard let cards = spy.lastLoadSession?.cards,
               let firstCard = cards.first,
               let secondCard = cards.first(where: { $0.pairId == firstCard.pairId && $0.id != firstCard.id }) else { return }
@@ -112,7 +114,7 @@ final class MemoryInteractorTests: XCTestCase {
 
     func test_flipNonMatchingPair_matchFoundFalse() async {
         let (sut, spy, haptic) = makeSUT()
-        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", startDifficulty: .easy))
         guard let cards = spy.lastLoadSession?.cards else { return }
         let firstCard = cards[0]
         guard let secondCard = cards.first(where: { $0.pairId != firstCard.pairId }) else { return }
@@ -125,7 +127,7 @@ final class MemoryInteractorTests: XCTestCase {
     // MARK: - 6. MemoryCard.deck возвращает 16 карточек
 
     func test_deck_has16Cards() {
-        let deck = MemoryCard.deck(for: "whistling")
+        let deck = MemoryCard.deck(for: "whistling", difficulty: .easy)
         XCTAssertEqual(deck.count, 16)
     }
 
@@ -133,7 +135,7 @@ final class MemoryInteractorTests: XCTestCase {
 
     func test_cancel_afterLoad_doesNotCrash() async {
         let (sut, _, _) = makeSUT()
-        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", startDifficulty: .easy))
         sut.cancel()
         XCTAssertTrue(true)
     }
@@ -142,7 +144,7 @@ final class MemoryInteractorTests: XCTestCase {
 
     func test_flipMatchedCard_ignored() async {
         let (sut, spy, _) = makeSUT()
-        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша"))
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", startDifficulty: .easy))
         guard let cards = spy.lastLoadSession?.cards,
               let firstCard = cards.first,
               let secondCard = cards.first(where: { $0.pairId == firstCard.pairId && $0.id != firstCard.id }) else { return }
