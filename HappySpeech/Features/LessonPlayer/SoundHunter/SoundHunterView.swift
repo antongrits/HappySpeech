@@ -96,20 +96,21 @@ struct SoundHunterView: View {
     }
 
     private var hintBanner: some View {
-        HStack(spacing: SpacingTokens.small) {
-            Image(systemName: "magnifyingglass")
-                .font(.system(size: 18, weight: .semibold))
-            Text(display.hintText)
-                .font(TypographyTokens.headline(16))
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
+        HSLiquidGlassCard(style: .tinted(ColorTokens.Brand.primary), padding: SpacingTokens.small) {
+            HStack(spacing: SpacingTokens.small) {
+                LyalyaRealityKitView(state: .explaining, mood: 0.8)
+                    .frame(width: 48, height: 48)
+                    .accessibilityHidden(true)
+                Image(systemName: "magnifyingglass")
+                    .font(.system(size: 18, weight: .semibold))
+                    .accessibilityHidden(true)
+                Text(display.hintText)
+                    .font(TypographyTokens.headline(16))
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+            }
+            .foregroundStyle(ColorTokens.Brand.primary)
         }
-        .foregroundStyle(ColorTokens.Brand.primary)
-        .padding(.horizontal, SpacingTokens.regular)
-        .padding(.vertical, SpacingTokens.small)
-        .background(
-            Capsule().fill(ColorTokens.Brand.primary.opacity(0.12))
-        )
         .padding(.horizontal, SpacingTokens.screenEdge)
         .accessibilityLabel(display.hintText)
     }

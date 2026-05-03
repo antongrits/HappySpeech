@@ -135,7 +135,8 @@ struct WorldMapView: View {
 
     private var mascotHeader: some View {
         HStack(spacing: SpacingTokens.regular) {
-            LyalyaMascotView(state: .idle, size: 80)
+            LyalyaRealityKitView(state: .idle, mood: 0.7)
+                .frame(width: 80, height: 80)
                 .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: SpacingTokens.tiny) {

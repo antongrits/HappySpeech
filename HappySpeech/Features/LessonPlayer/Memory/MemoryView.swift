@@ -134,6 +134,10 @@ struct MemoryView: View {
     private var header: some View {
         VStack(spacing: SpacingTokens.small) {
             HStack(alignment: .firstTextBaseline) {
+                LyalyaRealityKitView(state: display.streakCount >= 3 ? .celebrating : .idle, mood: 0.7)
+                    .frame(width: 52, height: 52)
+                    .accessibilityHidden(true)
+
                 VStack(alignment: .leading, spacing: 2) {
                     Text(display.greeting.isEmpty
                          ? String(localized: "Найди все пары")
@@ -230,10 +234,17 @@ struct MemoryView: View {
             handleFlip(cardId: card.id)
         } label: {
             ZStack {
-                RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
-                    .fill(faceUp
-                          ? ColorTokens.Kid.surface
-                          : ColorTokens.Brand.primary.opacity(0.85))
+                if card.isMatched {
+                    // Matched карточки получают glass-эффект вместо plain surface
+                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                        .fill(ColorTokens.Feedback.correct.opacity(0.18))
+                        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous))
+                } else {
+                    RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                        .fill(faceUp
+                              ? ColorTokens.Kid.surface
+                              : ColorTokens.Brand.primary.opacity(0.85))
+                }
                 if faceUp {
                     cardFaceContent(card: card)
                 } else {

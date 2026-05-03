@@ -40,17 +40,18 @@ struct SoftOnsetView: View {
     // MARK: - Subviews
 
     private var mascotHeader: some View {
-        HSMascotView(mood: mascotMood)
+        LyalyaRealityKitView(state: lyalyaState, mood: 0.8)
             .frame(width: 100, height: 100)
             .frame(maxWidth: .infinity)
+            .accessibilityHidden(true)
     }
 
-    private var mascotMood: MascotMood {
+    private var lyalyaState: LyalyaState {
         switch interactor.display.feedbackStyle {
         case .success:  return .celebrating
         case .error:    return .encouraging
         default:
-            return interactor.display.isRecording ? .happy : .idle
+            return interactor.display.isRecording ? .explaining : .idle
         }
     }
 
@@ -64,29 +65,31 @@ struct SoftOnsetView: View {
     }
 
     private var lanternView: some View {
-        ZStack {
-            // Lantern body
-            RoundedRectangle(cornerRadius: 8, style: .continuous)
-                .fill(lanternBodyColor)
-                .frame(width: 60, height: 90)
+        HSLiquidGlassCard(style: .tinted(ColorTokens.Brand.butter), padding: SpacingTokens.medium) {
+            ZStack {
+                // Lantern body
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .fill(lanternBodyColor)
+                    .frame(width: 60, height: 90)
 
-            // Light glow
-            Circle()
-                .fill(lanternGlowColor)
-                .frame(width: 120, height: 120)
-                .blur(radius: 30)
-                .opacity(lanternGlowOpacity)
-                .animation(
-                    reduceMotion ? nil : lanternAnimation,
-                    value: interactor.display.lanternState
-                )
+                // Light glow
+                Circle()
+                    .fill(lanternGlowColor)
+                    .frame(width: 120, height: 120)
+                    .blur(radius: 30)
+                    .opacity(lanternGlowOpacity)
+                    .animation(
+                        reduceMotion ? nil : lanternAnimation,
+                        value: interactor.display.lanternState
+                    )
 
-            Image(systemName: "lamp.table.fill")
-                .font(.system(size: 48))
-                .foregroundStyle(lanternIconColor)
-                .animation(MotionTokens.spring, value: interactor.display.lanternState)
+                Image(systemName: "lamp.table.fill")
+                    .font(.system(size: 48))
+                    .foregroundStyle(lanternIconColor)
+                    .animation(MotionTokens.spring, value: interactor.display.lanternState)
+            }
+            .frame(width: 120, height: 120)
         }
-        .frame(width: 120, height: 120)
         .accessibilityHidden(true)
     }
 
@@ -133,12 +136,14 @@ struct SoftOnsetView: View {
     }
 
     private var waveformSection: some View {
-        HSAudioWaveform(
-            amplitudes: interactor.display.waveformLevels,
-            style: .recording,
-            tint: waveformTint
-        )
-        .frame(height: 72)
+        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.small) {
+            HSAudioWaveform(
+                amplitudes: interactor.display.waveformLevels,
+                style: .recording,
+                tint: waveformTint
+            )
+            .frame(height: 64)
+        }
         .accessibilityHidden(true)
     }
 

@@ -133,7 +133,8 @@ struct CustomizationView: View {
                 .animation(reduceMotion ? nil : .easeInOut(duration: 0.25),
                            value: viewModel.selectedColor)
 
-            LyalyaMascotView(state: lyalyaState, size: mascotSize)
+            LyalyaRealityKitView(state: lyalyaState, mood: 0.8)
+                .frame(width: mascotSize, height: mascotSize)
                 .id(viewModel.selectedSkin.rawValue)
                 .transition(reduceMotion
                     ? .opacity
@@ -159,21 +160,20 @@ struct CustomizationView: View {
     @ViewBuilder
     private var lyalyaPromptBubble: some View {
         if let prompt = viewModel.lyalyaPrompt {
-            Text(prompt)
-                .font(TypographyTokens.body(14))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, SpacingTokens.medium)
-                .padding(.vertical, SpacingTokens.small)
-                .background(
-                    RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
-                        .fill(ColorTokens.Kid.surface)
-                )
-                .padding(.horizontal, SpacingTokens.regular)
-                .padding(.bottom, SpacingTokens.small)
-                .transition(.opacity.combined(with: .scale(scale: 0.95)))
-                .animation(reduceMotion ? nil : MotionTokens.spring, value: prompt)
-                .accessibilityLabel(prompt)
+            HSLiquidGlassCard(style: .primary, padding: SpacingTokens.small) {
+                Text(prompt)
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .frame(maxWidth: .infinity)
+            }
+            .padding(.horizontal, SpacingTokens.regular)
+            .padding(.bottom, SpacingTokens.small)
+            .transition(.opacity.combined(with: .scale(scale: 0.95)))
+            .animation(reduceMotion ? nil : MotionTokens.spring, value: prompt)
+            .accessibilityLabel(prompt)
         }
     }
 

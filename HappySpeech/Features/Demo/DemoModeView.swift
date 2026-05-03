@@ -407,61 +407,57 @@ struct DemoModeView: View {
     // MARK: - Step card
 
     private func stepCard(for step: DemoStep) -> some View {
-        VStack(spacing: SpacingTokens.medium) {
-            illustrationView(for: step)
-            VStack(spacing: SpacingTokens.tiny) {
-                if !step.subtitle.isEmpty {
-                    Text(step.subtitle.uppercased())
-                        .font(TypographyTokens.mono(11))
-                        .foregroundStyle(step.accent.resolvedColor.opacity(0.9))
-                        .tracking(1.5)
-                        .lineLimit(1)
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.large) {
+            VStack(spacing: SpacingTokens.medium) {
+                illustrationView(for: step)
+                VStack(spacing: SpacingTokens.tiny) {
+                    if !step.subtitle.isEmpty {
+                        Text(step.subtitle.uppercased())
+                            .font(TypographyTokens.mono(11))
+                            .foregroundStyle(step.accent.resolvedColor.opacity(0.9))
+                            .tracking(1.5)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
+                    }
+                    Text(step.title)
+                        .font(TypographyTokens.title(24))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
                         .minimumScaleFactor(0.85)
+                        .accessibilityIdentifier("demo.step.title")
+                    Text(step.description)
+                        .font(TypographyTokens.body(15))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .multilineTextAlignment(.center)
+                        .lineSpacing(4)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                        .padding(.horizontal, SpacingTokens.tiny)
                 }
-                Text(step.title)
-                    .font(TypographyTokens.title(24))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                    .accessibilityIdentifier("demo.step.title")
-                Text(step.description)
-                    .font(TypographyTokens.body(15))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .multilineTextAlignment(.center)
-                    .lineSpacing(4)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                    .padding(.horizontal, SpacingTokens.tiny)
-            }
 
-            if step.hasInteractive, let actionTitle = step.actionTitle {
-                Button {
-                    interactor?.tapInteractive(.init())
-                } label: {
-                    Label(actionTitle, systemImage: "play.circle.fill")
-                        .font(TypographyTokens.cta())
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, SpacingTokens.medium)
-                        .padding(.vertical, SpacingTokens.small)
-                        .background(
-                            Capsule()
-                                .fill(step.accent.resolvedColor)
-                        )
+                if step.hasInteractive, let actionTitle = step.actionTitle {
+                    Button {
+                        interactor?.tapInteractive(.init())
+                    } label: {
+                        Label(actionTitle, systemImage: "play.circle.fill")
+                            .font(TypographyTokens.cta())
+                            .foregroundStyle(.white)
+                            .padding(.horizontal, SpacingTokens.medium)
+                            .padding(.vertical, SpacingTokens.small)
+                            .background(
+                                Capsule()
+                                    .fill(step.accent.resolvedColor)
+                            )
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(actionTitle)
+                    .accessibilityHint(String(localized: "demo.try.hint"))
+                    .accessibilityIdentifier("demo.try.button")
                 }
-                .buttonStyle(.plain)
-                .accessibilityLabel(actionTitle)
-                .accessibilityHint(String(localized: "demo.try.hint"))
-                .accessibilityIdentifier("demo.try.button")
             }
+            .frame(maxWidth: .infinity, alignment: .center)
         }
-        .padding(SpacingTokens.large)
-        .frame(maxWidth: .infinity, alignment: .center)
-        .background(
-            RoundedRectangle(cornerRadius: 28, style: .continuous)
-                .fill(ColorTokens.Kid.surface)
-                .shadow(color: .black.opacity(0.12), radius: 18, y: 6)
-        )
         .accessibilityElement(children: .combine)
         .accessibilityLabel(combinedAccessibilityLabel(for: step))
     }
@@ -510,10 +506,7 @@ struct DemoModeView: View {
                 .frame(width: 72, height: 72)
                 .accessibilityHidden(true)
 
-            HSCard(
-                style: .tinted(Color.white.opacity(0.95)),
-                padding: SpacingTokens.medium
-            ) {
+            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.medium) {
                 Text(display.mascotText)
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Kid.ink)
