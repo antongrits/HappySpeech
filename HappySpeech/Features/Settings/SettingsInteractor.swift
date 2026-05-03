@@ -188,6 +188,9 @@ final class SettingsInteractor: SettingsBusinessLogic {
         Task { @MainActor [weak self] in
             guard let self else { return }
             logger.info("exportData format=\(request.format.rawValue, privacy: .public)")
+            // E.2 — Performance trace: specialist export (parent circuit, COPPA-safe).
+            let exportTrace = performanceMonitorService?.trace(name: "specialist_export_trace")
+            exportTrace?.start()
             presenter?.presentLoadSettings(.init(
                 settings: settings,
                 appVersion: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0",
@@ -204,6 +207,7 @@ final class SettingsInteractor: SettingsBusinessLogic {
                     url = try await exportWorker.exportJSON(childId: request.childId, settings: settings)
                 }
                 logger.info("exportData success url=\(url.lastPathComponent, privacy: .public)")
+                exportTrace?.stop()
                 presenter?.presentExportData(.init(
                     success: true,
                     fileURL: url,
@@ -211,6 +215,7 @@ final class SettingsInteractor: SettingsBusinessLogic {
                     errorMessage: nil
                 ))
             } catch {
+                exportTrace?.stop()
                 logger.error("exportData failed: \(error.localizedDescription, privacy: .public)")
                 presenter?.presentExportData(.init(
                     success: false,
