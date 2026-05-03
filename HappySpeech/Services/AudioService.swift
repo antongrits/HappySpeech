@@ -347,6 +347,19 @@ public protocol NotificationService: Sendable {
     func scheduleDailyReminder(at hour: Int, minute: Int) async throws
     func cancelAllReminders() async
     func requestPermission() async -> Bool
+
+    /// Запланировать ежедневное напоминание ребёнку в 17:00.
+    /// Конкретное время фиксировано в реализации (детский контур, Kids Category).
+    func scheduleDailyKidReminder(childName: String) async
+
+    /// Отменить ежедневное напоминание ребёнку.
+    func cancelDailyKidReminder(childName: String) async
+
+    /// Запланировать еженедельный итог для родителя (воскресенье 19:00).
+    func scheduleWeeklyParentSummary(achievementsCount: Int, streakDays: Int) async
+
+    /// Отменить еженедельный итог для родителя.
+    func cancelWeeklyParentSummary() async
 }
 
 // MARK: - HapticService Protocol
