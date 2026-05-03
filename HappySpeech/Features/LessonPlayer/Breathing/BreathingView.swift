@@ -94,8 +94,18 @@ struct BreathingView: View {
                     .minimumScaleFactor(0.85)
             }
             Spacer()
-            HSMascotView(mood: store.mascotMoodView, size: 80)
+            LyalyaRealityKitView(state: breathingLyalyaState, mood: 0.7)
+                .frame(width: 80, height: 80)
                 .accessibilityHidden(true)
+        }
+    }
+
+    private var breathingLyalyaState: LyalyaState {
+        switch store.mascotMoodView {
+        case .celebrating: return .celebrating
+        case .encouraging:  return .encouraging
+        case .thinking:    return .thinking
+        default:           return .idle
         }
     }
 
@@ -161,40 +171,43 @@ struct BreathingView: View {
     private var tutorialOverlay: some View {
         Color.black.opacity(0.35).ignoresSafeArea()
             .overlay(
-                VStack(spacing: SpacingTokens.medium) {
-                    HSMascotView(mood: .thinking, size: 120)
-                        .accessibilityHidden(true)
-                    Text(tutorialText(for: store.tutorialStep))
-                        .font(TypographyTokens.title())
-                        .foregroundStyle(.white)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(nil)
-                        .minimumScaleFactor(0.85)
-                        .padding(.horizontal, SpacingTokens.screenEdge)
-                    HSButton(
-                        String(localized: "Дальше"),
-                        style: .primary,
-                        icon: "arrow.right.circle.fill"
-                    ) {
-                        Task { await store.interactor.advanceTutorial() }
+                HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.large) {
+                    VStack(spacing: SpacingTokens.medium) {
+                        LyalyaRealityKitView(state: .thinking, mood: 0.6)
+                            .frame(width: 100, height: 100)
+                            .accessibilityHidden(true)
+                        Text(tutorialText(for: store.tutorialStep))
+                            .font(TypographyTokens.title())
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(nil)
+                            .minimumScaleFactor(0.85)
+                        HSButton(
+                            String(localized: "Дальше"),
+                            style: .primary,
+                            icon: "arrow.right.circle.fill"
+                        ) {
+                            Task { await store.interactor.advanceTutorial() }
+                        }
+                        .frame(minHeight: 56)
                     }
-                    .frame(minHeight: 56)
-                    .padding(.horizontal, SpacingTokens.screenEdge)
                 }
+                .padding(.horizontal, SpacingTokens.screenEdge)
             )
     }
 
     private var warmUpOverlay: some View {
-        VStack(spacing: SpacingTokens.small) {
-            ProgressView()
-                .progressViewStyle(.circular)
-                .scaleEffect(1.4)
-            Text(String(localized: "Тише… готовимся"))
-                .font(TypographyTokens.body())
-                .foregroundStyle(ColorTokens.Kid.ink)
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.large) {
+            VStack(spacing: SpacingTokens.small) {
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .scaleEffect(1.4)
+                    .tint(ColorTokens.Brand.primary)
+                Text(String(localized: "Тише… готовимся"))
+                    .font(TypographyTokens.body())
+                    .foregroundStyle(ColorTokens.Kid.ink)
+            }
         }
-        .padding(SpacingTokens.large)
-        .background(ColorTokens.Kid.surface, in: RoundedRectangle(cornerRadius: RadiusTokens.md))
     }
 
     private func tutorialText(for step: Int) -> String {

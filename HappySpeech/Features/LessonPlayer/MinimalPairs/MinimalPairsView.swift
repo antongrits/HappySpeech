@@ -129,6 +129,7 @@ struct MinimalPairsView: View {
 
     private var roundView: some View {
         VStack(spacing: SpacingTokens.large) {
+            lyalyaMascotHeader
             progressHeader
             promptBlock
             optionsRow
@@ -148,6 +149,13 @@ struct MinimalPairsView: View {
             reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.85),
             value: display.phase
         )
+    }
+
+    private var lyalyaMascotHeader: some View {
+        LyalyaRealityKitView(state: display.isAnswered ? .happy : .idle, mood: 0.7)
+            .frame(width: 60, height: 60)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .accessibilityHidden(true)
     }
 
     private var progressHeader: some View {
@@ -216,27 +224,26 @@ struct MinimalPairsView: View {
 
     private func optionCard(word: String, emoji: String, isTarget: Bool) -> some View {
         let shouldHighlight = display.showHintHighlight && isTarget
+        let glassStyle: HSLiquidGlassStyle = shouldHighlight
+            ? .tinted(ColorTokens.Brand.primary)
+            : .primary
         return Button {
             selectOption(isTarget: isTarget)
         } label: {
-            VStack(spacing: SpacingTokens.small) {
-                Text(emoji)
-                    .font(.system(size: 72))
-                    .accessibilityHidden(true)
-                Text(word)
-                    .font(TypographyTokens.title(22))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
+            HSLiquidGlassCard(style: glassStyle, padding: SpacingTokens.small) {
+                VStack(spacing: SpacingTokens.small) {
+                    Text(emoji)
+                        .font(.system(size: 72))
+                        .accessibilityHidden(true)
+                    Text(word)
+                        .font(TypographyTokens.title(22))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                }
+                .frame(maxWidth: .infinity)
+                .frame(minHeight: 160)
             }
-            .frame(maxWidth: .infinity)
-            .frame(minHeight: 180)
-            .padding(.vertical, SpacingTokens.small)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                    .fill(cardFill(isTarget: isTarget, hintHighlight: shouldHighlight))
-                    .shadow(color: .black.opacity(0.08), radius: 8, y: 4)
-            )
             .overlay(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                     .strokeBorder(cardStroke(isTarget: isTarget, hintHighlight: shouldHighlight), lineWidth: 3)

@@ -89,6 +89,7 @@ struct BingoView: View {
 
     private var playingView: some View {
         VStack(spacing: SpacingTokens.medium) {
+            lyalyaHeader
             calledWordBanner
             progressBar
             grid
@@ -97,6 +98,13 @@ struct BingoView: View {
         .padding(.horizontal, SpacingTokens.screenEdge)
         .padding(.top, SpacingTokens.large)
         .padding(.bottom, SpacingTokens.medium)
+    }
+
+    private var lyalyaHeader: some View {
+        LyalyaRealityKitView(state: display.isCalling ? .explaining : .idle, mood: 0.7)
+            .frame(width: 56, height: 56)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .accessibilityHidden(true)
     }
 
     // MARK: Banner
@@ -188,33 +196,37 @@ struct BingoView: View {
     private var bingoOverlay: some View {
         ZStack {
             Color.black.opacity(0.55).ignoresSafeArea()
-            VStack(spacing: SpacingTokens.medium) {
-                Text("🎉")
-                    .font(.system(size: 80))
-                    .accessibilityHidden(true)
-                Text(String(localized: "БИНГО!"))
-                    .font(TypographyTokens.display(40))
-                    .foregroundStyle(.white)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.6)
-                Text(String(localized: "Ты собрал пять в ряд!"))
-                    .font(TypographyTokens.body(17))
-                    .foregroundStyle(.white.opacity(0.9))
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                    .padding(.horizontal, SpacingTokens.xLarge)
-                HSButton(
-                    String(localized: "Завершить"),
-                    style: .primary,
-                    icon: "checkmark.circle.fill"
-                ) {
-                    interactor?.completeGame()
+            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.large) {
+                VStack(spacing: SpacingTokens.medium) {
+                    LyalyaRealityKitView(state: .celebrating, mood: 1.0)
+                        .frame(width: 80, height: 80)
+                        .accessibilityHidden(true)
+                    Text("🎉")
+                        .font(.system(size: 64))
+                        .accessibilityHidden(true)
+                    Text(String(localized: "БИНГО!"))
+                        .font(TypographyTokens.display(40))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.6)
+                    Text(String(localized: "Ты собрал пять в ряд!"))
+                        .font(TypographyTokens.body(17))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                        .padding(.horizontal, SpacingTokens.xLarge)
+                    HSButton(
+                        String(localized: "Завершить"),
+                        style: .primary,
+                        icon: "checkmark.circle.fill"
+                    ) {
+                        interactor?.completeGame()
+                    }
+                    .frame(maxWidth: 320)
                 }
-                .frame(maxWidth: 320)
-                .padding(.horizontal, SpacingTokens.screenEdge)
             }
-            .padding(SpacingTokens.large)
+            .padding(.horizontal, SpacingTokens.large)
         }
         .transition(.opacity)
         .accessibilityElement(children: .contain)

@@ -227,7 +227,9 @@ struct SettingsView: View {
     private var settingsHeaderSection: some View {
         Section {
             HStack(spacing: SpacingTokens.regular) {
-                LyalyaMascotView(state: .idle, size: 72).accessibilityHidden(true)
+                LyalyaRealityKitView(state: .idle, mood: 0.6)
+                    .frame(width: 72, height: 72)
+                    .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: SpacingTokens.micro) {
                     Text(String(localized: "settings.header.greeting"))
                         .font(TypographyTokens.headline(17))
@@ -1439,9 +1441,7 @@ private struct SettingsShareSheet: UIViewControllerRepresentable {
     }
     func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
-
 // MARK: - Preview
-
 #Preview("Settings – Parent") {
     SettingsView()
         .environment(AppContainer.preview())
