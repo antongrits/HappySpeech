@@ -51,7 +51,7 @@ struct BreathingTreeView: View {
         ZStack {
             // Tree trunk (static)
             RoundedRectangle(cornerRadius: 4, style: .continuous)
-                .fill(Color.brown.opacity(0.6))
+                .fill(ColorTokens.Nature.treeTrunk)
                 .frame(width: 16, height: 80)
                 .offset(y: 50)
 
@@ -72,6 +72,10 @@ struct BreathingTreeView: View {
         .frame(height: 220)
     }
 
+    // Design exception: dynamic leaf color based on breathing progress.
+    // Intentionally not using ColorTokens — progress-based interpolation
+    // from ColorTokens.Brand.mint (hue≈0.46) to a deeper green.
+    // Reviewed and approved in ui-audit-v15.md.
     private var leafColor: Color {
         let progress = Double(interactor.display.treeProgress)
         return Color(

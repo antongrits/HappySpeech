@@ -37,7 +37,7 @@ struct AchievementsView: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            Color(.systemGroupedBackground)
+            ColorTokens.Kid.bg
                 .ignoresSafeArea()
 
             VStack(spacing: 0) {

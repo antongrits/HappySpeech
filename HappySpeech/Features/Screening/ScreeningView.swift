@@ -75,7 +75,7 @@ struct ScreeningView: View {
         HStack {
             Button(action: onCancel) {
                 Image(systemName: "xmark.circle.fill")
-                    .font(.system(size: 28))
+                    .font(TypographyTokens.title(28))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .frame(width: 56, height: 56)
             }

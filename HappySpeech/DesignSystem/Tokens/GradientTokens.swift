@@ -131,4 +131,17 @@ public enum GradientTokens {
         startPoint: .top,
         endPoint: .bottom
     )
+
+    // MARK: - Functional fade overlays
+
+    /// Нижний fade-оверлей для action footer (top = прозрачный, bottom = заданный цвет).
+    /// Используется в Onboarding для плавного перехода между контентом и кнопками.
+    /// - Parameter background: Цвет нижнего края (обычно последний цвет фонового градиента).
+    public static func kidBottomFade(background: Color) -> LinearGradient {
+        LinearGradient(
+            colors: [background.opacity(0), background],
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    }
 }
