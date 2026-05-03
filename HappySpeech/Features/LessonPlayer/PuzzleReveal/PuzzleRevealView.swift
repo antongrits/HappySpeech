@@ -131,18 +131,19 @@ struct PuzzleRevealView: View {
     // MARK: Word banner
 
     private var wordBanner: some View {
-        Text(display.word)
-            .font(TypographyTokens.title(30))
-            .foregroundStyle(ColorTokens.Kid.ink)
-            .lineLimit(1)
-            .minimumScaleFactor(0.6)
-            .padding(.horizontal, SpacingTokens.large)
-            .padding(.vertical, SpacingTokens.small)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
-                    .fill(ColorTokens.Kid.surface)
-            )
-            .accessibilityLabel(String(localized: "Слово: \(display.word)"))
+        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.small) {
+            HStack(spacing: SpacingTokens.small) {
+                LyalyaMascotView(state: .explaining, size: 56)
+                    .accessibilityHidden(true)
+                Text(display.word)
+                    .font(TypographyTokens.title(30))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
+                    .frame(maxWidth: .infinity)
+                    .accessibilityLabel(String(localized: "Слово: \(display.word)"))
+            }
+        }
     }
 
     // MARK: Grid 3×3

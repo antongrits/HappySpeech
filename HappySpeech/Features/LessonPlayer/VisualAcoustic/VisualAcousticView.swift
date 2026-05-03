@@ -90,6 +90,12 @@ struct VisualAcousticView: View {
     private var playingView: some View {
         VStack(spacing: SpacingTokens.medium) {
             progressHeader
+            HStack(spacing: SpacingTokens.small) {
+                LyalyaMascotView(state: .encouraging, size: 56)
+                    .accessibilityHidden(true)
+                Spacer()
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
             emojiTile
             questionBlock
             listenButton

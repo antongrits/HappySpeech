@@ -16,6 +16,9 @@ struct AuthSignUpView: View {
 
     private enum Field: Hashable { case name, email, password, confirm }
 
+    @State private var appeared = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     var body: some View {
         ZStack {
             ColorTokens.Kid.bg.ignoresSafeArea()
@@ -27,7 +30,19 @@ struct AuthSignUpView: View {
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: SpacingTokens.sp5) {
                         header
-                        formSection
+                            .offset(y: appeared ? 0 : 24)
+                            .opacity(appeared ? 1 : 0)
+                            .animation(
+                                reduceMotion ? nil : MotionTokens.spring,
+                                value: appeared
+                            )
+                        formGlassSection
+                            .offset(y: appeared ? 0 : 32)
+                            .opacity(appeared ? 1 : 0)
+                            .animation(
+                                reduceMotion ? nil : MotionTokens.spring.delay(0.1),
+                                value: appeared
+                            )
                         submitButton
                         footerLink
                     }
@@ -37,6 +52,7 @@ struct AuthSignUpView: View {
                 }
             }
         }
+        .onAppear { appeared = true }
         .loadingOverlay(scene?.state.isLoading ?? false)
         .alert(
             scene?.state.error?.title ?? String(localized: "Ошибка"),
@@ -120,7 +136,7 @@ struct AuthSignUpView: View {
 
     private var header: some View {
         VStack(spacing: SpacingTokens.sp2) {
-            HSMascotView(mood: .celebrating, size: 96)
+            LyalyaMascotView(state: .celebrating, size: 96)
                 .padding(.top, SpacingTokens.sp2)
 
             Text(String(localized: "Создать аккаунт"))
@@ -132,6 +148,12 @@ struct AuthSignUpView: View {
                 .font(TypographyTokens.body(14))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
+        }
+    }
+
+    private var formGlassSection: some View {
+        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.sp4) {
+            formSection
         }
     }
 

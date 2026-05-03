@@ -47,6 +47,9 @@ struct RoleSelectView: View {
             VStack(spacing: 0) {
                 // Header
                 VStack(spacing: SpacingTokens.sp3) {
+                    LyalyaMascotView(state: .waving, size: 100)
+                        .padding(.bottom, SpacingTokens.sp2)
+
                     Text(String(localized: "Кто вы?"))
                         .font(TypographyTokens.display(28))
                         .foregroundStyle(ColorTokens.Kid.ink)

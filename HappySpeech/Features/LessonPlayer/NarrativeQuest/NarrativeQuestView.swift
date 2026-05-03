@@ -356,22 +356,22 @@ struct NarrativeQuestView: View {
     private var successOverlay: some View {
         ZStack {
             Color.black.opacity(0.15).ignoresSafeArea()
-            VStack(spacing: SpacingTokens.small) {
-                Text(display.rewardEmoji)
-                    .font(.system(size: 72))
-                    .accessibilityHidden(true)
-                Text(display.feedbackText)
-                    .font(TypographyTokens.title(20))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
+            HSLiquidGlassCard(
+                style: .tinted(ColorTokens.Brand.mint),
+                padding: SpacingTokens.large
+            ) {
+                VStack(spacing: SpacingTokens.small) {
+                    Text(display.rewardEmoji)
+                        .font(.system(size: 64))
+                        .accessibilityHidden(true)
+                    Text(display.feedbackText)
+                        .font(TypographyTokens.title(20))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                }
             }
-            .padding(SpacingTokens.large)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
-                    .fill(ColorTokens.Brand.mint.opacity(0.95))
-            )
             .padding(.horizontal, SpacingTokens.xLarge)
         }
         .accessibilityElement(children: .combine)
@@ -430,23 +430,27 @@ struct NarrativeQuestView: View {
     }
 
     private func lyalyaBubble(text: String) -> some View {
-        HSCard(style: .elevated) {
-            VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
-                Text(String(localized: "Ляля:"))
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                Text(text)
-                    .font(TypographyTokens.body(16))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.9)
+        HSLiquidGlassCard(style: .primary) {
+            HStack(alignment: .top, spacing: SpacingTokens.small) {
+                LyalyaMascotView(state: .explaining, size: 56)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
+                    Text(String(localized: "Ляля:"))
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    Text(text)
+                        .font(TypographyTokens.body(16))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.9)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 
     private var taskCard: some View {
-        HSCard(style: .tinted(ColorTokens.Brand.butter.opacity(0.35))) {
+        HSLiquidGlassCard(style: .tinted(ColorTokens.Brand.butter)) {
             VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
                 Text(String(localized: "Задача:"))
                     .font(TypographyTokens.caption(12))

@@ -11,6 +11,9 @@ struct AuthForgotPasswordView: View {
     @State private var email: String = ""
     @FocusState private var isFocused: Bool
 
+    @State private var appeared = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     var body: some View {
         ZStack {
             ColorTokens.Kid.bg.ignoresSafeArea()
@@ -21,11 +24,29 @@ struct AuthForgotPasswordView: View {
 
                 VStack(spacing: SpacingTokens.sp6) {
                     header
+                        .offset(y: appeared ? 0 : 24)
+                        .opacity(appeared ? 1 : 0)
+                        .animation(
+                            reduceMotion ? nil : MotionTokens.spring,
+                            value: appeared
+                        )
 
                     if let success = scene?.state.forgotPasswordViewModel {
                         successState(message: success.successMessage)
+                            .offset(y: appeared ? 0 : 20)
+                            .opacity(appeared ? 1 : 0)
+                            .animation(
+                                reduceMotion ? nil : MotionTokens.spring.delay(0.1),
+                                value: appeared
+                            )
                     } else {
-                        form
+                        formGlassSection
+                            .offset(y: appeared ? 0 : 28)
+                            .opacity(appeared ? 1 : 0)
+                            .animation(
+                                reduceMotion ? nil : MotionTokens.spring.delay(0.1),
+                                value: appeared
+                            )
                     }
 
                     Spacer(minLength: 0)
@@ -34,6 +55,7 @@ struct AuthForgotPasswordView: View {
                 .padding(.top, SpacingTokens.sp5)
             }
         }
+        .onAppear { appeared = true }
         .loadingOverlay(scene?.state.isLoading ?? false)
         .alert(
             scene?.state.error?.title ?? String(localized: "Ошибка"),
@@ -102,9 +124,15 @@ struct AuthForgotPasswordView: View {
         .ignoresSafeArea()
     }
 
+    private var formGlassSection: some View {
+        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.sp4) {
+            form
+        }
+    }
+
     private var header: some View {
         VStack(spacing: SpacingTokens.sp3) {
-            HSMascotView(mood: .thinking, size: 96)
+            LyalyaMascotView(state: .thinking, size: 96)
 
             Text(String(localized: "Забыли пароль?"))
                 .font(TypographyTokens.title(24))
@@ -141,25 +169,25 @@ struct AuthForgotPasswordView: View {
     }
 
     private func successState(message: String) -> some View {
-        VStack(spacing: SpacingTokens.sp5) {
-            Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 56))
-                .foregroundStyle(ColorTokens.Semantic.success)
+        HSLiquidGlassCard(style: .tinted(ColorTokens.Semantic.success), padding: SpacingTokens.sp6) {
+            VStack(spacing: SpacingTokens.sp5) {
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: 56))
+                    .foregroundStyle(ColorTokens.Semantic.success)
+                    .accessibilityHidden(true)
 
-            Text(message)
-                .font(TypographyTokens.body(15))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
+                Text(message)
+                    .font(TypographyTokens.body(15))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
 
-            HSButton(String(localized: "Вернуться ко входу"), style: .secondary) {
-                coordinator.navigate(to: .auth)
+                HSButton(String(localized: "Вернуться ко входу"), style: .secondary) {
+                    coordinator.navigate(to: .auth)
+                }
             }
         }
-        .padding(SpacingTokens.sp6)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
-                .fill(ColorTokens.Kid.surface)
-        )
     }
 }
 
