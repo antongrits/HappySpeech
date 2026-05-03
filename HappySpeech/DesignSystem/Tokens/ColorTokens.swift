@@ -189,6 +189,31 @@ public enum ColorTokens {
         public static let classic = Color.white
     }
 
+    // MARK: - Overlay Colors
+
+    /// Семантические оверлейные цвета для модальных затемнений, glass-эффектов и хайлайтов.
+    ///
+    /// Использование именованных токенов вместо `Color.black.opacity(0.45)` обеспечивает
+    /// единый визуальный язык на всех экранах и упрощает тонкую настройку.
+    public enum Overlay {
+        /// Стандартный modal dimmer (для sheet, fullscreen cover).
+        public static let scrim = Color.black.opacity(0.5)
+        /// Лёгкое затемнение (для карточек, hover-состояний).
+        public static let dimmerLight = Color.black.opacity(0.25)
+        /// Стандартное затемнение (для modal, hero overlay).
+        public static let dimmer = Color.black.opacity(0.45)
+        /// Тёмное затемнение (для video player, fullscreen).
+        public static let dimmerHeavy = Color.black.opacity(0.65)
+        /// Стеклянный белый тинт (light glass tint).
+        public static let glass = Color.white.opacity(0.15)
+        /// Стеклянный тёмный тинт (dark glass tint).
+        public static let glassDark = Color.black.opacity(0.15)
+        /// Хайлайт (для pressed-состояний, активных элементов).
+        public static let highlight = Color.white.opacity(0.25)
+        /// Мягкая тень (для card depth).
+        public static let shadow = Color.black.opacity(0.08)
+    }
+
     // MARK: - Session Colors
 
     /// Used in SessionShell progress indicators and fatigue-detection UI.

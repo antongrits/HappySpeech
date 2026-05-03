@@ -119,7 +119,7 @@ struct AnimatedStoryPlayerView: View {
         ZStack {
             Color.black
             Text(String(localized: "story.video.error"))
-                .font(.system(size: 16, weight: .medium, design: .rounded))
+                .font(TypographyTokens.body(16))
                 .foregroundStyle(.white)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
@@ -132,13 +132,13 @@ struct AnimatedStoryPlayerView: View {
             onComplete?()
         } label: {
             Text(String(localized: "story_player.skip"))
-                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .font(TypographyTokens.headline(15))
                 .foregroundStyle(.white)
                 .padding(.horizontal, 14)
                 .padding(.vertical, 8)
                 .background(
                     Capsule()
-                        .fill(Color.black.opacity(0.45))
+                        .fill(ColorTokens.Overlay.dimmer)
                 )
         }
         .accessibilityLabel(String(localized: "story_player.skip.accessibility"))
@@ -167,13 +167,17 @@ struct AnimatedStoryPlayerView: View {
     // MARK: - Background (native)
 
     private var backgroundLayer: some View {
-        LinearGradient(
-            colors: backgroundColors.isEmpty
-                ? [Color.blue.opacity(0.6), Color.purple.opacity(0.6)]
-                : backgroundColors,
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
+        if backgroundColors.isEmpty {
+            AnyView(GradientTokens.storyMagic)
+        } else {
+            AnyView(
+                LinearGradient(
+                    colors: backgroundColors,
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+        }
     }
 
     // MARK: - Content (native)
@@ -265,25 +269,25 @@ struct AnimatedStoryPlayerView: View {
 
             HStack(spacing: 4) {
                 Text(String(localized: "story.target_word.label"))
-                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                    .font(TypographyTokens.caption(13))
                     .foregroundStyle(.white.opacity(0.75))
 
                 Text(currentScene.targetWord)
-                    .font(.system(size: 15, weight: .bold, design: .rounded))
+                    .font(TypographyTokens.headline(15))
                     .foregroundStyle(.white)
                     .padding(.horizontal, 8)
                     .padding(.vertical, 3)
                     .background(
                         Capsule()
-                            .fill(Color.white.opacity(0.25))
+                            .fill(ColorTokens.Overlay.highlight)
                     )
             }
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 18)
         .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color.black.opacity(0.25))
+            RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
+                .fill(ColorTokens.Overlay.glassDark)
         )
         .opacity(sceneVisible ? 1 : 0)
         .offset(y: sceneVisible ? 0 : 20)
@@ -305,17 +309,17 @@ struct AnimatedStoryPlayerView: View {
             let after = String(text[range.upperBound...])
 
             return Text(before)
-                .font(.system(size: 18, weight: .medium, design: .rounded))
+                .font(TypographyTokens.headline(18))
                 .foregroundStyle(.white)
             + Text(word)
-                .font(.system(size: 18, weight: .bold, design: .rounded))
+                .font(TypographyTokens.title(18))
                 .foregroundStyle(.white)
             + Text(after)
-                .font(.system(size: 18, weight: .medium, design: .rounded))
+                .font(TypographyTokens.headline(18))
                 .foregroundStyle(.white)
         } else {
             return Text(text)
-                .font(.system(size: 18, weight: .medium, design: .rounded))
+                .font(TypographyTokens.headline(18))
                 .foregroundStyle(.white)
             + Text("")
             + Text("")
@@ -332,18 +336,18 @@ struct AnimatedStoryPlayerView: View {
                 Text(isLastScene
                      ? String(localized: "story.button.complete")
                      : String(localized: "story.button.next"))
-                    .font(.system(size: 18, weight: .semibold, design: .rounded))
+                    .font(TypographyTokens.headline(18))
                     .foregroundStyle(.white)
 
                 Image(systemName: isLastScene ? "checkmark.circle.fill" : "arrow.right.circle.fill")
-                    .font(.system(size: 20))
+                    .font(TypographyTokens.title(20))
                     .foregroundStyle(.white)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 16)
             .background(
                 Capsule()
-                    .fill(Color.white.opacity(0.25))
+                    .fill(ColorTokens.Overlay.highlight)
                     .overlay(
                         Capsule()
                             .strokeBorder(Color.white.opacity(0.5), lineWidth: 1.5)

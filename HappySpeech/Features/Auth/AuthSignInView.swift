@@ -102,16 +102,7 @@ struct AuthSignInView: View {
         GeometryReader { geo in
             ZStack(alignment: .top) {
                 Ellipse()
-                    .fill(
-                        LinearGradient(
-                            colors: [
-                                ColorTokens.Brand.primary.opacity(0.9),
-                                ColorTokens.Brand.primaryLo.opacity(0.7)
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
+                    .fill(GradientTokens.kidHeroDecoration)
                     .frame(width: geo.size.width * 1.3, height: 320)
                     .offset(x: -geo.size.width * 0.15, y: -100)
             }
@@ -285,7 +276,7 @@ struct AuthSignInView: View {
         let field = config.field
         HStack(spacing: SpacingTokens.sp3) {
             Image(systemName: icon)
-                .font(.system(size: 16))
+                .font(TypographyTokens.body(16))
                 .foregroundStyle(ColorTokens.Kid.inkSoft)
                 .frame(width: 24)
 

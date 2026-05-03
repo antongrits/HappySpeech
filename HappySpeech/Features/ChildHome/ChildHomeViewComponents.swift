@@ -7,6 +7,52 @@ import SwiftUI
 // модуля HappySpeech (не `private`), чтобы быть доступными из
 // `ChildHomeView.swift`. Каждый — самодостаточный view без бизнес-логики.
 
+// MARK: - KidBackgroundView
+//
+// iOS 18+: MeshGradient — органичный многоточечный тёплый фон.
+// iOS 17 fallback: GradientTokens.kidBackground (LinearGradient).
+// Reduced Motion: анимация фазы отключается, но градиент остаётся.
+
+struct KidBackgroundView: View {
+
+    @State private var phase: CGFloat = 0
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    var body: some View {
+        if #available(iOS 18.0, *) {
+            meshBackground
+                .onAppear {
+                    guard !reduceMotion else { return }
+                    withAnimation(.easeInOut(duration: 8).repeatForever(autoreverses: true)) {
+                        phase = .pi
+                    }
+                }
+        } else {
+            GradientTokens.kidBackground
+        }
+    }
+
+    @available(iOS 18.0, *)
+    private var meshBackground: some View {
+        let s = Float(sin(phase) * 0.08)
+        let c = Float(cos(phase) * 0.08)
+        return MeshGradient(
+            width: 3,
+            height: 3,
+            points: [
+                SIMD2(0, 0),        SIMD2(0.5, 0),        SIMD2(1, 0),
+                SIMD2(0, 0.5 + s),  SIMD2(0.5, 0.5),      SIMD2(1, 0.5 - c),
+                SIMD2(0, 1),        SIMD2(0.5, 1),         SIMD2(1, 1)
+            ],
+            colors: [
+                ColorTokens.Kid.bgSofter, ColorTokens.Brand.primaryLo.opacity(0.25), ColorTokens.Kid.bgSoft,
+                ColorTokens.Brand.rose.opacity(0.15), ColorTokens.Kid.bg, ColorTokens.Brand.butter.opacity(0.15),
+                ColorTokens.Kid.bgDeep.opacity(0.6), ColorTokens.Kid.bgSoft, ColorTokens.Kid.bgSofter
+            ]
+        )
+    }
+}
+
 // MARK: - CloudDecoration
 
 struct ChildHomeCloudDecoration: View {

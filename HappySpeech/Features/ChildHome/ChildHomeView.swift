@@ -184,12 +184,8 @@ struct ChildHomeView: View {
 
     private var kidBackground: some View {
         ZStack {
-            LinearGradient(
-                colors: [ColorTokens.Kid.bgSoft, ColorTokens.Kid.bgSofter],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
+            KidBackgroundView()
+                .ignoresSafeArea()
 
             ChildHomeCloudDecoration()
         }
@@ -338,7 +334,7 @@ struct ChildHomeView: View {
     private var missionHeroOverlay: some View {
         ZStack(alignment: .center) {
             // Dim background
-            Color.black.opacity(0.45)
+            ColorTokens.Overlay.dimmer
                 .ignoresSafeArea()
                 .onTapGesture {
                     withAnimation(.spring(response: 0.4, dampingFraction: 0.82)) {
