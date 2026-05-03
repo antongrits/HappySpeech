@@ -21,6 +21,13 @@
       "valueType": "BOOLEAN",
       "description": "Enables ARKit body tracking features"
     },
+    "feature_realtime_lipsync_enabled": {
+      "defaultValue": {
+        "value": "false"
+      },
+      "valueType": "BOOLEAN",
+      "description": "Enables real-time lip sync overlay on Lyalya mascot. Off by default — requires performance testing on low-end devices."
+    },
     "feature_spectrogram_enabled": {
       "defaultValue": {
         "value": "true"
@@ -42,12 +49,19 @@
       "valueType": "BOOLEAN",
       "description": "Enables speaker verification to confirm child identity before session"
     },
+    "feature_qwen_kid_circuit": {
+      "defaultValue": {
+        "value": "false"
+      },
+      "valueType": "BOOLEAN",
+      "description": "Enables Qwen2.5-1.5B on-device LLM in kid narration circuit. Off by default — large model (~1.2 GB) requires explicit download."
+    },
     "lyalya_voice_default": {
       "defaultValue": {
-        "value": "tuned"
+        "value": "pro"
       },
       "valueType": "STRING",
-      "description": "Default Lyalya voice variant: tuned | original | cloned"
+      "description": "Default Lyalya voice variant: pro | base | cloned"
     },
     "daily_reminder_time": {
       "defaultValue": {
@@ -58,10 +72,38 @@
     },
     "weekly_summary_day": {
       "defaultValue": {
-        "value": "Monday"
+        "value": "sunday"
       },
       "valueType": "STRING",
-      "description": "Day of week for weekly summary push notification"
+      "description": "Day of week for weekly summary push notification (lowercase English)"
+    },
+    "parent_summary_day": {
+      "defaultValue": {
+        "value": "sunday"
+      },
+      "valueType": "STRING",
+      "description": "Day of week when parent receives progress summary (sunday | monday ... saturday)"
+    },
+    "onboarding_skip_allowed": {
+      "defaultValue": {
+        "value": "true"
+      },
+      "valueType": "BOOLEAN",
+      "description": "Whether the onboarding flow can be skipped. Disable for A/B testing mandatory onboarding."
+    },
+    "demo_mode_steps": {
+      "defaultValue": {
+        "value": "15"
+      },
+      "valueType": "NUMBER",
+      "description": "Number of demo mode steps shown to unauthenticated users before paywall"
+    },
+    "max_session_duration_min": {
+      "defaultValue": {
+        "value": "25"
+      },
+      "valueType": "NUMBER",
+      "description": "Maximum allowed session duration in minutes. Fatigue detection triggers soft stop at this value."
     },
     "min_app_version": {
       "defaultValue": {
@@ -79,9 +121,9 @@
     }
   },
   "version": {
-    "versionNumber": "1",
-    "updateTime": "2026-05-02T00:00:00.000Z",
+    "versionNumber": "2",
+    "updateTime": "2026-05-04T00:00:00.000Z",
     "updateType": "INCREMENTAL_UPDATE",
-    "updateOrigin": "CONSOLE"
+    "updateOrigin": "REST_API"
   }
 }
