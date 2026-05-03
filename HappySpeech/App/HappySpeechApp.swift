@@ -137,6 +137,23 @@ struct HappySpeechApp: App {
             // cold_start_ms = (end_uptime - begin_uptime) * 1000
             HSLogger.app.info("ColdStart end uptime=\(ProcessInfo.processInfo.systemUptime, format: .fixed(precision: 3)) — Realm открыт")
 
+            // D.1 — Remote Config: fetch + activate + realtime updates.
+            // Выполняется асинхронно после Realm open, не блокирует UI.
+            // Ошибки fetch — graceful degradation на bundled defaults.
+            let isTesting = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+            if !isTesting, FirebaseApp.app() != nil {
+                Task {
+                    do {
+                        try await container.remoteConfigService.fetch()
+                        _ = try await container.remoteConfigService.activate()
+                        container.remoteConfigService.startRealtimeUpdates()
+                        HSLogger.app.info("RemoteConfig fetch + activate + realtime OK")
+                    } catch {
+                        HSLogger.app.warning("RemoteConfig bootstrap failed (using bundled defaults): \(error.localizedDescription)")
+                    }
+                }
+            }
+
             // K.4 — Запуск Spotlight-индексации после успешного открытия Realm.
             let spotlightCoord = SpotlightIndexCoordinator(
                 indexer: container.spotlightIndexer,

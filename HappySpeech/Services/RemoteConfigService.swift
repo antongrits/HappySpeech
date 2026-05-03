@@ -41,11 +41,18 @@ public protocol RemoteConfigService: AnyObject, Sendable {
     var featureSpectrogramEnabled: Bool { get }
     var featureEmotionDetectionEnabled: Bool { get }
     var featureSpeakerVerificationEnabled: Bool { get }
+    var featureQwenKidCircuit: Bool { get }
 
     // Content config
     var lyalyaVoiceDefault: String { get }
     var dailyReminderTime: String { get }
     var weeklySummaryDay: String { get }
+    var parentSummaryDay: String { get }
+
+    // Onboarding & session
+    var onboardingSkipAllowed: Bool { get }
+    var demoModeSteps: Int { get }
+    var maxSessionDurationMin: Int { get }
 
     // UI flags
     var homeShowStreakCelebration: Bool { get }
@@ -74,9 +81,14 @@ private enum RCKey {
     static let featureSpectrogram             = "feature_spectrogram_enabled"
     static let featureEmotionDetection        = "feature_emotion_detection_enabled"
     static let featureSpeakerVerification     = "feature_speaker_verification_enabled"
+    static let featureQwenKidCircuit          = "feature_qwen_kid_circuit"
     static let lyalyaVoiceDefault             = "lyalya_voice_default"
     static let dailyReminderTime              = "daily_reminder_time"
     static let weeklySummaryDay               = "weekly_summary_day"
+    static let parentSummaryDay               = "parent_summary_day"
+    static let onboardingSkipAllowed          = "onboarding_skip_allowed"
+    static let demoModeSteps                  = "demo_mode_steps"
+    static let maxSessionDurationMin          = "max_session_duration_min"
     static let homeShowStreakCelebration      = "home_show_streak_celebration"
     static let parentDashboardShowMLInsights  = "parent_dashboard_show_ml_insights"
     static let minAppVersion                  = "min_app_version"
@@ -108,9 +120,14 @@ public final class LiveRemoteConfigService: RemoteConfigService, @unchecked Send
         RCKey.featureSpectrogram:            true as NSNumber,
         RCKey.featureEmotionDetection:       true as NSNumber,
         RCKey.featureSpeakerVerification:    true as NSNumber,
-        RCKey.lyalyaVoiceDefault:            "tuned" as NSString,
+        RCKey.featureQwenKidCircuit:         false as NSNumber,
+        RCKey.lyalyaVoiceDefault:            "pro" as NSString,
         RCKey.dailyReminderTime:             "17:00" as NSString,
-        RCKey.weeklySummaryDay:              "Monday" as NSString,
+        RCKey.weeklySummaryDay:              "sunday" as NSString,
+        RCKey.parentSummaryDay:              "sunday" as NSString,
+        RCKey.onboardingSkipAllowed:         true as NSNumber,
+        RCKey.demoModeSteps:                 15 as NSNumber,
+        RCKey.maxSessionDurationMin:         25 as NSNumber,
         RCKey.homeShowStreakCelebration:     true as NSNumber,
         RCKey.parentDashboardShowMLInsights: true as NSNumber,
         RCKey.minAppVersion:                 "1.0.0" as NSString,
@@ -155,10 +172,14 @@ public final class LiveRemoteConfigService: RemoteConfigService, @unchecked Send
         config[RCKey.featureSpeakerVerification].boolValue
     }
 
+    public var featureQwenKidCircuit: Bool {
+        config[RCKey.featureQwenKidCircuit].boolValue
+    }
+
     // MARK: - Content config
 
     public var lyalyaVoiceDefault: String {
-        config[RCKey.lyalyaVoiceDefault].stringValue ?? "tuned"
+        config[RCKey.lyalyaVoiceDefault].stringValue ?? "pro"
     }
 
     public var dailyReminderTime: String {
@@ -166,7 +187,25 @@ public final class LiveRemoteConfigService: RemoteConfigService, @unchecked Send
     }
 
     public var weeklySummaryDay: String {
-        config[RCKey.weeklySummaryDay].stringValue ?? "Monday"
+        config[RCKey.weeklySummaryDay].stringValue ?? "sunday"
+    }
+
+    public var parentSummaryDay: String {
+        config[RCKey.parentSummaryDay].stringValue ?? "sunday"
+    }
+
+    // MARK: - Onboarding & session config
+
+    public var onboardingSkipAllowed: Bool {
+        config[RCKey.onboardingSkipAllowed].boolValue
+    }
+
+    public var demoModeSteps: Int {
+        Int(config[RCKey.demoModeSteps].numberValue ?? 15)
+    }
+
+    public var maxSessionDurationMin: Int {
+        Int(config[RCKey.maxSessionDurationMin].numberValue ?? 25)
     }
 
     // MARK: - UI flags
@@ -248,9 +287,14 @@ public final class MockRemoteConfigService: RemoteConfigService, @unchecked Send
     public var featureSpectrogramEnabled: Bool = true
     public var featureEmotionDetectionEnabled: Bool = true
     public var featureSpeakerVerificationEnabled: Bool = true
-    public var lyalyaVoiceDefault: String = "tuned"
+    public var featureQwenKidCircuit: Bool = false
+    public var lyalyaVoiceDefault: String = "pro"
     public var dailyReminderTime: String = "17:00"
-    public var weeklySummaryDay: String = "Monday"
+    public var weeklySummaryDay: String = "sunday"
+    public var parentSummaryDay: String = "sunday"
+    public var onboardingSkipAllowed: Bool = true
+    public var demoModeSteps: Int = 15
+    public var maxSessionDurationMin: Int = 25
     public var homeShowStreakCelebration: Bool = true
     public var parentDashboardShowMLInsights: Bool = true
     public var minAppVersion: String = "1.0.0"
