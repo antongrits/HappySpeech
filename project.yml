@@ -88,7 +88,11 @@ targets:
         excludes:
           - Info.plist
           - "*.entitlements"
+          - PrivacyInfo.xcprivacy
         type: group
+        buildPhase: resources
+      - path: HappySpeech/Resources/PrivacyInfo.xcprivacy
+        type: file
         buildPhase: resources
       - path: HappySpeech/Content/Seed/seasonal
         type: folder
@@ -116,10 +120,13 @@ targets:
           - "_hs-sibling._udp"
         UIBackgroundModes:
           - audio
+          - fetch
           - remote-notification
         MinimumOSVersion: "17.0"
+        KidsAgeRange: "5-8"
         UIRequiredDeviceCapabilities:
           - arm64
+          - arkit
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
         UIApplicationSceneManifest:
