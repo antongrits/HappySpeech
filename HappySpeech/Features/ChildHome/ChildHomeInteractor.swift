@@ -578,7 +578,13 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
         streak: Int
     ) async {
         let mission = response.dailyMissionDetail
-        let title = response.dailyTargetSound.isEmpty ? "Звук Р" : "Звук \(response.dailyTargetSound)"
+        let soundName = response.dailyTargetSound.isEmpty
+            ? String(localized: "child.home.widget.default_sound")
+            : response.dailyTargetSound
+        let title = String(
+            format: String(localized: "child.home.widget.sound_title"),
+            soundName
+        )
         let description = String(localized: "\(mission.requiredReps) раундов")
         let progress: Double = mission.requiredReps > 0
             ? Double(mission.completedReps) / Double(mission.requiredReps)

@@ -334,12 +334,10 @@ final class SettingsInteractor: SettingsBusinessLogic {
             settings.kidDailyReminderEnabled = request.enabled
             defaults.set(request.enabled, forKey: SettingsKey.kidDailyReminderEnabled)
 
-            if let live = notificationService as? NotificationServiceLive {
-                if request.enabled {
-                    await live.scheduleDailyKidReminder(childName: settings.childName)
-                } else {
-                    await live.cancelDailyKidReminder(childName: settings.childName)
-                }
+            if request.enabled {
+                await notificationService.scheduleDailyKidReminder(childName: settings.childName)
+            } else {
+                await notificationService.cancelDailyKidReminder(childName: settings.childName)
             }
             logger.info("kidDailyReminder toggled → \(request.enabled, privacy: .public)")
             presenter?.presentToggleKidDailyReminder(.init(settings: settings))
@@ -352,12 +350,10 @@ final class SettingsInteractor: SettingsBusinessLogic {
             settings.weeklyParentSummaryEnabled = request.enabled
             defaults.set(request.enabled, forKey: SettingsKey.weeklyParentSummaryEnabled)
 
-            if let live = notificationService as? NotificationServiceLive {
-                if request.enabled {
-                    await live.scheduleWeeklyParentSummary(achievementsCount: 0, streakDays: 0)
-                } else {
-                    await live.cancelWeeklyParentSummary()
-                }
+            if request.enabled {
+                await notificationService.scheduleWeeklyParentSummary(achievementsCount: 0, streakDays: 0)
+            } else {
+                await notificationService.cancelWeeklyParentSummary()
             }
             logger.info("weeklyParentSummary toggled → \(request.enabled, privacy: .public)")
             presenter?.presentToggleWeeklyParentSummary(.init(settings: settings))

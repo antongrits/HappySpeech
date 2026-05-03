@@ -174,6 +174,21 @@ public enum ColorTokens {
         public static let excellent = Color("FeedbackExcellent")
     }
 
+    // MARK: - Skin Tint Colors
+
+    /// Цветовые варианты тела маскота «Ляля».
+    /// Используются в `LyalyaMascotView` для skinTintColor.
+    public enum Skin {
+        /// Тёплый оттенок — слегка розоватый
+        public static let warm    = Color(red: 1.0, green: 0.95, blue: 0.95)
+        /// Прохладный оттенок — слегка голубоватый
+        public static let cool    = Color(red: 0.95, green: 0.97, blue: 1.0)
+        /// Природный оттенок — слегка зелёный
+        public static let nature  = Color(red: 0.95, green: 1.0,  blue: 0.95)
+        /// Классический — белый
+        public static let classic = Color.white
+    }
+
     // MARK: - Session Colors
 
     /// Used in SessionShell progress indicators and fatigue-detection UI.

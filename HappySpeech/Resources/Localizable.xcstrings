@@ -3152,6 +3152,28 @@
         }
       }
     },
+    "child.home.widget.default_sound": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Р"
+          }
+        }
+      }
+    },
+    "child.home.widget.sound_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук %@"
+          }
+        }
+      }
+    },
     "child.home.a11y.parent.button": {
       "extractionState": "manual",
       "localizations": {

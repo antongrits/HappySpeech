@@ -225,18 +225,6 @@ actor LiveSileroVAD: VADProtocol {
         return loaded
     }
 
-    private func runInference(
-        chunk: AVAudioPCMBuffer,
-        model: MLModel
-    ) async throws -> Float {
-        guard let channelData = chunk.floatChannelData else {
-            throw VADError.inferenceFailure("No channel data")
-        }
-        let frameCount = Int(chunk.frameLength)
-        let samples = Array(UnsafeBufferPointer(start: channelData[0], count: frameCount))
-        return try await runChunkInference(samples: samples, model: model)
-    }
-
     private func runChunkInference(samples: [Float], model: MLModel) async throws -> Float {
         // Упаковываем в MLMultiArray [1, 512]
         let multiArray = try MLMultiArray(

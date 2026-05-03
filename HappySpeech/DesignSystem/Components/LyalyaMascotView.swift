@@ -253,13 +253,13 @@ public struct LyalyaMascotView: View {
     private var skinTintColor: Color {
         switch customization?.colorVariant {
         case .warm:
-            return Color(red: 1.0, green: 0.95, blue: 0.95)
+            return ColorTokens.Skin.warm
         case .cool:
-            return Color(red: 0.95, green: 0.97, blue: 1.0)
+            return ColorTokens.Skin.cool
         case .nature:
-            return Color(red: 0.95, green: 1.0, blue: 0.95)
+            return ColorTokens.Skin.nature
         case .none:
-            return .white
+            return ColorTokens.Skin.classic
         }
     }
 
