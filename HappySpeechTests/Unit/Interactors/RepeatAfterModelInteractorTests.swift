@@ -46,6 +46,9 @@ final class RepeatAfterModelInteractorTests: XCTestCase {
             completeSessionCalled = true
             lastCompleteSession = response
         }
+        func presentReplayModel(_ response: RepeatAfterModelModels.ReplayModel.Response) {}
+        func presentHint(_ response: RepeatAfterModelModels.Hint.Response) {}
+        func presentSloMo(_ response: RepeatAfterModelModels.SloMo.Response) {}
     }
 
     private func makeSUT() -> (RepeatAfterModelInteractor, SpyPresenter) {

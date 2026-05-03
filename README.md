@@ -173,6 +173,69 @@ xcodebuild test -scheme HappySpeech \
 swiftlint --strict
 ```
 
+
+## v1.0.0-final-v14 — Plan v14 (2026-05-02)
+
+### Bundle Stats v14
+
+| Категория | Размер | Кол-во |
+|---|---|---|
+| Built app (Debug iPhone SE 3) | 827 MB | — |
+| Resources | 639 MB | — |
+| Audio (.m4a) | 168 MB | 10 460 phrases (3951 Lyalya) |
+| AR Assets (.usdz) | 231 MB | 20 USDZ |
+| Assets.xcassets | 112 MB | 154 illustrations + AppIcon |
+| Video (.mp4) | 71 MB | 100 MP4 |
+| ML Models (.mlpackage) | 53 MB | 47 mlpackages |
+| Animations | 3.5 MB | 58 Lottie + 1 Rive |
+
+### Итоговые метрики v14
+
+| Метрика | Значение |
+|---|---|
+| Bundle ID | `com.mmf.bsu.HappySpeech` |
+| MARKETING_VERSION | 1.0.0 |
+| Платформы | iPhone SE 3 + iPhone 17 Pro (BUILD SUCCEEDED) |
+| SwiftLint | 0 violations / 0 warnings (614 files) |
+| Lyalya phrases | 3 951 (.m4a) |
+| HD illustrations | 154 imagesets |
+| ML models | 47 .mlpackage |
+| AR scenes (USDZ) | 20 |
+| Lottie animations | 58 |
+| Rive animations | 1 |
+| Remotion videos | 100 MP4 |
+| Siri Intents | 9 |
+| Widgets | 4 |
+| Firebase project | `happyspeech-dfd95` (eur3) |
+| Kids Category compliant | YES |
+
+### Что нового в v14
+
+| Блок | Что сделано |
+|---|---|
+| Block 0 | Bundle ID com.mmf.bsu.HappySpeech, HealthKit removed |
+| Block A | 21 deep VIP Interactor (~12 400 LOC) |
+| Block B | AppIcon 3 appearance (FLUX-1-schnell) + 52 HD illustrations |
+| Block C | 50 Real Lottie animations (CC0/MIT) |
+| Block D | Custom 3D Lyalya USDZ + RealityKit blendshapes + 6 hero screens |
+| Block E+O | 4 ML models trained (RussianPhonemeClassifier 92.24%, Wav2Vec2 96.67%, SpeakerVerification 100%, EmotionDetection 95.83%) |
+| Block F | Voice expansion 2469 → 3951 Lyalya phrases |
+| Block G | Firebase full services (Remote Config + FCM + App Check + Performance) |
+| Block H | SPM: Lottie, Rive, Down, snapshot-testing, swiftui-particles |
+| Block I | UI audit 65 screens + 11 critical fixes |
+| Block J | 11 Remotion professional videos |
+| Block K | 9 Siri Intents + 4 Widgets + Spotlight |
+| Block L | Real-time lip-sync ARMirror (ARFaceAnchor 60fps) |
+| Block M | 142 screenshots audit + 6 critical bugs fixed |
+| Block N | ADR-V14-GLIFXYZ defer |
+| Block P | Snapshot threshold 0.05, 477 PNG re-recorded |
+| Block Q | Apple Kids Category compliance (Privacy Manifest, KidsAgeRange, ParentalGate) |
+| Block R | Bundle 827 MB accepted as production-quality |
+
+**Тег:** `v1.0.0-final-v14`
+
+---
+
 ---
 
 ## v1.0.0-final-v4 — Plan v13 (2026-05-01)

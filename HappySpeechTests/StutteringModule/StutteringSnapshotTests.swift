@@ -89,7 +89,10 @@ final class StutteringSnapshotTests: XCTestCase {
                 symbol: "waveform",
                 symbolColor: .primary,
                 duration: "~5 мин",
-                accessibilityLabel: mode.rawValue
+                accessibilityLabel: mode.rawValue,
+                isRecommended: false,
+                completedToday: false,
+                streak: 0
             )
         }
         return StutteringHomePreviewWrapper(cards: cards)
@@ -152,28 +155,8 @@ final class StutteringSnapshotTests: XCTestCase {
         let (appearanceName, style) = appearance
         let image = render(view, size: device.size, style: style)
         let url = snapshotURL(screen: screen, device: device.name, appearance: appearanceName)
-
-        guard let pngData = image.pngData() else {
-            XCTFail("PNG encoding failed: \(screen) / \(device.name) / \(appearanceName)")
-            return
-        }
-
-        if FileManager.default.fileExists(atPath: url.path) {
-            let existing = try Data(contentsOf: url)
-            let ratio = abs(Double(pngData.count) - Double(existing.count)) /
-                        Double(max(existing.count, 1))
-            XCTAssertLessThan(
-                ratio, 0.55,
-                "Snapshot изменился (\(screen) · \(device.name) · \(appearanceName)): " +
-                "\(existing.count) → \(pngData.count) байт"
-            )
-        } else {
-            try pngData.write(to: url)
-            XCTFail(
-                "Записан новый референс '\(url.lastPathComponent)' для \(screen)/\(device.name)/\(appearanceName). " +
-                "Перезапусти тест для сравнения."
-            )
-        }
+        let label = "\(screen)·\(device.name)·\(appearanceName)"
+        try SnapshotTestHelper.assertPixelMatch(image, referenceURL: url, label: label)
     }
 }
 

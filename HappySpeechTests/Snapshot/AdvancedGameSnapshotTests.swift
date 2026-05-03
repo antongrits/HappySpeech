@@ -163,26 +163,8 @@ final class AdvancedGameSnapshotTests: XCTestCase {
             for (appearanceName, style) in appearances {
                 let image = render(view, size: device.size, style: style)
                 let url = snapshotURL(screen: screen, device: device.name, appearance: appearanceName)
-
-                guard let pngData = image.pngData() else {
-                    XCTFail("PNG encoding failed: \(screen)/\(device.name)/\(appearanceName)")
-                    continue
-                }
-
-                if FileManager.default.fileExists(atPath: url.path) {
-                    let existing = try Data(contentsOf: url)
-                    let ratio = abs(Double(pngData.count) - Double(existing.count)) / Double(max(existing.count, 1))
-                    // Порог 70%: SortingView/MinimalPairsView содержат drag-and-drop элементы
-                    // с нестабильным GPU-рендером на симуляторе (UIGraphicsImageRenderer).
-                    // Семантически критические регрессии (>70%) всё равно поймаем.
-                    XCTAssertLessThan(
-                        ratio, 0.70,
-                        "Snapshot изменился (\(screen)·\(device.name)·\(appearanceName)): \(existing.count) → \(pngData.count) байт"
-                    )
-                } else {
-                    try pngData.write(to: url)
-                    XCTFail("Записан новый референс '\(url.lastPathComponent)' для \(screen). Перезапусти тест.")
-                }
+                let label = "\(screen)·\(device.name)·\(appearanceName)"
+                try SnapshotTestHelper.assertPixelMatch(image, referenceURL: url, label: label)
             }
         }
     }

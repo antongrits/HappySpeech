@@ -60,20 +60,8 @@ final class DesignSystemSnapshotTests: XCTestCase {
             for (name, style) in appearances {
                 let image = render(view, size: device.size, style: style)
                 let url = snapshotURL(component: component, device: device.name, appearance: name)
-                guard let data = image.pngData() else {
-                    XCTFail("PNG encoding failed for \(component)")
-                    continue
-                }
-                if FileManager.default.fileExists(atPath: url.path) {
-                    let existing = try Data(contentsOf: url)
-                    XCTAssertEqual(
-                        data.count, existing.count,
-                        "\(component) byte size differs at \(device.name) \(name)"
-                    )
-                } else {
-                    try data.write(to: url)
-                    XCTFail("Recorded reference for \(component) at \(url.lastPathComponent)")
-                }
+                let label = "\(component)·\(device.name)·\(name)"
+                try SnapshotTestHelper.assertPixelMatch(image, referenceURL: url, label: label)
             }
         }
     }
