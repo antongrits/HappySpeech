@@ -274,26 +274,26 @@ public struct LyalyaMascotView: View {
         case .princess:
             Image(systemName: "crown.fill")
                 .font(.system(size: overlaySize))
-                .foregroundStyle(Color.yellow)
-                .shadow(color: .yellow.opacity(0.4), radius: 3, y: 1)
+                .foregroundStyle(ColorTokens.Brand.butter)
+                .shadow(color: ColorTokens.Brand.butter.opacity(0.4), radius: 3, y: 1)
                 .offset(y: topOffset)
                 .accessibilityHidden(true)
         case .scientist:
             Image(systemName: "eyeglasses")
                 .font(.system(size: overlaySize * 1.2))
-                .foregroundStyle(Color.gray)
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .offset(y: -(size * 0.08))
                 .accessibilityHidden(true)
         case .athlete:
             Image(systemName: "figure.run")
                 .font(.system(size: overlaySize))
-                .foregroundStyle(Color.red)
+                .foregroundStyle(ColorTokens.Brand.rose)
                 .offset(y: topOffset)
                 .accessibilityHidden(true)
         case .artist:
             Image(systemName: "paintbrush.pointed.fill")
                 .font(.system(size: overlaySize))
-                .foregroundStyle(Color.purple)
+                .foregroundStyle(ColorTokens.Brand.lilac)
                 .offset(y: topOffset)
                 .accessibilityHidden(true)
         case .classic, .none:

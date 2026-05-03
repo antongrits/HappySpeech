@@ -323,8 +323,7 @@ private struct OnboardingWelcomeStep: View {
     var body: some View {
         VStack(spacing: SpacingTokens.large) {
             Spacer()
-            LyalyaRealityKitView(state: .waving, mood: 0.7)
-                .frame(width: 180, height: 180)
+            LyalyaHeroView(state: .waving, mood: 0.7, size: 180)
                 .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
                 .scaleEffect(appeared ? 1 : 0.6)
                 .opacity(appeared ? 1 : 0)
@@ -1114,8 +1113,7 @@ private struct OnboardingCompletionStep: View {
             VStack(spacing: SpacingTokens.large) {
                 Spacer()
 
-                LyalyaRealityKitView(state: .celebrating, mood: 1.0)
-                    .frame(width: 150, height: 150)
+                LyalyaHeroView(state: .celebrating, mood: 1.0, size: 150)
                     .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                     .accessibilityHidden(true)
 
