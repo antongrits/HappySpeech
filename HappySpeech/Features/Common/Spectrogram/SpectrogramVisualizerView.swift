@@ -196,7 +196,7 @@ public struct SpectrogramVisualizerView: View {
 
             Text(String(localized: "spectrogram.recording", defaultValue: "Запись"))
                 .font(TypographyTokens.caption(9))
-                .foregroundStyle(.red)
+                .foregroundStyle(ColorTokens.Semantic.error)
         }
         .padding(.horizontal, 6)
         .padding(.vertical, 3)
