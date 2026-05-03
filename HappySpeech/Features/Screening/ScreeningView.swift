@@ -159,8 +159,12 @@ struct ScreeningView: View {
         guard !isSaving else { return }
         isSaving = true
         let request = Self.makeCompleteRequest(from: outcome, childId: childId)
+        // E.2 — Performance trace: screening complete (parent circuit, COPPA-safe).
+        let screeningTrace = container.performanceMonitorService.trace(name: "screening_complete_trace")
+        screeningTrace.start()
         Task {
             await interactor?.completeScreening(request)
+            screeningTrace.stop()
             isSaving = false
             onFinish(outcome)
         }

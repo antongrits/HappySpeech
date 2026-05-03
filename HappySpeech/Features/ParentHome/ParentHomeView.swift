@@ -39,6 +39,9 @@ struct ParentHomeView: View {
         .tint(ColorTokens.Parent.accent)
         .environment(\.circuitContext, .parent)
         .task {
+            // E.2 — Performance trace: parent dashboard load time (opt-in, COPPA-safe).
+            let trace = container.performanceMonitorService.trace(name: "parent_dashboard_load")
+            trace.start()
             if scene == nil {
                 scene = ParentHomeScene(
                     childRepository: container.childRepository,
@@ -50,6 +53,7 @@ struct ParentHomeView: View {
                 )
             }
             await scene?.interactor.fetchData(.init(preferredChildId: nil))
+            trace.stop()
         }
     }
 
