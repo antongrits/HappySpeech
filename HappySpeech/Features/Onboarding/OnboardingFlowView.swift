@@ -130,7 +130,7 @@ struct OnboardingFlowView: View {
                         interactor?.goBack(.init())
                     } label: {
                         Image(systemName: "chevron.left")
-                            .font(.system(size: 17, weight: .semibold))
+                            .font(TypographyTokens.headline(17))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
                             .frame(width: 44, height: 44)
                             .contentShape(Rectangle())
@@ -409,7 +409,7 @@ private struct OnboardingRoleCard: View {
             ) {
                 HStack(spacing: SpacingTokens.medium) {
                     Text(role.emoji)
-                        .font(.system(size: 40))
+                        .font(TypographyTokens.display(40))
                         .frame(width: 56)
                         .accessibilityHidden(true)
                     VStack(alignment: .leading, spacing: SpacingTokens.micro) {
@@ -424,7 +424,7 @@ private struct OnboardingRoleCard: View {
                     }
                     Spacer()
                     Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
-                        .font(.system(size: 22, weight: .semibold))
+                        .font(TypographyTokens.title(22))
                         .foregroundStyle(isSelected ? ColorTokens.Brand.primary : ColorTokens.Kid.line)
                         .accessibilityHidden(true)
                 }
@@ -557,7 +557,7 @@ private struct AvatarOption: View {
     var body: some View {
         Button(action: onTap) {
             Text(emoji)
-                .font(.system(size: 36))
+                .font(TypographyTokens.display(36))
                 .frame(width: 52, height: 52)
                 .background(
                     Circle()
@@ -738,7 +738,7 @@ private struct GoalChipRow: View {
             HStack(spacing: SpacingTokens.small) {
                 Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
                     .foregroundStyle(isSelected ? ColorTokens.Brand.primary : ColorTokens.Kid.line)
-                    .font(.system(size: 22, weight: .semibold))
+                    .font(TypographyTokens.title(22))
                     .accessibilityHidden(true)
                 Text(label)
                     .font(TypographyTokens.headline(16))
@@ -902,7 +902,7 @@ private struct ScheduleRow: View {
         Button(action: onTap) {
             HStack(spacing: SpacingTokens.medium) {
                 Image(systemName: "clock.fill")
-                    .font(.system(size: 24))
+                    .font(TypographyTokens.title(24))
                     .foregroundStyle(isSelected ? ColorTokens.Brand.primary : ColorTokens.Kid.inkMuted)
                     .frame(width: 36)
                     .accessibilityHidden(true)
@@ -919,7 +919,7 @@ private struct ScheduleRow: View {
                 }
                 Spacer()
                 Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
-                    .font(.system(size: 22, weight: .semibold))
+                    .font(TypographyTokens.title(22))
                     .foregroundStyle(isSelected ? ColorTokens.Brand.primary : ColorTokens.Kid.line)
                     .accessibilityHidden(true)
             }
@@ -993,7 +993,7 @@ private struct OnboardingPermissionsStep: View {
         HSLiquidGlassCard(style: .tinted(color), padding: SpacingTokens.medium) {
             HStack(alignment: .top, spacing: SpacingTokens.medium) {
                 Image(systemName: icon)
-                    .font(.system(size: 32))
+                    .font(TypographyTokens.display(32))
                     .foregroundStyle(color)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: SpacingTokens.micro) {
@@ -1029,7 +1029,7 @@ private struct OnboardingModelDownloadStep: View {
                     .fill(ColorTokens.Brand.sky.opacity(0.15))
                     .frame(width: 140, height: 140)
                 Image(systemName: iconName)
-                    .font(.system(size: 56, weight: .semibold))
+                    .font(TypographyTokens.kidDisplay(56))
                     .foregroundStyle(ColorTokens.Brand.sky)
                     .accessibilityHidden(true)
             }
@@ -1118,7 +1118,7 @@ private struct OnboardingCompletionStep: View {
                     .accessibilityHidden(true)
 
                 Text(profile.childAvatar)
-                    .font(.system(size: 60))
+                    .font(TypographyTokens.kidDisplay(60))
                     .accessibilityHidden(true)
 
                 VStack(spacing: SpacingTokens.small) {
@@ -1269,7 +1269,7 @@ private struct OnboardingAboutStep: View {
                         .fill(feature.color.opacity(0.12))
                         .frame(width: 44, height: 44)
                     Image(systemName: feature.icon)
-                        .font(.system(size: 20, weight: .semibold))
+                        .font(TypographyTokens.headline(20))
                         .foregroundStyle(feature.color)
                         .accessibilityHidden(true)
                 }
@@ -1359,7 +1359,7 @@ private struct OnboardingScreeningIntroStep: View {
                 ForEach(features.indices, id: \.self) { index in
                     HStack(spacing: SpacingTokens.small) {
                         Image(systemName: features[index].icon)
-                            .font(.system(size: 18, weight: .semibold))
+                            .font(TypographyTokens.headline(18))
                             .foregroundStyle(ColorTokens.Brand.primary)
                             .frame(width: 28)
                             .accessibilityHidden(true)

@@ -115,16 +115,7 @@ struct AuthVerifyEmailView: View {
     private var topDecoration: some View {
         GeometryReader { geo in
             Ellipse()
-                .fill(
-                    LinearGradient(
-                        colors: [
-                            ColorTokens.Brand.primary.opacity(0.9),
-                            ColorTokens.Brand.primaryLo.opacity(0.7)
-                        ],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
+                .fill(GradientTokens.kidHeroDecoration)
                 .frame(width: geo.size.width * 1.3, height: 260)
                 .offset(x: -geo.size.width * 0.15, y: -140)
         }

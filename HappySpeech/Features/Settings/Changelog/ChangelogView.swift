@@ -29,7 +29,7 @@ struct ChangelogView: View {
                 } else if loadFailed {
                     VStack(spacing: SpacingTokens.regular) {
                         Image(systemName: "exclamationmark.triangle")
-                            .font(.system(size: 32))
+                            .font(TypographyTokens.display(32))
                             .foregroundStyle(ColorTokens.Semantic.warning)
                         Text(String(localized: "changelog.loadError"))
                             .font(TypographyTokens.body(15))

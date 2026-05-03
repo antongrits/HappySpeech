@@ -117,7 +117,7 @@ struct StoryCompletionView: View {
         HSLiquidGlassCard(style: .primary, padding: 0) {
             ZStack {
                 Text(display.emoji)
-                    .font(.system(size: 84))
+                    .font(TypographyTokens.kidDisplay(84))
                     .frame(maxWidth: .infinity)
                     .frame(height: 140)
                     .accessibilityHidden(true)
@@ -128,7 +128,7 @@ struct StoryCompletionView: View {
                         HStack {
                             Spacer()
                             Image(systemName: "speaker.wave.2.fill")
-                                .font(.system(size: 18, weight: .semibold))
+                                .font(TypographyTokens.headline(18))
                                 .foregroundStyle(ColorTokens.Brand.primary)
                                 .padding(SpacingTokens.small)
                                 .background(Circle().fill(.ultraThinMaterial))
@@ -194,7 +194,7 @@ struct StoryCompletionView: View {
             Image(systemName: display.feedbackCorrect
                   ? "checkmark.circle.fill"
                   : "lightbulb.fill")
-                .font(.system(size: 20, weight: .semibold))
+                .font(TypographyTokens.headline(20))
                 .foregroundStyle(
                     display.feedbackCorrect
                         ? ColorTokens.Feedback.correct
@@ -276,7 +276,7 @@ struct StoryCompletionView: View {
         HStack(spacing: SpacingTokens.small) {
             ForEach(0..<3, id: \.self) { idx in
                 Image(systemName: idx < display.starsEarned ? "star.fill" : "star")
-                    .font(.system(size: 44, weight: .semibold))
+                    .font(TypographyTokens.display(44))
                     .foregroundStyle(
                         idx < display.starsEarned
                             ? ColorTokens.Brand.butter
@@ -416,17 +416,17 @@ private struct ChoiceButton: View {
             EmptyView()
         case .correct:
             Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 20, weight: .bold))
+                .font(TypographyTokens.headline(20))
                 .foregroundStyle(.white)
                 .accessibilityHidden(true)
         case .wrong:
             Image(systemName: "xmark.circle.fill")
-                .font(.system(size: 20, weight: .bold))
+                .font(TypographyTokens.headline(20))
                 .foregroundStyle(.white)
                 .accessibilityHidden(true)
         case .revealed:
             Image(systemName: "star.fill")
-                .font(.system(size: 20, weight: .bold))
+                .font(TypographyTokens.headline(20))
                 .foregroundStyle(.white)
                 .accessibilityHidden(true)
         }

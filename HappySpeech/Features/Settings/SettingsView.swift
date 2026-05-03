@@ -303,7 +303,7 @@ struct SettingsView: View {
                     }
                     Spacer()
                     Image(systemName: "chevron.right")
-                        .font(.system(size: 13, weight: .semibold))
+                        .font(TypographyTokens.caption(13))
                         .foregroundStyle(ColorTokens.Parent.inkSoft)
                         .accessibilityHidden(true)
                 }
@@ -329,7 +329,7 @@ struct SettingsView: View {
                             .fill(ColorTokens.Brand.primary.opacity(0.15))
                             .frame(width: 48, height: 48)
                         Text(verbatim: display.settings.childAvatar)
-                            .font(.system(size: 26))
+                            .font(TypographyTokens.title(26))
                             .accessibilityHidden(true)
                     }
                     VStack(alignment: .leading, spacing: SpacingTokens.micro) {
@@ -347,7 +347,7 @@ struct SettingsView: View {
                     }
                     Spacer()
                     Image(systemName: "chevron.right")
-                        .font(.system(size: 13, weight: .semibold))
+                        .font(TypographyTokens.caption(13))
                         .foregroundStyle(ColorTokens.Parent.inkSoft)
                         .accessibilityHidden(true)
                 }
@@ -1012,7 +1012,7 @@ private struct SettingsProfileEditor: View {
                         avatar = item
                     } label: {
                         Text(verbatim: item)
-                            .font(.system(size: 28))
+                            .font(TypographyTokens.title(28))
                             .frame(width: 48, height: 48)
                             .background(
                                 Circle().fill(
@@ -1223,7 +1223,7 @@ private struct ModelPackRow: View {
                         .fill(iconBackground)
                         .frame(width: 38, height: 38)
                     Image(systemName: iconName)
-                        .font(.system(size: 16, weight: .semibold))
+                        .font(TypographyTokens.body(16))
                         .foregroundStyle(iconForeground)
                 }
 
