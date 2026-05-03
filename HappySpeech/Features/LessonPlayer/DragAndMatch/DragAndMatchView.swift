@@ -175,7 +175,7 @@ struct DragAndMatchView: View {
 
             VStack(spacing: SpacingTokens.medium) {
                 Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 56))
+                    .font(TypographyTokens.kidDisplay(56))
                     .foregroundStyle(ColorTokens.Feedback.correct)
                 Text(display.roundCompleteAccuracyLabel)
                     .font(TypographyTokens.title(20))
@@ -266,7 +266,7 @@ struct DragAndMatchView: View {
     private func wordChip(_ word: DragWord) -> some View {
         VStack(spacing: SpacingTokens.tiny) {
             Text(word.emoji)
-                .font(.system(size: 40))
+                .font(TypographyTokens.kidDisplay(40))
                 .accessibilityHidden(true)
             Text(word.word)
                 .font(TypographyTokens.headline(15))
@@ -312,7 +312,7 @@ struct DragAndMatchView: View {
 
     private func wordDragPreview(_ word: DragWord) -> some View {
         VStack(spacing: SpacingTokens.tiny) {
-            Text(word.emoji).font(.system(size: 44))
+            Text(word.emoji).font(TypographyTokens.kidDisplay(44))
             Text(word.word)
                 .font(TypographyTokens.headline(16))
                 .foregroundStyle(ColorTokens.Kid.ink)
@@ -342,7 +342,7 @@ struct DragAndMatchView: View {
 
         return VStack(spacing: SpacingTokens.small) {
             HStack(spacing: SpacingTokens.tiny) {
-                Text(bucket.emoji).font(.system(size: 22))
+                Text(bucket.emoji).font(TypographyTokens.headline(22))
                 Text(bucket.title)
                     .font(TypographyTokens.headline(15))
                     .foregroundStyle(ColorTokens.Kid.ink)
@@ -421,7 +421,7 @@ struct DragAndMatchView: View {
               : ColorTokens.Kid.line
 
         return HStack(spacing: SpacingTokens.micro) {
-            Text(word.emoji).font(.system(size: 18))
+            Text(word.emoji).font(TypographyTokens.headline(18))
             Text(word.word)
                 .font(TypographyTokens.caption(13))
                 .foregroundStyle(ColorTokens.Kid.ink)
@@ -492,7 +492,7 @@ struct DragAndMatchView: View {
         HStack(spacing: SpacingTokens.small) {
             ForEach(0..<3, id: \.self) { idx in
                 Image(systemName: idx < display.starsEarned ? "star.fill" : "star")
-                    .font(.system(size: 44, weight: .semibold))
+                    .font(TypographyTokens.kidDisplay(44))
                     .foregroundStyle(
                         idx < display.starsEarned
                             ? ColorTokens.Brand.butter

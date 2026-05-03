@@ -109,7 +109,7 @@ struct StoryPlayerView: View {
             )
             VStack(spacing: 12) {
                 Image(systemName: "play.circle.fill")
-                    .font(.system(size: 56))
+                    .font(TypographyTokens.kidDisplay(56))
                     .foregroundStyle(.white.opacity(0.8))
                 if let desc = entry?.description {
                     Text(desc)
@@ -131,7 +131,7 @@ struct StoryPlayerView: View {
     private var subtitleOverlay: some View {
         if let subtitle, !subtitle.isEmpty {
             Text(subtitle)
-                .font(.system(size: 16, weight: .semibold))
+                .font(TypographyTokens.body(16))
                 .foregroundStyle(.white)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
@@ -161,7 +161,7 @@ struct StoryPlayerView: View {
                         String(localized: "story_player.skip"),
                         systemImage: "forward.fill"
                     )
-                    .font(.system(size: 14, weight: .semibold))
+                    .font(TypographyTokens.caption(14))
                     .foregroundStyle(.white)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)

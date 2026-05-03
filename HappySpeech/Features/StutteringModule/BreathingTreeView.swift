@@ -126,7 +126,7 @@ struct BreathingTreeView: View {
     private var successOverlay: some View {
         VStack(spacing: SpacingTokens.sp4) {
             Image(systemName: "leaf.fill")
-                .font(.system(size: 48))
+                .font(TypographyTokens.kidDisplay(48))
                 .foregroundStyle(ColorTokens.Brand.mint)
 
             Text(String(localized: "stuttering.feedback.complete"))

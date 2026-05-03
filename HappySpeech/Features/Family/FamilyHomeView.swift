@@ -130,7 +130,7 @@ struct FamilyHomeView: View {
                     } label: {
                         HStack(spacing: SpacingTokens.sp3) {
                             Image(systemName: "chart.xyaxis.line")
-                                .font(.system(size: 22, weight: .semibold))
+                                .font(TypographyTokens.headline(22))
                                 .foregroundStyle(ColorTokens.Parent.accent)
                                 .accessibilityHidden(true)
                             Text(String(localized: "family.home.compare"))
@@ -138,7 +138,7 @@ struct FamilyHomeView: View {
                                 .foregroundStyle(ColorTokens.Parent.ink)
                             Spacer()
                             Image(systemName: "chevron.right")
-                                .font(.system(size: 14))
+                                .font(TypographyTokens.caption(14))
                                 .foregroundStyle(ColorTokens.Parent.inkSoft)
                                 .accessibilityHidden(true)
                         }
@@ -154,7 +154,7 @@ struct FamilyHomeView: View {
                 } label: {
                     HStack(spacing: SpacingTokens.sp3) {
                         Image(systemName: "gamecontroller.fill")
-                            .font(.system(size: 22, weight: .semibold))
+                            .font(TypographyTokens.headline(22))
                             .foregroundStyle(ColorTokens.Brand.lilac)
                             .accessibilityHidden(true)
                         Text(String(localized: "family.home.play_together"))
@@ -162,7 +162,7 @@ struct FamilyHomeView: View {
                             .foregroundStyle(ColorTokens.Parent.ink)
                         Spacer()
                         Image(systemName: "chevron.right")
-                            .font(.system(size: 14))
+                            .font(TypographyTokens.caption(14))
                             .foregroundStyle(ColorTokens.Parent.inkSoft)
                             .accessibilityHidden(true)
                     }
@@ -176,7 +176,7 @@ struct FamilyHomeView: View {
                 } label: {
                     HStack(spacing: SpacingTokens.sp3) {
                         Image(systemName: "shareplay")
-                            .font(.system(size: 22, weight: .semibold))
+                            .font(TypographyTokens.headline(22))
                             .foregroundStyle(ColorTokens.Brand.primary)
                             .accessibilityHidden(true)
                         VStack(alignment: .leading, spacing: 2) {
@@ -189,7 +189,7 @@ struct FamilyHomeView: View {
                         }
                         Spacer()
                         Image(systemName: "chevron.right")
-                            .font(.system(size: 14))
+                            .font(TypographyTokens.caption(14))
                             .foregroundStyle(ColorTokens.Parent.inkSoft)
                             .accessibilityHidden(true)
                     }
@@ -343,7 +343,7 @@ private struct AddChildCard: View {
                             .fill(ColorTokens.Brand.primary.opacity(0.12))
                             .frame(width: 56, height: 56)
                         Image(systemName: "plus")
-                            .font(.system(size: 22, weight: .semibold))
+                            .font(TypographyTokens.headline(22))
                             .foregroundStyle(ColorTokens.Brand.primary)
                     }
 

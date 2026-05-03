@@ -175,7 +175,7 @@ struct SortingView: View {
     private var timerLabel: some View {
         HStack(spacing: SpacingTokens.tiny) {
             Image(systemName: "timer")
-                .font(.system(size: 13, weight: .semibold))
+                .font(TypographyTokens.caption(13))
             Text(display.timerLabel)
                 .font(TypographyTokens.mono(14))
                 .monospacedDigit()
@@ -187,7 +187,7 @@ struct SortingView: View {
     private var streakBadge: some View {
         HStack(spacing: SpacingTokens.micro) {
             Image(systemName: "flame.fill")
-                .font(.system(size: 12, weight: .bold))
+                .font(TypographyTokens.caption(12))
             Text(String(localized: "серия ×\(display.currentStreak)"))
                 .font(TypographyTokens.caption(12))
         }
@@ -262,7 +262,7 @@ struct SortingView: View {
         } label: {
             VStack(spacing: SpacingTokens.small) {
                 Text(category.emoji)
-                    .font(.system(size: 44))
+                    .font(TypographyTokens.kidDisplay(44))
                     .accessibilityHidden(true)
                 Text(category.title)
                     .font(TypographyTokens.headline(16))
@@ -368,7 +368,7 @@ struct SortingView: View {
         if display.hintVisible {
             VStack(spacing: SpacingTokens.small) {
                 Image(systemName: "lightbulb.fill")
-                    .font(.system(size: 32))
+                    .font(TypographyTokens.kidDisplay(32))
                     .foregroundStyle(ColorTokens.Brand.butter)
                 Text(display.hintText)
                     .font(TypographyTokens.body(16))
@@ -442,7 +442,7 @@ struct SortingView: View {
         HStack(spacing: SpacingTokens.small) {
             ForEach(0..<3, id: \.self) { idx in
                 Image(systemName: idx < display.starsEarned ? "star.fill" : "star")
-                    .font(.system(size: 44, weight: .semibold))
+                    .font(TypographyTokens.kidDisplay(44))
                     .foregroundStyle(
                         idx < display.starsEarned
                             ? ColorTokens.Brand.butter

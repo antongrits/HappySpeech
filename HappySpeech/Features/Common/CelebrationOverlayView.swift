@@ -73,7 +73,7 @@ struct CelebrationOverlayView: View {
                 // Заголовок
                 VStack(spacing: 8) {
                     Text(titleText)
-                        .font(.system(size: 28, weight: .bold, design: .rounded))
+                        .font(TypographyTokens.title(28))
                         .foregroundStyle(.white)
                         .multilineTextAlignment(.center)
                         .lineLimit(nil)
@@ -82,7 +82,7 @@ struct CelebrationOverlayView: View {
 
                     if stars == 3 {
                         Text(String(localized: "celebration.perfect_subtitle"))
-                            .font(.system(size: 16, weight: .medium, design: .rounded))
+                            .font(TypographyTokens.body(16))
                             .foregroundStyle(.white.opacity(0.88))
                             .multilineTextAlignment(.center)
                             .lineLimit(nil)
@@ -97,7 +97,7 @@ struct CelebrationOverlayView: View {
                     onContinue()
                 } label: {
                     Text(String(localized: "celebration.continue_button"))
-                        .font(.system(size: 18, weight: .semibold, design: .rounded))
+                        .font(TypographyTokens.headline(18))
                         .foregroundStyle(.white)
                         .frame(maxWidth: 260)
                         .padding(.vertical, 14)
@@ -124,7 +124,7 @@ struct CelebrationOverlayView: View {
         HStack(spacing: 8) {
             ForEach(0..<3, id: \.self) { index in
                 Image(systemName: index < stars ? "star.fill" : "star")
-                    .font(.system(size: 36))
+                    .font(TypographyTokens.display(36))
                     .foregroundStyle(
                         index < stars
                             ? Color(hex: "#FFD93D")

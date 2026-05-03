@@ -306,7 +306,7 @@ struct NarrativeQuestView: View {
                 HStack(spacing: SpacingTokens.tiny) {
                     ForEach(Array(display.collectedEmojis.enumerated()), id: \.offset) { _, emoji in
                         Text(emoji)
-                            .font(.system(size: 32))
+                            .font(TypographyTokens.kidDisplay(32))
                     }
                 }
                 .accessibilityElement(children: .ignore)
@@ -316,7 +316,7 @@ struct NarrativeQuestView: View {
             HStack(spacing: SpacingTokens.tiny) {
                 ForEach(0..<3, id: \.self) { index in
                     Image(systemName: index < display.starsEarned ? "star.fill" : "star")
-                        .font(.system(size: 40, weight: .bold))
+                        .font(TypographyTokens.kidDisplay(40))
                         .foregroundStyle(
                             index < display.starsEarned
                                 ? ColorTokens.Brand.gold
@@ -408,7 +408,7 @@ struct NarrativeQuestView: View {
                 Spacer()
                 HStack(spacing: 4) {
                     ForEach(Array(display.collectedEmojis.enumerated()), id: \.offset) { _, emoji in
-                        Text(emoji).font(.system(size: 20))
+                        Text(emoji).font(TypographyTokens.headline(20))
                     }
                 }
                 .accessibilityHidden(true)

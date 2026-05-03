@@ -283,7 +283,7 @@ struct DemoModeView: View {
             interactor?.replayStep(.init())
         } label: {
             Image(systemName: "arrow.counterclockwise")
-                .font(.system(size: 16, weight: .semibold))
+                .font(TypographyTokens.body(16))
                 .foregroundStyle(.white.opacity(0.85))
                 .frame(minWidth: 44, minHeight: 44)
                 .contentShape(Rectangle())
@@ -298,7 +298,7 @@ struct DemoModeView: View {
             interactor?.toggleAutoAdvance(.init())
         } label: {
             Image(systemName: display.autoAdvanceEnabled ? "play.circle.fill" : "play.circle")
-                .font(.system(size: 17, weight: .semibold))
+                .font(TypographyTokens.headline(17))
                 .foregroundStyle(display.autoAdvanceEnabled ? .white : .white.opacity(0.7))
                 .frame(minWidth: 44, minHeight: 44)
                 .contentShape(Rectangle())
@@ -315,7 +315,7 @@ struct DemoModeView: View {
             showOverview = true
         } label: {
             Image(systemName: "list.bullet.rectangle")
-                .font(.system(size: 16, weight: .semibold))
+                .font(TypographyTokens.body(16))
                 .foregroundStyle(.white.opacity(0.85))
                 .frame(minWidth: 44, minHeight: 44)
                 .contentShape(Rectangle())

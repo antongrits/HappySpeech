@@ -251,7 +251,7 @@ struct ArticulationImitationView: View {
                     interactor.requestHint(.init(poseId: poseId))
                 } label: {
                     Image(systemName: "lightbulb.fill")
-                        .font(.system(size: 24))
+                        .font(TypographyTokens.title(24))
                         .foregroundStyle(ColorTokens.Brand.mint)
                         .frame(width: 56, height: 56)
                         .background(
@@ -326,7 +326,7 @@ struct ArticulationImitationView: View {
             HStack(spacing: SpacingTokens.tiny) {
                 ForEach(0..<display.outOf, id: \.self) { index in
                     Image(systemName: index < display.starsTotal ? "star.fill" : "star")
-                        .font(.system(size: 40, weight: .bold))
+                        .font(TypographyTokens.kidDisplay(40))
                         .foregroundStyle(
                             index < display.starsTotal
                                 ? ColorTokens.Brand.gold

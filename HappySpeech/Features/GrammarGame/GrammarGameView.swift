@@ -177,7 +177,7 @@ struct GrammarGameView: View {
                 interactor.requestExit()
             } label: {
                 Image(systemName: "xmark.circle.fill")
-                    .font(.system(size: 24))
+                    .font(TypographyTokens.title(24))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
             }
             .frame(width: 44, height: 44)
@@ -222,7 +222,7 @@ struct GrammarGameView: View {
             .fill(difficultyColor.opacity(0.15))
             .overlay(
                 Text(difficultyLabel)
-                    .font(.system(size: 12, weight: .bold, design: .rounded))
+                    .font(TypographyTokens.caption(12))
                     .foregroundStyle(difficultyColor)
                     .padding(.horizontal, SpacingTokens.small)
             )
@@ -265,7 +265,7 @@ struct GrammarGameView: View {
                 singularImageTile
 
                 Image(systemName: "arrow.right.circle.fill")
-                    .font(.system(size: 28))
+                    .font(TypographyTokens.title(28))
                     .foregroundStyle(ColorTokens.Brand.primary)
 
                 pluralResultArea
@@ -318,7 +318,7 @@ struct GrammarGameView: View {
                     .frame(width: tileSize, height: tileSize)
                     .overlay(
                         Image(systemName: "questionmark")
-                            .font(.system(size: 36))
+                            .font(TypographyTokens.display(36))
                             .foregroundStyle(ColorTokens.Kid.inkSoft)
                     )
             }
@@ -336,7 +336,7 @@ struct GrammarGameView: View {
             onChoiceTapped(choice.id)
         } label: {
             Text(choice.text)
-                .font(.system(size: 22, weight: .semibold, design: .rounded))
+                .font(TypographyTokens.headline(22))
                 .foregroundStyle(state.textColor)
                 .lineLimit(nil)
                 .minimumScaleFactor(0.85)
@@ -430,7 +430,7 @@ struct GrammarGameView: View {
 
             if !dragFeedbackPhrase.isEmpty {
                 Text(dragFeedbackPhrase)
-                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                    .font(TypographyTokens.headline(20))
                     .foregroundStyle(dragIsCorrect == true
                                      ? ColorTokens.Semantic.success
                                      : ColorTokens.Semantic.error)
@@ -500,12 +500,12 @@ struct GrammarGameView: View {
             HSLiquidGlassCard {
                 HStack(spacing: SpacingTokens.large) {
                     Image(systemName: "heart.circle.fill")
-                        .font(.system(size: 40))
+                        .font(TypographyTokens.kidDisplay(40))
                         .foregroundStyle(ColorTokens.Brand.primary)
                         .frame(width: 56, height: 56)
 
                     Text(questionText)
-                        .font(.system(size: 22, weight: .semibold, design: .rounded))
+                        .font(TypographyTokens.headline(22))
                         .foregroundStyle(ColorTokens.Kid.ink)
                         .lineLimit(nil)
                         .minimumScaleFactor(0.85)
@@ -534,12 +534,12 @@ struct GrammarGameView: View {
         } label: {
             HStack(spacing: SpacingTokens.large) {
                 Image(systemName: "person.circle.fill")
-                    .font(.system(size: 28))
+                    .font(TypographyTokens.title(28))
                     .foregroundStyle(state.textColor)
                     .frame(width: 56, height: 56)
 
                 Text(choice.text)
-                    .font(.system(size: 22, weight: .semibold, design: .rounded))
+                    .font(TypographyTokens.headline(22))
                     .foregroundStyle(state.textColor)
                     .lineLimit(nil)
                     .minimumScaleFactor(0.85)
@@ -548,7 +548,7 @@ struct GrammarGameView: View {
 
                 Image(systemName: stateIcon(for: choice))
                     .foregroundStyle(state.border)
-                    .font(.system(size: 22))
+                    .font(TypographyTokens.headline(22))
             }
             .padding(SpacingTokens.cardPad)
             .background(
@@ -591,11 +591,11 @@ struct GrammarGameView: View {
                 HSLiquidGlassCard {
                     HStack {
                         Image(systemName: "person.badge.plus")
-                            .font(.system(size: 28))
+                            .font(TypographyTokens.title(28))
                             .foregroundStyle(ColorTokens.Brand.primary)
                             .frame(width: 56, height: 56)
                         Text(questionText)
-                            .font(.system(size: 20, weight: .semibold, design: .rounded))
+                            .font(TypographyTokens.headline(20))
                             .foregroundStyle(ColorTokens.Kid.ink)
                             .lineLimit(nil)
                             .minimumScaleFactor(0.85)
@@ -645,7 +645,7 @@ struct GrammarGameView: View {
                 // Показываем feedback text
                 if !feedbackText.isEmpty {
                     Text(feedbackText)
-                        .font(.system(size: 18, weight: .semibold, design: .rounded))
+                        .font(TypographyTokens.headline(18))
                         .foregroundStyle(
                             selected == correctChoiceId
                                 ? ColorTokens.Semantic.success
@@ -675,7 +675,7 @@ struct GrammarGameView: View {
 
     private func hintView(_ hint: String) -> some View {
         Text(hint)
-            .font(.system(size: 16, weight: .medium, design: .rounded))
+            .font(TypographyTokens.body(16))
             .foregroundStyle(ColorTokens.Kid.inkMuted)
             .multilineTextAlignment(.center)
             .padding(SpacingTokens.regular)
@@ -707,10 +707,10 @@ struct GrammarGameView: View {
         VStack(spacing: SpacingTokens.large) {
             Spacer()
             Image(systemName: "exclamationmark.triangle.fill")
-                .font(.system(size: 48))
+                .font(TypographyTokens.kidDisplay(48))
                 .foregroundStyle(ColorTokens.Semantic.warning)
             Text(message)
-                .font(.system(size: 18, design: .rounded))
+                .font(TypographyTokens.headline(18))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, SpacingTokens.screenEdge)
@@ -729,12 +729,12 @@ struct GrammarGameView: View {
                 .frame(width: 120, height: 120)
 
             Text(sessionResultText)
-                .font(.system(size: 28, weight: .bold, design: .rounded))
+                .font(TypographyTokens.title(28))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
 
             Text("\(sessionCorrectCount) из \(totalRounds) правильно")
-                .font(.system(size: 20, design: .rounded))
+                .font(TypographyTokens.headline(20))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
 
             HSButton(
@@ -755,11 +755,11 @@ struct GrammarGameView: View {
     private func exitConfirmationSheet(_ vm: GrammarGameModels.ExitConfirmation.ViewModel) -> some View {
         VStack(spacing: SpacingTokens.xLarge) {
             Text(vm.title)
-                .font(.system(size: 22, weight: .bold, design: .rounded))
+                .font(TypographyTokens.headline(22))
                 .foregroundStyle(ColorTokens.Kid.ink)
 
             Text(vm.body)
-                .font(.system(size: 16, design: .rounded))
+                .font(TypographyTokens.body(16))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
 
@@ -968,7 +968,7 @@ private struct PluralPreviewGrid: View {
         ) {
             ForEach(0..<5, id: \.self) { _ in
                 Image(systemName: "circle.fill")
-                    .font(.system(size: 24))
+                    .font(TypographyTokens.title(24))
                     .foregroundStyle(ColorTokens.Brand.primary.opacity(0.7))
             }
         }
@@ -1015,12 +1015,12 @@ private struct DativeDropTargetView: View {
                     .frame(width: frameWidth, height: frameHeight)
 
                 Image(systemName: "person.circle.fill")
-                    .font(.system(size: 40))
+                    .font(TypographyTokens.kidDisplay(40))
                     .foregroundStyle(ColorTokens.Brand.primary)
             }
 
             Text(character.dativeName)
-                .font(.system(size: 16, weight: .semibold, design: .rounded))
+                .font(TypographyTokens.body(16))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
@@ -1045,7 +1045,7 @@ private struct GenitiveSceneView: View {
 
             // Ляля держит предмет в верхней части
             Image(systemName: "person.fill")
-                .font(.system(size: 40))
+                .font(TypographyTokens.kidDisplay(40))
                 .foregroundStyle(ColorTokens.Brand.primary)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.top, 20)
@@ -1085,13 +1085,13 @@ private struct ContainerTapTargetView: View {
                             .strokeBorder(borderColor, lineWidth: borderWidth)
                     )
                 Image(systemName: "cube.box.fill")
-                    .font(.system(size: 32))
+                    .font(TypographyTokens.kidDisplay(32))
                     .foregroundStyle(ColorTokens.Brand.primary)
             }
             .frame(width: 80, height: 88)
 
             Text(container.genitiveName)
-                .font(.system(size: 12, weight: .medium, design: .rounded))
+                .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
@@ -1135,7 +1135,7 @@ private struct PartyGuestsGrid: View {
                         .frame(width: 72, height: 72)
                         .overlay(
                             Image(systemName: "person.fill")
-                                .font(.system(size: 28))
+                                .font(TypographyTokens.title(28))
                                 .foregroundStyle(ColorTokens.Brand.primary)
                         )
                         .transition(.scale.animation(.spring(response: 0.5).delay(Double(idx) * 0.1)))
@@ -1147,7 +1147,7 @@ private struct PartyGuestsGrid: View {
                         .frame(width: 72, height: 72)
                         .overlay(
                             Image(systemName: "person.badge.plus")
-                                .font(.system(size: 22))
+                                .font(TypographyTokens.headline(22))
                                 .foregroundStyle(ColorTokens.Kid.inkSoft)
                         )
                 }

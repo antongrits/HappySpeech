@@ -91,7 +91,7 @@ struct ARZoneTutorialSheetView: View {
                 )
 
             Image(systemName: tutorial.animationSystemSymbol)
-                .font(.system(size: 52, weight: .semibold))
+                .font(TypographyTokens.kidDisplay(52))
                 .foregroundStyle(.white)
                 .symbolEffect(.bounce.down, value: symbolBounce)
                 .accessibilityHidden(true)

@@ -776,7 +776,7 @@ private struct AchievementPopupView: View {
     var body: some View {
         VStack(spacing: SpacingTokens.medium) {
             Image(systemName: info.iconName)
-                .font(.system(size: 52, weight: .semibold))
+                .font(TypographyTokens.kidDisplay(52))
                 .foregroundStyle(ColorTokens.Brand.gold)
                 .padding(SpacingTokens.medium)
                 .background(ColorTokens.Brand.gold.opacity(0.15), in: Circle())

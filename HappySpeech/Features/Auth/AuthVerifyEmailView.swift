@@ -138,7 +138,7 @@ struct AuthVerifyEmailView: View {
             VStack(spacing: SpacingTokens.sp3) {
                 HStack(spacing: SpacingTokens.sp3) {
                     Image(systemName: "envelope.badge.fill")
-                        .font(.system(size: 28, weight: .semibold))
+                        .font(TypographyTokens.title(28))
                         .foregroundStyle(ColorTokens.Brand.primary)
                         .accessibilityHidden(true)
                     VStack(alignment: .leading, spacing: SpacingTokens.sp1) {

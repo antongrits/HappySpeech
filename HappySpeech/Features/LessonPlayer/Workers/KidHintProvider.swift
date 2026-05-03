@@ -89,7 +89,7 @@ struct HintButtonView: View {
                     .fill(ColorTokens.Brand.butter.opacity(0.25))
                     .frame(width: 44, height: 44)
                 Image(systemName: "lightbulb.fill")
-                    .font(.system(size: 20, weight: .medium))
+                    .font(TypographyTokens.headline(20))
                     .foregroundStyle(ColorTokens.Brand.primary)
                     .opacity(isLoadingHint ? 0.5 : 1.0)
                     .animation(

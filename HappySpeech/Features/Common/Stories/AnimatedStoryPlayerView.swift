@@ -234,7 +234,7 @@ struct AnimatedStoryPlayerView: View {
 
     private var backgroundEmojiRow: some View {
         Text(currentScene.backgroundEmoji)
-            .font(.system(size: 42))
+            .font(TypographyTokens.kidDisplay(42))
             .opacity(sceneVisible ? 1 : 0)
             .animation(
                 reduceMotion ? .none : MotionTokens.outQuick,

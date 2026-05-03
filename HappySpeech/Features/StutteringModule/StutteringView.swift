@@ -152,7 +152,7 @@ struct StutteringView: View {
             HStack(spacing: SpacingTokens.sp3) {
                 Image(systemName: "speaker.wave.2.fill")
                     .foregroundStyle(ColorTokens.Brand.primary)
-                    .font(.system(size: 16))
+                    .font(TypographyTokens.body(16))
                 Text(scene.display.voicePromptText)
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Kid.ink)
@@ -283,7 +283,7 @@ private struct AdaptiveRecommendationCard: View {
             HStack(spacing: SpacingTokens.sp3) {
                 Image(systemName: "star.fill")
                     .foregroundStyle(ColorTokens.Brand.butter)
-                    .font(.system(size: 20))
+                    .font(TypographyTokens.headline(20))
                 VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
                     Text(String(localized: "stuttering.recommendation.title"))
                         .font(TypographyTokens.caption(12))
@@ -297,7 +297,7 @@ private struct AdaptiveRecommendationCard: View {
                 Spacer()
                 Image(systemName: "chevron.right")
                     .foregroundStyle(ColorTokens.Brand.primary)
-                    .font(.system(size: 14, weight: .semibold))
+                    .font(TypographyTokens.caption(14))
             }
             .padding(SpacingTokens.sp4)
             .background(
@@ -351,7 +351,7 @@ private struct InfoTile: View {
             HStack(spacing: SpacingTokens.sp3) {
                 Image(systemName: symbol)
                     .foregroundStyle(color)
-                    .font(.system(size: 18))
+                    .font(TypographyTokens.headline(18))
                     .frame(width: 32, height: 32)
                 Text(String(localized: String.LocalizationValue(titleKey)))
                     .font(TypographyTokens.body(15))
@@ -361,7 +361,7 @@ private struct InfoTile: View {
                 Spacer()
                 Image(systemName: "chevron.right")
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .font(.system(size: 13))
+                    .font(TypographyTokens.caption(13))
             }
             .padding(SpacingTokens.sp3)
             .background(ColorTokens.Kid.surface, in: RoundedRectangle(cornerRadius: RadiusTokens.md))
@@ -389,14 +389,14 @@ private struct ExerciseCard: View {
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
                 HStack {
                     Image(systemName: card.symbol)
-                        .font(.system(size: 28, weight: .semibold))
+                        .font(TypographyTokens.title(28))
                         .foregroundStyle(symbolColor)
                         .frame(width: 40, height: 40)
                     Spacer()
                     if card.completedToday {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundStyle(ColorTokens.Brand.mint)
-                            .font(.system(size: 16))
+                            .font(TypographyTokens.body(16))
                             .accessibilityLabel(String(localized: "stuttering.card.completed.accessibility"))
                     }
                 }
@@ -490,7 +490,7 @@ struct StutteringStaticInfoSheet: View {
     var body: some View {
         VStack(spacing: SpacingTokens.sp6) {
             Image(systemName: iconSymbol)
-                .font(.system(size: 48))
+                .font(TypographyTokens.kidDisplay(48))
                 .foregroundStyle(iconColor)
                 .accessibilityHidden(true)
 

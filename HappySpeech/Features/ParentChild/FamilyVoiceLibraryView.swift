@@ -114,7 +114,7 @@ struct FamilyVoiceLibraryView: View {
         HSCard(style: .tinted(ColorTokens.Brand.primary.opacity(0.08))) {
             HStack(spacing: SpacingTokens.sp3) {
                 Image(systemName: "checkmark.seal.fill")
-                    .font(.system(size: 20))
+                    .font(TypographyTokens.headline(20))
                     .foregroundStyle(ColorTokens.Brand.primary)
                     .accessibilityHidden(true)
 
@@ -182,7 +182,7 @@ struct FamilyRecordingRow: View {
                 // Play / Stop button
                 Button(action: onPlay) {
                     Image(systemName: isPlaying ? "stop.circle.fill" : "play.circle.fill")
-                        .font(.system(size: 36))
+                        .font(TypographyTokens.display(36))
                         .foregroundStyle(ColorTokens.Brand.primary)
                         .frame(minWidth: 44, minHeight: 44)
                         .animation(.easeInOut(duration: 0.2), value: isPlaying)
@@ -220,7 +220,7 @@ struct FamilyRecordingRow: View {
                 // Rerecord
                 Button(action: onRerecord) {
                     Image(systemName: "arrow.clockwise")
-                        .font(.system(size: 16, weight: .medium))
+                        .font(TypographyTokens.body(16))
                         .foregroundStyle(ColorTokens.Brand.primary)
                         .frame(minWidth: 36, minHeight: 36)
                 }

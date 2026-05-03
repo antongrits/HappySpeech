@@ -201,7 +201,7 @@ struct SiblingGameView: View {
                         .fill(ColorTokens.Brand.primary)
                         .frame(width: 80, height: 80)
                     Image(systemName: display.isListening ? "stop.fill" : "mic.fill")
-                        .font(.system(size: 32, weight: .semibold))
+                        .font(TypographyTokens.kidDisplay(32))
                         .foregroundStyle(.white)
                 }
             }

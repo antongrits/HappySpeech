@@ -211,7 +211,7 @@ struct RhythmView: View {
                 HStack(spacing: SpacingTokens.tiny) {
                     ForEach(0..<3, id: \.self) { i in
                         Image(systemName: i < store.display.starsPreview ? "star.fill" : "star")
-                            .font(.system(size: 28))
+                            .font(TypographyTokens.title(28))
                             .foregroundStyle(
                                 i < store.display.starsPreview
                                     ? ColorTokens.Brand.primary
@@ -244,7 +244,7 @@ struct RhythmView: View {
             HStack(spacing: SpacingTokens.tiny) {
                 ForEach(0..<3, id: \.self) { i in
                     Image(systemName: i < store.display.starsEarned ? "star.fill" : "star")
-                        .font(.system(size: 36))
+                        .font(TypographyTokens.display(36))
                         .foregroundStyle(
                             i < store.display.starsEarned
                                 ? ColorTokens.Brand.primary

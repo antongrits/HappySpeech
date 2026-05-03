@@ -66,7 +66,7 @@ struct SharePlaySessionView: View {
         HStack(spacing: SpacingTokens.sp3) {
             // Иконка SharePlay
             Image(systemName: "shareplay")
-                .font(.system(size: 15, weight: .semibold))
+                .font(TypographyTokens.body(15))
                 .foregroundStyle(ColorTokens.Brand.primary)
                 .accessibilityHidden(true)
 
@@ -95,7 +95,7 @@ struct SharePlaySessionView: View {
             Button(action: onEnd) {
                 HStack(spacing: 4) {
                     Image(systemName: "xmark")
-                        .font(.system(size: 12, weight: .bold))
+                        .font(TypographyTokens.caption(12))
                     Text(String(localized: "shareplay.session.end"))
                         .font(TypographyTokens.caption(12))
                 }

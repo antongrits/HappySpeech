@@ -121,7 +121,7 @@ struct MetronomeView: View {
             HStack(spacing: SpacingTokens.sp2) {
                 ForEach(0..<3, id: \.self) { i in
                     Image(systemName: "star.fill")
-                        .font(.system(size: 32))
+                        .font(TypographyTokens.kidDisplay(32))
                         .foregroundStyle(ColorTokens.Brand.butter)
                         .scaleEffect(1.0)
                         .animation(
@@ -159,7 +159,7 @@ private struct SyllableCell: View {
             .overlay {
                 if syllable.state == .completed {
                     Image(systemName: "checkmark")
-                        .font(.system(size: 16, weight: .bold))
+                        .font(TypographyTokens.body(16))
                         .foregroundStyle(.white)
                 }
             }

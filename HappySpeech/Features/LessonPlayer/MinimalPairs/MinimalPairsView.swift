@@ -177,7 +177,7 @@ struct MinimalPairsView: View {
         HStack(spacing: SpacingTokens.small) {
             Button(action: replayWord) {
                 Image(systemName: "speaker.wave.2.fill")
-                    .font(.system(size: 22, weight: .semibold))
+                    .font(TypographyTokens.headline(22))
                     .foregroundStyle(.white)
                     .frame(width: 56, height: 56)
                     .background(Circle().fill(ColorTokens.Brand.primary))
@@ -320,7 +320,7 @@ struct MinimalPairsView: View {
         VStack(spacing: SpacingTokens.tiny) {
             HStack(spacing: SpacingTokens.small) {
                 Image(systemName: display.correct ? "checkmark.circle.fill" : "xmark.circle.fill")
-                    .font(.system(size: 24, weight: .bold))
+                    .font(TypographyTokens.title(24))
                 Text(display.feedbackText)
                     .font(TypographyTokens.headline(17))
                     .lineLimit(2)
@@ -389,7 +389,7 @@ struct MinimalPairsView: View {
         HStack(spacing: SpacingTokens.small) {
             ForEach(0..<3, id: \.self) { idx in
                 Image(systemName: idx < display.starsEarned ? "star.fill" : "star")
-                    .font(.system(size: 44, weight: .semibold))
+                    .font(TypographyTokens.kidDisplay(44))
                     .foregroundStyle(
                         idx < display.starsEarned
                             ? ColorTokens.Brand.butter

@@ -52,7 +52,7 @@ struct HomeTaskDetailSheet: View {
 
                     Button(action: onDismiss) {
                         Image(systemName: "xmark.circle.fill")
-                            .font(.system(size: 24))
+                            .font(TypographyTokens.title(24))
                             .foregroundStyle(ColorTokens.Parent.inkSoft)
                     }
                     .buttonStyle(.plain)
@@ -100,7 +100,7 @@ struct HomeTaskDetailSheet: View {
             VStack(alignment: .leading, spacing: SpacingTokens.small) {
                 HStack(spacing: SpacingTokens.tiny) {
                     Image(systemName: "text.alignleft")
-                        .font(.system(size: 14, weight: .medium))
+                        .font(TypographyTokens.caption(14))
                         .foregroundStyle(ColorTokens.Parent.accent)
                         .accessibilityHidden(true)
                     Text(String(localized: "homeTasks.detail.descriptionTitle"))
@@ -168,7 +168,7 @@ struct HomeTaskDetailSheet: View {
     private func metaRow(icon: String, label: String, value: String, color: Color) -> some View {
         HStack(alignment: .center, spacing: SpacingTokens.regular) {
             Image(systemName: icon)
-                .font(.system(size: 16, weight: .medium))
+                .font(TypographyTokens.body(16))
                 .foregroundStyle(color)
                 .frame(width: 24, alignment: .center)
                 .accessibilityHidden(true)

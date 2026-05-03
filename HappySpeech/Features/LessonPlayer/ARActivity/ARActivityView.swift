@@ -89,7 +89,7 @@ struct ARActivityView: View {
         VStack(spacing: SpacingTokens.large) {
             Spacer()
             Image(systemName: "camera.fill")
-                .font(.system(size: 56, weight: .semibold))
+                .font(TypographyTokens.kidDisplay(56))
                 .foregroundStyle(ColorTokens.Kid.inkSoft)
                 .accessibilityHidden(true)
 
@@ -284,7 +284,7 @@ struct ARActivityView: View {
         HStack(spacing: SpacingTokens.small) {
             ForEach(0..<3, id: \.self) { index in
                 Image(systemName: index < display.starsEarned ? "star.fill" : "star")
-                    .font(.system(size: 44, weight: .semibold))
+                    .font(TypographyTokens.kidDisplay(44))
                     .foregroundStyle(
                         index < display.starsEarned
                             ? ColorTokens.Brand.gold
@@ -407,7 +407,7 @@ private struct ARActivityGameCardView: View {
             VStack(alignment: .leading, spacing: SpacingTokens.small) {
                 HStack {
                     Image(systemName: card.iconSystemName)
-                        .font(.system(size: 24, weight: .semibold))
+                        .font(TypographyTokens.title(24))
                         .foregroundStyle(iconColor)
                         .accessibilityHidden(true)
 
@@ -415,14 +415,14 @@ private struct ARActivityGameCardView: View {
 
                     if card.isRecommended {
                         Image(systemName: "star.fill")
-                            .font(.system(size: 12, weight: .bold))
+                            .font(TypographyTokens.caption(12))
                             .foregroundStyle(ColorTokens.Brand.gold)
                             .accessibilityHidden(true)
                     }
 
                     if card.playedToday {
                         Image(systemName: "checkmark.circle.fill")
-                            .font(.system(size: 14, weight: .regular))
+                            .font(TypographyTokens.caption(14))
                             .foregroundStyle(ColorTokens.Brand.primary.opacity(0.6))
                             .accessibilityHidden(true)
                     }
@@ -445,7 +445,7 @@ private struct ARActivityGameCardView: View {
 
                 HStack {
                     Image(systemName: "clock")
-                        .font(.system(size: 10, weight: .regular))
+                        .font(TypographyTokens.caption(10))
                         .accessibilityHidden(true)
                     Text(card.estimatedLabel)
                         .font(TypographyTokens.body(11))
