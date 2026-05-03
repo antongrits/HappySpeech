@@ -189,7 +189,7 @@ struct ProfileEditorView: View {
 
             if isSelected {
                 Image(systemName: "checkmark")
-                    .font(.system(size: 14, weight: .bold))
+                    .font(.system(size: 14, weight: .bold)) // emoji avatar accent — TypographyTokens.body не поддерживает .bold
                     .foregroundStyle(.white)
             }
         }

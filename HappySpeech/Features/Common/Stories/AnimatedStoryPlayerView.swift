@@ -246,7 +246,7 @@ struct AnimatedStoryPlayerView: View {
 
     private var characterView: some View {
         Text(currentScene.characterEmoji)
-            .font(.system(size: 80))
+            .font(TypographyTokens.kidDisplay(80))
             .scaleEffect(characterScale)
             .offset(x: characterOffset, y: 0)
             .rotationEffect(.degrees(characterRotation))

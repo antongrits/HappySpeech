@@ -297,7 +297,7 @@ private struct ChildCardView: View {
                 // Streak
                 HStack(spacing: SpacingTokens.sp1) {
                     Image(systemName: "flame.fill")
-                        .font(.system(size: 12))
+                        .font(TypographyTokens.caption(12))
                         .foregroundStyle(.orange)
                         .accessibilityHidden(true)
                     Text("\(child.currentStreak) \(String(localized: "streak.days.short"))")

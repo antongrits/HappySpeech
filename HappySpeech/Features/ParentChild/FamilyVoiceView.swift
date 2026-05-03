@@ -163,7 +163,7 @@ struct FamilyVoiceView: View {
         HSCard(style: .elevated) {
             VStack(spacing: SpacingTokens.sp3) {
                 Image(systemName: "waveform.circle")
-                    .font(.system(size: 56, weight: .medium))
+                    .font(TypographyTokens.kidDisplay(56))
                     .foregroundStyle(ColorTokens.Brand.primary)
                     .accessibilityHidden(true)
 

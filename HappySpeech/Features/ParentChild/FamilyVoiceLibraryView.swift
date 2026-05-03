@@ -136,7 +136,7 @@ struct FamilyVoiceLibraryView: View {
             Spacer()
 
             Image(systemName: "mic.slash.circle")
-                .font(.system(size: 64, weight: .light))
+                .font(TypographyTokens.kidDisplay(64))
                 .foregroundStyle(ColorTokens.Parent.inkSoft.opacity(0.5))
                 .accessibilityHidden(true)
 

@@ -136,7 +136,7 @@ struct NarrativeQuestView: View {
 
             VStack(spacing: SpacingTokens.medium) {
                 Text(display.finalRewardEmoji)
-                    .font(.system(size: 96))
+                    .font(TypographyTokens.kidDisplay(96))
                     .accessibilityHidden(true)
 
                 Text(display.questTitle)
@@ -220,7 +220,7 @@ struct NarrativeQuestView: View {
                             value: micPulse
                         )
                     Image(systemName: "mic.fill")
-                        .font(.system(size: 88, weight: .bold))
+                        .font(TypographyTokens.kidDisplay(88))
                         .foregroundStyle(ColorTokens.Brand.primary)
                         .accessibilityHidden(true)
                 }
@@ -262,12 +262,12 @@ struct NarrativeQuestView: View {
             VStack(spacing: SpacingTokens.medium) {
                 if display.feedbackSuccess {
                     Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 96, weight: .bold))
+                        .font(TypographyTokens.kidDisplay(96))
                         .foregroundStyle(ColorTokens.Brand.mint)
                         .accessibilityHidden(true)
                 } else {
                     Image(systemName: "arrow.triangle.2.circlepath")
-                        .font(.system(size: 80, weight: .bold))
+                        .font(TypographyTokens.kidDisplay(80))
                         .foregroundStyle(ColorTokens.Brand.sky)
                         .accessibilityHidden(true)
                 }
@@ -299,7 +299,7 @@ struct NarrativeQuestView: View {
                 .accessibilityHidden(true)
 
             Text(display.finalRewardEmoji)
-                .font(.system(size: 84))
+                .font(TypographyTokens.kidDisplay(84))
                 .accessibilityHidden(true)
 
             if !display.collectedEmojis.isEmpty {
