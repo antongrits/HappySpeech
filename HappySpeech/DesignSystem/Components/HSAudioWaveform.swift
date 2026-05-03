@@ -4,6 +4,10 @@ import SwiftUI
 
 /// Real-time audio waveform visualiser. Driven by amplitude array.
 /// Also supports playback mode (renders stored waveform).
+///
+/// Idle анимация реализована через `TimelineView + Canvas` — нет Timer,
+/// нет Sendable-мутации @State из closure, нет утечек памяти.
+/// Reduced Motion: статические bars без анимации.
 public struct HSAudioWaveform: View {
 
     public enum WaveformStyle {
@@ -18,8 +22,7 @@ public struct HSAudioWaveform: View {
     private let barCount: Int
 
     @Environment(\.circuitContext) private var circuit
-    @State private var idleBars: [Float] = []
-    @State private var idlePhase: Double = 0
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public init(
         amplitudes: [Float] = [],
@@ -35,30 +38,74 @@ public struct HSAudioWaveform: View {
 
     public var body: some View {
         GeometryReader { geo in
-            let barWidth = max(2, (geo.size.width - CGFloat(barCount - 1) * 2) / CGFloat(barCount))
-            let bars = displayedBars
-
-            HStack(alignment: .center, spacing: 2) {
-                ForEach(0..<barCount, id: \.self) { i in
-                    let amp = i < bars.count ? CGFloat(bars[i]) : 0.05
-                    let height = max(4, amp * geo.size.height * 0.9)
-
-                    RoundedRectangle(cornerRadius: barWidth / 2, style: .continuous)
-                        .fill(barColor(at: i, amplitude: Float(amp)))
-                        .frame(width: barWidth, height: height)
-                        .animation(.easeOut(duration: 0.06), value: amp)
+            if amplitudes.isEmpty && !reduceMotion {
+                // Idle: анимированные bars через TimelineView + Canvas (Swift 6 Sendable safe)
+                TimelineView(.animation(minimumInterval: 1.0 / 30.0)) { timeline in
+                    Canvas { ctx, size in
+                        let elapsed = timeline.date.timeIntervalSinceReferenceDate
+                        drawBars(ctx: ctx, size: size, elapsed: elapsed)
+                    }
                 }
+            } else {
+                // Live amplitudes или Reduced Motion: статические bars
+                staticBars(geo: geo)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         }
-        .onAppear { startIdleAnimation() }
-        .accessibilityLabel("Звуковая волна")
+        .accessibilityLabel(String(localized: "waveform.accessibility.label"))
         .accessibilityHidden(true)
     }
 
+    // MARK: - Canvas idle animation (TimelineView)
+
+    private func drawBars(ctx: GraphicsContext, size: CGSize, elapsed: TimeInterval) {
+        let totalWidth = size.width
+        let spacing: CGFloat = 2
+        let barWidth = max(2, (totalWidth - spacing * CGFloat(barCount - 1)) / CGFloat(barCount))
+        let base = tint ?? resolvedTint
+
+        for i in 0..<barCount {
+            let phase = Double(i) / Double(barCount) * .pi * 2
+            let amplitude = Float(0.15 + 0.25 * sin(phase + elapsed * 1.8))
+            let height = max(4, CGFloat(amplitude) * size.height * 0.9)
+            let x = CGFloat(i) * (barWidth + spacing)
+            let y = (size.height - height) / 2
+            let rect = CGRect(x: x, y: y, width: barWidth, height: height)
+
+            let alpha = 0.3 + Double(amplitude) * 0.7
+            let path = Path(roundedRect: rect, cornerRadius: barWidth / 2)
+            ctx.fill(path, with: .color(base.opacity(alpha)))
+        }
+    }
+
+    // MARK: - Static bars (live amplitudes or Reduced Motion)
+
+    @ViewBuilder
+    private func staticBars(geo: GeometryProxy) -> some View {
+        let barWidth = max(2, (geo.size.width - CGFloat(barCount - 1) * 2) / CGFloat(barCount))
+        let bars = displayedBars
+
+        HStack(alignment: .center, spacing: 2) {
+            ForEach(0..<barCount, id: \.self) { i in
+                let amp = i < bars.count ? CGFloat(bars[i]) : 0.05
+                let height = max(4, amp * geo.size.height * 0.9)
+
+                RoundedRectangle(cornerRadius: barWidth / 2, style: .continuous)
+                    .fill(barColor(at: i, amplitude: Float(amp)))
+                    .frame(width: barWidth, height: height)
+                    .animation(
+                        reduceMotion ? .none : .easeOut(duration: MotionTokens.Duration.instant),
+                        value: amp
+                    )
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+    }
+
+    // MARK: - Helpers
+
     private var displayedBars: [Float] {
         if amplitudes.isEmpty {
-            return idleBars.isEmpty ? Array(repeating: 0.1, count: barCount) : idleBars
+            return Array(repeating: 0.1, count: barCount)
         }
         if amplitudes.count >= barCount {
             return Array(amplitudes.prefix(barCount))
@@ -84,19 +131,6 @@ public struct HSAudioWaveform: View {
         case .kid:        return ColorTokens.Brand.primary
         case .parent:     return ColorTokens.Parent.accent
         case .specialist: return ColorTokens.Spec.waveform
-        }
-    }
-
-    private func startIdleAnimation() {
-        guard amplitudes.isEmpty else { return }
-        idleBars = (0..<barCount).map { i in
-            0.15 + 0.25 * Float(sin(Double(i) / Double(barCount) * .pi * 2))
-        }
-        Timer.scheduledTimer(withTimeInterval: 0.08, repeats: true) { _ in
-            idlePhase += 0.15
-            idleBars = (0..<barCount).map { i in
-                0.15 + 0.25 * Float(sin(Double(i) / Double(barCount) * .pi * 2 + idlePhase))
-            }
         }
     }
 }
