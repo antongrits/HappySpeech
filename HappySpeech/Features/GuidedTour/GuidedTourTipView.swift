@@ -42,7 +42,7 @@ struct GuidedTourTipView: View {
             RoundedRectangle(cornerRadius: RadiusTokens.lg)
                 .stroke(ColorTokens.Brand.primary.opacity(0.25), lineWidth: 1)
         )
-        .shadow(color: .black.opacity(0.12), radius: 16, x: 0, y: 8)
+        .kidCardShadow()
         .frame(maxWidth: 340)
         .padding(.horizontal, SpacingTokens.sp5)
         .position(

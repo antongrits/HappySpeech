@@ -28,7 +28,7 @@ struct SoundAndFaceView: View {
                 )
                 HStack(spacing: SpacingTokens.medium) {
                     Text(display.soundText)
-                        .font(.system(size: 72, weight: .bold))
+                        .font(TypographyTokens.kidDisplay(72))
                         .foregroundStyle(ColorTokens.Brand.primary)
                     VStack(alignment: .leading) {
                         Text(display.postureName)

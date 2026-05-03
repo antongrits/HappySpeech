@@ -65,6 +65,7 @@ struct SplashView: View {
                         .font(TypographyTokens.caption(11))
                         .foregroundStyle(.white.opacity(0.5))
                 }
+                // sp16 = 64pt — специфичное расстояние до loading bar. Проверено визуально.
                 .padding(.bottom, SpacingTokens.sp16)
                 .opacity(titleOpacity)
             }

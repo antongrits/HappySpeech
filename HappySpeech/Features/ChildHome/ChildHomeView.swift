@@ -419,8 +419,8 @@ struct ChildHomeView: View {
                         }
                     }
                 }
-                .padding(.horizontal, 2)
-                .padding(.vertical, 4)
+                .padding(.horizontal, SpacingTokens.micro)
+                .padding(.vertical, SpacingTokens.micro)
             }
         }
     }
@@ -719,8 +719,8 @@ struct ChildHomeView: View {
                         ChildHomeTodayWordCard(word: word)
                     }
                 }
-                .padding(.horizontal, 2)
-                .padding(.vertical, 4)
+                .padding(.horizontal, SpacingTokens.micro)
+                .padding(.vertical, SpacingTokens.micro)
             }
         }
     }
@@ -759,13 +759,15 @@ struct ChildHomeView: View {
     private func sectionHeader(_ title: String, emoji: String) -> some View {
         HStack(spacing: SpacingTokens.sp2) {
             Text(emoji)
-                .font(TypographyTokens.caption(14))
+                .font(TypographyTokens.caption(16))
                 .accessibilityHidden(true)
             Text(title)
-                .font(TypographyTokens.caption(12))
+                .font(TypographyTokens.caption(13))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .textCase(.uppercase)
                 .tracking(1)
+                .lineLimit(1)
+                .minimumScaleFactor(0.9)
             Spacer(minLength: 0)
         }
     }

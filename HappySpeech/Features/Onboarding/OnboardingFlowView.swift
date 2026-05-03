@@ -65,11 +65,8 @@ struct OnboardingFlowView: View {
         .safeAreaInset(edge: .bottom, spacing: 0) {
             actionFooter
                 .background(
-                    LinearGradient(
-                        colors: [gradientColors(for: display.currentStep).last?.opacity(0) ?? Color.clear,
-                                 gradientColors(for: display.currentStep).last ?? Color.clear],
-                        startPoint: .top,
-                        endPoint: .bottom
+                    GradientTokens.kidBottomFade(
+                        background: gradientColors(for: display.currentStep).last ?? ColorTokens.Kid.bg
                     )
                     .ignoresSafeArea(edges: .bottom)
                 )
