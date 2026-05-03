@@ -134,7 +134,7 @@ struct SessionReviewView: View {
     private var errorState: some View {
         VStack(spacing: SpacingTokens.regular) {
             Image(systemName: "exclamationmark.triangle")
-                .font(.system(size: 48, weight: .light))
+                .font(TypographyTokens.display(48))
                 .foregroundStyle(ColorTokens.Semantic.warning)
             Text(viewModel.errorText ?? String(localized: "review.error.unknown"))
                 .font(TypographyTokens.body(14))
@@ -154,7 +154,7 @@ struct SessionReviewView: View {
         } label: {
             HStack(spacing: SpacingTokens.tiny) {
                 Image(systemName: "chevron.left")
-                    .font(.system(size: 16, weight: .semibold))
+                    .font(TypographyTokens.subtitle(16))
                 Text(String(localized: "review.back"))
                     .font(TypographyTokens.body(15))
             }
@@ -198,7 +198,7 @@ struct SessionReviewView: View {
     private func headerMetric(icon: String, value: String, label: String) -> some View {
         HStack(spacing: SpacingTokens.tiny) {
             Image(systemName: icon)
-                .font(.system(size: 13, weight: .medium))
+                .font(TypographyTokens.bodyMedium(13))
                 .foregroundStyle(ColorTokens.Spec.accent)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
@@ -245,7 +245,7 @@ struct SessionReviewView: View {
                         .animation(reduceMotion ? nil : .easeOut(duration: 0.6),
                                    value: viewModel.overallAccuracyPercent)
                     Text("\(viewModel.overallAccuracyPercent)%")
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .font(TypographyTokens.kidDisplay(16))
                         .foregroundStyle(ColorTokens.Spec.ink)
                 }
 
@@ -378,7 +378,7 @@ struct SessionReviewView: View {
                 HSLiquidGlassCard(style: .tinted(ColorTokens.Brand.lilac)) {
                     HStack(alignment: .top, spacing: SpacingTokens.small) {
                         Image(systemName: "lightbulb.fill")
-                            .font(.system(size: 18, weight: .medium))
+                            .font(TypographyTokens.bodyMedium(18))
                             .foregroundStyle(ColorTokens.Brand.gold)
                             .accessibilityHidden(true)
                         Text(recommendation)

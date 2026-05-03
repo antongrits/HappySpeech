@@ -29,7 +29,7 @@ struct BreathingARView: View {
                 )
                 Spacer()
                 Image(systemName: display.isBlowing ? "wind" : "wind.snow")
-                    .font(.system(size: 64))
+                    .font(TypographyTokens.kidDisplay(64)) // emoji key graphic — skip TypographyTokens
                     .foregroundStyle(ColorTokens.Brand.sky)
                     .scaleEffect(1 + CGFloat(display.strength) * 0.2)
                     .animation(.easeOut(duration: 0.15), value: display.strength)

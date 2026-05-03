@@ -105,12 +105,6 @@ struct ScreeningView: View {
 
         interactorInstance.presenter = presenterInstance
         interactorInstance.router = routerInstance
-        presenterInstance.display = ScreeningDisplayBridge(state: state) { [weak routerInstance] newState in
-            self.state = newState
-            if newState.isFinished, let outcome = newState.outcome {
-                routerInstance?.complete(outcome: outcome.outcome)
-            }
-        }
         routerInstance.onComplete = { outcome in onFinish(outcome) }
         routerInstance.onRouteToParentHome = { [coordinator] in
             coordinator.navigate(to: .parentHome)
@@ -120,6 +114,13 @@ struct ScreeningView: View {
         self.interactor = interactorInstance
         self.presenter = presenterInstance
         self.router = routerInstance
+
+        let capturedRouter = routerInstance
+        presenterInstance.display = ScreeningDisplayBridge(state: state) { newState in
+            if newState.isFinished, let outcome = newState.outcome {
+                capturedRouter.complete(outcome: outcome.outcome)
+            }
+        }
 
         await interactorInstance.startScreening(.init(childId: childId, childAge: childAge))
     }
@@ -389,7 +390,7 @@ private struct StageCard: View {
                           : ColorTokens.Kid.bg)
                     .frame(width: 56, height: 56)
                 Image(systemName: isRecording ? "stop.circle.fill" : "mic.circle.fill")
-                    .font(.system(size: 34))
+                    .font(TypographyTokens.display(34))
                     .foregroundStyle(isRecording ? ColorTokens.Brand.primary : ColorTokens.Kid.ink)
             }
         }
@@ -408,7 +409,7 @@ private struct MicDeniedView: View {
     var body: some View {
         VStack(spacing: SpacingTokens.medium) {
             Image(systemName: "mic.slash.fill")
-                .font(.system(size: 52))
+                .font(TypographyTokens.kidDisplay(52))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
             Text(String(localized: "screening.mic.denied.title"))
                 .font(TypographyTokens.headline())
@@ -440,7 +441,7 @@ private struct BlockTransitionView: View {
     var body: some View {
         VStack(spacing: SpacingTokens.medium) {
             Image(systemName: "star.fill")
-                .font(.system(size: 52))
+                .font(TypographyTokens.kidDisplay(52))
                 .foregroundStyle(ColorTokens.Brand.primary)
             Text(String(localized: "screening.block.next"))
                 .font(TypographyTokens.headline())

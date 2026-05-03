@@ -142,7 +142,7 @@ struct SharePlaySessionView: View {
                 Spacer()
                 VStack(spacing: SpacingTokens.sp2) {
                     Text("🎉")
-                        .font(.system(size: 48))
+                        .font(TypographyTokens.kidDisplay(48))
                     Text(String(localized: "shareplay.celebration.together"))
                         .font(TypographyTokens.headline(17))
                         .foregroundStyle(ColorTokens.Brand.primary)

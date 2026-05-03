@@ -78,7 +78,7 @@ public final class ActiveChildStore: @unchecked Sendable {
     public static let shared = ActiveChildStore()
 
     private static let key = "hs.active.child.id"
-    private let defaults: UserDefaults
+    nonisolated(unsafe) private let defaults: UserDefaults
     private let queue = DispatchQueue(label: "ru.happyspeech.activechild", attributes: .concurrent)
 
     public init(defaults: UserDefaults = .standard) {

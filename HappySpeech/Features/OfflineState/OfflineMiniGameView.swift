@@ -56,7 +56,7 @@ struct OfflineMiniGameView: View {
 
     private var mascotHeader: some View {
         Text("\u{1F98B}")
-            .font(.system(size: 64))
+            .font(TypographyTokens.kidDisplay(64)) // emoji mascot header — skip TypographyTokens
             .accessibilityHidden(true)
     }
 
@@ -100,7 +100,7 @@ struct OfflineMiniGameView: View {
         } label: {
             HStack(spacing: SpacingTokens.sp3) {
                 Text(emoji)
-                    .font(.system(size: 36))
+                    .font(TypographyTokens.display(36)) // emoji card — skip TypographyTokens
                     .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
@@ -120,7 +120,7 @@ struct OfflineMiniGameView: View {
                 Spacer()
 
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 14, weight: .semibold))
+                    .font(TypographyTokens.labelRounded(14))
                     .foregroundStyle(accentColor)
             }
             .padding(SpacingTokens.sp4)
@@ -192,7 +192,7 @@ private struct TapLyalyaGameView: View {
                     .position(x: geo.size.width / 2, y: 50)
 
                 Text("\u{1F98B}")
-                    .font(.system(size: isRunning ? 60 : 52))
+                    .font(.system(size: isRunning ? 60 : 52)) // emoji mascot animated size — skip TypographyTokens
                     .position(mascotPosition)
                     .onTapGesture {
                         guard isRunning else { return }
@@ -254,7 +254,7 @@ private struct TapLyalyaGameView: View {
         VStack(spacing: SpacingTokens.sp6) {
             Spacer()
             Text("\u{1F38A}")
-                .font(.system(size: 72))
+                .font(TypographyTokens.kidDisplay(72)) // emoji key graphic — skip TypographyTokens
                 .accessibilityHidden(true)
             Text(String(format: String(localized: "offline.minigame.score.format"), taps))
                 .font(TypographyTokens.display(40))
@@ -337,14 +337,14 @@ private struct DragCloudsGameView: View {
                 GeometryReader { geo in
                     ZStack {
                         Text("\u{1F98B}")
-                            .font(.system(size: 56))
+                            .font(TypographyTokens.kidDisplay(56)) // emoji mascot — skip TypographyTokens
                             .position(mascotPosition)
                             .accessibilityHidden(true)
 
                         ForEach($clouds) { $cloud in
                             if !cloud.isCaught {
                                 Text("\u{2601}\u{FE0F}")
-                                    .font(.system(size: 44))
+                                    .font(TypographyTokens.display(44)) // emoji cloud — skip TypographyTokens
                                     .position(cloud.position)
                                     .gesture(
                                         DragGesture()
@@ -391,7 +391,7 @@ private struct DragCloudsGameView: View {
         VStack(spacing: SpacingTokens.sp6) {
             Spacer()
             Text("\u{1F4AB}")
-                .font(.system(size: 72))
+                .font(TypographyTokens.kidDisplay(72)) // emoji key graphic — skip TypographyTokens
                 .accessibilityHidden(true)
             Text(String(format: String(localized: "offline.minigame.score.format"), caught))
                 .font(TypographyTokens.display(40))
@@ -510,10 +510,10 @@ private struct FindPairGameView: View {
 
             if card.isFaceUp || card.isMatched {
                 Text(card.emoji)
-                    .font(.system(size: 28))
+                    .font(TypographyTokens.title(28)) // emoji card — skip TypographyTokens
             } else {
                 Text("\u{2753}")
-                    .font(.system(size: 24))
+                    .font(TypographyTokens.title(24)) // emoji question mark — skip TypographyTokens
                     .accessibilityHidden(true)
             }
         }
@@ -530,7 +530,7 @@ private struct FindPairGameView: View {
         VStack(spacing: SpacingTokens.sp6) {
             Spacer()
             Text("\u{1F3C6}")
-                .font(.system(size: 72))
+                .font(TypographyTokens.kidDisplay(72)) // emoji key graphic — skip TypographyTokens
                 .accessibilityHidden(true)
             Text(String(format: String(localized: "offline.minigame.score.format"), pairsFound))
                 .font(TypographyTokens.display(40))

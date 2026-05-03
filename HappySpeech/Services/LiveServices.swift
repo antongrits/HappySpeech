@@ -68,10 +68,12 @@ public final class LiveAudioService: AudioService, @unchecked Sendable {
                 frameCapacity: AVAudioFrameCount(Double(buffer.frameLength) * (16000.0 / format.sampleRate))
             ) else { return }
 
+            // Копируем samples до Sendable-замыкания чтобы избежать захвата non-Sendable AVAudioPCMBuffer
+            let sourceBuffer = buffer
             var error: NSError?
             converter.convert(to: convertedBuffer, error: &error) { _, status in
                 status.pointee = .haveData
-                return buffer
+                return sourceBuffer
             }
 
             try? audioFile.write(from: convertedBuffer)

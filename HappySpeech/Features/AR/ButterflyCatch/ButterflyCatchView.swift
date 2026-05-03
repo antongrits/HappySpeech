@@ -24,7 +24,7 @@ struct ButterflyCatchView: View {
             GeometryReader { proxy in
                 ForEach(Array(display.butterflies.values)) { butterfly in
                     Image(systemName: "sparkles")
-                        .font(.system(size: 40))
+                        .font(TypographyTokens.display(40)) // emoji butterfly — skip TypographyTokens
                         .foregroundStyle(ColorTokens.Brand.lilac)
                         .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous))
                         .position(

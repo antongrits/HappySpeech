@@ -197,7 +197,7 @@ struct SessionHistoryView: View {
     ) -> some View {
         VStack(alignment: .center, spacing: SpacingTokens.micro) {
             Image(systemName: icon)
-                .font(.system(size: 14, weight: .semibold))
+                .font(TypographyTokens.labelRounded(14))
                 .foregroundStyle(color)
                 .accessibilityHidden(true)
             Text(valueText)
@@ -245,7 +245,7 @@ struct SessionHistoryView: View {
             VStack(alignment: .leading, spacing: SpacingTokens.small) {
                 HStack(spacing: SpacingTokens.tiny) {
                     Image(systemName: "chart.line.uptrend.xyaxis")
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(TypographyTokens.labelRounded(14))
                         .foregroundStyle(ColorTokens.Parent.accent)
                     Text(String(localized: "sessionHistory.chart.title"))
                         .font(TypographyTokens.caption(12).weight(.semibold))
@@ -382,7 +382,7 @@ struct SessionHistoryView: View {
                     isExportSheetOpen = true
                 } label: {
                     Image(systemName: "square.and.arrow.up")
-                        .font(.system(size: 17, weight: .semibold))
+                        .font(TypographyTokens.subtitle(17))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
                         .frame(width: 44, height: 44)
                 }
@@ -394,7 +394,7 @@ struct SessionHistoryView: View {
                     Image(systemName: display.activeFilter.isActive
                           ? "line.3.horizontal.decrease.circle.fill"
                           : "line.3.horizontal.decrease.circle")
-                        .font(.system(size: 18, weight: .semibold))
+                        .font(TypographyTokens.subtitle(18))
                         .foregroundStyle(display.activeFilter.isActive
                                          ? ColorTokens.Parent.accent
                                          : ColorTokens.Parent.inkMuted)
@@ -442,7 +442,7 @@ struct SessionHistoryView: View {
                 interactor?.clearFilter(.init())
             } label: {
                 Image(systemName: "xmark.circle.fill")
-                    .font(.system(size: 18))
+                    .font(TypographyTokens.headline(18))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                     .frame(width: 44, height: 44)
             }
@@ -483,7 +483,7 @@ struct SessionHistoryView: View {
             Spacer(minLength: SpacingTokens.xLarge)
 
             Text(verbatim: isFilterEmpty ? "🔎" : "📅")
-                .font(.system(size: 96))
+                .font(.system(size: 96)) // emoji key graphic — skip TypographyTokens
                 .accessibilityHidden(true)
 
             VStack(spacing: SpacingTokens.small) {
@@ -633,7 +633,7 @@ private struct SessionHistoryRowContent: View {
             SessionHistoryScoreBadge(text: row.scoreText, tier: row.scoreTier)
 
             Image(systemName: "chevron.right")
-                .font(.system(size: 13, weight: .semibold))
+                .font(TypographyTokens.labelRounded(13))
                 .foregroundStyle(ColorTokens.Parent.inkSoft)
                 .accessibilityHidden(true)
         }
@@ -655,7 +655,7 @@ private struct SessionHistoryFilterChipBadge: View {
     var body: some View {
         HStack(spacing: SpacingTokens.micro) {
             Image(systemName: icon)
-                .font(.system(size: 10, weight: .semibold))
+                .font(TypographyTokens.caption(10))
             Text(label)
                 .font(TypographyTokens.caption(12).weight(.semibold))
                 .lineLimit(1)
@@ -1100,7 +1100,7 @@ private struct SessionHistoryDetailView: View {
         HSCard(style: .flat, padding: SpacingTokens.regular) {
             HStack(spacing: SpacingTokens.regular) {
                 Image(systemName: "waveform")
-                    .font(.system(size: 20, weight: .semibold))
+                    .font(TypographyTokens.titleSmall(20))
                     .foregroundStyle(ColorTokens.Parent.accent)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 2) {
@@ -1113,7 +1113,7 @@ private struct SessionHistoryDetailView: View {
                 }
                 Spacer()
                 Image(systemName: "play.circle.fill")
-                    .font(.system(size: 32))
+                    .font(TypographyTokens.display(32))
                     .foregroundStyle(ColorTokens.Parent.accent)
                     .frame(width: 44, height: 44)
             }
@@ -1137,7 +1137,7 @@ private struct SessionHistoryDetailView: View {
                         isEditingNote = true
                     } label: {
                         Image(systemName: "pencil")
-                            .font(.system(size: 16, weight: .semibold))
+                            .font(TypographyTokens.subtitle(16))
                             .foregroundStyle(ColorTokens.Parent.accent)
                             .frame(width: 44, height: 44)
                     }
@@ -1151,7 +1151,7 @@ private struct SessionHistoryDetailView: View {
                 } label: {
                     HStack(spacing: SpacingTokens.small) {
                         Image(systemName: "plus.circle")
-                            .font(.system(size: 18))
+                            .font(TypographyTokens.headline(18))
                             .foregroundStyle(ColorTokens.Parent.accent)
                         Text(String(localized: "sessionHistory.detail.noteAdd"))
                             .font(TypographyTokens.body(15))

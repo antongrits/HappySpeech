@@ -113,7 +113,7 @@ struct ARStoryQuestView: View {
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                 Spacer()
                 Text(display.rewardEmoji)
-                    .font(.system(size: 22))
+                    .font(TypographyTokens.title(22)) // emoji reward indicator — skip TypographyTokens
                     .accessibilityHidden(true)
             }
             HSProgressBar(value: display.progressFraction)
@@ -176,7 +176,7 @@ struct ARStoryQuestView: View {
     private var feedbackBanner: some View {
         HStack(spacing: SpacingTokens.small) {
             Text(display.canAdvance ? "✅" : "💬")
-                .font(.system(size: 26))
+                .font(TypographyTokens.title(26)) // emoji feedback indicator — skip TypographyTokens
                 .accessibilityHidden(true)
             Text(display.feedbackText)
                 .font(TypographyTokens.headline(15))
@@ -208,7 +208,7 @@ struct ARStoryQuestView: View {
                         .scaleEffect(display.isListening && !reduceMotion && micPulse ? 1.12 : 1.0)
                         .shadow(color: ColorTokens.Brand.primary.opacity(0.3), radius: 12, y: 6)
                     Image(systemName: display.isListening ? "stop.fill" : "mic.fill")
-                        .font(.system(size: 36, weight: .bold))
+                        .font(TypographyTokens.display(36))
                         .foregroundStyle(.white)
                 }
                 .animation(
@@ -259,7 +259,7 @@ struct ARStoryQuestView: View {
             Spacer()
 
             Text("🎉")
-                .font(.system(size: 72))
+                .font(TypographyTokens.kidDisplay(72)) // emoji key graphic — skip TypographyTokens
                 .accessibilityHidden(true)
 
             Text(String(localized: "ar.quest.completed.title"))
@@ -309,7 +309,7 @@ struct ARStoryQuestView: View {
         HStack(spacing: SpacingTokens.small) {
             ForEach(0..<3, id: \.self) { index in
                 Image(systemName: index < display.starsEarned ? "star.fill" : "star")
-                    .font(.system(size: 40, weight: .bold))
+                    .font(TypographyTokens.display(40))
                     .foregroundStyle(index < display.starsEarned
                                      ? ColorTokens.Brand.butter
                                      : ColorTokens.Kid.inkSoft)
@@ -332,7 +332,7 @@ struct ARStoryQuestView: View {
             Color.black.opacity(0.6).ignoresSafeArea()
             VStack(spacing: SpacingTokens.small) {
                 Image(systemName: "exclamationmark.triangle.fill")
-                    .font(.system(size: 40))
+                    .font(TypographyTokens.display(40))
                     .foregroundStyle(ColorTokens.Semantic.error)
                 Text(String(localized: "ar.quest.error.title"))
                     .font(TypographyTokens.headline())

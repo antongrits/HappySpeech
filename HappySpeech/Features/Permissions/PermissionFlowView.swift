@@ -416,7 +416,7 @@ struct PermissionFlowView: View {
         HStack(spacing: SpacingTokens.regular) {
             Image(systemName: "lock.shield.fill")
                 .foregroundStyle(ColorTokens.Brand.mint)
-                .font(.system(size: 22, weight: .regular))
+                .font(TypographyTokens.title(22))
                 .frame(width: 32, height: 32)
                 .accessibilityHidden(true)
 
@@ -442,7 +442,7 @@ struct PermissionFlowView: View {
             HStack(spacing: SpacingTokens.regular) {
                 Image(systemName: "exclamationmark.triangle.fill")
                     .foregroundStyle(ColorTokens.Semantic.error)
-                    .font(.system(size: 22))
+                    .font(TypographyTokens.title(22))
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: SpacingTokens.micro) {
                     Text(String(localized: "permissions.denied.title"))
@@ -597,7 +597,7 @@ private struct ConfettiBurstView: View {
                 ForEach(particles.indices, id: \.self) { idx in
                     let item = particles[idx]
                     Text(item.emoji)
-                        .font(.system(size: 28))
+                        .font(TypographyTokens.title(28))
                         .position(
                             x: proxy.size.width * item.xPosition,
                             y: animateParticles ? proxy.size.height + 40 : -40

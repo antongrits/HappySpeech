@@ -99,7 +99,7 @@ struct ProfileEditorView: View {
                     .shadow(color: viewModel.selectedThemeColor.opacity(0.3), radius: 12, y: 4)
 
                 Text(viewModel.selectedAvatarEmoji)
-                    .font(.system(size: 52))
+                    .font(TypographyTokens.kidDisplay(52))
             }
             .animation(.spring(response: 0.35, dampingFraction: 0.7), value: viewModel.selectedAvatarId)
 
@@ -152,7 +152,7 @@ struct ProfileEditorView: View {
                 )
 
             Text(preset.emoji)
-                .font(.system(size: 26))
+                .font(TypographyTokens.title(26))
         }
         .animation(.spring(response: 0.25, dampingFraction: 0.8), value: isSelected)
     }

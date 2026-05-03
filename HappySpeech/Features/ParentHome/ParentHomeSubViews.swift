@@ -58,7 +58,7 @@ struct SessionRow: View {
                 .fill(ColorTokens.Brand.primary.opacity(0.12))
                 .frame(width: 44, height: 44)
             Text(session.targetSound)
-                .font(.system(size: 18, weight: .black, design: .rounded))
+                .font(TypographyTokens.kidDisplay(18))
                 .foregroundStyle(ColorTokens.Brand.primary)
         }
     }
@@ -225,7 +225,7 @@ struct SoundAccuracyChartCard: View {
     private var averageRow: some View {
         HStack(spacing: SpacingTokens.sp2) {
             Image(systemName: "checkmark.seal.fill")
-                .font(.system(size: 14))
+                .font(TypographyTokens.caption(14))
                 .foregroundStyle(ColorTokens.Semantic.success)
             Text(String(localized: "Средняя точность: \(Int(averageAccuracy * 100))%"))
                 .font(TypographyTokens.body(13))
@@ -264,7 +264,7 @@ struct SoundProgressCard: View {
             VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
                 HStack {
                     Text(item.sound)
-                        .font(.system(size: 28, weight: .black, design: .rounded))
+                        .font(TypographyTokens.kidDisplay(28))
                         .foregroundStyle(ColorTokens.Brand.primary)
 
                     VStack(alignment: .leading) {
@@ -302,11 +302,11 @@ struct ParentStatCard: View {
         HSLiquidGlassCard(style: .tinted(color), padding: SpacingTokens.sp4) {
             VStack(spacing: SpacingTokens.sp2) {
                 Image(systemName: icon)
-                    .font(.system(size: 20))
+                    .font(TypographyTokens.titleSmall(20))
                     .foregroundStyle(color)
 
                 Text(value)
-                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .font(TypographyTokens.kidDisplay(20))
                     .foregroundStyle(ColorTokens.Parent.ink)
 
                 Text(label)

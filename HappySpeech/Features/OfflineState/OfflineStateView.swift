@@ -108,7 +108,7 @@ struct OfflineStateView: View {
 
             // wifi.slash icon
             Image(systemName: "wifi.slash")
-                .font(.system(size: 56, weight: .light))
+                .font(TypographyTokens.kidDisplay(56))
                 .foregroundStyle(ColorTokens.Semantic.warning.opacity(0.65))
                 .offset(y: -8)
 
@@ -131,7 +131,7 @@ struct OfflineStateView: View {
         // WCAG 1.4.3: white text on yellow warning background ~1.1:1 — fail.
         // Switch to dark ink on warning yellow → ~10:1 contrast.
         Text(viewModel.pendingBadgeText)
-            .font(.system(size: 12, weight: .semibold))
+            .font(TypographyTokens.labelRounded(12))
             .foregroundStyle(ColorTokens.Kid.ink)
             .padding(.horizontal, SpacingTokens.sp3)
             .padding(.vertical, SpacingTokens.sp1)

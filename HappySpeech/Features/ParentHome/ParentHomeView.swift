@@ -247,7 +247,7 @@ private struct ParentDashboardTab: View {
                     .frame(width: 52, height: 52)
                     .overlay(
                         Text(String(viewModel.childName.prefix(1)))
-                            .font(.system(size: 22, weight: .bold, design: .rounded))
+                            .font(TypographyTokens.titleSmall(22))
                             .foregroundStyle(ColorTokens.Brand.primary)
                     )
                     .overlay(
@@ -370,7 +370,7 @@ private struct ParentDashboardTab: View {
         HSCard(style: .tinted(ColorTokens.Brand.butter.opacity(0.15))) {
             HStack(alignment: .top, spacing: SpacingTokens.sp3) {
                 Image(systemName: "house.circle.fill")
-                    .font(.system(size: 28))
+                    .font(TypographyTokens.titleLarge(28))
                     .foregroundStyle(ColorTokens.Brand.gold)
 
                 VStack(alignment: .leading, spacing: 4) {
@@ -400,7 +400,7 @@ private struct ParentDashboardTab: View {
                 // Header
                 HStack(spacing: SpacingTokens.sp2) {
                     Image(systemName: "ear.and.waveform")
-                        .font(.system(size: 18, weight: .semibold))
+                        .font(TypographyTokens.subtitle(18))
                         .foregroundStyle(accentColor)
                         .accessibilityHidden(true)
 
@@ -417,7 +417,7 @@ private struct ParentDashboardTab: View {
 
                     // Severity badge
                     Text(card.severityText)
-                        .font(.system(size: 11, weight: .bold))
+                        .font(TypographyTokens.labelRounded(11, weight: .bold))
                         .foregroundStyle(.white)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 3)
@@ -481,7 +481,7 @@ private struct ParentDashboardTab: View {
         HSCard(style: .elevated) {
             HStack(spacing: SpacingTokens.sp3) {
                 Image(systemName: "mic.badge.plus")
-                    .font(.system(size: 28, weight: .semibold))
+                    .font(TypographyTokens.titleLarge(28))
                     .foregroundStyle(ColorTokens.Brand.primary)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 2) {
@@ -495,7 +495,7 @@ private struct ParentDashboardTab: View {
                 }
                 Spacer()
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 14))
+                    .font(TypographyTokens.caption(14))
                     .foregroundStyle(ColorTokens.Parent.inkSoft)
                     .accessibilityHidden(true)
             }
@@ -519,7 +519,7 @@ private struct ParentDashboardTab: View {
         HSCard(style: .elevated) {
             HStack(spacing: SpacingTokens.sp3) {
                 Image(systemName: "calendar.badge.checkmark")
-                    .font(.system(size: 28, weight: .semibold))
+                    .font(TypographyTokens.titleLarge(28))
                     .foregroundStyle(ColorTokens.Brand.primary)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 2) {
@@ -561,7 +561,7 @@ private struct ParentDashboardTab: View {
             HSCard(style: .elevated) {
                 HStack(spacing: SpacingTokens.sp3) {
                     Image(systemName: "waveform.path")
-                        .font(.system(size: 24, weight: .semibold))
+                        .font(TypographyTokens.titleMedium(24))
                         .foregroundStyle(ColorTokens.Brand.sky)
                         .frame(width: 40, height: 40)
 
@@ -605,7 +605,7 @@ private struct ParentDashboardTab: View {
                 ForEach(viewModel.recommendations, id: \.self) { rec in
                     HStack(alignment: .top, spacing: SpacingTokens.sp3) {
                         Image(systemName: "lightbulb.fill")
-                            .font(.system(size: 14))
+                            .font(TypographyTokens.caption(14))
                             .foregroundStyle(ColorTokens.Brand.butter)
                             .padding(.top, 2)
 

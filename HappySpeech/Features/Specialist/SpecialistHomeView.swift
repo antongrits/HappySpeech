@@ -209,7 +209,7 @@ private struct SpecChildRow: View {
                     .fill(ColorTokens.Spec.accent.opacity(0.12))
                     .frame(width: 48, height: 48)
                 Text(String(child.name.prefix(1)))
-                    .font(.system(size: 20, weight: .bold))
+                    .font(TypographyTokens.titleSmall(20))
                     .foregroundStyle(ColorTokens.Spec.accent)
             }
 
@@ -240,7 +240,7 @@ private struct SpecChildRow: View {
                     .font(TypographyTokens.caption(11))
                     .foregroundStyle(ColorTokens.Spec.inkMuted)
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 12))
+                    .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Spec.inkMuted)
                     .accessibilityHidden(true)
             }
@@ -465,7 +465,7 @@ private struct SpecDashboardHeader: View {
                             .fill(ColorTokens.Spec.accent.opacity(0.15))
                             .frame(width: 56, height: 56)
                         Text(String(child.name.prefix(1)))
-                            .font(.system(size: 24, weight: .bold, design: .rounded))
+                            .font(TypographyTokens.titleMedium(24))
                             .foregroundStyle(ColorTokens.Spec.accent)
                     }
                     VStack(alignment: .leading, spacing: 2) {
@@ -520,7 +520,7 @@ private struct SpecMetricTile: View {
     var body: some View {
         VStack(spacing: 2) {
             Text(value)
-                .font(.system(size: 20, weight: .black, design: .rounded))
+                .font(TypographyTokens.kidDisplay(20))
                 .foregroundStyle(ColorTokens.Spec.accent)
                 .minimumScaleFactor(0.8)
             Text(label)
@@ -576,7 +576,7 @@ private struct SpecSoundRow: View {
                         .fill(barColor.opacity(0.15))
                         .frame(width: 40, height: 40)
                     Text(row.sound)
-                        .font(.system(size: 16, weight: .black, design: .rounded))
+                        .font(TypographyTokens.kidDisplay(16))
                         .foregroundStyle(barColor)
                 }
 
@@ -673,7 +673,7 @@ private struct SpecSessionMiniRow: View {
                         .fill(ColorTokens.Spec.accent.opacity(0.12))
                         .frame(width: 36, height: 36)
                     Text(session.targetSound)
-                        .font(.system(size: 14, weight: .black, design: .rounded))
+                        .font(TypographyTokens.kidDisplay(14))
                         .foregroundStyle(ColorTokens.Spec.accent)
                 }
                 VStack(alignment: .leading, spacing: 2) {
@@ -692,7 +692,7 @@ private struct SpecSessionMiniRow: View {
                 }
                 Spacer()
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 12))
+                    .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Spec.inkMuted)
                     .accessibilityHidden(true)
             }
@@ -1043,7 +1043,7 @@ private struct SpecSessionRow: View {
                     .fill(ColorTokens.Spec.accent.opacity(0.12))
                     .frame(width: 44, height: 44)
                 Text(session.targetSound)
-                    .font(.system(size: 18, weight: .black, design: .rounded))
+                    .font(TypographyTokens.kidDisplay(18))
                     .foregroundStyle(ColorTokens.Spec.accent)
             }
 
@@ -1070,7 +1070,7 @@ private struct SpecSessionRow: View {
             Spacer()
 
             Image(systemName: "chevron.right")
-                .font(.system(size: 12))
+                .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Spec.inkMuted)
                 .accessibilityHidden(true)
         }

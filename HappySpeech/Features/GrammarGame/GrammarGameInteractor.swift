@@ -112,7 +112,6 @@ final class GrammarGameInteractor: GrammarGameBusinessLogic {
 
         phase = .evaluating
         let round = rounds[request.roundIndex]
-        let selectedChoice = round.choices.first(where: { $0.id == request.selectedChoiceId })
         let isCorrect = request.selectedChoiceId == round.choices[safe: round.correctIndex]?.id
 
         feedback.playSelectionHaptic()

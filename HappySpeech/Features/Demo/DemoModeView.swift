@@ -486,12 +486,12 @@ struct DemoModeView: View {
 
             if !step.illustrationSymbol.isEmpty {
                 Image(systemName: step.illustrationSymbol)
-                    .font(.system(size: 64, weight: .bold))
+                    .font(TypographyTokens.kidDisplay(64))
                     .foregroundStyle(.white)
                     .accessibilityHidden(true)
             } else {
                 Text(step.screenEmoji)
-                    .font(.system(size: 72))
+                    .font(TypographyTokens.kidDisplay(72)) // emoji screen illustration — skip TypographyTokens
                     .accessibilityHidden(true)
             }
         }

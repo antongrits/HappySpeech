@@ -232,7 +232,7 @@ struct MinimalPairsView: View {
             HSLiquidGlassCard(style: glassStyle, padding: SpacingTokens.small) {
                 VStack(spacing: SpacingTokens.small) {
                     Text(emoji)
-                        .font(.system(size: 72))
+                        .font(TypographyTokens.kidDisplay(72))
                         .accessibilityHidden(true)
                     Text(word)
                         .font(TypographyTokens.title(22))

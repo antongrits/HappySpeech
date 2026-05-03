@@ -155,7 +155,7 @@ struct SoundHunterView: View {
         VStack(spacing: SpacingTokens.medium) {
             Spacer(minLength: 0)
             Image(systemName: "checkmark.seal.fill")
-                .font(.system(size: 72))
+                .font(TypographyTokens.kidDisplay(72))
                 .foregroundStyle(ColorTokens.Brand.mint)
                 .accessibilityHidden(true)
             Text(String(localized: "Отлично! Ты нашёл все слова."))
