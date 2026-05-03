@@ -115,6 +115,8 @@ struct RepeatAfterModelView: View {
             feedbackView
         case .completed:
             completedView
+        @unknown default:
+            EmptyView()
         }
     }
 
