@@ -271,8 +271,7 @@ struct HomeTasksView: View {
         VStack(spacing: SpacingTokens.large) {
             Spacer(minLength: SpacingTokens.xLarge)
 
-            LyalyaRealityKitView(state: .celebrating, mood: 1.0)
-                .frame(width: 160, height: 160)
+            LyalyaMascotView(state: .celebrating, size: 160)
                 .accessibilityLabel(String(localized: "homeTasks.empty.celebrating.label"))
 
             VStack(spacing: SpacingTokens.small) {

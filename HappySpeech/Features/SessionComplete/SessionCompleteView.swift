@@ -165,8 +165,7 @@ struct SessionCompleteView: View {
     private var celebrationPhase: some View {
         let visible = display.isPhaseVisible(.celebration)
         VStack(spacing: SpacingTokens.medium) {
-            LyalyaRealityKitView(state: lyalyaResultState, mood: 1.0)
-                .frame(width: 140, height: 140)
+            LyalyaMascotView(state: lyalyaResultState, size: 140)
                 .scaleEffect(visible ? 1 : 0.2)
                 .opacity(visible ? 1 : 0)
                 .animation(

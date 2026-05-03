@@ -133,8 +133,7 @@ struct CustomizationView: View {
                 .animation(reduceMotion ? nil : .easeInOut(duration: 0.25),
                            value: viewModel.selectedColor)
 
-            LyalyaRealityKitView(state: lyalyaState, mood: 0.8)
-                .frame(width: mascotSize, height: mascotSize)
+            LyalyaMascotView(state: lyalyaState, size: mascotSize)
                 .id(viewModel.selectedSkin.rawValue)
                 .transition(reduceMotion
                     ? .opacity

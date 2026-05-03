@@ -98,8 +98,7 @@ struct SoundHunterView: View {
     private var hintBanner: some View {
         HSLiquidGlassCard(style: .tinted(ColorTokens.Brand.primary), padding: SpacingTokens.small) {
             HStack(spacing: SpacingTokens.small) {
-                LyalyaRealityKitView(state: .explaining, mood: 0.8)
-                    .frame(width: 48, height: 48)
+                LyalyaMascotView(state: .explaining, size: 48)
                     .accessibilityHidden(true)
                 Image(systemName: "magnifyingglass")
                     .font(.system(size: 18, weight: .semibold))

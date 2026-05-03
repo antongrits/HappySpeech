@@ -134,8 +134,7 @@ struct MemoryView: View {
     private var header: some View {
         VStack(spacing: SpacingTokens.small) {
             HStack(alignment: .firstTextBaseline) {
-                LyalyaRealityKitView(state: display.streakCount >= 3 ? .celebrating : .idle, mood: 0.7)
-                    .frame(width: 52, height: 52)
+                LyalyaMascotView(state: display.streakCount >= 3 ? .celebrating : .idle, size: 52)
                     .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: 2) {

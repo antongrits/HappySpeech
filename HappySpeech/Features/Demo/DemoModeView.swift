@@ -502,8 +502,7 @@ struct DemoModeView: View {
 
     private var mascotBubble: some View {
         HStack(alignment: .top, spacing: SpacingTokens.small) {
-            LyalyaRealityKitView(state: display.lyalyaState, mood: 0.7)
-                .frame(width: 72, height: 72)
+            LyalyaMascotView(state: display.lyalyaState, size: 72)
                 .accessibilityHidden(true)
 
             HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.medium) {

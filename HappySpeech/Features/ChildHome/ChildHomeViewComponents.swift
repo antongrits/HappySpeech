@@ -111,13 +111,7 @@ struct ChildHomeReactiveMascot: View {
     @State private var bobOffset: CGFloat = 0
 
     var body: some View {
-        // LyalyaRealityKitView — 3D маскот на прозрачном фоне.
-        // Для Home добавляем мягкое «парение» по Y (если ReduceMotion = off).
-        LyalyaRealityKitView(
-            state: mood.lyalyaState,
-            mood: 0.6
-        )
-        .frame(width: 140, height: 140)
+        LyalyaMascotView(state: mood.lyalyaState, size: 140)
         .offset(y: bobOffset)
         .onAppear { startBobbing() }
         .onChange(of: mood) { _, _ in startBobbing() }

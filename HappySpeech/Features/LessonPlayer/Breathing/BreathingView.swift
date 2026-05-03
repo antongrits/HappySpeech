@@ -94,8 +94,7 @@ struct BreathingView: View {
                     .minimumScaleFactor(0.85)
             }
             Spacer()
-            LyalyaRealityKitView(state: breathingLyalyaState, mood: 0.7)
-                .frame(width: 80, height: 80)
+            LyalyaMascotView(state: breathingLyalyaState, size: 80)
                 .accessibilityHidden(true)
         }
     }
@@ -173,8 +172,7 @@ struct BreathingView: View {
             .overlay(
                 HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.large) {
                     VStack(spacing: SpacingTokens.medium) {
-                        LyalyaRealityKitView(state: .thinking, mood: 0.6)
-                            .frame(width: 100, height: 100)
+                        LyalyaMascotView(state: .thinking, size: 100)
                             .accessibilityHidden(true)
                         Text(tutorialText(for: store.tutorialStep))
                             .font(TypographyTokens.title())
