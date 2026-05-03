@@ -362,7 +362,7 @@ struct NarrativeQuestView: View {
             ) {
                 VStack(spacing: SpacingTokens.small) {
                     Text(display.rewardEmoji)
-                        .font(.system(size: 64))
+                        .font(TypographyTokens.kidDisplay(64))
                         .accessibilityHidden(true)
                     Text(display.feedbackText)
                         .font(TypographyTokens.title(20))

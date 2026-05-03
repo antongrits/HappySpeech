@@ -276,7 +276,7 @@ public struct LyalyaRealityView: View {
                 )
 
             Text(animation.emoji)
-                .font(.system(size: size * 0.45))
+                .font(.system(size: size * 0.45)) // emoji size proportional to container — skip TypographyTokens
         }
         .frame(width: size, height: size)
     }

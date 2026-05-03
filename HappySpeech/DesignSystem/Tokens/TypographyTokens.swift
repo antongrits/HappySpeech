@@ -76,6 +76,43 @@ public enum TypographyTokens {
         .system(size: size, weight: .black, design: .rounded)
     }
 
+    // MARK: - Named Semantic Variants
+
+    /// Subtitle — 18pt semibold, rounded. Card subtitles, section labels.
+    public static func subtitle(_ size: CGFloat = 18) -> Font {
+        .system(size: size, weight: .semibold, design: .rounded)
+    }
+
+    /// Callout — 16pt regular. Secondary body text.
+    public static func callout(_ size: CGFloat = 16) -> Font {
+        .system(size: size, weight: .regular, design: .default)
+    }
+
+    /// Body medium weight — 16pt medium. Labels, UI controls.
+    public static func bodyMedium(_ size: CGFloat = 16) -> Font {
+        .system(size: size, weight: .medium, design: .default)
+    }
+
+    /// Title small — 20pt semibold, rounded.
+    public static func titleSmall(_ size: CGFloat = 20) -> Font {
+        .system(size: size, weight: .semibold, design: .rounded)
+    }
+
+    /// Title medium — 24pt bold, rounded.
+    public static func titleMedium(_ size: CGFloat = 24) -> Font {
+        .system(size: size, weight: .bold, design: .rounded)
+    }
+
+    /// Title large — 28pt bold, rounded.
+    public static func titleLarge(_ size: CGFloat = 28) -> Font {
+        .system(size: size, weight: .bold, design: .rounded)
+    }
+
+    /// Label rounded — small rounded labels (badges, chips), customisable weight.
+    public static func labelRounded(_ size: CGFloat = 14, weight: Font.Weight = .semibold) -> Font {
+        .system(size: size, weight: weight, design: .rounded)
+    }
+
     // MARK: - Dynamic Type Scaled Variants
 
     /// Body scaled to Dynamic Type.

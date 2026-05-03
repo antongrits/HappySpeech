@@ -224,7 +224,7 @@ struct SiblingDiscoveryView: View {
         let presenter = SiblingDiscoveryPresenter()
         let createdRouter = SiblingRouter()
         createdRouter.coordinator = coordinator
-        createdRouter.onRouteLobby = { [weak createdInteractor] peerID in
+        createdRouter.onRouteLobby = { peerID in
             onPeerConnected?(peerID.displayName)
         }
         createdRouter.onRouteBackDiscovery = {}

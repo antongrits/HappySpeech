@@ -66,7 +66,7 @@ struct SessionHistoryMetricCard: View {
         HSCard(style: .flat, padding: SpacingTokens.regular) {
             VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
                 Image(systemName: icon)
-                    .font(.system(size: 16, weight: .semibold))
+                    .font(TypographyTokens.subtitle(16))
                     .foregroundStyle(color)
                 Text(value)
                     .font(TypographyTokens.headline(20))
@@ -114,7 +114,7 @@ struct SessionHistoryAttemptRowCard: View {
                 SessionHistoryScoreBadge(text: "\(row.scorePercent)%", tier: row.scoreTier)
 
                 Image(systemName: row.isCorrect ? "checkmark.circle.fill" : "xmark.circle")
-                    .font(.system(size: 16, weight: .semibold))
+                    .font(TypographyTokens.subtitle(16))
                     .foregroundStyle(row.isCorrect
                                      ? ColorTokens.Semantic.success
                                      : ColorTokens.Semantic.error)
@@ -219,7 +219,7 @@ struct SessionHistoryExportSheet: View {
         Button(action: action) {
             HStack(spacing: SpacingTokens.regular) {
                 Image(systemName: icon)
-                    .font(.system(size: 22, weight: .semibold))
+                    .font(TypographyTokens.titleSmall(22))
                     .foregroundStyle(color)
                     .frame(width: 36)
                 VStack(alignment: .leading, spacing: 2) {
@@ -235,7 +235,7 @@ struct SessionHistoryExportSheet: View {
                 }
                 Spacer()
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 14, weight: .semibold))
+                    .font(TypographyTokens.labelRounded(14))
                     .foregroundStyle(ColorTokens.Parent.inkSoft)
             }
             .padding(SpacingTokens.regular)

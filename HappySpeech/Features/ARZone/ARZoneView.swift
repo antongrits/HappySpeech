@@ -376,7 +376,7 @@ private struct ARMascot2DFallback: View {
                 )
                 .shadow(color: ColorTokens.Brand.lilac.opacity(0.3), radius: 14, x: 0, y: 6)
             Text("🦋")
-                .font(.system(size: size * 0.5))
+                .font(.system(size: size * 0.5)) // emoji proportional size — skip TypographyTokens
                 .accessibilityHidden(true)
         }
         .frame(width: size, height: size)

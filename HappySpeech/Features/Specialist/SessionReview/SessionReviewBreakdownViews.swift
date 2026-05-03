@@ -56,7 +56,7 @@ struct BreakdownStatsCard: View {
     private func statCell(value: String, label: String) -> some View {
         VStack(spacing: 2) {
             Text(value)
-                .font(.system(size: 17, weight: .bold, design: .rounded))
+                .font(TypographyTokens.labelRounded(17, weight: .bold))
                 .foregroundStyle(ColorTokens.Spec.ink)
                 .lineLimit(1)
                 .minimumScaleFactor(0.85)
@@ -83,7 +83,7 @@ struct AttemptBreakdownRowView: View {
                         .fill(toneColor(row.tone).opacity(0.12))
                         .frame(width: 32, height: 32)
                     Text("\(row.index)")
-                        .font(.system(size: 13, weight: .bold, design: .rounded))
+                        .font(TypographyTokens.labelRounded(13))
                         .foregroundStyle(toneColor(row.tone))
                 }
 
@@ -94,12 +94,12 @@ struct AttemptBreakdownRowView: View {
                             .foregroundStyle(ColorTokens.Spec.ink)
                         if row.hasManualScore {
                             Image(systemName: "person.badge.key.fill")
-                                .font(.system(size: 10))
+                                .font(TypographyTokens.caption(10))
                                 .foregroundStyle(ColorTokens.Brand.gold)
                                 .accessibilityLabel(String(localized: "review.breakdown.manual_label"))
                         }
                         Image(systemName: row.confidenceIconName)
-                            .font(.system(size: 11))
+                            .font(TypographyTokens.caption(11))
                             .foregroundStyle(ColorTokens.Spec.inkMuted)
                             .accessibilityHidden(true)
                     }
@@ -197,7 +197,7 @@ struct AnnotationRowView: View {
     var body: some View {
         HStack(alignment: .top, spacing: SpacingTokens.small) {
             Image(systemName: annotation.isSessionLevel ? "doc.text" : "person.wave.2")
-                .font(.system(size: 14))
+                .font(TypographyTokens.caption(14))
                 .foregroundStyle(ColorTokens.Spec.accent)
                 .padding(.top, 2)
                 .accessibilityHidden(true)
@@ -218,7 +218,7 @@ struct AnnotationRowView: View {
                 onDelete()
             } label: {
                 Image(systemName: "trash")
-                    .font(.system(size: 13))
+                    .font(TypographyTokens.caption(13))
                     .foregroundStyle(ColorTokens.Semantic.error)
             }
             .accessibilityLabel(String(localized: "review.annotation.delete"))

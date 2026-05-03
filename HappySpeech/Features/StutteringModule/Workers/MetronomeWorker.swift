@@ -31,11 +31,13 @@ final class MetronomeWorker: MetronomeWorkerProtocol {
                 withTimeInterval: interval,
                 repeats: true
             ) { [weak self] _ in
-                guard let self else { return }
-                self.player?.stop()
-                self.player?.currentTime = 0
-                self.player?.play()
-                onTick()
+                Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    self.player?.stop()
+                    self.player?.currentTime = 0
+                    self.player?.play()
+                    onTick()
+                }
             }
             self.logger.info("MetronomeWorker started bpm=\(bpm, privacy: .public) interval=\(interval, privacy: .public)")
         }

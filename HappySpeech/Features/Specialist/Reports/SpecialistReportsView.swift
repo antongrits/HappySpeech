@@ -179,7 +179,7 @@ struct SpecialistReportsView: View {
             ? ColorTokens.Semantic.success
             : (percent >= 60 ? ColorTokens.Brand.gold : ColorTokens.Semantic.warning)
         return Text("\(percent)%")
-            .font(.system(size: 22, weight: .bold, design: .rounded))
+            .font(TypographyTokens.titleSmall(22))
             .foregroundStyle(.white)
             .padding(.horizontal, SpacingTokens.sp3)
             .padding(.vertical, SpacingTokens.sp1)
@@ -214,7 +214,7 @@ struct SpecialistReportsView: View {
         HSCard(style: .elevated) {
             VStack(spacing: SpacingTokens.sp2) {
                 Image(systemName: "tray")
-                    .font(.system(size: 32, weight: .light))
+                    .font(TypographyTokens.display(32))
                     .foregroundStyle(ColorTokens.Spec.inkMuted)
                 Text(String(localized: "reports.empty.title"))
                     .font(TypographyTokens.body())
@@ -268,7 +268,7 @@ struct SpecialistReportsView: View {
         } label: {
             HStack(spacing: SpacingTokens.sp2) {
                 Image(systemName: icon)
-                    .font(.system(size: 16, weight: .semibold))
+                    .font(TypographyTokens.subtitle(16))
                     .accessibilityHidden(true)
                 Text(title)
                     .font(TypographyTokens.cta())
@@ -449,7 +449,7 @@ private struct FilterChip: View {
         Button(action: action) {
             HStack(spacing: SpacingTokens.sp1) {
                 Image(systemName: icon)
-                    .font(.system(size: 12, weight: .semibold))
+                    .font(TypographyTokens.labelRounded(12))
                 Text(title)
                     .font(TypographyTokens.caption(13).bold())
             }
@@ -482,10 +482,10 @@ private struct SummaryMetric: View {
     var body: some View {
         VStack(spacing: SpacingTokens.sp1) {
             Image(systemName: icon)
-                .font(.system(size: 16, weight: .medium))
+                .font(TypographyTokens.bodyMedium(16))
                 .foregroundStyle(ColorTokens.Spec.accent)
             Text(value)
-                .font(.system(size: 18, weight: .bold, design: .rounded))
+                .font(TypographyTokens.subtitle(18))
                 .foregroundStyle(ColorTokens.Spec.ink)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
@@ -515,7 +515,7 @@ private struct SoundBreakdownRowView: View {
                         .fill(ColorTokens.Spec.accent.opacity(0.12))
                         .frame(width: 44, height: 44)
                     Text(row.sound)
-                        .font(.system(size: 18, weight: .black, design: .rounded))
+                        .font(TypographyTokens.kidDisplay(18))
                         .foregroundStyle(ColorTokens.Spec.accent)
                 }
 
@@ -580,7 +580,7 @@ private struct SoundDetailSheet: View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp4) {
             HStack(spacing: SpacingTokens.sp3) {
                 Text(row.sound)
-                    .font(.system(size: 36, weight: .black, design: .rounded))
+                    .font(TypographyTokens.display(36))
                     .foregroundStyle(ColorTokens.Spec.accent)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(row.currentStageTitle)

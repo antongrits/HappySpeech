@@ -418,7 +418,7 @@ private struct WorldZoneTile: View {
         VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
             HStack(alignment: .top) {
                 Text(card.icon)
-                    .font(.system(size: isWide ? 44 : 36))
+                    .font(.system(size: isWide ? 44 : 36)) // emoji key graphic — skip TypographyTokens
                     .accessibilityHidden(true)
                 Spacer(minLength: 0)
                 if !card.isLocked {
@@ -562,12 +562,12 @@ private struct WorldZoneDetailSheet: View {
                     .frame(width: 80, height: 80)
                 if viewModel.isLocked {
                     Image(systemName: "lock.fill")
-                        .font(.system(size: 30, weight: .medium))
+                        .font(TypographyTokens.titleLarge(30))
                         .foregroundStyle(ColorTokens.Kid.inkSoft)
                         .accessibilityHidden(true)
                 } else {
                     Text(viewModel.icon)
-                        .font(.system(size: 40))
+                        .font(TypographyTokens.display(40)) // emoji icon — skip TypographyTokens
                         .accessibilityHidden(true)
                 }
             }
@@ -583,7 +583,7 @@ private struct WorldZoneDetailSheet: View {
                     Spacer(minLength: 0)
                     Button(action: onDismiss) {
                         Image(systemName: "xmark.circle.fill")
-                            .font(.system(size: 24))
+                            .font(TypographyTokens.title(24))
                             .foregroundStyle(ColorTokens.Kid.inkSoft)
                     }
                     .buttonStyle(.plain)
@@ -608,7 +608,7 @@ private struct WorldZoneDetailSheet: View {
         HSLiquidGlassCard(style: .tinted(ColorTokens.Semantic.warning), padding: SpacingTokens.regular) {
             HStack(spacing: SpacingTokens.regular) {
                 Image(systemName: "lock.shield.fill")
-                    .font(.system(size: 22))
+                    .font(TypographyTokens.titleSmall(22))
                     .foregroundStyle(ColorTokens.Semantic.warning)
                     .accessibilityHidden(true)
                 Text(hint)
@@ -748,7 +748,7 @@ private struct WorldZoneDetailSheet: View {
     private func statCell(icon: String, value: String, label: String) -> some View {
         VStack(spacing: SpacingTokens.micro) {
             Image(systemName: icon)
-                .font(.system(size: 16, weight: .medium))
+                .font(TypographyTokens.bodyMedium(16))
                 .foregroundStyle(viewModel.backgroundColor)
                 .accessibilityHidden(true)
             Text(value)

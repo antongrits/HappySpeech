@@ -317,7 +317,7 @@ private struct ChildCardView: View {
                 .fill(themeColor.opacity(0.25))
                 .frame(width: 56, height: 56)
             Text(avatarEmoji)
-                .font(.system(size: 28))
+                .font(TypographyTokens.title(28))
                 .accessibilityHidden(true)
         }
         if let heroId = avatarHeroId, let ns = avatarNamespace {

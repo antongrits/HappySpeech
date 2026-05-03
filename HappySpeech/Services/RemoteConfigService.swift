@@ -179,19 +179,23 @@ public final class LiveRemoteConfigService: RemoteConfigService, @unchecked Send
     // MARK: - Content config
 
     public var lyalyaVoiceDefault: String {
-        config[RCKey.lyalyaVoiceDefault].stringValue ?? "pro"
+        let v = config[RCKey.lyalyaVoiceDefault].stringValue
+        return v.isEmpty ? "pro" : v
     }
 
     public var dailyReminderTime: String {
-        config[RCKey.dailyReminderTime].stringValue ?? "17:00"
+        let v = config[RCKey.dailyReminderTime].stringValue
+        return v.isEmpty ? "17:00" : v
     }
 
     public var weeklySummaryDay: String {
-        config[RCKey.weeklySummaryDay].stringValue ?? "sunday"
+        let v = config[RCKey.weeklySummaryDay].stringValue
+        return v.isEmpty ? "sunday" : v
     }
 
     public var parentSummaryDay: String {
-        config[RCKey.parentSummaryDay].stringValue ?? "sunday"
+        let v = config[RCKey.parentSummaryDay].stringValue
+        return v.isEmpty ? "sunday" : v
     }
 
     // MARK: - Onboarding & session config
@@ -201,11 +205,13 @@ public final class LiveRemoteConfigService: RemoteConfigService, @unchecked Send
     }
 
     public var demoModeSteps: Int {
-        Int(config[RCKey.demoModeSteps].numberValue ?? 15)
+        let v = config[RCKey.demoModeSteps].numberValue.intValue
+        return v > 0 ? v : 15
     }
 
     public var maxSessionDurationMin: Int {
-        Int(config[RCKey.maxSessionDurationMin].numberValue ?? 25)
+        let v = config[RCKey.maxSessionDurationMin].numberValue.intValue
+        return v > 0 ? v : 25
     }
 
     // MARK: - UI flags
@@ -221,11 +227,13 @@ public final class LiveRemoteConfigService: RemoteConfigService, @unchecked Send
     // MARK: - Version management
 
     public var minAppVersion: String {
-        config[RCKey.minAppVersion].stringValue ?? "1.0.0"
+        let v = config[RCKey.minAppVersion].stringValue
+        return v.isEmpty ? "1.0.0" : v
     }
 
     public var forceUpdateMinVersion: String {
-        config[RCKey.forceUpdateMinVersion].stringValue ?? "1.0.0"
+        let v = config[RCKey.forceUpdateMinVersion].stringValue
+        return v.isEmpty ? "1.0.0" : v
     }
 
     // MARK: - Lifecycle

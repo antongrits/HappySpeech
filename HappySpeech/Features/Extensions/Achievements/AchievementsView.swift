@@ -296,7 +296,7 @@ struct AchievementsView: View {
     private var emptyState: some View {
         VStack(spacing: SpacingTokens.sp4) {
             Image(systemName: "trophy")
-                .font(.system(size: 48))
+                .font(TypographyTokens.kidDisplay(48))
                 .foregroundStyle(ColorTokens.Kid.inkMuted.opacity(0.4))
                 .accessibilityHidden(true)
             Text(String(localized: "achievements.empty"))

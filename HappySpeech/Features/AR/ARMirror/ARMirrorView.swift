@@ -215,7 +215,7 @@ struct ARMirrorView: View {
     private var attentionIndicator: some View {
         HStack(spacing: SpacingTokens.micro) {
             Image(systemName: eyeContactState.isEyeContact ? "eye.fill" : "eye.slash")
-                .font(.system(size: 11))
+                .font(TypographyTokens.caption(11))
                 .foregroundStyle(eyeContactState.isEyeContact
                     ? ColorTokens.Brand.mint
                     : .white.opacity(0.5))

@@ -230,7 +230,7 @@ struct FamilyRecordingRow: View {
                 // Delete
                 Button(action: onDelete) {
                     Image(systemName: "trash")
-                        .font(.system(size: 16))
+                        .font(TypographyTokens.body(16))
                         .foregroundStyle(ColorTokens.Semantic.error)
                         .frame(minWidth: 36, minHeight: 36)
                 }

@@ -167,7 +167,7 @@ struct PhonemeAccuracyRow: View {
                 .fill(toneColor(row.tone).opacity(0.15))
                 .frame(width: 36, height: 36)
             Text(row.phoneme)
-                .font(.system(size: 16, weight: .black, design: .rounded))
+                .font(TypographyTokens.kidDisplay(16))
                 .foregroundStyle(toneColor(row.tone))
         }
     }
@@ -217,7 +217,7 @@ struct AccuracyPill: View {
 
     var body: some View {
         Text("\(percent)%")
-            .font(.system(size: 13, weight: .bold, design: .rounded))
+            .font(TypographyTokens.labelRounded(13))
             .foregroundStyle(.white)
             .padding(.horizontal, SpacingTokens.small)
             .padding(.vertical, 4)

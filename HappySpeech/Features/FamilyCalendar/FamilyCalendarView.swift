@@ -164,7 +164,7 @@ struct FamilyCalendarView: View {
     private var emptyView: some View {
         VStack(spacing: SpacingTokens.xxLarge) {
             Image(systemName: "calendar.badge.exclamationmark")
-                .font(.system(size: 56))
+                .font(TypographyTokens.kidDisplay(56))
                 .foregroundStyle(ColorTokens.Parent.inkSoft)
                 .accessibilityHidden(true)
             Text(String(localized: "family_calendar.empty.title"))
@@ -199,7 +199,7 @@ struct FamilyCalendarView: View {
                             let animation: Animation = reduceMotion
                                 ? .easeInOut(duration: 0.15)
                                 : MotionTokens.spring
-                            withAnimation(animation) {
+                            withAnimation(animation) { () -> Void in
                                 Task { await scene?.interactor.selectChild(request: .init(childId: childId)) }
                             }
                         }
@@ -259,7 +259,7 @@ struct FamilyCalendarView: View {
                 }
             } label: {
                 Image(systemName: "chevron.left")
-                    .font(.system(size: 14, weight: .semibold))
+                    .font(TypographyTokens.labelRounded(14))
                     .foregroundStyle(ColorTokens.Brand.primary)
                     .frame(width: 36, height: 36)
             }
@@ -274,7 +274,7 @@ struct FamilyCalendarView: View {
                 }
             } label: {
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 14, weight: .semibold))
+                    .font(TypographyTokens.labelRounded(14))
                     .foregroundStyle(ColorTokens.Brand.primary)
                     .frame(width: 36, height: 36)
             }
@@ -514,7 +514,7 @@ private struct ChildAvatarCard: View {
                         .frame(width: 56, height: 56)
                     if child.isAll {
                         Image(systemName: "person.2.fill")
-                            .font(.system(size: 22))
+                            .font(TypographyTokens.titleSmall(22))
                             .foregroundStyle(ColorTokens.Brand.primary)
                     } else {
                         Text(child.initials)
@@ -538,10 +538,10 @@ private struct ChildAvatarCard: View {
                 if child.streak > 0 {
                     HStack(spacing: 2) {
                         Image(systemName: "flame.fill")
-                            .font(.system(size: 10))
+                            .font(TypographyTokens.caption(10))
                             .foregroundStyle(ColorTokens.Brand.primary)
                         Text("\(child.streak)д")
-                            .font(.system(size: 10))
+                            .font(TypographyTokens.caption(10))
                             .foregroundStyle(ColorTokens.Parent.inkMuted)
                     }
                 } else {
@@ -582,7 +582,7 @@ private struct AddChildCapsule: View {
                         .foregroundStyle(ColorTokens.Parent.inkSoft)
                         .frame(width: 56, height: 56)
                     Image(systemName: "plus.circle")
-                        .font(.system(size: 24))
+                        .font(TypographyTokens.title(24))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
                 }
                 Text(String(localized: "family_calendar.children.add"))
@@ -631,7 +631,7 @@ private struct WeekDayCell: View {
         Button(action: onTap) {
             VStack(spacing: 2) {
                 Text(day.weekdayShort)
-                    .font(.system(size: 9, weight: .medium))
+                    .font(TypographyTokens.caption(9))
                     .foregroundStyle(day.isToday ? .white.opacity(0.8) : ColorTokens.Parent.inkMuted)
                     .minimumScaleFactor(0.7)
 
@@ -722,10 +722,10 @@ private struct WeekGoalCard: View {
                     if card.streakDays > 0 {
                         HStack(spacing: 2) {
                             Image(systemName: "flame.fill")
-                                .font(.system(size: 10))
+                                .font(TypographyTokens.caption(10))
                                 .foregroundStyle(ColorTokens.Brand.primary)
                             Text("\(card.streakDays)д")
-                                .font(.system(size: 10))
+                                .font(TypographyTokens.caption(10))
                                 .foregroundStyle(ColorTokens.Parent.inkMuted)
                         }
                     }
@@ -733,7 +733,7 @@ private struct WeekGoalCard: View {
                 Spacer()
                 if card.goalReached {
                     Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 20))
+                        .font(TypographyTokens.titleSmall(20))
                         .foregroundStyle(ColorTokens.Semantic.success)
                         .accessibilityLabel(String(localized: "family_calendar.a11y.goal_reached"))
                 }
@@ -947,7 +947,7 @@ private struct ChildSummaryCard: View {
                 .lineLimit(1)
             HStack(spacing: 4) {
                 Image(systemName: "star.fill")
-                    .font(.system(size: 12))
+                    .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Brand.gold)
                 Text("\(card.bestSound) (\(Int(card.bestSoundRate * 100))%)")
                     .font(TypographyTokens.caption())
@@ -982,7 +982,7 @@ private struct InsightRow: View {
     var body: some View {
         HStack(spacing: SpacingTokens.medium) {
             Image(systemName: insight.iconName)
-                .font(.system(size: 20))
+                .font(TypographyTokens.titleSmall(20))
                 .foregroundStyle(ColorTokens.Brand.primary)
                 .frame(width: 24)
                 .accessibilityHidden(true)
@@ -1258,7 +1258,7 @@ private struct WeekSummarySheet: View {
                         Spacer()
                         if summary.allGoalsReached {
                             Image(systemName: "star.circle.fill")
-                                .font(.system(size: 40))
+                                .font(TypographyTokens.display(40))
                                 .foregroundStyle(ColorTokens.Brand.gold)
                                 .accessibilityLabel(String(localized: "family_calendar.week_summary.all_goals_reached"))
                         }

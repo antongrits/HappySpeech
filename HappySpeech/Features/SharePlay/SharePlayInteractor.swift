@@ -118,7 +118,7 @@ final class SharePlayInteractor: SharePlayBusinessLogic {
             Self.logger.error("startSession error: \(spError.localizedDescription)")
             presenter?.presentStartSession(
                 SharePlay.StartSession.Response(
-                    outcome: .error(spError.localizedDescription ?? "")
+                    outcome: .error(spError.localizedDescription)
                 )
             )
         } catch {

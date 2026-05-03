@@ -227,7 +227,7 @@ struct ChildHomeSoundLetterBadge: View {
                 .fill(ColorTokens.Brand.primary.opacity(0.15))
 
             Text(letter)
-                .font(.system(size: size * 0.5, weight: .black, design: .rounded))
+                .font(TypographyTokens.kidDisplay(size * 0.5))
                 .foregroundStyle(ColorTokens.Brand.primary)
         }
         .frame(width: size, height: size)
@@ -1000,7 +1000,7 @@ struct ChildHomeTodayWordCard: View {
                         .fill(ColorTokens.Brand.primary.opacity(0.12))
                         .frame(width: 36, height: 36)
                     Text(word.targetSound)
-                        .font(.system(size: 17, weight: .black, design: .rounded))
+                        .font(TypographyTokens.kidDisplay(17))
                         .foregroundStyle(ColorTokens.Brand.primary)
                 }
                 .accessibilityHidden(true)
@@ -1019,7 +1019,7 @@ struct ChildHomeTodayWordCard: View {
                     .minimumScaleFactor(0.85)
 
                 Text(word.positionEmoji)
-                    .font(.system(size: 12))
+                    .font(TypographyTokens.caption(12))
                     .accessibilityHidden(true)
             }
             .padding(.vertical, SpacingTokens.sp3)
@@ -1061,7 +1061,7 @@ struct ChildHomeTaskPreviewRow: View {
                               : ColorTokens.Brand.primary.opacity(0.12))
                         .frame(width: 40, height: 40)
                     Image(systemName: task.isCompleted ? "checkmark.circle.fill" : "doc.badge.arrow.up")
-                        .font(.system(size: 18, weight: .semibold))
+                        .font(TypographyTokens.subtitle(18))
                         .foregroundStyle(task.isCompleted
                                          ? ColorTokens.Semantic.success
                                          : ColorTokens.Brand.primary)
@@ -1088,7 +1088,7 @@ struct ChildHomeTaskPreviewRow: View {
 
                         if task.isOverdue {
                             Image(systemName: "exclamationmark.circle.fill")
-                                .font(.system(size: 12))
+                                .font(TypographyTokens.caption(12))
                                 .foregroundStyle(ColorTokens.Semantic.error)
                                 .accessibilityHidden(true)
                         }
@@ -1098,7 +1098,7 @@ struct ChildHomeTaskPreviewRow: View {
                 Spacer(minLength: 0)
 
                 Image(systemName: "chevron.right")
-                    .font(.system(size: 13, weight: .semibold))
+                    .font(TypographyTokens.labelRounded(13))
                     .foregroundStyle(ColorTokens.Kid.line)
                     .accessibilityHidden(true)
             }

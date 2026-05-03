@@ -395,14 +395,9 @@ struct LetterTracingView: View {
     // MARK: - PKToolPicker
 
     private func setupToolPicker() {
-        let scene = UIApplication.shared.connectedScenes
-            .compactMap { $0 as? UIWindowScene }
-            .first
-        let window = scene?.windows.first(where: { $0.isKeyWindow }) ?? scene?.windows.first
-        guard let window else { return }
-        let picker = PKToolPicker.shared(for: window)
-        picker?.setVisible(true, forFirstResponder: canvas)
-        picker?.addObserver(canvas)
+        let picker = PKToolPicker()
+        picker.setVisible(true, forFirstResponder: canvas)
+        picker.addObserver(canvas)
         canvas.becomeFirstResponder()
     }
 

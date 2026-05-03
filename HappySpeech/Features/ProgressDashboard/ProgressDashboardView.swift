@@ -164,7 +164,7 @@ struct ProgressDashboardView: View {
             VStack(alignment: .leading, spacing: SpacingTokens.small) {
                 HStack(spacing: SpacingTokens.tiny) {
                     Image(systemName: iconName)
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(TypographyTokens.labelRounded(14))
                         .foregroundStyle(iconTint)
                         .accessibilityHidden(true)
                     Text(title)
@@ -399,7 +399,7 @@ struct ProgressDashboardView: View {
                             .fill(ColorTokens.Brand.lilac.opacity(0.18))
                             .frame(width: 40, height: 40)
                         Image(systemName: "sparkles")
-                            .font(.system(size: 18, weight: .semibold))
+                            .font(TypographyTokens.subtitle(18))
                             .foregroundStyle(ColorTokens.Brand.lilac)
                             .symbolEffect(.pulse, options: .repeating, isActive: display.isLLMLoading && !reduceMotion)
                     }
@@ -469,7 +469,7 @@ struct ProgressDashboardView: View {
             Spacer(minLength: SpacingTokens.xLarge)
 
             Text(verbatim: "📊")
-                .font(.system(size: 96))
+                .font(.system(size: 96)) // emoji key graphic — skip TypographyTokens
                 .accessibilityHidden(true)
 
             VStack(spacing: SpacingTokens.small) {
@@ -703,7 +703,7 @@ private struct SoundProgressCellView: View {
                     Spacer()
 
                     Image(systemName: cell.trendIconName)
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(TypographyTokens.labelRounded(14))
                         .foregroundStyle(trendColor)
                         .frame(width: 28, height: 28)
                         .background(
@@ -990,7 +990,7 @@ private struct RecommendationRowView: View {
     var body: some View {
         HStack(alignment: .top, spacing: SpacingTokens.regular) {
             Image(systemName: item.iconName)
-                .font(.system(size: 18, weight: .semibold))
+                .font(TypographyTokens.subtitle(18))
                 .foregroundStyle(ColorTokens.Parent.accent)
                 .accessibilityHidden(true)
 

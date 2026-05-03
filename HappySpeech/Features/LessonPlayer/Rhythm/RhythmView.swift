@@ -127,7 +127,7 @@ struct RhythmView: View {
                 LyalyaMascotView(state: .explaining, size: 72)
                     .accessibilityHidden(true)
                 Text(store.display.emoji)
-                    .font(.system(size: 72))
+                    .font(TypographyTokens.kidDisplay(72))
                     .accessibilityHidden(true)
                 Text(store.display.targetWord)
                     .font(TypographyTokens.title(28))
@@ -150,7 +150,7 @@ struct RhythmView: View {
     private var playingContent: some View {
         VStack(spacing: SpacingTokens.large) {
             Text(store.display.emoji)
-                .font(.system(size: 72))
+                .font(TypographyTokens.kidDisplay(72))
                 .accessibilityHidden(true)
             Text(String(localized: "Слушай внимательно…"))
                 .font(TypographyTokens.headline())
@@ -200,7 +200,7 @@ struct RhythmView: View {
         ) {
             VStack(spacing: SpacingTokens.medium) {
                 Text(store.display.feedbackCorrect ? "🎉" : "💫")
-                    .font(.system(size: 64))
+                    .font(TypographyTokens.kidDisplay(64))
                     .accessibilityHidden(true)
                 Text(store.display.feedbackText)
                     .font(TypographyTokens.headline())
@@ -235,7 +235,7 @@ struct RhythmView: View {
     private var completedContent: some View {
         VStack(spacing: SpacingTokens.large) {
             Text("🏆")
-                .font(.system(size: 72))
+                .font(TypographyTokens.kidDisplay(72))
                 .accessibilityHidden(true)
             Text(store.display.completionMessage)
                 .font(TypographyTokens.title())

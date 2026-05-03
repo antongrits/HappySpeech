@@ -30,7 +30,6 @@ struct CanvasViewRepresentable: UIViewRepresentable {
 
     func makeUIView(context: Context) -> PKCanvasView {
         canvas.tool = PKInkingTool(.marker, color: .systemBlue, width: penWidth)
-        canvas.allowsFingerDrawing = true
         canvas.backgroundColor = .clear
         canvas.isOpaque = false
         // anyInput: принимает и Pencil, и палец на любом устройстве.
@@ -46,7 +45,7 @@ struct CanvasViewRepresentable: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: PKCanvasView, context: Context) {
-        uiView.allowsFingerDrawing = true
+        uiView.drawingPolicy = .anyInput
         context.coordinator.canvas = uiView
     }
 

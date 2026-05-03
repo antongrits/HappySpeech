@@ -54,7 +54,7 @@ extension SessionReviewView {
         } label: {
             Image(systemName: isBreakdownExpanded ? "chevron.up.circle.fill" : "chevron.down.circle")
                 .foregroundStyle(ColorTokens.Spec.accent)
-                .font(.system(size: 18))
+                .font(TypographyTokens.headline(18))
         }
         .accessibilityLabel(isBreakdownExpanded
             ? String(localized: "review.breakdown.collapse")

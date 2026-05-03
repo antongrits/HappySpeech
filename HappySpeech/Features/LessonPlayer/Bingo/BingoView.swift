@@ -200,7 +200,7 @@ struct BingoView: View {
                     LyalyaMascotView(state: .celebrating, size: 80)
                         .accessibilityHidden(true)
                     Text("🎉")
-                        .font(.system(size: 64))
+                        .font(TypographyTokens.kidDisplay(64))
                         .accessibilityHidden(true)
                     Text(String(localized: "БИНГО!"))
                         .font(TypographyTokens.display(40))

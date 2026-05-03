@@ -356,16 +356,24 @@ enum MFCCExtractor {
 
         paddedFrame.withUnsafeBytes { rawPtr in
             guard let baseAddress = rawPtr.baseAddress else { return }
-            var splitComplex = DSPSplitComplex(realp: &real, imagp: &imag)
-            baseAddress.withMemoryRebound(to: DSPComplex.self, capacity: halfN) { complexPtr in
-                vDSP_ctoz(complexPtr, 2, &splitComplex, 1, vDSP_Length(halfN))
+            real.withUnsafeMutableBufferPointer { rBuf in
+                imag.withUnsafeMutableBufferPointer { iBuf in
+                    var splitComplex = DSPSplitComplex(realp: rBuf.baseAddress!, imagp: iBuf.baseAddress!)
+                    baseAddress.withMemoryRebound(to: DSPComplex.self, capacity: halfN) { complexPtr in
+                        vDSP_ctoz(complexPtr, 2, &splitComplex, 1, vDSP_Length(halfN))
+                    }
+                    vDSP_fft_zrip(setup, &splitComplex, 1, fftLog2n, FFTDirection(FFT_FORWARD))
+                }
             }
-            vDSP_fft_zrip(setup, &splitComplex, 1, fftLog2n, FFTDirection(FFT_FORWARD))
         }
 
-        var magnitudes   = [Float](repeating: 0, count: halfN)
-        var splitComplex = DSPSplitComplex(realp: &real, imagp: &imag)
-        vDSP_zvmags(&splitComplex, 1, &magnitudes, 1, vDSP_Length(halfN))
+        var magnitudes = [Float](repeating: 0, count: halfN)
+        real.withUnsafeMutableBufferPointer { rBuf in
+            imag.withUnsafeMutableBufferPointer { iBuf in
+                var splitComplex = DSPSplitComplex(realp: rBuf.baseAddress!, imagp: iBuf.baseAddress!)
+                vDSP_zvmags(&splitComplex, 1, &magnitudes, 1, vDSP_Length(halfN))
+            }
+        }
 
         return magnitudes
     }

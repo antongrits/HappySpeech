@@ -239,7 +239,7 @@ public struct SoundProgressState: Sendable, Codable, Equatable {
     /// Насколько звук «просрочен» для повтора.
     /// Отрицательный — ещё рано; 0 — пора сегодня; положительный — опоздание.
     public func overdueDays(now: Date = Date()) -> Int {
-        guard let last = lastReviewDate else { return Int.max }
+        guard lastReviewDate != nil else { return Int.max }
         let daysPassed = daysSinceLastReview(now: now) ?? 0
         return daysPassed - lastIntervalDays
     }

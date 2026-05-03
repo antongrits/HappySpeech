@@ -34,7 +34,7 @@ struct MimicLyalyaView: View {
                 )
                 HStack {
                     Text(display.emoji)
-                        .font(.system(size: 64))
+                        .font(TypographyTokens.kidDisplay(64)) // emoji posture indicator — skip TypographyTokens
                     Spacer()
                     Text(display.postureName)
                         .font(TypographyTokens.headline())

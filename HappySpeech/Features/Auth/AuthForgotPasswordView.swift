@@ -163,7 +163,7 @@ struct AuthForgotPasswordView: View {
         HSLiquidGlassCard(style: .tinted(ColorTokens.Semantic.success), padding: SpacingTokens.sp6) {
             VStack(spacing: SpacingTokens.sp5) {
                 Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: 56))
+                    .font(TypographyTokens.kidDisplay(56))
                     .foregroundStyle(ColorTokens.Semantic.success)
                     .accessibilityHidden(true)
 
