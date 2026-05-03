@@ -178,15 +178,27 @@ public enum ColorTokens {
 
     /// Цветовые варианты тела маскота «Ляля».
     /// Используются в `LyalyaMascotView` для skinTintColor.
+    /// Все цвета адаптируются к Light/Dark теме через именованные ассеты.
     public enum Skin {
-        /// Тёплый оттенок — слегка розоватый
-        public static let warm    = Color(red: 1.0, green: 0.95, blue: 0.95)
-        /// Прохладный оттенок — слегка голубоватый
-        public static let cool    = Color(red: 0.95, green: 0.97, blue: 1.0)
-        /// Природный оттенок — слегка зелёный
-        public static let nature  = Color(red: 0.95, green: 1.0,  blue: 0.95)
+        /// Тёплый оттенок — слегка розоватый (Light: rgb(255,242,242), Dark: rgb(255,230,230))
+        public static let warm    = Color("SkinWarm")
+        /// Прохладный оттенок — слегка голубоватый (Light: rgb(242,247,255), Dark: rgb(230,237,255))
+        public static let cool    = Color("SkinCool")
+        /// Природный оттенок — слегка зелёный (Light: rgb(242,255,242), Dark: rgb(230,255,230))
+        public static let nature  = Color("SkinNature")
         /// Классический — белый
         public static let classic = Color.white
+    }
+
+    // MARK: - Nature Colors
+
+    /// Природные цвета для игровых иллюстраций (дерево, трава, ствол).
+    /// Адаптируются к Light/Dark теме через именованные ассеты.
+    public enum Nature {
+        /// Ствол дерева — тёплый коричневый, dark-mode-safe.
+        /// Light: rgb(139,90,43), Dark: rgb(180,130,70).
+        /// Используется в BreathingTreeView.
+        public static let treeTrunk = Color("NatureTreeTrunk")
     }
 
     // MARK: - Overlay Colors
