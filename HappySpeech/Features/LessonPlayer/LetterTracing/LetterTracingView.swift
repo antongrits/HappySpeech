@@ -182,6 +182,17 @@ struct LetterTracingView: View {
 
     private func exerciseHeader(vm: LetterTracingModels.LoadExercise.ViewModel) -> some View {
         VStack(spacing: SpacingTokens.small) {
+            HStack(spacing: SpacingTokens.small) {
+                LyalyaMascotView(state: .pointing, size: 56)
+                    .accessibilityHidden(true)
+                Spacer()
+                Text(vm.tracingLevel.localizedTitle)
+                    .font(TypographyTokens.caption())
+                    .foregroundStyle(ColorTokens.Brand.sky)
+                    .accessibilityLabel(
+                        String(localized: "letter_tracing.level_accessibility \(vm.tracingLevel.localizedTitle)")
+                    )
+            }
             HSProgressBar(
                 value: Double(vm.roundIndex) / Double(max(vm.totalRounds, 1))
             )
@@ -191,14 +202,6 @@ struct LetterTracingView: View {
                 .multilineTextAlignment(.center)
                 .lineLimit(nil)
                 .minimumScaleFactor(0.85)
-
-            // Уровень обводки
-            Text(vm.tracingLevel.localizedTitle)
-                .font(TypographyTokens.caption())
-                .foregroundStyle(ColorTokens.Brand.sky)
-                .accessibilityLabel(
-                    String(localized: "letter_tracing.level_accessibility \(vm.tracingLevel.localizedTitle)")
-                )
         }
     }
 
@@ -268,71 +271,67 @@ struct LetterTracingView: View {
     }
 
     private func feedbackOverlay(vm: LetterTracingModels.SubmitDrawing.ViewModel) -> some View {
-        VStack(spacing: SpacingTokens.medium) {
-            HSMascotView(mood: vm.isCorrect ? .celebrating : .thinking, size: 100)
+        HSLiquidGlassCard(
+            style: vm.isCorrect
+                ? .tinted(ColorTokens.Brand.mint)
+                : .primary,
+            padding: SpacingTokens.xLarge
+        ) {
+            VStack(spacing: SpacingTokens.medium) {
+                LyalyaMascotView(state: vm.isCorrect ? .celebrating : .thinking, size: 100)
 
-            Text(vm.feedbackText)
-                .font(TypographyTokens.title(24))
-                .foregroundStyle(vm.isCorrect ? ColorTokens.Brand.mint : ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
+                Text(vm.feedbackText)
+                    .font(TypographyTokens.title(24))
+                    .foregroundStyle(vm.isCorrect ? ColorTokens.Brand.mint : ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
 
-            if let recognized = vm.recognizedText {
-                Text(recognized)
-                    .font(TypographyTokens.body())
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-            }
+                if let recognized = vm.recognizedText {
+                    Text(recognized)
+                        .font(TypographyTokens.body())
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                }
 
-            Text(
-                String(localized: "letter_tracing.score_percent \(vm.scorePercent)")
-            )
-            .font(TypographyTokens.headline())
-            .foregroundStyle(ColorTokens.Kid.ink)
-
-            // Попытка и лучший результат
-            if vm.attemptNumber > 1 {
                 Text(
-                    String(
-                        localized: "letter_tracing.attempt \(vm.attemptNumber) \(vm.bestScorePercent)"
-                    )
+                    String(localized: "letter_tracing.score_percent \(vm.scorePercent)")
                 )
-                .font(TypographyTokens.caption())
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-            }
+                .font(TypographyTokens.headline())
+                .foregroundStyle(ColorTokens.Kid.ink)
 
-            HSButton(
-                String(localized: "letter_tracing.button.next"),
-                style: .primary,
-                icon: "arrow.right.circle.fill"
-            ) {
-                Task { await handleNext() }
+                if vm.attemptNumber > 1 {
+                    Text(
+                        String(
+                            localized: "letter_tracing.attempt \(vm.attemptNumber) \(vm.bestScorePercent)"
+                        )
+                    )
+                    .font(TypographyTokens.caption())
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                }
+
+                HSButton(
+                    String(localized: "letter_tracing.button.next"),
+                    style: .primary,
+                    icon: "arrow.right.circle.fill"
+                ) {
+                    Task { await handleNext() }
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
         }
-        .padding(SpacingTokens.xLarge)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                .fill(.regularMaterial)
-                .shadow(color: .black.opacity(0.12), radius: 24, y: 8)
-        )
         .padding(.horizontal, SpacingTokens.screenEdge)
         .padding(.top, SpacingTokens.xLarge)
     }
 
     private var completeOverlay: some View {
-        VStack(spacing: SpacingTokens.medium) {
-            HSMascotView(mood: .celebrating, size: 120)
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.xLarge) {
+            VStack(spacing: SpacingTokens.medium) {
+                LyalyaMascotView(state: .celebrating, size: 120)
 
-            Text(String(localized: "letter_tracing.complete.title"))
-                .font(TypographyTokens.title(28))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
+                Text(String(localized: "letter_tracing.complete.title"))
+                    .font(TypographyTokens.title(28))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+            }
         }
-        .padding(SpacingTokens.xLarge)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                .fill(.regularMaterial)
-                .shadow(color: .black.opacity(0.12), radius: 24, y: 8)
-        )
         .padding(.horizontal, SpacingTokens.screenEdge)
         .padding(.top, SpacingTokens.xLarge)
     }

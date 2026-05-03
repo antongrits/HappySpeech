@@ -34,6 +34,7 @@ struct PermissionsOverviewView: View {
     @State private var presenter: PermissionsPresenter?
     @State private var router: PermissionsRouter?
     @State private var bootstrapped = false
+    @State private var appeared = false
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "PermissionsOverviewView")
 
@@ -71,7 +72,12 @@ struct PermissionsOverviewView: View {
         .navigationBarTitleDisplayMode(.large)
         .environment(\.circuitContext, .parent)
         .task { await bootstrap() }
-        .onAppear { refreshStatuses() }
+        .onAppear {
+            refreshStatuses()
+            withAnimation(reduceMotion ? nil : MotionTokens.spring.delay(0.15)) {
+                appeared = true
+            }
+        }
         .onChange(of: display.pendingSettingsURL) { _, url in
             guard let url else { return }
             openURL(url)
@@ -97,6 +103,8 @@ struct PermissionsOverviewView: View {
     private var mascotSection: some View {
         VStack(spacing: SpacingTokens.small) {
             LyalyaMascotView(state: mascotState, size: 100)
+                .offset(y: appeared ? 0 : -16)
+                .opacity(appeared ? 1 : 0)
                 .accessibilityLabel(mascotAccessibilityLabel)
 
             Text(display.overviewSummaryLabel)

@@ -122,22 +122,26 @@ struct RhythmView: View {
     // MARK: - Preview
 
     private var previewContent: some View {
-        VStack(spacing: SpacingTokens.large) {
-            Text(store.display.emoji)
-                .font(.system(size: 88))
-                .accessibilityHidden(true)
-            Text(store.display.targetWord)
-                .font(TypographyTokens.title(28))
-                .foregroundStyle(ColorTokens.Kid.ink)
-            Text(store.display.displayPattern)
-                .font(TypographyTokens.headline(20))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .tracking(2)
-                .accessibilityLabel(String(
-                    format: String(localized: "Ритмический рисунок: %@"),
-                    store.display.displayPattern
-                ))
-            beatsRow
+        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.large) {
+            VStack(spacing: SpacingTokens.medium) {
+                LyalyaMascotView(state: .explaining, size: 72)
+                    .accessibilityHidden(true)
+                Text(store.display.emoji)
+                    .font(.system(size: 72))
+                    .accessibilityHidden(true)
+                Text(store.display.targetWord)
+                    .font(TypographyTokens.title(28))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                Text(store.display.displayPattern)
+                    .font(TypographyTokens.headline(20))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .tracking(2)
+                    .accessibilityLabel(String(
+                        format: String(localized: "Ритмический рисунок: %@"),
+                        store.display.displayPattern
+                    ))
+                beatsRow
+            }
         }
     }
 
@@ -188,34 +192,41 @@ struct RhythmView: View {
     // MARK: - Feedback
 
     private var feedbackContent: some View {
-        VStack(spacing: SpacingTokens.large) {
-            Text(store.display.feedbackCorrect ? "🎉" : "💫")
-                .font(.system(size: 72))
-                .accessibilityHidden(true)
-            Text(store.display.feedbackText)
-                .font(TypographyTokens.headline())
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-            HStack(spacing: SpacingTokens.tiny) {
-                ForEach(0..<3, id: \.self) { i in
-                    Image(systemName: i < store.display.starsPreview ? "star.fill" : "star")
-                        .font(.system(size: 28))
-                        .foregroundStyle(
-                            i < store.display.starsPreview
-                                ? ColorTokens.Brand.primary
-                                : ColorTokens.Kid.inkSoft
-                        )
-                        .accessibilityHidden(true)
+        HSLiquidGlassCard(
+            style: store.display.feedbackCorrect
+                ? .tinted(ColorTokens.Feedback.correct)
+                : .primary,
+            padding: SpacingTokens.large
+        ) {
+            VStack(spacing: SpacingTokens.medium) {
+                Text(store.display.feedbackCorrect ? "🎉" : "💫")
+                    .font(.system(size: 64))
+                    .accessibilityHidden(true)
+                Text(store.display.feedbackText)
+                    .font(TypographyTokens.headline())
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                HStack(spacing: SpacingTokens.tiny) {
+                    ForEach(0..<3, id: \.self) { i in
+                        Image(systemName: i < store.display.starsPreview ? "star.fill" : "star")
+                            .font(.system(size: 28))
+                            .foregroundStyle(
+                                i < store.display.starsPreview
+                                    ? ColorTokens.Brand.primary
+                                    : ColorTokens.Kid.inkSoft
+                            )
+                            .accessibilityHidden(true)
+                    }
                 }
+                .accessibilityElement()
+                .accessibilityLabel(String(
+                    format: String(localized: "Заработано звёзд: %d из 3"),
+                    store.display.starsPreview
+                ))
+                beatsRow
             }
-            .accessibilityElement()
-            .accessibilityLabel(String(
-                format: String(localized: "Заработано звёзд: %d из 3"),
-                store.display.starsPreview
-            ))
-            beatsRow
         }
     }
 

@@ -64,7 +64,7 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
         let required = [
             "config.json",
             "AudioEncoder.mlmodelc",
-            "TextDecoder.mlmodelc",
+            "TextDecoder.mlmodelc"
         ]
         return required.allSatisfy { name in
             FileManager.default.fileExists(atPath: folder.appendingPathComponent(name).path)

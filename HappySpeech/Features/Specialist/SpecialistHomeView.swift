@@ -457,7 +457,7 @@ private struct SpecDashboardHeader: View {
     let summary: ReportSummary?
 
     var body: some View {
-        HSCard {
+        HSLiquidGlassCard(style: .elevated) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
                 HStack(spacing: SpacingTokens.sp4) {
                     ZStack {
@@ -569,7 +569,7 @@ private struct SpecSoundRow: View {
     }
 
     var body: some View {
-        HSCard {
+        HSLiquidGlassCard(style: .primary, padding: 0) {
             HStack(spacing: SpacingTokens.sp3) {
                 ZStack {
                     Circle()
