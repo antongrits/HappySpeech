@@ -151,7 +151,7 @@ final class ParentHomeInteractor: ParentHomeBusinessLogic {
     func deleteChild(_ request: ParentHomeModels.DeleteChild.Request) async {
         do {
             try await childRepository.delete(id: request.childId)
-            logger.info("ParentHome: deleted child \(request.childId, privacy: .public)")
+            logger.info("ParentHome: deleted child \(request.childId, privacy: .private)")
             // Reset active if deleted
             if activeChildId == request.childId { activeChildId = nil }
             await fetchData(.init(preferredChildId: activeChildId))

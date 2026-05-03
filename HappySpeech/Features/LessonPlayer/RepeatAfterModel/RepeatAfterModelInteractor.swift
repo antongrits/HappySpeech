@@ -82,8 +82,11 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
     /// Нужна для encouragement ("Уже лучше!") и будущего экспорта.
     private var attemptHistoryPerWord: [String: [Float]] = [:]
 
-    /// Pendng ML-score из PronunciationScorerService (хранится до получения ASR).
+    /// Pending ML-score из PronunciationScorerService (хранится до получения ASR).
     private var pendingMLScore: Float?
+
+    /// Фоновая задача LLM-feedback (Block H). Отменяется при advanceWord/cancel.
+    private var llmFeedbackTask: Task<Void, Never>?
 
     /// Активная подсказка для текущего слова (nil = не запрошена).
     private(set) var currentRepeatHintLevel: RepeatHintLevel = .none
@@ -289,8 +292,10 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
         presenter?.presentEvaluateAttempt(response)
 
         // Block H: обновляем feedback через LLM в фоне (Tier A/C, kid-safe).
+        // Сохраняем Task — отменяется в cancel() и advanceWord() при переходе к следующему слову.
         if let narrationService, !canAdvance {
-            Task { @MainActor [weak self] in
+            llmFeedbackTask?.cancel()
+            llmFeedbackTask = Task { @MainActor [weak self] in
                 guard let self else { return }
                 let scoreInt = Int(finalScore * 100)
                 let llmFeedback = await narrationService.generateAdaptiveFeedback(
@@ -361,6 +366,8 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
     // MARK: - advanceWord
 
     func advanceWord() {
+        llmFeedbackTask?.cancel()
+        llmFeedbackTask = nil
         let nextIndex = currentIndex + 1
         if nextIndex >= words.count {
             completeSession()
@@ -399,6 +406,8 @@ final class RepeatAfterModelInteractor: RepeatAfterModelBusinessLogic {
     // MARK: - cancel
 
     func cancel() {
+        llmFeedbackTask?.cancel()
+        llmFeedbackTask = nil
         isRecording = false
         pendingMLScore = nil
     }

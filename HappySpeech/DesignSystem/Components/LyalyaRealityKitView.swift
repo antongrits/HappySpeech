@@ -1,5 +1,4 @@
 import AVFoundation
-import Combine
 import OSLog
 import RealityKit
 import simd
@@ -150,6 +149,10 @@ public struct LyalyaRealityKitView: UIViewRepresentable {
     public func makeCoordinator() -> Coordinator {
         Coordinator()
     }
+
+    public static func dismantleUIView(_ uiView: ARView, coordinator: Coordinator) {
+        coordinator.cleanup()
+    }
 }
 
 // MARK: - Coordinator
@@ -160,6 +163,17 @@ extension LyalyaRealityKitView {
     /// named entity transform + material overrides (ADR-V13 compromise approach).
     @MainActor
     public final class Coordinator {
+
+        // MARK: - Cleanup
+
+        /// Вызывается из dismantleUIView — останавливает таймеры и отменяет Task.
+        /// Предотвращает retain cycle Timer → Coordinator → ARView.
+        func cleanup() {
+            blinkTimer?.invalidate()
+            blinkTimer = nil
+            idleAnimTask?.cancel()
+            idleAnimTask = nil
+        }
 
         // MARK: - Named entity references
 

@@ -24,8 +24,19 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
     private let missionSyncService: any DailyMissionSyncServiceProtocol
     private let logger = Logger(subsystem: "ru.happyspeech", category: "ChildHome")
 
-    /// Список ID скрытых ачивок (in-memory, на сессию).
-    private var dismissedAchievementIds: Set<String> = []
+    private static let dismissedAchievementsKey = "hs.childHome.dismissedAchievementIds"
+
+    /// Список ID скрытых ачивок — персистируется в UserDefaults.
+    /// Аналогично `readNotificationIds` в ParentHomeInteractor.
+    private var dismissedAchievementIds: Set<String> {
+        get {
+            let array = UserDefaults.standard.stringArray(forKey: Self.dismissedAchievementsKey) ?? []
+            return Set(array)
+        }
+        set {
+            UserDefaults.standard.set(Array(newValue), forKey: Self.dismissedAchievementsKey)
+        }
+    }
 
     /// Кэш последнего ID — для повторного presentFetch при `dismissAchievement`.
     private var lastChildId: String?
