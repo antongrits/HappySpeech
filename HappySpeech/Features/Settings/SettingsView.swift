@@ -227,8 +227,7 @@ struct SettingsView: View {
     private var settingsHeaderSection: some View {
         Section {
             HStack(spacing: SpacingTokens.regular) {
-                LyalyaRealityKitView(state: .idle, mood: 0.6)
-                    .frame(width: 72, height: 72)
+                LyalyaMascotView(state: .idle, size: 72)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: SpacingTokens.micro) {
                     Text(String(localized: "settings.header.greeting"))

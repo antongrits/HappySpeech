@@ -101,8 +101,7 @@ struct BingoView: View {
     }
 
     private var lyalyaHeader: some View {
-        LyalyaRealityKitView(state: display.isCalling ? .explaining : .idle, mood: 0.7)
-            .frame(width: 56, height: 56)
+        LyalyaMascotView(state: display.isCalling ? .explaining : .idle, size: 56)
             .frame(maxWidth: .infinity, alignment: .leading)
             .accessibilityHidden(true)
     }
@@ -198,8 +197,7 @@ struct BingoView: View {
             Color.black.opacity(0.55).ignoresSafeArea()
             HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.large) {
                 VStack(spacing: SpacingTokens.medium) {
-                    LyalyaRealityKitView(state: .celebrating, mood: 1.0)
-                        .frame(width: 80, height: 80)
+                    LyalyaMascotView(state: .celebrating, size: 80)
                         .accessibilityHidden(true)
                     Text("🎉")
                         .font(.system(size: 64))

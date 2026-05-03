@@ -152,8 +152,7 @@ struct MinimalPairsView: View {
     }
 
     private var lyalyaMascotHeader: some View {
-        LyalyaRealityKitView(state: display.isAnswered ? .happy : .idle, mood: 0.7)
-            .frame(width: 60, height: 60)
+        LyalyaMascotView(state: display.isAnswered ? .happy : .idle, size: 60)
             .frame(maxWidth: .infinity, alignment: .leading)
             .accessibilityHidden(true)
     }

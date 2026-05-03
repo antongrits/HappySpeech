@@ -2,14 +2,13 @@ import SwiftUI
 
 // MARK: - LyalyaHeroView
 
-/// Обёртка над LyalyaRealityKitView с надёжным fallback на LyalyaMascotView.
+/// Hero-представление маскота Ляли на основе 2D illustration.
 ///
-/// Решает проблему розового/непрозрачного прямоугольника:
-/// - Если lyalya3d_v2.usdz не найден в bundle — показывает LyalyaMascotView (2D Rive)
-/// - Если RealityKit недоступен (симулятор без Metal) — показывает LyalyaMascotView
-/// - Прозрачный фон гарантируется на обоих уровнях (.clear background)
+/// По умолчанию отображает `LyalyaMascotView` (2D, быстро, без тёмного фона).
+/// USDZ/RealityKit намеренно не используется — исключает тёмно-розовый артефакт
+/// прямоугольника на онбординге и других hero-экранах (KK v14 fix).
 ///
-/// Используется вместо LyalyaRealityKitView на онбординге и других hero-экранах.
+/// Используется на онбординге, SessionComplete, Rewards и других hero-экранах.
 ///
 /// ## Пример
 /// ```swift
@@ -42,42 +41,14 @@ public struct LyalyaHeroView: View {
         self.viseme = viseme
     }
 
-    // MARK: - State
-
-    @State private var usdzAvailable: Bool = false
-    @State private var checked: Bool = false
-
     // MARK: - Body
 
     public var body: some View {
-        ZStack {
-            Color.clear
-
-            if usdzAvailable {
-                LyalyaRealityKitView(
-                    state: state,
-                    mood: mood,
-                    mouthOpen: mouthOpen,
-                    viseme: viseme
-                )
-                .background(Color.clear)
-            } else {
-                LyalyaMascotView(
-                    state: state,
-                    size: size * 0.9
-                )
-            }
-        }
+        LyalyaMascotView(
+            state: state,
+            size: size * 0.9
+        )
         .frame(width: size, height: size)
-        .task {
-            guard !checked else { return }
-            checked = true
-            usdzAvailable = Bundle.main.url(
-                forResource: "lyalya3d_v2",
-                withExtension: "usdz",
-                subdirectory: "ARAssets"
-            ) != nil
-        }
     }
 }
 
