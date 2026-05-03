@@ -61,26 +61,9 @@ final class HSMascotViewSnapshotTests: XCTestCase {
     private func record<V: View>(view: V, name: String) throws {
         for (styleName, style) in appearances {
             let image = render(view, style: style)
-            let snapshotURL = referenceURL(name: name, appearance: styleName)
-
-            guard let pngData = image.pngData() else {
-                XCTFail("Не удалось закодировать PNG для '\(name)' (\(styleName))")
-                continue
-            }
-
-            if FileManager.default.fileExists(atPath: snapshotURL.path) {
-                // Сравниваем байтовый размер с допуском 1%
-                let existingData = try Data(contentsOf: snapshotURL)
-                let ratio = abs(Double(pngData.count) - Double(existingData.count)) / Double(existingData.count)
-                XCTAssertLessThan(
-                    ratio, 0.01,
-                    "Snapshot '\(name)' (\(styleName)) изменился: \(existingData.count) → \(pngData.count) байт"
-                )
-            } else {
-                // Первый запуск — записываем референс
-                try pngData.write(to: snapshotURL)
-                XCTFail("Записан новый референс: \(snapshotURL.lastPathComponent). Перезапусти тест.")
-            }
+            let url = referenceURL(name: name, appearance: styleName)
+            let label = "\(name)·\(styleName)"
+            try SnapshotTestHelper.assertPixelMatch(image, referenceURL: url, label: label)
         }
     }
 

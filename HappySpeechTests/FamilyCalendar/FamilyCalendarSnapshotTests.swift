@@ -132,9 +132,12 @@ final class FamilyCalendarSnapshotTests: XCTestCase {
                 ],
                 selectedChildId: nil,
                 currentMonth: Date(),
+                weekOffset: 0,
+                weekDays: [],
                 calendarDays: stubCalendarDays(),
                 heatmapEntries: stubHeatmapEntries(),
                 comparisonCards: [],
+                weekGoalCards: [],
                 insights: stubInsights(),
                 isLoading: false,
                 isLoadingInsights: false,
@@ -152,9 +155,12 @@ final class FamilyCalendarSnapshotTests: XCTestCase {
                 ],
                 selectedChildId: "c-1",
                 currentMonth: Date(),
+                weekOffset: 0,
+                weekDays: [],
                 calendarDays: stubCalendarDays(),
                 heatmapEntries: stubHeatmapEntries(),
                 comparisonCards: [],
+                weekGoalCards: [],
                 insights: stubInsights(),
                 isLoading: false,
                 isLoadingInsights: false,
@@ -172,6 +178,8 @@ final class FamilyCalendarSnapshotTests: XCTestCase {
                 ],
                 selectedChildId: nil,
                 currentMonth: Date(),
+                weekOffset: 0,
+                weekDays: [],
                 calendarDays: stubCalendarDays(),
                 heatmapEntries: stubHeatmapEntries(),
                 comparisonCards: [
@@ -186,6 +194,7 @@ final class FamilyCalendarSnapshotTests: XCTestCase {
                         comparisonDelta: -0.05, isLeader: false
                     )
                 ],
+                weekGoalCards: [],
                 insights: stubInsights(),
                 isLoading: false,
                 isLoadingInsights: false,
@@ -201,9 +210,12 @@ final class FamilyCalendarSnapshotTests: XCTestCase {
                 ],
                 selectedChildId: nil,
                 currentMonth: Date(),
+                weekOffset: 0,
+                weekDays: [],
                 calendarDays: [],
                 heatmapEntries: [],
                 comparisonCards: [],
+                weekGoalCards: [],
                 insights: [],
                 isLoading: false,
                 isLoadingInsights: false,
@@ -305,28 +317,8 @@ final class FamilyCalendarSnapshotTests: XCTestCase {
             device: device,
             appearance: appearanceName
         )
-
-        guard let pngData = image.pngData() else {
-            XCTFail("PNG encoding failed: \(screen) / \(device) / \(appearanceName)")
-            return
-        }
-
-        if FileManager.default.fileExists(atPath: url.path) {
-            let existing = try Data(contentsOf: url)
-            let ratio = abs(Double(pngData.count) - Double(existing.count)) /
-                        Double(max(existing.count, 1))
-            XCTAssertLessThan(
-                ratio, 0.55,
-                "Snapshot изменился (\(screen) · \(device) · \(appearanceName)): " +
-                "\(existing.count) → \(pngData.count) байт"
-            )
-        } else {
-            try pngData.write(to: url)
-            XCTFail(
-                "Записан новый референс '\(url.lastPathComponent)' для \(screen)/\(device)/\(appearanceName). " +
-                "Перезапусти тест для сравнения."
-            )
-        }
+        let label = "\(screen)·\(device)·\(appearanceName)"
+        try SnapshotTestHelper.assertPixelMatch(image, referenceURL: url, label: label)
     }
 }
 

@@ -271,28 +271,8 @@ final class ParentChildSnapshotTests: XCTestCase {
             device: device,
             appearance: appearanceName
         )
-
-        guard let pngData = image.pngData() else {
-            XCTFail("PNG encoding failed: \(screen)/\(device)/\(appearanceName)")
-            return
-        }
-
-        if FileManager.default.fileExists(atPath: url.path) {
-            let existing = try Data(contentsOf: url)
-            let ratio = abs(Double(pngData.count) - Double(existing.count)) /
-                        Double(max(existing.count, 1))
-            XCTAssertLessThan(
-                ratio, 0.55,
-                "Snapshot изменился (\(screen) · \(device) · \(appearanceName)): " +
-                "\(existing.count) → \(pngData.count) байт"
-            )
-        } else {
-            try pngData.write(to: url)
-            XCTFail(
-                "Записан новый референс '\(url.lastPathComponent)' для \(screen)/\(device)/\(appearanceName). " +
-                "Перезапусти тест для сравнения."
-            )
-        }
+        let label = "\(screen)·\(device)·\(appearanceName)"
+        try SnapshotTestHelper.assertPixelMatch(image, referenceURL: url, label: label)
     }
 }
 

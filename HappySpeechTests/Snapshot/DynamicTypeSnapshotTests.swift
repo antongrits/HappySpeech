@@ -213,26 +213,8 @@ final class DynamicTypeSnapshotTests: XCTestCase {
             for (appearanceName, style) in appearances {
                 let image = render(view, size: device.size, style: style, contentSize: dtCategory)
                 let url = snapshotURL(screen: screen, dtSize: dtName, appearance: appearanceName)
-
-                guard let pngData = image.pngData() else {
-                    XCTFail("PNG encoding failed: \(screen)/\(dtName)/\(appearanceName)")
-                    continue
-                }
-
-                if FileManager.default.fileExists(atPath: url.path) {
-                    let existing = try Data(contentsOf: url)
-                    let ratio = abs(Double(pngData.count) - Double(existing.count)) / Double(max(existing.count, 1))
-                    // Порог 30%: UIGraphicsImageRenderer нестабилен между прогонами
-                    XCTAssertLessThan(
-                        ratio, 0.30,
-                        "DT snapshot изменился (\(screen)·\(dtName)·\(appearanceName)): \(existing.count) → \(pngData.count) байт"
-                    )
-                } else {
-                    try pngData.write(to: url)
-                    XCTFail(
-                        "Записан новый DT референс '\(url.lastPathComponent)' для \(screen)/\(dtName). Перезапусти тест."
-                    )
-                }
+                let label = "\(screen)·\(dtName)·\(appearanceName)"
+                try SnapshotTestHelper.assertPixelMatch(image, referenceURL: url, label: label)
             }
         }
     }

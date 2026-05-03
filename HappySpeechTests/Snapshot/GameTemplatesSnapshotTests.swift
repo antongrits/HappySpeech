@@ -299,29 +299,8 @@ final class GameTemplatesSnapshotTests: XCTestCase {
             for (appearanceName, style) in appearances {
                 let image = render(view, size: device.size, style: style)
                 let url = snapshotURL(screen: screen, device: device.name, appearance: appearanceName)
-
-                guard let pngData = image.pngData() else {
-                    XCTFail("PNG encoding failed: \(screen) / \(device.name) / \(appearanceName)")
-                    continue
-                }
-
-                if FileManager.default.fileExists(atPath: url.path) {
-                    let existing = try Data(contentsOf: url)
-                    let ratio = abs(Double(pngData.count) - Double(existing.count)) / Double(max(existing.count, 1))
-                    // Порог 55%: SortingView/DemoView содержат нестабильный GPU-рендер
-                    // на симуляторе (UIGraphicsImageRenderer). Критические рег. (>55%) поймаем.
-                    XCTAssertLessThan(
-                        ratio, 0.55,
-                        "Snapshot изменился (\(screen) · \(device.name) · \(appearanceName)): " +
-                        "\(existing.count) → \(pngData.count) байт"
-                    )
-                } else {
-                    try pngData.write(to: url)
-                    XCTFail(
-                        "Записан новый референс '\(url.lastPathComponent)' для \(screen). " +
-                        "Перезапусти тест для сравнения."
-                    )
-                }
+                let label = "\(screen)·\(device.name)·\(appearanceName)"
+                try SnapshotTestHelper.assertPixelMatch(image, referenceURL: url, label: label)
             }
         }
     }

@@ -141,26 +141,8 @@ final class AccessibilityVariantsSnapshotTests: XCTestCase {
         for (appearanceName, style) in limitAppearances {
             let image = render(view, size: deviceSize, style: style, contentSize: dtCategory)
             let url = snapshotURL(screen: screen, device: deviceName, appearance: appearanceName)
-
-            guard let pngData = image.pngData() else {
-                XCTFail("PNG encoding failed: \(screen)/\(deviceName)/\(appearanceName)")
-                continue
-            }
-
-            if FileManager.default.fileExists(atPath: url.path) {
-                let existing = try Data(contentsOf: url)
-                let ratio = abs(Double(pngData.count) - Double(existing.count)) / Double(max(existing.count, 1))
-                // Порог 30%: UIGraphicsImageRenderer нестабилен между прогонами
-                XCTAssertLessThan(
-                    ratio, 0.30,
-                    "Snapshot изменился (\(screen)·\(deviceName)·\(appearanceName)): \(existing.count) → \(pngData.count) байт"
-                )
-            } else {
-                try pngData.write(to: url)
-                XCTFail(
-                    "Записан новый референс '\(url.lastPathComponent)' для \(screen). Перезапусти тест."
-                )
-            }
+            let label = "\(screen)·\(deviceName)·\(appearanceName)"
+            try SnapshotTestHelper.assertPixelMatch(image, referenceURL: url, label: label)
         }
     }
 }

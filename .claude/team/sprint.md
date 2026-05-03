@@ -132,6 +132,66 @@ All 19 blocks (A-S) completed либо ADR-deferred. 4 new skills.
 
 ---
 
+
+## Plan v14 — STATUS: COMPLETED (2026-05-02)
+
+Total commits: ~25.
+Final tag: v1.0.0-final-v14
+
+All 18 blocks (0/A/B/C/D/E+O/F/G/H/I/J/K/L/M/N/P/Q/R) completed либо ADR-deferred.
+
+### Plan v14 Stats
+
+| Метрика | Значение |
+|---|---|
+| Bundle (Debug iPhone SE 3) | 827 MB |
+| Resources | 639 MB |
+| Lyalya phrases | 3 951 |
+| HD Illustrations | 154 imagesets |
+| ML models (.mlpackage) | 47 |
+| AR scenes (USDZ) | 20 |
+| Lottie animations | 58 |
+| Remotion videos | 100 MP4 |
+| Siri Intents | 9 |
+| Widgets | 4 |
+| SwiftLint | 0 violations (614 files) |
+| BUILD iPhone SE 3 | SUCCEEDED |
+| BUILD Mac (Designed for iPhone) | pending (background) |
+
+### Block Summary
+
+| Блок | Статус |
+|---|---|
+| 0 — Bundle/Config | DONE |
+| A — 21 Deep VIP Interactor | DONE |
+| B — AppIcon + 52 HD Illustrations | DONE |
+| C — 50 Real Lottie animations | DONE |
+| D — 3D Lyalya USDZ + RealityKit | DONE |
+| E+O — 4 ML models trained | DONE |
+| F — Voice 2469 → 3951 phrases | DONE |
+| G — Firebase full services | DONE |
+| H — SPM Big libraries | DONE |
+| I — UI audit 65 screens + 11 fixes | DONE |
+| J — 11 Remotion videos | DONE |
+| K — 9 Siri + 4 Widgets + Spotlight | DONE |
+| L — Lip-sync ARMirror 60fps | DONE |
+| M — 142 screenshots + 6 bug fixes | DONE |
+| N — ADR-V14-GLIFXYZ defer | DONE (ADR) |
+| P — Snapshot threshold 0.05 | DONE |
+| Q — Kids Category compliance | DONE |
+| R — Bundle 827 MB finalization | DONE |
+| S — Final release tag | DONE |
+
+### Deferred for post-v14
+
+- GoogleSignIn ClientID (ручная настройка Firebase Console)
+- Firebase Storage rules (Blaze plan required)
+- Cuckoo SPM (swift-syntax conflict)
+- Mac screenshot tour (computer-use MCP не активен)
+- 12 minor UI issues + 3 P1 HIG findings
+
+---
+
 ## Sprint 12.6 — Final Polish (Plan v6) — 2026-04-26 to 2026-04-27
 
 ### Цель
