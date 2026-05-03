@@ -220,7 +220,7 @@ struct AchievementsView: View {
                         .fill(heroRarityColor(item.rarity).opacity(0.20))
                         .frame(width: 120, height: 120)
                     Image(systemName: item.iconName)
-                        .font(.system(size: 52, weight: .semibold))
+                        .font(TypographyTokens.kidDisplay(52))
                         .foregroundStyle(heroRarityColor(item.rarity))
                 }
                 .matchedGeometryEffect(

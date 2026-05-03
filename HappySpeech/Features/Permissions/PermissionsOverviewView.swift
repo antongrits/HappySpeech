@@ -145,7 +145,7 @@ struct PermissionsOverviewView: View {
                     Image(systemName: display.overviewAllGranted
                           ? "checkmark.shield.fill"
                           : "shield.fill")
-                        .font(.system(size: 28, weight: .medium))
+                        .font(TypographyTokens.title(28))
                         .foregroundStyle(display.overviewAllGranted
                             ? ColorTokens.Semantic.success
                             : ColorTokens.Brand.primary)
@@ -281,7 +281,7 @@ private struct PermissionOverviewCardView: View {
                 .fill(card.accentColor.opacity(card.state == .granted ? 0.15 : 0.12))
                 .frame(width: 48, height: 48)
             Image(systemName: card.icon)
-                .font(.system(size: 20, weight: .medium))
+                .font(TypographyTokens.headline(20))
                 .foregroundStyle(card.state == .granted
                     ? ColorTokens.Semantic.success
                     : card.accentColor)
@@ -336,7 +336,7 @@ private struct PermissionOverviewCardView: View {
         Button(action: onOpenSettings) {
             HStack(spacing: 4) {
                 Image(systemName: "gearshape.fill")
-                    .font(.system(size: 11))
+                    .font(TypographyTokens.caption(11))
                     .accessibilityHidden(true)
                 Text(String(localized: "permissions.openSettings"))
                     .font(TypographyTokens.caption(13).weight(.medium))
@@ -370,7 +370,7 @@ private struct PermissionOverviewCardView: View {
 
     private var statusIcon: some View {
         Image(systemName: statusIconName)
-            .font(.system(size: 18, weight: .medium))
+            .font(TypographyTokens.headline(18))
             .foregroundStyle(statusColor)
             .accessibilityHidden(true)
     }

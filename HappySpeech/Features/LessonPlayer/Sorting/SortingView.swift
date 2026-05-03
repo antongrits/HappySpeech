@@ -206,7 +206,7 @@ struct SortingView: View {
         if let word = currentWord {
             VStack(spacing: SpacingTokens.medium) {
                 Text(word.emoji)
-                    .font(.system(size: 120))
+                    .font(TypographyTokens.kidDisplay(120))
                     .accessibilityHidden(true)
                 Text(word.word)
                     .font(TypographyTokens.kidDisplay(40))
@@ -334,7 +334,7 @@ struct SortingView: View {
             let iconName = correct ? "checkmark.circle.fill" : "xmark.circle.fill"
             VStack(spacing: SpacingTokens.small) {
                 Image(systemName: iconName)
-                    .font(.system(size: 96, weight: .bold))
+                    .font(TypographyTokens.kidDisplay(96))
                     .foregroundStyle(color)
                 Text(display.feedbackText)
                     .font(TypographyTokens.title(24))

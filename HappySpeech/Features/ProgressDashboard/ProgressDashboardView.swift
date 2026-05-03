@@ -469,7 +469,7 @@ struct ProgressDashboardView: View {
             Spacer(minLength: SpacingTokens.xLarge)
 
             Text(verbatim: "📊")
-                .font(.system(size: 96)) // emoji key graphic — skip TypographyTokens
+                .font(TypographyTokens.kidDisplay(96)) // emoji key graphic — skip TypographyTokens
                 .accessibilityHidden(true)
 
             VStack(spacing: SpacingTokens.small) {

@@ -136,7 +136,7 @@ struct ArticulationImitationView: View {
         HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.large) {
             VStack(spacing: SpacingTokens.medium) {
                 Text(pose.emoji)
-                    .font(.system(size: 96))
+                    .font(TypographyTokens.kidDisplay(96))
                     .accessibilityHidden(true)
                 Text(pose.name)
                     .font(TypographyTokens.title(26))
@@ -195,7 +195,7 @@ struct ArticulationImitationView: View {
                         value: display.holdFraction
                     )
                 Text(display.currentPose?.emoji ?? "")
-                    .font(.system(size: 96))
+                    .font(TypographyTokens.kidDisplay(96))
                     .scaleEffect(reduceMotion ? 1.0 : (isPulsing ? 1.05 : 1.0))
                     .animation(
                         reduceMotion
@@ -294,12 +294,12 @@ struct ArticulationImitationView: View {
         VStack(spacing: SpacingTokens.medium) {
             if display.earnedStar {
                 Image(systemName: "star.fill")
-                    .font(.system(size: 120, weight: .bold))
+                    .font(TypographyTokens.kidDisplay(120))
                     .foregroundStyle(ColorTokens.Brand.gold)
                     .accessibilityHidden(true)
             } else {
                 Image(systemName: "heart.fill")
-                    .font(.system(size: 96, weight: .bold))
+                    .font(TypographyTokens.kidDisplay(96))
                     .foregroundStyle(ColorTokens.Brand.rose)
                     .accessibilityHidden(true)
             }

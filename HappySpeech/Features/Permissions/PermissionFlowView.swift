@@ -310,7 +310,7 @@ struct PermissionFlowView: View {
                 )
 
             Image(systemName: step.icon)
-                .font(.system(size: 50, weight: .light))
+                .font(TypographyTokens.kidDisplay(50))
                 .foregroundStyle(step.accentColor)
                 .accessibilityHidden(true)
         }
