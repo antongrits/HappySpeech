@@ -22191,6 +22191,28 @@
         }
       }
     },
+    "fluency_diary.empty.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запустите упражнение «Считаем спотыкания», чтобы начать отслеживать плавность речи"
+          }
+        }
+      }
+    },
+    "fluency_diary.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Записей ещё нет"
+          }
+        }
+      }
+    },
     "stuttering.feedback.complete": {
       "extractionState": "manual",
       "localizations": {

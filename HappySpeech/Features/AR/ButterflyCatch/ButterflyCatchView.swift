@@ -26,6 +26,7 @@ struct ButterflyCatchView: View {
                     Image(systemName: "sparkles")
                         .font(.system(size: 40))
                         .foregroundStyle(ColorTokens.Brand.lilac)
+                        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                         .position(
                             x: proxy.size.width * butterfly.position.x,
                             y: proxy.size.height * butterfly.position.y

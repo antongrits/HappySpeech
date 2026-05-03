@@ -324,6 +324,7 @@ private struct OnboardingWelcomeStep: View {
             Spacer()
             LyalyaRealityKitView(state: .waving, mood: 0.7)
                 .frame(width: 180, height: 180)
+                .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
                 .scaleEffect(appeared ? 1 : 0.6)
                 .opacity(appeared ? 1 : 0)
                 .accessibilityHidden(true)
@@ -1114,6 +1115,7 @@ private struct OnboardingCompletionStep: View {
 
                 LyalyaRealityKitView(state: .celebrating, mood: 1.0)
                     .frame(width: 150, height: 150)
+                    .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                     .accessibilityHidden(true)
 
                 Text(profile.childAvatar)

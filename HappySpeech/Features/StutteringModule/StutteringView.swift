@@ -129,7 +129,8 @@ struct StutteringView: View {
                 educationalSection
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.vertical, SpacingTokens.sp5)
+            .padding(.top, SpacingTokens.sp2)
+            .padding(.bottom, SpacingTokens.sp5)
         }
     }
 

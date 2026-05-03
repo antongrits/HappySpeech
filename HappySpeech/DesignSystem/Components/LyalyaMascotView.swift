@@ -136,6 +136,7 @@ public struct LyalyaMascotView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(LyalyaCustomizationStorage.self) private var customization: LyalyaCustomizationStorage?
     @Environment(\.mascotLipSyncState) private var lipSyncState
+    @Environment(\.hapticService) private var hapticService
 
     // MARK: - Animation state
 
@@ -229,7 +230,7 @@ public struct LyalyaMascotView: View {
         .accessibilityAddTraits(onTap != nil ? .isButton : [])
     }
 
-    // MARK: - Haptic feedback (v12)
+    // MARK: - Haptic feedback (v12 → T: HIG P1-1 — через HapticService)
     // Мягкая тактильная обратная связь при переходе между состояниями.
     // Kids-friendly: лёгкая при обычных переходах, средняя при celebrating.
     // Reduced Motion: не вызывается (проверка в onChange).
@@ -237,11 +238,11 @@ public struct LyalyaMascotView: View {
     private func playHapticFeedback(for newState: LyalyaState) {
         switch newState {
         case .celebrating:
-            UINotificationFeedbackGenerator().notificationOccurred(.success)
+            hapticService.notification(.success)
         case .encouraging:
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            hapticService.impact(.light)
         case .waving, .happy:
-            UIImpactFeedbackGenerator(style: .light).impactOccurred(intensity: 0.6)
+            hapticService.impact(.light)
         case .idle, .thinking, .sad, .pointing, .explaining, .singing:
             break
         }
