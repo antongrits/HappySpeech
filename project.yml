@@ -89,10 +89,18 @@ targets:
           - Info.plist
           - "*.entitlements"
           - PrivacyInfo.xcprivacy
+          - Models/Whisper/whisper-base/**
+          - Models/Whisper/whisper-small/**
         type: group
         buildPhase: resources
       - path: HappySpeech/Resources/PrivacyInfo.xcprivacy
         type: file
+        buildPhase: resources
+      - path: HappySpeech/Resources/Models/Whisper/whisper-base
+        type: folder
+        buildPhase: resources
+      - path: HappySpeech/Resources/Models/Whisper/whisper-small
+        type: folder
         buildPhase: resources
       - path: HappySpeech/Content/Seed/seasonal
         type: folder

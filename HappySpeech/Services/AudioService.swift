@@ -17,12 +17,37 @@ public protocol AudioService: Sendable {
     func amplitudeBuffer() -> [Float]
 }
 
+// MARK: - ASRTier
+
+/// Уровни качества ASR — определены здесь (Services-слой) для использования
+/// в протоколе и реализации.
+/// Tier A — быстрый on-demand (whisper-tiny).
+/// Tier B — качественный bundled (whisper-base).
+/// Tier C — максимальный bundled (whisper-small), только для специалиста.
+public enum ASRTier: String, Sendable, CaseIterable {
+    /// Tier A: whisper-tiny — быстрый, загружается on-demand (~150 MB).
+    case kidOnDevice
+    /// Tier B: whisper-base bundled в bundle приложения (~140 MB).
+    case parentQuality
+    /// Tier C: whisper-small bundled в bundle приложения (~460 MB).
+    case specialistQuality
+
+    public var displayName: String {
+        switch self {
+        case .kidOnDevice:       return "Быстрый (ребёнок)"
+        case .parentQuality:     return "Качественный (родитель)"
+        case .specialistQuality: return "Максимальный (специалист)"
+        }
+    }
+}
+
 // MARK: - ASRService Protocol
 
 public protocol ASRService: Sendable {
     var isReady: Bool { get }
     func transcribe(url: URL) async throws -> ASRResult
     func loadModel() async throws
+    func loadModel(tier: ASRTier) async throws
 }
 
 public struct ASRResult: Sendable {
