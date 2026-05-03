@@ -1046,7 +1046,7 @@ private struct ARGameBadgeOverlay: View {
     private func badgeView(icon: String, color: Color, labelKey: String) -> some View {
         HStack(spacing: 3) {
             Image(systemName: icon)
-                .font(.system(size: 9, weight: .bold))
+                .font(TypographyTokens.caption(9))
                 .accessibilityHidden(true)
             Text(String(localized: String.LocalizationValue(labelKey)))
                 .font(TypographyTokens.body(9).weight(.bold))

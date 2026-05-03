@@ -227,7 +227,7 @@ struct FamilyVoiceSplitView: View {
     private func transcriptRow(vm: FamilyVoiceViewModel?) -> some View {
         HStack(spacing: SpacingTokens.sp3) {
             Image(systemName: "text.bubble")
-                .font(.system(size: 16))
+                .font(TypographyTokens.body(16))
                 .foregroundStyle(ColorTokens.Parent.inkMuted)
                 .accessibilityHidden(true)
 

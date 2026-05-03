@@ -111,7 +111,7 @@ struct BingoView: View {
     private var calledWordBanner: some View {
         HStack(spacing: SpacingTokens.small) {
             Image(systemName: "speaker.wave.2.fill")
-                .font(.system(size: 22, weight: .semibold))
+                .font(TypographyTokens.headline(22))
                 .foregroundStyle(ColorTokens.Brand.primary)
                 .scaleEffect(display.isCalling && !reduceMotion ? 1.12 : 1.0)
                 .animation(
@@ -139,7 +139,7 @@ struct BingoView: View {
                 interactor?.callNextWord()
             } label: {
                 Image(systemName: "forward.end.fill")
-                    .font(.system(size: 20, weight: .semibold))
+                    .font(TypographyTokens.headline(20))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .padding(.horizontal, SpacingTokens.small)
                     .padding(.vertical, SpacingTokens.tiny)
@@ -268,7 +268,7 @@ struct BingoView: View {
         HStack(spacing: SpacingTokens.small) {
             ForEach(0..<3, id: \.self) { idx in
                 Image(systemName: idx < display.starsEarned ? "star.fill" : "star")
-                    .font(.system(size: 44, weight: .semibold))
+                    .font(TypographyTokens.kidDisplay(44))
                     .foregroundStyle(
                         idx < display.starsEarned
                             ? ColorTokens.Brand.butter
@@ -356,7 +356,7 @@ private struct BingoCellView: View {
                 if cell.isMarked {
                     VStack(spacing: 2) {
                         Image(systemName: "checkmark")
-                            .font(.system(size: 14, weight: .heavy))
+                            .font(TypographyTokens.caption(14))
                             .foregroundStyle(.white)
                             .accessibilityHidden(true)
                         Text(cell.word)

@@ -705,7 +705,7 @@ struct SettingsView: View {
                             .foregroundStyle(ColorTokens.Semantic.success)
                     } else {
                         Image(systemName: "chevron.right")
-                            .font(.system(size: 13, weight: .semibold))
+                            .font(TypographyTokens.caption(13))
                             .foregroundStyle(ColorTokens.Parent.inkSoft)
                     }
                 }

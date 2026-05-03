@@ -262,7 +262,7 @@ struct ObjectHuntView: View {
         HStack(spacing: SpacingTokens.small) {
             ForEach(0..<3, id: \.self) { index in
                 Image(systemName: index < display.starsEarned ? "star.fill" : "star")
-                    .font(.system(size: 40, weight: .semibold))
+                    .font(TypographyTokens.kidDisplay(40))
                     .foregroundStyle(
                         index < display.starsEarned ? ColorTokens.Brand.gold : ColorTokens.Kid.line
                     )
@@ -360,7 +360,7 @@ private struct SceneItemCell: View {
         }) {
             VStack(spacing: SpacingTokens.tiny) {
                 Image(systemName: item.icon)
-                    .font(.system(size: 32, weight: .medium))
+                    .font(TypographyTokens.kidDisplay(32))
                     .foregroundStyle(iconColor)
                     .frame(width: 44, height: 44)
 

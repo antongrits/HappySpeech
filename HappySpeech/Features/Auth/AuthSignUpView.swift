@@ -247,7 +247,7 @@ struct AuthInputField: View {
     var body: some View {
         HStack(spacing: SpacingTokens.sp3) {
             Image(systemName: icon)
-                .font(.system(size: 16))
+                .font(TypographyTokens.body(16))
                 .foregroundStyle(ColorTokens.Kid.inkSoft)
                 .frame(width: 24)
 

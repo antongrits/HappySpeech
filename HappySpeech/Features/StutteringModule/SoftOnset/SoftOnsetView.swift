@@ -83,7 +83,7 @@ struct SoftOnsetView: View {
                     )
 
                 Image(systemName: "lamp.table.fill")
-                    .font(.system(size: 48))
+                    .font(TypographyTokens.kidDisplay(48))
                     .foregroundStyle(lanternIconColor)
                     .animation(MotionTokens.spring, value: interactor.display.lanternState)
             }
@@ -158,7 +158,7 @@ struct SoftOnsetView: View {
     private var listenButton: some View {
         Button(action: {}) {
             Image(systemName: "speaker.wave.2.fill")
-                .font(.system(size: 22, weight: .semibold))
+                .font(TypographyTokens.headline(22))
                 .foregroundStyle(.white)
                 .frame(width: 56, height: 56)
                 .background(
@@ -177,7 +177,7 @@ struct SoftOnsetView: View {
             }
         }) {
             Image(systemName: interactor.display.isRecording ? "stop.fill" : "mic.fill")
-                .font(.system(size: 28, weight: .semibold))
+                .font(TypographyTokens.title(28))
                 .foregroundStyle(.white)
                 .frame(width: 80, height: 80)
                 .background(

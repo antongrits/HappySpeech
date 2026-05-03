@@ -209,7 +209,7 @@ private struct DiarySessionRow: View {
         HSCard(style: .flat, padding: SpacingTokens.sp3) {
             HStack(spacing: SpacingTokens.sp3) {
                 Image(systemName: session.statusSymbol)
-                    .font(.system(size: 20))
+                    .font(TypographyTokens.headline(20))
                     .foregroundStyle(
                         session.isNormal
                             ? ColorTokens.Semantic.success

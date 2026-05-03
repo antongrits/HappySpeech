@@ -519,7 +519,7 @@ private struct HomeTaskCard: View {
                     .frame(width: 28, height: 28)
                 if row.isCompleted {
                     Image(systemName: "checkmark")
-                        .font(.system(size: 14, weight: .heavy))
+                        .font(TypographyTokens.caption(14))
                         .foregroundStyle(.white)
                 }
             }
@@ -569,7 +569,7 @@ private struct HomeTaskCard: View {
         if let due = row.dueDateText {
             HStack(spacing: SpacingTokens.micro) {
                 Image(systemName: row.isOverdue ? "exclamationmark.circle.fill" : "calendar")
-                    .font(.system(size: 12, weight: .medium))
+                    .font(TypographyTokens.caption(12))
                     .foregroundStyle(row.isOverdue
                                      ? ColorTokens.Semantic.error
                                      : ColorTokens.Parent.inkSoft)

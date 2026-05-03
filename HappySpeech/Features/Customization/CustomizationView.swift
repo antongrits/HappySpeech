@@ -511,7 +511,7 @@ private struct CustomizationTabButton: View {
         Button(action: action) {
             VStack(spacing: SpacingTokens.sp1) {
                 Image(systemName: tab.iconName)
-                    .font(.system(size: 18, weight: .medium))
+                    .font(TypographyTokens.headline(18))
                 Text(tab.localizedName)
                     .font(TypographyTokens.caption(11))
                     .lineLimit(1)
@@ -562,13 +562,13 @@ private struct OutfitCard: View {
 
                     if case .locked = item.unlockStatus {
                         Image(systemName: "lock.fill")
-                            .font(.system(size: 16, weight: .bold))
+                            .font(TypographyTokens.body(16))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
                             .background(Circle().fill(ColorTokens.Kid.surface).padding(-4))
                             .padding(SpacingTokens.sp1)
                     } else if item.isSelected {
                         Image(systemName: "checkmark.circle.fill")
-                            .font(.system(size: 20, weight: .bold))
+                            .font(TypographyTokens.headline(20))
                             .foregroundStyle(ColorTokens.Brand.primary)
                             .background(Circle().fill(Color.white).padding(-2))
                             .padding(SpacingTokens.sp1)
@@ -584,7 +584,7 @@ private struct OutfitCard: View {
                 if item.starCost > 0 {
                     HStack(spacing: 2) {
                         Image(systemName: "star.fill")
-                            .font(.system(size: 9))
+                            .font(TypographyTokens.caption(9))
                             .foregroundStyle(ColorTokens.Brand.gold)
                         Text("\(item.starCost)")
                             .font(TypographyTokens.caption(10))
@@ -630,7 +630,7 @@ private struct OutfitCard: View {
             ZStack {
                 outfitPlaceholderGradient
                 Image(systemName: "tshirt")
-                    .font(.system(size: 28, weight: .light))
+                    .font(TypographyTokens.title(28))
                     .foregroundStyle(.white.opacity(0.85))
             }
         }
@@ -745,7 +745,7 @@ private struct AccessoryToggleButton: View {
                         .frame(width: 52, height: 52)
 
                     Image(systemName: item.iconName)
-                        .font(.system(size: 22, weight: .medium))
+                        .font(TypographyTokens.headline(22))
                         .foregroundStyle(
                             isLocked
                                 ? ColorTokens.Kid.inkMuted
@@ -754,7 +754,7 @@ private struct AccessoryToggleButton: View {
 
                     if isLocked {
                         Image(systemName: "lock.fill")
-                            .font(.system(size: 10, weight: .bold))
+                            .font(TypographyTokens.caption(10))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
                             .offset(x: 16, y: 16)
                     }
@@ -841,7 +841,7 @@ private struct SkinCard: View {
 
                 if isSelected {
                     Image(systemName: "checkmark.circle.fill")
-                        .font(.system(size: 22, weight: .bold))
+                        .font(TypographyTokens.headline(22))
                         .foregroundStyle(ColorTokens.Brand.primary)
                         .background(Circle().fill(Color.white).padding(-2))
                         .padding(SpacingTokens.sp1)

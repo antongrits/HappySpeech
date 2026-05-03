@@ -40,7 +40,7 @@ struct SplashView: View {
                         .tracking(-1)
 
                     Text(String(localized: "Говорим волшебно"))
-                        .font(.system(size: 13, weight: .medium))
+                        .font(TypographyTokens.caption(13))
                         .foregroundStyle(.white.opacity(0.85))
                         .tracking(2.5)
                         .textCase(.uppercase)

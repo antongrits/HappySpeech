@@ -175,7 +175,7 @@ struct DemoOverviewSheet: View {
                             Spacer()
 
                             Text(step.screenEmoji)
-                                .font(.system(size: 22))
+                                .font(TypographyTokens.headline(22))
                                 .accessibilityHidden(true)
                         }
                         .padding(.vertical, SpacingTokens.tiny)

@@ -263,7 +263,7 @@ struct LetterTracingView: View {
         }
         if hint.showDirectionArrow {
             Image(systemName: "arrow.down.right.circle.fill")
-                .font(.system(size: 36))
+                .font(TypographyTokens.display(36))
                 .foregroundStyle(ColorTokens.Brand.sky.opacity(0.85))
                 .position(x: size.width * 0.3, y: size.height * 0.3)
                 .accessibilityHidden(true)

@@ -111,7 +111,7 @@ private struct RoleCard: View {
                             .frame(width: 56, height: 56)
 
                         Image(systemName: icon)
-                            .font(.system(size: 24))
+                            .font(TypographyTokens.title(24))
                             .foregroundStyle(accentColor)
                     }
 
@@ -131,7 +131,7 @@ private struct RoleCard: View {
                     Spacer()
 
                     Image(systemName: "chevron.right")
-                        .font(.system(size: 14, weight: .semibold))
+                        .font(TypographyTokens.caption(14))
                         .foregroundStyle(ColorTokens.Kid.inkSoft)
                 }
             }

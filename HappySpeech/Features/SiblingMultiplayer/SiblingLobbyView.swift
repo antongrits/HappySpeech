@@ -85,7 +85,7 @@ struct SiblingLobbyView: View {
 
             HStack(spacing: 4) {
                 Image(systemName: badgeSymbol)
-                    .font(.system(size: 12))
+                    .font(TypographyTokens.caption(12))
                 Text(badgeText)
                     .font(TypographyTokens.caption(12))
             }

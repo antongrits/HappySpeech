@@ -330,7 +330,7 @@ private struct SharePlaySessionBannerView: View {
             // Иконка SharePlay
             Image(systemName: "shareplay")
                 .foregroundStyle(.white)
-                .font(.system(size: 16, weight: .semibold))
+                .font(TypographyTokens.body(16))
                 .accessibilityHidden(true)
 
             Text(participantCountLabel)

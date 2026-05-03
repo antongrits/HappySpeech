@@ -101,7 +101,7 @@ struct SoundHunterView: View {
                 LyalyaMascotView(state: .explaining, size: 48)
                     .accessibilityHidden(true)
                 Image(systemName: "magnifyingglass")
-                    .font(.system(size: 18, weight: .semibold))
+                    .font(TypographyTokens.headline(18))
                     .accessibilityHidden(true)
                 Text(display.hintText)
                     .font(TypographyTokens.headline(16))
@@ -155,7 +155,7 @@ struct SoundHunterView: View {
         VStack(spacing: SpacingTokens.medium) {
             Spacer(minLength: 0)
             Image(systemName: "checkmark.seal.fill")
-                .font(.system(size: 72, weight: .bold))
+                .font(.system(size: 72))
                 .foregroundStyle(ColorTokens.Brand.mint)
                 .accessibilityHidden(true)
             Text(String(localized: "Отлично! Ты нашёл все слова."))
@@ -216,7 +216,7 @@ struct SoundHunterView: View {
         HStack(spacing: SpacingTokens.small) {
             ForEach(0..<3, id: \.self) { index in
                 Image(systemName: index < display.starsEarned ? "star.fill" : "star")
-                    .font(.system(size: 44, weight: .semibold))
+                    .font(TypographyTokens.kidDisplay(44))
                     .foregroundStyle(
                         index < display.starsEarned
                             ? ColorTokens.Brand.gold
@@ -311,7 +311,7 @@ private struct HuntItemTile: View {
 
     private var iconView: some View {
         Image(systemName: item.icon)
-            .font(.system(size: 36, weight: .medium))
+            .font(TypographyTokens.display(36))
             .foregroundStyle(foregroundColor)
             .frame(height: 40)
             .accessibilityHidden(true)
@@ -331,17 +331,17 @@ private struct HuntItemTile: View {
         switch item.tapState {
         case .correct:
             Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: 18, weight: .bold))
+                .font(TypographyTokens.headline(18))
                 .foregroundStyle(ColorTokens.Feedback.correct)
                 .padding(SpacingTokens.tiny)
         case .wrong:
             Image(systemName: "xmark.circle.fill")
-                .font(.system(size: 18, weight: .bold))
+                .font(TypographyTokens.headline(18))
                 .foregroundStyle(ColorTokens.Feedback.incorrect)
                 .padding(SpacingTokens.tiny)
         case .revealed:
             Image(systemName: "star.fill")
-                .font(.system(size: 16, weight: .bold))
+                .font(TypographyTokens.body(16))
                 .foregroundStyle(ColorTokens.Brand.gold)
                 .padding(SpacingTokens.tiny)
         case .idle:
