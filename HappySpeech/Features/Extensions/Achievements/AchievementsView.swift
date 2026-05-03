@@ -269,7 +269,7 @@ struct AchievementsView: View {
             .padding(SpacingTokens.screenEdge)
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card * 2, style: .continuous)
-                    .fill(Color(.systemBackground))
+                    .fill(ColorTokens.Kid.surface)
                     .shadow(color: .black.opacity(0.18), radius: 24, x: 0, y: 8)
             )
             .padding(.horizontal, SpacingTokens.sp4)
@@ -414,7 +414,7 @@ struct AchievementsView: View {
         .padding(.vertical, SpacingTokens.sp3)
         .background(
             Capsule()
-                .fill(Color(.systemBackground))
+                .fill(ColorTokens.Kid.surface)
                 .shadow(color: .black.opacity(0.15), radius: 12, x: 0, y: 4)
         )
         .accessibilityAnnouncement(toast.message)

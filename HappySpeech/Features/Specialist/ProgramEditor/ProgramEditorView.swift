@@ -77,7 +77,7 @@ struct ProgramEditorView: View {
             if !isValid {
                 Text(String(localized: "program.editor.invalid"))
                     .font(TypographyTokens.caption(12))
-                    .foregroundStyle(.red)
+                    .foregroundStyle(ColorTokens.Semantic.error)
             }
         }
         .padding(SpacingTokens.medium)
