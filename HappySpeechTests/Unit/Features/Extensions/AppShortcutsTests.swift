@@ -79,7 +79,7 @@ final class AppShortcutsTests: XCTestCase {
 
         XCTAssertEqual(mock.handledActions.count, 1)
         if case .startBreathing = mock.handledActions.first {
-            // Верное действие
+            // Верное действие — duration не проверяем
         } else {
             XCTFail("Ожидали .startBreathing, получили \(String(describing: mock.handledActions.first))")
         }
@@ -103,14 +103,14 @@ final class AppShortcutsTests: XCTestCase {
             return
         }
 
-        if case .openLesson(let soundId) = mock.handledActions[0] {
+        if case .openLesson(let soundId, _) = mock.handledActions[0] {
             XCTAssertEqual(soundId, "Р")
         } else {
             XCTFail("Первое действие должно быть .openLesson")
         }
 
         if case .showProgress = mock.handledActions[1] {
-            // Верно
+            // Верно — childName не проверяем
         } else {
             XCTFail("Второе действие должно быть .showProgress")
         }
@@ -175,9 +175,9 @@ final class IsolatedDeepLinkRouter {
         pendingActions.removeAll()
     }
 
-    func handleOpenLesson(soundId: String) { dispatch(.openLesson(soundId: soundId)) }
-    func handleShowProgress() { dispatch(.showProgress) }
-    func handleStartBreathing() { dispatch(.startBreathing) }
+    func handleOpenLesson(soundId: String) { dispatch(.openLesson(soundId: soundId, difficulty: "medium")) }
+    func handleShowProgress() { dispatch(.showProgress(childName: nil)) }
+    func handleStartBreathing() { dispatch(.startBreathing(duration: 60)) }
     func handlePlayWithLyalya() { dispatch(.playWithLyalya) }
     func handleShowTodaysMission() { dispatch(.showTodaysMission) }
 

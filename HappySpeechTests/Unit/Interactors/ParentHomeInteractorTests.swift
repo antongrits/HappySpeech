@@ -32,6 +32,11 @@ final class ParentHomeInteractorTests: XCTestCase {
         func presentEmpty() {
             emptyCalled = true
         }
+        func presentWeeklyInsight(_ response: ParentHomeModels.WeeklyInsightResponse) {}
+        func presentError(_ message: String) {}
+        func presentAddChild() {}
+        func presentExportSpecialist(childId: String) {}
+        func presentStartLesson(childId: String) {}
     }
 
     private func makeSUT(
@@ -116,7 +121,7 @@ final class ParentHomeInteractorTests: XCTestCase {
                                       targetSounds: ["Р"], parentId: "p1")
         let (sut, spy) = makeSUT(children: [child1, child2])
         await sut.fetchData(.init(preferredChildId: "c1"))
-        await sut.switchChild(to: "c2")
+        await sut.switchChild(.init(childId: "c2"))
         XCTAssertEqual(spy.lastFetch?.childId, "c2")
     }
 

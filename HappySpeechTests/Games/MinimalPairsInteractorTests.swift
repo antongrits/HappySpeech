@@ -31,6 +31,9 @@ private final class SpyMinimalPairsPresenter: MinimalPairsPresentationLogic {
         completeCalled = true
         lastComplete = response
     }
+    func presentReplayWord(_ response: MinimalPairsModels.ReplayWord.Response) {}
+    func presentHint(_ response: MinimalPairsModels.RequestHint.Response) {}
+    func presentBonusRoundAdded(_ response: MinimalPairsModels.BonusRoundAdded.Response) {}
 }
 
 // MARK: - Tests
@@ -49,7 +52,7 @@ final class MinimalPairsInteractorTests: XCTestCase {
 
     func test_loadSession_loads10Rounds() async {
         let (sut, spy) = makeSUT()
-        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша"))
+        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childAge: 8))
         XCTAssertTrue(spy.loadSessionCalled)
         XCTAssertEqual(spy.lastLoadSession?.rounds.count, 10)
     }
@@ -58,7 +61,7 @@ final class MinimalPairsInteractorTests: XCTestCase {
 
     func test_startRound_zero_roundNumber1() async {
         let (sut, spy) = makeSUT()
-        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша"))
+        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childAge: 8))
         await sut.startRound(.init(roundIndex: 0))
         XCTAssertTrue(spy.startRoundCalled)
         XCTAssertEqual(spy.lastStartRound?.roundNumber, 1)
@@ -69,7 +72,7 @@ final class MinimalPairsInteractorTests: XCTestCase {
 
     func test_selectOption_correct() async {
         let (sut, spy) = makeSUT()
-        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша"))
+        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childAge: 8))
         await sut.startRound(.init(roundIndex: 0))
         await sut.selectOption(.init(selectedIsTarget: true))
         XCTAssertTrue(spy.selectOptionCalled)
@@ -80,7 +83,7 @@ final class MinimalPairsInteractorTests: XCTestCase {
 
     func test_selectOption_wrong() async {
         let (sut, spy) = makeSUT()
-        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша"))
+        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childAge: 8))
         await sut.startRound(.init(roundIndex: 0))
         await sut.selectOption(.init(selectedIsTarget: false))
         XCTAssertEqual(spy.lastSelectOption?.correct, false)
@@ -90,7 +93,7 @@ final class MinimalPairsInteractorTests: XCTestCase {
 
     func test_selectOption_transmitsCorrectAnswer() async {
         let (sut, spy) = makeSUT()
-        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша"))
+        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childAge: 8))
         await sut.startRound(.init(roundIndex: 0))
         let targetWord = spy.lastStartRound?.pair.targetWord ?? ""
         await sut.selectOption(.init(selectedIsTarget: true))
@@ -101,7 +104,7 @@ final class MinimalPairsInteractorTests: XCTestCase {
 
     func test_completeSession_noAnswers_correctCountZero() async {
         let (sut, spy) = makeSUT()
-        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша"))
+        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childAge: 8))
         await sut.completeSession(.init())
         XCTAssertTrue(spy.completeCalled)
         XCTAssertEqual(spy.lastComplete?.correctCount, 0)
@@ -112,7 +115,7 @@ final class MinimalPairsInteractorTests: XCTestCase {
 
     func test_startRound_outOfBounds_ignored() async {
         let (sut, spy) = makeSUT()
-        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша"))
+        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childAge: 8))
         await sut.startRound(.init(roundIndex: 99))
         XCTAssertFalse(spy.startRoundCalled)
     }

@@ -46,6 +46,7 @@ final class SettingsPresenterTests: XCTestCase {
         func displayToggleKidDailyReminder(_ viewModel: SettingsModels.ToggleKidDailyReminder.ViewModel) {}
         func displayToggleWeeklyParentSummary(_ viewModel: SettingsModels.ToggleWeeklyParentSummary.ViewModel) {}
         func displayUpdateHaptics(_ viewModel: SettingsModels.UpdateHaptics.ViewModel) {}
+        func displayTogglePerformanceMonitoring(_ viewModel: SettingsModels.TogglePerformanceMonitoring.ViewModel) {}
     }
 
     private func makeSUT() -> (SettingsPresenter, DisplaySpy) {

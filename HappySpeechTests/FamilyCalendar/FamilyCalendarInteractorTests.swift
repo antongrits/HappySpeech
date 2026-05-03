@@ -55,6 +55,9 @@ final class FamilyCalendarInteractorTests: XCTestCase {
         func displayClearToast() {
             displayClearToastCalled = true
         }
+        func displayLessonScheduled(voiceHint: String) {}
+        func displayWeekSummary(viewModel: WeekSummaryViewModel) {}
+        func displayToast(message: String) {}
     }
 
     // MARK: - Factory

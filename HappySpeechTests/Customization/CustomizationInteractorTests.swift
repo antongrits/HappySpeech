@@ -47,6 +47,7 @@ final class CustomizationInteractorTests: XCTestCase {
             displayVoicePreviewStateCalled = true
             lastPlayingVoice = playingVoice
         }
+        func displayLockedItemAttempt(viewModel: CustomizationViewModel) {}
     }
 
     // MARK: - Stub AuthService

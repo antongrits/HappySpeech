@@ -81,6 +81,7 @@ final class SettingsInteractorTests: XCTestCase {
         func presentToggleKidDailyReminder(_ response: SettingsModels.ToggleKidDailyReminder.Response) {}
         func presentToggleWeeklyParentSummary(_ response: SettingsModels.ToggleWeeklyParentSummary.Response) {}
         func presentUpdateHaptics(_ response: SettingsModels.UpdateHaptics.Response) {}
+        func presentTogglePerformanceMonitoring(_ response: SettingsModels.TogglePerformanceMonitoring.Response) {}
     }
 
     private func makeSUT() -> (SettingsInteractor, SpyPresenter) {

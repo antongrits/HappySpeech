@@ -51,6 +51,8 @@ final class PermissionsInteractorTests: XCTestCase {
         func presentLoading(_ isLoading: Bool) {
             loadingCalled = true
         }
+        func presentLyalyaPrompt(_ response: PermissionsModels.LyalyaPrompt.Response) {}
+        func presentDeniedGuidance(_ response: PermissionsModels.DeniedGuidance.Response) {}
     }
 
     private func makeSUT() -> (PermissionsInteractor, SpyPresenter) {

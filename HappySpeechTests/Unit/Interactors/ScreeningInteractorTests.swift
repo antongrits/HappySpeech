@@ -34,6 +34,11 @@ final class ScreeningInteractorTests: XCTestCase {
             finishCalled = true
             lastFinishResponse = response
         }
+        func presentPrepareStage(_ response: ScreeningModels.PrepareStage.Response) async {}
+        func presentStartRecording(_ response: ScreeningModels.StartRecording.Response) async {}
+        func presentRecordingError(_ error: ScreeningModels.RecordingError) async {}
+        func presentMicrophonePermission(_ response: ScreeningModels.MicrophonePermission.Response) async {}
+        func presentRescreeningCheck(_ response: ScreeningModels.CheckRescreening.Response) async {}
     }
 
     private func makeSUT() -> (ScreeningInteractor, SpyPresenter) {
@@ -111,7 +116,8 @@ final class ScreeningInteractorTests: XCTestCase {
             severity: "mild",
             problematicSounds: [],
             recommendedPacks: [],
-            notes: ""
+            notes: "",
+            isRescreening: false
         )
         await XCTAsyncNoThrow {
             await sut.completeScreening(completeReq)

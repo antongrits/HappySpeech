@@ -158,6 +158,12 @@ final class ArticulationImitationInteractorSmokeTests: XCTestCase {
         func presentLoadSession(_ response: ArticulationImitationModels.LoadSession.Response) {
             loadSessionCalled = true; lastLoadSession = response
         }
+        func presentStartPose(_ response: ArticulationImitationModels.StartPose.Response) {}
+        func presentBeginMirroring(_ mode: MirroringMode) {}
+        func presentBlendshapeUpdate(_ response: ArticulationImitationModels.BlendshapeUpdate.Response) {}
+        func presentConfirmPose(_ response: ArticulationImitationModels.ConfirmPose.Response) {}
+        func presentHint(_ response: ArticulationImitationModels.RequestHint.Response) {}
+        func presentParentConfirmRequest(_ pose: ArticulationPose) {}
         func presentStartExercise(_ response: ArticulationImitationModels.StartExercise.Response) {
             startExerciseCalled = true
         }
@@ -185,7 +191,7 @@ final class ArticulationImitationInteractorSmokeTests: XCTestCase {
         let (sut, spy) = makeSUT()
         sut.loadSession(.init(soundGroup: "С", childName: "Маша"))
         XCTAssertTrue(spy.loadSessionCalled)
-        XCTAssertFalse(spy.lastLoadSession?.exercises.isEmpty ?? true)
+        XCTAssertFalse(spy.lastLoadSession?.poses.isEmpty ?? true)
     }
 
     // MARK: - 8. cancel после loadSession не крашится
