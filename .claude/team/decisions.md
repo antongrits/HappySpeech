@@ -3,6 +3,30 @@
 
 ---
 
+## ADR-V14-FIREBASE-BUNDLEID — Firebase Bundle ID mismatch fix (2026-05-03)
+
+**Context:** Plan v14 Block DD — пользователь установил приложение и обнаружил что Firebase Auth не работает.
+
+**Проблема:**
+- GoogleService-Info.plist содержал `BUNDLE_ID = "ru.happyspeech.app"` (старый ID из Firebase Console)
+- Проект использует `PRODUCT_BUNDLE_IDENTIFIER = "com.mmf.bsu.HappySpeech"` (установлен Block 0)
+- project.yml содержал `PLACEHOLDER-REVERSED-CLIENT-ID` в CFBundleURLSchemes вместо реального значения
+
+**Fix (Block DD, 2026-05-03):**
+1. `plutil -replace BUNDLE_ID "com.mmf.bsu.HappySpeech"` в GoogleService-Info.plist
+2. project.yml CFBundleURLSchemes заменён на реальный `REVERSED_CLIENT_ID`: `com.googleusercontent.apps.142079911892-5n7g0begs0ocu270brlrmvce2emc8vag`
+
+**Для production (ВАЖНО):**
+Необходимо сделать одно из двух в Firebase Console:
+- **Вариант A:** изменить Bundle ID iOS-приложения в Firebase Console с `ru.happyspeech.app` на `com.mmf.bsu.HappySpeech` → скачать новый GoogleService-Info.plist
+- **Вариант B:** зарегистрировать новое iOS-приложение с Bundle ID `com.mmf.bsu.HappySpeech` → скачать свежий plist
+
+Текущий plist со вручную исправленным BUNDLE_ID работает для Sign in with Apple и Google Sign-In URL scheme, но SHA-1 fingerprint в Firebase Console должен совпадать с signing сертификатом для APNs.
+
+**Owner:** ios-dev-arch | **Status:** PARTIALLY FIXED (plist BUNDLE_ID + project.yml) | **Block:** DD v14
+
+---
+
 ## ADR-V14-GLIFXYZ — Glifxyz skill defer (2026-05-02)
 
 **Context:** Plan v14 Block N — исследование https://github.com/glifxyz для возможного создания skill и интеграции в проект HappySpeech.

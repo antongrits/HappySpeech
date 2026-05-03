@@ -140,7 +140,7 @@ targets:
           - CFBundleTypeRole: Editor
             CFBundleURLName: com.mmf.bsu.googlesignin
             CFBundleURLSchemes:
-              - com.googleusercontent.apps.PLACEHOLDER-REVERSED-CLIENT-ID
+              - com.googleusercontent.apps.142079911892-5n7g0begs0ocu270brlrmvce2emc8vag
     entitlements:
       path: HappySpeech/Resources/HappySpeech.entitlements
       properties:

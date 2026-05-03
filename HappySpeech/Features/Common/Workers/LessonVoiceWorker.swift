@@ -67,16 +67,18 @@ final class LessonVoiceWorker: NSObject {
 
     // MARK: - Public API
 
-    /// Воспроизводит текст голосом Ляли (m4a). Если файл не найден — Siri TTS.
+    /// Воспроизводит текст голосом Ляли (m4a). Если файл не найден — silent skip.
     /// Реально ждёт завершения воспроизведения перед возвратом.
     /// - Parameters:
     ///   - text: исходный текст (произвольный регистр, с пунктуацией)
     ///   - lessonType: опциональная метка для логов
     ///   - rate: мультипликатор скорости (1.0 = нормально, <1.0 = медленнее)
+    ///   - enableSystemTTSFallback: если true — Siri TTS при отсутствии m4a (только для тестов, default false)
     func speak(
         _ text: String,
         lessonType: String? = nil,
-        rate: Float = 1.0
+        rate: Float = 1.0,
+        enableSystemTTSFallback: Bool = false
     ) async {
         guard !text.isEmpty else { return }
 
@@ -98,9 +100,13 @@ final class LessonVoiceWorker: NSObject {
             return
         }
 
-        // Priority 3 (TTS)
-        logger.debug("\(logContext, privacy: .public)No Lyalya file for '\(text, privacy: .private)' — TTS fallback")
-        await speakViaSynthesizer(text, rate: rate)
+        // Priority 3 (TTS — только при явно включённом флаге, напр. в тестах)
+        if enableSystemTTSFallback {
+            logger.debug("\(logContext, privacy: .public)No Lyalya file for '\(text, privacy: .private)' — TTS fallback (enabled)")
+            await speakViaSynthesizer(text, rate: rate)
+        } else {
+            logger.warning("\(logContext, privacy: .public)No Lyalya m4a for '\(text, privacy: .private)' — silent skip (record missing phrase)")
+        }
     }
 
     /// Останавливает воспроизведение (и m4a, и TTS).

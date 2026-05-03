@@ -106,16 +106,16 @@ final class GrammarFeedbackWorker: NSObject {
         LessonVoiceWorker.shared.stop()
     }
 
-    // MARK: - System sound fallback
+    // MARK: - Sound feedback (через HapticService — без системных звуков)
 
-    /// Воспроизводит системный звук успеха.
+    /// Тактильный feedback успеха (без системных звуков).
     func playSuccessSound() {
-        AudioServicesPlaySystemSound(1057)    // "Tink"
+        Task { await hapticService.play(pattern: .perfectRound) }
     }
 
-    /// Воспроизводит мягкий звук ошибки.
+    /// Тактильный feedback ошибки (без системных звуков).
     func playErrorSound() {
-        AudioServicesPlaySystemSound(1073)    // мягкий отказ
+        Task { await hapticService.play(pattern: .wrong) }
     }
 
     // MARK: - Private
