@@ -1802,3 +1802,50 @@ Phase v15 выполнена через 16 локальных субагенто
 ### Tag
 
 `v1.0.0-final-v15` — финальная отметка Phase v15 production polish.
+
+---
+
+## ADR-V15-VIDEOS-CLEANUP-AND-DEFER
+
+**Дата:** 2026-05-04
+**Статус:** Accepted (cleanup) + Deferred (replacement)
+
+### Контекст
+
+Пользователь после визуального аудита Phase v15 указал: «видео некрасивые». Все .mp4 видео в `HappySpeech/Resources/Videos/` — это procedural Remotion-generated анимации (TypeScript React) с базовой геометрической графикой, не motion-designer уровня.
+
+### Решение
+
+**Часть 1 — Cleanup (выполнено):**
+Удалены 23 unused .mp4 файлов (24 MB), которые не упоминаются в коде:
+- `trailer_v14.mp4`, `onboarding_hero_v14.mp4` (старые версии, заменённые `trailer.mp4`/`onboarding_hero.mp4`)
+- 5 `celebrations/*_v14.mp4` (старые версии)
+- 3 `tutorials/overview_*.mp4` (планировались но не интегрированы)
+- 2 `tutorials/*_tutorial_v14.mp4`
+- 5 `transitions/*` (не используются — переходы анимируются SwiftUI)
+- 3 `onboarding/*` (заменены 3D Lyalya hero)
+- 3 `seasonal/*_highlight.mp4` (ContentService использует .json, не видео)
+
+Bundle size Videos: **71 MB → 47 MB** (-24 MB, -34%).
+
+**Часть 2 — Defer post-v1.0 (77 used видео):**
+
+Оставшиеся 77 видео используются в коде (`AchievementsManager`, `AnimatedStoryPlayerView`, `OnboardingFlow`, `LessonPlayer`). Они procedural Remotion (TypeScript with shapes) — не motion designer уровня. Удалить нельзя без нарушения функционала.
+
+**Roadmap post-v1.0:**
+- Заменить через motion-designer (Adobe After Effects + Bodymovin export → Lottie)
+- Либо real video footage от cinematographer
+- Либо CC0 от Pexels.com / Mixkit / Coverr.co
+
+Защита диплома допускает текущее качество как «MVP placeholder» — функционал работает, эстетика будет улучшена post-launch.
+
+### Последствия
+
+**Положительные:**
+- Bundle size уменьшен на 24 MB
+- Чище структура Resources/Videos/
+- BUILD SUCCEEDED проверен
+
+**Отрицательные:**
+- 77 видео остаются procedural-качества до post-v1.0
+- Real motion-designer контент требует бюджета или времени для DIY (Remotion с custom assets)
