@@ -34,6 +34,7 @@ public final class MockASRService: ASRService, @unchecked Sendable {
     }
 
     public func loadModel() async throws {}
+    public func loadModel(tier: ASRTier) async throws {}
 }
 
 // MARK: MockSyncService

@@ -57,6 +57,9 @@ final class SpecialistInteractor: SpecialistBusinessLogic {
     private let exportService: any SpecialistExportService
     private let llmDecisionService: any LLMDecisionServiceProtocol
     private let fcmService: any FCMService
+    /// ASR Tier C (whisper-small bundled) — используется только в specialist circuit
+    /// для точной транскрипции при session review.
+    private let asrService: (any ASRService)?
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "Specialist")
 
@@ -75,13 +78,30 @@ final class SpecialistInteractor: SpecialistBusinessLogic {
         sessionRepository: any SessionRepository,
         exportService: any SpecialistExportService,
         llmDecisionService: any LLMDecisionServiceProtocol,
-        fcmService: any FCMService
+        fcmService: any FCMService,
+        asrService: (any ASRService)? = nil
     ) {
         self.childRepository    = childRepository
         self.sessionRepository  = sessionRepository
         self.exportService      = exportService
         self.llmDecisionService = llmDecisionService
         self.fcmService         = fcmService
+        self.asrService         = asrService
+    }
+
+    /// Загружает Tier C ASR (whisper-small bundled) для specialist circuit.
+    /// Вызывается при открытии specialist home — загружает модель заранее.
+    func prepareSpecialistASR() {
+        guard let asrService else { return }
+        Task { [weak self] in
+            guard let self else { return }
+            do {
+                try await asrService.loadModel(tier: .specialistQuality)
+                self.logger.info("SpecialistInteractor: Tier C ASR ready (whisper-small)")
+            } catch {
+                self.logger.warning("SpecialistInteractor: Tier C ASR load failed, Tier B will be used: \(error.localizedDescription, privacy: .public)")
+            }
+        }
     }
 
     // MARK: - Fetch Caseload

@@ -9,3 +9,4 @@
 *.mlmodelc/**/weight.bin filter=lfs diff=lfs merge=lfs -text
 *.mlmodelc/**/*.bin filter=lfs diff=lfs merge=lfs -text
 *.mlmodelc/**/*.mil filter=lfs diff=lfs merge=lfs -text
+HappySpeech/Resources/Models/Whisper/whisper-small/**/*.bin filter=lfs diff=lfs merge=lfs -text

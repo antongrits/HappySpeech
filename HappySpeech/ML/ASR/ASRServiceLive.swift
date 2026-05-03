@@ -2,37 +2,15 @@ import Foundation
 import OSLog
 import WhisperKit
 
-// MARK: - ASRTier
-
-/// Уровни качества ASR.
-/// Tier A — быстро, для детских упражнений в реальном времени.
-/// Tier B — качественно, для сводок родителей (bundled whisper-base).
-/// Tier C — максимум, скачивается по запросу специалиста.
-public enum ASRTier: String, Sendable, CaseIterable {
-    /// Tier A: whisper-tiny — быстрый, загружается on-demand (~150 MB).
-    case kidOnDevice
-    /// Tier B: whisper-base bundled в bundle приложения (~150 MB).
-    case parentQuality
-    /// Tier C: whisper-small — скачивается по запросу (~780 MB).
-    case specialistQuality
-
-    public var displayName: String {
-        switch self {
-        case .kidOnDevice:     return "Быстрый (ребёнок)"
-        case .parentQuality:   return "Качественный (родитель)"
-        case .specialistQuality: return "Максимальный (специалист)"
-        }
-    }
-}
-
 // MARK: - LiveASRService
 
 /// WhisperKit-based ASR service.
 ///
 /// Fallback chain:
-///   1. Bundled whisper-base (Resources/Models/Whisper/whisper-base) — Tier B
-///   2. Downloaded whisper-tiny — Tier A
-///   3. Throws AppError.asrModelNotLoaded
+///   1. Bundled whisper-small (Resources/Models/Whisper/whisper-small) — Tier C (specialist)
+///   2. Bundled whisper-base (Resources/Models/Whisper/whisper-base) — Tier B (parent)
+///   3. Downloaded whisper-tiny — Tier A (kid)
+///   4. Throws AppError.asrModelNotLoaded
 ///
 /// `loadModel(tier:)` пытается загрузить указанный tier, автоматически
 /// откатываясь к следующему доступному при ошибке.
@@ -49,7 +27,16 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
 
     // MARK: - Bundled model paths
 
-    /// Путь к bundled whisper-base в Resources/Models/Whisper/whisper-base/
+    /// Путь к bundled whisper-small в Resources/Models/Whisper/whisper-small/ (Tier C)
+    private static var bundledSmallModelFolder: URL? {
+        Bundle.main.url(
+            forResource: "whisper-small",
+            withExtension: nil,
+            subdirectory: "Models/Whisper"
+        )
+    }
+
+    /// Путь к bundled whisper-base в Resources/Models/Whisper/whisper-base/ (Tier B)
     private static var bundledBaseModelFolder: URL? {
         Bundle.main.url(
             forResource: "whisper-base",
@@ -59,8 +46,8 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
     }
 
     /// Проверяет наличие обязательных файлов bundled модели.
-    private static func isBundledBaseAvailable() -> Bool {
-        guard let folder = bundledBaseModelFolder else { return false }
+    private static func isBundledModelAvailable(folder: URL?) -> Bool {
+        guard let folder else { return false }
         let required = [
             "config.json",
             "AudioEncoder.mlmodelc",
@@ -69,6 +56,14 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
         return required.allSatisfy { name in
             FileManager.default.fileExists(atPath: folder.appendingPathComponent(name).path)
         }
+    }
+
+    private static func isBundledSmallAvailable() -> Bool {
+        isBundledModelAvailable(folder: bundledSmallModelFolder)
+    }
+
+    private static func isBundledBaseAvailable() -> Bool {
+        isBundledModelAvailable(folder: bundledBaseModelFolder)
     }
 
     // MARK: - Init
@@ -83,6 +78,14 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
         HSLogger.asr.info("ASRService: loading tier=\(tier.rawValue)")
 
         switch tier {
+        case .specialistQuality:
+            if await tryLoadBundledSmall() {
+                _activeTier = .specialistQuality
+                return
+            }
+            HSLogger.asr.warning("ASRService: bundled whisper-small unavailable, falling back to parentQuality")
+            try await loadModel(tier: .parentQuality)
+
         case .parentQuality:
             if await tryLoadBundledBase() {
                 _activeTier = .parentQuality
@@ -95,11 +98,6 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
         case .kidOnDevice:
             try await loadTiny()
             _activeTier = .kidOnDevice
-
-        case .specialistQuality:
-            // Tier C не поддерживается в offline-bundle, используем parentQuality
-            HSLogger.asr.info("ASRService: specialistQuality requested, using parentQuality fallback")
-            try await loadModel(tier: .parentQuality)
         }
     }
 
@@ -142,6 +140,26 @@ public final class LiveASRService: ASRService, @unchecked Sendable {
     }
 
     // MARK: - Private load helpers
+
+    private func tryLoadBundledSmall() async -> Bool {
+        guard Self.isBundledSmallAvailable(),
+              let folder = Self.bundledSmallModelFolder else {
+            HSLogger.asr.info("ASRService: bundled whisper-small not found in bundle")
+            return false
+        }
+        do {
+            HSLogger.asr.info("ASRService: loading bundled whisper-small from \(folder.path)")
+            let config = WhisperKitConfig(modelFolder: folder.path)
+            let kit = try await WhisperKit(config)
+            whisper = kit
+            _isReady = true
+            HSLogger.asr.info("ASRService: whisper-small (bundled) ready — Tier C")
+            return true
+        } catch {
+            HSLogger.asr.error("ASRService: bundled whisper-small load failed: \(error.localizedDescription)")
+            return false
+        }
+    }
 
     private func tryLoadBundledBase() async -> Bool {
         guard Self.isBundledBaseAvailable(),
