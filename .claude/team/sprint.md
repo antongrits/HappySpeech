@@ -450,3 +450,67 @@ All 18 blocks (0/A/B/C/D/E+O/F/G/H/I/J/K/L/M/N/P/Q/R) completed либо ADR-def
 **Total Plan v10:** 15 коммитов, ~7900 LOC новый код, 151 ru-ключей, 969 voice phrases.
 
 **Готовность к v1.0.0 release tag:** READY
+
+---
+
+## Phase v15 — Production Polish (2026-05-04)
+
+**Status:** ✅ COMPLETED — 19 atomic commits, BUILD SUCCEEDED, tag `v1.0.0-final-v15`
+
+### Завершённые блоки
+
+| Phase | Описание | Агент | Commits |
+|---|---|---|---|
+| 1 | HSMascotView 2D→3D LyalyaRealityKitView + cleanup Rive/dead | self (Opus) | 1 |
+| 2.1 | AppIcon Apple HIG full bleed (3 appearances, no inner rounded corners) | icon-generator | 1 |
+| 2.2 | UI audit v15 (73 экрана) + design-handoff-v15.md | designer | 0 (audit only) |
+| 2.3 | Block JJ — code-review-v14 fixes (22/24) + UI handoff (13/13) | ios-developer | 5 |
+| 2.5 | Pro voice replacement Siri TTS (edge-tts SvetlanaNeural, 47 .m4a) | sound-curator | 1 |
+| 2.7 | Firebase full services (Remote Config + FCM + Storage + App Check + Performance) | backend-developer | 5 |
+| 2.6 | Real Lottie tutorials (8/8) + procedural cleanup (370 LOC) + 3D heroes verified | animator | 3 |
+| 2.4 | 169 hardcoded fonts → 12 (94% replaced via TypographyTokens) | self (Opus) | 2 |
+| 2.9 | Swift 6 concurrency warnings (already 0 в build) | implicit | 0 |
+| 2.8 | Project cleanup — 7 dead DS components + empty dirs | self (Opus) | 1 |
+
+### Итоговые метрики
+
+**Build:**
+- BUILD SUCCEEDED on iPhone 17 Pro simulator
+- 0 warnings в HappySpeech коде (excluded 3rd party SPM)
+- 0 errors
+
+**Russian-only страж:**
+- 0 en keys
+- 2213 ru keys в Localizable.xcstrings
+
+**Bundle:**
+- Audio: 169 MB (10 507 .m4a)
+- Animations: 3.8 MB (8 real Lottie tutorials, 35-122 KB)
+- Models: 657 MB (WhisperKit small + 7 .mlpackage)
+- Videos: 71 MB
+- ARAssets: 231 MB (lyalya3d_v2.usdz + 18 USDZ объектов)
+- Total resources: ~1.13 GB
+
+**Качество:**
+- AppIcon: 3 appearances (Any/Dark/Tinted), Apple HIG compliant
+- 3D Lyalya everywhere via LyalyaRealityKitView
+- Pro voice (edge-tts SvetlanaNeural) вместо Siri TTS
+- 0 TODO/FIXME/HACK/XXX
+- 0 print() statements
+- VIP Clean Swift compliance soblden
+
+**Firebase services активны:**
+- ✅ Auth (Email + Google + Anonymous)
+- ✅ Firestore (10 Cloud Functions, 14 indexes)
+- ✅ Remote Config (17 feature flags)
+- ✅ FCM (sendWeeklySummaryFCM cloud function deployed)
+- ✅ Storage (sample content pack)
+- ✅ App Check (DeviceCheck enforce)
+- ✅ Performance Monitoring (parent opt-in only, COPPA-safe)
+
+### Открытые задачи (post-v1.0)
+
+- APNS Auth Key — загружает пользователь вручную в Apple Developer Portal
+- Storage bucket region migration eur3 (если нужно)
+- 12 dynamic-size fonts (proportional эмодзи) — пока оставлены skip-комментариями
+

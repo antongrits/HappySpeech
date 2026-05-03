@@ -1724,3 +1724,81 @@ Rationale:
 - Total commits in v14: ~25
 
 **Owner:** CTO | **Status:** FINAL | **Block:** S v14
+
+---
+
+## ADR-V15-FINAL — Phase v15 Production Polish
+
+**Дата:** 2026-05-04
+**Статус:** Accepted
+
+### Контекст
+
+Пользователь после визуального аудита v14 запросил полный production-quality polish для дипломной защиты:
+1. AppIcon по Apple HIG (без внутренних рамок)
+2. 3D Lyalya вместо 2D Image (USDZ через RealityKit)
+3. Pro voice вместо Siri TTS (edge-tts SvetlanaNeural)
+4. Real Lottie tutorials (заменить procedural python-lottie)
+5. Удалить некрасивые procedural анимации
+6. Полная Firebase интеграция (Remote Config + FCM + Storage + App Check enforce + Performance)
+7. Code review fixes (24 issues from code-review-v14.md)
+8. UI audit + единая тема ClaudeDesign
+9. Hardcoded fonts → TypographyTokens
+10. Project cleanup unused files/code
+
+### Решение
+
+Phase v15 выполнена через 16 локальных субагентов (sonnet @ high) последовательно через Agent tool:
+- icon-generator (bg) — AppIcon Apple HIG full bleed (3 appearances)
+- designer — UI audit 73 экрана + design-handoff-v15.md
+- ios-developer — Block JJ + UI handoff fixes (22/24 issues, 5 commits)
+- sound-curator (bg) — Pro voice replacement (47 .m4a files, 9 lesson types)
+- backend-developer (bg) — Firebase full services (5 commits)
+- animator (bg) — Real Lottie + procedural cleanup + 3D heroes verified
+- self (Opus) — Phase 2.4 (159 fonts replaced) + Phase 2.8 (7 dead components removed)
+
+### Результаты
+
+**Code metrics:**
+- 19 atomic commits в Phase v15
+- BUILD SUCCEEDED on iPhone 17 Pro simulator
+- 0 warnings в HappySpeech коде (excluded 3rd party)
+- 0 en localization keys (Russian-only мандат соблюдён)
+- 2213 ru ключей в Localizable.xcstrings
+- 10 507 voice .m4a файлов
+- 8/8 real Lottie tutorials (35-122 KB, 5/8 имеют precomp assets)
+- 3 AppIcon appearances (Any/Dark/Tinted)
+- ~1.13 GB resources bundle (Audio 169 + Animations 3.8 + Models 657 + Videos 71 + ARAssets 231)
+
+**Architecture changes:**
+- HSMascotView 2D Image → 3D LyalyaRealityKitView (lyalya3d_v2.usdz)
+- Удалены: HSRiveView (304 LOC), 7 dead DS components, ~370 LOC procedural particles
+- Все 35+ usages mascot — через 3D pipeline
+- HSAudioWaveform — переписан на TimelineView+Canvas (Swift 6 strict compliance)
+- ColorTokens.Skin (warm/cool/nature) + Nature.treeTrunk новые токены
+- TypographyTokens — 159/169 fonts replaced (94%, 12 dynamic skipped с комментариями)
+
+**Firebase services активированы:**
+- Remote Config (17 feature flags template)
+- FCM (sendWeeklySummaryFCM cloud function deployed)
+- Storage (Halloween-2027 sample content pack)
+- App Check (DeviceCheck enforce)
+- Performance Monitoring (parent opt-in only, COPPA-safe)
+
+### Последствия
+
+**Положительные:**
+- Production-quality визуал (AppIcon Apple HIG, 3D Lyalya, real Lottie)
+- Pro voice озвучка вместо Siri TTS
+- Полная Firebase backend интеграция
+- Russian-only страж соблюдён
+- Все P0/P1 code review issues закрыты
+
+**Compromises (defer post-v1.0):**
+- ADR-V15-FCM-APNS-DEFER — APNS Auth Key загружает пользователь вручную
+- ADR-V15-STORAGE-CONTENT-PACKS — Storage bucket region us-central1 (не eur3, не меняется)
+- 12 dynamic fonts оставлены с комментариями skip (proportional эмодзи heroes)
+
+### Tag
+
+`v1.0.0-final-v15` — финальная отметка Phase v15 production polish.
