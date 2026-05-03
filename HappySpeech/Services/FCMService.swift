@@ -85,8 +85,15 @@ public final class LiveFCMService: NSObject, FCMService, MessagingDelegate, @unc
     }
 
     public func syncTokenToFirestore(userId: String) async throws {
+        // Precondition: userId должен быть аутентифицированным родительским аккаунтом.
+        // Анонимные пользователи (содержат "anon") и пустые id не синхронизируются.
+        // Это защита от случайного вызова при guest/kid-сессии без полной авторизации.
+        guard !userId.isEmpty, !userId.contains("anon") else {
+            logger.warning("FCM token sync skipped — userId is empty or anonymous")
+            return
+        }
         guard let token = Messaging.messaging().fcmToken else {
-            logger.warning("FCM token not yet available — skipping sync for user \(userId, privacy: .public)")
+            logger.warning("FCM token not yet available — skipping sync for user \(userId, privacy: .private)")
             return
         }
         try await db.collection("users").document(userId).setData(
