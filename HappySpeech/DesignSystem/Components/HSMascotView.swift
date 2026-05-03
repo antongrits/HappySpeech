@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - MascotMood
 // 10 состояний маскота Ляли для Rive state machine "LyalyaSM".
-// При добавлении нового состояния — обновить rivIndex в HSRiveView.swift.
+// 3D-рендер через LyalyaRealityKitView (lyalya3d_v2.usdz) — кастомные blendshapes / named entity transforms.
 
 public enum MascotMood: Sendable {
     case idle           // 0 — нежное парение, крылья медленно
@@ -126,9 +126,9 @@ public struct HSMascotView: View {
     // v12: pointing arrow pulse
     @State private var arrowPulse: CGFloat = 1.0
 
-    // 2D illustration rendering: всегда используем Asset Catalog иллюстрацию.
-    // Rive (lyalya.riv) содержит generic skills.riv — не кастомная Ляля.
-    // Отложено до поставки финального .riv с кастомной state machine "LyalyaSM".
+    // 3D rendering: маскот Ляля рендерится через LyalyaRealityKitView (lyalya3d_v2.usdz).
+    // Rive (lyalya.riv) удалён в Phase 1.2 — был generic skills.riv.
+    // 2D Image fallback используется только при ошибке загрузки USDZ.
 
     // MARK: - Init
 
@@ -191,18 +191,25 @@ public struct HSMascotView: View {
         // Lip-sync визуально не применяется до интеграции кастомного Rive-файла.
     }
 
-    // MARK: - Illustration Layer
+    // MARK: - Illustration Layer (3D RealityKit)
 
-    /// Отображает 2D-иллюстрацию из Assets.xcassets/Illustrations/mascot_lyalya_<state>.
-    /// Прозрачный фон обеспечен rembg при генерации (Block B).
+    /// Отображает 3D-маскот Лялю через `LyalyaRealityKitView` (`lyalya3d_v2.usdz`).
+    /// Fallback на 2D-иллюстрацию из Assets если RealityKit недоступен (визор/симулятор без Metal).
+    /// Прозрачный фон обеспечен через `cameraMode: .nonAR` + `environment.background = .color(.clear)`.
     @ViewBuilder
     private var illustrationLayer: some View {
-        Image(mood.illustrationName)
-            .resizable()
-            .scaledToFit()
-            .frame(width: size, height: size)
-            .offset(y: bodyBounce)
-            .accessibilityHidden(true)
+        let amplitude = audioAmplitude?.wrappedValue ?? 0
+        let viseme: LyalyaViseme = mood == .singing || mood == .explaining ? .a : .rest
+
+        LyalyaRealityKitView(
+            state: mood.lyalyaState,
+            mood: 0.7,
+            mouthOpen: amplitude,
+            viseme: viseme
+        )
+        .frame(width: size, height: size)
+        .offset(y: bodyBounce)
+        .accessibilityHidden(true)
     }
 
     // MARK: - Waving Hand Overlay (v12)
@@ -644,8 +651,9 @@ private struct MusicNotesView: View {
     }
 }
 
-// MARK: - ButterflyShape (Pure SwiftUI fallback)
+// MARK: - ButterflyShape (Pure SwiftUI fallback) — DEPRECATED, удалён в Phase 1.2 после переключения на 3D LyalyaRealityKitView.
 
+/* DEPRECATED: оригинальный 2D-fallback больше не нужен после перехода на 3D RealityKit рендер.
 private struct ButterflyShape: View {
     let size: CGFloat
     let isWingUp: Bool
@@ -825,33 +833,7 @@ private struct ThoughtBubble: View {
     }
 }
 
-// MARK: - SparklesView
-
-private struct SparklesView: View {
-    let size: CGFloat
-    @State private var phase: Double = 0
-    private var scale: CGFloat { size / 120 }
-
-    var body: some View {
-        ZStack {
-            ForEach(0..<6, id: \.self) { i in
-                Image(systemName: "sparkle")
-                    .font(.system(size: 10 * scale))
-                    .foregroundStyle(Color(hex: "#FFD700").opacity(0.85))
-                    .offset(
-                        x: CGFloat(cos(Double(i) * .pi / 3 + phase)) * 45 * scale,
-                        y: CGFloat(sin(Double(i) * .pi / 3 + phase)) * 40 * scale
-                    )
-                    .scaleEffect(0.7 + 0.3 * sin(phase * 2 + Double(i)))
-            }
-        }
-        .onAppear {
-            withAnimation(.linear(duration: 2).repeatForever(autoreverses: false)) {
-                phase = .pi * 2
-            }
-        }
-    }
-}
+*/
 
 // MARK: - MascotMood + helpers
 
