@@ -41,32 +41,46 @@ public extension MascotMood {
         case .pointing:    return .pointing
         }
     }
+
+    /// Маппинг MascotMood → имя 2D-иллюстрации в Assets.xcassets/Illustrations/.
+    /// idle → sleep (ближайший аналог покоя; lyalya_idle отсутствует).
+    /// encouraging → wave (жест поддержки совпадает с wave-иллюстрацией).
+    var illustrationName: String {
+        switch self {
+        case .idle:        return "mascot_lyalya_sleep"
+        case .happy:       return "mascot_lyalya_happy"
+        case .celebrating: return "mascot_lyalya_celebrate"
+        case .thinking:    return "mascot_lyalya_think"
+        case .sad:         return "mascot_lyalya_sad"
+        case .encouraging: return "mascot_lyalya_wave"
+        case .waving:      return "mascot_lyalya_wave"
+        case .explaining:  return "mascot_lyalya_listen"
+        case .singing:     return "mascot_lyalya_sing"
+        case .pointing:    return "mascot_lyalya_read"
+        }
+    }
 }
 
 // MARK: - HSMascotView
 
-/// 7-слойный рендер маскота Ляли: Rive + aura + particles + lip-sync.
+/// 7-слойный рендер маскота Ляли: 2D illustration + aura + particles.
 ///
 /// `HSMascotView` — низкоуровневый рендер-компонент. На экранах фич используйте
 /// ``LyalyaMascotView`` вместо прямого обращения к `HSMascotView`.
 ///
 /// ### Архитектура слоёв (снизу вверх в ZStack)
 ///
-/// 1. `lyalya.riv` через HSRiveView — Rive state machine "LyalyaSM"
-/// 2. `.colorMultiply` tinting — warm / cool / nature / classic (кастомизация скина)
-/// 3. `MoodAuraView` — ambient radial glow под маскотом, цвет зависит от настроения
-/// 4. `EmotionParticlesView` — частицы: звёзды (.celebrating), сердечки (.happy),
+/// 1. 2D-иллюстрация из Assets.xcassets/Illustrations (mascot_lyalya_<state>)
+/// 2. `MoodAuraView` — ambient radial glow под маскотом, цвет зависит от настроения
+/// 3. `EmotionParticlesView` — частицы: звёзды (.celebrating), сердечки (.happy),
 ///    знаки вопроса (.thinking), плюсы (.encouraging), ноты (.singing)
-/// 5. Mouth bubble overlay — real-time lip-sync через ``MascotLipSyncState``
-/// 6. SF Symbol decorative skin overlay — princess / scientist / athlete / artist
-/// 7. Breathing motion `.scaleEffect 1.0 → 1.03` + shake при `.encouraging`
-///
-/// ### Fallback
-/// Если `lyalya.riv` отсутствует в бандле — используется чистый SwiftUI `ButterflyShape`.
+/// 4. SF Symbol overlay — рука (.waving), стрелка (.pointing)
+/// 5. Breathing motion `.scaleEffect 1.0 → 1.03` + shake при `.encouraging`
 ///
 /// ### Lip-sync
-/// При передаче `audioAmplitude` применяет low-pass фильтрацию (τ ≈ 50ms)
-/// и передаёт нормализованное значение в Rive input `"mouthOpen"`.
+/// Real-time lip-sync через Rive недоступен при 2D illustration.
+/// Значение `audioAmplitude` принимается для совместимости API, но не применяется к рендеру.
+/// Отложено до будущей интеграции кастомного Rive-файла Ляли.
 ///
 /// ## Пример
 /// ```swift
@@ -95,16 +109,8 @@ public struct HSMascotView: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    // Rive binding
-    @State private var riveMood: MascotMood
-    @State private var smoothedMouth: Float = 0
-
-    // SwiftUI fallback animation states
-    @State private var isWingUp = false
-    @State private var sparkleOffset: CGFloat = 0
+    // Вертикальный bounce иллюстрации (bodyBounce) — применяется в illustrationLayer.
     @State private var bodyBounce: CGFloat = 0
-    @State private var bodyRotation: Double = 0
-    @State private var antennaDroop: Double = 0
 
     // v12: entrance / transition animation
     @State private var entranceScale: CGFloat = 0.85
@@ -120,10 +126,9 @@ public struct HSMascotView: View {
     // v12: pointing arrow pulse
     @State private var arrowPulse: CGFloat = 1.0
 
-    // Rive asset availability check (once per launch)
-    private static let riveAssetAvailable: Bool = {
-        Bundle.main.url(forResource: "lyalya", withExtension: "riv") != nil
-    }()
+    // 2D illustration rendering: всегда используем Asset Catalog иллюстрацию.
+    // Rive (lyalya.riv) содержит generic skills.riv — не кастомная Ляля.
+    // Отложено до поставки финального .riv с кастомной state machine "LyalyaSM".
 
     // MARK: - Init
 
@@ -137,7 +142,6 @@ public struct HSMascotView: View {
         self.size = size
         self.audioAmplitude = audioAmplitude
         self.pointingDirection = pointingDirection
-        self._riveMood = State(initialValue: mood)
     }
 
     // MARK: - Body
@@ -149,17 +153,11 @@ public struct HSMascotView: View {
                 MoodAuraView(mood: mood, size: size)
             }
 
-            // Layer 1–2: Rive или SwiftUI fallback
-            ZStack {
-                if Self.riveAssetAvailable {
-                    riveLayer
-                } else {
-                    swiftUIFallback
-                }
-            }
-            .scaleEffect(entranceScale)
-            .opacity(entranceOpacity)
-            .id(moodTransitionID)
+            // Layer 1: 2D illustration (mascot_lyalya_<state>)
+            illustrationLayer
+                .scaleEffect(entranceScale)
+                .opacity(entranceOpacity)
+                .id(moodTransitionID)
 
             // Layer 4: emotion particles
             if !reduceMotion {
@@ -182,33 +180,29 @@ public struct HSMascotView: View {
         .accessibilityLabel(accessibilityLabel)
         .accessibilityHidden(false)
         .onAppear {
-            riveMood = mood
             playEntrance()
             if !reduceMotion { startFallbackAnimation() }
         }
-        .onChange(of: mood) { _, newMood in
-            riveMood = newMood
+        .onChange(of: mood) { _, _ in
             playMoodTransition()
             if !reduceMotion { startFallbackAnimation() }
         }
-        .onChange(of: audioAmplitude?.wrappedValue ?? 0) { _, amplitude in
-            guard !reduceMotion else { return }
-            applyLipSync(rawAmplitude: amplitude)
-        }
+        // audioAmplitude принимается для совместимости API.
+        // Lip-sync визуально не применяется до интеграции кастомного Rive-файла.
     }
 
-    // MARK: - Rive Layer
+    // MARK: - Illustration Layer
 
+    /// Отображает 2D-иллюстрацию из Assets.xcassets/Illustrations/mascot_lyalya_<state>.
+    /// Прозрачный фон обеспечен rembg при генерации (Block B).
     @ViewBuilder
-    private var riveLayer: some View {
-        HSRiveView(
-            fileName: "lyalya",
-            stateMachine: "LyalyaSM",
-            mood: $riveMood,
-            mouthOpen: smoothedMouth
-        )
-        .frame(width: size, height: size)
-        .offset(y: bodyBounce)
+    private var illustrationLayer: some View {
+        Image(mood.illustrationName)
+            .resizable()
+            .scaledToFit()
+            .frame(width: size, height: size)
+            .offset(y: bodyBounce)
+            .accessibilityHidden(true)
     }
 
     // MARK: - Waving Hand Overlay (v12)
@@ -266,33 +260,6 @@ public struct HSMascotView: View {
             .accessibilityHidden(true)
     }
 
-    // MARK: - SwiftUI Fallback
-
-    @ViewBuilder
-    private var swiftUIFallback: some View {
-        ZStack {
-            if mood == .celebrating || mood == .happy {
-                SparklesView(size: size)
-                    .offset(y: sparkleOffset)
-            }
-
-            if mood == .thinking {
-                ThoughtBubble(size: size)
-                    .offset(x: size * 0.35, y: -size * 0.35)
-            }
-
-            ButterflyShape(
-                size: size,
-                isWingUp: isWingUp,
-                mood: mood,
-                antennaDroop: antennaDroop,
-                bodyRotation: bodyRotation,
-                smoothedMouth: smoothedMouth
-            )
-            .offset(y: bodyBounce)
-        }
-    }
-
     // MARK: - Entrance animation (v12)
 
     private func playEntrance() {
@@ -340,42 +307,26 @@ public struct HSMascotView: View {
         }
     }
 
-    // MARK: - Lip-sync (low-pass filter τ ≈ 50ms @ 60fps → α ≈ 0.17)
+    // MARK: - Illustration bounce animations
 
-    private func applyLipSync(rawAmplitude: Float) {
-        let alpha: Float = 0.17
-        let target = min(rawAmplitude * 2.5, 1.0)
-        smoothedMouth += alpha * (target - smoothedMouth)
-    }
-
-    // MARK: - SwiftUI fallback animations
-
+    /// Анимирует вертикальный bounce иллюстрации в зависимости от настроения.
     private func startFallbackAnimation() {
-        isWingUp = false
-        sparkleOffset = 0
         bodyBounce = 0
-        bodyRotation = 0
-        antennaDroop = 0
 
         switch mood {
         case .idle:
             withAnimation(MotionTokens.idlePulse) {
-                isWingUp = true
+                bodyBounce = 0
             }
 
         case .happy, .encouraging:
             withAnimation(MotionTokens.bounce.repeatCount(4, autoreverses: true)) {
-                isWingUp = true
                 bodyBounce = -8
             }
 
         case .celebrating:
             withAnimation(MotionTokens.bounce.repeatForever(autoreverses: true)) {
-                isWingUp = true
-                sparkleOffset = -12
-            }
-            withAnimation(.linear(duration: 1.2).repeatForever(autoreverses: false)) {
-                bodyRotation = 360
+                bodyBounce = -10
             }
 
         case .thinking:
@@ -385,26 +336,22 @@ public struct HSMascotView: View {
 
         case .sad:
             withAnimation(.easeInOut(duration: 2.5).repeatForever(autoreverses: true)) {
-                isWingUp = false
                 bodyBounce = 4
-                antennaDroop = 30
             }
 
         case .waving:
             withAnimation(MotionTokens.bounce.repeatCount(3, autoreverses: true)) {
-                isWingUp = true
                 bodyBounce = -6
             }
 
         case .explaining, .singing:
             withAnimation(MotionTokens.spring.repeatForever(autoreverses: true)) {
-                isWingUp = true
                 bodyBounce = -4
             }
 
         case .pointing:
             withAnimation(MotionTokens.outQuick) {
-                isWingUp = true
+                bodyBounce = 0
             }
         }
     }
