@@ -610,6 +610,7 @@ private struct WeekDayCell: View {
     let onLongPress: () -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.hapticService) private var hapticService
 
     private var bgColor: Color {
         if day.isToday { return ColorTokens.Brand.primary }
@@ -670,8 +671,7 @@ private struct WeekDayCell: View {
         .buttonStyle(.plain)
         .onLongPressGesture(minimumDuration: 0.5) {
             if !reduceMotion {
-                let impact = UIImpactFeedbackGenerator(style: .medium)
-                impact.impactOccurred()
+                hapticService.impact(.medium)
             }
             onLongPress()
         }

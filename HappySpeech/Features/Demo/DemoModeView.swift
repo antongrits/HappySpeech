@@ -285,7 +285,7 @@ struct DemoModeView: View {
             Image(systemName: "arrow.counterclockwise")
                 .font(.system(size: 16, weight: .semibold))
                 .foregroundStyle(.white.opacity(0.85))
-                .frame(width: 36, height: 36)
+                .frame(minWidth: 44, minHeight: 44)
                 .contentShape(Rectangle())
         }
         .accessibilityLabel(String(localized: "demo.replay.button"))
@@ -300,7 +300,7 @@ struct DemoModeView: View {
             Image(systemName: display.autoAdvanceEnabled ? "play.circle.fill" : "play.circle")
                 .font(.system(size: 17, weight: .semibold))
                 .foregroundStyle(display.autoAdvanceEnabled ? .white : .white.opacity(0.7))
-                .frame(width: 36, height: 36)
+                .frame(minWidth: 44, minHeight: 44)
                 .contentShape(Rectangle())
         }
         .accessibilityLabel(display.autoAdvanceEnabled
@@ -317,7 +317,7 @@ struct DemoModeView: View {
             Image(systemName: "list.bullet.rectangle")
                 .font(.system(size: 16, weight: .semibold))
                 .foregroundStyle(.white.opacity(0.85))
-                .frame(width: 36, height: 36)
+                .frame(minWidth: 44, minHeight: 44)
                 .contentShape(Rectangle())
         }
         .accessibilityLabel(String(localized: "demo.overview.label"))

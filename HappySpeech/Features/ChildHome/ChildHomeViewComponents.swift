@@ -90,25 +90,36 @@ struct ChildHomeReactiveMascot: View {
     }
 }
 
-// MARK: - MascotBubble
+// MARK: - MascotBubble (BUG-009: добавлен аватар Ляли слева от bubble)
 
 struct ChildHomeMascotBubble: View {
 
     let text: String
 
     var body: some View {
-        Text(text)
-            .font(TypographyTokens.body(14))
-            .foregroundStyle(ColorTokens.Kid.ink)
-            .multilineTextAlignment(.center)
-            .padding(.horizontal, SpacingTokens.sp4)
-            .padding(.vertical, SpacingTokens.sp3)
+        HStack(alignment: .bottom, spacing: SpacingTokens.sp2) {
+            LyalyaMascotView(state: .explaining, size: 40)
+                .accessibilityHidden(true)
+
+            HStack(spacing: 0) {
+                Text(text)
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .padding(.horizontal, SpacingTokens.sp4)
+                    .padding(.vertical, SpacingTokens.sp3)
+            }
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
                     .fill(ColorTokens.Kid.surface)
                     .kidTileShadow()
             )
-            .padding(.horizontal, SpacingTokens.sp6)
+        }
+        .padding(.horizontal, SpacingTokens.sp6)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(text)
     }
 }
 
@@ -305,8 +316,8 @@ struct ChildHomeQuickPlayCard: View {
                 Text(item.title)
                     .font(TypographyTokens.headline(14))
                     .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.8)
                     .multilineTextAlignment(.leading)
                     .ctaTextStyle()
 
