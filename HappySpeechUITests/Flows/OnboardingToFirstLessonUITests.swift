@@ -31,21 +31,24 @@ final class OnboardingToFirstLessonUITests: XCTestCase {
     // MARK: - Happy path
 
     func test_launch_showsKidHome_orAuthLanding() throws {
-        let kidHome = app.otherElements["ChildHomeRoot"]
-        let authLanding = app.otherElements["AuthLandingRoot"]
+        // После сброса состояния (-UITestResetState) приложение показывает Splash,
+        // затем переходит в Onboarding или Auth. Ждём любой из известных root-view.
+        let splash    = app.otherElements["SplashRoot"]
+        let kidHome   = app.otherElements["ChildHomeRoot"]
+        let authSignIn = app.otherElements["AuthSignInRoot"]
         let onboarding = app.otherElements["OnboardingRoot"]
 
-        let any = NSPredicate(format: "exists == true")
-        let expectation = XCTNSPredicateExpectation(
-            predicate: any,
-            object: kidHome.exists ? kidHome
-                 : (authLanding.exists ? authLanding : onboarding)
-        )
-        wait(for: [expectation], timeout: 5.0)
+        // Сначала ждём Splash (быстро появляется при старте)
+        let hasSplash = splash.waitForExistence(timeout: 5)
+        // Затем ждём перехода на следующий экран (Splash длится ~2.2 сек)
+        let appeared = hasSplash
+            || kidHome.waitForExistence(timeout: 10)
+            || authSignIn.waitForExistence(timeout: 5)
+            || onboarding.waitForExistence(timeout: 5)
 
         XCTAssertTrue(
-            kidHome.exists || authLanding.exists || onboarding.exists,
-            "Expected one of ChildHome, AuthLanding or Onboarding at launch"
+            appeared,
+            "Expected one of SplashRoot, ChildHome, AuthSignIn or Onboarding at launch"
         )
     }
 

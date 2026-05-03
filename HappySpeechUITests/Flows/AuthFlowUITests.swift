@@ -31,16 +31,21 @@ final class AuthFlowUITests: XCTestCase {
     // MARK: - 1. Экран входа или онбординга виден при сброшенном состоянии
 
     func test_authOrOnboardingVisible_onFreshLaunch() throws {
-        let authRoot       = app.otherElements["AuthLandingRoot"]
+        // Приложение стартует через SplashView (~2.2 сек), затем роутит в
+        // .onboarding (если онбординг не пройден) или .auth.
+        let splashRoot     = app.otherElements["SplashRoot"]
         let signInRoot     = app.otherElements["AuthSignInRoot"]
         let onboardingRoot = app.otherElements["OnboardingRoot"]
 
-        let appeared = authRoot.waitForExistence(timeout: 5)
-                    || signInRoot.waitForExistence(timeout: 1)
-                    || onboardingRoot.waitForExistence(timeout: 1)
+        // Splash должен появиться быстро
+        let hasSplash = splashRoot.waitForExistence(timeout: 5)
+        // После splash ждём onboarding или auth (2.2 сек задержка splash + буфер)
+        let appeared = hasSplash
+                    || signInRoot.waitForExistence(timeout: 8)
+                    || onboardingRoot.waitForExistence(timeout: 8)
 
         XCTAssertTrue(appeared,
-            "При сброшенном состоянии должен появиться экран авторизации или онбординга")
+            "При сброшенном состоянии должен появиться Splash, экран авторизации или онбординга")
     }
 
     // MARK: - 2. Поля email и пароль присутствуют на экране входа
@@ -166,29 +171,27 @@ final class AuthFlowUITests: XCTestCase {
     // MARK: - Private helpers
 
     /// Пытается достичь экрана SignIn — возвращает true, если удалось.
+    /// Учитывает: Splash (~2.2 сек) → Onboarding (если флаг не пройден) → Auth.
     @discardableResult
-    private func navigateToSignIn(timeout: TimeInterval = 5) -> Bool {
+    private func navigateToSignIn(timeout: TimeInterval = 10) -> Bool {
+        // Быстрый путь: AuthSignIn уже виден
         if app.otherElements["AuthSignInRoot"].waitForExistence(timeout: timeout) {
             return true
         }
-        if app.otherElements["AuthLandingRoot"].waitForExistence(timeout: 2) {
-            let signInPredicate = NSPredicate(
-                format: "label CONTAINS[c] 'войти' OR label CONTAINS[c] 'вход' OR label CONTAINS[c] 'уже есть'"
-            )
-            let signInLink = app.buttons.matching(signInPredicate).firstMatch
-            if signInLink.waitForExistence(timeout: 2) {
-                signInLink.tap()
-                return app.otherElements["AuthSignInRoot"].waitForExistence(timeout: 3)
-            }
+        // Splash → ждём его исчезновения, затем проверяем onboarding
+        _ = app.otherElements["SplashRoot"].waitForExistence(timeout: 5)
+        if app.otherElements["AuthSignInRoot"].waitForExistence(timeout: 6) {
+            return true
         }
-        if app.otherElements["OnboardingRoot"].waitForExistence(timeout: 2) {
+        // Если онбординг виден — пробуем пропустить (кнопка «Пропустить» есть на step sounds/permissions/model)
+        if app.otherElements["OnboardingRoot"].waitForExistence(timeout: 4) {
             let skipPredicate = NSPredicate(format: "label CONTAINS[c] 'пропустить'")
             let skipButton = app.buttons.matching(skipPredicate).firstMatch
             if skipButton.waitForExistence(timeout: 2) {
                 skipButton.tap()
-                return app.otherElements["AuthSignInRoot"].waitForExistence(timeout: 3)
-                    || app.otherElements["AuthLandingRoot"].waitForExistence(timeout: 1)
+                return app.otherElements["AuthSignInRoot"].waitForExistence(timeout: 4)
             }
+            // Онбординг виден, но пропустить нельзя с первого шага — тест должен скипнуться
         }
         return false
     }

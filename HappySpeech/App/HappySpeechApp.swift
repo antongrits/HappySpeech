@@ -79,6 +79,11 @@ struct HappySpeechApp: App {
         let args = ProcessInfo.processInfo.arguments
         let hasStartRoute = args.contains("-HSStartRoute")
         let useMock = args.contains("-UITestMockServices") || args.contains("-UITestOffline") || hasStartRoute
+        // UI-тест: при -UITestResetState сбрасываем флаг онбординга,
+        // чтобы при следующем запуске splash гарантированно роутил в .onboarding.
+        if args.contains("-UITestResetState") {
+            OnboardingState.reset()
+        }
         if useMock {
             let container = AppContainer.preview()
             // При -UITestOffline принудительно отключаем сеть в MockNetworkMonitor

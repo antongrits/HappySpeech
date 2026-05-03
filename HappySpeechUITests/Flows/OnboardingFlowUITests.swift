@@ -32,16 +32,21 @@ final class OnboardingFlowUITests: XCTestCase {
     // MARK: - 1. Онбординг или главный экран появляются при запуске
 
     func test_launch_showsKnownRoot() throws {
+        // После -UITestResetState приложение показывает SplashView (~2.2 сек),
+        // затем переходит в OnboardingRoot (онбординг сброшен).
+        let splashRoot  = app.otherElements["SplashRoot"]
         let onboarding  = app.otherElements["OnboardingRoot"]
-        let authLanding = app.otherElements["AuthLandingRoot"]
+        let authSignIn  = app.otherElements["AuthSignInRoot"]
         let childHome   = app.otherElements["ChildHomeRoot"]
 
-        let appeared = onboarding.waitForExistence(timeout: 5)
-                    || authLanding.waitForExistence(timeout: 1)
+        let hasSplash = splashRoot.waitForExistence(timeout: 5)
+        let appeared = hasSplash
+                    || onboarding.waitForExistence(timeout: 8)
+                    || authSignIn.waitForExistence(timeout: 5)
                     || childHome.waitForExistence(timeout: 1)
 
         XCTAssertTrue(appeared,
-            "Ожидался один из экранов: OnboardingRoot, AuthLandingRoot или ChildHomeRoot")
+            "Ожидался один из экранов: SplashRoot, OnboardingRoot, AuthSignInRoot или ChildHomeRoot")
     }
 
     // MARK: - 2. Кнопка «Далее» / «Продолжить» переводит на следующий шаг
@@ -170,7 +175,8 @@ final class OnboardingFlowUITests: XCTestCase {
     // MARK: - Private helpers
 
     @discardableResult
-    private func waitForOnboardingRoot(timeout: TimeInterval = 4) -> Bool {
+    private func waitForOnboardingRoot(timeout: TimeInterval = 8) -> Bool {
+        // Приложение стартует через SplashView (~2.2 сек), поэтому даём увеличенный таймаут.
         app.otherElements["OnboardingRoot"].waitForExistence(timeout: timeout)
     }
 

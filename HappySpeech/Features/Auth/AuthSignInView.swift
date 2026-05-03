@@ -36,6 +36,7 @@ struct AuthSignInView: View {
                 }
             }
         }
+        .accessibilityIdentifier("AuthSignInRoot")
         .loadingOverlay(scene?.state.isLoading ?? false)
         .alert(
             scene?.state.error?.title ?? String(localized: "Ошибка"),
