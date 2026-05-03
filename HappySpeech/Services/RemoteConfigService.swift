@@ -92,7 +92,10 @@ public final class LiveRemoteConfigService: RemoteConfigService, @unchecked Send
 
     private let logger = Logger(subsystem: "com.happyspeech", category: "RemoteConfig")
     private let config: RemoteConfig
-    private var realtimeListenerStarted = false
+    // nonisolated(unsafe): флаг пишется один раз при первом вызове startRealtimeUpdates()
+    // и читается в том же методе. В проекте startRealtimeUpdates вызывается строго из MainActor
+    // при старте приложения — гонки данных нет. @unchecked Sendable на классе оправдан.
+    nonisolated(unsafe) private var realtimeListenerStarted = false
 
     // Bundled defaults (used before first successful fetch + activate)
     // nonisolated(unsafe) required for Swift 6 strict concurrency — [String: NSObject] is not Sendable.

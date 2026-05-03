@@ -336,6 +336,33 @@ actor AmplitudeVAD: VADProtocol {
     }
 }
 
+// MARK: - Factory
+
+/// Создаёт VAD с graceful fallback: пробует загрузить CoreML-модель,
+/// при `VADError.modelNotFound` деградирует до AmplitudeVAD (~70-80% точность).
+///
+/// Использование:
+/// ```swift
+/// let vad = await makeVAD()
+/// ```
+func makeVAD(threshold: Float = VADResult.Constants.defaultThreshold) async -> any VADProtocol {
+    do {
+        let live = LiveSileroVAD(threshold: threshold)
+        // Пробуем загрузить модель — если нет, вернём fallback
+        _ = try await live.detectSpeech(
+            chunk: AVAudioPCMBuffer(),
+            timestamp: 0
+        )
+        return live
+    } catch VADError.modelNotFound {
+        let logger = Logger(subsystem: "HappySpeech", category: "SileroVAD")
+        logger.warning("SileroVAD.mlpackage not found — falling back to AmplitudeVAD (~70% accuracy)")
+        return AmplitudeVAD(energyThreshold: threshold * 0.02)
+    } catch {
+        return LiveSileroVAD(threshold: threshold)
+    }
+}
+
 // MARK: - Mock Implementation
 
 /// Мок для unit-тестов и Preview.
