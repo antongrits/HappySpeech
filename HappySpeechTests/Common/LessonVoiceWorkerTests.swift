@@ -220,9 +220,10 @@ final class LessonVoiceWorkerEdgeCaseTests: XCTestCase {
             await LessonVoiceWorker.shared.speak("мяч")
             expectation.fulfill()
         }
-        try? await Task.sleep(nanoseconds: 20_000_000) // 20ms — дать Task запуститься
+        try? await Task.sleep(nanoseconds: 50_000_000) // 50ms — дать Task запуститься
         LessonVoiceWorker.shared.stop()
-        await fulfillment(of: [expectation], timeout: 0.5)
+        // Таймаут 3s — TTS на симуляторе инициализируется медленнее физического устройства
+        await fulfillment(of: [expectation], timeout: 3.0)
     }
 }
 

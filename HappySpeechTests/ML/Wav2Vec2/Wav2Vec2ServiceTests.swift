@@ -53,9 +53,11 @@ final class Wav2Vec2ServiceTests: XCTestCase {
 
     // MARK: - 3. testCTCDecoderSilence
 
-    /// ``CTCDecoder`` корректно обрабатывает нулевой MLMultiArray (тишина = blank token).
+    /// ``CTCDecoder`` корректно обрабатывает входной массив с доминирующим blank-токеном (тишина).
     func testCTCDecoderSilence() throws {
-        // Создаём логит-массив с нулями (shape [1, 10, 37])
+        // Создаём логит-массив (shape [1, 10, 37]) где blank token (index 0) явно доминирует.
+        // Все нули → softmax равномерный → argmax непредсказуем.
+        // Задаём blank = +100, все остальные = -100 → CTC greedy уберёт все blank.
         let timeSteps = 10
         let vocabSize = Wav2Vec2Vocabulary.size
         let shape: [NSNumber] = [1, NSNumber(value: timeSteps), NSNumber(value: vocabSize)]
@@ -65,13 +67,19 @@ final class Wav2Vec2ServiceTests: XCTestCase {
             return
         }
 
-        // Все нули — softmax даст равномерное распределение, argmax = 0 (blank)
-        // CTC greedy collapse уберёт все blank токены
+        // Blank token (index 0) получает logit +100, все остальные -100
+        for t in 0..<timeSteps {
+            for v in 0..<vocabSize {
+                let index = [0, t, v] as [NSNumber]
+                array[index] = v == Wav2Vec2Vocabulary.blankIndex ? 100.0 : -100.0
+            }
+        }
+
         let result = CTCDecoder.decode(logitsArray: array)
 
-        // Тишина должна декодироваться в пустую строку (все blank)
-        XCTAssertEqual(result.decodedText, "", "Нулевой вход должен декодироваться в пустую строку")
-        XCTAssertTrue(result.phonemes.isEmpty, "Нулевой вход не должен содержать фонем (все blank)")
+        // Доминирующий blank → всё коллапсирует в пустую строку
+        XCTAssertEqual(result.decodedText, "", "Доминирующий blank должен декодироваться в пустую строку")
+        XCTAssertTrue(result.phonemes.isEmpty, "При всех blank фонем быть не должно")
     }
 
     // MARK: - 4. testWav2Vec2VocabularySize

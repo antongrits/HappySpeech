@@ -146,8 +146,7 @@ final class AuthFlowTests: FirebaseEmulatorTestsBase {
     func test_authEmulator_openApiSpec_available() async throws {
         let available = await checkAuthEmulatorAvailable()
         guard available else {
-            XCTExpectFailure("Auth emulator не запущен")
-            return
+            throw XCTSkip("Requires Firebase Auth Emulator running at localhost:9099")
         }
 
         guard let url = URL(string: "\(Self.authEmulatorHost)/emulator/openapi.json") else {
