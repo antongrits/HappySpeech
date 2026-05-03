@@ -82,7 +82,7 @@ M6 App Store      Sprint 12  tests+content DONE, Firestore deploy DONE, TestFlig
 - Total LOC: 75 582
 - Git коммитов: 125
 - Локализационных ключей: 1 381
-- Контент-айтемов: 6 265
+- Контент-айтемов: 6 959
 - BUILD: SUCCEEDED
 
 ### Выполнено в сессии (2026-04-25/26)
