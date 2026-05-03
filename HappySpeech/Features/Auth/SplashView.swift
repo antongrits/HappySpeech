@@ -71,6 +71,7 @@ struct SplashView: View {
         }
         .onAppear { animateIn() }
         .accessibilityLabel("HappySpeech. Загрузка...")
+        .accessibilityIdentifier("SplashRoot")
     }
 
     private var decorativeBackground: some View {

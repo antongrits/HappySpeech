@@ -74,6 +74,7 @@ struct OnboardingFlowView: View {
                     .ignoresSafeArea(edges: .bottom)
                 )
         }
+        .accessibilityIdentifier("OnboardingRoot")
         .environment(\.circuitContext, .kid)
         .task { await bootstrap() }
         .onChange(of: display.pendingCompleted) { _, value in
