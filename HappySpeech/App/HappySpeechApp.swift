@@ -137,11 +137,22 @@ struct HappySpeechApp: App {
             // cold_start_ms = (end_uptime - begin_uptime) * 1000
             HSLogger.app.info("ColdStart end uptime=\(ProcessInfo.processInfo.systemUptime, format: .fixed(precision: 3)) — Realm открыт")
 
+            // D.2 — FCM: wire notification handler for foreground/background + deep link.
+            // Вызываем только если Firebase активен (не testing, не placeholder plist).
+            let isTesting = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+            let isFirebaseActive = !isTesting && FirebaseApp.app() != nil
+            if isFirebaseActive {
+                FCMNotificationHandler.shared.attach(
+                    coordinator: coordinator,
+                    fcmService: container.fcmService
+                )
+                HSLogger.app.info("FCMNotificationHandler attached")
+            }
+
             // D.1 — Remote Config: fetch + activate + realtime updates.
             // Выполняется асинхронно после Realm open, не блокирует UI.
             // Ошибки fetch — graceful degradation на bundled defaults.
-            let isTesting = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
-            if !isTesting, FirebaseApp.app() != nil {
+            if isFirebaseActive {
                 Task {
                     do {
                         try await container.remoteConfigService.fetch()
