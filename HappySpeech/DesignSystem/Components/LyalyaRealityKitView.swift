@@ -701,7 +701,7 @@ extension LyalyaRealityKitView {
     LyalyaRealityKitView(state: .celebrating, mood: 1.0)
         .frame(width: 240, height: 240)
         .background(Color.yellow.opacity(0.15))
-        .clipShape(RoundedRectangle(cornerRadius: 24))
+        .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous))
 }
 
 #Preview("LyalyaRealityKitView — lip-sync visemes") {
