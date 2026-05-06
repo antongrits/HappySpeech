@@ -24,11 +24,11 @@ struct BreathingView: View {
         self.onComplete = onComplete
         let audioWorker = BreathingAudioWorker()
         let hapticWorker = BreathingHapticWorker(haptic: LiveHapticService())
-        let hkWorker: any BreathingHealthKitWorkerProtocol = MockBreathingHealthKitWorker()
+        let metricsWorker: any BreathingMetricsWorkerProtocol = LiveBreathingMetricsWorker()
         let interactor = BreathingInteractor(
             audioWorker: audioWorker,
             hapticWorker: hapticWorker,
-            healthKitWorker: hkWorker
+            metricsWorker: metricsWorker
         )
         let presenter = BreathingPresenter()
         interactor.presenter = presenter

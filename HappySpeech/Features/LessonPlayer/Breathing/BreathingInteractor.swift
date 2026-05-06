@@ -46,7 +46,7 @@ final class BreathingInteractor: BreathingBusinessLogic {
 
     private let audioWorker: any BreathingAudioWorkerProtocol
     private let hapticWorker: any BreathingHapticWorkerProtocol
-    private let healthKitWorker: any BreathingHealthKitWorkerProtocol
+    private let metricsWorker: any BreathingMetricsWorkerProtocol
     private let logger = HSLogger.audio
 
     // MARK: - Tuning
@@ -90,11 +90,11 @@ final class BreathingInteractor: BreathingBusinessLogic {
     init(
         audioWorker: any BreathingAudioWorkerProtocol,
         hapticWorker: any BreathingHapticWorkerProtocol,
-        healthKitWorker: any BreathingHealthKitWorkerProtocol = MockBreathingHealthKitWorker()
+        metricsWorker: any BreathingMetricsWorkerProtocol = LiveBreathingMetricsWorker()
     ) {
         self.audioWorker = audioWorker
         self.hapticWorker = hapticWorker
-        self.healthKitWorker = healthKitWorker
+        self.metricsWorker = metricsWorker
     }
 
     // MARK: - Scaffold contract
@@ -249,9 +249,10 @@ final class BreathingInteractor: BreathingBusinessLogic {
         await emitCurrentSnapshot()
         logger.info("Breathing: success score=\(score) duration=\(duration)")
 
-        // Логируем mindful session в Apple Health (parent opt-in, COPPA-safe).
+        // Локально логируем длительность сессии для in-app дашборда «Дыхание».
+        // HealthKit не используется (нет paid Apple Developer аккаунта).
         let sessionEnd = Date()
-        await healthKitWorker.logSessionIfEnabled(start: sessionStartDate, end: sessionEnd)
+        await metricsWorker.logSessionIfEnabled(start: sessionStartDate, end: sessionEnd)
     }
 
     private func fail(with reason: BreathingFailureReason) async {
