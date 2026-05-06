@@ -104,6 +104,15 @@ public final class AppContainer {
     // Actor-typed, lazy. Загружает модель при первом вызове transcribe. Graceful fallback на mock.
     private var _wav2Vec2Service: (any Wav2Vec2Service)?
 
+    // Block C v15: EnsembleASRService — weighted voting Tier A/B.
+    private var _ensembleASRService: (any EnsembleASRServiceProtocol)?
+
+    // Block C v15: SpeakerVerificationService — ECAPA d-vector, parent vs child.
+    private var _speakerVerificationService: (any SpeakerVerificationServiceProtocol)?
+
+    // Block C v15: EmotionDetectionService — Conv1d-LSTM 4 emotions.
+    private var _emotionDetectionService: (any EmotionDetectionServiceProtocol)?
+
     // Block M (v12): VoiceCloneService — placeholder, полная реализация post-v1.0.
     // Не требует factory — VoiceCloneServicePlaceholder легковесный struct без зависимостей.
     private var _voiceCloneService: (any VoiceCloneService)?
@@ -478,6 +487,38 @@ public final class AppContainer {
         return service
     }
 
+    // MARK: - Block C v15: Speech Service Wrappers
+
+    /// Ансамблевый ASR — взвешенное голосование Tier A (on-device) / Tier B (Whisper).
+    /// Kid circuit использует только Tier A (COPPA).
+    public var ensembleASRService: any EnsembleASRServiceProtocol {
+        if let existing = _ensembleASRService { return existing }
+        let service = LiveEnsembleASRService(
+            whisperASR: asrService,
+            phonemeClassifier: phonemeAnalysisService,
+            pronunciationScorer: pronunciationService
+        )
+        _ensembleASRService = service
+        return service
+    }
+
+    /// Верификация говорящего — ECAPA d-vector, parent vs child (COPPA-safe).
+    public var speakerVerificationService: any SpeakerVerificationServiceProtocol {
+        if let existing = _speakerVerificationService { return existing }
+        let service = LiveSpeakerVerificationService()
+        _speakerVerificationService = service
+        return service
+    }
+
+    /// Обнаружение эмоций — Conv1d-LSTM, 4 эмоции (happy/sad/frustrated/neutral).
+    /// Используется для адаптивного feedback Ляли в играх.
+    public var emotionDetectionService: any EmotionDetectionServiceProtocol {
+        if let existing = _emotionDetectionService { return existing }
+        let service = LiveEmotionDetectionService()
+        _emotionDetectionService = service
+        return service
+    }
+
     /// Библиотека анимированных историй. Singleton — создаётся один раз для всего приложения.
     public var storyLibrary: StoryLibrary { StoryLibrary.shared }
 
@@ -641,6 +682,10 @@ public extension AppContainer {
         container._biometricGateService = MockBiometricGateService(available: false, result: .fallback)
         // Block D v13: PhonemeAnalysis mock — без CoreML в preview/tests.
         container._phonemeAnalysisService = MockPhonemeAnalysisService()
+        // Block C v15: Speech Service Wrappers mock — без CoreML в preview/tests.
+        container._ensembleASRService = MockEnsembleASRService()
+        container._speakerVerificationService = MockSpeakerVerificationService()
+        container._emotionDetectionService = MockEmotionDetectionService()
         return container
     }
 }
