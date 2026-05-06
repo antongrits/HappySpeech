@@ -1,6 +1,25 @@
 import Foundation
 import OSLog
 
+// MARK: - ButterflyCatchInteractor
+//
+// VIP-thin Interactor (D.2 v15) — AR мини-игра «Поймай бабочку».
+//
+// Clean Swift поток:
+//   View (ARKit frame) → Interactor → Presenter → ViewModel → View
+//
+// AR зависимости:
+//   - TonguePostureClassifier: Core ML inference на ARFaceAnchor.blendShapes
+//     (jawOpen, mouthLeft, mouthRight и др.)
+//   - ARSCNViewDelegate: View передаёт blendshapes через scoreAttempt() на каждый кадр
+//
+// Бизнес-правила:
+//   - Бабочка «поймана» при confidence(blendshapes, posture) >= 0.6
+//   - Позы из цикла: smile / pucker / cupShape (подготовка артикуляции)
+//   - Позиции бабочек рандомизируются в диапазоне [0.1..0.9] × [0.15..0.45] экрана
+//
+// COPPA: нет сетевых вызовов, нет PII. Весь ML — on-device Core ML.
+
 @MainActor
 protocol ButterflyCatchBusinessLogic: AnyObject {
     func startGame(_ request: ButterflyCatchModels.StartGame.Request)

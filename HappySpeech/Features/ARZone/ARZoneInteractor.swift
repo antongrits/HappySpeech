@@ -2,6 +2,27 @@ import ARKit
 import Foundation
 import OSLog
 
+// MARK: - ARZoneInteractor
+//
+// VIP-thin Interactor (D.2 v15) — хаб AR-зоны (выбор AR-игры).
+//
+// Clean Swift поток:
+//   ARZoneView (навигация) → loadGames() / selectGame() → Presenter → View
+//
+// AR зависимости:
+//   - ARConfiguration.isSupported: проверка доступности ARKit на устройстве
+//   - ARFaceTrackingConfiguration: требует TrueDepth камеру (iPhone X+)
+//   - ARBodyTrackingConfiguration: требует LiDAR (iPhone 12 Pro+) — для PoseSequence
+//
+// Бизнес-правила:
+//   - loadGames() фильтрует игры по доступности AR на устройстве
+//   - selectFallback() предлагает 2D альтернативу если AR недоступен
+//   - refreshPlannerAdvice() обращается к AdaptivePlannerService (nil-safe)
+//   - Туториал показывается один раз (UserDefaults flag "ar.tutorial.shown")
+//
+// LLM: plannerService может использовать Tier A (on-device) для советов — COPPA-safe.
+// COPPA: нет сетевых вызовов. AR данные не покидают устройство.
+
 // MARK: - ARZoneBusinessLogic
 
 @MainActor

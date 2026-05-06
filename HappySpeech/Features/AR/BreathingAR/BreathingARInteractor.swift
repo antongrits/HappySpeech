@@ -1,6 +1,25 @@
 import Foundation
 import OSLog
 
+// MARK: - BreathingARInteractor
+//
+// VIP-thin Interactor (D.2 v15) — AR мини-игра «Сдуй одуванчик».
+//
+// Clean Swift поток:
+//   ARView (кадры + амплитуда микрофона) → updateFrame() → Presenter → View
+//
+// AR зависимости:
+//   - AirStreamDetector: анализирует jawOpen + cheekPuff blendshapes + AudioService amplitude
+//   - ARFaceAnchor.blendShapes: jawOpen (>0.4) + cheekPuff (>0.3) как признак выдоха
+//   - AVAudioEngine amplitude (16kHz mono): шум выдоха поверх AR сигнала
+//
+// Бизнес-правила:
+//   - 30 устойчивых кадров подряд (≈2с при 15fps) = один сдутый одуванчик
+//   - Оценка: ≥90% = 3 звезды, ≥60% = 2 звезды, иначе = 1 звезда
+//   - AirStreamDetector.reset() обязателен при каждом startGame
+//
+// COPPA: нет сетевых вызовов, нет PII. Весь ML — on-device Core ML.
+
 @MainActor
 protocol BreathingARBusinessLogic: AnyObject {
     func startGame(_ request: BreathingARModels.StartGame.Request)

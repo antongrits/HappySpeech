@@ -1,6 +1,26 @@
 import Foundation
 import OSLog
 
+// MARK: - ARMirrorInteractor
+//
+// VIP-thin Interactor (D.2 v15) — AR артикуляционное зеркало.
+//
+// Clean Swift поток:
+//   ARSCNViewDelegate (blendshapes) → View → updateFrame() → Presenter → View
+//
+// AR зависимости:
+//   - TonguePostureClassifier: Core ML inference на ARFaceAnchor.blendShapes
+//   - ARSCNView: live face mesh рендеринг (в View — не в Interactor)
+//   - Упражнения: Exercise.allCases (набор артикуляционных поз)
+//
+// Бизнес-правила:
+//   - confidence >= 0.6 начинает удержание; нужно держать ≥2с для засчёта
+//   - advanceToNextExercise() переключает на следующую позу в цикле
+//   - Среднее confidence по всем кадрам использует scoreAttempt()
+//   - Финальная оценка: avg ≥ 0.85 = 3 звезды
+//
+// COPPA: нет сетевых вызовов, нет PII. Face tracking — только on-device ARKit.
+
 // MARK: - ARMirrorBusinessLogic
 
 @MainActor

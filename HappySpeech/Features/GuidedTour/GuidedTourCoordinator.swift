@@ -3,6 +3,29 @@ import Observation
 import OSLog
 
 // MARK: - GuidedTourCoordinator
+//
+// D.3 v15 — Coordinator-only flow (нет VIP Interactor/Presenter/Router).
+//
+// Архитектурное обоснование:
+//   GuidedTour — это чисто навигационный оверлей поверх ChildHome/WorldMap.
+//   Нет бизнес-логики, нет сетевых вызовов, нет ML-инференса.
+//   Единственная «бизнес-операция» — persist completion flag в UserDefaults.
+//   Поэтому VIP здесь избыточен: Coordinator напрямую владеет состоянием
+//   и рендерит его через @Observable в SwiftUI.
+//
+// Coordinator ответственности:
+//   1. Управление шагами (TourStep array) — currentIndex, hasCompleted.
+//   2. Auto-advance таймер через Task + Task.sleep (отменяется на skip/next).
+//   3. Воспроизведение голоса Ляли через SoundServiceProtocol на каждый шаг.
+//   4. Персистенция: UserDefaults ключ "happyspeech.guidedTour.completed.v1".
+//   5. force-reset для QA (resetForTesting()).
+//
+// Интеграция в навигацию:
+//   - AppCoordinator инициализирует GuidedTourCoordinator и передаёт в окружение.
+//   - ChildHomeView наблюдает coordinator.isActive и показывает overlay.
+//   - NavigationStack НЕ используется — это sheet/overlay поверх текущего экрана.
+//
+// COPPA: нет сетевых вызовов, нет PII. SoundService воспроизводит только локальные аудио.
 
 /// Orchestrates progression through `TourSteps`: tracks current step, handles
 /// auto-advance timers, plays Lyalya voice-over on entry, persists completion
