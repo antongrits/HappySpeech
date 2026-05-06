@@ -7,6 +7,9 @@ import OSLog
 protocol AchievementsPresentationLogic: AnyObject {
     func presentAchievements(_ response: AchievementsModels.Load.Response)
     func presentUnlockedToast(_ response: AchievementsModels.ToastUnlocked.Response)
+    func presentNextAchievementProgress(_ response: AchievementsModels.NextAchievementProgress.Response)
+    func presentMotivationalMessage(_ response: AchievementsModels.MotivationalMessage.Response)
+    func presentShareAchievement(_ response: AchievementsModels.Share.Response)
 }
 
 // MARK: - AchievementsPresenter
@@ -61,6 +64,38 @@ final class AchievementsPresenter: AchievementsPresentationLogic {
         )
         view?.displayUnlockedToast(viewModel)
         logger.info("Toast: \(response.achievement.rawValue, privacy: .public)")
+    }
+
+    // MARK: - Present NextAchievementProgress
+
+    func presentNextAchievementProgress(_ response: AchievementsModels.NextAchievementProgress.Response) {
+        let p = response.progress
+        let title = String(localized: "achievement.title.\(p.achievementKey)")
+        let label = String(
+            format: String(localized: "achievements.progress.next.format"),
+            p.currentValue,
+            p.requiredValue
+        )
+        let vm = AchievementsModels.NextAchievementProgress.ViewModel(
+            achievementTitle: title,
+            progressFraction: p.fraction,
+            progressLabel: label
+        )
+        view?.displayNextAchievementProgress(vm)
+    }
+
+    // MARK: - Present MotivationalMessage
+
+    func presentMotivationalMessage(_ response: AchievementsModels.MotivationalMessage.Response) {
+        view?.displayMotivationalMessage(response.message)
+        logger.debug("motivationalMessage displayed для \(response.achievementKey, privacy: .public)")
+    }
+
+    // MARK: - Present ShareAchievement
+
+    func presentShareAchievement(_ response: AchievementsModels.Share.Response) {
+        view?.displayShareSheet(shareText: response.shareText, achievement: response.achievement)
+        logger.info("shareAchievement: \(response.achievement.rawValue, privacy: .public)")
     }
 
     // MARK: - Private helpers

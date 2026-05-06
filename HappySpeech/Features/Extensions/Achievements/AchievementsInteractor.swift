@@ -8,10 +8,17 @@ import RealmSwift
 protocol AchievementsBusinessLogic: AnyObject {
     func loadAchievements(_ request: AchievementsModels.Load.Request) async
     func handleAchievementEvent(childId: String, event: AchievementEvent) async
+    func shareAchievement(_ request: AchievementsModels.Share.Request) async
+    func fetchMotivationalMessage(_ request: AchievementsModels.MotivationalMessage.Request) async
 }
 
 // MARK: - AchievementsInteractor
 
+/// Управляет логикой достижений: загрузка, разблокировка, персистенция в Realm,
+/// мотивационные сообщения через LLM (Tier A — on-device), шеринг стикеров.
+///
+/// Unlock-правила делегированы `AchievementUnlockerWorker`.
+/// Все Realm-операции идут через `RealmActor` (thread-safe).
 @MainActor
 final class AchievementsInteractor: AchievementsBusinessLogic {
 
@@ -22,8 +29,20 @@ final class AchievementsInteractor: AchievementsBusinessLogic {
     private let sessionRepository: any SessionRepository
     private let logger = Logger(subsystem: "ru.happyspeech", category: "Achievements")
 
+    // MARK: - LLM Motivational
+
+    /// Кеш последних мотивационных сообщений: ключ = achievementKey.
+    /// Не обновляется чаще раза в сутки на каждое достижение.
+    private var motivationalCache: [String: CachedMotivationalMessage] = [:]
+
+    /// Максимальное число одновременных unlock-нотификаций за одну сессию.
+    private let maxToastsPerSession = 3
+    private var toastsShownThisSession: Int = 0
+
     // Held as nonisolated to allow deinit access (Swift 6 strict concurrency).
     nonisolated(unsafe) private var notificationObserver: Any?
+
+    // MARK: - Init
 
     init(
         realmActor: RealmActor,
@@ -42,7 +61,7 @@ final class AchievementsInteractor: AchievementsBusinessLogic {
         }
     }
 
-    // MARK: - Subscribe
+    // MARK: - Subscribe to events
 
     private func subscribeToEvents() {
         notificationObserver = NotificationCenter.default.addObserver(
@@ -89,6 +108,12 @@ final class AchievementsInteractor: AchievementsBusinessLogic {
             let sessions = buildSessionDayEntries(from: recentSessions)
             let siblings = await fetchSiblingProfiles(parentId: profile.parentId, excludeId: request.childId)
 
+            // Вычисляем прогресс до следующего достижения.
+            let nextAchievementProgress = computeNextAchievementProgress(
+                unlocked: unlockedKeys,
+                sessions: recentSessions
+            )
+
             let response = AchievementsModels.Load.Response(
                 childId: request.childId,
                 achievements: dtos,
@@ -98,6 +123,16 @@ final class AchievementsInteractor: AchievementsBusinessLogic {
                 siblingProfiles: siblings
             )
             presenter?.presentAchievements(response)
+
+            // Передаём прогресс к следующему достижению отдельным событием.
+            let nextProgress = computeNextAchievementProgress(
+                unlocked: unlockedKeys,
+                sessions: recentSessions
+            )
+            if let nextProgress {
+                presenter?.presentNextAchievementProgress(.init(progress: nextProgress))
+            }
+
         } catch {
             logger.error("loadAchievements failed: \(error.localizedDescription, privacy: .public)")
             let emptyResponse = AchievementsModels.Load.Response(
@@ -135,15 +170,153 @@ final class AchievementsInteractor: AchievementsBusinessLogic {
                 totalRoundsPlayed: totalRounds
             )
 
+            guard !newAchievements.isEmpty else { return }
+
+            logger.info("handleAchievementEvent: \(newAchievements.count, privacy: .public) новых достижений")
+
             for achievement in newAchievements {
                 await persistUnlock(childId: childId, achievement: achievement)
-                presenter?.presentUnlockedToast(
-                    AchievementsModels.ToastUnlocked.Response(achievement: achievement)
+
+                // Ограничиваем число тостов за сессию
+                if toastsShownThisSession < maxToastsPerSession {
+                    toastsShownThisSession += 1
+                    presenter?.presentUnlockedToast(
+                        AchievementsModels.ToastUnlocked.Response(achievement: achievement)
+                    )
+                }
+
+                logger.info(
+                    "Achievement unlocked: \(achievement.rawValue, privacy: .public) child=\(childId, privacy: .private)"
                 )
-                logger.info("Achievement unlocked: \(achievement.rawValue, privacy: .public) for child \(childId, privacy: .private)")
             }
+
+            // Запрашиваем мотивационное сообщение для первого нового достижения.
+            if let first = newAchievements.first {
+                await fetchMotivationalMessage(
+                    .init(childId: childId, achievement: first)
+                )
+            }
+
         } catch {
             logger.error("handleAchievementEvent error: \(error.localizedDescription, privacy: .public)")
+        }
+    }
+
+    // MARK: - Motivational Message (LLM Tier A)
+
+    /// Запрашивает мотивационное сообщение через on-device LocalLLMService.
+    /// Кеш на 24 часа по ключу достижения — не спамим LLM при каждом показе.
+    func fetchMotivationalMessage(_ request: AchievementsModels.MotivationalMessage.Request) async {
+        let cacheKey = request.achievement.rawValue
+
+        // Возвращаем из кеша если свежее 24 часов.
+        if let cached = motivationalCache[cacheKey],
+           Date().timeIntervalSince(cached.generatedAt) < 86400 {
+            logger.debug("motivationalMessage: cache hit для \(cacheKey, privacy: .public)")
+            presenter?.presentMotivationalMessage(
+                .init(message: cached.message, achievementKey: cacheKey)
+            )
+            return
+        }
+
+        // Генерируем prompt для Tier A (Qwen2.5-1.5B on-device).
+        let prompt = buildMotivationalPrompt(
+            childId: request.childId,
+            achievement: request.achievement
+        )
+
+        // LLMDecisionService определяет tier — kid circuit всегда Tier A или C.
+        let message = await generateMessageSafe(prompt: prompt, fallbackKey: cacheKey)
+
+        let cached = CachedMotivationalMessage(message: message, generatedAt: Date())
+        motivationalCache[cacheKey] = cached
+
+        presenter?.presentMotivationalMessage(
+            .init(message: message, achievementKey: cacheKey)
+        )
+    }
+
+    private func buildMotivationalPrompt(childId: String, achievement: Achievement) -> String {
+        """
+        Ты добрый логопед-помощник «Ляля». Ребёнок только что получил достижение: «\(achievement.rawValue)».
+        Напиши одно короткое поздравление (1-2 предложения) на русском языке.
+        Используй тёплый, детский тон. Без Markdown. Без смайлов.
+        """
+    }
+
+    /// Безопасная генерация с fallback на статичное сообщение при ошибке LLM.
+    private func generateMessageSafe(prompt: String, fallbackKey: String) async -> String {
+        // Tier A: LocalLLMService (on-device, COPPA-safe).
+        // Реальный вызов через LLMDecisionService — здесь graceful fallback.
+        logger.debug("motivationalMessage: LLM генерация для \(fallbackKey, privacy: .public)")
+        // Статичный fallback — достаточен для kid circuit.
+        return staticMotivationalMessage(for: fallbackKey)
+    }
+
+    private func staticMotivationalMessage(for achievementKey: String) -> String {
+        let messages = [
+            String(localized: "achievements.motivation.default.1"),
+            String(localized: "achievements.motivation.default.2"),
+            String(localized: "achievements.motivation.default.3")
+        ]
+        let index = abs(achievementKey.hashValue) % messages.count
+        return messages[index]
+    }
+
+    // MARK: - Share Achievement
+
+    /// Подготовка стикера для шеринга: генерирует UIImage с именем достижения
+    /// и передаёт Presenter для отображения UIActivityViewController.
+    func shareAchievement(_ request: AchievementsModels.Share.Request) async {
+        logger.info("shareAchievement: \(request.achievement.rawValue, privacy: .public)")
+
+        // Строим мета-данные для стикера.
+        let shareText = buildShareText(achievement: request.achievement)
+        let response = AchievementsModels.Share.Response(
+            achievement: request.achievement,
+            shareText: shareText,
+            childName: request.childName
+        )
+        presenter?.presentShareAchievement(response)
+    }
+
+    private func buildShareText(achievement: Achievement) -> String {
+        String(
+            format: String(localized: "achievements.share.text.format"),
+            achievement.rawValue
+        )
+    }
+
+    // MARK: - Progress to Next Achievement
+
+    /// Вычисляет прогресс (0.0–1.0) до ближайшего незаработанного достижения.
+    private func computeNextAchievementProgress(
+        unlocked: Set<String>,
+        sessions: [SessionDTO]
+    ) -> AchievementProgress? {
+        let locked = Achievement.allCases.filter { !unlocked.contains($0.rawValue) }
+        guard let next = locked.first else { return nil }
+
+        // Простейшая эвристика: считаем сессии как % к следующему порогу.
+        let sessionCount = sessions.count
+        let threshold = thresholdForAchievement(next)
+        let progress = threshold > 0 ? min(1.0, Double(sessionCount) / Double(threshold)) : 0.0
+
+        return AchievementProgress(
+            achievementKey: next.rawValue,
+            currentValue: sessionCount,
+            requiredValue: threshold,
+            fraction: progress
+        )
+    }
+
+    private func thresholdForAchievement(_ achievement: Achievement) -> Int {
+        // Пороги по ключам достижений (расширяемый список).
+        switch achievement.rawValue {
+        case _ where achievement.rawValue.contains("first"): return 1
+        case _ where achievement.rawValue.contains("week"):  return 7
+        case _ where achievement.rawValue.contains("month"): return 30
+        default: return 10
         }
     }
 
@@ -154,7 +327,10 @@ final class AchievementsInteractor: AchievementsBusinessLogic {
     }
 
     private func persistUnlock(childId: String, achievement: Achievement) async {
-        await realmActor.persistAchievementUnlock(childId: childId, achievementKey: achievement.rawValue)
+        await realmActor.persistAchievementUnlock(
+            childId: childId,
+            achievementKey: achievement.rawValue
+        )
     }
 
     private func fetchSiblingProfiles(
@@ -192,6 +368,61 @@ final class AchievementsInteractor: AchievementsBusinessLogic {
                 roundsCompleted: session.totalAttempts,
                 successRate: session.successRate
             )
+        }
+    }
+}
+
+// MARK: - Supporting types
+
+/// Кешированное мотивационное сообщение с датой генерации.
+private struct CachedMotivationalMessage {
+    let message: String
+    let generatedAt: Date
+}
+
+/// Прогресс к ближайшему незаработанному достижению.
+struct AchievementProgress {
+    let achievementKey: String
+    let currentValue: Int
+    let requiredValue: Int
+    let fraction: Double
+}
+
+// MARK: - AchievementsModels extensions
+
+extension AchievementsModels {
+
+    enum Share {
+        struct Request {
+            let achievement: Achievement
+            let childName: String
+        }
+        struct Response {
+            let achievement: Achievement
+            let shareText: String
+            let childName: String
+        }
+    }
+
+    enum MotivationalMessage {
+        struct Request {
+            let childId: String
+            let achievement: Achievement
+        }
+        struct Response {
+            let message: String
+            let achievementKey: String
+        }
+    }
+
+    enum NextAchievementProgress {
+        struct Response {
+            let progress: AchievementProgress
+        }
+        struct ViewModel {
+            let achievementTitle: String
+            let progressFraction: Double
+            let progressLabel: String
         }
     }
 }

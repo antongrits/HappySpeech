@@ -490,13 +490,22 @@ final class AchievementsDisplayProxy: AchievementsDisplayLogic {
 
     private let onDisplay: (AchievementsModels.Load.ViewModel) -> Void
     private let onToast: (AchievementsModels.ToastUnlocked.ViewModel) -> Void
+    private let onNextProgress: ((AchievementsModels.NextAchievementProgress.ViewModel) -> Void)?
+    private let onMotivationalMessage: ((String) -> Void)?
+    private let onShareSheet: ((String, Achievement) -> Void)?
 
     init(
         onDisplay: @escaping (AchievementsModels.Load.ViewModel) -> Void,
-        onToast: @escaping (AchievementsModels.ToastUnlocked.ViewModel) -> Void
+        onToast: @escaping (AchievementsModels.ToastUnlocked.ViewModel) -> Void,
+        onNextProgress: ((AchievementsModels.NextAchievementProgress.ViewModel) -> Void)? = nil,
+        onMotivationalMessage: ((String) -> Void)? = nil,
+        onShareSheet: ((String, Achievement) -> Void)? = nil
     ) {
         self.onDisplay = onDisplay
         self.onToast = onToast
+        self.onNextProgress = onNextProgress
+        self.onMotivationalMessage = onMotivationalMessage
+        self.onShareSheet = onShareSheet
     }
 
     func displayAchievements(_ viewModel: AchievementsModels.Load.ViewModel) {
@@ -505,6 +514,20 @@ final class AchievementsDisplayProxy: AchievementsDisplayLogic {
 
     func displayUnlockedToast(_ viewModel: AchievementsModels.ToastUnlocked.ViewModel) {
         onToast(viewModel)
+    }
+
+    func displayNextAchievementProgress(
+        _ viewModel: AchievementsModels.NextAchievementProgress.ViewModel
+    ) {
+        onNextProgress?(viewModel)
+    }
+
+    func displayMotivationalMessage(_ message: String) {
+        onMotivationalMessage?(message)
+    }
+
+    func displayShareSheet(shareText: String, achievement: Achievement) {
+        onShareSheet?(shareText, achievement)
     }
 }
 
