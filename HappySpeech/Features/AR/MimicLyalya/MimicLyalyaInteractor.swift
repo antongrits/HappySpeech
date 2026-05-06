@@ -1,6 +1,26 @@
 import Foundation
 import OSLog
 
+// MARK: - MimicLyalyaInteractor
+//
+// VIP-thin Interactor (D.2 v15) — AR игра «Повтори за Лялей».
+//
+// Clean Swift поток:
+//   ARKit (face blendshapes) + Vision (hand pose) → View → Interactor → Presenter → View
+//
+// AR зависимости:
+//   - TonguePostureClassifier: Core ML на ARFaceAnchor.blendShapes (лицевые позы)
+//   - HandPoseWorker: Vision VNDetectHumanHandPoseRequest (Block J — дополнительный жест)
+//   - Цикл поз: smile → pucker → cupShape → tongueUp → mushroom (5 логопедических упражнений)
+//
+// Бизнес-правила:
+//   - Чётные раунды = лицевые позы, нечётные = лицевые + жест руки
+//   - Совпадение позы при confidence > 0.65; оценка ≥ 0.85 = 3 звезды
+//   - HandPose: openPalm / point / fist / wave / thumbsUp — чередуются по раундам
+//   - Маскот «Ляля» анимируется через Rive state machine (в View, не здесь)
+//
+// COPPA: нет сетевых вызовов, нет PII. Face tracking — только on-device ARKit.
+
 @MainActor
 protocol MimicLyalyaBusinessLogic: AnyObject {
     func startGame(_ request: MimicLyalyaModels.StartGame.Request)

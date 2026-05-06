@@ -1,6 +1,25 @@
 import Foundation
 import OSLog
 
+// MARK: - SoundAndFaceInteractor
+//
+// VIP-thin Interactor (D.2 v15) — AR упражнение «Звук + Артикуляция».
+//
+// Clean Swift поток:
+//   ARView (blendshapes) + ASRService (transcript) → scoreAttempt() → Presenter → View
+//
+// AR зависимости:
+//   - TonguePostureClassifier: Core ML inference на ARFaceAnchor.blendShapes
+//   - WhisperKit ASR: транскрипт из AudioService (16kHz, 1-3 сек записи)
+//
+// Бизнес-правила:
+//   - Целевая артикуляция определяется звуком через posture(forSound:)
+//   - avgPostureConfidence: среднее по кадрам updateFrame()
+//   - Оценка: совпадение ASR + поза ≥ 0.6 = 3 звезды; одно из двух = 2; иначе = 1
+//   - Маппинг звук → поза: С/З = smile, Ш/Ж/Ч = cupShape, Р = mushroom, Л = tongueUp
+//
+// COPPA: ASR работает on-device (WhisperKit). Нет PII в транскриптах (только звуки/слоги).
+
 @MainActor
 protocol SoundAndFaceBusinessLogic: AnyObject {
     func startGame(_ request: SoundAndFaceModels.StartGame.Request)

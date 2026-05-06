@@ -1,6 +1,29 @@
 import Foundation
 import OSLog
 
+// MARK: - OfflineMiniGameInteractor
+//
+// VIP-thin Interactor (D.2 v15) — офлайн мини-игра для режима без сети.
+//
+// Clean Swift поток:
+//   OfflineStateView → OfflineMiniGameInteractor → Presenter → View
+//
+// Контекст использования:
+//   - Запускается автоматически когда OfflineStateInteractor.handleContinueOffline()
+//     определяет, что устройство оффлайн > 60 секунд
+//   - Не требует сетевого соединения — весь контент из Bundle / Realm
+//
+// Зависимости:
+//   - ContentEngine: загружает офлайн-контент (слова, звуки) из Bundle
+//   - Нет AR-зависимостей — простая карточная игра
+//
+// Бизнес-правила:
+//   - Максимальная длительность: 5 минут (фиксированная для офлайн-контекста)
+//   - Прогресс NOT сохраняется в Realm (офлайн-режим: нет гарантии sync)
+//   - Оценка: простая binary (правильно/неправильно) без stars
+//
+// COPPA: нет сетевых вызовов. Полностью offline-safe.
+
 // MARK: - OfflineMiniGameBusinessLogic
 
 @MainActor

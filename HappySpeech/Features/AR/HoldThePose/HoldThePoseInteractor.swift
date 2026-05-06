@@ -1,6 +1,25 @@
 import Foundation
 import OSLog
 
+// MARK: - HoldThePoseInteractor
+//
+// VIP-thin Interactor (D.2 v15) — AR упражнение «Удержи позу».
+//
+// Clean Swift поток:
+//   ARSCNViewDelegate.renderer(_:didUpdate:) → View → updateFrame() → Presenter → View
+//
+// AR зависимости:
+//   - TonguePostureClassifier: Core ML inference на ARFaceAnchor.blendShapes
+//   - Непрерывный поток кадров: ~15-30fps через ARSCNViewDelegate
+//
+// Бизнес-правила:
+//   - Удержание начинается когда confidence(posture) >= 0.6
+//   - Сброс удержания при падении confidence ниже порога
+//   - Оценка по avgConfidence: ≥0.85 = 3 звезды, 0.7-0.85 = 2, 0.5-0.7 = 1, иначе = 0
+//   - Целевое время удержания задаётся через StartGame.Request (по умолчанию 5с)
+//
+// COPPA: нет сетевых вызовов, нет PII. Весь ML — on-device Core ML.
+
 @MainActor
 protocol HoldThePoseBusinessLogic: AnyObject {
     func startGame(_ request: HoldThePoseModels.StartGame.Request)

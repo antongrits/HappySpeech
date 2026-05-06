@@ -2,6 +2,26 @@ import ARKit
 import Foundation
 import OSLog
 
+// MARK: - PoseSequenceInteractor
+//
+// VIP-thin Interactor (D.2 v15) — AR игра «Последовательность поз».
+//
+// Clean Swift поток:
+//   ARKit (face + body) → View → updateFrame() / updateBodyPose() → Presenter → View
+//
+// AR зависимости:
+//   - TonguePostureClassifier: face blendshapes → ArticulationPosture
+//   - ARBodyTrackingConfiguration: Vision skeleton (опционально, face-mode основной)
+//   - Двойной режим: face (артикуляция) + body (движение тела — Block J)
+//
+// Бизнес-правила:
+//   - Face mode: удержать posture ≥ 20 кадров подряд для перехода к следующей позе
+//   - Body mode: VNHumanBodyPoseObservation ключевые точки (плечи, локти, запястья)
+//   - Последовательность поз задаётся через StartGame.Request.postures
+//   - Оценка: отношение completed/total поз = stars (3 > 0.9, 2 > 0.6, 1 иначе)
+//
+// COPPA: нет сетевых вызовов, нет PII. Все ML — on-device ARKit + Core ML.
+
 // MARK: - PoseSequenceBusinessLogic
 
 @MainActor
