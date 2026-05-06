@@ -70,14 +70,18 @@ public extension MascotMood {
 ///
 /// ### Архитектура слоёв (снизу вверх в ZStack)
 ///
-/// 1. `LyalyaRealityKitView` — 3D маскот из `lyalya3d_v2.usdz` (RealityKit, nonAR)
+/// 1. `LyalyaRealityKitView` — 3D маскот из `lyalya3d_v2.usdz` (RealityKit, nonAR, прозрачный фон)
 /// 2. `MoodAuraView` — ambient radial glow под маскотом, цвет зависит от настроения
-/// 3. SF Symbol overlay — рука (.waving), стрелка (.pointing)
-/// 4. Entrance/bounce анимация: scale + opacity при появлении, shake при .encouraging
+/// 3. Entrance анимация: scale + opacity при появлении (только 3D blendshapes управляют состоянием)
 ///
 /// ### Lip-sync
 /// Real-time lip-sync через `audioAmplitude` → `LyalyaRealityKitView.mouthOpen`.
 /// При AR-сессии: `MascotLipSyncState` из environment переопределяет mouthOpen.
+///
+/// ### Состояния маскота
+/// Все переходы состояний (celebrating, encouraging, waving, pointing и т.д.) выполняются
+/// через 3D blendshapes / named entity transforms внутри `LyalyaRealityKitView`.
+/// 2D overlay-анимации удалены — 3D-рендер полностью отвечает за визуальное состояние.
 ///
 /// ## Пример
 /// ```swift
@@ -106,26 +110,14 @@ public struct HSMascotView: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    // Вертикальный bounce иллюстрации (bodyBounce) — применяется в illustrationLayer.
-    @State private var bodyBounce: CGFloat = 0
-
-    // v12: entrance / transition animation
+    // Entrance / transition animation (единственная 2D анимация — плавное появление)
     @State private var entranceScale: CGFloat = 0.85
     @State private var entranceOpacity: Double = 0
     @State private var moodTransitionID: Int = 0
 
-    // v12: encouraging shake
-    @State private var shakeOffset: CGFloat = 0
-
-    // v12: waving hand bounce
-    @State private var wavingHandScale: CGFloat = 1.0
-
-    // v12: pointing arrow pulse
-    @State private var arrowPulse: CGFloat = 1.0
-
     // 3D rendering: маскот Ляля рендерится через LyalyaRealityKitView (lyalya3d_v2.usdz).
-    // Rive (lyalya.riv) удалён в Phase 1.2 — был generic skills.riv.
-    // 2D Image fallback используется только при ошибке загрузки USDZ.
+    // Все состояния (encouraging shake, waving arm, celebrating jump) реализованы
+    // через named entity transforms в LyalyaRealityKitView.Coordinator.applyEmotionState.
 
     // MARK: - Init
 
@@ -145,48 +137,33 @@ public struct HSMascotView: View {
 
     public var body: some View {
         ZStack {
-            // Layer 3: ambient mood aura (под маскотом)
+            // Layer 1: ambient mood aura (под маскотом)
             if !reduceMotion {
                 MoodAuraView(mood: mood, size: size)
             }
 
-            // Layer 1: 2D illustration (mascot_lyalya_<state>)
+            // Layer 2: 3D маскот через LyalyaRealityKitView (прозрачный фон)
             illustrationLayer
                 .scaleEffect(entranceScale)
                 .opacity(entranceOpacity)
                 .id(moodTransitionID)
-
-            // Layer 6a: waving hand (только для waving)
-            if mood == .waving, !reduceMotion {
-                wavingHandOverlay
-            }
-
-            // Layer 6b: pointing arrow (только для pointing)
-            if mood == .pointing, !reduceMotion {
-                pointingArrowOverlay
-            }
         }
         .frame(width: size, height: size)
-        .offset(x: shakeOffset)
         .accessibilityLabel(accessibilityLabel)
         .accessibilityHidden(false)
         .onAppear {
             playEntrance()
-            if !reduceMotion { startFallbackAnimation() }
         }
         .onChange(of: mood) { _, _ in
             playMoodTransition()
-            if !reduceMotion { startFallbackAnimation() }
         }
-        // audioAmplitude принимается для совместимости API.
-        // Lip-sync визуально не применяется до интеграции кастомного Rive-файла.
     }
 
     // MARK: - Illustration Layer (3D RealityKit)
 
     /// Отображает 3D-маскот Лялю через `LyalyaRealityKitView` (`lyalya3d_v2.usdz`).
-    /// Fallback на 2D-иллюстрацию из Assets если RealityKit недоступен (визор/симулятор без Metal).
     /// Прозрачный фон обеспечен через `cameraMode: .nonAR` + `environment.background = .color(.clear)`.
+    /// Все состояния маскота управляются через 3D blendshapes / named entity transforms.
     @ViewBuilder
     private var illustrationLayer: some View {
         let amplitude = audioAmplitude?.wrappedValue ?? 0
@@ -199,66 +176,10 @@ public struct HSMascotView: View {
             viseme: viseme
         )
         .frame(width: size, height: size)
-        .offset(y: bodyBounce)
         .accessibilityHidden(true)
     }
 
-    // MARK: - Waving Hand Overlay (v12)
-
-    @ViewBuilder
-    private var wavingHandOverlay: some View {
-        Image(systemName: "hand.wave.fill")
-            .font(.system(size: size * 0.28))
-            .foregroundStyle(Color(hex: "#F97B50"))
-            .offset(x: size * 0.36, y: -size * 0.1)
-            .scaleEffect(wavingHandScale)
-            .rotationEffect(.degrees(wavingHandScale > 1.05 ? 12 : -6))
-            .onAppear {
-                withAnimation(
-                    MotionTokens.bounce.repeatCount(4, autoreverses: true)
-                ) {
-                    wavingHandScale = 1.18
-                }
-            }
-            .accessibilityHidden(true)
-    }
-
-    // MARK: - Pointing Arrow Overlay (v12)
-
-    @ViewBuilder
-    private var pointingArrowOverlay: some View {
-        let arrowAngle: Double = {
-            switch pointingDirection {
-            case .left:  return 180
-            case .right: return 0
-            case .up:    return -90
-            }
-        }()
-        let arrowOffset: CGSize = {
-            switch pointingDirection {
-            case .left:  return CGSize(width: -size * 0.44, height: 0)
-            case .right: return CGSize(width:  size * 0.44, height: 0)
-            case .up:    return CGSize(width: 0, height: -size * 0.44)
-            }
-        }()
-
-        Image(systemName: "arrowshape.right.fill")
-            .font(.system(size: size * 0.22))
-            .foregroundStyle(Color(hex: "#F97B50").opacity(0.9))
-            .offset(arrowOffset)
-            .rotationEffect(.degrees(arrowAngle))
-            .scaleEffect(arrowPulse)
-            .onAppear {
-                withAnimation(
-                    MotionTokens.bounce.repeatForever(autoreverses: true)
-                ) {
-                    arrowPulse = 1.22
-                }
-            }
-            .accessibilityHidden(true)
-    }
-
-    // MARK: - Entrance animation (v12)
+    // MARK: - Entrance animation
 
     private func playEntrance() {
         guard !reduceMotion else {
@@ -274,83 +195,14 @@ public struct HSMascotView: View {
         }
     }
 
-    // MARK: - Mood transition (v12)
+    // MARK: - Mood transition
 
     private func playMoodTransition() {
         guard !reduceMotion else { return }
         moodTransitionID += 1
-
-        if mood == .encouraging {
-            playEncouragingShake()
-        }
-
         withAnimation(MotionTokens.bounce) {
             entranceScale = 1.0
             entranceOpacity = 1.0
-        }
-    }
-
-    // MARK: - Encouraging shake (v12 — мягкое покачивание вместо вспышек)
-
-    private func playEncouragingShake() {
-        let moves: [CGFloat] = [-6, 6, -4, 4, -2, 2, 0]
-        var delay = 0.0
-        for offset in moves {
-            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-                withAnimation(.easeInOut(duration: MotionTokens.Duration.instant)) {
-                    shakeOffset = offset
-                }
-            }
-            delay += MotionTokens.Duration.instant
-        }
-    }
-
-    // MARK: - Illustration bounce animations
-
-    /// Анимирует вертикальный bounce иллюстрации в зависимости от настроения.
-    private func startFallbackAnimation() {
-        bodyBounce = 0
-
-        switch mood {
-        case .idle:
-            withAnimation(MotionTokens.idlePulse) {
-                bodyBounce = 0
-            }
-
-        case .happy, .encouraging:
-            withAnimation(MotionTokens.bounce.repeatCount(4, autoreverses: true)) {
-                bodyBounce = -8
-            }
-
-        case .celebrating:
-            withAnimation(MotionTokens.bounce.repeatForever(autoreverses: true)) {
-                bodyBounce = -10
-            }
-
-        case .thinking:
-            withAnimation(.easeInOut(duration: 2.2).repeatForever(autoreverses: true)) {
-                bodyBounce = 3
-            }
-
-        case .sad:
-            withAnimation(.easeInOut(duration: 2.5).repeatForever(autoreverses: true)) {
-                bodyBounce = 4
-            }
-
-        case .waving:
-            withAnimation(MotionTokens.bounce.repeatCount(3, autoreverses: true)) {
-                bodyBounce = -6
-            }
-
-        case .explaining, .singing:
-            withAnimation(MotionTokens.spring.repeatForever(autoreverses: true)) {
-                bodyBounce = -4
-            }
-
-        case .pointing:
-            withAnimation(MotionTokens.outQuick) {
-                bodyBounce = 0
-            }
         }
     }
 
@@ -372,7 +224,7 @@ public struct HSMascotView: View {
     }
 }
 
-// MARK: - MoodAuraView (v12 — ambient glow под маскотом)
+// MARK: - MoodAuraView (ambient glow под маскотом)
 
 /// Радиальный градиент-halo под маскотом — цвет и непрозрачность зависят от состояния.
 /// Reduced Motion: не отображается.
@@ -495,7 +347,7 @@ extension MascotMood: CaseIterable {
     .padding()
 }
 
-#Preview("v12 — частицы и аура") {
+#Preview("Настроения маскота") {
     @Previewable @State var selectedMood: MascotMood = .celebrating
 
     VStack(spacing: 20) {
