@@ -24311,6 +24311,266 @@
           }
         }
       }
+    },
+    "customization.outfit.everyday": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повседневный"
+          }
+        }
+      }
+    },
+    "customization.outfit.beach": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пляж"
+          }
+        }
+      }
+    },
+    "customization.outfit.winter": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зима"
+          }
+        }
+      }
+    },
+    "customization.outfit.school": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Школа"
+          }
+        }
+      }
+    },
+    "customization.outfit.birthday": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "День рождения"
+          }
+        }
+      }
+    },
+    "customization.outfit.space": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Космос"
+          }
+        }
+      }
+    },
+    "customization.hair.golden": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Золотистые"
+          }
+        }
+      }
+    },
+    "customization.hair.chestnut": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Каштановые"
+          }
+        }
+      }
+    },
+    "customization.hair.black": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чёрные"
+          }
+        }
+      }
+    },
+    "customization.hair.pink": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Розовые"
+          }
+        }
+      }
+    },
+    "customization.hair.cyan": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Бирюзовые"
+          }
+        }
+      }
+    },
+    "customization.eye.blue": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Голубые"
+          }
+        }
+      }
+    },
+    "customization.eye.green": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зелёные"
+          }
+        }
+      }
+    },
+    "customization.eye.brown": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Карие"
+          }
+        }
+      }
+    },
+    "customization.skintone.light": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Светлый"
+          }
+        }
+      }
+    },
+    "customization.skintone.medium": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Средний"
+          }
+        }
+      }
+    },
+    "customization.skintone.dark": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тёмный"
+          }
+        }
+      }
+    },
+    "customization.accessory.glasses": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Очки"
+          }
+        }
+      }
+    },
+    "customization.accessory.hat": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шапка"
+          }
+        }
+      }
+    },
+    "customization.accessory.bow": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Бабочка"
+          }
+        }
+      }
+    },
+    "customization.accessory.bag": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сумка"
+          }
+        }
+      }
+    },
+    "customization.background.bedroom": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спальня"
+          }
+        }
+      }
+    },
+    "customization.background.garden": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сад"
+          }
+        }
+      }
+    },
+    "customization.background.school": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Школа"
+          }
+        }
+      }
+    },
+    "customization.background.ocean": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Океан"
+          }
+        }
+      }
+    },
+    "customization.background.forest": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лес"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
