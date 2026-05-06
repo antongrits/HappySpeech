@@ -9,6 +9,10 @@ protocol ProgramEditorPresentationLogic: AnyObject {
     func presentRemoveBlock(_ response: ProgramEditorModels.RemoveBlock.Response) async
     func presentMoveBlock(_ response: ProgramEditorModels.MoveBlock.Response) async
     func presentSaveProgram(_ response: ProgramEditorModels.SaveProgram.Response) async
+    // D.1 v15
+    func presentValidation(_ response: ProgramEditorModels.ValidateProgram.Response) async
+    func presentValidationWarning(_ response: ProgramEditorModels.ValidationWarning.Response) async
+    func presentAssignToChild(_ response: ProgramEditorModels.AssignToChild.Response) async
 }
 
 // MARK: - ProgramEditorPresenter
@@ -23,21 +27,25 @@ final class ProgramEditorPresenter: ProgramEditorPresentationLogic {
         let vm = ProgramEditorModels.LoadProgram.ViewModel(
             blocks: response.program.blocks,
             totalDurationMinutes: total,
-            isValid: Self.isValid(response.program.blocks)
+            isValid: Self.isValid(response.program.blocks),
+            validationWarnings: response.validationWarnings
         )
         display?.displayLoadProgram(vm)
     }
 
     func presentAddBlock(_ response: ProgramEditorModels.AddBlock.Response) async {
-        let total = response.updatedBlocks.map(\.durationMinutes).reduce(0, +)
-        display?.displayAddBlock(.init(blocks: response.updatedBlocks,
-                                       totalDurationMinutes: total))
+        display?.displayAddBlock(.init(
+            blocks: response.updatedBlocks,
+            totalDurationMinutes: response.totalDurationMinutes,
+            validationWarnings: response.validationWarnings
+        ))
     }
 
     func presentRemoveBlock(_ response: ProgramEditorModels.RemoveBlock.Response) async {
-        let total = response.updatedBlocks.map(\.durationMinutes).reduce(0, +)
-        display?.displayRemoveBlock(.init(blocks: response.updatedBlocks,
-                                          totalDurationMinutes: total))
+        display?.displayRemoveBlock(.init(
+            blocks: response.updatedBlocks,
+            totalDurationMinutes: response.totalDurationMinutes
+        ))
     }
 
     func presentMoveBlock(_ response: ProgramEditorModels.MoveBlock.Response) async {
@@ -54,6 +62,37 @@ final class ProgramEditorPresenter: ProgramEditorPresentationLogic {
             )
         )
         display?.displaySaveProgram(vm)
+    }
+
+    // MARK: - D.1 v15 — новые методы
+
+    func presentValidation(_ response: ProgramEditorModels.ValidateProgram.Response) async {
+        let summary: String
+        if response.isValid {
+            summary = String(localized: "program_editor.validation.valid")
+        } else {
+            summary = response.errors.joined(separator: "\n")
+        }
+        display?.displayValidation(ProgramEditorModels.ValidateProgram.ViewModel(
+            isValid: response.isValid,
+            summary: summary,
+            warnings: response.warnings,
+            totalDurationMinutes: response.totalDurationMinutes
+        ))
+    }
+
+    func presentValidationWarning(_ response: ProgramEditorModels.ValidationWarning.Response) async {
+        display?.displayValidationWarning(response.message)
+    }
+
+    func presentAssignToChild(_ response: ProgramEditorModels.AssignToChild.Response) async {
+        let message = response.success
+            ? String(localized: "program_editor.assign.success")
+            : response.errorMessage ?? String(localized: "program_editor.assign.failure")
+        display?.displayAssignToChild(ProgramEditorModels.AssignToChild.ViewModel(
+            success: response.success,
+            message: message
+        ))
     }
 
     // MARK: - Validation

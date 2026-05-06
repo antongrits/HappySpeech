@@ -22,11 +22,18 @@ enum ProgramEditorModels {
         struct Response {
             let program: Program
             let availableBlockTypes: [ProgramBlockType]
+            let validationWarnings: [String]
+            init(program: Program, availableBlockTypes: [ProgramBlockType], validationWarnings: [String] = []) {
+                self.program = program
+                self.availableBlockTypes = availableBlockTypes
+                self.validationWarnings = validationWarnings
+            }
         }
         struct ViewModel: Equatable {
             let blocks: [ProgramBlock]
             let totalDurationMinutes: Int
             let isValid: Bool
+            let validationWarnings: [String]
         }
     }
 
@@ -38,10 +45,20 @@ enum ProgramEditorModels {
             let durationMinutes: Int
             let targetSound: String?
         }
-        struct Response { let updatedBlocks: [ProgramBlock] }
+        struct Response {
+            let updatedBlocks: [ProgramBlock]
+            let validationWarnings: [String]
+            let totalDurationMinutes: Int
+            init(updatedBlocks: [ProgramBlock], validationWarnings: [String] = [], totalDurationMinutes: Int = 0) {
+                self.updatedBlocks = updatedBlocks
+                self.validationWarnings = validationWarnings
+                self.totalDurationMinutes = totalDurationMinutes
+            }
+        }
         struct ViewModel: Equatable {
             let blocks: [ProgramBlock]
             let totalDurationMinutes: Int
+            let validationWarnings: [String]
         }
     }
 
@@ -49,7 +66,16 @@ enum ProgramEditorModels {
 
     enum RemoveBlock {
         struct Request { let blockId: UUID }
-        struct Response { let updatedBlocks: [ProgramBlock] }
+        struct Response {
+            let updatedBlocks: [ProgramBlock]
+            let validationWarnings: [String]
+            let totalDurationMinutes: Int
+            init(updatedBlocks: [ProgramBlock], validationWarnings: [String] = [], totalDurationMinutes: Int = 0) {
+                self.updatedBlocks = updatedBlocks
+                self.validationWarnings = validationWarnings
+                self.totalDurationMinutes = totalDurationMinutes
+            }
+        }
         struct ViewModel: Equatable {
             let blocks: [ProgramBlock]
             let totalDurationMinutes: Int
@@ -60,7 +86,14 @@ enum ProgramEditorModels {
 
     enum MoveBlock {
         struct Request { let blockId: UUID; let targetIndex: Int }
-        struct Response { let updatedBlocks: [ProgramBlock] }
+        struct Response {
+            let updatedBlocks: [ProgramBlock]
+            let validationWarnings: [String]
+            init(updatedBlocks: [ProgramBlock], validationWarnings: [String] = []) {
+                self.updatedBlocks = updatedBlocks
+                self.validationWarnings = validationWarnings
+            }
+        }
         struct ViewModel: Equatable {
             let blocks: [ProgramBlock]
         }
