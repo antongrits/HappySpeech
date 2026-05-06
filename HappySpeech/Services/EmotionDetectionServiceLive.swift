@@ -172,7 +172,6 @@ public actor LiveEmotionDetectionService: EmotionDetectionServiceProtocol {
 
             // 5. Собираем результат
             return buildResult(from: scores)
-
         } catch {
             logger.error("EmotionDetection: ошибка inference: \(error.localizedDescription)")
             return neutralResult()

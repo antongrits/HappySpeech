@@ -427,4 +427,3 @@ extension SharePlay {
 extension SharePlayPresentationLogic {
     func presentSessionStats(_ response: SharePlay.SessionStats.Response) {}
 }
-

@@ -149,7 +149,7 @@ struct ProgramEditorView: View {
             await interactor?.saveProgram(.init(
                 childId: childId, blocks: blocks, notes: notes
             ))
-            if let program = interactor?._currentProgram() {
+            if let program = interactor?.currentProgramSnapshot() {
                 onSaved(program)
             }
         }

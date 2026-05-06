@@ -195,8 +195,10 @@ final class SoftOnsetInteractor {
         )
 
         display.attackTimeMs = attackTimeMs
+        let classStr = String(describing: classification)
+        let diffStr = self.difficulty.rawValue
         logger.info(
-            "SoftOnset analysis: attackMs=\(attackTimeMs, privacy: .public) class=\(String(describing: classification), privacy: .public) diff=\(self.difficulty.rawValue, privacy: .public)"
+            "SoftOnset attackMs:\(attackTimeMs, privacy: .public) class:\(classStr, privacy: .public) diff:\(diffStr, privacy: .public)"
         )
 
         switch classification {

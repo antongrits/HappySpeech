@@ -299,10 +299,8 @@ public enum SoundProgressAggregator {
         let all = sessions.flatMap(\.attempts)
         var seen = OrderedSet<String>()
         var unique: [AttemptDTO] = []
-        for attempt in all {
-            if seen.append(attempt.id).inserted {
-                unique.append(attempt)
-            }
+        for attempt in all where seen.append(attempt.id).inserted {
+            unique.append(attempt)
         }
         return Array(
             unique

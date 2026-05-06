@@ -200,7 +200,7 @@ struct FamilyCalendarView: View {
                             let animation: Animation = reduceMotion
                                 ? .easeInOut(duration: 0.15)
                                 : MotionTokens.spring
-                            withAnimation(animation) { () -> Void in
+                            withAnimation(animation) {
                                 Task { await scene?.interactor.selectChild(request: .init(childId: childId)) }
                             }
                         }

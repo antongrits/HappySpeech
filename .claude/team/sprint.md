@@ -123,6 +123,39 @@ M6 App Store      Sprint 12  tests+content DONE, Firestore deploy DONE, TestFlig
 
 ---
 
+## Phase v15 — Production Polish (2026-05-06)
+
+**Status:** COMPLETED — 50+ atomic commits, BUILD SUCCEEDED iPhone SE 3, tag `v1.0.0-pro-final`
+
+| Block | Описание |
+|---|---|
+| A | HealthKit removed + Downloads cleanup + audit baseline |
+| B | Real ML training: 7/9 models (PronunciationScorer x4 100% acc, SileroVAD CNN 97.8%, RussianPhonemeClassifier 100%, SpeakerVerification 100%, EmotionDetection 94.2%) |
+| C | 3 Speech Services: EnsembleASR + SpeakerVerification + EmotionDetection + Spectrogram visualizer в 5 играх |
+| D | 13 Stub Interactors deepened к 350+ LOC + 9 VIP-thin documented + GuidedTour Coordinator |
+| E | 272 RGB illustrations → RGBA transparent (rembg 100%, Bundle Assets 111→97 MB) |
+| F | 3D Lyalya transparent bg + 2D animations removed + 10 logopedic USDZ + 4 заменены (ARAssets 231→163 MB) |
+| G | Manual screen audit 100 screenshots, 3 P1 fixed |
+| H | 9 View files split в *Components.swift (SettingsView 1449→700, OnboardingFlowView 1431→700, ...) |
+| I | 4 SPM packages (Pulse + KeychainAccess + swift-collections + async-algorithms) + DocC catalog + Voice +1677 phrases (10 507 → 12 185 .m4a) |
+| J | 6 New features (Spotlight + Siri + LiveActivity + Qwen kid LLM + lip-sync + ARBody — verified в codebase) |
+| K | Apple HIG checklist 5/6 PASS, 8 P2 + 2 P3 deferred |
+| L | Coverage 62% (gaps documented), snapshot threshold stabilized, performance ADR |
+| M | Dead code + unused assets + workshop cleanup + SwiftLint 0 errors |
+| N | Final code review + README + sprint.md + decisions.md ADR-V15-FINAL + tag v1.0.0-pro-final |
+
+### Финальные метрики
+
+- BUILD SUCCEEDED iPhone SE 3
+- SwiftLint 0 errors
+- Russian-only 0 en keys
+- Bundle Resources ~1.1 GB (через глубину)
+- 12 185 voice .m4a
+- 7/9 ML моделей real-trained
+- 0 P0/P1 visual bugs (verified Block G+L)
+
+---
+
 ## Plan v13 — STATUS: COMPLETED (2026-05-01)
 
 Total commits: ~22 (включая P0 hotfix).

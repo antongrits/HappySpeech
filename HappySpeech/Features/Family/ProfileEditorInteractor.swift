@@ -80,7 +80,6 @@ final class ProfileEditorInteractor {
             presenter?.presentSoundProgress(
                 ProfileEditor.SoundProgressResponse(items: soundProgress)
             )
-
         } catch {
             logger.error("ProfileEditorInteractor: load failed \(error.localizedDescription, privacy: .public)")
             presenter?.presentError(error)
@@ -173,7 +172,6 @@ final class ProfileEditorInteractor {
                 "ProfileEditorInteractor: saved child '\(trimmedName, privacy: .private)'"
             )
             presenter?.presentSaved(ProfileEditor.SaveResponse(success: true, errorMessage: nil))
-
         } catch {
             logger.error("ProfileEditorInteractor: save failed \(error.localizedDescription, privacy: .public)")
             presenter?.presentSaved(ProfileEditor.SaveResponse(
@@ -386,7 +384,7 @@ final class ProfileEditorInteractor {
         case ..<0.4:   return .beginning
         case 0.4..<0.7: return .developing
         case 0.7..<0.9: return .proficient
-        default:        return .mastered
+        default: return .achieved
         }
     }
 
@@ -452,7 +450,7 @@ extension ProfileEditor {
         let warnings: [String]
     }
 
-    struct AddTargetSoundRequest    { let sound: String }
+    struct AddTargetSoundRequest { let sound: String }
     struct RemoveTargetSoundRequest { let sound: String }
 
     struct SoundProgressResponse {
@@ -467,17 +465,17 @@ extension ProfileEditor {
     }
 
     enum ProgressLevel: String {
-        case beginning  = "beginning"
-        case developing = "developing"
-        case proficient = "proficient"
-        case mastered   = "mastered"
+        case beginning
+        case developing
+        case proficient
+        case achieved
 
         var localizedLabel: String {
             switch self {
-            case .beginning:  return String(localized: "progress.level.beginning")
+            case .beginning: return String(localized: "progress.level.beginning")
             case .developing: return String(localized: "progress.level.developing")
             case .proficient: return String(localized: "progress.level.proficient")
-            case .mastered:   return String(localized: "progress.level.mastered")
+            case .achieved: return String(localized: "progress.level.mastered")
             }
         }
     }

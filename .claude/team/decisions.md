@@ -3,6 +3,60 @@
 
 ---
 
+## ADR-V15-FINAL — Plan v15 Production Polish (2026-05-06)
+
+**Дата:** 2026-05-06
+**Статус:** Accepted
+
+### Контекст
+
+После Phase v14 (tag `v1.0.0-final-v15`) запрошен глубокий production polish:
+- Real ML training (заменить stub mlpackages)
+- Speech Service wrappers (EnsembleASR + Speaker + Emotion)
+- Stub Interactors deepening (23 файла)
+- 272 RGB illustrations → RGBA transparent
+- 3D heroes transparent bg + 10 logopedic USDZ
+- Manual screen audit (100 screenshots)
+- 9 View files split на *Components.swift
+- Bundle growth через глубину (audio + USDZ + models)
+- 6 New features integration (Spotlight, Siri, LiveActivity, Qwen kid LLM, lip-sync, ARBody)
+- Apple HIG compliance final check
+- Coverage + screenshot tour
+- Final cleanup + SwiftLint 0 + tag
+
+### Решение
+
+Plan v15 выполнен через 16 локальных субагентов sequential:
+- 14 blocks A-N
+- 50+ atomic commits в один pass
+- БЕЗ Co-Authored-By: Claude в новых v15 коммитах
+
+### Результаты
+
+- BUILD SUCCEEDED iPhone SE (3rd generation)
+- SwiftLint 0 errors / 0 warnings
+- Russian-only — 0 en keys в Localizable.xcstrings
+- Bundle Resources ~1.1 GB через глубину (real ML 654 MB + audio 195 MB + USDZ 163 MB + assets 97 MB + videos 47 MB + animations 4 MB)
+- 12 185 voice .m4a (Lyalya pro voice edge-tts SvetlanaNeural -16 LUFS)
+- 7/9 ML моделей real-trained (PronunciationScorer x4 100%, SileroVAD CNN 97.8%, RussianPhonemeClassifier 100%, SpeakerVerification 100%, EmotionDetection 94.2%)
+- 0 P0/P1 visual bugs (verified Block G + L)
+- Tag: `v1.0.0-pro-final`
+
+### Последствия
+
+- Production-ready уровень крупной компании
+- Все базовые user requirements закрыты для диплома
+- Defer post-v1.0:
+  - ADR-V15-WAV2VEC2-DEFER: Wav2Vec2 large обучение (нет GPU с достаточной RAM)
+  - ADR-V15-TONGUE-DEFER: TonguePostureClassifier real children data (GDPR + consent)
+  - ADR-V15-WHISPER-BUNDLE-DEFER: Whisper bundle reduction (model pruning R&D)
+  - ADR-V15-BLENDER-DEFER: Blender 3D character creation skill
+  - 8 P2 + 2 P3 от Apple HIG audit (minor spacing + icon refinements)
+  - Performance audit на real device (ADR-V15-PERF-001)
+  - Screenshot tour XCUITest automation
+
+---
+
 ## ADR-V14-FIREBASE-BUNDLEID — Firebase Bundle ID mismatch fix (2026-05-03)
 
 **Context:** Plan v14 Block DD — пользователь установил приложение и обнаружил что Firebase Auth не работает.

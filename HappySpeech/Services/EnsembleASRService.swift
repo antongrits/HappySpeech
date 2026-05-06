@@ -195,7 +195,9 @@ public final class LiveEnsembleASRService: EnsembleASRServiceProtocol, @unchecke
             + Self.tierBScorerWeight * scorerConfidence
 
         let elapsed = Int(Date().timeIntervalSince(start) * 1000)
-        logger.info("EnsembleASR Tier B: whisper=\(whisperConfidence), phoneme=\(phonemeConfidence), scorer=\(scorerConfidence), ensemble=\(ensembleConfidence), elapsed=\(elapsed)мс")
+        logger.info(
+            "EnsembleASR B w:\(whisperConfidence) ph:\(phonemeConfidence) sc:\(scorerConfidence) ens:\(ensembleConfidence) \(elapsed)мс"
+        )
 
         return EnsembleASRResult(
             transcript: transcript,
