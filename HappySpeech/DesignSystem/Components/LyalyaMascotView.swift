@@ -415,5 +415,5 @@ extension LyalyaState: Equatable {}
     LyalyaMascotView(state: .celebrating, size: 200)
         .padding(40)
         .background(Color.yellow.opacity(0.15))
-        .clipShape(RoundedRectangle(cornerRadius: 24))
+        .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous))
 }
