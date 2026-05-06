@@ -72,6 +72,8 @@ final class ARSnapshotTests: XCTestCase {
 
     func test_mimicLyalya_smoke() throws {
         let view = MimicLyalyaView()
+            .environment(AppContainer.preview())
+            .environment(AppCoordinator())
         try record(view, screen: "AR_MimicLyalyaSmoke")
     }
 
