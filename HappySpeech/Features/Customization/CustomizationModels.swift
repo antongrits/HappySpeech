@@ -14,7 +14,13 @@ public enum LyalyaSkin: String, CaseIterable, Identifiable, Sendable {
     public var id: String { rawValue }
 
     public var localizedName: String {
-        String(localized: String.LocalizationValue("customization.skin.\(rawValue)"))
+        switch self {
+        case .classic:    return String(localized: "customization.skin.classic")
+        case .princess:   return String(localized: "customization.skin.princess")
+        case .scientist:  return String(localized: "customization.skin.scientist")
+        case .athlete:    return String(localized: "customization.skin.athlete")
+        case .artist:     return String(localized: "customization.skin.artist")
+        }
     }
 
     public var illustrationName: String { "lyalya_\(rawValue)" }
@@ -34,7 +40,14 @@ public enum LyalyaOutfit: String, CaseIterable, Identifiable, Sendable {
     public var id: String { rawValue }
 
     public var localizedName: String {
-        String(localized: String.LocalizationValue("customization.outfit.\(rawValue)"))
+        switch self {
+        case .everyday:  return String(localized: "customization.outfit.everyday")
+        case .beach:     return String(localized: "customization.outfit.beach")
+        case .winter:    return String(localized: "customization.outfit.winter")
+        case .school:    return String(localized: "customization.outfit.school")
+        case .birthday:  return String(localized: "customization.outfit.birthday")
+        case .space:     return String(localized: "customization.outfit.space")
+        }
     }
 
     public var illustrationName: String { "lyalya_outfit_\(rawValue)" }
@@ -86,7 +99,13 @@ public enum LyalyaHairColor: String, CaseIterable, Identifiable, Sendable {
     public var id: String { rawValue }
 
     public var localizedName: String {
-        String(localized: String.LocalizationValue("customization.hair.\(rawValue)"))
+        switch self {
+        case .golden:   return String(localized: "customization.hair.golden")
+        case .chestnut: return String(localized: "customization.hair.chestnut")
+        case .black:    return String(localized: "customization.hair.black")
+        case .pink:     return String(localized: "customization.hair.pink")
+        case .cyan:     return String(localized: "customization.hair.cyan")
+        }
     }
 
     public var previewColor: Color {
@@ -110,7 +129,11 @@ public enum LyalyaEyeColor: String, CaseIterable, Identifiable, Sendable {
     public var id: String { rawValue }
 
     public var localizedName: String {
-        String(localized: String.LocalizationValue("customization.eye.\(rawValue)"))
+        switch self {
+        case .blue:  return String(localized: "customization.eye.blue")
+        case .green: return String(localized: "customization.eye.green")
+        case .brown: return String(localized: "customization.eye.brown")
+        }
     }
 
     public var previewColor: Color {
@@ -132,7 +155,11 @@ public enum LyalyaSkinTone: String, CaseIterable, Identifiable, Sendable {
     public var id: String { rawValue }
 
     public var localizedName: String {
-        String(localized: String.LocalizationValue("customization.skintone.\(rawValue)"))
+        switch self {
+        case .light:  return String(localized: "customization.skintone.light")
+        case .medium: return String(localized: "customization.skintone.medium")
+        case .dark:   return String(localized: "customization.skintone.dark")
+        }
     }
 
     public var previewColor: Color {
@@ -156,7 +183,12 @@ public enum LyalyaAccessory: String, CaseIterable, Identifiable, Sendable {
     public var id: String { rawValue }
 
     public var localizedName: String {
-        String(localized: String.LocalizationValue("customization.accessory.\(rawValue)"))
+        switch self {
+        case .glasses: return String(localized: "customization.accessory.glasses")
+        case .hat:     return String(localized: "customization.accessory.hat")
+        case .bow:     return String(localized: "customization.accessory.bow")
+        case .bag:     return String(localized: "customization.accessory.bag")
+        }
     }
 
     public var iconName: String {
@@ -192,7 +224,13 @@ public enum LyalyaBackground: String, CaseIterable, Identifiable, Sendable {
     public var id: String { rawValue }
 
     public var localizedName: String {
-        String(localized: String.LocalizationValue("customization.background.\(rawValue)"))
+        switch self {
+        case .bedroom: return String(localized: "customization.background.bedroom")
+        case .garden:  return String(localized: "customization.background.garden")
+        case .school:  return String(localized: "customization.background.school")
+        case .ocean:   return String(localized: "customization.background.ocean")
+        case .forest:  return String(localized: "customization.background.forest")
+        }
     }
 
     public var illustrationName: String { "bg_\(rawValue)" }
@@ -238,7 +276,11 @@ public enum LyalyaColorVariant: String, CaseIterable, Identifiable, Sendable {
     public var id: String { rawValue }
 
     public var localizedName: String {
-        String(localized: String.LocalizationValue("customization.color.\(rawValue)"))
+        switch self {
+        case .warm:   return String(localized: "customization.color.warm")
+        case .cool:   return String(localized: "customization.color.cool")
+        case .nature: return String(localized: "customization.color.nature")
+        }
     }
 
     public var gradientColors: (Color, Color) {
@@ -274,7 +316,11 @@ public enum LyalyaVoice: String, CaseIterable, Identifiable, Sendable {
     public var id: String { rawValue }
 
     public var localizedName: String {
-        String(localized: String.LocalizationValue("customization.voice.\(rawValue)"))
+        switch self {
+        case .classic:  return String(localized: "customization.voice.classic")
+        case .soft:     return String(localized: "customization.voice.soft")
+        case .cheerful: return String(localized: "customization.voice.cheerful")
+        }
     }
 
     public var previewFile: String { "lyalya_voice_\(rawValue)_preview" }
