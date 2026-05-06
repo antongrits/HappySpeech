@@ -60,6 +60,13 @@ final class AuthInteractorTests: XCTestCase {
             errorCalled = true
             lastError = error
         }
+
+        // MARK: D.1 v15 — новые методы протокола
+
+        func presentParentalGate(_ response: AuthModels.ParentalGate.Response) async {}
+        func presentAnonymousUpgrade(_ response: AuthModels.AnonymousUpgrade.Response) async {}
+        func presentTooManyFailedAttempts(_ response: AuthModels.TooManyFailedAttempts.Response) async {}
+        func presentDeleteAccountGateRequired(_ response: AuthModels.DeleteAccountGateRequired.Response) async {}
     }
 
     private func makeSUT(
@@ -123,8 +130,8 @@ final class AuthInteractorTests: XCTestCase {
 
     func test_signUp_success_callsPresenter() async {
         let (sut, spy, _) = makeSUT()
-        // password >= 6 символов (требование EmailAuthWorker.validate)
-        await sut.signUp(.init(email: "new@mail.com", password: "pass123", name: "Новый"))
+        // password >= 8 символов + цифра (требование validateSignUpInput)
+        await sut.signUp(.init(email: "new@mail.com", password: "passw0rd", name: "Новый"))
         XCTAssertTrue(spy.signUpCalled)
         XCTAssertFalse(spy.errorCalled)
     }
@@ -173,7 +180,8 @@ final class AuthInteractorTests: XCTestCase {
         let user = AuthUser(uid: "u3", email: "del@mail.com", displayName: nil,
                             isAnonymous: false, isEmailVerified: true)
         let (sut, spy, _) = makeSUT(initialUser: user)
-        await sut.deleteAccount(.init())
+        // skipGate=true чтобы обойти parentalGate (нет живого UI в unit-тесте)
+        await sut.deleteAccount(.init(skipGate: true))
         XCTAssertTrue(spy.deleteAccountCalled)
     }
 }
