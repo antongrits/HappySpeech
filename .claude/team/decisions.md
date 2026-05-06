@@ -1849,3 +1849,16 @@ Bundle size Videos: **71 MB → 47 MB** (-24 MB, -34%).
 **Отрицательные:**
 - 77 видео остаются procedural-качества до post-v1.0
 - Real motion-designer контент требует бюджета или времени для DIY (Remotion с custom assets)
+
+## ADR-V15-BLENDER-DEFER
+
+**Дата:** 2026-05-06
+**Статус:** DEFERRED (post-v1.0)
+
+**Контекст:** Block F v15 требовал создание blender-3d-character-skill для генерации профессиональных 3D-персонажей через Blender Python API (bpy).
+
+**Решение:** Blender не установлен на рабочей машине (`which blender` → not found). USDZ-объекты для ARAssets созданы через `usd-core` (Pixar Python API v26.5) — процедурная геометрия с PBR-материалами. Качество: базовые 3D-примитивы (сферы, цилиндры, конусы, кубы) с цветными материалами — достаточно для MVP логопедических упражнений.
+
+**Blender skill:** создать после установки Blender ≥4.0. Использовать `bpy` Python API для: риггинга персонажей, bake текстур, экспорта через `bpy.ops.wm.usd_export()`.
+
+**Метки:** ADR-V15-BLENDER-DEFER, post-v1.0
