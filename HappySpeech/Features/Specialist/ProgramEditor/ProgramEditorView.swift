@@ -252,4 +252,7 @@ private final class ProgramEditorDisplayBridge: ProgramEditorDisplayLogic {
     func displayRemoveBlock(_ vm: ProgramEditorModels.RemoveBlock.ViewModel) { onUpdate(vm.blocks, vm.totalDurationMinutes) }
     func displayMoveBlock(_ vm: ProgramEditorModels.MoveBlock.ViewModel) { onUpdate(vm.blocks, vm.blocks.map(\.durationMinutes).reduce(0, +)) }
     func displaySaveProgram(_ vm: ProgramEditorModels.SaveProgram.ViewModel) { onSave(vm.confirmationMessage) }
+    func displayValidation(_ vm: ProgramEditorModels.ValidateProgram.ViewModel) {}
+    func displayValidationWarning(_ message: String) {}
+    func displayAssignToChild(_ vm: ProgramEditorModels.AssignToChild.ViewModel) {}
 }
