@@ -28,6 +28,12 @@ final class ProgramEditorInteractorTests: XCTestCase {
         func presentSaveProgram(_ response: ProgramEditorModels.SaveProgram.Response) async {
             savedAt = response.savedAt
         }
+
+        // MARK: D.1 v15 — новые методы протокола
+
+        func presentValidation(_ response: ProgramEditorModels.ValidateProgram.Response) async {}
+        func presentValidationWarning(_ response: ProgramEditorModels.ValidationWarning.Response) async {}
+        func presentAssignToChild(_ response: ProgramEditorModels.AssignToChild.Response) async {}
     }
 
     private func makeSUT() -> (ProgramEditorInteractor, SpyPresenter) {

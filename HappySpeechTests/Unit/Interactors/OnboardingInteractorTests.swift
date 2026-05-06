@@ -91,6 +91,24 @@ final class OnboardingInteractorTests: XCTestCase {
         func presentSetLyalyaPreset(_ response: OnboardingModels.SetLyalyaPreset.Response) {}
     }
 
+    override func setUp() {
+        super.setUp()
+        // Сброс UserDefaults перед каждым тестом — OnboardingInteractor.loadOnboarding
+        // восстанавливает состояние из UserDefaults, что приводит к side-effect
+        // между тестами. Очищаем как OnboardingState (completed/profile), так и
+        // ResumeKeys (step + profile cache).
+        OnboardingState.reset()
+        UserDefaults.standard.removeObject(forKey: "onboarding.resume.step")
+        UserDefaults.standard.removeObject(forKey: "onboarding.resume.profile")
+    }
+
+    override func tearDown() {
+        OnboardingState.reset()
+        UserDefaults.standard.removeObject(forKey: "onboarding.resume.step")
+        UserDefaults.standard.removeObject(forKey: "onboarding.resume.profile")
+        super.tearDown()
+    }
+
     private func makeSUT() -> (OnboardingInteractor, SpyPresenter) {
         let sut = OnboardingInteractor()
         let spy = SpyPresenter()
@@ -168,11 +186,13 @@ final class OnboardingInteractorTests: XCTestCase {
     func test_toggleGoal_addsAndRemoves() async throws {
         let (sut, spy) = makeSUT()
         sut.loadOnboarding(.init())
+        // Добавляем две цели — минимум 2 для возможности убрать одну
         sut.toggleGoal(.init(goalId: "correct_sounds"))
+        sut.toggleGoal(.init(goalId: "fluency"))
         try await Task.sleep(nanoseconds: 100_000_000)
         XCTAssertTrue(spy.toggleGoalCalled)
         XCTAssertTrue(spy.lastToggleGoal?.profile.goals.contains("correct_sounds") ?? false)
-        // Повторный вызов убирает
+        // Убираем одну цель (не последнюю — count > 1)
         sut.toggleGoal(.init(goalId: "correct_sounds"))
         try await Task.sleep(nanoseconds: 100_000_000)
         XCTAssertFalse(spy.lastToggleGoal?.profile.goals.contains("correct_sounds") ?? true)
@@ -203,6 +223,8 @@ final class OnboardingInteractorTests: XCTestCase {
     func test_completeOnboarding_callsPresenter() async throws {
         let (sut, spy) = makeSUT()
         sut.loadOnboarding(.init())
+        // acceptPrivacyConsent — необходимо для completeOnboarding (guard profile.privacyAccepted)
+        sut.acceptPrivacyConsent(.init(accepted: true))
         sut.completeOnboarding(.init())
         try await Task.sleep(nanoseconds: 300_000_000)
         XCTAssertTrue(spy.completeOnboardingCalled)
