@@ -427,10 +427,10 @@ struct MetronomeSessionRecord: Identifiable, Sendable {
 // MARK: - MetronomeResultLevel (D.1 v15)
 
 enum MetronomeResultLevel: String, Sendable {
-    case excellent  = "excellent"
-    case good       = "good"
-    case fair       = "fair"
-    case needsWork  = "needsWork"
+    case excellent
+    case good
+    case fair
+    case needsWork
 
     static func from(accuracy: Double) -> MetronomeResultLevel {
         switch accuracy {

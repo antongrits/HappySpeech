@@ -132,7 +132,6 @@ final class AchievementsInteractor: AchievementsBusinessLogic {
             if let nextProgress {
                 presenter?.presentNextAchievementProgress(.init(progress: nextProgress))
             }
-
         } catch {
             logger.error("loadAchievements failed: \(error.localizedDescription, privacy: .public)")
             let emptyResponse = AchievementsModels.Load.Response(
@@ -196,7 +195,6 @@ final class AchievementsInteractor: AchievementsBusinessLogic {
                     .init(childId: childId, achievement: first)
                 )
             }
-
         } catch {
             logger.error("handleAchievementEvent error: \(error.localizedDescription, privacy: .public)")
         }

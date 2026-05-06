@@ -251,8 +251,9 @@ final class BreathingExtendedInteractor {
     private func calculateRoundScore() -> Int {
         let exhaleFrames = max(1, Int(Float(exhaleSeconds) * 20)) // ~20 кадров/сек
         let score = min(100, Int(Float(successfulFramesThisRound) / Float(exhaleFrames) * 100))
+        let okFrames = self.successfulFramesThisRound
         logger.info(
-            "BreathingExtended round score: \(score, privacy: .public)% (ok=\(self.successfulFramesThisRound, privacy: .public)/\(exhaleFrames, privacy: .public))"
+            "BreathingExtended score:\(score, privacy: .public)% ok:\(okFrames, privacy: .public)/\(exhaleFrames, privacy: .public)"
         )
         return score
     }

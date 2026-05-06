@@ -319,4 +319,3 @@ struct ARGameBadgeOverlay: View {
         .shadow(color: color.opacity(0.4), radius: 4, x: 0, y: 2)
     }
 }
-

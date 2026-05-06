@@ -69,7 +69,7 @@ final class ReportsInteractor: ReportsBusinessLogic {
             let timeline = ReportsAggregator.timeline(sessions: inRange)
 
             logger.info(
-                "fetchReport childId=\(request.childId, privacy: .public) sessions=\(inRange.count, privacy: .public) range=\(request.range.start, privacy: .public)…\(request.range.end, privacy: .public)"
+                "fetchReport id:\(request.childId, privacy: .public) n:\(inRange.count, privacy: .public)"
             )
 
             await presenter?.presentFetchReport(.init(
@@ -156,15 +156,17 @@ final class ReportsInteractor: ReportsBusinessLogic {
             let compliance = computeComplianceRate(sessions: inRange, range: request.range)
             let level = complianceLevel(rate: compliance)
 
+            let levelStr = level.rawValue
             logger.info(
-                "fetchComplianceSummary childId=\(request.childId, privacy: .public) rate=\(compliance, privacy: .public) level=\(level.rawValue, privacy: .public)"
+                "fetchComplianceSummary id:\(request.childId, privacy: .public) rate:\(compliance, privacy: .public) lvl:\(levelStr, privacy: .public)"
             )
 
             await presenter?.presentComplianceSummary(.init(
                 complianceRate: compliance,
                 level: level,
                 daysWithSession: countDaysWithSession(sessions: inRange, range: request.range),
-                totalDays: Calendar.current.dateComponents([.day], from: request.range.start, to: request.range.end).day ?? 0
+                totalDays: Calendar.current
+                    .dateComponents([.day], from: request.range.start, to: request.range.end).day ?? 0
             ))
         } catch {
             logger.error("fetchComplianceSummary failed: \(error.localizedDescription, privacy: .public)")

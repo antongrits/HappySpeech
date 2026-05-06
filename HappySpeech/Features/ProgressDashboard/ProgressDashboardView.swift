@@ -626,7 +626,6 @@ struct ProgressDashboardView: View {
     }
 }
 
-
 // MARK: - Preview
 
 #Preview("ProgressDashboard – Parent") {

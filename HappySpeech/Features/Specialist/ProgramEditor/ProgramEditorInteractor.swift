@@ -365,7 +365,7 @@ final class ProgramEditorInteractor: ProgramEditorBusinessLogic {
 
     // MARK: - Test hook
 
-    func _currentProgram() -> Program { currentProgram }
+    func currentProgramSnapshot() -> Program { currentProgram }
 
     // MARK: - Default template
 

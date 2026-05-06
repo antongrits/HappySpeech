@@ -92,7 +92,6 @@ final class ComparisonDashboardInteractor {
 
             // После основной загрузки генерируем parent insights.
             await generateParentInsights(children: comparisonData)
-
         } catch {
             logger.error("ComparisonDashboard: load failed \(error.localizedDescription, privacy: .public)")
             presenter?.presentError(error)
@@ -307,7 +306,7 @@ extension ComparisonDashboard {
     }
 
     struct FilterByPeriodRequest { let period: Period }
-    struct FilterBySoundRequest  { let sound: String? }
+    struct FilterBySoundRequest { let sound: String? }
 
     struct RankingEntry: Identifiable {
         var id: Int { rank }

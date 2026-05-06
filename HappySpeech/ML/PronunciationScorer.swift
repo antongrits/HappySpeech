@@ -358,7 +358,8 @@ enum MFCCExtractor {
             guard let baseAddress = rawPtr.baseAddress else { return }
             real.withUnsafeMutableBufferPointer { rBuf in
                 imag.withUnsafeMutableBufferPointer { iBuf in
-                    var splitComplex = DSPSplitComplex(realp: rBuf.baseAddress!, imagp: iBuf.baseAddress!)
+                    guard let rBase = rBuf.baseAddress, let iBase = iBuf.baseAddress else { return }
+                    var splitComplex = DSPSplitComplex(realp: rBase, imagp: iBase)
                     baseAddress.withMemoryRebound(to: DSPComplex.self, capacity: halfN) { complexPtr in
                         vDSP_ctoz(complexPtr, 2, &splitComplex, 1, vDSP_Length(halfN))
                     }
@@ -370,7 +371,8 @@ enum MFCCExtractor {
         var magnitudes = [Float](repeating: 0, count: halfN)
         real.withUnsafeMutableBufferPointer { rBuf in
             imag.withUnsafeMutableBufferPointer { iBuf in
-                var splitComplex = DSPSplitComplex(realp: rBuf.baseAddress!, imagp: iBuf.baseAddress!)
+                guard let rBase = rBuf.baseAddress, let iBase = iBuf.baseAddress else { return }
+                var splitComplex = DSPSplitComplex(realp: rBase, imagp: iBase)
                 vDSP_zvmags(&splitComplex, 1, &magnitudes, 1, vDSP_Length(halfN))
             }
         }

@@ -80,7 +80,6 @@ final class FamilyHomeInteractor {
                     FamilyHome.PracticeReminderResponse(reminders: practiceReminders)
                 )
             }
-
         } catch {
             logger.error(
                 "FamilyHomeInteractor: load failed \(error.localizedDescription, privacy: .public)"
@@ -168,7 +167,6 @@ final class FamilyHomeInteractor {
 
             // Перезагружаем список.
             await load(FamilyHome.LoadRequest())
-
         } catch {
             logger.error(
                 "FamilyHomeInteractor: delete failed \(error.localizedDescription, privacy: .public)"
@@ -341,9 +339,9 @@ private extension ChildProfileDTO {
 extension FamilyHome {
 
     enum SortOrder: String, CaseIterable {
-        case byName        = "byName"
-        case byLastSession = "byLastSession"
-        case byProgress    = "byProgress"
+        case byName
+        case byLastSession
+        case byProgress
 
         var localizedLabel: String {
             switch self {
@@ -354,7 +352,7 @@ extension FamilyHome {
         }
     }
 
-    struct SortRequest       { let order: SortOrder }
+    struct SortRequest { let order: SortOrder }
     struct DeleteChildRequest { let childId: String }
     struct UpdateParentNameRequest { let name: String }
 
