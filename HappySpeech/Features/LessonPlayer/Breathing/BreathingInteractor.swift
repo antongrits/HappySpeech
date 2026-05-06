@@ -250,7 +250,6 @@ final class BreathingInteractor: BreathingBusinessLogic {
         logger.info("Breathing: success score=\(score) duration=\(duration)")
 
         // Локально логируем длительность сессии для in-app дашборда «Дыхание».
-        // HealthKit не используется (нет paid Apple Developer аккаунта).
         let sessionEnd = Date()
         await metricsWorker.logSessionIfEnabled(start: sessionStartDate, end: sessionEnd)
     }

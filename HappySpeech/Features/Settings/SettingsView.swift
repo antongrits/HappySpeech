@@ -26,7 +26,6 @@ struct SettingsView: View {
 
     // MARK: - Local UI state
 
-    // HealthKit удалён (ADR-V13-HEALTHKIT-REMOVED): нет paid Apple Developer аккаунта.
     @State var showClearCacheConfirm = false
     @State var showExportConfirm = false
     @State var showProfileSheet = false

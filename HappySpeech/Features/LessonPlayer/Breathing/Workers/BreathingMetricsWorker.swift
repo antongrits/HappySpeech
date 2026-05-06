@@ -4,7 +4,6 @@ import Foundation
 
 /// Протокол для логирования завершённой дыхательной сессии.
 /// Реальное сохранение — только в Realm (через SessionRepository).
-/// HealthKit не используется (нет paid Apple Developer аккаунта).
 @MainActor
 protocol BreathingMetricsWorkerProtocol: AnyObject {
     func logSessionIfEnabled(start: Date, end: Date) async
