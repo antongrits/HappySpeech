@@ -1,6 +1,14 @@
 import Foundation
 import UIKit
 
+// MARK: - ParentalGateQuestion
+
+/// Математическая задача для COPPA parental gate.
+struct ParentalGateQuestion: Sendable, Equatable {
+    let displayText: String
+    let correctAnswer: Int
+}
+
 // MARK: - Auth VIP Models
 
 enum AuthModels {
@@ -107,11 +115,74 @@ enum AuthModels {
     // MARK: - Delete Account
 
     enum DeleteAccount {
-        struct Request {}
+        struct Request {
+            /// Пропустить parental gate (используется когда gate уже прошли ранее в этой сессии).
+            let skipGate: Bool
+            init(skipGate: Bool = false) { self.skipGate = skipGate }
+        }
         struct Response {}
         struct ViewModel: Equatable {
             let id: UUID
             init(id: UUID = UUID()) { self.id = id }
+        }
+    }
+
+    // MARK: - Parental Gate (COPPA)
+
+    enum ParentalGate {
+        enum Action {
+            case generateQuestion
+            case submitAnswer(Int)
+        }
+        struct Request {
+            let action: Action
+        }
+        enum GateState {
+            case waiting, passed, failed
+        }
+        struct Response {
+            let question: ParentalGateQuestion?
+            let state: GateState
+        }
+        struct ViewModel: Equatable {
+            let questionText: String
+            let state: String  // "waiting" | "passed" | "failed"
+        }
+    }
+
+    // MARK: - Anonymous Account Upgrade
+
+    enum AnonymousUpgrade {
+        struct Request {
+            let email: String
+            let password: String
+            let displayName: String
+        }
+        struct Response {
+            let user: AuthUser
+        }
+        struct ViewModel: Equatable {
+            let successMessage: String
+        }
+    }
+
+    // MARK: - Too Many Failed Attempts
+
+    enum TooManyFailedAttempts {
+        struct Response {
+            let count: Int
+        }
+        struct ViewModel: Equatable {
+            let message: String
+        }
+    }
+
+    // MARK: - Delete Account Gate Required
+
+    enum DeleteAccountGateRequired {
+        struct Response {}
+        struct ViewModel: Equatable {
+            let message: String
         }
     }
 

@@ -14,6 +14,11 @@ protocol AuthPresentationLogic: AnyObject {
     func presentSignOut(_ response: AuthModels.SignOut.Response) async
     func presentDeleteAccount(_ response: AuthModels.DeleteAccount.Response) async
     func presentError(_ error: any Error) async
+    // MARK: D.1 v15 — новые методы
+    func presentParentalGate(_ response: AuthModels.ParentalGate.Response) async
+    func presentAnonymousUpgrade(_ response: AuthModels.AnonymousUpgrade.Response) async
+    func presentTooManyFailedAttempts(_ response: AuthModels.TooManyFailedAttempts.Response) async
+    func presentDeleteAccountGateRequired(_ response: AuthModels.DeleteAccountGateRequired.Response) async
 }
 
 // MARK: - AuthDisplayLogic
@@ -30,4 +35,9 @@ protocol AuthDisplayLogic: AnyObject {
     func displaySignOut(_ viewModel: AuthModels.SignOut.ViewModel)
     func displayDeleteAccount(_ viewModel: AuthModels.DeleteAccount.ViewModel)
     func displayError(_ viewModel: AuthModels.ErrorViewModel)
+    // MARK: D.1 v15 — новые методы
+    func displayParentalGate(_ viewModel: AuthModels.ParentalGate.ViewModel)
+    func displayAnonymousUpgrade(_ viewModel: AuthModels.AnonymousUpgrade.ViewModel)
+    func displayTooManyFailedAttempts(_ viewModel: AuthModels.TooManyFailedAttempts.ViewModel)
+    func displayDeleteAccountGateRequired(_ viewModel: AuthModels.DeleteAccountGateRequired.ViewModel)
 }

@@ -25,6 +25,12 @@ final class AuthViewState: AuthDisplayLogic {
     var signOutViewModel: AuthModels.SignOut.ViewModel?
     var deleteAccountViewModel: AuthModels.DeleteAccount.ViewModel?
 
+    // MARK: - D.1 v15 — новые поля
+    var parentalGateViewModel: AuthModels.ParentalGate.ViewModel?
+    var anonymousUpgradeViewModel: AuthModels.AnonymousUpgrade.ViewModel?
+    var tooManyFailedAttemptsViewModel: AuthModels.TooManyFailedAttempts.ViewModel?
+    var deleteAccountGateRequiredViewModel: AuthModels.DeleteAccountGateRequired.ViewModel?
+
     // MARK: - AuthDisplayLogic
 
     func displayAuthState(_ viewModel: AuthModels.AuthState.ViewModel) {
@@ -74,6 +80,28 @@ final class AuthViewState: AuthDisplayLogic {
 
     func displayError(_ viewModel: AuthModels.ErrorViewModel) {
         error = viewModel
+        isLoading = false
+    }
+
+    // MARK: - D.1 v15 — новые методы
+
+    func displayParentalGate(_ viewModel: AuthModels.ParentalGate.ViewModel) {
+        parentalGateViewModel = viewModel
+        isLoading = false
+    }
+
+    func displayAnonymousUpgrade(_ viewModel: AuthModels.AnonymousUpgrade.ViewModel) {
+        anonymousUpgradeViewModel = viewModel
+        isLoading = false
+    }
+
+    func displayTooManyFailedAttempts(_ viewModel: AuthModels.TooManyFailedAttempts.ViewModel) {
+        tooManyFailedAttemptsViewModel = viewModel
+        isLoading = false
+    }
+
+    func displayDeleteAccountGateRequired(_ viewModel: AuthModels.DeleteAccountGateRequired.ViewModel) {
+        deleteAccountGateRequiredViewModel = viewModel
         isLoading = false
     }
 
