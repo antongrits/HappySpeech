@@ -195,9 +195,13 @@ public final class MockAdaptivePlannerService: AdaptivePlannerService, @unchecke
                 RouteStepItem(templateType: .listenAndChoose, targetSound: "Р",
                               stage: .wordInit, difficulty: 2, wordCount: 10, durationTargetSec: 180),
                 RouteStepItem(templateType: .repeatAfterModel, targetSound: "Р",
-                              stage: .wordInit, difficulty: 2, wordCount: 8, durationTargetSec: 240)
+                              stage: .wordInit, difficulty: 2, wordCount: 8, durationTargetSec: 240),
+                RouteStepItem(templateType: .sorting, targetSound: "Р",
+                              stage: .wordInit, difficulty: 1, wordCount: 8, durationTargetSec: 120),
+                RouteStepItem(templateType: .memory, targetSound: "Р",
+                              stage: .wordInit, difficulty: 1, wordCount: 6, durationTargetSec: 120)
             ],
-            maxDurationSec: 600,
+            maxDurationSec: 900,
             fatigueLevel: fatigue
         )
         self.route = route ?? defaultRoute
@@ -420,13 +424,17 @@ public final class InMemoryKeychainStore: KeychainStoreProtocol, @unchecked Send
 
 public extension ContentItem {
     static let previewItems: [ContentItem] = [
-        ContentItem(id: "1", word: "рак", imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 1),
-        ContentItem(id: "2", word: "рыба", imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 1),
-        ContentItem(id: "3", word: "роза", imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 1),
-        ContentItem(id: "4", word: "радуга", imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 2),
-        ContentItem(id: "5", word: "ракета", imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 2),
-        ContentItem(id: "6", word: "рот", imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 1),
-        ContentItem(id: "7", word: "рис", imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 1),
-        ContentItem(id: "8", word: "река", imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 2)
+        ContentItem(id: "prev-1",  word: "рак",    imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 1),
+        ContentItem(id: "prev-2",  word: "рыба",   imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 1),
+        ContentItem(id: "prev-3",  word: "роза",   imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 1),
+        ContentItem(id: "prev-4",  word: "радуга", imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 2),
+        ContentItem(id: "prev-5",  word: "ракета", imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 2),
+        ContentItem(id: "prev-6",  word: "рот",    imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 1),
+        ContentItem(id: "prev-7",  word: "рис",    imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 1),
+        ContentItem(id: "prev-8",  word: "река",   imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 2),
+        ContentItem(id: "prev-9",  word: "рука",   imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 1),
+        ContentItem(id: "prev-10", word: "робот",  imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 2),
+        ContentItem(id: "prev-11", word: "рябина", imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 2),
+        ContentItem(id: "prev-12", word: "ромашка", imageAsset: nil, audioAsset: nil, hint: nil, stage: .wordInit, difficulty: 3)
     ]
 }
