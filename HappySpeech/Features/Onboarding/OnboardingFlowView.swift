@@ -40,37 +40,40 @@ struct OnboardingFlowView: View {
     // MARK: - Body
 
     var body: some View {
-        ZStack {
-            backgroundGradient
-                .ignoresSafeArea()
+        GeometryReader { geometry in
+            ZStack {
+                backgroundGradient
+                    .ignoresSafeArea()
 
-            VStack(spacing: 0) {
-                progressHeader
+                VStack(spacing: 0) {
+                    progressHeader
 
-                stepContent
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    stepContent
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-                // Mascot bubble: показываем на шагах, где есть фраза Ляли.
-                // Welcome и Completion — пропускаем (там своя большая Ляля).
-                if !display.mascotText.isEmpty
-                    && display.currentStep != .welcome
-                    && display.currentStep != .completion {
-                    OnboardingMascotBubble(text: display.mascotText)
-                        .padding(.bottom, SpacingTokens.small)
-                        .transition(.opacity.combined(with: .move(edge: .bottom)))
-                        .animation(reduceMotion ? nil : MotionTokens.spring, value: display.currentStep)
+                    // Mascot bubble: показываем на шагах, где есть фраза Ляли.
+                    // Welcome и Completion — пропускаем (там своя большая Ляля).
+                    if !display.mascotText.isEmpty
+                        && display.currentStep != .welcome
+                        && display.currentStep != .completion {
+                        OnboardingMascotBubble(text: display.mascotText)
+                            .padding(.bottom, SpacingTokens.small)
+                            .transition(.opacity.combined(with: .move(edge: .bottom)))
+                            .animation(reduceMotion ? nil : MotionTokens.spring, value: display.currentStep)
+                    }
+
+                    actionFooter
+                        .background(
+                            GradientTokens.kidBottomFade(
+                                background: gradientColors(for: display.currentStep).last ?? ColorTokens.Kid.bg
+                            )
+                            .ignoresSafeArea(edges: .bottom)
+                        )
+                        .padding(.bottom, geometry.safeAreaInsets.bottom)
                 }
             }
         }
-        .safeAreaInset(edge: .bottom, spacing: 0) {
-            actionFooter
-                .background(
-                    GradientTokens.kidBottomFade(
-                        background: gradientColors(for: display.currentStep).last ?? ColorTokens.Kid.bg
-                    )
-                    .ignoresSafeArea(edges: .bottom)
-                )
-        }
+        .ignoresSafeArea(edges: .bottom)
         .accessibilityIdentifier("OnboardingRoot")
         .environment(\.circuitContext, .kid)
         .task { await bootstrap() }
@@ -255,7 +258,7 @@ struct OnboardingFlowView: View {
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
         .padding(.top, SpacingTokens.small)
-        .padding(.bottom, SpacingTokens.medium)
+        .padding(.bottom, SpacingTokens.small)
     }
 
     private var primaryButtonTitle: String {
