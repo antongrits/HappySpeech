@@ -176,6 +176,19 @@ struct RhythmView: View {
 
             rmsMeter
 
+            // Spectrogram — реальное время beat detection visualization.
+            // Помогает ребёнку видеть ритмический рисунок своего голоса.
+            // Reduce Motion: StaticSpectrogramView (один фрейм, без анимации).
+            SpectrogramVisualizerView(
+                referenceSpectrogram: nil,
+                style: .space
+            )
+            .frame(maxWidth: .infinity)
+            .frame(height: 110)
+            .accessibilityLabel(
+                String(localized: "spectrogram.rhythm.a11y", defaultValue: "Ритм твоего голоса")
+            )
+
             Text(String(
                 format: String(localized: "Обнаружено слогов: %d из %d"),
                 store.display.detectedBeats,
