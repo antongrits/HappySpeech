@@ -7,10 +7,10 @@ import OSLog
 // MARK: - LivePronunciationScorerService
 
 /// On-device pronunciation scorer using a CoreML model (.mlpackage).
-/// Falls back to acoustic energy heuristic when model is not available.
+/// При отсутствии модели — бросает ошибку (нет silent fallback к energy heuristic).
 ///
-/// Block G v13: MFCC extraction заменён с energy-stub на `RealMFCCExtractor`
-/// (vDSP FFT + Mel filterbank + DCT-II + delta + delta-delta, 39-мерный вектор).
+/// Block B.8 v15: удалён heuristic RMS fallback (min(1.0, rms * 8.0)).
+/// Реальный вывод только через обученную Conv1D модель + RealMFCCExtractor.
 public final class LivePronunciationScorerService: PronunciationScorerService, @unchecked Sendable {
 
     nonisolated(unsafe) private var mlModel: MLModel?
@@ -32,9 +32,9 @@ public final class LivePronunciationScorerService: PronunciationScorerService, @
             withExtension: "mlpackage"
         )
         guard let url = modelURL else {
-            HSLogger.ml.warning("PronunciationScorer model not found — using heuristic fallback")
             _isModelLoaded = false
-            return
+            HSLogger.ml.error("PronunciationScorer model not found in bundle — inference unavailable")
+            throw AppError.mlModelNotFound("PronunciationScorer")
         }
         let config = MLModelConfiguration()
         config.computeUnits = .cpuAndNeuralEngine
@@ -47,11 +47,11 @@ public final class LivePronunciationScorerService: PronunciationScorerService, @
     // MARK: - Score
 
     public func score(audioURL: URL, targetSound: String) async throws -> PronunciationScore {
-        if let model = mlModel {
-            return try await scoreWithModel(model: model, audioURL: audioURL, targetSound: targetSound)
-        } else {
-            return await heuristicScore(audioURL: audioURL, targetSound: targetSound)
+        guard let model = mlModel else {
+            HSLogger.ml.error("PronunciationScorer: модель не загружена, inference невозможен")
+            throw AppError.mlModelNotFound("PronunciationScorer")
         }
+        return try await scoreWithModel(model: model, audioURL: audioURL, targetSound: targetSound)
     }
 
     // MARK: - Private: ML Inference
@@ -67,29 +67,6 @@ public final class LivePronunciationScorerService: PronunciationScorerService, @
         let output = try await model.prediction(from: input)
         let scoreValue = output.featureValue(for: "pronunciation_score")?.doubleValue ?? 0.5
         return PronunciationScore(rawValue: max(0, min(1, scoreValue)))
-    }
-
-    // MARK: - Private: Heuristic Fallback
-
-    private func heuristicScore(audioURL: URL, targetSound: String) async -> PronunciationScore {
-        do {
-            let audioFile = try AVAudioFile(forReading: audioURL)
-            guard let buffer = AVAudioPCMBuffer(pcmFormat: audioFile.processingFormat,
-                                                frameCapacity: AVAudioFrameCount(audioFile.length)) else {
-                return PronunciationScore(rawValue: 0.5)
-            }
-            try audioFile.read(into: buffer)
-            guard let channelData = buffer.floatChannelData?[0] else {
-                return PronunciationScore(rawValue: 0.5)
-            }
-            let frameCount = Int(buffer.frameLength)
-            var rms: Float = 0
-            vDSP_rmsqv(channelData, 1, &rms, vDSP_Length(frameCount))
-            let normalizedScore = min(1.0, Double(rms) * 8.0)
-            return PronunciationScore(rawValue: normalizedScore)
-        } catch {
-            return PronunciationScore(rawValue: 0.5)
-        }
     }
 
     // MARK: - Private: Audio Loading
