@@ -347,6 +347,16 @@ struct RepeatAfterModelView: View {
             header
             Spacer(minLength: 0)
             recordingBody
+            // Spectrogram visualizer — визуальный feedback голоса ребёнка.
+            // Reduce Motion: SpectrogramVisualizerView сам переключается на StaticSpectrogramView.
+            SpectrogramVisualizerView(
+                referenceSpectrogram: nil,
+                style: .forest
+            )
+            .frame(maxWidth: .infinity)
+            .frame(height: 140)
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .accessibilityLabel(String(localized: "spectrogram.recording.a11y", defaultValue: "Визуализация твоего голоса"))
             attemptDotsView
             Spacer(minLength: 0)
             RecordingButton(
