@@ -1,3 +1,4 @@
+import Collections
 import Foundation
 
 // MARK: - SM-2 Spaced Repetition Algorithm
@@ -293,9 +294,18 @@ public enum SoundProgressAggregator {
     }
 
     private static func recentAttempts(from sessions: [SessionDTO], limit: Int) -> [AttemptDTO] {
-        Array(
-            sessions
-                .flatMap(\.attempts)
+        // OrderedSet используется для дедупликации атемптов по ID перед сортировкой,
+        // чтобы исключить дубли, которые могут появиться при оффлайн-синхронизации.
+        let all = sessions.flatMap(\.attempts)
+        var seen = OrderedSet<String>()
+        var unique: [AttemptDTO] = []
+        for attempt in all {
+            if seen.append(attempt.id).inserted {
+                unique.append(attempt)
+            }
+        }
+        return Array(
+            unique
                 .sorted { $0.timestamp > $1.timestamp }
                 .prefix(limit)
         )

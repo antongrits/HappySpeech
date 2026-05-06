@@ -1,5 +1,6 @@
 import Foundation
-import Security
+import KeychainAccess
+import OSLog
 
 // MARK: - KeychainStoreProtocol
 
@@ -14,49 +15,47 @@ public protocol KeychainStoreProtocol: Sendable {
 
 // MARK: - KeychainStore
 
-/// Thin wrapper over Security Framework Keychain services.
-/// Uses `kSecClassGenericPassword`. No iCloud sync — device-local only.
+/// Keychain wrapper backed by KeychainAccess SPM library.
+/// Uses kSecClassGenericPassword. No iCloud sync — device-local only.
+/// kSecAttrAccessible = afterFirstUnlockThisDeviceOnly.
 public struct KeychainStore: KeychainStoreProtocol {
+
+    private let logger = Logger(subsystem: "ru.happyspeech.app", category: "Security")
 
     public init() {}
 
     public func read(service: String, account: String) -> String? {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: service,
-            kSecAttrAccount as String: account,
-            kSecReturnData as String: true,
-            kSecMatchLimit as String: kSecMatchLimitOne
-        ]
-        var item: AnyObject?
-        let status = SecItemCopyMatching(query as CFDictionary, &item)
-        guard status == errSecSuccess, let data = item as? Data else { return nil }
-        return String(data: data, encoding: .utf8)
+        let kc = Keychain(service: service).accessibility(.afterFirstUnlockThisDeviceOnly)
+        do {
+            return try kc.get(account)
+        } catch {
+            logger.warning("KeychainStore.read failed service=\(service) account=\(account): \(error.localizedDescription)")
+            return nil
+        }
     }
 
     @discardableResult
     public func write(_ value: String, service: String, account: String) -> Bool {
-        guard let data = value.data(using: .utf8) else { return false }
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: service,
-            kSecAttrAccount as String: account
-        ]
-        SecItemDelete(query as CFDictionary)
-        var addQuery = query
-        addQuery[kSecValueData as String] = data
-        addQuery[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
-        return SecItemAdd(addQuery as CFDictionary, nil) == errSecSuccess
+        let kc = Keychain(service: service).accessibility(.afterFirstUnlockThisDeviceOnly)
+        do {
+            try kc.set(value, key: account)
+            return true
+        } catch {
+            logger.error("KeychainStore.write failed service=\(service) account=\(account): \(error.localizedDescription)")
+            return false
+        }
     }
 
     @discardableResult
     public func delete(service: String, account: String) -> Bool {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: service,
-            kSecAttrAccount as String: account
-        ]
-        return SecItemDelete(query as CFDictionary) == errSecSuccess
+        let kc = Keychain(service: service)
+        do {
+            try kc.remove(account)
+            return true
+        } catch {
+            logger.warning("KeychainStore.delete failed service=\(service) account=\(account): \(error.localizedDescription)")
+            return false
+        }
     }
 }
 
@@ -74,6 +73,7 @@ public struct KeychainKey: Sendable, Hashable {
 
     public static let anthropicAPIToken  = KeychainKey(service: "ru.happyspeech.anthropic", account: "api-token")
     public static let huggingFaceToken   = KeychainKey(service: "ru.happyspeech.hf", account: "inference-token")
+    public static let parentAuthToken    = KeychainKey(service: "ru.happyspeech.auth", account: "parent-refresh-token")
 }
 
 public extension KeychainStoreProtocol {
