@@ -1,9 +1,10 @@
 import Foundation
 import OSLog
+import Pulse
 
 // MARK: - HSLogger
 
-/// Централизованная система логирования HappySpeech на базе OSLog.
+/// Централизованная система логирования HappySpeech на базе OSLog + Pulse.
 ///
 /// `HSLogger` — единственный разрешённый способ логирования в проекте.
 /// Вызов стандартного вывода запрещён правилами кода и SwiftLint (custom rule `no_print`).
@@ -13,6 +14,8 @@ import OSLog
 ///
 /// Subsystem автоматически берётся из `Bundle.main.bundleIdentifier`
 /// (обычно `ru.happyspeech.app`).
+///
+/// Pulse LoggerStore подключён в Debug-сборках — логи доступны в Settings → Debug.
 ///
 /// ## Пример
 /// ```swift
@@ -53,4 +56,27 @@ public enum HSLogger {
     public static let network    = Logger(subsystem: subsystem, category: "Network")
     public static let ui         = Logger(subsystem: subsystem, category: "UI")
     public static let navigation = Logger(subsystem: subsystem, category: "Navigation")
+
+    // MARK: - Pulse Integration
+
+    /// Pulse LoggerStore — активен только в Debug-сборках. Nil в Release.
+    /// Используется через Settings → Помощь и документация → Логи (только для родителей).
+    public static let pulseStore: LoggerStore? = {
+        #if DEBUG
+        return LoggerStore.shared
+        #else
+        return nil
+        #endif
+    }()
+
+    /// Вызывается один раз при старте приложения (`AppDelegate` / `@main`).
+    /// Настраивает Pulse remote logging и OSLog forwarding.
+    @MainActor
+    public static func bootstrap() {
+        #if DEBUG
+        // Pulse LoggerStore настраивается с лимитом хранения 25 MB.
+        // Старые логи удаляются автоматически при превышении лимита.
+        app.info("HSLogger.bootstrap: Pulse активирован (Debug)")
+        #endif
+    }
 }

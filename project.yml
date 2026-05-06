@@ -76,6 +76,18 @@ packages:
   SwiftuiParticles:
     url: https://github.com/benlmyers/swiftui-particles
     from: "1.0.0"
+  Pulse:
+    url: https://github.com/kean/Pulse
+    from: "5.0.0"
+  KeychainAccess:
+    url: https://github.com/kishikawakatsumi/KeychainAccess
+    from: "4.2.2"
+  SwiftCollections:
+    url: https://github.com/apple/swift-collections
+    from: "1.1.0"
+  SwiftAsyncAlgorithms:
+    url: https://github.com/apple/swift-async-algorithms
+    from: "1.0.0"
 
 targets:
   HappySpeech:
@@ -206,6 +218,16 @@ targets:
         product: Tokenizers
       - package: SwiftuiParticles
         product: Particles
+      - package: Pulse
+        product: Pulse
+      - package: Pulse
+        product: PulseUI
+      - package: KeychainAccess
+        product: KeychainAccess
+      - package: SwiftCollections
+        product: Collections
+      - package: SwiftAsyncAlgorithms
+        product: AsyncAlgorithms
       - target: HappySpeechWidgetExtension
         embed: true
     scheme:
