@@ -24571,6 +24571,138 @@
           }
         }
       }
+    },
+    "offline.minigame.difficulty.easy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Легко"
+          }
+        }
+      }
+    },
+    "offline.minigame.difficulty.medium": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Средне"
+          }
+        }
+      }
+    },
+    "offline.minigame.difficulty.hard": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сложно"
+          }
+        }
+      }
+    },
+    "offline.minigame.paused.banner": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Игра на паузе"
+          }
+        }
+      }
+    },
+    "offline.minigame.paused.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжить"
+          }
+        }
+      }
+    },
+    "offline.minigame.achievement.firstWin": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Первая победа!"
+          }
+        }
+      }
+    },
+    "offline.minigame.achievement.fiveWins": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пять побед подряд"
+          }
+        }
+      }
+    },
+    "offline.minigame.achievement.tenWins": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Десять побед!"
+          }
+        }
+      }
+    },
+    "offline.minigame.achievement.perfectGame": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Идеальная игра"
+          }
+        }
+      }
+    },
+    "offline.minigame.error.persistence": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось сохранить прогресс"
+          }
+        }
+      }
+    },
+    "offline.minigame.error.state": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что-то пошло не так"
+          }
+        }
+      }
+    },
+    "offline.minigame.error.timer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Таймер прерван"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
