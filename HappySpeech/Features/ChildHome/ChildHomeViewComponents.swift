@@ -98,7 +98,7 @@ struct ChildHomeCloudDecoration: View {
 
     private func cloud(spec: CloudSpec) -> some View {
         Ellipse()
-            .fill(Color.white.opacity(spec.opacity))
+            .fill(ColorTokens.Overlay.onAccent.opacity(spec.opacity))
             .frame(width: spec.width, height: spec.height)
             .blur(radius: spec.blur)
             .offset(x: spec.offsetX, y: spec.offsetY)

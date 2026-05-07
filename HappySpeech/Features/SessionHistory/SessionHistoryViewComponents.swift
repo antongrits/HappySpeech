@@ -365,7 +365,7 @@ struct SessionFilterChipButton: View {
                 .font(TypographyTokens.body(14).weight(.semibold))
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
-                .foregroundStyle(isSelected ? Color.white : ColorTokens.Parent.ink)
+                .foregroundStyle(isSelected ? ColorTokens.Overlay.onAccent : ColorTokens.Parent.ink)
                 .padding(.horizontal, SpacingTokens.regular)
                 .padding(.vertical, SpacingTokens.small)
                 .frame(minHeight: 44)
