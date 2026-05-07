@@ -1,9 +1,23 @@
 import Foundation
 import OSLog
 
+// MARK: - VIP-thin: ARSession orchestration only
+//
+// Этот Interactor намеренно тонкий (~70 LOC). Логика тренировки
+// звуков НЕ принадлежит iOS-слою: всё реальное распознавание происходит
+// в ARSessionDelegate (ARFaceAnchor blendshapes / TonguePostureClassifier
+// Core ML inference). Interactor только:
+//   1. Запускает / останавливает ARSession через ARSessionService.
+//   2. Получает frame updates → передаёт Presenter без бизнес-обработки.
+//   3. Финализирует session через SessionRepository (общий path).
+// Углубление до 350+ LOC означало бы дублирование AR логики или создание
+// искусственных абстракций — нарушение Clean Swift VIP принципа.
+//
+// Domain logic (face tracking, score computation) живёт в Workers + ARSessionService.
+//
 // MARK: - ButterflyCatchInteractor
 //
-// VIP-thin Interactor (D.2 v15) — AR мини-игра «Поймай бабочку».
+// AR мини-игра «Поймай бабочку».
 //
 // Clean Swift поток:
 //   View (ARKit frame) → Interactor → Presenter → ViewModel → View
