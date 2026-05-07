@@ -276,11 +276,18 @@ public enum ColorTokens {
                 : UIColor.black.withAlphaComponent(0.15)
         })
 
-        /// Мягкая тень (для card depth).
+        /// Мягкая тень (для card depth, ~0.06-0.10).
         public static let shadow = Color(uiColor: UIColor { trait in
             trait.userInterfaceStyle == .dark
                 ? UIColor.black.withAlphaComponent(0.30)
                 : UIColor.black.withAlphaComponent(0.08)
+        })
+
+        /// Средняя тень (для elevated cards / modals, ~0.15-0.25).
+        public static let shadowMedium = Color(uiColor: UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor.black.withAlphaComponent(0.45)
+                : UIColor.black.withAlphaComponent(0.18)
         })
     }
 

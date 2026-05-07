@@ -164,12 +164,12 @@ struct ARHeroBanner: View {
         if !reduceMotion {
             ZStack {
                 Circle()
-                    .stroke(Color.white.opacity(0.35), lineWidth: 2)
+                    .stroke(ColorTokens.Overlay.highlight, lineWidth: 2)
                     .frame(width: 220, height: 220)
                     .scaleEffect(ringScale)
                     .opacity(ringOpacity)
                 Circle()
-                    .stroke(Color.white.opacity(0.25), lineWidth: 2)
+                    .stroke(ColorTokens.Overlay.highlight, lineWidth: 2)
                     .frame(width: 280, height: 280)
                     .scaleEffect(ringScale * 1.05)
                     .opacity(ringOpacity * 0.8)

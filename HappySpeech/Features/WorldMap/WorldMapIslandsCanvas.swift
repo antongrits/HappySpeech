@@ -223,7 +223,7 @@ private struct IslandBubble: View {
         if !card.isLocked {
             ZStack {
                 Circle()
-                    .stroke(Color.white.opacity(0.5), lineWidth: 5)
+                    .stroke(ColorTokens.Overlay.highlight, lineWidth: 5)
                 Circle()
                     .trim(from: 0, to: max(0.001, min(1, card.progress)))
                     .stroke(
@@ -310,7 +310,7 @@ private struct IslandBubble: View {
             Circle()
                 .fill(ColorTokens.Brand.gold)
                 .frame(width: 22, height: 22)
-                .shadow(color: .black.opacity(0.18), radius: 2, y: 1)
+                .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 2, y: 1)
             Image(systemName: "checkmark")
                 .font(TypographyTokens.caption(11).weight(.bold))
                 .foregroundStyle(.white)

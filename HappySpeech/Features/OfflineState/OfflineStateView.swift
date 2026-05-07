@@ -104,7 +104,7 @@ struct OfflineStateView: View {
             Circle()
                 .fill(ColorTokens.Kid.surface)
                 .frame(width: 180, height: 180)
-                .shadow(color: .black.opacity(0.08), radius: 18, x: 0, y: 8)
+                .shadow(color: ColorTokens.Overlay.shadow, radius: 18, x: 0, y: 8)
 
             // wifi.slash icon
             Image(systemName: "wifi.slash")
@@ -136,7 +136,7 @@ struct OfflineStateView: View {
             .padding(.horizontal, SpacingTokens.sp3)
             .padding(.vertical, SpacingTokens.sp1)
             .background(Capsule().fill(ColorTokens.Semantic.warning))
-            .shadow(color: .black.opacity(0.15), radius: 4, x: 0, y: 2)
+            .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 4, x: 0, y: 2)
             .accessibilityLabel(viewModel.pendingBadgeText)
     }
 

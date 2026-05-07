@@ -131,7 +131,7 @@ struct OfflineMiniGameView: View {
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                     .fill(ColorTokens.Kid.surface)
-                    .shadow(color: .black.opacity(0.07), radius: 8, x: 0, y: 3)
+                    .shadow(color: ColorTokens.Overlay.shadow, radius: 8, x: 0, y: 3)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
@@ -521,7 +521,7 @@ private struct FindPairGameView: View {
                       ? ColorTokens.Brand.mint.opacity(0.25)
                       : (card.isFaceUp ? ColorTokens.Kid.surface : ColorTokens.Brand.lilac.opacity(0.45)))
                 .aspectRatio(1, contentMode: .fit)
-                .shadow(color: .black.opacity(0.08), radius: 4, x: 0, y: 2)
+                .shadow(color: ColorTokens.Overlay.shadow, radius: 4, x: 0, y: 2)
 
             if card.isFaceUp || card.isMatched {
                 Image(card.emoji)

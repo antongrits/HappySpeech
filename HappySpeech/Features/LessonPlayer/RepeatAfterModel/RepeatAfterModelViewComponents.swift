@@ -70,7 +70,7 @@ struct RecordingButton: View {
                             .foregroundStyle(.white)
                             .accessibilityHidden(true)
                     )
-                    .shadow(color: .black.opacity(0.18), radius: 10, y: 4)
+                    .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 10, y: 4)
             }
             .frame(maxWidth: .infinity)
         }

@@ -76,7 +76,7 @@ struct AchievementPopupView: View {
         .padding(SpacingTokens.xLarge)
         .frame(maxWidth: 320)
         .background(ColorTokens.Kid.surface, in: RoundedRectangle(cornerRadius: RadiusTokens.xl))
-        .shadow(color: .black.opacity(0.18), radius: 24, x: 0, y: 8)
+        .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 24, x: 0, y: 8)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ColorTokens.Overlay.dimmerHeavy.ignoresSafeArea())
         .onTapGesture { onDismiss() }

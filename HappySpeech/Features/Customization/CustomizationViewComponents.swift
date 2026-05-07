@@ -181,7 +181,7 @@ struct ColorCircle: View {
                 .fill(color)
                 .frame(width: circleSize, height: circleSize)
                 .overlay(
-                    Circle().strokeBorder(.white.opacity(0.3), lineWidth: 1)
+                    Circle().strokeBorder(ColorTokens.Overlay.highlight, lineWidth: 1)
                 )
 
             if isSelected {

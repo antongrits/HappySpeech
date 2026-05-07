@@ -126,7 +126,7 @@ struct VisualAcousticView: View {
         HSLiquidGlassCard(style: .primary, padding: 0) {
             ZStack {
                 HSContentSymbol(display.imageEmoji, size: 96)
-                    .shadow(color: .black.opacity(0.08), radius: 8, y: 4)
+                    .shadow(color: ColorTokens.Overlay.shadow, radius: 8, y: 4)
                     .scaleEffect(reduceMotion ? 1.0 : (display.isPlaying ? 1.04 : 1.0))
                     .animation(
                         reduceMotion

@@ -583,7 +583,7 @@ struct DemoModeView: View {
             .padding(.vertical, SpacingTokens.small)
             .background(
                 Capsule()
-                    .fill(Color.black.opacity(0.75))
+                    .fill(ColorTokens.Overlay.dimmerHeavy)
             )
             .padding(.top, SpacingTokens.xLarge)
             Spacer()

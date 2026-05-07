@@ -346,7 +346,7 @@ private struct SharePlaySessionBannerView: View {
                     .foregroundStyle(.white)
                     .padding(.horizontal, SpacingTokens.sp3)
                     .padding(.vertical, SpacingTokens.sp1)
-                    .background(Color.white.opacity(0.25), in: Capsule())
+                    .background(ColorTokens.Overlay.highlight, in: Capsule())
             }
             .accessibilityLabel(String(localized: "shareplay.session.end"))
         }

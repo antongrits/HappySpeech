@@ -227,7 +227,7 @@ struct SortingView: View {
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                     .strokeBorder(Color.white.opacity(0.2), lineWidth: 1)
             )
-            .shadow(color: .black.opacity(0.08), radius: 12, y: 4)
+            .shadow(color: ColorTokens.Overlay.shadow, radius: 12, y: 4)
             .id(word.id)
             .transition(.asymmetric(
                 insertion: .scale(scale: 0.9).combined(with: .opacity),
@@ -349,7 +349,7 @@ struct SortingView: View {
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                     .fill(ColorTokens.Kid.surface)
-                    .shadow(color: .black.opacity(0.18), radius: 16, y: 4)
+                    .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 16, y: 4)
             )
             .transition(.scale(scale: 0.85).combined(with: .opacity))
             .accessibilityElement(children: .combine)
@@ -377,7 +377,7 @@ struct SortingView: View {
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                     .fill(ColorTokens.Kid.surface)
-                    .shadow(color: .black.opacity(0.14), radius: 12, y: 3)
+                    .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 12, y: 3)
             )
             .padding(.horizontal, SpacingTokens.xLarge)
             .transition(.move(edge: .top).combined(with: .opacity))
