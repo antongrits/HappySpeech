@@ -132,8 +132,8 @@ struct WorldZoneTile: View {
     private var highlightOverlay: some View {
         if card.isHighlighted {
             RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
-                .strokeBorder(Color.white, lineWidth: 3)
-                .shadow(color: .white.opacity(0.4), radius: 8)
+                .strokeBorder(ColorTokens.Overlay.onAccent, lineWidth: 3)
+                .shadow(color: ColorTokens.Overlay.onAccent.opacity(0.4), radius: 8)
         }
     }
 
@@ -145,7 +145,7 @@ struct WorldZoneTile: View {
                     .fill(ColorTokens.Overlay.dimmer)
                 Image(systemName: "lock.fill")
                     .font(TypographyTokens.title(32).weight(.semibold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .accessibilityHidden(true)
             }
         }
@@ -483,7 +483,7 @@ private extension String {
     var zoneForegroundColor: Color {
         switch self {
         case "butter", "gold": return ColorTokens.Kid.ink
-        default:               return .white
+        default:               return ColorTokens.Overlay.onAccent
         }
     }
 }
