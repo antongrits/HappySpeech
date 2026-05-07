@@ -164,9 +164,7 @@ struct FamilyCalendarView: View {
 
     private var emptyView: some View {
         VStack(spacing: SpacingTokens.xxLarge) {
-            Image(systemName: "calendar.badge.exclamationmark")
-                .font(TypographyTokens.kidDisplay(56))
-                .foregroundStyle(ColorTokens.Parent.inkSoft)
+            LyalyaMascotView(state: .pointing, size: 140)
                 .accessibilityHidden(true)
             Text(String(localized: "family_calendar.empty.title"))
                 .font(TypographyTokens.title())

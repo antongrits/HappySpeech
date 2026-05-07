@@ -188,6 +188,10 @@ struct DemoOverviewSheet: View {
             .navigationTitle(String(localized: "demo.overview.label"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    LyalyaMascotView(state: .explaining, size: 32)
+                        .accessibilityHidden(true)
+                }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         dismiss()
