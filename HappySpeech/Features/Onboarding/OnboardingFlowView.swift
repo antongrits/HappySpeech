@@ -138,6 +138,9 @@ struct OnboardingFlowView: View {
                     .accessibilityLabel(String(localized: "onboarding.a11y.back"))
                 }
                 Spacer()
+                LyalyaMascotView(state: .pointing, size: 36)
+                    .accessibilityHidden(true)
+                Spacer()
                 Text(display.progressLabel)
                     .font(TypographyTokens.mono(12))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
