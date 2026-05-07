@@ -335,7 +335,7 @@ struct ARStoryQuestView: View {
 
     private func errorOverlay(message: String) -> some View {
         ZStack {
-            Color.black.opacity(0.6).ignoresSafeArea()
+            ColorTokens.Overlay.dimmerHeavy.ignoresSafeArea()
             VStack(spacing: SpacingTokens.small) {
                 Image(systemName: "exclamationmark.triangle.fill")
                     .font(TypographyTokens.display(40))

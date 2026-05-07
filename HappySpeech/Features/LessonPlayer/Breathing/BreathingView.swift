@@ -168,7 +168,7 @@ struct BreathingView: View {
     // MARK: - Overlays
 
     private var tutorialOverlay: some View {
-        Color.black.opacity(0.35).ignoresSafeArea()
+        ColorTokens.Overlay.dimmer.ignoresSafeArea()
             .overlay(
                 HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.large) {
                     VStack(spacing: SpacingTokens.medium) {

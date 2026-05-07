@@ -93,7 +93,7 @@ struct ARMirrorView: View {
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, SpacingTokens.medium)
                         .padding(.vertical, SpacingTokens.small)
-                        .background(.black.opacity(0.45), in: Capsule())
+                        .background(ColorTokens.Overlay.dimmerHeavy, in: Capsule())
                         .accessibilityAddTraits(.updatesFrequently)
                 }
 
@@ -131,7 +131,7 @@ struct ARMirrorView: View {
         }
 
         if let startError {
-            Color.black.opacity(0.6).ignoresSafeArea()
+            ColorTokens.Overlay.dimmerHeavy.ignoresSafeArea()
             VStack(spacing: SpacingTokens.small) {
                 Text("ar.mirror.startError")
                     .font(TypographyTokens.headline())
@@ -201,7 +201,7 @@ struct ARMirrorView: View {
                 .foregroundStyle(.white.opacity(0.85))
             GeometryReader { proxy in
                 ZStack(alignment: .leading) {
-                    Capsule().fill(.white.opacity(0.25))
+                    Capsule().fill(ColorTokens.Overlay.highlight)
                     Capsule()
                         .fill(ColorTokens.Brand.mint)
                         .frame(width: proxy.size.width * CGFloat(display.lipSymmetry))
@@ -247,7 +247,7 @@ struct ARMirrorView: View {
                 .foregroundStyle(.white.opacity(0.85))
             GeometryReader { proxy in
                 ZStack(alignment: .leading) {
-                    Capsule().fill(.white.opacity(0.25))
+                    Capsule().fill(ColorTokens.Overlay.highlight)
                     Capsule()
                         .fill(LinearGradient(
                             colors: [ColorTokens.Brand.primary, ColorTokens.Brand.butter],

@@ -47,7 +47,7 @@ struct SoundAndFaceView: View {
 
                 GeometryReader { proxy in
                     ZStack(alignment: .leading) {
-                        Capsule().fill(.white.opacity(0.25))
+                        Capsule().fill(ColorTokens.Overlay.highlight)
                         Capsule().fill(ColorTokens.Brand.mint)
                             .frame(width: proxy.size.width * CGFloat(display.postureProgress))
                     }

@@ -38,11 +38,11 @@ struct BreathingARView: View {
                     .foregroundStyle(.white)
                     .padding(.horizontal, SpacingTokens.medium)
                     .padding(.vertical, SpacingTokens.small)
-                    .background(.black.opacity(0.45), in: Capsule())
+                    .background(ColorTokens.Overlay.dimmerHeavy, in: Capsule())
                 Spacer()
                 GeometryReader { proxy in
                     ZStack(alignment: .leading) {
-                        Capsule().fill(.white.opacity(0.25))
+                        Capsule().fill(ColorTokens.Overlay.highlight)
                         Capsule().fill(ColorTokens.Brand.sky)
                             .frame(width: proxy.size.width * CGFloat(display.strength))
                     }
