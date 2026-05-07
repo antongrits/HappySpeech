@@ -36,7 +36,7 @@ final class DemoDisplay: DemoDisplayLogic {
     var stepSubtitle: String = ""
     var stepDescription: String = ""
     var mascotText: String = ""
-    var screenEmoji: String = "📱"
+    var screenSymbol: String = "iphone"
     var illustrationSymbol: String = ""
     var accent: DemoAccentColor = .primary
     var lyalyaState: LyalyaState = .explaining
@@ -80,7 +80,7 @@ final class DemoDisplay: DemoDisplayLogic {
             stepSubtitle: viewModel.stepSubtitle,
             stepDescription: viewModel.stepDescription,
             mascotText: viewModel.mascotText,
-            screenEmoji: viewModel.screenEmoji,
+            screenSymbol: viewModel.screenSymbol,
             illustrationSymbol: viewModel.illustrationSymbol,
             accent: viewModel.accent,
             lyalyaState: viewModel.lyalyaState,
@@ -102,7 +102,7 @@ final class DemoDisplay: DemoDisplayLogic {
             stepSubtitle: viewModel.stepSubtitle,
             stepDescription: viewModel.stepDescription,
             mascotText: viewModel.mascotText,
-            screenEmoji: viewModel.screenEmoji,
+            screenSymbol: viewModel.screenSymbol,
             illustrationSymbol: viewModel.illustrationSymbol,
             accent: viewModel.accent,
             lyalyaState: viewModel.lyalyaState,
@@ -125,7 +125,7 @@ final class DemoDisplay: DemoDisplayLogic {
             stepSubtitle: viewModel.stepSubtitle,
             stepDescription: viewModel.stepDescription,
             mascotText: viewModel.mascotText,
-            screenEmoji: viewModel.screenEmoji,
+            screenSymbol: viewModel.screenSymbol,
             illustrationSymbol: viewModel.illustrationSymbol,
             accent: viewModel.accent,
             lyalyaState: viewModel.lyalyaState,
@@ -147,7 +147,7 @@ final class DemoDisplay: DemoDisplayLogic {
             stepSubtitle: viewModel.stepSubtitle,
             stepDescription: viewModel.stepDescription,
             mascotText: viewModel.mascotText,
-            screenEmoji: viewModel.screenEmoji,
+            screenSymbol: viewModel.screenSymbol,
             illustrationSymbol: viewModel.illustrationSymbol,
             accent: viewModel.accent,
             lyalyaState: viewModel.lyalyaState,
@@ -186,7 +186,7 @@ final class DemoDisplay: DemoDisplayLogic {
             stepSubtitle: viewModel.stepSubtitle,
             stepDescription: viewModel.stepDescription,
             mascotText: viewModel.mascotText,
-            screenEmoji: viewModel.screenEmoji,
+            screenSymbol: viewModel.screenSymbol,
             illustrationSymbol: viewModel.illustrationSymbol,
             accent: viewModel.accent,
             lyalyaState: viewModel.lyalyaState,
@@ -221,7 +221,7 @@ final class DemoDisplay: DemoDisplayLogic {
         stepSubtitle: String,
         stepDescription: String,
         mascotText: String,
-        screenEmoji: String,
+        screenSymbol: String,
         illustrationSymbol: String,
         accent: DemoAccentColor,
         lyalyaState: LyalyaState,
@@ -239,7 +239,7 @@ final class DemoDisplay: DemoDisplayLogic {
         self.stepSubtitle = stepSubtitle
         self.stepDescription = stepDescription
         self.mascotText = mascotText
-        self.screenEmoji = screenEmoji
+        self.screenSymbol = screenSymbol
         self.illustrationSymbol = illustrationSymbol
         self.accent = accent
         self.lyalyaState = lyalyaState

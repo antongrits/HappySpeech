@@ -466,7 +466,7 @@ struct DemoModeView: View {
 
     /// Большой круглый «постер» шага: SF Symbol по центру + emoji-fallback
     /// + тень. Если у шага задан `illustrationSymbol` — рендерим Image,
-    /// иначе используем `screenEmoji` как Text.
+    /// иначе используем `screenSymbol` как Text.
     @ViewBuilder
     private func illustrationView(for step: DemoStep) -> some View {
         ZStack {
@@ -486,12 +486,13 @@ struct DemoModeView: View {
 
             if !step.illustrationSymbol.isEmpty {
                 Image(systemName: step.illustrationSymbol)
-                    .font(TypographyTokens.kidDisplay(64))
+                    .font(.system(size: 64, weight: .regular))
                     .foregroundStyle(.white)
                     .accessibilityHidden(true)
             } else {
-                Text(step.screenEmoji)
-                    .font(TypographyTokens.kidDisplay(72)) // emoji screen illustration — skip TypographyTokens
+                Image(systemName: step.screenSymbol)
+                    .font(.system(size: 72, weight: .regular))
+                    .foregroundStyle(.white)
                     .accessibilityHidden(true)
             }
         }
