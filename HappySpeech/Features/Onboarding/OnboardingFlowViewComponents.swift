@@ -23,12 +23,17 @@ struct OnboardingWelcomeStep: View {
                     .font(TypographyTokens.title(28))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+                    .padding(.horizontal, SpacingTokens.medium)
                     .accessibilityAddTraits(.isHeader)
 
                 Text(String(localized: "onboarding.welcome.subtitle"))
                     .font(TypographyTokens.body(15))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
                     .padding(.horizontal, SpacingTokens.large)
                     .lineSpacing(4)
             }
@@ -65,12 +70,18 @@ struct OnboardingRoleStep: View {
             Text(String(localized: "onboarding.role.title"))
                 .font(TypographyTokens.title(24))
                 .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
+                .padding(.horizontal, SpacingTokens.medium)
                 .accessibilityAddTraits(.isHeader)
 
             Text(String(localized: "onboarding.role.subtitle"))
                 .font(TypographyTokens.body(14))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
                 .padding(.horizontal, SpacingTokens.large)
 
             VStack(spacing: SpacingTokens.small) {
@@ -170,14 +181,18 @@ struct OnboardingNameStep: View {
                     .font(TypographyTokens.title(24))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .multilineTextAlignment(.center)
-                    .padding(.horizontal, SpacingTokens.large)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+                    .padding(.horizontal, SpacingTokens.medium)
                     .accessibilityAddTraits(.isHeader)
 
                 Text(String(localized: "onboarding.name.subtitle"))
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .multilineTextAlignment(.center)
-                    .padding(.horizontal, SpacingTokens.xLarge)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .padding(.horizontal, SpacingTokens.large)
 
                 VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
                     Text(String(localized: "onboarding.profile.name.label"))
@@ -299,14 +314,18 @@ struct OnboardingAgeStep: View {
                     .font(TypographyTokens.title(24))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .multilineTextAlignment(.center)
-                    .padding(.horizontal, SpacingTokens.large)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+                    .padding(.horizontal, SpacingTokens.medium)
                     .accessibilityAddTraits(.isHeader)
 
                 Text(String(localized: "onboarding.age.subtitle"))
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .multilineTextAlignment(.center)
-                    .padding(.horizontal, SpacingTokens.xLarge)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .padding(.horizontal, SpacingTokens.large)
             }
 
             HStack(spacing: SpacingTokens.small) {
@@ -405,12 +424,18 @@ struct OnboardingGoalsStep: View {
             Text(String(localized: "onboarding.goals.title"))
                 .font(TypographyTokens.title(24))
                 .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
+                .padding(.horizontal, SpacingTokens.medium)
                 .accessibilityAddTraits(.isHeader)
 
             Text(String(localized: "onboarding.goals.subtitle"))
                 .font(TypographyTokens.body(14))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
                 .padding(.horizontal, SpacingTokens.large)
 
             ScrollView {
@@ -498,15 +523,19 @@ struct OnboardingSoundsStep: View {
             Text(String(localized: "onboarding.sounds.title"))
                 .font(TypographyTokens.title(22))
                 .foregroundStyle(ColorTokens.Kid.ink)
-                .padding(.top, SpacingTokens.medium)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, SpacingTokens.large)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
+                .padding(.top, SpacingTokens.medium)
+                .padding(.horizontal, SpacingTokens.medium)
                 .accessibilityAddTraits(.isHeader)
 
             Text(String(localized: "onboarding.sounds.subtitle"))
                 .font(TypographyTokens.body(13))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
                 .padding(.horizontal, SpacingTokens.large)
 
             ScrollView {
