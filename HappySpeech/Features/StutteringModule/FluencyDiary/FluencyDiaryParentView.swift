@@ -21,27 +21,14 @@ struct FluencyDiaryParentView: View {
                     ProgressView()
                         .frame(maxWidth: .infinity, minHeight: 200)
                 } else if sessions.isEmpty {
-                    // BUG-012: Lyalya в empty state вместо SF Symbol book
-                    VStack(spacing: SpacingTokens.sp4) {
-                        LyalyaMascotView(state: .encouraging, size: 80)
-                            .accessibilityHidden(true)
-                        Text(String(localized: "fluency_diary.empty.title"))
-                            .font(TypographyTokens.headline(18))
-                            .foregroundStyle(ColorTokens.Parent.ink)
-                            .multilineTextAlignment(.center)
-                        Text(String(localized: "fluency_diary.empty.message"))
-                            .font(TypographyTokens.body(14))
-                            .foregroundStyle(ColorTokens.Parent.inkMuted)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal, SpacingTokens.sp4)
-                            .lineLimit(nil)
-                            .minimumScaleFactor(0.85)
-                    }
-                    .frame(maxWidth: .infinity, minHeight: 300)
-                    .accessibilityElement(children: .combine)
-                    .accessibilityLabel(
-                        "\(String(localized: "fluency_diary.empty.title")). \(String(localized: "fluency_diary.empty.message"))"
+                    // G.1 v17 — HSEmptyStateView (mascot=encouraging).
+                    // Замена inline VStack: единый бренд-стиль empty-state'ов.
+                    HSEmptyStateView(
+                        mascot: .encouraging,
+                        title: String(localized: "fluency_diary.empty.title"),
+                        subtitle: String(localized: "fluency_diary.empty.message")
                     )
+                    .frame(maxWidth: .infinity, minHeight: 300)
                 } else {
                     chartSection
                     historySection

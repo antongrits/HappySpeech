@@ -224,10 +224,11 @@ struct RewardsView: View {
     @ViewBuilder
     private var contentSection: some View {
         if display.isEmpty {
+            // G.1 v17 — kid-контур: маскот Ляля вместо SF Symbol.
             HSEmptyStateView(
-                icon: "sparkles",
+                mascot: .encouraging,
                 title: display.emptyTitle,
-                message: display.emptyMessage
+                subtitle: display.emptyMessage
             )
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         } else {

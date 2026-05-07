@@ -265,48 +265,16 @@ struct HomeTasksView: View {
 
     // MARK: - Empty state
 
-    /// Empty-state с маскотом «Ляля» в celebrating-состоянии.
-    /// Никаких эмодзи в UI — только Rive-маскот через DesignSystem.
+    /// G.1 v17 — HSEmptyStateView (mascot=celebrating, parent-контур).
+    /// Маскот в celebrating-состоянии: «всё выполнено» — позитивная нота.
     private var emptyStateView: some View {
-        VStack(spacing: SpacingTokens.large) {
-            Spacer(minLength: SpacingTokens.xLarge)
-
-            LyalyaMascotView(state: .celebrating, size: 160)
-                .accessibilityLabel(String(localized: "homeTasks.empty.celebrating.label"))
-
-            VStack(spacing: SpacingTokens.small) {
-                Text(display.emptyTitle)
-                    .font(TypographyTokens.title(22))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-
-                Text(display.emptyMessage)
-                    .font(TypographyTokens.body())
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                    .padding(.horizontal, SpacingTokens.large)
-            }
-
-            HSButton(
-                String(localized: "homeTasks.empty.cta"),
-                style: .secondary,
-                size: .medium,
-                icon: "arrow.clockwise"
-            ) {
-                performRefresh()
-            }
-            .frame(maxWidth: 280)
-
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(display.emptyTitle). \(display.emptyMessage)")
+        HSEmptyStateView(
+            mascot: .celebrating,
+            title: display.emptyTitle,
+            subtitle: display.emptyMessage,
+            actionTitle: String(localized: "homeTasks.empty.cta"),
+            action: { performRefresh() }
+        )
     }
 
     // MARK: - Actions
