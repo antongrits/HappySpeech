@@ -127,7 +127,7 @@ struct SharePlaySessionView: View {
                     .padding(.horizontal, SpacingTokens.sp4)
                     .padding(.vertical, SpacingTokens.sp2)
                     .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: RadiusTokens.md))
-                    .shadow(color: .black.opacity(0.1), radius: 6)
+                    .shadow(color: ColorTokens.Overlay.shadow, radius: 6)
                     .transition(.scale.combined(with: .opacity))
                 Spacer()
             }

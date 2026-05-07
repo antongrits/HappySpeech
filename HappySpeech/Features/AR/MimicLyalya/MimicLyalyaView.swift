@@ -192,7 +192,7 @@ private struct HandPoseHintBanner: View {
         }
         .padding(.horizontal, SpacingTokens.medium)
         .padding(.vertical, SpacingTokens.small)
-        .background(.black.opacity(0.5), in: RoundedRectangle(cornerRadius: RadiusTokens.md))
+        .background(ColorTokens.Overlay.dimmerHeavy, in: RoundedRectangle(cornerRadius: RadiusTokens.md))
         .accessibilityElement(children: .combine)
         .accessibilityLabel(isMatching
             ? String(localized: "hand_pose.detect.matched")

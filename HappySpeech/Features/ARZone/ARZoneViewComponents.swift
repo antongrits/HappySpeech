@@ -311,7 +311,7 @@ struct ARStartRecommendedButton: View {
                         .minimumScaleFactor(0.85)
                     Text(card.title)
                         .font(TypographyTokens.body(13))
-                        .foregroundStyle(Color.white.opacity(0.92))
+                        .foregroundStyle(ColorTokens.Kid.surface)
                         .lineLimit(1)
                         .minimumScaleFactor(0.85)
                 }

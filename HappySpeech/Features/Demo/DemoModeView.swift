@@ -270,7 +270,7 @@ struct DemoModeView: View {
                 .padding(.horizontal, SpacingTokens.small)
                 .padding(.vertical, SpacingTokens.tiny)
                 .frame(minWidth: 44, minHeight: 44)
-                .background(Color.black.opacity(0.001))
+                .background(Color.clear)
                 .contentShape(Rectangle())
         }
         .accessibilityLabel(String(localized: "demo.a11y.skip"))

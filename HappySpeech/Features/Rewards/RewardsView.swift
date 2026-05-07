@@ -193,7 +193,7 @@ struct RewardsView: View {
                                 .background(
                                     Capsule().fill(
                                         tab.isActive
-                                            ? Color.white.opacity(0.25)
+                                            ? ColorTokens.Overlay.highlight
                                             : ColorTokens.Kid.surfaceAlt
                                     )
                                 )

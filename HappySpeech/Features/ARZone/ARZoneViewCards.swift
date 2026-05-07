@@ -273,7 +273,7 @@ struct ARGameCardView: View {
         HStack(spacing: 3) {
             ForEach(0..<3, id: \.self) { i in
                 Circle()
-                    .fill(i < card.difficulty ? Color.white : Color.white.opacity(0.35))
+                    .fill(i < card.difficulty ? Color.white : ColorTokens.Overlay.highlight)
                     .frame(width: 6, height: 6)
             }
         }

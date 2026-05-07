@@ -48,7 +48,7 @@ struct ButterflyCatchView: View {
                         .foregroundStyle(.white)
                         .padding(.horizontal, SpacingTokens.medium)
                         .padding(.vertical, SpacingTokens.small)
-                        .background(.black.opacity(0.5), in: Capsule())
+                        .background(ColorTokens.Overlay.dimmerHeavy, in: Capsule())
                         .padding(.bottom, SpacingTokens.xLarge)
                 }
             }

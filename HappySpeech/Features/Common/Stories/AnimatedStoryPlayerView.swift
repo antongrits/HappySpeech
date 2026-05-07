@@ -215,7 +215,7 @@ struct AnimatedStoryPlayerView: View {
                 Circle()
                     .fill(index <= currentSceneIndex
                           ? Color.white
-                          : Color.white.opacity(0.35))
+                          : ColorTokens.Overlay.highlight)
                     .frame(width: index == currentSceneIndex ? 12 : 8,
                            height: index == currentSceneIndex ? 12 : 8)
                     .animation(

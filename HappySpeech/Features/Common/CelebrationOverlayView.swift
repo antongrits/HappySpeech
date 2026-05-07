@@ -128,7 +128,7 @@ struct CelebrationOverlayView: View {
                     .foregroundStyle(
                         index < stars
                             ? ColorTokens.Celebration.star
-                            : Color.white.opacity(0.3)
+                            : ColorTokens.Overlay.highlight
                     )
                     .shadow(
                         color: index < stars

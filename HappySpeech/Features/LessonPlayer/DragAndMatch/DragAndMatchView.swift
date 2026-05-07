@@ -169,7 +169,7 @@ struct DragAndMatchView: View {
 
     private var roundCompleteOverlay: some View {
         ZStack {
-            Color.black.opacity(0.35)
+            ColorTokens.Overlay.dimmer
                 .ignoresSafeArea()
                 .transition(.opacity)
 
