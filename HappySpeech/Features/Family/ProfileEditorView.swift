@@ -92,21 +92,26 @@ struct ProfileEditorView: View {
 
     private var avatarPreviewSection: some View {
         VStack(spacing: SpacingTokens.sp3) {
-            ZStack {
-                Circle()
-                    .fill(viewModel.selectedThemeColor.opacity(0.2))
-                    .frame(width: 100, height: 100)
-                    .shadow(color: viewModel.selectedThemeColor.opacity(0.3), radius: 12, y: 4)
+            HStack(spacing: SpacingTokens.sp4) {
+                ZStack {
+                    Circle()
+                        .fill(viewModel.selectedThemeColor.opacity(0.2))
+                        .frame(width: 100, height: 100)
+                        .shadow(color: viewModel.selectedThemeColor.opacity(0.3), radius: 12, y: 4)
 
-                Image(viewModel.selectedAvatarIllustration)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .padding(SpacingTokens.sp2)
-                    .frame(width: 100, height: 100)
-                    .clipShape(Circle())
+                    Image(viewModel.selectedAvatarIllustration)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .padding(SpacingTokens.sp2)
+                        .frame(width: 100, height: 100)
+                        .clipShape(Circle())
+                        .accessibilityHidden(true)
+                }
+                .animation(.spring(response: 0.35, dampingFraction: 0.7), value: viewModel.selectedAvatarId)
+
+                LyalyaMascotView(state: .waving, size: 80)
                     .accessibilityHidden(true)
             }
-            .animation(.spring(response: 0.35, dampingFraction: 0.7), value: viewModel.selectedAvatarId)
 
             Text(viewModel.name.isEmpty ? String(localized: "profile.editor.name.placeholder") : viewModel.name)
                 .font(TypographyTokens.headline(20))
