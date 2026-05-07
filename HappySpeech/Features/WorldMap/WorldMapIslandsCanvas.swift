@@ -203,8 +203,9 @@ private struct IslandBubble: View {
                     .foregroundStyle(.white)
                     .accessibilityHidden(true)
             } else {
-                Text(card.icon)
-                    .font(TypographyTokens.display(38))
+                Image(systemName: card.icon)
+                    .font(.system(size: 38, weight: .regular))
+                    .foregroundStyle(.white)
                     .accessibilityHidden(true)
             }
 
@@ -346,7 +347,7 @@ private extension String {
         .init(
             id: "z1",
             name: String(localized: "worldmap.island.vowels"),
-            icon: "🎵",
+            icon: "music.note",
             soundsLabel: "А · О · У · И",
             progress: 1.0,
             progressLabel: "100%",
@@ -363,7 +364,7 @@ private extension String {
         .init(
             id: "z2",
             name: String(localized: "worldmap.island.sibilants"),
-            icon: "🐍",
+            icon: "leaf.fill",
             soundsLabel: "С · З · Ц",
             progress: 0.65,
             progressLabel: "65%",
@@ -380,7 +381,7 @@ private extension String {
         .init(
             id: "z3",
             name: String(localized: "worldmap.island.hissing"),
-            icon: "🐝",
+            icon: "ant.fill",
             soundsLabel: "Ш · Ж",
             progress: 0.30,
             progressLabel: "30%",
@@ -397,7 +398,7 @@ private extension String {
         .init(
             id: "z4",
             name: String(localized: "worldmap.island.sonorant.r"),
-            icon: "🐯",
+            icon: "flame.fill",
             soundsLabel: "Р · Рь",
             progress: 0.10,
             progressLabel: "10%",
@@ -414,7 +415,7 @@ private extension String {
         .init(
             id: "z5",
             name: String(localized: "worldmap.island.velar"),
-            icon: "🦆",
+            icon: "bird.fill",
             soundsLabel: "К · Г · Х",
             progress: 0.0,
             progressLabel: "0%",
@@ -431,7 +432,7 @@ private extension String {
         .init(
             id: "z6",
             name: String(localized: "worldmap.preview.grammar"),
-            icon: "📚",
+            icon: "books.vertical.fill",
             soundsLabel: String(localized: "worldmap.preview.cases"),
             progress: 0.0,
             progressLabel: "0%",

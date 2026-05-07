@@ -417,8 +417,9 @@ private struct WorldZoneTile: View {
     private var tileContent: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
             HStack(alignment: .top) {
-                Text(card.icon)
-                    .font(.system(size: isWide ? 44 : 36)) // emoji key graphic — skip TypographyTokens
+                Image(systemName: card.icon)
+                    .font(.system(size: isWide ? 44 : 36, weight: .regular))
+                    .foregroundStyle(ColorTokens.Brand.primary)
                     .accessibilityHidden(true)
                 Spacer(minLength: 0)
                 if !card.isLocked {
@@ -566,8 +567,9 @@ private struct WorldZoneDetailSheet: View {
                         .foregroundStyle(ColorTokens.Kid.inkSoft)
                         .accessibilityHidden(true)
                 } else {
-                    Text(viewModel.icon)
-                        .font(TypographyTokens.display(40)) // emoji icon — skip TypographyTokens
+                    Image(systemName: viewModel.icon)
+                        .font(.system(size: 40, weight: .regular))
+                        .foregroundStyle(ColorTokens.Brand.primary)
                         .accessibilityHidden(true)
                 }
             }

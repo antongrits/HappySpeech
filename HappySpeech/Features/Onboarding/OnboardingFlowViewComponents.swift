@@ -233,6 +233,8 @@ struct OnboardingNameStep: View {
 }
 
 struct AvatarOption: View {
+    /// Block D v16: parameter `emoji` оставлен по имени для совместимости callsites,
+    /// но его значение теперь — Asset name из Assets.xcassets.
     let emoji: String
     let isSelected: Bool
     let onTap: () -> Void
@@ -241,8 +243,10 @@ struct AvatarOption: View {
 
     var body: some View {
         Button(action: onTap) {
-            Text(emoji)
-                .font(TypographyTokens.display(36))
+            Image(emoji)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .padding(SpacingTokens.micro)
                 .frame(width: 52, height: 52)
                 .background(
                     Circle()
@@ -255,6 +259,7 @@ struct AvatarOption: View {
                                 )
                         )
                 )
+                .clipShape(Circle())
                 .scaleEffect(isSelected ? 1.1 : 1.0)
                 .animation(reduceMotion ? nil : MotionTokens.spring, value: isSelected)
         }
