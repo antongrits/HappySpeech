@@ -447,7 +447,7 @@ struct SessionShellBinder: View {
         .background(
             RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                 .fill(ColorTokens.Kid.surface)
-                .shadow(color: .black.opacity(0.08), radius: 20, y: 8)
+                .shadow(color: ColorTokens.Overlay.shadow, radius: 20, y: 8)
         )
         .padding(.top, SpacingTokens.xxLarge)
         .accessibilityElement(children: .combine)

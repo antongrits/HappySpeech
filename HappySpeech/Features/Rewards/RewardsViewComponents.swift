@@ -296,7 +296,7 @@ struct StickerUnlockOverlay: View {
 
     var body: some View {
         ZStack {
-            Color.black.opacity(0.55)
+            ColorTokens.Overlay.dimmerHeavy
                 .ignoresSafeArea()
                 .onTapGesture(perform: onDismiss)
                 .accessibilityAddTraits(.isButton)

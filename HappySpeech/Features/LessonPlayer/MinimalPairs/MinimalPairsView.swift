@@ -195,7 +195,7 @@ struct MinimalPairsView: View {
                     .foregroundStyle(.white)
                     .frame(width: 56, height: 56)
                     .background(Circle().fill(ColorTokens.Brand.primary))
-                    .shadow(color: .black.opacity(0.12), radius: 6, y: 3)
+                    .shadow(color: ColorTokens.Overlay.shadow, radius: 6, y: 3)
             }
             .buttonStyle(.plain)
             .disabled(display.replaysRemaining == 0 && !display.isAnswered)
@@ -354,7 +354,7 @@ struct MinimalPairsView: View {
                     : ColorTokens.Feedback.incorrect
             )
         )
-        .shadow(color: .black.opacity(0.16), radius: 10, y: 4)
+        .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 10, y: 4)
         .accessibilityLabel(display.feedbackText)
     }
 
@@ -465,7 +465,7 @@ struct MinimalPairsView: View {
             .foregroundStyle(.white)
             .padding(.horizontal, SpacingTokens.medium)
             .padding(.vertical, SpacingTokens.small)
-            .background(Capsule().fill(Color.black.opacity(0.75)))
+            .background(Capsule().fill(ColorTokens.Overlay.dimmerHeavy))
             .padding(.top, SpacingTokens.medium)
             .frame(maxWidth: .infinity)
             .accessibilityLabel(message)

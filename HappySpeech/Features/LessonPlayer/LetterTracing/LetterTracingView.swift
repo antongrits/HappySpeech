@@ -124,7 +124,7 @@ struct LetterTracingView: View {
                     .background(
                         RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                             .fill(ColorTokens.Kid.surface)
-                            .shadow(color: .black.opacity(0.06), radius: 12, y: 4)
+                            .shadow(color: ColorTokens.Overlay.shadow, radius: 12, y: 4)
                     )
                     .padding(.horizontal, SpacingTokens.screenEdge)
 

@@ -186,7 +186,7 @@ struct FeedbackOverlayView: View {
             RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                 .strokeBorder(borderColor, lineWidth: state == .incorrect ? 2 : 0)
         )
-        .shadow(color: .black.opacity(0.10), radius: 14, y: 4)
+        .shadow(color: ColorTokens.Overlay.shadow, radius: 14, y: 4)
     }
 
     private var borderColor: Color {

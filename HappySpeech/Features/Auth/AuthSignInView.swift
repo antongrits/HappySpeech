@@ -120,7 +120,7 @@ struct AuthSignInView: View {
             Text("HappySpeech")
                 .font(TypographyTokens.kidDisplay(30))
                 .foregroundStyle(.white)
-                .shadow(color: .black.opacity(0.15), radius: 4, y: 2)
+                .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 4, y: 2)
                 .lineLimit(nil)
                 .minimumScaleFactor(0.85)
                 .accessibilityAddTraits(.isHeader)

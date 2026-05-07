@@ -50,7 +50,7 @@ struct CelebrationOverlayView: View {
     var body: some View {
         ZStack {
             // Полупрозрачный фон
-            Color.black.opacity(0.45)
+            ColorTokens.Overlay.dimmerHeavy
                 .ignoresSafeArea()
 
             // Конфетти слой через ConfettiEmitterView (только при reduceMotion == false)
@@ -78,7 +78,7 @@ struct CelebrationOverlayView: View {
                         .multilineTextAlignment(.center)
                         .lineLimit(nil)
                         .minimumScaleFactor(0.85)
-                        .shadow(color: .black.opacity(0.25), radius: 4, x: 0, y: 2)
+                        .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 4, x: 0, y: 2)
 
                     if stars == 3 {
                         Text(String(localized: "celebration.perfect_subtitle"))

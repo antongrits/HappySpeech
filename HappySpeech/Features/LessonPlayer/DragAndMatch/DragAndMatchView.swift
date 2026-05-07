@@ -207,7 +207,7 @@ struct DragAndMatchView: View {
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                     .fill(ColorTokens.Kid.surface)
-                    .shadow(color: .black.opacity(0.15), radius: 20, y: 6)
+                    .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 20, y: 6)
             )
             .transition(.scale(scale: 0.85).combined(with: .opacity))
         }
@@ -282,7 +282,7 @@ struct DragAndMatchView: View {
         .background(
             RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
                 .fill(ColorTokens.Kid.surface)
-                .shadow(color: .black.opacity(0.06), radius: 4, y: 2)
+                .shadow(color: ColorTokens.Overlay.shadow, radius: 4, y: 2)
         )
         .overlay(
             RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
@@ -327,7 +327,7 @@ struct DragAndMatchView: View {
             RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
                 .fill(ColorTokens.Kid.surface)
         )
-        .shadow(color: .black.opacity(0.18), radius: 10, y: 4)
+        .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 10, y: 4)
     }
 
     // MARK: Buckets

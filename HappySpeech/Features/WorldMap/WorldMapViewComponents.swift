@@ -142,7 +142,7 @@ struct WorldZoneTile: View {
         if card.isLocked {
             ZStack {
                 RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
-                    .fill(.black.opacity(0.35))
+                    .fill(ColorTokens.Overlay.dimmer)
                 Image(systemName: "lock.fill")
                     .font(TypographyTokens.title(32).weight(.semibold))
                     .foregroundStyle(.white)

@@ -270,7 +270,7 @@ struct AchievementsView: View {
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card * 2, style: .continuous)
                     .fill(ColorTokens.Kid.surface)
-                    .shadow(color: .black.opacity(0.18), radius: 24, x: 0, y: 8)
+                    .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 24, x: 0, y: 8)
             )
             .padding(.horizontal, SpacingTokens.sp4)
         }
@@ -415,7 +415,7 @@ struct AchievementsView: View {
         .background(
             Capsule()
                 .fill(ColorTokens.Kid.surface)
-                .shadow(color: .black.opacity(0.15), radius: 12, x: 0, y: 4)
+                .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 12, x: 0, y: 4)
         )
         .accessibilityAnnouncement(toast.message)
     }

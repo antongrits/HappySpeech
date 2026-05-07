@@ -112,7 +112,7 @@ struct SharePlaySessionView: View {
         .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.md))
         .padding(.horizontal, SpacingTokens.sp3)
         .padding(.top, SpacingTokens.sp2)
-        .shadow(color: .black.opacity(0.08), radius: 6, y: 2)
+        .shadow(color: ColorTokens.Overlay.shadow, radius: 6, y: 2)
     }
 
     @ViewBuilder
@@ -152,7 +152,7 @@ struct SharePlaySessionView: View {
                 }
                 .padding(SpacingTokens.sp4)
                 .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: RadiusTokens.lg))
-                .shadow(color: .black.opacity(0.12), radius: 10)
+                .shadow(color: ColorTokens.Overlay.shadow, radius: 10)
                 Spacer()
             }
             .padding(.bottom, SpacingTokens.sp8)

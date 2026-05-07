@@ -350,7 +350,7 @@ struct AnimatedStoryPlayerView: View {
                     .fill(ColorTokens.Overlay.highlight)
                     .overlay(
                         Capsule()
-                            .strokeBorder(Color.white.opacity(0.5), lineWidth: 1.5)
+                            .strokeBorder(ColorTokens.Overlay.highlight, lineWidth: 1.5)
                     )
             )
         }

@@ -252,7 +252,7 @@ struct MemoryView: View {
             }
             .frame(height: cardHeight)
             .overlay(cardOverlay(card: card, isHinted: isHinted))
-            .shadow(color: .black.opacity(0.06), radius: 3, y: 1)
+            .shadow(color: ColorTokens.Overlay.shadow, radius: 3, y: 1)
             .scaleEffect(card.isMatched && !reduceMotion ? 1.02 : 1.0)
             .rotation3DEffect(
                 .degrees(reduceMotion ? 0 : (faceUp ? 0 : 180)),
