@@ -413,12 +413,20 @@ struct SessionShellBinder: View {
             Text(activity.gameType.localizedTitle)
                 .font(TypographyTokens.title())
                 .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
+                .padding(.horizontal, SpacingTokens.medium)
             Text(String(
                 format: String(localized: "session.placeholder.target_sound %@"),
                 activity.soundTarget
             ))
                 .font(TypographyTokens.body())
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .padding(.horizontal, SpacingTokens.medium)
             HSButton(
                 String(localized: "general.done"),
                 style: .primary,
@@ -439,9 +447,15 @@ struct SessionShellBinder: View {
             Text(vm.title)
                 .font(TypographyTokens.title())
                 .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
             Text(vm.subtitle)
                 .font(TypographyTokens.body())
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
         }
         .padding(SpacingTokens.large)
         .background(
