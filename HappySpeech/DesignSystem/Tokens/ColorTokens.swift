@@ -187,8 +187,12 @@ public enum ColorTokens {
         public static let cool    = Color("SkinCool")
         /// Природный оттенок — слегка зелёный (Light: rgb(242,255,242), Dark: rgb(230,255,230))
         public static let nature  = Color("SkinNature")
-        /// Классический — белый
-        public static let classic = Color.white
+        /// Классический — белый в Light, тёплый кремовый off-white в Dark.
+        public static let classic = Color(uiColor: UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor(red: 0.94, green: 0.92, blue: 0.90, alpha: 1.0)
+                : UIColor.white
+        })
     }
 
     // MARK: - Nature Colors
@@ -208,23 +212,70 @@ public enum ColorTokens {
     ///
     /// Использование именованных токенов вместо `Color.black.opacity(0.45)` обеспечивает
     /// единый визуальный язык на всех экранах и упрощает тонкую настройку.
+    /// Все цвета — **dynamic** через UITraitCollection: автоматически адаптируются к Light/Dark.
     public enum Overlay {
-        /// Стандартный modal dimmer (для sheet, fullscreen cover).
-        public static let scrim = Color.black.opacity(0.5)
+        /// Glass tint поверх dark/medium фона (например glass cards).
+        /// Was `Color.white.opacity(0.10-0.15)`. Light: 0.18, Dark: 0.08.
+        public static let glass = Color(uiColor: UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor.white.withAlphaComponent(0.08)
+                : UIColor.white.withAlphaComponent(0.18)
+        })
+
+        /// Highlight — тонкий border / accent поверх content (pressed states).
+        /// Was `Color.white.opacity(0.20-0.30)`. Light: 0.30, Dark: 0.15.
+        public static let highlight = Color(uiColor: UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor.white.withAlphaComponent(0.15)
+                : UIColor.white.withAlphaComponent(0.30)
+        })
+
+        /// Тонкий scrim (10-20% over bright).
+        /// Was `Color.black.opacity(0.05-0.10)`. Light: 0.10, Dark: 0.30.
+        public static let dimmer = Color(uiColor: UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor.black.withAlphaComponent(0.30)
+                : UIColor.black.withAlphaComponent(0.10)
+        })
+
+        /// Heavy scrim для sheets/modals.
+        /// Was `Color.black.opacity(0.40-0.60)`. Light: 0.45, Dark: 0.65.
+        public static let dimmerHeavy = Color(uiColor: UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor.black.withAlphaComponent(0.65)
+                : UIColor.black.withAlphaComponent(0.45)
+        })
+
+        /// Subtle separator. Was `Color.black.opacity(0.08-0.12)`. Использует `UIColor.separator`.
+        public static let separator = Color(uiColor: UIColor.separator)
+
+        /// Стандартный modal dimmer (alias на `dimmerHeavy` для backward compat).
+        public static let scrim = Color(uiColor: UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor.black.withAlphaComponent(0.65)
+                : UIColor.black.withAlphaComponent(0.50)
+        })
+
         /// Лёгкое затемнение (для карточек, hover-состояний).
-        public static let dimmerLight = Color.black.opacity(0.25)
-        /// Стандартное затемнение (для modal, hero overlay).
-        public static let dimmer = Color.black.opacity(0.45)
-        /// Тёмное затемнение (для video player, fullscreen).
-        public static let dimmerHeavy = Color.black.opacity(0.65)
-        /// Стеклянный белый тинт (light glass tint).
-        public static let glass = Color.white.opacity(0.15)
-        /// Стеклянный тёмный тинт (dark glass tint).
-        public static let glassDark = Color.black.opacity(0.15)
-        /// Хайлайт (для pressed-состояний, активных элементов).
-        public static let highlight = Color.white.opacity(0.25)
+        public static let dimmerLight = Color(uiColor: UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor.black.withAlphaComponent(0.40)
+                : UIColor.black.withAlphaComponent(0.25)
+        })
+
+        /// Стеклянный тёмный тинт (для тёмных glass-эффектов поверх светлых картинок).
+        public static let glassDark = Color(uiColor: UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor.black.withAlphaComponent(0.25)
+                : UIColor.black.withAlphaComponent(0.15)
+        })
+
         /// Мягкая тень (для card depth).
-        public static let shadow = Color.black.opacity(0.08)
+        public static let shadow = Color(uiColor: UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor.black.withAlphaComponent(0.30)
+                : UIColor.black.withAlphaComponent(0.08)
+        })
     }
 
     // MARK: - Session Colors
@@ -408,16 +459,24 @@ public enum ColorTokens {
     /// Цвета сцены SceneKit плейсхолдера Ляли (`LyalyaSceneView`).
     /// Используются как `UIColor` для SCNMaterial и как SwiftUI `Color` для preview-фонов.
     public enum LyalyaScene {
-        /// Ambient light — тёплый сиренево-белый.
+        /// Ambient light — тёплый сиренево-белый. (UIColor — статичный для SceneKit материала.)
         public static let ambientUI  = UIColor(red: 0.95, green: 0.93, blue: 1.00, alpha: 1)
-        /// Цвет тела (pastel lilac).
+        /// Цвет тела (pastel lilac). (UIColor — статичный для SceneKit материала.)
         public static let bodyUI     = UIColor(red: 0.76, green: 0.63, blue: 0.95, alpha: 1)
-        /// Цвет зрачков (тёмно-фиолетовый).
+        /// Цвет зрачков (тёмно-фиолетовый). (UIColor — статичный для SceneKit материала.)
         public static let pupilUI    = UIColor(red: 0.15, green: 0.10, blue: 0.25, alpha: 1)
-        /// Preview-фон idle — светло-сиреневый (#F3EEFF).
-        public static let backdropIdle      = Color(red: 0.953, green: 0.933, blue: 1.000)
-        /// Preview-фон celebrating — тёплый кремово-жёлтый (#FFF8E0).
-        public static let backdropCelebrate = Color(red: 1.000, green: 0.973, blue: 0.878)
+        /// Preview-фон idle — светло-сиреневый (Light: #F3EEFF, Dark: #2A1F3D — глубокий ночной фиолет).
+        public static let backdropIdle = Color(uiColor: UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor(red: 0.165, green: 0.122, blue: 0.239, alpha: 1.0)
+                : UIColor(red: 0.953, green: 0.933, blue: 1.000, alpha: 1.0)
+        })
+        /// Preview-фон celebrating — тёплый кремово-жёлтый (Light: #FFF8E0, Dark: #3D3520 — тёплый ночной янтарь).
+        public static let backdropCelebrate = Color(uiColor: UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor(red: 0.239, green: 0.208, blue: 0.125, alpha: 1.0)
+                : UIColor(red: 1.000, green: 0.973, blue: 0.878, alpha: 1.0)
+        })
     }
 }
 
