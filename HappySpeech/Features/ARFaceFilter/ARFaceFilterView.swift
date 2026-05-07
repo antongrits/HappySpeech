@@ -226,7 +226,7 @@ struct ARFaceFilterView: View {
             .frame(width: 72, height: 72)
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .fill(isSelected ? Color.white.opacity(0.30) : Color.black.opacity(0.40))
+                    .fill(isSelected ? ColorTokens.Overlay.highlight : ColorTokens.Overlay.dimmerHeavy)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 16)

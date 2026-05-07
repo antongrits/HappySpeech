@@ -234,7 +234,7 @@ struct ARQuickTipsCarousel: View {
                 .strokeBorder(
                     colorScheme == .light
                         ? ColorTokens.Brand.sky.opacity(0.40)
-                        : Color.white.opacity(0.12),
+                        : ColorTokens.Overlay.glass,
                     lineWidth: 1
                 )
         )
@@ -382,7 +382,7 @@ struct InstructionStepCard: View {
                         .font(TypographyTokens.body(11).weight(.bold))
                         .foregroundStyle(palette.first ?? ColorTokens.Brand.primary)
                         .padding(4)
-                        .background(Circle().fill(Color.white))
+                        .background(Circle().fill(ColorTokens.Kid.surface))
                         .offset(x: 6, y: -6)
                 }
 
