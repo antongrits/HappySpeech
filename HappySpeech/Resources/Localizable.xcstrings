@@ -24703,6 +24703,17 @@
           }
         }
       }
+    },
+    "onboarding.completion.placeholderName": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "друг"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

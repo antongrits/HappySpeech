@@ -75,11 +75,12 @@ extension UserRole: CaseIterable, Identifiable {
         }
     }
 
-    public var emoji: String {
+    /// Block D v16: эмодзи заменены на SF Symbols (UI chrome category).
+    public var systemImageName: String {
         switch self {
-        case .parent:     return "👨‍👩‍👧"
-        case .specialist: return "🩺"
-        case .child:      return "🧒"
+        case .parent:     return "person.2.fill"
+        case .specialist: return "stethoscope"
+        case .child:      return "figure.child"
         }
     }
 
@@ -110,11 +111,12 @@ public enum ChildGender: String, Sendable, Equatable, CaseIterable, Identifiable
         }
     }
 
-    public var emoji: String {
+    /// Block D v16: эмодзи заменены на SF Symbols.
+    public var systemImageName: String {
         switch self {
-        case .boy:          return "👦"
-        case .girl:         return "👧"
-        case .notSpecified: return "🧒"
+        case .boy:          return "figure.child"
+        case .girl:         return "figure.child"
+        case .notSpecified: return "person.fill.questionmark"
         }
     }
 }

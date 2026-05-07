@@ -249,14 +249,23 @@ struct OnboardingCompletionStep: View {
     @State private var confettiAppeared = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    private let confettiEmojis = ["🎉", "✨", "🌟", "💫", "🎊", "⭐"]
+    // Block D v16: эмодзи-частицы заменены на SF Symbol particles + tinted ColorTokens.
+    private let confettiSymbols: [(systemName: String, tint: Color)] = [
+        ("party.popper.fill", ColorTokens.Brand.gold),
+        ("sparkles",          ColorTokens.Brand.primary),
+        ("star.fill",         ColorTokens.Brand.gold),
+        ("sparkle",           ColorTokens.Brand.lilac),
+        ("heart.fill",        ColorTokens.Brand.rose),
+        ("star.fill",         ColorTokens.Brand.sky)
+    ]
 
     var body: some View {
         ZStack {
-            ForEach(0..<confettiEmojis.count * 3, id: \.self) { i in
-                let emoji = confettiEmojis[i % confettiEmojis.count]
-                Text(emoji)
-                    .font(.system(size: CGFloat.random(in: 22...32)))
+            ForEach(0..<confettiSymbols.count * 3, id: \.self) { i in
+                let particle = confettiSymbols[i % confettiSymbols.count]
+                Image(systemName: particle.systemName)
+                    .font(.system(size: CGFloat.random(in: 22...32), weight: .regular))
+                    .foregroundStyle(particle.tint)
                     .offset(
                         x: CGFloat.random(in: -160...160),
                         y: confettiAppeared ? CGFloat.random(in: 200...500) : -CGFloat.random(in: 200...400)
@@ -272,14 +281,23 @@ struct OnboardingCompletionStep: View {
                     .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                     .accessibilityHidden(true)
 
-                Text(profile.childAvatar)
-                    .font(TypographyTokens.kidDisplay(60))
+                // Block D v16: avatar string is now an Asset name (illustrationName).
+                // Backward-compat: если в строке legacy эмодзи — фолбэк на mascot_lyalya_happy.
+                Image(profile.childAvatar.allSatisfy { $0.isLetter || $0.isNumber || $0 == "_" }
+                      ? profile.childAvatar
+                      : "mascot_lyalya_happy")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 80, height: 80)
+                    .clipShape(Circle())
                     .accessibilityHidden(true)
 
                 VStack(spacing: SpacingTokens.small) {
                     Text(String(
                         format: String(localized: "onboarding.completion.title"),
-                        profile.childName.isEmpty ? "🙂" : profile.childName
+                        profile.childName.isEmpty
+                            ? String(localized: "onboarding.completion.placeholderName")
+                            : profile.childName
                     ))
                     .font(TypographyTokens.title(28))
                     .foregroundStyle(ColorTokens.Kid.ink)
