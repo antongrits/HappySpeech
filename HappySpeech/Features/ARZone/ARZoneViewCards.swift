@@ -34,7 +34,7 @@ struct ARDifficultyFilterChips: View {
     private func chip(for filter: ARDifficultyFilter, isActive: Bool) -> some View {
         Text(LocalizedStringResource(stringLiteral: filter.titleKey))
             .font(TypographyTokens.body(13).weight(.semibold))
-            .foregroundStyle(isActive ? Color.white : ColorTokens.Kid.ink)
+            .foregroundStyle(isActive ? ColorTokens.Overlay.onAccent : ColorTokens.Kid.ink)
             .padding(.horizontal, SpacingTokens.regular)
             .padding(.vertical, SpacingTokens.tiny)
             .background(
@@ -273,7 +273,7 @@ struct ARGameCardView: View {
         HStack(spacing: 3) {
             ForEach(0..<3, id: \.self) { i in
                 Circle()
-                    .fill(i < card.difficulty ? Color.white : ColorTokens.Overlay.highlight)
+                    .fill(i < card.difficulty ? ColorTokens.Overlay.onAccent : ColorTokens.Overlay.highlight)
                     .frame(width: 6, height: 6)
             }
         }

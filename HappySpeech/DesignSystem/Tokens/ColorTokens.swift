@@ -289,6 +289,15 @@ public enum ColorTokens {
                 ? UIColor.black.withAlphaComponent(0.45)
                 : UIColor.black.withAlphaComponent(0.18)
         })
+
+        /// Текст / иконка поверх насыщенных цветных backgrounds (CTA, Brand.primary capsule).
+        /// Семантически = static white в обеих темах: на coloured fill контраст всегда нужен максимальный.
+        /// Используй вместо `Color.white` для всех "text on coloured button" кейсов.
+        public static let onAccent = Color.white
+
+        /// Тёмный текст / иконка поверх светлых hero-фонов (для будущих use-case).
+        /// Семантически = static black; alias для completeness API.
+        public static let onLight = Color.black
     }
 
     // MARK: - Session Colors
