@@ -113,7 +113,7 @@ struct PoseSequenceView: View {
     private func chipColor(for index: Int) -> Color {
         if index < display.currentIndex { return ColorTokens.Brand.mint }
         if index == display.currentIndex { return ColorTokens.Brand.primary }
-        return Color.white.opacity(0.25)
+        return ColorTokens.Overlay.highlight
     }
 
     // MARK: - Body feedback

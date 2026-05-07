@@ -40,7 +40,7 @@ struct SoundAndFaceView: View {
                     }
                 }
                 .padding()
-                .background(.black.opacity(0.4), in: RoundedRectangle(cornerRadius: RadiusTokens.md))
+                .background(ColorTokens.Overlay.dimmerHeavy, in: RoundedRectangle(cornerRadius: RadiusTokens.md))
                 .padding(.horizontal, SpacingTokens.screenEdge)
 
                 Spacer()

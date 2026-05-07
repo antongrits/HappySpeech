@@ -203,7 +203,7 @@ struct AchievementsView: View {
     @ViewBuilder
     private func achievementHeroOverlay(item: AchievementCellViewModel) -> some View {
         ZStack {
-            Color.black.opacity(0.5)
+            ColorTokens.Overlay.dimmerHeavy
                 .ignoresSafeArea()
                 .onTapGesture {
                     withAnimation(.spring(response: 0.4, dampingFraction: 0.82)) {

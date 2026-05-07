@@ -225,7 +225,7 @@ struct SortingView: View {
             )
             .overlay(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                    .strokeBorder(Color.white.opacity(0.2), lineWidth: 1)
+                    .strokeBorder(ColorTokens.Overlay.highlight, lineWidth: 1)
             )
             .shadow(color: ColorTokens.Overlay.shadow, radius: 12, y: 4)
             .id(word.id)
@@ -278,13 +278,13 @@ struct SortingView: View {
             .overlay(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                     .strokeBorder(
-                        isHighlighted ? ColorTokens.Brand.primary : Color.white.opacity(0.2),
+                        isHighlighted ? ColorTokens.Brand.primary : ColorTokens.Overlay.highlight,
                         lineWidth: isHighlighted ? 3 : 1
                     )
             )
             .shadow(color: isHighlighted
                     ? ColorTokens.Brand.primary.opacity(0.2)
-                    : .black.opacity(0.06),
+                    : ColorTokens.Overlay.shadow,
                     radius: isHighlighted ? 10 : 4, y: 2)
             .scaleEffect(isHighlighted ? 1.03 : 1.0)
             .animation(

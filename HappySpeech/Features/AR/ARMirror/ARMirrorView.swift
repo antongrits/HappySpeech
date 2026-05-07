@@ -222,7 +222,7 @@ struct ARMirrorView: View {
                 .accessibilityHidden(true)
             GeometryReader { proxy in
                 ZStack(alignment: .leading) {
-                    Capsule().fill(.white.opacity(0.2))
+                    Capsule().fill(ColorTokens.Overlay.highlight)
                     Capsule()
                         .fill(eyeContactState.attentionScore > 0.6
                             ? ColorTokens.Brand.mint

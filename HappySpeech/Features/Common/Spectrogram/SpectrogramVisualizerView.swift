@@ -200,7 +200,7 @@ public struct SpectrogramVisualizerView: View {
         }
         .padding(.horizontal, 6)
         .padding(.vertical, 3)
-        .background(.black.opacity(0.5), in: Capsule())
+        .background(ColorTokens.Overlay.dimmerHeavy, in: Capsule())
         .padding(6)
         .accessibilityLabel(
             String(localized: "spectrogram.recording.a11y", defaultValue: "Идёт запись голоса")

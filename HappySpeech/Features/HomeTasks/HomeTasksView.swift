@@ -404,7 +404,7 @@ private struct HomeTaskFilterChip: View {
                     .background(
                         Capsule().fill(
                             isActive
-                                ? Color.white.opacity(0.25)
+                                ? ColorTokens.Overlay.highlight
                                 : ColorTokens.Parent.line.opacity(0.5)
                         )
                     )

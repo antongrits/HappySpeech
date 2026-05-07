@@ -137,7 +137,7 @@ struct StoryPlayerView: View {
                 .padding(.vertical, 8)
                 .background(
                     RoundedRectangle(cornerRadius: 10)
-                        .fill(Color.black.opacity(0.6))
+                        .fill(ColorTokens.Overlay.dimmerHeavy)
                 )
                 .padding(.bottom, 52)
                 .padding(.horizontal, 16)
@@ -167,7 +167,7 @@ struct StoryPlayerView: View {
                     .padding(.vertical, 8)
                     .background(
                         Capsule()
-                            .fill(Color.black.opacity(0.5))
+                            .fill(ColorTokens.Overlay.dimmerHeavy)
                     )
                 }
                 .transition(reduceMotion ? .identity : .opacity)
