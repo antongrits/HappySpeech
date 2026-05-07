@@ -54,9 +54,9 @@ public struct DemoStep: Sendable, Identifiable, Hashable {
     public let subtitle: String
     public let description: String
     public let mascotText: String
-    public let screenEmoji: String
+    public let screenSymbol: String
     /// SF Symbol для крупной иллюстрации шага (опционально).
-    /// Если пустой — используется `screenEmoji` как fallback.
+    /// Если пустой — используется `screenSymbol` как fallback.
     public let illustrationSymbol: String
     /// Семантический ключ цвета (legacy `highlightColor` хранится для совместимости).
     public let highlightColor: String
@@ -75,7 +75,7 @@ public struct DemoStep: Sendable, Identifiable, Hashable {
         subtitle: String = "",
         description: String,
         mascotText: String,
-        screenEmoji: String,
+        screenSymbol: String,
         illustrationSymbol: String = "",
         highlightColor: String,
         accent: DemoAccentColor? = nil,
@@ -88,7 +88,7 @@ public struct DemoStep: Sendable, Identifiable, Hashable {
         self.subtitle = subtitle
         self.description = description
         self.mascotText = mascotText
-        self.screenEmoji = screenEmoji
+        self.screenSymbol = screenSymbol
         self.illustrationSymbol = illustrationSymbol
         self.highlightColor = highlightColor
         self.accent = accent ?? DemoAccentColor.parse(highlightColor)
@@ -125,7 +125,7 @@ enum DemoModels {
             let stepSubtitle: String
             let stepDescription: String
             let mascotText: String
-            let screenEmoji: String
+            let screenSymbol: String
             let illustrationSymbol: String
             let accent: DemoAccentColor
             let lyalyaState: LyalyaState
@@ -156,7 +156,7 @@ enum DemoModels {
             let stepSubtitle: String
             let stepDescription: String
             let mascotText: String
-            let screenEmoji: String
+            let screenSymbol: String
             let illustrationSymbol: String
             let accent: DemoAccentColor
             let lyalyaState: LyalyaState
@@ -186,7 +186,7 @@ enum DemoModels {
             let stepSubtitle: String
             let stepDescription: String
             let mascotText: String
-            let screenEmoji: String
+            let screenSymbol: String
             let illustrationSymbol: String
             let accent: DemoAccentColor
             let lyalyaState: LyalyaState
@@ -217,7 +217,7 @@ enum DemoModels {
             let stepSubtitle: String
             let stepDescription: String
             let mascotText: String
-            let screenEmoji: String
+            let screenSymbol: String
             let illustrationSymbol: String
             let accent: DemoAccentColor
             let lyalyaState: LyalyaState
@@ -291,7 +291,7 @@ enum DemoModels {
             let stepSubtitle: String
             let stepDescription: String
             let mascotText: String
-            let screenEmoji: String
+            let screenSymbol: String
             let illustrationSymbol: String
             let accent: DemoAccentColor
             let lyalyaState: LyalyaState

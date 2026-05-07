@@ -174,9 +174,7 @@ struct DemoOverviewSheet: View {
 
                             Spacer()
 
-                            Text(step.screenEmoji)
-                                .font(TypographyTokens.headline(22))
-                                .accessibilityHidden(true)
+                            DemoOverviewSymbol(step: step)
                         }
                         .padding(.vertical, SpacingTokens.tiny)
                     }
@@ -201,6 +199,22 @@ struct DemoOverviewSheet: View {
                 }
             }
         }
+    }
+}
+
+// MARK: - DemoOverviewSymbol
+//
+// Block D v16: вынесли в отдельный struct, иначе compiler не успевал
+// type-check'нуть Button label expression (пара вложенностей превышала лимит).
+
+private struct DemoOverviewSymbol: View {
+    let step: DemoStep
+
+    var body: some View {
+        Image(systemName: step.screenSymbol)
+            .font(TypographyTokens.headline(22))
+            .foregroundStyle(ColorTokens.Brand.primary)
+            .accessibilityHidden(true)
     }
 }
 
@@ -263,7 +277,7 @@ struct DemoAutoAdvanceCountdownView: View {
                 subtitle: "Подзаголовок \(i)",
                 description: "Описание шага \(i)",
                 mascotText: "Ляля говорит \(i)",
-                screenEmoji: "📱",
+                screenSymbol: "iphone",
                 highlightColor: "primary",
                 accent: .primary,
                 lyalyaState: .explaining
