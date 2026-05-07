@@ -1,9 +1,23 @@
 import Foundation
 import OSLog
 
+// MARK: - VIP-thin: ARSession orchestration only
+//
+// Этот Interactor намеренно тонкий (~115 LOC). Логика тренировки
+// звуков НЕ принадлежит iOS-слою: всё реальное распознавание происходит
+// в ARSessionDelegate (ARFaceAnchor blendshapes / TonguePostureClassifier)
+// + Vision VNDetectHumanHandPoseRequest (HandPoseWorker). Interactor только:
+//   1. Запускает / останавливает ARSession через ARSessionService.
+//   2. Получает frame updates → передаёт Presenter без бизнес-обработки.
+//   3. Финализирует session через SessionRepository (общий path).
+// Углубление до 350+ LOC означало бы дублирование AR логики или создание
+// искусственных абстракций — нарушение Clean Swift VIP принципа.
+//
+// Domain logic (face tracking, hand pose detection) живёт в Workers + ARSessionService.
+//
 // MARK: - MimicLyalyaInteractor
 //
-// VIP-thin Interactor (D.2 v15) — AR игра «Повтори за Лялей».
+// AR игра «Повтори за Лялей».
 //
 // Clean Swift поток:
 //   ARKit (face blendshapes) + Vision (hand pose) → View → Interactor → Presenter → View
