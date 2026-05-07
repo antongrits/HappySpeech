@@ -265,8 +265,10 @@ struct DragAndMatchView: View {
 
     private func wordChip(_ word: DragWord) -> some View {
         VStack(spacing: SpacingTokens.tiny) {
-            Text(word.emoji)
-                .font(TypographyTokens.kidDisplay(40))
+            Image(word.emoji)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 48, height: 48)
                 .accessibilityHidden(true)
             Text(word.word)
                 .font(TypographyTokens.headline(15))
@@ -312,7 +314,10 @@ struct DragAndMatchView: View {
 
     private func wordDragPreview(_ word: DragWord) -> some View {
         VStack(spacing: SpacingTokens.tiny) {
-            Text(word.emoji).font(TypographyTokens.kidDisplay(44))
+            Image(word.emoji)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 52, height: 52)
             Text(word.word)
                 .font(TypographyTokens.headline(16))
                 .foregroundStyle(ColorTokens.Kid.ink)
@@ -342,7 +347,7 @@ struct DragAndMatchView: View {
 
         return VStack(spacing: SpacingTokens.small) {
             HStack(spacing: SpacingTokens.tiny) {
-                Text(bucket.emoji).font(TypographyTokens.headline(22))
+                DragMatchSymbolOrImage(name: bucket.emoji, size: 22)
                 Text(bucket.title)
                     .font(TypographyTokens.headline(15))
                     .foregroundStyle(ColorTokens.Kid.ink)
@@ -421,7 +426,10 @@ struct DragAndMatchView: View {
               : ColorTokens.Kid.line
 
         return HStack(spacing: SpacingTokens.micro) {
-            Text(word.emoji).font(TypographyTokens.headline(18))
+            Image(word.emoji)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 22, height: 22)
             Text(word.word)
                 .font(TypographyTokens.caption(13))
                 .foregroundStyle(ColorTokens.Kid.ink)
@@ -637,6 +645,37 @@ extension DragAndMatchDisplay: DragAndMatchDisplayLogic {
         durationLabel = viewModel.durationLabel
         showRoundComplete = false
         phase = .completed
+    }
+}
+
+// MARK: - DragMatchSymbolOrImage
+//
+// Block D v16: bucket.emoji string может быть SF Symbol name (точка-разделитель,
+// напр. "checkmark.circle.fill") или Asset name (без точки, напр. "word_fish").
+// Helper view выбирает правильный рендеринг.
+
+struct DragMatchSymbolOrImage: View {
+    let name: String
+    let size: CGFloat
+
+    var body: some View {
+        if name.contains(".") || isKnownSFSymbolKeyword(name) {
+            Image(systemName: name)
+                .font(.system(size: size, weight: .regular))
+                .foregroundStyle(ColorTokens.Brand.primary)
+                .accessibilityHidden(true)
+        } else {
+            Image(name)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: size + 4, height: size + 4)
+                .accessibilityHidden(true)
+        }
+    }
+
+    private func isKnownSFSymbolKeyword(_ s: String) -> Bool {
+        // Single-word SF Symbols без точек, использующиеся в Block D mapping.
+        ["sparkles", "questionmark", "calendar", "magnifyingglass"].contains(s)
     }
 }
 
