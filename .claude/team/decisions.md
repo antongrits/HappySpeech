@@ -2083,3 +2083,29 @@ DocC defer не блокирует general bundle growth strategy.
 - Cleanup: удалены `.build_docc/` (3.9 GB build artifact) и `HappySpeech/Resources/Docs/` (попытка copy, тоже удалена).
 
 **Метки:** ADR-V16-DOCC-DEFER, post-v1.0, Block T
+
+---
+
+## ADR-V17-WAV2VEC2-DEFER
+
+**Date:** 2026-05-08
+**Status:** Approved (defer post-v1.0)
+**Context:** Plan v17 Block B requirement — Real Wav2Vec2 Russian (~370 MB INT8 от jonatasgrosman/wav2vec2-large-xlsr-53-russian).
+
+**Issues blocking implementation:**
+
+1. **coremltools constraint** — Wav2Vec2 conversion failed в Plan v15 + v16 (двух attempts). Текущий coremltools 9 НЕ поддерживает требуемые ops для Wav2Vec2 transformer. ONNX runtime для iOS — не workable.
+2. **App Store cellular limit 200 MB** — bundle 370 MB exceeds для cellular download. Нужен on-demand resource (additional complexity).
+3. **WhisperKit large-v3-turbo (600 MB)** — уже задеплоен и работает как primary ASR. Wav2Vec2 frame-level phoneme embeddings — не критично.
+4. **RussianPhonemeClassifier (1.35 MB)** — покрывает phoneme detection в Tier A.
+
+**Decision:** **DEFER post-v1.0** до:
+- coremltools 10+ supports Wav2Vec2 conversion
+- ONNX runtime для iOS становится workable
+- ИЛИ дистилляция в smaller model (~50-100 MB) для bundle compatibility
+
+**Bundle 1.5 GB target** достигается через Block AD (USDZ scenes / voice expansion / Lottie depth) — не требует Wav2Vec2.
+
+**Affected:** `HappySpeech/Resources/Models/Wav2Vec2RuChild.mlpackage` (312 KB stub remains).
+
+**Метки:** ADR-V17-WAV2VEC2-DEFER, post-v1.0, Block B, coremltools-blocker
