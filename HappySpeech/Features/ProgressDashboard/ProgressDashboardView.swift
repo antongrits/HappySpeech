@@ -190,13 +190,16 @@ struct ProgressDashboardView: View {
             )
 
             if display.isInsightsLoading {
-                HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.cardPad) {
-                    Text(String(localized: "dashboard.insights.loading"))
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Parent.inkMuted)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                // G.2 v17 — skeleton+shimmer вместо текстового «загрузка…»
+                // Используем 2 HSSkeletonCard с .hsShimmer; Reduce Motion
+                // отключает анимацию через сам HSSkeletonShimmer.
+                VStack(spacing: SpacingTokens.small) {
+                    HSSkeletonCard()
+                    HSSkeletonCard()
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
+                .hsShimmer(active: true)
+                .accessibilityLabel(String(localized: "dashboard.insights.loading"))
             } else if display.insightCards.isEmpty {
                 HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.cardPad) {
                     Text(String(localized: "dashboard.insights.empty"))
@@ -421,9 +424,17 @@ struct ProgressDashboardView: View {
                                     .foregroundStyle(ColorTokens.Parent.inkSoft)
                             }
                         } else {
-                            Text(String(localized: "progressDashboard.llm.loading"))
-                                .font(TypographyTokens.body(14))
-                                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                            // G.2 v17 — skeleton-rows вместо «генерирую…».
+                            // Симулирует 2 строки заголовка и 2 строки тела.
+                            VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
+                                HSSkeletonRow(height: 16)
+                                    .frame(maxWidth: 200)
+                                HSSkeletonRow(height: 12)
+                                HSSkeletonRow(height: 12)
+                                    .frame(maxWidth: 240)
+                            }
+                            .hsShimmer(active: true)
+                            .accessibilityLabel(String(localized: "progressDashboard.llm.loading"))
                         }
                     }
                     Spacer(minLength: 0)
