@@ -117,10 +117,10 @@ struct AnimatedStoryPlayerView: View {
 
     private var videoErrorView: some View {
         ZStack {
-            Color.black
+            ColorTokens.Kid.ink
             Text(String(localized: "story.video.error"))
                 .font(TypographyTokens.body(16))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
         }
@@ -133,7 +133,7 @@ struct AnimatedStoryPlayerView: View {
         } label: {
             Text(String(localized: "story_player.skip"))
                 .font(TypographyTokens.headline(15))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .padding(.horizontal, 14)
                 .padding(.vertical, 8)
                 .background(
@@ -214,7 +214,7 @@ struct AnimatedStoryPlayerView: View {
             ForEach(0..<story.scenes.count, id: \.self) { index in
                 Circle()
                     .fill(index <= currentSceneIndex
-                          ? Color.white
+                          ? ColorTokens.Overlay.onAccent
                           : ColorTokens.Overlay.highlight)
                     .frame(width: index == currentSceneIndex ? 12 : 8,
                            height: index == currentSceneIndex ? 12 : 8)
@@ -274,11 +274,11 @@ struct AnimatedStoryPlayerView: View {
             HStack(spacing: 4) {
                 Text(String(localized: "story.target_word.label"))
                     .font(TypographyTokens.caption(13))
-                    .foregroundStyle(.white.opacity(0.75))
+                    .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.75))
 
                 Text(currentScene.targetWord)
                     .font(TypographyTokens.headline(15))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .padding(.horizontal, 8)
                     .padding(.vertical, 3)
                     .background(
@@ -314,17 +314,17 @@ struct AnimatedStoryPlayerView: View {
 
             return Text(before)
                 .font(TypographyTokens.headline(18))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
             + Text(word)
                 .font(TypographyTokens.title(18))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
             + Text(after)
                 .font(TypographyTokens.headline(18))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
         } else {
             return Text(text)
                 .font(TypographyTokens.headline(18))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
             + Text("")
             + Text("")
         }
@@ -341,11 +341,11 @@ struct AnimatedStoryPlayerView: View {
                      ? String(localized: "story.button.complete")
                      : String(localized: "story.button.next"))
                     .font(TypographyTokens.headline(18))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
 
                 Image(systemName: isLastScene ? "checkmark.circle.fill" : "arrow.right.circle.fill")
                     .font(TypographyTokens.title(20))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 16)
