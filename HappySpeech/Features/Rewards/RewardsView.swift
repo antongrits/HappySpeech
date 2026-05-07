@@ -182,7 +182,7 @@ struct RewardsView: View {
                         interactor?.filterByCollection(.init(collection: tab.collection))
                     } label: {
                         HStack(spacing: 6) {
-                            Text(tab.emoji).font(TypographyTokens.body(16)).accessibilityHidden(true)
+                            HSContentSymbol(tab.emoji, size: 16, tint: ColorTokens.Brand.primary)
                             Text(tab.title)
                                 .font(TypographyTokens.body(14))
                                 .lineLimit(1)
@@ -421,10 +421,8 @@ private struct StickerCellView: View {
     // S12: emoji с опциональным matchedGeometryEffect (source или destination).
     @ViewBuilder
     private var emojiView: some View {
-        let base = Text(cell.emoji)
-            .font(TypographyTokens.display(38))
+        let base = HSContentSymbol(cell.emoji, size: 38, tint: ColorTokens.Brand.gold)
             .scaleEffect(bounce ? 1.08 : 1.0)
-            .accessibilityHidden(true)
         if let ns = heroNamespace {
             base.matchedGeometryEffect(
                 id: "sticker_\(cell.id)",
@@ -459,11 +457,9 @@ private struct StickerCellView: View {
                     .fill(ColorTokens.Kid.surfaceAlt)
                     .frame(width: 64, height: 64)
 
-                Text(cell.emoji)
-                    .font(TypographyTokens.display(38))
+                HSContentSymbol(cell.emoji, size: 38, tint: ColorTokens.Kid.inkSoft)
                     .grayscale(0.95)
                     .opacity(0.35)
-                    .accessibilityHidden(true)
 
                 Image(systemName: "lock.fill")
                     .font(TypographyTokens.caption(14).weight(.semibold))
@@ -507,11 +503,9 @@ private struct StickerDetailSheet: View {
                             : ColorTokens.Kid.surfaceAlt
                     )
                     .frame(width: 140, height: 140)
-                Text(detail.emoji)
-                    .font(TypographyTokens.kidDisplay(80))
+                HSContentSymbol(detail.emoji, size: 80, tint: ColorTokens.Brand.gold)
                     .opacity(detail.isUnlocked ? 1 : 0.4)
                     .grayscale(detail.isUnlocked ? 0 : 0.9)
-                    .accessibilityHidden(true)
             }
 
             VStack(spacing: SpacingTokens.tiny) {
@@ -662,11 +656,9 @@ private struct StickerUnlockOverlay: View {
     // S12: emoji view с опциональным matchedGeometryEffect (isSource=false — destination).
     @ViewBuilder
     private var unlockEmojiView: some View {
-        let base = Text(unlock.emoji)
-            .font(TypographyTokens.kidDisplay(120))
+        let base = HSContentSymbol(unlock.emoji, size: 120, tint: ColorTokens.Brand.gold)
             .scaleEffect(heroNamespace != nil ? 1 : stickerScale)
             .shadow(color: ColorTokens.Brand.gold.opacity(0.5), radius: 18)
-            .accessibilityHidden(true)
         if let ns = heroNamespace, let sourceId = heroSourceId {
             base.matchedGeometryEffect(
                 id: "sticker_\(sourceId)",

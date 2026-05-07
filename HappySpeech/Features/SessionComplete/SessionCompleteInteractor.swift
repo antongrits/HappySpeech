@@ -75,53 +75,53 @@ final class SessionCompleteInteractor: SessionCompleteBusinessLogic {
         let colS = String(localized: "rewards.collection.stars")
         let animals: [StickerRevealInfo] = [
             StickerRevealInfo(
-                id: "animal.cat", emoji: "🐱",
+                id: "animal.cat", emoji: "word_cat",
                 name: String(localized: "rewards.sticker.cat"), collectionName: col
             ),
             StickerRevealInfo(
-                id: "animal.dog", emoji: "🐶",
+                id: "animal.dog", emoji: "word_dog",
                 name: String(localized: "rewards.sticker.dog"), collectionName: col
             ),
             StickerRevealInfo(
-                id: "animal.fox", emoji: "🦊",
+                id: "animal.fox", emoji: "word_fox",
                 name: String(localized: "rewards.sticker.fox"), collectionName: col
             ),
             StickerRevealInfo(
-                id: "animal.bear", emoji: "🐻",
+                id: "animal.bear", emoji: "word_bear",
                 name: String(localized: "rewards.sticker.bear"), collectionName: col
             ),
             StickerRevealInfo(
-                id: "animal.panda", emoji: "🐼",
+                id: "animal.panda", emoji: "word_bear",
                 name: String(localized: "rewards.sticker.panda"), collectionName: col
             ),
             StickerRevealInfo(
-                id: "animal.lion", emoji: "🦁",
+                id: "animal.lion", emoji: "reward_champion",
                 name: String(localized: "rewards.sticker.lion"), collectionName: col
             ),
             StickerRevealInfo(
-                id: "animal.tiger", emoji: "🐯",
+                id: "animal.tiger", emoji: "reward_brave_heart",
                 name: String(localized: "rewards.sticker.tiger"), collectionName: col
             ),
             StickerRevealInfo(
-                id: "animal.frog", emoji: "🐸",
+                id: "animal.frog", emoji: "word_frog",
                 name: String(localized: "rewards.sticker.frog"), collectionName: col
             )
         ]
         let stars: [StickerRevealInfo] = [
             StickerRevealInfo(
-                id: "star.first", emoji: "⭐",
+                id: "star.first", emoji: "reward_gold_star",
                 name: String(localized: "rewards.sticker.firstStar"), collectionName: colS
             ),
             StickerRevealInfo(
-                id: "star.streak3", emoji: "🌟",
+                id: "star.streak3", emoji: "sparkles",
                 name: String(localized: "rewards.sticker.streak3"), collectionName: colS
             ),
             StickerRevealInfo(
-                id: "star.shine", emoji: "🪐",
+                id: "star.shine", emoji: "globe.europe.africa.fill",
                 name: String(localized: "rewards.sticker.shine"), collectionName: colS
             ),
             StickerRevealInfo(
-                id: "star.perfect", emoji: "🌠",
+                id: "star.perfect", emoji: "sparkle",
                 name: String(localized: "rewards.sticker.perfect"), collectionName: colS
             )
         ]
@@ -254,7 +254,7 @@ final class SessionCompleteInteractor: SessionCompleteBusinessLogic {
         let pool = Self.stickerPool[soundTarget] ?? Self.stickerPool["default"] ?? []
         guard !pool.isEmpty else {
             return StickerRevealInfo(
-                id: "star.first", emoji: "⭐",
+                id: "star.first", emoji: "reward_gold_star",
                 name: String(localized: "rewards.sticker.firstStar"),
                 collectionName: String(localized: "rewards.collection.stars")
             )
@@ -419,8 +419,11 @@ final class SessionCompleteInteractor: SessionCompleteBusinessLogic {
 
     private func makeShareText(from result: SessionResult) -> String {
         let percent = Int(result.score * 100)
-        let stars = String(repeating: "★", count: result.starsEarned)
-            + String(repeating: "☆", count: max(0, 3 - result.starsEarned))
+        // Block D v16: ★/☆ — Unicode geometric shapes, не эмодзи, для share-text
+        // (текстовая копия в буфере обмена / iOS Share Sheet). Это plain text content,
+        // не UI rendering — оставлено намеренно.
+        let stars = String(repeating: "\u{2605}", count: result.starsEarned)
+            + String(repeating: "\u{2606}", count: max(0, 3 - result.starsEarned))
         let template = String(localized: "sessionComplete.share.template")
         return String(
             format: template,

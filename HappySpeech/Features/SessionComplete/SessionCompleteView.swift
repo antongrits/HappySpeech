@@ -362,8 +362,7 @@ struct SessionCompleteView: View {
     private func stickerRevealCard(sticker: StickerRevealInfo) -> some View {
         HSLiquidGlassCard(style: .tinted(ColorTokens.Brand.lilac), padding: SpacingTokens.medium) {
             HStack(spacing: SpacingTokens.medium) {
-                Text(sticker.emoji)
-                    .font(TypographyTokens.display(44))
+                HSContentSymbol(sticker.emoji, size: 44, tint: ColorTokens.Brand.gold)
                     .rotation3DEffect(
                         .degrees(stickerFlipped ? 0 : 180),
                         axis: (x: 0, y: 1, z: 0)
