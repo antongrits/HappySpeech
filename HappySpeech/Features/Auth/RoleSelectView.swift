@@ -53,10 +53,16 @@ struct RoleSelectView: View {
                     Text(String(localized: "Кто вы?"))
                         .font(TypographyTokens.display(28))
                         .foregroundStyle(ColorTokens.Kid.ink)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
 
                     Text(String(localized: "Выберите профиль для начала"))
                         .font(TypographyTokens.body())
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
                 }
                 .padding(.top, SpacingTokens.pageTop)
                 .padding(.horizontal, SpacingTokens.screenEdge)
@@ -120,11 +126,14 @@ private struct RoleCard: View {
                         Text(title)
                             .font(TypographyTokens.headline(17))
                             .foregroundStyle(ColorTokens.Kid.ink)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
 
                         Text(subtitle)
                             .font(TypographyTokens.body(13))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
                             .lineLimit(2)
+                            .minimumScaleFactor(0.85)
                             .ctaTextStyle()
                     }
 
