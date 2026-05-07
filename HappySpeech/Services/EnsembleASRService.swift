@@ -54,6 +54,18 @@ public protocol EnsembleASRServiceProtocol: Sendable {
 
     /// Подготавливает модели к работе (вызывать заранее для уменьшения latency).
     func warmUp(tier: EnsembleASRDetailTier) async
+
+    /// Считает phonetic accuracy через сравнение IPA-последовательностей.
+    ///
+    /// Детерминированный, локальный (`COPPA-safe`) скоринг через
+    /// ``RussianG2P/phoneticSimilarity(_:_:)`` с учётом артикуляционного
+    /// расстояния между фонемами (``IPADictionary/articulationDistance(_:_:)``).
+    ///
+    /// - Parameters:
+    ///   - child: предсказанные ребёнком фонемы (например, из ``RussianPhonemeClassifier``).
+    ///   - reference: эталонные фонемы из G2P-транскрипции слова.
+    /// - Returns: значение в `[0, 1]`, где 1.0 — идеальное совпадение.
+    func phoneticAccuracy(child: [String], reference: [String]) -> Double
 }
 
 // MARK: - LiveEnsembleASRService
@@ -128,6 +140,34 @@ public final class LiveEnsembleASRService: EnsembleASRServiceProtocol, @unchecke
             try? await whisperASR.loadModel(tier: .kidOnDevice)
         }
         logger.debug("EnsembleASR: warmUp завершён, tier=\(tier.rawValue)")
+    }
+
+    /// Phonetic accuracy через ``RussianG2P`` + взвешивание по
+    /// ``IPADictionary/articulationDistance(_:_:)``.
+    ///
+    /// Шаги:
+    /// 1. Считается базовая Левенштейн-similarity (символьная).
+    /// 2. Если массивы той же длины — корректируем штраф за каждую замену
+    ///    через `articulationDistance` (близкая замена `s` → `sʲ` штрафуется
+    ///    меньше, чем `s` → `r`).
+    public func phoneticAccuracy(child: [String], reference: [String]) -> Double {
+        let g2p = RussianG2P()
+        let baseSimilarity = g2p.phoneticSimilarity(reference, child)
+
+        guard child.count == reference.count, !child.isEmpty else {
+            return baseSimilarity
+        }
+
+        // Контекстная корректировка: штраф за замену взвешен на articulationDistance
+        var totalDistance: Double = 0
+        for i in 0 ..< reference.count {
+            totalDistance += IPADictionary.articulationDistance(reference[i], child[i])
+        }
+        let avgDistance = totalDistance / Double(reference.count)
+        let articulationSimilarity = 1.0 - avgDistance
+
+        // Взвешенное среднее: 0.5 базовая + 0.5 контекстная
+        return 0.5 * baseSimilarity + 0.5 * articulationSimilarity
     }
 
     // MARK: - Tier A: on-device только
@@ -264,4 +304,12 @@ public final class MockEnsembleASRService: EnsembleASRServiceProtocol, @unchecke
     }
 
     public func warmUp(tier: EnsembleASRDetailTier) async {}
+
+    public func phoneticAccuracy(child: [String], reference: [String]) -> Double {
+        guard !reference.isEmpty else { return 1.0 }
+        let matches = zip(child, reference).reduce(into: 0) { acc, pair in
+            if pair.0 == pair.1 { acc += 1 }
+        }
+        return Double(matches) / Double(reference.count)
+    }
 }
