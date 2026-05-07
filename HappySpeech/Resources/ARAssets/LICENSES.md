@@ -1,183 +1,12 @@
 # AR Assets — Лицензионная атрибуция
 
-Все USDZ-модели в этой директории получены из официальной галереи Apple AR Quick Look
-(https://developer.apple.com/augmented-reality/quick-look/) и распространяются в соответствии
-с лицензией Apple Sample Code License, которая разрешает использование в приложениях
-для App Store при условии соблюдения Apple Developer Program License Agreement.
-
-Источник: https://developer.apple.com/augmented-reality/quick-look/
-Лицензия на все Apple-модели: Apple Sample Code License
-https://developer.apple.com/terms/intellectual-property/
-
 ---
 
-## lyalya3d.usdz
+## lyalya3d.usdz / lyalya3d_v2.usdz
 
-- Описание: Маскот «Ляля» 3D-модель
+- Описание: Маскот «Ляля» 3D-модель (v1 и v2)
 - Источник: собственный ассет HappySpeech
 - Лицензия: проприетарная (HappySpeech project)
-
----
-
-## animal_chameleon.usdz
-
-- Описание: Анимированный хамелеон (животные, словарный запас)
-- Оригинальное имя: chameleon_anim_mtl_variant.usdz
-- Источник: https://developer.apple.com/augmented-reality/quick-look/models/chameleon/chameleon_anim_mtl_variant.usdz
-- Лицензия: Apple Sample Code License
-- Использование в HappySpeech: ARActivity — тема «Животные», словарные упражнения
-
----
-
-## animal_hummingbird.usdz
-
-- Описание: Анимированная колибри (птица, дыхательные упражнения)
-- Оригинальное имя: hummingbird_anim.usdz
-- Источник: https://developer.apple.com/augmented-reality/quick-look/models/hummingbird/hummingbird_anim.usdz
-- Лицензия: Apple Sample Code License
-- Использование в HappySpeech: ARActivity — артикуляция дыхания (breathing exercises), словарь «Птицы»
-
----
-
-## animal_seahorse.usdz
-
-- Описание: Анимированный морской конёк (подводная тема)
-- Оригинальное имя: seahorse_anim_mtl_variant.usdz
-- Источник: https://developer.apple.com/augmented-reality/quick-look/models/seahorse/seahorse_anim_mtl_variant.usdz
-- Лицензия: Apple Sample Code License
-- Использование в HappySpeech: NarrativeQuest «Подводное путешествие», ARStoryQuest underwater settings
-
----
-
-## kitchen_teapot.usdz
-
-- Описание: Чайник (ассоциация с шипящими звуками Ш, Ч)
-- Оригинальное имя: teapot.usdz
-- Источник: https://developer.apple.com/augmented-reality/quick-look/models/teapot/teapot.usdz
-- Лицензия: Apple Sample Code License
-- Использование в HappySpeech: sound-hunter для шипящих (Ш, Ч — пар из чайника шипит), kitchen vocabulary
-
----
-
-## scene_playground_slide.usdz
-
-- Описание: Детская горка (площадка, игровой контекст)
-- Оригинальное имя: slide.usdz
-- Источник: https://developer.apple.com/augmented-reality/quick-look/models/kids-slide/slide.usdz
-- Лицензия: Apple Sample Code License
-- Использование в HappySpeech: ARStoryQuest — сцена «Детская площадка», NarrativeQuest backgrounds
-
----
-
-## scene_robot.usdz
-
-- Описание: Ретро-робот (космическая/научная тема)
-- Оригинальное имя: robot.usdz
-- Источник: https://developer.apple.com/augmented-reality/quick-look/models/vintagerobot2k/robot.usdz
-- Лицензия: Apple Sample Code License
-- Использование в HappySpeech: NarrativeQuest «Космическая миссия», ARActivity тема «Робот» для звука Р
-
----
-
-## sport_ball_soccer.usdz
-
-- Описание: Футбольный мяч (спорт, знакомый детям объект)
-- Оригинальное имя: ball_soccerball_realistic.usdz
-- Источник: https://developer.apple.com/augmented-reality/quick-look/models/soccerball/ball_soccerball_realistic.usdz
-- Лицензия: Apple Sample Code License
-- Использование в HappySpeech: vocabulary AR «Мяч», pose sequence demo, ARActivity тема «Спорт»
-
----
-
-## toy_biplane.usdz
-
-- Описание: Игрушечный биплан (самолётик, детская игрушка)
-- Оригинальное имя: toy_biplane_realistic.usdz
-- Источник: https://developer.apple.com/augmented-reality/quick-look/models/biplane/toy_biplane_realistic.usdz
-- Лицензия: Apple Sample Code License
-- Использование в HappySpeech: NarrativeQuest «Полёт», ARActivity тема «Транспорт», словарь «Самолёт»
-
----
-
-## toy_car.usdz
-
-- Описание: Игрушечная машинка (детская игрушка)
-- Оригинальное имя: toy_car.usdz
-- Источник: https://developer.apple.com/augmented-reality/quick-look/models/toycar/toy_car.usdz
-- Лицензия: Apple Sample Code License
-- Использование в HappySpeech: ARActivity тема «Транспорт», словарь «Машина», sound-hunter (звук Р — мотор рычит)
-
----
-
-## toy_drummer.usdz
-
-- Описание: Игрушечный барабанщик (анимированная игрушка)
-- Оригинальное имя: toy_drummer.usdz
-- Источник: https://developer.apple.com/augmented-reality/quick-look/models/drummertoy/toy_drummer.usdz
-- Лицензия: Apple Sample Code License
-- Использование в HappySpeech: rhythm-exercises (ритмические игры), ARActivity тема «Музыка»
-
----
-
----
-
-## sport_glove_baseball.usdz
-
-- Описание: Бейсбольная перчатка (спортивный инвентарь)
-- Оригинальное имя: glove_baseball_mtl_variant.usdz
-- Источник: https://developer.apple.com/augmented-reality/quick-look/models/baseball-glove/glove_baseball_mtl_variant.usdz
-- Лицензия: Apple Sample Code License
-- Использование в HappySpeech: sport_gym_set, ARActivity «Спорт», словарь «Перчатка»
-
----
-
-## kitchen_pancakes.usdz
-
-- Описание: Блины — фотограмметрическая модель (кухонная тема)
-- Оригинальное имя: pancakes_photogrammetry.usdz
-- Источник: https://developer.apple.com/augmented-reality/quick-look/models/pancakes/pancakes_photogrammetry.usdz
-- Лицензия: Apple Sample Code License
-- Использование в HappySpeech: kitchen_full scene, ARActivity тема «Кухня», словарь «Блины», NarrativeQuest «Готовим завтрак»
-
----
-
-## sport_ball_football.usdz
-
-- Описание: Американский футбольный мяч (спорт)
-- Оригинальное имя: ball_football_realistic.usdz
-- Источник: https://developer.apple.com/augmented-reality/quick-look/models/football/ball_football_realistic.usdz
-- Лицензия: Apple Sample Code License
-- Использование в HappySpeech: sport_gym_set, ARActivity «Спорт», vocabulary AR «Мяч», sound-hunter (звук Ф — «Футбол»)
-
----
-
-## sport_ball_basketball.usdz
-
-- Описание: Баскетбольный мяч (спорт)
-- Оригинальное имя: ball_basketball_realistic.usdz
-- Источник: https://developer.apple.com/augmented-reality/quick-look/models/basketball/ball_basketball_realistic.usdz
-- Лицензия: Apple Sample Code License
-- Использование в HappySpeech: sport_gym_set, ARActivity «Спорт», vocabulary «Баскетбол», NarrativeQuest «Спортивная площадка»
-
----
-
-## sport_ball_baseball.usdz
-
-- Описание: Бейсбольный мяч (спорт)
-- Оригинальное имя: ball_baseball_realistic.usdz
-- Источник: https://developer.apple.com/augmented-reality/quick-look/models/baseball/ball_baseball_realistic.usdz
-- Лицензия: Apple Sample Code License
-- Использование в HappySpeech: sport_gym_set, ARActivity «Спорт», ObjectHunt набор «Спорт»
-
----
-
-## music_guitar_stratocaster.usdz
-
-- Описание: Электрогитара Fender Stratocaster (музыкальный инструмент)
-- Оригинальное имя: fender_stratocaster.usdz
-- Источник: https://developer.apple.com/augmented-reality/quick-look/models/stratocaster/fender_stratocaster.usdz
-- Лицензия: Apple Sample Code License
-- Использование в HappySpeech: bedroom_set, school_classroom scene, ARActivity тема «Музыка», словарь «Гитара», rhythm-exercises
 
 ---
 
@@ -187,26 +16,104 @@ https://developer.apple.com/terms/intellectual-property/
 - Оригинальное имя: solar_panels.usdz
 - Источник: https://developer.apple.com/augmented-reality/quick-look/models/solar-panels/solar_panels.usdz
 - Лицензия: Apple Sample Code License
-- Использование в HappySpeech: school_classroom scene, ARActivity тема «Наука», NarrativeQuest «Энергия солнца», словарь «Электричество»
+- Использование в HappySpeech: school_classroom scene, ARActivity тема «Наука», NarrativeQuest «Энергия солнца»
 
 ---
 
-## sport_glove_boxing.usdz
+## Логопедические объекты (Block F v16 — процедурная генерация)
 
-- Описание: Боксёрская перчатка (спортивный инвентарь)
-- Оригинальное имя: boxing_glove_realistic.usdz
-- Источник: https://developer.apple.com/augmented-reality/quick-look/models/boxing-glove/boxing_glove_realistic.usdz
-- Лицензия: Apple Sample Code License
-- Использование в HappySpeech: sport_gym_set, ARActivity «Спорт», ObjectHunt набор «Спортивный зал»
+Все нижеперечисленные модели сгенерированы программатически с использованием
+Pixar OpenUSD Python API (pxr) — собственные ассеты HappySpeech.
+Лицензия: MIT (HappySpeech project).
+Геометрия: примитивы USD (Sphere, Cylinder, Cone, Cube) + UsdPreviewSurface PBR.
+ARKit-совместимость: upAxis=Y, metersPerUnit=1.0.
+
+---
+
+### apple_red.usdz
+
+- Описание: Красное яблоко (звук А) — тело + стебель + листик + блик
+- Звуковая ассоциация: А («Яблоко» — А в начале слова)
+- Использование: ARZone sound-hunter, RepeatAfterModel (А)
+
+---
+
+### mouse_grey.usdz
+
+- Описание: Серая мышь (звук Ы) — тело + голова + уши + хвост
+- Звуковая ассоциация: Ы («мЫшь» — Ы в середине слова)
+- Использование: ARZone sound-hunter, ArticulationImitation (Ы)
+
+---
+
+### fox_orange.usdz
+
+- Описание: Оранжевая лиса (звуки Ль/Ф) — тело + голова + уши + хвост
+- Звуковая ассоциация: Ль («Лиса» — мягкий Л), Ф («Лиса» — Ф в слове «рыжая»)
+- Использование: ARZone ArticulationImitation (Ль, Ф)
+
+---
+
+### snake_green.usdz
+
+- Описание: Зелёная змея (звуки С/Ш) — свитое тело + голова + язык
+- Звуковая ассоциация: С («Змея» — шипение), Ш («ШШШипит»)
+- Использование: ARZone sound-hunter (С/Ш), ArticulationImitation
+
+---
+
+### cup_steaming.usdz
+
+- Описание: Кружка с паром (звуки К/Ч/П) — кружка + ручка + пар
+- Звуковая ассоциация: К («Кружка»), Ч («Чашка»), П («Пар»)
+- Использование: ARZone sound-hunter (шипящие и взрывные), BreathingExercises
+
+---
+
+### bell_brass.usdz
+
+- Описание: Латунный колокол (звуки Л/Н) — тело + обод + корона + язык
+- Звуковая ассоциация: Л («Колокол»), Н («коНь звенит»)
+- Использование: ARZone ArticulationImitation (Л, Н), RhythmExercises
+
+---
+
+### truck_red.usdz
+
+- Описание: Красный грузовик (звуки Р/Г) — кабина + кузов + 4 колеса
+- Звуковая ассоциация: Р («РРРычит мотор»), Г («Грузовик»)
+- Использование: ARZone sound-hunter (Р вибрация), ArticulationImitation
+
+---
+
+### whale_blue.usdz
+
+- Описание: Синий кит (звуки Х/В) — тело + плавники + фонтан
+- Звуковая ассоциация: Х («Хвост», «выдох — ХХХ»), В («Волна»)
+- Использование: ARZone BreathingExercises (выдох), sound-hunter (Х, В)
+
+---
+
+### rocket_silver.usdz
+
+- Описание: Серебряная ракета (звуки Р/Т) — корпус + стабилизаторы + пламя
+- Звуковая ассоциация: Р («РакеТа»), Т («ракеТа»)
+- Использование: ARZone NarrativeQuest «Космос», sound-hunter (Р, Т)
+
+---
+
+### drum_wooden.usdz
+
+- Описание: Деревянный барабан (звуки Д/Б) — корпус + кожи + палочки
+- Звуковая ассоциация: Д («Барабан — Д-Д-Д»), Б («БаБаБа — ритм»)
+- Использование: ARZone RhythmExercises, ArticulationImitation (Д, Б)
 
 ---
 
 ## Примечания
 
-1. Все модели из Apple AR Quick Look Gallery предоставляются Apple для использования
-   разработчиками в целях демонстрации и разработки AR-приложений.
-2. Использование в детском образовательном приложении соответствует назначению галереи.
-3. Коммерческое использование допускается в рамках Apple Developer Program License Agreement.
-4. Модели не были изменены и используются в исходном виде.
-5. Block K v13 — добавлено 8 новых моделей (sport_gym_set, kitchen_full, bedroom_set, school_classroom сцены).
-   Итого в директории: 20 USDZ файлов (12 из v12 + 8 из v13 Block K).
+1. Блок F v16: удалены 13 нерелевантных Apple Quick Look моделей (~150 MB).
+2. Добавлены 10 логопедических процедурных моделей (собственные ассеты).
+3. Apple Sample Code License модели (lyalya3d*, scene_solar_panels):
+   https://developer.apple.com/terms/intellectual-property/
+4. Логопедические модели: MIT-совместимая лицензия HappySpeech project.
