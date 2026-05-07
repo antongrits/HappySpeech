@@ -38,13 +38,19 @@ struct SplashView: View {
                         .font(TypographyTokens.kidDisplay(40))
                         .foregroundStyle(.white)
                         .tracking(-1)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
 
                     Text(String(localized: "Говорим волшебно"))
                         .font(TypographyTokens.caption(13))
                         .foregroundStyle(.white.opacity(0.85))
                         .tracking(2.5)
                         .textCase(.uppercase)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                 }
+                .padding(.horizontal, SpacingTokens.medium)
                 .opacity(titleOpacity)
 
                 Spacer()

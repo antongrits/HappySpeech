@@ -133,12 +133,19 @@ struct AuthSignUpView: View {
             Text(String(localized: "Создать аккаунт"))
                 .font(TypographyTokens.title(24))
                 .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
                 .padding(.top, SpacingTokens.sp3)
+                .padding(.horizontal, SpacingTokens.medium)
 
             Text(String(localized: "Создайте аккаунт, чтобы сохранить прогресс ребёнка"))
                 .font(TypographyTokens.body(14))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .padding(.horizontal, SpacingTokens.medium)
         }
     }
 
@@ -228,6 +235,8 @@ struct AuthSignUpView: View {
                     .fontWeight(.semibold)
             }
             .font(TypographyTokens.body(14))
+            .lineLimit(1)
+            .minimumScaleFactor(0.85)
         }
     }
 }
