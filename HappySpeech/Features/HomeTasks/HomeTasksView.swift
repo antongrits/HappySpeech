@@ -409,7 +409,7 @@ private struct HomeTaskFilterChip: View {
                         )
                     )
             }
-            .foregroundStyle(isActive ? Color.white : ColorTokens.Parent.inkMuted)
+            .foregroundStyle(isActive ? ColorTokens.Overlay.onAccent : ColorTokens.Parent.inkMuted)
             .padding(.horizontal, SpacingTokens.regular)
             .padding(.vertical, SpacingTokens.small)
             .frame(minHeight: 44)
@@ -520,7 +520,7 @@ private struct HomeTaskCard: View {
                 if row.isCompleted {
                     Image(systemName: "checkmark")
                         .font(TypographyTokens.caption(14))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                 }
             }
             .frame(width: 44, height: 44, alignment: .topLeading)

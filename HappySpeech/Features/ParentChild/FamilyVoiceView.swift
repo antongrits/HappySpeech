@@ -209,7 +209,7 @@ struct FamilyVoiceView: View {
         } label: {
             Text(word)
                 .font(TypographyTokens.body(15).weight(isSelected ? .semibold : .regular))
-                .foregroundStyle(isSelected ? Color.white : ColorTokens.Parent.ink)
+                .foregroundStyle(isSelected ? ColorTokens.Overlay.onAccent : ColorTokens.Parent.ink)
                 .padding(.horizontal, SpacingTokens.sp3)
                 .padding(.vertical, SpacingTokens.sp2)
                 .background(
