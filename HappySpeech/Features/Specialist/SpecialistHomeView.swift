@@ -109,6 +109,10 @@ struct SpecChildDashboardView: View {
         .navigationTitle(child?.name ?? String(localized: "spec.dashboard.title"))
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                LyalyaMascotView(state: .thinking, size: 32)
+                    .accessibilityHidden(true)
+            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     showNoteSheet = true
