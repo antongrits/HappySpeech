@@ -1,3 +1,4 @@
+import AVFoundation
 import Foundation
 import OSLog
 
@@ -8,6 +9,16 @@ protocol SpeechVisualizationBusinessLogic: AnyObject {
     func load(request: SpeechVisualizationModels.Load.Request) async
     func setMode(request: SpeechVisualizationModels.SetMode.Request) async
     func computeScore(request: SpeechVisualizationModels.Score.Request) async
+
+    /// Опционально: запускает mel-spectrogram cross-correlation между записью
+    /// ребёнка и эталоном. Используется в practice-режиме при наличии записи.
+    ///
+    /// Возвращает composite similarity ∈ `[0, 1]` (0 — нет совпадения, 1 — идеал).
+    /// Если файлов нет — возвращает `nil`.
+    func computeAcousticSimilarity(
+        childAudioURL: URL?,
+        referenceAudioURL: URL?
+    ) async -> Float?
 }
 
 // MARK: - SpeechVisualizationInteractor (Clean Swift: Interactor)
@@ -33,6 +44,11 @@ final class SpeechVisualizationInteractor: SpeechVisualizationBusinessLogic {
     private var currentSyllables: [KaraokeSyllable] = []
     private var currentMode: VisualizationMode = .listen
     private static let logger = Logger(subsystem: "ru.happyspeech", category: "SpeechVisualization")
+
+    // MARK: Acoustic Analysis (Block B.3 v17)
+
+    private let melExtractor = MelSpectrogramExtractor()
+    private let crossCorrelator = SpectrogramCrossCorrelator()
 
     // MARK: Constants
 
@@ -99,6 +115,61 @@ final class SpeechVisualizationInteractor: SpeechVisualizationBusinessLogic {
         )
         await presenter?.presentScore(response: response, syllables: currentSyllables)
         Self.logger.info("Karaoke score computed: overall=\(overall, format: .fixed(precision: 2))")
+    }
+
+    // MARK: - Acoustic Similarity (Block B.3 v17)
+
+    /// Считает composite acoustic similarity между записью ребёнка и эталоном
+    /// через ``MelSpectrogramExtractor`` + ``SpectrogramCrossCorrelator``.
+    ///
+    /// COPPA: вычисления локальные (vDSP, никаких сетевых вызовов).
+    func computeAcousticSimilarity(
+        childAudioURL: URL?,
+        referenceAudioURL: URL?
+    ) async -> Float? {
+        guard let childURL = childAudioURL,
+              let referenceURL = referenceAudioURL else {
+            return nil
+        }
+
+        do {
+            let childPCM = try Self.loadFloatPCM(from: childURL)
+            let referencePCM = try Self.loadFloatPCM(from: referenceURL)
+
+            let childMel = await melExtractor.extract(from: childPCM)
+            let referenceMel = await melExtractor.extract(from: referencePCM)
+
+            let result = await crossCorrelator.compare(
+                child: childMel,
+                reference: referenceMel
+            )
+
+            Self.logger.info(
+                "Acoustic similarity: cosine=\(result.cosineSimilarity), dtw=\(result.dtwScore), composite=\(result.compositeScore)"
+            )
+            return result.compositeScore
+        } catch {
+            Self.logger.error("computeAcousticSimilarity failed: \(error.localizedDescription)")
+            return nil
+        }
+    }
+
+    /// Загружает Float32 mono PCM @ 16 kHz из аудиофайла.
+    private static func loadFloatPCM(from url: URL) throws -> [Float] {
+        let file = try AVAudioFile(forReading: url)
+        let format = file.processingFormat
+        guard let buffer = AVAudioPCMBuffer(
+            pcmFormat: format,
+            frameCapacity: AVAudioFrameCount(file.length)
+        ) else {
+            return []
+        }
+        try file.read(into: buffer)
+        guard let channelData = buffer.floatChannelData?[0] else {
+            return []
+        }
+        let count = Int(buffer.frameLength)
+        return Array(UnsafeBufferPointer(start: channelData, count: count))
     }
 
     // MARK: - Pure helpers
