@@ -55,8 +55,10 @@ struct OfflineMiniGameView: View {
     // MARK: - Header
 
     private var mascotHeader: some View {
-        Text("\u{1F98B}")
-            .font(TypographyTokens.kidDisplay(64)) // emoji mascot header — skip TypographyTokens
+        Image("mascot_lyalya_wave")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 80, height: 80)
             .accessibilityHidden(true)
     }
 
@@ -65,21 +67,21 @@ struct OfflineMiniGameView: View {
     private var pickerCards: some View {
         VStack(spacing: SpacingTokens.sp3) {
             gameCard(
-                emoji: "\u{1F98B}",
+                systemImage: "hand.tap.fill",
                 titleKey: "offline.minigame.tap.title",
                 instrKey: "offline.minigame.tap.instruction",
                 accentColor: ColorTokens.Brand.rose,
                 gameType: .tapLyalya
             )
             gameCard(
-                emoji: "\u{2601}\u{FE0F}",
+                systemImage: "cloud.fill",
                 titleKey: "offline.minigame.drag.title",
                 instrKey: "offline.minigame.drag.instruction",
                 accentColor: ColorTokens.Brand.sky,
                 gameType: .dragClouds
             )
             gameCard(
-                emoji: "\u{1F195}",
+                systemImage: "rectangle.stack.fill",
                 titleKey: "offline.minigame.pair.title",
                 instrKey: "offline.minigame.pair.instruction",
                 accentColor: ColorTokens.Brand.mint,
@@ -89,7 +91,7 @@ struct OfflineMiniGameView: View {
     }
 
     private func gameCard(
-        emoji: String,
+        systemImage: String,
         titleKey: String.LocalizationValue,
         instrKey: String.LocalizationValue,
         accentColor: Color,
@@ -99,8 +101,10 @@ struct OfflineMiniGameView: View {
             selectedGame = gameType
         } label: {
             HStack(spacing: SpacingTokens.sp3) {
-                Text(emoji)
-                    .font(TypographyTokens.display(36)) // emoji card — skip TypographyTokens
+                Image(systemName: systemImage)
+                    .font(.system(size: 36, weight: .regular))
+                    .foregroundStyle(accentColor)
+                    .frame(width: 56)
                     .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
@@ -191,8 +195,10 @@ private struct TapLyalyaGameView: View {
                 headerBar
                     .position(x: geo.size.width / 2, y: 50)
 
-                Text("\u{1F98B}")
-                    .font(.system(size: isRunning ? 60 : 52)) // emoji mascot animated size — skip TypographyTokens
+                Image("mascot_lyalya_wave")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: isRunning ? 80 : 70, height: isRunning ? 80 : 70)
                     .position(mascotPosition)
                     .onTapGesture {
                         guard isRunning else { return }
@@ -253,8 +259,9 @@ private struct TapLyalyaGameView: View {
     private var resultView: some View {
         VStack(spacing: SpacingTokens.sp6) {
             Spacer()
-            Text("\u{1F38A}")
-                .font(TypographyTokens.kidDisplay(72)) // emoji key graphic — skip TypographyTokens
+            Image(systemName: "party.popper.fill")
+                .font(.system(size: 72, weight: .regular))
+                .foregroundStyle(ColorTokens.Brand.gold)
                 .accessibilityHidden(true)
             Text(String(format: String(localized: "offline.minigame.score.format"), taps))
                 .font(TypographyTokens.display(40))
@@ -336,15 +343,18 @@ private struct DragCloudsGameView: View {
             } else {
                 GeometryReader { geo in
                     ZStack {
-                        Text("\u{1F98B}")
-                            .font(TypographyTokens.kidDisplay(56)) // emoji mascot — skip TypographyTokens
+                        Image("mascot_lyalya_wave")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 70, height: 70)
                             .position(mascotPosition)
                             .accessibilityHidden(true)
 
                         ForEach($clouds) { $cloud in
                             if !cloud.isCaught {
-                                Text("\u{2601}\u{FE0F}")
-                                    .font(TypographyTokens.display(44)) // emoji cloud — skip TypographyTokens
+                                Image(systemName: "cloud.fill")
+                                    .font(.system(size: 44, weight: .regular))
+                                    .foregroundStyle(ColorTokens.Brand.sky)
                                     .position(cloud.position)
                                     .gesture(
                                         DragGesture()
@@ -390,8 +400,9 @@ private struct DragCloudsGameView: View {
     private var dragResultView: some View {
         VStack(spacing: SpacingTokens.sp6) {
             Spacer()
-            Text("\u{1F4AB}")
-                .font(TypographyTokens.kidDisplay(72)) // emoji key graphic — skip TypographyTokens
+            Image(systemName: "sparkles")
+                .font(.system(size: 72, weight: .regular))
+                .foregroundStyle(ColorTokens.Brand.sky)
                 .accessibilityHidden(true)
             Text(String(format: String(localized: "offline.minigame.score.format"), caught))
                 .font(TypographyTokens.display(40))
@@ -449,7 +460,11 @@ private struct FindPairGameView: View {
         var isMatched: Bool = false
     }
 
-    private static let emojis = ["🐶", "🐱", "🦁", "🐰", "🦊", "🐻"]
+    // Block D v16: эмодзи карточки → иллюстрации из Assets.xcassets.
+    // FALLBACK: 🦁 lion → reward_champion, 🐼 panda → word_bear (no panda asset).
+    private static let cardIllustrations: [String] = [
+        "word_dog", "word_cat", "reward_champion", "word_hare", "word_fox", "word_bear"
+    ]
 
     @State private var cards: [Card] = []
     @State private var firstFlipped: Card?
@@ -509,11 +524,14 @@ private struct FindPairGameView: View {
                 .shadow(color: .black.opacity(0.08), radius: 4, x: 0, y: 2)
 
             if card.isFaceUp || card.isMatched {
-                Text(card.emoji)
-                    .font(TypographyTokens.title(28)) // emoji card — skip TypographyTokens
+                Image(card.emoji)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .padding(SpacingTokens.sp2)
             } else {
-                Text("\u{2753}")
-                    .font(TypographyTokens.title(24)) // emoji question mark — skip TypographyTokens
+                Image(systemName: "questionmark")
+                    .font(TypographyTokens.title(24))
+                    .foregroundStyle(ColorTokens.Brand.lilac)
                     .accessibilityHidden(true)
             }
         }
@@ -521,16 +539,17 @@ private struct FindPairGameView: View {
             handleTap(card)
         }
         .accessibilityLabel(card.isFaceUp || card.isMatched
-                            ? card.emoji
-                            : String(localized: "offline.minigame.pair.card.hidden.a11y"))
+                            ? Text(verbatim: card.emoji)
+                            : Text(String(localized: "offline.minigame.pair.card.hidden.a11y")))
         .accessibilityAddTraits(.isButton)
     }
 
     private var pairResultView: some View {
         VStack(spacing: SpacingTokens.sp6) {
             Spacer()
-            Text("\u{1F3C6}")
-                .font(TypographyTokens.kidDisplay(72)) // emoji key graphic — skip TypographyTokens
+            Image(systemName: "trophy.fill")
+                .font(.system(size: 72, weight: .regular))
+                .foregroundStyle(ColorTokens.Brand.gold)
                 .accessibilityHidden(true)
             Text(String(format: String(localized: "offline.minigame.score.format"), pairsFound))
                 .font(TypographyTokens.display(40))
@@ -566,7 +585,7 @@ private struct FindPairGameView: View {
                     try? await Task.sleep(for: .milliseconds(400))
                     matchCards(emoji: card.emoji)
                     pairsFound += 1
-                    if pairsFound >= Self.emojis.count {
+                    if pairsFound >= Self.cardIllustrations.count {
                         isFinished = true
                     }
                 }
@@ -598,7 +617,7 @@ private struct FindPairGameView: View {
     }
 
     private func setupCards() {
-        let pairs = Self.emojis.flatMap { [$0, $0] }.shuffled()
+        let pairs = Self.cardIllustrations.flatMap { [$0, $0] }.shuffled()
         cards = pairs.map { Card(emoji: $0) }
         pairsFound = 0
         moves = 0

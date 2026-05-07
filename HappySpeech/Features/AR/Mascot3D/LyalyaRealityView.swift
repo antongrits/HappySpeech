@@ -17,15 +17,15 @@ public enum LyalyaAnimation: String, CaseIterable, Sendable {
     case pointing
     case sad
 
-    /// Emoji-фоллбэк для 2D-режима когда USDZ не загрузился.
-    var emoji: String {
+    /// Block D v16: эмодзи-фоллбэк заменён на SF Symbol для 2D-режима.
+    var systemImageName: String {
         switch self {
-        case .idle:        return "🦋"
-        case .waving:      return "👋"
-        case .celebrating: return "🎉"
-        case .thinking:    return "🤔"
-        case .pointing:    return "👆"
-        case .sad:         return "🌈"
+        case .idle:        return "sparkles"
+        case .waving:      return "hand.wave.fill"
+        case .celebrating: return "party.popper.fill"
+        case .thinking:    return "brain.head.profile"
+        case .pointing:    return "hand.point.up.fill"
+        case .sad:         return "cloud.rain.fill"
         }
     }
 
@@ -275,8 +275,10 @@ public struct LyalyaRealityView: View {
                     radius: 14, x: 0, y: 6
                 )
 
-            Text(animation.emoji)
-                .font(.system(size: size * 0.45)) // emoji size proportional to container — skip TypographyTokens
+            Image(systemName: animation.systemImageName)
+                .font(.system(size: size * 0.45, weight: .regular))
+                .foregroundStyle(.white)
+                .accessibilityHidden(true)
         }
         .frame(width: size, height: size)
     }
