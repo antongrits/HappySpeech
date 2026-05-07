@@ -1,6 +1,6 @@
 # Sound Assets Registry — HappySpeech
 
-**Version 2.5 — 2026-04-30**
+**Version 2.6 — 2026-05-07**
 **Managed by:** Sound Curator. All sounds verified CC0 or royalty-free.
 
 ---
@@ -14,6 +14,7 @@
 | Ляля tuned voice (.m4a) | 50 | ~852 KB | `HappySpeech/Resources/Audio/Lyalya/tuned/` (в репо) | ✅ Sprint 12 Блок L1 done |
 | Ляля Block P voice expansion (.m4a) | 570 | ~9.7 MB | `HappySpeech/Resources/Audio/Lyalya/<11 categories>/` (в репо) | ✅ Plan v11 Block P done |
 | Ляля Block F.3 voice expansion (.m4a) | 248 | ~3.2 MB | `HappySpeech/Resources/Audio/Lyalya/` root + subdirs (в репо) | ✅ Plan v12 F.3 done |
+| Ляля Block P.1 v16 voice expansion (.m4a) | 1+KB | ~+33 MB | `HappySpeech/Resources/Audio/Lyalya/<10 categories>/` (в репо) | ✅ Plan v16 Block P.1 done |
 | Content audio batch 1 (.m4a) | 1000 | 12.65 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 1 |
 | Content audio batch 2 (.m4a) | 1028 | 11.1 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 2 |
 | Content audio batch 3 (.m4a) | 681 | 8.36 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 3 |
@@ -571,7 +572,47 @@ Russian-only: 0 en keys ✅
 - **Plan v11 Block P** — ✅ DONE — Ляля +570 фраз (1526 total .m4a, цель ≥1500 выполнена)
 - **Plan v12 Block F.3** — ✅ DONE — Ляля +248 фраз (1774 total .m4a, seasonal/hints/ambient/phoneme)
 - **Plan v12 Block U ambient** — ✅ DONE — 10 ambient .caf сцен (1.2 MB) + AmbientSoundService.swift
+- **Plan v16 Block P.1** — ✅ DONE — Ляля +~1350 фраз (6835 total Lyalya .m4a, 13344 total Audio .m4a, 213 MB)
 - **Firebase Storage upload** — delegated to backend-developer M11.4
+
+## Plan v16 Block P.1 — Ляля Voice Expansion (6835 total Lyalya .m4a) ✅
+
+**Дата:** 2026-05-07
+**Голос:** `ru-RU-SvetlanaNeural` (edge-tts 7.2.8)
+**Формат:** .m4a, AAC, 16kHz mono, 32 kbps, loudnorm -16 LUFS TP=-1.5
+**Лицензия:** Microsoft edge-tts (royalty-free, коммерческое использование)
+**Общий размер Audio/:** 213 MB (13344 .m4a всего в Audio/)
+
+### Статус по категориям P.1
+
+| Категория | Субдиректория | Файлов | Коммит |
+|---|---|---|---|
+| P.1.1 Lesson hints | `lessons/` | 2008 | 316faa65 |
+| P.1.2 Achievements | `achievements/` | 359 | 75c6fa33 |
+| P.1.3 UI states | `ui_states/` | 50 | d677ab82 |
+| P.1.4 Widget phrases | `widget/` | 81 | d677ab82 |
+| P.1.5 Daily streak | `daily_streak/` | 60 | d677ab82 |
+| P.1.6 Family greetings | `family_greetings/` | 50 | d677ab82 |
+| P.1.7 Specialist | `specialist/` | 128 | 844b2009 |
+| P.1.8 Stuttering DTT | `stuttering/` | 240 | 9a27ad15 |
+| P.1.9 Narrative quest | `narrative_quest/` | 48 | 4555ac90 |
+| P.1.10 Contextual | `contextual/` | 118 | 4ee6f9d3 |
+| **ИТОГО Lyalya/** | — | **6835** | — |
+
+### Описание категорий
+
+- **P.1.1** — 24 типа игр × 20 вариантов подсказок (480 новых)
+- **P.1.2** — 32 ачивмента × 2 варианта фраз (64 файла)
+- **P.1.3** — 50 фраз для состояний UI (loading, empty, error, offline, sync, permissions, notifications)
+- **P.1.4** — 51 фраза для виджетов (good_morning, reminder, streak, progress, parent, specialist, lockscreen)
+- **P.1.5** — 60 фраз для ежедневных серий (7 дней × 5 вариантов + 4 вехи × 5 + возврат × 5)
+- **P.1.6** — 50 персонализированных приветствий по именам (50 популярных русских имён)
+- **P.1.7** — 128 фраз для специалистов (отчёты родителям, туториалы программы)
+- **P.1.8** — 110+ фраз для заикания: DTT команды, дыхательный ритм, voluntary stuttering, подкрепление, руководство для родителей
+- **P.1.9** — 48 фраз для narrative quest (главы, переходы, NPC диалоги, боссы, карта)
+- **P.1.10** — 118 фраз: восстановление после ошибок, retry, тайминг сессий, перерывы, завершения, мотивация, подсказки, похвала, переходы уровней, звуковые интро, напоминания артикуляции, советы родителям, прощания
+
+---
 
 ## См. также
 
