@@ -401,7 +401,7 @@ struct AppSettings: Sendable, Equatable {
             theme: .system,
             childName: String(localized: "settings.profile.defaultName"),
             childAge: 6,
-            childAvatar: "🦊",
+            childAvatar: "word_fox",
             notificationsEnabled: true,
             reminderTime: defaultTime,
             audioQuality: .standard,

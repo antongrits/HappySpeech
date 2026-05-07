@@ -38,17 +38,28 @@ enum ProfileEditor {
     // MARK: - Domain: Avatar presets
 
     struct AvatarPreset: Identifiable {
-        let id: String        // rawValue
-        let emoji: String
+        let id: String                // rawValue
+        let illustrationName: String  // Asset catalog name (Block D v16: replaces emoji)
         let localizedName: String
     }
 
+    // Block D v16: emoji → illustration mapping (FALLBACK for missing assets):
+    //   🦋 butterfly → mascot_lyalya_wave (Lyalya is a butterfly)
+    //   ⭐ star      → reward_gold_star
+    //   🚀 rocket    → reward_rocket
+    //   🐉 dragon    → reward_brave_heart (FALLBACK)
+    //   🦄 unicorn   → reward_rainbow (FALLBACK)
     static let avatarPresets: [AvatarPreset] = [
-        AvatarPreset(id: "butterfly", emoji: "🦋", localizedName: String(localized: "avatar.butterfly")),
-        AvatarPreset(id: "star",      emoji: "⭐", localizedName: String(localized: "avatar.star")),
-        AvatarPreset(id: "rocket",    emoji: "🚀", localizedName: String(localized: "avatar.rocket")),
-        AvatarPreset(id: "dragon",    emoji: "🐉", localizedName: String(localized: "avatar.dragon")),
-        AvatarPreset(id: "unicorn",   emoji: "🦄", localizedName: String(localized: "avatar.unicorn"))
+        AvatarPreset(id: "butterfly", illustrationName: "mascot_lyalya_wave",
+                     localizedName: String(localized: "avatar.butterfly")),
+        AvatarPreset(id: "star",      illustrationName: "reward_gold_star",
+                     localizedName: String(localized: "avatar.star")),
+        AvatarPreset(id: "rocket",    illustrationName: "reward_rocket",
+                     localizedName: String(localized: "avatar.rocket")),
+        AvatarPreset(id: "dragon",    illustrationName: "reward_brave_heart",
+                     localizedName: String(localized: "avatar.dragon")),
+        AvatarPreset(id: "unicorn",   illustrationName: "reward_rainbow",
+                     localizedName: String(localized: "avatar.unicorn"))
     ]
 
     // MARK: - Domain: Theme presets
@@ -93,8 +104,8 @@ final class ProfileEditorViewModel {
             .first { $0.id == selectedThemeId }?.color ?? ColorTokens.Brand.primary
     }
 
-    var selectedAvatarEmoji: String {
+    var selectedAvatarIllustration: String {
         ProfileEditor.avatarPresets
-            .first { $0.id == selectedAvatarId }?.emoji ?? "🧒"
+            .first { $0.id == selectedAvatarId }?.illustrationName ?? "mascot_lyalya_happy"
     }
 }

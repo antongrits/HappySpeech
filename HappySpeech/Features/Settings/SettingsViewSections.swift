@@ -112,8 +112,12 @@ extension SettingsView {
                         Circle()
                             .fill(ColorTokens.Brand.primary.opacity(0.15))
                             .frame(width: 48, height: 48)
-                        Text(verbatim: display.settings.childAvatar)
-                            .font(TypographyTokens.title(26))
+                        Image(display.settings.childAvatar)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding(SpacingTokens.micro)
+                            .frame(width: 48, height: 48)
+                            .clipShape(Circle())
                             .accessibilityHidden(true)
                     }
                     VStack(alignment: .leading, spacing: SpacingTokens.micro) {

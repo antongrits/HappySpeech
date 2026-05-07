@@ -93,7 +93,7 @@ struct FamilyHomeView: View {
                 ChildCardView(
                     child: child,
                     themeColor: viewModel.themeColor(for: child),
-                    avatarEmoji: viewModel.avatarEmoji(for: child),
+                    avatarIllustration: viewModel.avatarIllustrationName(for: child),
                     avatarHeroId: reduceMotion ? nil : "child_avatar_\(child.id)",
                     avatarNamespace: reduceMotion ? nil : familyAvatarNamespace
                 )
@@ -261,7 +261,7 @@ private struct ChildCardView: View {
 
     let child: FamilyHome.ChildSummary
     let themeColor: Color
-    let avatarEmoji: String
+    let avatarIllustration: String
     var avatarHeroId: String? = nil
     var avatarNamespace: Namespace.ID? = nil
 
@@ -316,8 +316,12 @@ private struct ChildCardView: View {
             Circle()
                 .fill(themeColor.opacity(0.25))
                 .frame(width: 56, height: 56)
-            Text(avatarEmoji)
-                .font(TypographyTokens.title(28))
+            Image(avatarIllustration)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .padding(SpacingTokens.micro)
+                .frame(width: 56, height: 56)
+                .clipShape(Circle())
                 .accessibilityHidden(true)
         }
         if let heroId = avatarHeroId, let ns = avatarNamespace {

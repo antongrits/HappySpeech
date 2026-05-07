@@ -98,8 +98,13 @@ struct ProfileEditorView: View {
                     .frame(width: 100, height: 100)
                     .shadow(color: viewModel.selectedThemeColor.opacity(0.3), radius: 12, y: 4)
 
-                Text(viewModel.selectedAvatarEmoji)
-                    .font(TypographyTokens.kidDisplay(52))
+                Image(viewModel.selectedAvatarIllustration)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .padding(SpacingTokens.sp2)
+                    .frame(width: 100, height: 100)
+                    .clipShape(Circle())
+                    .accessibilityHidden(true)
             }
             .animation(.spring(response: 0.35, dampingFraction: 0.7), value: viewModel.selectedAvatarId)
 
@@ -151,8 +156,13 @@ struct ProfileEditorView: View {
                         )
                 )
 
-            Text(preset.emoji)
-                .font(TypographyTokens.title(26))
+            Image(preset.illustrationName)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .padding(SpacingTokens.micro)
+                .frame(width: 52, height: 52)
+                .clipShape(Circle())
+                .accessibilityHidden(true)
         }
         .animation(.spring(response: 0.25, dampingFraction: 0.8), value: isSelected)
     }

@@ -49,7 +49,14 @@ final class SettingsPresenter: SettingsPresentationLogic {
         let viewModel = SettingsModels.LoadSettings.ViewModel(
             settings: response.settings,
             appVersionLine: versionLine,
-            availableAvatars: ["🦊", "🐰", "🦁", "🐼", "🦉", "🐢"],
+            availableAvatars: [
+                "word_fox",      // лиса (replaces 🦊)
+                "word_hare",     // заяц (replaces 🐰)
+                "reward_champion", // лев (FALLBACK: 🦁)
+                "word_bear",     // медведь (FALLBACK: 🐼 panda)
+                "word_bird",     // сова (FALLBACK: 🦉 owl → bird)
+                "word_frog"      // лягушка (FALLBACK: 🐢 turtle → amphibian)
+            ],
             availableAges: Array(3...12)
         )
         display?.displayLoadSettings(viewModel)

@@ -276,7 +276,11 @@ final class SettingsInteractor: SettingsBusinessLogic {
         if age > 0 { settings.childAge = age }
 
         if let avatar = defaults.string(forKey: SettingsKey.childAvatar), !avatar.isEmpty {
-            settings.childAvatar = avatar
+            // Block D v16 migration: эмодзи (legacy) → illustrationName.
+            // Если в storage эмодзи (есть символ за пределами ASCII букв/цифр/_),
+            // считаем legacy и используем default.
+            let isLegacyEmoji = !avatar.allSatisfy { $0.isLetter || $0.isNumber || $0 == "_" }
+            settings.childAvatar = isLegacyEmoji ? AppSettings.default.childAvatar : avatar
         }
 
         if defaults.object(forKey: SettingsKey.notificationsEnabled) != nil {
