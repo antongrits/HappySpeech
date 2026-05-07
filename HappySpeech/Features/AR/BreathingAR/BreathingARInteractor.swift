@@ -1,9 +1,23 @@
 import Foundation
 import OSLog
 
+// MARK: - VIP-thin: ARSession orchestration only
+//
+// Этот Interactor намеренно тонкий (~75 LOC). Логика тренировки
+// звуков НЕ принадлежит iOS-слою: всё реальное распознавание происходит
+// в ARSessionDelegate (ARFaceAnchor blendshapes + AVAudioEngine amplitude
+// → AirStreamDetector). Interactor только:
+//   1. Запускает / останавливает ARSession через ARSessionService.
+//   2. Получает frame updates → передаёт Presenter без бизнес-обработки.
+//   3. Финализирует session через SessionRepository (общий path).
+// Углубление до 350+ LOC означало бы дублирование AR логики или создание
+// искусственных абстракций — нарушение Clean Swift VIP принципа.
+//
+// Domain logic (face tracking, breath detection) живёт в Workers + ARSessionService.
+//
 // MARK: - BreathingARInteractor
 //
-// VIP-thin Interactor (D.2 v15) — AR мини-игра «Сдуй одуванчик».
+// AR мини-игра «Сдуй одуванчик».
 //
 // Clean Swift поток:
 //   ARView (кадры + амплитуда микрофона) → updateFrame() → Presenter → View
