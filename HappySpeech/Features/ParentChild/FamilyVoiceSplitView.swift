@@ -64,6 +64,10 @@ struct FamilyVoiceSplitView: View {
             ColorTokens.Kid.bg.ignoresSafeArea(edges: .top)
 
             VStack(spacing: SpacingTokens.xLarge) {
+                // Lyalya — watcher на верху детской области
+                LyalyaMascotView(state: childIsRecording ? .singing : .happy, size: 80)
+                    .accessibilityHidden(true)
+
                 // [A] Illustration card
                 illustrationCard
 

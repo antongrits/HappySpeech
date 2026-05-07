@@ -343,12 +343,21 @@ struct ComparisonDashboardView: View {
     // MARK: - Empty State
 
     private var emptyState: some View {
-        HSEmptyState(
-            icon: "chart.xyaxis.line",
-            title: String(localized: "comparison.empty.title"),
-            message: String(localized: "comparison.empty.message"),
-            actionTitle: nil
-        ) {}
+        VStack(spacing: SpacingTokens.medium) {
+            LyalyaMascotView(state: .thinking, size: 140)
+                .accessibilityHidden(true)
+            Text(String(localized: "comparison.empty.title"))
+                .font(TypographyTokens.title(22))
+                .foregroundStyle(ColorTokens.Parent.ink)
+                .multilineTextAlignment(.center)
+            Text(String(localized: "comparison.empty.message"))
+                .font(TypographyTokens.body())
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, SpacingTokens.large)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(.horizontal, SpacingTokens.screenEdge)
     }
 
     // MARK: - Helpers

@@ -55,10 +55,7 @@ struct OfflineMiniGameView: View {
     // MARK: - Header
 
     private var mascotHeader: some View {
-        Image("mascot_lyalya_wave")
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(width: 80, height: 80)
+        LyalyaMascotView(state: .waving, size: 100)
             .accessibilityHidden(true)
     }
 
