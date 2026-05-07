@@ -89,8 +89,10 @@ struct SettingsProfileEditor: View {
                     Button {
                         avatar = item
                     } label: {
-                        Text(verbatim: item)
-                            .font(TypographyTokens.title(28))
+                        Image(item)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding(SpacingTokens.micro)
                             .frame(width: 48, height: 48)
                             .background(
                                 Circle().fill(
@@ -105,6 +107,7 @@ struct SettingsProfileEditor: View {
                                     lineWidth: avatar == item ? 2 : 1
                                 )
                             )
+                            .clipShape(Circle())
                     }
                     .buttonStyle(.plain)
                     .accessibilityLabel(String(
