@@ -270,5 +270,4 @@ extension SettingsView {
                 .textCase(.uppercase)
         }
     }
-
 }

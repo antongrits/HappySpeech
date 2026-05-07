@@ -291,4 +291,3 @@ struct RewardsView: View {
         interactor.loadRewards(.init(childId: childId, forceReload: false))
     }
 }
-

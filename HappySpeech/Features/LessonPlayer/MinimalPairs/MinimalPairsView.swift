@@ -565,4 +565,3 @@ struct MinimalPairsView: View {
         }
     }
 }
-

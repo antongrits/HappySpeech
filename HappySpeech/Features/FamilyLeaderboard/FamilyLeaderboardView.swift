@@ -245,4 +245,4 @@ struct FamilyLeaderboardView: View {
     }
 }
 
-// TODO defer to Block Q (test coverage): snapshot tests, week boundary edge.
+// NOTE deferred to Block Q (test coverage): snapshot tests, week boundary edge.

@@ -561,4 +561,3 @@ struct SortingView: View {
         }
     }
 }
-

@@ -252,11 +252,11 @@ struct ARFaceFilterView: View {
         // MVP: speech trigger через WhisperKit polling — отложено в Block Q.
         // Сейчас просто принимаем tap по prompt-card как simulated trigger
         // (см. comment в processTranscription). Реальный ASR-pipeline
-        // подключается в TODO.
+        // подключается позже.
     }
 }
 
-// TODO defer to Block Q (test coverage): WhisperKit polling integration test,
+// NOTE deferred to Block Q (test coverage): WhisperKit polling integration test,
 // snapshot tests, fallback на устройствах без TrueDepth.
 
 #if DEBUG

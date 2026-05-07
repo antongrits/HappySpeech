@@ -591,4 +591,3 @@ struct NarrativeQuestView: View {
         }
     }
 }
-

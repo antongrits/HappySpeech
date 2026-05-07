@@ -264,12 +264,11 @@ final class OfflineMiniGameInteractor: OfflineMiniGameBusinessLogic {
         // Achievement triggers.
         var newlyUnlocked: [OfflineMiniGameModels.Achievement] = []
         if request.didComplete {
-            for achievement in checkAchievements(stats: stats, isPerfect: isPerfect) {
-                if !stats.unlockedAchievements.contains(achievement.rawValue) {
-                    stats.unlockedAchievements.insert(achievement.rawValue)
-                    newlyUnlocked.append(achievement)
-                    Self.logger.info("Achievement unlocked: \(achievement.rawValue, privacy: .public)")
-                }
+            for achievement in checkAchievements(stats: stats, isPerfect: isPerfect)
+            where !stats.unlockedAchievements.contains(achievement.rawValue) {
+                stats.unlockedAchievements.insert(achievement.rawValue)
+                newlyUnlocked.append(achievement)
+                Self.logger.info("Achievement unlocked: \(achievement.rawValue, privacy: .public)")
             }
         }
 

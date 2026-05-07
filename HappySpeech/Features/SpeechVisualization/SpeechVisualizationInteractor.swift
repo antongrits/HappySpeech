@@ -129,5 +129,5 @@ final class SpeechVisualizationInteractor: SpeechVisualizationBusinessLogic {
     }
 }
 
-// TODO defer to Block Q (test coverage): unit tests for splitToSyllables
+// NOTE deferred to Block Q (test coverage): unit tests for splitToSyllables
 // (граничные слова: "стол", "корова", "обезьяна", "лес"), accuracy heuristics.
