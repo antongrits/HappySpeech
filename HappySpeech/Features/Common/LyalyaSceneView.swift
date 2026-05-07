@@ -139,7 +139,7 @@ private enum LyalyaSceneBuilder {
         let ambientLight = SCNLight()
         ambientLight.type = .ambient
         ambientLight.intensity = 600
-        ambientLight.color = UIColor(red: 0.95, green: 0.93, blue: 1.0, alpha: 1)
+        ambientLight.color = ColorTokens.LyalyaScene.ambientUI
         ambientNode.light = ambientLight
         scene.rootNode.addChildNode(ambientNode)
 
@@ -209,9 +209,7 @@ private enum LyalyaSceneBuilder {
     private static func makeBodyMaterial() -> SCNMaterial {
         let mat = SCNMaterial()
         // Pastel lilac-to-pink gradient через diffuse + emission тонировку
-        mat.diffuse.contents = UIColor(
-            red: 0.76, green: 0.63, blue: 0.95, alpha: 1
-        )
+        mat.diffuse.contents = ColorTokens.LyalyaScene.bodyUI
         mat.specular.contents = UIColor.white
         mat.shininess = 0.65
         mat.roughness.contents = 0.25
@@ -231,7 +229,7 @@ private enum LyalyaSceneBuilder {
 
     private static func makePupilMaterial() -> SCNMaterial {
         let mat = SCNMaterial()
-        mat.diffuse.contents = UIColor(red: 0.15, green: 0.1, blue: 0.25, alpha: 1)
+        mat.diffuse.contents = ColorTokens.LyalyaScene.pupilUI
         mat.lightingModel = .constant
         return mat
     }
@@ -372,13 +370,13 @@ extension LyalyaSceneView {
 #Preview("Idle — medium") {
     LyalyaSceneView.medium(state: .idle)
         .padding(32)
-        .background(Color(hex: "#F3EEFF"))
+        .background(ColorTokens.LyalyaScene.backdropIdle)
 }
 
 #Preview("Celebrating — large") {
     LyalyaSceneView.large(state: .celebrating)
         .padding(32)
-        .background(Color(hex: "#FFF8E0"))
+        .background(ColorTokens.LyalyaScene.backdropCelebrate)
 }
 
 #Preview("Все состояния") {

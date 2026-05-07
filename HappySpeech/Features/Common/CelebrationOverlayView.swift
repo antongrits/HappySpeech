@@ -103,9 +103,9 @@ struct CelebrationOverlayView: View {
                         .padding(.vertical, 14)
                         .background(
                             Capsule()
-                                .fill(Color(hex: "#4D96FF").opacity(0.9))
+                                .fill(ColorTokens.Celebration.primaryButton.opacity(0.9))
                         )
-                        .shadow(color: Color(hex: "#4D96FF").opacity(0.5), radius: 12, x: 0, y: 6)
+                        .shadow(color: ColorTokens.Celebration.primaryButton.opacity(0.5), radius: 12, x: 0, y: 6)
                 }
                 .lineLimit(nil)
                 .minimumScaleFactor(0.85)
@@ -127,12 +127,12 @@ struct CelebrationOverlayView: View {
                     .font(TypographyTokens.display(36))
                     .foregroundStyle(
                         index < stars
-                            ? Color(hex: "#FFD93D")
+                            ? ColorTokens.Celebration.star
                             : Color.white.opacity(0.3)
                     )
                     .shadow(
                         color: index < stars
-                            ? Color(hex: "#FFD93D").opacity(0.6)
+                            ? ColorTokens.Celebration.star.opacity(0.6)
                             : .clear,
                         radius: 8, x: 0, y: 2
                     )
@@ -197,14 +197,14 @@ struct CelebrationOverlayView: View {
 
 #Preview("3 звезды") {
     ZStack {
-        Color(hex: "#2C1A6B").ignoresSafeArea()
+        ColorTokens.Celebration.backdropDeep.ignoresSafeArea()
         CelebrationOverlayView(stars: 3) { }
     }
 }
 
 #Preview("1 звезда") {
     ZStack {
-        Color(hex: "#1A3A2B").ignoresSafeArea()
+        ColorTokens.Celebration.backdropForest.ignoresSafeArea()
         CelebrationOverlayView(stars: 1) { }
     }
 }

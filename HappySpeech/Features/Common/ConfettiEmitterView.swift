@@ -121,7 +121,7 @@ struct ConfettiEmitterView: View {
                 .frame(width: 120, height: 120)
                 .foregroundStyle(
                     LinearGradient(
-                        colors: [Color(hex: "#FFD700"), Color(hex: "#C77DFF")],
+                        colors: [ColorTokens.Confetti.gold, ColorTokens.Confetti.lilac],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )
@@ -158,24 +158,24 @@ struct ConfettiEmitterView: View {
         switch style {
         case .celebration:
             Image(systemName: "heart.fill")
-                .foregroundStyle(Color(hex: "#FF6B6B"))
+                .foregroundStyle(ColorTokens.Confetti.coral)
                 .tag("heart.fill")
             Image(systemName: "star.fill")
-                .foregroundStyle(Color(hex: "#FFD93D"))
+                .foregroundStyle(ColorTokens.Confetti.yellow)
                 .tag("star.fill")
             Image(systemName: "sparkle")
-                .foregroundStyle(Color(hex: "#C77DFF"))
+                .foregroundStyle(ColorTokens.Confetti.lilac)
                 .tag("sparkle")
             Image(systemName: "circle.fill")
-                .foregroundStyle(Color(hex: "#FF9E4F"))
+                .foregroundStyle(ColorTokens.Confetti.orange)
                 .tag("circle.fill")
         case .perfect:
             Image(systemName: "star.fill")
-                .foregroundStyle(Color(hex: "#FFD700"))
+                .foregroundStyle(ColorTokens.Confetti.gold)
                 .tag("star.fill")
         case .achievement:
             Image(systemName: "star.fill")
-                .foregroundStyle(Color(hex: "#4D96FF"))
+                .foregroundStyle(ColorTokens.Confetti.blue)
                 .tag("star.fill")
         }
     }
@@ -315,32 +315,9 @@ struct ConfettiEmitterView: View {
 
     private var colorPalette: [Color] {
         switch style {
-        case .celebration:
-            return [
-                Color(hex: "#FF6B6B"),
-                Color(hex: "#FFD93D"),
-                Color(hex: "#FF9E4F"),
-                Color(hex: "#C77DFF"),
-                Color(hex: "#FF69B4"),
-                Color(hex: "#FFA07A")
-            ]
-        case .perfect:
-            return [
-                Color(hex: "#FFD700"),
-                Color(hex: "#FFF176"),
-                Color(hex: "#FFCA28"),
-                Color(hex: "#FFE082"),
-                Color(hex: "#FF8F00")
-            ]
-        case .achievement:
-            return [
-                Color(hex: "#4D96FF"),
-                Color(hex: "#6BCB77"),
-                Color(hex: "#C77DFF"),
-                Color(hex: "#FF6B6B"),
-                Color(hex: "#FFD93D"),
-                Color(hex: "#FF9E4F")
-            ]
+        case .celebration: return ColorTokens.Confetti.celebrationPalette
+        case .perfect:     return ColorTokens.Confetti.perfectPalette
+        case .achievement: return ColorTokens.Confetti.achievementPalette
         }
     }
 }
@@ -349,28 +326,28 @@ struct ConfettiEmitterView: View {
 
 #Preview("Celebration — Normal") {
     ZStack {
-        Color(hex: "#1A0A3B").ignoresSafeArea()
+        ColorTokens.Celebration.backdropNight.ignoresSafeArea()
         ConfettiEmitterView(style: .celebration)
     }
 }
 
 #Preview("Perfect — Normal") {
     ZStack {
-        Color(hex: "#1A2A1A").ignoresSafeArea()
+        ColorTokens.Celebration.backdropMoss.ignoresSafeArea()
         ConfettiEmitterView(style: .perfect)
     }
 }
 
 #Preview("Achievement — Normal") {
     ZStack {
-        Color(hex: "#0A1A3B").ignoresSafeArea()
+        ColorTokens.Celebration.backdropIndigo.ignoresSafeArea()
         ConfettiEmitterView(style: .achievement)
     }
 }
 
 #Preview("Reduce Motion Fallback") {
     ZStack {
-        Color(hex: "#1A0A3B").ignoresSafeArea()
+        ColorTokens.Celebration.backdropNight.ignoresSafeArea()
         // Fallback отображается при включённом Accessibility > Reduce Motion в Settings
         ConfettiReduceMotionPreview()
     }
@@ -384,7 +361,7 @@ private struct ConfettiReduceMotionPreview: View {
             .frame(width: 120, height: 120)
             .foregroundStyle(
                 LinearGradient(
-                    colors: [Color(hex: "#FFD700"), Color(hex: "#C77DFF")],
+                    colors: [ColorTokens.Confetti.gold, ColorTokens.Confetti.lilac],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
