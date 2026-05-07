@@ -173,9 +173,13 @@ struct SpecChildRow: View {
                 Text(child.name)
                     .font(TypographyTokens.headline(16))
                     .foregroundStyle(ColorTokens.Spec.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
 
                 HStack(spacing: SpacingTokens.sp2) {
                     Text(ageLine)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                     Text("·")
                     ForEach(child.targetSounds, id: \.self) { sound in
                         HSBadge(sound, style: .filled(ColorTokens.Spec.accent))
@@ -189,12 +193,15 @@ struct SpecChildRow: View {
                     .padding(.top, 2)
             }
 
-            Spacer()
+            Spacer(minLength: SpacingTokens.sp1)
 
             VStack(alignment: .trailing, spacing: 2) {
                 Text(lastSessionLabel)
                     .font(TypographyTokens.caption(11))
                     .foregroundStyle(ColorTokens.Spec.inkMuted)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                    .multilineTextAlignment(.trailing)
                 Image(systemName: "chevron.right")
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Spec.inkMuted)
@@ -278,11 +285,15 @@ struct SpecDashboardHeader: View {
                         Text(child.name)
                             .font(TypographyTokens.headline(18))
                             .foregroundStyle(ColorTokens.Spec.ink)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
                         Text("\(child.age) лет · звуки: \(child.targetSounds.joined(separator: ", "))")
                             .font(TypographyTokens.caption(13))
                             .foregroundStyle(ColorTokens.Spec.inkMuted)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
                     }
-                    Spacer()
+                    Spacer(minLength: SpacingTokens.sp1)
                 }
 
                 if let summary {
