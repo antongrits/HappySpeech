@@ -946,7 +946,7 @@ final class DemoDisplayTests: XCTestCase {
                 title: "Шаг \(i + 1)",
                 description: "Описание \(i + 1)",
                 mascotText: "Привет!",
-                screenEmoji: "📱",
+                screenSymbol: "iphone",
                 highlightColor: "#FF6B35"
             )
         }
@@ -968,7 +968,7 @@ final class DemoDisplayTests: XCTestCase {
             stepSubtitle: "",
             stepDescription: step.description,
             mascotText: step.mascotText,
-            screenEmoji: step.screenEmoji,
+            screenSymbol: step.screenSymbol,
             illustrationSymbol: step.illustrationSymbol,
             accent: step.accent,
             lyalyaState: step.lyalyaState,
@@ -991,7 +991,7 @@ final class DemoDisplayTests: XCTestCase {
             stepSubtitle: "",
             stepDescription: "Описание",
             mascotText: "Отлично!",
-            screenEmoji: "🎉",
+            screenSymbol: "star.circle.fill",
             illustrationSymbol: "star.fill",
             accent: .primary,
             lyalyaState: .celebrating,
