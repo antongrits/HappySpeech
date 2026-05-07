@@ -36,6 +36,10 @@ struct ChildHomeView: View {
     // Флаг: показывать развёрнутую mission-карточку поверх контента.
     @State private var missionHeroExpanded: Bool = false
 
+    // MARK: - S.1 v16 — Daily Streak Rewards
+    // Tap на flame badge → sheet с DailyStreakView (milestones + saver).
+    @State private var showDailyStreakSheet: Bool = false
+
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -156,6 +160,13 @@ struct ChildHomeView: View {
         } message: {
             Text(String(localized: "child.home.sos.alert_message"))
         }
+        .sheet(isPresented: $showDailyStreakSheet) {
+            DailyStreakView(
+                childId: childId,
+                childName: viewModel.displayedName
+            )
+            .environment(container)
+        }
     }
 
     // MARK: - Wiring (Clean Swift bootstrap)
@@ -218,10 +229,16 @@ struct ChildHomeView: View {
                 Spacer()
 
                 if viewModel.currentStreak > 0 {
-                    ChildHomeStreakBadge(
-                        streak: viewModel.currentStreak,
-                        isHot: viewModel.isStreakHot
-                    )
+                    Button {
+                        showDailyStreakSheet = true
+                    } label: {
+                        ChildHomeStreakBadge(
+                            streak: viewModel.currentStreak,
+                            isHot: viewModel.isStreakHot
+                        )
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityHint(Text("child.home.streak.tap.hint"))
                 }
             }
         }
