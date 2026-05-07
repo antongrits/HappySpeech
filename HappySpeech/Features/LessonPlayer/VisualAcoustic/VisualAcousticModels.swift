@@ -108,14 +108,22 @@ enum VisualAcousticModels {
 /// Один раунд игры: картинка + вопрос + 4 варианта.
 struct VisualAcousticRound: Sendable, Equatable, Hashable {
     let id: UUID
-    let imageEmoji: String           // "🐍"
-    let imageLabel: String           // "Змея"
-    let question: String             // "Как звучит змея?"
-    let questionWithSound: String    // "Найди слово со звуком «С»"
-    let choices: [String]            // 4 варианта
-    let correctIndex: Int            // индекс правильного
-    let soundGroup: String           // whistling / hissing / sonants / velar
-    let ttsText: String              // полный текст для TTS (question + варианты)
+    /// Block D v16: содержит SF Symbol name или Asset name из Assets.xcassets.
+    let imageEmoji: String
+    /// Подпись к картинке (например, "Змея").
+    let imageLabel: String
+    /// Вопрос (например, "Как звучит змея?").
+    let question: String
+    /// Подсказка-вопрос с целевым звуком.
+    let questionWithSound: String
+    /// 4 варианта ответа.
+    let choices: [String]
+    /// Индекс правильного варианта в `choices`.
+    let correctIndex: Int
+    /// Группа звуков: whistling / hissing / sonants / velar.
+    let soundGroup: String
+    /// Полный текст для TTS (вопрос + варианты).
+    let ttsText: String
 }
 
 /// Результат выбора одного варианта.

@@ -85,13 +85,13 @@ public enum StickerCollection: String, Sendable, CaseIterable, Identifiable {
 
     public var emoji: String {
         switch self {
-        case .all:       return "🎁"
-        case .animals:   return "🐾"
-        case .space:     return "🚀"
-        case .forest:    return "🌲"
-        case .ocean:     return "🌊"
-        case .halloween: return "🎃"
-        case .newYear:   return "🎆"
+        case .all:       return "gift.fill"
+        case .animals:   return "pawprint.fill"
+        case .space:     return "reward_rocket"
+        case .forest:    return "word_forest"
+        case .ocean:     return "water.waves"
+        case .halloween: return "seasonal_halloween_full_moon"
+        case .newYear:   return "sparkles"
         }
     }
 
@@ -129,10 +129,10 @@ public enum AlbumTheme: String, Sendable, CaseIterable, Identifiable {
 
     public var previewEmoji: String {
         switch self {
-        case .bright: return "☀️"
-        case .dark:   return "🌙"
-        case .pastel: return "🌸"
-        case .neon:   return "💡"
+        case .bright: return "sun.max.fill"
+        case .dark:   return "moon.fill"
+        case .pastel: return "word_flower"
+        case .neon:   return "lightbulb.fill"
         }
     }
 

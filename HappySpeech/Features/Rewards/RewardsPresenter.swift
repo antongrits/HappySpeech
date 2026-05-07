@@ -195,10 +195,10 @@ final class RewardsPresenter: RewardsPresentationLogic {
         }
         let confetti: [String]
         switch sticker.rarity {
-        case .legendary: confetti = ["🌈", "✨", "⭐", "💫", "🌟", sticker.emoji, "🎉", "🏆"]
-        case .epic:      confetti = ["✨", "💫", "⭐", sticker.emoji, "🎉", "🔮"]
-        case .rare:      confetti = ["⭐", "🌟", sticker.emoji, "🎉", "💙"]
-        case .common:    confetti = ["🎉", "✨", "⭐", sticker.emoji]
+        case .legendary: confetti = ["reward_rainbow", "sparkles", "reward_gold_star", "sparkle", "sparkles", sticker.emoji, "party.popper.fill", "trophy.fill"]
+        case .epic:      confetti = ["sparkles", "sparkle", "reward_gold_star", sticker.emoji, "party.popper.fill", "sparkles"]
+        case .rare:      confetti = ["reward_gold_star", "sparkles", sticker.emoji, "party.popper.fill", "heart.fill"]
+        case .common:    confetti = ["party.popper.fill", "sparkles", "reward_gold_star", sticker.emoji]
         }
         let unlock = StickerUnlockViewModel(
             id: sticker.id,
@@ -480,9 +480,9 @@ final class RewardsPresenter: RewardsPresentationLogic {
 
     private func medalEmoji(for medal: RewardsAchievement.Medal) -> String {
         switch medal {
-        case .bronze:  return "🥉"
-        case .silver:  return "🥈"
-        case .gold:    return "🥇"
+        case .bronze:  return "medal.fill"
+        case .silver:  return "medal.fill"
+        case .gold:    return "medal.fill"
         }
     }
 }
