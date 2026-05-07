@@ -93,9 +93,9 @@ struct AuthForgotPasswordView: View {
             } label: {
                 Image(systemName: "chevron.left")
                     .font(TypographyTokens.headline(18))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Brand.primary)
                     .padding(SpacingTokens.sp2)
-                    .background(.white.opacity(0.15), in: Circle())
+                    .background(ColorTokens.Kid.surface, in: Circle())
             }
             .accessibilityLabel(String(localized: "Назад"))
 

@@ -330,7 +330,7 @@ public struct ParentalGate: View {
 // MARK: - Preview
 
 #Preview("ParentalGate — math (biometric fallback)") {
-    Color.gray.opacity(0.2).ignoresSafeArea()
+    ColorTokens.Parent.bgDeep.ignoresSafeArea()
         .sheet(isPresented: .constant(true)) {
             ParentalGate(
                 isPresented: .constant(true),
@@ -340,7 +340,7 @@ public struct ParentalGate: View {
 }
 
 #Preview("ParentalGate — biometric pending") {
-    Color.gray.opacity(0.2).ignoresSafeArea()
+    ColorTokens.Parent.bgDeep.ignoresSafeArea()
         .sheet(isPresented: .constant(true)) {
             ParentalGate(
                 isPresented: .constant(true),
