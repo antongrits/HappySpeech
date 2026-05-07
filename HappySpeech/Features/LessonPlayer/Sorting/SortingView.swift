@@ -108,6 +108,8 @@ struct SortingView: View {
 
     private var loadingView: some View {
         VStack(spacing: SpacingTokens.medium) {
+            LyalyaMascotView(state: .thinking, size: 120)
+                .accessibilityHidden(true)
             ProgressView()
                 .scaleEffect(1.4)
                 .tint(ColorTokens.Brand.primary)

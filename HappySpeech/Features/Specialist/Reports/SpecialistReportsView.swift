@@ -50,6 +50,10 @@ struct SpecialistReportsView: View {
             }
             .navigationTitle(String(localized: "Отчёты"))
             .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    LyalyaMascotView(state: .thinking, size: 32)
+                        .accessibilityHidden(true)
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         Task { await reload() }
