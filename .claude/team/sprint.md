@@ -547,3 +547,57 @@ All 18 blocks (0/A/B/C/D/E+O/F/G/H/I/J/K/L/M/N/P/Q/R) completed либо ADR-def
 - Storage bucket region migration eur3 (если нужно)
 - 12 dynamic-size fonts (proportional эмодзи) — пока оставлены skip-комментариями
 
+---
+
+## Sprint 16 (v16) — IN PROGRESS (2026-05-07)
+
+**Goal:** довести проект до бескомпромиссного production-quality уровня крупной компании.
+**Plan:** `/Users/antongric/.claude/plans/indexed-prancing-tide.md` (Plan v16, 22 блока).
+**Audit baseline:** `.claude/team/audit-v16-baseline.md`.
+
+### Прогресс v16 (last update 2026-05-07)
+
+| Block | Статус | Commit | Файлов |
+|-------|--------|--------|--------|
+| A — Agent overrides + audit baseline | ✅ DONE | 1301944f | 3 |
+| B — Real ML training (9 models, BG) | 🟡 IN PROGRESS | — | 9 mlpackage |
+| C — 464 RGB → RGBA illustrations | ⏳ PENDING | — | 464 |
+| D — Эмодзи → SF Symbol/illustrations | 🟡 IN PROGRESS | — | ~50 |
+| E — HealthKit cleanup | ✅ DONE | 6c9dc34d | 3 |
+| F — 10 logopedic USDZ + delete 13 | ⏳ PENDING | — | ~25 |
+| G — Mascot-Everywhere (≥50 screens) | ⏳ PENDING | — | ~50 |
+| H — Light/Dark systematic | ⏳ PENDING | — | 118 |
+| I — GuidedTour VIP | ✅ DONE | 3327e7d8 | 9 |
+| J — Stub Interactors (9 files) | ✅ DONE | 0f12f244, 99102baa, 7f9da0a9 | 9 |
+| K — View >600 LOC split | ⏳ PENDING | — | 13 |
+| L — Hardcoded colors → ColorTokens | ✅ DONE | 74f088e7 | 6 |
+| M — Manual screen audit 118 views | ⏳ PENDING | — | 118 |
+| N — Modern iOS 26 features | ⏳ PENDING | — | 7 |
+| O — Custom UI elements (kavsoft) | ⏳ PENDING | — | 10 |
+| P — Bundle growth (voice + SPM + DocC) | ⏳ PENDING | — | — |
+| Q — Coverage + perf + screenshots | ⏳ PENDING | — | — |
+| R — Audio audit | ⏳ PENDING | — | — |
+| S — Новые функции (≥3-5) | ⏳ PENDING | — | ≥15 |
+| T — Final cleanup | ⏳ PENDING | — | — |
+| U — Final review + docs + tag | ⏳ PENDING | — | — |
+| V — Final QA + push | ⏳ PENDING | — | — |
+
+**Completed:** 5/22 blocks (A, E, I, J, L)
+**In progress:** 2 BG agents (Block B ML training, Block D эмодзи refactor)
+
+### Agent model overrides (Block A v16)
+
+- `cto`, `code-reviewer` — Opus 4.7 1M xhigh ✅ (existing)
+- `ios-developer`, `ml-engineer` — Opus 4.7 1M xhigh ✅ (NEW v16)
+- `designer` — Opus 4.7 1M high ✅ (NEW v16)
+- Остальные 11 агентов — Sonnet @ high
+
+### Архитектурные изменения v16
+
+- GuidedTour теперь полноценный Clean Swift VIP (Interactor 451 LOC + Presenter + Router + DisplayLogic)
+- 8 AR Interactors задокументированы как `// VIP-thin: ARSession orchestration only` (legitimate thin)
+- OfflineMiniGameInteractor углублён 121 → 535 LOC (state machine + persistence + achievements + analytics)
+- ColorTokens расширен +185 LOC (Theme/Confetti/Celebration/LyalyaScene enum, 86 hex literals удалены)
+- 0 HealthKit refs (ни в коде, ни в комментариях)
+
+
