@@ -287,7 +287,11 @@ struct ChildHomeView: View {
     private var dailyMissionSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
             HStack(spacing: SpacingTokens.sp2) {
-                sectionHeader(String(localized: "child.home.mission.section"), emoji: "🎯")
+                sectionHeader(
+                    String(localized: "child.home.mission.section"),
+                    systemImage: "target",
+                    tint: ColorTokens.Brand.primary
+                )
                 Spacer(minLength: 0)
                 // B13: компактный таймер до конца дня (TimelineView, обновление 60с).
                 // Не показываем, если миссия уже завершена.
@@ -406,7 +410,11 @@ struct ChildHomeView: View {
 
     private var quickPlaySection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-            sectionHeader(String(localized: "child.home.quick.section"), emoji: "🎮")
+            sectionHeader(
+                String(localized: "child.home.quick.section"),
+                systemImage: "gamecontroller.fill",
+                tint: ColorTokens.Brand.primary
+            )
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: SpacingTokens.sp3) {
@@ -432,7 +440,11 @@ struct ChildHomeView: View {
 
     private var quickActionsSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-            sectionHeader(String(localized: "child.home.actions.section"), emoji: "✨")
+            sectionHeader(
+                String(localized: "child.home.actions.section"),
+                systemImage: "sparkles",
+                tint: ColorTokens.Brand.primary
+            )
 
             // Sibling Multiplayer card (full-width, above grid)
             Button {
@@ -534,7 +546,11 @@ struct ChildHomeView: View {
     private var worldMapPreviewSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
             HStack {
-                sectionHeader(String(localized: "child.home.world.section"), emoji: "🗺")
+                sectionHeader(
+                    String(localized: "child.home.world.section"),
+                    systemImage: "map.fill",
+                    tint: ColorTokens.Brand.primary
+                )
                 Spacer()
                 Button {
                     router?.routeToWorldMap(
@@ -565,7 +581,11 @@ struct ChildHomeView: View {
 
     private var progressSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-            sectionHeader(String(localized: "child.home.progress.section"), emoji: "📈")
+            sectionHeader(
+                String(localized: "child.home.progress.section"),
+                systemImage: "chart.line.uptrend.xyaxis",
+                tint: ColorTokens.Brand.primary
+            )
 
             if viewModel.soundProgress.isEmpty {
                 ChildHomeEmptyProgressView()
@@ -582,7 +602,11 @@ struct ChildHomeView: View {
     private var recentRewardsSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
             HStack {
-                sectionHeader(String(localized: "child.home.rewards.title"), emoji: "🏅")
+                sectionHeader(
+                    String(localized: "child.home.rewards.title"),
+                    systemImage: "medal.fill",
+                    tint: ColorTokens.Brand.primary
+                )
                 Spacer()
                 Button {
                     router?.routeToRewards(childId: childId)
@@ -649,7 +673,11 @@ struct ChildHomeView: View {
     private var recentSessionsSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
             HStack {
-                sectionHeader(String(localized: "child.home.recent.section"), emoji: "📚")
+                sectionHeader(
+                    String(localized: "child.home.recent.section"),
+                    systemImage: "books.vertical.fill",
+                    tint: ColorTokens.Brand.primary
+                )
                 Spacer()
                 Button {
                     router?.routeToSessionHistory(childId: childId)
@@ -711,7 +739,11 @@ struct ChildHomeView: View {
 
     private var todayWordsSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-            sectionHeader(String(localized: "child.home.today.words.section"), emoji: "📝")
+            sectionHeader(
+                String(localized: "child.home.today.words.section"),
+                systemImage: "square.and.pencil",
+                tint: ColorTokens.Brand.primary
+            )
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: SpacingTokens.sp3) {
@@ -730,7 +762,11 @@ struct ChildHomeView: View {
     private var homeTasksSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
             HStack {
-                sectionHeader(String(localized: "child.home.hometasks.section"), emoji: "📋")
+                sectionHeader(
+                    String(localized: "child.home.hometasks.section"),
+                    systemImage: "list.bullet.clipboard.fill",
+                    tint: ColorTokens.Brand.primary
+                )
                 Spacer()
                 Button {
                     router?.routeToHomeTasks()
@@ -756,10 +792,15 @@ struct ChildHomeView: View {
 
     // MARK: - Section header helper
 
-    private func sectionHeader(_ title: String, emoji: String) -> some View {
+    private func sectionHeader(
+        _ title: String,
+        systemImage: String,
+        tint: Color = ColorTokens.Brand.primary
+    ) -> some View {
         HStack(spacing: SpacingTokens.sp2) {
-            Text(emoji)
-                .font(TypographyTokens.caption(16))
+            Image(systemName: systemImage)
+                .font(TypographyTokens.caption(14).weight(.semibold))
+                .foregroundStyle(tint)
                 .accessibilityHidden(true)
             Text(title)
                 .font(TypographyTokens.caption(13))
