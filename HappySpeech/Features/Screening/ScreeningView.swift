@@ -81,6 +81,9 @@ struct ScreeningView: View {
             }
             .accessibilityLabel(String(localized: "screening.header.cancel"))
             Spacer()
+            LyalyaMascotView(state: .encouraging, size: 56)
+                .accessibilityHidden(true)
+            Spacer()
             if let progress = state.progressText {
                 Text(progress)
                     .font(TypographyTokens.caption(14))

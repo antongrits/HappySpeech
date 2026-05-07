@@ -295,9 +295,7 @@ struct AchievementsView: View {
 
     private var emptyState: some View {
         VStack(spacing: SpacingTokens.sp4) {
-            Image(systemName: "trophy")
-                .font(TypographyTokens.kidDisplay(48))
-                .foregroundStyle(ColorTokens.Kid.inkMuted.opacity(0.4))
+            LyalyaMascotView(state: .encouraging, size: 140)
                 .accessibilityHidden(true)
             Text(String(localized: "achievements.empty"))
                 .font(TypographyTokens.body(16))
