@@ -98,8 +98,9 @@ struct OnboardingRoleCard: View {
                 padding: SpacingTokens.medium
             ) {
                 HStack(spacing: SpacingTokens.medium) {
-                    Text(role.emoji)
-                        .font(TypographyTokens.display(40))
+                    Image(systemName: role.systemImageName)
+                        .font(.system(size: 36, weight: .regular))
+                        .foregroundStyle(ColorTokens.Brand.primary)
                         .frame(width: 56)
                         .accessibilityHidden(true)
                     VStack(alignment: .leading, spacing: SpacingTokens.micro) {
