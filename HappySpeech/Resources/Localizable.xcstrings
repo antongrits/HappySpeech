@@ -24714,6 +24714,39 @@
           }
         }
       }
+    },
+    "child.home.rewards.placeholder.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Награда"
+          }
+        }
+      }
+    },
+    "child.home.achievement.placeholder.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Первый урок"
+          }
+        }
+      }
+    },
+    "child.home.achievement.placeholder.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поздравляем с первым занятием!"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
