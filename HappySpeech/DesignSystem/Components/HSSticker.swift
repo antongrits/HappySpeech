@@ -124,7 +124,7 @@ public struct HSSticker: View {
         case .owl:        return ColorTokens.Brand.lilac.opacity(0.25)
         case .penguin:    return ColorTokens.Brand.sky.opacity(0.25)
         case .goldStar:   return ColorTokens.Brand.butter.opacity(0.4)
-        case .silverStar: return Color.gray.opacity(0.2)
+        case .silverStar: return ColorTokens.Brand.silver.opacity(0.4)
         case .crown:      return ColorTokens.Brand.butter.opacity(0.4)
         case .trophy:     return Color.orange.opacity(0.25)
         case .medal:      return ColorTokens.Brand.mint.opacity(0.3)

@@ -55,6 +55,12 @@ public enum ColorTokens {
         public static let rose       = Color("BrandRose")
         /// Achievement gold — rewards, home-task highlight
         public static let gold       = Color("BrandGold")
+        /// Silver-tier reward — used for silverStar sticker. Light: cool grey, Dark: warm grey.
+        public static let silver = Color(uiColor: UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor(red: 0.62, green: 0.66, blue: 0.72, alpha: 1.0)
+                : UIColor(red: 0.78, green: 0.82, blue: 0.86, alpha: 1.0)
+        })
     }
 
     // MARK: - Kid Circuit (warm cream world)

@@ -76,7 +76,7 @@ struct BackgroundCard: View {
 
                 Text(item.localizedName)
                     .font(TypographyTokens.caption(10))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Kid.ink)
                     .lineLimit(1)
                     .minimumScaleFactor(0.80)
                     .padding(.vertical, SpacingTokens.sp1)

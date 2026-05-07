@@ -195,7 +195,7 @@ struct FamilyVoiceSplitView: View {
         .padding(SpacingTokens.sp4)
         .background(
             RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(Color.white.opacity(0.92))
+                .fill(ColorTokens.Kid.surface)
                 .shadow(radius: 8)
         )
         .accessibilityAnnouncement(vm.feedback ?? "")
