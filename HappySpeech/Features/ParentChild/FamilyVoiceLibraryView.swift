@@ -135,9 +135,7 @@ struct FamilyVoiceLibraryView: View {
         VStack(spacing: SpacingTokens.sp5) {
             Spacer()
 
-            Image(systemName: "mic.slash.circle")
-                .font(TypographyTokens.kidDisplay(64))
-                .foregroundStyle(ColorTokens.Parent.inkSoft.opacity(0.5))
+            LyalyaMascotView(state: .explaining, size: 140)
                 .accessibilityHidden(true)
 
             Text(String(localized: "family.voice.library.empty"))

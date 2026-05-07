@@ -137,6 +137,11 @@ struct SessionHistoryDetailView: View {
     private var headerCard: some View {
         HSCard(style: .elevated) {
             HStack(alignment: .top, spacing: SpacingTokens.regular) {
+                LyalyaMascotView(
+                    state: detail.scorePercent >= 70 ? .celebrating : .encouraging,
+                    size: 60
+                )
+                .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
                     Text(detail.titleLine)
                         .font(TypographyTokens.headline(20))

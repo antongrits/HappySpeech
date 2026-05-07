@@ -162,9 +162,7 @@ struct FamilyVoiceView: View {
     private var headerCard: some View {
         HSCard(style: .elevated) {
             VStack(spacing: SpacingTokens.sp3) {
-                Image(systemName: "waveform.circle")
-                    .font(TypographyTokens.kidDisplay(56))
-                    .foregroundStyle(ColorTokens.Brand.primary)
+                LyalyaMascotView(state: .singing, size: 100)
                     .accessibilityHidden(true)
 
                 Text(String(localized: "parent_child.recorder.title"))

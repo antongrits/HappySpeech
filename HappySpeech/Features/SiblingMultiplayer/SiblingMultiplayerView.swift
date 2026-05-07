@@ -61,8 +61,12 @@ struct SiblingMultiplayerView: View {
                     }
                 )
             } else {
-                Text(String(localized: "sibling.error.connection"))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                VStack(spacing: SpacingTokens.medium) {
+                    LyalyaMascotView(state: .sad, size: 120)
+                        .accessibilityHidden(true)
+                    Text(String(localized: "sibling.error.connection"))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                }
             }
 
         case .game(let peerDisplayName):
@@ -75,8 +79,12 @@ struct SiblingMultiplayerView: View {
                     localDisplayName: localDisplayName
                 )
             } else {
-                Text(String(localized: "sibling.error.connection"))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                VStack(spacing: SpacingTokens.medium) {
+                    LyalyaMascotView(state: .sad, size: 120)
+                        .accessibilityHidden(true)
+                    Text(String(localized: "sibling.error.connection"))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                }
             }
         }
     }

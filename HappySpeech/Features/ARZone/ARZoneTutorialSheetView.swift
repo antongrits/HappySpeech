@@ -34,7 +34,11 @@ struct ARZoneTutorialSheetView: View {
 
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: SpacingTokens.large) {
-                    heroSymbol
+                    HStack(spacing: SpacingTokens.large) {
+                        heroSymbol
+                        LyalyaMascotView(state: .pointing, size: 100)
+                            .accessibilityHidden(true)
+                    }
                     titleBlock
                     stepsBlock
                     Spacer(minLength: SpacingTokens.xLarge)

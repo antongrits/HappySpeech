@@ -101,21 +101,26 @@ struct SharePlayView: View {
     // MARK: - Sections
 
     private var headerSection: some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-            Text(
-                String(
-                    format: String(localized: "shareplay.subtitle"),
-                    viewModel.childName
+        HStack(alignment: .top, spacing: SpacingTokens.sp3) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+                Text(
+                    String(
+                        format: String(localized: "shareplay.subtitle"),
+                        viewModel.childName
+                    )
                 )
-            )
-            .font(TypographyTokens.body(17))
-            .foregroundStyle(ColorTokens.Parent.inkMuted)
-            .padding(.top, SpacingTokens.sp2)
+                .font(TypographyTokens.body(17))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .padding(.top, SpacingTokens.sp2)
 
-            Text(String(localized: "shareplay.instruction"))
-                .font(TypographyTokens.caption(14))
-                .foregroundStyle(ColorTokens.Parent.inkSoft)
-                .multilineTextAlignment(.leading)
+                Text(String(localized: "shareplay.instruction"))
+                    .font(TypographyTokens.caption(14))
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .multilineTextAlignment(.leading)
+            }
+            Spacer(minLength: 0)
+            LyalyaMascotView(state: .happy, size: 72)
+                .accessibilityHidden(true)
         }
         .accessibilityElement(children: .combine)
     }
