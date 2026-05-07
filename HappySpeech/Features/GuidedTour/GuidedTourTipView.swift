@@ -96,7 +96,7 @@ struct GuidedTourTipView: View {
                     }
                 }
                 .font(TypographyTokens.cta())
-                .foregroundStyle(Color.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .padding(.horizontal, SpacingTokens.sp5)
                 .padding(.vertical, SpacingTokens.sp3)
                 .background(ColorTokens.Brand.primary, in: Capsule())

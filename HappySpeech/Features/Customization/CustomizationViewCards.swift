@@ -37,7 +37,7 @@ struct OutfitCard: View {
                         Image(systemName: "checkmark.circle.fill")
                             .font(TypographyTokens.headline(20))
                             .foregroundStyle(ColorTokens.Brand.primary)
-                            .background(Circle().fill(Color.white).padding(-2))
+                            .background(Circle().fill(ColorTokens.Kid.surface).padding(-2))
                             .padding(SpacingTokens.sp1)
                     }
                 }
@@ -98,7 +98,7 @@ struct OutfitCard: View {
                 outfitPlaceholderGradient
                 Image(systemName: "tshirt")
                     .font(TypographyTokens.title(28))
-                    .foregroundStyle(.white.opacity(0.85))
+                    .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
             }
         }
     }
@@ -157,7 +157,7 @@ struct SkinCard: View {
                     Image(systemName: "checkmark.circle.fill")
                         .font(TypographyTokens.headline(22))
                         .foregroundStyle(ColorTokens.Brand.primary)
-                        .background(Circle().fill(Color.white).padding(-2))
+                        .background(Circle().fill(ColorTokens.Kid.surface).padding(-2))
                         .padding(SpacingTokens.sp1)
                 }
             }
@@ -207,7 +207,7 @@ struct SkinCard: View {
                 placeholderGradient
                 Image(systemName: "figure.stand")
                     .font(.system(size: skinHeight * 0.5, weight: .light))
-                    .foregroundStyle(.white.opacity(0.85))
+                    .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
             }
         }
     }
