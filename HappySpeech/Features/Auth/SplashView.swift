@@ -78,17 +78,17 @@ struct SplashView: View {
     private var decorativeBackground: some View {
         ZStack {
             Circle()
-                .fill(.white.opacity(0.06))
+                .fill(ColorTokens.Overlay.glass)
                 .frame(width: 280, height: 280)
                 .offset(x: -80, y: -200)
 
             Circle()
-                .fill(.white.opacity(0.04))
+                .fill(ColorTokens.Overlay.glass)
                 .frame(width: 200, height: 200)
                 .offset(x: 120, y: 100)
 
             Circle()
-                .fill(.white.opacity(0.05))
+                .fill(ColorTokens.Overlay.glass)
                 .frame(width: 160, height: 160)
                 .offset(x: 100, y: -280)
         }

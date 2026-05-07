@@ -155,7 +155,7 @@ public struct SpectrogramVisualizerView: View {
     private var comparisonDivider: some View {
         HStack {
             Rectangle()
-                .fill(Color.white.opacity(0.15))
+                .fill(ColorTokens.Overlay.glass)
                 .frame(height: 1)
 
             Text(String(localized: "spectrogram.compare", defaultValue: "Сравни звуки"))
@@ -164,7 +164,7 @@ public struct SpectrogramVisualizerView: View {
                 .padding(.horizontal, 8)
 
             Rectangle()
-                .fill(Color.white.opacity(0.15))
+                .fill(ColorTokens.Overlay.glass)
                 .frame(height: 1)
         }
     }

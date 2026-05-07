@@ -68,7 +68,7 @@ struct PoseSequenceView: View {
                 .foregroundStyle(.white)
                 .padding(.horizontal, SpacingTokens.medium)
                 .padding(.vertical, SpacingTokens.small)
-                .background(.black.opacity(0.45), in: RoundedRectangle(cornerRadius: RadiusTokens.md))
+                .background(ColorTokens.Overlay.dimmerHeavy, in: RoundedRectangle(cornerRadius: RadiusTokens.md))
                 .accessibilityLabel(Text("ar.poseSequence.currentPose \(display.currentName)"))
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
@@ -126,7 +126,7 @@ struct PoseSequenceView: View {
                 .foregroundStyle(scoreColor(display.bodyScore))
                 .padding(.horizontal, SpacingTokens.medium)
                 .padding(.vertical, SpacingTokens.small)
-                .background(.black.opacity(0.55), in: RoundedRectangle(cornerRadius: RadiusTokens.lg))
+                .background(ColorTokens.Overlay.dimmerHeavy, in: RoundedRectangle(cornerRadius: RadiusTokens.lg))
                 .accessibilityLabel(Text("ar.poseSequence.score \(display.bodyScore)"))
 
             // Hint text
@@ -137,7 +137,7 @@ struct PoseSequenceView: View {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, SpacingTokens.large)
                     .padding(.vertical, SpacingTokens.tiny)
-                    .background(.black.opacity(0.35), in: RoundedRectangle(cornerRadius: RadiusTokens.sm))
+                    .background(ColorTokens.Overlay.dimmer, in: RoundedRectangle(cornerRadius: RadiusTokens.sm))
                     .lineLimit(2)
                     .minimumScaleFactor(0.85)
                     .accessibilityLabel(Text(display.currentHint))
@@ -157,7 +157,7 @@ struct PoseSequenceView: View {
     private var progressBar: some View {
         GeometryReader { proxy in
             ZStack(alignment: .leading) {
-                Capsule().fill(.white.opacity(0.25))
+                Capsule().fill(ColorTokens.Overlay.highlight)
                 Capsule().fill(ColorTokens.Brand.primary)
                     .frame(width: proxy.size.width * CGFloat(display.progress))
             }

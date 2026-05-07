@@ -33,10 +33,10 @@ struct HoldThePoseView: View {
                         .foregroundStyle(.white)
                         .padding(.horizontal, SpacingTokens.medium)
                         .padding(.vertical, SpacingTokens.small)
-                        .background(.black.opacity(0.45), in: Capsule())
+                        .background(ColorTokens.Overlay.dimmerHeavy, in: Capsule())
                     GeometryReader { proxy in
                         ZStack(alignment: .leading) {
-                            Capsule().fill(.white.opacity(0.25))
+                            Capsule().fill(ColorTokens.Overlay.highlight)
                             Capsule()
                                 .fill(ColorTokens.Brand.mint)
                                 .frame(width: proxy.size.width * CGFloat(display.progress))

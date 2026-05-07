@@ -58,7 +58,7 @@ struct ARGameHUD: View {
                     .font(.headline)
                     .foregroundStyle(.white)
                     .padding(SpacingTokens.small)
-                    .background(.black.opacity(0.45), in: Circle())
+                    .background(ColorTokens.Overlay.dimmerHeavy, in: Circle())
             }
             .frame(minWidth: 56, minHeight: 56)
             .contentShape(Rectangle())
@@ -69,7 +69,7 @@ struct ARGameHUD: View {
                 .foregroundStyle(.white)
                 .padding(.horizontal, SpacingTokens.small)
                 .padding(.vertical, SpacingTokens.tiny)
-                .background(.black.opacity(0.35), in: Capsule())
+                .background(ColorTokens.Overlay.dimmer, in: Capsule())
 
             Spacer()
 

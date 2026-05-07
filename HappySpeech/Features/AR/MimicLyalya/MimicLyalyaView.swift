@@ -43,7 +43,7 @@ struct MimicLyalyaView: View {
                         .foregroundStyle(.white)
                         .padding(.horizontal, SpacingTokens.small)
                         .padding(.vertical, SpacingTokens.tiny)
-                        .background(.black.opacity(0.45), in: Capsule())
+                        .background(ColorTokens.Overlay.dimmerHeavy, in: Capsule())
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
 
@@ -62,7 +62,7 @@ struct MimicLyalyaView: View {
                 VStack {
                     GeometryReader { proxy in
                         ZStack(alignment: .leading) {
-                            Capsule().fill(.white.opacity(0.25))
+                            Capsule().fill(ColorTokens.Overlay.highlight)
                             Capsule()
                                 .fill(ColorTokens.Brand.primary)
                                 .frame(width: proxy.size.width * CGFloat(display.progress))

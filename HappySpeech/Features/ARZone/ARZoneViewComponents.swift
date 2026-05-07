@@ -294,7 +294,7 @@ struct ARStartRecommendedButton: View {
             HStack(spacing: SpacingTokens.regular) {
                 ZStack {
                     Circle()
-                        .fill(Color.white.opacity(0.22))
+                        .fill(ColorTokens.Overlay.highlight)
                         .frame(width: 48, height: 48)
                     Image(systemName: "play.fill")
                         .font(TypographyTokens.headline(20).weight(.bold))

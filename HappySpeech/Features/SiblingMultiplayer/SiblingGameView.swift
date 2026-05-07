@@ -297,7 +297,7 @@ struct SiblingGameView: View {
 
     private var roundResultOverlay: some View {
         ZStack {
-            Color.black.opacity(0.35).ignoresSafeArea()
+            ColorTokens.Overlay.dimmer.ignoresSafeArea()
 
             if case .result(let winner) = display.roundPhase {
                 HSCard {

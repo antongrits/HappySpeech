@@ -191,15 +191,15 @@ struct DemoModeView: View {
 
             ZStack {
                 Circle()
-                    .fill(Color.white.opacity(0.07))
+                    .fill(ColorTokens.Overlay.glass)
                     .frame(width: 320)
                     .offset(x: -120, y: -260)
                 Circle()
-                    .fill(Color.white.opacity(0.05))
+                    .fill(ColorTokens.Overlay.glass)
                     .frame(width: 220)
                     .offset(x: 140, y: 80)
                 Circle()
-                    .fill(Color.white.opacity(0.04))
+                    .fill(ColorTokens.Overlay.glass)
                     .frame(width: 160)
                     .offset(x: -80, y: 240)
             }

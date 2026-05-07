@@ -355,7 +355,7 @@ struct NarrativeQuestView: View {
 
     private var successOverlay: some View {
         ZStack {
-            Color.black.opacity(0.15).ignoresSafeArea()
+            ColorTokens.Overlay.dimmer.ignoresSafeArea()
             HSLiquidGlassCard(
                 style: .tinted(ColorTokens.Brand.mint),
                 padding: SpacingTokens.large

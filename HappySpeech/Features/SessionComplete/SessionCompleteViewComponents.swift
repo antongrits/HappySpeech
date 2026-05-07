@@ -78,7 +78,7 @@ struct AchievementPopupView: View {
         .background(ColorTokens.Kid.surface, in: RoundedRectangle(cornerRadius: RadiusTokens.xl))
         .shadow(color: .black.opacity(0.18), radius: 24, x: 0, y: 8)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.black.opacity(0.45).ignoresSafeArea())
+        .background(ColorTokens.Overlay.dimmerHeavy.ignoresSafeArea())
         .onTapGesture { onDismiss() }
         .accessibilityElement(children: .contain)
         .accessibilityLabel(

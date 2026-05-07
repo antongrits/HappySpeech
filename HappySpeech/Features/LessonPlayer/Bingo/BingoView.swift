@@ -209,7 +209,7 @@ struct BingoView: View {
 
     private var bingoOverlay: some View {
         ZStack {
-            Color.black.opacity(0.55).ignoresSafeArea()
+            ColorTokens.Overlay.dimmerHeavy.ignoresSafeArea()
             HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.large) {
                 VStack(spacing: SpacingTokens.medium) {
                     LyalyaMascotView(state: .celebrating, size: 80)
