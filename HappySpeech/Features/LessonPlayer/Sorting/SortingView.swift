@@ -205,9 +205,7 @@ struct SortingView: View {
     private var wordCard: some View {
         if let word = currentWord {
             VStack(spacing: SpacingTokens.medium) {
-                Text(word.emoji)
-                    .font(TypographyTokens.kidDisplay(120))
-                    .accessibilityHidden(true)
+                HSContentSymbol(word.emoji, size: 120)
                 Text(word.word)
                     .font(TypographyTokens.kidDisplay(40))
                     .foregroundStyle(ColorTokens.Kid.ink)
@@ -261,9 +259,7 @@ struct SortingView: View {
             handleClassify(categoryId: category.id)
         } label: {
             VStack(spacing: SpacingTokens.small) {
-                Text(category.emoji)
-                    .font(TypographyTokens.kidDisplay(44))
-                    .accessibilityHidden(true)
+                HSContentSymbol(category.emoji, size: 44)
                 Text(category.title)
                     .font(TypographyTokens.headline(16))
                     .foregroundStyle(ColorTokens.Kid.ink)

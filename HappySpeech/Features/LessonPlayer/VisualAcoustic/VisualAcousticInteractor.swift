@@ -275,7 +275,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
             "whistling": [
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🐍",
+                    imageEmoji: "word_fish",
                     imageLabel: String(localized: "Змея"),
                     question: String(localized: "Как звучит змея?"),
                     questionWithSound: String(localized: "Найди слово со звуком «С»"),
@@ -286,7 +286,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 ),
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🦟",
+                    imageEmoji: "word_butterfly_insect",
                     imageLabel: String(localized: "Комар"),
                     question: String(localized: "Как звучит комар?"),
                     questionWithSound: String(localized: "Найди слово со звуком «З»"),
@@ -297,7 +297,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 ),
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🐤",
+                    imageEmoji: "word_hen",
                     imageLabel: String(localized: "Цыплёнок"),
                     question: String(localized: "Кто вылупился из яйца?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Ц»"),
@@ -308,7 +308,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 ),
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🌲",
+                    imageEmoji: "word_forest",
                     imageLabel: String(localized: "Сосна"),
                     question: String(localized: "Какое это дерево?"),
                     questionWithSound: String(localized: "Найди слово со звуком «С»"),
@@ -319,7 +319,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 ),
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🦓",
+                    imageEmoji: "word_hare",
                     imageLabel: String(localized: "Зебра"),
                     question: String(localized: "Кто это в полоску?"),
                     questionWithSound: String(localized: "Найди слово со звуком «З»"),
@@ -330,7 +330,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 ),
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🌻",
+                    imageEmoji: "word_flower",
                     imageLabel: String(localized: "Цветок"),
                     question: String(localized: "Что растёт в поле?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Ц»"),
@@ -345,7 +345,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
             "hissing": [
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🐝",
+                    imageEmoji: "word_butterfly_insect",
                     imageLabel: String(localized: "Пчела"),
                     question: String(localized: "Как звучит пчела?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Ж»"),
@@ -356,7 +356,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 ),
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🐭",
+                    imageEmoji: "word_cat",
                     imageLabel: String(localized: "Мышка"),
                     question: String(localized: "Кто пищит в норке?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Ш»"),
@@ -367,7 +367,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 ),
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "⏰",
+                    imageEmoji: "word_lamp",
                     imageLabel: String(localized: "Часы"),
                     question: String(localized: "Что показывает время?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Ч»"),
@@ -389,7 +389,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 ),
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🦒",
+                    imageEmoji: "word_elephant",
                     imageLabel: String(localized: "Жираф"),
                     question: String(localized: "Кто самый высокий?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Ж»"),
@@ -400,7 +400,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 ),
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🧥",
+                    imageEmoji: "word_bag",
                     imageLabel: String(localized: "Шуба"),
                     question: String(localized: "Что надевают зимой?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Ш»"),
@@ -415,7 +415,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
             "sonants": [
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🐯",
+                    imageEmoji: "reward_brave_heart",
                     imageLabel: String(localized: "Тигр"),
                     question: String(localized: "Как звучит тигр?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Р»"),
@@ -426,7 +426,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 ),
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🚀",
+                    imageEmoji: "reward_rocket",
                     imageLabel: String(localized: "Ракета"),
                     question: String(localized: "На чём летят в космос?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Р»"),
@@ -437,7 +437,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 ),
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🍋",
+                    imageEmoji: "word_apple",
                     imageLabel: String(localized: "Лимон"),
                     question: String(localized: "Какой жёлтый и кислый?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Л»"),
@@ -448,7 +448,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 ),
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🐟",
+                    imageEmoji: "word_fish",
                     imageLabel: String(localized: "Рыба"),
                     question: String(localized: "Кто плавает в воде?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Р»"),
@@ -459,7 +459,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 ),
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🌕",
+                    imageEmoji: "word_moon",
                     imageLabel: String(localized: "Луна"),
                     question: String(localized: "Что светит ночью на небе?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Л»"),
@@ -470,7 +470,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 ),
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🌈",
+                    imageEmoji: "reward_rainbow",
                     imageLabel: String(localized: "Радуга"),
                     question: String(localized: "Что появляется после дождя?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Р»"),
@@ -485,7 +485,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
             "velar": [
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🐸",
+                    imageEmoji: "word_frog",
                     imageLabel: String(localized: "Лягушка"),
                     question: String(localized: "Как звучит лягушка?"),
                     questionWithSound: String(localized: "Найди слово со звуком «К»"),
@@ -496,7 +496,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 ),
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🦆",
+                    imageEmoji: "word_bird",
                     imageLabel: String(localized: "Гусь"),
                     question: String(localized: "Кто кричит «га-га»?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Г»"),
@@ -507,7 +507,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 ),
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🍞",
+                    imageEmoji: "word_cake",
                     imageLabel: String(localized: "Хлеб"),
                     question: String(localized: "Что пекут в печке?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Х»"),
@@ -518,7 +518,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 ),
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🐱",
+                    imageEmoji: "word_cat",
                     imageLabel: String(localized: "Кот"),
                     question: String(localized: "Кто мяукает?"),
                     questionWithSound: String(localized: "Найди слово со звуком «К»"),
@@ -529,7 +529,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 ),
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🍇",
+                    imageEmoji: "word_apple",
                     imageLabel: String(localized: "Виноград"),
                     question: String(localized: "Какая ягода гроздью?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Г»"),
@@ -540,7 +540,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 ),
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🐹",
+                    imageEmoji: "word_hare",
                     imageLabel: String(localized: "Хомяк"),
                     question: String(localized: "Кто грызёт зёрна в клетке?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Х»"),

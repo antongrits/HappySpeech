@@ -245,9 +245,7 @@ struct MinimalPairsView: View {
         } label: {
             HSLiquidGlassCard(style: glassStyle, padding: SpacingTokens.small) {
                 VStack(spacing: SpacingTokens.small) {
-                    Text(emoji)
-                        .font(TypographyTokens.kidDisplay(72))
-                        .accessibilityHidden(true)
+                    HSContentSymbol(emoji, size: 72)
                     Text(word)
                         .font(TypographyTokens.title(22))
                         .foregroundStyle(ColorTokens.Kid.ink)

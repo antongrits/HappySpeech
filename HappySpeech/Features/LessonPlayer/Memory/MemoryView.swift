@@ -292,9 +292,7 @@ struct MemoryView: View {
     @ViewBuilder
     private func cardFaceContent(card: MemoryCard) -> some View {
         VStack(spacing: 4) {
-            Text(card.emoji)
-                .font(TypographyTokens.title(emojiSize))
-                .accessibilityHidden(true)
+            HSContentSymbol(card.emoji, size: emojiSize)
             Text(card.word)
                 .font(TypographyTokens.caption(wordFontSize))
                 .foregroundStyle(ColorTokens.Kid.ink)

@@ -404,7 +404,7 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
                     targetWord: String(localized: "сова"),
                     targetSoundGroup: "whistling",
                     successNarration: String(localized: "Прилетела мудрая сова и прогнала змею!"),
-                    rewardEmoji: "🦉",
+                    rewardEmoji: "word_bird",
                     hint: String(localized: "Звук «С» — как свисток чайника.")
                 ),
                 NarrativeQuestStage(
@@ -414,7 +414,7 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
                     targetWord: String(localized: "звезда"),
                     targetSoundGroup: "whistling",
                     successNarration: String(localized: "Цветок расцвёл разноцветными огоньками!"),
-                    rewardEmoji: "⭐",
+                    rewardEmoji: "reward_gold_star",
                     hint: String(localized: "Звук «З» — это звонкий свисток.")
                 ),
                 NarrativeQuestStage(
@@ -424,7 +424,7 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
                     targetWord: String(localized: "цыплёнок"),
                     targetSoundGroup: "whistling",
                     successNarration: String(localized: "Цыплята нашлись под листочком — цапля благодарит Лялю!"),
-                    rewardEmoji: "🐣",
+                    rewardEmoji: "word_hen",
                     hint: String(localized: "«Ц» — это как «ТС», быстро.")
                 ),
                 NarrativeQuestStage(
@@ -434,11 +434,11 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
                     targetWord: String(localized: "сундук"),
                     targetSoundGroup: "whistling",
                     successNarration: String(localized: "Сундук открылся! Внутри — золотые монетки."),
-                    rewardEmoji: "💰",
+                    rewardEmoji: "reward_gold_star",
                     hint: String(localized: "Начни со свистящего «С».")
                 )
             ],
-            finalRewardEmoji: "🏆",
+            finalRewardEmoji: "trophy.fill",
             finalMessage: String(localized: "Ляля вернулась из джунглей настоящим героем! Ты ей очень помог.")
         ),
 
@@ -474,7 +474,7 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
                     targetWord: String(localized: "чайник"),
                     targetSoundGroup: "hissing",
                     successNarration: String(localized: "Чайник засвистел — значит, какао готово!"),
-                    rewardEmoji: "☕",
+                    rewardEmoji: "word_cup",
                     hint: String(localized: "«Ч» — это как тихое чиханье.")
                 ),
                 NarrativeQuestStage(
@@ -484,11 +484,11 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
                     targetWord: String(localized: "щенок"),
                     targetSoundGroup: "hissing",
                     successNarration: String(localized: "Щенок радостно плюхнулся рядом и подарил ракушку!"),
-                    rewardEmoji: "🐶",
+                    rewardEmoji: "word_dog",
                     hint: String(localized: "«Щ» — длинный мягкий «Ш».")
                 )
             ],
-            finalRewardEmoji: "🏆",
+            finalRewardEmoji: "trophy.fill",
             finalMessage: String(localized: "Море подарило Ляле целую коллекцию сокровищ! Спасибо тебе.")
         ),
 
@@ -504,7 +504,7 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
                     targetWord: String(localized: "ракета"),
                     targetSoundGroup: "sonants",
                     successNarration: String(localized: "Ракета взлетает с громким «ррр»! Ляля в космосе!"),
-                    rewardEmoji: "🚀",
+                    rewardEmoji: "reward_rocket",
                     hint: String(localized: "Звук «Р» — рычит как моторчик.")
                 ),
                 NarrativeQuestStage(
@@ -514,7 +514,7 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
                     targetWord: String(localized: "рыба"),
                     targetSoundGroup: "sonants",
                     successNarration: String(localized: "Космическая рыба поплыла впереди, освещая путь!"),
-                    rewardEmoji: "🐟",
+                    rewardEmoji: "word_fish",
                     hint: String(localized: "Рычи мягко: «рр-рыба».")
                 ),
                 NarrativeQuestStage(
@@ -524,7 +524,7 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
                     targetWord: String(localized: "лев"),
                     targetSoundGroup: "sonants",
                     successNarration: String(localized: "Лев рассказал Ляле сказку про звёзды!"),
-                    rewardEmoji: "🦁",
+                    rewardEmoji: "reward_champion",
                     hint: String(localized: "«Л» — язык к зубкам.")
                 ),
                 NarrativeQuestStage(
@@ -534,11 +534,11 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
                     targetWord: String(localized: "луна"),
                     targetSoundGroup: "sonants",
                     successNarration: String(localized: "Лампа засветилась лунным светом — путь домой открыт!"),
-                    rewardEmoji: "🌙",
+                    rewardEmoji: "word_moon",
                     hint: String(localized: "«Л» — тёплый и мягкий звук.")
                 )
             ],
-            finalRewardEmoji: "🏆",
+            finalRewardEmoji: "trophy.fill",
             finalMessage: String(localized: "Ляля вернулась из космоса с целой горстью звёздочек!")
         ),
 
@@ -554,7 +554,7 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
                     targetWord: String(localized: "кот"),
                     targetSoundGroup: "velar",
                     successNarration: String(localized: "Кот вежливо мяукнул и повёл Лялю вверх по тропе!"),
-                    rewardEmoji: "🐱",
+                    rewardEmoji: "word_cat",
                     hint: String(localized: "Звук «К» — как короткий щелчок.")
                 ),
                 NarrativeQuestStage(
@@ -574,7 +574,7 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
                     targetWord: String(localized: "хлеб"),
                     targetSoundGroup: "velar",
                     successNarration: String(localized: "Пекарь угостил Лялю тёплым хлебом и чаем!"),
-                    rewardEmoji: "🥖",
+                    rewardEmoji: "word_cake",
                     hint: String(localized: "«Х» — как тёплый выдох на ладошки.")
                 ),
                 NarrativeQuestStage(
@@ -584,11 +584,11 @@ final class NarrativeQuestInteractor: NarrativeQuestBusinessLogic {
                     targetWord: String(localized: "ключ"),
                     targetSoundGroup: "velar",
                     successNarration: String(localized: "Ключ провернулся — Ляля получила карту сокровищ!"),
-                    rewardEmoji: "🗝️",
+                    rewardEmoji: "word_door",
                     hint: String(localized: "Начни со звука «К».")
                 )
             ],
-            finalRewardEmoji: "🏆",
+            finalRewardEmoji: "trophy.fill",
             finalMessage: String(localized: "Ляля спустилась с горы с картой сокровищ! Вы сделали это вместе.")
         )
     ]

@@ -292,7 +292,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 choices: ["сосну", "берёзу", "рябину"],
                 correctIndex: 0,
                 soundGroup: "whistling",
-                emoji: "🌲"
+                emoji: "word_forest"
             ),
             StoryScene(
                 id: UUID(),
@@ -308,7 +308,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 choices: ["облако", "солнце", "пёрышко"],
                 correctIndex: 1,
                 soundGroup: "whistling",
-                emoji: "☀️"
+                emoji: "word_sun"
             ),
             StoryScene(
                 id: UUID(),
@@ -316,7 +316,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 choices: ["корова", "лошадка", "коза"],
                 correctIndex: 2,
                 soundGroup: "whistling",
-                emoji: "🐐"
+                emoji: "word_cow"
             ),
             StoryScene(
                 id: UUID(),
@@ -324,7 +324,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 choices: ["ёжик", "крот", "заяц"],
                 correctIndex: 2,
                 soundGroup: "whistling",
-                emoji: "🐇"
+                emoji: "word_hare"
             )
         ],
 
@@ -336,7 +336,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 choices: ["кошка", "мышка", "утка"],
                 correctIndex: 0,
                 soundGroup: "hissing",
-                emoji: "🐱"
+                emoji: "word_cat"
             ),
             StoryScene(
                 id: UUID(),
@@ -344,7 +344,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 choices: ["ваза", "чашка", "миска"],
                 correctIndex: 1,
                 soundGroup: "hissing",
-                emoji: "🍵"
+                emoji: "word_cup"
             ),
             StoryScene(
                 id: UUID(),
@@ -352,7 +352,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 choices: ["уточка", "рыбка", "щука"],
                 correctIndex: 2,
                 soundGroup: "hissing",
-                emoji: "🐟"
+                emoji: "word_fish"
             ),
             StoryScene(
                 id: UUID(),
@@ -360,7 +360,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 choices: ["ёж", "волк", "лис"],
                 correctIndex: 0,
                 soundGroup: "hissing",
-                emoji: "🦔"
+                emoji: "word_hare"
             ),
             StoryScene(
                 id: UUID(),
@@ -368,7 +368,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 choices: ["куртку", "пальто", "шапку"],
                 correctIndex: 2,
                 soundGroup: "hissing",
-                emoji: "🧢"
+                emoji: "word_bag"
             )
         ],
 
@@ -380,7 +380,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 choices: ["рыбка", "уточка", "бабочка"],
                 correctIndex: 0,
                 soundGroup: "sonants",
-                emoji: "🐠"
+                emoji: "word_fish"
             ),
             StoryScene(
                 id: UUID(),
@@ -388,7 +388,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 choices: ["свеча", "лампа", "печка"],
                 correctIndex: 1,
                 soundGroup: "sonants",
-                emoji: "💡"
+                emoji: "word_lamp"
             ),
             StoryScene(
                 id: UUID(),
@@ -396,7 +396,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 choices: ["машина", "тележка", "лодка"],
                 correctIndex: 2,
                 soundGroup: "sonants",
-                emoji: "🛶"
+                emoji: "word_boat"
             ),
             StoryScene(
                 id: UUID(),
@@ -404,7 +404,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 choices: ["орёл", "воробей", "голубь"],
                 correctIndex: 0,
                 soundGroup: "sonants",
-                emoji: "🦅"
+                emoji: "word_bird"
             ),
             StoryScene(
                 id: UUID(),
@@ -412,7 +412,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 choices: ["огурец", "кабачок", "помидор"],
                 correctIndex: 2,
                 soundGroup: "sonants",
-                emoji: "🍅"
+                emoji: "word_apple"
             )
         ],
 
@@ -424,7 +424,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 choices: ["пёс", "котик", "хомяк"],
                 correctIndex: 1,
                 soundGroup: "velar",
-                emoji: "🐈"
+                emoji: "word_cat"
             ),
             StoryScene(
                 id: UUID(),
@@ -440,7 +440,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 choices: ["хлеб", "пирог", "сыр"],
                 correctIndex: 0,
                 soundGroup: "velar",
-                emoji: "🍞"
+                emoji: "word_cake"
             ),
             StoryScene(
                 id: UUID(),
@@ -448,7 +448,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 choices: ["крыши", "лесенки", "горки"],
                 correctIndex: 2,
                 soundGroup: "velar",
-                emoji: "🛷"
+                emoji: "snowflake"
             ),
             StoryScene(
                 id: UUID(),
@@ -456,7 +456,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 choices: ["булка", "каша", "рыба"],
                 correctIndex: 0,
                 soundGroup: "velar",
-                emoji: "🥖"
+                emoji: "word_cake"
             )
         ]
     ]
