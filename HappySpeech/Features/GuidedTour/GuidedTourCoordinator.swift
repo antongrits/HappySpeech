@@ -4,74 +4,68 @@ import OSLog
 
 // MARK: - GuidedTourCoordinator
 //
-// D.3 v15 — Coordinator-only flow (нет VIP Interactor/Presenter/Router).
+// Block I v16 — Coordinator переписан как DisplayLogic над VIP-стэком.
 //
-// Архитектурное обоснование:
-//   GuidedTour — это чисто навигационный оверлей поверх ChildHome/WorldMap.
-//   Нет бизнес-логики, нет сетевых вызовов, нет ML-инференса.
-//   Единственная «бизнес-операция» — persist completion flag в UserDefaults.
-//   Поэтому VIP здесь избыточен: Coordinator напрямую владеет состоянием
-//   и рендерит его через @Observable в SwiftUI.
+// Архитектура (Clean Swift VIP):
+//   View / Container     → Coordinator (Display)  — рендерит ViewModel
+//   Coordinator (Intent) → Interactor             — отправляет Request
+//   Interactor           → Presenter              — формирует Response
+//   Presenter            → Coordinator (Display)  — выдаёт ViewModel
 //
-// Coordinator ответственности:
-//   1. Управление шагами (TourStep array) — currentIndex, hasCompleted.
-//   2. Auto-advance таймер через Task + Task.sleep (отменяется на skip/next).
-//   3. Воспроизведение голоса Ляли через SoundServiceProtocol на каждый шаг.
-//   4. Персистенция: UserDefaults ключ "happyspeech.guidedTour.completed.v1".
-//   5. force-reset для QA (resetForTesting()).
+// Coordinator одновременно:
+//   1. Принимает intents от UI (start/next/skip).
+//   2. Реализует GuidedTourDisplayLogic — обновляет @Observable state.
 //
-// Интеграция в навигацию:
-//   - AppCoordinator инициализирует GuidedTourCoordinator и передаёт в окружение.
-//   - ChildHomeView наблюдает coordinator.isActive и показывает overlay.
-//   - NavigationStack НЕ используется — это sheet/overlay поверх текущего экрана.
+// Этот двойной hat — устоявшийся pattern в проекте (см. также Onboarding).
+// Альтернатива (отдельный Display-объект) даёт лишний indirection без
+// практической пользы для overlay-flow.
 //
-// COPPA: нет сетевых вызовов, нет PII. SoundService воспроизводит только локальные аудио.
+// Persistence, gating, analytics, side-effects → перенесены в Interactor.
+// Coordinator теперь stateless по отношению к persistence — просто кеширует
+// текущее ViewModel для SwiftUI binding.
 
-/// Orchestrates progression through `TourSteps`: tracks current step, handles
-/// auto-advance timers, plays Lyalya voice-over on entry, persists completion
-/// so the tour is shown once per install (unless user re-triggers via Settings).
+/// Orchestrates the guided-tour overlay state by relaying user intents to
+/// `GuidedTourInteractor` and projecting `ViewModel` updates into a
+/// SwiftUI-observable state.
 ///
-/// `@Observable` + `@MainActor` — mirrors the app-wide convention; safe to drive
-/// SwiftUI views directly.
+/// `@Observable` + `@MainActor` — соответствует convention проекта.
 @MainActor
 @Observable
-final class GuidedTourCoordinator {
+final class GuidedTourCoordinator: GuidedTourDisplayLogic {
 
-    // MARK: - State
+    // MARK: - State (UI-уровень, derived from ViewModel)
 
-    /// All steps (currently 11 — see `TourSteps.all`).
+    /// Полный список шагов (как в текущем flavor). Кешируется при load.
     private(set) var steps: [TourStep]
 
-    /// Index of the currently displayed step; `nil` when the tour is idle.
+    /// Индекс текущего шага. `nil` пока тур не активен.
     private(set) var currentIndex: Int?
 
-    /// `true` while the tour overlay is on screen.
+    /// Виден ли overlay прямо сейчас.
     private(set) var isActive: Bool = false
 
-    /// `true` once the user finished or dismissed the tour in this install.
+    /// Был ли тур уже пройден (для UI Settings: показывать кнопку "Снова").
     private(set) var hasCompleted: Bool
 
-    // MARK: - Dependencies
+    // MARK: - VIP collaborators
 
-    private let soundService: any SoundServiceProtocol
-    private let defaults: UserDefaults
+    private let interactor: any GuidedTourBusinessLogic
+    private let router: any GuidedTourRoutingLogic
+
     private let logger = Logger(subsystem: "ru.happyspeech", category: "GuidedTour")
-
-    private var autoAdvanceTask: Task<Void, Never>?
-
-    private static let completionKey = "happyspeech.guidedTour.completed.v1"
 
     // MARK: - Init
 
     init(
-        soundService: any SoundServiceProtocol,
+        interactor: any GuidedTourBusinessLogic,
+        router: any GuidedTourRoutingLogic,
         steps: [TourStep] = TourSteps.all,
-        defaults: UserDefaults = .standard
+        hasCompleted: Bool = false
     ) {
-        self.soundService = soundService
+        self.interactor = interactor
+        self.router = router
         self.steps = steps
-        self.defaults = defaults
-        self.hasCompleted = defaults.bool(forKey: Self.completionKey)
+        self.hasCompleted = hasCompleted
     }
 
     // MARK: - Derived
@@ -91,78 +85,113 @@ final class GuidedTourCoordinator {
         return index == steps.count - 1
     }
 
-    // MARK: - Intents
+    // MARK: - Intents (UI → Interactor)
 
-    /// Starts the tour from the first step. No-op if already active.
-    func start(force: Bool = false) {
-        guard !isActive else { return }
-        if hasCompleted && !force {
-            logger.debug("tour already completed, skipping auto-start")
-            return
-        }
-        logger.info("tour start, steps=\(self.steps.count, privacy: .public)")
-        isActive = true
-        enter(stepIndex: 0)
+    /// Старт тура. `force=true` запускает повторно даже после `complete()`.
+    /// `childId` нужен для session-count gating; `nil` — пропустить gating.
+    func start(force: Bool = false, childId: String? = nil) {
+        logger.info("intent: start force=\(force, privacy: .public)")
+        interactor.loadTour(.init(force: force, childId: childId))
     }
 
     func next() {
-        cancelAutoAdvance()
-        guard let index = currentIndex else { return }
-        if index + 1 >= steps.count {
-            complete()
-        } else {
-            enter(stepIndex: index + 1)
-        }
+        logger.debug("intent: next from index=\(self.currentIndex ?? -1, privacy: .public)")
+        interactor.nextStep(.init())
+    }
+
+    func previous() {
+        logger.debug("intent: previous from index=\(self.currentIndex ?? -1, privacy: .public)")
+        interactor.previousStep(.init())
     }
 
     func skip() {
-        logger.info("tour skipped at index=\(self.currentIndex ?? -1, privacy: .public)")
-        complete()
+        logger.info("intent: skip at=\(self.currentIndex ?? -1, privacy: .public)")
+        interactor.skipTour(.init())
     }
 
+    /// Сбросить флаг прохождения (QA / Settings re-trigger).
     func resetForTesting() {
-        defaults.removeObject(forKey: Self.completionKey)
-        hasCompleted = false
-        isActive = false
+        logger.info("intent: reset")
+        interactor.resetTour(.init())
+    }
+
+    // MARK: - DisplayLogic
+
+    func displayLoadTour(_ viewModel: GuidedTourModels.LoadTour.ViewModel) {
+        applyViewModel(
+            isVisible: viewModel.isVisible,
+            currentStep: viewModel.currentStep,
+            stepNumber: viewModel.stepNumber
+        )
+    }
+
+    func displayNextStep(_ viewModel: GuidedTourModels.NextStep.ViewModel) {
+        applyViewModel(
+            isVisible: viewModel.isVisible,
+            currentStep: viewModel.currentStep,
+            stepNumber: viewModel.stepNumber
+        )
+        if !viewModel.isVisible {
+            hasCompleted = true
+            router.routeAfterTourCompletion()
+        }
+    }
+
+    func displayPreviousStep(_ viewModel: GuidedTourModels.PreviousStep.ViewModel) {
+        applyViewModel(
+            isVisible: viewModel.isVisible,
+            currentStep: viewModel.currentStep,
+            stepNumber: viewModel.stepNumber
+        )
+    }
+
+    func displaySkipTour(_ viewModel: GuidedTourModels.SkipTour.ViewModel) {
+        isActive = viewModel.isVisible
         currentIndex = nil
-        cancelAutoAdvance()
+        hasCompleted = true
+        router.routeAfterTourCompletion()
+    }
+
+    func displayCompleteTour(_ viewModel: GuidedTourModels.CompleteTour.ViewModel) {
+        isActive = viewModel.isVisible
+        currentIndex = nil
+        hasCompleted = true
+        router.routeAfterTourCompletion()
+    }
+
+    func displayResetTour(_ viewModel: GuidedTourModels.ResetTour.ViewModel) {
+        isActive = viewModel.isVisible
+        currentIndex = nil
+        hasCompleted = false
+    }
+
+    func displayAutoAdvance(_ viewModel: GuidedTourModels.AutoAdvance.ViewModel) {
+        applyViewModel(
+            isVisible: viewModel.isVisible,
+            currentStep: viewModel.currentStep,
+            stepNumber: viewModel.stepNumber
+        )
+        if !viewModel.isVisible {
+            hasCompleted = true
+            router.routeAfterTourCompletion()
+        }
     }
 
     // MARK: - Private
 
-    private func enter(stepIndex: Int) {
-        currentIndex = stepIndex
-        let step = steps[stepIndex]
-
-        if let phraseId = step.lyalyaPhrase, let phrase = LyalyaPhrase(rawValue: phraseId) {
-            soundService.playLyalya(phrase)
+    private func applyViewModel(
+        isVisible: Bool,
+        currentStep: TourStep?,
+        stepNumber: Int
+    ) {
+        isActive = isVisible
+        if let currentStep, let index = steps.firstIndex(of: currentStep) {
+            currentIndex = index
+        } else if isVisible, stepNumber > 0 {
+            // Fallback: stepNumber 1-based.
+            currentIndex = max(0, min(stepNumber - 1, steps.count - 1))
+        } else {
+            currentIndex = nil
         }
-
-        if let delay = step.autoAdvanceAfter {
-            scheduleAutoAdvance(after: delay)
-        }
-    }
-
-    private func scheduleAutoAdvance(after delay: TimeInterval) {
-        cancelAutoAdvance()
-        autoAdvanceTask = Task { [weak self] in
-            try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
-            guard !Task.isCancelled else { return }
-            await MainActor.run { self?.next() }
-        }
-    }
-
-    private func cancelAutoAdvance() {
-        autoAdvanceTask?.cancel()
-        autoAdvanceTask = nil
-    }
-
-    private func complete() {
-        cancelAutoAdvance()
-        currentIndex = nil
-        isActive = false
-        hasCompleted = true
-        defaults.set(true, forKey: Self.completionKey)
-        logger.info("tour completed")
     }
 }

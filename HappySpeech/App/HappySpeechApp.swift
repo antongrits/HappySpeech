@@ -132,6 +132,10 @@ struct HappySpeechApp: App {
             try await container.realmActor.open()
             // Wire LessonVoiceWorker с семейными записями (Priority 1 в цепочке озвучки).
             LessonVoiceWorker.shared.realmActor = container.realmActor
+
+            // Block I v16: GuidedTour VIP — Router получает weak ref на AppCoordinator
+            // после того как корневая навигация полностью инициализирована.
+            container.attachGuidedTourCoordinator(coordinator)
             // Cold start завершён: Realm открыт, первый экран рендерится.
             // Логируем uptime для расчёта интервала вручную из log stream:
             // cold_start_ms = (end_uptime - begin_uptime) * 1000
