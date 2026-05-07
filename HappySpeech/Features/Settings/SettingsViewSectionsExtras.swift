@@ -216,6 +216,31 @@ extension SettingsView {
         }
     }
 
+    // MARK: Karaoke Mode (S.3 v16)
+
+    var karaokeSection: some View {
+        Section {
+            NavigationLink(destination: SpeechVisualizationView(word: "сова", targetSound: "С")) {
+                Label {
+                    Text(String(localized: "settings.karaoke.label"))
+                        .font(TypographyTokens.body(15))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                } icon: {
+                    Image(systemName: "waveform.and.mic")
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                }
+            }
+            .frame(minHeight: 44)
+            .accessibilityLabel(String(localized: "settings.karaoke.label"))
+            .accessibilityHint(String(localized: "settings.karaoke.hint"))
+        } header: {
+            Text(String(localized: "settings.section.karaoke"))
+                .font(TypographyTokens.caption(12).weight(.semibold))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .textCase(.uppercase)
+        }
+    }
+
     // MARK: About
 
     var aboutSection: some View {
