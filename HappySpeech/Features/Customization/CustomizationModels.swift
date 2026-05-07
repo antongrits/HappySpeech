@@ -110,11 +110,11 @@ public enum LyalyaHairColor: String, CaseIterable, Identifiable, Sendable {
 
     public var previewColor: Color {
         switch self {
-        case .golden:   return Color(red: 0.99, green: 0.88, blue: 0.50)
-        case .chestnut: return Color(red: 0.56, green: 0.32, blue: 0.18)
-        case .black:    return Color(red: 0.15, green: 0.13, blue: 0.14)
-        case .pink:     return Color(red: 0.99, green: 0.63, blue: 0.78)
-        case .cyan:     return Color(red: 0.40, green: 0.84, blue: 0.88)
+        case .golden:   return ColorTokens.Theme.hairGolden
+        case .chestnut: return ColorTokens.Theme.hairChestnut
+        case .black:    return ColorTokens.Theme.hairBlack
+        case .pink:     return ColorTokens.Theme.hairPink
+        case .cyan:     return ColorTokens.Theme.hairCyan
         }
     }
 }
@@ -138,9 +138,9 @@ public enum LyalyaEyeColor: String, CaseIterable, Identifiable, Sendable {
 
     public var previewColor: Color {
         switch self {
-        case .blue:  return Color(red: 0.40, green: 0.70, blue: 0.95)
-        case .green: return Color(red: 0.37, green: 0.76, blue: 0.43)
-        case .brown: return Color(red: 0.54, green: 0.32, blue: 0.12)
+        case .blue:  return ColorTokens.Theme.eyeBlue
+        case .green: return ColorTokens.Theme.eyeGreen
+        case .brown: return ColorTokens.Theme.eyeBrown
         }
     }
 }
@@ -164,9 +164,9 @@ public enum LyalyaSkinTone: String, CaseIterable, Identifiable, Sendable {
 
     public var previewColor: Color {
         switch self {
-        case .light:  return Color(red: 0.98, green: 0.87, blue: 0.79)
-        case .medium: return Color(red: 0.83, green: 0.63, blue: 0.49)
-        case .dark:   return Color(red: 0.48, green: 0.31, blue: 0.20)
+        case .light:  return ColorTokens.Theme.toneLight
+        case .medium: return ColorTokens.Theme.toneMedium
+        case .dark:   return ColorTokens.Theme.toneDark
         }
     }
 }
@@ -239,27 +239,27 @@ public enum LyalyaBackground: String, CaseIterable, Identifiable, Sendable {
         switch self {
         case .bedroom:
             return LinearGradient(
-                colors: [Color(red: 0.90, green: 0.82, blue: 0.95), Color(red: 0.75, green: 0.65, blue: 0.88)],
+                colors: [ColorTokens.Theme.bedroomFrom, ColorTokens.Theme.bedroomTo],
                 startPoint: .topLeading, endPoint: .bottomTrailing
             )
         case .garden:
             return LinearGradient(
-                colors: [Color(red: 0.80, green: 0.95, blue: 0.72), Color(red: 0.55, green: 0.85, blue: 0.55)],
+                colors: [ColorTokens.Theme.gardenFrom, ColorTokens.Theme.gardenTo],
                 startPoint: .topLeading, endPoint: .bottomTrailing
             )
         case .school:
             return LinearGradient(
-                colors: [Color(red: 0.98, green: 0.93, blue: 0.70), Color(red: 0.95, green: 0.82, blue: 0.45)],
+                colors: [ColorTokens.Theme.schoolBgFrom, ColorTokens.Theme.schoolBgTo],
                 startPoint: .topLeading, endPoint: .bottomTrailing
             )
         case .ocean:
             return LinearGradient(
-                colors: [Color(red: 0.65, green: 0.88, blue: 0.98), Color(red: 0.35, green: 0.65, blue: 0.90)],
+                colors: [ColorTokens.Theme.oceanFrom, ColorTokens.Theme.oceanTo],
                 startPoint: .topLeading, endPoint: .bottomTrailing
             )
         case .forest:
             return LinearGradient(
-                colors: [Color(red: 0.60, green: 0.82, blue: 0.62), Color(red: 0.30, green: 0.60, blue: 0.35)],
+                colors: [ColorTokens.Theme.forestFrom, ColorTokens.Theme.forestTo],
                 startPoint: .topLeading, endPoint: .bottomTrailing
             )
         }
@@ -285,9 +285,9 @@ public enum LyalyaColorVariant: String, CaseIterable, Identifiable, Sendable {
 
     public var gradientColors: (Color, Color) {
         switch self {
-        case .warm:   return (Color(red: 1.0, green: 0.878, blue: 0.784), Color(red: 1.0, green: 0.816, blue: 0.69))
-        case .cool:   return (Color(red: 0.784, green: 0.91, blue: 1.0), Color(red: 0.69, green: 0.847, blue: 0.973))
-        case .nature: return (Color(red: 0.784, green: 0.941, blue: 0.847), Color(red: 0.69, green: 0.91, blue: 0.784))
+        case .warm:   return (ColorTokens.Theme.warmFrom, ColorTokens.Theme.warmTo)
+        case .cool:   return (ColorTokens.Theme.coolFrom, ColorTokens.Theme.coolTo)
+        case .nature: return (ColorTokens.Theme.natureFrom, ColorTokens.Theme.natureTo)
         }
     }
 
@@ -299,9 +299,9 @@ public enum LyalyaColorVariant: String, CaseIterable, Identifiable, Sendable {
     /// UIColor тела Ляли для передачи в RealityKit SimpleMaterial.
     public var uiColor: UIColor {
         switch self {
-        case .warm:   return UIColor(red: 0.788, green: 0.659, blue: 0.941, alpha: 1)
-        case .cool:   return UIColor(red: 0.612, green: 0.780, blue: 0.941, alpha: 1)
-        case .nature: return UIColor(red: 0.612, green: 0.851, blue: 0.710, alpha: 1)
+        case .warm:   return ColorTokens.Theme.bodyWarmUI
+        case .cool:   return ColorTokens.Theme.bodyCoolUI
+        case .nature: return ColorTokens.Theme.bodyNatureUI
         }
     }
 }

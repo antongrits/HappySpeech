@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 // MARK: - ColorTokens
 
@@ -233,6 +234,190 @@ public enum ColorTokens {
         public static let progressBar        = Color("SessionProgressBar")
         public static let progressBackground = Color("SessionProgressBackground")
         public static let fatigueWarning     = Color("SessionFatigueWarning")
+    }
+
+    // MARK: - Customization Theme Palette
+
+    /// Палитра 16 пастельных пар-градиентов для карточек кастомизации (наряды и скины).
+    /// Каждая пара состоит из верхнего (`*From`) и нижнего (`*To`) цвета — используется в
+    /// `LinearGradient` плейсхолдеров иллюстраций, когда `Image(named:)` отсутствует.
+    /// Все цвета подобраны как мягкие, low-saturation тона, безопасные для детских экранов.
+    public enum Theme {
+
+        // MARK: Outfit — Everyday (повседневный наряд) — небесно-голубой
+        public static let everydayFrom = Color(red: 0.72, green: 0.87, blue: 0.98)
+        public static let everydayTo   = Color(red: 0.50, green: 0.72, blue: 0.92)
+
+        // MARK: Outfit — Beach (пляж) — солнечно-жёлтый → оранжевый
+        public static let beachFrom    = Color(red: 0.98, green: 0.92, blue: 0.60)
+        public static let beachTo      = Color(red: 0.98, green: 0.75, blue: 0.30)
+
+        // MARK: Outfit — Winter (зима) — морозно-голубой
+        public static let winterFrom   = Color(red: 0.82, green: 0.93, blue: 0.98)
+        public static let winterTo     = Color(red: 0.60, green: 0.80, blue: 0.95)
+
+        // MARK: Outfit — School (школа) — зелёная олива
+        public static let schoolFrom   = Color(red: 0.78, green: 0.87, blue: 0.68)
+        public static let schoolTo     = Color(red: 0.55, green: 0.75, blue: 0.45)
+
+        // MARK: Outfit — Birthday (день рождения) — розовый
+        public static let birthdayFrom = Color(red: 0.98, green: 0.75, blue: 0.85)
+        public static let birthdayTo   = Color(red: 0.95, green: 0.55, blue: 0.70)
+
+        // MARK: Outfit — Space (космос) — фиолетово-синий
+        public static let spaceFrom    = Color(red: 0.50, green: 0.55, blue: 0.80)
+        public static let spaceTo      = Color(red: 0.20, green: 0.25, blue: 0.55)
+
+        // MARK: Skin — Princess (принцесса) — нежно-розовый
+        public static let princessFrom = Color(red: 1.00, green: 0.75, blue: 0.85)
+        public static let princessTo   = Color(red: 0.95, green: 0.55, blue: 0.70)
+
+        // MARK: Skin — Scientist (учёный) — мятно-зелёный
+        public static let scientistFrom = Color(red: 0.85, green: 0.95, blue: 0.85)
+        public static let scientistTo   = Color(red: 0.65, green: 0.88, blue: 0.65)
+
+        // MARK: Skin — Athlete (спортсмен) — солнечно-оранжевый
+        public static let athleteFrom  = Color(red: 1.00, green: 0.88, blue: 0.65)
+        public static let athleteTo    = Color(red: 0.95, green: 0.70, blue: 0.35)
+
+        // MARK: Skin — Artist (художник) — лавандовый
+        public static let artistFrom   = Color(red: 0.90, green: 0.75, blue: 0.95)
+        public static let artistTo     = Color(red: 0.75, green: 0.55, blue: 0.90)
+
+        // MARK: Background — Bedroom (спальня) — пурпурно-сиреневый
+        public static let bedroomFrom  = Color(red: 0.90, green: 0.82, blue: 0.95)
+        public static let bedroomTo    = Color(red: 0.75, green: 0.65, blue: 0.88)
+
+        // MARK: Background — Garden (сад) — травянисто-зелёный
+        public static let gardenFrom   = Color(red: 0.80, green: 0.95, blue: 0.72)
+        public static let gardenTo     = Color(red: 0.55, green: 0.85, blue: 0.55)
+
+        // MARK: Background — School (школа) — тёплый жёлтый
+        public static let schoolBgFrom = Color(red: 0.98, green: 0.93, blue: 0.70)
+        public static let schoolBgTo   = Color(red: 0.95, green: 0.82, blue: 0.45)
+
+        // MARK: Background — Ocean (океан) — морская волна
+        public static let oceanFrom    = Color(red: 0.65, green: 0.88, blue: 0.98)
+        public static let oceanTo      = Color(red: 0.35, green: 0.65, blue: 0.90)
+
+        // MARK: Background — Forest (лес) — лесной зелёный
+        public static let forestFrom   = Color(red: 0.60, green: 0.82, blue: 0.62)
+        public static let forestTo     = Color(red: 0.30, green: 0.60, blue: 0.35)
+
+        // MARK: Color Variant — Warm (тёплый) — кораллово-абрикосовый
+        public static let warmFrom     = Color(red: 1.00, green: 0.878, blue: 0.784)
+        public static let warmTo       = Color(red: 1.00, green: 0.816, blue: 0.69)
+
+        // MARK: Color Variant — Cool (прохладный) — голубой
+        public static let coolFrom     = Color(red: 0.784, green: 0.91, blue: 1.00)
+        public static let coolTo       = Color(red: 0.69, green: 0.847, blue: 0.973)
+
+        // MARK: Color Variant — Nature (природный) — зелёный
+        public static let natureFrom   = Color(red: 0.784, green: 0.941, blue: 0.847)
+        public static let natureTo     = Color(red: 0.69, green: 0.91, blue: 0.784)
+
+        // MARK: Hair Color — preview swatches
+        public static let hairGolden   = Color(red: 0.99, green: 0.88, blue: 0.50)
+        public static let hairChestnut = Color(red: 0.56, green: 0.32, blue: 0.18)
+        public static let hairBlack    = Color(red: 0.15, green: 0.13, blue: 0.14)
+        public static let hairPink     = Color(red: 0.99, green: 0.63, blue: 0.78)
+        public static let hairCyan     = Color(red: 0.40, green: 0.84, blue: 0.88)
+
+        // MARK: Eye Color — preview swatches
+        public static let eyeBlue      = Color(red: 0.40, green: 0.70, blue: 0.95)
+        public static let eyeGreen     = Color(red: 0.37, green: 0.76, blue: 0.43)
+        public static let eyeBrown     = Color(red: 0.54, green: 0.32, blue: 0.12)
+
+        // MARK: Skin Tone — preview swatches
+        public static let toneLight    = Color(red: 0.98, green: 0.87, blue: 0.79)
+        public static let toneMedium   = Color(red: 0.83, green: 0.63, blue: 0.49)
+        public static let toneDark     = Color(red: 0.48, green: 0.31, blue: 0.20)
+
+        // MARK: Body color (UIColor variants for RealityKit SimpleMaterial)
+        public static let bodyWarmUI   = UIColor(red: 0.788, green: 0.659, blue: 0.941, alpha: 1)
+        public static let bodyCoolUI   = UIColor(red: 0.612, green: 0.780, blue: 0.941, alpha: 1)
+        public static let bodyNatureUI = UIColor(red: 0.612, green: 0.851, blue: 0.710, alpha: 1)
+    }
+
+    // MARK: - Confetti Palette
+
+    /// Палитра конфетти-частиц для `ConfettiEmitterView`.
+    /// Три стиля: celebration (тёплые цвета), perfect (золото), achievement (бренд-цвета).
+    public enum Confetti {
+
+        // MARK: Celebration — тёплая радостная палитра
+        /// Кораллово-красный (#FF6B6B)
+        public static let coral     = Color(red: 1.00, green: 0.42, blue: 0.42)
+        /// Солнечно-жёлтый (#FFD93D)
+        public static let yellow    = Color(red: 1.00, green: 0.85, blue: 0.24)
+        /// Оранжевый (#FF9E4F)
+        public static let orange    = Color(red: 1.00, green: 0.62, blue: 0.31)
+        /// Лиловый (#C77DFF)
+        public static let lilac     = Color(red: 0.78, green: 0.49, blue: 1.00)
+        /// Hot pink (#FF69B4)
+        public static let hotPink   = Color(red: 1.00, green: 0.41, blue: 0.71)
+        /// Light salmon (#FFA07A)
+        public static let salmon    = Color(red: 1.00, green: 0.63, blue: 0.48)
+
+        // MARK: Perfect — золотая палитра
+        /// Чистое золото (#FFD700)
+        public static let gold      = Color(red: 1.00, green: 0.84, blue: 0.00)
+        /// Кремово-жёлтый (#FFF176)
+        public static let cream     = Color(red: 1.00, green: 0.95, blue: 0.46)
+        /// Янтарный (#FFCA28)
+        public static let amber     = Color(red: 1.00, green: 0.79, blue: 0.16)
+        /// Светло-янтарный (#FFE082)
+        public static let amberSoft = Color(red: 1.00, green: 0.88, blue: 0.51)
+        /// Тёмно-оранжевый (#FF8F00)
+        public static let darkAmber = Color(red: 1.00, green: 0.56, blue: 0.00)
+
+        // MARK: Achievement — бренд-палитра
+        /// Голубой (#4D96FF)
+        public static let blue      = Color(red: 0.30, green: 0.59, blue: 1.00)
+        /// Травянистый (#6BCB77)
+        public static let green     = Color(red: 0.42, green: 0.80, blue: 0.47)
+
+        // MARK: Готовые палитры (для удобного pickColor)
+        public static let celebrationPalette: [Color] = [coral, yellow, orange, lilac, hotPink, salmon]
+        public static let perfectPalette: [Color]     = [gold, cream, amber, amberSoft, darkAmber]
+        public static let achievementPalette: [Color] = [blue, green, lilac, coral, yellow, orange]
+    }
+
+    // MARK: - Celebration Palette
+
+    /// Цвета для `CelebrationOverlayView` и preview-фонов празднования.
+    public enum Celebration {
+        /// Цвет CTA-кнопки «Продолжить» — голубой (#4D96FF).
+        public static let primaryButton  = Color(red: 0.30, green: 0.59, blue: 1.00)
+        /// Цвет звезды (соответствует Confetti.yellow #FFD93D).
+        public static let star           = Color(red: 1.00, green: 0.85, blue: 0.24)
+        /// Глубокий пурпурный фон preview (3 stars) — #2C1A6B.
+        public static let backdropDeep   = Color(red: 0.173, green: 0.102, blue: 0.420)
+        /// Тёмно-зелёный фон preview (1 star) — #1A3A2B.
+        public static let backdropForest = Color(red: 0.102, green: 0.227, blue: 0.169)
+        /// Глубокий индиго фон preview (achievement) — #0A1A3B.
+        public static let backdropIndigo = Color(red: 0.039, green: 0.102, blue: 0.231)
+        /// Глубокий зелёный фон preview (perfect) — #1A2A1A.
+        public static let backdropMoss   = Color(red: 0.102, green: 0.165, blue: 0.102)
+        /// Глубокий пурпурный фон preview (celebration) — #1A0A3B.
+        public static let backdropNight  = Color(red: 0.102, green: 0.039, blue: 0.231)
+    }
+
+    // MARK: - Lyalya Scene (SceneKit / SwiftUI)
+
+    /// Цвета сцены SceneKit плейсхолдера Ляли (`LyalyaSceneView`).
+    /// Используются как `UIColor` для SCNMaterial и как SwiftUI `Color` для preview-фонов.
+    public enum LyalyaScene {
+        /// Ambient light — тёплый сиренево-белый.
+        public static let ambientUI  = UIColor(red: 0.95, green: 0.93, blue: 1.00, alpha: 1)
+        /// Цвет тела (pastel lilac).
+        public static let bodyUI     = UIColor(red: 0.76, green: 0.63, blue: 0.95, alpha: 1)
+        /// Цвет зрачков (тёмно-фиолетовый).
+        public static let pupilUI    = UIColor(red: 0.15, green: 0.10, blue: 0.25, alpha: 1)
+        /// Preview-фон idle — светло-сиреневый (#F3EEFF).
+        public static let backdropIdle      = Color(red: 0.953, green: 0.933, blue: 1.000)
+        /// Preview-фон celebrating — тёплый кремово-жёлтый (#FFF8E0).
+        public static let backdropCelebrate = Color(red: 1.000, green: 0.973, blue: 0.878)
     }
 }
 

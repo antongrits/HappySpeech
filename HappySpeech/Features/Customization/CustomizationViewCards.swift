@@ -112,23 +112,23 @@ struct OutfitCard: View {
 
     private var placeholderFromColor: Color {
         switch item.outfit {
-        case .everyday:  return Color(red: 0.72, green: 0.87, blue: 0.98)
-        case .beach:     return Color(red: 0.98, green: 0.92, blue: 0.60)
-        case .winter:    return Color(red: 0.82, green: 0.93, blue: 0.98)
-        case .school:    return Color(red: 0.78, green: 0.87, blue: 0.68)
-        case .birthday:  return Color(red: 0.98, green: 0.75, blue: 0.85)
-        case .space:     return Color(red: 0.50, green: 0.55, blue: 0.80)
+        case .everyday:  return ColorTokens.Theme.everydayFrom
+        case .beach:     return ColorTokens.Theme.beachFrom
+        case .winter:    return ColorTokens.Theme.winterFrom
+        case .school:    return ColorTokens.Theme.schoolFrom
+        case .birthday:  return ColorTokens.Theme.birthdayFrom
+        case .space:     return ColorTokens.Theme.spaceFrom
         }
     }
 
     private var placeholderToColor: Color {
         switch item.outfit {
-        case .everyday:  return Color(red: 0.50, green: 0.72, blue: 0.92)
-        case .beach:     return Color(red: 0.98, green: 0.75, blue: 0.30)
-        case .winter:    return Color(red: 0.60, green: 0.80, blue: 0.95)
-        case .school:    return Color(red: 0.55, green: 0.75, blue: 0.45)
-        case .birthday:  return Color(red: 0.95, green: 0.55, blue: 0.70)
-        case .space:     return Color(red: 0.20, green: 0.25, blue: 0.55)
+        case .everyday:  return ColorTokens.Theme.everydayTo
+        case .beach:     return ColorTokens.Theme.beachTo
+        case .winter:    return ColorTokens.Theme.winterTo
+        case .school:    return ColorTokens.Theme.schoolTo
+        case .birthday:  return ColorTokens.Theme.birthdayTo
+        case .space:     return ColorTokens.Theme.spaceTo
         }
     }
 }
@@ -221,21 +221,21 @@ struct SkinCard: View {
 
     private var placeholderFrom: Color {
         switch skin {
-        case .classic:   return Color(red: 0.72, green: 0.87, blue: 0.98)
-        case .princess:  return Color(red: 1.00, green: 0.75, blue: 0.85)
-        case .scientist: return Color(red: 0.85, green: 0.95, blue: 0.85)
-        case .athlete:   return Color(red: 1.00, green: 0.88, blue: 0.65)
-        case .artist:    return Color(red: 0.90, green: 0.75, blue: 0.95)
+        case .classic:   return ColorTokens.Theme.everydayFrom
+        case .princess:  return ColorTokens.Theme.princessFrom
+        case .scientist: return ColorTokens.Theme.scientistFrom
+        case .athlete:   return ColorTokens.Theme.athleteFrom
+        case .artist:    return ColorTokens.Theme.artistFrom
         }
     }
 
     private var placeholderTo: Color {
         switch skin {
-        case .classic:   return Color(red: 0.50, green: 0.72, blue: 0.92)
-        case .princess:  return Color(red: 0.95, green: 0.55, blue: 0.70)
-        case .scientist: return Color(red: 0.65, green: 0.88, blue: 0.65)
-        case .athlete:   return Color(red: 0.95, green: 0.70, blue: 0.35)
-        case .artist:    return Color(red: 0.75, green: 0.55, blue: 0.90)
+        case .classic:   return ColorTokens.Theme.everydayTo
+        case .princess:  return ColorTokens.Theme.princessTo
+        case .scientist: return ColorTokens.Theme.scientistTo
+        case .athlete:   return ColorTokens.Theme.athleteTo
+        case .artist:    return ColorTokens.Theme.artistTo
         }
     }
 
