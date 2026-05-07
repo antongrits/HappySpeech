@@ -88,6 +88,18 @@ packages:
   SwiftAsyncAlgorithms:
     url: https://github.com/apple/swift-async-algorithms
     from: "1.0.0"
+  SwiftNumerics:
+    url: https://github.com/apple/swift-numerics
+    from: "1.0.2"
+  SwiftSyntax:
+    url: https://github.com/apple/swift-syntax
+    from: "600.0.0"
+  SwiftUIShimmer:
+    url: https://github.com/markiv/SwiftUI-Shimmer
+    from: "1.5.0"
+  FloatingButton:
+    url: https://github.com/exyte/FloatingButton
+    from: "1.4.0"
 
 targets:
   HappySpeech:
@@ -228,6 +240,14 @@ targets:
         product: Collections
       - package: SwiftAsyncAlgorithms
         product: AsyncAlgorithms
+      - package: SwiftNumerics
+        product: Numerics
+      - package: SwiftSyntax
+        product: SwiftSyntax
+      - package: SwiftUIShimmer
+        product: Shimmer
+      - package: FloatingButton
+        product: FloatingButton
       - target: HappySpeechWidgetExtension
         embed: true
     scheme:
