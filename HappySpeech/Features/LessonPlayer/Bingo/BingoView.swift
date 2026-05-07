@@ -214,8 +214,9 @@ struct BingoView: View {
                 VStack(spacing: SpacingTokens.medium) {
                     LyalyaMascotView(state: .celebrating, size: 80)
                         .accessibilityHidden(true)
-                    Text("🎉")
-                        .font(TypographyTokens.kidDisplay(64))
+                    Image(systemName: "party.popper.fill")
+                        .font(.system(size: 64, weight: .regular))
+                        .foregroundStyle(ColorTokens.Brand.gold)
                         .accessibilityHidden(true)
                     Text(String(localized: "БИНГО!"))
                         .font(TypographyTokens.display(40))

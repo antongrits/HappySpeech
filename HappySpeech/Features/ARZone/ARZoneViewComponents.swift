@@ -36,8 +36,10 @@ struct ARMascot2DFallback: View {
                     )
                 )
                 .shadow(color: ColorTokens.Brand.lilac.opacity(0.3), radius: 14, x: 0, y: 6)
-            Text("🦋")
-                .font(.system(size: size * 0.5)) // emoji proportional size — skip TypographyTokens
+            Image("mascot_lyalya_wave")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: size * 0.7, height: size * 0.7)
                 .accessibilityHidden(true)
         }
         .frame(width: size, height: size)

@@ -483,8 +483,9 @@ struct SessionHistoryView: View {
         VStack(spacing: SpacingTokens.large) {
             Spacer(minLength: SpacingTokens.xLarge)
 
-            Text(verbatim: isFilterEmpty ? "🔎" : "📅")
-                .font(TypographyTokens.kidDisplay(96)) // emoji key graphic — skip TypographyTokens
+            Image(systemName: isFilterEmpty ? "magnifyingglass" : "calendar")
+                .font(.system(size: 96, weight: .regular))
+                .foregroundStyle(ColorTokens.Parent.inkMuted.opacity(0.55))
                 .accessibilityHidden(true)
 
             VStack(spacing: SpacingTokens.small) {
