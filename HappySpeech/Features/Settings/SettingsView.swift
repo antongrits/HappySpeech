@@ -82,6 +82,12 @@ struct SettingsView: View {
             }
             .navigationTitle(String(localized: "settings.navTitle"))
             .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    LyalyaMascotView(state: .idle, size: 36)
+                        .accessibilityHidden(true)
+                }
+            }
             .confirmationDialog(
                 String(localized: "settings.cache.confirm.title"),
                 isPresented: $showClearCacheConfirm,

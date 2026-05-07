@@ -483,10 +483,11 @@ struct SessionHistoryView: View {
         VStack(spacing: SpacingTokens.large) {
             Spacer(minLength: SpacingTokens.xLarge)
 
-            Image(systemName: isFilterEmpty ? "magnifyingglass" : "calendar")
-                .font(.system(size: 96, weight: .regular))
-                .foregroundStyle(ColorTokens.Parent.inkMuted.opacity(0.55))
-                .accessibilityHidden(true)
+            LyalyaMascotView(
+                state: isFilterEmpty ? .thinking : .explaining,
+                size: 140
+            )
+            .accessibilityHidden(true)
 
             VStack(spacing: SpacingTokens.small) {
                 Text(display.emptyTitle)
