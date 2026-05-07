@@ -201,11 +201,12 @@ final class WorldMapPresenter: WorldMapPresentationLogic {
     }
 
     func presentCollectTreasure(_ response: WorldMapModels.CollectTreasure.Response) {
+        // Block D v16: эмодзи коллекционных предметов → SF Symbols.
         let icon: String
         switch response.collectible.type {
-        case .goldPebble: icon = "🪙"
-        case .magicShell: icon = "🐚"
-        case .speechCrystal: icon = "💎"
+        case .goldPebble: icon = "circle.fill"     // FALLBACK: gold pebble
+        case .magicShell: icon = "shell.fill"
+        case .speechCrystal: icon = "diamond.fill"
         }
         let toast = String(
             format: String(localized: "worldMap.collectible.toast"),

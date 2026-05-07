@@ -184,7 +184,7 @@ public struct OnboardingProfile: Sendable, Equatable {
         role: UserRole = .parent,
         childName: String = "",
         childAge: Int = 6,
-        childAvatar: String = "🐱",
+        childAvatar: String = "word_cat",
         childGender: ChildGender = .notSpecified,
         goals: Set<String> = [],
         difficultSounds: Set<String> = [],
@@ -214,7 +214,11 @@ public struct OnboardingProfile: Sendable, Equatable {
         self.lyalyaPreset = lyalyaPreset
     }
 
-    public static let availableAvatars: [String] = ["🐱", "🐶", "🦊", "🐻", "🐼", "🦁"]
+    // Block D v16: эмодзи аватары → illustration assets.
+    // FALLBACK: 🐼 panda → word_bear, 🦁 lion → reward_champion.
+    public static let availableAvatars: [String] = [
+        "word_cat", "word_dog", "word_fox", "word_bear", "word_bear", "reward_champion"
+    ]
 
     /// Целевой возраст 5–8 лет (методическое требование).
     /// Допустимый диапазон 3–12 лет — крайние возраста показываются «вне рекомендованного».
