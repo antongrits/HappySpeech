@@ -1934,3 +1934,64 @@ Bundle size Videos: **71 MB → 47 MB** (-24 MB, -34%).
 **Альтернатива (rejected):** заменить эмодзи на текст-описания (`"лес"` вместо `🌲🌲🌲`) — теряет визуальную опору для детей 5-8 лет.
 
 **Метки:** ADR-V16-STORY-EMOJI-DEFER, post-v1.0, Block S
+
+---
+
+## ADR-V16-DOCC-DEFER — DocC archive bundle отложен (2026-05-07)
+
+**Дата:** 2026-05-07
+**Статус:** Accepted
+**Автор:** ios-developer (Block P.3 v16)
+
+### Контекст
+
+Block P.3 plan v16 — bundle `HappySpeech.doccarchive` в `HappySpeech/Resources/Docs/` для in-app help screen и bundle size depth.
+
+### Что произошло
+
+`xcodebuild docbuild -scheme HappySpeech -destination 'generic/platform=iOS Simulator'` отработал успешно (`** BUILD DOCUMENTATION SUCCEEDED **`), но размер генерируемого archive — **3.9 GB**:
+
+| Папка doccarchive | Размер |
+|---|---|
+| `data/` | 2.6 GB |
+| `documentation/` | 1.2 GB |
+| `index/` | 152 MB |
+| `js/` + `css/` + assets | ~1.1 MB |
+
+Причина: DocC archive по умолчанию документирует **все символы всех SPM dependencies** (WhisperKit, MLX Swift, Firebase iOS SDK, Realm Swift, swift-collections, swift-numerics и т.д.). При больших dep-deps generated symbol graphs занимают гигабайты.
+
+### Почему bundle невозможен
+
+1. **App Store cellular limit** — 200 MB (без cellular >4 GB полностью блокирует cellular install).
+2. **GitHub file limit** — 100 MB на файл, репо повиснет на push.
+3. **Yandex.Disk sync** — 3.9 GB synced files не нужны команде.
+4. **Bundle inflation** — increasing bundle size to 5+ GB (текущий 1.1 GB → 5 GB) ухудшает UX.
+
+### Решение
+
+Отложить DocC archive bundle. Source `HappySpeech/HappySpeech.docc/` остаётся (Articles/, Tutorials/, HappySpeech.md) — это исходники, ~30 KB, читаемы как Markdown в Xcode. Разработчики/студенты компилируют DocC локально по необходимости.
+
+### Альтернативы (для post-v1.0)
+
+1. **`--exclude-spi-symbols` + `--minimum-access-level public`** — урезать только до public API HappySpeech target, без deps. Требует CLI `docc convert` напрямую (не через `xcodebuild docbuild`).
+2. **`xcrun docc convert` с явным `--symbol-graph-dir` only HappySpeech** — фильтровать по target.
+3. **GitHub Pages hosting** — генерировать через CI, hostить на gh-pages, in-app `WKWebView` загружает с интернета.
+4. **In-app `MarkdownView`** — рендерить `HappySpeech.docc/Articles/*.md` напрямую через `Text(markdown:)` или `MarkdownUI` SPM. Bundle +30 KB вместо +3.9 GB.
+
+Выбрана **альтернатива 4** для post-v1.0 (Block T) — простейший путь, sufficient для in-app help screen.
+
+### Bundle size depth (P.3 цель)
+
+Достигается через другие Blocks:
+- **Block P.1** (voice expansion +500 voice files ~50 MB)
+- **Block B** (real ML training, weights в .mlpackage добавляют ~600 MB)
+- **Block U.4** (USDZ logopedic models ~163 MB)
+
+DocC defer не блокирует general bundle growth strategy.
+
+### Артефакты
+
+- Source `.docc/` остаётся как был (commit eced389f и ранее).
+- Cleanup: удалены `.build_docc/` (3.9 GB build artifact) и `HappySpeech/Resources/Docs/` (попытка copy, тоже удалена).
+
+**Метки:** ADR-V16-DOCC-DEFER, post-v1.0, Block T
