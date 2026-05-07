@@ -78,11 +78,16 @@ struct FamilyHomeView: View {
     // MARK: - Sections
 
     private var greetingSection: some View {
-        Text(viewModel.greeting)
-            .font(TypographyTokens.headline(22))
-            .foregroundStyle(ColorTokens.Parent.ink)
-            .padding(.top, SpacingTokens.sp3)
-            .accessibilityAddTraits(.isHeader)
+        HStack(alignment: .center, spacing: SpacingTokens.sp3) {
+            Text(viewModel.greeting)
+                .font(TypographyTokens.headline(22))
+                .foregroundStyle(ColorTokens.Parent.ink)
+                .accessibilityAddTraits(.isHeader)
+            Spacer(minLength: 0)
+            LyalyaMascotView(state: .waving, size: 60)
+                .accessibilityHidden(true)
+        }
+        .padding(.top, SpacingTokens.sp3)
     }
 
     private var childrenGrid: some View {
