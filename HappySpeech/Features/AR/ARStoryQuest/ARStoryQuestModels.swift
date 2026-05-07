@@ -17,7 +17,7 @@ struct QuestStep: Sendable, Identifiable, Hashable {
     let targetWord: String       // слово, которое ребёнок произносит
     let soundGroup: String       // "whistling" | "hissing" | "sonants" | "velar"
     let hint: String             // артикуляционная подсказка
-    let rewardEmoji: String      // emoji после успеха
+    let rewardEmoji: String      // SF Symbol name (Block D v16)
 }
 
 /// Квест — сценарий из 8 связных шагов.
@@ -44,7 +44,7 @@ extension QuestScript {
                 targetWord: String(localized: "ar.quest.space.s1.word"),
                 soundGroup: "whistling",
                 hint: String(localized: "ar.quest.space.s1.hint"),
-                rewardEmoji: "🪐"
+                rewardEmoji: "globe.europe.africa.fill"
             ),
             QuestStep(
                 id: "s2",
@@ -53,7 +53,7 @@ extension QuestScript {
                 targetWord: String(localized: "ar.quest.space.s2.word"),
                 soundGroup: "whistling",
                 hint: String(localized: "ar.quest.space.s2.hint"),
-                rewardEmoji: "☀️"
+                rewardEmoji: "sun.max.fill"
             ),
             QuestStep(
                 id: "s3",
@@ -62,7 +62,7 @@ extension QuestScript {
                 targetWord: String(localized: "ar.quest.space.s3.word"),
                 soundGroup: "whistling",
                 hint: String(localized: "ar.quest.space.s3.hint"),
-                rewardEmoji: "🦓"
+                rewardEmoji: "pawprint.fill"
             ),
             QuestStep(
                 id: "s4",
@@ -71,7 +71,7 @@ extension QuestScript {
                 targetWord: String(localized: "ar.quest.space.s4.word"),
                 soundGroup: "hissing",
                 hint: String(localized: "ar.quest.space.s4.hint"),
-                rewardEmoji: "🌟"
+                rewardEmoji: "sparkles"
             ),
             QuestStep(
                 id: "s5",
@@ -80,7 +80,7 @@ extension QuestScript {
                 targetWord: String(localized: "ar.quest.space.s5.word"),
                 soundGroup: "hissing",
                 hint: String(localized: "ar.quest.space.s5.hint"),
-                rewardEmoji: "💛"
+                rewardEmoji: "heart.fill"
             ),
             QuestStep(
                 id: "s6",
@@ -89,7 +89,7 @@ extension QuestScript {
                 targetWord: String(localized: "ar.quest.space.s6.word"),
                 soundGroup: "sonants",
                 hint: String(localized: "ar.quest.space.s6.hint"),
-                rewardEmoji: "🐦"
+                rewardEmoji: "bird.fill"
             ),
             QuestStep(
                 id: "s7",
@@ -98,7 +98,7 @@ extension QuestScript {
                 targetWord: String(localized: "ar.quest.space.s7.word"),
                 soundGroup: "sonants",
                 hint: String(localized: "ar.quest.space.s7.hint"),
-                rewardEmoji: "⚔️"
+                rewardEmoji: "shield.fill"
             ),
             QuestStep(
                 id: "s8",
@@ -107,7 +107,7 @@ extension QuestScript {
                 targetWord: String(localized: "ar.quest.space.s8.word"),
                 soundGroup: "velar",
                 hint: String(localized: "ar.quest.space.s8.hint"),
-                rewardEmoji: "🏠"
+                rewardEmoji: "house.fill"
             )
         ]
     )

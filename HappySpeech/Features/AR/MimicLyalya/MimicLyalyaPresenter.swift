@@ -34,7 +34,7 @@ final class MimicLyalyaPresenter: MimicLyalyaPresentationLogic {
     func presentUpdateFrame(_ response: MimicLyalyaModels.UpdateFrame.Response) {
         display?.displayUpdateFrame(.init(
             progress: response.confidence,
-            emoji: response.isMatching ? "🎉" : "🙂"
+            emoji: response.isMatching ? "party.popper.fill" : "face.smiling"
         ))
     }
 

@@ -33,8 +33,10 @@ struct MimicLyalyaView: View {
                     onClose: { dismiss() }
                 )
                 HStack {
-                    Text(display.emoji)
-                        .font(TypographyTokens.kidDisplay(64)) // emoji posture indicator — skip TypographyTokens
+                    Image(systemName: display.emoji)
+                        .font(.system(size: 56, weight: .regular))
+                        .foregroundStyle(.white)
+                        .accessibilityHidden(true)
                     Spacer()
                     Text(display.postureName)
                         .font(TypographyTokens.headline())
@@ -207,7 +209,8 @@ final class MimicLyalyaDisplay: MimicLyalyaDisplayLogic {
     var postureName: String = ""
     var roundText: String = ""
     var progress: Float = 0
-    var emoji: String = "🙂"
+    // Block D v16: эмодзи заменены на SF Symbol name (UI chrome).
+    var emoji: String = "face.smiling"
     var lastStars: Int?
 
     // Block J: Hand Pose state
