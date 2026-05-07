@@ -349,10 +349,10 @@ struct AgeBubble: View {
             VStack(spacing: 2) {
                 Text("\(value)")
                     .font(TypographyTokens.title(28))
-                    .foregroundStyle(isSelected ? .white : ColorTokens.Kid.ink)
+                    .foregroundStyle(isSelected ? ColorTokens.Overlay.onAccent : ColorTokens.Kid.ink)
                 Text(String(localized: "onboarding.age.years.short"))
                     .font(TypographyTokens.caption(12))
-                    .foregroundStyle(isSelected ? Color.white : ColorTokens.Kid.ink)
+                    .foregroundStyle(isSelected ? ColorTokens.Overlay.onAccent : ColorTokens.Kid.ink)
             }
             .frame(width: 70, height: 70)
             .background(
@@ -512,7 +512,7 @@ struct SoundChip: View {
         Button(action: onTap) {
             Text(label)
                 .font(TypographyTokens.title(22))
-                .foregroundStyle(isSelected ? .white : ColorTokens.Kid.ink)
+                .foregroundStyle(isSelected ? ColorTokens.Overlay.onAccent : ColorTokens.Kid.ink)
                 .frame(width: 60, height: 60)
                 .background(
                     Circle()

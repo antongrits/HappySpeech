@@ -200,12 +200,12 @@ private struct IslandBubble: View {
             if card.isLocked {
                 Image(systemName: "lock.fill")
                     .font(TypographyTokens.title(28).weight(.semibold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .accessibilityHidden(true)
             } else {
                 Image(systemName: card.icon)
                     .font(.system(size: 38, weight: .regular))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .accessibilityHidden(true)
             }
 
@@ -227,7 +227,7 @@ private struct IslandBubble: View {
                 Circle()
                     .trim(from: 0, to: max(0.001, min(1, card.progress)))
                     .stroke(
-                        Color.white,
+                        ColorTokens.Overlay.onAccent,
                         style: StrokeStyle(lineWidth: 5, lineCap: .round)
                     )
                     .rotationEffect(.degrees(-90))
@@ -313,7 +313,7 @@ private struct IslandBubble: View {
                 .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 2, y: 1)
             Image(systemName: "checkmark")
                 .font(TypographyTokens.caption(11).weight(.bold))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
         }
         .accessibilityHidden(true)
     }

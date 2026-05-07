@@ -184,7 +184,7 @@ struct SpecialistReportsView: View {
             : (percent >= 60 ? ColorTokens.Brand.gold : ColorTokens.Semantic.warning)
         return Text("\(percent)%")
             .font(TypographyTokens.titleSmall(22))
-            .foregroundStyle(.white)
+            .foregroundStyle(ColorTokens.Overlay.onAccent)
             .padding(.horizontal, SpacingTokens.sp3)
             .padding(.vertical, SpacingTokens.sp1)
             .background(Capsule().fill(color))
@@ -285,7 +285,7 @@ struct SpecialistReportsView: View {
                 RoundedRectangle(cornerRadius: RadiusTokens.button, style: .continuous)
                     .fill(ColorTokens.Spec.accent)
             )
-            .foregroundStyle(.white)
+            .foregroundStyle(ColorTokens.Overlay.onAccent)
         }
         .accessibilityLabel(title)
     }
@@ -464,7 +464,7 @@ private struct FilterChip: View {
                 Capsule()
                     .fill(isSelected ? ColorTokens.Spec.accent : ColorTokens.Spec.surface)
             )
-            .foregroundStyle(isSelected ? Color.white : ColorTokens.Spec.ink)
+            .foregroundStyle(isSelected ? ColorTokens.Overlay.onAccent : ColorTokens.Spec.ink)
             .overlay(
                 Capsule()
                     .stroke(ColorTokens.Spec.line, lineWidth: isSelected ? 0 : 1)
