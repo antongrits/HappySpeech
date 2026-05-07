@@ -13,8 +13,7 @@ struct OnboardingWelcomeStep: View {
     var body: some View {
         VStack(spacing: SpacingTokens.large) {
             Spacer()
-            LyalyaHeroView(state: .waving, mood: 0.7, size: 180)
-                .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
+            LyalyaHeroView(state: .waving, mood: 0.7, size: 240)
                 .scaleEffect(appeared ? 1 : 0.6)
                 .opacity(appeared ? 1 : 0)
                 .accessibilityHidden(true)
@@ -52,12 +51,20 @@ struct OnboardingRoleStep: View {
     let selectedRole: UserRole
     let onSelect: (UserRole) -> Void
 
+    @State private var appeared = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     var body: some View {
         VStack(spacing: SpacingTokens.medium) {
+            LyalyaHeroView(state: .pointing, mood: 0.7, size: 200)
+                .scaleEffect(appeared ? 1 : 0.7)
+                .opacity(appeared ? 1 : 0)
+                .accessibilityHidden(true)
+                .padding(.top, SpacingTokens.small)
+
             Text(String(localized: "onboarding.role.title"))
                 .font(TypographyTokens.title(24))
                 .foregroundStyle(ColorTokens.Kid.ink)
-                .padding(.top, SpacingTokens.large)
                 .accessibilityAddTraits(.isHeader)
 
             Text(String(localized: "onboarding.role.subtitle"))
@@ -65,8 +72,6 @@ struct OnboardingRoleStep: View {
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, SpacingTokens.large)
-
-            Spacer()
 
             VStack(spacing: SpacingTokens.small) {
                 ForEach(UserRole.allCases) { role in
@@ -80,6 +85,11 @@ struct OnboardingRoleStep: View {
             .padding(.horizontal, SpacingTokens.screenEdge)
 
             Spacer()
+        }
+        .onAppear {
+            withAnimation(reduceMotion ? nil : MotionTokens.spring.delay(0.1)) {
+                appeared = true
+            }
         }
     }
 }
@@ -153,7 +163,7 @@ struct OnboardingNameStep: View {
             VStack(spacing: SpacingTokens.large) {
                 Spacer(minLength: SpacingTokens.medium)
 
-                LyalyaMascotView(state: .pointing, size: 100)
+                LyalyaHeroView(state: .explaining, mood: 0.7, size: 180)
                     .accessibilityHidden(true)
 
                 Text(String(localized: "onboarding.name.title"))
@@ -281,7 +291,7 @@ struct OnboardingAgeStep: View {
         VStack(spacing: SpacingTokens.large) {
             Spacer(minLength: SpacingTokens.medium)
 
-            LyalyaMascotView(state: .thinking, size: 110)
+            LyalyaHeroView(state: .thinking, mood: 0.6, size: 180)
                 .accessibilityHidden(true)
 
             VStack(spacing: SpacingTokens.small) {
@@ -381,12 +391,20 @@ struct OnboardingGoalsStep: View {
     let selectedGoals: Set<String>
     let onToggle: (String) -> Void
 
+    @State private var appeared = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     var body: some View {
         VStack(spacing: SpacingTokens.medium) {
+            LyalyaHeroView(state: .celebrating, mood: 0.8, size: 180)
+                .scaleEffect(appeared ? 1 : 0.7)
+                .opacity(appeared ? 1 : 0)
+                .accessibilityHidden(true)
+                .padding(.top, SpacingTokens.small)
+
             Text(String(localized: "onboarding.goals.title"))
                 .font(TypographyTokens.title(24))
                 .foregroundStyle(ColorTokens.Kid.ink)
-                .padding(.top, SpacingTokens.medium)
                 .accessibilityAddTraits(.isHeader)
 
             Text(String(localized: "onboarding.goals.subtitle"))
@@ -406,6 +424,11 @@ struct OnboardingGoalsStep: View {
                     }
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
+            }
+        }
+        .onAppear {
+            withAnimation(reduceMotion ? nil : MotionTokens.spring.delay(0.1)) {
+                appeared = true
             }
         }
     }
@@ -457,12 +480,21 @@ struct OnboardingSoundsStep: View {
     let selectedSounds: Set<String>
     let onToggle: (String) -> Void
 
+    @State private var appeared = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     private let columns = [
         GridItem(.adaptive(minimum: 70, maximum: 90), spacing: SpacingTokens.tiny)
     ]
 
     var body: some View {
         VStack(spacing: SpacingTokens.medium) {
+            LyalyaHeroView(state: .explaining, mood: 0.7, size: 160)
+                .scaleEffect(appeared ? 1 : 0.7)
+                .opacity(appeared ? 1 : 0)
+                .accessibilityHidden(true)
+                .padding(.top, SpacingTokens.small)
+
             Text(String(localized: "onboarding.sounds.title"))
                 .font(TypographyTokens.title(22))
                 .foregroundStyle(ColorTokens.Kid.ink)
@@ -497,6 +529,11 @@ struct OnboardingSoundsStep: View {
                 .accessibilityLabel(
                     String(format: String(localized: "onboarding.sounds.selectedCount"), selectedSounds.count)
                 )
+        }
+        .onAppear {
+            withAnimation(reduceMotion ? nil : MotionTokens.spring.delay(0.1)) {
+                appeared = true
+            }
         }
     }
 }

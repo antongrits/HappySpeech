@@ -10,11 +10,16 @@ struct OnboardingScheduleStep: View {
     let selectedMinutes: Int
     let onSelect: (Int) -> Void
 
+    @State private var appeared = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     var body: some View {
         VStack(spacing: SpacingTokens.medium) {
-            Spacer(minLength: SpacingTokens.medium)
+            Spacer(minLength: SpacingTokens.tiny)
 
-            LyalyaMascotView(state: .happy, size: 100)
+            LyalyaHeroView(state: .happy, mood: 0.8, size: 200)
+                .scaleEffect(appeared ? 1 : 0.7)
+                .opacity(appeared ? 1 : 0)
                 .accessibilityHidden(true)
 
             Text(String(localized: "onboarding.schedule.title"))
@@ -42,6 +47,11 @@ struct OnboardingScheduleStep: View {
             .padding(.horizontal, SpacingTokens.screenEdge)
 
             Spacer(minLength: SpacingTokens.medium)
+        }
+        .onAppear {
+            withAnimation(reduceMotion ? nil : MotionTokens.spring.delay(0.1)) {
+                appeared = true
+            }
         }
     }
 }
@@ -104,12 +114,19 @@ struct ScheduleRow: View {
 
 struct OnboardingPermissionsStep: View {
 
+    @State private var appeared = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     var body: some View {
         VStack(spacing: SpacingTokens.medium) {
+            LyalyaHeroView(state: .pointing, mood: 0.7, size: 180)
+                .scaleEffect(appeared ? 1 : 0.7)
+                .opacity(appeared ? 1 : 0)
+                .accessibilityHidden(true)
+
             Text(String(localized: "onboarding.permissions.title"))
                 .font(TypographyTokens.title(24))
                 .foregroundStyle(ColorTokens.Kid.ink)
-                .padding(.top, SpacingTokens.medium)
                 .accessibilityAddTraits(.isHeader)
 
             Text(String(localized: "onboarding.permissions.subtitle"))
@@ -141,6 +158,11 @@ struct OnboardingPermissionsStep: View {
             .padding(.horizontal, SpacingTokens.screenEdge)
 
             Spacer()
+        }
+        .onAppear {
+            withAnimation(reduceMotion ? nil : MotionTokens.spring.delay(0.1)) {
+                appeared = true
+            }
         }
     }
 
@@ -175,19 +197,25 @@ struct OnboardingModelDownloadStep: View {
     let statusLabel: String
     let onStart: () -> Void
 
+    @State private var appeared = false
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    private var heroState: LyalyaState {
+        switch status {
+        case .completed: return .celebrating
+        case .downloading: return .thinking
+        default: return .idle
+        }
+    }
+
     var body: some View {
         VStack(spacing: SpacingTokens.large) {
             Spacer()
 
-            ZStack {
-                Circle()
-                    .fill(ColorTokens.Brand.sky.opacity(0.15))
-                    .frame(width: 140, height: 140)
-                Image(systemName: iconName)
-                    .font(TypographyTokens.kidDisplay(56))
-                    .foregroundStyle(ColorTokens.Brand.sky)
-                    .accessibilityHidden(true)
-            }
+            LyalyaHeroView(state: heroState, mood: 0.6, size: 220)
+                .scaleEffect(appeared ? 1 : 0.7)
+                .opacity(appeared ? 1 : 0)
+                .accessibilityHidden(true)
 
             VStack(spacing: SpacingTokens.small) {
                 Text(String(localized: "onboarding.model.title"))
@@ -228,15 +256,13 @@ struct OnboardingModelDownloadStep: View {
 
             Spacer()
         }
-    }
-
-    private var iconName: String {
-        switch status {
-        case .completed:   return "checkmark.circle.fill"
-        case .downloading: return "arrow.down.circle"
-        case .failed:      return "exclamationmark.triangle.fill"
-        case .skipped:     return "forward.circle"
-        case .idle:        return "arrow.down.circle"
+        .onAppear {
+            withAnimation(reduceMotion ? nil : MotionTokens.spring.delay(0.1)) {
+                appeared = true
+            }
+        }
+        .onChange(of: status) { _, _ in
+            withAnimation(reduceMotion ? nil : MotionTokens.spring) {}
         }
     }
 }
@@ -277,8 +303,7 @@ struct OnboardingCompletionStep: View {
             VStack(spacing: SpacingTokens.large) {
                 Spacer()
 
-                LyalyaHeroView(state: .celebrating, mood: 1.0, size: 150)
-                    .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                LyalyaHeroView(state: .celebrating, mood: 1.0, size: 220)
                     .accessibilityHidden(true)
 
                 // Block D v16: avatar string is now an Asset name (illustrationName).
