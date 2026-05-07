@@ -368,7 +368,7 @@ struct DailyStreakView: View {
     }
 }
 
-// TODO defer to Block Q (test coverage): snapshot tests for DailyStreakView
+// NOTE deferred to Block Q (test coverage): snapshot tests for DailyStreakView
 // in light + dark, Dynamic Type axL, broken state, all-milestones-unlocked.
 
 #if DEBUG

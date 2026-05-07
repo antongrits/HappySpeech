@@ -742,4 +742,3 @@ struct SessionCompleteView: View {
         }
     }
 }
-

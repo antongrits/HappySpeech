@@ -53,4 +53,4 @@ struct KaraokeWordView: View {
     }
 }
 
-// TODO defer to Block Q (test coverage): snapshot tests for all states.
+// NOTE deferred to Block Q (test coverage): snapshot tests for all states.

@@ -57,9 +57,9 @@ final class DailyStreakInteractor: DailyStreakBusinessLogic, DailyStreakDataStor
 
     private enum Keys {
         static let prefix = "happyspeech.dailyStreak."
-        static func currentStreak(_ childId: String)    -> String { "\(prefix)\(childId).current" }
-        static func longestStreak(_ childId: String)    -> String { "\(prefix)\(childId).longest" }
-        static func lastActiveISO(_ childId: String)    -> String { "\(prefix)\(childId).lastActive" }
+        static func currentStreak(_ childId: String) -> String { "\(prefix)\(childId).current" }
+        static func longestStreak(_ childId: String) -> String { "\(prefix)\(childId).longest" }
+        static func lastActiveISO(_ childId: String) -> String { "\(prefix)\(childId).lastActive" }
         static func unlockedMilestones(_ childId: String) -> String { "\(prefix)\(childId).unlocked" }
         static func saverLastUsedISO(_ childId: String) -> String { "\(prefix)\(childId).saverUsed" }
         static func reminderScheduled(_ childId: String) -> String { "\(prefix)\(childId).reminderOn" }
@@ -292,5 +292,5 @@ final class DailyStreakInteractor: DailyStreakBusinessLogic, DailyStreakDataStor
     }
 }
 
-// TODO defer to Block Q (test coverage): unit tests for computeCheckIn,
+// NOTE deferred to Block Q (test coverage): unit tests for computeCheckIn,
 // useSaver gating, snapshot persistence round-trip, scheduleReminderIfNeeded.

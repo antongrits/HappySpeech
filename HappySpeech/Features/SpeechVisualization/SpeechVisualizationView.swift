@@ -255,4 +255,4 @@ struct SpeechVisualizationView: View {
     }
 }
 
-// TODO defer to Block Q (test coverage): snapshot, accuracy color thresholds.
+// NOTE deferred to Block Q (test coverage): snapshot, accuracy color thresholds.

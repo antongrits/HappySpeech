@@ -144,5 +144,5 @@ final class FamilyLeaderboardInteractor: FamilyLeaderboardBusinessLogic {
     }
 }
 
-// TODO defer to Block Q (test coverage): unit tests for aggregation,
+// NOTE deferred to Block Q (test coverage): unit tests for aggregation,
 // period boundaries, parentId filtering, empty family.

@@ -57,5 +57,5 @@ final class ARFaceFilterInteractor: ARFaceFilterBusinessLogic {
     }
 }
 
-// TODO defer to Block Q (test coverage): unit tests for case-insensitive
+// NOTE deferred to Block Q (test coverage): unit tests for case-insensitive
 // matching, partial match (substring vs whole word), wrong-trigger negative.

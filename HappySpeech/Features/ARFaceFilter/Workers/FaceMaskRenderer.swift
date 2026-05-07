@@ -62,4 +62,4 @@ final class FaceMaskRenderer: NSObject {
     }
 }
 
-// TODO defer to Block Q (test coverage): integration test with ARSession mock.
+// NOTE deferred to Block Q (test coverage): integration test with ARSession mock.

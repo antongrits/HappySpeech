@@ -52,7 +52,10 @@ extension TargetWordItem {
                 TargetWordItem(id: "ryba", word: "Рыба", soundGroup: soundGroup, syllabification: "ры-ба", audioFilename: nil, emoji: "word_fish"),
                 TargetWordItem(id: "luna", word: "Луна", soundGroup: soundGroup, syllabification: "лу-на", audioFilename: nil, emoji: "word_moon"),
                 TargetWordItem(id: "lev", word: "Лев", soundGroup: soundGroup, syllabification: "лев", audioFilename: nil, emoji: "reward_champion"),
-                TargetWordItem(id: "radio", word: "Радио", soundGroup: soundGroup, syllabification: "ра-ди-о", audioFilename: nil, emoji: "antenna.radiowaves.left.and.right")
+                TargetWordItem(id: "radio", word: "Радио",
+                               soundGroup: soundGroup, syllabification: "ра-ди-о",
+                               audioFilename: nil,
+                               emoji: "antenna.radiowaves.left.and.right")
             ]
         default: // velar + unknown
             return [

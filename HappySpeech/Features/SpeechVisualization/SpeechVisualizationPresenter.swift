@@ -115,4 +115,3 @@ final class SpeechVisualizationPresenter: SpeechVisualizationPresentationLogic {
         await displayLogic?.displayScore(viewModel: viewModel)
     }
 }
-
