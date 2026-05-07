@@ -116,11 +116,9 @@ struct StoryCompletionView: View {
     private var emojiTile: some View {
         HSLiquidGlassCard(style: .primary, padding: 0) {
             ZStack {
-                Text(display.emoji)
-                    .font(TypographyTokens.kidDisplay(84))
+                HSContentSymbol(display.emoji, size: 84)
                     .frame(maxWidth: .infinity)
                     .frame(height: 140)
-                    .accessibilityHidden(true)
 
                 // Иконка TTS — показываем только в фазе reading.
                 if display.phase == .reading, display.isReading {

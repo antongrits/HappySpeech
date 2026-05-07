@@ -32,35 +32,35 @@ extension TargetWordItem {
         switch soundGroup {
         case SoundFamily.whistling.rawValue:
             return [
-                TargetWordItem(id: "sova", word: "Сова", soundGroup: soundGroup, syllabification: "со-ва", audioFilename: nil, emoji: "🦉"),
-                TargetWordItem(id: "zamok", word: "Замок", soundGroup: soundGroup, syllabification: "за-мок", audioFilename: nil, emoji: "🔒"),
-                TargetWordItem(id: "zub", word: "Зуб", soundGroup: soundGroup, syllabification: "зуб", audioFilename: nil, emoji: "🦷"),
-                TargetWordItem(id: "sad", word: "Сад", soundGroup: soundGroup, syllabification: "сад", audioFilename: nil, emoji: "🌳"),
-                TargetWordItem(id: "sobaka", word: "Собака", soundGroup: soundGroup, syllabification: "со-ба-ка", audioFilename: nil, emoji: "🐶")
+                TargetWordItem(id: "sova", word: "Сова", soundGroup: soundGroup, syllabification: "со-ва", audioFilename: nil, emoji: "word_bird"),
+                TargetWordItem(id: "zamok", word: "Замок", soundGroup: soundGroup, syllabification: "за-мок", audioFilename: nil, emoji: "word_door"),
+                TargetWordItem(id: "zub", word: "Зуб", soundGroup: soundGroup, syllabification: "зуб", audioFilename: nil, emoji: "word_bag"),
+                TargetWordItem(id: "sad", word: "Сад", soundGroup: soundGroup, syllabification: "сад", audioFilename: nil, emoji: "word_tree"),
+                TargetWordItem(id: "sobaka", word: "Собака", soundGroup: soundGroup, syllabification: "со-ба-ка", audioFilename: nil, emoji: "word_dog")
             ]
         case SoundFamily.hissing.rawValue:
             return [
-                TargetWordItem(id: "shuba", word: "Шуба", soundGroup: soundGroup, syllabification: "шу-ба", audioFilename: nil, emoji: "🧥"),
-                TargetWordItem(id: "zhaba", word: "Жаба", soundGroup: soundGroup, syllabification: "жа-ба", audioFilename: nil, emoji: "🐸"),
-                TargetWordItem(id: "shkola", word: "Школа", soundGroup: soundGroup, syllabification: "шко-ла", audioFilename: nil, emoji: "🏫"),
-                TargetWordItem(id: "zhuk", word: "Жук", soundGroup: soundGroup, syllabification: "жук", audioFilename: nil, emoji: "🐞"),
-                TargetWordItem(id: "shapka", word: "Шапка", soundGroup: soundGroup, syllabification: "шап-ка", audioFilename: nil, emoji: "🧢")
+                TargetWordItem(id: "shuba", word: "Шуба", soundGroup: soundGroup, syllabification: "шу-ба", audioFilename: nil, emoji: "word_bag"),
+                TargetWordItem(id: "zhaba", word: "Жаба", soundGroup: soundGroup, syllabification: "жа-ба", audioFilename: nil, emoji: "word_frog"),
+                TargetWordItem(id: "shkola", word: "Школа", soundGroup: soundGroup, syllabification: "шко-ла", audioFilename: nil, emoji: "house.fill"),
+                TargetWordItem(id: "zhuk", word: "Жук", soundGroup: soundGroup, syllabification: "жук", audioFilename: nil, emoji: "word_butterfly_insect"),
+                TargetWordItem(id: "shapka", word: "Шапка", soundGroup: soundGroup, syllabification: "шап-ка", audioFilename: nil, emoji: "word_bag")
             ]
         case SoundFamily.sonorant.rawValue:
             return [
-                TargetWordItem(id: "raketa", word: "Ракета", soundGroup: soundGroup, syllabification: "ра-ке-та", audioFilename: nil, emoji: "🚀"),
-                TargetWordItem(id: "ryba", word: "Рыба", soundGroup: soundGroup, syllabification: "ры-ба", audioFilename: nil, emoji: "🐟"),
-                TargetWordItem(id: "luna", word: "Луна", soundGroup: soundGroup, syllabification: "лу-на", audioFilename: nil, emoji: "🌙"),
-                TargetWordItem(id: "lev", word: "Лев", soundGroup: soundGroup, syllabification: "лев", audioFilename: nil, emoji: "🦁"),
-                TargetWordItem(id: "radio", word: "Радио", soundGroup: soundGroup, syllabification: "ра-ди-о", audioFilename: nil, emoji: "📻")
+                TargetWordItem(id: "raketa", word: "Ракета", soundGroup: soundGroup, syllabification: "ра-ке-та", audioFilename: nil, emoji: "reward_rocket"),
+                TargetWordItem(id: "ryba", word: "Рыба", soundGroup: soundGroup, syllabification: "ры-ба", audioFilename: nil, emoji: "word_fish"),
+                TargetWordItem(id: "luna", word: "Луна", soundGroup: soundGroup, syllabification: "лу-на", audioFilename: nil, emoji: "word_moon"),
+                TargetWordItem(id: "lev", word: "Лев", soundGroup: soundGroup, syllabification: "лев", audioFilename: nil, emoji: "reward_champion"),
+                TargetWordItem(id: "radio", word: "Радио", soundGroup: soundGroup, syllabification: "ра-ди-о", audioFilename: nil, emoji: "antenna.radiowaves.left.and.right")
             ]
         default: // velar + unknown
             return [
-                TargetWordItem(id: "kot", word: "Кот", soundGroup: soundGroup, syllabification: "кот", audioFilename: nil, emoji: "🐱"),
-                TargetWordItem(id: "gora", word: "Гора", soundGroup: soundGroup, syllabification: "го-ра", audioFilename: nil, emoji: "⛰️"),
-                TargetWordItem(id: "hvala", word: "Хвала", soundGroup: soundGroup, syllabification: "хва-ла", audioFilename: nil, emoji: "👏"),
-                TargetWordItem(id: "kniga", word: "Книга", soundGroup: soundGroup, syllabification: "кни-га", audioFilename: nil, emoji: "📚"),
-                TargetWordItem(id: "galka", word: "Галка", soundGroup: soundGroup, syllabification: "гал-ка", audioFilename: nil, emoji: "🐦")
+                TargetWordItem(id: "kot", word: "Кот", soundGroup: soundGroup, syllabification: "кот", audioFilename: nil, emoji: "word_cat"),
+                TargetWordItem(id: "gora", word: "Гора", soundGroup: soundGroup, syllabification: "го-ра", audioFilename: nil, emoji: "word_forest"),
+                TargetWordItem(id: "hvala", word: "Хвала", soundGroup: soundGroup, syllabification: "хва-ла", audioFilename: nil, emoji: "hands.clap.fill"),
+                TargetWordItem(id: "kniga", word: "Книга", soundGroup: soundGroup, syllabification: "кни-га", audioFilename: nil, emoji: "books.vertical.fill"),
+                TargetWordItem(id: "galka", word: "Галка", soundGroup: soundGroup, syllabification: "гал-ка", audioFilename: nil, emoji: "word_bird")
             ]
         }
     }

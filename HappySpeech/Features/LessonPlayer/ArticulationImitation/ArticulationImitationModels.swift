@@ -63,7 +63,7 @@ extension ArticulationPose {
             name: String(localized: "artposeA.name"),
             instruction: String(localized: "artposeA.instruction"),
             voicePrompt: String(localized: "artposeA.prompt"),
-            emoji: "😮",
+            emoji: "mouth.fill",
             systemImageName: "mouth",
             targetSound: "А",
             blendshapeTargets: [
@@ -78,7 +78,7 @@ extension ArticulationPose {
             name: String(localized: "artposeO.name"),
             instruction: String(localized: "artposeO.instruction"),
             voicePrompt: String(localized: "artposeO.prompt"),
-            emoji: "😯",
+            emoji: "mouth.fill",
             systemImageName: "circle",
             targetSound: "О",
             blendshapeTargets: [
@@ -94,7 +94,7 @@ extension ArticulationPose {
             name: String(localized: "artposeU.name"),
             instruction: String(localized: "artposeU.instruction"),
             voicePrompt: String(localized: "artposeU.prompt"),
-            emoji: "😗",
+            emoji: "mouth.fill",
             systemImageName: "circle.fill",
             targetSound: "У",
             blendshapeTargets: [
@@ -109,7 +109,7 @@ extension ArticulationPose {
             name: String(localized: "artposeI.name"),
             instruction: String(localized: "artposeI.instruction"),
             voicePrompt: String(localized: "artposeI.prompt"),
-            emoji: "😁",
+            emoji: "mouth.fill",
             systemImageName: "face.smiling",
             targetSound: "И",
             blendshapeTargets: [
@@ -126,7 +126,7 @@ extension ArticulationPose {
             name: String(localized: "artposeE.name"),
             instruction: String(localized: "artposeE.instruction"),
             voicePrompt: String(localized: "artposeE.prompt"),
-            emoji: "😐",
+            emoji: "mouth.fill",
             systemImageName: "minus",
             targetSound: "Э",
             blendshapeTargets: [
@@ -142,7 +142,7 @@ extension ArticulationPose {
             name: String(localized: "artposeY.name"),
             instruction: String(localized: "artposeY.instruction"),
             voicePrompt: String(localized: "artposeY.prompt"),
-            emoji: "😑",
+            emoji: "mouth.fill",
             systemImageName: "rectangle",
             targetSound: "Ы",
             blendshapeTargets: [
@@ -158,7 +158,7 @@ extension ArticulationPose {
             name: String(localized: "artposeM.name"),
             instruction: String(localized: "artposeM.instruction"),
             voicePrompt: String(localized: "artposeM.prompt"),
-            emoji: "🤐",
+            emoji: "mouth.fill",
             systemImageName: "mouth.fill",
             targetSound: "М",
             blendshapeTargets: [
@@ -173,7 +173,7 @@ extension ArticulationPose {
             name: String(localized: "artposeP.name"),
             instruction: String(localized: "artposeP.instruction"),
             voicePrompt: String(localized: "artposeP.prompt"),
-            emoji: "💋",
+            emoji: "mouth.fill",
             systemImageName: "mouth",
             targetSound: "П",
             blendshapeTargets: [
@@ -189,7 +189,7 @@ extension ArticulationPose {
             name: String(localized: "artposeS.name"),
             instruction: String(localized: "artposeS.instruction"),
             voicePrompt: String(localized: "artposeS.prompt"),
-            emoji: "😬",
+            emoji: "mouth.fill",
             systemImageName: "line.diagonal",
             targetSound: "С",
             blendshapeTargets: [
@@ -222,7 +222,7 @@ extension ArticulationPose {
             name: String(localized: "artposeR.name"),
             instruction: String(localized: "artposeR.instruction"),
             voicePrompt: String(localized: "artposeR.prompt"),
-            emoji: "👅",
+            emoji: "mouth.fill",
             systemImageName: "arrow.up",
             targetSound: "Р",
             blendshapeTargets: [
@@ -239,7 +239,7 @@ extension ArticulationPose {
             name: String(localized: "artposeL.name"),
             instruction: String(localized: "artposeL.instruction"),
             voicePrompt: String(localized: "artposeL.prompt"),
-            emoji: "😛",
+            emoji: "mouth.fill",
             systemImageName: "arrow.left.and.right",
             targetSound: "Л",
             blendshapeTargets: [

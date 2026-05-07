@@ -152,9 +152,7 @@ struct RepeatAfterModelView: View {
         if let word = display.currentWord {
             HSLiquidGlassCard(style: .primary, padding: SpacingTokens.large) {
                 VStack(spacing: SpacingTokens.medium) {
-                    Text(word.emoji)
-                        .font(TypographyTokens.kidDisplay(96))
-                        .accessibilityHidden(true)
+                    HSContentSymbol(word.emoji, size: 96)
 
                     LetterHighlightView(
                         word: word.word,

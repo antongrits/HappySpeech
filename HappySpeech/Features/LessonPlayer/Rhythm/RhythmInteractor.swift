@@ -381,7 +381,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
                 syllableWord: "СО-ва",
                 targetWord: "сова",
                 soundGroup: "whistling",
-                emoji: "🦉",
+                emoji: "word_bird",
                 displayPattern: "ТА • та"
             ),
             RhythmPattern(
@@ -390,7 +390,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
                 syllableWord: "СА-мо-лёт",
                 targetWord: "самолёт",
                 soundGroup: "whistling",
-                emoji: "✈️",
+                emoji: "word_kite",
                 displayPattern: "ТА • та • та"
             ),
             RhythmPattern(
@@ -399,7 +399,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
                 syllableWord: "со-СНА",
                 targetWord: "сосна",
                 soundGroup: "whistling",
-                emoji: "🌲",
+                emoji: "word_forest",
                 displayPattern: "та • ТА"
             ),
             RhythmPattern(
@@ -408,7 +408,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
                 syllableWord: "ка-ПУС-та",
                 targetWord: "капуста",
                 soundGroup: "whistling",
-                emoji: "🥬",
+                emoji: "word_flower",
                 displayPattern: "та • ТА • та"
             ),
             RhythmPattern(
@@ -417,7 +417,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
                 syllableWord: "ЗА-ле-за-ет",
                 targetWord: "залезает",
                 soundGroup: "whistling",
-                emoji: "🧗",
+                emoji: "reward_brave_heart",
                 displayPattern: "ТА • та • та • та"
             )
         ],
@@ -428,7 +428,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
                 syllableWord: "ШАП-ка",
                 targetWord: "шапка",
                 soundGroup: "hissing",
-                emoji: "🧢",
+                emoji: "word_bag",
                 displayPattern: "ТА • та"
             ),
             RhythmPattern(
@@ -437,7 +437,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
                 syllableWord: "чу-ДО",
                 targetWord: "чудо",
                 soundGroup: "hissing",
-                emoji: "✨",
+                emoji: "sparkles",
                 displayPattern: "та • ТА"
             ),
             RhythmPattern(
@@ -446,7 +446,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
                 syllableWord: "ШО-ко-лад",
                 targetWord: "шоколад",
                 soundGroup: "hissing",
-                emoji: "🍫",
+                emoji: "word_cake",
                 displayPattern: "ТА • та • та"
             ),
             RhythmPattern(
@@ -455,7 +455,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
                 syllableWord: "ма-ШИ-на",
                 targetWord: "машина",
                 soundGroup: "hissing",
-                emoji: "🚗",
+                emoji: "word_car",
                 displayPattern: "та • ТА • та"
             ),
             RhythmPattern(
@@ -464,7 +464,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
                 syllableWord: "ЩУ-ка-плы-вёт",
                 targetWord: "щука плывёт",
                 soundGroup: "hissing",
-                emoji: "🐟",
+                emoji: "word_fish",
                 displayPattern: "ТА • та • та • та"
             )
         ],
@@ -475,7 +475,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
                 syllableWord: "РЫ-ба",
                 targetWord: "рыба",
                 soundGroup: "sonants",
-                emoji: "🐟",
+                emoji: "word_fish",
                 displayPattern: "ТА • та"
             ),
             RhythmPattern(
@@ -484,7 +484,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
                 syllableWord: "ра-КЕ-та",
                 targetWord: "ракета",
                 soundGroup: "sonants",
-                emoji: "🚀",
+                emoji: "reward_rocket",
                 displayPattern: "та • ТА • та"
             ),
             RhythmPattern(
@@ -493,7 +493,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
                 syllableWord: "ЛО-шадь",
                 targetWord: "лошадь",
                 soundGroup: "sonants",
-                emoji: "🐴",
+                emoji: "word_cow",
                 displayPattern: "ТА • та"
             ),
             RhythmPattern(
@@ -502,7 +502,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
                 syllableWord: "ру-КА",
                 targetWord: "рука",
                 soundGroup: "sonants",
-                emoji: "✋",
+                emoji: "hand.raised.fill",
                 displayPattern: "та • ТА"
             ),
             RhythmPattern(
@@ -511,7 +511,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
                 syllableWord: "ра-ДУ-га-ет",
                 targetWord: "радуется",
                 soundGroup: "sonants",
-                emoji: "🌈",
+                emoji: "reward_rainbow",
                 displayPattern: "та • ТА • та • та"
             )
         ],
@@ -522,7 +522,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
                 syllableWord: "КОТ-ик",
                 targetWord: "котик",
                 soundGroup: "velar",
-                emoji: "🐱",
+                emoji: "word_cat",
                 displayPattern: "ТА • та"
             ),
             RhythmPattern(
@@ -531,7 +531,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
                 syllableWord: "ко-РО-ва",
                 targetWord: "корова",
                 soundGroup: "velar",
-                emoji: "🐄",
+                emoji: "word_cow",
                 displayPattern: "та • ТА • та"
             ),
             RhythmPattern(
@@ -540,7 +540,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
                 syllableWord: "ГУ-сё-нок",
                 targetWord: "гусёнок",
                 soundGroup: "velar",
-                emoji: "🐥",
+                emoji: "word_hen",
                 displayPattern: "ТА • та • та"
             ),
             RhythmPattern(
@@ -549,7 +549,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
                 syllableWord: "ХЛЕ-бец",
                 targetWord: "хлебец",
                 soundGroup: "velar",
-                emoji: "🍞",
+                emoji: "word_cake",
                 displayPattern: "ТА • та"
             ),
             RhythmPattern(
@@ -558,7 +558,7 @@ final class RhythmInteractor: RhythmBusinessLogic {
                 syllableWord: "ка-РА-мель-ка",
                 targetWord: "карамелька",
                 soundGroup: "velar",
-                emoji: "🍬",
+                emoji: "word_cake",
                 displayPattern: "та • ТА • та • та"
             )
         ]

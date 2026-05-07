@@ -98,25 +98,25 @@ extension SortingSet {
         taskType: .firstSound,
         taskDescription: "Разложи слова: в синюю — на звук «С», в зелёную — на звук «Ш»",
         categories: [
-            SortingCategory(id: "sound_s", title: "Звук С", emoji: "🔵", colorKey: "blue"),
-            SortingCategory(id: "sound_sh", title: "Звук Ш", emoji: "🟢", colorKey: "green")
+            SortingCategory(id: "sound_s", title: "Звук С", emoji: "circle.fill", colorKey: "blue"),
+            SortingCategory(id: "sound_sh", title: "Звук Ш", emoji: "circle.fill", colorKey: "green")
         ],
         words: [
-            SortingWord(id: "sok_fs", word: "Сок", emoji: "🧃", correctCategory: "sound_s",
+            SortingWord(id: "sok_fs", word: "Сок", emoji: "word_cup", correctCategory: "sound_s",
                         soundGroup: "whistling", syllableCount: 1, firstSound: "С", soundPosition: "initial"),
-            SortingWord(id: "shapka_fs", word: "Шапка", emoji: "🎩", correctCategory: "sound_sh",
+            SortingWord(id: "shapka_fs", word: "Шапка", emoji: "word_bag", correctCategory: "sound_sh",
                         soundGroup: "hissing", syllableCount: 2, firstSound: "Ш", soundPosition: "initial"),
-            SortingWord(id: "sumka_fs", word: "Сумка", emoji: "👜", correctCategory: "sound_s",
+            SortingWord(id: "sumka_fs", word: "Сумка", emoji: "word_bag", correctCategory: "sound_s",
                         soundGroup: "whistling", syllableCount: 2, firstSound: "С", soundPosition: "initial"),
-            SortingWord(id: "shina_fs", word: "Шина", emoji: "🛞", correctCategory: "sound_sh",
+            SortingWord(id: "shina_fs", word: "Шина", emoji: "word_window", correctCategory: "sound_sh",
                         soundGroup: "hissing", syllableCount: 2, firstSound: "Ш", soundPosition: "initial"),
-            SortingWord(id: "slon_fs", word: "Слон", emoji: "🐘", correctCategory: "sound_s",
+            SortingWord(id: "slon_fs", word: "Слон", emoji: "word_elephant", correctCategory: "sound_s",
                         soundGroup: "whistling", syllableCount: 1, firstSound: "С", soundPosition: "initial"),
-            SortingWord(id: "shkaf_fs", word: "Шкаф", emoji: "🗄️", correctCategory: "sound_sh",
+            SortingWord(id: "shkaf_fs", word: "Шкаф", emoji: "word_door", correctCategory: "sound_sh",
                         soundGroup: "hissing", syllableCount: 1, firstSound: "Ш", soundPosition: "initial"),
             SortingWord(id: "stol_fs", word: "Стол", emoji: "🪑", correctCategory: "sound_s",
                         soundGroup: "whistling", syllableCount: 1, firstSound: "С", soundPosition: "initial"),
-            SortingWord(id: "sharf_fs", word: "Шарф", emoji: "🧣", correctCategory: "sound_sh",
+            SortingWord(id: "sharf_fs", word: "Шарф", emoji: "word_bag", correctCategory: "sound_sh",
                         soundGroup: "hissing", syllableCount: 1, firstSound: "Ш", soundPosition: "initial")
         ]
     )
@@ -134,21 +134,21 @@ extension SortingSet {
             SortingCategory(id: "final", title: "В конце", emoji: "⬇️", colorKey: "orange")
         ],
         words: [
-            SortingWord(id: "sok_pos", word: "Сок", emoji: "🧃", correctCategory: "initial",
+            SortingWord(id: "sok_pos", word: "Сок", emoji: "word_cup", correctCategory: "initial",
                         soundGroup: "whistling", syllableCount: 1, firstSound: "С", soundPosition: "initial"),
-            SortingWord(id: "nos_pos", word: "Нос", emoji: "👃", correctCategory: "final",
+            SortingWord(id: "nos_pos", word: "Нос", emoji: "mouth.fill", correctCategory: "final",
                         soundGroup: "whistling", syllableCount: 1, firstSound: "Н", soundPosition: "final"),
-            SortingWord(id: "sumka_pos", word: "Сумка", emoji: "👜", correctCategory: "initial",
+            SortingWord(id: "sumka_pos", word: "Сумка", emoji: "word_bag", correctCategory: "initial",
                         soundGroup: "whistling", syllableCount: 2, firstSound: "С", soundPosition: "initial"),
-            SortingWord(id: "les_pos", word: "Лес", emoji: "🌲", correctCategory: "final",
+            SortingWord(id: "les_pos", word: "Лес", emoji: "word_forest", correctCategory: "final",
                         soundGroup: "whistling", syllableCount: 1, firstSound: "Л", soundPosition: "final"),
-            SortingWord(id: "son_pos", word: "Сон", emoji: "💤", correctCategory: "initial",
+            SortingWord(id: "son_pos", word: "Сон", emoji: "moon.zzz.fill", correctCategory: "initial",
                         soundGroup: "whistling", syllableCount: 1, firstSound: "С", soundPosition: "initial"),
-            SortingWord(id: "pes_pos", word: "Пёс", emoji: "🐕", correctCategory: "final",
+            SortingWord(id: "pes_pos", word: "Пёс", emoji: "word_dog", correctCategory: "final",
                         soundGroup: "whistling", syllableCount: 1, firstSound: "П", soundPosition: "final"),
-            SortingWord(id: "sabaka_pos", word: "Собака", emoji: "🐶", correctCategory: "initial",
+            SortingWord(id: "sabaka_pos", word: "Собака", emoji: "word_dog", correctCategory: "initial",
                         soundGroup: "whistling", syllableCount: 3, firstSound: "С", soundPosition: "initial"),
-            SortingWord(id: "kolos_pos", word: "Колос", emoji: "🌾", correctCategory: "final",
+            SortingWord(id: "kolos_pos", word: "Колос", emoji: "word_flower", correctCategory: "final",
                         soundGroup: "whistling", syllableCount: 2, firstSound: "К", soundPosition: "final")
         ]
     )
@@ -167,21 +167,21 @@ extension SortingSet {
             SortingCategory(id: "three", title: "3 слога", emoji: "3️⃣", colorKey: "green")
         ],
         words: [
-            SortingWord(id: "dom_sc", word: "Дом", emoji: "🏠", correctCategory: "one",
+            SortingWord(id: "dom_sc", word: "Дом", emoji: "word_house", correctCategory: "one",
                         soundGroup: "any", syllableCount: 1, firstSound: "Д", soundPosition: "initial"),
-            SortingWord(id: "koshka_sc", word: "Кошка", emoji: "🐱", correctCategory: "two",
+            SortingWord(id: "koshka_sc", word: "Кошка", emoji: "word_cat", correctCategory: "two",
                         soundGroup: "any", syllableCount: 2, firstSound: "К", soundPosition: "initial"),
-            SortingWord(id: "sobaka_sc", word: "Собака", emoji: "🐶", correctCategory: "three",
+            SortingWord(id: "sobaka_sc", word: "Собака", emoji: "word_dog", correctCategory: "three",
                         soundGroup: "any", syllableCount: 3, firstSound: "С", soundPosition: "initial"),
-            SortingWord(id: "les_sc", word: "Лес", emoji: "🌲", correctCategory: "one",
+            SortingWord(id: "les_sc", word: "Лес", emoji: "word_forest", correctCategory: "one",
                         soundGroup: "any", syllableCount: 1, firstSound: "Л", soundPosition: "initial"),
-            SortingWord(id: "reka_sc", word: "Река", emoji: "🌊", correctCategory: "two",
+            SortingWord(id: "reka_sc", word: "Река", emoji: "word_fish", correctCategory: "two",
                         soundGroup: "any", syllableCount: 2, firstSound: "Р", soundPosition: "initial"),
-            SortingWord(id: "malina_sc", word: "Малина", emoji: "🍓", correctCategory: "three",
+            SortingWord(id: "malina_sc", word: "Малина", emoji: "word_apple", correctCategory: "three",
                         soundGroup: "any", syllableCount: 3, firstSound: "М", soundPosition: "initial"),
-            SortingWord(id: "kit_sc", word: "Кит", emoji: "🐋", correctCategory: "one",
+            SortingWord(id: "kit_sc", word: "Кит", emoji: "word_fish", correctCategory: "one",
                         soundGroup: "any", syllableCount: 1, firstSound: "К", soundPosition: "initial"),
-            SortingWord(id: "ryba_sc", word: "Рыба", emoji: "🐟", correctCategory: "two",
+            SortingWord(id: "ryba_sc", word: "Рыба", emoji: "word_fish", correctCategory: "two",
                         soundGroup: "any", syllableCount: 2, firstSound: "Р", soundPosition: "initial")
         ]
     )
@@ -195,25 +195,25 @@ extension SortingSet {
         taskType: .vowelConsonant,
         taskDescription: "Послушай слово. Первый звук — гласный или согласный?",
         categories: [
-            SortingCategory(id: "vowel", title: "Гласный", emoji: "🔴", colorKey: "red"),
-            SortingCategory(id: "consonant", title: "Согласный", emoji: "🔵", colorKey: "blue")
+            SortingCategory(id: "vowel", title: "Гласный", emoji: "circle.fill", colorKey: "red"),
+            SortingCategory(id: "consonant", title: "Согласный", emoji: "circle.fill", colorKey: "blue")
         ],
         words: [
-            SortingWord(id: "aist_vc", word: "Аист", emoji: "🦢", correctCategory: "vowel",
+            SortingWord(id: "aist_vc", word: "Аист", emoji: "word_bird", correctCategory: "vowel",
                         soundGroup: "any", syllableCount: 2, firstSound: "А", soundPosition: "initial"),
-            SortingWord(id: "baran_vc", word: "Баран", emoji: "🐑", correctCategory: "consonant",
+            SortingWord(id: "baran_vc", word: "Баран", emoji: "word_cow", correctCategory: "consonant",
                         soundGroup: "any", syllableCount: 2, firstSound: "Б", soundPosition: "initial"),
-            SortingWord(id: "utka_vc", word: "Утка", emoji: "🦆", correctCategory: "vowel",
+            SortingWord(id: "utka_vc", word: "Утка", emoji: "word_bird", correctCategory: "vowel",
                         soundGroup: "any", syllableCount: 2, firstSound: "У", soundPosition: "initial"),
-            SortingWord(id: "gora_vc", word: "Гора", emoji: "⛰️", correctCategory: "consonant",
+            SortingWord(id: "gora_vc", word: "Гора", emoji: "word_forest", correctCategory: "consonant",
                         soundGroup: "any", syllableCount: 2, firstSound: "Г", soundPosition: "initial"),
-            SortingWord(id: "orel_vc", word: "Орёл", emoji: "🦅", correctCategory: "vowel",
+            SortingWord(id: "orel_vc", word: "Орёл", emoji: "word_bird", correctCategory: "vowel",
                         soundGroup: "any", syllableCount: 2, firstSound: "О", soundPosition: "initial"),
-            SortingWord(id: "dom_vc", word: "Дом", emoji: "🏠", correctCategory: "consonant",
+            SortingWord(id: "dom_vc", word: "Дом", emoji: "word_house", correctCategory: "consonant",
                         soundGroup: "any", syllableCount: 1, firstSound: "Д", soundPosition: "initial"),
             SortingWord(id: "igla_vc", word: "Игла", emoji: "🪡", correctCategory: "vowel",
                         soundGroup: "any", syllableCount: 2, firstSound: "И", soundPosition: "initial"),
-            SortingWord(id: "kot_vc", word: "Кот", emoji: "🐱", correctCategory: "consonant",
+            SortingWord(id: "kot_vc", word: "Кот", emoji: "word_cat", correctCategory: "consonant",
                         soundGroup: "any", syllableCount: 1, firstSound: "К", soundPosition: "initial")
         ]
     )
@@ -227,25 +227,25 @@ extension SortingSet {
         taskType: .voicedUnvoiced,
         taskDescription: "Первый согласный звук — звонкий или глухой?",
         categories: [
-            SortingCategory(id: "voiced", title: "Звонкий", emoji: "🔔", colorKey: "yellow"),
-            SortingCategory(id: "unvoiced", title: "Глухой", emoji: "🔕", colorKey: "gray")
+            SortingCategory(id: "voiced", title: "Звонкий", emoji: "bell.fill", colorKey: "yellow"),
+            SortingCategory(id: "unvoiced", title: "Глухой", emoji: "bell.slash.fill", colorKey: "gray")
         ],
         words: [
             SortingWord(id: "bochka_vu", word: "Бочка", emoji: "🪣", correctCategory: "voiced",
                         soundGroup: "any", syllableCount: 2, firstSound: "Б", soundPosition: "initial"),
-            SortingWord(id: "papa_vu", word: "Папа", emoji: "👨", correctCategory: "unvoiced",
+            SortingWord(id: "papa_vu", word: "Папа", emoji: "mascot_lyalya_read", correctCategory: "unvoiced",
                         soundGroup: "any", syllableCount: 2, firstSound: "П", soundPosition: "initial"),
-            SortingWord(id: "dub_vu", word: "Дуб", emoji: "🌳", correctCategory: "voiced",
+            SortingWord(id: "dub_vu", word: "Дуб", emoji: "word_tree", correctCategory: "voiced",
                         soundGroup: "any", syllableCount: 1, firstSound: "Д", soundPosition: "initial"),
-            SortingWord(id: "tortik_vu", word: "Тортик", emoji: "🎂", correctCategory: "unvoiced",
+            SortingWord(id: "tortik_vu", word: "Тортик", emoji: "birthday.cake.fill", correctCategory: "unvoiced",
                         soundGroup: "any", syllableCount: 2, firstSound: "Т", soundPosition: "initial"),
-            SortingWord(id: "vaza_vu", word: "Ваза", emoji: "💐", correctCategory: "voiced",
+            SortingWord(id: "vaza_vu", word: "Ваза", emoji: "leaf.fill", correctCategory: "voiced",
                         soundGroup: "any", syllableCount: 2, firstSound: "В", soundPosition: "initial"),
-            SortingWord(id: "futbol_vu", word: "Футбол", emoji: "⚽", correctCategory: "unvoiced",
+            SortingWord(id: "futbol_vu", word: "Футбол", emoji: "soccerball", correctCategory: "unvoiced",
                         soundGroup: "any", syllableCount: 2, firstSound: "Ф", soundPosition: "initial"),
-            SortingWord(id: "gnom_vu", word: "Гном", emoji: "🧙", correctCategory: "voiced",
+            SortingWord(id: "gnom_vu", word: "Гном", emoji: "person.fill", correctCategory: "voiced",
                         soundGroup: "any", syllableCount: 1, firstSound: "Г", soundPosition: "initial"),
-            SortingWord(id: "korol_vu", word: "Король", emoji: "👑", correctCategory: "unvoiced",
+            SortingWord(id: "korol_vu", word: "Король", emoji: "crown.fill", correctCategory: "unvoiced",
                         soundGroup: "any", syllableCount: 2, firstSound: "К", soundPosition: "initial")
         ]
     )
@@ -259,25 +259,25 @@ extension SortingSet {
         taskType: .semantic,
         taskDescription: "Разложи: живое или неживое?",
         categories: [
-            SortingCategory(id: "living", title: "Живое", emoji: "🌱", colorKey: "green"),
+            SortingCategory(id: "living", title: "Живое", emoji: "leaf.fill", colorKey: "green"),
             SortingCategory(id: "nonliving", title: "Неживое", emoji: "🪨", colorKey: "gray")
         ],
         words: [
-            SortingWord(id: "kot_an", word: "Кот", emoji: "🐱", correctCategory: "living",
+            SortingWord(id: "kot_an", word: "Кот", emoji: "word_cat", correctCategory: "living",
                         soundGroup: "any", syllableCount: 1, firstSound: "К", soundPosition: "initial"),
             SortingWord(id: "stol_an", word: "Стол", emoji: "🪑", correctCategory: "nonliving",
                         soundGroup: "any", syllableCount: 1, firstSound: "С", soundPosition: "initial"),
-            SortingWord(id: "reka_an", word: "Река", emoji: "🌊", correctCategory: "nonliving",
+            SortingWord(id: "reka_an", word: "Река", emoji: "word_fish", correctCategory: "nonliving",
                         soundGroup: "any", syllableCount: 2, firstSound: "Р", soundPosition: "initial"),
-            SortingWord(id: "sobaka_an", word: "Собака", emoji: "🐶", correctCategory: "living",
+            SortingWord(id: "sobaka_an", word: "Собака", emoji: "word_dog", correctCategory: "living",
                         soundGroup: "any", syllableCount: 3, firstSound: "С", soundPosition: "initial"),
-            SortingWord(id: "derevo_an", word: "Дерево", emoji: "🌳", correctCategory: "living",
+            SortingWord(id: "derevo_an", word: "Дерево", emoji: "word_tree", correctCategory: "living",
                         soundGroup: "any", syllableCount: 3, firstSound: "Д", soundPosition: "initial"),
-            SortingWord(id: "kniga_an", word: "Книга", emoji: "📚", correctCategory: "nonliving",
+            SortingWord(id: "kniga_an", word: "Книга", emoji: "books.vertical.fill", correctCategory: "nonliving",
                         soundGroup: "any", syllableCount: 2, firstSound: "К", soundPosition: "initial"),
-            SortingWord(id: "ryba_an", word: "Рыба", emoji: "🐟", correctCategory: "living",
+            SortingWord(id: "ryba_an", word: "Рыба", emoji: "word_fish", correctCategory: "living",
                         soundGroup: "any", syllableCount: 2, firstSound: "Р", soundPosition: "initial"),
-            SortingWord(id: "dom_an", word: "Дом", emoji: "🏠", correctCategory: "nonliving",
+            SortingWord(id: "dom_an", word: "Дом", emoji: "word_house", correctCategory: "nonliving",
                         soundGroup: "any", syllableCount: 1, firstSound: "Д", soundPosition: "initial")
         ]
     )

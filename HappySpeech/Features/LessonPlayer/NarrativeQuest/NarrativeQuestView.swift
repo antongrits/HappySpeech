@@ -361,9 +361,7 @@ struct NarrativeQuestView: View {
                 padding: SpacingTokens.large
             ) {
                 VStack(spacing: SpacingTokens.small) {
-                    Text(display.rewardEmoji)
-                        .font(TypographyTokens.kidDisplay(64))
-                        .accessibilityHidden(true)
+                    HSContentSymbol(display.rewardEmoji, size: 64, tint: ColorTokens.Brand.gold)
                     Text(display.feedbackText)
                         .font(TypographyTokens.title(20))
                         .foregroundStyle(ColorTokens.Kid.ink)

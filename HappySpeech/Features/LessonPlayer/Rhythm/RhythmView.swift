@@ -126,9 +126,7 @@ struct RhythmView: View {
             VStack(spacing: SpacingTokens.medium) {
                 LyalyaMascotView(state: .explaining, size: 72)
                     .accessibilityHidden(true)
-                Text(store.display.emoji)
-                    .font(TypographyTokens.kidDisplay(72))
-                    .accessibilityHidden(true)
+                HSContentSymbol(store.display.emoji, size: 72)
                 Text(store.display.targetWord)
                     .font(TypographyTokens.title(28))
                     .foregroundStyle(ColorTokens.Kid.ink)
@@ -149,9 +147,7 @@ struct RhythmView: View {
 
     private var playingContent: some View {
         VStack(spacing: SpacingTokens.large) {
-            Text(store.display.emoji)
-                .font(TypographyTokens.kidDisplay(72))
-                .accessibilityHidden(true)
+            HSContentSymbol(store.display.emoji, size: 72)
             Text(String(localized: "Слушай внимательно…"))
                 .font(TypographyTokens.headline())
                 .foregroundStyle(ColorTokens.Brand.primary)

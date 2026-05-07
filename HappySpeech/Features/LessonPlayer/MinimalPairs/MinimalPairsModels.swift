@@ -48,25 +48,25 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "miska_mishka",
             targetWord: "миска", foilWord: "мишка",
-            targetEmoji: "🥣", foilEmoji: "🐻",
+            targetEmoji: "word_cup", foilEmoji: "word_bear",
             soundContrast: "С-Ш", targetIsLeft: true
         ),
         MinimalPairRound(
             id: "sova_shuba",
             targetWord: "сова", foilWord: "шуба",
-            targetEmoji: "🦉", foilEmoji: "🧥",
+            targetEmoji: "word_bird", foilEmoji: "word_bag",
             soundContrast: "С-Ш", targetIsLeft: false
         ),
         MinimalPairRound(
             id: "suk_shuk",
             targetWord: "сук", foilWord: "шук",
-            targetEmoji: "🌿", foilEmoji: "🌀",
+            targetEmoji: "word_flower", foilEmoji: "word_flower",
             soundContrast: "С-Ш", targetIsLeft: true
         ),
         MinimalPairRound(
             id: "kosa_kosha",
             targetWord: "коса", foilWord: "кошка",
-            targetEmoji: "🌾", foilEmoji: "🐱",
+            targetEmoji: "word_flower", foilEmoji: "word_cat",
             soundContrast: "С-Ш", targetIsLeft: false
         ),
 
@@ -74,19 +74,19 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "zima_zhima",
             targetWord: "зима", foilWord: "жима",
-            targetEmoji: "❄️", foilEmoji: "💪",
+            targetEmoji: "word_window", foilEmoji: "reward_brave_heart",
             soundContrast: "З-Ж", targetIsLeft: false
         ),
         MinimalPairRound(
             id: "zuk_zhuk",
             targetWord: "зук", foilWord: "жук",
-            targetEmoji: "🌀", foilEmoji: "🐛",
+            targetEmoji: "word_flower", foilEmoji: "word_butterfly_insect",
             soundContrast: "З-Ж", targetIsLeft: true
         ),
         MinimalPairRound(
             id: "zaba_zhaba",
             targetWord: "заба", foilWord: "жаба",
-            targetEmoji: "🌀", foilEmoji: "🐸",
+            targetEmoji: "word_flower", foilEmoji: "word_frog",
             soundContrast: "З-Ж", targetIsLeft: false
         ),
 
@@ -94,19 +94,19 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "rak_lak",
             targetWord: "рак", foilWord: "лак",
-            targetEmoji: "🦞", foilEmoji: "💅",
+            targetEmoji: "word_fish", foilEmoji: "word_apple",
             soundContrast: "Р-Л", targetIsLeft: true
         ),
         MinimalPairRound(
             id: "rama_lama",
             targetWord: "рама", foilWord: "лама",
-            targetEmoji: "🪟", foilEmoji: "🦙",
+            targetEmoji: "word_window", foilEmoji: "word_cow",
             soundContrast: "Р-Л", targetIsLeft: false
         ),
         MinimalPairRound(
             id: "rot_lot",
             targetWord: "рот", foilWord: "лот",
-            targetEmoji: "👄", foilEmoji: "🔢",
+            targetEmoji: "mouth.fill", foilEmoji: "textformat.123",
             soundContrast: "Р-Л", targetIsLeft: true
         ),
 
@@ -114,19 +114,19 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "bochka_pochka",
             targetWord: "бочка", foilWord: "почка",
-            targetEmoji: "🛢️", foilEmoji: "🫘",
+            targetEmoji: "word_bag", foilEmoji: "word_apple",
             soundContrast: "Б-П", targetIsLeft: true
         ),
         MinimalPairRound(
             id: "bala_pala",
             targetWord: "бала", foilWord: "пала",
-            targetEmoji: "🎈", foilEmoji: "🌴",
+            targetEmoji: "balloon.fill", foilEmoji: "word_tree",
             soundContrast: "Б-П", targetIsLeft: false
         ),
         MinimalPairRound(
             id: "bant_pant",
             targetWord: "бант", foilWord: "пант",
-            targetEmoji: "🎀", foilEmoji: "🦌",
+            targetEmoji: "ribbon", foilEmoji: "word_bear",
             soundContrast: "Б-П", targetIsLeft: true
         ),
 
@@ -134,19 +134,19 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "dom_tom",
             targetWord: "дом", foilWord: "том",
-            targetEmoji: "🏠", foilEmoji: "📖",
+            targetEmoji: "word_house", foilEmoji: "books.vertical.fill",
             soundContrast: "Д-Т", targetIsLeft: false
         ),
         MinimalPairRound(
             id: "duk_tuk",
             targetWord: "дук", foilWord: "тук",
-            targetEmoji: "🌀", foilEmoji: "🔨",
+            targetEmoji: "word_flower", foilEmoji: "hammer.fill",
             soundContrast: "Д-Т", targetIsLeft: true
         ),
         MinimalPairRound(
             id: "dama_tama",
             targetWord: "дама", foilWord: "тама",
-            targetEmoji: "👩", foilEmoji: "🌀",
+            targetEmoji: "mascot_lyalya_read", foilEmoji: "word_flower",
             soundContrast: "Д-Т", targetIsLeft: false
         ),
 
@@ -154,13 +154,13 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "kot_god",
             targetWord: "кот", foilWord: "год",
-            targetEmoji: "🐱", foilEmoji: "📅",
+            targetEmoji: "word_cat", foilEmoji: "calendar",
             soundContrast: "К-Г", targetIsLeft: false
         ),
         MinimalPairRound(
             id: "gora_kora",
             targetWord: "гора", foilWord: "кора",
-            targetEmoji: "⛰️", foilEmoji: "🪵",
+            targetEmoji: "word_forest", foilEmoji: "🪵",
             soundContrast: "К-Г", targetIsLeft: true
         ),
 
@@ -168,13 +168,13 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "vaza_faza",
             targetWord: "ваза", foilWord: "фаза",
-            targetEmoji: "🏺", foilEmoji: "⚡",
+            targetEmoji: "word_cup", foilEmoji: "bolt.fill",
             soundContrast: "В-Ф", targetIsLeft: true
         ),
         MinimalPairRound(
             id: "volk_folk",
             targetWord: "волк", foilWord: "фолк",
-            targetEmoji: "🐺", foilEmoji: "🎵",
+            targetEmoji: "word_fox", foilEmoji: "music.note",
             soundContrast: "В-Ф", targetIsLeft: false
         ),
 
@@ -182,13 +182,13 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "zhuk_shuk_2",
             targetWord: "жук", foilWord: "шук",
-            targetEmoji: "🐛", foilEmoji: "🌀",
+            targetEmoji: "word_butterfly_insect", foilEmoji: "word_flower",
             soundContrast: "Ж-Ш", targetIsLeft: true
         ),
         MinimalPairRound(
             id: "zhar_shar",
             targetWord: "жар", foilWord: "шар",
-            targetEmoji: "🔥", foilEmoji: "🎈",
+            targetEmoji: "flame.fill", foilEmoji: "balloon.fill",
             soundContrast: "Ж-Ш", targetIsLeft: false
         ),
 
@@ -196,13 +196,13 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "chelka_shelka",
             targetWord: "чёлка", foilWord: "щёлка",
-            targetEmoji: "💇", foilEmoji: "🔓",
+            targetEmoji: "scissors", foilEmoji: "lock.open.fill",
             soundContrast: "Ч-Щ", targetIsLeft: true
         ),
         MinimalPairRound(
             id: "chit_shit",
             targetWord: "чит", foilWord: "щит",
-            targetEmoji: "🃏", foilEmoji: "🛡️",
+            targetEmoji: "rectangle.fill.on.rectangle.fill", foilEmoji: "shield.fill",
             soundContrast: "Ч-Щ", targetIsLeft: false
         ),
 
@@ -210,13 +210,13 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "sort_zort",
             targetWord: "сорт", foilWord: "зорт",
-            targetEmoji: "🗂️", foilEmoji: "🌀",
+            targetEmoji: "folder.fill", foilEmoji: "word_flower",
             soundContrast: "С-З", targetIsLeft: true
         ),
         MinimalPairRound(
             id: "suk_zuk",
             targetWord: "сук", foilWord: "зук",
-            targetEmoji: "🌿", foilEmoji: "🌀",
+            targetEmoji: "word_flower", foilEmoji: "word_flower",
             soundContrast: "С-З", targetIsLeft: false
         ),
 
@@ -224,13 +224,13 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "sholk_shcholk",
             targetWord: "шёлк", foilWord: "щёлк",
-            targetEmoji: "🧵", foilEmoji: "👆",
+            targetEmoji: "scissors", foilEmoji: "hand.point.up.fill",
             soundContrast: "Ш-Щ", targetIsLeft: true
         ),
         MinimalPairRound(
             id: "shit_shchit",
             targetWord: "шит", foilWord: "щит",
-            targetEmoji: "🪡", foilEmoji: "🛡️",
+            targetEmoji: "🪡", foilEmoji: "shield.fill",
             soundContrast: "Ш-Щ", targetIsLeft: false
         ),
 
@@ -238,7 +238,7 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "les_yes",
             targetWord: "лес", foilWord: "ес",
-            targetEmoji: "🌲", foilEmoji: "🌀",
+            targetEmoji: "word_forest", foilEmoji: "word_flower",
             soundContrast: "Л-Й", targetIsLeft: true
         ),
 
@@ -246,13 +246,13 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "mama_nana",
             targetWord: "мама", foilWord: "нана",
-            targetEmoji: "👩", foilEmoji: "👵",
+            targetEmoji: "mascot_lyalya_read", foilEmoji: "mascot_lyalya_read",
             soundContrast: "М-Н", targetIsLeft: true
         ),
         MinimalPairRound(
             id: "mol_nol",
             targetWord: "моль", foilWord: "ноль",
-            targetEmoji: "🦋", foilEmoji: "0️⃣",
+            targetEmoji: "word_butterfly_insect", foilEmoji: "0️⃣",
             soundContrast: "М-Н", targetIsLeft: false
         ),
 
@@ -260,7 +260,7 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "gora_hora",
             targetWord: "гора", foilWord: "хора",
-            targetEmoji: "⛰️", foilEmoji: "💃",
+            targetEmoji: "word_forest", foilEmoji: "figure.dance",
             soundContrast: "Г-Х", targetIsLeft: true
         ),
 
@@ -268,13 +268,13 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "lisa_lysa",
             targetWord: "лиса", foilWord: "лыса",
-            targetEmoji: "🦊", foilEmoji: "👤",
+            targetEmoji: "word_fox", foilEmoji: "person.fill",
             soundContrast: "Л-Л'", targetIsLeft: true
         ),
         MinimalPairRound(
             id: "luk_lyuk",
             targetWord: "лук", foilWord: "люк",
-            targetEmoji: "🧅", foilEmoji: "🚪",
+            targetEmoji: "word_apple", foilEmoji: "word_door",
             soundContrast: "Л-Л'", targetIsLeft: false
         ),
 
@@ -282,7 +282,7 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "roza_koza",
             targetWord: "роза", foilWord: "коза",
-            targetEmoji: "🌹", foilEmoji: "🐐",
+            targetEmoji: "word_flower", foilEmoji: "word_cow",
             soundContrast: "Р-К", targetIsLeft: true
         )
     ]

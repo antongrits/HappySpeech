@@ -135,9 +135,7 @@ struct ArticulationImitationView: View {
     private func poseCard(_ pose: ArticulationPose) -> some View {
         HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.large) {
             VStack(spacing: SpacingTokens.medium) {
-                Text(pose.emoji)
-                    .font(TypographyTokens.kidDisplay(96))
-                    .accessibilityHidden(true)
+                HSContentSymbol(pose.emoji, size: 96)
                 Text(pose.name)
                     .font(TypographyTokens.title(26))
                     .foregroundStyle(ColorTokens.Kid.ink)
@@ -194,8 +192,7 @@ struct ArticulationImitationView: View {
                         reduceMotion ? nil : .linear(duration: 0.1),
                         value: display.holdFraction
                     )
-                Text(display.currentPose?.emoji ?? "")
-                    .font(TypographyTokens.kidDisplay(96))
+                HSContentSymbol(display.currentPose?.emoji ?? "mouth.fill", size: 96)
                     .scaleEffect(reduceMotion ? 1.0 : (isPulsing ? 1.05 : 1.0))
                     .animation(
                         reduceMotion
