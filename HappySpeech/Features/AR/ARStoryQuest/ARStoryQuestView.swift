@@ -175,8 +175,13 @@ struct ARStoryQuestView: View {
 
     private var feedbackBanner: some View {
         HStack(spacing: SpacingTokens.small) {
-            Text(display.canAdvance ? "✅" : "💬")
-                .font(TypographyTokens.title(26)) // emoji feedback indicator — skip TypographyTokens
+            Image(systemName: display.canAdvance ? "checkmark.circle.fill" : "bubble.left.fill")
+                .font(TypographyTokens.title(26))
+                .foregroundStyle(
+                    display.canAdvance
+                        ? ColorTokens.Feedback.correct
+                        : ColorTokens.Brand.primary
+                )
                 .accessibilityHidden(true)
             Text(display.feedbackText)
                 .font(TypographyTokens.headline(15))
@@ -258,8 +263,9 @@ struct ARStoryQuestView: View {
         VStack(spacing: SpacingTokens.medium) {
             Spacer()
 
-            Text("🎉")
-                .font(TypographyTokens.kidDisplay(72)) // emoji key graphic — skip TypographyTokens
+            Image(systemName: "party.popper.fill")
+                .font(.system(size: 72, weight: .regular))
+                .foregroundStyle(ColorTokens.Brand.gold)
                 .accessibilityHidden(true)
 
             Text(String(localized: "ar.quest.completed.title"))

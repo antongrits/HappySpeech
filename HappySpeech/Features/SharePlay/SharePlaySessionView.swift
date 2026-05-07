@@ -141,8 +141,10 @@ struct SharePlaySessionView: View {
             HStack {
                 Spacer()
                 VStack(spacing: SpacingTokens.sp2) {
-                    Text("🎉")
-                        .font(TypographyTokens.kidDisplay(48))
+                    Image(systemName: "party.popper.fill")
+                        .font(.system(size: 48, weight: .regular))
+                        .foregroundStyle(ColorTokens.Brand.gold)
+                        .accessibilityHidden(true)
                     Text(String(localized: "shareplay.celebration.together"))
                         .font(TypographyTokens.headline(17))
                         .foregroundStyle(ColorTokens.Brand.primary)

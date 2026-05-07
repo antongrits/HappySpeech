@@ -212,8 +212,13 @@ struct RhythmView: View {
             padding: SpacingTokens.large
         ) {
             VStack(spacing: SpacingTokens.medium) {
-                Text(store.display.feedbackCorrect ? "🎉" : "💫")
-                    .font(TypographyTokens.kidDisplay(64))
+                Image(systemName: store.display.feedbackCorrect ? "party.popper.fill" : "sparkles")
+                    .font(.system(size: 64, weight: .regular))
+                    .foregroundStyle(
+                        store.display.feedbackCorrect
+                            ? ColorTokens.Brand.gold
+                            : ColorTokens.Brand.primary
+                    )
                     .accessibilityHidden(true)
                 Text(store.display.feedbackText)
                     .font(TypographyTokens.headline())
@@ -247,8 +252,9 @@ struct RhythmView: View {
 
     private var completedContent: some View {
         VStack(spacing: SpacingTokens.large) {
-            Text("🏆")
-                .font(TypographyTokens.kidDisplay(72))
+            Image(systemName: "trophy.fill")
+                .font(.system(size: 72, weight: .regular))
+                .foregroundStyle(ColorTokens.Brand.gold)
                 .accessibilityHidden(true)
             Text(store.display.completionMessage)
                 .font(TypographyTokens.title())

@@ -270,8 +270,9 @@ struct PuzzleRevealView: View {
     private var puzzleCompleteView: some View {
         VStack(spacing: SpacingTokens.large) {
             Spacer()
-            Text("🎉")
-                .font(TypographyTokens.kidDisplay(72))
+            Image(systemName: "party.popper.fill")
+                .font(.system(size: 72, weight: .regular))
+                .foregroundStyle(ColorTokens.Brand.gold)
                 .accessibilityHidden(true)
             Text(String(localized: "Пазл собран!"))
                 .font(TypographyTokens.title(28))
