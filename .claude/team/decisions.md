@@ -1916,3 +1916,21 @@ Bundle size Videos: **71 MB → 47 MB** (-24 MB, -34%).
 **Blender skill:** создать после установки Blender ≥4.0. Использовать `bpy` Python API для: риггинга персонажей, bake текстур, экспорта через `bpy.ops.wm.usd_export()`.
 
 **Метки:** ADR-V15-BLENDER-DEFER, post-v1.0
+
+## ADR-V16-STORY-EMOJI-DEFER
+
+**Дата:** 2026-05-07
+**Статус:** DEFERRED (post-v1.0, Block S)
+
+**Контекст:** Block D v16 заменяет эмодзи в UI strings на SF Symbols / иллюстрации. Файл `HappySpeech/Features/Common/Stories/StoryLibrary.swift` содержит 119 эмодзи в narrative content (`backgroundEmoji`, `characterEmoji` поля sceneview-моделей сказок).
+
+**Решение:** StoryLibrary defer — эмодзи остаются, потому что:
+
+1. **Это narrative content, не UI chrome** — отображаются внутри сторителлинга в сказках, не в навигационных хедерах/кнопках/декорациях.
+2. **Замена на SF Symbols ломает UX** — `🌲🌲🌲 → tree.fill tree.fill tree.fill` или `🌬️🌲 → wind tree.fill` теряет нарративный смысл.
+3. **Замена на иллюстрации требует ~120 новых assets** — 119 уникальных сцен/персонажей сказок, каждая с мультимодальным окружением (фон+персонаж комбо). Это отдельный объём работы для icon-generator + designer-visual.
+4. **Стратегическое решение:** в Block S (post-v1.0) будет создан `StoryIllustrationGenerator` — компонент, который рендерит каждую сцену сказки как полноценную иллюстрацию (фон сцены + персонажи) через Image composition + готовые asset packs. До тех пор сторителлинг отображается с эмодзи.
+
+**Альтернатива (rejected):** заменить эмодзи на текст-описания (`"лес"` вместо `🌲🌲🌲`) — теряет визуальную опору для детей 5-8 лет.
+
+**Метки:** ADR-V16-STORY-EMOJI-DEFER, post-v1.0, Block S
