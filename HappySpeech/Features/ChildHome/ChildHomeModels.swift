@@ -208,10 +208,11 @@ enum ChildHomeModels {
         let title: String
         let earnedAt: Date
 
+        // Block D v16: emoji теперь хранит SF Symbol name (UI chrome).
         static let placeholder = RecentReward(
             id: "placeholder-reward",
-            emoji: "🏅",
-            title: "Награда",
+            emoji: "medal.fill",
+            title: String(localized: "child.home.rewards.placeholder.title"),
             earnedAt: Date()
         )
     }
@@ -237,8 +238,10 @@ enum ChildHomeModels {
         let soundTarget: String
         let score: Float
 
-        var scoreEmoji: String {
-            score >= 0.9 ? "⭐️⭐️⭐️" : score >= 0.7 ? "⭐️⭐️" : "⭐️"
+        /// Количество звёзд (1-3) для отрисовки рейтинга через SF Symbol star.fill.
+        /// Block D v16: заменили эмодзи "⭐️⭐️⭐️" на числовое представление.
+        var scoreStars: Int {
+            score >= 0.9 ? 3 : score >= 0.7 ? 2 : 1
         }
     }
 
@@ -251,11 +254,12 @@ enum ChildHomeModels {
         let emoji: String
         var isVisible: Bool
 
+        // Block D v16: emoji теперь хранит SF Symbol name (UI chrome).
         static let placeholder = Achievement(
             id: "first-session",
-            title: "Первый урок",
-            description: "Поздравляем с первым занятием!",
-            emoji: "🎉",
+            title: String(localized: "child.home.achievement.placeholder.title"),
+            description: String(localized: "child.home.achievement.placeholder.description"),
+            emoji: "party.popper.fill",
             isVisible: true
         )
     }
@@ -276,12 +280,13 @@ enum ChildHomeModels {
         /// Процент правильных попыток ребёнка (0…1). nil → ещё не пробовал.
         let successRate: Double?
 
-        var positionEmoji: String {
+        /// Block D v16: позиционные эмодзи заменены на SF Symbol names.
+        var positionSymbol: String {
             switch soundPosition {
-            case "init":  return "⬅️"
-            case "mid":   return "↔️"
-            case "final": return "➡️"
-            default:      return "🔤"
+            case "init":  return "arrow.left"
+            case "mid":   return "arrow.left.arrow.right"
+            case "final": return "arrow.right"
+            default:      return "textformat"
             }
         }
     }

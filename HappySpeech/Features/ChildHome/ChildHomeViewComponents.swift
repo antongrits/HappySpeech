@@ -519,8 +519,9 @@ struct ChildHomeWorldZoneBubble: View {
                     .fill(familyColor.opacity(0.10 + zone.progress * 0.55))
                     .frame(width: 48, height: 48)
 
-                Text(zone.emoji)
+                Image(systemName: zone.emoji)
                     .font(TypographyTokens.title(22))
+                    .foregroundStyle(familyColor)
                     .accessibilityHidden(true)
             }
             .frame(width: 56, height: 56)
@@ -608,9 +609,14 @@ struct ChildHomeRecentSessionRow: View {
 
                 Spacer()
 
-                Text(session.scoreEmoji)
-                    .font(TypographyTokens.body(16))
-                    .accessibilityHidden(true)
+                HStack(spacing: 1) {
+                    ForEach(0..<session.scoreStars, id: \.self) { _ in
+                        Image(systemName: "star.fill")
+                            .font(TypographyTokens.caption(12))
+                            .foregroundStyle(ColorTokens.Brand.gold)
+                    }
+                }
+                .accessibilityHidden(true)
             }
         }
         .accessibilityElement(children: .combine)
@@ -638,8 +644,9 @@ struct ChildHomeAchievementBanner: View {
     var body: some View {
         HSLiquidGlassCard(style: .tinted(ColorTokens.Brand.gold)) {
             HStack(alignment: .top, spacing: SpacingTokens.sp3) {
-                Text(achievement.emoji)
-                    .font(TypographyTokens.display(36))
+                Image(systemName: achievement.emoji)
+                    .font(.system(size: 36, weight: .regular))
+                    .foregroundStyle(ColorTokens.Brand.gold)
                     .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: 2) {
@@ -915,8 +922,9 @@ struct ChildHomeRecentRewardRow: View {
                     Circle()
                         .fill(ColorTokens.Brand.gold.opacity(0.18))
                         .frame(width: 44, height: 44)
-                    Text(reward.emoji)
+                    Image(systemName: reward.emoji)
                         .font(TypographyTokens.title(22))
+                        .foregroundStyle(ColorTokens.Brand.gold)
                         .accessibilityHidden(true)
                 }
 
@@ -940,7 +948,7 @@ struct ChildHomeRecentRewardRow: View {
             }
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel(Text("\(reward.emoji) \(reward.title). \(formattedDate)"))
+        .accessibilityLabel(Text("\(reward.title). \(formattedDate)"))
     }
 
     private var formattedDate: String {
@@ -1018,8 +1026,9 @@ struct ChildHomeTodayWordCard: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.85)
 
-                Text(word.positionEmoji)
+                Image(systemName: word.positionSymbol)
                     .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .accessibilityHidden(true)
             }
             .padding(.vertical, SpacingTokens.sp3)

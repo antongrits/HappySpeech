@@ -216,7 +216,7 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
                     id: "seed-first-session",
                     titleKey: "child.home.achievement.first.title",
                     descriptionKey: "child.home.achievement.first.description",
-                    emoji: "🎉",
+                    emoji: "party.popper.fill",
                     isNew: true
                 ),
             dailyMissionDetail: ChildHomeModels.DailyMissionDetailData(
@@ -306,7 +306,7 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
                 id: placeholderId,
                 titleKey: "child.home.achievement.first.title",
                 descriptionKey: "child.home.achievement.first.description",
-                emoji: "🎉",
+                emoji: "party.popper.fill",
                 isNew: true
             )
         }
@@ -316,7 +316,7 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
             id: id,
             titleKey: "child.home.achievement.streak.title",
             descriptionKey: "child.home.achievement.streak.description",
-            emoji: "🌟",
+            emoji: "sparkles",
             isNew: true
         )
     }
@@ -330,11 +330,11 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
     }
 
     private static let worldZoneTemplates: [WorldZoneTemplate] = [
-        .init(sound: "С", emoji: "🌊", family: .whistling),
-        .init(sound: "Ш", emoji: "🐍", family: .hissing),
-        .init(sound: "Р", emoji: "🐯", family: .sonorant),
-        .init(sound: "Л", emoji: "🌙", family: .sonorant),
-        .init(sound: "К", emoji: "🏔", family: .velar)
+        .init(sound: "С", emoji: "water.waves", family: .whistling),
+        .init(sound: "Ш", emoji: "leaf.fill", family: .hissing),
+        .init(sound: "Р", emoji: "flame.fill", family: .sonorant),
+        .init(sound: "Л", emoji: "moon.fill", family: .sonorant),
+        .init(sound: "К", emoji: "mountain.2.fill", family: .velar)
     ]
 
     private static func buildWorldZones(profile: ChildProfileDTO) -> [ChildHomeModels.WorldZoneData] {
@@ -429,9 +429,9 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
 
     private static func rewardEmoji(for score: Double) -> String {
         switch score {
-        case 0.95...: return "🏆"
-        case 0.90..<0.95: return "🥇"
-        default: return "🥈"
+        case 0.95...: return "trophy.fill"
+        case 0.90..<0.95: return "medal.fill"
+        default: return "medal"
         }
     }
 
@@ -448,32 +448,33 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
         return [
             .init(
                 id: "seed-reward-1",
-                emoji: "🏆",
+                emoji: "trophy.fill",
                 titleKey: "child.home.rewards.gold",
                 earnedAt: now.addingTimeInterval(-3600)
             ),
             .init(
                 id: "seed-reward-2",
-                emoji: "🥇",
+                emoji: "medal.fill",
                 titleKey: "child.home.rewards.silver",
                 earnedAt: now.addingTimeInterval(-86_400)
             ),
             .init(
                 id: "seed-reward-3",
-                emoji: "🌟",
+                emoji: "sparkles",
                 titleKey: "child.home.rewards.streak",
                 earnedAt: now.addingTimeInterval(-172_800)
             )
         ]
     }
 
+    // Block D v16: emoji-поле теперь хранит SF Symbol name (UI chrome).
     private static func seedWorldZones() -> [ChildHomeModels.WorldZoneData] {
         [
-            .init(id: "zone-С", sound: "С", emoji: "🌊", progress: 0.7, family: .whistling),
-            .init(id: "zone-Ш", sound: "Ш", emoji: "🐍", progress: 0.5, family: .hissing),
-            .init(id: "zone-Р", sound: "Р", emoji: "🐯", progress: 0.4, family: .sonorant),
-            .init(id: "zone-Л", sound: "Л", emoji: "🌙", progress: 0.3, family: .sonorant),
-            .init(id: "zone-К", sound: "К", emoji: "🏔", progress: 0.2, family: .velar)
+            .init(id: "zone-С", sound: "С", emoji: "water.waves",     progress: 0.7, family: .whistling),
+            .init(id: "zone-Ш", sound: "Ш", emoji: "leaf.fill",       progress: 0.5, family: .hissing),
+            .init(id: "zone-Р", sound: "Р", emoji: "flame.fill",      progress: 0.4, family: .sonorant),
+            .init(id: "zone-Л", sound: "Л", emoji: "moon.fill",       progress: 0.3, family: .sonorant),
+            .init(id: "zone-К", sound: "К", emoji: "mountain.2.fill", progress: 0.2, family: .velar)
         ]
     }
 
