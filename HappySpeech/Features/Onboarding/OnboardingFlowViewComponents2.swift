@@ -26,14 +26,18 @@ struct OnboardingScheduleStep: View {
                 .font(TypographyTokens.title(24))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, SpacingTokens.large)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
+                .padding(.horizontal, SpacingTokens.medium)
                 .accessibilityAddTraits(.isHeader)
 
             Text(String(localized: "onboarding.schedule.subtitle"))
                 .font(TypographyTokens.body(13))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
-                .padding(.horizontal, SpacingTokens.xLarge)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .padding(.horizontal, SpacingTokens.large)
 
             VStack(spacing: SpacingTokens.small) {
                 ForEach(DailySchedulePreset.allPresets) { preset in
@@ -76,10 +80,14 @@ struct ScheduleRow: View {
                     Text(preset.title)
                         .font(TypographyTokens.headline(17))
                         .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                        .multilineTextAlignment(.leading)
                     Text(preset.subtitle)
                         .font(TypographyTokens.body(13))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                         .lineLimit(2)
+                        .minimumScaleFactor(0.85)
                         .multilineTextAlignment(.leading)
                 }
                 Spacer()
@@ -127,12 +135,18 @@ struct OnboardingPermissionsStep: View {
             Text(String(localized: "onboarding.permissions.title"))
                 .font(TypographyTokens.title(24))
                 .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.8)
+                .padding(.horizontal, SpacingTokens.medium)
                 .accessibilityAddTraits(.isHeader)
 
             Text(String(localized: "onboarding.permissions.subtitle"))
                 .font(TypographyTokens.body(14))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
                 .padding(.horizontal, SpacingTokens.large)
 
             VStack(spacing: SpacingTokens.small) {
@@ -177,10 +191,13 @@ struct OnboardingPermissionsStep: View {
                     Text(title)
                         .font(TypographyTokens.headline(16))
                         .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
                     Text(body)
                         .font(TypographyTokens.body(13))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                         .lineLimit(3)
+                        .minimumScaleFactor(0.85)
                 }
                 Spacer()
             }
@@ -221,11 +238,17 @@ struct OnboardingModelDownloadStep: View {
                 Text(String(localized: "onboarding.model.title"))
                     .font(TypographyTokens.title(22))
                     .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+                    .padding(.horizontal, SpacingTokens.medium)
                     .accessibilityAddTraits(.isHeader)
                 Text(String(localized: "onboarding.model.subtitle"))
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
                     .padding(.horizontal, SpacingTokens.large)
             }
 
