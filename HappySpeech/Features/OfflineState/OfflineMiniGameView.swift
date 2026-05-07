@@ -170,7 +170,6 @@ private struct TapLyalyaGameView: View {
     @State private var isFinished: Bool = false
     @State private var mascotPosition: CGPoint = CGPoint(x: 160, y: 280)
     @State private var timerTask: Task<Void, Never>?
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -192,10 +191,11 @@ private struct TapLyalyaGameView: View {
                 headerBar
                     .position(x: geo.size.width / 2, y: 50)
 
-                Image("mascot_lyalya_wave")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: isRunning ? 80 : 70, height: isRunning ? 80 : 70)
+                // Block J v17: 3D Ляля вместо Image("mascot_lyalya_wave").
+                // Размер 80pt — compact игровой target, но всё равно 3D
+                // согласно правилу «только 3D герои».
+                LyalyaRealityKitView(state: isRunning ? .happy : .idle, mood: 0.6)
+                    .frame(width: 80, height: 80)
                     .position(mascotPosition)
                     .onTapGesture {
                         guard isRunning else { return }
@@ -297,13 +297,12 @@ private struct TapLyalyaGameView: View {
     }
 
     private func jumpMascot(in size: CGSize) {
-        guard !reduceMotion else { return }
+        // Block J v17: spring rebound animation удалён —
+        // 3D-маскот меняет позицию мгновенно, idle-анимации идут внутри RealityKit.
         let margin: CGFloat = 60
         let newX = CGFloat.random(in: margin...(size.width - margin))
         let newY = CGFloat.random(in: 80...(size.height - 80))
-        withAnimation(.spring(response: 0.25, dampingFraction: 0.6)) {
-            mascotPosition = CGPoint(x: newX, y: newY)
-        }
+        mascotPosition = CGPoint(x: newX, y: newY)
     }
 
     private func resetGame() {
@@ -340,9 +339,9 @@ private struct DragCloudsGameView: View {
             } else {
                 GeometryReader { geo in
                     ZStack {
-                        Image("mascot_lyalya_wave")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
+                        // Block J v17: 3D Ляля вместо Image("mascot_lyalya_wave").
+                        // Static target для drag-and-drop игры, idle-анимации внутри RealityKit.
+                        LyalyaRealityKitView(state: .waving, mood: 0.5)
                             .frame(width: 70, height: 70)
                             .position(mascotPosition)
                             .accessibilityHidden(true)
