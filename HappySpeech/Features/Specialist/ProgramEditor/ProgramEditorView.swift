@@ -65,6 +65,8 @@ struct ProgramEditorView: View {
 
     private var summary: some View {
         HStack {
+            LyalyaMascotView(state: isValid ? .happy : .thinking, size: 48)
+                .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(String(localized: "program.editor.duration"))
                     .font(TypographyTokens.caption(12))

@@ -245,17 +245,21 @@ struct AnimatedStoryPlayerView: View {
     // MARK: - Character
 
     private var characterView: some View {
-        Text(currentScene.characterEmoji)
-            .font(TypographyTokens.kidDisplay(80))
-            .scaleEffect(characterScale)
-            .offset(x: characterOffset, y: 0)
-            .rotationEffect(.degrees(characterRotation))
-            .opacity(characterOpacity)
-            .frame(height: 120)
-            .accessibilityLabel(
-                String(localized: "story.character.label \(currentScene.characterEmoji)")
-            )
-            .accessibilityHidden(true)
+        HStack(spacing: 24) {
+            LyalyaMascotView(state: .singing, size: 80)
+                .accessibilityHidden(true)
+            Text(currentScene.characterEmoji)
+                .font(TypographyTokens.kidDisplay(80))
+                .scaleEffect(characterScale)
+                .offset(x: characterOffset, y: 0)
+                .rotationEffect(.degrees(characterRotation))
+                .opacity(characterOpacity)
+                .accessibilityLabel(
+                    String(localized: "story.character.label \(currentScene.characterEmoji)")
+                )
+                .accessibilityHidden(true)
+        }
+        .frame(height: 120)
     }
 
     // MARK: - Narrative card

@@ -123,6 +123,12 @@ struct ListenAndChooseView: View {
 
     private func instructionSection(_ vm: ListenAndChooseModels.LoadRound.ViewModel) -> some View {
         VStack(spacing: SpacingTokens.small) {
+            LyalyaMascotView(
+                state: phase == .listening ? .singing : .pointing,
+                size: 80
+            )
+            .accessibilityHidden(true)
+
             Text(vm.instructionText)
                 .font(TypographyTokens.body(16))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)

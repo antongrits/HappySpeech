@@ -58,6 +58,10 @@ struct SessionReviewView: View {
             ToolbarItem(placement: .navigationBarLeading) {
                 backButton
             }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                LyalyaMascotView(state: .thinking, size: 32)
+                    .accessibilityHidden(true)
+            }
         }
         .sheet(item: $pendingShareURL) { item in
             ShareSheetView(items: [item.url])
