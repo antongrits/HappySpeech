@@ -230,12 +230,17 @@ private struct ParentDashboardTab: View {
     }
 
     private var headerSection: some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-            Text(viewModel.greeting)
-                .font(TypographyTokens.headline())
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-                .padding(.top, SpacingTokens.sp3)
+        HStack(alignment: .center, spacing: SpacingTokens.sp3) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+                Text(viewModel.greeting)
+                    .font(TypographyTokens.headline())
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+            }
+            Spacer()
+            LyalyaMascotView(state: .waving, size: 64)
+                .accessibilityHidden(true)
         }
+        .padding(.top, SpacingTokens.sp3)
     }
 
     private var childSection: some View {
