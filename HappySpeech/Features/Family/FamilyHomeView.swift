@@ -30,6 +30,9 @@ struct FamilyHomeView: View {
     @State private var profileEditorChildId: String?
     @State private var showingProfileEditor = false
 
+    // MARK: S.2 v16 — Family Leaderboard
+    @State private var showingLeaderboard = false
+
     // MARK: S12 Hero Transitions (Block S)
     // Namespace для matchedGeometryEffect: avatar circle → увеличение при переходе в ChildHome.
     @Namespace private var familyAvatarNamespace
@@ -72,6 +75,10 @@ struct FamilyHomeView: View {
                 .environment(container)
                 .environment(coordinator)
             }
+        }
+        .sheet(isPresented: $showingLeaderboard) {
+            FamilyLeaderboardView(parentId: "")
+                .environment(container)
         }
     }
 
@@ -149,6 +156,30 @@ struct FamilyHomeView: View {
                         }
                     }
                     .accessibilityLabel(String(localized: "family.home.compare"))
+                }
+
+                // S.2 v16 — Family Leaderboard (parent-only).
+                HSLiquidGlassCard(style: .primary) {
+                    Button {
+                        showingLeaderboard = true
+                    } label: {
+                        HStack(spacing: SpacingTokens.sp3) {
+                            Image(systemName: "trophy.fill")
+                                .font(TypographyTokens.headline(22))
+                                .foregroundStyle(ColorTokens.Brand.gold)
+                                .accessibilityHidden(true)
+                            Text(String(localized: "family.home.leaderboard"))
+                                .font(TypographyTokens.headline(16))
+                                .foregroundStyle(ColorTokens.Parent.ink)
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .font(TypographyTokens.caption(14))
+                                .foregroundStyle(ColorTokens.Parent.inkSoft)
+                                .accessibilityHidden(true)
+                        }
+                    }
+                    .accessibilityLabel(String(localized: "family.home.leaderboard"))
+                    .accessibilityHint(String(localized: "family.home.leaderboard.hint"))
                 }
             }
 
