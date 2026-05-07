@@ -62,6 +62,7 @@ struct SettingsView: View {
                     dataSection
                     performanceSection
                     specialistSection
+                    karaokeSection
                     aboutSection
                 }
                 .listStyle(.insetGrouped)
