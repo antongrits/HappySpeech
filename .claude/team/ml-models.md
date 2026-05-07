@@ -1,6 +1,32 @@
 # ML Models Registry — HappySpeech
-## Version 2.4 — 2026-04-26
+## Version 2.5 — 2026-05-07
 ## Managed by ML Trainer. Updated when model is converted and validated.
+
+---
+
+## Block B v16 — BG Training Status (2026-05-07)
+
+**Статус:** IN PROGRESS (BG agent running, ~8-12 ч)
+
+Block B Plan v16 запустил BG agent для дообучения 9 моделей. Финальные mlpackages появятся после завершения. Текущие deployed модели в Resources/Models/ остаются в production до замены.
+
+| Модель | Текущая версия | Ожидаемая val accuracy v16 | Статус BG |
+|---|---|---|---|
+| SileroVAD CNN | M4.4 (99.9%) | ≥99% | queued |
+| PronunciationScorer_whistling | M4.3 (100%) | ≥99% | queued |
+| PronunciationScorer_hissing | M4.3 (100%) | ≥99% | queued |
+| PronunciationScorer_sonants | M4.3 (100%) | ≥99% | queued |
+| PronunciationScorer_velar | M4.3 (100%) | ≥99% | queued |
+| SoundClassifier | M4.5 (85.8%) | ≥90% | queued |
+| RussianPhonemeClassifier | v14 (92.24%) | ≥93% | queued |
+| Wav2Vec2RuChildLogopedic | v14 (96.67%) | ≥97% | queued |
+| EmotionDetection | v14 (95.83%) | ≥96% | queued |
+
+Wav2Vec2RuChild (Wav2Vec2-base fine-tune) и TonguePostureClassifier v2 на реальных детских данных — deferred post-v1.0 (GPU RAM + GDPR consent required).
+
+**По завершении Block B:** ml-engineer обновит этот реестр записями с реальными val accuracy v16.
+
+---
 
 ---
 

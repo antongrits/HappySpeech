@@ -175,6 +175,55 @@ swiftlint --strict
 
 ---
 
+## v1.0.0-final-v16 — Plan v16 (2026-05-07)
+
+### Итоговые метрики v16
+
+| Метрика | Значение |
+|---|---|
+| v16 коммитов | 71 |
+| Bundle Resources | 1.3 GB |
+| Audio .m4a | 13 344 |
+| Mascot screens | 81 (target ≥50, exceeded) |
+| SwiftLint | 0 errors |
+| BUILD | SUCCEEDED iPhone SE 3 |
+| Russian-only | 0 EN ключей, 2255 RU ключей |
+| Эмодзи в UI | 0 |
+| HealthKit refs | 0 |
+| Custom UI components | 12 (HSCustom*, kavsoft-style) |
+| Новые фичи | 4 |
+
+### Plan v16 — 22 блока (17 completed, 5 deferred)
+
+| Block | Описание | Статус |
+|---|---|---|
+| A | Agent overrides (Opus xhigh для ios/ml/designer) + audit baseline | DONE |
+| B | Real ML training 9 моделей (BG running) | DEFERRED |
+| C | 464 RGB → RGBA illustrations regen | DEFERRED |
+| D | 600+ эмодзи → SF Symbol/illustrations | DONE |
+| E | HealthKit полное удаление (3 файла, 0 refs) | DONE |
+| F | 10 logopedic USDZ + delete 13 нерелевантных (-157 MB) | DONE |
+| G | Mascot-Everywhere (81 экранов с Лялей) | DONE |
+| H | Light/Dark systematic (ColorTokens.Overlay, 124→31 raw literals) | DONE |
+| I | GuidedTour полный VIP (Interactor 451 LOC + Presenter + Router) | DONE |
+| J | Stub Interactors (8 AR thin documented, OfflineMiniGame 121→535 LOC) | DONE |
+| K | View >600 LOC split (12/13 файлов, 12 новых Components) | DONE |
+| L | Hardcoded colors → ColorTokens (86 hex → 0) | DONE |
+| M | Manual screen audit 118 views × 2 темы | DEFERRED |
+| N | Modern iOS 26 features (все 7 реализованы) | DONE |
+| O | Custom UI kavsoft-style (12 компонентов, 2423 LOC) | DONE |
+| P | Bundle growth (voice +1155, 5 SPM libs, DocC deferred) | DONE |
+| Q | Coverage 35.9% + performance ADR + 22 screenshots | DONE |
+| R | Audio audit (13 344 файлов, 174 с неверным sample rate — P1 post-v16) | DONE |
+| S | 4 новые фичи (DailyStreak, FamilyLeaderboard, SpeechVisualization, ARFaceFilter — 2911 LOC) | DONE |
+| T | Final cleanup (SwiftLint 0, _workshop -300 MB) | DONE |
+| U | Final docs (sprint.md + ADR-V16-FINAL + README + ml-models) | DONE |
+| V | Final QA + git tag v1.0.0-final-v16 | NEXT |
+
+**Тег:** `v1.0.0-final-v16` (Block V — следующий шаг)
+
+---
+
 ## v1.0.0-pro-final — Plan v15 Production Polish (2026-05-06)
 
 ### Итоговые метрики v15
