@@ -522,18 +522,53 @@ public final class AppContainer {
     /// Библиотека анимированных историй. Singleton — создаётся один раз для всего приложения.
     public var storyLibrary: StoryLibrary { StoryLibrary.shared }
 
-    // MARK: - GuidedTour
+    // MARK: - GuidedTour (VIP — Block I v16)
 
     private var _guidedTourCoordinator: GuidedTourCoordinator?
+    private var _guidedTourInteractor: GuidedTourInteractor?
+    private var _guidedTourPresenter: GuidedTourPresenter?
+    private var _guidedTourRouter: GuidedTourRouter?
 
     /// Lazy global guided-tour coordinator. Single instance per AppContainer so the
     /// 11-step tour state survives navigation between ChildHome / ParentHome / Settings.
     /// Internal visibility — only consumed by feature views within the app target.
+    ///
+    /// VIP wiring (Block I v16):
+    ///   Coordinator (Display) ↔ Interactor → Presenter → Coordinator → SwiftUI
+    ///   Router использует AppCoordinator (передаётся позднее, т.к. он создаётся
+    ///   уровнем выше в App layer).
     var guidedTourCoordinator: GuidedTourCoordinator {
         if let existing = _guidedTourCoordinator { return existing }
-        let new = GuidedTourCoordinator(soundService: soundService)
-        _guidedTourCoordinator = new
-        return new
+
+        let presenter = GuidedTourPresenter()
+        let router = GuidedTourRouter()
+        let interactor = GuidedTourInteractor(
+            soundService: soundService,
+            analyticsService: analyticsService,
+            sessionRepository: sessionRepository
+        )
+        interactor.presenter = presenter
+
+        let coordinator = GuidedTourCoordinator(
+            interactor: interactor,
+            router: router,
+            steps: TourSteps.all,
+            hasCompleted: interactor.hasCompletedCurrentFlavor
+        )
+        presenter.display = coordinator
+
+        _guidedTourPresenter = presenter
+        _guidedTourRouter = router
+        _guidedTourInteractor = interactor
+        _guidedTourCoordinator = coordinator
+        return coordinator
+    }
+
+    /// Internal accessor — нужен AppCoordinator-у, чтобы привязать `weak` ref
+    /// к Router после создания корневой навигационной координаты.
+    func attachGuidedTourCoordinator(_ appCoordinator: AppCoordinator) {
+        _ = guidedTourCoordinator // ensure built
+        _guidedTourRouter?.coordinator = appCoordinator
     }
 }
 
