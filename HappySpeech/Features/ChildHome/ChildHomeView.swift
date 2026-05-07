@@ -193,10 +193,21 @@ struct ChildHomeView: View {
 
     // MARK: - Background
 
+    /// G.3 v17 — три слоя: бренд-фон → mesh gradient (низкая opacity) → облака.
+    /// Mesh gradient НЕ заменяет KidBackgroundView, а добавляет «дыхание»
+    /// цвета сверху. На iOS 17 fallback на radial gradient (см. компонент).
+    /// Reduce Motion компонент учитывает сам.
     private var kidBackground: some View {
         ZStack {
             KidBackgroundView()
                 .ignoresSafeArea()
+
+            HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                .ignoresSafeArea()
+                .opacity(0.35)
+                .blendMode(.softLight)
+                .accessibilityHidden(true)
+                .allowsHitTesting(false)
 
             ChildHomeCloudDecoration()
         }
