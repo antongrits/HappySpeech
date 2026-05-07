@@ -18,6 +18,9 @@ struct ARZoneView: View {
     @State private var router: ARZoneRouter?
     @State private var viewModelHolder = ARZoneDisplay()
 
+    // S.4 v16 — AR Face Filter Mode (fun mode).
+    @State private var showFaceFilterSheet: Bool = false
+
     /// Компактные устройства (iPhone SE, iPhone mini) — compact horizontal size class.
     /// На них 3D-вид не грузим — слишком дорого и тесно, показываем 2D-эмодзи-фоллбэк.
     /// На iPad (regular) — всегда показываем 3D.
@@ -30,6 +33,7 @@ struct ARZoneView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: SpacingTokens.large) {
                     heroBanner
+                    faceFilterEntryButton
                     quickTipsCarousel
                     plannerBannerSection
                     instructionsSection
@@ -68,6 +72,9 @@ struct ARZoneView: View {
             .presentationDragIndicator(.visible)
             .presentationCornerRadius(RadiusTokens.sheet)
         }
+        .fullScreenCover(isPresented: $showFaceFilterSheet) {
+            ARFaceFilterView()
+        }
         .onAppear { bootstrap() }
         .task {
             // Показываем placeholder первые ~300 мс — USDZ успевает подгрузиться,
@@ -85,6 +92,45 @@ struct ARZoneView: View {
             mascotState: viewModelHolder.mascotState,
             phase: viewModelHolder.phase
         )
+    }
+
+    // MARK: - Face filter entry (S.4 v16)
+
+    private var faceFilterEntryButton: some View {
+        Button {
+            showFaceFilterSheet = true
+        } label: {
+            HStack(spacing: SpacingTokens.sp3) {
+                Image(systemName: "theatermasks.fill")
+                    .font(.title2)
+                    .foregroundStyle(.white)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("ar.zone.faceFilter.title")
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(.white)
+                    Text("ar.zone.faceFilter.subtitle")
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(.white.opacity(0.85))
+                }
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(.white)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp4)
+            .background(
+                RoundedRectangle(cornerRadius: 18)
+                    .fill(LinearGradient(
+                        colors: [ColorTokens.Brand.lilac, ColorTokens.Brand.primary],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ))
+            )
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(Text("ar.zone.faceFilter.title"))
+        .accessibilityHint(Text("ar.zone.faceFilter.hint"))
     }
 
     // MARK: - Quick tips carousel
