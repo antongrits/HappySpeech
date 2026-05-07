@@ -2,9 +2,23 @@ import ARKit
 import Foundation
 import OSLog
 
+// MARK: - VIP-thin: ARSession orchestration only
+//
+// Этот Interactor намеренно тонкий (~190 LOC). Логика тренировки
+// звуков НЕ принадлежит iOS-слою: всё реальное распознавание происходит
+// в ARSessionDelegate (ARFaceAnchor blendshapes + ARBodyAnchor joints
+// через VNHumanBodyPoseObservation). Interactor только:
+//   1. Запускает / останавливает ARSession через ARSessionService.
+//   2. Получает frame updates → передаёт Presenter без бизнес-обработки.
+//   3. Финализирует session через SessionRepository (общий path).
+// Углубление до 350+ LOC означало бы дублирование AR логики или создание
+// искусственных абстракций — нарушение Clean Swift VIP принципа.
+//
+// Domain logic (face/body tracking, similarity scoring) живёт в Workers + ARSessionService.
+//
 // MARK: - PoseSequenceInteractor
 //
-// VIP-thin Interactor (D.2 v15) — AR игра «Последовательность поз».
+// AR игра «Последовательность поз».
 //
 // Clean Swift поток:
 //   ARKit (face + body) → View → updateFrame() / updateBodyPose() → Presenter → View

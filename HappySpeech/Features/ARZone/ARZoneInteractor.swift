@@ -2,9 +2,24 @@ import ARKit
 import Foundation
 import OSLog
 
+// MARK: - VIP-thin: ARSession orchestration only
+//
+// Этот Interactor намеренно тонкий (~235 LOC) — это хаб выбора AR-игры,
+// а не сам AR-цикл. Логика тренировки звуков НЕ принадлежит iOS-слою:
+// всё реальное распознавание происходит в ARSessionDelegate дочерних
+// AR-экранов (ButterflyCatch / ARMirror / HoldThePose / etc). ARZoneInteractor только:
+//   1. Запускает / останавливает ARSession через ARSessionService (через дочерние экраны).
+//   2. Получает frame updates → передаёт Presenter без бизнес-обработки.
+//   3. Финализирует session через SessionRepository (общий path).
+//   4. Делегирует AdaptivePlannerService для рекомендаций (Tier A on-device).
+// Углубление до 350+ LOC означало бы дублирование AR логики или создание
+// искусственных абстракций — нарушение Clean Swift VIP принципа.
+//
+// Domain logic (planner advice, AR availability checks) живёт в AdaptivePlannerService + Workers.
+//
 // MARK: - ARZoneInteractor
 //
-// VIP-thin Interactor (D.2 v15) — хаб AR-зоны (выбор AR-игры).
+// Хаб AR-зоны (выбор AR-игры).
 //
 // Clean Swift поток:
 //   ARZoneView (навигация) → loadGames() / selectGame() → Presenter → View

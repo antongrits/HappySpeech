@@ -1,9 +1,23 @@
 import Foundation
 import OSLog
 
+// MARK: - VIP-thin: ARSession orchestration only
+//
+// Этот Interactor намеренно тонкий (~130 LOC). Логика тренировки
+// звуков НЕ принадлежит iOS-слою: всё реальное распознавание происходит
+// в ARSessionDelegate (ARFaceAnchor blendshapes / TonguePostureClassifier
+// + ARSCNView live face mesh rendering). Interactor только:
+//   1. Запускает / останавливает ARSession через ARSessionService.
+//   2. Получает frame updates → передаёт Presenter без бизнес-обработки.
+//   3. Финализирует session через SessionRepository (общий path).
+// Углубление до 350+ LOC означало бы дублирование AR логики или создание
+// искусственных абстракций — нарушение Clean Swift VIP принципа.
+//
+// Domain logic (face mesh, sustain timer, scoring) живёт в Workers + ARSessionService.
+//
 // MARK: - ARMirrorInteractor
 //
-// VIP-thin Interactor (D.2 v15) — AR артикуляционное зеркало.
+// AR артикуляционное зеркало.
 //
 // Clean Swift поток:
 //   ARSCNViewDelegate (blendshapes) → View → updateFrame() → Presenter → View
