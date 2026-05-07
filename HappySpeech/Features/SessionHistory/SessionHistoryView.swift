@@ -479,55 +479,24 @@ struct SessionHistoryView: View {
 
     @ViewBuilder
     private var emptyStateView: some View {
+        // G.1 v17 — унифицированный empty-state через HSEmptyStateView (mascot-вариант).
+        // Маскот выражает контекст: thinking — фильтр пуст, explaining — нет сессий.
         let isFilterEmpty = display.emptyKind == .noResultsForFilter
-        VStack(spacing: SpacingTokens.large) {
-            Spacer(minLength: SpacingTokens.xLarge)
-
-            LyalyaMascotView(
-                state: isFilterEmpty ? .thinking : .explaining,
-                size: 140
-            )
-            .accessibilityHidden(true)
-
-            VStack(spacing: SpacingTokens.small) {
-                Text(display.emptyTitle)
-                    .font(TypographyTokens.title(22))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-
-                Text(display.emptyMessage)
-                    .font(TypographyTokens.body())
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                    .padding(.horizontal, SpacingTokens.large)
-            }
-
-            HSButton(
-                isFilterEmpty
-                    ? String(localized: "sessionHistory.empty.cta.clear")
-                    : String(localized: "sessionHistory.empty.cta.start"),
-                style: .primary,
-                size: .medium,
-                icon: isFilterEmpty ? "arrow.clockwise" : "play.fill"
-            ) {
+        HSEmptyStateView(
+            mascot: isFilterEmpty ? .thinking : .explaining,
+            title: display.emptyTitle,
+            subtitle: display.emptyMessage,
+            actionTitle: isFilterEmpty
+                ? String(localized: "sessionHistory.empty.cta.clear")
+                : String(localized: "sessionHistory.empty.cta.start"),
+            action: {
                 if isFilterEmpty {
                     interactor?.clearFilter(.init())
                 } else {
                     handleStartLesson()
                 }
             }
-            .frame(maxWidth: 280)
-
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(display.emptyTitle). \(display.emptyMessage)")
+        )
     }
 
     // MARK: - Actions

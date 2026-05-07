@@ -465,46 +465,17 @@ struct ProgressDashboardView: View {
     // MARK: - Empty state
 
     private var emptyStateView: some View {
-        VStack(spacing: SpacingTokens.large) {
-            Spacer(minLength: SpacingTokens.xLarge)
-
-            LyalyaMascotView(state: .explaining, size: 140)
-                .accessibilityHidden(true)
-
-            VStack(spacing: SpacingTokens.small) {
-                Text(display.emptyTitle)
-                    .font(TypographyTokens.title(22))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-
-                Text(display.emptyMessage)
-                    .font(TypographyTokens.body())
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                    .padding(.horizontal, SpacingTokens.large)
-            }
-
-            HSButton(
-                String(localized: "progressDashboard.empty.cta"),
-                style: .primary,
-                size: .medium,
-                icon: "play.fill"
-            ) {
+        // G.1 v17 — HSEmptyStateView (mascot=explaining), parent-контур.
+        HSEmptyStateView(
+            mascot: .explaining,
+            title: display.emptyTitle,
+            subtitle: display.emptyMessage,
+            actionTitle: String(localized: "progressDashboard.empty.cta"),
+            action: {
                 container.hapticService.impact(.medium)
                 logger.info("emptyState start lesson tapped")
             }
-            .frame(maxWidth: 280)
-
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(display.emptyTitle). \(display.emptyMessage)")
+        )
     }
 
     // MARK: - Helpers
