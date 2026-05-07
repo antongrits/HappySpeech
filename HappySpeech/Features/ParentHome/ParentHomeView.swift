@@ -235,8 +235,11 @@ private struct ParentDashboardTab: View {
                 Text(viewModel.greeting)
                     .font(TypographyTokens.headline())
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+                    .multilineTextAlignment(.leading)
             }
-            Spacer()
+            Spacer(minLength: SpacingTokens.sp2)
             LyalyaMascotView(state: .waving, size: 64)
                 .accessibilityHidden(true)
         }
@@ -264,12 +267,16 @@ private struct ParentDashboardTab: View {
                     Text(viewModel.childName)
                         .font(TypographyTokens.headline(17))
                         .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                     Text(String(localized: "\(viewModel.childAge) лет · \(viewModel.targetSoundsText)"))
                         .font(TypographyTokens.body(13))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
                 }
 
-                Spacer()
+                Spacer(minLength: SpacingTokens.sp2)
 
                 Button {
                     // Switch child
@@ -298,20 +305,28 @@ private struct ParentDashboardTab: View {
                         Text(String(localized: "Результат занятия"))
                             .font(TypographyTokens.body(13))
                             .foregroundStyle(ColorTokens.Parent.inkMuted)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
                         Text(session.resultText)
                             .font(TypographyTokens.headline(20))
                             .foregroundStyle(session.successRate >= 0.7 ? ColorTokens.Semantic.success : ColorTokens.Semantic.warning)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
                     }
 
-                    Spacer()
+                    Spacer(minLength: SpacingTokens.sp2)
 
                     VStack(alignment: .trailing, spacing: 2) {
                         Text(String(localized: "Попыток"))
                             .font(TypographyTokens.body(12))
                             .foregroundStyle(ColorTokens.Parent.inkMuted)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
                         Text("\(session.totalAttempts)")
                             .font(TypographyTokens.headline(18))
                             .foregroundStyle(ColorTokens.Parent.ink)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
                     }
                 }
 
@@ -493,12 +508,16 @@ private struct ParentDashboardTab: View {
                     Text(String(localized: "family.voice.library.title"))
                         .font(TypographyTokens.headline())
                         .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
                     Text(String(localized: "family.voice.library.subtitle"))
                         .font(TypographyTokens.body())
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
                         .ctaTextStyle()
                 }
-                Spacer()
+                Spacer(minLength: SpacingTokens.sp1)
                 Image(systemName: "chevron.right")
                     .font(TypographyTokens.caption(14))
                     .foregroundStyle(ColorTokens.Parent.inkSoft)
@@ -531,11 +550,15 @@ private struct ParentDashboardTab: View {
                     Text(String(localized: "family_calendar.card.title"))
                         .font(TypographyTokens.headline())
                         .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
                     Text(String(localized: "family_calendar.card.subtitle"))
                         .font(TypographyTokens.body())
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
                 }
-                Spacer()
+                Spacer(minLength: SpacingTokens.sp1)
                 Image(systemName: "chevron.right")
                     .foregroundStyle(ColorTokens.Parent.inkSoft)
                     .accessibilityHidden(true)
