@@ -8138,6 +8138,17 @@
         }
       }
     },
+    "demo.try.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите, чтобы попробовать интерактивный пример"
+          }
+        }
+      }
+    },
     "demo.step1.desc": {
       "extractionState": "manual",
       "localizations": {
@@ -9204,13 +9215,35 @@
         }
       }
     },
+    "facefilter.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть AR-фильтр"
+          }
+        }
+      }
+    },
+    "facefilter.fallback.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На этом устройстве нет камеры TrueDepth. Поиграй без маски — или попробуй на iPhone с Face ID"
+          }
+        }
+      }
+    },
     "facefilter.fallback.title": {
       "extractionState": "manual",
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Заголовок"
+            "value": "AR не поддерживается"
           }
         }
       }
@@ -12834,6 +12867,28 @@
         }
       }
     },
+    "karaoke.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть экран слоговой практики"
+          }
+        }
+      }
+    },
+    "karaoke.cta.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите, чтобы слушать или практиковать произношение слова"
+          }
+        }
+      }
+    },
     "karaoke.cta.listen": {
       "extractionState": "manual",
       "localizations": {
@@ -12922,13 +12977,35 @@
         }
       }
     },
+    "karaoke.screen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слоговая практика"
+          }
+        }
+      }
+    },
+    "karaoke.spectrogram.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Визуализация звука — спектрограмма вашей речи"
+          }
+        }
+      }
+    },
     "karaoke.summary": {
       "extractionState": "manual",
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Караоке"
+            "value": "Итог"
           }
         }
       }
@@ -12966,6 +13043,17 @@
         }
       }
     },
+    "leaderboard.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть рейтинг семьи"
+          }
+        }
+      }
+    },
     "leaderboard.empty.message": {
       "extractionState": "manual",
       "localizations": {
@@ -12973,6 +13061,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Запиши хотя бы одно занятие — и рейтинг появится."
+          }
+        }
+      }
+    },
+    "leaderboard.empty.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начните заниматься — и здесь появится рейтинг вашей семьи"
           }
         }
       }
@@ -13088,6 +13187,17 @@
       }
     },
     "leaderboard.nav_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рейтинг семьи"
+          }
+        }
+      }
+    },
+    "leaderboard.screen.title": {
       "extractionState": "manual",
       "localizations": {
         "ru": {
@@ -31961,12 +32071,24 @@
         }
       }
     },
-    "streak.days.short": {
+    "streak.close.a11y": {
+      "extractionState": "manual",
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "дн"
+            "value": "Закрыть экран серии дней"
+          }
+        }
+      }
+    },
+    "streak.days.short": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "дн."
           }
         }
       }
@@ -31977,7 +32099,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Дни"
+            "value": "%d дней подряд"
           }
         }
       }
@@ -31988,7 +32110,18 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Серия"
+            "value": "Серия %d дней. %@"
+          }
+        }
+      }
+    },
+    "streak.longest.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рекорд"
           }
         }
       }
@@ -31999,7 +32132,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Значение"
+            "value": "%d дней"
           }
         }
       }
@@ -32010,7 +32143,29 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Серия"
+            "value": "Этап серии дней"
+          }
+        }
+      }
+    },
+    "streak.milestones.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Этапы серии"
+          }
+        }
+      }
+    },
+    "streak.next.completed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все этапы пройдены!"
           }
         }
       }
@@ -32021,7 +32176,40 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Метка"
+            "value": "До «%@» осталось %d дней"
+          }
+        }
+      }
+    },
+    "streak.progress.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прогресс до следующего этапа серии"
+          }
+        }
+      }
+    },
+    "streak.saver.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спасти серию"
+          }
+        }
+      }
+    },
+    "streak.saver.cta.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Использовать спасение серии, чтобы не потерять прогресс"
           }
         }
       }
@@ -32032,7 +32220,18 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Доступно"
+            "value": "Доступно один раз в месяц"
+          }
+        }
+      }
+    },
+    "streak.saver.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спасение серии"
           }
         }
       }
@@ -32077,6 +32276,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Серия"
+          }
+        }
+      }
+    },
+    "streak.screen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серия дней"
           }
         }
       }

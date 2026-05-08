@@ -3,6 +3,24 @@
 
 ---
 
+## ADR-V18-L-LOCALIZATION-FIX — Block L v18 localization audit complete (2026-05-08)
+
+### Дата: 2026-05-08
+### Статус: Done
+
+**Проблема:** В iOS UI отображались сырые английские ключи вместо русских строк в экранах: DailyStreak, FamilyLeaderboard, SpeechVisualization (karaoke), ARFaceFilter, DemoMode.
+
+**Действие:** Ручной аудит 5 Swift-файлов (Block S v16 + Demo). Добавлено 27 ключей в Localizable.xcstrings:
+- `streak.*` — 12 ключей (screen.title, close.a11y, days.unit, days.short, hero.a11y, longest.title, longest.value, milestones.title, next.completed, next.label, progress.a11y, saver.cta, saver.cta.hint, saver.title, screen.title); также исправлены 5 заполнителей ("Серия"/"Дни"/"Метка" → реальные значения)
+- `karaoke.*` — 4 ключа (screen.title, close.a11y, spectrogram.a11y, cta.hint); исправлено karaoke.summary "Заголовок" → "Итог"
+- `leaderboard.*` — 3 ключа (screen.title, close.a11y, empty.subtitle)
+- `facefilter.*` — 2 ключа (close.a11y, fallback.body); исправлено fallback.title "Заголовок" → "AR не поддерживается"
+- `demo.try.hint` — 1 ключ
+
+**Вывод:** 0 сырых English-ключей в UI для всех проаудированных экранов. JSON Localizable.xcstrings структурно валиден.
+
+---
+
 ## ADR-V18-H-VERIFIED — Lyalya 3D coverage already meets target (2026-05-08)
 
 ### Дата: 2026-05-08
