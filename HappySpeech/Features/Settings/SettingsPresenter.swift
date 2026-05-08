@@ -50,12 +50,12 @@ final class SettingsPresenter: SettingsPresentationLogic {
             settings: response.settings,
             appVersionLine: versionLine,
             availableAvatars: [
-                "word_fox",      // лиса (replaces 🦊)
-                "word_hare",     // заяц (replaces 🐰)
-                "reward_champion", // лев (FALLBACK: 🦁)
-                "word_bear",     // медведь (FALLBACK: 🐼 panda)
-                "word_bird",     // сова (FALLBACK: 🦉 owl → bird)
-                "word_frog"      // лягушка (FALLBACK: 🐢 turtle → amphibian)
+                "word_fox",        // лиса
+                "word_hare",       // заяц
+                "reward_champion", // лев (fallback)
+                "word_bear",       // медведь (fallback для panda)
+                "word_bird",       // сова (fallback bird)
+                "word_frog"        // лягушка (fallback amphibian)
             ],
             availableAges: Array(3...12)
         )

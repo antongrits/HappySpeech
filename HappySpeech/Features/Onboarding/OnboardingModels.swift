@@ -214,8 +214,8 @@ public struct OnboardingProfile: Sendable, Equatable {
         self.lyalyaPreset = lyalyaPreset
     }
 
-    // Block D v16: эмодзи аватары → illustration assets.
-    // FALLBACK: 🐼 panda → word_bear, 🦁 lion → reward_champion.
+    // Block D v16 / G v18: иллюстрационные ассеты аватаров.
+    // FALLBACK: panda → word_bear, lion → reward_champion.
     public static let availableAvatars: [String] = [
         "word_cat", "word_dog", "word_fox", "word_bear", "word_bear", "reward_champion"
     ]

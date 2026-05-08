@@ -206,7 +206,7 @@ extension ArticulationPose {
             name: String(localized: "artposeSh.name"),
             instruction: String(localized: "artposeSh.instruction"),
             voicePrompt: String(localized: "artposeSh.prompt"),
-            emoji: "🫦",
+            emoji: "mouth.fill",
             systemImageName: "waveform.path",
             targetSound: "Ш",
             blendshapeTargets: [

@@ -93,7 +93,7 @@ final class PuzzleRevealInteractor: PuzzleRevealBusinessLogic {
                        hintText: String(localized: "Произнеси слово с буквой «Ш»")),
             PuzzleItem(word: "жираф", emoji: "word_elephant", soundGroup: "hissing",
                        hintText: String(localized: "Произнеси слово с буквой «Ж»")),
-            PuzzleItem(word: "чайник", emoji: "🫖", soundGroup: "hissing",
+            PuzzleItem(word: "чайник", emoji: "word_cup", soundGroup: "hissing",
                        hintText: String(localized: "Произнеси слово с буквой «Ч»")),
             PuzzleItem(word: "щука", emoji: "word_fish", soundGroup: "hissing",
                        hintText: String(localized: "Произнеси слово с буквой «Щ»")),

@@ -128,8 +128,10 @@ struct DailyStreakView: View {
     @ViewBuilder
     private func heroSection(viewModel: DailyStreakModels.Load.ViewModel) -> some View {
         VStack(spacing: SpacingTokens.sp2) {
-            Text(viewModel.statusEmoji)
+            // Block G v18: statusEmoji теперь хранит SF Symbol name.
+            Image(systemName: viewModel.statusEmoji)
                 .font(.system(size: 64))
+                .foregroundStyle(ColorTokens.Brand.primary)
                 .accessibilityHidden(true)
 
             Text(verbatim: "\(viewModel.currentStreak)")

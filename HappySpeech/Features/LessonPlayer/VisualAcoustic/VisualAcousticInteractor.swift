@@ -378,7 +378,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 ),
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "🪥",
+                    imageEmoji: "scribble",
                     imageLabel: String(localized: "Щётка"),
                     question: String(localized: "Чем чистят зубы?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Щ»"),

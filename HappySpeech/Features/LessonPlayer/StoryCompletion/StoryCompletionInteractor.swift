@@ -300,7 +300,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 choices: ["белка", "лягушка", "стрекоза"],
                 correctIndex: 2,
                 soundGroup: "whistling",
-                emoji: "🪰"
+                emoji: "ant.fill"
             ),
             StoryScene(
                 id: UUID(),
@@ -432,7 +432,7 @@ final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {
                 choices: ["гусь", "лебедь", "аист"],
                 correctIndex: 0,
                 soundGroup: "velar",
-                emoji: "🪿"
+                emoji: "bird.fill"
             ),
             StoryScene(
                 id: UUID(),

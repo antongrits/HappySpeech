@@ -160,7 +160,7 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "gora_kora",
             targetWord: "гора", foilWord: "кора",
-            targetEmoji: "word_forest", foilEmoji: "🪵",
+            targetEmoji: "word_forest", foilEmoji: "word_tree",
             soundContrast: "К-Г", targetIsLeft: true
         ),
 
@@ -230,7 +230,7 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "shit_shchit",
             targetWord: "шит", foilWord: "щит",
-            targetEmoji: "🪡", foilEmoji: "shield.fill",
+            targetEmoji: "scribble", foilEmoji: "shield.fill",
             soundContrast: "Ш-Щ", targetIsLeft: false
         ),
 

@@ -153,9 +153,11 @@ struct FamilyLeaderboardView: View {
                     .fill(rankBackground(row: row))
                     .frame(width: 40, height: 40)
                 if let medal = row.medal {
-                    Text(medal.emoji)
+                    // Block G v18: SF Symbol с brand-tint вместо эмодзи медалей.
+                    Image(systemName: medal.symbolName)
                         .font(.title2)
-                        .accessibilityHidden(true)
+                        .foregroundStyle(medalTint(medal))
+                        .accessibilityLabel(Text(medalAccessibilityLabel(medal)))
                 } else {
                     Text(verbatim: "\(row.rank)")
                         .font(.title3.bold())
@@ -205,6 +207,24 @@ struct FamilyLeaderboardView: View {
             return ColorTokens.Brand.gold.opacity(0.20)
         }
         return ColorTokens.Parent.inkSoft.opacity(0.30)
+    }
+
+    // Block G v18: цвет медали (золото/серебро/бронза) для SF Symbol tint.
+    private func medalTint(_ medal: FamilyLeaderboardModels.Load.ViewModel.Medal) -> Color {
+        switch medal {
+        case .gold:   return ColorTokens.Brand.gold
+        case .silver: return ColorTokens.Parent.inkSoft
+        case .bronze: return ColorTokens.Brand.primary
+        }
+    }
+
+    // Block G v18: a11y label для медали (важно для VoiceOver).
+    private func medalAccessibilityLabel(_ medal: FamilyLeaderboardModels.Load.ViewModel.Medal) -> String {
+        switch medal {
+        case .gold:   return String(localized: "leaderboard.medal.gold.a11y")
+        case .silver: return String(localized: "leaderboard.medal.silver.a11y")
+        case .bronze: return String(localized: "leaderboard.medal.bronze.a11y")
+        }
     }
 
     // MARK: - Empty

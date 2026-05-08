@@ -21,15 +21,9 @@ enum FaceMaskKind: String, Sendable, CaseIterable, Identifiable {
 
     var id: String { rawValue }
 
-    var emoji: String {
-        switch self {
-        case .kitten:  return "🐱"
-        case .fox:     return "🦊"
-        case .crown:   return "👑"
-        case .ushanka: return "🪖"
-        case .glasses: return "🤓"
-        }
-    }
+    /// Block G v18: эмодзи заменены на SF Symbols. Поле `emoji` сохранено
+    /// для обратной совместимости — теперь возвращает то же, что `symbolName`.
+    var emoji: String { symbolName }
 
     var symbolName: String {
         switch self {

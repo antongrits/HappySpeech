@@ -38,24 +38,27 @@ final class DailyStreakPresenter: DailyStreakPresentationLogic {
             next: response.nextMilestone
         )
 
+        // Block G v18: эмодзи заменены на SF Symbol names. Поле `statusEmoji`
+        // сохранено для обратной совместимости — теперь содержит symbol name,
+        // отрисовка через Image(systemName:) на стороне View.
         let statusLabel: String
         let statusEmoji: String
         switch response.status {
         case .fresh:
             statusLabel = String(localized: "streak.status.fresh")
-            statusEmoji = "🌱"
+            statusEmoji = "leaf.fill"
         case .active:
             statusLabel = String(localized: "streak.status.active")
-            statusEmoji = "🔥"
+            statusEmoji = "flame.fill"
         case .pendingToday:
             statusLabel = String(localized: "streak.status.pending")
-            statusEmoji = "⏳"
+            statusEmoji = "hourglass"
         case .broken:
             statusLabel = String(localized: "streak.status.broken")
-            statusEmoji = "💤"
+            statusEmoji = "moon.zzz.fill"
         case .saved:
             statusLabel = String(localized: "streak.status.saved")
-            statusEmoji = "🛟"
+            statusEmoji = "lifepreserver"
         }
 
         let saverHint: String

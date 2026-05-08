@@ -672,7 +672,7 @@ private extension RewardsInteractor {
                     collection: .halloween, rarity: .epic,
                     isUnlocked: false, isNew: false,
                     unlockCondition: String(localized: "rewards.cond.zombie"),  unlockedAt: nil),
-            Sticker(id: "halloween.cauldron",emoji: "🪄", name: String(localized: "rewards.sticker.cauldron"),
+            Sticker(id: "halloween.cauldron",emoji: "wand.and.sparkles", name: String(localized: "rewards.sticker.cauldron"),
                     collection: .halloween, rarity: .common,
                     isUnlocked: false, isNew: false,
                     unlockCondition: String(localized: "rewards.cond.cauldron"),unlockedAt: nil),

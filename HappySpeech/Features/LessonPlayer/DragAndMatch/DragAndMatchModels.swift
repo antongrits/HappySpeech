@@ -245,7 +245,7 @@ extension DragWord {
                      correctBucketId: "sound_k", soundGroup: "velar"),
             DragWord(id: "klyuch", word: "ключ", emoji: "word_door",
                      correctBucketId: "sound_k", soundGroup: "velar"),
-            DragWord(id: "gus", word: "гусь", emoji: "🪿",
+            DragWord(id: "gus", word: "гусь", emoji: "bird.fill",
                      correctBucketId: "sound_g", soundGroup: "velar"),
             DragWord(id: "gorka", word: "горка", emoji: "word_park",
                      correctBucketId: "sound_g", soundGroup: "velar"),
@@ -253,12 +253,12 @@ extension DragWord {
                      correctBucketId: "sound_h", soundGroup: "velar"),
             DragWord(id: "uho", word: "ухо", emoji: "word_bear",
                      correctBucketId: "sound_h", soundGroup: "velar"),
-            DragWord(id: "muha", word: "муха", emoji: "🪰",
+            DragWord(id: "muha", word: "муха", emoji: "ant.fill",
                      correctBucketId: "sound_h", soundGroup: "velar")
         ],
         [
             DragBucket(id: "sound_k", title: "Звук «К»", emoji: "word_cat", color: "butter"),
-            DragBucket(id: "sound_g", title: "Звук «Г»", emoji: "🪿", color: "mint"),
+            DragBucket(id: "sound_g", title: "Звук «Г»", emoji: "bird.fill", color: "mint"),
             DragBucket(id: "sound_h", title: "Звук «Х»", emoji: "word_cake", color: "rose")
         ]
     )
@@ -276,7 +276,7 @@ extension DragWord {
                      correctBucketId: "sound_p", soundGroup: "bilabial"),
             DragWord(id: "ptica", word: "птица", emoji: "word_bird",
                      correctBucketId: "sound_p", soundGroup: "bilabial"),
-            DragWord(id: "pila", word: "пила", emoji: "🪚",
+            DragWord(id: "pila", word: "пила", emoji: "hammer.fill",
                      correctBucketId: "sound_p", soundGroup: "bilabial")
         ],
         [
