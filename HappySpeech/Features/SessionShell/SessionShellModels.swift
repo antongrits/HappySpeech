@@ -27,6 +27,22 @@ enum SessionShellModels {
             let childId: String
             let targetSoundId: String
             let sessionType: SessionType
+            /// Когда задано — Interactor создаёт сессию из одного шаблона
+            /// (используется при deep link / debug-routes lessonPlayer(templateType:)).
+            /// При nil — обычный adaptive / default подбор шаблонов.
+            let forcedGameType: GameType?
+
+            init(
+                childId: String,
+                targetSoundId: String,
+                sessionType: SessionType,
+                forcedGameType: GameType? = nil
+            ) {
+                self.childId = childId
+                self.targetSoundId = targetSoundId
+                self.sessionType = sessionType
+                self.forcedGameType = forcedGameType
+            }
         }
         struct Response {
             let activities: [SessionActivity]
@@ -153,6 +169,34 @@ enum GameType: String, Sendable, CaseIterable {
     case objectHunt             = "ObjectHunt"
     /// Block Q (v12): 18-й шаблон — написание буквы PencilKit + Vision handwriting recognition.
     case letterTracing          = "LetterTracing"
+
+    /// Маппинг kebab-case route-строк → GameType для deep links / debug-routes.
+    /// Возвращает nil если строка пустая или не распознана (тогда вызывается
+    /// обычный adaptive подбор).
+    static func fromTemplateRoute(_ raw: String) -> GameType? {
+        switch raw.lowercased() {
+        case "":                            return nil
+        case "listen-and-choose":           return .listenAndChoose
+        case "repeat-after-model":          return .repeatAfterModel
+        case "minimal-pairs":               return .minimalPairs
+        case "drag-and-match":              return .dragAndMatch
+        case "memory":                      return .memory
+        case "bingo":                       return .bingo
+        case "breathing":                   return .breathing
+        case "rhythm":                      return .rhythm
+        case "sorting":                     return .sorting
+        case "puzzle-reveal":               return .puzzleReveal
+        case "sound-hunter":                return .soundHunter
+        case "narrative-quest":             return .narrativeQuest
+        case "visual-acoustic":             return .visualAcoustic
+        case "story-completion":            return .storyCompletion
+        case "articulation-imitation":     return .articulationImitation
+        case "ar-activity":                 return .arActivity
+        case "object-hunt":                 return .objectHunt
+        case "letter-tracing":              return .letterTracing
+        default:                            return nil
+        }
+    }
 }
 
 enum SessionType: String, Sendable {
