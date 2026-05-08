@@ -33,6 +33,9 @@ struct SessionHistoryView: View {
     @State private var isExportSheetOpen = false
     @State private var path: [SessionDetailRoute] = []
 
+    // Block J v18 — hero zoom transition (iOS 18+) для row → detail.
+    @Namespace private var heroNamespace
+
     // Optional childId — оставлено для будущей привязки к репозиторию.
     private let childId: String?
 
@@ -96,6 +99,8 @@ struct SessionHistoryView: View {
             }
             .navigationDestination(for: SessionDetailRoute.self) { route in
                 SessionHistoryDetailView(detail: route.detail)
+                    // Block J v18 — hero zoom destination (iOS 18+ matchedTransitionSource).
+                    .heroDestination(id: route.detail.id, namespace: heroNamespace)
             }
         }
         .environment(\.circuitContext, .parent)
@@ -369,6 +374,8 @@ struct SessionHistoryView: View {
                                         .contentShape(Rectangle())
                                 }
                                 .buttonStyle(.plain)
+                                // Block J v18 — hero zoom source (iOS 18+).
+                                .heroSource(id: row.id, namespace: heroNamespace)
 
                                 if index < group.rows.count - 1 {
                                     Divider()
