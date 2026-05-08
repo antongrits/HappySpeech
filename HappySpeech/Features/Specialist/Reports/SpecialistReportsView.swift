@@ -529,9 +529,9 @@ private struct SoundBreakdownRowView: View {
                         .foregroundStyle(ColorTokens.Spec.ink)
                         .lineLimit(1)
                     HStack(spacing: SpacingTokens.sp2) {
-                        Text(String(localized: "reports.row.attempts.\(row.attempts)"))
+                        Text(String(format: String(localized: "reports.row.attempts.format"), row.attempts))
                         Text("·")
-                        Text(String(localized: "reports.row.success.\(row.successes)"))
+                        Text(String(format: String(localized: "reports.row.success.format"), row.successes))
                     }
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Spec.inkMuted)
