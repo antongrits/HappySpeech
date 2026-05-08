@@ -2108,6 +2108,216 @@
           "hint": "Вдохни как можно глубже — всё, что можешь. Выдыхай медленно до конца. Молодец!",
           "difficulty": 1,
           "audio_file": "Audio/Content/Breathing/br-300.m4a"
+        },
+        {
+          "id": "br-p-300",
+          "word": "Дыхание с препятствием",
+          "hint": "Сложи губы буквой «о» и дуй сквозь маленькое отверстие — тонкая струя.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Breathing/br-p-300.m4a"
+        },
+        {
+          "id": "br-p-301",
+          "word": "Счёт на выдохе до 10",
+          "hint": "Вдохни. На одном выдохе считай: раз, два, три... Досчитай до 10 не вдыхая.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Breathing/br-p-301.m4a"
+        },
+        {
+          "id": "br-p-302",
+          "word": "Дыхание с паузой 4-4-4",
+          "hint": "Вдохни на 4 счёта. Задержи на 4. Выдохни на 4. Повтори трижды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Breathing/br-p-302.m4a"
+        },
+        {
+          "id": "br-p-303",
+          "word": "Пение на выдохе «А-А-А»",
+          "hint": "Тянем звук А на одном выдохе как можно дольше. Считай секунды!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Breathing/br-p-303.m4a"
+        },
+        {
+          "id": "br-p-304",
+          "word": "Счёт на выдохе до 15",
+          "hint": "Усложнённый вариант: вдохни глубоко и считай до 15 на одном выдохе.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Breathing/br-p-304.m4a"
+        },
+        {
+          "id": "br-p-305",
+          "word": "Ритмическое дыхание с хлопками",
+          "hint": "Хлопай в ладоши ритмично: вдох (1 хлопок) — выдох (2 хлопка).",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Breathing/br-p-305.m4a"
+        },
+        {
+          "id": "br-p-306",
+          "word": "Дыхание через трубочку в воду",
+          "hint": "Подуй через трубочку в стакан воды — образуются пузырьки. Контролируй силу!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Breathing/br-p-306.m4a"
+        },
+        {
+          "id": "br-p-307",
+          "word": "Мягкая атака звука",
+          "hint": "Перед тем как начать говорить — вдохни спокойно. Потом тихонько начни слово.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Breathing/br-p-307.m4a"
+        },
+        {
+          "id": "br-p-308",
+          "word": "Прерывистый выдох: с-с-с-с",
+          "hint": "Короткие порции: с! пауза. с! пауза. Каждый звук — отдельный выдох.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Breathing/br-p-308.m4a"
+        },
+        {
+          "id": "br-p-309",
+          "word": "Дыхание живота лёжа",
+          "hint": "Ляг на спину. Положи руку на живот. Дыши так, чтобы рука поднималась.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Breathing/br-p-309.m4a"
+        },
+        {
+          "id": "br-p-310",
+          "word": "Длинное ффф-выдыхание",
+          "hint": "Вдохни. На выдохе тяни звук Ф как можно дольше. Это укрепляет выдох.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Breathing/br-p-310.m4a"
+        },
+        {
+          "id": "br-p-311",
+          "word": "Смех на выдохе: ха-ха-ха",
+          "hint": "Смейся намеренно: ха-ха-ха. Это отличная дыхательная тренировка!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Breathing/br-p-311.m4a"
+        },
+        {
+          "id": "br-p-312",
+          "word": "Выдох с изменением тона",
+          "hint": "Тяни звук А, меняя высоту от низкого к высокому на одном выдохе.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Breathing/br-p-312.m4a"
+        },
+        {
+          "id": "br-p-313",
+          "word": "Вдох через нос — выдох через рот",
+          "hint": "Вдохни медленно через нос. Выдохни через рот. Рот приоткрыт немного.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Breathing/br-p-313.m4a"
+        },
+        {
+          "id": "br-p-314",
+          "word": "Дыхание с движением рук",
+          "hint": "Поднимай руки вверх на вдохе — опускай на выдохе. Ритм важен!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Breathing/br-p-314.m4a"
+        },
+        {
+          "id": "br-p-315",
+          "word": "Задуй свечу далеко",
+          "hint": "Представь свечу в метре от тебя. Дуй медленно и прицельно — задуть издалека.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Breathing/br-p-315.m4a"
+        },
+        {
+          "id": "br-p-316",
+          "word": "Дыхание с закрытым ртом: М-М-М",
+          "hint": "Тяни М с закрытым ртом долго. Вибрация в груди и голове.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Breathing/br-p-316.m4a"
+        },
+        {
+          "id": "br-p-317",
+          "word": "Быстрый вдох — долгий выдох",
+          "hint": "Вдохни быстро. Выдыхай очень медленно — считай до 8. Ровно!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Breathing/br-p-317.m4a"
+        },
+        {
+          "id": "br-p-318",
+          "word": "Дыхание под стихотворный ритм",
+          "hint": "Стихи: «Раз-два-три-четыре» — говори на выдохе весь ритмический блок.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Breathing/br-p-318.m4a"
+        },
+        {
+          "id": "br-p-319",
+          "word": "Пузырь из жвачки без жвачки",
+          "hint": "Надуй щёки с воздухом. Держи несколько секунд. Медленно выпускай.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Breathing/br-p-319.m4a"
+        },
+        {
+          "id": "br-p-320",
+          "word": "Дыхание перед сложным словом",
+          "hint": "Перед трудным длинным словом — вдохни. Произноси чётко на выдохе.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Breathing/br-p-320.m4a"
+        },
+        {
+          "id": "br-p-321",
+          "word": "Цикл: вдох-говорю-выдох",
+          "hint": "Вдохни → скажи слово → выдохни полностью. Три раза с разными словами.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Breathing/br-p-321.m4a"
+        },
+        {
+          "id": "br-p-322",
+          "word": "Долгий зевок и выдох",
+          "hint": "Зевни медленно и широко. После зевка — долгий спокойный выдох.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Breathing/br-p-322.m4a"
+        },
+        {
+          "id": "br-p-323",
+          "word": "Шёпот на выдохе",
+          "hint": "Вдохни. На выдохе шёпотом считай до 10. Экономь воздух!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Breathing/br-p-323.m4a"
+        },
+        {
+          "id": "br-p-324",
+          "word": "Нарастающий выдох",
+          "hint": "Выдыхай медленнее с каждой попыткой: 3 сек, 5 сек, 8 сек, 10 сек.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Breathing/br-p-324.m4a"
+        },
+        {
+          "id": "br-p-325",
+          "word": "Имитация задувания большой свечи",
+          "hint": "Сделай вдох на всё лёгкие. Дуй долго-долго в одну точку. Свеча большая!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Breathing/br-p-325.m4a"
+        },
+        {
+          "id": "br-p-326",
+          "word": "Ритм дыхания в стихах",
+          "hint": "«Тра-та-та, тра-та-та» — каждый такт на коротком выдохе. Ритм чёткий!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Breathing/br-p-326.m4a"
+        },
+        {
+          "id": "br-p-327",
+          "word": "Дыхание для сонорного Р",
+          "hint": "Перед словом с Р: вдохни, почувствуй вибрацию в языке, произноси Р-Р-Р.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Breathing/br-p-327.m4a"
+        },
+        {
+          "id": "br-p-328",
+          "word": "Дыхание для свистящих",
+          "hint": "Перед С/З: вдохни, сжми губы, тонкая холодная струйка. Точная дозировка!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Breathing/br-p-328.m4a"
+        },
+        {
+          "id": "br-p-329",
+          "word": "Дыхание для шипящих",
+          "hint": "Перед Ш/Ж: вдохни, губы немного округлены, тёплая широкая струя. Мягче!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Breathing/br-p-329.m4a"
         }
       ]
     },

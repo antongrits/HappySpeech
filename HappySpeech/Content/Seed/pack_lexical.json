@@ -2174,6 +2174,181 @@
           "hint": "Моя любимое время года — ... Потому что ...",
           "difficulty": 3,
           "audio_file": "Audio/Content/Lexical/lex-sw-24.m4a"
+        },
+        {
+          "id": "lex-sw-25",
+          "word": "метель",
+          "hint": "Зимний ветер несёт снег и воет.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-sw-25.m4a"
+        },
+        {
+          "id": "lex-sw-26",
+          "word": "иней",
+          "hint": "Белый узор на стекле морозным утром.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-sw-26.m4a"
+        },
+        {
+          "id": "lex-sw-27",
+          "word": "ледоход",
+          "hint": "Весной лёд на реке ломается и плывёт.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-sw-27.m4a"
+        },
+        {
+          "id": "lex-sw-28",
+          "word": "паводок",
+          "hint": "Весной река разливается — это паводок.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-sw-28.m4a"
+        },
+        {
+          "id": "lex-sw-29",
+          "word": "засуха",
+          "hint": "Долго нет дождя, и земля трескается.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-sw-29.m4a"
+        },
+        {
+          "id": "lex-sw-30",
+          "word": "роса",
+          "hint": "Капли воды на листьях ранним утром.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-sw-30.m4a"
+        },
+        {
+          "id": "lex-sw-31",
+          "word": "слякоть",
+          "hint": "Мокро и грязно — осенью такая погода.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-sw-31.m4a"
+        },
+        {
+          "id": "lex-sw-32",
+          "word": "ураган",
+          "hint": "Очень сильный ветер.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-sw-32.m4a"
+        },
+        {
+          "id": "lex-sw-33",
+          "word": "позёмка",
+          "hint": "Ветер гонит снег по земле низко.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Lexical/lex-sw-33.m4a"
+        },
+        {
+          "id": "lex-sw-34",
+          "word": "жара",
+          "hint": "Летом очень горячо — это жара.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-sw-34.m4a"
+        },
+        {
+          "id": "lex-sw-35",
+          "word": "заморозки",
+          "hint": "Небольшой мороз по ночам — заморозки.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-sw-35.m4a"
+        },
+        {
+          "id": "lex-sw-36",
+          "word": "половодье",
+          "hint": "Вода разливается по полям весной.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Lexical/lex-sw-36.m4a"
+        },
+        {
+          "id": "lex-sw-37",
+          "word": "бриз",
+          "hint": "Лёгкий морской ветер.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-sw-37.m4a"
+        },
+        {
+          "id": "lex-sw-38",
+          "word": "листопад",
+          "hint": "Осенью листья падают с деревьев.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-sw-38.m4a"
+        },
+        {
+          "id": "lex-sw-39",
+          "word": "снегопад",
+          "hint": "Снег идёт сильно и долго.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-sw-39.m4a"
+        },
+        {
+          "id": "lex-sw-40",
+          "word": "пасмурно",
+          "hint": "Небо затянуто тучами, нет солнца.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-sw-40.m4a"
+        },
+        {
+          "id": "lex-sw-41",
+          "word": "затяжной дождь",
+          "hint": "Дождь идёт несколько дней подряд.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-sw-41.m4a"
+        },
+        {
+          "id": "lex-sw-42",
+          "word": "проталина",
+          "hint": "Место в снегу где потеплело и снег растаял.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Lexical/lex-sw-42.m4a"
+        },
+        {
+          "id": "lex-sw-43",
+          "word": "ясно",
+          "hint": "Солнечно, ни облачка — ясная погода.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-sw-43.m4a"
+        },
+        {
+          "id": "lex-sw-44",
+          "word": "туман",
+          "hint": "Облако опустилось на землю.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-sw-44.m4a"
+        },
+        {
+          "id": "lex-sw-45",
+          "word": "изморось",
+          "hint": "Мелкий-мелкий дождь как водяная пыль.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Lexical/lex-sw-45.m4a"
+        },
+        {
+          "id": "lex-sw-46",
+          "word": "мороз",
+          "hint": "Очень холодно — вода замерзает.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-sw-46.m4a"
+        },
+        {
+          "id": "lex-sw-47",
+          "word": "оттепель",
+          "hint": "Зимой потеплело и снег начал таять.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-sw-47.m4a"
+        },
+        {
+          "id": "lex-sw-48",
+          "word": "радуга",
+          "hint": "После дождя на небе цветная дуга.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-sw-48.m4a"
+        },
+        {
+          "id": "lex-sw-49",
+          "word": "гроза",
+          "hint": "Гром, молния и сильный дождь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-sw-49.m4a"
         }
       ]
     },
@@ -2536,6 +2711,181 @@
           "hint": "Лечит, слушает, прописывает таблетки... Кто это? Врач!",
           "difficulty": 3,
           "audio_file": "Audio/Content/Lexical/lex-pr-24.m4a"
+        },
+        {
+          "id": "lex-pr-25",
+          "word": "архитектор",
+          "hint": "Проектирует дома и здания. Рисует чертежи.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-pr-25.m4a"
+        },
+        {
+          "id": "lex-pr-26",
+          "word": "программист",
+          "hint": "Пишет программы для компьютера.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-pr-26.m4a"
+        },
+        {
+          "id": "lex-pr-27",
+          "word": "спасатель",
+          "hint": "Спасает людей в трудных ситуациях.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-pr-27.m4a"
+        },
+        {
+          "id": "lex-pr-28",
+          "word": "журналист",
+          "hint": "Пишет статьи и берёт интервью.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-pr-28.m4a"
+        },
+        {
+          "id": "lex-pr-29",
+          "word": "ветеринар",
+          "hint": "Лечит животных в клинике.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-pr-29.m4a"
+        },
+        {
+          "id": "lex-pr-30",
+          "word": "переводчик",
+          "hint": "Говорит на многих языках и помогает людям понимать друг друга.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-pr-30.m4a"
+        },
+        {
+          "id": "lex-pr-31",
+          "word": "агроном",
+          "hint": "Занимается выращиванием урожая.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-pr-31.m4a"
+        },
+        {
+          "id": "lex-pr-32",
+          "word": "библиотекарь",
+          "hint": "Хранит книги и помогает читателям.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-pr-32.m4a"
+        },
+        {
+          "id": "lex-pr-33",
+          "word": "экскурсовод",
+          "hint": "Рассказывает про достопримечательности.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-pr-33.m4a"
+        },
+        {
+          "id": "lex-pr-34",
+          "word": "кондитер",
+          "hint": "Делает торты, конфеты и пирожные.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-pr-34.m4a"
+        },
+        {
+          "id": "lex-pr-35",
+          "word": "геолог",
+          "hint": "Изучает горные породы и ищет полезные ископаемые.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-pr-35.m4a"
+        },
+        {
+          "id": "lex-pr-36",
+          "word": "музыкант",
+          "hint": "Играет на музыкальном инструменте.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-pr-36.m4a"
+        },
+        {
+          "id": "lex-pr-37",
+          "word": "скульптор",
+          "hint": "Лепит фигуры из глины или камня.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-pr-37.m4a"
+        },
+        {
+          "id": "lex-pr-38",
+          "word": "хирург",
+          "hint": "Делает операции в больнице.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-pr-38.m4a"
+        },
+        {
+          "id": "lex-pr-39",
+          "word": "дизайнер",
+          "hint": "Придумывает красивый внешний вид вещей.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-pr-39.m4a"
+        },
+        {
+          "id": "lex-pr-40",
+          "word": "астроном",
+          "hint": "Изучает звёзды и планеты.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-pr-40.m4a"
+        },
+        {
+          "id": "lex-pr-41",
+          "word": "логопед",
+          "hint": "Помогает научиться правильно говорить.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-pr-41.m4a"
+        },
+        {
+          "id": "lex-pr-42",
+          "word": "тренер",
+          "hint": "Учит спортом заниматься.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-pr-42.m4a"
+        },
+        {
+          "id": "lex-pr-43",
+          "word": "фотограф",
+          "hint": "Делает красивые снимки.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-pr-43.m4a"
+        },
+        {
+          "id": "lex-pr-44",
+          "word": "режиссёр",
+          "hint": "Снимает фильмы и руководит актёрами.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-pr-44.m4a"
+        },
+        {
+          "id": "lex-pr-45",
+          "word": "слесарь",
+          "hint": "Ремонтирует трубы и механизмы.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-pr-45.m4a"
+        },
+        {
+          "id": "lex-pr-46",
+          "word": "таможенник",
+          "hint": "Проверяет грузы на границе.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-pr-46.m4a"
+        },
+        {
+          "id": "lex-pr-47",
+          "word": "психолог",
+          "hint": "Помогает людям разобраться в своих чувствах.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-pr-47.m4a"
+        },
+        {
+          "id": "lex-pr-48",
+          "word": "строитель",
+          "hint": "Строит дома и здания.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-pr-48.m4a"
+        },
+        {
+          "id": "lex-pr-49",
+          "word": "диктор",
+          "hint": "Читает новости на телевидении.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-pr-49.m4a"
         }
       ]
     },
@@ -4708,6 +5058,181 @@
           "hint": "Сегодня я чувствую ... Это потому что ...",
           "difficulty": 3,
           "audio_file": "Audio/Content/Lexical/lex-em-24.m4a"
+        },
+        {
+          "id": "lex-em-25",
+          "word": "гордость",
+          "hint": "Когда ты сделал что-то хорошее и рад этому.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-em-25.m4a"
+        },
+        {
+          "id": "lex-em-26",
+          "word": "смущение",
+          "hint": "Когда тебе неловко и ты краснеешь.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-em-26.m4a"
+        },
+        {
+          "id": "lex-em-27",
+          "word": "облегчение",
+          "hint": "Ты боялся, а потом всё хорошо кончилось.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-em-27.m4a"
+        },
+        {
+          "id": "lex-em-28",
+          "word": "зависть",
+          "hint": "Когда хочется то, что есть у другого.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-em-28.m4a"
+        },
+        {
+          "id": "lex-em-29",
+          "word": "доверие",
+          "hint": "Знаешь, что человек тебя не обманет.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-em-29.m4a"
+        },
+        {
+          "id": "lex-em-30",
+          "word": "нежность",
+          "hint": "Тихая, ласковая, тёплая радость.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-em-30.m4a"
+        },
+        {
+          "id": "lex-em-31",
+          "word": "растерянность",
+          "hint": "Не знаешь, что делать — и стоишь.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-em-31.m4a"
+        },
+        {
+          "id": "lex-em-32",
+          "word": "любопытство",
+          "hint": "Хочется всё узнать и попробовать.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-em-32.m4a"
+        },
+        {
+          "id": "lex-em-33",
+          "word": "обида",
+          "hint": "Кто-то поступил несправедливо, и тебе грустно.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-em-33.m4a"
+        },
+        {
+          "id": "lex-em-34",
+          "word": "скука",
+          "hint": "Нечего делать, и время тянется долго.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-em-34.m4a"
+        },
+        {
+          "id": "lex-em-35",
+          "word": "восхищение",
+          "hint": "Ты видишь что-то очень красивое и удивительное.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-em-35.m4a"
+        },
+        {
+          "id": "lex-em-36",
+          "word": "тревога",
+          "hint": "Что-то беспокоит, но ты не знаешь что.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-em-36.m4a"
+        },
+        {
+          "id": "lex-em-37",
+          "word": "ожидание",
+          "hint": "Знаешь, что что-то хорошее скоро будет.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-em-37.m4a"
+        },
+        {
+          "id": "lex-em-38",
+          "word": "упрямство",
+          "hint": "Не хочешь менять своё решение.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-em-38.m4a"
+        },
+        {
+          "id": "lex-em-39",
+          "word": "сочувствие",
+          "hint": "Тебе жалко другого и хочется помочь.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-em-39.m4a"
+        },
+        {
+          "id": "lex-em-40",
+          "word": "злость",
+          "hint": "Тебе очень не понравилось что-то.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-em-40.m4a"
+        },
+        {
+          "id": "lex-em-41",
+          "word": "счастье",
+          "hint": "Всё хорошо, ты доволен и рад.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-em-41.m4a"
+        },
+        {
+          "id": "lex-em-42",
+          "word": "уверенность",
+          "hint": "Знаешь что делать и не боишься.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-em-42.m4a"
+        },
+        {
+          "id": "lex-em-43",
+          "word": "сожаление",
+          "hint": "Жалеешь, что поступил не так.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-em-43.m4a"
+        },
+        {
+          "id": "lex-em-44",
+          "word": "восторг",
+          "hint": "Очень сильная радость.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-em-44.m4a"
+        },
+        {
+          "id": "lex-em-45",
+          "word": "ужас",
+          "hint": "Очень сильный страх.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-em-45.m4a"
+        },
+        {
+          "id": "lex-em-46",
+          "word": "благодарность",
+          "hint": "Тебе помогли, и ты говоришь спасибо от души.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-em-46.m4a"
+        },
+        {
+          "id": "lex-em-47",
+          "word": "тоска",
+          "hint": "Скучаешь по кому-то или чему-то важному.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-em-47.m4a"
+        },
+        {
+          "id": "lex-em-48",
+          "word": "разочарование",
+          "hint": "Ждал хорошего, а получилось не так.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lexical/lex-em-48.m4a"
+        },
+        {
+          "id": "lex-em-49",
+          "word": "спокойствие",
+          "hint": "Ты расслаблен, ничего не тревожит.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-em-49.m4a"
         }
       ]
     },
