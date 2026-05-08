@@ -142,7 +142,17 @@ public struct HSMascotView: View {
                 MoodAuraView(mood: mood, size: size)
             }
 
-            // Layer 2: 3D маскот через LyalyaRealityKitView (прозрачный фон)
+            // Layer 2: 2D fallback illustration (видна, если 3D не загрузился —
+            // simulator без USDZ, mock-контекст, медленная асинхронная загрузка).
+            // RealityKit ARView с .clear фоном пропускает 2D слой сквозь себя
+            // ровно до момента, когда USDZ-сцена окажется в кадре.
+            Image(mood.illustrationName)
+                .resizable()
+                .scaledToFit()
+                .frame(width: size, height: size)
+                .accessibilityHidden(true)
+
+            // Layer 3: 3D маскот через LyalyaRealityKitView (прозрачный фон)
             illustrationLayer
                 .scaleEffect(entranceScale)
                 .opacity(entranceOpacity)
