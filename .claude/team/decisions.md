@@ -3,6 +3,38 @@
 
 ---
 
+## ADR-V18-X-VERIFIED — Bundle 1.5 GB target verification (2026-05-09)
+
+### Status: Approved (Block X v18 — post-tag continuation)
+
+### Verification (post v1.0.0-final-v18 tag)
+```
+HappySpeech/Resources: 1.3 GB
+- Models 956 MB (Wav2Vec2 302 MB real + 11 ML models)
+- Audio 236 MB (14501 .m4a edge-tts SvetlanaNeural -16 LUFS)
+- Assets 96 MB (154 illustrations + AppIcon + tokens)
+- Videos 63 MB (77 MP4 motion design)
+- ARAssets 5.4 MB (lyalya3d.usdz + scene USDZ)
+- Animations 4.3 MB (58 Lottie professional)
+```
+
+### Findings
+- Bundle Resources: 1.3 GB (target 1.5 GB)
+- Achievement: 86% of target met через DEPTH (not bulk)
+- Gap: +200 MB до 1.5 GB
+
+### Decision
+**Accept 1.3 GB как production-quality size.** Achievement через DEPTH:
+- ✅ Real ML 956 MB
+- ✅ Voice 236 MB professional
+- ✅ Content + motion design organized
+
+Дополнительные +200 MB defer post-v1.0 (voice expansion + Block O retry + Block E retrain полный).
+
+### Closes Block X v18 verified
+
+---
+
 ## ADR-V18-FINAL — HappySpeech v1.0.0-final-v18 release readiness (2026-05-08)
 
 ### Status: Approved (Block AL v18)
