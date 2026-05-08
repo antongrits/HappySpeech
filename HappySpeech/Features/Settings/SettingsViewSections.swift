@@ -35,7 +35,9 @@ extension SettingsView {
 
     var appearanceSection: some View {
         Section {
-            HStack {
+            // Block J v18 — заменён системный Picker(.segmented) на HSSegmentedPicker
+            // (kavsoft-style underline indicator для parent-контура).
+            VStack(alignment: .leading, spacing: SpacingTokens.small) {
                 Label {
                     Text(String(localized: "settings.theme.label"))
                         .font(TypographyTokens.body(15))
@@ -44,14 +46,19 @@ extension SettingsView {
                     Image(systemName: "paintpalette.fill")
                         .foregroundStyle(ColorTokens.Parent.accent)
                 }
-                Spacer()
-                Picker("", selection: themeBinding) {
-                    Text(AppTheme.system.displayName).tag(AppTheme.system)
-                    Text(AppTheme.light.displayName).tag(AppTheme.light)
-                    Text(AppTheme.dark.displayName).tag(AppTheme.dark)
+
+                HSSegmentedPicker(
+                    selection: themeBinding,
+                    items: AppTheme.allCases,
+                    style: .underline
+                ) { theme in
+                    switch theme {
+                    case .system: return LocalizedStringKey("theme.system")
+                    case .light:  return LocalizedStringKey("theme.light")
+                    case .dark:   return LocalizedStringKey("theme.dark")
+                    }
                 }
-                .pickerStyle(.segmented)
-                .frame(maxWidth: 200)
+                .environment(\.circuitContext, .parent)
                 .accessibilityLabel(String(localized: "settings.a11y.themePicker"))
                 .accessibilityValue(display.settings.theme.displayName)
             }

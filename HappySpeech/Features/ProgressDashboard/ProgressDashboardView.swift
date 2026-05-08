@@ -103,19 +103,28 @@ struct ProgressDashboardView: View {
     }
 
     // MARK: - Period picker
+    //
+    // Block J v18 — заменён custom PeriodChipView ряд на HSSegmentedPicker
+    // (kavsoft-style capsule indicator с matchedGeometryEffect).
+    // PeriodChipView оставлен в Components на случай legacy preview.
 
     private var periodPickerSection: some View {
-        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.tiny) {
-            HStack(spacing: SpacingTokens.tiny) {
-                ForEach(display.periodOptions) { option in
-                    PeriodChipView(option: option) {
-                        handlePeriodChange(option.period)
-                    }
-                }
+        HSSegmentedPicker(
+            selection: Binding(
+                get: { display.selectedPeriod },
+                set: { handlePeriodChange($0) }
+            ),
+            items: ProgressDashboardModels.TimePeriod.allCases,
+            style: .underline
+        ) { period in
+            switch period {
+            case .week:    return LocalizedStringKey("progressDashboard.period.week")
+            case .month:   return LocalizedStringKey("progressDashboard.period.month")
+            case .quarter: return LocalizedStringKey("progressDashboard.period.quarter")
             }
-            .frame(maxWidth: .infinity)
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
+        .environment(\.circuitContext, .parent)
         .accessibilityElement(children: .contain)
     }
 
