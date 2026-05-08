@@ -118,11 +118,37 @@
       },
       "valueType": "STRING",
       "description": "Hard minimum: users below this version cannot use the app until they update."
+    },
+    "tutorial_variant": {
+      "defaultValue": {
+        "value": "A"
+      },
+      "valueType": "STRING",
+      "description": "A/B Testing experiment (Plan v18 Block U.5). Variant A = original step-by-step tutorial. Variant B = gamified tutorial with mini-quest. Activation event: app_first_open. Goal metric: tutorial_completion_rate.",
+      "conditionalValues": {
+        "ab_tutorial_variant_b": {
+          "value": "B"
+        }
+      }
+    },
+    "tutorial_variant_rollout_percent": {
+      "defaultValue": {
+        "value": "50"
+      },
+      "valueType": "NUMBER",
+      "description": "Plan v18 Block U.5 — процент пользователей, попадающих в variant B (0-100). Управляется через Firebase Console A/B Testing UI."
     }
   },
+  "conditions": [
+    {
+      "name": "ab_tutorial_variant_b",
+      "expression": "percent <= 50",
+      "tagColor": "BLUE"
+    }
+  ],
   "version": {
-    "versionNumber": "2",
-    "updateTime": "2026-05-04T00:00:00.000Z",
+    "versionNumber": "3",
+    "updateTime": "2026-05-08T00:00:00.000Z",
     "updateType": "INCREMENTAL_UPDATE",
     "updateOrigin": "REST_API"
   }
