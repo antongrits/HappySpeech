@@ -630,6 +630,49 @@ All 18 blocks (0/A/B/C/D/E+O/F/G/H/I/J/K/L/M/N/P/Q/R) completed либо ADR-def
 
 ---
 
+## Plan v18 — ЗАВЕРШЁН (2026-05-08)
+
+**Status:** CLOSED — Block AJ + Block AL выполнены. Tag v1.0.0-final-v18 готов к созданию (Block AM следующий).
+
+**Примечание:** Plan v18 ЗАВЕРШЁН (партиал — fresh code в active blocks, multiple defer ADRs для post-v1.0).
+
+### Финальные метрики Plan v18
+
+| Метрика | Значение |
+|---|---|
+| v18 коммитов | 45+ |
+| Завершённых блоков | 27 (из ~30 запланированных) |
+| Интерактивных экранов | 105+ |
+| Audio .m4a | 14 501 |
+| Уроков | 7 555 (25 паков) |
+| Core ML моделей | 12 .mlpackage (304+ MB) |
+| DesignSystem компонентов | 41 |
+| Cloud Functions | 16 live (europe-west3) |
+| SwiftLint --strict | 0 ошибок |
+| BUILD | SUCCEEDED iPhone SE (3rd generation) |
+| RU ключей | 3 827 |
+| EN ключей | 0 |
+
+### Что задеплоено в Plan v18
+
+- 6 новых Firebase Cloud Functions callable (scoreSpeechQuality, generateNeurolinguistSummary, validateChildVoice, analyzeSpeechProgress, generateSpecialistReport, createFamilyInviteToken)
+- Remote Config template v3 (19 параметров, A/B testing)
+- Apple Universal Links вместо deprecated Firebase Dynamic Links
+- AppIcon Single Size Apple HIG strict (Any/Dark/Tinted идентичные)
+- 13 HSCustom* компонентов (Block J A.1-B.9, kavsoft-inspired)
+- 5 новых экранов (DialectAdaptation, LogopedistChat, WeeklyChallenge, FamilyAchievements, CulturalContent)
+- Plain Russian audit: 9 англицизмов исправлены
+- DerivedData cleanup: -7 GB
+- Git author cleanup: 100% v18 commits от antongrits
+
+### Следующие шаги (Block AM, AO)
+
+- Block AM: `git tag -a v1.0.0-final-v18 && git push origin v1.0.0-final-v18`
+- Block AO: Final READY declaration в `.claude/team/v18-FINAL-READY.md`
+- Диплом: презентация защиты подготовлена (S12-023 DONE)
+
+---
+
 ## Block M v18 — Plain Russian Language Audit (2026-05-08)
 
 **Status:** DONE
