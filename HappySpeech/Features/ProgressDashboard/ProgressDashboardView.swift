@@ -212,6 +212,8 @@ struct ProgressDashboardView: View {
                 VStack(alignment: .leading, spacing: SpacingTokens.small) {
                     ForEach(display.insightCards) { card in
                         ParentInsightCard(card: card)
+                            // Block J v18 — kavsoft-style tilt carousel scroll transition.
+                            .hsScrollEffect(.tiltCarousel)
                     }
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
