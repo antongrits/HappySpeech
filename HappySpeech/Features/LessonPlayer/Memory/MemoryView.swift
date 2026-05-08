@@ -152,12 +152,15 @@ struct MemoryView: View {
                 Spacer()
                 timerBadge
             }
-            HStack {
+            HStack(spacing: SpacingTokens.small) {
                 Text(String(localized: "Найдено пар: \(display.matchedPairs) из \(display.totalPairs)"))
                     .font(TypographyTokens.caption(13))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .monospacedDigit()
-                Spacer()
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+                    .layoutPriority(1)
+                Spacer(minLength: 4)
                 if display.streakCount >= 3 {
                     streakBadge
                 }

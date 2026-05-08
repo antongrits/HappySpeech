@@ -419,6 +419,8 @@ struct SortingView: View {
                     Text(String(localized: "Помогли: \(display.autoPlacedCount) слова"))
                         .font(TypographyTokens.caption(13))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                 }
 
                 Spacer(minLength: SpacingTokens.large)
