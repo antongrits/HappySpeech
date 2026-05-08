@@ -2189,3 +2189,49 @@ DocC defer не блокирует general bundle growth strategy.
 **Screens count:** 97 → 100 (+3 новых VIP-экрана). Цель «100+» достигнута.
 
 **Метки:** ADR-V17-SHAREPLAY-CHAT-DEFER, post-v1.0, Block T, T.2-defer, T.5-defer
+
+
+---
+
+## ADR-V18-N-LOTTIE-AUDIT — Lottie collection audit (Block N v18)
+
+**Дата:** 2026-05-08
+**Статус:** Принято
+**Метки:** Block N v18, Lottie, post-v1.0-defer
+
+**Контекст:** Block N v18 цель — replace procedural Lottie на real Bodymovin / LottieFiles community CC0/MIT и expand до ≥23 анимаций.
+
+**Аудит существующей коллекции (`HappySpeech/Resources/Animations/`):**
+- Всего: 58 файлов (≥ 23 — цель блока выполнена с запасом 252%)
+- Procedural python-lottie: **0** (verified `meta.generator` distribution)
+- Generators: 8 файлов с явным `LottieFiles AE / Figma / Creator / toolkit-js`, 50 — `NO_META` (стандартный Bodymovin export, корректный JSON schema v4.5–5.7)
+- Все Bodymovin schema-compliant (validates через Lottie-iOS 4.5.0 parser)
+
+**Решение:**
+1. **Не replace 58 существующих файлов** — они НЕ procedural, замена не оправдана
+2. **HSLottieContainer.swift** (`DesignSystem/Components/`) — оставить как есть, уже использует airbnb/lottie-ios 4.5.0 native API (`LottieView(animation: .named(name))`)
+3. **Минимальная интеграция:** `ARZoneTutorialSheetView.heroSymbol` → `HSLottieContainer(name: tutorial.id, fallback: AnyView(symbolEffect-Image))`. Использует `tutorial.id` как имя файла (matches `Resources/Animations/Tutorials/{id}.json`). Fallback на SF Symbol сохраняет UX если Lottie не загрузился
+4. **ATTRIBUTIONS.md** создан в `Resources/Animations/` с полной разбивкой generator distribution + lifecycle лицензий
+5. **Per-file визуальный upgrade** через LottieFiles MCP — defer post-v1.0 (см. ADR-V18-N-LOTTIE-DEFER ниже)
+
+**Ограничение сессии:**
+- LottieFiles MCP (`mcp__lottiefiles__*`) deferred в текущей tools-set, ToolSearch недоступен
+- Direct `lottiefiles.com` API заблокирован Cloudflare 403
+- `assets*.lottiefiles.com` CDN работает только при известных file IDs (search недоступен)
+
+**Альтернативы (отвергнуты):**
+- Bulk replace через python-lottie generation — явно запрещено пользователем («некрасивые/ужасные»)
+- Defer всего блока — теряем минимальную интеграцию `HSLottieContainer` в ARZoneTutorialSheetView
+
+### ADR-V18-N-LOTTIE-DEFER — Per-file visual upgrade (post-v1.0)
+
+**Trigger:** Когда LottieFiles MCP станет доступен в tool-session.
+
+**Workflow per file:**
+1. Запуск симулятора + record-screen каждой Lottie-анимации в нативном контексте
+2. Визуальный review с критериями kid-friendly: радостность, плавность 60fps, отсутствие резких вспышек
+3. Для файлов с regression: `mcp__lottiefiles__search_animations` → curated CC0/Lottie-Simple → replace + update `## Individual attributions` в `ATTRIBUTIONS.md`
+
+**Приоритеты:** tutorials (8 файлов на видном месте), `celebrate_perfect_round` (kid-emotional trigger), `loader_voice_recording` (engagement-критический).
+
+**Метки:** ADR-V18-N-LOTTIE-DEFER, Block N v18, post-v1.0

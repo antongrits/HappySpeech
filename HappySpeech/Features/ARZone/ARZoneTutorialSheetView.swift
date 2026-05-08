@@ -6,14 +6,12 @@ import SwiftUI
 ///
 /// Показывается при первом запуске каждой AR-игры.
 /// Содержит:
-/// - SF Symbol анимацию (symbolEffect — без Lottie зависимости)
+/// - Lottie-анимацию (Resources/Animations/Tutorials/{gameId}.json)
+///   с fallback на SF Symbol (`symbolEffect`) если файл не найден в бандле.
 /// - Заголовок + короткое описание (1–2 предложения)
 /// - До 3 шагов инструкции с SF Symbol иконками
 /// - CTA «Начать» (≥ 56pt, kid-safe)
 /// - Кнопку «Пропустить» (для повторных сессий)
-///
-/// Lottie: планируется замена `symbolEffect` на `HSLottieContainer`
-/// после подключения LottieFiles SDK. Путь: Resources/Animations/Tutorials/{gameId}.json.
 struct ARZoneTutorialSheetView: View {
 
     let tutorial: ARTutorial
@@ -76,7 +74,7 @@ struct ARZoneTutorialSheetView: View {
             .accessibilityHidden(true)
     }
 
-    // MARK: - Hero SF Symbol (Lottie-ready placeholder)
+    // MARK: - Hero (Lottie с fallback на SF Symbol)
 
     private var heroSymbol: some View {
         ZStack {
@@ -94,11 +92,19 @@ struct ARZoneTutorialSheetView: View {
                     radius: reduceMotion ? 0 : 18, x: 0, y: 8
                 )
 
-            Image(systemName: tutorial.animationSystemSymbol)
-                .font(TypographyTokens.kidDisplay(52))
-                .foregroundStyle(.white)
-                .symbolEffect(.bounce.down, value: symbolBounce)
-                .accessibilityHidden(true)
+            // Lottie анимация для конкретной AR-игры (id == имя файла в Resources/Animations/Tutorials/)
+            // Fallback на SF Symbol если .json не загрузился (Bundle.main.path → nil).
+            HSLottieContainer(
+                name: tutorial.id,
+                fallback: AnyView(
+                    Image(systemName: tutorial.animationSystemSymbol)
+                        .font(TypographyTokens.kidDisplay(52))
+                        .foregroundStyle(.white)
+                        .symbolEffect(.bounce.down, value: symbolBounce)
+                ),
+                size: CGSize(width: 96, height: 96)
+            )
+            .accessibilityHidden(true)
         }
         .padding(.top, SpacingTokens.large)
     }
