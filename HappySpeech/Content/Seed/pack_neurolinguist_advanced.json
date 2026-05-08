@@ -1,0 +1,472 @@
+{
+  "id": "pack_neurolinguist_advanced_v1",
+  "soundTarget": "нейролингвист",
+  "group": "фонематика",
+  "version": 1,
+  "description": "Нейролингвистический продвинутый пак: фонематический анализ, рифмовые пары, слогораздел, скороговорки, артикуляционная гибкость.",
+  "stages": {
+    "first_sound": {
+      "stageId": "first_sound",
+      "note": "Фонематический анализ: определение первого звука в слове.",
+      "items": [
+        {
+          "id": "nl-fs-00",
+          "word": "ГДЕ начинается слово «КОТ»?",
+          "hint": "Первый звук: [К]. Сожми пальчик! К-К-Кот.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-fs-00.m4a"
+        },
+        {
+          "id": "nl-fs-01",
+          "word": "Какой первый звук в слове «РЫБА»?",
+          "hint": "Р-р-р-рыба. Первый звук — [Р]. Твёрдый!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fs-01.m4a"
+        },
+        {
+          "id": "nl-fs-02",
+          "word": "Первый звук в слове «ШАПКА»?",
+          "hint": "Ш-ш-ш... [Ш]. Язык наверху, широкий.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fs-02.m4a"
+        },
+        {
+          "id": "nl-fs-03",
+          "word": "Первый звук в слове «СВЕТ»?",
+          "hint": "СВ-ет. Первый всё равно [С] — стечение СВ.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-fs-03.m4a"
+        },
+        {
+          "id": "nl-fs-04",
+          "word": "Первый звук в слове «ЁЛКА»?",
+          "hint": "Ё начинается с [Й]. Й-й-ёлка!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-fs-04.m4a"
+        },
+        {
+          "id": "nl-fs-05",
+          "word": "Первый звук в слове «ЩУКА»?",
+          "hint": "Щ-щ-щука. [Щ] — долгий шипящий.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fs-05.m4a"
+        },
+        {
+          "id": "nl-fs-06",
+          "word": "Первый звук в слове «ЛИМОН»?",
+          "hint": "Ль-Ль-Лимон. [Ль] — мягкий!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fs-06.m4a"
+        },
+        {
+          "id": "nl-fs-07",
+          "word": "Первый звук в слове «ЯБЛОКО»?",
+          "hint": "Я = [Й]+[А]. Первый звук — [Й]!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-fs-07.m4a"
+        },
+        {
+          "id": "nl-fs-08",
+          "word": "Первый звук в слове «СТРЕЛА»?",
+          "hint": "СТР — стечение. Первый звук: [С].",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-fs-08.m4a"
+        },
+        {
+          "id": "nl-fs-09",
+          "word": "Первый звук в слове «ЗВЕРЬ»?",
+          "hint": "ЗВ — стечение. Первый звук: [З].",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-fs-09.m4a"
+        }
+      ]
+    },
+    "last_sound": {
+      "stageId": "last_sound",
+      "note": "Фонематический анализ: определение последнего звука.",
+      "items": [
+        {
+          "id": "nl-ls-00",
+          "word": "Последний звук в слове «МАК»?",
+          "hint": "Ма-К. Последний [К].",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-ls-00.m4a"
+        },
+        {
+          "id": "nl-ls-01",
+          "word": "Последний звук в слове «ДОМ»?",
+          "hint": "До-М. Последний [М] — носовой.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-ls-01.m4a"
+        },
+        {
+          "id": "nl-ls-02",
+          "word": "Последний звук в слове «ПЯТЬ»?",
+          "hint": "Пять... [ТЬ]. Мягкий!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-ls-02.m4a"
+        },
+        {
+          "id": "nl-ls-03",
+          "word": "Последний звук в слове «МЫШЬ»?",
+          "hint": "Мышь... [ШЬ]. Шипящий мягкий!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-ls-03.m4a"
+        },
+        {
+          "id": "nl-ls-04",
+          "word": "Последний звук в слове «СИНИЙ»?",
+          "hint": "Сини-Й. Последний [Й]!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-ls-04.m4a"
+        },
+        {
+          "id": "nl-ls-05",
+          "word": "Последний звук в слове «РЫСЬ»?",
+          "hint": "Рыс-Ь. [СЬ] — мягкий свистящий.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-ls-05.m4a"
+        },
+        {
+          "id": "nl-ls-06",
+          "word": "Последний звук в слове «ГРИБ»?",
+          "hint": "Гри-Б... Но звучит [П] — оглушение!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-ls-06.m4a"
+        },
+        {
+          "id": "nl-ls-07",
+          "word": "Последний звук в слове «ЁРШ»?",
+          "hint": "Ёр-Ш. Последний [Ш].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-ls-07.m4a"
+        },
+        {
+          "id": "nl-ls-08",
+          "word": "Последний звук в слове «БОРЩ»?",
+          "hint": "Борщ... последний [ЩЬ]. Мягкий шипящий!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-ls-08.m4a"
+        },
+        {
+          "id": "nl-ls-09",
+          "word": "Последний звук в слове «ОБЛАКО»?",
+          "hint": "Облак-О. Последний гласный [О].",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-ls-09.m4a"
+        }
+      ]
+    },
+    "syllable_count": {
+      "stageId": "syllable_count",
+      "note": "Слогораздел — считаем слоги, делим слова.",
+      "items": [
+        {
+          "id": "nl-sc-00",
+          "word": "Сколько слогов в слове «ДОМ»?",
+          "hint": "Дом — 1 слог. Хлопни один раз!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-sc-00.m4a"
+        },
+        {
+          "id": "nl-sc-01",
+          "word": "Сколько слогов в слове «МАМА»?",
+          "hint": "Ма-ма — 2 слога. Два хлопка!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-sc-01.m4a"
+        },
+        {
+          "id": "nl-sc-02",
+          "word": "Сколько слогов в слове «МОЛОКО»?",
+          "hint": "Мо-ло-ко — 3 слога. Три хлопка!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sc-02.m4a"
+        },
+        {
+          "id": "nl-sc-03",
+          "word": "Раздели на слоги: ЛЯГУШКА",
+          "hint": "Ля-гуш-ка — 3 слога!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sc-03.m4a"
+        },
+        {
+          "id": "nl-sc-04",
+          "word": "Раздели на слоги: ЧЕРЕПАХА",
+          "hint": "Че-ре-па-ха — 4 слога!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sc-04.m4a"
+        },
+        {
+          "id": "nl-sc-05",
+          "word": "Раздели на слоги: СКВОРЕЧНИК",
+          "hint": "Скво-реч-ник — 3 слога. Хлопни три раза!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sc-05.m4a"
+        },
+        {
+          "id": "nl-sc-06",
+          "word": "Раздели на слоги: ВЕЛОСИПЕД",
+          "hint": "Ве-ло-си-пед — 4 слога!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sc-06.m4a"
+        },
+        {
+          "id": "nl-sc-07",
+          "word": "Раздели на слоги: СТРЕЛА",
+          "hint": "Стре-ла — 2 слога. Хоть и много букв!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sc-07.m4a"
+        },
+        {
+          "id": "nl-sc-08",
+          "word": "Раздели на слоги: ЭЛЕКТРИЧЕСТВО",
+          "hint": "Э-лек-три-чес-тво — 5 слогов!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-sc-08.m4a"
+        },
+        {
+          "id": "nl-sc-09",
+          "word": "Раздели на слоги: РАСПРЕДЕЛЕНИЕ",
+          "hint": "Рас-пре-де-ле-ни-е — 6 слогов. Рекорд!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-sc-09.m4a"
+        }
+      ]
+    },
+    "rhymes_extended": {
+      "stageId": "rhymes_extended",
+      "note": "Рифмовые пары и стихотворные скороговорки — фонологическое осознание.",
+      "items": [
+        {
+          "id": "nl-rh-00",
+          "word": "кошка — ложка",
+          "hint": "Слышишь похожий конец? ОШКа — ОЖКа. Рифма!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-rh-00.m4a"
+        },
+        {
+          "id": "nl-rh-01",
+          "word": "мышка — книжка",
+          "hint": "ЫШКа — ИЖКа — рифмуются!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-rh-01.m4a"
+        },
+        {
+          "id": "nl-rh-02",
+          "word": "ракета — планета",
+          "hint": "ЭТА — ЭТА. Идеальная рифма!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-rh-02.m4a"
+        },
+        {
+          "id": "nl-rh-03",
+          "word": "сосна — весна",
+          "hint": "ОСН А — ЕСН А. Рифмующийся конец!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-rh-03.m4a"
+        },
+        {
+          "id": "nl-rh-04",
+          "word": "Шла Саша по шоссе и сосала сушку",
+          "hint": "Скороговорка на Ш+С — два похожих звука!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-rh-04.m4a"
+        },
+        {
+          "id": "nl-rh-05",
+          "word": "Сыворотка из-под простокваши",
+          "hint": "СЫВ + ОРО + ТКА — сложная цепочка С.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-rh-05.m4a"
+        },
+        {
+          "id": "nl-rh-06",
+          "word": "Карл у Клары украл кораллы",
+          "hint": "К + КА + Р + КА + Р + КО — все К и Р!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-rh-06.m4a"
+        },
+        {
+          "id": "nl-rh-07",
+          "word": "Три дровосека, три дроворуба",
+          "hint": "ТРИ + ДРО + ТРИ + ДРО — ТР и ДР чередуются.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-rh-07.m4a"
+        },
+        {
+          "id": "nl-rh-08",
+          "word": "Подбери рифму к слову «РЕКА»?",
+          "hint": "Река — тоска, сека, доска, облака... Выбери!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-rh-08.m4a"
+        },
+        {
+          "id": "nl-rh-09",
+          "word": "Подбери рифму к слову «МЕДВЕДЬ»?",
+          "hint": "Медведь — петь, сидеть, смотреть. Рифма на -ЕТЬ!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-rh-09.m4a"
+        },
+        {
+          "id": "nl-rh-10",
+          "word": "Чёрной ночью чёрный кот прыгнул в чёрный дымоход",
+          "hint": "Скороговорка на Ч — четыре ЧЁ.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-rh-10.m4a"
+        }
+      ]
+    },
+    "minimal_pairs": {
+      "stageId": "minimal_pairs",
+      "note": "Минимальные пары — различение звуков, близких по артикуляции.",
+      "items": [
+        {
+          "id": "nl-mp-00",
+          "word": "СОМ — ЗОМ",
+          "hint": "С — глухой (без голоса). З — звонкий. Чувствуешь горлышко?",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-mp-00.m4a"
+        },
+        {
+          "id": "nl-mp-01",
+          "word": "ШАР — ЗАР",
+          "hint": "Ш — шипящий. З — свистящий. Разные!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-mp-01.m4a"
+        },
+        {
+          "id": "nl-mp-02",
+          "word": "РАК — ЛАК",
+          "hint": "Р — дрожит язычок. Л — язычок у зубов.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-mp-02.m4a"
+        },
+        {
+          "id": "nl-mp-03",
+          "word": "КОСА — КОЗА",
+          "hint": "С — глухой. З — звонкий. КосА vs козА.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-mp-03.m4a"
+        },
+        {
+          "id": "nl-mp-04",
+          "word": "МИШКА — МЫШКА",
+          "hint": "МИ-шка (мягкое и) — МЫ-шка (твёрдое ы). Разные!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-mp-04.m4a"
+        },
+        {
+          "id": "nl-mp-05",
+          "word": "ЛУША — ЛУЖА",
+          "hint": "Ш — глухой. Ж — звонкий. Слышишь голос?",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-mp-05.m4a"
+        },
+        {
+          "id": "nl-mp-06",
+          "word": "ЧАС — ЩАС",
+          "hint": "Ч — короткий. Щ — длинный шипящий.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-mp-06.m4a"
+        },
+        {
+          "id": "nl-mp-07",
+          "word": "РЫБА — ЛЫБА",
+          "hint": "Р — дрожащий. Л — боковой. Слышишь?",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-mp-07.m4a"
+        },
+        {
+          "id": "nl-mp-08",
+          "word": "СОН — ЦОН",
+          "hint": "С — простой свистящий. Ц — аффриката (Т+С).",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-mp-08.m4a"
+        },
+        {
+          "id": "nl-mp-09",
+          "word": "ЖАРА — ШАРА",
+          "hint": "Ж — звонкий. Ш — глухой. Горлышко вибрирует у Ж.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-mp-09.m4a"
+        }
+      ]
+    },
+    "sound_analysis": {
+      "stageId": "sound_analysis",
+      "note": "Полный звуковой анализ слов — нейролингвистический уровень.",
+      "items": [
+        {
+          "id": "nl-sa-00",
+          "word": "Разбери слово «КОТ» на звуки",
+          "hint": "К — О — Т. Три звука. Нарисуй три клеточки!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sa-00.m4a"
+        },
+        {
+          "id": "nl-sa-01",
+          "word": "Разбери слово «МАМА» на звуки",
+          "hint": "М — А — М — А. Четыре звука!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sa-01.m4a"
+        },
+        {
+          "id": "nl-sa-02",
+          "word": "Разбери слово «РЫБА» на звуки",
+          "hint": "Р — Ы — Б — А. Четыре звука!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sa-02.m4a"
+        },
+        {
+          "id": "nl-sa-03",
+          "word": "Разбери слово «СТОЛ» на звуки",
+          "hint": "С — Т — О — Л. Четыре звука, не три!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sa-03.m4a"
+        },
+        {
+          "id": "nl-sa-04",
+          "word": "Разбери слово «ШКОЛА» на звуки",
+          "hint": "Ш — К — О — Л — А. Пять звуков!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sa-04.m4a"
+        },
+        {
+          "id": "nl-sa-05",
+          "word": "Сколько звуков в слове «ЭХО»?",
+          "hint": "Э — Х — О. Три звука!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sa-05.m4a"
+        },
+        {
+          "id": "nl-sa-06",
+          "word": "Сколько звуков в слове «ЕЛЬ»?",
+          "hint": "Й — Э — Л — Ь. Четыре, хотя букв три!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sa-06.m4a"
+        },
+        {
+          "id": "nl-sa-07",
+          "word": "Сколько звуков в слове «ВЬЮ»?",
+          "hint": "В — Й — У. Три звука! Ь — не звук.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-sa-07.m4a"
+        },
+        {
+          "id": "nl-sa-08",
+          "word": "Назови все согласные в «СТРЕЛА»",
+          "hint": "Стрела: С, Т, Р, Л — четыре согласных!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sa-08.m4a"
+        },
+        {
+          "id": "nl-sa-09",
+          "word": "Назови все гласные в «КОРОВА»",
+          "hint": "Корова: О, О, А — три гласных!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sa-09.m4a"
+        }
+      ]
+    }
+  }
+}
