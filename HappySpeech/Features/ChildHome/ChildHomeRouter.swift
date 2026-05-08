@@ -14,6 +14,7 @@ protocol ChildHomeRoutingLogic {
     func routeToSiblingMultiplayer(childId: String)
     func routeToSeasonalLesson(event: SeasonalEvent, childId: String)
     func routeToAchievements(childId: String)
+    func routeToVoiceCloning(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -75,5 +76,10 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
 
     func routeToAchievements(childId: String) {
         coordinator?.navigate(to: .achievements(childId: childId))
+    }
+
+    /// Block T v17 — VoiceCloning «Голосовой архив».
+    func routeToVoiceCloning(childId: String) {
+        coordinator?.navigate(to: .voiceCloning(childId: childId))
     }
 }

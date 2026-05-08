@@ -176,9 +176,100 @@ struct ChildProfileData: Sendable {
     let parentId: String
 }
 
+// MARK: - VoiceSampleObject (v8 — Block T v17 / VoiceCloningScreen)
+//
+// Запись голоса ребёнка для self-comparison ("Послушай себя через неделю").
+// COPPA-safe: данные хранятся только локально в Documents/VoiceArchive/.
+// audioFilePath — относительный путь от Documents (без абсолютного префикса).
+
+final class VoiceSampleObject: Object, @unchecked Sendable {
+    @Persisted(primaryKey: true) var id: String = UUID().uuidString
+    @Persisted var childId: String = ""
+    @Persisted var word: String = ""                  // Произнесённое слово / фраза
+    @Persisted var targetSound: String = ""           // "С", "Ш" и т.д.
+    @Persisted var audioFilePath: String = ""         // относительный путь от Documents/
+    @Persisted var durationSeconds: Double = 0
+    @Persisted var recordedAt: Date = Date()
+    @Persisted var note: String = ""                  // комментарий ребёнка (через preset)
+}
+
+// MARK: - VoiceSampleData (Sendable DTO)
+
+struct VoiceSampleData: Sendable, Identifiable {
+    let id: String
+    let childId: String
+    let word: String
+    let targetSound: String
+    let audioFilePath: String
+    let durationSeconds: Double
+    let recordedAt: Date
+    let note: String
+}
+
+// MARK: - LeaderboardEntryObject (v8 — Block T v17 / PronunciationLeaderboard)
+//
+// Снимок недельного результата ребёнка для семейного рейтинга.
+// COPPA-safe: ranking только внутри одной семьи (parentId).
+// week — ISO week (yearWeek 202618) для агрегации.
+
+final class LeaderboardEntryObject: Object, @unchecked Sendable {
+    @Persisted(primaryKey: true) var id: String = UUID().uuidString
+    @Persisted var childId: String = ""
+    @Persisted var parentId: String = ""
+    @Persisted var weekKey: String = ""              // "2026-W18"
+    @Persisted var weeklyAccuracy: Double = 0        // 0.0–1.0
+    @Persisted var sessionsCount: Int = 0
+    @Persisted var totalAttempts: Int = 0
+    @Persisted var correctAttempts: Int = 0
+    @Persisted var updatedAt: Date = Date()
+}
+
+// MARK: - LeaderboardEntryData (Sendable DTO)
+
+struct LeaderboardEntryData: Sendable, Identifiable {
+    let id: String
+    let childId: String
+    let parentId: String
+    let weekKey: String
+    let weeklyAccuracy: Double
+    let sessionsCount: Int
+    let totalAttempts: Int
+    let correctAttempts: Int
+    let updatedAt: Date
+}
+
+// MARK: - InsightObject (v8 — Block T v17 / NeurolinguistInsights)
+//
+// Сохранённый AI-summary прогресса ребёнка (rule-based template, не реальный LLM).
+// Генерируется из последних N сессий (Realm). Кэшируется на 24 часа.
+
+final class InsightObject: Object, @unchecked Sendable {
+    @Persisted(primaryKey: true) var id: String = UUID().uuidString
+    @Persisted var childId: String = ""
+    @Persisted var generatedAt: Date = Date()
+    @Persisted var summaryText: String = ""           // Russian Markdown summary
+    @Persisted var trendLabel: String = ""            // "improving" | "stable" | "declining"
+    @Persisted var sessionsAnalyzedCount: Int = 0
+    @Persisted var primarySoundFocus: String = ""    // "Р"
+    @Persisted var recommendation: String = ""
+}
+
+// MARK: - InsightData (Sendable DTO)
+
+struct InsightData: Sendable, Identifiable {
+    let id: String
+    let childId: String
+    let generatedAt: Date
+    let summaryText: String
+    let trendLabel: String
+    let sessionsAnalyzedCount: Int
+    let primarySoundFocus: String
+    let recommendation: String
+}
+
 // MARK: - SchemaVersion
 
 /// Current Realm schema version. Increment with each migration.
 enum RealmSchemaVersion {
-    static let current: UInt64 = 7   // v7: added UnlockedAchievementObject (Achievements L6)
+    static let current: UInt64 = 8   // v8: VoiceSampleObject + LeaderboardEntryObject + InsightObject (Block T v17)
 }

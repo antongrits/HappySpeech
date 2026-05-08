@@ -514,6 +514,46 @@ struct ChildHomeView: View {
             .accessibilityLabel(String(localized: "sibling.entry.title"))
             .accessibilityHint(String(localized: "sibling.discovery.nav_title"))
 
+            // Block T v17 — Voice Cloning «Голосовой архив».
+            Button {
+                router?.routeToVoiceCloning(childId: childId)
+            } label: {
+                HStack(spacing: SpacingTokens.sp3) {
+                    Image(systemName: "mic.badge.plus")
+                        .font(TypographyTokens.headline(22))
+                        .foregroundStyle(.white)
+                        .frame(width: 44, height: 44)
+                        .background(Circle().fill(ColorTokens.Brand.lilac.opacity(0.9)))
+                        .accessibilityHidden(true)
+
+                    Text(String(localized: "voice_cloning.entry.title"))
+                        .font(TypographyTokens.headline(18))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+
+                    Spacer()
+
+                    Image(systemName: "chevron.right")
+                        .font(TypographyTokens.caption(14))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .accessibilityHidden(true)
+                }
+                .padding(.horizontal, SpacingTokens.sp4)
+                .frame(maxWidth: .infinity, minHeight: 100)
+                .background(
+                    RoundedRectangle(cornerRadius: RadiusTokens.card)
+                        .fill(ColorTokens.Brand.lilac.opacity(0.12))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: RadiusTokens.card)
+                        .strokeBorder(ColorTokens.Brand.lilac.opacity(0.3), lineWidth: 1)
+                )
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(String(localized: "voice_cloning.entry.title"))
+            .accessibilityHint(String(localized: "voice_cloning.entry.hint"))
+
             let columns: [GridItem] = hSizeClass == .regular
                 ? [GridItem(.flexible()), GridItem(.flexible()),
                    GridItem(.flexible()), GridItem(.flexible())]

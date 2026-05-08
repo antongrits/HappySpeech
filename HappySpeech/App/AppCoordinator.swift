@@ -43,6 +43,10 @@ enum AppRoute: Hashable {
     case profileEditor(childId: String)
     // Block P: SharePlay — родитель запускает, COPPA-safe
     case sharePlay
+    // Block T v17: новые экраны (T.1, T.3, T.4)
+    case voiceCloning(childId: String)
+    case pronunciationLeaderboard(parentId: String)
+    case neurolinguistInsights(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -379,6 +383,26 @@ struct AppCoordinatorView: View {
         case .sharePlay:
             SharePlayView()
                 .environment(\.circuitContext, .parent)
+
+        // MARK: - Block T v17
+
+        case .voiceCloning(let childId):
+            NavigationStack {
+                VoiceCloningView(childId: childId)
+            }
+            .environment(\.circuitContext, .kid)
+
+        case .pronunciationLeaderboard(let parentId):
+            NavigationStack {
+                PronunciationLeaderboardView(parentId: parentId)
+            }
+            .environment(\.circuitContext, .parent)
+
+        case .neurolinguistInsights(let childId):
+            NavigationStack {
+                NeurolinguistInsightsView(childId: childId)
+            }
+            .environment(\.circuitContext, .parent)
         }
     }
 
