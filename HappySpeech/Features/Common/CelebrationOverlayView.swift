@@ -74,7 +74,7 @@ struct CelebrationOverlayView: View {
                 VStack(spacing: 8) {
                     Text(titleText)
                         .font(TypographyTokens.title(28))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .multilineTextAlignment(.center)
                         .lineLimit(nil)
                         .minimumScaleFactor(0.85)
@@ -83,7 +83,7 @@ struct CelebrationOverlayView: View {
                     if stars == 3 {
                         Text(String(localized: "celebration.perfect_subtitle"))
                             .font(TypographyTokens.body(16))
-                            .foregroundStyle(.white.opacity(0.88))
+                            .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.88))
                             .multilineTextAlignment(.center)
                             .lineLimit(nil)
                             .minimumScaleFactor(0.85)
@@ -98,7 +98,7 @@ struct CelebrationOverlayView: View {
                 } label: {
                     Text(String(localized: "celebration.continue_button"))
                         .font(TypographyTokens.headline(18))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .frame(maxWidth: 260)
                         .padding(.vertical, 14)
                         .background(

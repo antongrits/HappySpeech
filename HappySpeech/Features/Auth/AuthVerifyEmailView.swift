@@ -208,7 +208,7 @@ struct AuthVerifyEmailView: View {
     private func toastView(_ message: String) -> some View {
         Text(message)
             .font(TypographyTokens.body(13))
-            .foregroundStyle(.white)
+            .foregroundStyle(ColorTokens.Overlay.onAccent)
             .padding(.horizontal, SpacingTokens.sp4)
             .padding(.vertical, SpacingTokens.sp3)
             .background(
