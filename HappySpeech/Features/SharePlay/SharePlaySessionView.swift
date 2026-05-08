@@ -99,7 +99,7 @@ struct SharePlaySessionView: View {
                     Text(String(localized: "shareplay.session.end"))
                         .font(TypographyTokens.caption(12))
                 }
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .padding(.horizontal, SpacingTokens.sp3)
                 .padding(.vertical, SpacingTokens.sp1)
                 .background(ColorTokens.Brand.primary, in: Capsule())

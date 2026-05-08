@@ -240,7 +240,7 @@ struct DemoAutoAdvanceCountdownView: View {
                 .frame(width: 32, height: 32)
             Text("\(secondsLeft)")
                 .font(TypographyTokens.mono(14))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
         }
         .accessibilityLabel(
             String(format: String(localized: "demo.autoadvance.label"), secondsLeft)

@@ -333,7 +333,7 @@ struct DailyStreakView: View {
     private func toastBanner(text: String) -> some View {
         Text(text)
             .font(TypographyTokens.caption())
-            .foregroundStyle(.white)
+            .foregroundStyle(ColorTokens.Overlay.onAccent)
             .padding(.horizontal, SpacingTokens.sp4)
             .padding(.vertical, SpacingTokens.sp2)
             .background(

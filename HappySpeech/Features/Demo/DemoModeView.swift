@@ -230,7 +230,7 @@ struct DemoModeView: View {
             HStack {
                 Text(display.progressLabel)
                     .font(TypographyTokens.mono(13))
-                    .foregroundStyle(.white.opacity(0.9))
+                    .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.9))
                     .accessibilityIdentifier("demo.progress.label")
                 Spacer()
             }
@@ -266,7 +266,7 @@ struct DemoModeView: View {
         } label: {
             Text(String(localized: "demo.cta.skip"))
                 .font(TypographyTokens.body(14).weight(.semibold))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .padding(.horizontal, SpacingTokens.small)
                 .padding(.vertical, SpacingTokens.tiny)
                 .frame(minWidth: 44, minHeight: 44)
@@ -284,7 +284,7 @@ struct DemoModeView: View {
         } label: {
             Image(systemName: "arrow.counterclockwise")
                 .font(TypographyTokens.body(16))
-                .foregroundStyle(.white.opacity(0.85))
+                .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
                 .frame(minWidth: 44, minHeight: 44)
                 .contentShape(Rectangle())
         }
@@ -316,7 +316,7 @@ struct DemoModeView: View {
         } label: {
             Image(systemName: "list.bullet.rectangle")
                 .font(TypographyTokens.body(16))
-                .foregroundStyle(.white.opacity(0.85))
+                .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
                 .frame(minWidth: 44, minHeight: 44)
                 .contentShape(Rectangle())
         }
@@ -442,7 +442,7 @@ struct DemoModeView: View {
                     } label: {
                         Label(actionTitle, systemImage: "play.circle.fill")
                             .font(TypographyTokens.cta())
-                            .foregroundStyle(.white)
+                            .foregroundStyle(ColorTokens.Overlay.onAccent)
                             .padding(.horizontal, SpacingTokens.medium)
                             .padding(.vertical, SpacingTokens.small)
                             .background(
@@ -487,12 +487,12 @@ struct DemoModeView: View {
             if !step.illustrationSymbol.isEmpty {
                 Image(systemName: step.illustrationSymbol)
                     .font(.system(size: 64, weight: .regular))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .accessibilityHidden(true)
             } else {
                 Image(systemName: step.screenSymbol)
                     .font(.system(size: 72, weight: .regular))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .accessibilityHidden(true)
             }
         }
@@ -572,10 +572,10 @@ struct DemoModeView: View {
         VStack {
             HStack(spacing: SpacingTokens.small) {
                 Image(systemName: "sparkles")
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                 Text(message)
                     .font(TypographyTokens.body(14))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .lineLimit(2)
                     .minimumScaleFactor(0.85)
             }

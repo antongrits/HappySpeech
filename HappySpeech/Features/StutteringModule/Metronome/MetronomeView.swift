@@ -160,7 +160,7 @@ private struct SyllableCell: View {
                 if syllable.state == .completed {
                     Image(systemName: "checkmark")
                         .font(TypographyTokens.body(16))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                 }
             }
             .frame(width: 48, height: 48)
