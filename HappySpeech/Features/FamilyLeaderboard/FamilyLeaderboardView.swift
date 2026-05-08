@@ -231,9 +231,8 @@ struct FamilyLeaderboardView: View {
 
     private var emptyState: some View {
         VStack(spacing: SpacingTokens.sp3) {
-            Image(systemName: "chart.bar.xaxis")
-                .font(.system(size: 56))
-                .foregroundStyle(ColorTokens.Parent.inkSoft.opacity(0.5))
+            // H v18 — Lyalya hero вместо SF Symbol для тёплого parent empty-state.
+            LyalyaMascotView(state: .thinking, size: 100)
                 .accessibilityHidden(true)
             Text("leaderboard.empty.title")
                 .font(TypographyTokens.headline(18))

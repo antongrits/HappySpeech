@@ -2,11 +2,20 @@ import SwiftUI
 
 // MARK: - LyalyaHeroView
 
-/// Hero-представление маскота Ляли на основе 2D illustration.
+/// Hero-представление маскота Ляли — обёртка над `LyalyaMascotView`.
 ///
-/// По умолчанию отображает `LyalyaMascotView` (2D, быстро, без тёмного фона).
-/// USDZ/RealityKit намеренно не используется — исключает тёмно-розовый артефакт
-/// прямоугольника на онбординге и других hero-экранах (KK v14 fix).
+/// Hybrid-архитектура (см. `HSMascotView`):
+/// - **Layer 2**: 2D PNG-иллюстрация (`mascot_lyalya_*` из Assets) — гарантирует
+///   видимость маскота на симуляторе без TrueDepth и до загрузки 3D usdz.
+/// - **Layer 3**: `LyalyaRealityKitView` (`lyalya3d_v2.usdz`, RealityKit nonAR
+///   с прозрачным фоном) — рендерится поверх 2D, когда сцена загружена.
+///
+/// История фиксов прозрачного фона:
+/// - KK v14 (8c06a48f) — временно отключил RealityKit из-за артефакта розового фона.
+/// - F.1 v15 (ec6c2072) — починил `arView.environment.background = .color(.clear)`,
+///   `cameraMode = .nonAR`, `isOpaque = false`.
+/// - K v17 (1bb8b6d1) — visual audit 94 файлов, 0 артефактов прозрачности.
+/// - H v18 — visual verify iPhone SE (3rd gen): pink rectangle не воспроизводится.
 ///
 /// Используется на онбординге, SessionComplete, Rewards и других hero-экранах.
 ///
