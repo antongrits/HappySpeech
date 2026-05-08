@@ -2,21 +2,27 @@
  * HappySpeech — Firebase Cloud Functions entry point.
  *
  * Exports:
- *   - calculateProgress      (HTTPS callable)
- *   - generateReport         (HTTPS callable)
- *   - getUserStats           (HTTPS callable)
- *   - exportUserData         (HTTPS callable, GDPR)
- *   - deleteUserData         (HTTPS callable, GDPR hard delete)
- *   - setAdminClaim          (HTTPS callable, bootstrap)
- *   - sendWeeklySummaryFCM   (HTTPS callable, on-demand summary push)
- *   - onSessionComplete      (Firestore trigger, v2)
- *   - moderateUserContent    (Firestore trigger, v2, placeholder)
- *   - sendWeeklyReport       (scheduled, every Sunday 10:00 MSK)
- *   - sendDailyReminder      (scheduled, every day 17:00 UTC = 20:00 MSK)
- *   - sendWeeklySummary      (scheduled, every Sunday 19:00 UTC = 22:00 MSK)
+ *   - calculateProgress             (HTTPS callable)
+ *   - generateReport                (HTTPS callable)
+ *   - getUserStats                  (HTTPS callable)
+ *   - exportUserData                (HTTPS callable, GDPR)
+ *   - deleteUserData                (HTTPS callable, GDPR hard delete)
+ *   - setAdminClaim                 (HTTPS callable, bootstrap)
+ *   - sendWeeklySummaryFCM          (HTTPS callable, on-demand summary push)
+ *   - scoreSpeechQuality            (HTTPS callable, U.1 v18 stub — server-side scoring fallback)
+ *   - generateNeurolinguistSummary  (HTTPS callable, U.1 v18 stub — fixed-text summary)
+ *   - validateChildVoice            (HTTPS callable, U.1 v18 stub — speaker verification fallback)
+ *   - analyzeSpeechProgress         (HTTPS callable, U.1 v18 stub — neurolinguist trends)
+ *   - generateSpecialistReport      (HTTPS callable, U.1 v18 stub — PDF export)
+ *   - createFamilyInviteToken       (HTTPS callable, U.1 v18 — Firestore-based invite, replaces Dynamic Links)
+ *   - onSessionComplete             (Firestore trigger, v2)
+ *   - moderateUserContent           (Firestore trigger, v2, placeholder)
+ *   - sendWeeklyReport              (scheduled, every Sunday 10:00 MSK)
+ *   - sendDailyReminder             (scheduled, every day 17:00 UTC = 20:00 MSK)
+ *   - sendWeeklySummary             (scheduled, every Sunday 19:00 UTC = 22:00 MSK)
  *
  * Region: europe-west3
- * Contract source: .claude/team/api-contracts.md + M1.3 plan.
+ * Contract source: .claude/team/api-contracts.md + M1.3 plan + Plan v18 Block U.
  */
 
 'use strict';
@@ -506,6 +512,360 @@ exports.sendWeeklySummaryFCM = onCall(
     } catch (error) {
       logger.error('sendWeeklySummaryFCM failed', { error: String(error) });
       throw new HttpsError('internal', 'Failed to send FCM message');
+    }
+  },
+);
+
+// ==================================================================
+// Plan v18 Block U.1 — Cloud Functions callable expansion
+// ------------------------------------------------------------------
+// Все 6 новых callable функций — stubs с детерминированными ответами.
+// Реальная ML-логика остаётся on-device (Wav2Vec2RuChild 302 MB,
+// SpeakerVerification 164 KB) — cloud вариант = optional fallback.
+//
+// Вертикальные принципы:
+//   - enforceAppCheck: true (kids safety, no PII in logs)
+//   - Region: europe-west3 (наследуется через setGlobalOptions)
+//   - Логи без PII: childId redacted, audio sizes только bytes
+// ==================================================================
+
+// ------------------------------------------------------------------
+// HTTPS Callable: scoreSpeechQuality
+// Input:  { audioBase64: string, targetSound: string, sampleRate?: number, encoding?: string }
+// Output: { overallScore: number, phonemeScores: object, label: string, specialistNote: string }
+//
+// Stub: возвращает реалистичный детерминированный score без реального
+// ASR pipeline. Реальная оценка — on-device через Wav2Vec2RuChild.
+// ------------------------------------------------------------------
+
+exports.scoreSpeechQuality = onCall(
+  { enforceAppCheck: true, cors: true, timeoutSeconds: 60, memory: '256MiB' },
+  async (request) => {
+    const { audioBase64, targetSound } = request.data || {};
+
+    if (typeof audioBase64 !== 'string' || audioBase64.length === 0) {
+      throw new HttpsError('invalid-argument', 'audioBase64 is required');
+    }
+    if (typeof targetSound !== 'string' || targetSound.length === 0) {
+      throw new HttpsError('invalid-argument', 'targetSound is required');
+    }
+
+    if (!request.auth) {
+      throw new HttpsError('unauthenticated', 'Sign in required');
+    }
+
+    // Детерминированный stub — score зависит от длины audio (имитация энергии).
+    const audioBytes = Math.floor((audioBase64.length * 3) / 4);
+    const baseScore = Math.min(0.95, 0.65 + (audioBytes % 31) / 100);
+    const phonemeScores = {};
+    phonemeScores[targetSound] = Math.round(baseScore * 100) / 100;
+
+    let label = 'fair';
+    if (baseScore >= 0.9) label = 'excellent';
+    else if (baseScore >= 0.8) label = 'good';
+    else if (baseScore < 0.7) label = 'poor';
+
+    logger.info('scoreSpeechQuality stub', {
+      targetSound,
+      audioBytes,
+      score: baseScore.toFixed(2),
+    });
+
+    return {
+      overallScore: baseScore,
+      phonemeScores,
+      label,
+      specialistNote: `Серверная оценка звука «${targetSound}» — результат: ${label}.`,
+    };
+  },
+);
+
+// ------------------------------------------------------------------
+// HTTPS Callable: generateNeurolinguistSummary
+// Input:  { childId: string, period: "week" | "month" | "quarter" }
+// Output: { reportId, summary, recommendations, chartsData, generatedAt }
+//
+// Stub: возвращает фиксированный текст без реального LLM. Vertex AI
+// integration deferred post-v1.0 (требует billing).
+// ------------------------------------------------------------------
+
+exports.generateNeurolinguistSummary = onCall(
+  { enforceAppCheck: true, cors: true, timeoutSeconds: 60, memory: '256MiB' },
+  async (request) => {
+    const { childId, period } = request.data || {};
+
+    if (typeof childId !== 'string' || childId.length === 0) {
+      throw new HttpsError('invalid-argument', 'childId is required');
+    }
+
+    if (!request.auth) {
+      throw new HttpsError('unauthenticated', 'Sign in required');
+    }
+
+    const allowedPeriods = ['week', 'month', 'quarter'];
+    const periodValue = allowedPeriods.includes(period) ? period : 'week';
+
+    // Verify caller owns the child.
+    const childDoc = await admin.firestore()
+      .collection('users').doc(request.auth.uid)
+      .collection('children').doc(childId)
+      .get();
+
+    if (!childDoc.exists) {
+      throw new HttpsError('permission-denied', 'Child not found or not owned by caller');
+    }
+
+    const reportId = `nl-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+
+    const summary = 'Ребёнок показывает стабильный прогресс. ' +
+      'Хорошо работает с шипящими и свистящими звуками. ' +
+      'Звук Р требует продолжения регулярных занятий.';
+
+    const recommendations = [
+      'Продолжайте ежедневные упражнения по 10-15 минут',
+      'Обратите внимание на звук Р в начале слов',
+      'Используйте упражнения на дифференциацию Р/Л',
+    ];
+
+    const chartsData = {
+      'Ш': [0.55, 0.65, 0.75, 0.82],
+      'Ж': [0.50, 0.62, 0.71, 0.79],
+      'Р': [0.30, 0.42, 0.55, 0.62],
+      'Л': [0.65, 0.72, 0.80, 0.85],
+    };
+
+    logger.info('generateNeurolinguistSummary stub', {
+      reportId,
+      period: periodValue,
+    });
+
+    return {
+      reportId,
+      summary,
+      recommendations,
+      chartsData,
+      generatedAt: Date.now() / 1000,
+    };
+  },
+);
+
+// ------------------------------------------------------------------
+// HTTPS Callable: validateChildVoice
+// Input:  { audioBase64: string }
+// Output: { isChildVoice: boolean, confidence: number }
+//
+// Stub: всегда возвращает isChildVoice=true чтобы не блокировать UX.
+// Реальный speaker verification — on-device через SpeakerVerification.mlpackage.
+// ------------------------------------------------------------------
+
+exports.validateChildVoice = onCall(
+  { enforceAppCheck: true, cors: true, timeoutSeconds: 30, memory: '256MiB' },
+  async (request) => {
+    const { audioBase64 } = request.data || {};
+
+    if (typeof audioBase64 !== 'string' || audioBase64.length === 0) {
+      throw new HttpsError('invalid-argument', 'audioBase64 is required');
+    }
+
+    if (!request.auth) {
+      throw new HttpsError('unauthenticated', 'Sign in required');
+    }
+
+    const audioBytes = Math.floor((audioBase64.length * 3) / 4);
+    logger.info('validateChildVoice stub', { audioBytes });
+
+    // Always return true — never block kid UX. Real speaker verification on-device.
+    return {
+      isChildVoice: true,
+      confidence: 0.92,
+    };
+  },
+);
+
+// ------------------------------------------------------------------
+// HTTPS Callable: analyzeSpeechProgress
+// Input:  { childId: string }
+// Output: { trends: [...], strengths: [...], gaps: [...] }
+//
+// Stub: фокус на neurolinguist trends (vs calculateProgress = aggregation).
+// ------------------------------------------------------------------
+
+exports.analyzeSpeechProgress = onCall(
+  { enforceAppCheck: true, cors: true, timeoutSeconds: 60, memory: '256MiB' },
+  async (request) => {
+    const { childId } = request.data || {};
+
+    if (typeof childId !== 'string' || childId.length === 0) {
+      throw new HttpsError('invalid-argument', 'childId is required');
+    }
+
+    if (!request.auth) {
+      throw new HttpsError('unauthenticated', 'Sign in required');
+    }
+
+    // Verify ownership.
+    const childDoc = await admin.firestore()
+      .collection('users').doc(request.auth.uid)
+      .collection('children').doc(childId)
+      .get();
+
+    if (!childDoc.exists) {
+      throw new HttpsError('permission-denied', 'Child not found or not owned by caller');
+    }
+
+    logger.info('analyzeSpeechProgress stub', { childId: '[REDACTED]' });
+
+    return {
+      trends: [
+        { soundGroup: 'шипящие', direction: 'up', changePercent: 18 },
+        { soundGroup: 'свистящие', direction: 'up', changePercent: 12 },
+        { soundGroup: 'соноры', direction: 'flat', changePercent: 3 },
+      ],
+      strengths: [
+        'Чёткое произношение Ш, Ж',
+        'Хороший темп речи',
+        'Правильное дыхание во время упражнений',
+      ],
+      gaps: [
+        'Звук Р требует доработки в начале слов',
+        'Дифференциация Р/Л неустойчива',
+      ],
+    };
+  },
+);
+
+// ------------------------------------------------------------------
+// HTTPS Callable: generateSpecialistReport
+// Input:  { childId: string, format: "json" | "pdf" }
+// Output: { reportId: string, format: string, downloadUrl: string | null }
+//
+// Stub: возвращает указатель на report (PDF generation deferred).
+// Отличается от generateReport — focus на specialist export workflow.
+// ------------------------------------------------------------------
+
+exports.generateSpecialistReport = onCall(
+  { enforceAppCheck: true, cors: true, timeoutSeconds: 120, memory: '512MiB' },
+  async (request) => {
+    const { childId, format } = request.data || {};
+
+    if (typeof childId !== 'string' || childId.length === 0) {
+      throw new HttpsError('invalid-argument', 'childId is required');
+    }
+
+    if (!request.auth) {
+      throw new HttpsError('unauthenticated', 'Sign in required');
+    }
+
+    const allowedFormats = ['json', 'pdf'];
+    const formatValue = allowedFormats.includes(format) ? format : 'json';
+
+    // Verify ownership.
+    const childDoc = await admin.firestore()
+      .collection('users').doc(request.auth.uid)
+      .collection('children').doc(childId)
+      .get();
+
+    if (!childDoc.exists) {
+      throw new HttpsError('permission-denied', 'Child not found or not owned by caller');
+    }
+
+    const reportId = `spec-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+
+    logger.info('generateSpecialistReport stub', {
+      reportId,
+      format: formatValue,
+    });
+
+    // PDF generation deferred — return null downloadUrl, client falls back to on-device export.
+    return {
+      reportId,
+      format: formatValue,
+      downloadUrl: null,
+      message: 'PDF-экспорт временно выполняется на устройстве через SpecialistExportService.',
+    };
+  },
+);
+
+// ------------------------------------------------------------------
+// HTTPS Callable: createFamilyInviteToken
+// Input:  { parentId: string, role: "secondary" | "observer", durationHours?: number }
+// Output: { token: string, shortCode: string, expiresAt: number, deepLinkURL: string }
+//
+// Replaces deprecated Firebase Dynamic Links (sunset 2025-08-25).
+// Creates a single-use Firestore-stored invite token. Kid scans QR / parent
+// enters short code → deep link via Apple Universal Links resolves to Firestore lookup.
+//
+// See: ADR-V18-U-DYNAMICLINKS-REPLACE
+// ------------------------------------------------------------------
+
+exports.createFamilyInviteToken = onCall(
+  { enforceAppCheck: true, cors: true, timeoutSeconds: 30, memory: '256MiB' },
+  async (request) => {
+    const { parentId, role, durationHours } = request.data || {};
+
+    if (typeof parentId !== 'string' || parentId.length === 0) {
+      throw new HttpsError('invalid-argument', 'parentId is required');
+    }
+
+    if (!request.auth || request.auth.uid !== parentId) {
+      throw new HttpsError('permission-denied', 'Only the parent can create invites for themselves');
+    }
+
+    const allowedRoles = ['secondary', 'observer'];
+    const roleValue = allowedRoles.includes(role) ? role : 'observer';
+
+    const ttlHours = (typeof durationHours === 'number' && durationHours > 0 && durationHours <= 168) ?
+      durationHours :
+      24;
+    const expiresAt = Date.now() + (ttlHours * 3600 * 1000);
+
+    // Generate cryptographically random token (32 chars hex) and 6-char short code (uppercase alphanumeric).
+    // eslint-disable-next-line global-require
+    const crypto = require('crypto');
+    const token = crypto.randomBytes(16).toString('hex');
+    const shortCodeAlphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // omit ambiguous chars (0/O, 1/I)
+    let shortCode = '';
+    for (let i = 0; i < 6; i++) {
+      shortCode += shortCodeAlphabet[crypto.randomInt(shortCodeAlphabet.length)];
+    }
+
+    const inviteData = {
+      parentId,
+      role: roleValue,
+      token,
+      shortCode,
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      expiresAt: admin.firestore.Timestamp.fromMillis(expiresAt),
+      consumed: false,
+      consumedBy: null,
+      consumedAt: null,
+    };
+
+    try {
+      // Path: /family_invites/{token} — top-level collection (queryable by short code via index).
+      await admin.firestore()
+        .collection('family_invites').doc(token)
+        .set(inviteData);
+
+      // Universal Link URL — resolved by iOS app via Associated Domains entitlement.
+      const deepLinkURL = `https://happyspeech.mmf.bsu.app/invite?token=${token}&code=${shortCode}`;
+
+      logger.info('createFamilyInviteToken issued', {
+        parentId: '[REDACTED]',
+        role: roleValue,
+        ttlHours,
+        shortCode,
+      });
+
+      return {
+        token,
+        shortCode,
+        expiresAt: Math.floor(expiresAt / 1000),
+        deepLinkURL,
+      };
+    } catch (error) {
+      logger.error('createFamilyInviteToken failed', { error: String(error) });
+      throw new HttpsError('internal', 'Failed to create invite token');
     }
   },
 );
