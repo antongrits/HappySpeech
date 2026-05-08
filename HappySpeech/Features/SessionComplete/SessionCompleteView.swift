@@ -130,6 +130,15 @@ struct SessionCompleteView: View {
                         }
                     }
             }
+
+            // Block J v18 — HSConfettiView layered поверх existing ConfettiCanvasView.
+            // Pattern .celebration (разноцветное), HSRewardBurst остаётся в score reveal.
+            // Per Block J одобрение #9: keep BOTH layered.
+            HSConfettiView(preset: .celebration, isActive: $confettiVisible)
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
+                .zIndex(12)
+                .accessibilityHidden(true)
         }
         .navigationBarBackButtonHidden()
         .environment(\.circuitContext, .kid)
