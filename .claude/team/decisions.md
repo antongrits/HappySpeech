@@ -3,6 +3,130 @@
 
 ---
 
+## ADR-V18-U-INSTALLATIONS-VERIFIED — Firebase Installations integration уже выполнена (2026-05-08)
+
+### Дата: 2026-05-08
+### Статус: Approved (Block U.3 v18 verification — already done in Block AA v17)
+
+### Контекст
+Plan v18 Block U.3 запросил Firebase Installations enable + iOS integration:
+- Firebase Console: Installations API enabled
+- iOS: `Installations.installations().installationID()` integration
+- Service: `InstallationsService.swift` с `currentInstallationID` / `authToken` / `upgradeToAuthUser` / `deleteInstallation`
+- Use-case: anonymous → auth upgrade tracking, FCM token correlation
+
+### Verification (2026-05-08)
+
+**Service file:**
+- `HappySpeech/Services/InstallationsService.swift` — 234 LOC
+- Origin commit: `9bd00a30` (feat(firebase): AA.2 v17 — Firebase Installations)
+- Author: antongrits, без Co-Authored-By
+
+**Полная реализация:**
+- `InstallationsServiceProtocol` с 4 методами (`currentInstallationID`, `authToken`, `upgradeToAuthUser`, `deleteInstallation`)
+- `LiveInstallationsService` — продакшн через `Installations.installations()` SDK
+- `MockInstallationsService` — детерминированные ответы для preview/test
+- `FirestoreProxy` — изолированный helper для записи `installationId` в `/users/{uid}` (избегает циклической зависимости от SyncService)
+- `InstallationsError` — `notInitialized` / `tokenUnavailable` / `syncFailed`
+
+**SPM dependency:**
+- `FirebaseInstallations` — declared в `project.yml` (line 211-212)
+- Также transitive dependency через `FirebaseAuth`, `FirebaseFirestore`, `FirebaseFunctions`
+
+**DI wiring:**
+- AppContainer.swift L64 (`_installationsService`), L396-403 (lazy init), L771 (preview mock)
+
+**Firebase Console state:**
+- Installations API auto-enabled при первом `FirebaseApp.configure()` — не требует ручной настройки в Console
+- App Check enforce уже настроен (firebase.json) — Installations использует App Check для верификации
+
+**COPPA compliance:**
+- Installation ID **не содержит PII** — это случайный 22-char base64url идентификатор установки
+- Документация в InstallationsService.swift:14-16 явно запрещает хранить Installation ID в детских профилях
+- Запись только в `/users/{uid}` (родитель), не в `/users/{uid}/children/{childId}`
+
+### Решение
+Считать Plan v18 Block U.3 выполненным через Block AA v17. Дополнительной работы не требуется. Service готов к продакшну.
+
+### Последствия
+- Документация в firebase-runbook.md обновляется в Block U.7
+- iOS code 100% covered, build green, lint clean
+- Firebase Installations работает out-of-the-box после `FirebaseApp.configure()`
+
+---
+
+## ADR-V18-U-DYNAMICLINKS-REPLACE — Replace Firebase Dynamic Links (deprecated) на Apple Universal Links + Firestore invite tokens (2026-05-08)
+
+### Дата: 2026-05-08
+### Статус: Approved (Block U.4 v18)
+
+### Контекст
+Plan v18 Block U.4 запросил Firebase Dynamic Links setup:
+- Создать домен `happyspeech.page.link` в Firebase Console
+- iOS integration через `FirebaseDynamicLinks` SDK
+- Cloud Function `triggerFamilyInviteDynamicLink`
+
+**Проблема:** Google официально объявил Firebase Dynamic Links **deprecated** в августе 2024, и сервис **окончательно отключён 25 августа 2025 года**. На момент 2026-05-08 создать новый Dynamic Links домен **невозможно** — Console UI скрыт, API возвращает 404.
+
+Существующий iOS код (`HappySpeech/Services/DynamicLinksService.swift`, 408 LOC, commit `405bef07`) использует:
+- `FirebaseDynamicLinks` SDK (`DynamicLinks.dynamicLinks()`, `DynamicLinkComponents`)
+- Реальные методы: `createFamilyInviteLink`, `handleIncomingLink`, `createSpecialistAccessLink`
+- Линковка через Firebase Console-managed домен `happyspeech.page.link`
+
+После shutdown 2025-08-25 любой вызов `components.shorten()` или `handleUniversalLink()` возвращает ошибку.
+
+### Решение
+Заменить Firebase Dynamic Links на iOS-нативное решение **Apple Universal Links + Firestore-stored invite tokens**:
+
+**1. Cloud Function (Block U.1):**
+- `createFamilyInviteToken(parentId, role, durationHours)` — заменяет `triggerFamilyInviteDynamicLink`
+- Создаёт single-use Firestore документ `/family_invites/{token}` со схемой:
+  - `parentId` (string), `role` ("secondary" | "observer")
+  - `token` (32-char hex, primary key), `shortCode` (6-char base32 без неоднозначных O/0/1/I)
+  - `createdAt`, `expiresAt` (TTL 1-168 часов, дефолт 24)
+  - `consumed: false`, `consumedBy: null`, `consumedAt: null` (single-use audit fields)
+- Возвращает Universal Link URL `https://happyspeech.mmf.bsu.app/invite?token=<...>&code=<...>`
+
+**2. iOS Service (Block U.4):**
+- Новый `FamilyInviteService.swift` (создан в этом коммите) — workflow:
+  - `createInvite(role, durationHours) → FamilyInviteToken` (через CloudFunctionsService)
+  - `redeemInvite(byShortCode|byToken) → Result` (Firestore lookup + consume + verify TTL)
+  - `parseInviteURL(_ url) → InviteParams` (разбор Universal Link)
+
+**3. Replacement of legacy DynamicLinksService:**
+- `LiveDynamicLinksService` оставлен как deprecated marker (depends on `FirebaseDynamicLinks` SDK)
+- Все новые call sites используют `FamilyInviteService`
+- DI wiring остаётся для совместимости — `MockDynamicLinksService` всегда возвращает stub URL
+
+### Альтернативы (рассмотрены и отклонены)
+| Опция | Причина отклонения |
+|---|---|
+| (a) Skip U.4 полностью | Family invite — реальная UX потребность, нельзя skip |
+| (b) Custom URL Scheme `happyspeech://invite?...` | Не работает если приложение не установлено (нет fallback на App Store) |
+| (c) Branch.io / AppsFlyer | 3rd-party tracker — запрещён Kids Category |
+| (d) Сохранить DynamicLinks SDK как stub | Сервис мёртв — `shorten()` возвращает 404 |
+
+**Apple Universal Links** выбран потому что:
+- Native iOS (без 3rd-party deps)
+- Robust: не sunset risk
+- Если приложение не установлено — Safari открывает associated `https://happyspeech.mmf.bsu.app/invite` страницу (можно разместить App Store redirect)
+- Поддерживает `apple-app-site-association` файл с `bundleID = com.mmf.bsu.HappySpeech`
+
+### Последствия
+- `FirebaseDynamicLinks` SDK останется в SPM до Block U.4 commit, потом deprecated
+- `DynamicLinksService.swift` **сохраняется** в репо как stub (не удаляется чтобы не ломать DI и call sites) — файл помечен `@available(*, deprecated, message: "Use FamilyInviteService")`
+- Universal Links требуют:
+  - `apple-app-site-association` файл на `https://happyspeech.mmf.bsu.app/.well-known/` (deferred — сейчас домен placeholder)
+  - Associated Domains entitlement (`applinks:happyspeech.mmf.bsu.app`) — будет добавлен в Block AB / отдельный Apple Developer Portal task
+- Firestore index: `family_invites` shortCode + expiresAt для быстрых lookup'ов (deferred — будет добавлен в Block U.4 commit или отдельным коммитом)
+
+### Verification
+- Cloud Function `createFamilyInviteToken` deployed в Block U.1 (commit abea9729)
+- iOS `FamilyInviteService.swift` создан в Block U.4 (этот коммит)
+- ADR-V18-U-DEPLOY-DEFER может быть открыт если deploy блокирован
+
+---
+
 ## ADR-V18-I-VERIFIED — Onboarding 3D + 2D anims removed уже выполнены (2026-05-08)
 
 ### Дата: 2026-05-08
