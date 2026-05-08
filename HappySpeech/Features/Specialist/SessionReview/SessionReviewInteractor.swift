@@ -274,29 +274,35 @@ final class SessionReviewInteractor: SessionReviewBusinessLogic {
         return nil
     }
 
-    /// Человекочитаемое имя шаблона. Источник истины — `TemplateType`,
-    /// здесь — словарь UI-меток.
+    /// Человекочитаемое имя шаблона. Источник истины — `TemplateType.displayName`.
+    /// Поддерживаются как kebab-case raw values ("listen-and-choose"), так и
+    /// PascalCase (`GameType.rawValue` → "ListenAndChoose") — fallback к словарю UI-меток.
     static func gameName(for templateType: String) -> String {
-        gameNameMap[templateType] ?? templateType
+        if let kebab = TemplateType(rawValue: templateType) {
+            return kebab.displayName
+        }
+        return gameNameMap[templateType] ?? templateType
     }
 
     private static let gameNameMap: [String: String] = [
-        "listenAndChoose": String(localized: "game.listen_and_choose"),
-        "repeatAfterModel": String(localized: "game.repeat_after_model"),
-        "dragAndMatch": String(localized: "game.drag_and_match"),
-        "storyCompletion": String(localized: "game.story_completion"),
-        "puzzleReveal": String(localized: "game.puzzle_reveal"),
-        "sorting": String(localized: "game.sorting"),
-        "memory": String(localized: "game.memory"),
-        "bingo": String(localized: "game.bingo"),
-        "soundHunter": String(localized: "game.sound_hunter"),
-        "articulationImitation": String(localized: "game.articulation_imitation"),
+        // PascalCase ключи (GameType.rawValue) — вторичный fallback,
+        // встречаются при логировании Sessions из SessionShellInteractor.
+        "ListenAndChoose": String(localized: "game.listen_and_choose"),
+        "RepeatAfterModel": String(localized: "game.repeat_after_model"),
+        "DragAndMatch": String(localized: "game.drag_and_match"),
+        "StoryCompletion": String(localized: "game.story_completion"),
+        "PuzzleReveal": String(localized: "game.puzzle_reveal"),
+        "Sorting": String(localized: "game.sorting"),
+        "Memory": String(localized: "game.memory"),
+        "Bingo": String(localized: "game.bingo"),
+        "SoundHunter": String(localized: "game.sound_hunter"),
+        "ArticulationImitation": String(localized: "game.articulation_imitation"),
         "ARActivity": String(localized: "game.ar_activity"),
-        "visualAcoustic": String(localized: "game.visual_acoustic"),
-        "breathing": String(localized: "game.breathing"),
-        "rhythm": String(localized: "game.rhythm"),
-        "narrativeQuest": String(localized: "game.narrative_quest"),
-        "minimalPairs": String(localized: "game.minimal_pairs")
+        "VisualAcoustic": String(localized: "game.visual_acoustic"),
+        "Breathing": String(localized: "game.breathing"),
+        "Rhythm": String(localized: "game.rhythm"),
+        "NarrativeQuest": String(localized: "game.narrative_quest"),
+        "MinimalPairs": String(localized: "game.minimal_pairs")
     ]
 
     // MARK: - Summary (existing)

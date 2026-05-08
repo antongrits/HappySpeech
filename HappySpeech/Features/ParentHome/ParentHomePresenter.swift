@@ -170,6 +170,11 @@ final class ParentHomePresenter: ParentHomePresentationLogic {
     }
 
     private static func templateName(for type: String) -> String {
+        // Источник истины — TemplateType.displayName (русские человекочитаемые).
+        if let kebab = TemplateType(rawValue: type) {
+            return kebab.displayName
+        }
+        // Fallback на устаревший ключ template.<slug>.name (оставлен для совместимости).
         let key = "template.\(type).name"
         let localized = String(localized: String.LocalizationValue(key))
         return localized == key ? type : localized
