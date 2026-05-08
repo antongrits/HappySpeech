@@ -38,19 +38,12 @@ struct AuthSignInView: View {
         }
         .accessibilityIdentifier("AuthSignInRoot")
         .loadingOverlay(scene?.state.isLoading ?? false)
-        .alert(
-            scene?.state.error?.title ?? String(localized: "Ошибка"),
-            isPresented: Binding(
-                get: { scene?.state.error != nil },
-                set: { if !$0 { scene?.state.dismissError() } }
-            ),
-            actions: {
-                Button(String(localized: "Понятно"), role: .cancel) {}
-            },
-            message: {
-                Text(scene?.state.error?.message ?? "")
-            }
-        )
+        // Block J v18 — заменён системный .alert на HSCustomAlert
+        // (kavsoft-style branded overlay с blur backdrop).
+        .hsAlert(item: Binding(
+            get: { authAlertItem },
+            set: { newValue in if newValue == nil { scene?.state.dismissError() } }
+        ))
         .task {
             if scene == nil {
                 scene = AuthScene(authService: container.authService)
@@ -66,6 +59,24 @@ struct AuthSignInView: View {
                 handleAuthenticationSuccess(requiresVerification: false)
             }
         }
+    }
+
+    // MARK: - Block J v18 HSCustomAlert mapping
+    //
+    // Преобразует scene?.state.error в HSAlertItem для брендированного
+    // алерта. Возврашает nil если ошибки нет.
+    private var authAlertItem: HSAlertItem? {
+        guard let error = scene?.state.error else { return nil }
+        return HSAlertItem(
+            title: LocalizedStringKey(error.title),
+            message: LocalizedStringKey(error.message),
+            symbol: "exclamationmark.triangle.fill",
+            primary: HSAlertAction(
+                title: String(localized: "Понятно"),
+                role: .cancel,
+                action: { scene?.state.dismissError() }
+            )
+        )
     }
 
     // MARK: - Actions

@@ -47,15 +47,11 @@ struct AuthVerifyEmailView: View {
             .padding(.bottom, SpacingTokens.sp8)
         }
         .loadingOverlay(scene?.state.isLoading ?? false)
-        .alert(
-            scene?.state.error?.title ?? String(localized: "Ошибка"),
-            isPresented: Binding(
-                get: { scene?.state.error != nil },
-                set: { if !$0 { scene?.state.dismissError() } }
-            ),
-            actions: { Button(String(localized: "Понятно"), role: .cancel) {} },
-            message: { Text(scene?.state.error?.message ?? "") }
-        )
+        // Block J v18 — заменён системный .alert на HSCustomAlert.
+        .hsAlert(item: Binding(
+            get: { authAlertItem },
+            set: { newValue in if newValue == nil { scene?.state.dismissError() } }
+        ))
         .onAppear {
             guard !appeared else { return }
             withAnimation(reduceMotion ? .easeIn(duration: 0.1) : MotionTokens.spring.delay(0.1)) {
@@ -81,6 +77,22 @@ struct AuthVerifyEmailView: View {
         .onChange(of: scene?.state.signOutViewModel) { _, newValue in
             if newValue != nil { coordinator.navigate(to: .auth) }
         }
+    }
+
+    // MARK: - Block J v18 HSCustomAlert mapping
+
+    private var authAlertItem: HSAlertItem? {
+        guard let error = scene?.state.error else { return nil }
+        return HSAlertItem(
+            title: LocalizedStringKey(error.title),
+            message: LocalizedStringKey(error.message),
+            symbol: "exclamationmark.triangle.fill",
+            primary: HSAlertAction(
+                title: String(localized: "Понятно"),
+                role: .cancel,
+                action: { scene?.state.dismissError() }
+            )
+        )
     }
 
     // MARK: - Actions
