@@ -368,6 +368,8 @@ struct SessionHistoryView: View {
                             }
                         }
                     }
+                    // Block J v18 — kavsoft-style tilt carousel scroll transition.
+                    .hsScrollEffect(.tiltCarousel)
                 }
             }
         }

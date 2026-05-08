@@ -258,6 +258,8 @@ struct HomeTasksView: View {
                         onStart: { handleStart(row.id) }
                     )
                     .transition(.opacity.combined(with: .move(edge: .top)))
+                    // Block J v18 — kavsoft-style tilt carousel scroll transition.
+                    .hsScrollEffect(.tiltCarousel)
                 }
             }
         }

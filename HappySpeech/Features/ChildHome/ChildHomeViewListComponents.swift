@@ -41,6 +41,8 @@ struct ChildHomeSoundProgressRow: View {
                 }
             }
         }
+        // Block J v18 — kavsoft-style tilt carousel scroll transition.
+        .hsScrollEffect(.tiltCarousel)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(String.localizedStringWithFormat(
             String(localized: "child.home.sound.row.a11y"),
@@ -93,6 +95,8 @@ struct ChildHomeRecentSessionRow: View {
                 .accessibilityHidden(true)
             }
         }
+        // Block J v18 — kavsoft-style tilt carousel scroll transition.
+        .hsScrollEffect(.tiltCarousel)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(String.localizedStringWithFormat(
             String(localized: "child.home.recent.row.a11y"),

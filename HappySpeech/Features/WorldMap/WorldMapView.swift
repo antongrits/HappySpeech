@@ -235,6 +235,8 @@ struct WorldMapView: View {
                     ) {
                         handleZoneTap(card.id)
                     }
+                    // Block J v18 — kavsoft-style tilt carousel scroll transition.
+                    .hsScrollEffect(.tiltCarousel)
                 }
             }
 
@@ -250,6 +252,8 @@ struct WorldMapView: View {
                 ) {
                     handleZoneTap(last.id)
                 }
+                // Block J v18 — kavsoft-style tilt carousel scroll transition.
+                .hsScrollEffect(.tiltCarousel)
             }
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
