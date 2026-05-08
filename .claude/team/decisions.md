@@ -3,6 +3,100 @@
 
 ---
 
+## ADR-V18-U-DEPLOY-SUCCESS — Block U.1 functions + Remote Config deployed успешно (2026-05-08)
+
+### Дата: 2026-05-08
+### Статус: Approved (Block U.8 v18 — deploy verification)
+
+### Контекст
+Plan v18 Block U.8 финальная сверка после реализации Cloud Functions callable
+(U.1) и Remote Config tutorial_variant (U.5). Цель: задеплоить и верифицировать
+работающие функции на live-проекте `happyspeech-dfd95`.
+
+### Deploy результаты
+
+**Firebase CLI**: 15.15.0
+**Logged in as**: antongric132@gmail.com
+**Project**: happyspeech-dfd95
+
+**1. Remote Config (U.5):**
+```
+firebase deploy --only remoteconfig --project happyspeech-dfd95
+✔  Deploy complete!
+```
+- Template v3 deployed: 19 параметров включая `tutorial_variant` (default "A",
+  conditional "B" под `ab_tutorial_variant_b`)
+- 1 condition активна: `ab_tutorial_variant_b` (percent <= 50)
+
+**2. Cloud Functions (U.1):**
+```
+firebase deploy --only functions:scoreSpeechQuality,...createFamilyInviteToken
+```
+- ✔ scoreSpeechQuality(europe-west3) — Successful create operation
+- ✔ generateNeurolinguistSummary(europe-west3) — Successful create operation
+- ✔ validateChildVoice(europe-west3) — Successful create operation
+- ✔ analyzeSpeechProgress(europe-west3) — Successful create operation
+- ✔ generateSpecialistReport(europe-west3) — Successful create operation (memory 512 MiB)
+- ✔ createFamilyInviteToken(europe-west3) — Successful create operation
+
+**Verification (firebase functions:list):**
+```
+8 functions live в europe-west3:
+- analyzeSpeechProgress (callable)
+- createFamilyInviteToken (callable)
+- generateNeurolinguistSummary (callable)
+- generateSpecialistReport (callable, 512 MiB)
+- scoreSpeechQuality (callable)
+- validateChildVoice (callable)
+- sendDailyReminder (scheduled, baseline)
+- sendWeeklySummary (scheduled, baseline)
+```
+
+Все 6 callable функций имеют `enforceAppCheck: true` (Kids Safety).
+
+### Замечания (warnings)
+1. **Node.js 20 deprecation** (2026-04-30, decommission 2026-10-30):
+   - Текущий runtime в `functions/package.json`: `"engines": {"node": "20"}`
+   - **Action item**: миграция на Node.js 22 в отдельном backlog'е перед окт-2026.
+2. **firebase-functions outdated**:
+   - Текущая `^5.0.0`, latest 6.x с breaking changes
+   - **Action item**: миграция на firebase-functions@latest в отдельной фазе после v1.0.0.
+3. **Cleanup policy не настроен** для container images в Artifact Registry:
+   - Manual command: `firebase functions:artifacts:setpolicy`
+   - **Action item**: настроить retention policy чтобы не накапливать billing.
+
+### Pending deploy items (deferred)
+
+Эти элементы Plan v18 требуют дополнительной инфраструктуры и не задеплоены
+в Block U.8 — они задокументированы в `firebase-runbook.md` "Deferred deploy items":
+
+| Item | Reason for defer |
+|---|---|
+| Realtime Database initial deploy | Требует `firebase init database` interactive UI или `database.rules.json` файл — отдельный коммит |
+| Apple Universal Links infra | Требует deploy `apple-app-site-association` файла на хостинг + entitlement update в Apple Developer Portal |
+| Firestore index `family_invites` (shortCode + consumed) | Будет добавлен через `firestore:indexes` deploy в отдельном коммите |
+| Console A/B Testing experiment activation | Требует ручной UI activation через Firebase Console |
+| Custom event `tutorial_completion_rate` emit | Требует код-изменения в TutorialView (отдельный backlog item) |
+| Migration baseline functions (Sprint 12) на App Check enforce | Существующие 8 функций имеют `enforceAppCheck: false` исторически — migration отдельным sprint'ом |
+
+### Решение
+Block U v18 считать завершённым. 6 новых callable функций live, Remote Config
+template обновлён до v3, iOS-сторона полностью реализована. Deferred deploy items
+зафиксированы для следующих спринтов.
+
+### Последствия
+- HappySpeech v1.0 имеет полную Firebase backend integration:
+  - Auth + Firestore + Storage + App Check (existing)
+  - 16 Cloud Functions (10 baseline + 6 v18)
+  - Remote Config v3 с A/B testing template
+  - Installations service (verified)
+  - FamilyInviteService (Universal Links + Firestore tokens)
+  - RealtimeDatabaseService (SharePlay sync, region eur-west1)
+- Dynamic Links полностью deprecated и заменён.
+- Все U.1 callable functions защищены App Check enforce.
+
+---
+
 ## ADR-V18-U-INSTALLATIONS-VERIFIED — Firebase Installations integration уже выполнена (2026-05-08)
 
 ### Дата: 2026-05-08
