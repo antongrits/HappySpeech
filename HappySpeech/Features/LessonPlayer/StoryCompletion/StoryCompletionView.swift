@@ -418,17 +418,17 @@ private struct ChoiceButton: View {
         case .correct:
             Image(systemName: "checkmark.circle.fill")
                 .font(TypographyTokens.headline(20))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .accessibilityHidden(true)
         case .wrong:
             Image(systemName: "xmark.circle.fill")
                 .font(TypographyTokens.headline(20))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .accessibilityHidden(true)
         case .revealed:
             Image(systemName: "star.fill")
                 .font(TypographyTokens.headline(20))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .accessibilityHidden(true)
         }
     }

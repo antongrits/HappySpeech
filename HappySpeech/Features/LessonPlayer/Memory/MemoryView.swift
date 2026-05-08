@@ -304,7 +304,7 @@ struct MemoryView: View {
     private var cardBackContent: some View {
         Image(systemName: "questionmark")
             .font(TypographyTokens.title(questionSize).weight(.bold))
-            .foregroundStyle(.white)
+            .foregroundStyle(ColorTokens.Overlay.onAccent)
             .accessibilityHidden(true)
     }
 

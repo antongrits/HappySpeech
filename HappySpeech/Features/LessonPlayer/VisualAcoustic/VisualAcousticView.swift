@@ -490,7 +490,7 @@ private struct ChoiceTile: View {
         case .correct:
             Image(systemName: "checkmark.circle.fill")
                 .font(TypographyTokens.title(20).weight(.bold))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .accessibilityHidden(true)
         case .wrong:
             if isRevealed {

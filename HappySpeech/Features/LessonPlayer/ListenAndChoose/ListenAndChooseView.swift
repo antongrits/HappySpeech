@@ -433,7 +433,7 @@ struct AudioPlayButton: View {
                     .overlay(
                         Image(systemName: isPlaying ? "speaker.wave.3.fill" : "play.fill")
                             .font(TypographyTokens.title(36).weight(.bold))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(ColorTokens.Overlay.onAccent)
                             .accessibilityHidden(true)
                     )
                     .shadow(color: ColorTokens.Brand.primary.opacity(0.35), radius: 12, y: 6)

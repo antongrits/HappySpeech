@@ -67,7 +67,7 @@ struct RecordingButton: View {
                     .overlay(
                         Image(systemName: isRecording ? "stop.fill" : "mic.fill")
                             .font(TypographyTokens.title(32).weight(.bold))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(ColorTokens.Overlay.onAccent)
                             .accessibilityHidden(true)
                     )
                     .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 10, y: 4)
