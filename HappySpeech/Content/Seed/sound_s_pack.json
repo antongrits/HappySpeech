@@ -977,6 +977,76 @@
           "word": "солнышко",
           "difficulty": 3,
           "audio_file": "Audio/Content/S/s-wi-63.m4a"
+        },
+        {
+          "id": "s-wi-64",
+          "word": "стрела",
+          "hint": "Стечение СТР — язык строго на позиции С.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-wi-64.m4a"
+        },
+        {
+          "id": "s-wi-65",
+          "word": "стружка",
+          "hint": "СТР + Ш — два трудных звука.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-wi-65.m4a"
+        },
+        {
+          "id": "s-wi-66",
+          "word": "сплетня",
+          "hint": "Стечение СПЛ в начале.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-wi-66.m4a"
+        },
+        {
+          "id": "s-wi-67",
+          "word": "скрипач",
+          "hint": "СКР — три согласных подряд.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-wi-67.m4a"
+        },
+        {
+          "id": "s-wi-68",
+          "word": "снегирь",
+          "hint": "СН в начале слова.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-wi-68.m4a"
+        },
+        {
+          "id": "s-wi-69",
+          "word": "смородина",
+          "hint": "СМ — губно-зубной + С.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-wi-69.m4a"
+        },
+        {
+          "id": "s-wi-70",
+          "word": "стрекоза",
+          "hint": "СТР — твёрдое трёхбуквенное стечение.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-wi-70.m4a"
+        },
+        {
+          "id": "s-wi-71",
+          "word": "спектакль",
+          "hint": "СПЕ — мягкое стечение.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-wi-71.m4a"
+        },
+        {
+          "id": "s-wi-72",
+          "word": "скворечник",
+          "hint": "СКВ — три согласных + Ч.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-wi-72.m4a"
+        },
+        {
+          "id": "s-wi-73",
+          "word": "слабость",
+          "hint": "СЛ в начале, -СТЬ на конце.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-wi-73.m4a"
         }
       ]
     },
@@ -1283,6 +1353,76 @@
           "word": "кокос",
           "difficulty": 3,
           "audio_file": "Audio/Content/S/s-wm-49.m4a"
+        },
+        {
+          "id": "s-wm-50",
+          "word": "пространство",
+          "hint": "С встречается дважды в разных скоплениях.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-wm-50.m4a"
+        },
+        {
+          "id": "s-wm-51",
+          "word": "лекарство",
+          "hint": "РСТ — трудное стечение в середине.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-wm-51.m4a"
+        },
+        {
+          "id": "s-wm-52",
+          "word": "торжество",
+          "hint": "ЖС — звонкий + глухой.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-wm-52.m4a"
+        },
+        {
+          "id": "s-wm-53",
+          "word": "пластмасса",
+          "hint": "СТМ — три согласных в середине.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-wm-53.m4a"
+        },
+        {
+          "id": "s-wm-54",
+          "word": "рассвет",
+          "hint": "СС → СВ — переход через двойную С.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-wm-54.m4a"
+        },
+        {
+          "id": "s-wm-55",
+          "word": "расстояние",
+          "hint": "СС + ТО — долгий [С].",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-wm-55.m4a"
+        },
+        {
+          "id": "s-wm-56",
+          "word": "нарциссы",
+          "hint": "Двойная СС на конце основы.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-wm-56.m4a"
+        },
+        {
+          "id": "s-wm-57",
+          "word": "перекрёсток",
+          "hint": "СТ в середине с ударением.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-wm-57.m4a"
+        },
+        {
+          "id": "s-wm-58",
+          "word": "предусмотреть",
+          "hint": "СМ внутри сложного глагола.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-wm-58.m4a"
+        },
+        {
+          "id": "s-wm-59",
+          "word": "рассмотреть",
+          "hint": "ССМ — двойной С перед сонорным.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-wm-59.m4a"
         }
       ]
     },
@@ -1835,6 +1975,111 @@
           "word": "сестра Соня",
           "difficulty": 2,
           "audio_file": "Audio/Content/S/s-ph-49.m4a"
+        },
+        {
+          "id": "s-ph-50",
+          "word": "стрела стрелка стрельба",
+          "hint": "Три слова с СТР — тренировка связки.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-ph-50.m4a"
+        },
+        {
+          "id": "s-ph-51",
+          "word": "Саша сослался на сестру",
+          "hint": "Четыре С в одной фразе.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-ph-51.m4a"
+        },
+        {
+          "id": "s-ph-52",
+          "word": "скоростной самолёт снижается",
+          "hint": "СКС + СМ — контрастные позиции.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-ph-52.m4a"
+        },
+        {
+          "id": "s-ph-53",
+          "word": "спелая слива слаще",
+          "hint": "СП + СЛ + СЛ — нарастающая сложность.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-ph-53.m4a"
+        },
+        {
+          "id": "s-ph-54",
+          "word": "свежий снег скрипит",
+          "hint": "СВ + СН + СКР — три стечения.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-ph-54.m4a"
+        },
+        {
+          "id": "s-ph-55",
+          "word": "старый сломанный самокат",
+          "hint": "СТ + СЛ + С — вся фраза на С.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-ph-55.m4a"
+        },
+        {
+          "id": "s-ph-56",
+          "word": "смелый солдат спит спокойно",
+          "hint": "СМ + С + СП + СП — скороговорочный ритм.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-ph-56.m4a"
+        },
+        {
+          "id": "s-ph-57",
+          "word": "стрельба — это серьёзно",
+          "hint": "СТР в начале, С в середине.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-ph-57.m4a"
+        },
+        {
+          "id": "s-ph-58",
+          "word": "снегирь сидит на сосне",
+          "hint": "СН + С + СС — ритмичная фраза.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-ph-58.m4a"
+        },
+        {
+          "id": "s-ph-59",
+          "word": "скрипач сыграл сонату",
+          "hint": "СКР + С + С — три ключевых слова.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-ph-59.m4a"
+        },
+        {
+          "id": "s-ph-60",
+          "word": "смородина созрела в саду",
+          "hint": "СМ + С + С — нарратив с повтором.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-ph-60.m4a"
+        },
+        {
+          "id": "s-ph-61",
+          "word": "сосульки свисают со стрехи",
+          "hint": "СС + СВ + С + СТ — насыщенная С-цепочка.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-ph-61.m4a"
+        },
+        {
+          "id": "s-ph-62",
+          "word": "строгий список слов",
+          "hint": "СТР + СП + СЛ — три стечения подряд.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-ph-62.m4a"
+        },
+        {
+          "id": "s-ph-63",
+          "word": "спорт стал смыслом жизни",
+          "hint": "СП + СТ + СМ — трёхслойная тренировка.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-ph-63.m4a"
+        },
+        {
+          "id": "s-ph-64",
+          "word": "синий свитер соседа",
+          "hint": "С + СВ + С — чередование позиций.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-ph-64.m4a"
         }
       ]
     },
@@ -2021,6 +2266,111 @@
           "word": "Сова охотится ночью в лесу.",
           "difficulty": 4,
           "audio_file": "Audio/Content/S/s-sen-29.m4a"
+        },
+        {
+          "id": "s-sen-30",
+          "word": "Степан строил снежную крепость с самого утра.",
+          "hint": "5 слов на С — история в одном предложении.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-sen-30.m4a"
+        },
+        {
+          "id": "s-sen-31",
+          "word": "Скоростной поезд сделал остановку на станции.",
+          "hint": "С в начале двух слов + стечение СТ.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-sen-31.m4a"
+        },
+        {
+          "id": "s-sen-32",
+          "word": "Слоны смотрели на закат с вершины скалы.",
+          "hint": "Сказочный образ + СМ + С + С.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-sen-32.m4a"
+        },
+        {
+          "id": "s-sen-33",
+          "word": "Снегирь и синица сидели на соседних ветках.",
+          "hint": "Два персонажа + три С-слова.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-sen-33.m4a"
+        },
+        {
+          "id": "s-sen-34",
+          "word": "Светлана собрала спелые сливы в корзинку.",
+          "hint": "Нарративная цепочка на С.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-sen-34.m4a"
+        },
+        {
+          "id": "s-sen-35",
+          "word": "Старый замок стоял среди сосен.",
+          "hint": "СТ + ССН — картинный образ.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-sen-35.m4a"
+        },
+        {
+          "id": "s-sen-36",
+          "word": "Сестра слушала сказку, сидя у окна.",
+          "hint": "Четыре С-слова + деепричастный оборот.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-sen-36.m4a"
+        },
+        {
+          "id": "s-sen-37",
+          "word": "Смелый стрелок попал в самый центр.",
+          "hint": "СМ + СТР + С — насыщенная фраза.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-sen-37.m4a"
+        },
+        {
+          "id": "s-sen-38",
+          "word": "Солнечные лучи сверкали сквозь листья.",
+          "hint": "С + СВ + СКВ — три стечения.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-sen-38.m4a"
+        },
+        {
+          "id": "s-sen-39",
+          "word": "Сквозь стекло светились огни станции.",
+          "hint": "СКВ + СТ + СВ + С — максимальная нагрузка.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-sen-39.m4a"
+        },
+        {
+          "id": "s-sen-40",
+          "word": "Счастливый сын с сестрой спешили домой.",
+          "hint": "Сч + С + С + СС + СП — цепочка.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-sen-40.m4a"
+        },
+        {
+          "id": "s-sen-41",
+          "word": "Свежая смородина слаще сушёной.",
+          "hint": "СВ + СМ + СЛ + СШ — фонетический контраст.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-sen-41.m4a"
+        },
+        {
+          "id": "s-sen-42",
+          "word": "Сосна скрипит, когда дует сильный ветер.",
+          "hint": "С + СКР + С — природный сюжет.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-sen-42.m4a"
+        },
+        {
+          "id": "s-sen-43",
+          "word": "Солёный суп совсем не сладкий.",
+          "hint": "Работа со смыслом + четыре С.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-sen-43.m4a"
+        },
+        {
+          "id": "s-sen-44",
+          "word": "Серёжа споткнулся и стал смеяться.",
+          "hint": "С + СП + СТ + СМ — нарратив с действием.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-sen-44.m4a"
         }
       ]
     },

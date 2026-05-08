@@ -818,6 +818,76 @@
           "word": "звездопад",
           "difficulty": 4,
           "audio_file": "Audio/Content/Z/z-wi-54.m4a"
+        },
+        {
+          "id": "z-wi-55",
+          "word": "звездопад",
+          "hint": "ЗВ + СТ — стечение в начале.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Z/z-wi-55.m4a"
+        },
+        {
+          "id": "z-wi-56",
+          "word": "злость",
+          "hint": "ЗЛО — мягкое стечение.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-wi-56.m4a"
+        },
+        {
+          "id": "z-wi-57",
+          "word": "здравствуй",
+          "hint": "ЗДРАВ — четыре согласных в начале.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Z/z-wi-57.m4a"
+        },
+        {
+          "id": "z-wi-58",
+          "word": "знаменитый",
+          "hint": "ЗН — два согласных + ударение.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-wi-58.m4a"
+        },
+        {
+          "id": "z-wi-59",
+          "word": "зрение",
+          "hint": "ЗР — редкое стечение.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Z/z-wi-59.m4a"
+        },
+        {
+          "id": "z-wi-60",
+          "word": "звуковой",
+          "hint": "ЗВУ — З + сонорный.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Z/z-wi-60.m4a"
+        },
+        {
+          "id": "z-wi-61",
+          "word": "зверобой",
+          "hint": "ЗВЕ + БОЙ — нарративный образ.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-wi-61.m4a"
+        },
+        {
+          "id": "z-wi-62",
+          "word": "знакомый",
+          "hint": "ЗН + КО — четырёхсложное.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-wi-62.m4a"
+        },
+        {
+          "id": "z-wi-63",
+          "word": "злобный",
+          "hint": "ЗЛО + БН — двойное стечение.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Z/z-wi-63.m4a"
+        },
+        {
+          "id": "z-wi-64",
+          "word": "зодчий",
+          "hint": "ЗО + ДЧ — З + шипящий финал.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Z/z-wi-64.m4a"
         }
       ]
     },
@@ -1586,6 +1656,76 @@
           "word": "зелёный кузнечик",
           "difficulty": 4,
           "audio_file": "Audio/Content/Z/z-ph-44.m4a"
+        },
+        {
+          "id": "z-ph-45",
+          "word": "звезда за горизонтом",
+          "hint": "ЗВЕ + ЗА + ГО — нарратив.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-ph-45.m4a"
+        },
+        {
+          "id": "z-ph-46",
+          "word": "злой зверь в лесу",
+          "hint": "ЗЛ + ЗВ — два стечения.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-ph-46.m4a"
+        },
+        {
+          "id": "z-ph-47",
+          "word": "здравствуй зима",
+          "hint": "ЗДРАВ + ЗИ — сезонный нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Z/z-ph-47.m4a"
+        },
+        {
+          "id": "z-ph-48",
+          "word": "зелёная зона",
+          "hint": "ЗЕ + ЗО — два З в начале.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Z/z-ph-48.m4a"
+        },
+        {
+          "id": "z-ph-49",
+          "word": "зубы заболели",
+          "hint": "ЗУ + ЗА — дублирование З.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Z/z-ph-49.m4a"
+        },
+        {
+          "id": "z-ph-50",
+          "word": "золотой запас",
+          "hint": "ЗО + ЗА — два З-слова.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-ph-50.m4a"
+        },
+        {
+          "id": "z-ph-51",
+          "word": "зимнее звёздное небо",
+          "hint": "ЗИМ + ЗВЁ — нарративный образ.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Z/z-ph-51.m4a"
+        },
+        {
+          "id": "z-ph-52",
+          "word": "закат за озером",
+          "hint": "ЗА + ЗА + О — ритмическое повторение.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-ph-52.m4a"
+        },
+        {
+          "id": "z-ph-53",
+          "word": "зубная щётка",
+          "hint": "ЗУ + НАЯ — прикладной контекст.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-ph-53.m4a"
+        },
+        {
+          "id": "z-ph-54",
+          "word": "звенящий голос",
+          "hint": "ЗВЕ + НЯ — артикуляционная нагрузка.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-ph-54.m4a"
         }
       ]
     },
@@ -1742,6 +1882,76 @@
           "word": "Завод работает и гудит.",
           "difficulty": 3,
           "audio_file": "Audio/Content/Z/z-sen-24.m4a"
+        },
+        {
+          "id": "z-sen-25",
+          "word": "Злой заяц залез в зелёный огород.",
+          "hint": "ЗЛ + ЗА + ЗА + ЗЕ — четыре З.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Z/z-sen-25.m4a"
+        },
+        {
+          "id": "z-sen-26",
+          "word": "Зимой звёзды светят ярко и ясно.",
+          "hint": "ЗИМ + ЗВЁ — нарратив природы.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-sen-26.m4a"
+        },
+        {
+          "id": "z-sen-27",
+          "word": "Знакомый зоолог знает про зебр всё.",
+          "hint": "ЗН + ЗО + ЗН + ЗЕ — насыщенный З.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Z/z-sen-27.m4a"
+        },
+        {
+          "id": "z-sen-28",
+          "word": "Зайчата ждали зиму под зелёной ёлкой.",
+          "hint": "ЗА + ЗИ + ЗЕ — три З-слова.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Z/z-sen-28.m4a"
+        },
+        {
+          "id": "z-sen-29",
+          "word": "Зонтик забыли на заднем сиденье.",
+          "hint": "ЗОН + ЗА + ЗА — три З в нарративе.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-sen-29.m4a"
+        },
+        {
+          "id": "z-sen-30",
+          "word": "Здравствуйте, я из зоопарка!",
+          "hint": "ЗДРАВ + ЗО — приветствие с З-темой.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-sen-30.m4a"
+        },
+        {
+          "id": "z-sen-31",
+          "word": "Звонкий звук зимнего колокольчика.",
+          "hint": "ЗВО + ЗВ + ЗИМ — насыщенная цепочка.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Z/z-sen-31.m4a"
+        },
+        {
+          "id": "z-sen-32",
+          "word": "Заря зажгла золотые облака.",
+          "hint": "ЗА + ЗА + ЗО — три З в одном предложении.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-sen-32.m4a"
+        },
+        {
+          "id": "z-sen-33",
+          "word": "Зелёный зонт заслонил от дождя.",
+          "hint": "ЗЕ + ЗО + ЗА — три З.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-sen-33.m4a"
+        },
+        {
+          "id": "z-sen-34",
+          "word": "Зебра забежала в загон и замерла.",
+          "hint": "ЗЕ + ЗА + ЗА + ЗА — четыре З.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Z/z-sen-34.m4a"
         }
       ]
     },

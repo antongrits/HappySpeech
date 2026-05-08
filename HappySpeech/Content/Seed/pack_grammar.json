@@ -294,6 +294,76 @@
           "hint": "Волк сердитый — заяц добрый. Антонимы прилагательных!",
           "difficulty": 2,
           "audio_file": "Audio/Content/Grammar/gr-adj-19.m4a"
+        },
+        {
+          "id": "gr-adj-20",
+          "word": "высокий дом — ... дерево",
+          "hint": "Высокое дерево! Средний род.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-adj-20.m4a"
+        },
+        {
+          "id": "gr-adj-21",
+          "word": "синяя лента — синий ...",
+          "hint": "Синий цветок! Мужской род.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-adj-21.m4a"
+        },
+        {
+          "id": "gr-adj-22",
+          "word": "красивый — у красивого",
+          "hint": "Родительный падеж прилагательного.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Grammar/gr-adj-22.m4a"
+        },
+        {
+          "id": "gr-adj-23",
+          "word": "маленький котик — ... кошечка",
+          "hint": "Маленькая кошечка! Женский род.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-adj-23.m4a"
+        },
+        {
+          "id": "gr-adj-24",
+          "word": "горячий — горячее — самый ...",
+          "hint": "Самый горячий! Степени сравнения.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Grammar/gr-adj-24.m4a"
+        },
+        {
+          "id": "gr-adj-25",
+          "word": "зелёный лист — зелёные ...",
+          "hint": "Зелёные листья! Множественное число.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-adj-25.m4a"
+        },
+        {
+          "id": "gr-adj-26",
+          "word": "умный мальчик — умная ...",
+          "hint": "Умная девочка! Смена рода.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-adj-26.m4a"
+        },
+        {
+          "id": "gr-adj-27",
+          "word": "быстрый — быстрее — самый быстрый",
+          "hint": "Три формы одного прилагательного.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Grammar/gr-adj-27.m4a"
+        },
+        {
+          "id": "gr-adj-28",
+          "word": "сильный ветер — сильного ...",
+          "hint": "Сильного ветра. Родительный падеж мужского рода.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Grammar/gr-adj-28.m4a"
+        },
+        {
+          "id": "gr-adj-29",
+          "word": "тёплый день — тёплого ...",
+          "hint": "Тёплого дня. Родительный — мужской.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Grammar/gr-adj-29.m4a"
         }
       ]
     },
@@ -600,6 +670,76 @@
           "hint": "Вчера было. Сегодня есть. Завтра будет. Три времени!",
           "difficulty": 3,
           "audio_file": "Audio/Content/Grammar/gr-vb-18.m4a"
+        },
+        {
+          "id": "gr-vf-19",
+          "word": "я пою — он ...",
+          "hint": "Поёт! Третье лицо единственного числа.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-vf-19.m4a"
+        },
+        {
+          "id": "gr-vf-20",
+          "word": "мы бежали — они ...",
+          "hint": "Бежали! Множественное число прошедшего.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-vf-20.m4a"
+        },
+        {
+          "id": "gr-vf-21",
+          "word": "он читал — она ...",
+          "hint": "Читала! Женский род прошедшего времени.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-vf-21.m4a"
+        },
+        {
+          "id": "gr-vf-22",
+          "word": "завтра мы ... (играть)",
+          "hint": "Будем играть! Будущее время.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-vf-22.m4a"
+        },
+        {
+          "id": "gr-vf-23",
+          "word": "вчера она ... (прыгать)",
+          "hint": "Прыгала! Прошедшее время, женский род.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-vf-23.m4a"
+        },
+        {
+          "id": "gr-vf-24",
+          "word": "я хочу — мы ...",
+          "hint": "Хотим! Форма первого лица множественного числа.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-vf-24.m4a"
+        },
+        {
+          "id": "gr-vf-25",
+          "word": "кот ест — коты ...",
+          "hint": "Едят! Множественное число настоящего.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-vf-25.m4a"
+        },
+        {
+          "id": "gr-vf-26",
+          "word": "папа идёт — папа ...",
+          "hint": "Шёл (вчера). Чередование в прошедшем.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Grammar/gr-vf-26.m4a"
+        },
+        {
+          "id": "gr-vf-27",
+          "word": "мы спим — они ...",
+          "hint": "Спят! Третье лицо множественного числа.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-vf-27.m4a"
+        },
+        {
+          "id": "gr-vf-28",
+          "word": "я несу — ты ...",
+          "hint": "Несёшь! Второе лицо единственного числа.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-vf-28.m4a"
         }
       ]
     },
@@ -746,6 +886,76 @@
           "hint": "Рисую чем? Карандашом! Творительный падеж.",
           "difficulty": 4,
           "audio_file": "Audio/Content/Grammar/gr-case-19.m4a"
+        },
+        {
+          "id": "gr-case-20",
+          "word": "я думаю о ... (друг)",
+          "hint": "Думаю о ком? О друге! Предложный падеж.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-case-20.m4a"
+        },
+        {
+          "id": "gr-case-21",
+          "word": "мы идём к ... (бабушка)",
+          "hint": "Идём к кому? К бабушке! Дательный падеж.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-case-21.m4a"
+        },
+        {
+          "id": "gr-case-22",
+          "word": "кот сидит под ... (стол)",
+          "hint": "Под чем? Под столом! Творительный падеж.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-case-22.m4a"
+        },
+        {
+          "id": "gr-case-23",
+          "word": "я читаю ... (книга)",
+          "hint": "Читаю что? Книгу! Винительный падеж.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-case-23.m4a"
+        },
+        {
+          "id": "gr-case-24",
+          "word": "на улице нет ... (дождь)",
+          "hint": "Нет чего? Дождя! Родительный падеж.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-case-24.m4a"
+        },
+        {
+          "id": "gr-case-25",
+          "word": "пишу письмо ... (мама)",
+          "hint": "Пишу кому? Маме! Дательный падеж.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-case-25.m4a"
+        },
+        {
+          "id": "gr-case-26",
+          "word": "играю ... (мяч)",
+          "hint": "Играю чем? Мячом! Творительный падеж.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-case-26.m4a"
+        },
+        {
+          "id": "gr-case-27",
+          "word": "думаю о ... (каникулы)",
+          "hint": "Думаю о чём? О каникулах! Предложный множественного числа.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Grammar/gr-case-27.m4a"
+        },
+        {
+          "id": "gr-case-28",
+          "word": "вышел из ... (магазин)",
+          "hint": "Из чего? Из магазина! Родительный падеж.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-case-28.m4a"
+        },
+        {
+          "id": "gr-case-29",
+          "word": "лёг на ... (диван)",
+          "hint": "Лёг на что? На диван! Винительный падеж направления.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-case-29.m4a"
         }
       ]
     },
@@ -934,6 +1144,76 @@
           "hint": "Снег — снежный — снеговик — снегирь — снежинка. Все от СНЕГ!",
           "difficulty": 4,
           "audio_file": "Audio/Content/Grammar/gr-wc-25.m4a"
+        },
+        {
+          "id": "gr-wc-26",
+          "word": "лист — листья — много листьев",
+          "hint": "Три формы: единственное, множественное, родительный.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Grammar/gr-wc-26.m4a"
+        },
+        {
+          "id": "gr-wc-27",
+          "word": "дерево — деревья — нет деревьев",
+          "hint": "Особое чередование: деревО — дерЕВЬЯ.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Grammar/gr-wc-27.m4a"
+        },
+        {
+          "id": "gr-wc-28",
+          "word": "лягушка — лягушки — много лягушек",
+          "hint": "Стандартное изменение.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-wc-28.m4a"
+        },
+        {
+          "id": "gr-wc-29",
+          "word": "нога — ноги — много ног",
+          "hint": "Чередование: нОга — нОг (нулевое окончание).",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Grammar/gr-wc-29.m4a"
+        },
+        {
+          "id": "gr-wc-30",
+          "word": "глаз — глаза — много глаз",
+          "hint": "Чередование ударения.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Grammar/gr-wc-30.m4a"
+        },
+        {
+          "id": "gr-wc-31",
+          "word": "стул — стулья — нет стульев",
+          "hint": "Особое чередование: стулЬЯ.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Grammar/gr-wc-31.m4a"
+        },
+        {
+          "id": "gr-wc-32",
+          "word": "лев — льва — нет льва",
+          "hint": "Беглая гласная: лЕв — лЬва.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Grammar/gr-wc-32.m4a"
+        },
+        {
+          "id": "gr-wc-33",
+          "word": "пень — пни — много пней",
+          "hint": "Мягкий знак меняется: пЕНЬ — пНИ.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Grammar/gr-wc-33.m4a"
+        },
+        {
+          "id": "gr-wc-34",
+          "word": "город — города — много городов",
+          "hint": "Ударение смещается: гОрод — городА.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-wc-34.m4a"
+        },
+        {
+          "id": "gr-wc-35",
+          "word": "ребёнок — дети — нет детей",
+          "hint": "Супплетивная форма! Разные корни.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Grammar/gr-wc-35.m4a"
         }
       ]
     },
@@ -1132,6 +1412,76 @@
           "word": "Девочка нарисовала красивый цветок маме.",
           "difficulty": 3,
           "audio_file": "Audio/Content/Grammar/gr-sen-31.m4a"
+        },
+        {
+          "id": "gr-sg-32",
+          "word": "Птица, которая пела, улетела.",
+          "hint": "Придаточное относительное предложение.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Grammar/gr-sg-32.m4a"
+        },
+        {
+          "id": "gr-sg-33",
+          "word": "Если будет дождь, мы останемся дома.",
+          "hint": "Условное придаточное предложение.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Grammar/gr-sg-33.m4a"
+        },
+        {
+          "id": "gr-sg-34",
+          "word": "Мама сказала, что ужин готов.",
+          "hint": "Косвенная речь — что + глагол.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Grammar/gr-sg-34.m4a"
+        },
+        {
+          "id": "gr-sg-35",
+          "word": "Потому что он устал, он лёг спать.",
+          "hint": "Причинно-следственная связь.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Grammar/gr-sg-35.m4a"
+        },
+        {
+          "id": "gr-sg-36",
+          "word": "Хотя было холодно, дети гуляли.",
+          "hint": "Уступительное придаточное с хотя.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Grammar/gr-sg-36.m4a"
+        },
+        {
+          "id": "gr-sg-37",
+          "word": "Когда наступит лето, мы поедем на море.",
+          "hint": "Временное придаточное — когда.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Grammar/gr-sg-37.m4a"
+        },
+        {
+          "id": "gr-sg-38",
+          "word": "Чем больше читаешь, тем умнее становишься.",
+          "hint": "Конструкция чем-тем.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Grammar/gr-sg-38.m4a"
+        },
+        {
+          "id": "gr-sg-39",
+          "word": "Книга, которую я читаю, очень интересная.",
+          "hint": "Который в винительном падеже.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Grammar/gr-sg-39.m4a"
+        },
+        {
+          "id": "gr-sg-40",
+          "word": "Такой добрый, что все его любят.",
+          "hint": "Степень качества с такой-что.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Grammar/gr-sg-40.m4a"
+        },
+        {
+          "id": "gr-sg-41",
+          "word": "Пока папа работал, мама готовила.",
+          "hint": "Одновременность: пока + настоящее.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Grammar/gr-sg-41.m4a"
         }
       ]
     },

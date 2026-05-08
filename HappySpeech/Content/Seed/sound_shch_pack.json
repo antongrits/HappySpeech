@@ -1828,6 +1828,76 @@
           "word": "овощной суп",
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-ph-51.m4a"
+        },
+        {
+          "id": "shch-ph-52",
+          "word": "щедрый угощает",
+          "hint": "ЩЕД + ЩА — два Щ в фразе.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Shch/shch-ph-52.m4a"
+        },
+        {
+          "id": "shch-ph-53",
+          "word": "ящик с овощами",
+          "hint": "ЯЩ + ЩА — Щ в двух позициях.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Shch/shch-ph-53.m4a"
+        },
+        {
+          "id": "shch-ph-54",
+          "word": "мощная щука",
+          "hint": "МО + ЩН + ЩУ — Щ в двух словах.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Shch/shch-ph-54.m4a"
+        },
+        {
+          "id": "shch-ph-55",
+          "word": "общая площадь",
+          "hint": "ОБЩ + ПЛО + ЩА — два Щ.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Shch/shch-ph-55.m4a"
+        },
+        {
+          "id": "shch-ph-56",
+          "word": "щенок тащил верёвку",
+          "hint": "ЩЕ + ТА + ЩИЛ — нарратив.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Shch/shch-ph-56.m4a"
+        },
+        {
+          "id": "shch-ph-57",
+          "word": "душ и ещё ванна",
+          "hint": "ДУ + ЩЕ — Щ в служебном слове.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Shch/shch-ph-57.m4a"
+        },
+        {
+          "id": "shch-ph-58",
+          "word": "щетина на щеках",
+          "hint": "ЩЕ + ЩЕ — два Щ в одной фразе.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Shch/shch-ph-58.m4a"
+        },
+        {
+          "id": "shch-ph-59",
+          "word": "плащ намок насквозь",
+          "hint": "ПЛА + ЩЬ — Щ на конце.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Shch/shch-ph-59.m4a"
+        },
+        {
+          "id": "shch-ph-60",
+          "word": "рощи вдоль ущелья",
+          "hint": "РО + ЩИ + У + ЩЕ — два Щ.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Shch/shch-ph-60.m4a"
+        },
+        {
+          "id": "shch-ph-61",
+          "word": "защитник честного ящика",
+          "hint": "ЗА + ЩИТ + ЧЕС + ЯЩИ — три шипящих.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Shch/shch-ph-61.m4a"
         }
       ]
     },
@@ -2044,6 +2114,111 @@
           "word": "Борщ варится на медленном огне.",
           "difficulty": 3,
           "audio_file": "Audio/Content/SHCH/shch-sen-34.m4a"
+        },
+        {
+          "id": "shch-sen-35",
+          "word": "Щенок нашёл щётку под диваном.",
+          "hint": "ЩЕ + ЩЁТ — два Щ-слова.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Shch/shch-sen-35.m4a"
+        },
+        {
+          "id": "shch-sen-36",
+          "word": "Ящерица спряталась в роще у ручья.",
+          "hint": "ЯЩЕ + РО + ЩЕ + РУ + ЧЬЯ — два Щ.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Shch/shch-sen-36.m4a"
+        },
+        {
+          "id": "shch-sen-37",
+          "word": "Щедрый дядя угостил нас борщом.",
+          "hint": "ЩЕД + ЩИЛ + БОР + ЩОМ — три Щ.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Shch/shch-sen-37.m4a"
+        },
+        {
+          "id": "shch-sen-38",
+          "word": "Общая чаща густая и мощная.",
+          "hint": "ОБЩ + ЧА + ЩА + МО + ЩН — нарратив природы.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Shch/shch-sen-38.m4a"
+        },
+        {
+          "id": "shch-sen-39",
+          "word": "Щука плыла сквозь водоросли и плащи водорослей.",
+          "hint": "ЩУ + СКВ + ЩИ + ПЛА + ЩИ — нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Shch/shch-sen-39.m4a"
+        },
+        {
+          "id": "shch-sen-40",
+          "word": "Уголок защищён зелёными кустами.",
+          "hint": "ЗА + ЩИ + ЩЁН — два Щ в сказуемом.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Shch/shch-sen-40.m4a"
+        },
+        {
+          "id": "shch-sen-41",
+          "word": "Мощные волны плескали о берег.",
+          "hint": "МО + ЩН — Щ в прилагательном.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Shch/shch-sen-41.m4a"
+        },
+        {
+          "id": "shch-sen-42",
+          "word": "Щётка лежала рядом с мисочкой щенка.",
+          "hint": "ЩЁТ + МИС + ЩЕН — три Щ.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Shch/shch-sen-42.m4a"
+        },
+        {
+          "id": "shch-sen-43",
+          "word": "Плащ висел на гвозде в защитном углу.",
+          "hint": "ПЛА + ЩЬ + ЗА + ЩИТ — два Щ.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Shch/shch-sen-43.m4a"
+        },
+        {
+          "id": "shch-sen-44",
+          "word": "Прекрасная роща встретила нас тишиной.",
+          "hint": "РО + ЩА — нарратив природы.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Shch/shch-sen-44.m4a"
+        },
+        {
+          "id": "shch-sen-45",
+          "word": "Борщ и щи — исконно русская еда.",
+          "hint": "ОР + ЩЬ + ЩИ — два Щ-блюда.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Shch/shch-sen-45.m4a"
+        },
+        {
+          "id": "shch-sen-46",
+          "word": "Щавель растёт на освещённой опушке.",
+          "hint": "ЩА + ОС + ЩЁН + ОПУ + ШКЕ — насыщенный нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Shch/shch-sen-46.m4a"
+        },
+        {
+          "id": "shch-sen-47",
+          "word": "Ещё раз попробуй произнести слово «щи».",
+          "hint": "ЕЩЁ + ЩИ — закрепление в инструкции.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Shch/shch-sen-47.m4a"
+        },
+        {
+          "id": "shch-sen-48",
+          "word": "Маленький щенок защищал свою миску.",
+          "hint": "ЩЕ + ЗА + ЩИ + ЩАЛ — четыре Щ.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Shch/shch-sen-48.m4a"
+        },
+        {
+          "id": "shch-sen-49",
+          "word": "Дощатый причал у рощи пах смолой.",
+          "hint": "ДО + ЩА + ЩА + РО + ЩИ — три Щ.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Shch/shch-sen-49.m4a"
         }
       ]
     },

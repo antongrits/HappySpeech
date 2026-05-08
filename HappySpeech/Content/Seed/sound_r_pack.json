@@ -1227,6 +1227,111 @@
           "hint": "Мягкий [Р'].",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-wi-79.m4a"
+        },
+        {
+          "id": "r-wi-80",
+          "word": "трюк",
+          "hint": "ТРЮ — мягкий [Р'] в стечении.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wi-80.m4a"
+        },
+        {
+          "id": "r-wi-81",
+          "word": "трюфель",
+          "hint": "ТРЮ + Ф — редкое стечение.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wi-81.m4a"
+        },
+        {
+          "id": "r-wi-82",
+          "word": "трель",
+          "hint": "ТРЕ — Р с лабиализацией.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wi-82.m4a"
+        },
+        {
+          "id": "r-wi-83",
+          "word": "ряженка",
+          "hint": "РЯ — мягкий [Р'] + Ж.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wi-83.m4a"
+        },
+        {
+          "id": "r-wi-84",
+          "word": "рябчик",
+          "hint": "РЯ + Ч — мягкий + шипящий.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wi-84.m4a"
+        },
+        {
+          "id": "r-wi-85",
+          "word": "рыщет",
+          "hint": "РЫ + Щ — твёрдый Р + шипящий.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wi-85.m4a"
+        },
+        {
+          "id": "r-wi-86",
+          "word": "решётка",
+          "hint": "РЕ — мягкий + ШТ внутри.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wi-86.m4a"
+        },
+        {
+          "id": "r-wi-87",
+          "word": "ряска",
+          "hint": "РЯ — мягкий с Я.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wi-87.m4a"
+        },
+        {
+          "id": "r-wi-88",
+          "word": "рьяный",
+          "hint": "РЬЯ — мягкий знак + Я.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wi-88.m4a"
+        },
+        {
+          "id": "r-wi-89",
+          "word": "ряд",
+          "hint": "РЯД — краткое слово с мягким Р.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wi-89.m4a"
+        },
+        {
+          "id": "r-wi-90",
+          "word": "рекорд",
+          "hint": "РЕ + КД — Р в начале и конце.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wi-90.m4a"
+        },
+        {
+          "id": "r-wi-91",
+          "word": "рикша",
+          "hint": "РИ + КШ — экзотическое слово.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wi-91.m4a"
+        },
+        {
+          "id": "r-wi-92",
+          "word": "ремонт",
+          "hint": "РЕМ — мягкий Р + носовой.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wi-92.m4a"
+        },
+        {
+          "id": "r-wi-93",
+          "word": "рычаг",
+          "hint": "РЫ + Ч — твёрдый Р + шипящий.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wi-93.m4a"
+        },
+        {
+          "id": "r-wi-94",
+          "word": "ристалище",
+          "hint": "РИ + СТ + Щ — трёхслоговое слово.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wi-94.m4a"
         }
       ]
     },
@@ -1676,6 +1781,111 @@
           "word": "пираты",
           "difficulty": 2,
           "audio_file": "Audio/Content/R/r-wm-69.m4a"
+        },
+        {
+          "id": "r-wm-70",
+          "word": "скрипач",
+          "hint": "КРИ — Р в стечении с К.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wm-70.m4a"
+        },
+        {
+          "id": "r-wm-71",
+          "word": "строчка",
+          "hint": "СТР — трёхбуквенное стечение.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wm-71.m4a"
+        },
+        {
+          "id": "r-wm-72",
+          "word": "портрет",
+          "hint": "Два Р в слове — твёрдый и твёрдый.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wm-72.m4a"
+        },
+        {
+          "id": "r-wm-73",
+          "word": "штрих",
+          "hint": "ШТР — три согласных с Р.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wm-73.m4a"
+        },
+        {
+          "id": "r-wm-74",
+          "word": "стреноженный",
+          "hint": "СТР + НЖ — высокая фонетическая сложность.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wm-74.m4a"
+        },
+        {
+          "id": "r-wm-75",
+          "word": "пронырливый",
+          "hint": "НЫР + ЛИ — два сонорных.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wm-75.m4a"
+        },
+        {
+          "id": "r-wm-76",
+          "word": "перрон",
+          "hint": "ДВА Р — один долгий, один нет.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wm-76.m4a"
+        },
+        {
+          "id": "r-wm-77",
+          "word": "острога",
+          "hint": "СТР — в середине длинного слова.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wm-77.m4a"
+        },
+        {
+          "id": "r-wm-78",
+          "word": "матрёшка",
+          "hint": "ТРЁ — мягкий [Р'] в стечении.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wm-78.m4a"
+        },
+        {
+          "id": "r-wm-79",
+          "word": "аэропорт",
+          "hint": "Два Р — один в середине, один на конце.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wm-79.m4a"
+        },
+        {
+          "id": "r-wm-80",
+          "word": "профессор",
+          "hint": "ПРО + СС + Р — Р в двух позициях.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wm-80.m4a"
+        },
+        {
+          "id": "r-wm-81",
+          "word": "скверный",
+          "hint": "СКВ + РН — три согласных.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wm-81.m4a"
+        },
+        {
+          "id": "r-wm-82",
+          "word": "разочарование",
+          "hint": "Р в начале + пятислоговое слово.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wm-82.m4a"
+        },
+        {
+          "id": "r-wm-83",
+          "word": "перекрёсток",
+          "hint": "ПРЕ + КРЁ — два Р в разных стечениях.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wm-83.m4a"
+        },
+        {
+          "id": "r-wm-84",
+          "word": "распорядок",
+          "hint": "РСП + РЯД — двойной Р.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wm-84.m4a"
         }
       ]
     },
@@ -2194,6 +2404,76 @@
           "word": "топор",
           "difficulty": 2,
           "audio_file": "Audio/Content/R/r-wf-79.m4a"
+        },
+        {
+          "id": "r-wf-80",
+          "word": "характер",
+          "hint": "Р на конце — мягкая позиция.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wf-80.m4a"
+        },
+        {
+          "id": "r-wf-81",
+          "word": "офицер",
+          "hint": "ЦЕР — Р после шипящего.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wf-81.m4a"
+        },
+        {
+          "id": "r-wf-82",
+          "word": "стетоскоп... нет: компьютер",
+          "hint": "ТЕР — Р в западноевропейском слове.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wf-82.m4a"
+        },
+        {
+          "id": "r-wf-83",
+          "word": "директор",
+          "hint": "КТ + Р на конце.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wf-83.m4a"
+        },
+        {
+          "id": "r-wf-84",
+          "word": "календарь",
+          "hint": "ДАР + Ь — мягкий на конце.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wf-84.m4a"
+        },
+        {
+          "id": "r-wf-85",
+          "word": "фонарь",
+          "hint": "НАР + Ь — мягкий [Р'] на конце.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wf-85.m4a"
+        },
+        {
+          "id": "r-wf-86",
+          "word": "словарь",
+          "hint": "ВАР + Ь — мягкий знак смягчает Р.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wf-86.m4a"
+        },
+        {
+          "id": "r-wf-87",
+          "word": "пахарь",
+          "hint": "ХАР + Ь — аграрная тема.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wf-87.m4a"
+        },
+        {
+          "id": "r-wf-88",
+          "word": "ветер",
+          "hint": "ТЕР — звук в трёхбуквенном окончании.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wf-88.m4a"
+        },
+        {
+          "id": "r-wf-89",
+          "word": "лагерь",
+          "hint": "ГЕР + Ь — мягкий финальный Р.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wf-89.m4a"
         }
       ]
     },
@@ -2680,6 +2960,146 @@
           "word": "рядом с рябиной",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-ph-79.m4a"
+        },
+        {
+          "id": "r-ph-80",
+          "word": "красивый рисунок",
+          "hint": "КР + РИ — Р в двух словах.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-ph-80.m4a"
+        },
+        {
+          "id": "r-ph-81",
+          "word": "ровная дорога",
+          "hint": "РО + ДО + РО — ритмичное повторение.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-ph-81.m4a"
+        },
+        {
+          "id": "r-ph-82",
+          "word": "рыжая белка прыгает",
+          "hint": "РЫ + БЕ + ПРЫ — нарратив.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-ph-82.m4a"
+        },
+        {
+          "id": "r-ph-83",
+          "word": "трудная работа",
+          "hint": "ТР + РА — стечение в обоих словах.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-ph-83.m4a"
+        },
+        {
+          "id": "r-ph-84",
+          "word": "ребята рисуют портрет",
+          "hint": "РЕ + РИ + РТ — три Р-слова.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-ph-84.m4a"
+        },
+        {
+          "id": "r-ph-85",
+          "word": "ребристая поверхность",
+          "hint": "РЕ + РИ + РХ — высокая нагрузка.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-ph-85.m4a"
+        },
+        {
+          "id": "r-ph-86",
+          "word": "рокот моря вдали",
+          "hint": "РО + МО + ВД — нарративный образ.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-ph-86.m4a"
+        },
+        {
+          "id": "r-ph-87",
+          "word": "разноцветный шарф",
+          "hint": "РАЗ + ЦВ + Ш — три звуковые группы.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-ph-87.m4a"
+        },
+        {
+          "id": "r-ph-88",
+          "word": "ровный горизонт",
+          "hint": "РО + ГО + ЗО — ритм гласных.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-ph-88.m4a"
+        },
+        {
+          "id": "r-ph-89",
+          "word": "грустный рыцарь",
+          "hint": "ГР + РЫ — два Р-стечения.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-ph-89.m4a"
+        },
+        {
+          "id": "r-ph-90",
+          "word": "рыбак поймал окуня",
+          "hint": "РЫ + НА — нарративный микросюжет.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-ph-90.m4a"
+        },
+        {
+          "id": "r-ph-91",
+          "word": "тролль и дракон",
+          "hint": "ТРО + ДРА — два стечения ТР/ДР.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-ph-91.m4a"
+        },
+        {
+          "id": "r-ph-92",
+          "word": "старая крепость",
+          "hint": "СТА + КРЕ — сказочный образ.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-ph-92.m4a"
+        },
+        {
+          "id": "r-ph-93",
+          "word": "стройка идёт круглые сутки",
+          "hint": "СТР + КР — два трёхбуквенных стечения.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-ph-93.m4a"
+        },
+        {
+          "id": "r-ph-94",
+          "word": "рыжий кот прыгнул",
+          "hint": "РЫ + КОТ + ПРЫ — micro-story.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-ph-94.m4a"
+        },
+        {
+          "id": "r-ph-95",
+          "word": "серьёзный разговор",
+          "hint": "СЕ + РЬЁ + РА + ЗВ — мягкий + твёрдый Р.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-ph-95.m4a"
+        },
+        {
+          "id": "r-ph-96",
+          "word": "радуга после дождя",
+          "hint": "РА + ДУ + ДЖ — природный образ.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-ph-96.m4a"
+        },
+        {
+          "id": "r-ph-97",
+          "word": "рыцарь спасает принцессу",
+          "hint": "РЫ + СПА + ПРИ — сказочный нарратив.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-ph-97.m4a"
+        },
+        {
+          "id": "r-ph-98",
+          "word": "прохладный речной ветер",
+          "hint": "ПРО + РЕЧ + ВЕ — три Р-слова.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-ph-98.m4a"
+        },
+        {
+          "id": "r-ph-99",
+          "word": "разрисованный рюкзак",
+          "hint": "РА + ЗРИ + РЮ — плотная Р-цепочка.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-ph-99.m4a"
         }
       ]
     },
@@ -2986,6 +3406,111 @@
           "word": "Рыбный рынок открывается рано утром.",
           "difficulty": 4,
           "audio_file": "Audio/Content/R/r-sen-49.m4a"
+        },
+        {
+          "id": "r-sen-50",
+          "word": "Рыжая лисица пробежала рядом с дорогой.",
+          "hint": "РЫЖ + ЛИС + ПРО + РЯ + ДО — цепочка Р.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-sen-50.m4a"
+        },
+        {
+          "id": "r-sen-51",
+          "word": "Трактор работал прямо в поле.",
+          "hint": "ТР + РА + ПРЯ — три Р-стечения.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-sen-51.m4a"
+        },
+        {
+          "id": "r-sen-52",
+          "word": "Ребята разрисовали рюкзаки акварелью.",
+          "hint": "РЕ + РА + РЮ + КВА + РЕ — насыщенная Р-цепочка.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-sen-52.m4a"
+        },
+        {
+          "id": "r-sen-53",
+          "word": "Серьёзный разговор требует внимания.",
+          "hint": "СЕ + РЬ + РА + ТРЕ — мягкий и твёрдый Р.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-sen-53.m4a"
+        },
+        {
+          "id": "r-sen-54",
+          "word": "Рокот реки разносился по округе.",
+          "hint": "РО + РЕ + РА + РУ — четыре Р.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-sen-54.m4a"
+        },
+        {
+          "id": "r-sen-55",
+          "word": "Рыцарь проехал через переправу.",
+          "hint": "РЫ + ПРО + ЕХА + ПЕ + РЕ + РА — длинный нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-sen-55.m4a"
+        },
+        {
+          "id": "r-sen-56",
+          "word": "Разноцветная радуга появилась над рекой.",
+          "hint": "РАЗ + РА + ДУ + РЕ — природный образ.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-sen-56.m4a"
+        },
+        {
+          "id": "r-sen-57",
+          "word": "Ворона прячет ягоды в разных местах.",
+          "hint": "ВО + РО + ПРЯ + РА — нарратив.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-sen-57.m4a"
+        },
+        {
+          "id": "r-sen-58",
+          "word": "Прохладный ветер гнал тучи за горизонт.",
+          "hint": "ПРО + ВЕ + ГНАЛ + ГО + РИ — картинный образ.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-sen-58.m4a"
+        },
+        {
+          "id": "r-sen-59",
+          "word": "Маленький рыбак прыгнул с мостика.",
+          "hint": "МА + РЫ + ПРЫ + МО — micro-story.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-sen-59.m4a"
+        },
+        {
+          "id": "r-sen-60",
+          "word": "Строгий учитель дал трудное задание.",
+          "hint": "СТР + УЧИТ + ДАЛ + ТР — два стечения.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-sen-60.m4a"
+        },
+        {
+          "id": "r-sen-61",
+          "word": "Осенью деревья роняют листья и жёлуди.",
+          "hint": "ОСЕ + ДЕ + РЕ + РО — нарратив природы.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-sen-61.m4a"
+        },
+        {
+          "id": "r-sen-62",
+          "word": "Крот роет норы прямо под огородом.",
+          "hint": "КР + РО + ПРЯ + ОГО + РО — два КР.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-sen-62.m4a"
+        },
+        {
+          "id": "r-sen-63",
+          "word": "Речной трамвайчик отчалил рано утром.",
+          "hint": "РЕЧ + ТРА + РА — нарративный мини-текст.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-sen-63.m4a"
+        },
+        {
+          "id": "r-sen-64",
+          "word": "Пёстрый дятел стучит по твёрдому стволу.",
+          "hint": "ПЁС + ДЯТ + ТВЁ + СТВ — Р в разных позициях.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-sen-64.m4a"
         }
       ]
     },

@@ -1048,6 +1048,76 @@
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/SH/sh-wi-60.m4a"
+        },
+        {
+          "id": "sh-wi-61",
+          "word": "шкаф",
+          "hint": "ШК — два согласных в начале.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-wi-61.m4a"
+        },
+        {
+          "id": "sh-wi-62",
+          "word": "шприц",
+          "hint": "ШПР — три согласных на старте.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-wi-62.m4a"
+        },
+        {
+          "id": "sh-wi-63",
+          "word": "шпион",
+          "hint": "ШП — редкое стечение.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-wi-63.m4a"
+        },
+        {
+          "id": "sh-wi-64",
+          "word": "шхуна",
+          "hint": "ШХ — оба шумных согласных.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-wi-64.m4a"
+        },
+        {
+          "id": "sh-wi-65",
+          "word": "шторка",
+          "hint": "ШТ — два глухих в начале.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-wi-65.m4a"
+        },
+        {
+          "id": "sh-wi-66",
+          "word": "шкварки",
+          "hint": "ШКВ — три согласных + ударный А.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-wi-66.m4a"
+        },
+        {
+          "id": "sh-wi-67",
+          "word": "шпала",
+          "hint": "ШП + Л — два стечения.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-wi-67.m4a"
+        },
+        {
+          "id": "sh-wi-68",
+          "word": "шпилька",
+          "hint": "ШП + ЛЬ — сложная цепочка.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-wi-68.m4a"
+        },
+        {
+          "id": "sh-wi-69",
+          "word": "штора",
+          "hint": "ШТО — мягкий старт после ШТ.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-wi-69.m4a"
+        },
+        {
+          "id": "sh-wi-70",
+          "word": "шкурка",
+          "hint": "ШК + РК — двойное стечение.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-wi-70.m4a"
         }
       ]
     },
@@ -1454,6 +1524,76 @@
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/SH/sh-wm-49.m4a"
+        },
+        {
+          "id": "sh-wm-50",
+          "word": "вспышка",
+          "hint": "ПШК — три согласных в середине.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-wm-50.m4a"
+        },
+        {
+          "id": "sh-wm-51",
+          "word": "мышьяк",
+          "hint": "ШЬЯ — Ш с мягким знаком.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-wm-51.m4a"
+        },
+        {
+          "id": "sh-wm-52",
+          "word": "прошлое",
+          "hint": "ШЛ — плавный после Ш.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-wm-52.m4a"
+        },
+        {
+          "id": "sh-wm-53",
+          "word": "ошмётки",
+          "hint": "ШМ в середине слова.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-wm-53.m4a"
+        },
+        {
+          "id": "sh-wm-54",
+          "word": "лошадка",
+          "hint": "Ш между двумя гласными.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-wm-54.m4a"
+        },
+        {
+          "id": "sh-wm-55",
+          "word": "сушёный",
+          "hint": "ШЁ — лабиализованный звук после Ш.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-wm-55.m4a"
+        },
+        {
+          "id": "sh-wm-56",
+          "word": "нашествие",
+          "hint": "ШЕС — Ш + шипящий контекст.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-wm-56.m4a"
+        },
+        {
+          "id": "sh-wm-57",
+          "word": "рыжеволосый",
+          "hint": "ЖВ — звонкий вариант стечения.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-wm-57.m4a"
+        },
+        {
+          "id": "sh-wm-58",
+          "word": "ножницы",
+          "hint": "ЖН — звонкий Ж + носовой.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-wm-58.m4a"
+        },
+        {
+          "id": "sh-wm-59",
+          "word": "дожди",
+          "hint": "ЖД — звонкий + звонкий.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-wm-59.m4a"
         }
       ]
     },
@@ -2046,6 +2186,111 @@
           "word": "шалаш в лесу",
           "difficulty": 3,
           "audio_file": "Audio/Content/SH/sh-ph-49.m4a"
+        },
+        {
+          "id": "sh-ph-50",
+          "word": "шкаф у окна",
+          "hint": "ШК в начале фразы.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-ph-50.m4a"
+        },
+        {
+          "id": "sh-ph-51",
+          "word": "шторка задёрнута плотно",
+          "hint": "ШТ + плавное Р.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-ph-51.m4a"
+        },
+        {
+          "id": "sh-ph-52",
+          "word": "большой шкаф с полками",
+          "hint": "Ш в двух позициях: конец + начало.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-ph-52.m4a"
+        },
+        {
+          "id": "sh-ph-53",
+          "word": "шпионская игра",
+          "hint": "ШП + ИГ — сложный ритм.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-ph-53.m4a"
+        },
+        {
+          "id": "sh-ph-54",
+          "word": "сушёная шиповник",
+          "hint": "ШЁ + ШИ — два Ш в фразе.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-ph-54.m4a"
+        },
+        {
+          "id": "sh-ph-55",
+          "word": "дождь прошёл быстро",
+          "hint": "ЖД + ШЁ — звонкий + шипящий.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-ph-55.m4a"
+        },
+        {
+          "id": "sh-ph-56",
+          "word": "вышка над крышей",
+          "hint": "ШК + КР — насыщенная фраза.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-ph-56.m4a"
+        },
+        {
+          "id": "sh-ph-57",
+          "word": "маленький мышонок",
+          "hint": "Ш в середине — картинный образ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-ph-57.m4a"
+        },
+        {
+          "id": "sh-ph-58",
+          "word": "ошибка в решении",
+          "hint": "Ш + Ш — дифференциация позиций.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-ph-58.m4a"
+        },
+        {
+          "id": "sh-ph-59",
+          "word": "нашла клешнями",
+          "hint": "ШН + КЛ + ШН — ритмическое чередование.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-ph-59.m4a"
+        },
+        {
+          "id": "sh-ph-60",
+          "word": "шприц в кармане",
+          "hint": "ШПР — три согласных в теме.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-ph-60.m4a"
+        },
+        {
+          "id": "sh-ph-61",
+          "word": "прошлой зимой шёл снег",
+          "hint": "ШЛ + ШЁ — нарративный образ.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-ph-61.m4a"
+        },
+        {
+          "id": "sh-ph-62",
+          "word": "шустрый мышонок убежал",
+          "hint": "ШУ + ШО — два Ш в разных слогах.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-ph-62.m4a"
+        },
+        {
+          "id": "sh-ph-63",
+          "word": "вышла кошка из корзинки",
+          "hint": "ШЛА + КШК — плотная Ш-цепочка.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-ph-63.m4a"
+        },
+        {
+          "id": "sh-ph-64",
+          "word": "школьная экскурсия прошла",
+          "hint": "ШК + КС + ШЛ — три стечения.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-ph-64.m4a"
         }
       ]
     },
@@ -2232,6 +2477,111 @@
           "word": "Матрёшка стоит на полке в шкафу.",
           "difficulty": 4,
           "audio_file": "Audio/Content/SH/sh-sen-29.m4a"
+        },
+        {
+          "id": "sh-sen-30",
+          "word": "Шустрый мышонок спрятался под шкафом.",
+          "hint": "ШУ + МШ + ШК — три позиции Ш.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-sen-30.m4a"
+        },
+        {
+          "id": "sh-sen-31",
+          "word": "Шторм прошёл, и вышло солнышко.",
+          "hint": "ШТ + ШЁ + ШЛ + ШЛ + ШН — цепочка.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-sen-31.m4a"
+        },
+        {
+          "id": "sh-sen-32",
+          "word": "Маша нашла шпильку в шкафу.",
+          "hint": "ША + НШ + ШП + ШК — нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-sen-32.m4a"
+        },
+        {
+          "id": "sh-sen-33",
+          "word": "Большая мышь утащила кусочек сыра.",
+          "hint": "ШЬ в конце + ШК — связный текст.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-sen-33.m4a"
+        },
+        {
+          "id": "sh-sen-34",
+          "word": "Шкаф скрипит, когда его открывают.",
+          "hint": "ШК + КР — придаточное предложение.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-sen-34.m4a"
+        },
+        {
+          "id": "sh-sen-35",
+          "word": "Дождь прошёл, и стало свежее.",
+          "hint": "ЖД + ШЁ — нарративная связка.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-sen-35.m4a"
+        },
+        {
+          "id": "sh-sen-36",
+          "word": "Кошка смотрела на мышку издалека.",
+          "hint": "КШ + МШ — две позиции шипящих.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-sen-36.m4a"
+        },
+        {
+          "id": "sh-sen-37",
+          "word": "Школьники прошли мимо старой вышки.",
+          "hint": "ШК + ШЛ + ШК — тройная связь.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-sen-37.m4a"
+        },
+        {
+          "id": "sh-sen-38",
+          "word": "Шёпот в тишине слышен очень хорошо.",
+          "hint": "ШЁ + ШН + ШН — шёпотная тема.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-sen-38.m4a"
+        },
+        {
+          "id": "sh-sen-39",
+          "word": "Шершавый камень лежал у дорожки.",
+          "hint": "ШРШВ — сложная фонетика слова.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-sen-39.m4a"
+        },
+        {
+          "id": "sh-sen-40",
+          "word": "Наша кошка уже старая, но шустрая.",
+          "hint": "НШ + КШ + ШУ — три Ш-слова.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-sen-40.m4a"
+        },
+        {
+          "id": "sh-sen-41",
+          "word": "Прошлой осенью мы нашли гриб.",
+          "hint": "ШЛ + НШ — два Ш в одном предложении.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-sen-41.m4a"
+        },
+        {
+          "id": "sh-sen-42",
+          "word": "В шкафу лежат шарф и шапка.",
+          "hint": "Три Ш-слова — счёт и называние.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-sen-42.m4a"
+        },
+        {
+          "id": "sh-sen-43",
+          "word": "Шумный поезд промчался мимо станции.",
+          "hint": "ШУМ + ЧШ — шипящий нарратив.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-sen-43.m4a"
+        },
+        {
+          "id": "sh-sen-44",
+          "word": "Миша и Даша делили большую шоколадку.",
+          "hint": "МШ + ДШ + ШО — имена + слово.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-sen-44.m4a"
         }
       ]
     },

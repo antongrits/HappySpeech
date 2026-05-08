@@ -932,6 +932,76 @@
           "hint": "Мягкий [Л'].",
           "difficulty": 2,
           "audio_file": "Audio/Content/L/l-wi-59.m4a"
+        },
+        {
+          "id": "l-wi-60",
+          "word": "льдина",
+          "hint": "ЛЬД — мягкий Л + звонкий.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-60.m4a"
+        },
+        {
+          "id": "l-wi-61",
+          "word": "льстить",
+          "hint": "ЛЬС — мягкий + шипящий.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-wi-61.m4a"
+        },
+        {
+          "id": "l-wi-62",
+          "word": "лягушонок",
+          "hint": "ЛЯ — мягкий [Л'] + ГУ + ШО.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-62.m4a"
+        },
+        {
+          "id": "l-wi-63",
+          "word": "лиственница",
+          "hint": "ЛИС + ТВ — мягкий Л + стечение.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-wi-63.m4a"
+        },
+        {
+          "id": "l-wi-64",
+          "word": "лебединый",
+          "hint": "ЛЕ — мягкий в прилагательном.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-64.m4a"
+        },
+        {
+          "id": "l-wi-65",
+          "word": "льётся",
+          "hint": "ЛЬЁ — мягкий с ударным Ё.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-65.m4a"
+        },
+        {
+          "id": "l-wi-66",
+          "word": "лиловый",
+          "hint": "Два ЛИ — твёрдый и мягкий чередуются.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-66.m4a"
+        },
+        {
+          "id": "l-wi-67",
+          "word": "ловкость",
+          "hint": "ЛО + ВКС — твёрдый Л + стечение.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-67.m4a"
+        },
+        {
+          "id": "l-wi-68",
+          "word": "ломоносов",
+          "hint": "ЛО + МО + НО + СО — ритм 4 слогов.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-68.m4a"
+        },
+        {
+          "id": "l-wi-69",
+          "word": "лопотать",
+          "hint": "ЛО + ПО — мягкая интонация.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-69.m4a"
         }
       ]
     },
@@ -1808,6 +1878,111 @@
           "word": "лёгкий ветерок",
           "difficulty": 2,
           "audio_file": "Audio/Content/L/l-ph-44.m4a"
+        },
+        {
+          "id": "l-ph-45",
+          "word": "лось лесной — лиса лесная",
+          "hint": "Твёрдый Л и мягкий Ль — минимальная пара.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-45.m4a"
+        },
+        {
+          "id": "l-ph-46",
+          "word": "луч и люстра",
+          "hint": "ЛУ (твёрдый) и ЛЮ (мягкий).",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-46.m4a"
+        },
+        {
+          "id": "l-ph-47",
+          "word": "лапа лисы",
+          "hint": "ЛА + ЛИ — твёрдый и мягкий рядом.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-47.m4a"
+        },
+        {
+          "id": "l-ph-48",
+          "word": "лесная лужа",
+          "hint": "ЛЕ + ЛУ — оба Л разные по мягкости.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-48.m4a"
+        },
+        {
+          "id": "l-ph-49",
+          "word": "ловкий лисёнок",
+          "hint": "ЛО + ЛИ — дифференциация.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-49.m4a"
+        },
+        {
+          "id": "l-ph-50",
+          "word": "лёгкий летний дождик",
+          "hint": "ЛЁ + ЛЕ — два мягких Л.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-50.m4a"
+        },
+        {
+          "id": "l-ph-51",
+          "word": "лошадь везла лён",
+          "hint": "ЛО + ВЕ + ЛЁН — нарратив.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-51.m4a"
+        },
+        {
+          "id": "l-ph-52",
+          "word": "лаяли громко два льва",
+          "hint": "ЛА + ЛЬВ — твёрдый и мягкий.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-52.m4a"
+        },
+        {
+          "id": "l-ph-53",
+          "word": "плыл лебедь по волнам",
+          "hint": "ПЛ + ЛЕ + ВО + ЛН — два Л.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-53.m4a"
+        },
+        {
+          "id": "l-ph-54",
+          "word": "лиловая лилия",
+          "hint": "Два ЛИ — мягкий повтор.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-54.m4a"
+        },
+        {
+          "id": "l-ph-55",
+          "word": "далёкий лес",
+          "hint": "ДА + ЛЁ + ЛЕС — нарративный образ.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-55.m4a"
+        },
+        {
+          "id": "l-ph-56",
+          "word": "лодка плыла вдоль берега",
+          "hint": "ЛО + ПЛЫ + ВДО + ЛЬ — насыщенный Л.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-ph-56.m4a"
+        },
+        {
+          "id": "l-ph-57",
+          "word": "белый лебедь у лесного озера",
+          "hint": "БЕ + ЛЕ + ЛЕ + ЛЕ — три мягких Л.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-57.m4a"
+        },
+        {
+          "id": "l-ph-58",
+          "word": "смелый и ловкий",
+          "hint": "ЛЫ + ЛО — два Л в прилагательных.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-58.m4a"
+        },
+        {
+          "id": "l-ph-59",
+          "word": "ласточка летит к лесу",
+          "hint": "ЛА + ЛЕ + ЛЕ — три Л-слова.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-59.m4a"
         }
       ]
     },
@@ -1964,6 +2139,111 @@
           "word": "Луна светит ночью, солнце — днём.",
           "difficulty": 3,
           "audio_file": "Audio/Content/L/l-sen-24.m4a"
+        },
+        {
+          "id": "l-sen-25",
+          "word": "Ласточки летели над лугом и лесом.",
+          "hint": "ЛА + ЛЕ + ЛУ + ЛЕ — четыре Л.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-25.m4a"
+        },
+        {
+          "id": "l-sen-26",
+          "word": "Лоси любят лизать соль в лесу.",
+          "hint": "ЛО + ЛЮ + ЛИ + ЛЕ — нарративная цепочка.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-26.m4a"
+        },
+        {
+          "id": "l-sen-27",
+          "word": "Ловкий лисёнок нашёл лесную малину.",
+          "hint": "ЛО + ЛИ + НА + ЛЕ + МА + ЛИ — нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-27.m4a"
+        },
+        {
+          "id": "l-sen-28",
+          "word": "Лёля любила лепить из пластилина.",
+          "hint": "ЛЁ + ЛЮ + ЛЕ + ЛА + ПЛА + ЛИ — шесть Л.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-28.m4a"
+        },
+        {
+          "id": "l-sen-29",
+          "word": "Бабушка наливала клубничный компот.",
+          "hint": "ЛИ + КЛУ + ЛА — Л в разных позициях.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-sen-29.m4a"
+        },
+        {
+          "id": "l-sen-30",
+          "word": "Листья падали тихо и ложились на землю.",
+          "hint": "ЛИС + ЛО + ЛЕ + ЗЕМ — осенний нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-30.m4a"
+        },
+        {
+          "id": "l-sen-31",
+          "word": "Льдина плыла по холодной реке.",
+          "hint": "ЛЬД + ПЛЫ + ХО + ЛО — мягкий и твёрдый.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-31.m4a"
+        },
+        {
+          "id": "l-sen-32",
+          "word": "Лилии у озера лилового цвета.",
+          "hint": "ЛИ + ЛИ + ЛИ + ЛО — четыре Л.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-sen-32.m4a"
+        },
+        {
+          "id": "l-sen-33",
+          "word": "Лев и олень дружили в зелёном лесу.",
+          "hint": "ЛЕВ + О + ЛЕ + ЗЕ + ЛЁ + ЛЕ — шесть Л.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-33.m4a"
+        },
+        {
+          "id": "l-sen-34",
+          "word": "Солнечный луч лёг на лесную полянку.",
+          "hint": "СО + ЛУ + ЛЁ + ЛЕ + ПО + ЛЯ — нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-34.m4a"
+        },
+        {
+          "id": "l-sen-35",
+          "word": "Дедушка купил деревянный лук и стрелы.",
+          "hint": "ДЕ + КУ + ДЕ + ЛУ + СТ + РЕ + ЛЫ — Л в разных позициях.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-35.m4a"
+        },
+        {
+          "id": "l-sen-36",
+          "word": "Лошадка легко перепрыгнула лужу.",
+          "hint": "ЛО + ЛЕ + КО + ЛУ — нарратив действия.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-sen-36.m4a"
+        },
+        {
+          "id": "l-sen-37",
+          "word": "Ласковый волк из сказки оказался добрым.",
+          "hint": "ЛА + ВО + ЛК + ОКА + ДО + РЫМ — нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-37.m4a"
+        },
+        {
+          "id": "l-sen-38",
+          "word": "Белые облака плыли медленно над лесом.",
+          "hint": "БЕ + ОБ + ПЛЫ + МЕД + ЛЕН + ЛЕ — длинный нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-38.m4a"
+        },
+        {
+          "id": "l-sen-39",
+          "word": "Ленивый кот лежал на полке и лизал лапы.",
+          "hint": "ЛЕ + КОТ + ЛЕ + ПО + ЛКЕ + ЛИ + ЛА — семь Л.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-39.m4a"
         }
       ]
     },

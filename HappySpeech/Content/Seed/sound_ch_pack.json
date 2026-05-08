@@ -938,6 +938,76 @@
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/CH/ch-wi-59.m4a"
+        },
+        {
+          "id": "ch-wi-60",
+          "word": "чревовещатель",
+          "hint": "ЧРЕ + ЩА — Ч + трёхсложное стечение.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-wi-60.m4a"
+        },
+        {
+          "id": "ch-wi-61",
+          "word": "чрезмерный",
+          "hint": "ЧРЕ + ЗМ — сложная начальная группа.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-wi-61.m4a"
+        },
+        {
+          "id": "ch-wi-62",
+          "word": "чтение",
+          "hint": "ЧТ — дуэт согласных в начале.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Ch/ch-wi-62.m4a"
+        },
+        {
+          "id": "ch-wi-63",
+          "word": "чтобы",
+          "hint": "ЧТО — функциональное слово с Ч.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-wi-63.m4a"
+        },
+        {
+          "id": "ch-wi-64",
+          "word": "чмокать",
+          "hint": "ЧМО — Ч + носовой.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Ch/ch-wi-64.m4a"
+        },
+        {
+          "id": "ch-wi-65",
+          "word": "чернила",
+          "hint": "ЧЕ + РН — Ч + сонорный + носовой.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Ch/ch-wi-65.m4a"
+        },
+        {
+          "id": "ch-wi-66",
+          "word": "чернозём",
+          "hint": "ЧЕ + РН + ЗЁМ — три звуковых группы.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-wi-66.m4a"
+        },
+        {
+          "id": "ch-wi-67",
+          "word": "чистоплотный",
+          "hint": "ЧИС + ТОП + ЛОТ — длинное слово с Ч.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-wi-67.m4a"
+        },
+        {
+          "id": "ch-wi-68",
+          "word": "чемпион",
+          "hint": "ЧЕМ + ПИО — Ч в спортивной теме.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Ch/ch-wi-68.m4a"
+        },
+        {
+          "id": "ch-wi-69",
+          "word": "чёрный бархат",
+          "hint": "ЧЁ + РН — Ч с мягким контекстом.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Ch/ch-wi-69.m4a"
         }
       ]
     },
@@ -2092,6 +2162,76 @@
           "word": "чашка молока",
           "difficulty": 1,
           "audio_file": "Audio/Content/CH/ch-ph-59.m4a"
+        },
+        {
+          "id": "ch-ph-60",
+          "word": "чудесный чайный чайник",
+          "hint": "Три слова на Ч — тренировка повтора.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-ph-60.m4a"
+        },
+        {
+          "id": "ch-ph-61",
+          "word": "чтение вслух каждый вечер",
+          "hint": "ЧТЕ + КА + ЧЕ — нарративный микросюжет.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Ch/ch-ph-61.m4a"
+        },
+        {
+          "id": "ch-ph-62",
+          "word": "мачта и чайка",
+          "hint": "АЧ + ЧА — Ч в двух позициях.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Ch/ch-ph-62.m4a"
+        },
+        {
+          "id": "ch-ph-63",
+          "word": "бочонок с борщом",
+          "hint": "ЧО + ЧО — ритмический повтор.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Ch/ch-ph-63.m4a"
+        },
+        {
+          "id": "ch-ph-64",
+          "word": "ночью пели сверчки",
+          "hint": "ЧЬЮ + ЧКИ — два Ч в фразе.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-ph-64.m4a"
+        },
+        {
+          "id": "ch-ph-65",
+          "word": "чёрная черепаха",
+          "hint": "ЧЁ + ЧЕ — два Ч в словосочетании.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Ch/ch-ph-65.m4a"
+        },
+        {
+          "id": "ch-ph-66",
+          "word": "чемпион по плаванию",
+          "hint": "ЧЕМ + ПЛА — нарратив спорта.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Ch/ch-ph-66.m4a"
+        },
+        {
+          "id": "ch-ph-67",
+          "word": "горячий чай с лимоном",
+          "hint": "ЧИ + ЧА — Ч в двух словах.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Ch/ch-ph-67.m4a"
+        },
+        {
+          "id": "ch-ph-68",
+          "word": "часы пробили полночь",
+          "hint": "ЧА + ЧЬ — начало и конец.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Ch/ch-ph-68.m4a"
+        },
+        {
+          "id": "ch-ph-69",
+          "word": "птичья стая над речкой",
+          "hint": "ЧЬ + ЧК — Ч в суффиксах.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-ph-69.m4a"
         }
       ]
     },
@@ -2338,6 +2478,76 @@
           "word": "Дочка читает маме сказку вслух.",
           "difficulty": 3,
           "audio_file": "Audio/Content/CH/ch-sen-39.m4a"
+        },
+        {
+          "id": "ch-sen-40",
+          "word": "Чайник вскипел, и Чук налил чай в чашку.",
+          "hint": "Четыре Ч-слова — нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-sen-40.m4a"
+        },
+        {
+          "id": "ch-sen-41",
+          "word": "Черепаха нашла чудесный цветок у ручья.",
+          "hint": "ЧЕ + ЧУ + ЦВЕ + ЧЬЯ — насыщенная цепочка.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-sen-41.m4a"
+        },
+        {
+          "id": "ch-sen-42",
+          "word": "Ночью сверчки пели у старого чулана.",
+          "hint": "НО + ЧЬЮ + ЧКИ + ЧУ — три Ч.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-sen-42.m4a"
+        },
+        {
+          "id": "ch-sen-43",
+          "word": "Чёрные тучи накрыли речную долину.",
+          "hint": "ЧЁ + ЧИ + РЕЧ — три Ч.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-sen-43.m4a"
+        },
+        {
+          "id": "ch-sen-44",
+          "word": "Чемоданчик Дачника был полон чудес.",
+          "hint": "ЧЕМ + ЧИ + ДА + ЧИ + ЧУ — пять Ч.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-sen-44.m4a"
+        },
+        {
+          "id": "ch-sen-45",
+          "word": "Чистая речка журчала среди черёмух.",
+          "hint": "ЧИС + РЕЧ + ЖУ + ЧА + ЧЕ — четыре Ч.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-sen-45.m4a"
+        },
+        {
+          "id": "ch-sen-46",
+          "word": "Дочка научила братика читать.",
+          "hint": "ДОЧ + НАУ + ЧИ + ЧИ — три Ч.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Ch/ch-sen-46.m4a"
+        },
+        {
+          "id": "ch-sen-47",
+          "word": "Часовщик починил старинные часы.",
+          "hint": "ЧАС + ЧИ + ЧИ + ЧА — четыре Ч.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-sen-47.m4a"
+        },
+        {
+          "id": "ch-sen-48",
+          "word": "Бочки с борщом поставили на чердак.",
+          "hint": "ЧКИ + ЧОМ + ЧЕ — три Ч.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-sen-48.m4a"
+        },
+        {
+          "id": "ch-sen-49",
+          "word": "Юный чемпион получил значок за смелость.",
+          "hint": "ЧЕМ + ЧО + ЗНА + ЧОК — три Ч.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-sen-49.m4a"
         }
       ]
     },

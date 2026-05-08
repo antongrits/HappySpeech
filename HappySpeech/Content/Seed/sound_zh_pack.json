@@ -858,6 +858,76 @@
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wi-49.m4a"
+        },
+        {
+          "id": "zh-wi-50",
+          "word": "жгучий",
+          "hint": "ЖГ — звонкий + глухой в начале.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Zh/zh-wi-50.m4a"
+        },
+        {
+          "id": "zh-wi-51",
+          "word": "жмурки",
+          "hint": "ЖМ — Ж + носовой.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Zh/zh-wi-51.m4a"
+        },
+        {
+          "id": "zh-wi-52",
+          "word": "жрать",
+          "hint": "ЖР — два шумных в начале.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Zh/zh-wi-52.m4a"
+        },
+        {
+          "id": "zh-wi-53",
+          "word": "жнец",
+          "hint": "ЖН — Ж + носовой.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Zh/zh-wi-53.m4a"
+        },
+        {
+          "id": "zh-wi-54",
+          "word": "жёваный",
+          "hint": "ЖЁ — ударный вариант.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Zh/zh-wi-54.m4a"
+        },
+        {
+          "id": "zh-wi-55",
+          "word": "жуткий",
+          "hint": "ЖУТ — Ж в ударном слоге.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Zh/zh-wi-55.m4a"
+        },
+        {
+          "id": "zh-wi-56",
+          "word": "жесть",
+          "hint": "ЖЕС + ТЬ — Ж + согласный кластер.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Zh/zh-wi-56.m4a"
+        },
+        {
+          "id": "zh-wi-57",
+          "word": "жнивьё",
+          "hint": "ЖН + ВЬЁ — сложная фонема.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Zh/zh-wi-57.m4a"
+        },
+        {
+          "id": "zh-wi-58",
+          "word": "жирный",
+          "hint": "ЖИ + РН — Ж с сонорным.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Zh/zh-wi-58.m4a"
+        },
+        {
+          "id": "zh-wi-59",
+          "word": "желать",
+          "hint": "ЖЕ — мягкий контекст для Ж.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Zh/zh-wi-59.m4a"
         }
       ]
     },
@@ -1716,6 +1786,76 @@
           "word": "жара в июле",
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-ph-39.m4a"
+        },
+        {
+          "id": "zh-ph-40",
+          "word": "жук жужжит у жасмина",
+          "hint": "ЖУ + ЖУ + ЖЖ + ЖА — четыре Ж.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Zh/zh-ph-40.m4a"
+        },
+        {
+          "id": "zh-ph-41",
+          "word": "желтая рожь",
+          "hint": "ЖЕ + ЖЬ — Ж в начале и конце.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Zh/zh-ph-41.m4a"
+        },
+        {
+          "id": "zh-ph-42",
+          "word": "жмурки в саду",
+          "hint": "ЖМ + РКИ — сложный ритм.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Zh/zh-ph-42.m4a"
+        },
+        {
+          "id": "zh-ph-43",
+          "word": "жирный еж",
+          "hint": "ЖИ + ЖЬ — твёрдый + мягкий Ж.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Zh/zh-ph-43.m4a"
+        },
+        {
+          "id": "zh-ph-44",
+          "word": "жаркий южный берег",
+          "hint": "ЖА + ЮЖ + БЕ — Ж в двух позициях.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Zh/zh-ph-44.m4a"
+        },
+        {
+          "id": "zh-ph-45",
+          "word": "жёлтый журавль",
+          "hint": "ЖЁ + ЖУ — два Ж в фразе.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Zh/zh-ph-45.m4a"
+        },
+        {
+          "id": "zh-ph-46",
+          "word": "дождь прошёл над лужей",
+          "hint": "ЖД + ЖЁ + ЖЕ — три Ж.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Zh/zh-ph-46.m4a"
+        },
+        {
+          "id": "zh-ph-47",
+          "word": "жестокий мороз",
+          "hint": "ЖЕС + МО — Ж + мороз.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Zh/zh-ph-47.m4a"
+        },
+        {
+          "id": "zh-ph-48",
+          "word": "кожаный жилет",
+          "hint": "КО + ЖА + ЖИ — Ж в двух позициях.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Zh/zh-ph-48.m4a"
+        },
+        {
+          "id": "zh-ph-49",
+          "word": "уже жарко снаружи",
+          "hint": "УЖЕ + ЖА + РУ + ЖИ — четыре Ж.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Zh/zh-ph-49.m4a"
         }
       ]
     },
@@ -1872,6 +2012,76 @@
           "word": "Жасмин цветёт в саду.",
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-sen-24.m4a"
+        },
+        {
+          "id": "zh-sen-25",
+          "word": "Жук жужжал и кружил над лужей.",
+          "hint": "ЖУ + ЖУЖ + КРУ + ЛУ — насыщенный Ж.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Zh/zh-sen-25.m4a"
+        },
+        {
+          "id": "zh-sen-26",
+          "word": "Жираф живёт в жарких странах.",
+          "hint": "ЖИ + ЖИ + ЖА — три Ж.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Zh/zh-sen-26.m4a"
+        },
+        {
+          "id": "zh-sen-27",
+          "word": "Желтеющая рожь шумела на ветру.",
+          "hint": "ЖЕЛ + ЖЬ — образный нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Zh/zh-sen-27.m4a"
+        },
+        {
+          "id": "zh-sen-28",
+          "word": "Ёж нашёл ягоды у дорожки.",
+          "hint": "ЁЖ + НА + ШЁ + ДО + РО + ЖКИ — Ж три раза.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Zh/zh-sen-28.m4a"
+        },
+        {
+          "id": "zh-sen-29",
+          "word": "Жёлтые листья кружились вокруг берёзы.",
+          "hint": "ЖЁ + КРУ + ЖИ + РЁ — Ж в нарративе.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Zh/zh-sen-29.m4a"
+        },
+        {
+          "id": "zh-sen-30",
+          "word": "Дождь прошёл ночью и освежил воздух.",
+          "hint": "ЖД + ШЁ + ЖИЛ — связный нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Zh/zh-sen-30.m4a"
+        },
+        {
+          "id": "zh-sen-31",
+          "word": "Бабушка жарила пирожки уже до обеда.",
+          "hint": "ЖА + РИ + ЖКИ + УЖЕ — три Ж.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Zh/zh-sen-31.m4a"
+        },
+        {
+          "id": "zh-sen-32",
+          "word": "Жираф и ежи — друзья из зоопарка.",
+          "hint": "ЖИ + ЕЖИ — Ж в двух словах.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Zh/zh-sen-32.m4a"
+        },
+        {
+          "id": "zh-sen-33",
+          "word": "Каждое утро живая изгородь дрожит от росы.",
+          "hint": "ЖДО + ЖИ + ЖО + ДРОЖИТ — насыщенный Ж.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Zh/zh-sen-33.m4a"
+        },
+        {
+          "id": "zh-sen-34",
+          "word": "Жадный ёжик прятал ягоды под листьями.",
+          "hint": "ЖА + ЁЖИ + ЯГО + ЛИС + ЬЯ — нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Zh/zh-sen-34.m4a"
         }
       ]
     },
