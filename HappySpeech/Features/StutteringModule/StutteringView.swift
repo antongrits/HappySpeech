@@ -137,11 +137,21 @@ struct StutteringView: View {
     // MARK: - Mascot Header
 
     private var mascotHeader: some View {
-        HSMascotView(mood: .idle)
-            .frame(width: 100, height: 100)
-            .frame(maxWidth: .infinity)
-            .accessibilityLabel(String(localized: "stuttering.mascot.accessibility"))
-            .accessibilityHidden(true)
+        VStack(spacing: SpacingTokens.sp2) {
+            HSMascotView(mood: .encouraging, size: 140)
+                .accessibilityLabel(String(localized: "stuttering.mascot.accessibility"))
+                .accessibilityHidden(true)
+
+            Text(String(localized: "stuttering.entry.subtitle"))
+                .font(TypographyTokens.body(14))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
+                .padding(.horizontal, SpacingTokens.sp4)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, SpacingTokens.sp2)
     }
 
     // MARK: - Voice Prompt Banner
