@@ -206,6 +206,12 @@ targets:
         product: FirebaseMessaging
       - package: FirebaseSDK
         product: FirebasePerformance
+      - package: FirebaseSDK
+        product: FirebaseFunctions
+      - package: FirebaseSDK
+        product: FirebaseInstallations
+      - package: FirebaseSDK
+        product: FirebaseDynamicLinks
       - package: WhisperKit
         product: WhisperKit
       - package: Lottie

@@ -59,6 +59,11 @@ public final class AppContainer {
     private var _contentPackDownloadService: (any ContentPackDownloadService)?
     private var _performanceMonitorService: (any PerformanceMonitorService)?
 
+    // Block AA (v17): Firebase missing services
+    private var _cloudFunctionsService: (any CloudFunctionsServiceProtocol)?
+    private var _installationsService: (any InstallationsServiceProtocol)?
+    private var _dynamicLinksService: (any DynamicLinksServiceProtocol)?
+
     // SoundService — lazy, не требует изменения init
     private var _soundService: (any SoundServiceProtocol)?
 
@@ -374,6 +379,45 @@ public final class AppContainer {
         if let f = fcm { _fcmService = f }
         if let cpd = contentPackDownload { _contentPackDownloadService = cpd }
         if let p = performance { _performanceMonitorService = p }
+    }
+
+    // MARK: - Block AA (v17): Firebase missing services
+
+    /// Cloud Functions callable — серверная оценка произношения и генерация отчётов.
+    /// Только родительский / специалистский контур. COPPA: детский контур использует on-device scorer.
+    public var cloudFunctionsService: any CloudFunctionsServiceProtocol {
+        if let existing = _cloudFunctionsService { return existing }
+        let new = LiveCloudFunctionsService()
+        _cloudFunctionsService = new
+        return new
+    }
+
+    /// Firebase Installations — идентификация установки для Anonymous → Auth upgrade flow.
+    public var installationsService: any InstallationsServiceProtocol {
+        if let existing = _installationsService { return existing }
+        let new = LiveInstallationsService()
+        _installationsService = new
+        return new
+    }
+
+    /// Firebase Dynamic Links — создание и обработка семейных приглашений.
+    /// Только родительский контур. Дети ссылки не получают и не отправляют (COPPA).
+    public var dynamicLinksService: any DynamicLinksServiceProtocol {
+        if let existing = _dynamicLinksService { return existing }
+        let new = LiveDynamicLinksService()
+        _dynamicLinksService = new
+        return new
+    }
+
+    /// Позволяет Preview/Tests подменить Block AA сервисы.
+    public func overrideBlockAAServices(
+        cloudFunctions: (any CloudFunctionsServiceProtocol)? = nil,
+        installations: (any InstallationsServiceProtocol)? = nil,
+        dynamicLinks: (any DynamicLinksServiceProtocol)? = nil
+    ) {
+        if let cf = cloudFunctions { _cloudFunctionsService = cf }
+        if let inst = installations { _installationsService = inst }
+        if let dl = dynamicLinks { _dynamicLinksService = dl }
     }
 
     public var soundService: any SoundServiceProtocol {
@@ -721,6 +765,12 @@ public extension AppContainer {
         container._ensembleASRService = MockEnsembleASRService()
         container._speakerVerificationService = MockSpeakerVerificationService()
         container._emotionDetectionService = MockEmotionDetectionService()
+        // Block AA (v17): Firebase missing services mock — без сети в preview/tests.
+        container.overrideBlockAAServices(
+            cloudFunctions: MockCloudFunctionsService(),
+            installations: MockInstallationsService(),
+            dynamicLinks: MockDynamicLinksService()
+        )
         return container
     }
 }
