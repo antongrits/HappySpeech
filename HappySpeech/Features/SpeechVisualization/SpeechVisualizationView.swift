@@ -84,9 +84,14 @@ struct SpeechVisualizationView: View {
                     summarySection
                     primaryCTA
                 } else {
-                    ProgressView()
-                        .controlSize(.large)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    // H v18 — Lyalya hero на loading-экране.
+                    VStack(spacing: SpacingTokens.sp3) {
+                        LyalyaMascotView(state: .thinking, size: 80)
+                            .accessibilityHidden(true)
+                        ProgressView()
+                            .controlSize(.large)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
             .padding(.horizontal, SpacingTokens.screenEdge)

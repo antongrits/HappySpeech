@@ -85,9 +85,14 @@ struct DailyStreakView: View {
                         saverSection(viewModel: viewModel)
                         longestSection(viewModel: viewModel)
                     } else {
-                        ProgressView()
-                            .controlSize(.large)
-                            .padding(.top, SpacingTokens.sp10)
+                        // H v18 — Lyalya hero на loading-экране.
+                        VStack(spacing: SpacingTokens.sp3) {
+                            LyalyaMascotView(state: .happy, size: 80)
+                                .accessibilityHidden(true)
+                            ProgressView()
+                                .controlSize(.large)
+                        }
+                        .padding(.top, SpacingTokens.sp10)
                     }
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)

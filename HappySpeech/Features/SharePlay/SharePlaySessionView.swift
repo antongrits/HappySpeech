@@ -141,9 +141,9 @@ struct SharePlaySessionView: View {
             HStack {
                 Spacer()
                 VStack(spacing: SpacingTokens.sp2) {
-                    Image(systemName: "party.popper.fill")
-                        .font(.system(size: 48, weight: .regular))
-                        .foregroundStyle(ColorTokens.Brand.gold)
+                    // H v18 — Ляля celebrating вместо SF Symbol party.popper
+                    // для соответствия комментарию в шапке файла.
+                    LyalyaMascotView(state: .celebrating, size: 80)
                         .accessibilityHidden(true)
                     Text(String(localized: "shareplay.celebration.together"))
                         .font(TypographyTokens.headline(17))

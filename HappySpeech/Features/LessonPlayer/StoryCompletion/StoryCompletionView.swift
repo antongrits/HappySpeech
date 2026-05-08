@@ -71,6 +71,9 @@ struct StoryCompletionView: View {
 
     private var loadingView: some View {
         VStack(spacing: SpacingTokens.medium) {
+            // H v18 — Ляля thinking на loading-экране (готовим историю).
+            LyalyaMascotView(state: .thinking, size: 80)
+                .accessibilityHidden(true)
             ProgressView()
                 .progressViewStyle(.circular)
                 .tint(ColorTokens.Brand.primary)

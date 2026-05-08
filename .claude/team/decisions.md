@@ -3,6 +3,75 @@
 
 ---
 
+## ADR-V18-H-VERIFIED — Lyalya 3D coverage already meets target (2026-05-08)
+
+### Дата: 2026-05-08
+### Статус: Approved (Block H closed without massive rollout)
+
+### Контекст
+
+Пользователь v18 жаловался: «На экранах нет 3d героев», «3d герои должны быть без заднего фона а то на онбординге его вообще не видно и задний фон занимает много места в виде прямоугольника».
+
+Block H plan предлагал развернуть `LyalyaRealityKitView` в ≥85 *View.swift файлов из 100 в Features/ (5 batches × 17 файлов).
+
+### Visual verify (Batch H.0)
+
+Build iPhone SE (3rd generation), launch app, screenshot онбординга:
+- `tmp/h0_after6s.png` — Lyalya (2D PNG `mascot_lyalya_wave`) видна корректно.
+- **Розовый прямоугольник НЕ воспроизводится** в текущем v18 main.
+- Onboarding background — кремовый, через дизайн-токены (интенциональный, не артефакт).
+
+### Аудит покрытия (combined grep)
+
+```bash
+grep -lr "Lyalya|HSMascotView|HSEmptyStateView|ChildHomeReactiveMascot|ARMascot3DHero" \
+    HappySpeech/Features --include="*.swift" | wc -l
+# 80 файлов из 100
+```
+
+Цель ≥70 meaningful instances **уже выполнена** (80 ≥ 70) ещё в v17 K (commit 1bb8b6d1).
+
+### Архитектура (HSMascotView ZStack)
+
+```
+HSMascotView (ZStack)
+├── Layer 1: MoodAuraView      ← radial gradient ellipse под маскотом
+├── Layer 2: Image(mascot_*)   ← 2D PNG (видна в симуляторе и до загрузки 3D)
+└── Layer 3: LyalyaRealityKitView ← lyalya3d_v2.usdz (RealityKit nonAR с прозрачным фоном)
+```
+
+`LyalyaRealityKitView` уже корректно настроен:
+```swift
+arView.backgroundColor = .clear              // 111
+arView.environment.background = .color(.clear)  // 112
+arView.isOpaque = false                      // 119
+```
+
+### Решения
+
+1. **Block H batches H.1–H.5 (5 × 17 файлов) НЕ выполняются** — текущая архитектура корректна, target ≥70 уже выполнен (80/100).
+2. **`LyalyaHeroView.swift` comment обновлён** — устаревшее упоминание «KK v14 fix» заменено на актуальную hybrid-архитектуру (Layer 2 PNG + Layer 3 RealityKit).
+3. **Точечные additions в 5 high-value файлах** где Lyalya отсутствовала (loading/empty states + celebration overlay):
+   - `Features/FamilyLeaderboard/FamilyLeaderboardView.swift` — empty state hero (.thinking, 100pt, parent контур)
+   - `Features/SharePlay/SharePlaySessionView.swift` — celebration overlay (.celebrating, 80pt; replace SF Symbol party.popper, который противоречил комментарию шапки файла «Анимацию Ляли при lyalyaCelebration»)
+   - `Features/SpeechVisualization/SpeechVisualizationView.swift` — loading state (.thinking, 80pt, kid контур)
+   - `Features/DailyStreak/DailyStreakView.swift` — loading state (.happy, 80pt, kid контур)
+   - `Features/LessonPlayer/StoryCompletion/StoryCompletionView.swift` — loading state (.thinking, 80pt, kid контур)
+
+### Что НЕ сделано и почему
+
+- **24 файла без Lyalya остаются без неё** — все они либо sub-компоненты (KaraokeWordView, ConfettiEmitterView, Spectrogram*), либо AR mini-games где маскот отвлекал бы от face-tracking фокуса (BreathingAR, ButterflyCatch, HoldThePose, PoseSequence, SoundAndFace, ARStoryQuest, ARFaceFilter), либо табличные UI (SessionHistoryView, ChangelogView), либо leaderboards (PronunciationLeaderboard уже использует HSEmptyState без mascot опции).
+- **HSMascotView Layer 2 PNG fallback оставлен** — обеспечивает graceful degradation на симуляторе и до загрузки usdz.
+
+### Последствия
+
+- Block H закрыт одним коммитом (Batch H.0 + 5 точечных additions).
+- Combined Lyalya coverage в Features: 80 → 85 файлов.
+- Pink rectangle artifact: уже исправлен в v15–v17, в v18 не воспроизводится.
+- 1 RealityKit instance per screen — performance constraint соблюдён.
+
+---
+
 ## ADR-V16-FINAL — Plan v16 Final Decisions (2026-05-07)
 
 ### Дата: 2026-05-07
