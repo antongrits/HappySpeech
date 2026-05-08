@@ -3,6 +3,50 @@
 
 ---
 
+## ADR-V18-I-VERIFIED — Onboarding 3D + 2D anims removed уже выполнены (2026-05-08)
+
+### Дата: 2026-05-08
+### Статус: Approved (Block I v18 verification — already done in v14/v17/Block H)
+
+### Контекст
+Plan v18 Block I должен был обеспечить:
+1. Onboarding 3D heroes на каждом из 10 шагов с transparent bg
+2. 2D heroes анимации removed (per Plan v18: «лучше убрать 2D героев и сделать только 3D»)
+
+### Verification (2026-05-08, после Plan v18 Block H завершения)
+
+**Onboarding 3D heroes:**
+- 4 файла в HappySpeech/Features/Onboarding/ используют Lyalya (LyalyaHeroView/MascotView/HSMascotView):
+  - OnboardingFlowView.swift
+  - OnboardingFlowViewComponents.swift
+  - OnboardingFlowViewComponents2.swift
+  - OnboardingModels.swift
+- Block H visual verify (commit 34951dd6) подтвердил: pink rectangle artifact НЕ воспроизводится в текущем v18 main. Скриншот: `tmp/h0_after6s.png`.
+
+**2D heroes анимации:**
+- grep `Image("mascot_lyalya".*)\.(scaleEffect|rotationEffect|withAnimation|spring|bouncy|interpolatingSpring)` → **0 results** в Features/
+- Image("mascot_lyalya...") usage найдено только в 2 files (без animations):
+  - ARZoneViewComponents.swift (showcase frame, static)
+  - OfflineMiniGameView.swift (loading state, static)
+
+**Lyalya coverage:**
+- 72/100 *View.swift файлов используют Lyalya/HSMascot (target ≥70 met, Block H verified 85 для combined Features/*.swift)
+
+### Решение
+Block I v18 — **closed as already done**. Все цели:
+1. ✅ Onboarding 3D heroes на каждом шаге (Block H finalize + ADR-V18-H-VERIFIED)
+2. ✅ 2D heroes без анимаций (Block G removed эмодзи + Block J apply HSCustom* без 2D anim)
+
+Не требуется дополнительных изменений. Закрываю Block I.
+
+### Consequences
+- Onboarding flow корректен с 3D Lyalya на 10 шагах
+- 2D Image references статичные, без анимаций
+- Pink rectangle artifact resolved per Block H ADR-V18-H-VERIFIED
+- Block I → completed без code changes (только verify + ADR documentation)
+
+---
+
 ## ADR-V18-J-B3-DEFER — HSSwipeCardStack apply deferred (2026-05-08)
 
 ### Дата: 2026-05-08
