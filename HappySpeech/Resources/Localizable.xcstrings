@@ -32488,7 +32488,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Подсказка"
+            "value": "Сохранить отчёт в формате CSV"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export report as CSV"
           }
         }
       }
@@ -32510,7 +32516,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Подсказка"
+            "value": "Сохранить отчёт в формате PDF"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export report as PDF"
           }
         }
       }
@@ -32532,7 +32544,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Подсказка"
+            "value": "Отправить сообщение родителю"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send a message to the parent"
           }
         }
       }
@@ -32543,7 +32561,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Кнопка"
+            "value": "Добавить ребёнка"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add child"
           }
         }
       }
@@ -32554,7 +32578,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Подсказка"
+            "value": "Добавить нового ребёнка в список"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a new child to the list"
           }
         }
       }
@@ -32576,7 +32606,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Подсказка"
+            "value": "Открыть карточку ребёнка"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open child profile"
           }
         }
       }
@@ -32587,7 +32623,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Пусто"
+            "value": "Добавьте первого ребёнка через кнопку «+»."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add your first child using the «+» button."
           }
         }
       }
@@ -32598,7 +32640,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Заголовок"
+            "value": "Нет подопечных"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No clients yet"
           }
         }
       }
@@ -32620,7 +32668,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Заголовок"
+            "value": "Мои подопечные"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My clients"
           }
         }
       }
@@ -32631,7 +32685,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Заголовок"
+            "value": "Карточка ребёнка"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Child profile"
           }
         }
       }
@@ -32708,7 +32768,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Заголовок"
+            "value": "Сообщение родителю"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Message to parent"
           }
         }
       }
@@ -32851,7 +32917,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Заголовок"
+            "value": "Заметка специалиста"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Specialist note"
           }
         }
       }
@@ -32862,7 +32934,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Пусто"
+            "value": "Заметок пока нет"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No notes yet"
           }
         }
       }
@@ -32983,7 +33061,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Подсказка"
+            "value": "Открыть карточку занятия"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open session details"
           }
         }
       }
@@ -33005,7 +33089,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Пусто"
+            "value": "Здесь появятся занятия после первой сессии."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sessions will appear here after the first session."
           }
         }
       }
@@ -33016,7 +33106,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Заголовок"
+            "value": "Занятий пока нет"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No sessions yet"
           }
         }
       }
@@ -33038,7 +33134,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Кнопка"
+            "value": "Сортировать"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sort"
           }
         }
       }
@@ -33060,7 +33162,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Подсказка"
+            "value": "Изменить порядок сортировки"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Change sort order"
           }
         }
       }
@@ -33071,7 +33179,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Заголовок"
+            "value": "Порядок сортировки"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sort order"
           }
         }
       }
