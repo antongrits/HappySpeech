@@ -355,6 +355,13 @@ struct RepeatAfterModelView: View {
             .frame(height: 140)
             .padding(.horizontal, SpacingTokens.screenEdge)
             .accessibilityLabel(String(localized: "spectrogram.recording.a11y", defaultValue: "Визуализация твоего голоса"))
+
+            // Block J v18 — HSAudioWaveform (recording mode) поверх spectrogram
+            // как additional kid-friendly visual feedback (idle TimelineView анимация).
+            HSAudioWaveform(style: .recording, tint: ColorTokens.Brand.primary)
+                .frame(height: 56)
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .accessibilityHidden(true)
             attemptDotsView
             Spacer(minLength: 0)
             RecordingButton(
