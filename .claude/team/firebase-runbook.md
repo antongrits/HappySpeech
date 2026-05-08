@@ -246,3 +246,68 @@ UI: http://localhost:4000
 - [ ] Console A/B Testing experiment activation для `tutorial_variant`
 - [ ] Custom event `tutorial_completion_rate` emit в TutorialView (для goal metric)
 - [ ] Migration baseline Cloud Functions (M1.3) на `enforceAppCheck: true`
+
+---
+
+## Block AH v18 — Финальная верификация Firebase services (2026-05-09)
+
+### AppCheck enforcement (post-Block AD fix)
+- Pre-fix (Block AD code review): 7 legacy callables с `enforceAppCheck: false`
+- Post-fix (commit `5b432690`): все callable functions с `enforceAppCheck: true`
+- Deploy status: **VERIFIED DEPLOYED** (firebase deploy --only functions, 2026-05-09)
+- Источник правды (`functions/index.js`):
+  - 13 callable functions с `enforceAppCheck: true`
+  - 2 Firestore triggers (`onSessionComplete`, `moderateUserContent`) — App Check не применим
+  - 3 scheduled functions (`sendDailyReminder`, `sendWeeklyReport`, `sendWeeklySummary`) — App Check не применим
+
+### Список deployed functions (18 total, europe-west3, nodejs20, v2)
+
+**Callable (13/13 с enforceAppCheck: true):**
+1. analyzeSpeechProgress
+2. calculateProgress
+3. createFamilyInviteToken
+4. deleteUserData
+5. exportUserData
+6. generateNeurolinguistSummary
+7. generateReport
+8. generateSpecialistReport
+9. getUserStats
+10. scoreSpeechQuality
+11. sendWeeklySummaryFCM
+12. setAdminClaim
+13. validateChildVoice
+
+**Firestore triggers (2):**
+- moderateUserContent (onDocumentWritten)
+- onSessionComplete (onDocumentCreated)
+
+**Scheduled (3):**
+- sendDailyReminder
+- sendWeeklyReport
+- sendWeeklySummary
+
+### CLI verification snapshot
+- `firebase functions:list` — 18 functions ✅
+- `firebase firestore:indexes` — 14 composite indexes ✅
+- `firebase apps:list` — iOS app `1:142079911892:ios:29ac123af1f89662de9841` ✅
+- `firebase use` — happyspeech-dfd95 (active) ✅
+
+### Финальное состояние Firebase services (Plan v18 правило 12)
+- Auth (Email + Google + Anonymous) — VERIFIED ACTIVE
+- Firestore + 14 composite indexes — VERIFIED ACTIVE
+- Cloud Functions (18 deployed: 13 callable enforced + 2 triggers + 3 scheduled) — VERIFIED ACTIVE
+- Storage rules — VERIFIED ACTIVE
+- App Check DeviceCheck enforce — VERIFIED ACTIVE
+- Remote Config v3 + tutorial_variant template — VERIFIED ACTIVE
+- FCM — VERIFIED ACTIVE
+- Performance Monitoring — VERIFIED ACTIVE
+- Installations — VERIFIED ACTIVE
+- Realtime Database europe-west1 (Block U.6) — VERIFIED ACTIVE
+- A/B Testing template (Block U.5) — VERIFIED ACTIVE
+
+### Notes (edge cases, encountered during deploy)
+- First-time 2nd gen deploy: 2 Firestore triggers (`onSessionComplete`, `moderateUserContent`) failed
+  на первой попытке с Eventarc Service Agent permission propagation error.
+  Retry через ~2 минуты — оба successful create operation.
+- Cleanup policy для container images в europe-west3 настроен (--force, 1 day retention).
+- Node.js 20 deprecated 2026-04-30, decommission 2026-10-30. Запланировать upgrade до Node 22.
