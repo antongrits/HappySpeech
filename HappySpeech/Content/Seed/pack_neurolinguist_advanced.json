@@ -467,6 +467,3566 @@
           "audio_file": "Audio/Content/NL/nl-sa-09.m4a"
         }
       ]
+    },
+    "sibilants_extended": {
+      "stageId": "sibilants_extended",
+      "note": "Свистящие С/З: слоги, слова (начало/середина/конец), фразы — нейролингвистическая проработка.",
+      "items": [
+        {
+          "id": "nl-sib-00",
+          "word": "са-са-са",
+          "hint": "С — язычок у нижних зубов, холодная струйка.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-sib-00.m4a"
+        },
+        {
+          "id": "nl-sib-01",
+          "word": "со-со-со",
+          "hint": "СО — губы чуть округлены. Холодный ветерок!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-sib-01.m4a"
+        },
+        {
+          "id": "nl-sib-02",
+          "word": "су-су-су",
+          "hint": "СУ — губы трубочкой, язычок у нижних зубов.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-sib-02.m4a"
+        },
+        {
+          "id": "nl-sib-03",
+          "word": "сы-сы-сы",
+          "hint": "СЫ — широкая улыбка, язычок не поднимается.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-sib-03.m4a"
+        },
+        {
+          "id": "nl-sib-04",
+          "word": "си-си-си",
+          "hint": "СИ — мягкий! Язычок ближе к нёбу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sib-04.m4a"
+        },
+        {
+          "id": "nl-sib-05",
+          "word": "ас-ос-ус",
+          "hint": "Слог заканчивается на С. Короткий хвостик!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sib-05.m4a"
+        },
+        {
+          "id": "nl-sib-06",
+          "word": "сад",
+          "hint": "С в начале. Сад — огород, там растут овощи.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-sib-06.m4a"
+        },
+        {
+          "id": "nl-sib-07",
+          "word": "сок",
+          "hint": "С — О — К. Три звука! Сок пьют из стакана.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-sib-07.m4a"
+        },
+        {
+          "id": "nl-sib-08",
+          "word": "сом",
+          "hint": "С в начале. Сом — большая рыба.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-sib-08.m4a"
+        },
+        {
+          "id": "nl-sib-09",
+          "word": "сыр",
+          "hint": "СЫР — С твёрдый, потом Ы. Сыр жёлтый.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-sib-09.m4a"
+        },
+        {
+          "id": "nl-sib-10",
+          "word": "слон",
+          "hint": "СЛ — стечение. С+Л вместе. Слон большой!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sib-10.m4a"
+        },
+        {
+          "id": "nl-sib-11",
+          "word": "стол",
+          "hint": "СТ — стечение. Стол, за которым едят.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sib-11.m4a"
+        },
+        {
+          "id": "nl-sib-12",
+          "word": "снег",
+          "hint": "СН — стечение. Зимой падает снег.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sib-12.m4a"
+        },
+        {
+          "id": "nl-sib-13",
+          "word": "класс",
+          "hint": "С на конце (оглушается). Класс в школе.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sib-13.m4a"
+        },
+        {
+          "id": "nl-sib-14",
+          "word": "нос",
+          "hint": "Нос — С на конце. Чем мы дышим?",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-sib-14.m4a"
+        },
+        {
+          "id": "nl-sib-15",
+          "word": "голос",
+          "hint": "ГО-лос. С в конце. Голос — это звук речи.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sib-15.m4a"
+        },
+        {
+          "id": "nl-sib-16",
+          "word": "лиса",
+          "hint": "Ли-СА. С в середине. Хитрая лиса!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sib-16.m4a"
+        },
+        {
+          "id": "nl-sib-17",
+          "word": "оса",
+          "hint": "О-СА. С в середине. Оса жалит!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-sib-17.m4a"
+        },
+        {
+          "id": "nl-sib-18",
+          "word": "посуда",
+          "hint": "По-СУ-да. С в середине. Тарелки — это посуда.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sib-18.m4a"
+        },
+        {
+          "id": "nl-sib-19",
+          "word": "кусок",
+          "hint": "Ку-СОК. С в середине. Кусок хлеба.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sib-19.m4a"
+        },
+        {
+          "id": "nl-sib-20",
+          "word": "за-за-за",
+          "hint": "З — звонкий! Горлышко вибрирует. Как комарик.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sib-20.m4a"
+        },
+        {
+          "id": "nl-sib-21",
+          "word": "зо-зо-зо",
+          "hint": "ЗО — звонкое. Горлышко поёт!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sib-21.m4a"
+        },
+        {
+          "id": "nl-sib-22",
+          "word": "зуб",
+          "hint": "З в начале. Зуб надо чистить каждый день.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-sib-22.m4a"
+        },
+        {
+          "id": "nl-sib-23",
+          "word": "зонт",
+          "hint": "ЗОН-Т. З в начале. Зонт — от дождя.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-sib-23.m4a"
+        },
+        {
+          "id": "nl-sib-24",
+          "word": "заяц",
+          "hint": "ЗА-яц. З в начале. Заяц прыгает!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-sib-24.m4a"
+        },
+        {
+          "id": "nl-sib-25",
+          "word": "звезда",
+          "hint": "ЗВ — стечение. Звёзды светят ночью.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sib-25.m4a"
+        },
+        {
+          "id": "nl-sib-26",
+          "word": "змея",
+          "hint": "ЗМ — стечение. Змея ползёт.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sib-26.m4a"
+        },
+        {
+          "id": "nl-sib-27",
+          "word": "коза",
+          "hint": "Ко-ЗА. З в середине. У козы рожки.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-sib-27.m4a"
+        },
+        {
+          "id": "nl-sib-28",
+          "word": "глаза",
+          "hint": "Гла-ЗА. З в середине. Два глаза — пара!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sib-28.m4a"
+        },
+        {
+          "id": "nl-sib-29",
+          "word": "мороз",
+          "hint": "Мо-РОЗ. З на конце (звучит как С). Зимой мороз!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sib-29.m4a"
+        },
+        {
+          "id": "nl-sib-30",
+          "word": "сани",
+          "hint": "СА-ни. Зимой катаются на санях.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-sib-30.m4a"
+        },
+        {
+          "id": "nl-sib-31",
+          "word": "собака",
+          "hint": "СО-БА-ка. Три слога! С в начале.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sib-31.m4a"
+        },
+        {
+          "id": "nl-sib-32",
+          "word": "самолёт",
+          "hint": "СА-мо-лёт. С в начале. Летит высоко!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sib-32.m4a"
+        },
+        {
+          "id": "nl-sib-33",
+          "word": "сестра",
+          "hint": "СЕС-тра. Два С! Это мягкий СЬ и твёрдый С.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sib-33.m4a"
+        },
+        {
+          "id": "nl-sib-34",
+          "word": "спасибо",
+          "hint": "Спа-СИ-бо. Два С! Вежливое слово.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sib-34.m4a"
+        },
+        {
+          "id": "nl-sib-35",
+          "word": "сосулька",
+          "hint": "СО-суль-ка. Два С! Висит зимой с крыши.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sib-35.m4a"
+        },
+        {
+          "id": "nl-sib-36",
+          "word": "зима",
+          "hint": "ЗИ-ма. З мягкий (ЗЬ). Зимой холодно.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sib-36.m4a"
+        },
+        {
+          "id": "nl-sib-37",
+          "word": "зелёный",
+          "hint": "ЗЕ-лё-ный. З мягкий. Трава зелёная!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sib-37.m4a"
+        },
+        {
+          "id": "nl-sib-38",
+          "word": "зеркало",
+          "hint": "ЗЕР-ка-ло. З мягкий. Смотримся в зеркало.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sib-38.m4a"
+        },
+        {
+          "id": "nl-sib-39",
+          "word": "Сима везла санки",
+          "hint": "Четыре слова — два С! Сима и санки.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sib-39.m4a"
+        },
+        {
+          "id": "nl-sib-40",
+          "word": "В саду стоят сосны",
+          "hint": "Фраза с тремя С. Сад — сосна — стоят.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sib-40.m4a"
+        },
+        {
+          "id": "nl-sib-41",
+          "word": "Заяц зимой сидит в норе",
+          "hint": "З — заяц, зимой. С — сидит. Оба звука!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sib-41.m4a"
+        },
+        {
+          "id": "nl-sib-42",
+          "word": "свист",
+          "hint": "СВ + ИСТ. Три согласных подряд! Свист паровоза.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sib-42.m4a"
+        },
+        {
+          "id": "nl-sib-43",
+          "word": "список",
+          "hint": "СПИС-ок. СП — стечение, потом С снова!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sib-43.m4a"
+        },
+        {
+          "id": "nl-sib-44",
+          "word": "скользить",
+          "hint": "СКОЛ-зить. СК + ЗЬ — глухой и звонкий!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-sib-44.m4a"
+        },
+        {
+          "id": "nl-sib-45",
+          "word": "существо",
+          "hint": "СУ-щес-тво. Два С! Сложное слово.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-sib-45.m4a"
+        },
+        {
+          "id": "nl-sib-46",
+          "word": "случай",
+          "hint": "СЛУ-чай. СЛ — стечение. Счастливый случай!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sib-46.m4a"
+        },
+        {
+          "id": "nl-sib-47",
+          "word": "смеяться",
+          "hint": "СМЕ-ять-ся. СМ — стечение. Смеяться весело!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sib-47.m4a"
+        },
+        {
+          "id": "nl-sib-48",
+          "word": "словарь",
+          "hint": "СЛО-варь. СЛ — стечение. В словаре много слов!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sib-48.m4a"
+        },
+        {
+          "id": "nl-sib-49",
+          "word": "звонить",
+          "hint": "ЗВО-нить. ЗВ — стечение. Позвони маме!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sib-49.m4a"
+        }
+      ]
+    },
+    "fricatives_extended": {
+      "stageId": "fricatives_extended",
+      "note": "Фрикативные Ш/Ж/Х: слоги, слова по позициям, фразы — шипящие и заднеязычные.",
+      "items": [
+        {
+          "id": "nl-fri-00",
+          "word": "ша-ша-ша",
+          "hint": "Ш — язычок поднят чашечкой. Тёплая струйка!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-fri-00.m4a"
+        },
+        {
+          "id": "nl-fri-01",
+          "word": "шо-шо-шо",
+          "hint": "ШО — губы чуть вперёд. Шумит Ш!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-fri-01.m4a"
+        },
+        {
+          "id": "nl-fri-02",
+          "word": "шу-шу-шу",
+          "hint": "ШУ — губы трубочкой, язык наверху.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-fri-02.m4a"
+        },
+        {
+          "id": "nl-fri-03",
+          "word": "жа-жа-жа",
+          "hint": "Ж — как Ш, но горлышко гудит. Жук жужжит!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fri-03.m4a"
+        },
+        {
+          "id": "nl-fri-04",
+          "word": "жу-жу-жу",
+          "hint": "ЖУ — звонкое. Жужжит пчела.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fri-04.m4a"
+        },
+        {
+          "id": "nl-fri-05",
+          "word": "ха-ха-ха",
+          "hint": "Х — горловой, тёплый ветерок из горла.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-fri-05.m4a"
+        },
+        {
+          "id": "nl-fri-06",
+          "word": "шар",
+          "hint": "ШАР — Ш в начале. Круглый воздушный шарик!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-fri-06.m4a"
+        },
+        {
+          "id": "nl-fri-07",
+          "word": "шапка",
+          "hint": "ША-пка. Ш в начале. Зимой надевают шапку.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-fri-07.m4a"
+        },
+        {
+          "id": "nl-fri-08",
+          "word": "шуба",
+          "hint": "ШУ-ба. Ш в начале. Тёплая шуба — из меха.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-fri-08.m4a"
+        },
+        {
+          "id": "nl-fri-09",
+          "word": "школа",
+          "hint": "ШКО-ла. ШК — стечение. Дети учатся в школе.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fri-09.m4a"
+        },
+        {
+          "id": "nl-fri-10",
+          "word": "кошка",
+          "hint": "КОШ-ка. Ш в середине. Мурлыкает кошка.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-fri-10.m4a"
+        },
+        {
+          "id": "nl-fri-11",
+          "word": "машина",
+          "hint": "Ма-ШИ-на. Ш в середине. Машина едет!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fri-11.m4a"
+        },
+        {
+          "id": "nl-fri-12",
+          "word": "подушка",
+          "hint": "По-ДУШ-ка. Ш в середине. Мягкая подушка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fri-12.m4a"
+        },
+        {
+          "id": "nl-fri-13",
+          "word": "мышь",
+          "hint": "МЫШЬ — Ш на конце. Маленькая серая мышка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fri-13.m4a"
+        },
+        {
+          "id": "nl-fri-14",
+          "word": "малыш",
+          "hint": "МА-лыш. Ш на конце. Маленький малыш!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fri-14.m4a"
+        },
+        {
+          "id": "nl-fri-15",
+          "word": "шоколад",
+          "hint": "ШО-ко-лад. Ш в начале. Вкусный шоколад!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fri-15.m4a"
+        },
+        {
+          "id": "nl-fri-16",
+          "word": "шевелиться",
+          "hint": "Ше-ве-ЛИ-ться. Ш в начале, сложное слово!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-fri-16.m4a"
+        },
+        {
+          "id": "nl-fri-17",
+          "word": "шершавый",
+          "hint": "ШЕР-ша-вый. Два Ш! Шершавая кора дерева.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-fri-17.m4a"
+        },
+        {
+          "id": "nl-fri-18",
+          "word": "жук",
+          "hint": "ЖУК — Ж в начале. Летит жук-жужелица.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-fri-18.m4a"
+        },
+        {
+          "id": "nl-fri-19",
+          "word": "жираф",
+          "hint": "ЖИ-раф. Ж в начале, длинная шея!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fri-19.m4a"
+        },
+        {
+          "id": "nl-fri-20",
+          "word": "живот",
+          "hint": "ЖИ-вот. Ж в начале. Болит животик.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-fri-20.m4a"
+        },
+        {
+          "id": "nl-fri-21",
+          "word": "лужа",
+          "hint": "ЛУ-жа. Ж в середине. Прыгаем через лужу!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-fri-21.m4a"
+        },
+        {
+          "id": "nl-fri-22",
+          "word": "пижама",
+          "hint": "Пи-ЖА-ма. Ж в середине. В пижаме спят.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fri-22.m4a"
+        },
+        {
+          "id": "nl-fri-23",
+          "word": "дождь",
+          "hint": "ДОЖДЬ — Ж в середине. Дождик капает!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fri-23.m4a"
+        },
+        {
+          "id": "nl-fri-24",
+          "word": "нож",
+          "hint": "НОЖ — Ж на конце (звучит как Ш). Нож острый!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-fri-24.m4a"
+        },
+        {
+          "id": "nl-fri-25",
+          "word": "гараж",
+          "hint": "Га-РАЖ — Ж на конце. Машина в гараже.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-fri-25.m4a"
+        },
+        {
+          "id": "nl-fri-26",
+          "word": "хлеб",
+          "hint": "ХЛЕБ — Х в начале, ХЛ стечение. Вкусный хлеб.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fri-26.m4a"
+        },
+        {
+          "id": "nl-fri-27",
+          "word": "хвост",
+          "hint": "ХВОСТ — ХВ стечение. У собаки пушистый хвост.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fri-27.m4a"
+        },
+        {
+          "id": "nl-fri-28",
+          "word": "холод",
+          "hint": "ХО-лод. Х в начале. Зимой холодно!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-fri-28.m4a"
+        },
+        {
+          "id": "nl-fri-29",
+          "word": "хомяк",
+          "hint": "Хо-МЯК. Х в начале. Хомяк прячет зёрна.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fri-29.m4a"
+        },
+        {
+          "id": "nl-fri-30",
+          "word": "ухо",
+          "hint": "У-хо. Х в середине. Два уха — правое и левое.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-fri-30.m4a"
+        },
+        {
+          "id": "nl-fri-31",
+          "word": "мохнатый",
+          "hint": "Мох-НА-тый. Х в середине. Мохнатый медведь.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-fri-31.m4a"
+        },
+        {
+          "id": "nl-fri-32",
+          "word": "горох",
+          "hint": "Го-РОХ — Х на конце. Зелёный горох.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fri-32.m4a"
+        },
+        {
+          "id": "nl-fri-33",
+          "word": "петух",
+          "hint": "Пе-ТУХ — Х на конце. Петух кричит ку-ка-ре-ку!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fri-33.m4a"
+        },
+        {
+          "id": "nl-fri-34",
+          "word": "шашлык",
+          "hint": "ШАШ-лык. Два Ш! Вкусный шашлык на природе.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-fri-34.m4a"
+        },
+        {
+          "id": "nl-fri-35",
+          "word": "шахматы",
+          "hint": "ШАХ-ма-ты. Ш в начале. Играем в шахматы.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-fri-35.m4a"
+        },
+        {
+          "id": "nl-fri-36",
+          "word": "жестокий",
+          "hint": "ЖЕС-то-кий. Ж в начале. Жёсткий урок!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-fri-36.m4a"
+        },
+        {
+          "id": "nl-fri-37",
+          "word": "художник",
+          "hint": "Ху-ДОЖ-ник. Х+Ж! Художник рисует.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-fri-37.m4a"
+        },
+        {
+          "id": "nl-fri-38",
+          "word": "хорошо",
+          "hint": "Хо-ро-ШО. Х и Ш в одном слове!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-fri-38.m4a"
+        },
+        {
+          "id": "nl-fri-39",
+          "word": "Шура нашёл жука",
+          "hint": "Ш — Шура, нашёл. Ж — жука. Оба звука!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-fri-39.m4a"
+        },
+        {
+          "id": "nl-fri-40",
+          "word": "Большой жираф шагает",
+          "hint": "Ж — жираф, Ш — шагает. Оба шипящих!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-fri-40.m4a"
+        },
+        {
+          "id": "nl-fri-41",
+          "word": "Хороший хозяин кормит животных",
+          "hint": "Два Х — хороший, хозяин. Ж — животных.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-fri-41.m4a"
+        },
+        {
+          "id": "nl-fri-42",
+          "word": "широкий",
+          "hint": "ШИ-ро-кий. Ш мягкое + широкий звук И.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fri-42.m4a"
+        },
+        {
+          "id": "nl-fri-43",
+          "word": "шёпот",
+          "hint": "ШЁ-пот. Ш в начале. Говорим шёпотом тихо.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fri-43.m4a"
+        },
+        {
+          "id": "nl-fri-44",
+          "word": "жёлудь",
+          "hint": "ЖЁ-лудь. Ж в начале. Жёлуди едят белки.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fri-44.m4a"
+        },
+        {
+          "id": "nl-fri-45",
+          "word": "рубашка",
+          "hint": "Ру-БАШ-ка. Ш в середине. Рубашка с пуговицами.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-fri-45.m4a"
+        },
+        {
+          "id": "nl-fri-46",
+          "word": "хохотать",
+          "hint": "Хо-хо-ТАТЬ. Два Х! Громко хохотать.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-fri-46.m4a"
+        },
+        {
+          "id": "nl-fri-47",
+          "word": "жужелица",
+          "hint": "ЖУ-же-ли-ца. Два Ж! Жужелица — жук.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-fri-47.m4a"
+        },
+        {
+          "id": "nl-fri-48",
+          "word": "шелест",
+          "hint": "ШЕ-лест. Ш в начале. Шелест листьев.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-fri-48.m4a"
+        },
+        {
+          "id": "nl-fri-49",
+          "word": "жидкость",
+          "hint": "ЖИД-кость. Ж в начале. Вода — жидкость.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-fri-49.m4a"
+        }
+      ]
+    },
+    "affricates_extended": {
+      "stageId": "affricates_extended",
+      "note": "Аффрикаты Ч/Ц: слоги, слова, фразы — двухкомпонентные звуки.",
+      "items": [
+        {
+          "id": "nl-aff-00",
+          "word": "ча-ча-ча",
+          "hint": "Ч = Т+Ш вместе. Короткий взрыв! Ча-ча-ча.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-aff-00.m4a"
+        },
+        {
+          "id": "nl-aff-01",
+          "word": "чо-чо-чо",
+          "hint": "ЧО — губы чуть вперёд. Язык наверху.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-aff-01.m4a"
+        },
+        {
+          "id": "nl-aff-02",
+          "word": "чу-чу-чу",
+          "hint": "ЧУ — губы трубочкой. Паровоз чу-чу!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-aff-02.m4a"
+        },
+        {
+          "id": "nl-aff-03",
+          "word": "ца-ца-ца",
+          "hint": "Ц = Т+С вместе. Твёрдый звук! Ца-ца-ца.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-03.m4a"
+        },
+        {
+          "id": "nl-aff-04",
+          "word": "цо-цо-цо",
+          "hint": "ЦО — твёрдое. Язычок у нижних зубов.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-04.m4a"
+        },
+        {
+          "id": "nl-aff-05",
+          "word": "чашка",
+          "hint": "ЧА-шка. Ч в начале. Из чашки пьют чай.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-aff-05.m4a"
+        },
+        {
+          "id": "nl-aff-06",
+          "word": "чайник",
+          "hint": "ЧАЙ-ник. Ч в начале. Кипит чайник!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-aff-06.m4a"
+        },
+        {
+          "id": "nl-aff-07",
+          "word": "чемодан",
+          "hint": "Че-мо-ДАН. Ч в начале. Чемодан берут в дорогу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-07.m4a"
+        },
+        {
+          "id": "nl-aff-08",
+          "word": "черепаха",
+          "hint": "Че-ре-ПА-ха. Ч в начале. Медленная черепаха.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-aff-08.m4a"
+        },
+        {
+          "id": "nl-aff-09",
+          "word": "чердак",
+          "hint": "Чер-ДАК. Ч в начале. Вещи хранят на чердаке.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-09.m4a"
+        },
+        {
+          "id": "nl-aff-10",
+          "word": "бочка",
+          "hint": "БОЧ-ка. Ч в середине. В бочке хранят воду.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-aff-10.m4a"
+        },
+        {
+          "id": "nl-aff-11",
+          "word": "точка",
+          "hint": "ТОЧ-ка. Ч в середине. Точка в конце предложения.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-aff-11.m4a"
+        },
+        {
+          "id": "nl-aff-12",
+          "word": "ночник",
+          "hint": "НОЧ-ник. Ч в середине. Ночник светит ночью.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-12.m4a"
+        },
+        {
+          "id": "nl-aff-13",
+          "word": "мяч",
+          "hint": "МЯЧ — Ч на конце. Круглый мяч!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-aff-13.m4a"
+        },
+        {
+          "id": "nl-aff-14",
+          "word": "ключ",
+          "hint": "КЛЮЧ — Ч на конце. Ключом открывают дверь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-14.m4a"
+        },
+        {
+          "id": "nl-aff-15",
+          "word": "речь",
+          "hint": "РЕЧЬ — Ч на конце. Правильная красивая речь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-15.m4a"
+        },
+        {
+          "id": "nl-aff-16",
+          "word": "цапля",
+          "hint": "ЦАП-ля. Ц в начале. Цапля стоит на одной ноге.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-16.m4a"
+        },
+        {
+          "id": "nl-aff-17",
+          "word": "цирк",
+          "hint": "ЦИРК — Ц в начале. В цирке выступают клоуны.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-17.m4a"
+        },
+        {
+          "id": "nl-aff-18",
+          "word": "цыплёнок",
+          "hint": "ЦЫП-лё-нок. Ц в начале. Жёлтый цыплёнок!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-aff-18.m4a"
+        },
+        {
+          "id": "nl-aff-19",
+          "word": "цепь",
+          "hint": "ЦЕПЬ — Ц в начале. Цепь из звеньев.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-19.m4a"
+        },
+        {
+          "id": "nl-aff-20",
+          "word": "цветок",
+          "hint": "ЦВЕ-ток. ЦВ — стечение. Красивый цветок!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-aff-20.m4a"
+        },
+        {
+          "id": "nl-aff-21",
+          "word": "лицо",
+          "hint": "Ли-ЦО. Ц в середине. Умой лицо!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-aff-21.m4a"
+        },
+        {
+          "id": "nl-aff-22",
+          "word": "овца",
+          "hint": "Ов-ЦА. Ц в середине. Овца говорит «бе-е».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-22.m4a"
+        },
+        {
+          "id": "nl-aff-23",
+          "word": "птица",
+          "hint": "ПТИ-ца. Ц в конце. Птица летит высоко!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-23.m4a"
+        },
+        {
+          "id": "nl-aff-24",
+          "word": "улица",
+          "hint": "У-ли-ца. Ц в конце. Дети гуляют на улице.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-24.m4a"
+        },
+        {
+          "id": "nl-aff-25",
+          "word": "огурец",
+          "hint": "О-гу-РЕЦ. Ц на конце. Зелёный огурец.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-25.m4a"
+        },
+        {
+          "id": "nl-aff-26",
+          "word": "заяц",
+          "hint": "ЗА-яц. Ц на конце. Быстрый зайчик!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-26.m4a"
+        },
+        {
+          "id": "nl-aff-27",
+          "word": "чудо",
+          "hint": "ЧУ-до. Ч в начале. Настоящее чудо!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-aff-27.m4a"
+        },
+        {
+          "id": "nl-aff-28",
+          "word": "чулок",
+          "hint": "ЧУ-лок. Ч в начале. Надеваем чулки.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-28.m4a"
+        },
+        {
+          "id": "nl-aff-29",
+          "word": "четыре",
+          "hint": "ЧЕ-ты-ре. Ч в начале. Цифра четыре!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-29.m4a"
+        },
+        {
+          "id": "nl-aff-30",
+          "word": "пчела",
+          "hint": "ПЧЕ-ла. ПЧ — стечение. Пчела собирает мёд.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-aff-30.m4a"
+        },
+        {
+          "id": "nl-aff-31",
+          "word": "птенец",
+          "hint": "ПТЕ-нец. ПТ+Ц — сложная фонология!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-aff-31.m4a"
+        },
+        {
+          "id": "nl-aff-32",
+          "word": "цепочка",
+          "hint": "Це-ПОЧ-ка. Ц и Ч в одном слове!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-aff-32.m4a"
+        },
+        {
+          "id": "nl-aff-33",
+          "word": "чечевица",
+          "hint": "Че-че-ВИ-ца. Два Ч + Ц! Сложное слово.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-aff-33.m4a"
+        },
+        {
+          "id": "nl-aff-34",
+          "word": "учитель",
+          "hint": "У-ЧИ-тель. Ч в середине. Учитель учит детей.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-34.m4a"
+        },
+        {
+          "id": "nl-aff-35",
+          "word": "значение",
+          "hint": "Зна-ЧЕ-ние. Ч в середине. Какое значение?",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-aff-35.m4a"
+        },
+        {
+          "id": "nl-aff-36",
+          "word": "источник",
+          "hint": "Ис-ТОЧ-ник. Ч в середине. Источник воды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-aff-36.m4a"
+        },
+        {
+          "id": "nl-aff-37",
+          "word": "цветущий",
+          "hint": "Цве-ТУ-щий. Ц+Щ в одном слове!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-aff-37.m4a"
+        },
+        {
+          "id": "nl-aff-38",
+          "word": "Чашка чая стоит на столе",
+          "hint": "Два ЧА в одном предложении!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-aff-38.m4a"
+        },
+        {
+          "id": "nl-aff-39",
+          "word": "Цапля поймала цыплёнка",
+          "hint": "Два Ц! Цапля и цыплёнок.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-aff-39.m4a"
+        },
+        {
+          "id": "nl-aff-40",
+          "word": "Черепаха ползёт по улице",
+          "hint": "Ч — черепаха. Ц — улице. Оба аффриката!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-aff-40.m4a"
+        },
+        {
+          "id": "nl-aff-41",
+          "word": "чёрный",
+          "hint": "ЧЁР-ный. Ч в начале. Чёрный кот.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-aff-41.m4a"
+        },
+        {
+          "id": "nl-aff-42",
+          "word": "чистый",
+          "hint": "ЧИС-тый. Ч в начале, ЧИС — стечение!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-42.m4a"
+        },
+        {
+          "id": "nl-aff-43",
+          "word": "цифра",
+          "hint": "ЦИФ-ра. ЦИ — всегда твёрдое! Цифры 1-9.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-aff-43.m4a"
+        },
+        {
+          "id": "nl-aff-44",
+          "word": "центр",
+          "hint": "ЦЕНТР — ЦЕ + НТР. Ц в начале. Центр города.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-aff-44.m4a"
+        },
+        {
+          "id": "nl-aff-45",
+          "word": "качать",
+          "hint": "Ка-ЧАТЬ. Ч в середине. Качать малыша.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-45.m4a"
+        },
+        {
+          "id": "nl-aff-46",
+          "word": "кричать",
+          "hint": "Кри-ЧАТЬ. Ч в середине. Нельзя кричать!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-46.m4a"
+        },
+        {
+          "id": "nl-aff-47",
+          "word": "молчать",
+          "hint": "Мол-ЧАТЬ. Ч в середине. Тихо молчи!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-47.m4a"
+        },
+        {
+          "id": "nl-aff-48",
+          "word": "получить",
+          "hint": "По-лу-ЧИТЬ. Ч в конце. Получить подарок!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-aff-48.m4a"
+        },
+        {
+          "id": "nl-aff-49",
+          "word": "цукаты",
+          "hint": "ЦУ-ка-ты. Ц в начале. Сладкие цукаты.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-aff-49.m4a"
+        }
+      ]
+    },
+    "sonorants_r": {
+      "stageId": "sonorants_r",
+      "note": "Сонор Р/Рь: слоги, слова во всех позициях, фразы, скороговорки — дислалия ротацизм.",
+      "items": [
+        {
+          "id": "nl-son-r-00",
+          "word": "ра-ра-ра",
+          "hint": "Р — язычок дрожит у нёба. Ра-ра-ра!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-son-r-00.m4a"
+        },
+        {
+          "id": "nl-son-r-01",
+          "word": "ро-ро-ро",
+          "hint": "РО — дрожащий плюс О. Ро-ро-ро!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-son-r-01.m4a"
+        },
+        {
+          "id": "nl-son-r-02",
+          "word": "ру-ру-ру",
+          "hint": "РУ — губы трубочкой. Р-р-рулит!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-son-r-02.m4a"
+        },
+        {
+          "id": "nl-son-r-03",
+          "word": "ры-ры-ры",
+          "hint": "РЫ — язычок дрожит, рот широкий. Ры-ры-ры!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-son-r-03.m4a"
+        },
+        {
+          "id": "nl-son-r-04",
+          "word": "ар-ор-ур",
+          "hint": "Обратные слоги. Р на конце — твёрдое завершение.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-son-r-04.m4a"
+        },
+        {
+          "id": "nl-son-r-05",
+          "word": "рак",
+          "hint": "РАК — Р в начале. Рак пятится назад!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-son-r-05.m4a"
+        },
+        {
+          "id": "nl-son-r-06",
+          "word": "рот",
+          "hint": "РОТ — Р в начале. Открой рот!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-son-r-06.m4a"
+        },
+        {
+          "id": "nl-son-r-07",
+          "word": "рыба",
+          "hint": "РЫ-ба. Р в начале. Рыба плавает в воде.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-son-r-07.m4a"
+        },
+        {
+          "id": "nl-son-r-08",
+          "word": "рука",
+          "hint": "РУ-ка. Р в начале. Две руки — правая и левая.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-son-r-08.m4a"
+        },
+        {
+          "id": "nl-son-r-09",
+          "word": "ракета",
+          "hint": "Ра-КЕ-та. Р в начале. Ракета летит к звёздам!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-son-r-09.m4a"
+        },
+        {
+          "id": "nl-son-r-10",
+          "word": "радуга",
+          "hint": "РА-ду-га. Р в начале. Радуга после дождя.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-son-r-10.m4a"
+        },
+        {
+          "id": "nl-son-r-11",
+          "word": "ромашка",
+          "hint": "Ро-МАШ-ка. Р в начале + Ш в середине.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-son-r-11.m4a"
+        },
+        {
+          "id": "nl-son-r-12",
+          "word": "гора",
+          "hint": "Го-РА. Р в середине. Высокая гора.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-son-r-12.m4a"
+        },
+        {
+          "id": "nl-son-r-13",
+          "word": "корова",
+          "hint": "Ко-РО-ва. Р в середине. Корова даёт молоко.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-son-r-13.m4a"
+        },
+        {
+          "id": "nl-son-r-14",
+          "word": "ворона",
+          "hint": "Во-РО-на. Р в середине. Ворона кричит кар!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-son-r-14.m4a"
+        },
+        {
+          "id": "nl-son-r-15",
+          "word": "карандаш",
+          "hint": "Ка-ран-ДАШ. Р в середине. Рисуем карандашом.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-son-r-15.m4a"
+        },
+        {
+          "id": "nl-son-r-16",
+          "word": "паровоз",
+          "hint": "Па-ро-ВОЗ. Р в середине. Паровоз гудит!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-son-r-16.m4a"
+        },
+        {
+          "id": "nl-son-r-17",
+          "word": "топор",
+          "hint": "То-ПОР. Р на конце. Топором рубят дрова.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-son-r-17.m4a"
+        },
+        {
+          "id": "nl-son-r-18",
+          "word": "забор",
+          "hint": "За-БОР. Р на конце. За забором сад.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-son-r-18.m4a"
+        },
+        {
+          "id": "nl-son-r-19",
+          "word": "мотор",
+          "hint": "Мо-ТОР. Р на конце. Гудит мотор!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-son-r-19.m4a"
+        },
+        {
+          "id": "nl-son-r-20",
+          "word": "сыр",
+          "hint": "СЫР — С+Ы+Р. Р на конце. Жёлтый сыр.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-son-r-20.m4a"
+        },
+        {
+          "id": "nl-son-r-21",
+          "word": "двор",
+          "hint": "ДВОР — ДВ+ОР. Р на конце. Дети играют во дворе.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-son-r-21.m4a"
+        },
+        {
+          "id": "nl-son-r-22",
+          "word": "трактор",
+          "hint": "ТРАК-тор. ТР стечение + Р на конце. Два Р!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-son-r-22.m4a"
+        },
+        {
+          "id": "nl-son-r-23",
+          "word": "ри-ри-ри",
+          "hint": "РИ — мягкий! Рь. Слышишь разницу с РЫ?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-son-r-23.m4a"
+        },
+        {
+          "id": "nl-son-r-24",
+          "word": "речка",
+          "hint": "РЕЧ-ка. Рь в начале. Речка бежит по камушкам.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-son-r-24.m4a"
+        },
+        {
+          "id": "nl-son-r-25",
+          "word": "репа",
+          "hint": "РЕ-па. Рь в начале. Тянут репку!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-son-r-25.m4a"
+        },
+        {
+          "id": "nl-son-r-26",
+          "word": "рябина",
+          "hint": "РЯ-би-на. Рь в начале. Красная рябина.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-son-r-26.m4a"
+        },
+        {
+          "id": "nl-son-r-27",
+          "word": "ребята",
+          "hint": "Ре-БЯ-та. Рь в начале. Весёлые ребята!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-son-r-27.m4a"
+        },
+        {
+          "id": "nl-son-r-28",
+          "word": "орёл",
+          "hint": "О-РЁЛ. Рь в середине. Гордый орёл!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-son-r-28.m4a"
+        },
+        {
+          "id": "nl-son-r-29",
+          "word": "деревня",
+          "hint": "Де-РЕВ-ня. Рь в середине. Бабушка в деревне.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-son-r-29.m4a"
+        },
+        {
+          "id": "nl-son-r-30",
+          "word": "дверь",
+          "hint": "ДВЕРЬ — ДВ+ЕРЬ. Рь на конце. Открой дверь!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-son-r-30.m4a"
+        },
+        {
+          "id": "nl-son-r-31",
+          "word": "говорить",
+          "hint": "Го-во-РИТЬ. Рь в конце. Говорить красиво!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-son-r-31.m4a"
+        },
+        {
+          "id": "nl-son-r-32",
+          "word": "трамвай",
+          "hint": "ТРАМ-вай. ТР стечение. Трамвай звенит!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-son-r-32.m4a"
+        },
+        {
+          "id": "nl-son-r-33",
+          "word": "дракон",
+          "hint": "ДРА-кон. ДР стечение. Страшный дракон!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-son-r-33.m4a"
+        },
+        {
+          "id": "nl-son-r-34",
+          "word": "крокодил",
+          "hint": "Кро-ко-ДИЛ. КР стечение. Зелёный крокодил!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-son-r-34.m4a"
+        },
+        {
+          "id": "nl-son-r-35",
+          "word": "прыгать",
+          "hint": "ПРЫГ-ать. ПР стечение. Прыгать весело!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-son-r-35.m4a"
+        },
+        {
+          "id": "nl-son-r-36",
+          "word": "стрела",
+          "hint": "СТРЕ-ла. СТР — три согласных! Летит стрела.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-son-r-36.m4a"
+        },
+        {
+          "id": "nl-son-r-37",
+          "word": "Рома рисует рыбу",
+          "hint": "Три Р в одном предложении! Р-Р-Р.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-son-r-37.m4a"
+        },
+        {
+          "id": "nl-son-r-38",
+          "word": "Красная роза растёт в саду",
+          "hint": "Три Р: красная, роза, растёт. Считай!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-son-r-38.m4a"
+        },
+        {
+          "id": "nl-son-r-39",
+          "word": "Ворона сидит на заборе",
+          "hint": "Два Р: воРона, забоРе. Оба в середине и конце!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-son-r-39.m4a"
+        },
+        {
+          "id": "nl-son-r-40",
+          "word": "Рыбак поймал рыбу в реке",
+          "hint": "Три Р! Рыбак — Р в начале. Рыбу — Р в начале. Реке — Рь.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-son-r-40.m4a"
+        },
+        {
+          "id": "nl-son-r-41",
+          "word": "рукавица",
+          "hint": "Ру-ка-ВИ-ца. Р в начале + Ц. Тёплые рукавицы.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-son-r-41.m4a"
+        },
+        {
+          "id": "nl-son-r-42",
+          "word": "ракушка",
+          "hint": "РА-куш-ка. Р+Ш в одном слове. Ракушка на море!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-son-r-42.m4a"
+        },
+        {
+          "id": "nl-son-r-43",
+          "word": "рюкзак",
+          "hint": "РЮК-зак. Рь в начале + З. Тяжёлый рюкзак.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-son-r-43.m4a"
+        },
+        {
+          "id": "nl-son-r-44",
+          "word": "морозный",
+          "hint": "Мо-РОЗ-ный. Р в середине. Морозный зимний день.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-son-r-44.m4a"
+        },
+        {
+          "id": "nl-son-r-45",
+          "word": "природа",
+          "hint": "При-РО-да. ПРИ + Р снова. Красивая природа!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-son-r-45.m4a"
+        },
+        {
+          "id": "nl-son-r-46",
+          "word": "сердце",
+          "hint": "СЕР-дце. Рь в середине + ДЦ. Доброе сердце!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-son-r-46.m4a"
+        },
+        {
+          "id": "nl-son-r-47",
+          "word": "прекрасный",
+          "hint": "Пре-КРАС-ный. ПРЕ + КР! Два стечения с Р.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-son-r-47.m4a"
+        },
+        {
+          "id": "nl-son-r-48",
+          "word": "тренировка",
+          "hint": "Тре-ни-РОВ-ка. ТР + Р! Тренировка каждый день.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-son-r-48.m4a"
+        },
+        {
+          "id": "nl-son-r-49",
+          "word": "Дровосек рубит дрова в лесу",
+          "hint": "ДРО + ДРА — два ДР! Сложная скороговорка.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-son-r-49.m4a"
+        }
+      ]
+    },
+    "sonorants_lmn": {
+      "stageId": "sonorants_lmn",
+      "note": "Соноры Л/Лъ/М/Н: ламбдацизм, носовые, слова во всех позициях.",
+      "items": [
+        {
+          "id": "nl-lmn-00",
+          "word": "ла-ла-ла",
+          "hint": "Л — язычок прижат к верхним зубам. Ла-ла-ла!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-lmn-00.m4a"
+        },
+        {
+          "id": "nl-lmn-01",
+          "word": "ло-ло-ло",
+          "hint": "ЛО — Л боковой. Воздух идёт по бокам языка.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-lmn-01.m4a"
+        },
+        {
+          "id": "nl-lmn-02",
+          "word": "лу-лу-лу",
+          "hint": "ЛУ — губы трубочкой. Л у верхних зубов.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-lmn-02.m4a"
+        },
+        {
+          "id": "nl-lmn-03",
+          "word": "лампа",
+          "hint": "ЛАМ-па. Л в начале. Лампа светит ярко!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-lmn-03.m4a"
+        },
+        {
+          "id": "nl-lmn-04",
+          "word": "луна",
+          "hint": "ЛУ-на. Л в начале. Луна светит ночью.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-lmn-04.m4a"
+        },
+        {
+          "id": "nl-lmn-05",
+          "word": "лопата",
+          "hint": "Ло-ПА-та. Л в начале. Копаем лопатой.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-lmn-05.m4a"
+        },
+        {
+          "id": "nl-lmn-06",
+          "word": "кукла",
+          "hint": "КУК-ла. Л в конце. Красивая кукла!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-lmn-06.m4a"
+        },
+        {
+          "id": "nl-lmn-07",
+          "word": "стол",
+          "hint": "СТОЛ — Л в конце. Стоит стол.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-lmn-07.m4a"
+        },
+        {
+          "id": "nl-lmn-08",
+          "word": "пол",
+          "hint": "ПОЛ — Л в конце. Метём пол.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-lmn-08.m4a"
+        },
+        {
+          "id": "nl-lmn-09",
+          "word": "белка",
+          "hint": "БЕЛ-ка. Л в середине. Рыжая белка прыгает.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-lmn-09.m4a"
+        },
+        {
+          "id": "nl-lmn-10",
+          "word": "молоко",
+          "hint": "Мо-ло-КО. Два Л! Пьём молоко каждый день.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-lmn-10.m4a"
+        },
+        {
+          "id": "nl-lmn-11",
+          "word": "голубь",
+          "hint": "ГО-лубь. Л в середине. Белый голубь летит.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-lmn-11.m4a"
+        },
+        {
+          "id": "nl-lmn-12",
+          "word": "ли-ли-ли",
+          "hint": "ЛИ — мягкий! Льи. Слышишь разницу с ЛА?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-lmn-12.m4a"
+        },
+        {
+          "id": "nl-lmn-13",
+          "word": "лимон",
+          "hint": "Ли-МОН. Ль в начале. Кислый лимон!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-lmn-13.m4a"
+        },
+        {
+          "id": "nl-lmn-14",
+          "word": "лиса",
+          "hint": "Ли-СА. Ль в начале + С. Хитрая лиса!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-lmn-14.m4a"
+        },
+        {
+          "id": "nl-lmn-15",
+          "word": "лента",
+          "hint": "ЛЕН-та. Ль в начале. Красивая лента в волосах.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-lmn-15.m4a"
+        },
+        {
+          "id": "nl-lmn-16",
+          "word": "цыплёнок",
+          "hint": "Цып-ЛЁ-нок. Ль в середине + Ц. Жёлтый цыплёнок.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-lmn-16.m4a"
+        },
+        {
+          "id": "nl-lmn-17",
+          "word": "словарь",
+          "hint": "Сло-ВАРЬ. Ль на конце + СЛ стечение.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-lmn-17.m4a"
+        },
+        {
+          "id": "nl-lmn-18",
+          "word": "тюлень",
+          "hint": "Тю-ЛЕНЬ. Ль на конце. Толстый тюлень!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-lmn-18.m4a"
+        },
+        {
+          "id": "nl-lmn-19",
+          "word": "пальто",
+          "hint": "ПАЛЬ-то. Ль в середине. Осенью носят пальто.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-lmn-19.m4a"
+        },
+        {
+          "id": "nl-lmn-20",
+          "word": "ма-ма-ма",
+          "hint": "М — губы смыкаются. Носовой звук. Ма-ма!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-lmn-20.m4a"
+        },
+        {
+          "id": "nl-lmn-21",
+          "word": "мама",
+          "hint": "МА-ма. М в начале и середине. Самое первое слово!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-lmn-21.m4a"
+        },
+        {
+          "id": "nl-lmn-22",
+          "word": "медведь",
+          "hint": "МЕД-ведь. М в начале. Косолапый медведь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-lmn-22.m4a"
+        },
+        {
+          "id": "nl-lmn-23",
+          "word": "молния",
+          "hint": "МОЛ-ния. М в начале + Л. Молния сверкает!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-lmn-23.m4a"
+        },
+        {
+          "id": "nl-lmn-24",
+          "word": "умный",
+          "hint": "УМ-ный. М в середине. Умный ученик!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-lmn-24.m4a"
+        },
+        {
+          "id": "nl-lmn-25",
+          "word": "дом",
+          "hint": "ДОМ — М на конце. Родной дом.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-lmn-25.m4a"
+        },
+        {
+          "id": "nl-lmn-26",
+          "word": "мармелад",
+          "hint": "Мар-ме-ЛАД. Два М + Л! Сладкий мармелад.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-lmn-26.m4a"
+        },
+        {
+          "id": "nl-lmn-27",
+          "word": "на-на-на",
+          "hint": "Н — носовой, язычок у верхних зубов. На-на-на!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-lmn-27.m4a"
+        },
+        {
+          "id": "nl-lmn-28",
+          "word": "нос",
+          "hint": "НОС — Н в начале. Нос нюхает запахи!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-lmn-28.m4a"
+        },
+        {
+          "id": "nl-lmn-29",
+          "word": "нога",
+          "hint": "Но-ГА. Н в начале. Две ноги — правая и левая.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-lmn-29.m4a"
+        },
+        {
+          "id": "nl-lmn-30",
+          "word": "небо",
+          "hint": "НЕ-бо. Нь в начале. Голубое небо над нами.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-lmn-30.m4a"
+        },
+        {
+          "id": "nl-lmn-31",
+          "word": "ножницы",
+          "hint": "НОЖ-ни-цы. Н+Ж+Ц! Три разных звука.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-lmn-31.m4a"
+        },
+        {
+          "id": "nl-lmn-32",
+          "word": "окно",
+          "hint": "Ок-НО. Н в конце. Смотрим в окно.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-lmn-32.m4a"
+        },
+        {
+          "id": "nl-lmn-33",
+          "word": "длинный",
+          "hint": "ДЛИН-ный. ДЛ стечение + Н. Длинный хвост!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-lmn-33.m4a"
+        },
+        {
+          "id": "nl-lmn-34",
+          "word": "нарисовать",
+          "hint": "На-ри-со-ВАТЬ. Н+Р+С — три разных звука!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-lmn-34.m4a"
+        },
+        {
+          "id": "nl-lmn-35",
+          "word": "лопнуть",
+          "hint": "ЛОП-нуть. Л+Н в одном слове. Шарик лопнул!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-lmn-35.m4a"
+        },
+        {
+          "id": "nl-lmn-36",
+          "word": "нельзя",
+          "hint": "НЕЛЬ-зя. Нь+Л+З! Три звука в стечении.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-lmn-36.m4a"
+        },
+        {
+          "id": "nl-lmn-37",
+          "word": "Лена ловила рыбу",
+          "hint": "ЛЕ + ЛО + Р — Ль, Л, Р чередуются!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-lmn-37.m4a"
+        },
+        {
+          "id": "nl-lmn-38",
+          "word": "Молоко налили в бутылку",
+          "hint": "М+Л+Н+Л+Т — насыщенная фраза соноров.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-lmn-38.m4a"
+        },
+        {
+          "id": "nl-lmn-39",
+          "word": "ложка",
+          "hint": "ЛОЖ-ка. Л+Ж. Едим суп ложкой.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-lmn-39.m4a"
+        },
+        {
+          "id": "nl-lmn-40",
+          "word": "ломать",
+          "hint": "ЛО-мать. Л в начале. Не надо ломать игрушки!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-lmn-40.m4a"
+        },
+        {
+          "id": "nl-lmn-41",
+          "word": "малина",
+          "hint": "Ма-ЛИ-на. М+Ль. Сладкая малина в саду.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-lmn-41.m4a"
+        },
+        {
+          "id": "nl-lmn-42",
+          "word": "мелодия",
+          "hint": "Ме-ЛО-ди-я. М+Л. Красивая мелодия!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-lmn-42.m4a"
+        },
+        {
+          "id": "nl-lmn-43",
+          "word": "муравей",
+          "hint": "Му-ра-ВЕЙ. М+Р. Трудолюбивый муравей.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-lmn-43.m4a"
+        },
+        {
+          "id": "nl-lmn-44",
+          "word": "морковь",
+          "hint": "Мор-КОВЬ. М+Р. Оранжевая морковь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-lmn-44.m4a"
+        },
+        {
+          "id": "nl-lmn-45",
+          "word": "нарядный",
+          "hint": "На-РЯД-ный. Н+Р. Нарядный костюм!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-lmn-45.m4a"
+        },
+        {
+          "id": "nl-lmn-46",
+          "word": "нагнуться",
+          "hint": "На-ГНУТЬ-ся. НГН — сложное стечение.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-lmn-46.m4a"
+        },
+        {
+          "id": "nl-lmn-47",
+          "word": "нарисовать",
+          "hint": "На-ри-со-ВАТЬ. Нь+Р+С — тренируем всё!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-lmn-47.m4a"
+        },
+        {
+          "id": "nl-lmn-48",
+          "word": "ломоносов",
+          "hint": "Ло-мо-НО-сов. Л+М+Н — три сонора!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-lmn-48.m4a"
+        },
+        {
+          "id": "nl-lmn-49",
+          "word": "Налей молока в ладони",
+          "hint": "Н+М+Л — три сонора в одной фразе!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-lmn-49.m4a"
+        }
+      ]
+    },
+    "velars_extended": {
+      "stageId": "velars_extended",
+      "note": "Заднеязычные К/Г: слоги, слова, фразы — постановка каппацизма/гаммацизма.",
+      "items": [
+        {
+          "id": "nl-vel-00",
+          "word": "ка-ка-ка",
+          "hint": "К — корень языка прижат к нёбу. Кха-кха!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vel-00.m4a"
+        },
+        {
+          "id": "nl-vel-01",
+          "word": "ко-ко-ко",
+          "hint": "КО — глубокий К. Кудахчет курочка!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vel-01.m4a"
+        },
+        {
+          "id": "nl-vel-02",
+          "word": "га-га-га",
+          "hint": "Г — как К, но с голосом. Гагочет гусь!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vel-02.m4a"
+        },
+        {
+          "id": "nl-vel-03",
+          "word": "кот",
+          "hint": "КОТ — К в начале. Мягкий кот мурлычет.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vel-03.m4a"
+        },
+        {
+          "id": "nl-vel-04",
+          "word": "куст",
+          "hint": "КУСТ — К в начале. За кустом спрятался заяц.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vel-04.m4a"
+        },
+        {
+          "id": "nl-vel-05",
+          "word": "камень",
+          "hint": "КА-мень. К в начале. Тяжёлый камень.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vel-05.m4a"
+        },
+        {
+          "id": "nl-vel-06",
+          "word": "корень",
+          "hint": "КО-рень. К+Р. Корень слова — главная часть.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vel-06.m4a"
+        },
+        {
+          "id": "nl-vel-07",
+          "word": "рукав",
+          "hint": "Ру-КАВ. К в середине. Рукав пальто.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vel-07.m4a"
+        },
+        {
+          "id": "nl-vel-08",
+          "word": "молоток",
+          "hint": "Мо-ло-ТОК. К в конце. Стучит молоток!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vel-08.m4a"
+        },
+        {
+          "id": "nl-vel-09",
+          "word": "веник",
+          "hint": "ВЕ-ник. К в конце. Метём веником.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vel-09.m4a"
+        },
+        {
+          "id": "nl-vel-10",
+          "word": "гусь",
+          "hint": "ГУСЬ — Г в начале. Белый гусь шипит!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vel-10.m4a"
+        },
+        {
+          "id": "nl-vel-11",
+          "word": "гора",
+          "hint": "Го-РА. Г+Р. Высокая гора!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vel-11.m4a"
+        },
+        {
+          "id": "nl-vel-12",
+          "word": "голубь",
+          "hint": "ГО-лубь. Г+Л. Белый голубь мира.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vel-12.m4a"
+        },
+        {
+          "id": "nl-vel-13",
+          "word": "гриб",
+          "hint": "ГРИБ — ГР стечение. Грибы растут в лесу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vel-13.m4a"
+        },
+        {
+          "id": "nl-vel-14",
+          "word": "флаг",
+          "hint": "ФЛАГ — Г на конце (звучит К). Российский флаг.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vel-14.m4a"
+        },
+        {
+          "id": "nl-vel-15",
+          "word": "снег",
+          "hint": "СНЕГ — Г на конце (звучит К). Белый снег.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vel-15.m4a"
+        },
+        {
+          "id": "nl-vel-16",
+          "word": "книга",
+          "hint": "КНИ-га. КН стечение + Г. Читаем книгу!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-vel-16.m4a"
+        },
+        {
+          "id": "nl-vel-17",
+          "word": "кружка",
+          "hint": "КРУЖ-ка. КР стечение. Горячий чай в кружке.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-vel-17.m4a"
+        },
+        {
+          "id": "nl-vel-18",
+          "word": "крыса",
+          "hint": "КРЫ-са. КР стечение. Серая крыса.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-vel-18.m4a"
+        },
+        {
+          "id": "nl-vel-19",
+          "word": "глаз",
+          "hint": "ГЛАЗ — ГЛ стечение. Два глаза — два Г+Л!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-vel-19.m4a"
+        },
+        {
+          "id": "nl-vel-20",
+          "word": "гладкий",
+          "hint": "ГЛАД-кий. ГЛ + К! Гладкая поверхность.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-vel-20.m4a"
+        },
+        {
+          "id": "nl-vel-21",
+          "word": "какао",
+          "hint": "Ка-КА-о. Два К! Вкусное какао с молоком.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vel-21.m4a"
+        },
+        {
+          "id": "nl-vel-22",
+          "word": "колокол",
+          "hint": "Ко-ло-КОЛ. Три К + Л! Звонит колокол.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-vel-22.m4a"
+        },
+        {
+          "id": "nl-vel-23",
+          "word": "кукушка",
+          "hint": "Ку-КУШ-ка. Два К! Кукушка кукует.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-vel-23.m4a"
+        },
+        {
+          "id": "nl-vel-24",
+          "word": "Кот поймал гусеницу",
+          "hint": "К — кот. Г — гусеницу. Оба заднеязычных!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-vel-24.m4a"
+        },
+        {
+          "id": "nl-vel-25",
+          "word": "Гусь клюёт зёрна",
+          "hint": "Г — гусь. К — клюёт. Заднеязычные вместе!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-vel-25.m4a"
+        },
+        {
+          "id": "nl-vel-26",
+          "word": "Купи красивую куклу",
+          "hint": "Три К в одной фразе! Ку-пи, кра-си-вую, кук-лу.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-vel-26.m4a"
+        },
+        {
+          "id": "nl-vel-27",
+          "word": "кирпич",
+          "hint": "КИР-пич. К мягкое (КЬ) + Ч. Дом из кирпича.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-vel-27.m4a"
+        },
+        {
+          "id": "nl-vel-28",
+          "word": "гитара",
+          "hint": "Ги-ТА-ра. Г мягкое + Р. Играем на гитаре!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-vel-28.m4a"
+        },
+        {
+          "id": "nl-vel-29",
+          "word": "искусство",
+          "hint": "Ис-КУС-ство. К в середине + СТВ — сложная фонология.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-vel-29.m4a"
+        }
+      ]
+    },
+    "vowels_extended": {
+      "stageId": "vowels_extended",
+      "note": "Гласные А/О/У/Ы/Э/И: артикуляционные позиции, ударение, различение — для гипотонуса и ОНР.",
+      "items": [
+        {
+          "id": "nl-vow-00",
+          "word": "А-А-А",
+          "hint": "А — рот широко открыт, язычок лежит. А-А-А!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-00.m4a"
+        },
+        {
+          "id": "nl-vow-01",
+          "word": "О-О-О",
+          "hint": "О — губы кружочком. Округли губки!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-01.m4a"
+        },
+        {
+          "id": "nl-vow-02",
+          "word": "У-У-У",
+          "hint": "У — губы трубочкой вперёд. У-У-У!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-02.m4a"
+        },
+        {
+          "id": "nl-vow-03",
+          "word": "Ы-Ы-Ы",
+          "hint": "Ы — рот чуть открыт, язычок оттянут назад.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-03.m4a"
+        },
+        {
+          "id": "nl-vow-04",
+          "word": "Э-Э-Э",
+          "hint": "Э — рот чуть открыт, улыбка. Э-э-эхо!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-04.m4a"
+        },
+        {
+          "id": "nl-vow-05",
+          "word": "И-И-И",
+          "hint": "И — губы в улыбке, язычок у нижних зубов.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-05.m4a"
+        },
+        {
+          "id": "nl-vow-06",
+          "word": "А-О-У",
+          "hint": "Ряд гласных: рот открывается — закрывается. А-О-У!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-06.m4a"
+        },
+        {
+          "id": "nl-vow-07",
+          "word": "У-О-А",
+          "hint": "Обратный ряд! У-О-А. Губы меняются.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vow-07.m4a"
+        },
+        {
+          "id": "nl-vow-08",
+          "word": "А-У",
+          "hint": "А — широко. У — трубочка. Ребёнок заблудился: А-У!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-08.m4a"
+        },
+        {
+          "id": "nl-vow-09",
+          "word": "И-А",
+          "hint": "И — улыбка. А — открытый рот. Ослик кричит И-А!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-09.m4a"
+        },
+        {
+          "id": "nl-vow-10",
+          "word": "мак",
+          "hint": "МАК — ударный А. МАК! Громкий слог.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-10.m4a"
+        },
+        {
+          "id": "nl-vow-11",
+          "word": "рот",
+          "hint": "РОТ — ударный О. Круглый рот.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-11.m4a"
+        },
+        {
+          "id": "nl-vow-12",
+          "word": "лук",
+          "hint": "ЛУК — ударный У. Горький лук.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-12.m4a"
+        },
+        {
+          "id": "nl-vow-13",
+          "word": "рысь",
+          "hint": "РЫСЬ — ударный Ы. Рысь — дикая кошка.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-13.m4a"
+        },
+        {
+          "id": "nl-vow-14",
+          "word": "мэр",
+          "hint": "МЭР — ударный Э. Мэр города.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vow-14.m4a"
+        },
+        {
+          "id": "nl-vow-15",
+          "word": "кит",
+          "hint": "КИТ — ударный И. Огромный кит плавает!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-15.m4a"
+        },
+        {
+          "id": "nl-vow-16",
+          "word": "вода — вОды",
+          "hint": "Ударение меняется! водА → вОды. Слышишь?",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-vow-16.m4a"
+        },
+        {
+          "id": "nl-vow-17",
+          "word": "рукА — рУки",
+          "hint": "РукА — ударение на А. РУки — на У. Меняется!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-vow-17.m4a"
+        },
+        {
+          "id": "nl-vow-18",
+          "word": "горА — гОры",
+          "hint": "ГорА — ударение на А. ГОры — на О.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-vow-18.m4a"
+        },
+        {
+          "id": "nl-vow-19",
+          "word": "окно — Окна",
+          "hint": "ОкнО → Окна. Ударение сдвигается!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-vow-19.m4a"
+        },
+        {
+          "id": "nl-vow-20",
+          "word": "лесА — лЕс",
+          "hint": "ЛесА (много) — ЛЕс (один). Ударение разное!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-vow-20.m4a"
+        },
+        {
+          "id": "nl-vow-21",
+          "word": "Я-Я-Я",
+          "hint": "Я = Й+А. Два звука! Язычок сначала к нёбу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vow-21.m4a"
+        },
+        {
+          "id": "nl-vow-22",
+          "word": "Ё-Ё-Ё",
+          "hint": "Ё = Й+О. Два звука! Ёжик — Й+О+жик.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vow-22.m4a"
+        },
+        {
+          "id": "nl-vow-23",
+          "word": "Ю-Ю-Ю",
+          "hint": "Ю = Й+У. Два звука! Юла крутится.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vow-23.m4a"
+        },
+        {
+          "id": "nl-vow-24",
+          "word": "Е-Е-Е",
+          "hint": "Е = Й+Э. Два звука в начале! Ель — Й+Э+ль.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vow-24.m4a"
+        },
+        {
+          "id": "nl-vow-25",
+          "word": "яблоко",
+          "hint": "ЯБ-ло-ко. Я=ЙА в начале. Три слога!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vow-25.m4a"
+        },
+        {
+          "id": "nl-vow-26",
+          "word": "ёжик",
+          "hint": "ЁЖ-ик. Ё=ЙО в начале. Колючий ёжик!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vow-26.m4a"
+        },
+        {
+          "id": "nl-vow-27",
+          "word": "юла",
+          "hint": "Ю-ла. Ю=ЙУ в начале. Крутится юла!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-27.m4a"
+        },
+        {
+          "id": "nl-vow-28",
+          "word": "ель",
+          "hint": "ЕЛЬ — Е=ЙЭ в начале. Зелёная ель!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vow-28.m4a"
+        },
+        {
+          "id": "nl-vow-29",
+          "word": "Удар на первый слог: ЗАмок",
+          "hint": "ЗАмок (место). Не замОк (дверной)!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-vow-29.m4a"
+        },
+        {
+          "id": "nl-vow-30",
+          "word": "Удар на второй слог: замОк",
+          "hint": "ЗамОк (дверной). Не ЗАмок (строение)!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-vow-30.m4a"
+        },
+        {
+          "id": "nl-vow-31",
+          "word": "Удар: МУка — мукА",
+          "hint": "МУка (для хлеба) или мукА (страдание)?",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-vow-31.m4a"
+        },
+        {
+          "id": "nl-vow-32",
+          "word": "произнеси А длинно",
+          "hint": "АААА — тяни долго! Потом О, потом У.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-32.m4a"
+        },
+        {
+          "id": "nl-vow-33",
+          "word": "произнеси А коротко",
+          "hint": "А! — коротко и чётко. Потом О! потом У!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-33.m4a"
+        },
+        {
+          "id": "nl-vow-34",
+          "word": "А громко — А тихо",
+          "hint": "А! (громко) — а (тихо). Учимся управлять голосом.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vow-34.m4a"
+        },
+        {
+          "id": "nl-vow-35",
+          "word": "пение: А-А-А↑",
+          "hint": "Тяни А и поднимай голос выше. Поёшь!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vow-35.m4a"
+        },
+        {
+          "id": "nl-vow-36",
+          "word": "аист",
+          "hint": "А-ист. А в начале. Длинноногий аист!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-36.m4a"
+        },
+        {
+          "id": "nl-vow-37",
+          "word": "уши",
+          "hint": "У-ши. У в начале. Большие уши у слона!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-37.m4a"
+        },
+        {
+          "id": "nl-vow-38",
+          "word": "осень",
+          "hint": "О-сень. О в начале. Жёлтая осень!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-38.m4a"
+        },
+        {
+          "id": "nl-vow-39",
+          "word": "иней",
+          "hint": "И-ней. И в начале. Белый иней зимой.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vow-39.m4a"
+        },
+        {
+          "id": "nl-vow-40",
+          "word": "эхо",
+          "hint": "Э-хо. Э в начале. В горах слышно эхо!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-40.m4a"
+        },
+        {
+          "id": "nl-vow-41",
+          "word": "опушка",
+          "hint": "О-пуш-ка. О в начале. Опушка леса.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vow-41.m4a"
+        },
+        {
+          "id": "nl-vow-42",
+          "word": "утро",
+          "hint": "УТ-ро. У в начале. Доброе утро!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-42.m4a"
+        },
+        {
+          "id": "nl-vow-43",
+          "word": "игла",
+          "hint": "Иг-ЛА. И в начале. Острая игла!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vow-43.m4a"
+        },
+        {
+          "id": "nl-vow-44",
+          "word": "избушка",
+          "hint": "И-БУШ-ка. И в начале. Избушка на курьих ножках!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-vow-44.m4a"
+        },
+        {
+          "id": "nl-vow-45",
+          "word": "облако",
+          "hint": "ОБ-ла-ко. О в начале. Белое облако!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vow-45.m4a"
+        },
+        {
+          "id": "nl-vow-46",
+          "word": "А-И-О-У",
+          "hint": "Четыре гласных подряд. Пой каждый!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-vow-46.m4a"
+        },
+        {
+          "id": "nl-vow-47",
+          "word": "У-А-И-О-Э-Ы",
+          "hint": "Весь ряд гласных! Рот меняет форму.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-vow-47.m4a"
+        },
+        {
+          "id": "nl-vow-48",
+          "word": "Артикуляция А: открой рот широко",
+          "hint": "Рот открыт как можно шире! Язычок внизу. А!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-48.m4a"
+        },
+        {
+          "id": "nl-vow-49",
+          "word": "Артикуляция У: губы трубочкой далеко",
+          "hint": "Губы вперёд максимально! У-у-у-у.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-vow-49.m4a"
+        }
+      ]
+    },
+    "soft_variants": {
+      "stageId": "soft_variants",
+      "note": "Мягкие согласные Ть/Дь/Сь/Зь/Нь/Ль/Рь — палатализация, типичная трудность при ФФН и ОНР.",
+      "items": [
+        {
+          "id": "nl-soft-00",
+          "word": "тя-тя-тя",
+          "hint": "ТЯ — мягкое Тъ. Язычок чуть к нёбу. Тятя!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-soft-00.m4a"
+        },
+        {
+          "id": "nl-soft-01",
+          "word": "те-те-те",
+          "hint": "ТЕ — мягкое Тъ. Телефон!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-soft-01.m4a"
+        },
+        {
+          "id": "nl-soft-02",
+          "word": "тигр",
+          "hint": "ТИГР — ТЬ в начале. Полосатый тигр рычит!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-02.m4a"
+        },
+        {
+          "id": "nl-soft-03",
+          "word": "тетрадь",
+          "hint": "Тет-РАДЬ. ТЬ+ДЬ! В тетради пишут буквы.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-soft-03.m4a"
+        },
+        {
+          "id": "nl-soft-04",
+          "word": "котёнок",
+          "hint": "Ко-ТЁ-нок. ТЬ в середине. Маленький котёнок!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-04.m4a"
+        },
+        {
+          "id": "nl-soft-05",
+          "word": "пять",
+          "hint": "ПЯТЬ — ТЬ на конце. Пять пальцев на руке!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-soft-05.m4a"
+        },
+        {
+          "id": "nl-soft-06",
+          "word": "пить",
+          "hint": "ПИТЬ — ТЬ на конце. Хочу пить воды!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-soft-06.m4a"
+        },
+        {
+          "id": "nl-soft-07",
+          "word": "ходить",
+          "hint": "Хо-ДИТЬ. ТЬ на конце. Ходить в школу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-07.m4a"
+        },
+        {
+          "id": "nl-soft-08",
+          "word": "дя-дя-дя",
+          "hint": "ДЯ — мягкое Дъ. Дядя пришёл!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-soft-08.m4a"
+        },
+        {
+          "id": "nl-soft-09",
+          "word": "дядя",
+          "hint": "ДЯ-дя. Два мягких Дъ! Добрый дядя.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-09.m4a"
+        },
+        {
+          "id": "nl-soft-10",
+          "word": "дерево",
+          "hint": "ДЕ-ре-во. ДЬ в начале + Р. Высокое дерево.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-10.m4a"
+        },
+        {
+          "id": "nl-soft-11",
+          "word": "деньги",
+          "hint": "ДЕНЬ-ги. ДЬ+НЬ в начале. Деньги в кошельке.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-soft-11.m4a"
+        },
+        {
+          "id": "nl-soft-12",
+          "word": "медведь",
+          "hint": "Мед-ВЕДЬ. ДЬ на конце. Косолапый медведь!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-12.m4a"
+        },
+        {
+          "id": "nl-soft-13",
+          "word": "лошадь",
+          "hint": "Ло-ШАДЬ. ДЬ на конце. Красивая лошадь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-13.m4a"
+        },
+        {
+          "id": "nl-soft-14",
+          "word": "ся-ся-ся",
+          "hint": "СЯ — мягкое Сь. Язычок ближе к нёбу. Ся!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-14.m4a"
+        },
+        {
+          "id": "nl-soft-15",
+          "word": "синий",
+          "hint": "СИ-ний. СЬ в начале. Синее небо!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-soft-15.m4a"
+        },
+        {
+          "id": "nl-soft-16",
+          "word": "семь",
+          "hint": "СЕМЬ — СЬ в начале. Семь дней в неделе!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-soft-16.m4a"
+        },
+        {
+          "id": "nl-soft-17",
+          "word": "сёстры",
+          "hint": "СЁС-тры. СЬ в начале + С снова! Две сестры.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-soft-17.m4a"
+        },
+        {
+          "id": "nl-soft-18",
+          "word": "гусеница",
+          "hint": "Гу-СЕ-ни-ца. СЬ в середине. Гусеница ползёт.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-soft-18.m4a"
+        },
+        {
+          "id": "nl-soft-19",
+          "word": "рысь",
+          "hint": "РЫСЬ — СЬ на конце. Дикая кошка рысь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-19.m4a"
+        },
+        {
+          "id": "nl-soft-20",
+          "word": "лось",
+          "hint": "ЛОСЬ — СЬ на конце. Большой лось в лесу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-20.m4a"
+        },
+        {
+          "id": "nl-soft-21",
+          "word": "зя-зя-зя",
+          "hint": "ЗЯ — мягкое Зь. Звонкое и мягкое! Зя!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-21.m4a"
+        },
+        {
+          "id": "nl-soft-22",
+          "word": "земля",
+          "hint": "Зем-ЛЯ. ЗЬ в начале + Л. Земля вращается!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-22.m4a"
+        },
+        {
+          "id": "nl-soft-23",
+          "word": "зелёный",
+          "hint": "Зе-ЛЁ-ный. ЗЬ в начале. Зелёный лист.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-23.m4a"
+        },
+        {
+          "id": "nl-soft-24",
+          "word": "зима",
+          "hint": "ЗИ-ма. ЗЬ в начале. Холодная зима.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-soft-24.m4a"
+        },
+        {
+          "id": "nl-soft-25",
+          "word": "обезьяна",
+          "hint": "О-безь-Я-на. ЗЬ в середине. Смешная обезьяна!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-soft-25.m4a"
+        },
+        {
+          "id": "nl-soft-26",
+          "word": "грязь",
+          "hint": "ГРЯЗЬ — ЗЬ на конце. После дождя грязь.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-soft-26.m4a"
+        },
+        {
+          "id": "nl-soft-27",
+          "word": "вязь",
+          "hint": "ВЯЗЬ — ЗЬ на конце. Красивая вязь узора.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-soft-27.m4a"
+        },
+        {
+          "id": "nl-soft-28",
+          "word": "ня-ня-ня",
+          "hint": "НЯ — мягкое Нь. Тянем к нёбу язычок.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-soft-28.m4a"
+        },
+        {
+          "id": "nl-soft-29",
+          "word": "няня",
+          "hint": "НЯ-ня. Два НЬ! Добрая нянечка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-29.m4a"
+        },
+        {
+          "id": "nl-soft-30",
+          "word": "нёбо",
+          "hint": "НЁ-бо. НЬ в начале. Нёбо — потолок рта!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-30.m4a"
+        },
+        {
+          "id": "nl-soft-31",
+          "word": "нитка",
+          "hint": "НИТ-ка. НЬ в начале. Нитка с иголкой.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-soft-31.m4a"
+        },
+        {
+          "id": "nl-soft-32",
+          "word": "конь",
+          "hint": "КОНЬ — НЬ на конце. Быстрый конь скачет!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-soft-32.m4a"
+        },
+        {
+          "id": "nl-soft-33",
+          "word": "огонь",
+          "hint": "О-ГОНЬ — НЬ на конце. Горит яркий огонь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-33.m4a"
+        },
+        {
+          "id": "nl-soft-34",
+          "word": "линия",
+          "hint": "ЛИ-ни-я. ЛЬ+НЬ. Прямая линия.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-34.m4a"
+        },
+        {
+          "id": "nl-soft-35",
+          "word": "ля-ля-ля",
+          "hint": "ЛЯ — мягкое Ль. Пою ля-ля-ля!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-soft-35.m4a"
+        },
+        {
+          "id": "nl-soft-36",
+          "word": "лягушка",
+          "hint": "ЛЯ-гуш-ка. ЛЬ в начале + Ш. Зелёная лягушка!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-36.m4a"
+        },
+        {
+          "id": "nl-soft-37",
+          "word": "люди",
+          "hint": "ЛЮ-ди. ЛЬ в начале. Добрые люди вокруг.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-soft-37.m4a"
+        },
+        {
+          "id": "nl-soft-38",
+          "word": "лётчик",
+          "hint": "ЛЁТ-чик. ЛЬ в начале + Ч. Смелый лётчик!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-soft-38.m4a"
+        },
+        {
+          "id": "nl-soft-39",
+          "word": "соль",
+          "hint": "СОЛЬ — ЛЬ на конце. Солёная соль!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-soft-39.m4a"
+        },
+        {
+          "id": "nl-soft-40",
+          "word": "боль",
+          "hint": "БОЛЬ — ЛЬ на конце. Болит — значит боль.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-soft-40.m4a"
+        },
+        {
+          "id": "nl-soft-41",
+          "word": "рь-рь-рь",
+          "hint": "Мягкое РЬ — язычок дрожит мягче. Рь-рь-рь!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-41.m4a"
+        },
+        {
+          "id": "nl-soft-42",
+          "word": "ри-ри-ри",
+          "hint": "РИ — мягкое РЬ. Рисуем! Ри-ри-ри.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-42.m4a"
+        },
+        {
+          "id": "nl-soft-43",
+          "word": "рябина",
+          "hint": "РЯ-би-на. РЬ в начале. Красная рябина.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-43.m4a"
+        },
+        {
+          "id": "nl-soft-44",
+          "word": "рисовать",
+          "hint": "Ри-со-ВАТЬ. РЬ в начале. Рисовать красками.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-44.m4a"
+        },
+        {
+          "id": "nl-soft-45",
+          "word": "фонарь",
+          "hint": "Фо-НАРЬ. РЬ на конце. Горит фонарь ночью.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-45.m4a"
+        },
+        {
+          "id": "nl-soft-46",
+          "word": "букварь",
+          "hint": "Бук-ВАРЬ. РЬ на конце. Читаем по букварю!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-soft-46.m4a"
+        },
+        {
+          "id": "nl-soft-47",
+          "word": "Тётя Тася тихо пела",
+          "hint": "ТЬ — тётя, тася, тихо. Три мягких ТЬ!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-soft-47.m4a"
+        },
+        {
+          "id": "nl-soft-48",
+          "word": "Синяя лисица бежит к реке",
+          "hint": "СЬ — синяя. ЛЬ — лисица. РЬ — реке. Три мягких!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-soft-48.m4a"
+        },
+        {
+          "id": "nl-soft-49",
+          "word": "Дети рисовали деревья",
+          "hint": "ДЬ — дети. РЬ — рисовали. ДЬ — деревья. ЛЬ — деревья.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-soft-49.m4a"
+        },
+        {
+          "id": "nl-soft-50",
+          "word": "твёрдый — мягкий",
+          "hint": "Т — твёрдый. ТЬ — мягкий. Слышишь разницу?",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-soft-50.m4a"
+        },
+        {
+          "id": "nl-soft-51",
+          "word": "рад — рядом",
+          "hint": "Р твёрдый в «рад». РЬ мягкий в «рядом»!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-soft-51.m4a"
+        },
+        {
+          "id": "nl-soft-52",
+          "word": "лук — люк",
+          "hint": "Л твёрдый в «лук». ЛЬ мягкий в «люк»!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-soft-52.m4a"
+        },
+        {
+          "id": "nl-soft-53",
+          "word": "нос — нёс",
+          "hint": "Н твёрдый в «нос». НЬ мягкий в «нёс»!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-soft-53.m4a"
+        },
+        {
+          "id": "nl-soft-54",
+          "word": "зал — зять",
+          "hint": "З твёрдый в «зал». ЗЬ мягкий в «зять»!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-soft-54.m4a"
+        },
+        {
+          "id": "nl-soft-55",
+          "word": "дал — даль",
+          "hint": "Д твёрдый в «дал». ДЬ мягкий в «даль»!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-soft-55.m4a"
+        },
+        {
+          "id": "nl-soft-56",
+          "word": "тучи",
+          "hint": "ТУ-чи. ТЬ? Нет! ТУ — твёрдый Т + У.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-soft-56.m4a"
+        },
+        {
+          "id": "nl-soft-57",
+          "word": "тени",
+          "hint": "ТЕ-ни. ТЬ + НЬ. Тени от деревьев.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-soft-57.m4a"
+        },
+        {
+          "id": "nl-soft-58",
+          "word": "деятель",
+          "hint": "ДЕ-я-тель. ДЬ+ТЬ+ЛЬ — три мягких подряд!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-soft-58.m4a"
+        },
+        {
+          "id": "nl-soft-59",
+          "word": "Нельзя лениться",
+          "hint": "НЬ — нельзя. ЛЬ — нельзя, лениться. ЛЬ снова!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-soft-59.m4a"
+        },
+        {
+          "id": "nl-soft-60",
+          "word": "телевизор",
+          "hint": "ТЕ-ле-ви-зор. ТЬ+ЛЬ. Смотрим телевизор.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-soft-60.m4a"
+        },
+        {
+          "id": "nl-soft-61",
+          "word": "сирень",
+          "hint": "Си-РЕНЬ. СЬ+РЬ+НЬ! Три мягких. Цветёт сирень.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-soft-61.m4a"
+        },
+        {
+          "id": "nl-soft-62",
+          "word": "лентяй",
+          "hint": "ЛЕН-тяй. ЛЬ+НЬ+ТЬ. Не будь лентяем!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-soft-62.m4a"
+        },
+        {
+          "id": "nl-soft-63",
+          "word": "дятел",
+          "hint": "ДЯ-тел. ДЬ+ТЬ. Дятел стучит по дереву!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-soft-63.m4a"
+        },
+        {
+          "id": "nl-soft-64",
+          "word": "нянечка",
+          "hint": "НЯ-неч-ка. НЬ+НЬ. Добрая нянечка в садике.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-soft-64.m4a"
+        },
+        {
+          "id": "nl-soft-65",
+          "word": "сиреневый",
+          "hint": "Си-РЕ-не-вый. СЬ+РЬ+НЬ. Сиреневый цвет.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-soft-65.m4a"
+        },
+        {
+          "id": "nl-soft-66",
+          "word": "тюлень",
+          "hint": "ТЮ-лень. ТЬ+ЛЬ+НЬ. Три мягких! Толстый тюлень.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-soft-66.m4a"
+        },
+        {
+          "id": "nl-soft-67",
+          "word": "ленивый",
+          "hint": "Ле-НИ-вый. ЛЬ+НЬ. Ленивый кот дремлет.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-soft-67.m4a"
+        },
+        {
+          "id": "nl-soft-68",
+          "word": "щенята",
+          "hint": "Ще-НЯ-та. НЬ в середине. Маленькие щенята.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-soft-68.m4a"
+        },
+        {
+          "id": "nl-soft-69",
+          "word": "Лисёнок резвится в лесу",
+          "hint": "ЛЬ — лисёнок. СЬ — резвится. ЛЬ — лесу. Три мягких!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-soft-69.m4a"
+        }
+      ]
+    },
+    "stress_patterns": {
+      "stageId": "stress_patterns",
+      "note": "Ударение в словах — нейролингвистическая проработка ритмической структуры для ОНР и ЗРР.",
+      "items": [
+        {
+          "id": "nl-str-00",
+          "word": "мАма",
+          "hint": "МА-ма. Ударение на первый слог. МА!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-str-00.m4a"
+        },
+        {
+          "id": "nl-str-01",
+          "word": "папА",
+          "hint": "па-ПА. Ударение на второй слог. ПА!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-str-01.m4a"
+        },
+        {
+          "id": "nl-str-02",
+          "word": "молокО",
+          "hint": "мо-ло-КО. Ударение на третий слог. КО!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-02.m4a"
+        },
+        {
+          "id": "nl-str-03",
+          "word": "собАка",
+          "hint": "со-БА-ка. Ударение на второй слог. БА!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-03.m4a"
+        },
+        {
+          "id": "nl-str-04",
+          "word": "рАдуга",
+          "hint": "РА-ду-га. Ударение на первый слог. РА!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-04.m4a"
+        },
+        {
+          "id": "nl-str-05",
+          "word": "корОва",
+          "hint": "ко-РО-ва. Ударение на второй слог. РО!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-05.m4a"
+        },
+        {
+          "id": "nl-str-06",
+          "word": "карандАш",
+          "hint": "ка-ран-ДАШ. Ударение на третий слог. ДАШ!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-str-06.m4a"
+        },
+        {
+          "id": "nl-str-07",
+          "word": "черепАха",
+          "hint": "че-ре-ПА-ха. Ударение на третий слог. ПА!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-str-07.m4a"
+        },
+        {
+          "id": "nl-str-08",
+          "word": "велосипЕд",
+          "hint": "ве-ло-си-ПЕД. Ударение на четвёртый слог. ПЕД!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-str-08.m4a"
+        },
+        {
+          "id": "nl-str-09",
+          "word": "телефОн",
+          "hint": "те-ле-ФОН. Ударение на третий слог. ФОН!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-str-09.m4a"
+        },
+        {
+          "id": "nl-str-10",
+          "word": "хлопни на ударный слог: кОшка",
+          "hint": "КОш-ка. Хлопни на КО!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-str-10.m4a"
+        },
+        {
+          "id": "nl-str-11",
+          "word": "хлопни на ударный слог: лисА",
+          "hint": "ли-СА. Хлопни на СА!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-11.m4a"
+        },
+        {
+          "id": "nl-str-12",
+          "word": "хлопни на ударный слог: машИна",
+          "hint": "ма-ШИ-на. Хлопни на ШИ!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-12.m4a"
+        },
+        {
+          "id": "nl-str-13",
+          "word": "хлопни: яблОко",
+          "hint": "ЯБ-ло-ко. Хлопни на ЯБ! Первый слог.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-13.m4a"
+        },
+        {
+          "id": "nl-str-14",
+          "word": "хлопни: огурЕц",
+          "hint": "о-гу-РЕЦ. Хлопни на РЕЦ! Третий слог.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-str-14.m4a"
+        },
+        {
+          "id": "nl-str-15",
+          "word": "кОт или котА?",
+          "hint": "КОт (один кот). КотА (у кого? кота). Ударение меняется!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-str-15.m4a"
+        },
+        {
+          "id": "nl-str-16",
+          "word": "дОм или домА?",
+          "hint": "ДОм (один дом). ДомА (много домов). Ударение на А!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-str-16.m4a"
+        },
+        {
+          "id": "nl-str-17",
+          "word": "лЕс или лесА?",
+          "hint": "ЛЕс (один лес). ЛесА (много лесов). Ударение сдвинулось.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-str-17.m4a"
+        },
+        {
+          "id": "nl-str-18",
+          "word": "рукА или рУки?",
+          "hint": "РукА (одна рука). РУки (две руки). Ударение сдвинулось!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-str-18.m4a"
+        },
+        {
+          "id": "nl-str-19",
+          "word": "ногА или нОги?",
+          "hint": "НогА (одна нога). НОги (две ноги). Слышишь сдвиг?",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-str-19.m4a"
+        },
+        {
+          "id": "nl-str-20",
+          "word": "глАз или глазА?",
+          "hint": "ГЛАз (один глаз). ГлазА (глаза — пара). Ударение на А!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-str-20.m4a"
+        },
+        {
+          "id": "nl-str-21",
+          "word": "ритм: ТА-та",
+          "hint": "ТА-та — двусложное с ударением на первый. Мама, папа, Катя.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-str-21.m4a"
+        },
+        {
+          "id": "nl-str-22",
+          "word": "ритм: та-ТА",
+          "hint": "та-ТА — двусложное с ударением на второй. Вода, коза, нога.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-str-22.m4a"
+        },
+        {
+          "id": "nl-str-23",
+          "word": "ритм: ТА-та-та",
+          "hint": "ТА-та-та — трёхсложное, ударение первый. Ягода, радуга.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-23.m4a"
+        },
+        {
+          "id": "nl-str-24",
+          "word": "ритм: та-ТА-та",
+          "hint": "та-ТА-та — трёхсложное, ударение второй. Малина, ромашка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-24.m4a"
+        },
+        {
+          "id": "nl-str-25",
+          "word": "ритм: та-та-ТА",
+          "hint": "та-та-ТА — трёхсложное, ударение третий. Молоко, пирожок.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-25.m4a"
+        },
+        {
+          "id": "nl-str-26",
+          "word": "назови слова ТА-та",
+          "hint": "ТА-та: кошка, рыбка, шапка, птица. Хлопни на ТА!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-26.m4a"
+        },
+        {
+          "id": "nl-str-27",
+          "word": "назови слова та-ТА",
+          "hint": "та-ТА: вода, нога, рука, окно. Хлопни на ТА!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-27.m4a"
+        },
+        {
+          "id": "nl-str-28",
+          "word": "разнИца или рАзница?",
+          "hint": "РАзница — правильно! На первый слог.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-str-28.m4a"
+        },
+        {
+          "id": "nl-str-29",
+          "word": "звонИт или звОнит?",
+          "hint": "ЗвонИт — правильно! На третий слог.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-str-29.m4a"
+        },
+        {
+          "id": "nl-str-30",
+          "word": "Отметь ударный слог в «БАБОЧКА»",
+          "hint": "БА-боч-ка. Первый слог ударный — БА!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-30.m4a"
+        },
+        {
+          "id": "nl-str-31",
+          "word": "Отметь ударный слог в «МАЛИНА»",
+          "hint": "ма-ЛИ-на. Второй слог ударный — ЛИ!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-31.m4a"
+        },
+        {
+          "id": "nl-str-32",
+          "word": "Отметь ударный слог в «ПИРОЖОК»",
+          "hint": "пи-ро-ЖОК. Третий слог ударный — ЖОК!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-str-32.m4a"
+        },
+        {
+          "id": "nl-str-33",
+          "word": "шАпка",
+          "hint": "ША-пка. Ударный первый слог. Тёплая шАпка.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/NL/nl-str-33.m4a"
+        },
+        {
+          "id": "nl-str-34",
+          "word": "машИна",
+          "hint": "ма-ШИ-на. Ударный второй слог. Едет машИна.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-34.m4a"
+        },
+        {
+          "id": "nl-str-35",
+          "word": "крокодИл",
+          "hint": "кро-ко-ДИЛ. Ударный третий слог. Зелёный крокодИл.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-str-35.m4a"
+        },
+        {
+          "id": "nl-str-36",
+          "word": "электрИчество",
+          "hint": "э-лек-ТРИ-чес-тво. Ударный третий слог. Сложно!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-str-36.m4a"
+        },
+        {
+          "id": "nl-str-37",
+          "word": "пOезд",
+          "hint": "ПО-езд. Первый ударный. Едет поезд!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-37.m4a"
+        },
+        {
+          "id": "nl-str-38",
+          "word": "самолЁт",
+          "hint": "са-мо-ЛЁТ. Третий ударный. Летит самолёт!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-str-38.m4a"
+        },
+        {
+          "id": "nl-str-39",
+          "word": "автОбус",
+          "hint": "ав-ТО-бус. Второй ударный. Едем на автОбусе.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-str-39.m4a"
+        },
+        {
+          "id": "nl-str-40",
+          "word": "постАвить ударение в «ВОРОНА»",
+          "hint": "во-РО-на. Второй слог РО — ударный!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-40.m4a"
+        },
+        {
+          "id": "nl-str-41",
+          "word": "постАвить ударение в «ЛИМОН»",
+          "hint": "ли-МОН. Второй слог МОН — ударный!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-41.m4a"
+        },
+        {
+          "id": "nl-str-42",
+          "word": "постАвить ударение в «СОЛНЫШКО»",
+          "hint": "СОЛ-ныш-ко. Первый слог СОЛ — ударный!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-42.m4a"
+        },
+        {
+          "id": "nl-str-43",
+          "word": "проговори слово по слогам: КОРО-ВА",
+          "hint": "КО-РО-ВА. Три хлопка. Ударение на второй!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-43.m4a"
+        },
+        {
+          "id": "nl-str-44",
+          "word": "проговори: ЧЕ-РЕ-ПА-ХА",
+          "hint": "Четыре хлопка! Ударение на третий — ПА!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-str-44.m4a"
+        },
+        {
+          "id": "nl-str-45",
+          "word": "проговори: ВЕ-ЛО-СИ-ПЕД",
+          "hint": "Четыре хлопка! Ударение на четвёртый — ПЕД!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-str-45.m4a"
+        },
+        {
+          "id": "nl-str-46",
+          "word": "сИла или силА?",
+          "hint": "СИла — сила (мощь). СилА? Нет! СИла.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-str-46.m4a"
+        },
+        {
+          "id": "nl-str-47",
+          "word": "пОле или полЕ?",
+          "hint": "ПОле — правильно! Зелёное поле.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-str-47.m4a"
+        },
+        {
+          "id": "nl-str-48",
+          "word": "считай слоги и хлопай: БАБУШКА",
+          "hint": "БА-буш-ка — три хлопка. Ударение на первый!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-48.m4a"
+        },
+        {
+          "id": "nl-str-49",
+          "word": "считай слоги и хлопай: ДЕДУШКА",
+          "hint": "ДЕ-душ-ка — три хлопка. Ударение на первый!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-str-49.m4a"
+        }
+      ]
+    },
+    "sentence_level": {
+      "stageId": "sentence_level",
+      "note": "Предложения с насыщенной фонологией — закрепление всех групп звуков, ОНР/ФФН уровень.",
+      "items": [
+        {
+          "id": "nl-sen-00",
+          "word": "Саша ест кашу",
+          "hint": "С — Саша. Ш — кашу. Два разных звука.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sen-00.m4a"
+        },
+        {
+          "id": "nl-sen-01",
+          "word": "Зоя видит зайца",
+          "hint": "З — Зоя, зайца. Два З в предложении!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/NL/nl-sen-01.m4a"
+        },
+        {
+          "id": "nl-sen-02",
+          "word": "Рома рисует розу",
+          "hint": "Три Р! Рома — рисует — розу.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sen-02.m4a"
+        },
+        {
+          "id": "nl-sen-03",
+          "word": "Лена лепит лебедя",
+          "hint": "Три Л! Лена — лепит — лебедя.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sen-03.m4a"
+        },
+        {
+          "id": "nl-sen-04",
+          "word": "Коля катит колесо",
+          "hint": "Три К! Коля — катит — колесо.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sen-04.m4a"
+        },
+        {
+          "id": "nl-sen-05",
+          "word": "Жук жужжит в луже",
+          "hint": "Три Ж! Жук — жужжит — луже.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sen-05.m4a"
+        },
+        {
+          "id": "nl-sen-06",
+          "word": "Цапля стоит у реки",
+          "hint": "Ц — цапля. Р — реки. Оба звука!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sen-06.m4a"
+        },
+        {
+          "id": "nl-sen-07",
+          "word": "Чашка стоит на столе",
+          "hint": "Ч — чашка. С — стоит, столе. Два С!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sen-07.m4a"
+        },
+        {
+          "id": "nl-sen-08",
+          "word": "Щенок нашёл кость",
+          "hint": "Щ — щенок. Ш — нашёл. Шипящие!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sen-08.m4a"
+        },
+        {
+          "id": "nl-sen-09",
+          "word": "Петух кричит громко",
+          "hint": "Х — петух. К+Р — кричит. Велярный + сонор!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sen-09.m4a"
+        },
+        {
+          "id": "nl-sen-10",
+          "word": "Мишка нашёл мёд в лесу",
+          "hint": "М — мишка, мёд. Ш — нашёл. Л — лесу.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sen-10.m4a"
+        },
+        {
+          "id": "nl-sen-11",
+          "word": "Рыбак поймал большую рыбу",
+          "hint": "Р — рыбак, рыбу. Б — большую. Два Р!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sen-11.m4a"
+        },
+        {
+          "id": "nl-sen-12",
+          "word": "Синяя стрекоза летит над рекой",
+          "hint": "С — синяя. Р — стрекоза, рекой. СТР стечение!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sen-12.m4a"
+        },
+        {
+          "id": "nl-sen-13",
+          "word": "Девочка нарисовала цветочек",
+          "hint": "Д — девочка. Р — нарисовала. Ц — цветочек. Ч — цветочек.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sen-13.m4a"
+        },
+        {
+          "id": "nl-sen-14",
+          "word": "Лягушка прыгнула в болото",
+          "hint": "ЛЬ — лягушка. ПР — прыгнула. Б — болото.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sen-14.m4a"
+        },
+        {
+          "id": "nl-sen-15",
+          "word": "Зимой зайчик сидит в кустах",
+          "hint": "ЗЬ — зимой, зайчик. С — сидит. К — кустах.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sen-15.m4a"
+        },
+        {
+          "id": "nl-sen-16",
+          "word": "Черепаха медленно ползёт по тропинке",
+          "hint": "Ч — черепаха. М — медленно. П — ползёт, тропинке.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sen-16.m4a"
+        },
+        {
+          "id": "nl-sen-17",
+          "word": "Красный трактор пашет поле",
+          "hint": "КР — красный. ТР — трактор. П — пашет, поле.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sen-17.m4a"
+        },
+        {
+          "id": "nl-sen-18",
+          "word": "Ребята строят снежную крепость",
+          "hint": "РЬ — ребята. СТР — строят. СН — снежную. КР — крепость.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-sen-18.m4a"
+        },
+        {
+          "id": "nl-sen-19",
+          "word": "Маленький котёнок мяукает под лестницей",
+          "hint": "М — маленький, мяукает. К — котёнок. Л — лестницей.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-sen-19.m4a"
+        },
+        {
+          "id": "nl-sen-20",
+          "word": "Что стоит в углу?",
+          "hint": "ЧТО — стечение ЧТ. Самый сложный слог!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sen-20.m4a"
+        },
+        {
+          "id": "nl-sen-21",
+          "word": "Где живёт медведь?",
+          "hint": "ГДЕ — стечение ГД. Живёт — ЖЬ+В+ЁТ.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sen-21.m4a"
+        },
+        {
+          "id": "nl-sen-22",
+          "word": "Кто летит на ракете?",
+          "hint": "КТО — стечение КТ. Ракете — Р+К+Т. Три звука!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sen-22.m4a"
+        },
+        {
+          "id": "nl-sen-23",
+          "word": "Почему шумит лес?",
+          "hint": "ПЧ — почему. Ш — шумит. Л — лес. Три разных.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sen-23.m4a"
+        },
+        {
+          "id": "nl-sen-24",
+          "word": "Как зовут твоего друга?",
+          "hint": "К — как. ЗЬ — зовут. ДР — друга. Стечение!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sen-24.m4a"
+        },
+        {
+          "id": "nl-sen-25",
+          "word": "В лесу растут высокие сосны",
+          "hint": "Л — лесу. Р — растут. С — сосны (два С!). В — высокие.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sen-25.m4a"
+        },
+        {
+          "id": "nl-sen-26",
+          "word": "Летом дети купаются в реке",
+          "hint": "Л — летом. Д — дети. К — купаются. Р — реке.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sen-26.m4a"
+        },
+        {
+          "id": "nl-sen-27",
+          "word": "Осенью листья желтеют и краснеют",
+          "hint": "Л — листья. ЖЬ — желтеют. КР — краснеют. Сложно!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-sen-27.m4a"
+        },
+        {
+          "id": "nl-sen-28",
+          "word": "Дедушка читает сказку внукам",
+          "hint": "ДЬ — дедушка. ЧЬ — читает. С — сказку. СК стечение!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sen-28.m4a"
+        },
+        {
+          "id": "nl-sen-29",
+          "word": "Щенок лакает воду из миски",
+          "hint": "ЩЬ — щенок. Л — лакает. В — воду. М — миски.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sen-29.m4a"
+        },
+        {
+          "id": "nl-sen-30",
+          "word": "Птицы улетают на юг",
+          "hint": "ПТ — птицы. Л — улетают. Ю=ЙУ. Сложная фонология!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sen-30.m4a"
+        },
+        {
+          "id": "nl-sen-31",
+          "word": "Дождик капает на крышу",
+          "hint": "ДЬ — дождик. К — капает, крышу. КР стечение.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sen-31.m4a"
+        },
+        {
+          "id": "nl-sen-32",
+          "word": "Цветы цветут на клумбе",
+          "hint": "Ц — цветы, цветут. ДВА Ц! КЛ — клумбе.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sen-32.m4a"
+        },
+        {
+          "id": "nl-sen-33",
+          "word": "Строители строят большой дом",
+          "hint": "СТР — строители, строят. Три СТР!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sen-33.m4a"
+        },
+        {
+          "id": "nl-sen-34",
+          "word": "Белочка запасает орешки на зиму",
+          "hint": "БЬ — белочка. З — запасает, зиму. Р — орешки.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sen-34.m4a"
+        },
+        {
+          "id": "nl-sen-35",
+          "word": "Рыжая лиса бежит по лесной дороге",
+          "hint": "Р — рыжая. Л — лиса, лесной. ДЬ — дороге.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-sen-35.m4a"
+        },
+        {
+          "id": "nl-sen-36",
+          "word": "Мальчик нашёл большую шишку",
+          "hint": "М — мальчик. Ш — нашёл, шишку. Два Ш!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sen-36.m4a"
+        },
+        {
+          "id": "nl-sen-37",
+          "word": "Зимой звери прячутся от холода",
+          "hint": "ЗЬ — зимой, звери. ПРЯ — прячутся. Х — холода.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-sen-37.m4a"
+        },
+        {
+          "id": "nl-sen-38",
+          "word": "Хитрая лиса обхитрила волка",
+          "hint": "Х — хитрая, обхитрила. Л — лиса. В — волка.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-sen-38.m4a"
+        },
+        {
+          "id": "nl-sen-39",
+          "word": "Смелый рыцарь спас принцессу",
+          "hint": "СМ — смелый. Р — рыцарь. СП — спас. ПРЬ — принцессу.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-sen-39.m4a"
+        },
+        {
+          "id": "nl-sen-40",
+          "word": "В саду созревают сочные яблоки",
+          "hint": "С — саду, созревают, сочные. Три С в одном предложении!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sen-40.m4a"
+        },
+        {
+          "id": "nl-sen-41",
+          "word": "Кошка ловит рыбу в реке",
+          "hint": "К — кошка. Л — ловит. Р — рыбу, реке. Два Р!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/NL/nl-sen-41.m4a"
+        },
+        {
+          "id": "nl-sen-42",
+          "word": "Ночью слышны звуки леса",
+          "hint": "НЬ — ночью. Ш — слышны. ЗЬ — звуки. Л — леса.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sen-42.m4a"
+        },
+        {
+          "id": "nl-sen-43",
+          "word": "Ручеёк журчит по камушкам",
+          "hint": "РЬ — ручеёк. Ж — журчит. К — камушкам. Три звука!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sen-43.m4a"
+        },
+        {
+          "id": "nl-sen-44",
+          "word": "Бабочка порхает над цветами",
+          "hint": "Б — бабочка. Х — порхает. Ц — цветами. Три разных!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sen-44.m4a"
+        },
+        {
+          "id": "nl-sen-45",
+          "word": "Дети прыгают через лужи",
+          "hint": "ДЬ — дети. ПРЬ — прыгают. Л — лужи. Ж — лужи.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sen-45.m4a"
+        },
+        {
+          "id": "nl-sen-46",
+          "word": "Солнышко светит ярко и радостно",
+          "hint": "С — солнышко, светит. Р — радостно. Два С + Р!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/NL/nl-sen-46.m4a"
+        },
+        {
+          "id": "nl-sen-47",
+          "word": "Шустрый мышонок спрятался в норке",
+          "hint": "Ш — шустрый. М — мышонок. СПР — спрятался. Н — норке.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-sen-47.m4a"
+        },
+        {
+          "id": "nl-sen-48",
+          "word": "Радостные ребята бегут на праздник",
+          "hint": "Р — радостные, ребята. Б — бегут. ПР — праздник.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-sen-48.m4a"
+        },
+        {
+          "id": "nl-sen-49",
+          "word": "Снежинки кружатся и падают на землю",
+          "hint": "СН — снежинки. КР — кружатся. З — землю. Три группы!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/NL/nl-sen-49.m4a"
+        }
+      ]
     }
   }
 }
