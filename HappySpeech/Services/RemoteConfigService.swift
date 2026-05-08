@@ -62,6 +62,11 @@ public protocol RemoteConfigService: AnyObject, Sendable {
     var minAppVersion: String { get }
     var forceUpdateMinVersion: String { get }
 
+    // Block U.5 v18 — A/B Testing
+    /// Вариант туториала: `"A"` (default step-by-step) или `"B"` (gamified mini-quest).
+    /// Назначается через Firebase A/B Testing. Activation event: `app_first_open`.
+    var tutorialVariant: String { get }
+
     func fetch() async throws
     func activate() async throws -> Bool
 
@@ -93,6 +98,7 @@ private enum RCKey {
     static let parentDashboardShowMLInsights  = "parent_dashboard_show_ml_insights"
     static let minAppVersion                  = "min_app_version"
     static let forceUpdateMinVersion          = "force_update_min_version"
+    static let tutorialVariant                = "tutorial_variant"
 }
 
 // MARK: - Live Implementation
@@ -131,7 +137,8 @@ public final class LiveRemoteConfigService: RemoteConfigService, @unchecked Send
         RCKey.homeShowStreakCelebration:     true as NSNumber,
         RCKey.parentDashboardShowMLInsights: true as NSNumber,
         RCKey.minAppVersion:                 "1.0.0" as NSString,
-        RCKey.forceUpdateMinVersion:         "1.0.0" as NSString
+        RCKey.forceUpdateMinVersion:         "1.0.0" as NSString,
+        RCKey.tutorialVariant:               "A" as NSString
     ]
 
     public init(minimumFetchInterval: TimeInterval = 3600) {
@@ -236,6 +243,13 @@ public final class LiveRemoteConfigService: RemoteConfigService, @unchecked Send
         return v.isEmpty ? "1.0.0" : v
     }
 
+    /// Plan v18 Block U.5 — A/B Testing tutorial variant.
+    /// Возвращает `"A"` или `"B"` (нормализуется в uppercase). Дефолт `"A"`.
+    public var tutorialVariant: String {
+        let raw = config[RCKey.tutorialVariant].stringValue.uppercased()
+        return (raw == "B") ? "B" : "A"
+    }
+
     // MARK: - Lifecycle
 
     /// Fetches remote values. Respects minimumFetchInterval (no-op if called too soon).
@@ -307,6 +321,7 @@ public final class MockRemoteConfigService: RemoteConfigService, @unchecked Send
     public var parentDashboardShowMLInsights: Bool = true
     public var minAppVersion: String = "1.0.0"
     public var forceUpdateMinVersion: String = "1.0.0"
+    public var tutorialVariant: String = "A"
 
     public init() {}
     public func fetch() async throws {}
