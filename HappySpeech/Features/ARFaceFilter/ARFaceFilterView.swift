@@ -139,8 +139,9 @@ struct ARFaceFilterView: View {
     private var maskOverlay: some View {
         if let setMaskVM = holder.setMaskVM {
             let offset = renderer.overlayOffset(for: setMaskVM.mask)
-            Text(setMaskVM.mask.emoji)
+            Image(systemName: setMaskVM.mask.symbolName)
                 .font(.system(size: 90))
+                .foregroundStyle(.white)
                 .shadow(color: holder.glowState == .glowing
                         ? renderer.glowColor(for: setMaskVM.mask)
                         : .black.opacity(0.4),
@@ -216,8 +217,9 @@ struct ARFaceFilterView: View {
             Task { await interactor?.setMask(request: .init(mask: mask)) }
         } label: {
             VStack(spacing: 4) {
-                Text(mask.emoji)
+                Image(systemName: mask.symbolName)
                     .font(.system(size: 36))
+                    .foregroundStyle(.white)
                 Text(mask.localizedTitle)
                     .font(.caption2)
                     .foregroundStyle(.white)

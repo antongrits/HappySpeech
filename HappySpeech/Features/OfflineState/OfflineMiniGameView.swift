@@ -456,8 +456,8 @@ private struct FindPairGameView: View {
         var isMatched: Bool = false
     }
 
-    // Block D v16: эмодзи карточки → иллюстрации из Assets.xcassets.
-    // FALLBACK: 🦁 lion → reward_champion, 🐼 panda → word_bear (no panda asset).
+    // Block D v16 / G v18: эмодзи карточки → иллюстрации из Assets.xcassets.
+    // FALLBACK: lion → reward_champion, panda → word_bear (нет panda ассета).
     private static let cardIllustrations: [String] = [
         "word_dog", "word_cat", "reward_champion", "word_hare", "word_fox", "word_bear"
     ]

@@ -89,13 +89,9 @@ enum FamilyLeaderboardModels {
                     }
                 }
 
-                var emoji: String {
-                    switch self {
-                    case .gold:   return "🥇"
-                    case .silver: return "🥈"
-                    case .bronze: return "🥉"
-                    }
-                }
+                /// Block G v18: значение эмодзи заменено на имя SF Symbol
+                /// (alias к symbolName) — отрисовка через Image(systemName:).
+                var emoji: String { symbolName }
             }
         }
     }

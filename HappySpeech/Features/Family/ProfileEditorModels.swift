@@ -43,12 +43,12 @@ enum ProfileEditor {
         let localizedName: String
     }
 
-    // Block D v16: emoji → illustration mapping (FALLBACK for missing assets):
-    //   🦋 butterfly → mascot_lyalya_wave (Lyalya is a butterfly)
-    //   ⭐ star      → reward_gold_star
-    //   🚀 rocket    → reward_rocket
-    //   🐉 dragon    → reward_brave_heart (FALLBACK)
-    //   🦄 unicorn   → reward_rainbow (FALLBACK)
+    // Block D v16 / G v18: иллюстрационные ассеты для аватаров.
+    //   butterfly → mascot_lyalya_wave (Lyalya — бабочка)
+    //   star      → reward_gold_star
+    //   rocket    → reward_rocket
+    //   dragon    → reward_brave_heart (fallback)
+    //   unicorn   → reward_rainbow (fallback)
     static let avatarPresets: [AvatarPreset] = [
         AvatarPreset(id: "butterfly", illustrationName: "mascot_lyalya_wave",
                      localizedName: String(localized: "avatar.butterfly")),

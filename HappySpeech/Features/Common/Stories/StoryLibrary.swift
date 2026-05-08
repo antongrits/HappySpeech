@@ -26,8 +26,8 @@ public final class StoryLibrary: Sendable {
             scenes: [
                 AnimatedStoryScene(
                     id: "shustray-shishka-1",
-                    backgroundEmoji: "🌲🌲🌲",
-                    characterEmoji: "🌰",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "В шумном лесу на высокой ели жила маленькая шустрая шишка.",
                     targetWord: "шишка",
                     animationType: .bounce,
@@ -35,8 +35,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "shustray-shishka-2",
-                    backgroundEmoji: "🌬️🌲",
-                    characterEmoji: "🌰💨",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Шалый ветер налетел и схватил шишку, понося её вниз с шумом.",
                     targetWord: "шишку",
                     animationType: .slide,
@@ -44,8 +44,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "shustray-shishka-3",
-                    backgroundEmoji: "🐿️🏠",
-                    characterEmoji: "🌰🐿️",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Рыжая белочка поймала шишку и унесла её в своё тёплое гнёздышко.",
                     targetWord: "шишку",
                     animationType: .grow,
@@ -65,8 +65,8 @@ public final class StoryLibrary: Sendable {
             scenes: [
                 AnimatedStoryScene(
                     id: "zhukov-v-luzhe-1",
-                    backgroundEmoji: "🌧️🌿",
-                    characterEmoji: "🐞",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Маленький жучок жил под листочком и очень любил дождик.",
                     targetWord: "жучок",
                     animationType: .bounce,
@@ -74,8 +74,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "zhukov-v-luzhe-2",
-                    backgroundEmoji: "🌊💦",
-                    characterEmoji: "🐞🌊",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "После дождя жучок прыгнул в большую лужу и начал плескаться.",
                     targetWord: "жучок",
                     animationType: .float,
@@ -83,8 +83,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "zhukov-v-luzhe-3",
-                    backgroundEmoji: "🌺🌤️",
-                    characterEmoji: "🐞🌺",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Жучок выбрался на цветок и сушил крылышки под тёплым солнышком.",
                     targetWord: "жучок",
                     animationType: .spin,
@@ -104,8 +104,8 @@ public final class StoryLibrary: Sendable {
             scenes: [
                 AnimatedStoryScene(
                     id: "shchenok-i-shchetka-1",
-                    backgroundEmoji: "🏠🌿",
-                    characterEmoji: "🐶",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Маленький щенок нашёл на полу большую пушистую щётку.",
                     targetWord: "щенок",
                     animationType: .grow,
@@ -113,8 +113,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "shchenok-i-shchetka-2",
-                    backgroundEmoji: "✨💫",
-                    characterEmoji: "🐶🪥",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Щенок начал играть с щёткой и катал её по всей комнате.",
                     targetWord: "щёткой",
                     animationType: .bounce,
@@ -122,8 +122,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "shchenok-i-shchetka-3",
-                    backgroundEmoji: "✨🌟",
-                    characterEmoji: "🐶✨",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Щенок почистил щёткой свою шёрстку и стал блестеть как звёздочка.",
                     targetWord: "щёткой",
                     animationType: .spin,
@@ -143,8 +143,8 @@ public final class StoryLibrary: Sendable {
             scenes: [
                 AnimatedStoryScene(
                     id: "chaynik-chudak-1",
-                    backgroundEmoji: "☕🍵",
-                    characterEmoji: "🫖",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Жил-был чудной чайник, который умел петь песенки.",
                     targetWord: "чайник",
                     animationType: .bounce,
@@ -152,8 +152,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "chaynik-chudak-2",
-                    backgroundEmoji: "🎩💨",
-                    characterEmoji: "🫖🎩",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Чайник надел волшебную шляпу и начал чудить — превращал воду в чай.",
                     targetWord: "чайник",
                     animationType: .spin,
@@ -161,8 +161,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "chaynik-chudak-3",
-                    backgroundEmoji: "☕🌸",
-                    characterEmoji: "🫖☕",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Чайник налил всем горячего чаю и очень гордился своим чудесным даром.",
                     targetWord: "чаю",
                     animationType: .float,
@@ -184,8 +184,8 @@ public final class StoryLibrary: Sendable {
             scenes: [
                 AnimatedStoryScene(
                     id: "sinyaya-sobaka-1",
-                    backgroundEmoji: "🌤️🌈",
-                    characterEmoji: "🐕",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "В синем саду жила самая добрая собака по имени Соня.",
                     targetWord: "собака",
                     animationType: .fadeIn,
@@ -193,8 +193,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "sinyaya-sobaka-2",
-                    backgroundEmoji: "🦴🌿",
-                    characterEmoji: "🐕💙",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Соня нашла большую косточку и сразу же спрятала её в саду.",
                     targetWord: "Соня",
                     animationType: .slide,
@@ -202,8 +202,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "sinyaya-sobaka-3",
-                    backgroundEmoji: "🏠💙",
-                    characterEmoji: "🐕🦴",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Собака Соня очень любила свой синий домик и свою любимую кость.",
                     targetWord: "собака",
                     animationType: .bounce,
@@ -223,8 +223,8 @@ public final class StoryLibrary: Sendable {
             scenes: [
                 AnimatedStoryScene(
                     id: "zaychik-na-zaryadke-1",
-                    backgroundEmoji: "🌄🌿",
-                    characterEmoji: "🐰",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Рано утром на зелёной полянке зайчик делал зарядку.",
                     targetWord: "зайчик",
                     animationType: .bounce,
@@ -232,8 +232,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "zaychik-na-zaryadke-2",
-                    backgroundEmoji: "🏋️🌿",
-                    characterEmoji: "🐰🏋️",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Зайчик поднимал морковки как гантельки и громко считал до десяти.",
                     targetWord: "зайчик",
                     animationType: .shake,
@@ -241,8 +241,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "zaychik-na-zaryadke-3",
-                    backgroundEmoji: "🌞🌈",
-                    characterEmoji: "🐰🌟",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "После зарядки зайчик был здоровым и весёлым на весь день.",
                     targetWord: "зайчик",
                     animationType: .float,
@@ -262,8 +262,8 @@ public final class StoryLibrary: Sendable {
             scenes: [
                 AnimatedStoryScene(
                     id: "tsyplyonok-tsezar-1",
-                    backgroundEmoji: "🌻🌾",
-                    characterEmoji: "🐣",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Маленький цыплёнок по имени Цезарь только что вылупился из яйца.",
                     targetWord: "цыплёнок",
                     animationType: .grow,
@@ -271,8 +271,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "tsyplyonok-tsezar-2",
-                    backgroundEmoji: "👑🌟",
-                    characterEmoji: "🐣👑",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Цезарь нашёл золотую корону и объявил себя царём всего птичьего двора.",
                     targetWord: "цыплёнок",
                     animationType: .spin,
@@ -280,8 +280,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "tsyplyonok-tsezar-3",
-                    backgroundEmoji: "🌻🐣",
-                    characterEmoji: "🐣🌻",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Цыплёнок Цезарь собрал всех цыплят и угостил их семечками из цветка.",
                     targetWord: "цыплят",
                     animationType: .bounce,
@@ -303,8 +303,8 @@ public final class StoryLibrary: Sendable {
             scenes: [
                 AnimatedStoryScene(
                     id: "rybka-rita-1",
-                    backgroundEmoji: "🌊🪸",
-                    characterEmoji: "🐠",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "В розовом море жила маленькая рыбка Рита с радужными плавниками.",
                     targetWord: "рыбка",
                     animationType: .float,
@@ -312,8 +312,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "rybka-rita-2",
-                    backgroundEmoji: "🌊💎",
-                    characterEmoji: "🐠🐚",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Рита нашла красивую ракушку и решила подарить её другу-крабику.",
                     targetWord: "Рита",
                     animationType: .slide,
@@ -321,8 +321,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "rybka-rita-3",
-                    backgroundEmoji: "🐚🌊",
-                    characterEmoji: "🐠🦀",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Рыбка Рита и крабик радостно играли с ракушкой весь день напролёт.",
                     targetWord: "рыбка",
                     animationType: .bounce,
@@ -342,8 +342,8 @@ public final class StoryLibrary: Sendable {
             scenes: [
                 AnimatedStoryScene(
                     id: "raketa-ryzhik-1",
-                    backgroundEmoji: "🌌⭐",
-                    characterEmoji: "🚀",
+                    backgroundEmoji: "⭐",
+                    characterEmoji: "",
                     narrativeText: "Рыжая ракета Рыжик мечтала долететь до самой далёкой звезды.",
                     targetWord: "ракета",
                     animationType: .grow,
@@ -351,8 +351,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "raketa-ryzhik-2",
-                    backgroundEmoji: "⭐🌙",
-                    characterEmoji: "🚀⭐",
+                    backgroundEmoji: "⭐",
+                    characterEmoji: "⭐",
                     narrativeText: "Рыжик разогнался и рванул вверх, оставляя рыжий след в небе.",
                     targetWord: "рванул",
                     animationType: .slide,
@@ -360,8 +360,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "raketa-ryzhik-3",
-                    backgroundEmoji: "🌙🌟",
-                    characterEmoji: "🚀🌟",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Ракета Рыжик добралась до луны и радостно прокричала: «Ура!»",
                     targetWord: "ракета",
                     animationType: .bounce,
@@ -383,8 +383,8 @@ public final class StoryLibrary: Sendable {
             scenes: [
                 AnimatedStoryScene(
                     id: "lisa-i-lyagushka-1",
-                    backgroundEmoji: "🌿🍃",
-                    characterEmoji: "🦊",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Ловкая лиса гуляла по лесу и нашла большое лесное озеро.",
                     targetWord: "лиса",
                     animationType: .slide,
@@ -392,8 +392,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "lisa-i-lyagushka-2",
-                    backgroundEmoji: "🐸💧",
-                    characterEmoji: "🦊🐸",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "На листочке сидела маленькая лягушка и квакала на всю поляну.",
                     targetWord: "лягушка",
                     animationType: .bounce,
@@ -401,8 +401,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "lisa-i-lyagushka-3",
-                    backgroundEmoji: "🌿🌸",
-                    characterEmoji: "🦊🐸",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Лиса и лягушка подружились и каждый день ловили луч солнца вместе.",
                     targetWord: "лягушка",
                     animationType: .float,
@@ -422,8 +422,8 @@ public final class StoryLibrary: Sendable {
             scenes: [
                 AnimatedStoryScene(
                     id: "luna-i-lena-1",
-                    backgroundEmoji: "🌙✨",
-                    characterEmoji: "🌙",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Луна по имени Лена каждую ночь светила над лесом и над лугом.",
                     targetWord: "луна",
                     animationType: .fadeIn,
@@ -431,8 +431,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "luna-i-lena-2",
-                    backgroundEmoji: "⭐💫",
-                    characterEmoji: "🌙⭐",
+                    backgroundEmoji: "⭐",
+                    characterEmoji: "⭐",
                     narrativeText: "Лена собирала вокруг себя звёздочки и строила из них ласковый букет.",
                     targetWord: "Лена",
                     animationType: .float,
@@ -440,8 +440,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "luna-i-lena-3",
-                    backgroundEmoji: "🌙🌲",
-                    characterEmoji: "🌙🌟",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Луна Лена лила лёгкий серебряный свет на всех спящих лесных зверей.",
                     targetWord: "луна",
                     animationType: .spin,
@@ -463,8 +463,8 @@ public final class StoryLibrary: Sendable {
             scenes: [
                 AnimatedStoryScene(
                     id: "kot-kuzma-1",
-                    backgroundEmoji: "🏠🌳",
-                    characterEmoji: "🐱",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Кот Кузьма жил в красивом домике и каждый день ловил клубки.",
                     targetWord: "кот",
                     animationType: .bounce,
@@ -472,8 +472,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "kot-kuzma-2",
-                    backgroundEmoji: "🎩🌟",
-                    characterEmoji: "🐱🎩",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Кузьма надел клетчатую кепку и отправился на кулинарный конкурс.",
                     targetWord: "Кузьма",
                     animationType: .slide,
@@ -481,8 +481,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "kot-kuzma-3",
-                    backgroundEmoji: "🏆🎉",
-                    characterEmoji: "🐱🏆",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Кот Кузьма выиграл кубок и принёс домой целую корзину конфет.",
                     targetWord: "кот",
                     animationType: .grow,
@@ -502,8 +502,8 @@ public final class StoryLibrary: Sendable {
             scenes: [
                 AnimatedStoryScene(
                     id: "gus-grisha-1",
-                    backgroundEmoji: "🌾🏞️",
-                    characterEmoji: "🦆",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Гордый гусь Гриша жил на большом зелёном лугу у голубого пруда.",
                     targetWord: "гусь",
                     animationType: .fadeIn,
@@ -511,8 +511,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "gus-grisha-2",
-                    backgroundEmoji: "🌾🌊",
-                    characterEmoji: "🦆🌊",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Гриша гордо плыл по воде и громко гоготал от радости.",
                     targetWord: "гоготал",
                     animationType: .float,
@@ -520,8 +520,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "gus-grisha-3",
-                    backgroundEmoji: "🌅🌾",
-                    characterEmoji: "🦆🌟",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Гусь Гриша угостил всех гостей гречкой и говорил им добрые слова.",
                     targetWord: "гусь",
                     animationType: .bounce,
@@ -541,8 +541,8 @@ public final class StoryLibrary: Sendable {
             scenes: [
                 AnimatedStoryScene(
                     id: "khomyak-khrabry-1",
-                    backgroundEmoji: "🌲🌾",
-                    characterEmoji: "🐹",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Маленький хомяк решил стать самым храбрым хомяком в лесу.",
                     targetWord: "хомяк",
                     animationType: .grow,
@@ -550,8 +550,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "khomyak-khrabry-2",
-                    backgroundEmoji: "🛡️⚔️",
-                    characterEmoji: "🐹🛡️",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Хомяк сделал щит из орехового листа и меч из тонкой веточки.",
                     targetWord: "хомяк",
                     animationType: .shake,
@@ -559,8 +559,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "khomyak-khrabry-3",
-                    backgroundEmoji: "🏆🌟",
-                    characterEmoji: "🐹🌟",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Все в лесу хвалили храброго хомяка и угощали его вкусными хлебными крошками.",
                     targetWord: "хомяка",
                     animationType: .bounce,
@@ -582,8 +582,8 @@ public final class StoryLibrary: Sendable {
             scenes: [
                 AnimatedStoryScene(
                     id: "mishka-i-mishutka-1",
-                    backgroundEmoji: "🌲🌲",
-                    characterEmoji: "🐻",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Большой мишка и маленький мишутка жили в шалаше посреди леса.",
                     targetWord: "мишка",
                     animationType: .bounce,
@@ -591,8 +591,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "mishka-i-mishutka-2",
-                    backgroundEmoji: "🍯🌿",
-                    characterEmoji: "🐻🍯",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Мишка нашёл в лесу большой шар мёда и позвал мишутку делиться.",
                     targetWord: "мишутку",
                     animationType: .slide,
@@ -600,8 +600,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "mishka-i-mishutka-3",
-                    backgroundEmoji: "🌲🏠",
-                    characterEmoji: "🐻🐻",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Мишка и мишутка съели весь мёд и пошли спать в свой уютный шалаш.",
                     targetWord: "шалаш",
                     animationType: .float,
@@ -621,8 +621,8 @@ public final class StoryLibrary: Sendable {
             scenes: [
                 AnimatedStoryScene(
                     id: "pingvin-pyotr-1",
-                    backgroundEmoji: "🧊❄️",
-                    characterEmoji: "🐧",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Пингвин Пётр жил на плоской льдине посреди холодного океана.",
                     targetWord: "пингвин",
                     animationType: .slide,
@@ -630,8 +630,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "pingvin-pyotr-2",
-                    backgroundEmoji: "🐟🧊",
-                    characterEmoji: "🐧🐟",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Пётр поймал пять больших рыбок и принёс их в подарок пингвинятам.",
                     targetWord: "Пётр",
                     animationType: .bounce,
@@ -639,8 +639,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "pingvin-pyotr-3",
-                    backgroundEmoji: "❄️🌟",
-                    characterEmoji: "🐧⭐",
+                    backgroundEmoji: "",
+                    characterEmoji: "⭐",
                     narrativeText: "Пингвин Пётр стал лучшим папой и получил почётную полярную звезду.",
                     targetWord: "пингвин",
                     animationType: .grow,
@@ -660,8 +660,8 @@ public final class StoryLibrary: Sendable {
             scenes: [
                 AnimatedStoryScene(
                     id: "yozhik-egor-1",
-                    backgroundEmoji: "🍄🌲",
-                    characterEmoji: "🦔",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Ёжик Егор ел ежевику у ели и ёжился от утреннего холода.",
                     targetWord: "ёжик",
                     animationType: .shake,
@@ -669,8 +669,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "yozhik-egor-2",
-                    backgroundEmoji: "🍂🍄",
-                    characterEmoji: "🦔🍄",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Егор нашёл ёлку с вкусными грибами и наколол их на иголки.",
                     targetWord: "Егор",
                     animationType: .bounce,
@@ -678,8 +678,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "yozhik-egor-3",
-                    backgroundEmoji: "🌲🏠",
-                    characterEmoji: "🦔🌟",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Ёжик Егор принёс грибы домой и сварил ароматный ежевичный суп.",
                     targetWord: "ёжик",
                     animationType: .float,
@@ -699,8 +699,8 @@ public final class StoryLibrary: Sendable {
             scenes: [
                 AnimatedStoryScene(
                     id: "babochka-bella-1",
-                    backgroundEmoji: "🌺🌸",
-                    characterEmoji: "🦋",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Бабочка Белла жила в большом саду среди белых и розовых цветов.",
                     targetWord: "бабочка",
                     animationType: .float,
@@ -708,8 +708,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "babochka-bella-2",
-                    backgroundEmoji: "🌈🌺",
-                    characterEmoji: "🦋🌈",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Белла летела сквозь радугу и собирала блестящие капли росы.",
                     targetWord: "Белла",
                     animationType: .spin,
@@ -717,8 +717,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "babochka-bella-3",
-                    backgroundEmoji: "🌸✨",
-                    characterEmoji: "🦋🌸",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Бабочка Белла нарисовала крыльями большую букву «Б» на небе.",
                     targetWord: "бабочка",
                     animationType: .bounce,
@@ -738,8 +738,8 @@ public final class StoryLibrary: Sendable {
             scenes: [
                 AnimatedStoryScene(
                     id: "drakon-dima-1",
-                    backgroundEmoji: "🔥🏔️",
-                    characterEmoji: "🐲",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Дракон Дима добрый и дружелюбный жил в далёкой долине.",
                     targetWord: "дракон",
                     animationType: .grow,
@@ -747,8 +747,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "drakon-dima-2",
-                    backgroundEmoji: "🔥👑",
-                    characterEmoji: "🐲🔥",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Дима дул огнём на большую лужу и делал из неё дым-облако.",
                     targetWord: "Дима",
                     animationType: .bounce,
@@ -756,8 +756,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "drakon-dima-3",
-                    backgroundEmoji: "👑🌟",
-                    characterEmoji: "🐲👑",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Дракон Дима стал добрым другом для всех жителей долины.",
                     targetWord: "дракон",
                     animationType: .float,
@@ -777,8 +777,8 @@ public final class StoryLibrary: Sendable {
             scenes: [
                 AnimatedStoryScene(
                     id: "tigr-timur-1",
-                    backgroundEmoji: "🌿🏕️",
-                    characterEmoji: "🐯",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Тигр Тимур тихо ходил по тропинке в тропическом лесу.",
                     targetWord: "тигр",
                     animationType: .slide,
@@ -786,8 +786,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "tigr-timur-2",
-                    backgroundEmoji: "🌿🌟",
-                    characterEmoji: "🐯🌿",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Тимур танцевал среди деревьев и тихонько пел тигриные песни.",
                     targetWord: "Тимур",
                     animationType: .bounce,
@@ -795,8 +795,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "tigr-timur-3",
-                    backgroundEmoji: "🏕️🔥",
-                    characterEmoji: "🐯🌟",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Тигр Тимур сидел у тёплого костра и рассказывал тигрятам сказки.",
                     targetWord: "тигр",
                     animationType: .float,
