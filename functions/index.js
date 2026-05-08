@@ -64,7 +64,7 @@ const { runWeeklySummary } = require('./src/sendWeeklySummary');
 // ------------------------------------------------------------------
 
 exports.calculateProgress = onCall(
-  { enforceAppCheck: false, cors: true },
+  { enforceAppCheck: true, cors: true },
   async (request) => {
     const { userId, childId } = request.data || {};
 
@@ -92,7 +92,7 @@ exports.calculateProgress = onCall(
 // ------------------------------------------------------------------
 
 exports.generateReport = onCall(
-  { enforceAppCheck: false, cors: true },
+  { enforceAppCheck: true, cors: true },
   async (request) => {
     const { userId, childId, period } = request.data || {};
 
@@ -143,7 +143,7 @@ exports.generateReport = onCall(
 // ------------------------------------------------------------------
 
 exports.getUserStats = onCall(
-  { enforceAppCheck: false, cors: true },
+  { enforceAppCheck: true, cors: true },
   async (request) => {
     const { userId } = request.data || {};
 
@@ -239,7 +239,7 @@ exports.sendWeeklyReport = onSchedule(
 // ------------------------------------------------------------------
 
 exports.exportUserData = onCall(
-  { enforceAppCheck: false, cors: true, timeoutSeconds: 540, memory: '512MiB' },
+  { enforceAppCheck: true, cors: true, timeoutSeconds: 540, memory: '512MiB' },
   async (request) => {
     const { userId } = request.data || {};
 
@@ -282,7 +282,7 @@ exports.exportUserData = onCall(
 // ------------------------------------------------------------------
 
 exports.deleteUserData = onCall(
-  { enforceAppCheck: false, cors: true, timeoutSeconds: 540, memory: '512MiB' },
+  { enforceAppCheck: true, cors: true, timeoutSeconds: 540, memory: '512MiB' },
   async (request) => {
     const { userId, confirm } = request.data || {};
 
@@ -357,7 +357,7 @@ exports.moderateUserContent = onDocumentWritten(
 // ------------------------------------------------------------------
 
 exports.setAdminClaim = onCall(
-  { enforceAppCheck: false, cors: true },
+  { enforceAppCheck: true, cors: true },
   async (request) => {
     return setAdminClaimHandler(admin, request);
   },
@@ -427,7 +427,7 @@ exports.sendWeeklySummary = onSchedule(
 // ------------------------------------------------------------------
 
 exports.sendWeeklySummaryFCM = onCall(
-  { enforceAppCheck: false, cors: true },
+  { enforceAppCheck: true, cors: true },
   async (request) => {
     const { parentId } = request.data || {};
 
