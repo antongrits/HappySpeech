@@ -75,7 +75,7 @@ struct AchievementCardView: View {
     private var rarityBadge: some View {
         Text(item.rarity.localizedTitle)
             .font(TypographyTokens.caption(10))
-            .foregroundStyle(.white)
+            .foregroundStyle(ColorTokens.Overlay.onAccent)
             .padding(.horizontal, SpacingTokens.sp2)
             .padding(.vertical, 3)
             .background(Capsule().fill(rarityColor))
