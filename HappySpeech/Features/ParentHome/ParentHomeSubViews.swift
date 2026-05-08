@@ -230,7 +230,10 @@ struct SoundAccuracyChartCard: View {
             Text(String(localized: "Средняя точность: \(Int(averageAccuracy * 100))%"))
                 .font(TypographyTokens.body(13))
                 .foregroundStyle(ColorTokens.Parent.inkMuted)
-            Spacer()
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+                .layoutPriority(1)
+            Spacer(minLength: 4)
         }
         .padding(.top, SpacingTokens.sp1)
     }
