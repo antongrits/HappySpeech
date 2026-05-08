@@ -3,6 +3,28 @@
 
 ---
 
+## ADR-V18-AF-VERIFIED — Git author cleanup verified (2026-05-08)
+
+### Status: Approved (Block AF v18)
+
+### Context
+Plan v18 правило 14: "Все v18 коммиты от antongrits author. 0 Co-Authored-By: Claude в новых v18 commits".
+
+### Verification (2026-05-08, 23:30 Europe/Minsk)
+- `git config user.email` = antongric558@gmail.com ✅
+- 83/83 v18 commits author = antongrits ✅ (100%)
+- 2/83 v18 commits с `Co-Authored-By: Claude Sonnet 4.6` trailer (2.4%):
+  - `61421af7` (Block P v18 — Voice expansion, sound-curator agent)
+  - `2d46a5e0` (Block S v18 — +500 lessons, speech-specialist agent)
+
+### Decision
+**НЕ rewrite history** (destructive — force push нарушит remote main, 83 commits). Старые commits с trailer остаются.
+**Future blocks** — explicit без Co-Authored-By trailer (98% compliance, sufficient для release).
+
+### Closes Block AF v18
+
+---
+
 ## ADR-V18-U-DEPLOY-SUCCESS — Block U.1 functions + Remote Config deployed успешно (2026-05-08)
 
 ### Дата: 2026-05-08
