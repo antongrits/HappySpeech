@@ -7011,7 +7011,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Дважды нажмите чтобы сохранить кастомизацию Ляли"
+            "value": "Дважды нажмите чтобы сохранить настройки Ляли"
           }
         }
       }
@@ -7263,7 +7263,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Кастомизация сохранена!"
+            "value": "Настройки сохранены!"
           }
         }
       }
@@ -7766,7 +7766,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Кастомизация Ляли"
+            "value": "Наряд Ляли"
           }
         }
       }
@@ -19779,7 +19779,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Стрик %d дней"
+            "value": "Серия %d дней"
           }
         }
       }
@@ -20351,7 +20351,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Стрик"
+            "value": "Серия"
           }
         }
       }
@@ -22617,7 +22617,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Пробел"
+            "value": "Космос"
           }
         }
       }
@@ -28634,7 +28634,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Кастомизация Ляли"
+            "value": "Наряд Ляли"
           }
         }
       }
@@ -32471,7 +32471,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Анализ временно использует тестовые данные. WhisperKit интеграция в разработке."
+            "value": "Анализ речи временно недоступен. Попробуйте позже."
           }
         }
       }
@@ -32481,7 +32481,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Анализ через WhisperKit активен"
+            "value": "Анализ голоса включён"
           }
         }
       }

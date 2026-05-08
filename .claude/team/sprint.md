@@ -628,4 +628,31 @@ All 18 blocks (0/A/B/C/D/E+O/F/G/H/I/J/K/L/M/N/P/Q/R) completed либо ADR-def
 - Coverage 35.9% (target 90%) — нужно ~600 unit tests, defer к post-v1.0
 - DocC catalog publish — P.3 deferred
 
+---
+
+## Block M v18 — Plain Russian Language Audit (2026-05-08)
+
+**Status:** DONE
+**Файл:** `HappySpeech/Resources/Localizable.xcstrings`
+**Аудит:** `_workshop/audit/v18-jargon-keys.txt`
+
+### Результат аудита
+
+Предустановленный список жаргона (интерактор, презентер, API, токен, пайплайн, легаси, фолбэк, аугментация и др.) — 0 попаданий в RU-значениях UI-строк. Переводы уже являлись plain Russian.
+
+Найдено и исправлено 9 проблем вне предустановленного списка:
+
+| Ключ | Было | Стало | Тип |
+|------|------|-------|-----|
+| customization.a11y.save_hint | "...кастомизацию Ляли" | "...настройки Ляли" | англицизм |
+| customization.feedback.saved | "Кастомизация сохранена!" | "Настройки сохранены!" | англицизм |
+| customization.title | "Кастомизация Ляли" | "Наряд Ляли" | англицизм |
+| settings.customization.label | "Кастомизация Ляли" | "Наряд Ляли" | англицизм |
+| progressDashboard.summary.streak | "Стрик" | "Серия" | англицизм |
+| progressDashboard.a11y.streakPattern | "Стрик %d дней" | "Серия %d дней" | англицизм |
+| rewards.collection.space | "Пробел" | "Космос" | неверный перевод |
+| stuttering.diary.stub_banner | "...WhisperKit интеграция в разработке." | "Анализ речи временно недоступен. Попробуйте позже." | debug-текст в UI |
+| stuttering.diary.whisperkit_active | "Анализ через WhisperKit активен" | "Анализ голоса включён" | название библиотеки в UI |
+
+Russian-only mandate: сохранён (0 EN ключей).
 
