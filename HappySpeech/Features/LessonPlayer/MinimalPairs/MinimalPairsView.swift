@@ -192,7 +192,7 @@ struct MinimalPairsView: View {
             Button(action: replayWord) {
                 Image(systemName: "speaker.wave.2.fill")
                     .font(TypographyTokens.headline(22))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .frame(width: 56, height: 56)
                     .background(Circle().fill(ColorTokens.Brand.primary))
                     .shadow(color: ColorTokens.Overlay.shadow, radius: 6, y: 3)
@@ -346,7 +346,7 @@ struct MinimalPairsView: View {
         }
         .padding(.horizontal, SpacingTokens.large)
         .padding(.vertical, SpacingTokens.medium)
-        .foregroundStyle(.white)
+        .foregroundStyle(ColorTokens.Overlay.onAccent)
         .background(
             Capsule().fill(
                 display.correct
@@ -462,7 +462,7 @@ struct MinimalPairsView: View {
     private func toastBanner(_ message: String) -> some View {
         Text(message)
             .font(TypographyTokens.caption(14))
-            .foregroundStyle(.white)
+            .foregroundStyle(ColorTokens.Overlay.onAccent)
             .padding(.horizontal, SpacingTokens.medium)
             .padding(.vertical, SpacingTokens.small)
             .background(Capsule().fill(ColorTokens.Overlay.dimmerHeavy))

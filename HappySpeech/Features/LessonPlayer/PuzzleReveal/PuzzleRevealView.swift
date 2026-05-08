@@ -438,7 +438,7 @@ private struct PuzzleTileView: View {
             } else {
                 Image(systemName: "questionmark")
                     .font(TypographyTokens.title(22).weight(.heavy))
-                    .foregroundStyle(.white.opacity(0.9))
+                    .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.9))
                     .accessibilityHidden(true)
             }
         }

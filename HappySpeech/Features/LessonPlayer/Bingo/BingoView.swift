@@ -373,14 +373,14 @@ private struct BingoCellView: View {
                     VStack(spacing: 2) {
                         Image(systemName: "checkmark")
                             .font(TypographyTokens.caption(14))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(ColorTokens.Overlay.onAccent)
                             .accessibilityHidden(true)
                         Text(cell.word)
                             .font(TypographyTokens.body(11))
-                            .foregroundStyle(.white)
+                            .foregroundStyle(ColorTokens.Overlay.onAccent)
                             .lineLimit(1)
                             .minimumScaleFactor(0.55)
-                            .strikethrough(!cell.isWinner, color: .white.opacity(0.7))
+                            .strikethrough(!cell.isWinner, color: ColorTokens.Overlay.onAccent.opacity(0.7))
                     }
                     .padding(.horizontal, 4)
                 } else {
