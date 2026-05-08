@@ -33,10 +33,10 @@ struct SoundAndFaceView: View {
                     VStack(alignment: .leading) {
                         Text(display.postureName)
                             .font(TypographyTokens.headline())
-                            .foregroundStyle(.white)
+                            .foregroundStyle(ColorTokens.Overlay.onAccent)
                         Text(display.instruction)
                             .font(TypographyTokens.body(13))
-                            .foregroundStyle(.white.opacity(0.85))
+                            .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
                     }
                 }
                 .padding()

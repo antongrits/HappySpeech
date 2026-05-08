@@ -129,7 +129,7 @@ struct ARFallbackBannerView: View {
                             .minimumScaleFactor(0.85)
                     }
                     .font(TypographyTokens.headline(15))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .padding(.horizontal, SpacingTokens.large)
                     .padding(.vertical, SpacingTokens.small)
                     .background(
@@ -228,7 +228,7 @@ struct ARGameCardView: View {
                 HStack {
                     Image(systemName: card.iconName)
                         .font(TypographyTokens.title(30).weight(.medium))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .accessibilityHidden(true)
                     Spacer()
                     difficultyDots
@@ -237,7 +237,7 @@ struct ARGameCardView: View {
                 VStack(alignment: .leading, spacing: SpacingTokens.micro) {
                     Text(card.title)
                         .font(TypographyTokens.headline(16))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .lineLimit(2)
                         .minimumScaleFactor(0.85)
                     HStack(spacing: SpacingTokens.micro) {
@@ -247,7 +247,7 @@ struct ARGameCardView: View {
                         Text("\(card.estimatedMinutes) мин")
                             .font(TypographyTokens.body(12))
                     }
-                    .foregroundStyle(.white.opacity(0.85))
+                    .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
                 }
             }
             .padding(SpacingTokens.regular)
@@ -310,7 +310,7 @@ struct ARGameBadgeOverlay: View {
             Text(String(localized: String.LocalizationValue(labelKey)))
                 .font(TypographyTokens.body(9).weight(.bold))
         }
-        .foregroundStyle(.white)
+        .foregroundStyle(ColorTokens.Overlay.onAccent)
         .padding(.horizontal, 7)
         .padding(.vertical, 3)
         .background(

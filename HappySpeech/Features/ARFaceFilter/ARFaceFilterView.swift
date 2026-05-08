@@ -141,7 +141,7 @@ struct ARFaceFilterView: View {
             let offset = renderer.overlayOffset(for: setMaskVM.mask)
             Image(systemName: setMaskVM.mask.symbolName)
                 .font(.system(size: 90))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .shadow(color: holder.glowState == .glowing
                         ? renderer.glowColor(for: setMaskVM.mask)
                         : .black.opacity(0.4),
@@ -163,8 +163,8 @@ struct ARFaceFilterView: View {
             } label: {
                 Image(systemName: "xmark.circle.fill")
                     .font(.title)
-                    .foregroundStyle(.white)
-                    .background(Circle().fill(.black.opacity(0.4)))
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
+                    .background(Circle().fill(ColorTokens.Overlay.dimmerHeavy))
             }
             .accessibilityLabel(Text("facefilter.close.a11y"))
         }
@@ -177,7 +177,7 @@ struct ARFaceFilterView: View {
         VStack(spacing: SpacingTokens.sp1) {
             Text(viewModel.promptText)
                 .font(.title2.bold())
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .multilineTextAlignment(.center)
                 .accessibilityLabel(Text(viewModel.promptText))
             if let triggerVM = holder.triggerVM, triggerVM.isMatched {
@@ -190,7 +190,7 @@ struct ARFaceFilterView: View {
         .padding(SpacingTokens.sp4)
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(.black.opacity(0.55))
+                .fill(ColorTokens.Overlay.dimmerHeavy)
         )
         .padding(.horizontal, SpacingTokens.sp3)
         .animation(reduceMotion ? nil : .easeInOut, value: holder.triggerVM?.isMatched)
@@ -219,10 +219,10 @@ struct ARFaceFilterView: View {
             VStack(spacing: 4) {
                 Image(systemName: mask.symbolName)
                     .font(.system(size: 36))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                 Text(mask.localizedTitle)
                     .font(.caption2)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .lineLimit(1)
             }
             .frame(width: 72, height: 72)

@@ -56,7 +56,7 @@ struct ARGameHUD: View {
             Button(action: onClose) {
                 Image(systemName: "xmark")
                     .font(.headline)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .padding(SpacingTokens.small)
                     .background(ColorTokens.Overlay.dimmerHeavy, in: Circle())
             }
@@ -66,7 +66,7 @@ struct ARGameHUD: View {
 
             Text(title)
                 .font(TypographyTokens.headline(16))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .padding(.horizontal, SpacingTokens.small)
                 .padding(.vertical, SpacingTokens.tiny)
                 .background(ColorTokens.Overlay.dimmer, in: Capsule())
@@ -76,7 +76,7 @@ struct ARGameHUD: View {
             if let scoreText {
                 Text(scoreText)
                     .font(TypographyTokens.headline(16))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .padding(.horizontal, SpacingTokens.small)
                     .padding(.vertical, SpacingTokens.tiny)
                     .background(ColorTokens.Brand.primary.opacity(0.9), in: Capsule())

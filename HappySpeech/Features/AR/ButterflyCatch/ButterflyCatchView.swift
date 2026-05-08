@@ -45,7 +45,7 @@ struct ButterflyCatchView: View {
                 if !display.statusMessage.isEmpty {
                     Text(display.statusMessage)
                         .font(TypographyTokens.headline())
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .padding(.horizontal, SpacingTokens.medium)
                         .padding(.vertical, SpacingTokens.small)
                         .background(ColorTokens.Overlay.dimmerHeavy, in: Capsule())

@@ -35,7 +35,7 @@ struct BreathingARView: View {
                     .animation(.easeOut(duration: 0.15), value: display.strength)
                 Text(display.hint)
                     .font(TypographyTokens.headline())
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .padding(.horizontal, SpacingTokens.medium)
                     .padding(.vertical, SpacingTokens.small)
                     .background(ColorTokens.Overlay.dimmerHeavy, in: Capsule())

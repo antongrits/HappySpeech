@@ -277,7 +277,7 @@ public struct LyalyaRealityView: View {
 
             Image(systemName: animation.systemImageName)
                 .font(.system(size: size * 0.45, weight: .regular))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .accessibilityHidden(true)
         }
         .frame(width: size, height: size)

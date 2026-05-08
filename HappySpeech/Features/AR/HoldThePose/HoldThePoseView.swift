@@ -30,7 +30,7 @@ struct HoldThePoseView: View {
                 VStack(spacing: SpacingTokens.small) {
                     Text(display.postureName)
                         .font(TypographyTokens.headline())
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .padding(.horizontal, SpacingTokens.medium)
                         .padding(.vertical, SpacingTokens.small)
                         .background(ColorTokens.Overlay.dimmerHeavy, in: Capsule())
@@ -45,7 +45,7 @@ struct HoldThePoseView: View {
                     .frame(height: 14)
                     Text("\(display.confidencePercent)%")
                         .font(TypographyTokens.body(13))
-                        .foregroundStyle(.white.opacity(0.85))
+                        .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.bottom, SpacingTokens.xLarge)

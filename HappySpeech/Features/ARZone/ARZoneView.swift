@@ -103,19 +103,19 @@ struct ARZoneView: View {
             HStack(spacing: SpacingTokens.sp3) {
                 Image(systemName: "theatermasks.fill")
                     .font(.title2)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 2) {
                     Text("ar.zone.faceFilter.title")
                         .font(TypographyTokens.headline(16))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                     Text("ar.zone.faceFilter.subtitle")
                         .font(TypographyTokens.caption(12))
-                        .foregroundStyle(.white.opacity(0.85))
+                        .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
                 }
                 Spacer()
                 Image(systemName: "chevron.right")
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .accessibilityHidden(true)
             }
             .padding(SpacingTokens.sp4)

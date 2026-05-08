@@ -214,7 +214,7 @@ struct ARStoryQuestView: View {
                         .shadow(color: ColorTokens.Brand.primary.opacity(0.3), radius: 12, y: 6)
                     Image(systemName: display.isListening ? "stop.fill" : "mic.fill")
                         .font(TypographyTokens.display(36))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                 }
                 .animation(
                     reduceMotion
