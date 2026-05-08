@@ -1,6 +1,6 @@
 # Sound Assets Registry — HappySpeech
 
-**Version 2.6 — 2026-05-07**
+**Version 2.7 — 2026-05-08**
 **Managed by:** Sound Curator. All sounds verified CC0 or royalty-free.
 
 ---
@@ -15,6 +15,7 @@
 | Ляля Block P voice expansion (.m4a) | 570 | ~9.7 MB | `HappySpeech/Resources/Audio/Lyalya/<11 categories>/` (в репо) | ✅ Plan v11 Block P done |
 | Ляля Block F.3 voice expansion (.m4a) | 248 | ~3.2 MB | `HappySpeech/Resources/Audio/Lyalya/` root + subdirs (в репо) | ✅ Plan v12 F.3 done |
 | Ляля Block P.1 v16 voice expansion (.m4a) | 1+KB | ~+33 MB | `HappySpeech/Resources/Audio/Lyalya/<10 categories>/` (в репо) | ✅ Plan v16 Block P.1 done |
+| Ляля Block P v18 voice expansion (.m4a) | 775 | ~15 MB | `HappySpeech/Resources/Audio/Lyalya/{v18,v18b,v18c,v18d}/` (в репо) | ✅ Plan v18 Block P done |
 | Content audio batch 1 (.m4a) | 1000 | 12.65 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 1 |
 | Content audio batch 2 (.m4a) | 1028 | 11.1 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 2 |
 | Content audio batch 3 (.m4a) | 681 | 8.36 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 3 |
@@ -573,6 +574,7 @@ Russian-only: 0 en keys ✅
 - **Plan v12 Block F.3** — ✅ DONE — Ляля +248 фраз (1774 total .m4a, seasonal/hints/ambient/phoneme)
 - **Plan v12 Block U ambient** — ✅ DONE — 10 ambient .caf сцен (1.2 MB) + AmbientSoundService.swift
 - **Plan v16 Block P.1** — ✅ DONE — Ляля +~1350 фраз (6835 total Lyalya .m4a, 13344 total Audio .m4a, 213 MB)
+- **Plan v18 Block P** — ✅ DONE — Ляля +775 фраз (v18:400 + v18b:246 + v18c:109 + v18d:20), **14501 total Audio .m4a, TARGET REACHED**
 - **Firebase Storage upload** — delegated to backend-developer M11.4
 
 ## Plan v16 Block P.1 — Ляля Voice Expansion (6835 total Lyalya .m4a) ✅
@@ -611,6 +613,44 @@ Russian-only: 0 en keys ✅
 - **P.1.8** — 110+ фраз для заикания: DTT команды, дыхательный ритм, voluntary stuttering, подкрепление, руководство для родителей
 - **P.1.9** — 48 фраз для narrative quest (главы, переходы, NPC диалоги, боссы, карта)
 - **P.1.10** — 118 фраз: восстановление после ошибок, retry, тайминг сессий, перерывы, завершения, мотивация, подсказки, похвала, переходы уровней, звуковые интро, напоминания артикуляции, советы родителям, прощания
+
+---
+
+## Plan v18 Block P — Ляля Voice Expansion (775 файлов, TARGET 14500+ REACHED) ✅
+
+**Дата:** 2026-05-08
+**Голос:** `ru-RU-SvetlanaNeural` (edge-tts 7.2.8)
+**Pipeline:** edge-tts → mp3 → ffmpeg loudnorm (I=-16, TP=-1.5, LRA=11) → AAC 16kHz mono 32kbps → .m4a
+**Формат:** AAC LC, 16000 Hz, 1ch mono, 12–25 KB/файл (все < 50 KB)
+**Длительность:** 3–5 секунд
+**Лицензия:** Microsoft edge-tts (royalty-free, коммерческое использование)
+**lyalya-phrase-mapping.json:** 783 → 1558 записей (+775)
+
+| Батч | Поддиректория | Файлов | Категории |
+|---|---|---|---|
+| v18 | `Lyalya/v18/` | 400 | achievement_unlock (112), onboarding_narration (50), settings_hint (46), hint_prerecorded (34), multi_stage_celebration (30), game_specific (60), daily_streak (40), voice_clone_reference (28) |
+| v18b | `Lyalya/v18b/` | 246 | contextual_phrases, retry_encouragement, session_timing, instruction_set, special_praise, progress_feedback, phoneme_intro (24 звука), time_of_day, breathing_instructions, articulation_exercises, parent_tips_voice, sound_mastery, position_coaching, syllable_practice, syllable_drill, sound_differentiation, adaptive_pacing, daily_task_intro, diagnostic_phrases, narrative_transitions, rewards_prompts, social_sharing |
+| v18c | `Lyalya/v18c/` | 109 | phonology_concepts, word_analysis, word_building, reading_support, auditory_memory, narrative_skill, vocabulary_concepts, grammar_concepts, tongue_twisters, lip/cheek/jaw/tongue exercises, gamification, seasonal_extended, specialist_integration, progress_tracking, practice_tips, adaptive_content, session_structure, self_assessment |
+| v18d | `Lyalya/v18d/` | 20 | session_open, praise_special, break_prompt, confidence_boost, visual_instruction, pacing_cue, task_complete, reward_micro, farewell |
+| **ИТОГО v18 Block P** | — | **775** | **0 ошибок, 0 пропущено** |
+
+**Итоговый счёт:**
+- Total .m4a в Audio/: **14501** (target 14500 REACHED ✅)
+- Lyalya-phrase-mapping.json: 1558 записей
+
+**Валидация (10 случайных файлов из v18+v18b+v18c+v18d):**
+- AAC LC, 16000 Hz, 1ch mono ✅
+- Размер 12–25 KB (< 50 KB) ✅
+- Длительность 3.3–5.1s ✅
+- 10/10 OK ✅
+
+**Скрипты:**
+- `_workshop/scripts/lyalya-phrases-v18.json` — 400 фраз
+- `_workshop/scripts/lyalya-phrases-v18b.json` — 246 фраз
+- `_workshop/scripts/lyalya-phrases-v18c.json` — 109 фраз
+- `_workshop/scripts/lyalya-phrases-v18d.json` — 20 фраз
+- `_workshop/scripts/generate_lyalya_voice_v18.py` / `v18b.py` / `v18c.py` / `v18d.py` — генерация
+- `_workshop/scripts/update_v18_mapping.py` — обновление маппинга
 
 ---
 
