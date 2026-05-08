@@ -81,10 +81,17 @@ struct SpecChildDashboardView: View {
         ZStack {
             ColorTokens.Spec.bg.ignoresSafeArea()
             if isLoading {
-                ProgressView()
-                    .controlSize(.large)
-                    .tint(ColorTokens.Spec.accent)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                // Block J v18 — skeleton shimmer вместо ProgressView spinner.
+                VStack(spacing: SpacingTokens.regular) {
+                    ForEach(0..<5, id: \.self) { _ in
+                        HSSkeletonCard()
+                    }
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.top, SpacingTokens.regular)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                .redacted(reason: .placeholder)
+                .hsShimmer(active: true)
             } else {
                 ScrollView {
                     VStack(spacing: SpacingTokens.sp4) {

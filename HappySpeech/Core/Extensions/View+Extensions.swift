@@ -30,6 +30,15 @@ public extension View {
         }
     }
 
+    /// Block J v18 — Skeleton shimmer overlay для loading-состояний.
+    /// Применяется к контенту: при loading контент redacted+shimmer, иначе обычный.
+    /// Альтернатива `.loadingOverlay(_:)` без блокирующего dimmer.
+    func loadingShimmer(_ isLoading: Bool) -> some View {
+        self
+            .redacted(reason: isLoading ? .placeholder : [])
+            .hsShimmer(active: isLoading)
+    }
+
     /// Adds standard CTA safe-scaling behaviour.
     func ctaTextStyle() -> some View {
         self

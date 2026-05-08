@@ -80,7 +80,17 @@ struct ProgressDashboardView: View {
     @ViewBuilder
     private var content: some View {
         if display.isLoading && display.summaryCards.isEmpty {
-            HSLoadingView(message: String(localized: "progressDashboard.loading"))
+            // Block J v18 — skeleton shimmer вместо ProgressView spinner.
+            VStack(spacing: SpacingTokens.regular) {
+                ForEach(0..<6, id: \.self) { _ in
+                    HSSkeletonCard()
+                }
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.top, SpacingTokens.regular)
+            .redacted(reason: .placeholder)
+            .hsShimmer(active: true)
+            .accessibilityLabel(String(localized: "progressDashboard.loading"))
         } else if display.isEmpty {
             emptyStateView
         } else {
