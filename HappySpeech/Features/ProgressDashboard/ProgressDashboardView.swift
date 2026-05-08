@@ -45,6 +45,15 @@ struct ProgressDashboardView: View {
             ZStack(alignment: .bottom) {
                 ColorTokens.Parent.bg.ignoresSafeArea()
 
+                // Block J v18 — kavsoft-style mesh gradient (iOS 18+) с soft-light blend.
+                // На iOS 17 fallback на RadialGradient (component-internal).
+                HSMeshGradientBackground(palette: .calm, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(0.22)
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
                 content
                     .refreshable { performRefresh() }
 

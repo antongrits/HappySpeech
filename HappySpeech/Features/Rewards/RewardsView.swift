@@ -58,6 +58,15 @@ struct RewardsView: View {
             ZStack(alignment: .bottom) {
                 ColorTokens.Kid.bg.ignoresSafeArea()
 
+                // Block J v18 — kavsoft-style mesh gradient palette .rewards
+                // (gold/butter/primaryLo). iOS 18+ MeshGradient, fallback iOS 17.
+                HSMeshGradientBackground(palette: .rewards, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(0.30)
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
                 VStack(spacing: 0) {
                     headerSection
                     tabFilterSection
