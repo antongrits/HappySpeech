@@ -239,6 +239,9 @@ struct ChildHomeView: View {
 
                 Spacer()
 
+                // Block J v18 — HSProgressRing для дневной миссии (Activity Ring style).
+                // Showing 1.0 if mission completed, 0.0 если нет.
+                // Hidden если streak > 0 (показывается streak badge).
                 if viewModel.currentStreak > 0 {
                     Button {
                         showDailyStreakSheet = true
@@ -250,6 +253,21 @@ struct ChildHomeView: View {
                     }
                     .buttonStyle(.plain)
                     .accessibilityHint(Text("child.home.streak.tap.hint"))
+                } else {
+                    HSProgressRing(
+                        value: viewModel.dailyMissionDetail.isCompleted ? 1.0 : 0.0,
+                        size: 56,
+                        lineWidth: 6,
+                        color: viewModel.dailyMissionDetail.isCompleted
+                            ? ColorTokens.Semantic.success
+                            : ColorTokens.Brand.primary,
+                        label: viewModel.dailyMissionDetail.isCompleted ? "✓" : ""
+                    )
+                    .accessibilityLabel(
+                        viewModel.dailyMissionDetail.isCompleted
+                            ? String(localized: "child.home.mission.completed.a11y")
+                            : String(localized: "child.home.mission.pending.a11y")
+                    )
                 }
             }
         }
