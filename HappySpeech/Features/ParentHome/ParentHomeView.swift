@@ -452,7 +452,7 @@ private struct ParentDashboardTab: View {
                     // Severity badge
                     Text(card.severityText)
                         .font(TypographyTokens.labelRounded(11, weight: .bold))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 3)
                         .background(Capsule().fill(accentColor))

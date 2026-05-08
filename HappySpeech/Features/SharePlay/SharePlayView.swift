@@ -334,13 +334,13 @@ private struct SharePlaySessionBannerView: View {
         HStack(spacing: SpacingTokens.sp3) {
             // Иконка SharePlay
             Image(systemName: "shareplay")
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .font(TypographyTokens.body(16))
                 .accessibilityHidden(true)
 
             Text(participantCountLabel)
                 .font(TypographyTokens.body(14))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .lineLimit(1)
 
             Spacer()
@@ -348,7 +348,7 @@ private struct SharePlaySessionBannerView: View {
             Button(action: onEnd) {
                 Text(String(localized: "shareplay.session.end"))
                     .font(TypographyTokens.body(13))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .padding(.horizontal, SpacingTokens.sp3)
                     .padding(.vertical, SpacingTokens.sp1)
                     .background(ColorTokens.Overlay.highlight, in: Capsule())

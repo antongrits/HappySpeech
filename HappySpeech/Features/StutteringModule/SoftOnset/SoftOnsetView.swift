@@ -159,7 +159,7 @@ struct SoftOnsetView: View {
         Button(action: {}) {
             Image(systemName: "speaker.wave.2.fill")
                 .font(TypographyTokens.headline(22))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .frame(width: 56, height: 56)
                 .background(
                     Circle().fill(ColorTokens.Brand.sky)
@@ -178,7 +178,7 @@ struct SoftOnsetView: View {
         }) {
             Image(systemName: interactor.display.isRecording ? "stop.fill" : "mic.fill")
                 .font(TypographyTokens.title(28))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .frame(width: 80, height: 80)
                 .background(
                     Circle().fill(recordButtonColor)

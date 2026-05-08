@@ -318,7 +318,7 @@ struct ModelPackRow: View {
                         if item.isActive {
                             Text(String(localized: "settings.models.badge.active"))
                                 .font(TypographyTokens.caption(10).weight(.bold))
-                                .foregroundStyle(.white)
+                                .foregroundStyle(ColorTokens.Overlay.onAccent)
                                 .padding(.horizontal, 6)
                                 .padding(.vertical, 2)
                                 .background(
