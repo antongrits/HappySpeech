@@ -24,15 +24,35 @@ struct SessionShellView: View {
     let childId: String
     let targetSoundId: String
     let sessionType: SessionType
+    /// Опциональный шаблон игры. Когда задан — sessionShell собирает сессию из
+    /// 5 шагов одного шаблона. Используется при deep link / debug-routes.
+    let forcedGameType: GameType?
 
     let container: AppContainer
     let coordinator: AppCoordinator
+
+    init(
+        childId: String,
+        targetSoundId: String,
+        sessionType: SessionType,
+        forcedGameType: GameType? = nil,
+        container: AppContainer,
+        coordinator: AppCoordinator
+    ) {
+        self.childId = childId
+        self.targetSoundId = targetSoundId
+        self.sessionType = sessionType
+        self.forcedGameType = forcedGameType
+        self.container = container
+        self.coordinator = coordinator
+    }
 
     var body: some View {
         SessionShellHost(
             childId: childId,
             targetSoundId: targetSoundId,
             sessionType: sessionType,
+            forcedGameType: forcedGameType,
             container: container,
             coordinator: coordinator
         )
@@ -67,6 +87,7 @@ struct SessionShellHost: View {
     let childId: String
     let targetSoundId: String
     let sessionType: SessionType
+    let forcedGameType: GameType?
     let container: AppContainer
     let coordinator: AppCoordinator
 
@@ -128,7 +149,8 @@ struct SessionShellHost: View {
                 SessionShellModels.StartSession.Request(
                     childId: childId,
                     targetSoundId: targetSoundId,
-                    sessionType: sessionType
+                    sessionType: sessionType,
+                    forcedGameType: forcedGameType
                 )
             )
         }

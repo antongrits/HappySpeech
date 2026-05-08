@@ -270,11 +270,12 @@ struct AppCoordinatorView: View {
                 onReplay: { coordinator.pop() }
             )
 
-        case .lessonPlayer(_, let childId):
+        case .lessonPlayer(let templateType, let childId):
             SessionShellView(
                 childId: childId,
                 targetSoundId: "Р",
-                sessionType: .adaptive,
+                sessionType: templateType.isEmpty ? .adaptive : .quickPractice,
+                forcedGameType: GameType.fromTemplateRoute(templateType),
                 container: container,
                 coordinator: coordinator
             )

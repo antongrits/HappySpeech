@@ -248,6 +248,11 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
     }
 
     private func loadActivities(for request: SessionShellModels.StartSession.Request) async -> [SessionActivity] {
+        // Если deep link / debug-route задал конкретный шаблон — собираем сессию
+        // из 5 шагов одного шаблона, минуя AdaptivePlanner.
+        if let forced = request.forcedGameType {
+            return Self.forcedActivities(for: request, gameType: forced)
+        }
         switch request.sessionType {
         case .adaptive:
             do {
@@ -268,6 +273,22 @@ final class SessionShellInteractor: SessionShellBusinessLogic {
             }
         case .quickPractice, .screening, .homeworkTask:
             return Self.defaultActivities(for: request)
+        }
+    }
+
+    private static func forcedActivities(
+        for request: SessionShellModels.StartSession.Request,
+        gameType: GameType
+    ) -> [SessionActivity] {
+        (0..<5).map { idx in
+            SessionActivity(
+                id: "\(request.childId)-forced-\(gameType.rawValue)-\(idx)",
+                gameType: gameType,
+                lessonId: "\(request.targetSoundId)-\(gameType.rawValue)-\(idx)",
+                soundTarget: request.targetSoundId,
+                difficulty: 1 + idx / 2,
+                isCompleted: false
+            )
         }
     }
 
