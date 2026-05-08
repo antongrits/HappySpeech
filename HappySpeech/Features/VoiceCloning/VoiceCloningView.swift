@@ -177,7 +177,7 @@ struct VoiceCloningView: View {
 
                 Image(systemName: viewModel.isRecording ? "stop.fill" : "mic.fill")
                     .font(.system(size: 32, weight: .bold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
             }
         }
         .buttonStyle(.plain)
@@ -406,7 +406,7 @@ private struct ToastBanner: View {
     var body: some View {
         Text(text)
             .font(TypographyTokens.body(14).weight(.medium))
-            .foregroundStyle(.white)
+            .foregroundStyle(ColorTokens.Overlay.onAccent)
             .padding(.horizontal, SpacingTokens.sp4)
             .padding(.vertical, SpacingTokens.sp2)
             .background(

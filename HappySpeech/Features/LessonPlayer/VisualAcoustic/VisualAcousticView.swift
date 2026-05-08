@@ -496,12 +496,12 @@ private struct ChoiceTile: View {
             if isRevealed {
                 Image(systemName: "star.fill")
                     .font(TypographyTokens.title(20).weight(.bold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .accessibilityHidden(true)
             } else {
                 Image(systemName: "xmark.circle.fill")
                     .font(TypographyTokens.title(20).weight(.bold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .accessibilityHidden(true)
             }
         }

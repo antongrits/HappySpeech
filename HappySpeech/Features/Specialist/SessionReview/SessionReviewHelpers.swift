@@ -218,7 +218,7 @@ struct AccuracyPill: View {
     var body: some View {
         Text("\(percent)%")
             .font(TypographyTokens.labelRounded(13))
-            .foregroundStyle(.white)
+            .foregroundStyle(ColorTokens.Overlay.onAccent)
             .padding(.horizontal, SpacingTokens.small)
             .padding(.vertical, 4)
             .background(Capsule().fill(pillColor))

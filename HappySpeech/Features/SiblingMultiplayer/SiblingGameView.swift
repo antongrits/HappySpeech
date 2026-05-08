@@ -202,7 +202,7 @@ struct SiblingGameView: View {
                         .frame(width: 80, height: 80)
                     Image(systemName: display.isListening ? "stop.fill" : "mic.fill")
                         .font(TypographyTokens.kidDisplay(32))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                 }
             }
             .buttonStyle(.plain)

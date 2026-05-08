@@ -256,7 +256,7 @@ struct AchievementsView: View {
                 } label: {
                     Text(String(localized: "rewards.detail.close"))
                         .font(TypographyTokens.headline(16))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .padding(.horizontal, SpacingTokens.sp6)
                         .padding(.vertical, SpacingTokens.sp3)
                         .background(

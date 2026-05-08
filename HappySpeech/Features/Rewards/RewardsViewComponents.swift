@@ -124,7 +124,7 @@ struct StickerCellView: View {
                 if cell.isNew {
                     Text(String(localized: "rewards.badge.new"))
                         .font(TypographyTokens.mono(10))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
                         .background(Capsule().fill(ColorTokens.Brand.gold))
@@ -326,7 +326,7 @@ struct StickerUnlockOverlay: View {
             VStack(spacing: SpacingTokens.large) {
                 Text(String(localized: "rewards.unlock.badge"))
                     .font(TypographyTokens.caption(12))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .padding(.horizontal, SpacingTokens.medium)
                     .padding(.vertical, SpacingTokens.tiny)
                     .background(Capsule().fill(ColorTokens.Brand.gold))
@@ -338,7 +338,7 @@ struct StickerUnlockOverlay: View {
 
                 Text(unlock.name)
                     .font(TypographyTokens.title(28))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .multilineTextAlignment(.center)
 
                 HSButton(

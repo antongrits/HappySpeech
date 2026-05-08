@@ -205,7 +205,7 @@ struct ProfileEditorView: View {
             if isSelected {
                 Image(systemName: "checkmark")
                     .font(.system(size: 14, weight: .bold)) // emoji avatar accent — TypographyTokens.body не поддерживает .bold
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
             }
         }
         .animation(.spring(response: 0.25, dampingFraction: 0.8), value: isSelected)

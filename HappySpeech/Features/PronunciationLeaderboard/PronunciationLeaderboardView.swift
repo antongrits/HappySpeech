@@ -192,7 +192,7 @@ struct PronunciationLeaderboardView: View {
                 .overlay(
                     Text("\(row.position)")
                         .font(TypographyTokens.titleLarge(28))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                 )
         }
         .frame(maxWidth: .infinity)

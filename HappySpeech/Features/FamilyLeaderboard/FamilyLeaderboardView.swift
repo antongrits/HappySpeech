@@ -161,7 +161,7 @@ struct FamilyLeaderboardView: View {
                 } else {
                     Text(verbatim: "\(row.rank)")
                         .font(.title3.bold())
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                 }
             }
 
