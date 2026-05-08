@@ -14417,12 +14417,6 @@
             "state": "translated",
             "value": "Изолированный звук"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Isolated sound"
-          }
         }
       }
     },
@@ -14455,12 +14449,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Не определён"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Unknown"
           }
         }
       }
@@ -32490,12 +32478,6 @@
             "state": "translated",
             "value": "Сохранить отчёт в формате CSV"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Export report as CSV"
-          }
         }
       }
     },
@@ -32517,12 +32499,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Сохранить отчёт в формате PDF"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Export report as PDF"
           }
         }
       }
@@ -32546,12 +32522,6 @@
             "state": "translated",
             "value": "Отправить сообщение родителю"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Send a message to the parent"
-          }
         }
       }
     },
@@ -32563,12 +32533,6 @@
             "state": "translated",
             "value": "Добавить ребёнка"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Add child"
-          }
         }
       }
     },
@@ -32579,12 +32543,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Добавить нового ребёнка в список"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Add a new child to the list"
           }
         }
       }
@@ -32608,12 +32566,6 @@
             "state": "translated",
             "value": "Открыть карточку ребёнка"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Open child profile"
-          }
         }
       }
     },
@@ -32625,12 +32577,6 @@
             "state": "translated",
             "value": "Добавьте первого ребёнка через кнопку «+»."
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Add your first child using the «+» button."
-          }
         }
       }
     },
@@ -32641,12 +32587,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Нет подопечных"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No clients yet"
           }
         }
       }
@@ -32670,12 +32610,6 @@
             "state": "translated",
             "value": "Мои подопечные"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "My clients"
-          }
         }
       }
     },
@@ -32686,12 +32620,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Карточка ребёнка"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Child profile"
           }
         }
       }
@@ -32769,12 +32697,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Сообщение родителю"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Message to parent"
           }
         }
       }
@@ -32919,12 +32841,6 @@
             "state": "translated",
             "value": "Заметка специалиста"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Specialist note"
-          }
         }
       }
     },
@@ -32935,12 +32851,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Заметок пока нет"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No notes yet"
           }
         }
       }
@@ -33063,12 +32973,6 @@
             "state": "translated",
             "value": "Открыть карточку занятия"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Open session details"
-          }
         }
       }
     },
@@ -33091,12 +32995,6 @@
             "state": "translated",
             "value": "Здесь появятся занятия после первой сессии."
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sessions will appear here after the first session."
-          }
         }
       }
     },
@@ -33107,12 +33005,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Занятий пока нет"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No sessions yet"
           }
         }
       }
@@ -33136,12 +33028,6 @@
             "state": "translated",
             "value": "Сортировать"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sort"
-          }
         }
       }
     },
@@ -33164,12 +33050,6 @@
             "state": "translated",
             "value": "Изменить порядок сортировки"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Change sort order"
-          }
         }
       }
     },
@@ -33180,12 +33060,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Порядок сортировки"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sort order"
           }
         }
       }
@@ -40755,12 +40629,6 @@
             "state": "translated",
             "value": "Слоги"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Syllables"
-          }
         }
       }
     },
@@ -40771,12 +40639,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Слово (начало)"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Word (initial)"
           }
         }
       }
@@ -40789,12 +40651,6 @@
             "state": "translated",
             "value": "Слово (середина)"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Word (medial)"
-          }
         }
       }
     },
@@ -40805,12 +40661,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Слово (конец)"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Word (final)"
           }
         }
       }
@@ -40823,12 +40673,6 @@
             "state": "translated",
             "value": "Фраза"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Phrase"
-          }
         }
       }
     },
@@ -40839,12 +40683,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Предложение"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sentence"
           }
         }
       }
@@ -40857,12 +40695,6 @@
             "state": "translated",
             "value": "%lld занятий"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld sessions"
-          }
         }
       }
     },
@@ -40873,12 +40705,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld минут"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld minutes"
           }
         }
       }
@@ -40891,12 +40717,6 @@
             "state": "translated",
             "value": "%lld Б"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld B"
-          }
         }
       }
     },
@@ -40907,12 +40727,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld попыток"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld attempts"
           }
         }
       }
@@ -40925,12 +40739,6 @@
             "state": "translated",
             "value": "%lld успешных"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld successful"
-          }
         }
       }
     },
@@ -40941,12 +40749,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "AR-маски"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "AR Masks"
           }
         }
       }
@@ -40959,12 +40761,6 @@
             "state": "translated",
             "value": "Весёлый режим с речевыми триггерами"
           }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fun mode with speech triggers"
-          }
         }
       }
     },
@@ -40975,12 +40771,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Открыть AR-маски с речевыми триггерами"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Open AR masks with speech triggers"
           }
         }
       }
