@@ -89,7 +89,7 @@ struct ARMirrorView: View {
                 if !display.instruction.isEmpty {
                     Text(display.instruction)
                         .font(TypographyTokens.headline())
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, SpacingTokens.medium)
                         .padding(.vertical, SpacingTokens.small)
@@ -119,7 +119,7 @@ struct ARMirrorView: View {
                 Spacer()
                 Text(String(localized: "eye_focus.hint.look_at_me"))
                     .font(TypographyTokens.headline(15))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .padding(.horizontal, SpacingTokens.medium)
                     .padding(.vertical, SpacingTokens.small)
                     .background(ColorTokens.Brand.primary.opacity(0.9), in: Capsule())
@@ -184,11 +184,11 @@ struct ARMirrorView: View {
         HStack {
             Text("\(vm.exerciseNumber) / \(vm.totalExercises)")
                 .font(TypographyTokens.body(13))
-                .foregroundStyle(.white.opacity(0.85))
+                .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
             Spacer()
             Text(String(localized: String.LocalizationValue(vm.currentExercise.displayNameKey)))
                 .font(TypographyTokens.headline(15))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
         .padding(.top, SpacingTokens.tiny)
@@ -198,7 +198,7 @@ struct ARMirrorView: View {
         VStack(alignment: .leading, spacing: SpacingTokens.micro) {
             Text("ar.mirror.symmetry")
                 .font(TypographyTokens.body(12))
-                .foregroundStyle(.white.opacity(0.85))
+                .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
             GeometryReader { proxy in
                 ZStack(alignment: .leading) {
                     Capsule().fill(ColorTokens.Overlay.highlight)
@@ -244,7 +244,7 @@ struct ARMirrorView: View {
         VStack(alignment: .leading, spacing: SpacingTokens.micro) {
             Text("ar.mirror.holdProgress")
                 .font(TypographyTokens.body(12))
-                .foregroundStyle(.white.opacity(0.85))
+                .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
             GeometryReader { proxy in
                 ZStack(alignment: .leading) {
                     Capsule().fill(ColorTokens.Overlay.highlight)

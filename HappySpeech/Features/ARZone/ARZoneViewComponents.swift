@@ -295,7 +295,7 @@ struct ARStartRecommendedButton: View {
                         .frame(width: 48, height: 48)
                     Image(systemName: "play.fill")
                         .font(TypographyTokens.headline(20).weight(.bold))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .accessibilityHidden(true)
                 }
                 .scaleEffect(pulse)
@@ -303,7 +303,7 @@ struct ARStartRecommendedButton: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("ar.zone.recommended.cta")
                         .font(TypographyTokens.headline(16))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .lineLimit(1)
                         .minimumScaleFactor(0.85)
                     Text(card.title)
@@ -317,7 +317,7 @@ struct ARStartRecommendedButton: View {
 
                 Image(systemName: "arrow.right")
                     .font(TypographyTokens.body(15).weight(.semibold))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .accessibilityHidden(true)
             }
             .padding(SpacingTokens.regular)
@@ -371,7 +371,7 @@ struct InstructionStepCard: View {
                         .frame(width: 48, height: 48)
                     Image(systemName: step.icon)
                         .font(TypographyTokens.title(22).weight(.semibold))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .accessibilityHidden(true)
                 }
                 .overlay(alignment: .topTrailing) {

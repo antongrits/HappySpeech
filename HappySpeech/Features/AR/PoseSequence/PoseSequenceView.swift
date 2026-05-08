@@ -65,7 +65,7 @@ struct PoseSequenceView: View {
             // Название текущей позы
             Text(display.currentName)
                 .font(TypographyTokens.title(32))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .padding(.horizontal, SpacingTokens.medium)
                 .padding(.vertical, SpacingTokens.small)
                 .background(ColorTokens.Overlay.dimmerHeavy, in: RoundedRectangle(cornerRadius: RadiusTokens.md))
@@ -95,7 +95,7 @@ struct PoseSequenceView: View {
                             chipColor(for: index),
                             in: Capsule()
                         )
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .accessibilityElement(children: .ignore)
                         .accessibilityLabel(
                             index < display.currentIndex
@@ -133,7 +133,7 @@ struct PoseSequenceView: View {
             if !display.currentHint.isEmpty {
                 Text(display.currentHint)
                     .font(TypographyTokens.body(15))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, SpacingTokens.large)
                     .padding(.vertical, SpacingTokens.tiny)

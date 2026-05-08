@@ -99,7 +99,7 @@ struct ARZoneTutorialSheetView: View {
                 fallback: AnyView(
                     Image(systemName: tutorial.animationSystemSymbol)
                         .font(TypographyTokens.kidDisplay(52))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .symbolEffect(.bounce.down, value: symbolBounce)
                 ),
                 size: CGSize(width: 96, height: 96)
@@ -168,7 +168,7 @@ struct ARZoneTutorialSheetView: View {
                     .frame(width: 44, height: 44)
                 Image(systemName: step.icon)
                     .font(TypographyTokens.headline(18))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .accessibilityHidden(true)
             }
 
@@ -200,7 +200,7 @@ struct ARZoneTutorialSheetView: View {
                         .minimumScaleFactor(0.85)
                 }
                 .font(TypographyTokens.headline(17).weight(.bold))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .frame(maxWidth: .infinity)
                 .frame(minHeight: 56)
                 .background(
