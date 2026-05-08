@@ -45,6 +45,17 @@ struct OnboardingFlowView: View {
                 backgroundGradient
                     .ignoresSafeArea()
 
+                // Block J v18 B.7 — HSMeshGradientBackground поверх linear backgroundGradient.
+                // HSOnboardingParallax не применён whole-screen (это 3-page intro pattern,
+                // несовместим с 10-шаговым VIP flow из OnboardingFlowView). Берём только
+                // mesh-фон от него для рovuсения parallax visual feel.
+                HSMeshGradientBackground(palette: .kidCool, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(0.35)
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
                 VStack(spacing: 0) {
                     progressHeader
 
