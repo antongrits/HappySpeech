@@ -190,6 +190,12 @@ private struct ParentDashboardTab: View {
                     // Family Voice card
                     familyVoiceCard
 
+                    // Block T v17 — Pronunciation Leaderboard (parent-only, COPPA-safe).
+                    pronunciationLeaderboardCard
+
+                    // Block T v17 — Neurolinguist Insights (rule-based summary).
+                    neurolinguistInsightsCard
+
                     // Family Calendar card
                     familyCalendarCard
 
@@ -532,6 +538,88 @@ private struct ParentDashboardTab: View {
         .accessibilityLabel(
             String(localized: "family.voice.library.title") + ". " +
             String(localized: "family.voice.library.subtitle")
+        )
+        .accessibilityAddTraits(.isButton)
+        .environment(\.circuitContext, .parent)
+    }
+
+    // MARK: - Block T v17: Pronunciation Leaderboard card
+
+    private var pronunciationLeaderboardCard: some View {
+        HSCard(style: .elevated) {
+            HStack(spacing: SpacingTokens.sp3) {
+                Image(systemName: "trophy.fill")
+                    .font(TypographyTokens.titleLarge(28))
+                    .foregroundStyle(ColorTokens.Brand.gold)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "leaderboard.entry.title"))
+                        .font(TypographyTokens.headline())
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "leaderboard.entry.subtitle"))
+                        .font(TypographyTokens.body())
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: SpacingTokens.sp1)
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp4)
+        }
+        .onTapGesture {
+            // Read parent uid from coordinator authUser; fallback empty.
+            let parentId = coordinator.authUser?.uid ?? ""
+            coordinator.navigate(to: .pronunciationLeaderboard(parentId: parentId))
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            String(localized: "leaderboard.entry.title") + ". " +
+            String(localized: "leaderboard.entry.subtitle")
+        )
+        .accessibilityAddTraits(.isButton)
+        .environment(\.circuitContext, .parent)
+    }
+
+    // MARK: - Block T v17: Neurolinguist Insights card
+
+    private var neurolinguistInsightsCard: some View {
+        HSCard(style: .elevated) {
+            HStack(spacing: SpacingTokens.sp3) {
+                Image(systemName: "sparkles")
+                    .font(TypographyTokens.titleLarge(28))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "insights.entry.title"))
+                        .font(TypographyTokens.headline())
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "insights.entry.subtitle"))
+                        .font(TypographyTokens.body())
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: SpacingTokens.sp1)
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp4)
+        }
+        .onTapGesture {
+            coordinator.navigate(to: .neurolinguistInsights(childId: viewModel.childId))
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            String(localized: "insights.entry.title") + ". " +
+            String(localized: "insights.entry.subtitle")
         )
         .accessibilityAddTraits(.isButton)
         .environment(\.circuitContext, .parent)
