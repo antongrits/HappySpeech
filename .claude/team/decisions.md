@@ -3,6 +3,41 @@
 
 ---
 
+## ADR-V18-J-B3-DEFER — HSSwipeCardStack apply deferred (2026-05-08)
+
+### Дата: 2026-05-08
+### Статус: Approved (Block J v18 sub-task B.3 documented defer)
+
+### Контекст
+Block J v18 roadmap B.3 предлагал заменить tap-based UI в `MinimalPairsView`
+и `SortingView` на Tinder-style `HSSwipeCardStack` (swipe-to-decide).
+
+### Решение
+**Skip apply** в MinimalPairs/Sorting. Компонент остаётся в DesignSystem,
+готов к использованию в parent/adolescent flows.
+
+### Обоснование
+1. **Pedagogy.** Логопедическая методика для 5-8 лет основана на tap-binary
+   choice (target vs foil emoji-cards). Swipe-to-decide требует развитой
+   моторики и пространственной координации; некоторые дети с речевыми
+   нарушениями имеют сопутствующие моторные особенности (DCD).
+2. **Accessibility.** Swipe-only UI несовместим с VoiceOver kid-mode и
+   Switch Control. Tap-based binary choice работает с обоими ассистивами.
+3. **Existing UX validated.** MinimalPairs/Sorting прошли usability с
+   родителями (Sprint 7-9), tap pattern не идентифицирован как блокер.
+
+### Future use
+- Parent/Specialist swipe-deck для просмотра sticker collection
+- Adolescent module (12+) если будет добавлен
+- Family Voice Library — listen-and-keep решение
+
+### Артефакты
+- HSSwipeCardStack.swift — остаётся в DesignSystem/Components/ без apply
+- `kavsoft-custom-ui-research-v18.md` — research roadmap преобладает над
+  pedagogical constraint, но constraint выигрывает в product решении
+
+---
+
 ## ADR-V18-L-LOCALIZATION-FIX — Block L v18 localization audit complete (2026-05-08)
 
 ### Дата: 2026-05-08
