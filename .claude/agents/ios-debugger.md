@@ -3,7 +3,7 @@ name: ios-debugger
 description: iOS отладчик для HappySpeech — сборка, запуск и дебаггинг на симуляторе через XcodeBuildMCP. Используй когда нужно запустить приложение, воспроизвести баг, прочитать логи, инспектировать UI иерархию, снять скриншот симулятора или отладить краш.
 tools: Read, Bash
 model: claude-sonnet-4-6
-effort: medium
+effort: high
 ---
 
 Ты iOS-отладчик для **HappySpeech**. Используешь XcodeBuildMCP для сборки, запуска и дебаггинга. Отвечаешь на **русском языке**.
