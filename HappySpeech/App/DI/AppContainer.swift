@@ -64,6 +64,10 @@ public final class AppContainer {
     private var _installationsService: (any InstallationsServiceProtocol)?
     private var _dynamicLinksService: (any DynamicLinksServiceProtocol)?
 
+    // Block U (v18): Firebase full services replacement (Dynamic Links → Universal Links + Firestore)
+    private var _familyInviteService: (any FamilyInviteServiceProtocol)?
+    private var _realtimeDatabaseService: (any RealtimeDatabaseServiceProtocol)?
+
     // SoundService — lazy, не требует изменения init
     private var _soundService: (any SoundServiceProtocol)?
 
@@ -420,6 +424,35 @@ public final class AppContainer {
         if let dl = dynamicLinks { _dynamicLinksService = dl }
     }
 
+    // MARK: - Block U (v18): Firebase full services replacement
+
+    /// Семейные приглашения через Apple Universal Links + Firestore (заменяет deprecated Dynamic Links).
+    /// Только родительский контур. См. ADR-V18-U-DYNAMICLINKS-REPLACE.
+    public var familyInviteService: any FamilyInviteServiceProtocol {
+        if let existing = _familyInviteService { return existing }
+        let new = LiveFamilyInviteService(cloudFunctions: cloudFunctionsService)
+        _familyInviteService = new
+        return new
+    }
+
+    /// Firebase Realtime Database — multiplayer SharePlay session sync.
+    /// Region: europe-west1 (closest available для eur3).
+    public var realtimeDatabaseService: any RealtimeDatabaseServiceProtocol {
+        if let existing = _realtimeDatabaseService { return existing }
+        let new = LiveRealtimeDatabaseService()
+        _realtimeDatabaseService = new
+        return new
+    }
+
+    /// Позволяет Preview/Tests подменить Block U сервисы.
+    public func overrideBlockUServices(
+        familyInvite: (any FamilyInviteServiceProtocol)? = nil,
+        realtimeDatabase: (any RealtimeDatabaseServiceProtocol)? = nil
+    ) {
+        if let fi = familyInvite { _familyInviteService = fi }
+        if let rdb = realtimeDatabase { _realtimeDatabaseService = rdb }
+    }
+
     public var soundService: any SoundServiceProtocol {
         if let existing = _soundService { return existing }
         let new = LiveSoundService()
@@ -770,6 +803,11 @@ public extension AppContainer {
             cloudFunctions: MockCloudFunctionsService(),
             installations: MockInstallationsService(),
             dynamicLinks: MockDynamicLinksService()
+        )
+        // Block U (v18): Firebase full services replacement mock — без сети в preview/tests.
+        container.overrideBlockUServices(
+            familyInvite: MockFamilyInviteService(),
+            realtimeDatabase: MockRealtimeDatabaseService()
         )
         return container
     }

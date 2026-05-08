@@ -75,6 +75,11 @@ public enum DynamicLinksError: LocalizedError, Sendable {
 
 /// Создание и обработка Firebase Dynamic Links для семейных приглашений.
 ///
+/// > Warning: **Deprecated в Plan v18 Block U.4.** Firebase Dynamic Links
+/// > отключены Google 25 августа 2025 года. Используйте `FamilyInviteService`
+/// > (Apple Universal Links + Firestore-based tokens). См. ADR-V18-U-DYNAMICLINKS-REPLACE.
+/// > Этот сервис сохранён в репо как stub чтобы не ломать существующий DI.
+///
 /// Родитель может пригласить второго родителя или наблюдателя в семейный профиль
 /// через универсальную ссылку. Dynamic Link корректно открывает приложение
 /// на устройствах с установленным HappySpeech и ведёт в App Store если нет.
