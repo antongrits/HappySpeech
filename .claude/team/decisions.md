@@ -3,6 +3,25 @@
 
 ---
 
+## ADR-V18-AE-EXECUTED — Simulator + DerivedData cleanup executed (2026-05-08)
+
+### Status: Approved (Block AE v18)
+
+### Action taken
+- `xcrun simctl shutdown all` — все simulators остановлены
+- `xcrun simctl erase 4166BD56-19F6-4BE6-AA6C-5E4A0F3F6A32` — iPhone SE (3rd generation) erased
+- `rm -rf ~/Library/Developer/Xcode/DerivedData/HappySpeech-*` — 11 GB DerivedData cleaned
+- DerivedData total: 11 GB → 4 GB (-7 GB)
+
+### Result
+- Simulator iPhone SE (3rd generation) ready для clean state
+- Re-build потребуется при следующем `xcodebuild build`
+- iOS 18.6 + iOS 26.4 runtimes сохранены (не удалены)
+
+### Closes Block AE v18
+
+---
+
 ## ADR-V18-AF-VERIFIED — Git author cleanup verified (2026-05-08)
 
 ### Status: Approved (Block AF v18)
