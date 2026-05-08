@@ -40984,6 +40984,1040 @@
           }
         }
       }
+    },
+    "voice_cloning.nav_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Голосовой архив"
+          }
+        }
+      }
+    },
+    "voice_cloning.hero.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Послушай, как ты говоришь!"
+          }
+        }
+      }
+    },
+    "voice_cloning.hero.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запиши слово и сравни, как у тебя получается. Раз в неделю — это уже прогресс!"
+          }
+        }
+      }
+    },
+    "voice_cloning.say_word": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скажи слово"
+          }
+        }
+      }
+    },
+    "voice_cloning.section.this_week": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На этой неделе"
+          }
+        }
+      }
+    },
+    "voice_cloning.section.recent": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Недавно"
+          }
+        }
+      }
+    },
+    "voice_cloning.section.earlier": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Раньше"
+          }
+        }
+      }
+    },
+    "voice_cloning.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Записей пока нет"
+          }
+        }
+      }
+    },
+    "voice_cloning.empty.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажми большую кнопку и произнеси слово. Запись 5 секунд."
+          }
+        }
+      }
+    },
+    "voice_cloning.error.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что-то пошло не так"
+          }
+        }
+      }
+    },
+    "voice_cloning.error.retry": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторить"
+          }
+        }
+      }
+    },
+    "voice_cloning.error.permission": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разреши доступ к микрофону в Настройках, чтобы записать голос."
+          }
+        }
+      }
+    },
+    "voice_cloning.error.generic": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не получилось сохранить запись. Попробуй ещё раз."
+          }
+        }
+      }
+    },
+    "voice_cloning.toast.saved": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сохранено!"
+          }
+        }
+      }
+    },
+    "voice_cloning.toast.deleted": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запись удалена"
+          }
+        }
+      }
+    },
+    "voice_cloning.delete.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалить запись?"
+          }
+        }
+      }
+    },
+    "voice_cloning.delete.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запись «%@» будет удалена навсегда."
+          }
+        }
+      }
+    },
+    "voice_cloning.delete.confirm": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалить"
+          }
+        }
+      }
+    },
+    "voice_cloning.delete.cancel": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оставить"
+          }
+        }
+      }
+    },
+    "voice_cloning.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Голосовой архив"
+          }
+        }
+      }
+    },
+    "voice_cloning.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Записать слово и послушать свой голос"
+          }
+        }
+      }
+    },
+    "voice_cloning.a11y.button_record": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать запись"
+          }
+        }
+      }
+    },
+    "voice_cloning.a11y.button_stop": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остановить запись"
+          }
+        }
+      }
+    },
+    "voice_cloning.a11y.button_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запись длится до 5 секунд"
+          }
+        }
+      }
+    },
+    "voice_cloning.a11y.row_play": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Воспроизвести запись"
+          }
+        }
+      }
+    },
+    "voice_cloning.a11y.row_pause": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Остановить воспроизведение"
+          }
+        }
+      }
+    },
+    "voice_cloning.a11y.row_summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, звук %@, %@, длительность %@"
+          }
+        }
+      }
+    },
+    "voice_cloning.a11y.row_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зажми, чтобы удалить"
+          }
+        }
+      }
+    },
+    "voice_cloning.a11y.say_word": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Произнеси слово %@"
+          }
+        }
+      }
+    },
+    "voice_cloning.a11y.total_count": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Всего записей: %d"
+          }
+        }
+      }
+    },
+    "leaderboard.nav_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рейтинг семьи"
+          }
+        }
+      }
+    },
+    "leaderboard.header.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рейтинг точности произношения"
+          }
+        }
+      }
+    },
+    "leaderboard.header.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Соревнование внутри семьи. Только для родителей."
+          }
+        }
+      }
+    },
+    "leaderboard.scope.this_week": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Эта неделя"
+          }
+        }
+      }
+    },
+    "leaderboard.scope.last_week": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прошлая"
+          }
+        }
+      }
+    },
+    "leaderboard.scope.all_time": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Всё время"
+          }
+        }
+      }
+    },
+    "leaderboard.scope_label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Период"
+          }
+        }
+      }
+    },
+    "leaderboard.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока нет данных"
+          }
+        }
+      }
+    },
+    "leaderboard.empty.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запиши хотя бы одно занятие — и рейтинг появится."
+          }
+        }
+      }
+    },
+    "leaderboard.error.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не получилось загрузить"
+          }
+        }
+      }
+    },
+    "leaderboard.error.retry": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторить"
+          }
+        }
+      }
+    },
+    "leaderboard.summary.total": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Всего детей в рейтинге: %d"
+          }
+        }
+      }
+    },
+    "leaderboard.unknown_child": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Без имени"
+          }
+        }
+      }
+    },
+    "leaderboard.trend.stable": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "стабильно"
+          }
+        }
+      }
+    },
+    "leaderboard.trend.no_data": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "—"
+          }
+        }
+      }
+    },
+    "leaderboard.sessions.one": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "занятие"
+          }
+        }
+      }
+    },
+    "leaderboard.sessions.few": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "занятия"
+          }
+        }
+      }
+    },
+    "leaderboard.sessions.many": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "занятий"
+          }
+        }
+      }
+    },
+    "leaderboard.podium.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Топ-3 рейтинга"
+          }
+        }
+      }
+    },
+    "leaderboard.podium.row.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d место, %@, %@"
+          }
+        }
+      }
+    },
+    "leaderboard.row.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Откроет прогресс ребёнка"
+          }
+        }
+      }
+    },
+    "leaderboard.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рейтинг семьи"
+          }
+        }
+      }
+    },
+    "leaderboard.entry.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Точность произношения за неделю — кто сегодня впереди?"
+          }
+        }
+      }
+    },
+    "insights.nav_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Insights от Ляли"
+          }
+        }
+      }
+    },
+    "insights.hero.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что говорит Ляля"
+          }
+        }
+      }
+    },
+    "insights.hero.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Краткий разбор за неделю на основе занятий ребёнка."
+          }
+        }
+      }
+    },
+    "insights.card.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прогресс за неделю"
+          }
+        }
+      }
+    },
+    "insights.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока нет занятий"
+          }
+        }
+      }
+    },
+    "insights.empty.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Когда наберётся несколько сессий, Ляля покажет тренды и подсветит звуки."
+          }
+        }
+      }
+    },
+    "insights.empty.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть прогресс"
+          }
+        }
+      }
+    },
+    "insights.error.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что-то пошло не так"
+          }
+        }
+      }
+    },
+    "insights.error.retry": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обновить"
+          }
+        }
+      }
+    },
+    "insights.toolbar.refresh": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обновить"
+          }
+        }
+      }
+    },
+    "insights.action.progress": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подробный прогресс"
+          }
+        }
+      }
+    },
+    "insights.action.history": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "История занятий"
+          }
+        }
+      }
+    },
+    "insights.reco.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рекомендация"
+          }
+        }
+      }
+    },
+    "insights.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Insights от Ляли"
+          }
+        }
+      }
+    },
+    "insights.entry.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AI-разбор прогресса ребёнка за неделю."
+          }
+        }
+      }
+    },
+    "insights.fallback.child_name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Малыш"
+          }
+        }
+      }
+    },
+    "insights.trend.improving": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "улучшается"
+          }
+        }
+      }
+    },
+    "insights.trend.declining": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "снижается"
+          }
+        }
+      }
+    },
+    "insights.trend.stable": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "стабильно"
+          }
+        }
+      }
+    },
+    "insights.trend.no_data": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "мало данных"
+          }
+        }
+      }
+    },
+    "insights.chip.sessions": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Занятий"
+          }
+        }
+      }
+    },
+    "insights.chip.accuracy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Точность"
+          }
+        }
+      }
+    },
+    "insights.chip.minutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Минут"
+          }
+        }
+      }
+    },
+    "insights.chip.streak": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подряд дней"
+          }
+        }
+      }
+    },
+    "insights.chip.best_sound": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лучший звук"
+          }
+        }
+      }
+    },
+    "insights.chip.challenge": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В работе"
+          }
+        }
+      }
+    },
+    "insights.hook.improving": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На этой неделе %@ заметно прибавил! Сравнение со вчерашним собой — это лучшее, что есть в логопедии."
+          }
+        }
+      }
+    },
+    "insights.hook.stable": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ держится уверенно. Стабильность — фундамент привычки. Так держать!"
+          }
+        }
+      }
+    },
+    "insights.hook.declining": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ немного устал на этой неделе. Это нормально — давайте дадим небольшую паузу и вернёмся к лёгким упражнениям."
+          }
+        }
+      }
+    },
+    "insights.hook.no_data": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока мало данных, чтобы сделать выводы. После 2–3 занятий Ляля сможет рассказать больше про %@."
+          }
+        }
+      }
+    },
+    "insights.body.numbers": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "За эту неделю — %d занятий, около %d минут практики, средняя точность %d%%."
+          }
+        }
+      }
+    },
+    "insights.body.best_sound": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лучше всего получается звук **%@** — это сильная сторона, на которую можно опереться при отработке других."
+          }
+        }
+      }
+    },
+    "insights.body.challenging_sound": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук **%@** пока в работе. Не нужно много — 2–3 коротких подхода в день дают больше, чем длинная сессия."
+          }
+        }
+      }
+    },
+    "insights.body.streak": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серия %d дней подряд — это огромная победа. Ритуал важнее результата."
+          }
+        }
+      }
+    },
+    "insights.body.no_recent": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодня и вчера занятий не было — попробуйте короткую 3-минутную сессию вечером."
+          }
+        }
+      }
+    },
+    "insights.body.signature": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "_— Ляля, ваш цифровой логопед-помощник_"
+          }
+        }
+      }
+    },
+    "insights.reco.improving_with_challenging": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрепите успех ещё двумя короткими сессиями на звук %@."
+          }
+        }
+      }
+    },
+    "insights.reco.improving_general": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оставьте текущий ритм — он работает. Не нужно добавлять нагрузки."
+          }
+        }
+      }
+    },
+    "insights.reco.stable": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попробуйте на этой неделе один новый шаблон игры, чтобы внести разнообразие."
+          }
+        }
+      }
+    },
+    "insights.reco.declining": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сократите длительность сессии до 5 минут и используйте только знакомые слова. Усталость уйдёт за пару дней."
+          }
+        }
+      }
+    },
+    "insights.reco.no_data": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запишите 2–3 занятия за неделю — и вернитесь сюда, чтобы увидеть тренды."
+          }
+        }
+      }
     }
   },
   "version": "1.0"
