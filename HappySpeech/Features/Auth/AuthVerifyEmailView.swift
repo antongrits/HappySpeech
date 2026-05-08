@@ -172,6 +172,8 @@ struct AuthVerifyEmailView: View {
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
                     .multilineTextAlignment(.center)
                     .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
         .accessibilityElement(children: .combine)
@@ -202,6 +204,10 @@ struct AuthVerifyEmailView: View {
                 .font(TypographyTokens.body(13))
                 .foregroundStyle(ColorTokens.Kid.inkSoft)
                 .underline()
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, SpacingTokens.medium)
         }
     }
 
