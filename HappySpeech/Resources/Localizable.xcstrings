@@ -40819,6 +40819,57 @@
           }
         }
       }
+    },
+    "ar.zone.faceFilter.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AR-маски"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AR Masks"
+          }
+        }
+      }
+    },
+    "ar.zone.faceFilter.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Весёлый режим с речевыми триггерами"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fun mode with speech triggers"
+          }
+        }
+      }
+    },
+    "ar.zone.faceFilter.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть AR-маски с речевыми триггерами"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open AR masks with speech triggers"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
