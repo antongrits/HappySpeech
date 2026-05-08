@@ -3,7 +3,11 @@
 > S12-019 — Финальная версия для App Store Connect  
 > Автор: Антон Гриц (Anton Hryts)  
 > Bundle ID: ru.happyspeech.app  
-> Дата: 2026-04-26
+> Дата: 2026-05-08 (v18 final update — Block AJ)
+> Tag: v1.0.0-final-v18
+>
+> NOTE: Submission к App Store отложен — у автора нет платного Apple Developer Account.
+> Метаданные полностью готовы для будущего submission.
 
 ---
 
@@ -23,7 +27,31 @@
 | Primary Language | Russian |
 | Support URL | https://github.com/antongrits/HappySpeech/issues |
 | Privacy Policy URL | https://antongrits.github.io/HappySpeech/privacy |
+| Marketing URL | https://antongrits.github.io/HappySpeech/ |
 | Copyright | © 2026 Anton Hryts |
+
+---
+
+## v18 HIGHLIGHTS (2026-05-08)
+
+Что добавлено в v1.0.0-final-v18 по сравнению с предыдущими тегами:
+
+| Компонент | Метрика |
+|---|---|
+| Интерактивные экраны | 105+ (*View.swift) |
+| Аудио файлы Ляли | 14 501 .m4a |
+| Контент-единицы (уроки) | 7 555 в 25 паках |
+| Core ML модели | 12 .mlpackage (304+ MB total) |
+| DesignSystem компоненты | 41 (HSCustom* family) |
+| Cloud Functions | 16 (6 новых callable v18 + 10 baseline) |
+| AR игры | 10 (face tracking + blendshapes) |
+| 3D маскот Ляля | USDZ 744 KB + RealityKit blendshapes |
+| Snapshot тестов | 469 PNG (light + dark) |
+| Эмодзи в UI строках | 0 (заменены на SF Symbols) |
+| Hardcoded hex цвета | 0 (86 → 0, ColorTokens) |
+| HealthKit refs | 0 (полностью удалён) |
+| SwiftLint --strict | 0 ошибок |
+| BUILD | SUCCEEDED iPhone SE (3rd generation) |
 
 ---
 
@@ -121,12 +149,34 @@ HappySpeech появился в App Store!
 • 16 видов речевых игр для работы над звуками С, З, Ц, Ш, Ж, Ч, Щ, Р, Л
 • Маскот Ляля ведёт занятия и поддерживает ребёнка
 • Умный планировщик составляет расписание с учётом прогресса
-• Артикуляционные упражнения через камеру
+• Артикуляционные упражнения через камеру (10 AR игр)
 • Оценка произношения прямо на устройстве — без интернета
 • Дашборд прогресса для родителей
 • Инструменты для логопедов: статистика и экспорт отчётов
+• 3D маскот Ляля с анимацией и синхронизацией губ
+• Семейная синхронизация прогресса через Firebase
+• 14 500+ профессиональных аудио фраз маскота
 
-Работает на iPhone и iPad. iOS 17 и новее.
+Работает на iPhone. Требует iOS 17 или новее.
+```
+
+### Что нового (v1.0.0-final-v18 — внутренний тег, для документации)
+
+```
+v1.0.0-final-v18 (2026-05-08) — финальная сборка перед дипломной защитой
+
+Основные изменения:
+• 105+ интерактивных экранов с современным дизайном
+• 14 500+ аудио фраз Ляли (профессиональный голос, edge-tts SvetlanaNeural)
+• 7 555 уроков в 25 паках (нейролингвистическая методика)
+• 12 Core ML моделей (Wav2Vec2 для детской русской речи, 302 MB)
+• 16 Cloud Functions в Firebase (6 новых: scoreSpeechQuality, generateNeurolinguistSummary, и др.)
+• 10 AR игр с отслеживанием лица и 3D Лялей
+• Кабинет специалиста: программы, сессии, PDF-отчёты, чат с логопедом
+• Семейная карта прогресса, сравнение детей, достижения семьи
+• 41 компонент дизайн-системы (HSCustom* family, kavsoft-паттерны)
+• 0 эмодзи в UI, 0 hardcoded цветов, 0 английских ключей
+• Полное соответствие Apple HIG + WCAG AA
 ```
 
 ---
@@ -219,14 +269,16 @@ HappySpeech is now on the App Store!
 
 What's included:
 • 16 speech exercise types for sounds S, Z, Ts, Sh, Zh, Ch, R, L
-• Lyalya the mascot guides every session
+• Lyalya the mascot guides every session (3D animated character)
 • Smart adaptive planner based on your child's progress
-• Articulation exercises with camera feedback
+• 10 AR articulation games with face tracking
 • On-device pronunciation scoring — no internet required
-• Parent progress dashboard
-• Speech therapist tools with report export
+• Parent progress dashboard with Swift Charts analytics
+• Speech therapist cabinet with PDF report export
+• Family progress sync via Firebase
+• 14,500+ professional voice audio phrases
 
-Works on iPhone and iPad. Requires iOS 17 or later.
+Works on iPhone. Requires iOS 17 or later.
 ```
 
 ---
@@ -303,3 +355,23 @@ Works on iPhone and iPad. Requires iOS 17 or later.
 - [ ] Build выбран как версия для Review (не Beta)
 - [ ] Review Notes для App Review Team (на английском):
   > "This is a Russian-language speech therapy educational app for children ages 5-8. To test: create an account (or use Sign in with Apple), select a child profile, choose a sound group (e.g. 'Ш'), and start any game. Microphone and camera permissions are required for core functionality. The app works fully offline after initial launch."
+
+---
+
+## СТАТУС v18 (2026-05-08)
+
+| Критерий | Статус |
+|---|---|
+| App Store metadata ru + en | READY |
+| AppPrivacyInfo.xcprivacy | DONE (Sprint 12, S12-018) |
+| Firebase backend | LIVE (happyspeech-dfd95, europe-west3) |
+| BUILD SUCCEEDED | VERIFIED (iPhone SE 3rd generation) |
+| SwiftLint --strict 0 errors | VERIFIED |
+| 0 EN ключей в UI | VERIFIED (3 827 ru keys) |
+| 0 эмодзи в UI | VERIFIED |
+| TestFlight submission | BLOCKED (нет платного Apple Developer Account) |
+| App Store submission | DEFERRED (explicit — автор подтвердил) |
+
+**Tag:** v1.0.0-final-v18
+**Автор:** Anton Hryts (antongrits)
+**Дата финальной сборки:** 2026-05-08
