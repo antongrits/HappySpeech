@@ -85,16 +85,24 @@ struct ParentHomeView: View {
     }
 
     // MARK: - Phone tab layout
+    //
+    // Block J v18 — заменён системный TabView на HSAnimatedTabBar
+    // (kavsoft-style capsule indicator c matchedGeometryEffect).
+    // Контент рендерится через ZStack: текущий таб поверх + custom bar снизу.
 
     private var tabLayout: some View {
-        TabView(selection: $selectedTab) {
-            ForEach(ParentTab.allCases, id: \.self) { tab in
-                tabContent(for: tab)
-                    .tabItem {
-                        Label(tab.rawValue, systemImage: tab.icon)
-                    }
-                    .tag(tab)
+        ZStack(alignment: .bottom) {
+            tabContent(for: selectedTab)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+            HSAnimatedTabBar(
+                selection: $selectedTab,
+                items: ParentTab.allCases
+            ) { tab in
+                (tab.icon, LocalizedStringKey(tab.rawValue))
             }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.bottom, SpacingTokens.sp2)
         }
     }
 

@@ -27,14 +27,20 @@ struct SpecialistHomeView: View {
     }
 
     var body: some View {
-        TabView(selection: $selectedTab) {
-            ForEach(SpecTab.allCases, id: \.self) { tab in
-                specTabContent(for: tab)
-                    .tabItem {
-                        Label(tab.rawValue, systemImage: tab.icon)
-                    }
-                    .tag(tab)
+        // Block J v18 — заменён системный TabView на HSAnimatedTabBar
+        // (kavsoft-style capsule indicator).
+        ZStack(alignment: .bottom) {
+            specTabContent(for: selectedTab)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+            HSAnimatedTabBar(
+                selection: $selectedTab,
+                items: SpecTab.allCases
+            ) { tab in
+                (tab.icon, LocalizedStringKey(tab.rawValue))
             }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.bottom, SpacingTokens.sp2)
         }
         .tint(ColorTokens.Spec.accent)
         .environment(\.circuitContext, .specialist)
