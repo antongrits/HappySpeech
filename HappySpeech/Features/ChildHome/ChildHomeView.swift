@@ -124,7 +124,9 @@ struct ChildHomeView: View {
                            value: viewModel.hasAchievement)
             }
             .safeAreaInset(edge: .bottom) { Color.clear.frame(height: SpacingTokens.sp8) }
-            .refreshable {
+            // Block J v18 — kavsoft-style pull-to-refresh с маскотом Лялей
+            // (kid-контур). Внутри hsMascotRefresh уже вызывается .refreshable.
+            .hsMascotRefresh {
                 await interactor?.refreshData(childId: childId)
             }
 
