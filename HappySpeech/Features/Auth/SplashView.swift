@@ -36,14 +36,14 @@ struct SplashView: View {
                 VStack(spacing: SpacingTokens.sp2) {
                     Text("HappySpeech")
                         .font(TypographyTokens.kidDisplay(40))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .tracking(-1)
                         .lineLimit(1)
                         .minimumScaleFactor(0.7)
 
                     Text(String(localized: "Говорим волшебно"))
                         .font(TypographyTokens.caption(13))
-                        .foregroundStyle(.white.opacity(0.85))
+                        .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
                         .tracking(2.5)
                         .textCase(.uppercase)
                         .multilineTextAlignment(.center)
@@ -60,16 +60,16 @@ struct SplashView: View {
                 VStack(spacing: SpacingTokens.sp3) {
                     ZStack(alignment: .leading) {
                         Capsule()
-                            .fill(.white.opacity(0.25))
+                            .fill(ColorTokens.Overlay.onAccent.opacity(0.25))
                             .frame(width: 80, height: 3)
                         Capsule()
-                            .fill(.white)
+                            .fill(ColorTokens.Overlay.onAccent)
                             .frame(width: progressWidth * 80, height: 3)
                     }
 
                     Text(String(localized: "Загрузка..."))
                         .font(TypographyTokens.caption(11))
-                        .foregroundStyle(.white.opacity(0.5))
+                        .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.5))
                 }
                 // sp16 = 64pt — специфичное расстояние до loading bar. Проверено визуально.
                 .padding(.bottom, SpacingTokens.sp16)

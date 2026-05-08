@@ -438,7 +438,7 @@ struct ChildHomeView: View {
                             .lineLimit(nil)
                             .minimumScaleFactor(0.85)
                     }
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .padding(.horizontal, SpacingTokens.sp6)
                     .padding(.vertical, SpacingTokens.sp3)
                     .frame(maxWidth: .infinity)
@@ -501,7 +501,7 @@ struct ChildHomeView: View {
                 HStack(spacing: SpacingTokens.sp3) {
                     Image(systemName: "person.2.fill")
                         .font(TypographyTokens.headline(22))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .frame(width: 44, height: 44)
                         .background(Circle().fill(ColorTokens.Brand.sky.opacity(0.9)))
                         .accessibilityHidden(true)
@@ -541,7 +541,7 @@ struct ChildHomeView: View {
                 HStack(spacing: SpacingTokens.sp3) {
                     Image(systemName: "mic.badge.plus")
                         .font(TypographyTokens.headline(22))
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .frame(width: 44, height: 44)
                         .background(Circle().fill(ColorTokens.Brand.lilac.opacity(0.9)))
                         .accessibilityHidden(true)

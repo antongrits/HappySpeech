@@ -110,11 +110,11 @@ struct StoryPlayerView: View {
             VStack(spacing: 12) {
                 Image(systemName: "play.circle.fill")
                     .font(TypographyTokens.kidDisplay(56))
-                    .foregroundStyle(.white.opacity(0.8))
+                    .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.8))
                 if let desc = entry?.description {
                     Text(desc)
                         .font(.headline)
-                        .foregroundStyle(.white)
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 24)
                         .lineLimit(nil)
@@ -132,7 +132,7 @@ struct StoryPlayerView: View {
         if let subtitle, !subtitle.isEmpty {
             Text(subtitle)
                 .font(TypographyTokens.body(16))
-                .foregroundStyle(.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
                 .background(
@@ -162,7 +162,7 @@ struct StoryPlayerView: View {
                         systemImage: "forward.fill"
                     )
                     .font(TypographyTokens.caption(14))
-                    .foregroundStyle(.white)
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
                     .background(
