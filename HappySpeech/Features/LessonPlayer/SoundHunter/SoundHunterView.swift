@@ -128,14 +128,18 @@ struct SoundHunterView: View {
     }
 
     private var sceneIndicator: some View {
-        HStack(spacing: SpacingTokens.tiny) {
+        HStack(spacing: SpacingTokens.small) {
             Text(String(localized: "Сцена \(display.sceneIndex + 1) из \(display.totalScenes)"))
                 .font(TypographyTokens.caption(13))
                 .foregroundStyle(ColorTokens.Kid.inkSoft)
-            Spacer()
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
+            Spacer(minLength: 4)
             Text(String(localized: "Найдено: \(display.correctCount) из \(display.totalCorrectNeeded)"))
                 .font(TypographyTokens.mono(13))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
     }
