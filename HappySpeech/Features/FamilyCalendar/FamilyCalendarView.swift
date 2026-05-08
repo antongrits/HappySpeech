@@ -260,7 +260,7 @@ struct FamilyCalendarView: View {
                 Image(systemName: "chevron.left")
                     .font(TypographyTokens.labelRounded(14))
                     .foregroundStyle(ColorTokens.Brand.primary)
-                    .frame(width: 36, height: 36)
+                    .frame(minWidth: 44, minHeight: 44)
             }
             .accessibilityLabel(String(localized: "family_calendar.week.previous"))
 
@@ -275,7 +275,7 @@ struct FamilyCalendarView: View {
                 Image(systemName: "chevron.right")
                     .font(TypographyTokens.labelRounded(14))
                     .foregroundStyle(ColorTokens.Brand.primary)
-                    .frame(width: 36, height: 36)
+                    .frame(minWidth: 44, minHeight: 44)
             }
             .accessibilityLabel(String(localized: "family_calendar.week.next"))
         }

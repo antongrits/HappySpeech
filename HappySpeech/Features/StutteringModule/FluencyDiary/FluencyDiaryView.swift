@@ -145,7 +145,7 @@ struct FluencyDiaryView: View {
                 )
                 .frame(height: 56)
                 .opacity(interactor.display.isRecording ? 1 : 0.3)
-                .animation(MotionTokens.outQuick, value: interactor.display.isRecording)
+                .animation(reduceMotion ? nil : MotionTokens.outQuick, value: interactor.display.isRecording)
 
                 if interactor.display.isRecording {
                     Text(String(localized: "stuttering.diary.recording_hint"))
