@@ -2109,3 +2109,83 @@ DocC defer не блокирует general bundle growth strategy.
 **Affected:** `HappySpeech/Resources/Models/Wav2Vec2RuChild.mlpackage` (312 KB stub remains).
 
 **Метки:** ADR-V17-WAV2VEC2-DEFER, post-v1.0, Block B, coremltools-blocker
+
+---
+
+## ADR-V17-SHAREPLAY-CHAT-DEFER
+
+**Date:** 2026-05-08
+**Status:** Approved (defer post-v1.0)
+**Context:** Plan v17 Block T originally requested 5 new screens. После приоритизации
+обсудили fallback Variant B — реализуются 3 фичи полностью (T.1, T.3, T.4), а T.2
+и T.5 выделяются в этот ADR с обоснованием отсрочки.
+
+### T.2 — FamilySharedSessionView (SharePlay extension)
+
+**Issues blocking implementation:**
+
+1. **Entitlement complexity** — реальная SharePlay требует:
+   - `com.apple.developer.group-session` entitlement
+   - `NSGroupSessionUsageDescription` в Info.plist
+   - Обновление provisioning profile на стороне Apple Developer
+   - GroupActivities framework + соответствующий `GroupActivity` тип
+   - Session lifecycle через `GroupSessionMessenger`
+
+2. **Stub UI без реального SharePlay** не даёт ценности — пользователь
+   ожидает рабочий multiplayer, а не симуляцию.
+
+3. **Существующий `SharePlayView`** уже покрывает базовый сценарий
+   запуска — расширение его до полноценного collaborative session
+   требует отдельного спринта.
+
+**Decision:** **DEFER post-v1.0** до:
+- Обновления Apple Developer setup с group-session entitlement
+- Выделенного спринта на GroupActivities API + lifecycle
+
+**Affected:** маршрут `.familySharedSession` НЕ добавлен. Существующий
+`.sharePlay` сохраняет роль entry-point для будущей реализации.
+
+### T.5 — SpeechTherapistChat (Firestore COPPA-safe messaging)
+
+**Issues blocking implementation:**
+
+1. **Backend complexity** — chat требует:
+   - Новая коллекция `chats/{chatId}/messages/`
+   - Security rules для COPPA-safe чтения (parent + specialist read,
+     parent only write, specialist verified write)
+   - Cloud Function для рассылки FCM-пушей
+   - Модерация контента (filter inappropriate content)
+
+2. **Auth gap** — у нас есть Sign in with Apple для parent, но НЕТ
+   verified specialist accounts с привязкой к конкретной семье.
+   Нужен onboarding-флоу со стороны специалиста + invite code.
+
+3. **Регуляторный риск** — chat с потенциальными PII (фото, имя ребёнка)
+   усиливает GDPR/COPPA обязательства. Требует юридического review.
+
+4. **Существующий `LiveAuthService`** не содержит role-based claims
+   (parent / specialist) — потребуется расширение custom claims через
+   Firebase Admin SDK.
+
+**Decision:** **DEFER post-v1.0** до:
+- Отдельного backend-sprint на specialist roles + chat schema
+- Юридического review COPPA + GDPR обязательств
+- Custom claims в Firebase Auth
+
+**Affected:** маршрут `.speechTherapistChat` НЕ добавлен. В Settings вместо
+кнопки чата используется существующий «Связь со специалистом» через email
+(если будет добавлен в Block AC).
+
+### Реализованные в Block T v17
+
+| ID  | Фича                          | Статус       | Размер           |
+|-----|-------------------------------|--------------|------------------|
+| T.1 | VoiceCloningScreen            | ✅ Full VIP  | 5 файлов, ~750 LOC |
+| T.2 | FamilySharedSessionView       | DEFER        | этот ADR         |
+| T.3 | PronunciationLeaderboard      | ✅ Full VIP  | 5 файлов, ~600 LOC |
+| T.4 | NeurolinguistInsights         | ✅ Full VIP (rule-based) | 5 файлов, ~700 LOC |
+| T.5 | SpeechTherapistChat           | DEFER        | этот ADR         |
+
+**Screens count:** 97 → 100 (+3 новых VIP-экрана). Цель «100+» достигнута.
+
+**Метки:** ADR-V17-SHAREPLAY-CHAT-DEFER, post-v1.0, Block T, T.2-defer, T.5-defer
