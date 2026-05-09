@@ -406,6 +406,13 @@ public final class AppContainer {
 
     /// Firebase Dynamic Links — создание и обработка семейных приглашений.
     /// Только родительский контур. Дети ссылки не получают и не отправляют (COPPA).
+    ///
+    /// - Note: `LiveDynamicLinksService` помечен `deprecated` (Firebase shutdown 25.08.2025);
+    ///   реальные приглашения создаёт `FamilyInviteService`. Свойство сохранено для совместимости
+    ///   и обработки legacy ссылок. Свойство также помечено deprecated, чтобы deprecation-warning
+    ///   от вызова `LiveDynamicLinksService()` подавлялся (Swift не репортит warning внутри
+    ///   уже deprecated-кода). Реальных callers у свойства нет.
+    @available(*, deprecated, message: "Заменён на FamilyInviteService — см. ADR-V18-U-DYNAMICLINKS-REPLACE")
     public var dynamicLinksService: any DynamicLinksServiceProtocol {
         if let existing = _dynamicLinksService { return existing }
         let new = LiveDynamicLinksService()

@@ -182,6 +182,13 @@ private enum DLConfig {
 ///
 /// Создаёт `DynamicLinkComponents` с iOS-параметрами (App Store fallback, minimum version).
 /// `@unchecked Sendable` оправдан: все методы stateless, `DynamicLinks.dynamicLinks()` thread-safe.
+///
+/// - Important: Сервис помечен как `deprecated` — Firebase Dynamic Links отключается 25.08.2025.
+///   Заменён на `FamilyInviteService` (Universal Links + Firestore tokens) согласно
+///   ADR-V18-U-DYNAMICLINKS-REPLACE. Атрибут `@available(*, deprecated)` подавляет внутренние
+///   deprecation-warning от вызовов `DynamicLinks` API в реализации (Swift не репортит
+///   deprecation внутри уже deprecated кода).
+@available(*, deprecated, message: "Заменён на FamilyInviteService — см. ADR-V18-U-DYNAMICLINKS-REPLACE. Firebase Dynamic Links shutdown: 25.08.2025.")
 public final class LiveDynamicLinksService: DynamicLinksServiceProtocol, @unchecked Sendable {
 
     private let logger = Logger(subsystem: "com.happyspeech", category: "DynamicLinks")
