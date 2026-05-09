@@ -160,6 +160,116 @@ private struct IdleBounceModifier: ViewModifier {
     }
 }
 
+// MARK: - Convenience Variants (Block J B.10 v18)
+
+/// Готовые варианты empty-state'ов для типичных сценариев приложения.
+///
+/// Каждый variant содержит русскоязычный заголовок, подсказку и подходящий SF Symbol —
+/// не нужно дублировать копирайт в каждой фиче. Variants создаются через
+/// статические фабричные методы, чтобы Russian-локализация работала через
+/// `String(localized:)` без дублирования строк по проекту.
+///
+/// ## Пример
+/// ```swift
+/// HSEmptyStateView.lessons(action: { coordinator.openCatalog() })
+/// HSEmptyStateView.tasks()
+/// HSEmptyStateView.search(query: "Звук Ы")
+/// ```
+@available(iOS 17.0, *)
+public extension HSEmptyStateView {
+
+    /// Empty-state для списка уроков.
+    static func lessons(
+        actionTitle: String = String(localized: "empty.lessons.cta", defaultValue: "Открыть каталог"),
+        action: (() -> Void)? = nil
+    ) -> HSEmptyStateView {
+        HSEmptyStateView(
+            icon: "book.closed",
+            title: String(localized: "empty.lessons.title", defaultValue: "Нет уроков"),
+            message: String(localized: "empty.lessons.message", defaultValue: "Добавь первый урок и начни путь"),
+            action: action,
+            actionTitle: actionTitle
+        )
+    }
+
+    /// Empty-state для домашних заданий.
+    static func tasks(
+        actionTitle: String = String(localized: "empty.tasks.cta", defaultValue: "Создать задание"),
+        action: (() -> Void)? = nil
+    ) -> HSEmptyStateView {
+        HSEmptyStateView(
+            icon: "list.bullet.clipboard",
+            title: String(localized: "empty.tasks.title", defaultValue: "Нет заданий"),
+            message: String(localized: "empty.tasks.message", defaultValue: "Сегодня заданий нет — отдыхай!"),
+            action: action,
+            actionTitle: actionTitle
+        )
+    }
+
+    /// Empty-state для наград/достижений.
+    static func achievements(
+        actionTitle: String = String(localized: "empty.achievements.cta", defaultValue: "К занятиям"),
+        action: (() -> Void)? = nil
+    ) -> HSEmptyStateView {
+        HSEmptyStateView(
+            icon: "trophy",
+            title: String(localized: "empty.achievements.title", defaultValue: "Пока нет наград"),
+            message: String(localized: "empty.achievements.message", defaultValue: "Заверши первое занятие, чтобы получить награду"),
+            action: action,
+            actionTitle: actionTitle
+        )
+    }
+
+    /// Empty-state для уведомлений.
+    static func notifications(
+        actionTitle: String = String(localized: "empty.notifications.cta", defaultValue: "К настройкам"),
+        action: (() -> Void)? = nil
+    ) -> HSEmptyStateView {
+        HSEmptyStateView(
+            icon: "bell.slash",
+            title: String(localized: "empty.notifications.title", defaultValue: "Уведомлений нет"),
+            message: String(localized: "empty.notifications.message", defaultValue: "Здесь будут напоминания и сводки прогресса"),
+            action: action,
+            actionTitle: actionTitle
+        )
+    }
+
+    /// Empty-state для пустого результата поиска.
+    static func search(
+        query: String = "",
+        actionTitle: String = String(localized: "empty.search.cta", defaultValue: "Очистить"),
+        action: (() -> Void)? = nil
+    ) -> HSEmptyStateView {
+        let message = query.isEmpty
+            ? String(localized: "empty.search.message.generic", defaultValue: "Попробуй другой запрос")
+            : String(localized: "empty.search.message.withQuery", defaultValue: "Ничего не найдено по запросу") + " «\(query)»"
+        return HSEmptyStateView(
+            icon: "magnifyingglass",
+            title: String(localized: "empty.search.title", defaultValue: "Ничего не найдено"),
+            message: message,
+            action: action,
+            actionTitle: actionTitle
+        )
+    }
+
+    /// Generic custom empty-state — для случаев без готового варианта.
+    static func custom(
+        icon: String = "tray",
+        title: String,
+        message: String,
+        actionTitle: String = String(localized: "empty.custom.cta", defaultValue: "Попробовать"),
+        action: (() -> Void)? = nil
+    ) -> HSEmptyStateView {
+        HSEmptyStateView(
+            icon: icon,
+            title: title,
+            message: message,
+            action: action,
+            actionTitle: actionTitle
+        )
+    }
+}
+
 // MARK: - Preview
 
 #Preview("HSEmptyStateView SF Symbol") {
