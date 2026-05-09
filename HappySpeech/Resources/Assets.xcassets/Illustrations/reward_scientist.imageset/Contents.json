@@ -1,15 +1,17 @@
 {
   "images": [
     {
-      "filename": "reward_scientist.png",
+      "filename": "reward_scientist@1x.png",
       "idiom": "universal",
       "scale": "1x"
     },
     {
+      "filename": "reward_scientist@2x.png",
       "idiom": "universal",
       "scale": "2x"
     },
     {
+      "filename": "reward_scientist@3x.png",
       "idiom": "universal",
       "scale": "3x"
     }

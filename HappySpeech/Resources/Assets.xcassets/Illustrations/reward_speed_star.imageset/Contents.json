@@ -1,15 +1,17 @@
 {
   "images": [
     {
-      "filename": "reward_speed_star.png",
+      "filename": "reward_speed_star@1x.png",
       "idiom": "universal",
       "scale": "1x"
     },
     {
+      "filename": "reward_speed_star@2x.png",
       "idiom": "universal",
       "scale": "2x"
     },
     {
+      "filename": "reward_speed_star@3x.png",
       "idiom": "universal",
       "scale": "3x"
     }

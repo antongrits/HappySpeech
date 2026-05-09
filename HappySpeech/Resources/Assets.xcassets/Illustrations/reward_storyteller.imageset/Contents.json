@@ -1,15 +1,17 @@
 {
   "images": [
     {
-      "filename": "reward_storyteller.png",
+      "filename": "reward_storyteller@1x.png",
       "idiom": "universal",
       "scale": "1x"
     },
     {
+      "filename": "reward_storyteller@2x.png",
       "idiom": "universal",
       "scale": "2x"
     },
     {
+      "filename": "reward_storyteller@3x.png",
       "idiom": "universal",
       "scale": "3x"
     }

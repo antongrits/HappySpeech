@@ -1,15 +1,17 @@
 {
   "images": [
     {
-      "filename": "reward_night_owl.png",
+      "filename": "reward_night_owl@1x.png",
       "idiom": "universal",
       "scale": "1x"
     },
     {
+      "filename": "reward_night_owl@2x.png",
       "idiom": "universal",
       "scale": "2x"
     },
     {
+      "filename": "reward_night_owl@3x.png",
       "idiom": "universal",
       "scale": "3x"
     }
