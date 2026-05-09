@@ -528,3 +528,100 @@ SpecialistDashboardView → PatientListView → SessionReviewView → ScreeningO
 
 **Общие экраны:**
 SettingsView → ThemePickerView → NotificationsSettingsView → DemoTourView
+
+---
+
+## v18 Final State (2026-05-09)
+
+### Tag: v1.0.0-final-v18 (30e55060) + post-tag continuation
+
+### Production-quality milestone (Plan v18 + post-tag continuation)
+
+| Метрика | Достигнуто | Цель |
+|---|---|---|
+| Всего коммитов v18 | 76+ | ≥80 |
+| Post-tag коммитов | 28+ | n/a |
+| Голосовых файлов (.m4a) | 14 501 | ≥14 500 |
+| Контент-паков | 25 | ≥25 |
+| Единиц контента | 7 555 | ≥7 459 |
+| Imagesets (HD иллюстрации) | 154 | n/a |
+| MP4 видео (motion-design) | 69+ | n/a |
+| Lottie анимации | 58 | n/a |
+| Core ML моделей (.mlpackage) | 12 | n/a |
+| Русских ключей локализации | 3 827 | ≥3 800 |
+| Cloud Functions (Firebase) | 18 live (europe-west3) | 100% |
+| AppCheck enforced | 14/14 | 100% |
+| Компонентов DesignSystem | 41 | n/a |
+| Интерактивных экранов (VIP) | 105+ | 100+ |
+| SwiftLint --strict | 0 ошибок | 0 |
+| QA тестов (pass/total) | 68/70 (97%) | ≥95% |
+| BUILD | SUCCEEDED iPhone SE (3rd gen) | SUCCEEDED |
+| Bundle глубина ресурсов | 1.3 GB | n/a |
+
+### Архитектура
+
+- iOS 17+ SwiftUI 6.0
+- Swift 6 strict concurrency (async/await, @Observable)
+- Clean Swift VIP на каждую фичу (Interactor / Presenter / Router / Models / Workers)
+- Realm Swift — offline-first локальная БД (9 репозиториев, миграции)
+- Firebase backend: Auth + Firestore + Functions (18 callable) + Storage + AppCheck (DeviceCheck) + Remote Config (19 флагов) + FCM + Performance
+- WhisperKit + Wav2Vec2RuChild — ASR (WER ~7.4% на RU)
+- 12 Core ML моделей: Wav2Vec2RuChild (302 MB real), RussianPhonemeClassifier (83.9%), EmotionDetection (≥75%), SileroVAD, SoundClassifier, TonguePostureClassifier и др.
+- ARKit Face Tracking (TrueDepth, 52 blendshapes, 16 артикуляционных)
+- 3D маскот Ляля — LyalyaRealityKitView (RealityKit + USDZ, 8 эмоций, 5 viseme lip-sync)
+- MLX Swift + Qwen2.5-1.5B — on-device LLM (~20 tok/s на iPhone 15 Pro)
+
+### Compliance
+
+- Kids Category (Apple App Store)
+- COPPA-safe (parent-gated messaging, без внешних ссылок без Parental Gate)
+- Privacy Policy + Terms размещены на GitHub Pages (https://antongrits.github.io/HappySpeech/)
+- WCAG AA контраст (≥4.5:1)
+- VoiceOver labels (97% покрытие)
+- Reduce Motion compliance (@Environment(\.accessibilityReduceMotion))
+- Dynamic Type (Small → AccessibilityLarge, layout не ломается)
+
+### Что НЕ делает приложение (честные границы)
+
+- Медицинская диагностика — приложение является педагогической поддержкой, не клинической
+- Клиническое распознавание нарушений речи — используются интерпретируемые эвристики
+- Полное tongue-tracking внутри рта — ARKit даёт только внешние blendshapes
+- Гарантия клинических результатов
+- Замена живого логопеда
+
+### Демо для защиты диплома (9 сценариев)
+
+1. **Onboarding flow** — 10 шагов с 3D Лялей 200pt+, child profile setup, parental gate
+2. **ChildHome** — детский контур, тёплая палитра, low-text, маскот на каждом экране
+3. **WorldMap + LessonPlayer** — 16 игровых шаблонов, матрица sound × stage × template
+4. **AR Mirror** — TrueDepth blendshapes для артикуляции, TonguePostureClassifier
+5. **ParentHome** — аналитика Swift Charts, прогресс по звукам, PDF-экспорт
+6. **SpecialistDashboard** — специалистский контур, CSV-экспорт, SessionReview
+7. **FamilyAchievements** — общие семейные достижения (R.4, 1 277 LOC)
+8. **CulturalContent** — русские народные сказки, культурный контент (R.5, 1 443 LOC)
+9. **GuidedTour** — 15-шаговый демо-маршрут для комиссии
+
+### Сравнение с конкурентами (финальная версия)
+
+| Функция | HappySpeech | Логопотам | Буковки | Логомаг |
+|---|---|---|---|---|
+| AR-артикуляция | Да | Нет | Нет | Нет |
+| AI-оценка произношения | Да | Нет | Нет | Нет |
+| Offline-first | Да | Частично | Нет | Нет |
+| Специалистский контур | Да | Нет | Нет | Нет |
+| On-device LLM | Да | Нет | Нет | Нет |
+| 18 типов упражнений | Да | Нет | Нет | Нет |
+| 14 501 голосовых файлов | Да | Нет | Нет | Нет |
+| Kids Category compliant | Да | Нет | Нет | Нет |
+| 3D маскот (RealityKit) | Да | Нет | Нет | Нет |
+
+### Future v19 roadmap (после защиты)
+
+- Apple Developer Program ($99/год) → App Store submission (Kids Category)
+- Retraining ML на реальном детском датасете (через TestFlight collection)
+- Расширение голосовой базы 14 501 → 18 000+ файлов
+- Block O Remotion → 100+ профессиональных MP4 (уровень motion-дизайна)
+- Block AG Blender — 3D кастомный rig для Ляли
+- Многоязычность: казахский, украинский, белорусский
+- Клинические испытания с логопедами (пилот в 2–3 детских учреждениях)
+- Android-версия на базе Compose + ONNX Runtime
