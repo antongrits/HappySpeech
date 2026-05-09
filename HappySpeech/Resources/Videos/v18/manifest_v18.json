@@ -1,0 +1,115 @@
+{
+  "version": "v18",
+  "block": "O",
+  "description": "Real motion design videos rendered with Remotion (TypeScript / React).",
+  "format": {
+    "codec": "H.265 (HEVC)",
+    "resolution": "1280x720",
+    "fps": 30,
+    "audio": "silent"
+  },
+  "categories": {
+    "intro":       { "count": 1,  "duration_sec": 5  },
+    "trailer":     { "count": 1,  "duration_sec": 30 },
+    "celebrations":{ "count": 8,  "duration_sec": 3  },
+    "lessons":     { "count": 16, "duration_sec": 6  },
+    "onboarding":  { "count": 10, "duration_sec": 6  },
+    "achievements":{ "count": 8,  "duration_sec": 5  },
+    "transitions": { "count": 9,  "duration_sec": 1.5},
+    "breathing":   { "count": 4,  "duration_sec": 12 },
+    "stories":     { "count": 12, "duration_sec": 6  }
+  },
+  "files": {
+    "intro": [
+      "intro/v18_intro.mp4"
+    ],
+    "trailer": [
+      "trailer/v18_demo_trailer.mp4"
+    ],
+    "celebrations": [
+      "celebrations/v18_celebrate_star1.mp4",
+      "celebrations/v18_celebrate_star2.mp4",
+      "celebrations/v18_celebrate_star3.mp4",
+      "celebrations/v18_celebrate_milestone.mp4",
+      "celebrations/v18_celebrate_streak.mp4",
+      "celebrations/v18_celebrate_perfect.mp4",
+      "celebrations/v18_celebrate_firsttime.mp4",
+      "celebrations/v18_celebrate_weekly.mp4"
+    ],
+    "lessons": [
+      "lessons/v18_lesson_bingo.mp4",
+      "lessons/v18_lesson_minimal_pairs.mp4",
+      "lessons/v18_lesson_sound_hunter.mp4",
+      "lessons/v18_lesson_memory.mp4",
+      "lessons/v18_lesson_sorting.mp4",
+      "lessons/v18_lesson_drag_and_match.mp4",
+      "lessons/v18_lesson_repeat_after_model.mp4",
+      "lessons/v18_lesson_rhythm.mp4",
+      "lessons/v18_lesson_narrative_quest.mp4",
+      "lessons/v18_lesson_articulation.mp4",
+      "lessons/v18_lesson_listen_and_choose.mp4",
+      "lessons/v18_lesson_story_completion.mp4",
+      "lessons/v18_lesson_puzzle_reveal.mp4",
+      "lessons/v18_lesson_ar_activity.mp4",
+      "lessons/v18_lesson_visual_acoustic.mp4",
+      "lessons/v18_lesson_breathing.mp4"
+    ],
+    "onboarding": [
+      "onboarding/v18_onboard_1.mp4",
+      "onboarding/v18_onboard_2.mp4",
+      "onboarding/v18_onboard_3.mp4",
+      "onboarding/v18_onboard_4.mp4",
+      "onboarding/v18_onboard_5.mp4",
+      "onboarding/v18_onboard_6.mp4",
+      "onboarding/v18_onboard_7.mp4",
+      "onboarding/v18_onboard_8.mp4",
+      "onboarding/v18_onboard_9.mp4",
+      "onboarding/v18_onboard_10.mp4"
+    ],
+    "achievements": [
+      "achievements/v18_achieve_first_star.mp4",
+      "achievements/v18_achieve_first_sound.mp4",
+      "achievements/v18_achieve_streak_7.mp4",
+      "achievements/v18_achieve_streak_30.mp4",
+      "achievements/v18_achieve_champion.mp4",
+      "achievements/v18_achieve_explorer.mp4",
+      "achievements/v18_achieve_first_ar.mp4",
+      "achievements/v18_achieve_perfectionist.mp4"
+    ],
+    "transitions": [
+      "transitions/v18_trans_iris.mp4",
+      "transitions/v18_trans_slide_left.mp4",
+      "transitions/v18_trans_slide_right.mp4",
+      "transitions/v18_trans_fade_glow.mp4",
+      "transitions/v18_trans_curtain.mp4",
+      "transitions/v18_trans_page_flip.mp4",
+      "transitions/v18_trans_scale_up.mp4",
+      "transitions/v18_trans_scale_down.mp4",
+      "transitions/v18_trans_dissolve.mp4"
+    ],
+    "breathing": [
+      "breathing/v18_breathing_478.mp4",
+      "breathing/v18_breathing_box.mp4",
+      "breathing/v18_breathing_belly.mp4",
+      "breathing/v18_breathing_alternate.mp4"
+    ],
+    "stories": [
+      "stories/v18_story_luna_lena.mp4",
+      "stories/v18_story_mishka_mishutka.mp4",
+      "stories/v18_story_pingvin_pyotr.mp4",
+      "stories/v18_story_raketa_ryzhik.mp4",
+      "stories/v18_story_rybka_rita.mp4",
+      "stories/v18_story_shchenok_shchetka.mp4",
+      "stories/v18_story_shustray_shishka.mp4",
+      "stories/v18_story_sinyaya_sobaka.mp4",
+      "stories/v18_story_tigr_timur.mp4",
+      "stories/v18_story_tsyplyonok_tsezar.mp4",
+      "stories/v18_story_yozhik_egor.mp4",
+      "stories/v18_story_zaychik_zaryadka.mp4"
+    ]
+  },
+  "totals": {
+    "files": 69,
+    "size_mb": 28
+  }
+}
