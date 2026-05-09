@@ -3,6 +3,41 @@
 
 ---
 
+## ADR-V18-AF-VERIFIED-POST-TAG — Git author audit (2026-05-09)
+
+### Status: Approved (Block AF v18 verify)
+
+### Context
+v18 commits authorship audit per Plan v18 правило: «Все v18 commits author = antongrits, БЕЗ Co-Authored-By: Claude».
+
+### Findings
+- `git config user.email`: antongric558@gmail.com ✅
+- `git config user.name`: antongrits ✅
+- 76 v18 commits since 2026-05-08 — author = antongrits (100%) ✅
+- **3 pre-tag commits** содержат Co-Authored-By: Claude (legacy):
+  - `f9756fa9` AF v18 git cleanup (pre-tag)
+  - `61421af7` P v18 voice expansion (pre-tag)
+  - `2d46a5e0` S v18 +500 lessons (pre-tag)
+
+### Decision
+Accept — pre-tag commits с Co-Author Claude НЕ rewrite (destructive operation per Plan v18 strict rule).
+
+Все post-tag commits (28+) — author antongrits 100%, 0 Co-Authored-By: Claude.
+
+### Verification
+```bash
+# Post-tag commits (28+)
+git log 30e55060..HEAD --pretty='%an' | sort -u
+# Output: antongrits (single line)
+
+git log 30e55060..HEAD --pretty=%B | grep -c "Co-Authored-By: Claude"
+# Output: 0
+```
+
+### Closes Block AF v18 ✅
+
+---
+
 ## ADR-V18-VIP-INIT-RACE — VIP triple через @State Optional acceptable (2026-05-09)
 
 ### Status: Approved (Block AD code review post-tag)
