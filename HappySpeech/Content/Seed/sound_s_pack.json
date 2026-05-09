@@ -1047,6 +1047,97 @@
           "hint": "СЛ в начале, -СТЬ на конце.",
           "difficulty": 4,
           "audio_file": "Audio/Content/S/s-wi-73.m4a"
+        },
+        {
+          "id": "s-wi-74",
+          "word": "сосиска",
+          "hint": "СО+СИ+СКА — три слога с С.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-wi-74.m4a"
+        },
+        {
+          "id": "s-wi-75",
+          "word": "сугроб",
+          "hint": "СУ+ГРО — зимнее слово.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-wi-75.m4a"
+        },
+        {
+          "id": "s-wi-76",
+          "word": "стрела",
+          "hint": "СТР — стечение трёх согласных.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-wi-76.m4a"
+        },
+        {
+          "id": "s-wi-77",
+          "word": "скала",
+          "hint": "СКА — стечение СК.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-wi-77.m4a"
+        },
+        {
+          "id": "s-wi-78",
+          "word": "свисток",
+          "hint": "СВИ+СТО+К — два стечения с С.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-wi-78.m4a"
+        },
+        {
+          "id": "s-wi-79",
+          "word": "страница",
+          "hint": "СТР+НИ+ЦА — длинное слово.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-wi-79.m4a"
+        },
+        {
+          "id": "s-wi-80",
+          "word": "сарафан",
+          "hint": "СА+РА+ФАН — три слога, С в начале.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-wi-80.m4a"
+        },
+        {
+          "id": "s-wi-81",
+          "word": "спрятать",
+          "hint": "СПР — три согласных вместе.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-wi-81.m4a"
+        },
+        {
+          "id": "s-wi-82",
+          "word": "скворец",
+          "hint": "СКВ+РЕЦ — сложное стечение.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-wi-82.m4a"
+        },
+        {
+          "id": "s-wi-83",
+          "word": "серебро",
+          "hint": "СЕ+РЕ+БРО — мягкий С плюс Р.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-wi-83.m4a"
+        },
+        {
+          "id": "s-wi-84",
+          "word": "студент",
+          "hint": "СТУ+ДЕН+Т — СТ стечение.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-wi-84.m4a"
+        },
+        {
+          "id": "s-wi-85",
+          "word": "сирота",
+          "hint": "СИ+РО+ТА — мягкий С с Р.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-wi-85.m4a"
+        },
+        {
+          "id": "s-wi-86",
+          "word": "смелость",
+          "hint": "СМЕ+ЛОСТЬ — стечение СМ.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-wi-86.m4a"
         }
       ]
     },
@@ -1423,6 +1514,76 @@
           "hint": "ССМ — двойной С перед сонорным.",
           "difficulty": 5,
           "audio_file": "Audio/Content/S/s-wm-59.m4a"
+        },
+        {
+          "id": "s-wm-60",
+          "word": "пёстрый",
+          "hint": "ПЁС+ТРЫ — С в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-wm-60.m4a"
+        },
+        {
+          "id": "s-wm-61",
+          "word": "арбуз",
+          "hint": "АР+БУЗ — З/С чередование.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/S/s-wm-61.m4a"
+        },
+        {
+          "id": "s-wm-62",
+          "word": "костёр",
+          "hint": "КОС+ТЁР — С в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-wm-62.m4a"
+        },
+        {
+          "id": "s-wm-63",
+          "word": "паспорт",
+          "hint": "ПАС+ПОРТ — С дважды.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-wm-63.m4a"
+        },
+        {
+          "id": "s-wm-64",
+          "word": "выставка",
+          "hint": "ВЫС+ТАВ+КА — СТ стечение.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-wm-64.m4a"
+        },
+        {
+          "id": "s-wm-65",
+          "word": "перстень",
+          "hint": "ПЕР+СТЕНЬ — РСТ стечение.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-wm-65.m4a"
+        },
+        {
+          "id": "s-wm-66",
+          "word": "список",
+          "hint": "СПИ+СОК — С дважды.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-wm-66.m4a"
+        },
+        {
+          "id": "s-wm-67",
+          "word": "свисать",
+          "hint": "СВИ+САТЬ — С дважды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-wm-67.m4a"
+        },
+        {
+          "id": "s-wm-68",
+          "word": "острый",
+          "hint": "ОС+ТРЫ — СТР стечение.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-wm-68.m4a"
+        },
+        {
+          "id": "s-wm-69",
+          "word": "стрелять",
+          "hint": "СТР+ЕЛЯ — трёх-согласное стечение.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-wm-69.m4a"
         }
       ]
     },
@@ -2080,6 +2241,41 @@
           "hint": "С + СВ + С — чередование позиций.",
           "difficulty": 3,
           "audio_file": "Audio/Content/S/s-ph-64.m4a"
+        },
+        {
+          "id": "s-ph-65",
+          "word": "спелая слива на столе",
+          "hint": "СП+СЛИ+СТ — три стечения.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-ph-65.m4a"
+        },
+        {
+          "id": "s-ph-66",
+          "word": "старая сосна у забора",
+          "hint": "СТА+СО+СНА — С в разных позициях.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-ph-66.m4a"
+        },
+        {
+          "id": "s-ph-67",
+          "word": "серый слон из саванны",
+          "hint": "СЕ+СЛО+СА — насыщенный С-текст.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-ph-67.m4a"
+        },
+        {
+          "id": "s-ph-68",
+          "word": "снежная скульптура во дворе",
+          "hint": "СНЕ+СКУЛЬ+ДВО — зимняя тема.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-ph-68.m4a"
+        },
+        {
+          "id": "s-ph-69",
+          "word": "строгий сторож у склада",
+          "hint": "СТР+СТО+СКЛ — сложные стечения.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-ph-69.m4a"
         }
       ]
     },
@@ -2371,6 +2567,41 @@
           "hint": "С + СП + СТ + СМ — нарратив с действием.",
           "difficulty": 5,
           "audio_file": "Audio/Content/S/s-sen-44.m4a"
+        },
+        {
+          "id": "s-sen-45",
+          "word": "Соня собрала спелую смородину в саду.",
+          "hint": "СО+СО+СП+СМО+СА — пять С-слов.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-sen-45.m4a"
+        },
+        {
+          "id": "s-sen-46",
+          "word": "Степан слушал страшную историю про стражника.",
+          "hint": "СТЕ+СЛУ+СТР+СТР — нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-sen-46.m4a"
+        },
+        {
+          "id": "s-sen-47",
+          "word": "Светлые сосны стояли вдоль сельской дороги.",
+          "hint": "СВЕ+СО+СТО+СЕЛ — четыре С-слова.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-sen-47.m4a"
+        },
+        {
+          "id": "s-sen-48",
+          "word": "Сережа строит скворечник из старых досок.",
+          "hint": "СЕ+СТР+СКВ+СТА — мастерская тема.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-sen-48.m4a"
+        },
+        {
+          "id": "s-sen-49",
+          "word": "Синяя стрекоза сидела на стебле камыша.",
+          "hint": "СИ+СТР+СИ+СТЕ — пейзаж.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/S/s-sen-49.m4a"
         }
       ]
     },
@@ -2443,6 +2674,20 @@
           "word": "Сказка про Соню и сову: Соня шла по лесу. Вдруг увидела сову. Сова сидела на сосне и смотрела на Соню.",
           "difficulty": 5,
           "audio_file": "Audio/Content/S/s-sto-10.m4a"
+        },
+        {
+          "id": "s-st-11",
+          "word": "Серый волк жил в старом лесу. Он искал себе еду. Однажды увидел собаку. Собака спала. Но волк побоялся и убежал.",
+          "hint": "История про волка и собаку. Слова: С, ЛЕ, СТА, ЕДУ, ОД, СО.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-st-11.m4a"
+        },
+        {
+          "id": "s-st-12",
+          "word": "Соня и Саша собирали ягоды в лесу. Саша нашёл гриб. Соня сказала: «Молодец, Саша!» Они сложили всё в корзинку.",
+          "hint": "Нарратив с именами. С трижды в именах.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/S/s-st-12.m4a"
         }
       ]
     },
@@ -2659,6 +2904,41 @@
           "hint": "Сеть — для рыбы, цепь — у собаки.",
           "difficulty": 3,
           "audio_file": "Audio/Content/S/s-diff-29.m4a"
+        },
+        {
+          "id": "s-diff-30",
+          "word": "сок — шок",
+          "hint": "Сок — напиток с С, шок — неожиданность с Ш.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-diff-30.m4a"
+        },
+        {
+          "id": "s-diff-31",
+          "word": "соль — шаль",
+          "hint": "Соль — приправа с С, шаль — ткань с Ш.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-diff-31.m4a"
+        },
+        {
+          "id": "s-diff-32",
+          "word": "суп — шуп",
+          "hint": "Суп — еда с С. Шуп — не существует!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/S/s-diff-32.m4a"
+        },
+        {
+          "id": "s-diff-33",
+          "word": "сено — жено",
+          "hint": "Сено — корм для коровы с С. Жено — нет.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-diff-33.m4a"
+        },
+        {
+          "id": "s-diff-34",
+          "word": "семь — цемент",
+          "hint": "Семь — число с С, цемент — стройматериал с Ц.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-diff-34.m4a"
         }
       ]
     }

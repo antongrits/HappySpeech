@@ -1002,6 +1002,111 @@
           "hint": "ЛО + ПО — мягкая интонация.",
           "difficulty": 4,
           "audio_file": "Audio/Content/L/l-wi-69.m4a"
+        },
+        {
+          "id": "l-wi-70",
+          "word": "ладонь",
+          "hint": "ЛА+ДОНЬ — внутренняя часть руки.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-70.m4a"
+        },
+        {
+          "id": "l-wi-71",
+          "word": "ловушка",
+          "hint": "ЛО+ВУШ+КА — ловить кого-то.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-71.m4a"
+        },
+        {
+          "id": "l-wi-72",
+          "word": "лебедёнок",
+          "hint": "ЛЕ+БЕ+ДЁ+НОК — детёныш лебедя, Л мягкий.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-72.m4a"
+        },
+        {
+          "id": "l-wi-73",
+          "word": "локомотив",
+          "hint": "ЛО+КО+МО+ТИВ — паровоз.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-73.m4a"
+        },
+        {
+          "id": "l-wi-74",
+          "word": "лопасть",
+          "hint": "ЛО+ПАСТЬ — часть пропеллера.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-74.m4a"
+        },
+        {
+          "id": "l-wi-75",
+          "word": "лоскуток",
+          "hint": "ЛО+СКУТ+ОК — кусочек ткани.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-75.m4a"
+        },
+        {
+          "id": "l-wi-76",
+          "word": "лягушонок",
+          "hint": "ЛЯ+ГУ+ШО+НОК — детёныш лягушки, Л мягкий.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-76.m4a"
+        },
+        {
+          "id": "l-wi-77",
+          "word": "летопись",
+          "hint": "ЛЕ+ТО+ПИСЬ — историческая запись.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-77.m4a"
+        },
+        {
+          "id": "l-wi-78",
+          "word": "ленточка",
+          "hint": "ЛЕН+ТОЧ+КА — украшение, Л мягкий.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-78.m4a"
+        },
+        {
+          "id": "l-wi-79",
+          "word": "листопад",
+          "hint": "ЛИС+ТО+ПАД — падение листьев, два Л.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wi-79.m4a"
+        },
+        {
+          "id": "l-wi-80",
+          "word": "лукошко",
+          "hint": "ЛУ+КОШ+КО — корзинка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-80.m4a"
+        },
+        {
+          "id": "l-wi-81",
+          "word": "ластоногий",
+          "hint": "ЛА+СТО+НО+ГИЙ — прилагательное про моржей.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-81.m4a"
+        },
+        {
+          "id": "l-wi-82",
+          "word": "лазоревый",
+          "hint": "ЛА+ЗО+РЕ+ВЫЙ — небесно-голубой.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-wi-82.m4a"
+        },
+        {
+          "id": "l-wi-83",
+          "word": "лопотание",
+          "hint": "ЛО+ПО+ТА+НИЕ — невнятная речь.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wi-83.m4a"
+        },
+        {
+          "id": "l-wi-84",
+          "word": "лапоть",
+          "hint": "ЛА+ПОТЬ — народная обувь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wi-84.m4a"
         }
       ]
     },
@@ -1332,6 +1437,111 @@
           "hint": "Мягкий [Л'].",
           "difficulty": 3,
           "audio_file": "Audio/Content/L/l-wm-49.m4a"
+        },
+        {
+          "id": "l-wm-50",
+          "word": "яблоко",
+          "hint": "ЯБ+ЛО+КО — Л в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-50.m4a"
+        },
+        {
+          "id": "l-wm-51",
+          "word": "палка",
+          "hint": "ПА+ЛКА — Л в середине.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-wm-51.m4a"
+        },
+        {
+          "id": "l-wm-52",
+          "word": "молоток",
+          "hint": "МО+ЛО+ТОК — Л дважды в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-52.m4a"
+        },
+        {
+          "id": "l-wm-53",
+          "word": "халва",
+          "hint": "ХА+ЛВА — ЛВ стечение.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-53.m4a"
+        },
+        {
+          "id": "l-wm-54",
+          "word": "платок",
+          "hint": "ПЛА+ТОК — ПЛ стечение.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-54.m4a"
+        },
+        {
+          "id": "l-wm-55",
+          "word": "белочка",
+          "hint": "БЕ+ЛОЧ+КА — Л мягкий в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-55.m4a"
+        },
+        {
+          "id": "l-wm-56",
+          "word": "полотенце",
+          "hint": "ПО+ЛО+ТЕН+ЦЕ — Л дважды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-wm-56.m4a"
+        },
+        {
+          "id": "l-wm-57",
+          "word": "облако",
+          "hint": "ОБ+ЛА+КО — Л в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-57.m4a"
+        },
+        {
+          "id": "l-wm-58",
+          "word": "шалаш",
+          "hint": "ША+ЛАШ — Л в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-58.m4a"
+        },
+        {
+          "id": "l-wm-59",
+          "word": "глобус",
+          "hint": "ГЛО+БУС — ГЛ стечение.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-59.m4a"
+        },
+        {
+          "id": "l-wm-60",
+          "word": "флаг",
+          "hint": "ФЛА+Г — ФЛ стечение.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-60.m4a"
+        },
+        {
+          "id": "l-wm-61",
+          "word": "блинчик",
+          "hint": "БЛИ+НЧИ+К — БЛ стечение.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-61.m4a"
+        },
+        {
+          "id": "l-wm-62",
+          "word": "плакат",
+          "hint": "ПЛА+КАТ — ПЛ стечение.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-62.m4a"
+        },
+        {
+          "id": "l-wm-63",
+          "word": "пилотка",
+          "hint": "ПИ+ЛОТ+КА — Л в середине.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-wm-63.m4a"
+        },
+        {
+          "id": "l-wm-64",
+          "word": "кулак",
+          "hint": "КУ+ЛАК — Л в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-wm-64.m4a"
         }
       ]
     },
@@ -1983,6 +2193,76 @@
           "hint": "ЛА + ЛЕ + ЛЕ — три Л-слова.",
           "difficulty": 4,
           "audio_file": "Audio/Content/L/l-ph-59.m4a"
+        },
+        {
+          "id": "l-ph-60",
+          "word": "лёгкий листочек летит вниз",
+          "hint": "ЛЁГ+ЛИС+ЛЕ — Л трижды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-60.m4a"
+        },
+        {
+          "id": "l-ph-61",
+          "word": "лукавый лис у реки",
+          "hint": "ЛУ+ЛИС — Л дважды.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-61.m4a"
+        },
+        {
+          "id": "l-ph-62",
+          "word": "ласковая лошадка на лугу",
+          "hint": "ЛА+ЛО+ЛУ — Л трижды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-62.m4a"
+        },
+        {
+          "id": "l-ph-63",
+          "word": "летит ласточка над полем",
+          "hint": "ЛЕ+ЛА+ПО — Л трижды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-63.m4a"
+        },
+        {
+          "id": "l-ph-64",
+          "word": "лиловый лотос у пруда",
+          "hint": "ЛИ+ЛО — Л дважды в нач. слов.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-64.m4a"
+        },
+        {
+          "id": "l-ph-65",
+          "word": "лесные лилии цветут весной",
+          "hint": "ЛЕС+ЛИ+ЛИ — Л трижды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-65.m4a"
+        },
+        {
+          "id": "l-ph-66",
+          "word": "лебеди летят над длинным озером",
+          "hint": "ЛЕ+ЛЕ+ДЛИН+ОЗЕ — Л четырежды.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-ph-66.m4a"
+        },
+        {
+          "id": "l-ph-67",
+          "word": "ловкий лягушонок прыгнул в лужу",
+          "hint": "ЛО+ЛЯ+ЛУ — Л трижды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-67.m4a"
+        },
+        {
+          "id": "l-ph-68",
+          "word": "луговые цветы ломятся от красоты",
+          "hint": "ЛУ+ЛО+КРА — Л дважды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/L/l-ph-68.m4a"
+        },
+        {
+          "id": "l-ph-69",
+          "word": "луна светила в тёмном лесу",
+          "hint": "ЛУ+ЛЕ — Л в двух словах.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-69.m4a"
         }
       ]
     },
@@ -2244,6 +2524,41 @@
           "hint": "ЛЕ + КОТ + ЛЕ + ПО + ЛКЕ + ЛИ + ЛА — семь Л.",
           "difficulty": 5,
           "audio_file": "Audio/Content/L/l-sen-39.m4a"
+        },
+        {
+          "id": "l-sen-40",
+          "word": "Лисята лакали молоко из блюдца.",
+          "hint": "ЛИ+ЛА+МО+БЛЮ — Л в четырёх словах.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-40.m4a"
+        },
+        {
+          "id": "l-sen-41",
+          "word": "Ласковое летнее солнце грело лужайку.",
+          "hint": "ЛА+ЛЕ+СОЛ+ЛУ — Л четырежды.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-41.m4a"
+        },
+        {
+          "id": "l-sen-42",
+          "word": "Лодка плыла по спокойному лесному озеру.",
+          "hint": "ЛО+ПЛЫ+ЛЕС — Л трижды.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-42.m4a"
+        },
+        {
+          "id": "l-sen-43",
+          "word": "Лёля нашла листочки лопуха у калитки.",
+          "hint": "ЛЁ+ЛИС+ЛО+КА — Л четырежды.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-43.m4a"
+        },
+        {
+          "id": "l-sen-44",
+          "word": "Лесные ёлки светились в лунную ночь.",
+          "hint": "ЛЕС+ЁЛ+ЛУН — Л трижды.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/L/l-sen-44.m4a"
         }
       ]
     },

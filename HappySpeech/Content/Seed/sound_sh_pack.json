@@ -1118,6 +1118,76 @@
           "hint": "ШК + РК — двойное стечение.",
           "difficulty": 5,
           "audio_file": "Audio/Content/Sh/sh-wi-70.m4a"
+        },
+        {
+          "id": "sh-wi-71",
+          "word": "шатёр",
+          "hint": "ША+ТЁР — шатёр в цирке или на природе.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-wi-71.m4a"
+        },
+        {
+          "id": "sh-wi-72",
+          "word": "шоссе",
+          "hint": "ШО+ССЕ — дорога.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-wi-72.m4a"
+        },
+        {
+          "id": "sh-wi-73",
+          "word": "шифровка",
+          "hint": "ШИ+ФРО+ВКА — секретное сообщение.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-wi-73.m4a"
+        },
+        {
+          "id": "sh-wi-74",
+          "word": "штанга",
+          "hint": "ШТА+НГА — спортивный инвентарь.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-wi-74.m4a"
+        },
+        {
+          "id": "sh-wi-75",
+          "word": "шасси",
+          "hint": "ША+ССИ — колёса самолёта.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-wi-75.m4a"
+        },
+        {
+          "id": "sh-wi-76",
+          "word": "шнурки",
+          "hint": "ШНУ+РКИ — то, чем завязывают ботинки.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-wi-76.m4a"
+        },
+        {
+          "id": "sh-wi-77",
+          "word": "штиль",
+          "hint": "ШТИ+ЛЬ — полная тишина на море.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-wi-77.m4a"
+        },
+        {
+          "id": "sh-wi-78",
+          "word": "шахтёр",
+          "hint": "ШАХ+ТЁР — тот, кто работает в шахте.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-wi-78.m4a"
+        },
+        {
+          "id": "sh-wi-79",
+          "word": "шествие",
+          "hint": "ШЕС+ТВИЕ — торжественный поход.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-wi-79.m4a"
+        },
+        {
+          "id": "sh-wi-80",
+          "word": "шпиль",
+          "hint": "ШПИ+ЛЬ — острый верх башни.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-wi-80.m4a"
         }
       ]
     },
@@ -2291,6 +2361,41 @@
           "hint": "ШК + КС + ШЛ — три стечения.",
           "difficulty": 5,
           "audio_file": "Audio/Content/Sh/sh-ph-64.m4a"
+        },
+        {
+          "id": "sh-ph-65",
+          "word": "шустрый шмель над цветком",
+          "hint": "ШУС+ШМЕ — два Ш-слова.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-ph-65.m4a"
+        },
+        {
+          "id": "sh-ph-66",
+          "word": "шёлковый шарф на плечах",
+          "hint": "ШЁЛ+ША — Ш в двух словах.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-ph-66.m4a"
+        },
+        {
+          "id": "sh-ph-67",
+          "word": "шумная школа во вторник",
+          "hint": "ШУМ+ШКО — ШМ и ШК стечения.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-ph-67.m4a"
+        },
+        {
+          "id": "sh-ph-68",
+          "word": "мышиная нора под крыльцом",
+          "hint": "МЫ+НО+КРЫ — Ш в середине слова.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-ph-68.m4a"
+        },
+        {
+          "id": "sh-ph-69",
+          "word": "шёлковая подушка у дивана",
+          "hint": "ШЁЛ+ПО+ДУ+ШКА — длинная фраза.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-ph-69.m4a"
         }
       ]
     },
@@ -2582,6 +2687,41 @@
           "hint": "МШ + ДШ + ШО — имена + слово.",
           "difficulty": 4,
           "audio_file": "Audio/Content/Sh/sh-sen-44.m4a"
+        },
+        {
+          "id": "sh-sen-45",
+          "word": "Шура нашёл шишку под большой ёлкой.",
+          "hint": "ШУ+ШИ+ШКУ — три Ш-слова.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-sen-45.m4a"
+        },
+        {
+          "id": "sh-sen-46",
+          "word": "Большая мышь спряталась под деревянным крыльцом.",
+          "hint": "ША+МЫ+КРЫ — Ш в разных позициях.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-sen-46.m4a"
+        },
+        {
+          "id": "sh-sen-47",
+          "word": "Шустрый малыш шлёпал по лужам весело.",
+          "hint": "ШУС+МА+ШЛЁ — нарратив с двумя Ш.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-sen-47.m4a"
+        },
+        {
+          "id": "sh-sen-48",
+          "word": "Наш шофёр ехал по широкому шоссе.",
+          "hint": "ШО+ШИ+ШО — три Ш-слова.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Sh/sh-sen-48.m4a"
+        },
+        {
+          "id": "sh-sen-49",
+          "word": "Шмель жужжал над шиповником у тропинки.",
+          "hint": "ШМЕ+ШИ — Ш в начале двух слов.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Sh/sh-sen-49.m4a"
         }
       ]
     },

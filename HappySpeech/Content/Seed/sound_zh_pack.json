@@ -928,6 +928,76 @@
           "hint": "ЖЕ — мягкий контекст для Ж.",
           "difficulty": 3,
           "audio_file": "Audio/Content/Zh/zh-wi-59.m4a"
+        },
+        {
+          "id": "zh-wi-60",
+          "word": "жаровня",
+          "hint": "ЖА+РО+ВНЯ — посуда для жарки.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Zh/zh-wi-60.m4a"
+        },
+        {
+          "id": "zh-wi-61",
+          "word": "железо",
+          "hint": "ЖЕ+ЛЕ+ЗО — металл.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Zh/zh-wi-61.m4a"
+        },
+        {
+          "id": "zh-wi-62",
+          "word": "жонглёр",
+          "hint": "ЖОН+ГЛЁР — цирковой артист.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Zh/zh-wi-62.m4a"
+        },
+        {
+          "id": "zh-wi-63",
+          "word": "жеребёнок",
+          "hint": "ЖЕ+РЕ+БЁ+НОК — детёныш лошади.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Zh/zh-wi-63.m4a"
+        },
+        {
+          "id": "zh-wi-64",
+          "word": "жимолость",
+          "hint": "ЖИ+МО+ЛОСТЬ — лесная ягода.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Zh/zh-wi-64.m4a"
+        },
+        {
+          "id": "zh-wi-65",
+          "word": "жизнерадостный",
+          "hint": "ЖИЗ+НЕ+РА+ДОС+ТНЫ — длинное слово с Ж.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Zh/zh-wi-65.m4a"
+        },
+        {
+          "id": "zh-wi-66",
+          "word": "железнодорожный",
+          "hint": "ЖЕ+ЛЕЗ+НО+ДО+РО+ЖНЫ — Ж дважды.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Zh/zh-wi-66.m4a"
+        },
+        {
+          "id": "zh-wi-67",
+          "word": "жалованье",
+          "hint": "ЖА+ЛО+ВА+НЬЕ — зарплата.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Zh/zh-wi-67.m4a"
+        },
+        {
+          "id": "zh-wi-68",
+          "word": "жадность",
+          "hint": "ЖА+ДНОСТЬ — черта характера.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Zh/zh-wi-68.m4a"
+        },
+        {
+          "id": "zh-wi-69",
+          "word": "жилище",
+          "hint": "ЖИ+ЛИ+ЩЕ — место проживания.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Zh/zh-wi-69.m4a"
         }
       ]
     },
@@ -1856,6 +1926,41 @@
           "hint": "УЖЕ + ЖА + РУ + ЖИ — четыре Ж.",
           "difficulty": 5,
           "audio_file": "Audio/Content/Zh/zh-ph-49.m4a"
+        },
+        {
+          "id": "zh-ph-50",
+          "word": "жёлтый жираф у воды",
+          "hint": "ЖЁЛ+ЖИ — два Ж-слова подряд.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Zh/zh-ph-50.m4a"
+        },
+        {
+          "id": "zh-ph-51",
+          "word": "жужжание жука над лугом",
+          "hint": "ЖУ+ЖА+ЖУ — три Ж подряд.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Zh/zh-ph-51.m4a"
+        },
+        {
+          "id": "zh-ph-52",
+          "word": "ежи живут в можжевельнике",
+          "hint": "ЖИ+ЖИ+МО+ЖЖЕ — насыщенная Ж-фраза.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Zh/zh-ph-52.m4a"
+        },
+        {
+          "id": "zh-ph-53",
+          "word": "уже жарче снаружи сада",
+          "hint": "УЖЕ+ЖА+НА+РУ+ЖИ — четыре Ж.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Zh/zh-ph-53.m4a"
+        },
+        {
+          "id": "zh-ph-54",
+          "word": "железная ограда вокруг дома",
+          "hint": "ЖЕ+ЛЕЗ — Ж в середине слова.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Zh/zh-ph-54.m4a"
         }
       ]
     },
@@ -2082,6 +2187,27 @@
           "hint": "ЖА + ЁЖИ + ЯГО + ЛИС + ЬЯ — нарратив.",
           "difficulty": 5,
           "audio_file": "Audio/Content/Zh/zh-sen-34.m4a"
+        },
+        {
+          "id": "zh-sen-35",
+          "word": "Жора дружил с жирафом из соседнего зоопарка.",
+          "hint": "ЖО+ДРУ+ЖИ+ЖИ — Ж в разных позициях.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Zh/zh-sen-35.m4a"
+        },
+        {
+          "id": "zh-sen-36",
+          "word": "Железные ножи лежали у повара на столе.",
+          "hint": "ЖЕ+НО+ЖИ — Ж в трёх словах.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Zh/zh-sen-36.m4a"
+        },
+        {
+          "id": "zh-sen-37",
+          "word": "Ежата нашли ежевику между дорожками сада.",
+          "hint": "ЖА+ЖЕ+ЖИ+ДО+РО — насыщенный Ж-нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Zh/zh-sen-37.m4a"
         }
       ]
     },

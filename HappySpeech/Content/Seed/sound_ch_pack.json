@@ -1008,6 +1008,76 @@
           "hint": "ЧЁ + РН — Ч с мягким контекстом.",
           "difficulty": 4,
           "audio_file": "Audio/Content/Ch/ch-wi-69.m4a"
+        },
+        {
+          "id": "ch-wi-70",
+          "word": "чемпион",
+          "hint": "ЧЕМ+ПИ+ОН — победитель.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Ch/ch-wi-70.m4a"
+        },
+        {
+          "id": "ch-wi-71",
+          "word": "чернила",
+          "hint": "ЧЕР+НИ+ЛА — для ручки.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Ch/ch-wi-71.m4a"
+        },
+        {
+          "id": "ch-wi-72",
+          "word": "чудовище",
+          "hint": "ЧУ+ДО+ВИ+ЩЕ — сказочный герой.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Ch/ch-wi-72.m4a"
+        },
+        {
+          "id": "ch-wi-73",
+          "word": "чиновник",
+          "hint": "ЧИ+НОВ+НИК — служащий.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Ch/ch-wi-73.m4a"
+        },
+        {
+          "id": "ch-wi-74",
+          "word": "численность",
+          "hint": "ЧИС+ЛЕН+НОСТЬ — количество.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-wi-74.m4a"
+        },
+        {
+          "id": "ch-wi-75",
+          "word": "чистота",
+          "hint": "ЧИС+ТО+ТА — порядок.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-wi-75.m4a"
+        },
+        {
+          "id": "ch-wi-76",
+          "word": "чувствительный",
+          "hint": "ЧУВ+СТВИ+ТЕЛЬ+НЫЙ — очень длинное прилагательное с Ч.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-wi-76.m4a"
+        },
+        {
+          "id": "ch-wi-77",
+          "word": "чернослив",
+          "hint": "ЧЕР+НО+СЛИВ — сухофрукт.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Ch/ch-wi-77.m4a"
+        },
+        {
+          "id": "ch-wi-78",
+          "word": "четверть",
+          "hint": "ЧЕТ+ВЕРТЬ — часть целого.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Ch/ch-wi-78.m4a"
+        },
+        {
+          "id": "ch-wi-79",
+          "word": "чечевица",
+          "hint": "ЧЕ+ЧЕ+ВИ+ЦА — бобовое растение, Ч дважды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Ch/ch-wi-79.m4a"
         }
       ]
     },
@@ -2232,6 +2302,41 @@
           "hint": "ЧЬ + ЧК — Ч в суффиксах.",
           "difficulty": 5,
           "audio_file": "Audio/Content/Ch/ch-ph-69.m4a"
+        },
+        {
+          "id": "ch-ph-70",
+          "word": "чёрная черника в лукошке",
+          "hint": "ЧЁ+ЧЕ+ЛУ — Ч дважды в фразе.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Ch/ch-ph-70.m4a"
+        },
+        {
+          "id": "ch-ph-71",
+          "word": "чистые ручьи в лесу",
+          "hint": "ЧИС+РУ+ЧЬИ — Ч дважды.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Ch/ch-ph-71.m4a"
+        },
+        {
+          "id": "ch-ph-72",
+          "word": "ночной луч освещал тропинку",
+          "hint": "НО+ЧНО+ЛУЧ — Ч в двух словах.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Ch/ch-ph-72.m4a"
+        },
+        {
+          "id": "ch-ph-73",
+          "word": "чайник кипит на плите",
+          "hint": "ЧА+КИ — Ч в начале фразы.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-ph-73.m4a"
+        },
+        {
+          "id": "ch-ph-74",
+          "word": "чудесный вечер у речки",
+          "hint": "ЧУ+ВЕ+ЧЕ+РЕ+ЧКИ — Ч трижды.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-ph-74.m4a"
         }
       ]
     },
@@ -2548,6 +2653,41 @@
           "hint": "ЧЕМ + ЧО + ЗНА + ЧОК — три Ч.",
           "difficulty": 5,
           "audio_file": "Audio/Content/Ch/ch-sen-49.m4a"
+        },
+        {
+          "id": "ch-sen-50",
+          "word": "Чистый ручей журчит среди камней.",
+          "hint": "ЧИС+РУЧ+ЧУ — три Ч-слова.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Ch/ch-sen-50.m4a"
+        },
+        {
+          "id": "ch-sen-51",
+          "word": "Ночью птенчики спрятались под крылом мамы.",
+          "hint": "НО+ЧЬЮ+ПТЕ+ЧИ — Ч в двух словах.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-sen-51.m4a"
+        },
+        {
+          "id": "ch-sen-52",
+          "word": "Врач лечил чижика в маленькой клетке.",
+          "hint": "ВРА+ЛЕ+ЧИ — Ч трижды.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-sen-52.m4a"
+        },
+        {
+          "id": "ch-sen-53",
+          "word": "Чемпион получил четыре золотых медали.",
+          "hint": "ЧЕМ+ЧЕ+ТЫ — Ч дважды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Ch/ch-sen-53.m4a"
+        },
+        {
+          "id": "ch-sen-54",
+          "word": "Мачеха пряла нитки у тёплой печки.",
+          "hint": "МА+ЧЕ+ПЕ+ЧКИ — Ч трижды.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Ch/ch-sen-54.m4a"
         }
       ]
     },

@@ -1312,6 +1312,181 @@
           "hint": "Любая сказка или история — начало, середина, конец!",
           "difficulty": 5,
           "audio_file": "Audio/Content/Narrative/narr-ms-23.m4a"
+        },
+        {
+          "id": "narr-ms-25",
+          "word": "Маленький зайчик нашёл морковку в огороде.",
+          "hint": "Кто? Зайчик. Что нашёл? Морковку. Где? В огороде.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Nar/narr-ms-25.m4a"
+        },
+        {
+          "id": "narr-ms-26",
+          "word": "Красивая бабочка летела над цветущим лугом.",
+          "hint": "Кто? Бабочка. Как? Красивая. Над чем? Над лугом.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Nar/narr-ms-26.m4a"
+        },
+        {
+          "id": "narr-ms-27",
+          "word": "Пушистый котик спал на мягком диване.",
+          "hint": "Кто? Котик. Где спал? На диване.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Nar/narr-ms-27.m4a"
+        },
+        {
+          "id": "narr-ms-28",
+          "word": "Смелый рыцарь защищал замок от врагов.",
+          "hint": "Кто? Рыцарь. Что делал? Защищал замок.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-ms-28.m4a"
+        },
+        {
+          "id": "narr-ms-29",
+          "word": "Весёлые дети строили снеговика во дворе.",
+          "hint": "Кто? Дети. Что строили? Снеговика. Где? Во дворе.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Nar/narr-ms-29.m4a"
+        },
+        {
+          "id": "narr-ms-30",
+          "word": "Огромный кит плыл по глубокому океану.",
+          "hint": "Кто? Кит. Как плыл? По глубокому океану.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-ms-30.m4a"
+        },
+        {
+          "id": "narr-ms-31",
+          "word": "Добрая фея подарила принцессе волшебный цветок.",
+          "hint": "Кто? Фея. Кому? Принцессе. Что подарила? Цветок.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-ms-31.m4a"
+        },
+        {
+          "id": "narr-ms-32",
+          "word": "Старый дуб стоял у края тёмного леса.",
+          "hint": "Что? Дуб. Где? У края леса.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Nar/narr-ms-32.m4a"
+        },
+        {
+          "id": "narr-ms-33",
+          "word": "Юркий воробей клевал хлебные крошки на асфальте.",
+          "hint": "Кто? Воробей. Что клевал? Крошки. Где? На асфальте.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-ms-33.m4a"
+        },
+        {
+          "id": "narr-ms-34",
+          "word": "Мама испекла вкусный пирог с яблоками.",
+          "hint": "Кто? Мама. Что испекла? Пирог. С чем? С яблоками.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Nar/narr-ms-34.m4a"
+        },
+        {
+          "id": "narr-ms-35",
+          "word": "Ежонок фырчал и копошился в осенних листьях.",
+          "hint": "Кто? Ежонок. Что делал? Фырчал и копошился.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-ms-35.m4a"
+        },
+        {
+          "id": "narr-ms-36",
+          "word": "Белка прыгала с ветки на ветку быстро.",
+          "hint": "Кто? Белка. Что делала? Прыгала. Как? Быстро.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Nar/narr-ms-36.m4a"
+        },
+        {
+          "id": "narr-ms-37",
+          "word": "Яркое солнце освещало зелёные поля и луга.",
+          "hint": "Что? Солнце. Что делало? Освещало. Что именно?",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-ms-37.m4a"
+        },
+        {
+          "id": "narr-ms-38",
+          "word": "Рыжая лиса осторожно шла по снегу.",
+          "hint": "Кто? Лиса. Как шла? Осторожно. По чему? По снегу.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Nar/narr-ms-38.m4a"
+        },
+        {
+          "id": "narr-ms-39",
+          "word": "Маленький утёнок упал в тёплую лужу.",
+          "hint": "Кто? Утёнок. Что произошло? Упал. Куда? В лужу.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Nar/narr-ms-39.m4a"
+        },
+        {
+          "id": "narr-ms-40",
+          "word": "Дровосек рубил ёлку у речки в лесу.",
+          "hint": "Кто? Дровосек. Что рубил? Ёлку. Где? У речки.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-ms-40.m4a"
+        },
+        {
+          "id": "narr-ms-41",
+          "word": "Медведь проснулся и вышел из тёмной берлоги.",
+          "hint": "Кто? Медведь. Что сделал? Проснулся и вышел.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-ms-41.m4a"
+        },
+        {
+          "id": "narr-ms-42",
+          "word": "Розовый фламинго стоял на одной ноге у воды.",
+          "hint": "Кто? Фламинго. Как стоял? На одной ноге.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-ms-42.m4a"
+        },
+        {
+          "id": "narr-ms-43",
+          "word": "Папа и Костя ловили рыбу на озере.",
+          "hint": "Кто? Папа и Костя. Что делали? Ловили рыбу.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Nar/narr-ms-43.m4a"
+        },
+        {
+          "id": "narr-ms-44",
+          "word": "Голодный волк бродил по зимнему лесу.",
+          "hint": "Кто? Волк. Как? Голодный. Где? По лесу.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Nar/narr-ms-44.m4a"
+        },
+        {
+          "id": "narr-ms-45",
+          "word": "Ласточки вернулись домой после долгой зимы.",
+          "hint": "Кто? Ласточки. Что сделали? Вернулись. После чего?",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-ms-45.m4a"
+        },
+        {
+          "id": "narr-ms-46",
+          "word": "Бабушка вязала тёплые носки внуку у камина.",
+          "hint": "Кто? Бабушка. Что вязала? Носки. Где? У камина.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-ms-46.m4a"
+        },
+        {
+          "id": "narr-ms-47",
+          "word": "Молодой журавль учился летать над полями.",
+          "hint": "Кто? Журавль. Что делал? Учился летать.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-ms-47.m4a"
+        },
+        {
+          "id": "narr-ms-48",
+          "word": "Сорока принесла блестящую пуговицу в гнездо.",
+          "hint": "Кто? Сорока. Что принесла? Пуговицу. Куда? В гнездо.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-ms-48.m4a"
+        },
+        {
+          "id": "narr-ms-49",
+          "word": "Весной снег тает и появляются первые цветы.",
+          "hint": "Когда? Весной. Что происходит? Снег тает. Что появляется?",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-ms-49.m4a"
         }
       ]
     },
@@ -1486,6 +1661,181 @@
           "hint": "«Большое спасибо!» / «Очень тебе благодарен!» / «Ты мне очень помог!»",
           "difficulty": 2,
           "audio_file": "Audio/Content/Narrative/narr-dl-23.m4a"
+        },
+        {
+          "id": "narr-dl-25",
+          "word": "— Ты видел радугу? — Да, она была огромная!",
+          "hint": "Диалог про радугу. Два голоса.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Nar/narr-dl-25.m4a"
+        },
+        {
+          "id": "narr-dl-26",
+          "word": "— Куда мы идём? — В лес за грибами!",
+          "hint": "Диалог про поход в лес.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Nar/narr-dl-26.m4a"
+        },
+        {
+          "id": "narr-dl-27",
+          "word": "— Что ты делаешь? — Рисую кошку!",
+          "hint": "Диалог про рисование.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Nar/narr-dl-27.m4a"
+        },
+        {
+          "id": "narr-dl-28",
+          "word": "— Почему ты грустишь? — Потерял любимую игрушку.",
+          "hint": "Диалог про грусть.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Nar/narr-dl-28.m4a"
+        },
+        {
+          "id": "narr-dl-29",
+          "word": "— Хочешь яблоко? — Да, спасибо, очень вкусное!",
+          "hint": "Диалог угощения.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Nar/narr-dl-29.m4a"
+        },
+        {
+          "id": "narr-dl-30",
+          "word": "— Кто твой любимый герой? — Конечно, Буратино!",
+          "hint": "Диалог про любимый персонаж.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Nar/narr-dl-30.m4a"
+        },
+        {
+          "id": "narr-dl-31",
+          "word": "— Когда придёт зима? — Скоро, уже холодно.",
+          "hint": "Диалог про времена года.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Nar/narr-dl-31.m4a"
+        },
+        {
+          "id": "narr-dl-32",
+          "word": "— Ты умеешь плавать? — Да, научил папа летом.",
+          "hint": "Диалог про умение плавать.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Nar/narr-dl-32.m4a"
+        },
+        {
+          "id": "narr-dl-33",
+          "word": "— Что любишь есть? — Суп с фрикадельками!",
+          "hint": "Диалог про любимую еду.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Nar/narr-dl-33.m4a"
+        },
+        {
+          "id": "narr-dl-34",
+          "word": "— Где живёт слон? — В Африке, в жаркой стране.",
+          "hint": "Диалог про животных и места обитания.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-dl-34.m4a"
+        },
+        {
+          "id": "narr-dl-35",
+          "word": "— Расскажи про лета. — Мы ездили на море всей семьёй!",
+          "hint": "Монолог-рассказ про лето.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-dl-35.m4a"
+        },
+        {
+          "id": "narr-dl-36",
+          "word": "— Что происходит осенью? — Листья падают и птицы улетают.",
+          "hint": "Диалог про осень.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-dl-36.m4a"
+        },
+        {
+          "id": "narr-dl-37",
+          "word": "— Как называется детёныш кошки? — Котёнок!",
+          "hint": "Диалог-загадка про животных.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Nar/narr-dl-37.m4a"
+        },
+        {
+          "id": "narr-dl-38",
+          "word": "— Сколько ног у паука? — Целых восемь!",
+          "hint": "Диалог-загадка про насекомых.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Nar/narr-dl-38.m4a"
+        },
+        {
+          "id": "narr-dl-39",
+          "word": "— Чем пахнет лес? — Смолой и грибами и свежестью.",
+          "hint": "Диалог про ощущения.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-dl-39.m4a"
+        },
+        {
+          "id": "narr-dl-40",
+          "word": "— Что такое радуга? — Это свет после дождя.",
+          "hint": "Объяснение природного явления.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-dl-40.m4a"
+        },
+        {
+          "id": "narr-dl-41",
+          "word": "— Зачем учиться читать? — Чтобы читать книги самому!",
+          "hint": "Диалог про учёбу.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-dl-41.m4a"
+        },
+        {
+          "id": "narr-dl-42",
+          "word": "— Что ты скажешь маме? — Мамочка, я тебя люблю!",
+          "hint": "Речь про любовь к близким.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Nar/narr-dl-42.m4a"
+        },
+        {
+          "id": "narr-dl-43",
+          "word": "— Как ты провёл выходной? — Мы ходили в зоопарк с папой.",
+          "hint": "Монолог про выходной день.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-dl-43.m4a"
+        },
+        {
+          "id": "narr-dl-44",
+          "word": "— Опиши своего друга. — Он добрый, весёлый и любит футбол.",
+          "hint": "Монолог-описание человека.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-dl-44.m4a"
+        },
+        {
+          "id": "narr-dl-45",
+          "word": "— Расскажи сказку. — Жили-были дед и баба...",
+          "hint": "Начало традиционной сказки.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Nar/narr-dl-45.m4a"
+        },
+        {
+          "id": "narr-dl-46",
+          "word": "— Что было дальше? — Колобок встретил лисицу!",
+          "hint": "Продолжение сказки.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Nar/narr-dl-46.m4a"
+        },
+        {
+          "id": "narr-dl-47",
+          "word": "— Почему тигр полосатый? — Чтобы прятаться в траве!",
+          "hint": "Объяснение через диалог.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-dl-47.m4a"
+        },
+        {
+          "id": "narr-dl-48",
+          "word": "— Чего ты боишься? — Темноты, но мама всегда рядом.",
+          "hint": "Диалог про страхи и поддержку.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-dl-48.m4a"
+        },
+        {
+          "id": "narr-dl-49",
+          "word": "— Что ты мечтаешь? — Стать пожарным и спасать людей.",
+          "hint": "Монолог про мечту.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Nar/narr-dl-49.m4a"
         }
       ]
     }
