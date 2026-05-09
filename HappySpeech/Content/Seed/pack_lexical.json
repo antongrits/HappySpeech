@@ -4877,6 +4877,251 @@
           "hint": "КОТ — переставили — ТОК! Кот мурлычет, ток бежит по проводам.",
           "difficulty": 4,
           "audio_file": "Audio/Content/Lexical/lex-ss-24.m4a"
+        },
+        {
+          "id": "lex-ss-26",
+          "word": "КОТ — замени К на Р — получится РОТ",
+          "hint": "К→Р: КОТ→РОТ. Один звук меняет слово!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-ss-26.m4a"
+        },
+        {
+          "id": "lex-ss-27",
+          "word": "МАК — замени М на Р — получится РАК",
+          "hint": "М→Р: МАК→РАК.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lex/lex-ss-27.m4a"
+        },
+        {
+          "id": "lex-ss-28",
+          "word": "ДОМ — замени Д на С — получится СОМ",
+          "hint": "Д→С: ДОМ→СОМ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lex/lex-ss-28.m4a"
+        },
+        {
+          "id": "lex-ss-29",
+          "word": "ЛУК — замени Л на Ж — получится ЖУК",
+          "hint": "Л→Ж: ЛУК→ЖУК.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lex/lex-ss-29.m4a"
+        },
+        {
+          "id": "lex-ss-30",
+          "word": "ТОК — замени Т на Б — получится БОК",
+          "hint": "Т→Б: ТОК→БОК.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lex/lex-ss-30.m4a"
+        },
+        {
+          "id": "lex-ss-31",
+          "word": "ШАР — замени Ш на П — получится ПАР",
+          "hint": "Ш→П: ШАР→ПАР.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lex/lex-ss-31.m4a"
+        },
+        {
+          "id": "lex-ss-32",
+          "word": "ЗОВ — замени З на ЛЬ — получится ЛОВ",
+          "hint": "З→Л: ЗОВ→ЛОВ.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-ss-32.m4a"
+        },
+        {
+          "id": "lex-ss-33",
+          "word": "СОН — замени С на ТОН — получится ТОН",
+          "hint": "СОН→ТОН: меняем первый звук.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-ss-33.m4a"
+        },
+        {
+          "id": "lex-ss-34",
+          "word": "ЧАЙ — замени Ч на КР — получится КРАЙ",
+          "hint": "Ч→КР: ЧАЙ→КРАЙ.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lex/lex-ss-34.m4a"
+        },
+        {
+          "id": "lex-ss-35",
+          "word": "ВОЛ — замени В на К — получится КОЛ",
+          "hint": "В→К: ВОЛ→КОЛ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lex/lex-ss-35.m4a"
+        },
+        {
+          "id": "lex-ss-36",
+          "word": "ГОЛ — замени Г на С — получится СОЛ (соль)",
+          "hint": "Г→С: ГОЛ→СОЛЬ.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-ss-36.m4a"
+        },
+        {
+          "id": "lex-ss-37",
+          "word": "ПОЛ — замени П на Д — получится ДОЛ",
+          "hint": "П→Д: ПОЛ→ДОЛ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lex/lex-ss-37.m4a"
+        },
+        {
+          "id": "lex-ss-38",
+          "word": "НОС — замени Н на К — получится КОС",
+          "hint": "Н→К: НОС→КОС.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lex/lex-ss-38.m4a"
+        },
+        {
+          "id": "lex-ss-39",
+          "word": "БОР — замени Б на Г — получится ГОР",
+          "hint": "Б→Г: БОР→ГОР(а).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lex/lex-ss-39.m4a"
+        },
+        {
+          "id": "lex-ss-40",
+          "word": "ТИГ(Р) — замени Т на РИ — получится РЫГР?",
+          "hint": "Это сложный случай! Тигр остаётся тигром.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Lex/lex-ss-40.m4a"
+        },
+        {
+          "id": "lex-ss-41",
+          "word": "СОЛ(Ь) — замени С на РОЛ — получится РОЛЬ",
+          "hint": "С→Р: СОЛЬ→РОЛЬ.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lex/lex-ss-41.m4a"
+        },
+        {
+          "id": "lex-ss-42",
+          "word": "КИТ — замени К на Б — получится БИТ",
+          "hint": "К→Б: КИТ→БИТ.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-ss-42.m4a"
+        },
+        {
+          "id": "lex-ss-43",
+          "word": "РОТ — замени Р на ЛЬ — получится ЛОТ",
+          "hint": "Р→Л: РОТ→ЛОТ.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-ss-43.m4a"
+        },
+        {
+          "id": "lex-ss-44",
+          "word": "ЗУБ — замени З на Д — получится ДУБ",
+          "hint": "З→Д: ЗУБ→ДУБ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lex/lex-ss-44.m4a"
+        },
+        {
+          "id": "lex-ss-45",
+          "word": "ЖАРА — замени Ж на ПА — получится ПАРА",
+          "hint": "Ж→П: ЖАРА→ПАРА.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-ss-45.m4a"
+        },
+        {
+          "id": "lex-ss-46",
+          "word": "ДАЧА — замени Д на КА — получится КАША",
+          "hint": "Д→К: ДАЧА→КАША (меняем два звука).",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lex/lex-ss-46.m4a"
+        },
+        {
+          "id": "lex-ss-47",
+          "word": "МАМА — замени оба М на П — ПАПА",
+          "hint": "М→П: МАМА→ПАПА. Забавно!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-ss-47.m4a"
+        },
+        {
+          "id": "lex-ss-48",
+          "word": "ЛИСА — замени Л на КИ — получится КИСА",
+          "hint": "Л→К: ЛИСА→КИСА.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-ss-48.m4a"
+        },
+        {
+          "id": "lex-ss-49",
+          "word": "РОЗА — замени Р на КО — получится КОЗА",
+          "hint": "Р→К: РОЗА→КОЗА.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-ss-49.m4a"
+        },
+        {
+          "id": "lex-ss-50",
+          "word": "РЫБА — замени Р на ГУ — получится ГУБА",
+          "hint": "Р→Г: РЫБА→ГУБА.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lex/lex-ss-50.m4a"
+        },
+        {
+          "id": "lex-ss-51",
+          "word": "ГОРА — замени Г на НО — получится НОРА",
+          "hint": "Г→Н: ГОРА→НОРА.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-ss-51.m4a"
+        },
+        {
+          "id": "lex-ss-52",
+          "word": "КАША — замени КА на ВА — получится ВАША",
+          "hint": "КА→ВА: КАША→ВАША.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-ss-52.m4a"
+        },
+        {
+          "id": "lex-ss-53",
+          "word": "ТУЧИ — замени Т на КЛЮ — получится КЛЮЧИ",
+          "hint": "Т→КЛЮ: ТУЧИ→КЛЮЧИ (два звука меняются).",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Lex/lex-ss-53.m4a"
+        },
+        {
+          "id": "lex-ss-54",
+          "word": "ВРАЧ — замени ВР на КЛЮ — нет! ВРАЧ остаётся ВРАЧОМ",
+          "hint": "Не каждое слово можно заменить. ВРАЧ уникальный!",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Lex/lex-ss-54.m4a"
+        },
+        {
+          "id": "lex-ss-55",
+          "word": "СЛОН — замени СЛ на ТОН — получится ТОН",
+          "hint": "СЛ→Т: СЛОН→ТОН.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lex/lex-ss-55.m4a"
+        },
+        {
+          "id": "lex-ss-56",
+          "word": "ЛЕС — замени Е на О — получится ЛОС (лось)",
+          "hint": "Е→О: ЛЕС→ЛОС. Звук меняет слово!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-ss-56.m4a"
+        },
+        {
+          "id": "lex-ss-57",
+          "word": "ШАР — замени А на О — получится ШОР",
+          "hint": "А→О: ШАР→ШОР. Слова меняются!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-ss-57.m4a"
+        },
+        {
+          "id": "lex-ss-58",
+          "word": "ГРА (Ч) — замени ГР на КЛЮ — получится КЛЮЧ",
+          "hint": "ГРАЧ→КЛЮЧ — сложная замена двух слогов.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Lex/lex-ss-58.m4a"
+        },
+        {
+          "id": "lex-ss-59",
+          "word": "МЯЧ — замени М на КАЛ — получится КАЛАЧ",
+          "hint": "М→КАЛ: МЯЧ→КАЛАЧ.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Lex/lex-ss-59.m4a"
+        },
+        {
+          "id": "lex-ss-60",
+          "word": "РАК — замени А на О — получится РОК",
+          "hint": "А→О: РАК→РОК. Разные слова!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-ss-60.m4a"
         }
       ]
     },
@@ -5233,6 +5478,251 @@
           "hint": "Ты расслаблен, ничего не тревожит.",
           "difficulty": 3,
           "audio_file": "Audio/Content/Lexical/lex-em-49.m4a"
+        },
+        {
+          "id": "lex-em-51",
+          "word": "тихая радость",
+          "hint": "ТЬ мягкое: ТИхая.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lex/lex-em-51.m4a"
+        },
+        {
+          "id": "lex-em-52",
+          "word": "дивное удивление",
+          "hint": "ДЬ мягкое: ДИвное.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-em-52.m4a"
+        },
+        {
+          "id": "lex-em-53",
+          "word": "симпатия",
+          "hint": "СЬ мягкое: СИмпатия.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-em-53.m4a"
+        },
+        {
+          "id": "lex-em-54",
+          "word": "тревога",
+          "hint": "ТЬ мягкое: ТРЕвога.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-em-54.m4a"
+        },
+        {
+          "id": "lex-em-55",
+          "word": "досада",
+          "hint": "ДЬ мягкое начало слова.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-em-55.m4a"
+        },
+        {
+          "id": "lex-em-56",
+          "word": "сила духа",
+          "hint": "СЬ мягкое: СИла.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-em-56.m4a"
+        },
+        {
+          "id": "lex-em-57",
+          "word": "тепло в сердце",
+          "hint": "ТЬ мягкое: ТЕпло.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lex/lex-em-57.m4a"
+        },
+        {
+          "id": "lex-em-58",
+          "word": "дерзость",
+          "hint": "ДЬ мягкое: ДЕрзость.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lex/lex-em-58.m4a"
+        },
+        {
+          "id": "lex-em-59",
+          "word": "сильная воля",
+          "hint": "СЬ мягкое: СИльная.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-em-59.m4a"
+        },
+        {
+          "id": "lex-em-60",
+          "word": "тихое спокойствие",
+          "hint": "ТЬ мягкое: ТИхое.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-em-60.m4a"
+        },
+        {
+          "id": "lex-em-61",
+          "word": "добрая тяга к знаниям",
+          "hint": "ДЬ+ТЬ: ДОбрая, ТЯга.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lex/lex-em-61.m4a"
+        },
+        {
+          "id": "lex-em-62",
+          "word": "серьёзность",
+          "hint": "СЬ мягкое: СЕрьёзность.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lex/lex-em-62.m4a"
+        },
+        {
+          "id": "lex-em-63",
+          "word": "терпение",
+          "hint": "ТЬ мягкое: ТЕрпение.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-em-63.m4a"
+        },
+        {
+          "id": "lex-em-64",
+          "word": "дисциплина",
+          "hint": "ДЬ мягкое: ДИсциплина.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Lex/lex-em-64.m4a"
+        },
+        {
+          "id": "lex-em-65",
+          "word": "синхрония чувств",
+          "hint": "СЬ мягкое: СИнхрония.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Lex/lex-em-65.m4a"
+        },
+        {
+          "id": "lex-em-66",
+          "word": "тягостная тишина",
+          "hint": "ТЬ мягкое: ТЯгостная, ТИшина.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Lex/lex-em-66.m4a"
+        },
+        {
+          "id": "lex-em-67",
+          "word": "диссонанс",
+          "hint": "ДЬ мягкое: ДИссонанс.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Lex/lex-em-67.m4a"
+        },
+        {
+          "id": "lex-em-68",
+          "word": "сердечность",
+          "hint": "СЬ мягкое: СЕрдечность.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lex/lex-em-68.m4a"
+        },
+        {
+          "id": "lex-em-69",
+          "word": "тоска по дому",
+          "hint": "ТЬ мягкое: ТОска.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-em-69.m4a"
+        },
+        {
+          "id": "lex-em-70",
+          "word": "дерзкая смелость",
+          "hint": "ДЬ мягкое: ДЕрзкая.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lex/lex-em-70.m4a"
+        },
+        {
+          "id": "lex-em-71",
+          "word": "силуэт страха",
+          "hint": "СЬ мягкое: СИлуэт.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Lex/lex-em-71.m4a"
+        },
+        {
+          "id": "lex-em-72",
+          "word": "тихая нежность",
+          "hint": "ТЬ мягкое: ТИхая.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-em-72.m4a"
+        },
+        {
+          "id": "lex-em-73",
+          "word": "диво дивное",
+          "hint": "ДЬ мягкое: ДИво, ДИвное.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-em-73.m4a"
+        },
+        {
+          "id": "lex-em-74",
+          "word": "сиротливость",
+          "hint": "СЬ мягкое: СИротливость.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Lex/lex-em-74.m4a"
+        },
+        {
+          "id": "lex-em-75",
+          "word": "теплота объятий",
+          "hint": "ТЬ мягкое: ТЕплота.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lex/lex-em-75.m4a"
+        },
+        {
+          "id": "lex-em-76",
+          "word": "доброта",
+          "hint": "ДЬ мягкое: ДОброта.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lex/lex-em-76.m4a"
+        },
+        {
+          "id": "lex-em-77",
+          "word": "снисходительность",
+          "hint": "СЬ мягкое: СНИсходительность.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Lex/lex-em-77.m4a"
+        },
+        {
+          "id": "lex-em-78",
+          "word": "тихая грусть",
+          "hint": "ТЬ мягкое: ТИхая.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-em-78.m4a"
+        },
+        {
+          "id": "lex-em-79",
+          "word": "добросовестность",
+          "hint": "ДЬ мягкое: ДОбросовестность.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Lex/lex-em-79.m4a"
+        },
+        {
+          "id": "lex-em-80",
+          "word": "сентиментальность",
+          "hint": "СЬ мягкое: СЕнтиментальность.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Lex/lex-em-80.m4a"
+        },
+        {
+          "id": "lex-em-81",
+          "word": "тихий восторг",
+          "hint": "ТЬ мягкое: ТИхий.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-em-81.m4a"
+        },
+        {
+          "id": "lex-em-82",
+          "word": "дивный покой",
+          "hint": "ДЬ мягкое: ДИвный.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-em-82.m4a"
+        },
+        {
+          "id": "lex-em-83",
+          "word": "сердитость",
+          "hint": "СЬ мягкое: СЕрдитость.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lex/lex-em-83.m4a"
+        },
+        {
+          "id": "lex-em-84",
+          "word": "тихоня",
+          "hint": "ТЬ мягкое: ТИхоня.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lex/lex-em-84.m4a"
+        },
+        {
+          "id": "lex-em-85",
+          "word": "дивная мечта",
+          "hint": "ДЬ мягкое: ДИвная.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Lex/lex-em-85.m4a"
         }
       ]
     },

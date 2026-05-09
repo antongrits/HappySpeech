@@ -1774,6 +1774,251 @@
           "hint": "Попробуй оба варианта. Правильно: те-ле-ФОН — последний слог! Слышишь?",
           "difficulty": 3,
           "audio_file": "Audio/Content/Grammar/gr-st-19.m4a"
+        },
+        {
+          "id": "gr-st-20",
+          "word": "Тима тихо говорит",
+          "hint": "ТЬ в начале имени. ТИма — мягкое Т.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Gr/gr-st-20.m4a"
+        },
+        {
+          "id": "gr-st-21",
+          "word": "Дима делает домашнее задание",
+          "hint": "ДЬ — мягкое Д: ДИма, ДЕлает.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Gr/gr-st-21.m4a"
+        },
+        {
+          "id": "gr-st-22",
+          "word": "Сеня читает интересную книжку",
+          "hint": "СЬ — мягкое С в имени СЕня.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Gr/gr-st-22.m4a"
+        },
+        {
+          "id": "gr-st-23",
+          "word": "Тихий вечер наступает быстро",
+          "hint": "ТЬ мягкое: ТИхий, быстро.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Gr/gr-st-23.m4a"
+        },
+        {
+          "id": "gr-st-24",
+          "word": "Дети идут в детский сад",
+          "hint": "ДЬ мягкое: ДЕти, ДЕтский.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Gr/gr-st-24.m4a"
+        },
+        {
+          "id": "gr-st-25",
+          "word": "Синяя лента красиво блестит",
+          "hint": "СЬ мягкое: СИняя, блеСТит.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Gr/gr-st-25.m4a"
+        },
+        {
+          "id": "gr-st-26",
+          "word": "Тетя угостила конфетой",
+          "hint": "ТЬ мягкое: ТЕтя, конфЕТой.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Gr/gr-st-26.m4a"
+        },
+        {
+          "id": "gr-st-27",
+          "word": "Диван стоит у стены",
+          "hint": "ДЬ мягкое: ДИван.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Gr/gr-st-27.m4a"
+        },
+        {
+          "id": "gr-st-28",
+          "word": "Семья пошла в кино",
+          "hint": "СЬ мягкое: СЕмья.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Gr/gr-st-28.m4a"
+        },
+        {
+          "id": "gr-st-29",
+          "word": "Тигрёнок тихо прыгнул вперёд",
+          "hint": "ТЬ мягкое: ТИгрёнок, ТИхо.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Gr/gr-st-29.m4a"
+        },
+        {
+          "id": "gr-st-30",
+          "word": "Дядя играл на дудочке",
+          "hint": "ДЬ мягкое: ДЯдя, дуДОчке.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Gr/gr-st-30.m4a"
+        },
+        {
+          "id": "gr-st-31",
+          "word": "Серёжа поёт смешную песенку",
+          "hint": "СЬ мягкое: СЕрёжа, смЕшную.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Gr/gr-st-31.m4a"
+        },
+        {
+          "id": "gr-st-32",
+          "word": "Тётя Таня тихонько напевала",
+          "hint": "ТЬ мягкое: ТЕтя, ТИхонько.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Gr/gr-st-32.m4a"
+        },
+        {
+          "id": "gr-st-33",
+          "word": "Дети смотрели диафильм",
+          "hint": "ДЬ мягкое: ДЕти, ДИафильм.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Gr/gr-st-33.m4a"
+        },
+        {
+          "id": "gr-st-34",
+          "word": "Синица сидит на сосне",
+          "hint": "СЬ мягкое: СИница, СИдит.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Gr/gr-st-34.m4a"
+        },
+        {
+          "id": "gr-st-35",
+          "word": "Тихо, тихо — мышка спит",
+          "hint": "ТЬ мягкое: ТИхо, ТИхо.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Gr/gr-st-35.m4a"
+        },
+        {
+          "id": "gr-st-36",
+          "word": "Дивный сад расцвёл за ночь",
+          "hint": "ДЬ мягкое: ДИвный.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Gr/gr-st-36.m4a"
+        },
+        {
+          "id": "gr-st-37",
+          "word": "Сиреневый букет пахнет чудесно",
+          "hint": "СЬ мягкое: СИреневый.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Gr/gr-st-37.m4a"
+        },
+        {
+          "id": "gr-st-38",
+          "word": "Тигр привык тихо охотиться",
+          "hint": "ТЬ мягкое: ТИгр, ТИхо.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Gr/gr-st-38.m4a"
+        },
+        {
+          "id": "gr-st-39",
+          "word": "Дикий дикобраз живёт в лесу",
+          "hint": "ДЬ мягкое: ДИкий, ДИкобраз.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Gr/gr-st-39.m4a"
+        },
+        {
+          "id": "gr-st-40",
+          "word": "Синий свет фонаря освещал двор",
+          "hint": "СЬ мягкое: СИний, СВет.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Gr/gr-st-40.m4a"
+        },
+        {
+          "id": "gr-st-41",
+          "word": "Тявкнул щенок у тёплого крыльца",
+          "hint": "ТЬ мягкое: ТЯвкнул, ТЁплого.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Gr/gr-st-41.m4a"
+        },
+        {
+          "id": "gr-st-42",
+          "word": "Дёготь — это смола из берёзы",
+          "hint": "ДЬ мягкое: ДЁготь.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Gr/gr-st-42.m4a"
+        },
+        {
+          "id": "gr-st-43",
+          "word": "Сеть рыбака запуталась в камнях",
+          "hint": "СЬ мягкое: СЕть.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Gr/gr-st-43.m4a"
+        },
+        {
+          "id": "gr-st-44",
+          "word": "Тихая деревня стояла в долине",
+          "hint": "ТЬ мягкое: ТИхая.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Gr/gr-st-44.m4a"
+        },
+        {
+          "id": "gr-st-45",
+          "word": "Дюймовочка спала в цветочке",
+          "hint": "ДЬ мягкое: ДЮймовочка.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Gr/gr-st-45.m4a"
+        },
+        {
+          "id": "gr-st-46",
+          "word": "Симфония звучала на площади",
+          "hint": "СЬ мягкое: СИмфония.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Gr/gr-st-46.m4a"
+        },
+        {
+          "id": "gr-st-47",
+          "word": "Телёнок теребил верёвку",
+          "hint": "ТЬ мягкое: ТЕлёнок, ТЕребил.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Gr/gr-st-47.m4a"
+        },
+        {
+          "id": "gr-st-48",
+          "word": "Добрый дельфин плыл к берегу",
+          "hint": "ДЬ мягкое: ДОбрый, ДЕльфин.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Gr/gr-st-48.m4a"
+        },
+        {
+          "id": "gr-st-49",
+          "word": "Сильный ветер гнул деревья",
+          "hint": "СЬ мягкое: СИльный.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Gr/gr-st-49.m4a"
+        },
+        {
+          "id": "gr-st-50",
+          "word": "Тихий труженик — это муравей",
+          "hint": "ТЬ мягкое: ТИхий.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Gr/gr-st-50.m4a"
+        },
+        {
+          "id": "gr-st-51",
+          "word": "Димочка любит диковинки",
+          "hint": "ДЬ мягкое: ДИмочка, ДИковинки.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Gr/gr-st-51.m4a"
+        },
+        {
+          "id": "gr-st-52",
+          "word": "Синие чернила разлились по тетради",
+          "hint": "СЬ мягкое: СИние.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Gr/gr-st-52.m4a"
+        },
+        {
+          "id": "gr-st-53",
+          "word": "Тётя Дина дала детям дыню",
+          "hint": "ТЬ + ДЬ: ТЕтя, ДИна, ДЕтям, ДЫню.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Gr/gr-st-53.m4a"
+        },
+        {
+          "id": "gr-st-54",
+          "word": "Сердитый тигр тихо зарычал",
+          "hint": "ТЬ мягкое: ТИгр, ТИхо.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Gr/gr-st-54.m4a"
         }
       ]
     }

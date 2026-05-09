@@ -2674,6 +2674,216 @@
           "hint": "Три цикла: вдох — скажи слово — выдох. Мама, папа, молоко. Готов говорить!",
           "difficulty": 1,
           "audio_file": "Audio/Content/Breathing/br-v-050.m4a"
+        },
+        {
+          "id": "br-vw-51",
+          "word": "МММ — гудение моторчика",
+          "hint": "Гуди протяжно: мм-мм-мм.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Br/br-vw-51.m4a"
+        },
+        {
+          "id": "br-vw-52",
+          "word": "ВВВ — ветерок дует",
+          "hint": "Нижняя губа у верхних зубов, дуй.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Br/br-vw-52.m4a"
+        },
+        {
+          "id": "br-vw-53",
+          "word": "ЗЗЗ — комарик летит",
+          "hint": "Зубы вместе, голос включи: з-з-з.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Br/br-vw-53.m4a"
+        },
+        {
+          "id": "br-vw-54",
+          "word": "ЖЖЖ — жук жужжит",
+          "hint": "Широкий язык наверху: ж-ж-ж.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Br/br-vw-54.m4a"
+        },
+        {
+          "id": "br-vw-55",
+          "word": "РРР — тигр рычит",
+          "hint": "Язык вибрирует у нёба: р-р-р.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Br/br-vw-55.m4a"
+        },
+        {
+          "id": "br-vw-56",
+          "word": "ЛЛЛ — самолёт гудит",
+          "hint": "Язык у зубов: л-л-л.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Br/br-vw-56.m4a"
+        },
+        {
+          "id": "br-vw-57",
+          "word": "НН-НН — колыбельная",
+          "hint": "Носовой звук: н-н-нннн.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Br/br-vw-57.m4a"
+        },
+        {
+          "id": "br-vw-58",
+          "word": "АМ-АМ — большой рот",
+          "hint": "Открываем рот широко на А, закрываем на М.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Br/br-vw-58.m4a"
+        },
+        {
+          "id": "br-vw-59",
+          "word": "ОМ-ОМ — бурлит котёл",
+          "hint": "О круглый, М закрытый: ом-ом.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Br/br-vw-59.m4a"
+        },
+        {
+          "id": "br-vw-60",
+          "word": "УМ-УМ — думаем",
+          "hint": "У вытянутый, М носовой: ум-ум.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Br/br-vw-60.m4a"
+        },
+        {
+          "id": "br-vw-61",
+          "word": "ИМ-ИМ — игрушечный гудок",
+          "hint": "И узкий, М закрытый: им-им.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Br/br-vw-61.m4a"
+        },
+        {
+          "id": "br-vw-62",
+          "word": "ЭМ-ЭМ — нечёткий звук",
+          "hint": "Э открытый, М носовой: эм-эм.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Br/br-vw-62.m4a"
+        },
+        {
+          "id": "br-vw-63",
+          "word": "Пением гласной А на выдохе",
+          "hint": "Выдох — А тянется долго, не торопись.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Br/br-vw-63.m4a"
+        },
+        {
+          "id": "br-vw-64",
+          "word": "Пение О на длинном выдохе",
+          "hint": "О круглый, выдох плавный и долгий.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Br/br-vw-64.m4a"
+        },
+        {
+          "id": "br-vw-65",
+          "word": "Пение У на длинном выдохе",
+          "hint": "У вытянутый, голос ровный.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Br/br-vw-65.m4a"
+        },
+        {
+          "id": "br-vw-66",
+          "word": "Крещендо: тихо → громко",
+          "hint": "Начни тихо «а», становись громче постепенно.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Br/br-vw-66.m4a"
+        },
+        {
+          "id": "br-vw-67",
+          "word": "Диминуэндо: громко → тихо",
+          "hint": "Начни громко «а», становись тише.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Br/br-vw-67.m4a"
+        },
+        {
+          "id": "br-vw-68",
+          "word": "Пение МА-МО-МУ",
+          "hint": "Три слога подряд: МА-МО-МУ, голос ровный.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Br/br-vw-68.m4a"
+        },
+        {
+          "id": "br-vw-69",
+          "word": "Пение ЛА-ЛО-ЛУ-ЛИ",
+          "hint": "Четыре слога: ЛА-ЛО-ЛУ-ЛИ.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Br/br-vw-69.m4a"
+        },
+        {
+          "id": "br-vw-70",
+          "word": "Пение РА-РО-РУ-РИ",
+          "hint": "Р с гласными: РА-РО-РУ-РИ.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Br/br-vw-70.m4a"
+        },
+        {
+          "id": "br-vw-71",
+          "word": "Голос высокий — пищит мышка",
+          "hint": "Очень высокий голос, как писк мышки.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Br/br-vw-71.m4a"
+        },
+        {
+          "id": "br-vw-72",
+          "word": "Голос низкий — рычит медведь",
+          "hint": "Очень низкий голос, как медвежий рык.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Br/br-vw-72.m4a"
+        },
+        {
+          "id": "br-vw-73",
+          "word": "Смена регистра: мышка → медведь",
+          "hint": "Сначала высокий, потом низкий.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Br/br-vw-73.m4a"
+        },
+        {
+          "id": "br-vw-74",
+          "word": "Ритм на слоге ТА",
+          "hint": "Повторяй ТА-ТА-ТА ровно, как барабан.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Br/br-vw-74.m4a"
+        },
+        {
+          "id": "br-vw-75",
+          "word": "Ритм с акцентом: ТА-та-та-ТА-та-та",
+          "hint": "Первый слог громче, остальные тихо.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Br/br-vw-75.m4a"
+        },
+        {
+          "id": "br-vw-76",
+          "word": "Вдох через нос — выдох ТТТ",
+          "hint": "Вдох носом, выдох — кончик языка: тт-тт.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Br/br-vw-76.m4a"
+        },
+        {
+          "id": "br-vw-77",
+          "word": "Вдох — выдох ЧВВВ",
+          "hint": "Вдох, затем выдох-свист: чвв.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Br/br-vw-77.m4a"
+        },
+        {
+          "id": "br-vw-78",
+          "word": "Долгий выдох на ФФФ",
+          "hint": "Губы слегка сжаты, выдох сильный: ф-ф-ф.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Br/br-vw-78.m4a"
+        },
+        {
+          "id": "br-vw-79",
+          "word": "Долгий выдох на ССС",
+          "hint": "Язык у зубов, воздух сквозь щель: с-с-с.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Br/br-vw-79.m4a"
+        },
+        {
+          "id": "br-vw-80",
+          "word": "Долгий выдох на ШШШ",
+          "hint": "Широкий язык наверху: ш-ш-ш.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Br/br-vw-80.m4a"
         }
       ]
     }

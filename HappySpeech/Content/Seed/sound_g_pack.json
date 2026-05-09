@@ -611,6 +611,54 @@
           "word": "грядка",
           "difficulty": 3,
           "audio_file": "Audio/Content/G/g-wi-49.m4a"
+        },
+        {
+          "id": "g-wi-50",
+          "word": "гриб",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/G/g-wi-50.m4a"
+        },
+        {
+          "id": "g-wi-51",
+          "word": "гребень",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-51.m4a"
+        },
+        {
+          "id": "g-wi-52",
+          "word": "глобус",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-52.m4a"
+        },
+        {
+          "id": "g-wi-53",
+          "word": "галерея",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-wi-53.m4a"
+        },
+        {
+          "id": "g-wi-54",
+          "word": "гусеница",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wi-54.m4a"
+        },
+        {
+          "id": "g-wi-55",
+          "word": "горшочек",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/G/g-wi-55.m4a"
+        },
+        {
+          "id": "g-wi-56",
+          "word": "грибница",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wi-56.m4a"
+        },
+        {
+          "id": "g-wi-57",
+          "word": "гуляние",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-wi-57.m4a"
         }
       ]
     },
@@ -1225,6 +1273,34 @@
           "word": "гармония и гармонь",
           "difficulty": 3,
           "audio_file": "Audio/Content/G/g-ph-35.m4a"
+        },
+        {
+          "id": "g-ph-36",
+          "word": "голубые горы на горизонте",
+          "hint": "ГО+ГО+ГО — три Г-слова.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-ph-36.m4a"
+        },
+        {
+          "id": "g-ph-37",
+          "word": "гриб растёт в густом лесу",
+          "hint": "ГРИ+ГУС — Г дважды.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-ph-37.m4a"
+        },
+        {
+          "id": "g-ph-38",
+          "word": "гусёнок гуляет у гнезда",
+          "hint": "ГУ+ГУ+ГНЕ — Г трижды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-ph-38.m4a"
+        },
+        {
+          "id": "g-ph-39",
+          "word": "гречка готовится на огне",
+          "hint": "ГРЕ+ГО+ОГ — Г трижды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-ph-39.m4a"
         }
       ]
     },
@@ -1381,6 +1457,24 @@
           "word": "Голубь гулял по набережной.",
           "difficulty": 3,
           "audio_file": "Audio/Content/G/g-sen-24.m4a"
+        },
+        {
+          "id": "g-sen-25",
+          "word": "Галя гуляла в густом городском парке.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/G/g-sen-25.m4a"
+        },
+        {
+          "id": "g-sen-26",
+          "word": "Грибники нашли гриб у гнилого пня.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-sen-26.m4a"
+        },
+        {
+          "id": "g-sen-27",
+          "word": "Гусь гоготал громко у голубого пруда.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/G/g-sen-27.m4a"
         }
       ]
     },

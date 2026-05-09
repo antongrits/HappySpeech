@@ -766,6 +766,54 @@
           "word": "капуста",
           "difficulty": 3,
           "audio_file": "Audio/Content/K/k-wi-49.m4a"
+        },
+        {
+          "id": "k-wi-50",
+          "word": "кедровый",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/K/k-wi-50.m4a"
+        },
+        {
+          "id": "k-wi-51",
+          "word": "крокодил",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/K/k-wi-51.m4a"
+        },
+        {
+          "id": "k-wi-52",
+          "word": "конфета",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-52.m4a"
+        },
+        {
+          "id": "k-wi-53",
+          "word": "кастрюля",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/K/k-wi-53.m4a"
+        },
+        {
+          "id": "k-wi-54",
+          "word": "колокольня",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/K/k-wi-54.m4a"
+        },
+        {
+          "id": "k-wi-55",
+          "word": "картошка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-55.m4a"
+        },
+        {
+          "id": "k-wi-56",
+          "word": "кузнечик",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/K/k-wi-56.m4a"
+        },
+        {
+          "id": "k-wi-57",
+          "word": "кувшин",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-wi-57.m4a"
         }
       ]
     },
@@ -1343,6 +1391,30 @@
           "word": "клён у дома",
           "difficulty": 2,
           "audio_file": "Audio/Content/K/k-ph-30.m4a"
+        },
+        {
+          "id": "k-ph-31",
+          "word": "кошка кормит котят",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/K/k-ph-31.m4a"
+        },
+        {
+          "id": "k-ph-32",
+          "word": "крутая горка у парка",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/K/k-ph-32.m4a"
+        },
+        {
+          "id": "k-ph-33",
+          "word": "красивая картинка в книге",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/K/k-ph-33.m4a"
+        },
+        {
+          "id": "k-ph-34",
+          "word": "колокол звенит над крышей",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/K/k-ph-34.m4a"
         }
       ]
     },
@@ -1469,6 +1541,24 @@
           "word": "На качелях качается Кирилл.",
           "difficulty": 3,
           "audio_file": "Audio/Content/K/k-sen-19.m4a"
+        },
+        {
+          "id": "k-sen-20",
+          "word": "Котёнок катился по траве и кувыркался.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/K/k-sen-20.m4a"
+        },
+        {
+          "id": "k-sen-21",
+          "word": "Карина купила красивые цветы для мамы.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/K/k-sen-21.m4a"
+        },
+        {
+          "id": "k-sen-22",
+          "word": "Крот копал нору под клубничной грядкой.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/K/k-sen-22.m4a"
         }
       ]
     },

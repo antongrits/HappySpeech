@@ -663,6 +663,66 @@
           "word": "цокать",
           "difficulty": 2,
           "audio_file": "Audio/Content/C/c-wi-39.m4a"
+        },
+        {
+          "id": "c-wi-40",
+          "word": "цирюльник",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/C/c-wi-40.m4a"
+        },
+        {
+          "id": "c-wi-41",
+          "word": "цепочка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/C/c-wi-41.m4a"
+        },
+        {
+          "id": "c-wi-42",
+          "word": "целитель",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/C/c-wi-42.m4a"
+        },
+        {
+          "id": "c-wi-43",
+          "word": "центральный",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/C/c-wi-43.m4a"
+        },
+        {
+          "id": "c-wi-44",
+          "word": "цветочный",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/C/c-wi-44.m4a"
+        },
+        {
+          "id": "c-wi-45",
+          "word": "цистерна",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/C/c-wi-45.m4a"
+        },
+        {
+          "id": "c-wi-46",
+          "word": "целевой",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/C/c-wi-46.m4a"
+        },
+        {
+          "id": "c-wi-47",
+          "word": "цыганёнок",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/C/c-wi-47.m4a"
+        },
+        {
+          "id": "c-wi-48",
+          "word": "церемония",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/C/c-wi-48.m4a"
+        },
+        {
+          "id": "c-wi-49",
+          "word": "ценитель",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/C/c-wi-49.m4a"
         }
       ]
     },
@@ -1413,6 +1473,36 @@
           "word": "тигрица с тигрятами",
           "difficulty": 3,
           "audio_file": "Audio/Content/C/c-ph-51.m4a"
+        },
+        {
+          "id": "c-ph-52",
+          "word": "цветущий цирк на площади",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/C/c-ph-52.m4a"
+        },
+        {
+          "id": "c-ph-53",
+          "word": "цепочка овец на лугу",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/C/c-ph-53.m4a"
+        },
+        {
+          "id": "c-ph-54",
+          "word": "целый цилиндр из бумаги",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/C/c-ph-54.m4a"
+        },
+        {
+          "id": "c-ph-55",
+          "word": "цыплята у колодца",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/C/c-ph-55.m4a"
+        },
+        {
+          "id": "c-ph-56",
+          "word": "центральная площадь столицы",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/C/c-ph-56.m4a"
         }
       ]
     },
@@ -1659,6 +1749,36 @@
           "word": "Молодец — это похвала за хорошую работу.",
           "difficulty": 4,
           "audio_file": "Audio/Content/C/c-sen-39.m4a"
+        },
+        {
+          "id": "c-sen-40",
+          "word": "Цыплята бегали вокруг цветочной грядки.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/C/c-sen-40.m4a"
+        },
+        {
+          "id": "c-sen-41",
+          "word": "Цирк приехал на центральную площадь города.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/C/c-sen-41.m4a"
+        },
+        {
+          "id": "c-sen-42",
+          "word": "Овца цеплялась за цветы на обочине.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/C/c-sen-42.m4a"
+        },
+        {
+          "id": "c-sen-43",
+          "word": "Целых пять цапель стояли у пруда.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/C/c-sen-43.m4a"
+        },
+        {
+          "id": "c-sen-44",
+          "word": "Цветочница продавала пёстрые цикламены на рынке.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/C/c-sen-44.m4a"
         }
       ]
     },

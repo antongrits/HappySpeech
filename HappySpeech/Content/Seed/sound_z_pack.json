@@ -888,6 +888,76 @@
           "hint": "ЗО + ДЧ — З + шипящий финал.",
           "difficulty": 5,
           "audio_file": "Audio/Content/Z/z-wi-64.m4a"
+        },
+        {
+          "id": "z-wi-65",
+          "word": "захватить",
+          "hint": "ЗА+ХВА+ТИТЬ — З в начале длинного слова.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-wi-65.m4a"
+        },
+        {
+          "id": "z-wi-66",
+          "word": "зарница",
+          "hint": "ЗА+РНИ+ЦА — природное явление.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Z/z-wi-66.m4a"
+        },
+        {
+          "id": "z-wi-67",
+          "word": "земляника",
+          "hint": "ЗЕМ+ЛЯ+НИ+КА — четыре слога.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-wi-67.m4a"
+        },
+        {
+          "id": "z-wi-68",
+          "word": "зеркальный",
+          "hint": "ЗЕР+КАЛЬ+НЫЙ — прилагательное с З.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-wi-68.m4a"
+        },
+        {
+          "id": "z-wi-69",
+          "word": "золотистый",
+          "hint": "ЗО+ЛО+ТИС+ТЫЙ — длинное прилагательное.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-wi-69.m4a"
+        },
+        {
+          "id": "z-wi-70",
+          "word": "знакомый",
+          "hint": "ЗНА — стечение ЗН в начале.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Z/z-wi-70.m4a"
+        },
+        {
+          "id": "z-wi-71",
+          "word": "заморозки",
+          "hint": "ЗА+МО+РОЗ+КИ — З дважды в слове.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-wi-71.m4a"
+        },
+        {
+          "id": "z-wi-72",
+          "word": "звонкий",
+          "hint": "ЗВО+НКИ — стечение ЗВ.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Z/z-wi-72.m4a"
+        },
+        {
+          "id": "z-wi-73",
+          "word": "зубатый",
+          "hint": "ЗУ+БА+ТЫЙ — прилагательное.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-wi-73.m4a"
+        },
+        {
+          "id": "z-wi-74",
+          "word": "завиток",
+          "hint": "ЗА+ВИ+ТОК — три слога.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Z/z-wi-74.m4a"
         }
       ]
     },
@@ -1726,6 +1796,41 @@
           "hint": "ЗВЕ + НЯ — артикуляционная нагрузка.",
           "difficulty": 4,
           "audio_file": "Audio/Content/Z/z-ph-54.m4a"
+        },
+        {
+          "id": "z-ph-55",
+          "word": "золотая звёздочка на небе",
+          "hint": "ЗО+ЗВЁ+НЕ — два З-слова.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-ph-55.m4a"
+        },
+        {
+          "id": "z-ph-56",
+          "word": "зоркий заяц в засаде",
+          "hint": "ЗО+ЗА+ЗА — три З-слова подряд.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-ph-56.m4a"
+        },
+        {
+          "id": "z-ph-57",
+          "word": "зелёная земляника в лесу",
+          "hint": "ЗЕ+ЗЕМ — З в двух словах.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Z/z-ph-57.m4a"
+        },
+        {
+          "id": "z-ph-58",
+          "word": "знакомый звуковой сигнал",
+          "hint": "ЗНА+ЗВУ+СИГ — ЗН и ЗВ стечения.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Z/z-ph-58.m4a"
+        },
+        {
+          "id": "z-ph-59",
+          "word": "заснеженный замок в горах",
+          "hint": "ЗАС+ЗА — сложная конструкция.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Z/z-ph-59.m4a"
         }
       ]
     },
@@ -1952,6 +2057,27 @@
           "hint": "ЗЕ + ЗА + ЗА + ЗА — четыре З.",
           "difficulty": 5,
           "audio_file": "Audio/Content/Z/z-sen-34.m4a"
+        },
+        {
+          "id": "z-sen-35",
+          "word": "Зоя нашла золотую звёздочку на поляне.",
+          "hint": "ЗО+ЗО+ЗВЁ — три З-слова в предложении.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Z/z-sen-35.m4a"
+        },
+        {
+          "id": "z-sen-36",
+          "word": "Заяц замер и стал прислушиваться к звукам.",
+          "hint": "ЗА+ЗА+ЗВУ — нарратив с тремя З.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Z/z-sen-36.m4a"
+        },
+        {
+          "id": "z-sen-37",
+          "word": "Зелёные зонтики цветов защищали от дождя.",
+          "hint": "ЗЕ+ЗО+ЗА — насыщенный З-текст.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/Z/z-sen-37.m4a"
         }
       ]
     },
@@ -2133,6 +2259,34 @@
           "hint": "Зерно — семя, жернов — большой камень.",
           "difficulty": 4,
           "audio_file": "Audio/Content/Z/z-diff-24.m4a"
+        },
+        {
+          "id": "z-diff-25",
+          "word": "зима — жима",
+          "hint": "Зима — с З. Жима — не слово.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-diff-25.m4a"
+        },
+        {
+          "id": "z-diff-26",
+          "word": "зонт — жонт",
+          "hint": "Зонт — с З. Жонт — не существует!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-diff-26.m4a"
+        },
+        {
+          "id": "z-diff-27",
+          "word": "зуб — жуб",
+          "hint": "Зуб — с З. Жуб — нет такого слова.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Z/z-diff-27.m4a"
+        },
+        {
+          "id": "z-diff-28",
+          "word": "запах — жапах",
+          "hint": "Запах — с З. Жапах — придумка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-diff-28.m4a"
         }
       ]
     }

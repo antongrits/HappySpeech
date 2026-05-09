@@ -148,6 +148,146 @@
           "hint": "К-О-Ш-К-А. Два гласных: О и А.",
           "difficulty": 3,
           "audio_file": "Audio/Content/Phonemic/phon-vc-19.m4a"
+        },
+        {
+          "id": "phon-vc-21",
+          "word": "АУ — кричи в лесу",
+          "hint": "АУ — А долгий, У долгий.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Phon/phon-vc-21.m4a"
+        },
+        {
+          "id": "phon-vc-22",
+          "word": "ОИ — два гласных",
+          "hint": "О и И — оба гласных.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Phon/phon-vc-22.m4a"
+        },
+        {
+          "id": "phon-vc-23",
+          "word": "ЭЮ — необычная пара",
+          "hint": "Э и Ю — оба гласных.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Phon/phon-vc-23.m4a"
+        },
+        {
+          "id": "phon-vc-24",
+          "word": "Гласный в слове «ЛУК»",
+          "hint": "Гласный: У. Слышишь?",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Phon/phon-vc-24.m4a"
+        },
+        {
+          "id": "phon-vc-25",
+          "word": "Сколько гласных в «МОЛОКО»?",
+          "hint": "МО-ЛО-КО — три О, три гласных.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Phon/phon-vc-25.m4a"
+        },
+        {
+          "id": "phon-vc-26",
+          "word": "Гласные в «КАША»",
+          "hint": "КА-ША — А, А — два гласных.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Phon/phon-vc-26.m4a"
+        },
+        {
+          "id": "phon-vc-27",
+          "word": "Ы — гласный или нет?",
+          "hint": "Ы — гласный. Рты-мы-ты.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Phon/phon-vc-27.m4a"
+        },
+        {
+          "id": "phon-vc-28",
+          "word": "Гласные в «УЛИЦА»",
+          "hint": "У-ЛИ-ЦА — У, И, А — три гласных.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Phon/phon-vc-28.m4a"
+        },
+        {
+          "id": "phon-vc-29",
+          "word": "Э или Е в слове «ЭХО»?",
+          "hint": "Э-ХО — первый гласный Э.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Phon/phon-vc-29.m4a"
+        },
+        {
+          "id": "phon-vc-30",
+          "word": "Сколько гласных в «САМОЛЁТ»?",
+          "hint": "СА-МО-ЛЁТ — А, О, Ё — три гласных.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Phon/phon-vc-30.m4a"
+        },
+        {
+          "id": "phon-vc-31",
+          "word": "И или Ы в «МЫШЬ»?",
+          "hint": "МЫ-ШЬ — гласный Ы.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Phon/phon-vc-31.m4a"
+        },
+        {
+          "id": "phon-vc-32",
+          "word": "Найди гласный в «СТОЛ»",
+          "hint": "СТОЛ — один гласный О.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Phon/phon-vc-32.m4a"
+        },
+        {
+          "id": "phon-vc-33",
+          "word": "Гласный в «ДОЧЬ»",
+          "hint": "ДОЧЬ — гласный О.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Phon/phon-vc-33.m4a"
+        },
+        {
+          "id": "phon-vc-34",
+          "word": "Сколько гласных в «ЁЛОЧКА»?",
+          "hint": "ЁЛ-ОЧ-КА — Ё, О, А — три гласных.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Phon/phon-vc-34.m4a"
+        },
+        {
+          "id": "phon-vc-35",
+          "word": "Гласные в «МОЛНИЯ»",
+          "hint": "МОЛ-НИ-Я — О, И, Я — три гласных.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Phon/phon-vc-35.m4a"
+        },
+        {
+          "id": "phon-vc-36",
+          "word": "Ю — мягкий гласный?",
+          "hint": "Ю смягчает согласный перед собой.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Phon/phon-vc-36.m4a"
+        },
+        {
+          "id": "phon-vc-37",
+          "word": "Гласные в «КРАСИВЫЙ»",
+          "hint": "КРА-СИ-ВЫЙ — А, И, Ы — три гласных.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Phon/phon-vc-37.m4a"
+        },
+        {
+          "id": "phon-vc-38",
+          "word": "Я — это Й+А?",
+          "hint": "Я = Й+А. В начале слова: ЯК = ЙАК.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Phon/phon-vc-38.m4a"
+        },
+        {
+          "id": "phon-vc-39",
+          "word": "Сколько гласных в «ЧЕРЕПАХА»?",
+          "hint": "ЧЕ-РЕ-ПА-ХА — Е, Е, А, А — четыре.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Phon/phon-vc-39.m4a"
+        },
+        {
+          "id": "phon-vc-40",
+          "word": "Все гласные русского языка",
+          "hint": "А, О, У, Э, И, Ы, Е, Ё, Ю, Я — десять!",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Phon/phon-vc-40.m4a"
         }
       ]
     },
@@ -1587,6 +1727,216 @@
           "hint": "че-ре-ПА-ха. Ударение на слог ПА!",
           "difficulty": 3,
           "audio_file": "Audio/Content/Phonemic/phon-st-20.m4a"
+        },
+        {
+          "id": "phon-st-22",
+          "word": "МА-МА — ударение на первый слог",
+          "hint": "МА-ма. Первый слог сильнее.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Phon/phon-st-22.m4a"
+        },
+        {
+          "id": "phon-st-23",
+          "word": "ко-РО-ва — ударение на второй",
+          "hint": "ко-РО-ва. Хлопни на РО.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Phon/phon-st-23.m4a"
+        },
+        {
+          "id": "phon-st-24",
+          "word": "мо-ло-КО — ударение на третий",
+          "hint": "мо-ло-КО. Последний слог самый сильный.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Phon/phon-st-24.m4a"
+        },
+        {
+          "id": "phon-st-25",
+          "word": "БЕ-лый или бе-ЛЫЙ?",
+          "hint": "БЕ-лый — ударение на первый слог.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Phon/phon-st-25.m4a"
+        },
+        {
+          "id": "phon-st-26",
+          "word": "Ударение в «САМОЛЁТ»",
+          "hint": "са-мо-ЛЁТ — ударение на ЛЁТ.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Phon/phon-st-26.m4a"
+        },
+        {
+          "id": "phon-st-27",
+          "word": "Ударение в «ОБЛАКО»",
+          "hint": "ОБ-ла-ко — ударение на ОБ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Phon/phon-st-27.m4a"
+        },
+        {
+          "id": "phon-st-28",
+          "word": "Ударение в «КОНФЕТА»",
+          "hint": "кон-ФЕ-та — ударение на ФЕ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Phon/phon-st-28.m4a"
+        },
+        {
+          "id": "phon-st-29",
+          "word": "Ударение меняет смысл: «ЗАМОК»",
+          "hint": "ЗА-мок (дверной) или за-МОК (укрепление).",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Phon/phon-st-29.m4a"
+        },
+        {
+          "id": "phon-st-30",
+          "word": "Ударение в «ЧЕРЕПАХА»",
+          "hint": "че-ре-ПА-ха — ударение на ПА.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Phon/phon-st-30.m4a"
+        },
+        {
+          "id": "phon-st-31",
+          "word": "Ударение в «АРБУЗ»",
+          "hint": "ар-БУЗ — ударение на последний слог.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Phon/phon-st-31.m4a"
+        },
+        {
+          "id": "phon-st-32",
+          "word": "ЗАМОК — ударение на первый слог",
+          "hint": "ЗА-мок — то, чем запирают дверь.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Phon/phon-st-32.m4a"
+        },
+        {
+          "id": "phon-st-33",
+          "word": "за-МОК — ударение на второй",
+          "hint": "за-МОК — старинная крепость.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Phon/phon-st-33.m4a"
+        },
+        {
+          "id": "phon-st-34",
+          "word": "Ударение в «МОЛНИЯ»",
+          "hint": "МОЛ-ни-я — ударение на первый слог.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Phon/phon-st-34.m4a"
+        },
+        {
+          "id": "phon-st-35",
+          "word": "Ударение в «ЛОПАТА»",
+          "hint": "ло-ПА-та — ударение на ПА.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Phon/phon-st-35.m4a"
+        },
+        {
+          "id": "phon-st-36",
+          "word": "Ударение в «ПИРОГ»",
+          "hint": "пи-РОГ — ударение на последний слог.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Phon/phon-st-36.m4a"
+        },
+        {
+          "id": "phon-st-37",
+          "word": "Ударение в «МАЛИНА»",
+          "hint": "ма-ЛИ-на — ударение на ЛИ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Phon/phon-st-37.m4a"
+        },
+        {
+          "id": "phon-st-38",
+          "word": "Ударение в «ЛЕСТНИЦА»",
+          "hint": "ЛЕС-ни-ца — ударение на первый слог.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Phon/phon-st-38.m4a"
+        },
+        {
+          "id": "phon-st-39",
+          "word": "Ударение в «РОМАШКА»",
+          "hint": "ро-МАШ-ка — ударение на МАШ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Phon/phon-st-39.m4a"
+        },
+        {
+          "id": "phon-st-40",
+          "word": "Ударение в «ЯБЛОКО»",
+          "hint": "ЯБ-ло-ко — ударение на первый слог.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Phon/phon-st-40.m4a"
+        },
+        {
+          "id": "phon-st-41",
+          "word": "Ударение в «ВЕЛОСИПЕД»",
+          "hint": "ве-ло-си-ПЕД — ударение на последний слог.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/Phon/phon-st-41.m4a"
+        },
+        {
+          "id": "phon-st-42",
+          "word": "Ударение в «СВЕТОФОР»",
+          "hint": "све-то-ФОР — ударение на последний слог.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Phon/phon-st-42.m4a"
+        },
+        {
+          "id": "phon-st-43",
+          "word": "Ударение в «ТЕЛЕФОН»",
+          "hint": "те-ле-ФОН — ударение на последний слог.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Phon/phon-st-43.m4a"
+        },
+        {
+          "id": "phon-st-44",
+          "word": "Ударение в «САХАР»",
+          "hint": "СА-хар — ударение на первый слог.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Phon/phon-st-44.m4a"
+        },
+        {
+          "id": "phon-st-45",
+          "word": "Ударение в «КОШКА»",
+          "hint": "КОШ-ка — ударение на первый слог.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Phon/phon-st-45.m4a"
+        },
+        {
+          "id": "phon-st-46",
+          "word": "Ударение в «ДЕРЕВО»",
+          "hint": "ДЕ-ре-во — ударение на первый слог.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Phon/phon-st-46.m4a"
+        },
+        {
+          "id": "phon-st-47",
+          "word": "Ударение в «ПЕТУХ»",
+          "hint": "пе-ТУХ — ударение на последний слог.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Phon/phon-st-47.m4a"
+        },
+        {
+          "id": "phon-st-48",
+          "word": "Ударение в «ТРАКТОР»",
+          "hint": "ТРАК-тор — ударение на первый слог.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Phon/phon-st-48.m4a"
+        },
+        {
+          "id": "phon-st-49",
+          "word": "Ударение в «ОГУРЕЦ»",
+          "hint": "о-гу-РЕЦ — ударение на последний слог.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Phon/phon-st-49.m4a"
+        },
+        {
+          "id": "phon-st-50",
+          "word": "Ударение в «ПОМИДОР»",
+          "hint": "по-ми-ДОР — ударение на последний слог.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Phon/phon-st-50.m4a"
+        },
+        {
+          "id": "phon-st-51",
+          "word": "Ударение в «МОРКОВЬ»",
+          "hint": "мор-КОВЬ — ударение на последний слог.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Phon/phon-st-51.m4a"
         }
       ]
     },

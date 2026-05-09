@@ -1332,6 +1332,111 @@
           "hint": "РИ + СТ + Щ — трёхслоговое слово.",
           "difficulty": 5,
           "audio_file": "Audio/Content/R/r-wi-94.m4a"
+        },
+        {
+          "id": "r-wi-95",
+          "word": "рокировка",
+          "hint": "РО+КИ+РО+ВКА — шахматный ход с двумя Р.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wi-95.m4a"
+        },
+        {
+          "id": "r-wi-96",
+          "word": "рукопожатие",
+          "hint": "РУ+КО+ПО+ЖА+ТИЕ — пять слогов.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wi-96.m4a"
+        },
+        {
+          "id": "r-wi-97",
+          "word": "роскошный",
+          "hint": "РОС+КО+ШНЫ — прилагательное с Р.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wi-97.m4a"
+        },
+        {
+          "id": "r-wi-98",
+          "word": "рукоятка",
+          "hint": "РУ+КО+ЯТ+КА — Р в начале длинного слова.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wi-98.m4a"
+        },
+        {
+          "id": "r-wi-99",
+          "word": "разноцветный",
+          "hint": "РА+ЗНО+ЦВЕТ+НЫ — Р+сложный состав.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wi-99.m4a"
+        },
+        {
+          "id": "r-wi-100",
+          "word": "рюкзачок",
+          "hint": "РЮ+КЗАЧ+ОК — уменьшительное от рюкзак.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wi-100.m4a"
+        },
+        {
+          "id": "r-wi-101",
+          "word": "риторика",
+          "hint": "РИ+ТО+РИ+КА — наука о речи, Р дважды.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wi-101.m4a"
+        },
+        {
+          "id": "r-wi-102",
+          "word": "рифмовать",
+          "hint": "РИФ+МО+ВАТЬ — подбирать рифмы.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wi-102.m4a"
+        },
+        {
+          "id": "r-wi-103",
+          "word": "распорядок",
+          "hint": "РАС+ПО+РЯ+ДОК — Р дважды в слове.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wi-103.m4a"
+        },
+        {
+          "id": "r-wi-104",
+          "word": "раздробить",
+          "hint": "РА+ЗДРО+БИТЬ — РЗД стечение.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wi-104.m4a"
+        },
+        {
+          "id": "r-wi-105",
+          "word": "румянец",
+          "hint": "РУ+МЯ+НЕЦ — розовые щёки.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wi-105.m4a"
+        },
+        {
+          "id": "r-wi-106",
+          "word": "рассветный",
+          "hint": "РАС+СВЕТ+НЫ — прилагательное.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wi-106.m4a"
+        },
+        {
+          "id": "r-wi-107",
+          "word": "родиться",
+          "hint": "РО+ДИТЬ+СЯ — глагол с Р.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wi-107.m4a"
+        },
+        {
+          "id": "r-wi-108",
+          "word": "рассеянный",
+          "hint": "РАС+СЕ+ЯН+НЫ — прилагательное, два СС.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wi-108.m4a"
+        },
+        {
+          "id": "r-wi-109",
+          "word": "рыболов",
+          "hint": "РЫ+БО+ЛОВ — тот, кто ловит рыбу.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wi-109.m4a"
         }
       ]
     },
@@ -1886,6 +1991,146 @@
           "hint": "РСП + РЯД — двойной Р.",
           "difficulty": 5,
           "audio_file": "Audio/Content/R/r-wm-84.m4a"
+        },
+        {
+          "id": "r-wm-85",
+          "word": "журавль",
+          "hint": "ЖУ+РА+ВЕЛЬ — Р в середине.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wm-85.m4a"
+        },
+        {
+          "id": "r-wm-86",
+          "word": "ворона",
+          "hint": "ВО+РО+НА — Р дважды.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-86.m4a"
+        },
+        {
+          "id": "r-wm-87",
+          "word": "береза",
+          "hint": "БЕ+РЁ+ЗА — Р в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-87.m4a"
+        },
+        {
+          "id": "r-wm-88",
+          "word": "огурец",
+          "hint": "О+ГУ+РЕЦ — Р в последнем слоге.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-88.m4a"
+        },
+        {
+          "id": "r-wm-89",
+          "word": "морковь",
+          "hint": "МОР+КОВЬ — Р после М.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-89.m4a"
+        },
+        {
+          "id": "r-wm-90",
+          "word": "порошок",
+          "hint": "ПО+РО+ШОК — Р дважды.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wm-90.m4a"
+        },
+        {
+          "id": "r-wm-91",
+          "word": "сарафан",
+          "hint": "СА+РА+ФАН — Р в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-91.m4a"
+        },
+        {
+          "id": "r-wm-92",
+          "word": "горошина",
+          "hint": "ГО+РО+ШИ+НА — Р дважды.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wm-92.m4a"
+        },
+        {
+          "id": "r-wm-93",
+          "word": "характер",
+          "hint": "ХА+РАК+ТЕР — Р дважды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wm-93.m4a"
+        },
+        {
+          "id": "r-wm-94",
+          "word": "корзина",
+          "hint": "КОР+ЗИ+НА — Р после К.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-94.m4a"
+        },
+        {
+          "id": "r-wm-95",
+          "word": "горизонт",
+          "hint": "ГО+РИ+ЗОНТ — Р в середине.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wm-95.m4a"
+        },
+        {
+          "id": "r-wm-96",
+          "word": "перочинный",
+          "hint": "ПЕ+РО+ЧИН+НЫ — Р в начале.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wm-96.m4a"
+        },
+        {
+          "id": "r-wm-97",
+          "word": "уверенность",
+          "hint": "У+ВЕ+РЕН+НОСТЬ — Р в середине.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wm-97.m4a"
+        },
+        {
+          "id": "r-wm-98",
+          "word": "деревня",
+          "hint": "ДЕ+РЕВНЯ — РЕ стечение.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wm-98.m4a"
+        },
+        {
+          "id": "r-wm-99",
+          "word": "марабу",
+          "hint": "МА+РА+БУ — Р в середине.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wm-99.m4a"
+        },
+        {
+          "id": "r-wm-100",
+          "word": "прогресс",
+          "hint": "ПРО+ГРЕСС — Р дважды.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-wm-100.m4a"
+        },
+        {
+          "id": "r-wm-101",
+          "word": "рыбарь",
+          "hint": "РЫ+БАРЬ — Р в начале и конце.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-wm-101.m4a"
+        },
+        {
+          "id": "r-wm-102",
+          "word": "варенье",
+          "hint": "ВА+РЕНЬЕ — Р в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-wm-102.m4a"
+        },
+        {
+          "id": "r-wm-103",
+          "word": "комаровка",
+          "hint": "КО+МА+РО+ВКА — Р в середине.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wm-103.m4a"
+        },
+        {
+          "id": "r-wm-104",
+          "word": "перерыв",
+          "hint": "ПЕ+РЕ+РЫВ — Р дважды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-wm-104.m4a"
         }
       ]
     },
@@ -3100,6 +3345,76 @@
           "hint": "РА + ЗРИ + РЮ — плотная Р-цепочка.",
           "difficulty": 5,
           "audio_file": "Audio/Content/R/r-ph-99.m4a"
+        },
+        {
+          "id": "r-ph-100",
+          "word": "разноцветная радуга над рекой",
+          "hint": "РА+РА+РЕ — три Р-слова в фразе.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-ph-100.m4a"
+        },
+        {
+          "id": "r-ph-101",
+          "word": "рокочущий гром в горах",
+          "hint": "РО+ГРО+ГО — Р в разных позициях.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-ph-101.m4a"
+        },
+        {
+          "id": "r-ph-102",
+          "word": "роскошный рисунок на бумаге",
+          "hint": "РОС+РИ — два Р-слова.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-ph-102.m4a"
+        },
+        {
+          "id": "r-ph-103",
+          "word": "ранняя роса на розах",
+          "hint": "РА+РО+РО — три Р-слова.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-ph-103.m4a"
+        },
+        {
+          "id": "r-ph-104",
+          "word": "ребята строят крепость из снега",
+          "hint": "РЕ+СТР+КРЕ — Р в трёх словах.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-ph-104.m4a"
+        },
+        {
+          "id": "r-ph-105",
+          "word": "ракета промчалась через горы",
+          "hint": "РА+ПРО+ЧА+ГО — Р+сложный нарратив.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-ph-105.m4a"
+        },
+        {
+          "id": "r-ph-106",
+          "word": "рыбак ранним утром грёб вёслами",
+          "hint": "РЫ+РА+ГРЁБ — Р трижды.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-ph-106.m4a"
+        },
+        {
+          "id": "r-ph-107",
+          "word": "румяный ребёнок рад прогулке",
+          "hint": "РУ+РЕ+РА+ПРО — Р четырежды.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-ph-107.m4a"
+        },
+        {
+          "id": "r-ph-108",
+          "word": "разрушенный замок у реки",
+          "hint": "РА+РУ+РЕ — Р трижды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-ph-108.m4a"
+        },
+        {
+          "id": "r-ph-109",
+          "word": "рукастый рыбак поймал карпа",
+          "hint": "РУ+РЫ+КА — Р трижды.",
+          "difficulty": 4,
+          "audio_file": "Audio/Content/R/r-ph-109.m4a"
         }
       ]
     },
@@ -3511,6 +3826,41 @@
           "hint": "ПЁС + ДЯТ + ТВЁ + СТВ — Р в разных позициях.",
           "difficulty": 5,
           "audio_file": "Audio/Content/R/r-sen-64.m4a"
+        },
+        {
+          "id": "r-sen-65",
+          "word": "Разноцветная рыбка плавала у дна реки.",
+          "hint": "РА+РЫБ+РЕ — Р в трёх словах.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-sen-65.m4a"
+        },
+        {
+          "id": "r-sen-66",
+          "word": "Ранним утром рыбак отправился к реке.",
+          "hint": "РА+РЫ+РЕ — Р трижды в предложении.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-sen-66.m4a"
+        },
+        {
+          "id": "r-sen-67",
+          "word": "Румяный ребёнок рисовал рыбу на бумаге.",
+          "hint": "РУ+РЕ+РИ+РЫ+БУ — пять Р-слов.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-sen-67.m4a"
+        },
+        {
+          "id": "r-sen-68",
+          "word": "Рябина росла у старого деревянного забора.",
+          "hint": "РЯ+РО+СТА+ДЕ+РЕ+ЗА — Р в четырёх словах.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-sen-68.m4a"
+        },
+        {
+          "id": "r-sen-69",
+          "word": "Радостный тигр прыгнул через ров к реке.",
+          "hint": "РА+ТИ+ПРЫ+РО+РЕ — Р пять раз.",
+          "difficulty": 5,
+          "audio_file": "Audio/Content/R/r-sen-69.m4a"
         }
       ]
     },
