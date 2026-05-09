@@ -20,6 +20,9 @@ struct ProgramEditorView: View {
     @State private var interactor: ProgramEditorInteractor?
     @State private var presenter: ProgramEditorPresenter?
     @State private var router: ProgramEditorRouter?
+    // Strong reference: presenter.display — weak, без strong-владельца bridge освободится
+    // моментально и callbacks никогда не сработают.
+    @State private var displayBridge: ProgramEditorDisplayBridge?
 
     @State private var blocks: [ProgramBlock] = []
     @State private var totalMinutes: Int = 0
@@ -166,7 +169,7 @@ struct ProgramEditorView: View {
         let routerInstance = ProgramEditorRouter()
 
         interactorInstance.presenter = presenterInstance
-        presenterInstance.display = ProgramEditorDisplayBridge(
+        let bridge = ProgramEditorDisplayBridge(
             onLoad: { vm in
                 blocks = vm.blocks
                 totalMinutes = vm.totalDurationMinutes
@@ -179,6 +182,8 @@ struct ProgramEditorView: View {
             },
             onSave: { message in confirmation = message }
         )
+        presenterInstance.display = bridge
+        self.displayBridge = bridge
         routerInstance.onSaved = onSaved
         routerInstance.onCancel = onCancel
 

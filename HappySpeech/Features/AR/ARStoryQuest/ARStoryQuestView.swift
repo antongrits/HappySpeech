@@ -371,8 +371,7 @@ struct ARStoryQuestView: View {
             container: container
         )
 
-        presenter.onUpdate = { [weak presenterBox = WeakBox(value: presenter)] newDisplay in
-            _ = presenterBox
+        presenter.onUpdate = { newDisplay in
             // Capture outside actor closure: reassign on main actor.
             Task { @MainActor in
                 display = newDisplay
@@ -401,17 +400,6 @@ struct ARStoryQuestView: View {
             }
         }
     }
-}
-
-// MARK: - WeakBox helper
-
-/// Lightweight weak wrapper used to keep presenter alive in closures without
-/// creating retain cycles. Marked `@unchecked Sendable` because it only ever
-/// crosses actor boundaries on the main actor.
-@MainActor
-private final class WeakBox<T: AnyObject> {
-    weak var value: T?
-    init(value: T?) { self.value = value }
 }
 
 // MARK: - Preview
