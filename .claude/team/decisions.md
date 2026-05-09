@@ -3,6 +3,36 @@
 
 ---
 
+## ADR-V18-AG-DEFER-BLENDER — Blender 3D characters defer post-v1.0 (2026-05-09)
+
+### Status: Approved (Block AG v18 — post-tag continuation)
+
+### Context
+Plan v18 Block AG (line 5354-5510) targets custom rigged Lyalya 3D characters через Blender + Reality Composer Pro USDZ pipeline.
+
+### Findings
+1. **Blender не установлен:** `which blender` → not found, `/Applications/` без Blender.app
+2. **Disk constraint:** 6.5 GB free, Blender install ~2 GB + render output ~5-10 GB heavy
+3. **Existing 3D coverage acceptable:** lyalya3d.usdz (5.4 MB) + LyalyaRealityKitView существует с blendshapes (8 emotions + 5 lip-sync visemes), used в 100+ files (Block AG.verify в Block AI)
+
+### Decision
+Defer custom Blender pipeline post-v1.0. Используем existing USDZ + RealityKit blendshapes для production.
+
+### Future v19 enable path
+1. Install Blender (`brew install --cask blender`) — 2 GB
+2. Custom rig Lyalya с full body skeleton + 12 emotions (vs current 8)
+3. Reality Composer Pro USDZ export с advanced shader properties
+4. Replace lyalya3d.usdz с new custom rig
+
+### Mitigation
+Existing 3D character production-quality verified Block AI:
+- 8 emotion blendshapes
+- 5 lip-sync visemes (mouth open/closed/A/E/O)
+- ARKit Face Tracking integration
+- AR + non-AR (SwiftUI inline) modes
+
+---
+
 ## ADR-V18-X-VERIFIED — Bundle 1.5 GB target verification (2026-05-09)
 
 ### Status: Approved (Block X v18 — post-tag continuation)
