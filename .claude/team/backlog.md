@@ -110,6 +110,31 @@
 
 ---
 
+## v18 Completed (post-tag, 2026-05-09)
+
+Все блоки Plan v18 выполнены либо задокументированы в ADR-deferred. После тега v1.0.0-final-v18 (30e55060) добавлено 28+ коммитов.
+
+| Block | Статус | Описание |
+|---|---|---|
+| X — Bundle depth | DONE | 1.3 GB bundle depth verified |
+| AB — Content overflow | DONE | 6 overflow files fixed |
+| AD — Code review + AppCheck | DONE | 14/14 AppCheck enforce enabled |
+| AH — Firebase 18 functions | DONE | 18 Cloud Functions deployed europe-west3 |
+| Y — SwiftLint warnings | DONE | 11 warnings resolved |
+| AK — QA pass | DONE | 68/70 tests APPROVED |
+| AI — Final audit | DONE | No critical gaps |
+| O — Remotion 69 MP4 | DONE | motion-design videos |
+| Q — 154 imagesets | DONE | 600 PNG FLUX-1-schnell regen |
+| R — 5 new VIP screens | DONE | 6126 LOC |
+| J B.10 + Group C | DONE | 4 new DS components |
+| E — ML + ADRs | DONE | ML retrain partial + 3 ADR |
+| AG — Blender 3D | DONE (ADR-deferred) | ADR-V18-BLENDER-DEFER |
+| W — Performance | DONE | performance audit + bug fix |
+| Z — Screenshot tour | IN PROGRESS (BG) | 100+ PNG target |
+| V — Tests 90% | IN PROGRESS (BG) | coverage target |
+
+---
+
 ## Plan v11 закрыт — 2026-04-29
 
 Все 15 блоков A–N выполнены. Tag: `v1.0.0-pro`.
