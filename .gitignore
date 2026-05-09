@@ -68,3 +68,4 @@ venv/
 
 # Content audio — bundled in app (Firebase Storage skipped, Spark plan)
 # HappySpeech/Resources/Audio/Content/ — unbundled for direct app bundle inclusion
+**/.DS_Store
