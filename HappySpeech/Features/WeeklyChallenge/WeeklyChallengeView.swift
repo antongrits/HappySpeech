@@ -469,7 +469,7 @@ struct WeeklyChallengeView: View {
         ZStack {
             Color.black.opacity(0.001)
                 .ignoresSafeArea()
-            HSRewardBurst()
+            HSRewardBurst(isShowing: holder.showRewardBurst)
                 .task {
                     try? await Task.sleep(for: .seconds(2.0))
                     holder.showRewardBurst = false
