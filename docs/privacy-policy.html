@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Политика конфиденциальности — HappySpeech</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 24px 16px 64px;
+      color: #1c1c1e;
+      line-height: 1.65;
+    }
+    h1 { font-size: 28px; margin-bottom: 4px; }
+    h2 { font-size: 20px; margin-top: 40px; border-bottom: 1px solid #e5e5ea; padding-bottom: 6px; }
+    h3 { font-size: 16px; margin-top: 28px; }
+    .meta { color: #6c6c70; font-size: 14px; margin-bottom: 32px; }
+    table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+    th, td { border: 1px solid #d1d1d6; padding: 8px 12px; font-size: 14px; text-align: left; }
+    th { background: #f2f2f7; font-weight: 600; }
+    .badge {
+      display: inline-block;
+      background: #34c759;
+      color: white;
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    @media (prefers-color-scheme: dark) {
+      body { background: #000; color: #f2f2f7; }
+      th { background: #1c1c1e; }
+      td, th { border-color: #3a3a3c; }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Политика конфиденциальности</h1>
+<div class="meta">HappySpeech · Версия 1.0 · Вступает в силу: 23 апреля 2026 г.</div>
+
+<span class="badge">COPPA compliant</span>&nbsp;
+<span class="badge">Kids Category</span>&nbsp;
+<span class="badge">No ads · No tracking</span>
+
+<h2>1. Введение</h2>
+<p>Настоящая Политика конфиденциальности описывает, как приложение <strong>HappySpeech</strong> обрабатывает персональные данные. Мы уважаем вашу частную жизнь и частную жизнь ваших детей.</p>
+<p>HappySpeech — логопедическое приложение для детей 5–8 лет. Родители или законные опекуны управляют аккаунтом и дают согласие на обработку данных от имени ребёнка.</p>
+
+<h2>2. Оператор данных</h2>
+<p><strong>Антон Гриц</strong>, индивидуальный разработчик<br>
+Email: <a href="mailto:antongric558@gmail.com">antongric558@gmail.com</a> (тема: «HappySpeech Privacy»)</p>
+
+<h2>3. Какие данные мы собираем</h2>
+
+<h3>3.1 Профиль ребёнка</h3>
+<p>Имя, возраст, пол (по желанию). Хранится локально (Realm) и в Firebase Firestore для синхронизации.</p>
+
+<h3>3.2 Аккаунт родителя / специалиста</h3>
+<p>Email-адрес, метод аутентификации (Firebase Auth). Хранится в Firebase Authentication (Google LLC).</p>
+
+<h3>3.3 Прогресс и результаты сессий</h3>
+<p>Дата занятия, ID упражнения, оценка произношения (0–100), количество попыток. Хранится локально и в Firestore.</p>
+
+<h3>3.4 Голосовые записи</h3>
+<p><strong>Обрабатываются исключительно на устройстве.</strong> Голосовые записи не передаются на сервер, не хранятся после завершения упражнения и не покидают ОЗУ устройства.</p>
+
+<h3>3.5 Данные, которые мы НЕ собираем</h3>
+<p>Геолокация · Контакты · Фото · IDFA · Рекламные данные · Биометрия</p>
+
+<h2>4. Особая защита детей (COPPA)</h2>
+<ul>
+  <li>Верифицируемое родительское согласие до создания профиля ребёнка</li>
+  <li>Ребёнок не может самостоятельно зарегистрироваться или изменить настройки</li>
+  <li>Родитель может просмотреть и удалить все данные ребёнка в любое время</li>
+  <li>Данные детей не используются в рекламных целях</li>
+  <li>Все внешние ссылки закрыты за родительским контролем (parental gate)</li>
+</ul>
+
+<h2>5. Хранение данных</h2>
+<table>
+  <tr><th>Тип данных</th><th>Местонахождение</th><th>Шифрование</th></tr>
+  <tr><td>Профиль ребёнка</td><td>Realm + Firestore</td><td>AES-256 / TLS 1.3</td></tr>
+  <tr><td>Аккаунт родителя</td><td>Firebase Auth</td><td>Google LLC</td></tr>
+  <tr><td>Прогресс</td><td>Realm + Firestore</td><td>AES-256 / TLS 1.3</td></tr>
+  <tr><td>Голосовые записи</td><td>ОЗУ устройства (только во время упражнения)</td><td>Не хранятся</td></tr>
+</table>
+
+<h2>6. Передача данных третьим лицам</h2>
+<p>Данные передаются <strong>только Firebase (Google LLC)</strong> как техническому обработчику (DPA / SCCs). Мы не продаём и не передаём данные рекламным сетям или брокерам.</p>
+
+<h2>7. Аналитика</h2>
+<p>Приложение <strong>не использует</strong> Firebase Analytics, Mixpanel, Amplitude или иные аналитические SDK. Рекламные идентификаторы не используются. Внутренняя аналитика прогресса — только локальная.</p>
+
+<h2>8. Права пользователя (GDPR / ФЗ-152)</h2>
+<p>Доступ · Исправление · Удаление · Ограничение обработки · Переносимость · Возражение · Отзыв согласия.</p>
+<p>Запрос: <a href="mailto:antongric558@gmail.com">antongric558@gmail.com</a>, тема «HappySpeech Data Request». Срок ответа: 30 дней.</p>
+
+<h2>9. Безопасность</h2>
+<ul>
+  <li>Realm AES-256 at-rest</li>
+  <li>TLS 1.3 in-transit</li>
+  <li>Firebase App Check (защита API)</li>
+  <li>Firestore Security Rules (пользователь видит только свои данные)</li>
+</ul>
+
+<h2>10. Изменения</h2>
+<p>При существенных изменениях — уведомление через push или экран при входе. Продолжение использования = принятие.</p>
+
+<h2>English Summary</h2>
+<p>HappySpeech is a COPPA-compliant speech therapy app for children aged 5–8. Voice data is processed <strong>on-device only</strong> and never transmitted. We do not use advertising, tracking, or third-party analytics SDKs. Firebase (Google LLC) is the only third-party data processor. Parents have full rights to review and delete their child's data. Contact: <a href="mailto:antongric558@gmail.com">antongric558@gmail.com</a></p>
+<p>Full English privacy policy available on request.</p>
+
+<hr>
+<p style="color:#6c6c70;font-size:13px;">© 2026 Anton Hryts · HappySpeech · <a href="mailto:antongric558@gmail.com">antongric558@gmail.com</a></p>
+
+</body>
+</html>
