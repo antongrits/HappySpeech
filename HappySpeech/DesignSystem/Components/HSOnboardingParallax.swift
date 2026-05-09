@@ -133,6 +133,9 @@ public struct HSOnboardingParallax: View {
     @ViewBuilder
     private func illustration(for page: Page) -> some View {
         // Параллакс: иллюстрация увеличивается/смещается на scrollTransition.
+        // Локальная копия reduceMotion — Sendable closure ниже не может
+        // напрямую читать main-actor-isolated environment value.
+        let isMotionReduced = reduceMotion
         ZStack {
             if UIImage(named: page.imageName) != nil {
                 Image(page.imageName)
@@ -144,11 +147,11 @@ public struct HSOnboardingParallax: View {
                     .font(.system(size: 140))
             }
         }
-        .scrollTransition(reduceMotion ? .identity : .interactive) { effect, phase in
+        .scrollTransition(isMotionReduced ? .identity : .interactive) { effect, phase in
             effect
-                .scaleEffect(reduceMotion ? 1.0 : (1.0 - abs(phase.value) * 0.15))
-                .offset(y: reduceMotion ? 0 : phase.value * -40)
-                .opacity(reduceMotion ? 1.0 : (1.0 - abs(phase.value) * 0.4))
+                .scaleEffect(isMotionReduced ? 1.0 : (1.0 - abs(phase.value) * 0.15))
+                .offset(y: isMotionReduced ? 0 : phase.value * -40)
+                .opacity(isMotionReduced ? 1.0 : (1.0 - abs(phase.value) * 0.4))
         }
     }
 

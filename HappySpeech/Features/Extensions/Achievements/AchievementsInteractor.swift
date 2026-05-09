@@ -108,12 +108,6 @@ final class AchievementsInteractor: AchievementsBusinessLogic {
             let sessions = buildSessionDayEntries(from: recentSessions)
             let siblings = await fetchSiblingProfiles(parentId: profile.parentId, excludeId: request.childId)
 
-            // Вычисляем прогресс до следующего достижения.
-            let nextAchievementProgress = computeNextAchievementProgress(
-                unlocked: unlockedKeys,
-                sessions: recentSessions
-            )
-
             let response = AchievementsModels.Load.Response(
                 childId: request.childId,
                 achievements: dtos,
@@ -124,7 +118,7 @@ final class AchievementsInteractor: AchievementsBusinessLogic {
             )
             presenter?.presentAchievements(response)
 
-            // Передаём прогресс к следующему достижению отдельным событием.
+            // Прогресс к следующему достижению — отдельным событием.
             let nextProgress = computeNextAchievementProgress(
                 unlocked: unlockedKeys,
                 sessions: recentSessions
