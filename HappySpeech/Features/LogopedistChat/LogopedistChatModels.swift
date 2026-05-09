@@ -136,6 +136,7 @@ enum LogopedistChatModels {
             let timeLabel: String
             let statusLabel: String
             let statusSymbol: String?
+            let isRead: Bool
             let attachment: AttachmentRow?
             let accessibilityLabel: String
         }

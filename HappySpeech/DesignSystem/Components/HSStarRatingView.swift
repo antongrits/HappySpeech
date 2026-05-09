@@ -116,7 +116,7 @@ public struct HSStarRatingView: View {
         Image(systemName: isFilled ? "star.fill" : "star")
             .font(.system(size: starSize, weight: .semibold))
             .foregroundStyle(isFilled ? ColorTokens.Brand.gold : Color.secondary)
-            .scaleEffect(isFilled && !reduceMotion ? 1.0 : 1.0)
+            .scaleEffect(isFilled && !reduceMotion ? 1.1 : 1.0)
             .animation(
                 reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.6),
                 value: isFilled
