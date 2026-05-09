@@ -335,11 +335,14 @@ public final class ActiveChildStore: @unchecked Sendable {
     }
 
     public func set(_ id: String?) {
-        queue.async(flags: .barrier) { [defaults] in
+        // self уже @unchecked Sendable, поэтому захват `self` Sendable.
+        // Прежний `[defaults]` пытался захватить UserDefaults напрямую — non-Sendable.
+        queue.async(flags: .barrier) { [weak self] in
+            guard let self else { return }
             if let id, !id.isEmpty {
-                defaults.set(id, forKey: Self.key)
+                self.defaults.set(id, forKey: Self.key)
             } else {
-                defaults.removeObject(forKey: Self.key)
+                self.defaults.removeObject(forKey: Self.key)
             }
         }
     }
