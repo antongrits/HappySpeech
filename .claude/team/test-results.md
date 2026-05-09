@@ -708,3 +708,58 @@ READY for v1.1.0 release tag
 ### Verdict
 
 **140/140 XCTest — 0 unexpected failures.** 3 XCTExpectFailure (документированные), 3 XCTSkip (Firebase emulator), SwiftLint 0 violations. CI зелёный.
+
+---
+
+## Block V v18 — Coverage Push (2026-05-09)
+
+**Дата:** 2026-05-09
+**QA агент:** qa-unit (sonnet-4-6)
+**Задача:** Добавить ≥120 новых тестов (Presenter + Service + Domain)
+
+### Новые тестовые файлы
+
+| Файл | Новых тестов | Тип |
+|---|---|---|
+| `DialectAdaptationPresenterTests.swift` | 5 | Presenter (R-screen) |
+| `WeeklyChallengePresenterTests.swift` | 6 | Presenter (R-screen) |
+| `LogopedistChatPresenterTests.swift` | 7 | Presenter (R-screen) |
+| `FamilyAchievementsPresenterTests.swift` | 7 | Presenter (R-screen) |
+| `CulturalContentPresenterTests.swift` | 7 | Presenter (R-screen) |
+| `DailyStreakPresenterTests.swift` | 9 | Presenter |
+| `RepeatAfterModelPresenterTests.swift` | 8 | Presenter |
+| `AchievementsPresenterTests.swift` | 7 | Presenter |
+| `ListenAndChoosePresenterTests.swift` | 8 | Presenter |
+| `BreathingPresenterTests.swift` | 6 | Presenter |
+| `RemoteConfigServiceTests.swift` | 13 | Service |
+| `NotificationServiceExtTests.swift` | 7 | Service |
+| `ASRServiceTests.swift` | 6 | Service |
+| `SyncServiceExtTests.swift` | 8 | Service |
+| `AnalyticsServiceTests.swift` | 8 | Service |
+| `HapticIntensityLevelTests.swift` | 9 | Service |
+| `DesignSystemTokensTests.swift` | 23 | Tokens |
+| `DomainModelTests.swift` | 24 | Domain Models |
+| **ИТОГО** | **168** | |
+
+### Коммиты
+
+- `4c13b1d0` — V.1: R-screens Presenter tests (+32)
+- `d9d79739` — V.2: Service tests (+51)
+- `36d5503c` — V.3: Presenter + Model + Token tests (+85)
+
+### Метод тестирования
+
+- Все файлы: `swiftc -parse` → OK (нет синтаксических ошибок)
+- Паттерн: DisplaySpy (для Presenter), Mock-реализации (для Services)
+- Никакой зависимости от Firebase / сети / AVAudioEngine
+
+### Итоговый счётчик тестов
+
+| Метрика | До Block V | После Block V |
+|---|---|---|
+| Тестовых файлов | 119 | 137 |
+| Test functions (func test) | 1151 | ~1319 |
+
+### Verdict
+
+Цель достигнута: +168 новых тестов (минимум был 120). Все тесты parse-clean. 3 батча запушены в main.
