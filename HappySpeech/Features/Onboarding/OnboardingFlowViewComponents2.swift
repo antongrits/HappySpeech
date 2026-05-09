@@ -127,7 +127,7 @@ struct OnboardingPermissionsStep: View {
 
     var body: some View {
         VStack(spacing: SpacingTokens.medium) {
-            LyalyaHeroView(state: .pointing, mood: 0.7, size: 180)
+            LyalyaHeroView(state: .pointing, mood: 0.7, size: 200)
                 .scaleEffect(appeared ? 1 : 0.7)
                 .opacity(appeared ? 1 : 0)
                 .accessibilityHidden(true)

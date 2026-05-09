@@ -141,10 +141,9 @@ struct WeeklyChallengeView: View {
 
     @ViewBuilder
     private func heroSection(viewModel: WeeklyChallengeModels.Load.ViewModel) -> some View {
-        VStack(spacing: SpacingTokens.sp2) {
-            Image(systemName: viewModel.symbolName)
-                .font(.system(size: 56))
-                .foregroundStyle(ColorTokens.Brand.primary)
+        VStack(spacing: SpacingTokens.sp3) {
+            LyalyaMascotView(state: .celebrating, size: 140)
+                .frame(height: 140)
                 .accessibilityHidden(true)
 
             Text(viewModel.challengeTitle)
