@@ -24,6 +24,9 @@ struct ScreeningView: View {
     @State private var interactor: ScreeningInteractor?
     @State private var presenter: ScreeningPresenter?
     @State private var router: ScreeningRouter?
+    // Strong reference: presenter.display — weak, без strong-владельца bridge освободится
+    // моментально и updates никогда не сработают.
+    @State private var displayBridge: ScreeningDisplayBridge?
     @State private var state = ScreeningViewState()
     @State private var isSaving: Bool = false
 
@@ -119,11 +122,13 @@ struct ScreeningView: View {
         self.router = routerInstance
 
         let capturedRouter = routerInstance
-        presenterInstance.display = ScreeningDisplayBridge(state: state) { newState in
+        let bridge = ScreeningDisplayBridge(state: state) { newState in
             if newState.isFinished, let outcome = newState.outcome {
                 capturedRouter.complete(outcome: outcome.outcome)
             }
         }
+        presenterInstance.display = bridge
+        self.displayBridge = bridge
 
         await interactorInstance.startScreening(.init(childId: childId, childAge: childAge))
     }

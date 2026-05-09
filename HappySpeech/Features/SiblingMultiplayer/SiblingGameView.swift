@@ -16,6 +16,9 @@ struct SiblingGameView: View {
 
     @State private var display = SiblingGameDisplay()
     @State private var interactor: SiblingGameInteractor?
+    // Strong reference: presenter.view — weak, без strong-владельца adapter освободится
+    // моментально и presenter callbacks никогда не сработают.
+    @State private var viewAdapter: SiblingGameViewAdapter?
     @State private var showExitAlert: Bool = false
     @State private var showRoundOverlay: Bool = false
     @State private var showEndGame: Bool = false
@@ -402,11 +405,13 @@ struct SiblingGameView: View {
         let createdInteractor = SiblingGameInteractor(mpcWorker: mpcWorker)
         let presenter = SiblingGamePresenter(localPeerDisplayName: localDisplayName)
         createdInteractor.presenter = presenter
-        presenter.view = SiblingGameViewAdapter(
+        let adapter = SiblingGameViewAdapter(
             display: display,
             showRoundOverlay: { showRoundOverlay = $0 },
             showEndGame: { showEndGame = $0 }
         )
+        presenter.view = adapter
+        self.viewAdapter = adapter
         self.interactor = createdInteractor
         createdInteractor.loadGame(
             childId: childId,
