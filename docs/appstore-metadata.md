@@ -3,11 +3,82 @@
 > S12-019 — Финальная версия для App Store Connect  
 > Автор: Антон Гриц (Anton Hryts)  
 > Bundle ID: ru.happyspeech.app  
-> Дата: 2026-05-08 (v18 final update — Block AJ)
+> Дата: 2026-05-09 (v18 final update — Block AJ)
 > Tag: v1.0.0-final-v18
 >
-> NOTE: Submission к App Store отложен — у автора нет платного Apple Developer Account.
-> Метаданные полностью готовы для будущего submission.
+> **NOT submitting к App Store в v1.0** — пользователь без Apple Developer Program ($99/yr).
+> Metadata готов для будущего submission когда account активирован.
+
+---
+
+## What's New (v1.0.0-final-v18 + post-tag)
+
+### Production-quality milestone
+
+| Компонент | Метрика |
+|---|---|
+| Интерактивные экраны | 105+ (*View.swift) |
+| Аудио файлы Ляли | 14 501 .m4a (edge-tts SvetlanaNeural) |
+| Иллюстрации | 154 imagesets / 600 PNG (FLUX-1-schnell) |
+| MP4 motion-design | 117+ (Remotion) |
+| Core ML модели | 12 .mlpackage (Wav2Vec2 302 MB real) |
+| DesignSystem компоненты | 41 (HSCustom* family) |
+| Apple HIG violations | 0 P0 / 0 P1 (96–97% compliance) |
+| Cloud Functions enforceAppCheck | 14/14 (kids safety) |
+| EN ключей в UI | 0 (3 827 ru keys) |
+
+### Features
+
+- Логопедический анализатор речи (Wav2Vec2 + 4 PronunciationScorer)
+- 3D маскот Ляля с blendshapes (8 emotions + 5 lip-sync visemes)
+- AR упражнения артикуляции (TrueDepth Face Tracking)
+- Семейная синхронизация прогресса (Firestore)
+- Adaptive learning planner (skill stages C, V → C, V → C, V)
+- Spaced repetition engine (forgetting curve based)
+- 25 content packs / 7 555+ lessons (русский / IPA G2P)
+- Полностью offline-first работа
+
+### Architecture
+
+- Swift 6 strict concurrency
+- iOS 17+ SwiftUI 6
+- Clean Swift VIP per feature
+- Realm Swift локальная БД
+- Firebase backend (Auth / Firestore / FCM / Storage / AppCheck / RemoteConfig / Performance)
+
+### Quality bars
+
+- Light/Dark adaptive (49+ files)
+- Reduce Motion compliance
+- VoiceOver labels (97% coverage)
+- Touch targets ≥56pt Kids / ≥44pt adults
+- Dynamic Type Small → AccessibilityLarge
+- WCAG AA contrast (≥4.5:1)
+- Bundle: 1.4 GB (real ML models, voices, content)
+
+---
+
+## GitHub Pages Deploy (post-v1.0)
+
+Privacy Policy URL и Terms URL должны быть accessible при сабмите:
+
+- https://antongrits.github.io/HappySpeech/privacy-policy.html
+- https://antongrits.github.io/HappySpeech/terms.html
+
+Deploy команда (когда нужно):
+
+```bash
+# Settings → Pages → Branch main → /docs folder
+git push origin main  # GitHub Pages автоматически рендерит /docs
+```
+
+Currently: НЕ deployed (404). Будет deployed когда Apple Developer Program активирован и нужна submission.
+
+Локальные файлы готовы:
+- `docs/privacy-policy.html`
+- `docs/privacy-policy.md`
+- `docs/terms.html`
+- `docs/terms-of-service.md`
 
 ---
 
@@ -358,11 +429,15 @@ Works on iPhone. Requires iOS 17 or later.
 
 ---
 
-## СТАТУС v18 (2026-05-08)
+## СТАТУС v18 (2026-05-09 — Block AJ final)
 
 | Критерий | Статус |
 |---|---|
 | App Store metadata ru + en | READY |
+| What's New v18 section | DONE (Block AJ) |
+| Privacy Policy (.md + .html) | DONE |
+| Terms of Service (.md + .html) | DONE |
+| GitHub Pages deploy | DEFERRED (нет Apple Developer Account) |
 | AppPrivacyInfo.xcprivacy | DONE (Sprint 12, S12-018) |
 | Firebase backend | LIVE (happyspeech-dfd95, europe-west3) |
 | BUILD SUCCEEDED | VERIFIED (iPhone SE 3rd generation) |
@@ -375,3 +450,4 @@ Works on iPhone. Requires iOS 17 or later.
 **Tag:** v1.0.0-final-v18
 **Автор:** Anton Hryts (antongrits)
 **Дата финальной сборки:** 2026-05-08
+**Block AJ metadata pass:** 2026-05-09
