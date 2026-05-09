@@ -132,7 +132,7 @@ struct LessonQuickWidgetView: View {
     private func lessonRow(_ item: QuickLessonItem) -> some View {
         let fallback = URL(fileURLWithPath: "/")
         let destination = URL(string: item.deepLink) ?? fallback
-        return Link(destination: destination) {
+        Link(destination: destination) {
             HStack(spacing: 8) {
                 Circle()
                     .fill(typeColor(item.type).opacity(0.2))
