@@ -186,7 +186,7 @@ swiftlint --strict
 
 **Status:** PRODUCTION-READY (2026-05-09)
 **Tag:** v1.0.0-final-v18
-**Total v18 commits:** 80+
+**Total v18 commits:** 100
 
 ### Achievement
 
@@ -201,6 +201,7 @@ swiftlint --strict
 - 14/14 Cloud Functions enforceAppCheck enabled
 - 0 EN keys in UI (3 827 ru keys)
 - Bundle: 1.3 GB through depth
+- Test functions: 1319 (137 test files)
 
 ### Quality
 
