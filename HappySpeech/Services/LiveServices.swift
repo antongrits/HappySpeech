@@ -1,5 +1,5 @@
 import AsyncAlgorithms
-import AVFoundation
+@preconcurrency import AVFoundation
 import Collections
 import Foundation
 import OSLog
