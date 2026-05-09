@@ -155,6 +155,43 @@ extension SettingsView {
                 display.settings.childAge
             ))
             .accessibilityHint(String(localized: "settings.a11y.profile.hint"))
+
+            // Block R.1 v18 — Dialect Adaptation row.
+            // Открывает DialectAdaptationView в large sheet.
+            Button {
+                showDialectAdaptationSheet = true
+            } label: {
+                HStack(spacing: SpacingTokens.regular) {
+                    Image(systemName: "waveform.and.mic")
+                        .font(TypographyTokens.subtitle(20))
+                        .foregroundStyle(ColorTokens.Parent.accent)
+                        .frame(width: 32, height: 32)
+                        .accessibilityHidden(true)
+
+                    VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                        Text(String(localized: "settings.dialect.row.title"))
+                            .font(TypographyTokens.body(15))
+                            .foregroundStyle(ColorTokens.Parent.ink)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
+                        Text(String(localized: "settings.dialect.row.subtitle"))
+                            .font(TypographyTokens.caption(12))
+                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                            .lineLimit(2)
+                    }
+
+                    Spacer()
+
+                    Image(systemName: "chevron.right")
+                        .font(TypographyTokens.caption(13))
+                        .foregroundStyle(ColorTokens.Parent.inkSoft)
+                        .accessibilityHidden(true)
+                }
+                .frame(minHeight: 56)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(String(localized: "settings.dialect.row.title"))
+            .accessibilityHint(String(localized: "settings.dialect.row.hint"))
         } header: {
             Text(String(localized: "settings.section.profile"))
                 .font(TypographyTokens.caption(12).weight(.semibold))
