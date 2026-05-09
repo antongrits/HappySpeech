@@ -1,15 +1,17 @@
 {
   "images": [
     {
-      "filename": "reward_streak_30.png",
+      "filename": "reward_streak_30@1x.png",
       "idiom": "universal",
       "scale": "1x"
     },
     {
+      "filename": "reward_streak_30@2x.png",
       "idiom": "universal",
       "scale": "2x"
     },
     {
+      "filename": "reward_streak_30@3x.png",
       "idiom": "universal",
       "scale": "3x"
     }

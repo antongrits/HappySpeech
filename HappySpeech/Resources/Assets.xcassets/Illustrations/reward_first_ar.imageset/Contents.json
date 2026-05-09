@@ -1,15 +1,17 @@
 {
   "images": [
     {
-      "filename": "reward_first_ar.png",
+      "filename": "reward_first_ar@1x.png",
       "idiom": "universal",
       "scale": "1x"
     },
     {
+      "filename": "reward_first_ar@2x.png",
       "idiom": "universal",
       "scale": "2x"
     },
     {
+      "filename": "reward_first_ar@3x.png",
       "idiom": "universal",
       "scale": "3x"
     }
