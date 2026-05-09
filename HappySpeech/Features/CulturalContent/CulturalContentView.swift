@@ -142,10 +142,9 @@ struct CulturalContentView: View {
     // MARK: - Hero
 
     private var heroSection: some View {
-        VStack(spacing: SpacingTokens.sp2) {
-            Image(systemName: "books.vertical.fill")
-                .font(.system(size: 48))
-                .foregroundStyle(ColorTokens.Brand.primary)
+        VStack(spacing: SpacingTokens.sp3) {
+            LyalyaMascotView(state: .explaining, size: 140)
+                .frame(height: 140)
                 .accessibilityHidden(true)
 
             Text("cultural.hero.title")

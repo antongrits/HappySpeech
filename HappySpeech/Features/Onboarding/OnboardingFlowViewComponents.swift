@@ -174,7 +174,7 @@ struct OnboardingNameStep: View {
             VStack(spacing: SpacingTokens.large) {
                 Spacer(minLength: SpacingTokens.medium)
 
-                LyalyaHeroView(state: .explaining, mood: 0.7, size: 180)
+                LyalyaHeroView(state: .explaining, mood: 0.7, size: 200)
                     .accessibilityHidden(true)
 
                 Text(String(localized: "onboarding.name.title"))
@@ -306,7 +306,7 @@ struct OnboardingAgeStep: View {
         VStack(spacing: SpacingTokens.large) {
             Spacer(minLength: SpacingTokens.medium)
 
-            LyalyaHeroView(state: .thinking, mood: 0.6, size: 180)
+            LyalyaHeroView(state: .thinking, mood: 0.6, size: 200)
                 .accessibilityHidden(true)
 
             VStack(spacing: SpacingTokens.small) {
@@ -415,7 +415,7 @@ struct OnboardingGoalsStep: View {
 
     var body: some View {
         VStack(spacing: SpacingTokens.medium) {
-            LyalyaHeroView(state: .celebrating, mood: 0.8, size: 180)
+            LyalyaHeroView(state: .celebrating, mood: 0.8, size: 200)
                 .scaleEffect(appeared ? 1 : 0.7)
                 .opacity(appeared ? 1 : 0)
                 .accessibilityHidden(true)
@@ -514,7 +514,7 @@ struct OnboardingSoundsStep: View {
 
     var body: some View {
         VStack(spacing: SpacingTokens.medium) {
-            LyalyaHeroView(state: .explaining, mood: 0.7, size: 160)
+            LyalyaHeroView(state: .explaining, mood: 0.7, size: 200)
                 .scaleEffect(appeared ? 1 : 0.7)
                 .opacity(appeared ? 1 : 0)
                 .accessibilityHidden(true)

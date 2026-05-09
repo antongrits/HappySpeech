@@ -128,10 +128,9 @@ struct DialectAdaptationView: View {
 
     @ViewBuilder
     private func heroSection(viewModel: DialectAdaptationModels.Load.ViewModel) -> some View {
-        VStack(spacing: SpacingTokens.sp2) {
-            Image(systemName: "waveform.and.mic")
-                .font(.system(size: 48))
-                .foregroundStyle(ColorTokens.Parent.accent)
+        VStack(spacing: SpacingTokens.sp3) {
+            LyalyaMascotView(state: .thinking, size: 140)
+                .frame(height: 140)
                 .accessibilityHidden(true)
 
             Text("dialect.hero.title")

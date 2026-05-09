@@ -220,6 +220,39 @@ struct LogopedistChatView: View {
         .background(ColorTokens.Semantic.warningBg)
     }
 
+    // MARK: - Hero (empty state)
+
+    private var chatHeroEmptyState: some View {
+        VStack(spacing: SpacingTokens.sp3) {
+            LyalyaMascotView(state: .waving, size: 140)
+                .frame(height: 140)
+                .accessibilityHidden(true)
+
+            Text(verbatim: "Здесь начнётся ваш диалог")
+                .font(TypographyTokens.title(20))
+                .foregroundStyle(ColorTokens.Parent.ink)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
+
+            Text(verbatim: "Напишите специалисту первое сообщение — Ляля поможет начать беседу.")
+                .font(TypographyTokens.body(13))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .padding(.horizontal, SpacingTokens.sp4)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, SpacingTokens.sp5)
+        .background(
+            RoundedRectangle(cornerRadius: RadiusTokens.card)
+                .fill(ColorTokens.Parent.surface)
+                .shadow(color: .black.opacity(0.05), radius: 8, y: 2)
+        )
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(Text(verbatim: "Здесь начнётся ваш диалог. Напишите специалисту первое сообщение."))
+    }
+
     // MARK: - Messages
 
     @ViewBuilder
@@ -227,6 +260,10 @@ struct LogopedistChatView: View {
         ScrollViewReader { proxy in
             ScrollView {
                 LazyVStack(spacing: SpacingTokens.sp2) {
+                    if viewModel.messages.isEmpty {
+                        chatHeroEmptyState
+                            .padding(.top, SpacingTokens.sp6)
+                    }
                     ForEach(viewModel.messages) { message in
                         messageBubble(message: message)
                             .id(message.id)

@@ -125,24 +125,9 @@ struct FamilyAchievementsView: View {
         hero: FamilyAchievementsModels.Load.StreakHeroViewModel
     ) -> some View {
         VStack(spacing: SpacingTokens.sp3) {
-            ZStack {
-                Circle()
-                    .fill(
-                        hero.allActiveToday
-                            ? ColorTokens.Brand.primary.opacity(0.15)
-                            : ColorTokens.Parent.bgDeep
-                    )
-                    .frame(width: 84, height: 84)
-
-                Image(systemName: hero.allActiveToday ? "flame.fill" : "person.3")
-                    .font(.system(size: 40))
-                    .foregroundStyle(
-                        hero.allActiveToday
-                            ? ColorTokens.Brand.primary
-                            : ColorTokens.Parent.inkSoft
-                    )
-            }
-            .accessibilityHidden(true)
+            LyalyaMascotView(state: .celebrating, size: 140)
+                .frame(height: 140)
+                .accessibilityHidden(true)
 
             Text(hero.titleLabel)
                 .font(TypographyTokens.title(22))
