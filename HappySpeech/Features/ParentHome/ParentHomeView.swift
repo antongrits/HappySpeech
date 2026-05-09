@@ -164,6 +164,12 @@ private struct ParentDashboardTab: View {
     let coordinator: AppCoordinator
 
     @Environment(\.horizontalSizeClass) private var hSizeClass
+    @Environment(AppContainer.self) private var container
+
+    /// Block R.2 v18 — sheet с LogopedistChatView (parent ↔ specialist).
+    @State private var showLogopedistChatSheet: Bool = false
+    /// Block R.4 v18 — sheet с FamilyAchievementsView (общие достижения).
+    @State private var showFamilyAchievementsSheet: Bool = false
 
     var body: some View {
         NavigationStack {
@@ -207,6 +213,12 @@ private struct ParentDashboardTab: View {
                     // Family Calendar card
                     familyCalendarCard
 
+                    // Block R.2 v18 — Logopedist chat card.
+                    logopedistChatCard
+
+                    // Block R.4 v18 — Family achievements card.
+                    familyAchievementsCard
+
                     // Stuttering / Fluency module (if hasFluencyGoal enabled)
                     stutteringCard
 
@@ -219,6 +231,23 @@ private struct ParentDashboardTab: View {
             .background(ColorTokens.Parent.bg.ignoresSafeArea())
             .navigationTitle(String(localized: "Прогресс"))
             .navigationBarTitleDisplayMode(.large)
+            // Block R.2 v18 — LogopedistChat sheet.
+            .sheet(isPresented: $showLogopedistChatSheet) {
+                let parentId = coordinator.authUser?.uid ?? "parent-default"
+                LogopedistChatView(
+                    parentId: parentId,
+                    specialistId: "specialist-default"
+                )
+                .environment(container)
+                .presentationDetents([.large])
+            }
+            // Block R.4 v18 — FamilyAchievements sheet.
+            .sheet(isPresented: $showFamilyAchievementsSheet) {
+                let familyId = coordinator.authUser?.uid ?? "family-default"
+                FamilyAchievementsView(familyId: familyId)
+                    .environment(container)
+                    .presentationDetents([.large])
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
@@ -717,6 +746,86 @@ private struct ParentDashboardTab: View {
             )
             .environment(\.circuitContext, .parent)
         }
+    }
+
+    // MARK: - Block R.2 v18: Logopedist Chat Card
+
+    private var logopedistChatCard: some View {
+        HSCard(style: .elevated) {
+            HStack(spacing: SpacingTokens.sp3) {
+                Image(systemName: "message.badge.filled.fill")
+                    .font(TypographyTokens.titleLarge(28))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "chat.entry.title"))
+                        .font(TypographyTokens.headline())
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "chat.entry.subtitle"))
+                        .font(TypographyTokens.body())
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: SpacingTokens.sp1)
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp4)
+        }
+        .onTapGesture {
+            showLogopedistChatSheet = true
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            String(localized: "chat.entry.title") + ". " +
+            String(localized: "chat.entry.subtitle")
+        )
+        .accessibilityAddTraits(.isButton)
+        .environment(\.circuitContext, .parent)
+    }
+
+    // MARK: - Block R.4 v18: Family Achievements Card
+
+    private var familyAchievementsCard: some View {
+        HSCard(style: .elevated) {
+            HStack(spacing: SpacingTokens.sp3) {
+                Image(systemName: "trophy.circle.fill")
+                    .font(TypographyTokens.titleLarge(28))
+                    .foregroundStyle(ColorTokens.Brand.gold)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "family.achievements.entry.title"))
+                        .font(TypographyTokens.headline())
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "family.achievements.entry.subtitle"))
+                        .font(TypographyTokens.body())
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: SpacingTokens.sp1)
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp4)
+        }
+        .onTapGesture {
+            showFamilyAchievementsSheet = true
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            String(localized: "family.achievements.entry.title") + ". " +
+            String(localized: "family.achievements.entry.subtitle")
+        )
+        .accessibilityAddTraits(.isButton)
+        .environment(\.circuitContext, .parent)
     }
 
     private var recommendationsSection: some View {
