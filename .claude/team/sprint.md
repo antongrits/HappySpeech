@@ -673,6 +673,34 @@ All 18 blocks (0/A/B/C/D/E+O/F/G/H/I/J/K/L/M/N/P/Q/R) completed либо ADR-def
 
 ---
 
+## Sprint 12 — Post-Tag Continuation FINAL (2026-05-09, 100 commits)
+
+### Status: 95% COMPLETE — 49+ post-tag commits
+
+### Latest blocks closed (V tests added)
+- V.1 R-screens Presenter tests (+32 tests) — 4c13b1d0
+- V.2 Service tests (+51 tests) — d9d79739
+- V.3 Presenter + Model + Token tests (+85 tests) — 36d5503c
+- V.4 Final coverage report (+168 total) — 908641a2
+
+### Test stats
+- Test files: 137 (+18)
+- Test functions: 1319 (+168)
+
+### Total post-tag commits achievement
+- 49+ closed blocks since tag v1.0.0-final-v18
+- 0 regressions detected
+- BUILD SUCCEEDED
+- 0 in-house warnings
+- 0 P0 / 0 P1 (Apple HIG)
+
+### Pending
+- Block Z screenshot tour (BG running, sonnet)
+- AA Apply Z findings (depends on Z)
+- AN.final + AO (final declarations after Z)
+
+---
+
 ## Sprint 12 — Post-Tag Continuation (2026-05-09)
 
 ### Status: COMPLETED — Plan v18 100%
