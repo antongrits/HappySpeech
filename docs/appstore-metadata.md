@@ -58,23 +58,27 @@
 
 ---
 
-## GitHub Pages Deploy (post-v1.0)
+## GitHub Pages Deploy
 
-Privacy Policy URL и Terms URL должны быть accessible при сабмите:
+Privacy Policy URL и Terms URL accessible при сабмите:
 
 - https://antongrits.github.io/HappySpeech/privacy-policy.html
 - https://antongrits.github.io/HappySpeech/terms.html
+- https://antongrits.github.io/HappySpeech/ (landing index)
 
-Deploy команда (когда нужно):
+Deploy конфигурация:
 
 ```bash
-# Settings → Pages → Branch main → /docs folder
-git push origin main  # GitHub Pages автоматически рендерит /docs
+# Settings → Pages → Source: main branch, /docs folder
+# HTTPS enforced: true
+# Build type: legacy (Jekyll auto)
+git push origin main  # GitHub Pages автоматически пересобирает /docs
 ```
 
-Currently: НЕ deployed (404). Будет deployed когда Apple Developer Program активирован и нужна submission.
+Status: deployed (HTTP 200). Активирован 2026-05-09 через `gh api -X POST repos/antongrits/HappySpeech/pages`. Готов для App Store submission когда Apple Developer Program активирован.
 
-Локальные файлы готовы:
+Локальные файлы (source):
+- `docs/index.html`
 - `docs/privacy-policy.html`
 - `docs/privacy-policy.md`
 - `docs/terms.html`
@@ -437,7 +441,7 @@ Works on iPhone. Requires iOS 17 or later.
 | What's New v18 section | DONE (Block AJ) |
 | Privacy Policy (.md + .html) | DONE |
 | Terms of Service (.md + .html) | DONE |
-| GitHub Pages deploy | DEFERRED (нет Apple Developer Account) |
+| GitHub Pages deploy | DONE (https://antongrits.github.io/HappySpeech/, deployed 2026-05-09) |
 | AppPrivacyInfo.xcprivacy | DONE (Sprint 12, S12-018) |
 | Firebase backend | LIVE (happyspeech-dfd95, europe-west3) |
 | BUILD SUCCEEDED | VERIFIED (iPhone SE 3rd generation) |
