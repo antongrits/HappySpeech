@@ -50,8 +50,8 @@ struct SeasonalBannerView: View {
                         Text(event.localizedTitle)
                             .font(TypographyTokens.headline())
                             .foregroundStyle(ColorTokens.Kid.ink)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.85)
+                            .lineLimit(nil)
+                            .minimumScaleFactor(0.75)
 
                         Text(String(localized: "seasonal.banner.subtitle"))
                             .font(TypographyTokens.caption())
