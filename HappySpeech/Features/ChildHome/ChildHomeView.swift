@@ -40,6 +40,14 @@ struct ChildHomeView: View {
     // Tap на flame badge → sheet с DailyStreakView (milestones + saver).
     @State private var showDailyStreakSheet: Bool = false
 
+    // MARK: - R.3 v18 — Weekly Challenge
+    // Tap на quick action card → sheet с WeeklyChallengeView.
+    @State private var showWeeklyChallengeSheet: Bool = false
+
+    // MARK: - R.5 v18 — Cultural Content (русские сказки/песни)
+    // Tap на quick action card → sheet с CulturalContentView.
+    @State private var showCulturalContentSheet: Bool = false
+
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -168,6 +176,18 @@ struct ChildHomeView: View {
                 childName: viewModel.displayedName
             )
             .environment(container)
+        }
+        // Block R.3 v18 — WeeklyChallenge sheet.
+        .sheet(isPresented: $showWeeklyChallengeSheet) {
+            WeeklyChallengeView(childId: childId)
+                .environment(container)
+                .presentationDetents([.large])
+        }
+        // Block R.5 v18 — CulturalContent sheet.
+        .sheet(isPresented: $showCulturalContentSheet) {
+            CulturalContentView(childId: childId)
+                .environment(container)
+                .presentationDetents([.large])
         }
     }
 
@@ -624,6 +644,28 @@ struct ChildHomeView: View {
                     reduceMotion: reduceMotion
                 ) {
                     router?.routeToAchievements(childId: childId)
+                }
+                // Block R.3 v18 — Weekly Challenge entry.
+                ChildHomeQuickActionTile(
+                    title: String(localized: "child.home.action.weekly"),
+                    icon: "calendar.badge.clock",
+                    color: ColorTokens.Brand.rose,
+                    heroId: "quickaction_weekly",
+                    namespace: heroNamespace,
+                    reduceMotion: reduceMotion
+                ) {
+                    showWeeklyChallengeSheet = true
+                }
+                // Block R.5 v18 — Cultural Content entry.
+                ChildHomeQuickActionTile(
+                    title: String(localized: "child.home.action.cultural"),
+                    icon: "books.vertical.fill",
+                    color: ColorTokens.Brand.butter,
+                    heroId: "quickaction_cultural",
+                    namespace: heroNamespace,
+                    reduceMotion: reduceMotion
+                ) {
+                    showCulturalContentSheet = true
                 }
             }
         }
