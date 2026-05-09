@@ -8144,7 +8144,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Нажмите, чтобы попробовать интерактивный пример"
+            "value": "Покажет короткий пример упражнения"
           }
         }
       }
@@ -8871,17 +8871,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Попробовать!"
-          }
-        }
-      }
-    },
-    "demo.try.hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Покажет короткий пример упражнения"
           }
         }
       }
@@ -42048,6 +42037,1249 @@
           "stringUnit": {
             "state": "translated",
             "value": "≈ \\(minutes) мин \\(seconds) с"
+          }
+        }
+      }
+    },
+    "chat.attach.audio": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прикрепить аудио"
+          }
+        }
+      }
+    },
+    "chat.attach.confirmation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Аудио прикреплено к сообщению"
+          }
+        }
+      }
+    },
+    "chat.attachment.audio.placeholder": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Аудиозапись"
+          }
+        }
+      }
+    },
+    "chat.attachment.audio.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Аудиозапись"
+          }
+        }
+      }
+    },
+    "chat.autoreply.default": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спасибо за сообщение! Отвечу в ближайшее время."
+          }
+        }
+      }
+    },
+    "chat.autoreply.fallback": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сообщение получено."
+          }
+        }
+      }
+    },
+    "chat.autoreply.question": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хороший вопрос! Отвечу подробнее при следующем сеансе."
+          }
+        }
+      }
+    },
+    "chat.autoreply.short": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Понял, принял к сведению."
+          }
+        }
+      }
+    },
+    "chat.autoreply.thanks": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рад помочь! Продолжайте занятия."
+          }
+        }
+      }
+    },
+    "chat.composer.placeholder": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Написать логопеду..."
+          }
+        }
+      }
+    },
+    "chat.connection.offline.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нет подключения. Сообщение будет отправлено при восстановлении связи."
+          }
+        }
+      }
+    },
+    "chat.header.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@, %@"
+          }
+        }
+      }
+    },
+    "chat.message.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: %@, %@"
+          }
+        }
+      }
+    },
+    "chat.message.a11y.withAttachment": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: %@, вложение %@, %@"
+          }
+        }
+      }
+    },
+    "chat.seed.intro": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Здесь вы можете задавать вопросы о занятиях и отправлять аудиозаписи для анализа."
+          }
+        }
+      }
+    },
+    "chat.seed.welcome": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Здравствуйте! Я %@ — ваш логопед в HappySpeech. Рада начать работу с вашим ребёнком."
+          }
+        }
+      }
+    },
+    "chat.send.confirmation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сообщение отправлено"
+          }
+        }
+      }
+    },
+    "chat.sender.parent": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вы"
+          }
+        }
+      }
+    },
+    "chat.sender.specialist": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Логопед"
+          }
+        }
+      }
+    },
+    "chat.specialist.lastSeen": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Был(а) в %@"
+          }
+        }
+      }
+    },
+    "chat.specialist.notConnected": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Логопед не подключён"
+          }
+        }
+      }
+    },
+    "chat.specialist.offline": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не в сети"
+          }
+        }
+      }
+    },
+    "chat.specialist.online": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В сети"
+          }
+        }
+      }
+    },
+    "chat.specialist.seed.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Елена Ивановна"
+          }
+        }
+      }
+    },
+    "chat.status.delivered": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Доставлено"
+          }
+        }
+      }
+    },
+    "chat.status.failed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ошибка"
+          }
+        }
+      }
+    },
+    "chat.status.read": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прочитано"
+          }
+        }
+      }
+    },
+    "chat.status.sending": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отправляется..."
+          }
+        }
+      }
+    },
+    "chat.status.sent": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отправлено"
+          }
+        }
+      }
+    },
+    "chat.time.yesterday": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вчера в %@"
+          }
+        }
+      }
+    },
+    "cultural.category.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %d материалов"
+          }
+        }
+      }
+    },
+    "cultural.item.a11y.noAuthor": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, категория %@"
+          }
+        }
+      }
+    },
+    "cultural.item.a11y.withAuthor": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, автор %@, категория %@"
+          }
+        }
+      }
+    },
+    "cultural.item.allSounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все звуки"
+          }
+        }
+      }
+    },
+    "cultural.list.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В этой категории пока нет материалов"
+          }
+        }
+      }
+    },
+    "cultural.list.total": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d материалов"
+          }
+        }
+      }
+    },
+    "cultural.reader.pause": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пауза"
+          }
+        }
+      }
+    },
+    "cultural.reader.play": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Воспроизвести"
+          }
+        }
+      }
+    },
+    "cultural.toast.bookmarked": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавлено в избранное"
+          }
+        }
+      }
+    },
+    "cultural.toast.unbookmarked": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалено из избранного"
+          }
+        }
+      }
+    },
+    "dialect.applied.format": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Применено %@"
+          }
+        }
+      }
+    },
+    "dialect.hero.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Текущий диалект: %@"
+          }
+        }
+      }
+    },
+    "dialect.row.a11y.available": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, доступен для выбора"
+          }
+        }
+      }
+    },
+    "dialect.row.a11y.selected": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, выбран"
+          }
+        }
+      }
+    },
+    "dialect.toast.applied": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Применён диалект «%@»"
+          }
+        }
+      }
+    },
+    "dialect.toast.reset": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Восстановлен диалект «%@»"
+          }
+        }
+      }
+    },
+    "empty.achievements.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "К занятиям"
+          }
+        }
+      }
+    },
+    "empty.achievements.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заверши первое занятие, чтобы получить награду"
+          }
+        }
+      }
+    },
+    "empty.achievements.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока нет наград"
+          }
+        }
+      }
+    },
+    "empty.custom.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попробовать"
+          }
+        }
+      }
+    },
+    "empty.lessons.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть каталог"
+          }
+        }
+      }
+    },
+    "empty.lessons.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавь первый урок и начни путь"
+          }
+        }
+      }
+    },
+    "empty.lessons.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нет уроков"
+          }
+        }
+      }
+    },
+    "empty.notifications.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "К настройкам"
+          }
+        }
+      }
+    },
+    "empty.notifications.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Здесь будут напоминания и сводки прогресса"
+          }
+        }
+      }
+    },
+    "empty.notifications.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Уведомлений нет"
+          }
+        }
+      }
+    },
+    "empty.search.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Очистить"
+          }
+        }
+      }
+    },
+    "empty.search.message.generic": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попробуй другой запрос"
+          }
+        }
+      }
+    },
+    "empty.search.message.withQuery": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ничего не найдено по запросу"
+          }
+        }
+      }
+    },
+    "empty.search.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ничего не найдено"
+          }
+        }
+      }
+    },
+    "empty.tasks.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Создать задание"
+          }
+        }
+      }
+    },
+    "empty.tasks.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодня заданий нет — отдыхай!"
+          }
+        }
+      }
+    },
+    "empty.tasks.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нет заданий"
+          }
+        }
+      }
+    },
+    "family.ach.a11y.locked": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, прогресс %@, не получена"
+          }
+        }
+      }
+    },
+    "family.ach.a11y.unlocked": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, прогресс %@, получена"
+          }
+        }
+      }
+    },
+    "family.ach.category.bonus": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Бонус"
+          }
+        }
+      }
+    },
+    "family.ach.category.milestone": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Веха"
+          }
+        }
+      }
+    },
+    "family.ach.category.sessions": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Занятия"
+          }
+        }
+      }
+    },
+    "family.ach.category.sounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуки"
+          }
+        }
+      }
+    },
+    "family.ach.category.streak": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серия"
+          }
+        }
+      }
+    },
+    "family.member.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@, %@, %@"
+          }
+        }
+      }
+    },
+    "family.member.activeToday": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Занимался сегодня"
+          }
+        }
+      }
+    },
+    "family.member.ageLabel": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d лет"
+          }
+        }
+      }
+    },
+    "family.member.noMastered": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуки ещё осваиваются"
+          }
+        }
+      }
+    },
+    "family.member.noStreak": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серия не начата"
+          }
+        }
+      }
+    },
+    "family.member.notActiveToday": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодня не занимался"
+          }
+        }
+      }
+    },
+    "family.member.streak.day1": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 день подряд"
+          }
+        }
+      }
+    },
+    "family.member.streak.daysN": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d дней подряд"
+          }
+        }
+      }
+    },
+    "family.streak.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@"
+          }
+        }
+      }
+    },
+    "family.streak.activeRatio": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d из %d занимаются сегодня"
+          }
+        }
+      }
+    },
+    "family.streak.empty.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавьте участников и начните вместе"
+          }
+        }
+      }
+    },
+    "family.streak.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Семья пока не добавлена"
+          }
+        }
+      }
+    },
+    "family.streak.partial.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ещё %d участников не занимались сегодня"
+          }
+        }
+      }
+    },
+    "family.streak.partial.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не все занимаются"
+          }
+        }
+      }
+    },
+    "family.streak.together.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вся семья занимается сегодня — отлично!"
+          }
+        }
+      }
+    },
+    "family.streak.together.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d дней вместе"
+          }
+        }
+      }
+    },
+    "family.summary.mastered": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d освоено звуков"
+          }
+        }
+      }
+    },
+    "family.summary.sessions": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d занятий всего"
+          }
+        }
+      }
+    },
+    "family.summary.unlocked": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d из %d наград"
+          }
+        }
+      }
+    },
+    "family.toast.unlocked.multiple": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разблокировано %d новых наград"
+          }
+        }
+      }
+    },
+    "family.toast.unlocked.single": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разблокирована награда «%@»"
+          }
+        }
+      }
+    },
+    "paywall.teaser.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Узнать больше"
+          }
+        }
+      }
+    },
+    "paywall.teaser.defaultTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Премиум функция"
+          }
+        }
+      }
+    },
+    "paywall.teaser.hint.disabled": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скоро появится"
+          }
+        }
+      }
+    },
+    "paywall.teaser.hint.enabled": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите для подробностей"
+          }
+        }
+      }
+    },
+    "starRating.label.prefix": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Оценка"
+          }
+        }
+      }
+    },
+    "starRating.outOf": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "из"
+          }
+        }
+      }
+    },
+    "starRating.set": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поставить"
+          }
+        }
+      }
+    },
+    "weekly.day.a11y.completed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: выполнен"
+          }
+        }
+      }
+    },
+    "weekly.day.a11y.locked": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: заблокирован"
+          }
+        }
+      }
+    },
+    "weekly.day.a11y.missed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: пропущен"
+          }
+        }
+      }
+    },
+    "weekly.day.a11y.pending": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: ожидает выполнения"
+          }
+        }
+      }
+    },
+    "weekly.endOfWeek.days": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "До конца недели %d дней"
+          }
+        }
+      }
+    },
+    "weekly.endOfWeek.today": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Последний день недели — сегодня"
+          }
+        }
+      }
+    },
+    "weekly.endOfWeek.tomorrow": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "До конца недели 1 день"
+          }
+        }
+      }
+    },
+    "weekly.hero.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Недельный вызов: %@, %@"
+          }
+        }
+      }
+    },
+    "weekly.reward.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Награда: %@, %@"
+          }
+        }
+      }
+    },
+    "weekly.reward.locked.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заблокирована"
+          }
+        }
+      }
+    },
+    "weekly.reward.unlocked.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Получена"
+          }
+        }
+      }
+    },
+    "weekly.toast.completed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Недельный вызов выполнен! Поздравляем!"
+          }
+        }
+      }
+    },
+    "weekly.toast.dayMarked": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выполнено %d из %d дней"
+          }
+        }
+      }
+    },
+    "weekly.toast.kindSwitched": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Переключено на «%@»"
+          }
+        }
+      }
+    },
+    "weekly.toast.rewardUnlocked": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разблокирована новая награда!"
           }
         }
       }
