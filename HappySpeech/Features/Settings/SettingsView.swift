@@ -40,6 +40,8 @@ struct SettingsView: View {
     @State private var showParentalGate = false
     @State private var parentalGatePendingURL: URL?
     @State private var showChangelog = false
+    /// Block R.1 v18 — sheet для DialectAdaptationView (Settings → Profile → Dialect).
+    @State var showDialectAdaptationSheet = false
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "SettingsView")
 
@@ -223,6 +225,13 @@ struct SettingsView: View {
                         parentalGatePendingURL = nil
                     }
                 }
+            }
+            // Block R.1 v18 — DialectAdaptation sheet.
+            .sheet(isPresented: $showDialectAdaptationSheet) {
+                let childId = container.currentChildId.isEmpty ? "default" : container.currentChildId
+                DialectAdaptationView(childId: childId)
+                    .environment(container)
+                    .presentationDetents([.large])
             }
         }
         .environment(\.circuitContext, .parent)
