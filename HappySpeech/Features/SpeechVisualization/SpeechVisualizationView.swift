@@ -30,14 +30,13 @@ final class SpeechVisualizationViewModelHolder: SpeechVisualizationDisplayLogic 
     func displayScore(viewModel: SpeechVisualizationModels.Score.ViewModel) async {
         self.scoreVM = viewModel
         // Заменим syllables в loadVM на updated.
-        if var lvm = loadVM {
+        if let lvm = loadVM {
             self.loadVM = SpeechVisualizationModels.Load.ViewModel(
                 title: lvm.title,
                 wordDisplay: lvm.wordDisplay,
                 syllables: viewModel.updatedSyllables,
                 totalDurationLabel: lvm.totalDurationLabel
             )
-            _ = lvm
         }
     }
 }
