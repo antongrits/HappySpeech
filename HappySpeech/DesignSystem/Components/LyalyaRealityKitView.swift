@@ -210,6 +210,17 @@ extension LyalyaRealityKitView {
         /// Вертикальное смещение по Y для центровки в кадре.
         private static let basePositionY: Float = -0.1
 
+        // MARK: - Sync USDZ loader (iOS 17 fallback)
+
+        /// Synchronous wrapper для Entity.load(contentsOf:) — выносит
+        /// синхронный вызов в отдельный sync метод, чтобы не было
+        /// async-availability диагностики на callsite (iOS 17 fallback).
+        @available(iOS, introduced: 17.0, obsoleted: 18.0,
+                   message: "Use Entity(contentsOf:) async init on iOS 18+.")
+        private static func loadEntitySync(from url: URL) throws -> Entity {
+            try Entity.load(contentsOf: url)
+        }
+
         // MARK: - Scene setup
 
         func loadScene(into arView: ARView, reduceMotion: Bool) {
@@ -255,7 +266,15 @@ extension LyalyaRealityKitView {
             }
 
             do {
-                let entity = try await Entity.load(contentsOf: url)
+                // Entity(contentsOf:) async init доступен только на iOS 18+.
+                // На iOS 17 fallback к synchronous Entity.load(contentsOf:);
+                // предупреждение о async-context подавлено условным branch'ом.
+                let entity: Entity
+                if #available(iOS 18.0, *) {
+                    entity = try await Entity(contentsOf: url)
+                } else {
+                    entity = try Self.loadEntitySync(from: url)
+                }
                 entity.scale = SIMD3<Float>(repeating: Self.baseScale)
                 entity.position = [0, Self.basePositionY, 0]
 

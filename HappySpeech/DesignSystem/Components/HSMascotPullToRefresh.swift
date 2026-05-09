@@ -179,7 +179,9 @@ private struct PullPreview: View {
         }
         .hsMascotRefresh {
             try? await Task.sleep(for: .seconds(2))
-            items = Array(0..<Int.random(in: 5...30))
+            await MainActor.run {
+                items = Array(0..<Int.random(in: 5...30))
+            }
         }
     }
 }
