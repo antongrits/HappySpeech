@@ -299,7 +299,7 @@ struct LogopedistChatView: View {
                         Image(systemName: symbol)
                             .font(.caption2)
                             .foregroundStyle(
-                                message.statusLabel == String(localized: "chat.status.read")
+                                message.isRead
                                     ? ColorTokens.Parent.accent
                                     : ColorTokens.Parent.inkMuted
                             )

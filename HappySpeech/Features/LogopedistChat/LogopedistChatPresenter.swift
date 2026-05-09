@@ -120,6 +120,7 @@ final class LogopedistChatPresenter: LogopedistChatPresentationLogic {
         let timeLabel = formatTime(msg.createdAt)
         let statusLabel = formatStatus(msg.status, isFromParent: isFromParent)
         let statusSymbol = symbolForStatus(msg.status, isFromParent: isFromParent)
+        let isRead = msg.status == .read
 
         let attachment: LogopedistChatModels.Load.AttachmentRow?
         if let att = msg.attachment {
@@ -166,6 +167,7 @@ final class LogopedistChatPresenter: LogopedistChatPresentationLogic {
             timeLabel: timeLabel,
             statusLabel: statusLabel,
             statusSymbol: statusSymbol,
+            isRead: isRead,
             attachment: attachment,
             accessibilityLabel: a11y
         )

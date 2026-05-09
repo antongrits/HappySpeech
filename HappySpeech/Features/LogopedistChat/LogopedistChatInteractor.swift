@@ -52,6 +52,7 @@ final class LogopedistChatInteractor: LogopedistChatBusinessLogic, LogopedistCha
 
     private var messages: [ChatMessage]
     private var specialistInfo: SpecialistInfo?
+    private var autoReplyTask: Task<Void, Never>?
 
     // MARK: - Dependencies
 
@@ -124,6 +125,9 @@ final class LogopedistChatInteractor: LogopedistChatBusinessLogic, LogopedistCha
         messages.append(parentMessage)
         Self.logger.info("Parent message sent (\(request.text.count) chars)")
 
+        // Cancel предыдущий auto-reply если есть (защита от накопления при rapid send).
+        autoReplyTask?.cancel()
+
         // Через 2 секунды (моделируем delay) добавляем auto-reply от specialist
         // — для дипломной демонстрации.
         let autoReply = ChatMessage(
@@ -135,15 +139,27 @@ final class LogopedistChatInteractor: LogopedistChatBusinessLogic, LogopedistCha
             attachment: nil,
             isOptional: true
         )
-        // Ждём чуть чтобы UX «как живой ответ».
-        try? await Task.sleep(for: .seconds(2))
-        messages.append(autoReply)
 
         let response = LogopedistChatModels.Send.Response(
             createdMessage: parentMessage,
-            appendedMessages: [parentMessage, autoReply]
+            appendedMessages: [parentMessage]
         )
+        await presenter?.presentSend(response: response)
 
+        // Fire-and-forget auto-reply через 2 секунды (cancellable).
+        autoReplyTask = Task { [weak self] in
+            try? await Task.sleep(for: .seconds(2))
+            guard !Task.isCancelled, let self else { return }
+            await self.appendAutoReply(autoReply, parentMessage: parentMessage)
+        }
+    }
+
+    private func appendAutoReply(_ autoReply: ChatMessage, parentMessage: ChatMessage) async {
+        messages.append(autoReply)
+        let response = LogopedistChatModels.Send.Response(
+            createdMessage: parentMessage,
+            appendedMessages: [autoReply]
+        )
         await presenter?.presentSend(response: response)
     }
 

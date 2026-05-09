@@ -131,8 +131,7 @@ public struct HSEmptyStateView: View {
                 Circle()
                     .fill(ColorTokens.Brand.primary.opacity(0.15))
                     .frame(width: 120, height: 120)
-                Text(state.fallbackEmoji)
-                    .font(.system(size: 56))
+                LyalyaMascotView(state: state, size: 96)
             }
             .modifier(IdleBounceModifier(reduceMotion: reduceMotion))
         }

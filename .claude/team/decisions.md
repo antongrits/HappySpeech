@@ -3,6 +3,40 @@
 
 ---
 
+## ADR-V18-VIP-INIT-RACE — VIP triple через @State Optional acceptable (2026-05-09)
+
+### Status: Approved (Block AD code review post-tag)
+
+### Context
+Code review v18 post-tag нашёл паттерн VIP triple init через `@State` Optional во всех 5 R-screens (DialectAdaptation/LogopedistChat/WeeklyChallenge/FamilyAchievements/CulturalContent):
+```swift
+@State private var interactor: <Feature>Interactor?
+@State private var presenter: <Feature>Presenter?
+@State private var router: <Feature>Router?
+```
+И setup в `setupAndLoad()` через `.task`.
+
+### Concern
+Theoretical race: если body отрендерился до setupAndLoad, любые tap'ы могут попасть на nil.
+
+### Decision
+Accept текущий pattern для v1.0:
+- Mitigation активна: `holder.loadVM == nil → loadingSection` показывает loading state до setupAndLoad
+- В loadingSection composer disabled (нет интерактивных элементов до загрузки)
+- На практике race не воспроизводится
+
+### Future v19 enable path
+Вынести VIP triple в AppContainer factory closure:
+```swift
+container.makeLogopedistChatVIP(parentId:, specialistId:) -> (Interactor, Presenter, Router)
+```
+Это устранит race окно полностью.
+
+### Mitigation
+В loadingSection и при holder.loadVM == nil все интерактивные элементы блокированы.
+
+---
+
 ## ADR-V18-AG-DEFER-BLENDER — Blender 3D characters defer post-v1.0 (2026-05-09)
 
 ### Status: Approved (Block AG v18 — post-tag continuation)
