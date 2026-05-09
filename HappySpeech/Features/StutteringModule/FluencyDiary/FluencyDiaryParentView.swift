@@ -15,29 +15,31 @@ struct FluencyDiaryParentView: View {
     private let normalThreshold: Float = 5.0
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: SpacingTokens.sp6) {
-                if isLoading {
-                    ProgressView()
-                        .frame(maxWidth: .infinity, minHeight: 200)
-                } else if sessions.isEmpty {
-                    // G.1 v17 — HSEmptyStateView (mascot=encouraging).
-                    // Замена inline VStack: единый бренд-стиль empty-state'ов.
-                    HSEmptyStateView(
-                        mascot: .encouraging,
-                        title: String(localized: "fluency_diary.empty.title"),
-                        subtitle: String(localized: "fluency_diary.empty.message")
-                    )
-                    .frame(maxWidth: .infinity, minHeight: 300)
-                } else {
-                    chartSection
-                    historySection
+        ZStack {
+            ColorTokens.Parent.bg.ignoresSafeArea()
+            ScrollView {
+                VStack(spacing: SpacingTokens.sp6) {
+                    if isLoading {
+                        ProgressView()
+                            .frame(maxWidth: .infinity, minHeight: 200)
+                    } else if sessions.isEmpty {
+                        // G.1 v17 — HSEmptyStateView (mascot=encouraging).
+                        // Замена inline VStack: единый бренд-стиль empty-state'ов.
+                        HSEmptyStateView(
+                            mascot: .encouraging,
+                            title: String(localized: "fluency_diary.empty.title"),
+                            subtitle: String(localized: "fluency_diary.empty.message")
+                        )
+                        .frame(maxWidth: .infinity, minHeight: 300)
+                    } else {
+                        chartSection
+                        historySection
+                    }
                 }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.vertical, SpacingTokens.sp5)
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.vertical, SpacingTokens.sp5)
         }
-        .background(ColorTokens.Parent.bg.ignoresSafeArea())
         .navigationTitle(String(localized: "Дневник плавности"))
         .navigationBarTitleDisplayMode(.inline)
         .environment(\.circuitContext, .parent)

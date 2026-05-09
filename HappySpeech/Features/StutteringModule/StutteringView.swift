@@ -78,36 +78,34 @@ struct StutteringView: View {
     @AppStorage("stuttering_welcome_shown") private var welcomeShown: Bool = false
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                ColorTokens.Kid.bg.ignoresSafeArea()
-                scrollContent
+        ZStack {
+            ColorTokens.Kid.bg.ignoresSafeArea()
+            scrollContent
+        }
+        .navigationTitle(String(localized: "stuttering.entry.title"))
+        .navigationBarTitleDisplayMode(.large)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                progressToolbarButton
             }
-            .navigationTitle(String(localized: "stuttering.entry.title"))
-            .navigationBarTitleDisplayMode(.large)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    progressToolbarButton
-                }
+        }
+        .sheet(isPresented: Binding(
+            get: { scene.display.showWelcomeSheet },
+            set: { _ in }
+        )) {
+            StutteringWelcomeSheet {
+                welcomeShown = true
+                scene.interactor.markWelcomeSeen()
+                scene.display.showWelcomeSheet = false
             }
-            .sheet(isPresented: Binding(
-                get: { scene.display.showWelcomeSheet },
-                set: { _ in }
-            )) {
-                StutteringWelcomeSheet {
-                    welcomeShown = true
-                    scene.interactor.markWelcomeSeen()
-                    scene.display.showWelcomeSheet = false
-                }
+        }
+        .sheet(item: $showInfoType) { type in
+            StutteringStaticInfoSheet(type: type) {
+                showInfoType = nil
             }
-            .sheet(item: $showInfoType) { type in
-                StutteringStaticInfoSheet(type: type) {
-                    showInfoType = nil
-                }
-            }
-            .navigationDestination(item: $navigateTo) { mode in
-                StutteringRouter().destinationView(for: mode)
-            }
+        }
+        .navigationDestination(item: $navigateTo) { mode in
+            StutteringRouter().destinationView(for: mode)
         }
         .environment(\.circuitContext, .kid)
         .task {
@@ -579,6 +577,8 @@ extension InfoCardType: Identifiable {
 // MARK: - Preview
 
 #Preview("StutteringView") {
-    StutteringView()
-        .environment(\.circuitContext, .kid)
+    NavigationStack {
+        StutteringView()
+    }
+    .environment(\.circuitContext, .kid)
 }

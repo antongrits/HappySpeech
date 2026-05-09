@@ -44,6 +44,12 @@ struct AuthSignInView: View {
             get: { authAlertItem },
             set: { newValue in if newValue == nil { scene?.state.dismissError() } }
         ))
+        .onAppear {
+            // AA v18 — eager init on appear (before .task) so form is ready on first render.
+            if scene == nil {
+                scene = AuthScene(authService: container.authService)
+            }
+        }
         .task {
             if scene == nil {
                 scene = AuthScene(authService: container.authService)

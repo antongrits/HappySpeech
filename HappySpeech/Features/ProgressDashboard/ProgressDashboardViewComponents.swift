@@ -23,7 +23,7 @@ struct SummaryCardView: View {
             VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
                 Text(card.title)
                     .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .foregroundStyle(ColorTokens.Parent.ink)
                     .lineLimit(1)
                     .minimumScaleFactor(0.85)
 
@@ -41,7 +41,7 @@ struct SummaryCardView: View {
                 } else if let caption = card.caption {
                     Text(caption)
                         .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .foregroundStyle(ColorTokens.Parent.ink)
                         .lineLimit(1)
                         .minimumScaleFactor(0.85)
                 }
