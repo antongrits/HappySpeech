@@ -174,15 +174,9 @@ struct PermissionFlowView: View {
             VStack(spacing: SpacingTokens.large) {
                 Spacer(minLength: SpacingTokens.large)
 
+                // Block I v19: повторяющийся scaleEffect убран с 2D Ляли.
                 LyalyaMascotView(state: card.lyalyaState, size: 200)
                     .accessibilityLabel(String(localized: "permissions.lyalya.a11y.celebrating"))
-                    .scaleEffect(celebrationActive ? 1.05 : 1.0)
-                    .animation(
-                        reduceMotion
-                            ? nil
-                            : .easeInOut(duration: 1.4).repeatForever(autoreverses: true),
-                        value: celebrationActive
-                    )
 
                 VStack(spacing: SpacingTokens.small) {
                     Text(card.title)

@@ -17,8 +17,8 @@ struct OnboardingScheduleStep: View {
         VStack(spacing: SpacingTokens.medium) {
             Spacer(minLength: SpacingTokens.tiny)
 
+            // Block I v19: scaleEffect убран с 2D Ляли.
             LyalyaHeroView(state: .happy, mood: 0.8, size: 200)
-                .scaleEffect(appeared ? 1 : 0.7)
                 .opacity(appeared ? 1 : 0)
                 .accessibilityHidden(true)
 
@@ -127,8 +127,8 @@ struct OnboardingPermissionsStep: View {
 
     var body: some View {
         VStack(spacing: SpacingTokens.medium) {
+            // Block I v19: scaleEffect убран с 2D Ляли.
             LyalyaHeroView(state: .pointing, mood: 0.7, size: 200)
-                .scaleEffect(appeared ? 1 : 0.7)
                 .opacity(appeared ? 1 : 0)
                 .accessibilityHidden(true)
 
@@ -229,8 +229,8 @@ struct OnboardingModelDownloadStep: View {
         VStack(spacing: SpacingTokens.large) {
             Spacer()
 
+            // Block I v19: scaleEffect убран с 2D Ляли.
             LyalyaHeroView(state: heroState, mood: 0.6, size: 220)
-                .scaleEffect(appeared ? 1 : 0.7)
                 .opacity(appeared ? 1 : 0)
                 .accessibilityHidden(true)
 
@@ -543,8 +543,8 @@ struct OnboardingScreeningIntroStep: View {
         VStack(spacing: SpacingTokens.large) {
             Spacer(minLength: SpacingTokens.small)
 
+            // Block I v19: scaleEffect убран с 2D Ляли.
             LyalyaMascotView(state: .thinking, size: 130)
-                .scaleEffect(appeared ? 1 : 0.7)
                 .opacity(appeared ? 1 : 0)
                 .accessibilityHidden(true)
 
