@@ -6,6 +6,7 @@ struct AuthSignInView: View {
 
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(AppContainer.self) private var container
+    @Environment(\.colorScheme) private var colorScheme
 
     @State private var scene: AuthScene?
     @State private var email: String = ""
@@ -13,6 +14,12 @@ struct AuthSignInView: View {
     @FocusState private var focusedField: Field?
 
     private enum Field: Hashable { case email, password }
+
+    // Block C v19 — hero decoration opacity снижается в dark mode чтобы
+    // убрать яркую оранжевую шапку на тёмном фоне.
+    private var heroDecorationOpacity: Double {
+        colorScheme == .dark ? 0.35 : 1.0
+    }
 
     var body: some View {
         ZStack {
@@ -120,6 +127,7 @@ struct AuthSignInView: View {
             ZStack(alignment: .top) {
                 Ellipse()
                     .fill(GradientTokens.kidHeroDecoration)
+                    .opacity(heroDecorationOpacity)
                     .frame(width: geo.size.width * 1.3, height: 320)
                     .offset(x: -geo.size.width * 0.15, y: -100)
             }
