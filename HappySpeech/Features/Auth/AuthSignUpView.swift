@@ -18,6 +18,12 @@ struct AuthSignUpView: View {
 
     @State private var appeared = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
+
+    // Block C v19 — hero decoration opacity снижается в dark mode.
+    private var heroDecorationOpacity: Double {
+        colorScheme == .dark ? 0.35 : 1.0
+    }
 
     var body: some View {
         ZStack {
@@ -131,6 +137,7 @@ struct AuthSignUpView: View {
         GeometryReader { geo in
             Ellipse()
                 .fill(GradientTokens.kidHeroDecoration)
+                .opacity(heroDecorationOpacity)
                 .frame(width: geo.size.width * 1.3, height: 260)
                 .offset(x: -geo.size.width * 0.15, y: -120)
         }
