@@ -56,6 +56,10 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
     func fetchChildData(_ request: ChildHomeModels.Fetch.Request) async {
         lastChildId = request.childId
 
+        // P0.3 fix v19: show seed content immediately so the screen is never empty
+        // while the async Realm fetch is in flight. Real data overwrites it when ready.
+        presenter?.presentFetch(buildSeedResponse())
+
         // Реальные данные из Realm — основной путь.
         do {
             let profile = try await childRepository.fetch(id: request.childId)

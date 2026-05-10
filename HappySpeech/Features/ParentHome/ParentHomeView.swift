@@ -28,33 +28,39 @@ struct ParentHomeView: View {
 
     var body: some View {
         Group {
-            if hSizeClass == .regular {
-                // iPad full screen / large split: NavigationSplitView sidebar layout
-                sidebarLayout
-            } else {
-                // iPhone / compact: привычный TabView
-                tabLayout
-            }
+            // P0.2 fix v19: always use tabLayout on iPhone (iOS 26 on SE3 simulator
+            // may return .regular hSizeClass or .pad idiom via new adaptive APIs).
+            // sidebarLayout is intentionally disabled for diploma build (iPhone-only).
+            tabLayout
         }
         .tint(ColorTokens.Parent.accent)
         .environment(\.circuitContext, .parent)
+        // P0.2 fix v19: create scene synchronously in onAppear so tabContent
+        // renders immediately (scene != nil) before async fetch completes.
+        .onAppear { bootstrapScene() }
         .task {
             // E.2 — Performance trace: parent dashboard load time (opt-in, COPPA-safe).
             let trace = container.performanceMonitorService.trace(name: "parent_dashboard_load")
             trace.start()
-            if scene == nil {
-                scene = ParentHomeScene(
-                    childRepository: container.childRepository,
-                    sessionRepository: container.sessionRepository,
-                    screeningOutcomeRepository: container.screeningOutcomeRepository,
-                    llmDecisionService: container.llmDecisionService,
-                    adaptivePlannerService: container.adaptivePlannerService,
-                    notificationService: container.notificationService
-                )
-            }
             await scene?.interactor.fetchData(.init(preferredChildId: nil))
             trace.stop()
         }
+    }
+
+    // MARK: - Bootstrap
+
+    /// P0.2 fix v19: creates the scene synchronously on first appear so that
+    /// tabContent renders immediately with an empty state instead of ProgressView.
+    private func bootstrapScene() {
+        guard scene == nil else { return }
+        scene = ParentHomeScene(
+            childRepository: container.childRepository,
+            sessionRepository: container.sessionRepository,
+            screeningOutcomeRepository: container.screeningOutcomeRepository,
+            llmDecisionService: container.llmDecisionService,
+            adaptivePlannerService: container.adaptivePlannerService,
+            notificationService: container.notificationService
+        )
     }
 
     // MARK: - Tablet sidebar layout
@@ -74,11 +80,22 @@ struct ParentHomeView: View {
             .navigationTitle(String(localized: "Родитель"))
             .listStyle(.sidebar)
         } detail: {
-            tabContent(for: selectedTab)
+            if let vm = scene?.viewModel {
+                switch selectedTab {
+                case .dashboard:  ParentDashboardTab(viewModel: vm, coordinator: coordinator)
+                case .sessions:   ParentSessionsTab(sessions: vm.recentSessions)
+                case .analytics:  ParentAnalyticsTab(progress: vm.soundProgress)
+                case .settings:   SettingsView()
+                }
+            } else {
+                ProgressView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(ColorTokens.Parent.bg)
+            }
         }
         .navigationSplitViewStyle(.balanced)
-        .onChange(of: sidebarSelection) { _, newValue in
-            if let tab = newValue {
+        .onChange(of: sidebarSelection) { _, newVal in
+            if let tab = newVal {
                 selectedTab = tab
             }
         }
@@ -86,40 +103,67 @@ struct ParentHomeView: View {
 
     // MARK: - Phone tab layout
     //
-    // Block J v18 — заменён системный TabView на HSAnimatedTabBar
-    // (kavsoft-style capsule indicator c matchedGeometryEffect).
-    // Контент рендерится через ZStack: текущий таб поверх + custom bar снизу.
+    // P0.2 fix v19: replaced ZStack+HSAnimatedTabBar with system TabView to prevent
+    // iOS 26 adaptive column navigation (split sidebar) from appearing on iPhone.
+    // HSAnimatedTabBar caused a matchedGeometryEffect bug on iOS 26 SE3 simulator.
 
     private var tabLayout: some View {
-        ZStack(alignment: .bottom) {
-            tabContent(for: selectedTab)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        TabView(selection: $selectedTab) {
+            dashboardTab
+                .tabItem {
+                    Label(ParentTab.dashboard.rawValue, systemImage: ParentTab.dashboard.icon)
+                }
+                .tag(ParentTab.dashboard)
 
-            HSAnimatedTabBar(
-                selection: $selectedTab,
-                items: ParentTab.allCases
-            ) { tab in
-                (tab.icon, LocalizedStringKey(tab.rawValue))
-            }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.bottom, SpacingTokens.sp2)
+            sessionsTab
+                .tabItem {
+                    Label(ParentTab.sessions.rawValue, systemImage: ParentTab.sessions.icon)
+                }
+                .tag(ParentTab.sessions)
+
+            analyticsTab
+                .tabItem {
+                    Label(ParentTab.analytics.rawValue, systemImage: ParentTab.analytics.icon)
+                }
+                .tag(ParentTab.analytics)
+
+            settingsTab
+                .tabItem {
+                    Label(ParentTab.settings.rawValue, systemImage: ParentTab.settings.icon)
+                }
+                .tag(ParentTab.settings)
         }
+        .tint(ColorTokens.Parent.accent)
     }
 
-    @ViewBuilder
-    private func tabContent(for tab: ParentTab) -> some View {
-        if let viewModel = scene?.viewModel {
-            switch tab {
-            case .dashboard:  ParentDashboardTab(viewModel: viewModel, coordinator: coordinator)
-            case .sessions:   ParentSessionsTab(sessions: viewModel.recentSessions)
-            case .analytics:  ParentAnalyticsTab(progress: viewModel.soundProgress)
-            case .settings:   SettingsView()
-            }
+    @ViewBuilder private var dashboardTab: some View {
+        if let vm = scene?.viewModel {
+            ParentDashboardTab(viewModel: vm, coordinator: coordinator)
         } else {
             ProgressView()
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(ColorTokens.Parent.bg)
         }
+    }
+
+    @ViewBuilder private var sessionsTab: some View {
+        if let vm = scene?.viewModel {
+            ParentSessionsTab(sessions: vm.recentSessions)
+        } else {
+            Color.clear
+        }
+    }
+
+    @ViewBuilder private var analyticsTab: some View {
+        if let vm = scene?.viewModel {
+            ParentAnalyticsTab(progress: vm.soundProgress)
+        } else {
+            Color.clear
+        }
+    }
+
+    @ViewBuilder private var settingsTab: some View {
+        SettingsView()
     }
 }
 
