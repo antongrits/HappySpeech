@@ -235,13 +235,15 @@ struct SettingsView: View {
             }
         }
         .environment(\.circuitContext, .parent)
-        .task { await bootstrap() }
+        // P0.4 fix v19: use onAppear (sync) instead of .task (async) so that
+        // loadSettings() fires before the first screenshot frame is captured.
+        .onAppear { bootstrap() }
     }
 
     // MARK: - Bootstrap
 
     @MainActor
-    private func bootstrap() async {
+    private func bootstrap() {
         guard !bootstrapped else { return }
         bootstrapped = true
 

@@ -52,6 +52,9 @@ struct SessionHistoryView: View {
     var body: some View {
         NavigationStack(path: $path) {
             ZStack(alignment: .bottom) {
+                // P0.5 fix v19: explicit parent bg behind gradient prevents warm KidBg
+                // from bleeding through when navigating from kid circuit screens.
+                ColorTokens.Parent.bg.ignoresSafeArea()
                 backgroundGradient.ignoresSafeArea()
 
                 content
@@ -74,6 +77,10 @@ struct SessionHistoryView: View {
             }
             .navigationTitle(String(localized: "sessionHistory.navTitle"))
             .navigationBarTitleDisplayMode(.large)
+            // P0.5 fix v19: explicit toolbar background prevents iOS 26 Liquid Glass
+            // from washing out the navigation title contrast on parent circuit.
+            .toolbarBackground(ColorTokens.Parent.bg, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
             .toolbar { filterToolbarItem }
             .sheet(isPresented: $isFilterSheetOpen) {
                 SessionHistoryFilterSheet(
@@ -223,7 +230,9 @@ struct SessionHistoryView: View {
                 .minimumScaleFactor(0.7)
             Text(captionText)
                 .font(TypographyTokens.caption(11))
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                // P0.5 fix v19: use ink (high-contrast) instead of inkMuted for
+                // session summary captions. inkMuted fails WCAG AA on warm backgrounds.
+                .foregroundStyle(ColorTokens.Parent.ink)
                 .lineLimit(2)
                 .multilineTextAlignment(.center)
                 .minimumScaleFactor(0.85)
