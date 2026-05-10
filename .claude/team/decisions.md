@@ -3,6 +3,45 @@
 
 ---
 
+## ADR-V19-H-DEFER-BLENDER — Blender 3D custom rigging defer (2026-05-10)
+
+### Status: Approved (Block H v19)
+
+### Context
+Plan v19 Block H targets Blender 3D custom rigging для Lyalya hero per user requirement #46.
+
+### Findings
+1. `which blender` → not found
+2. `/Applications/Blender*` → no matches
+3. `python3 -c "import bpy"` → ModuleNotFoundError
+4. Disk: 13 GB free (Blender install ~2 GB + render heavy → недостаточно)
+
+### Existing 3D Lyalya state
+- `lyalya3d.usdz` 759 KB rigged real
+- `lyalya3d_v2.usdz` 106 KB
+- 8 emotion blendshapes (idle, listening, celebrating, thinking, sad, waving, pointing, explaining)
+- 5 lip-sync visemes (mouth open/closed/A/E/O)
+- ARKit Face Tracking integration
+- AR + non-AR (SwiftUI inline) modes via LyalyaRealityKitView
+
+### Decision
+**Defer Blender custom pipeline post-v1.0.** Existing rigged USDZ acceptable для production v19.
+
+### Future v20 enable path
+1. `brew install --cask blender` (2 GB)
+2. Free up 30+ GB disk
+3. Custom rig Lyalya с full skeleton + 12 emotions (vs current 8)
+4. Reality Composer Pro USDZ export advanced shader properties
+5. Replace lyalya3d.usdz с new custom rig
+
+### Mitigation
+Block I v19 (commit c56dc705) already verified:
+- 3D LyalyaRealityKitView transparent bg ✅
+- 2D Lyalya animations removed
+- Asset unification complete
+
+---
+
 ## ADR-V18-AF-VERIFIED-POST-TAG — Git author audit (2026-05-09)
 
 ### Status: Approved (Block AF v18 verify)
