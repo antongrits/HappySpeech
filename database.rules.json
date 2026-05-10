@@ -1,0 +1,33 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "shareplay_sessions": {
+      "$sessionId": {
+        ".read": "auth != null && (data.child('hostUid').val() === auth.uid || data.child('participants').child(auth.uid).exists())",
+        ".write": "auth != null && (!data.exists() || data.child('hostUid').val() === auth.uid)",
+        ".validate": "newData.hasChildren(['hostUid', 'currentStep', 'version'])",
+        "hostUid": {
+          ".validate": "newData.isString() && newData.val().length > 0"
+        },
+        "currentStep": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "version": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "currentExerciseId": {
+          ".validate": "newData.isString()"
+        },
+        "updatedAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "participants": {
+          "$uid": {
+            ".validate": "newData.isBoolean() && auth.uid === $uid"
+          }
+        }
+      }
+    }
+  }
+}

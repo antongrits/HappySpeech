@@ -160,7 +160,7 @@ public protocol RealtimeDatabaseServiceProtocol: AnyObject, Sendable {
 private enum RTDBConfig {
     /// Region для базы — `europe-west1` (closest available для eur3).
     /// Realtime Database не поддерживает eur3 multi-region; us-central1 далеко от RU.
-    static let databaseURL = "https://happyspeech-dfd95-default-rtdb.europe-west1.firebasedatabase.app"
+    static let databaseURL = "https://happyspeech-dfd95.europe-west1.firebasedatabase.app"
 
     /// Корневой путь для SharePlay сессий.
     static let sessionsPath = "shareplay_sessions"

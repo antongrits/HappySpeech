@@ -6,6 +6,10 @@
   "storage": {
     "rules": "storage.rules"
   },
+  "database": {
+    "rules": "database.rules.json",
+    "instance": "happyspeech-dfd95"
+  },
   "remoteconfig": {
     "template": "firebase/remoteconfig.template.json"
   },
