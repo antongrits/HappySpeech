@@ -1,6 +1,6 @@
 # Sound Assets Registry — HappySpeech
 
-**Version 2.7 — 2026-05-08**
+**Version 2.9 — 2026-05-10**
 **Managed by:** Sound Curator. All sounds verified CC0 or royalty-free.
 
 ---
@@ -16,6 +16,7 @@
 | Ляля Block F.3 voice expansion (.m4a) | 248 | ~3.2 MB | `HappySpeech/Resources/Audio/Lyalya/` root + subdirs (в репо) | ✅ Plan v12 F.3 done |
 | Ляля Block P.1 v16 voice expansion (.m4a) | 1+KB | ~+33 MB | `HappySpeech/Resources/Audio/Lyalya/<10 categories>/` (в репо) | ✅ Plan v16 Block P.1 done |
 | Ляля Block P v18 voice expansion (.m4a) | 775 | ~15 MB | `HappySpeech/Resources/Audio/Lyalya/{v18,v18b,v18c,v18d}/` (в репо) | ✅ Plan v18 Block P done |
+| Ляля Block F v19 voice expansion (.m4a) | 13798 (итого в Lyalya/) | ~240 MB | `HappySpeech/Resources/Audio/Lyalya/<new categories>/` (в репо) | ✅ Plan v19 Block F DONE — v19+v19c+v19d+v19e, generated=2676+527+async batch |
 | Content audio batch 1 (.m4a) | 1000 | 12.65 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 1 |
 | Content audio batch 2 (.m4a) | 1028 | 11.1 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 2 |
 | Content audio batch 3 (.m4a) | 681 | 8.36 MB | `HappySpeech/Resources/Audio/Content/` (локально, gitignored → Firebase Storage) | ✅ M3.4 batch 3 |
