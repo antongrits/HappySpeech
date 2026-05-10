@@ -61,9 +61,8 @@ struct CelebrationOverlayView: View {
             }
 
             VStack(spacing: 24) {
-                // Ляля
+                // Block I v19: scaleEffect убран с 2D Ляли — только opacity fade-in.
                 LyalyaMascotView(state: .celebrating, size: 150)
-                    .scaleEffect(mascotVisible ? 1 : 0.6)
                     .opacity(mascotVisible ? 1 : 0)
 
                 // Звезды

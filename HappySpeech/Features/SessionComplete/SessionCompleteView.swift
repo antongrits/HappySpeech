@@ -174,11 +174,11 @@ struct SessionCompleteView: View {
     private var celebrationPhase: some View {
         let visible = display.isPhaseVisible(.celebration)
         VStack(spacing: SpacingTokens.medium) {
+            // Block I v19: scaleEffect убран с 2D Ляли — только opacity fade-in.
             LyalyaMascotView(state: lyalyaResultState, size: 140)
-                .scaleEffect(visible ? 1 : 0.2)
                 .opacity(visible ? 1 : 0)
                 .animation(
-                    reduceMotion ? nil : MotionTokens.bounce,
+                    reduceMotion ? nil : MotionTokens.spring,
                     value: visible
                 )
                 .accessibilityHidden(true)

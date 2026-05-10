@@ -131,7 +131,9 @@ public struct LyalyaMascotView: View {
 
     // MARK: - Animation state
 
-    @State private var breathingScale: CGFloat = 1.0
+    // Block I v19: breathingScale анимация удалена — 2D PNG Ляли не должен
+    // двигаться (требование пользователя: «2d героев нельзя анимировать»).
+    // Idle-дыхание живёт внутри LyalyaRealityKitView (3D только).
 
     // v12: haptic feedback при переходе между состояниями
     @State private var previousState: LyalyaState = .idle
@@ -183,14 +185,9 @@ public struct LyalyaMascotView: View {
             }
         }
         .frame(width: size, height: size)
-        .scaleEffect(breathingScale)
         .contentShape(Rectangle())
         .onAppear {
             previousState = state
-            guard !reduceMotion else { return }
-            withAnimation(MotionTokens.idlePulse) {
-                breathingScale = 1.02
-            }
         }
         .onChange(of: state) { oldState, newState in
             guard !reduceMotion else { return }
