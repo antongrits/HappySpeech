@@ -7,11 +7,11 @@ import OSLog
 /// Роль родителя в семейном профиле.
 public enum ParentRole: String, Sendable, CaseIterable {
     /// Основной родитель — создатель семьи, имеет полный доступ.
-    case primary = "primary"
+    case primary
     /// Второй родитель / опекун — доступ к чтению прогресса и просмотру сессий.
-    case secondary = "secondary"
+    case secondary
     /// Приглашённый наблюдатель — только чтение прогресса (бабушки/дедушки).
-    case observer = "observer"
+    case observer
 }
 
 /// Payload из входящей Dynamic Link — содержит параметры приглашения.
@@ -382,7 +382,9 @@ public final class LiveDynamicLinksService: DynamicLinksServiceProtocol, @unchec
 /// Preview / test реализация с детерминированными ответами.
 public final class MockDynamicLinksService: DynamicLinksServiceProtocol, @unchecked Sendable {
 
+    // swiftlint:disable:next force_unwrapping
     public var stubbedInviteURL: URL = URL(string: "https://happyspeech.page.link/mock-invite")!
+    // swiftlint:disable:next force_unwrapping
     public var stubbedSpecialistURL: URL = URL(string: "https://happyspeech.page.link/mock-specialist")!
     public var stubbedPayload: DynamicLinkPayload = DynamicLinkPayload(
         linkType: "family_invite",

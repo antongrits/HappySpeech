@@ -90,6 +90,16 @@ cyclomatic_complexity:
   warning: 20
   error: 30
 
+function_parameter_count:
+  warning: 6
+  error: 8
+
+inclusive_language:
+  override_allowed_terms:
+    - master       # "освоенные звуки" (masteredSounds) — domain term из методики логопедии (Лопатина, Жукова)
+    - mastered
+    - mastery
+
 custom_rules:
   no_print:
     name: "No print"

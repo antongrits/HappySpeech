@@ -26,14 +26,12 @@ enum AchievementRarity: String, Sendable, CaseIterable {
 
 // MARK: - Achievement
 
-// swiftlint:disable inclusive_language
 enum Achievement: String, CaseIterable, Sendable {
 
     // Звуки
     case firstSoundMastered
     case fiveSoundsMastered
     case allSoundsMastered
-// swiftlint:enable inclusive_language
 
     // Streaks
     case streak3Days

@@ -517,8 +517,8 @@ extension AppCoordinatorView {
     ///
     /// This helper is intentionally side-effect-free and pure to keep the
     /// `launchSplash` flow simple and unit-testable.
-    // swiftlint:disable:next cyclomatic_complexity function_body_length
-    static func resolveStartRoute(_ route: String) -> AppRoute {
+    static func resolveStartRoute(_ route: String) -> AppRoute { // swiftlint:disable:this cyclomatic_complexity
+
         let previewChild = "preview-child-1"
         let previewChild2 = "preview-child-2"
         let previewParent = "local-parent"

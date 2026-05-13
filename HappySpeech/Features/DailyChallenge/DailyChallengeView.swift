@@ -288,7 +288,7 @@ struct DailyChallengeView: View {
                 .frame(width: 64, height: 64)
 
             // Fallback на SF Symbol, если ассета нет в Assets.xcassets
-            if let _ = UIImage(named: name) {
+            if UIImage(named: name) != nil {
                 Image(name)
                     .resizable()
                     .scaledToFit()

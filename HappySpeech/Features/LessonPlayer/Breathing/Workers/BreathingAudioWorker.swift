@@ -189,12 +189,32 @@ public final class MockBreathingAudioWorker: BreathingAudioWorkerProtocol, @unch
     public private(set) var startCount: Int = 0
     public private(set) var stopCount: Int = 0
 
-    private var timer: Timer?
+    private var streamTask: Task<Void, Never>?
     private var cursor: Int = 0
 
     public init() {}
 
     public func requestPermission() async -> Bool { isPermissionGranted }
+
+    /// v22 Block 2.3: AsyncStream-based amplitude pusher (no Timer).
+    /// Stream yields scripted samples с 50 ms cadence, until cancelled.
+    private func amplitudeStream() -> AsyncStream<Float> {
+        AsyncStream { continuation in
+            let task = Task { [weak self] in
+                guard let self else { continuation.finish(); return }
+                while !Task.isCancelled {
+                    let amps = self.scriptedAmplitudes
+                    guard !amps.isEmpty else { break }
+                    let value = amps[self.cursor % amps.count]
+                    self.cursor += 1
+                    continuation.yield(value)
+                    try? await Task.sleep(for: .milliseconds(50))
+                }
+                continuation.finish()
+            }
+            continuation.onTermination = { _ in task.cancel() }
+        }
+    }
 
     public func start(
         onAmplitude: @escaping @Sendable (Float) -> Void,
@@ -206,11 +226,10 @@ public final class MockBreathingAudioWorker: BreathingAudioWorkerProtocol, @unch
         }
         guard !scriptedAmplitudes.isEmpty else { return }
         cursor = 0
-        await MainActor.run {
-            self.timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] _ in
-                guard let self else { return }
-                let value = self.scriptedAmplitudes[self.cursor % self.scriptedAmplitudes.count]
-                self.cursor += 1
+        let stream = amplitudeStream()
+        streamTask = Task {
+            for await value in stream {
+                guard !Task.isCancelled else { break }
                 onAmplitude(value)
             }
         }
@@ -218,8 +237,8 @@ public final class MockBreathingAudioWorker: BreathingAudioWorkerProtocol, @unch
 
     public func stop() {
         stopCount += 1
-        timer?.invalidate()
-        timer = nil
+        streamTask?.cancel()
+        streamTask = nil
     }
 
     /// Synchronously push `count` amplitude samples. Useful for
