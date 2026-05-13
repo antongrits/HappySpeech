@@ -92,7 +92,7 @@ packages:
     url: https://github.com/apple/swift-numerics
     from: "1.0.2"
   SwiftSyntax:
-    url: https://github.com/apple/swift-syntax
+    url: https://github.com/swiftlang/swift-syntax
     from: "600.0.0"
   SwiftUIShimmer:
     url: https://github.com/markiv/SwiftUI-Shimmer
