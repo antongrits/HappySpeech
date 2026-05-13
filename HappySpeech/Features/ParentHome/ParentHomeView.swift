@@ -6,6 +6,7 @@ struct ParentHomeView: View {
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(\.horizontalSizeClass) private var hSizeClass
+    @Environment(\.colorScheme) private var colorScheme
     @State private var scene: ParentHomeScene?
     @State private var selectedTab: ParentTab = .dashboard
     @State private var sidebarSelection: ParentTab? = .dashboard
@@ -174,6 +175,8 @@ struct ParentHomeView: View {
         VStack(spacing: SpacingTokens.sp4) {
             Spacer()
             LyalyaMascotView(state: .thinking, size: 80)
+                // F.tier1 v21: mascot чуть мягче в dark, чтобы не светил.
+                .opacity(colorScheme == .dark ? 0.9 : 1.0)
                 .accessibilityHidden(true)
             ProgressView()
                 .tint(ColorTokens.Parent.accent)

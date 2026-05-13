@@ -17,6 +17,7 @@ struct FamilyHomeView: View {
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.horizontalSizeClass) private var hSizeClass
+    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - VIP
 
@@ -94,7 +95,9 @@ struct FamilyHomeView: View {
                 .multilineTextAlignment(.leading)
                 .accessibilityAddTraits(.isHeader)
             Spacer(minLength: SpacingTokens.sp1)
+            // F.tier1 v21: mascot мягче в dark.
             LyalyaMascotView(state: .waving, size: 60)
+                .opacity(colorScheme == .dark ? 0.92 : 1.0)
                 .accessibilityHidden(true)
         }
         .padding(.top, SpacingTokens.sp3)

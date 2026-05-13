@@ -6,6 +6,7 @@ struct RoleSelectView: View {
     @Environment(AppCoordinator.self) private var coordinator
     @State private var appeared = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     private struct RoleEntry: Identifiable {
         let id = UUID()
@@ -47,7 +48,9 @@ struct RoleSelectView: View {
             VStack(spacing: 0) {
                 // Header
                 VStack(spacing: SpacingTokens.sp3) {
+                    // F.tier1 v21: hero mascot мягче в dark.
                     LyalyaMascotView(state: .waving, size: 100)
+                        .opacity(colorScheme == .dark ? 0.92 : 1.0)
                         .padding(.bottom, SpacingTokens.sp2)
 
                     Text(String(localized: "Кто вы?"))

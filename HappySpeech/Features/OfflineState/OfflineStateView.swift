@@ -23,6 +23,7 @@ struct OfflineStateView: View {
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     // Auto-retry state
     @State private var retryCountdown: Int = 5
@@ -72,12 +73,13 @@ struct OfflineStateView: View {
     // MARK: - Background
 
     private var backgroundLayer: some View {
+        // F.tier1 v21: lilac accent мягче в dark, чтобы offline screen не «фонил» фиолетом.
         ColorTokens.Kid.bg
             .ignoresSafeArea()
             .overlay(alignment: .top) {
                 LinearGradient(
                     colors: [
-                        ColorTokens.Brand.lilac.opacity(0.18),
+                        ColorTokens.Brand.lilac.opacity(colorScheme == .dark ? 0.10 : 0.18),
                         ColorTokens.Kid.bg.opacity(0)
                     ],
                     startPoint: .top,
@@ -113,7 +115,9 @@ struct OfflineStateView: View {
                 .offset(y: -8)
 
             // Lyalya mascot — sits beside the icon
+            // F.tier1 v21: mascot мягче в dark.
             LyalyaMascotView(state: .encouraging, size: 72)
+                .opacity(colorScheme == .dark ? 0.92 : 1.0)
                 .offset(x: 70, y: 38)
                 .accessibilityHidden(true)
 

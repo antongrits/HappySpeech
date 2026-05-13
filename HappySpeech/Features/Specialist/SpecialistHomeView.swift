@@ -9,6 +9,7 @@ struct SpecialistHomeView: View {
     @State private var selectedTab: SpecTab = .children
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(AppContainer.self) private var container
+    @Environment(\.colorScheme) private var colorScheme
 
     enum SpecTab: String, CaseIterable {
         // Block H v21 — labels хранят русские raw values для LocalizedStringKey lookup.
@@ -66,6 +67,7 @@ struct SpecChildDashboardView: View {
     let childId: String
 
     @Environment(AppContainer.self) private var container
+    @Environment(\.colorScheme) private var colorScheme
     @State private var child: ChildProfileDTO?
     @State private var sessions: [SessionDTO] = []
     @State private var breakdown: [SoundBreakdownRow] = []
@@ -127,6 +129,8 @@ struct SpecChildDashboardView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 LyalyaMascotView(state: .thinking, size: 32)
+                    // F.tier1 v21: mascot мягче в dark, чтобы не «бликовал» в toolbar.
+                    .opacity(colorScheme == .dark ? 0.9 : 1.0)
                     .accessibilityHidden(true)
             }
             ToolbarItem(placement: .navigationBarTrailing) {

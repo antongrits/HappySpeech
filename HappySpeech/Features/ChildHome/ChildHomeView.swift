@@ -52,6 +52,7 @@ struct ChildHomeView: View {
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.horizontalSizeClass) private var hSizeClass
+    @Environment(\.colorScheme) private var colorScheme
 
     private static let logger = Logger(subsystem: "ru.happyspeech", category: "ChildHome")
 
@@ -226,12 +227,15 @@ struct ChildHomeView: View {
 
             HSMeshGradientBackground(palette: .kidWarm, animated: true)
                 .ignoresSafeArea()
-                .opacity(0.35)
+                // F.tier1 v21: чуть притушеваем mesh в dark, чтобы не «выгорало» поверх тёмного фона.
+                .opacity(colorScheme == .dark ? 0.22 : 0.35)
                 .blendMode(.softLight)
                 .accessibilityHidden(true)
                 .allowsHitTesting(false)
 
             ChildHomeCloudDecoration()
+                // F.tier1 v21: облака мягче в dark, чтобы не перетягивали внимание.
+                .opacity(colorScheme == .dark ? 0.85 : 1.0)
         }
     }
 

@@ -18,6 +18,7 @@ struct SessionHistoryView: View {
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - VIP State
 
@@ -55,7 +56,10 @@ struct SessionHistoryView: View {
                 // P0.5 fix v19: explicit parent bg behind gradient prevents warm KidBg
                 // from bleeding through when navigating from kid circuit screens.
                 ColorTokens.Parent.bg.ignoresSafeArea()
-                backgroundGradient.ignoresSafeArea()
+                backgroundGradient
+                    .ignoresSafeArea()
+                    // F.tier1 v21: gradient мягче в dark, чтобы не размывал контент списка.
+                    .opacity(colorScheme == .dark ? 0.85 : 1.0)
 
                 content
                     .refreshable { performRefresh() }

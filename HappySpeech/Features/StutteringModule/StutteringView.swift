@@ -75,6 +75,7 @@ struct StutteringView: View {
     @State private var navigateTo: StutteringMode?
     @State private var showInfoType: InfoCardType?
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @AppStorage("stuttering_welcome_shown") private var welcomeShown: Bool = false
 
     var body: some View {

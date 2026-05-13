@@ -66,6 +66,7 @@ struct DailyStreakView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
+    @Environment(\.colorScheme) private var colorScheme
 
     private static let logger = Logger(subsystem: "ru.happyspeech", category: "DailyStreak.View")
 
@@ -86,8 +87,10 @@ struct DailyStreakView: View {
                         longestSection(viewModel: viewModel)
                     } else {
                         // H v18 — Lyalya hero на loading-экране.
+                        // F.tier1 v21: mascot мягче в dark.
                         VStack(spacing: SpacingTokens.sp3) {
                             LyalyaMascotView(state: .happy, size: 80)
+                                .opacity(colorScheme == .dark ? 0.92 : 1.0)
                                 .accessibilityHidden(true)
                             ProgressView()
                                 .controlSize(.large)

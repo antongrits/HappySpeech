@@ -28,6 +28,7 @@ struct SessionCompleteView: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - VIP State
 
@@ -175,8 +176,9 @@ struct SessionCompleteView: View {
         let visible = display.isPhaseVisible(.celebration)
         VStack(spacing: SpacingTokens.medium) {
             // Block I v19: scaleEffect убран с 2D Ляли — только opacity fade-in.
+            // F.tier1 v21: hero — мягче в dark.
             LyalyaMascotView(state: lyalyaResultState, size: 140)
-                .opacity(visible ? 1 : 0)
+                .opacity(visible ? (colorScheme == .dark ? 0.92 : 1.0) : 0)
                 .animation(
                     reduceMotion ? nil : MotionTokens.spring,
                     value: visible
