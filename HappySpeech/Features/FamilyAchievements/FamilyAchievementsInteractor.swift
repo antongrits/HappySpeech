@@ -76,8 +76,17 @@ final class FamilyAchievementsInteractor: FamilyAchievementsBusinessLogic, Famil
     // MARK: - Load
 
     func load(request: FamilyAchievementsModels.Load.Request) async {
-        async let childrenTask: [ChildProfileDTO] = (try? await childRepository.fetchAll()) ?? []
-        let children = await childrenTask
+        let children: [ChildProfileDTO]
+        do {
+            children = try await childRepository.fetchAll()
+        } catch {
+            Self.logger.error("ChildRepository.fetchAll failed: \(error.localizedDescription)")
+            // 3.D v23: ранее silent try? → возвращали [] → presentLoad с empty state;
+            // если выше по стеку spinner всё-таки висит, гарантируем что present
+            // вызовется даже на error path и не оставим View в loading.
+            await emitEmptyState(for: request.familyId)
+            return
+        }
 
         // Собираем сводки по каждому ребёнку.
         var memberSummaries: [FamilyMemberSummary] = []
@@ -166,6 +175,30 @@ final class FamilyAchievementsInteractor: FamilyAchievementsBusinessLogic, Famil
             streakState: streakState
         )
 
+        await presenter?.presentLoad(response: response)
+    }
+
+    /// 3.D v23: гарантирует что View никогда не остаётся в loading state
+    /// даже если childRepository упал. Presenter покажет empty family stub.
+    private func emitEmptyState(for familyId: String) async {
+        let streakState = FamilyStreakState(
+            combinedDays: 0,
+            allActiveToday: false,
+            totalMembers: 0,
+            activeTodayCount: 0
+        )
+        let unlocked = readUnlocked(for: familyId)
+        var progressById: [String: Int] = [:]
+        for ach in FamilyAchievement.catalog {
+            progressById[ach.id] = 0
+        }
+        let response = FamilyAchievementsModels.Load.Response(
+            achievements: FamilyAchievement.catalog,
+            unlockedIds: unlocked,
+            progressById: progressById,
+            members: [],
+            streakState: streakState
+        )
         await presenter?.presentLoad(response: response)
     }
 
