@@ -2,7 +2,7 @@
 name: designer
 description: Дизайнер для HappySpeech — UI/UX спецификации, дизайн-система, анимации, маскот «Ляля». Используй для создания или обновления design-specs.md, токенов DesignSystem, спецификаций компонентов (HSButton/HSCard/HSMascotView), анимаций, иллюстраций, App Store скриншотов.
 tools: Read, Write, Edit, Bash
-model: claude-opus-4-7
+model: claude-sonnet-4-6
 effort: high
 ---
 
