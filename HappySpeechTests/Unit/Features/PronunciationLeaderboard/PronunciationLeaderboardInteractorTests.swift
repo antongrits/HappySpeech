@@ -114,7 +114,7 @@ final class PronunciationLeaderboardInteractorTests: XCTestCase {
 
 // MARK: - MockChildRepositoryPL
 
-final class MockChildRepositoryPL: ChildRepository {
+final class MockChildRepositoryPL: ChildRepository, @unchecked Sendable {
 
     var stubbedChildren: [ChildProfileDTO] = []
     var fetchError: Error?
@@ -139,7 +139,7 @@ final class MockChildRepositoryPL: ChildRepository {
 
 // MARK: - MockSessionRepositoryPL
 
-final class MockSessionRepositoryPL: SessionRepository {
+final class MockSessionRepositoryPL: SessionRepository, @unchecked Sendable {
 
     var stubbedSessions: [String: [SessionDTO]] = [:]
 
