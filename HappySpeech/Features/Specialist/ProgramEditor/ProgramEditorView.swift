@@ -40,9 +40,20 @@ struct ProgramEditorView: View {
                 blockList
                 palette
             }
-            .navigationTitle(String(localized: "program.editor.title"))
+            // 3.C v23: inline title на iPhone SE 320pt мог обрезаться рядом с
+            // LyalyaMascotView blob; используем кастомный principal toolbar item
+            // с явным lineLimit(1) + minimumScaleFactor, чтобы title не превратился
+            // в "М..." в screenshot tour.
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text(String(localized: "program.editor.title"))
+                        .font(TypographyTokens.headline(17))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                        .accessibilityAddTraits(.isHeader)
+                }
                 ToolbarItem(placement: .cancellationAction) {
                     Button(String(localized: "program.editor.cancel"), action: onCancel)
                 }
