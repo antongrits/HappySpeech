@@ -3692,3 +3692,70 @@ Full automated dead code analyzer deferred to v23+.
 - User performs final Firebase Console A/B deploy + optional device profiling.
 
 **Tag:** `v1.0.0-final-v22` (created 2026-05-13).
+
+---
+
+## ADR-V23-RIVE — Custom Lyalya.riv: Final Defer Post-v1.0 (2026-05-14)
+
+**Дата:** 2026-05-14
+**Статус:** ACCEPTED — Final Defer (Path B)
+**Предшествующие ADR:** ADR-V10-RIVE → ADR-V11-RIVE-V2 → ADR-V12-RIVE
+
+### Контекст
+
+Block 4.1 v23 выполнил web-research цикл по поиску custom Lyalya.riv character.
+
+**Web search 2026-05-14 — найдено:**
+- Character Animation by Dowski (rive.app/community) — CC BY 4.0, skeletal bones demo, generic shape. Не подходит: отсутствует mascot-образ.
+- Kid Character Animation by muh.iswarramadhan (marketplace) — CC BY, Walk/Run/Idle, human kid character. Не подходит: человеческий ребёнок, не зверёк-маскот.
+- Rive App Mascot — Cloud Character (marketplace) — CC BY, 6 expressions, cloud shape. Не подходит: абстрактная форма, не соответствует образу Ляли.
+- Прочие результаты: платные freelance-сервисы, туториалы, нет CC0/MIT animal mascot для speech therapy.
+
+**Блокеры Path A (Real Custom Lyalya.riv):**
+1. Rive Editor — desktop GUI, недоступен в Claude Code CLI среде (подтверждено в v11, v12, v23 — три проверки).
+2. Программное создание .riv без Rive Editor невозможно (rive-python — server-side renderer, не editor).
+3. Ни один найденный CC0/MIT character не соответствует образу Ляли (animal mascot, 8+ emotional states, speech therapy context).
+4. CC BY assets (не CC0/MIT) технически приемлемы для attribution, но образ персонажей несовместим с концепцией маскота.
+
+**Текущее состояние v1.0 (достаточно для diploma):**
+- `lyalya3d.usdz` (744 KB, `Resources/ARAssets/`) — primary 3D rigged mascot, RealityKit, idle breath, AR-capable.
+- `LyalyaMascotView.swift` — 10 состояний (idle/waving/pointing/celebrating/thinking/explaining/singing/sad/happy/encouraging), haptic feedback, lip-sync overlay.
+- `HSMascotView.swift` — 7-layer composite: Rive base motion + MoodAuraView + EmotionParticlesView + WavingHandOverlay + PointingArrowOverlay + entrance animation + encouraging shake.
+- 70+ Lyalya audio .m4a файлов.
+
+### Решение
+
+**Custom Lyalya.riv не создаётся и не приобретается в v1.0.**
+USDZ 3D Lyalya (`lyalya3d.usdz`) остаётся primary visual mascot.
+SwiftUI composite (`HSMascotView` + `LyalyaMascotView`) обеспечивает все 10 состояний без custom .riv.
+
+### Rationale
+
+1. Rive Editor недоступен в среде разработки (CLI only) — три независимые проверки.
+2. Нет CC0/MIT pre-made animal mascot character на Rive Community или Marketplace (web search 2026-05-14).
+3. USDZ 3D превосходит 2D Rive по качеству визуала — downgrade нецелесообразен.
+4. Diploma deadline критичен (Sprint 12); разработка custom Rive требует дизайнера ($500-1500).
+5. Существующий SwiftUI composite (`HSMascotView`) достаточен для App Store submission.
+
+### Post-v1.0 Roadmap
+
+После защиты диплома — нанять Rive designer. Требования к .riv файлу:
+- State Machine: "LyalyaSM"
+- Состояния: idle, listening, celebrating, thinking, sad, waving, pointing, explaining (8+)
+- Inputs: `mouthOpen` (Number 0-1), `blink` (Trigger), `mood` (Number 0-1)
+- Лицензия: MIT или CC0
+- Замена: только `HSRiveView.swift` (stateMachineName + input mapping), без изменений архитектуры.
+
+### Files
+
+- `HappySpeech/Resources/Animations/lyalya.riv` — ОТСУТСТВУЕТ (не создан, не приобретён, defer confirmed)
+- `HappySpeech/Resources/ARAssets/lyalya3d.usdz` — primary 3D mascot, без изменений
+- `HappySpeech/DesignSystem/Components/LyalyaMascotView.swift` — без изменений
+- `HappySpeech/DesignSystem/Components/HSMascotView.swift` — без изменений
+
+### Impact
+
+- Build: без изменений.
+- v1.0 mascot: полностью функционален (3D USDZ + SwiftUI composite + audio).
+- Diploma defence: не блокирован.
+- App Store: нет блокеров.
