@@ -169,11 +169,16 @@ struct FamilyCalendarView: View {
             Text(String(localized: "family_calendar.empty.title"))
                 .font(TypographyTokens.title())
                 .foregroundStyle(ColorTokens.Parent.ink)
+                .lineLimit(3)
+                .minimumScaleFactor(0.85)
                 .multilineTextAlignment(.center)
             Text(String(localized: "family_calendar.empty.subtitle"))
                 .font(TypographyTokens.body())
                 .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
                 .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(.horizontal, SpacingTokens.regular)
@@ -243,6 +248,10 @@ struct FamilyCalendarView: View {
             Text(String(localized: "family_calendar.week.schedule_hint"))
                 .font(TypographyTokens.caption())
                 .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: .infinity, alignment: .center)
         }
     }

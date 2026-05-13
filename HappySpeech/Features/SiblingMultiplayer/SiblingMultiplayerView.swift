@@ -66,6 +66,11 @@ struct SiblingMultiplayerView: View {
                         .accessibilityHidden(true)
                     Text(String(localized: "sibling.error.connection"))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(.horizontal, SpacingTokens.regular)
                 }
             }
 
@@ -84,6 +89,11 @@ struct SiblingMultiplayerView: View {
                         .accessibilityHidden(true)
                     Text(String(localized: "sibling.error.connection"))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                        .multilineTextAlignment(.center)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(.horizontal, SpacingTokens.regular)
                 }
             }
         }

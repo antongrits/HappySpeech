@@ -110,11 +110,16 @@ struct FamilyLeaderboardView: View {
                 Text(viewModel.title)
                     .font(TypographyTokens.title(24))
                     .foregroundStyle(ColorTokens.Parent.ink)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
                     .accessibilityAddTraits(.isHeader)
             }
             Text(viewModel.subtitle)
                 .font(TypographyTokens.body(14))
                 .foregroundStyle(ColorTokens.Parent.inkSoft)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
 
@@ -170,10 +175,13 @@ struct FamilyLeaderboardView: View {
                     .font(TypographyTokens.headline(16))
                     .foregroundStyle(ColorTokens.Parent.ink)
                     .lineLimit(1)
+                    .minimumScaleFactor(0.85)
                 HStack(spacing: SpacingTokens.sp2) {
                     Text(row.primaryStat)
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Parent.inkSoft)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                     Text("•")
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Parent.inkSoft)
@@ -181,15 +189,19 @@ struct FamilyLeaderboardView: View {
                     Text(row.secondaryStat)
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Parent.inkSoft)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                 }
             }
 
-            Spacer()
+            Spacer(minLength: SpacingTokens.sp2)
 
             Text(row.scoreLabel)
                 .font(TypographyTokens.headline(15))
                 .foregroundStyle(row.isLeader ? ColorTokens.Brand.gold : ColorTokens.Parent.ink)
                 .monospacedDigit()
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
         }
         .padding(.horizontal, SpacingTokens.sp4)
         .padding(.vertical, SpacingTokens.sp3)
@@ -237,10 +249,16 @@ struct FamilyLeaderboardView: View {
             Text("leaderboard.empty.title")
                 .font(TypographyTokens.headline(18))
                 .foregroundStyle(ColorTokens.Parent.ink)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
+                .multilineTextAlignment(.center)
             Text("leaderboard.empty.subtitle")
                 .font(TypographyTokens.body(14))
                 .foregroundStyle(ColorTokens.Parent.inkSoft)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
                 .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, SpacingTokens.sp10)

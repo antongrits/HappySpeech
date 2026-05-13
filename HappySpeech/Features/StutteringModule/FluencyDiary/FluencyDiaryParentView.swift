@@ -63,9 +63,13 @@ struct FluencyDiaryParentView: View {
             Text(String(localized: "Спотыканий на 100 слогов"))
                 .font(TypographyTokens.headline(17))
                 .foregroundStyle(ColorTokens.Parent.ink)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
             Text(String(localized: "За последние 4 недели"))
                 .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
         }
     }
 
@@ -130,6 +134,8 @@ struct FluencyDiaryParentView: View {
             )
             .font(TypographyTokens.caption(12))
             .foregroundStyle(ColorTokens.Semantic.success)
+            .lineLimit(1)
+            .minimumScaleFactor(0.85)
 
             Label(
                 String(localized: "stuttering.diary.metric.elevated"),
@@ -137,6 +143,8 @@ struct FluencyDiaryParentView: View {
             )
             .font(TypographyTokens.caption(12))
             .foregroundStyle(ColorTokens.Semantic.warning)
+            .lineLimit(1)
+            .minimumScaleFactor(0.85)
         }
     }
 
@@ -147,6 +155,8 @@ struct FluencyDiaryParentView: View {
             Text(String(localized: "История сессий"))
                 .font(TypographyTokens.headline(17))
                 .foregroundStyle(ColorTokens.Parent.ink)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
 
             ForEach(sessions) { session in
                 DiarySessionRow(session: session)
@@ -210,6 +220,8 @@ private struct DiarySessionRow: View {
                     Text(session.dateText)
                         .font(TypographyTokens.body(15))
                         .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                     Text(
                         session.isNormal
                             ? String(localized: "stuttering.diary.metric.normal")
@@ -217,9 +229,11 @@ private struct DiarySessionRow: View {
                     )
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
                 }
 
-                Spacer()
+                Spacer(minLength: SpacingTokens.sp2)
 
                 Text(String(format: String(localized: "stuttering.diary.metric.format"), Int(Float(session.rateText) ?? 0)))
                     .font(TypographyTokens.mono(13))
@@ -228,6 +242,8 @@ private struct DiarySessionRow: View {
                             ? ColorTokens.Semantic.success
                             : ColorTokens.Semantic.warning
                     )
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
             }
         }
         .environment(\.circuitContext, .parent)

@@ -198,6 +198,8 @@ struct ProgressDashboardView: View {
                     Text(title)
                         .font(TypographyTokens.headline(15))
                         .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                 }
 
                 FlowChipsRow(chips: chips)
@@ -442,16 +444,23 @@ struct ProgressDashboardView: View {
                             Text(summary.title)
                                 .font(TypographyTokens.headline(17))
                                 .foregroundStyle(ColorTokens.Parent.ink)
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.85)
+                                .fixedSize(horizontal: false, vertical: true)
                             Text(summary.bodyText)
                                 .font(TypographyTokens.body(15))
                                 .foregroundStyle(ColorTokens.Parent.inkMuted)
                                 .lineSpacing(TypographyTokens.LineSpacing.normal)
                                 .lineLimit(nil)
+                                .minimumScaleFactor(0.85)
+                                .fixedSize(horizontal: false, vertical: true)
                                 .accessibilityLabel(summary.accessibilityLabel)
                             if summary.isFallback {
                                 Text(String(localized: "progressDashboard.llm.fallbackBadge"))
                                     .font(TypographyTokens.caption(11))
                                     .foregroundStyle(ColorTokens.Parent.inkSoft)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.85)
                             }
                         } else {
                             // G.2 v17 — skeleton-rows вместо «генерирую…».
@@ -527,10 +536,15 @@ struct ProgressDashboardView: View {
             Text(title)
                 .font(TypographyTokens.title(20))
                 .foregroundStyle(ColorTokens.Parent.ink)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
             if let subtitle {
                 Text(subtitle)
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
         .padding(.horizontal, SpacingTokens.screenEdge)

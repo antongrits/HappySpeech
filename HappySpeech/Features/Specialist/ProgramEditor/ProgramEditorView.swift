@@ -67,22 +67,29 @@ struct ProgramEditorView: View {
     // MARK: - Subviews
 
     private var summary: some View {
-        HStack {
+        HStack(spacing: SpacingTokens.small) {
             LyalyaMascotView(state: isValid ? .happy : .thinking, size: 48)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(String(localized: "program.editor.duration"))
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
                 Text("\(totalMinutes) " + String(localized: "program.editor.minutes"))
                     .font(TypographyTokens.title(22))
                     .foregroundStyle(isValid ? ColorTokens.Kid.ink : .red)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
             }
-            Spacer()
+            Spacer(minLength: SpacingTokens.tiny)
             if !isValid {
                 Text(String(localized: "program.editor.invalid"))
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Semantic.error)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                    .multilineTextAlignment(.trailing)
             }
         }
         .padding(SpacingTokens.medium)
@@ -123,6 +130,8 @@ struct ProgramEditorView: View {
                     } label: {
                         Text(String(localized: String.LocalizationValue(type.titleKey)))
                             .font(TypographyTokens.caption(13))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
                             .padding(.horizontal, SpacingTokens.medium)
                             .padding(.vertical, SpacingTokens.small)
                             .background(Capsule().fill(ColorTokens.Parent.surface))
@@ -207,16 +216,22 @@ private struct ProgramBlockRow: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(String(localized: String.LocalizationValue(block.type.titleKey)))
                     .font(TypographyTokens.body(15))
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
                 if let sound = block.targetSound {
                     Text(String(localized: "program.editor.sound.\(sound)"))
                         .font(TypographyTokens.caption(11))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                 }
             }
-            Spacer()
+            Spacer(minLength: SpacingTokens.tiny)
             Text("\(block.durationMinutes) " + String(localized: "program.editor.min"))
                 .font(TypographyTokens.mono(13))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
         }
     }
 

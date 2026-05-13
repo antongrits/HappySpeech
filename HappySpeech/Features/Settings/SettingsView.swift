@@ -73,6 +73,7 @@ struct SettingsView: View {
 
                 if let toast = display.toastMessage {
                     HSToast(toast, type: display.toastIsError ? .error : .success)
+                        .padding(.horizontal, SpacingTokens.regular)
                         .padding(.bottom, SpacingTokens.large)
                         .transition(.move(edge: .bottom).combined(with: .opacity))
                         .task {
