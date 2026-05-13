@@ -1,6 +1,9 @@
 # Lottie Animations — Attributions & License Audit
 
-Последний аудит: **2026-05-08** (Block N v18).
+Последний аудит: **2026-05-13** (Block P v21 re-audit, результаты идентичны Block N v18).
+
+**v21-P verdict:** 0 procedural python-lottie файлов. Все 58 — legitimate Bodymovin/AE/LottieFiles
+экспорты. Wholesale replacement не требуется (ADR-V21-LOTTIE-DEFER в `.claude/team/decisions.md`).
 
 ---
 

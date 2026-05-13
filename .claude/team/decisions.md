@@ -3,6 +3,65 @@
 
 ---
 
+## ADR-V21-LOTTIE-DEFER — Lottie collection already real, no replacement needed (2026-05-13)
+
+### Status: Accepted (Block P v21)
+
+### Context
+Plan v21 Block P: «Real Lottie verify + replace procedural». User explicit constraint:
+«нельзя использовать кастомные анимации в lottie потому что получаются некрасивыми».
+
+### Audit results (v21-P, 2026-05-13)
+58 Lottie JSON в `HappySpeech/Resources/Animations/`. Распределение `meta.g` (Bodymovin generator key):
+
+| Generator | Count | Note |
+|---|---|---|
+| `LottieFiles AE 0.1.21` | 1 | After Effects plugin |
+| `LottieFiles AE 1.0.0` | 1 | After Effects plugin |
+| `LottieFiles AE 3.5.4` | 1 | After Effects plugin |
+| `LottieFiles Figma v37` | 1 | Figma plugin |
+| `LottieFiles Figma v101` | 1 | Figma plugin |
+| `@lottiefiles/creator 1.79.0` | 1 | LottieFiles Creator |
+| `@lottiefiles/creator 1.80.0` | 1 | LottieFiles Creator |
+| `@lottiefiles/toolkit-js 0.66.4` | 1 | LottieFiles Toolkit |
+| `NO_META` (legacy Bodymovin export, key omitted) | 50 | — |
+| `python-lottie` / procedural | **0** | NONE FOUND |
+
+Lottie schema versions: 4.5.5–5.8.1 (legitimate Bodymovin/AE range, no v6.x procedural artefacts).
+
+### Heuristic AE-origin check on 8 sampled NO_META files
+Все 8 семплов из категорий Celebrations/EmptyStates/Loaders/MicroInteractions/Transitions/Tutorials прошли AE-fingerprint проверку:
+- Реальные AE наименования слоёв: `Beerglass`, `MartiniGloss`, `Pre-comp 3`, `face-ctrl`, `Layer 2/error2 Outlines`, `needle Outlines`, `QR_s Outlines`, `pop8 + 椭圆 1` (CJK shapes — AE Chinese impor)
+- Precomp assets (`assets[].layers`) у butterfly-catch, pose-sequence, transition_unlock
+- Multi-stage timing (`ip != 0` в pose-sequence, реальные AE timestamps)
+
+### Decision
+**Не выполнять wholesale replacement** — все 58 файлов уже legitimate Bodymovin/AE/LottieFiles экспорты. Procedural python-lottie count = 0. Заменять нечего.
+
+### Size distribution
+- 36 files ≥ 30 KB (полные AE сцены)
+- 19 files <30 KB (легкие micro-interactions: checkmark, shake, modal_out, syncing — нормальный размер для одно-/двух-целевых анимаций)
+- 3 files >200 KB (mimic-lyalya 235 KB, pose-sequence 367 KB — детальные tutorial с face rigs, in budget ≤500 KB/file)
+
+### LottieFiles MCP availability
+`mcp__lottiefiles__search_animations` НЕ доступен в текущей сессии:
+- `~/.claude.json` mcpServers.lottiefiles.env = пусто (нет API ключа)
+- Tools deferred / не загружены через ToolSearch
+- Та же ситуация в v15/v18 — задокументирована (ADR-V15-LOTTIE, ADR-V18-N-LOTTIE-DEFER)
+
+### Outcome
+- BUILD SUCCEEDED iPhone SE 3 (verified 2026-05-13)
+- `HappySpeech/Resources/Animations/ATTRIBUTIONS.md` уже корректно описывает состояние коллекции (v18 Block N audit ≈ v21 Block P audit)
+- `_workshop/lottie_attributions.md` обновлён датой v21-P audit
+- Никаких файлов не удалено / не добавлено / не заменено — все 58 — реальные AE/Bodymovin
+
+### Post-v1.0 plan (unchanged from ADR-V18-N-LOTTIE-DEFER)
+1. Добавить `LOTTIEFILES_API_KEY` в `~/.claude.json` → mcpServers.lottiefiles.env
+2. Per-file визуальный review через симулятор + видео-фиксация
+3. Целевая замена только по результатам visual review (если ребёнок-тестер скажет «некрасиво» о конкретном файле)
+
+---
+
 ## ADR-V21-WHISPER-CONSOLIDATION — Keep both whisper-base + whisper-small (2026-05-13)
 
 ### Status: Accepted (Block M v21)
