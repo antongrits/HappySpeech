@@ -43481,6 +43481,1392 @@
           }
         }
       }
+    },
+    "soundDictionary.screen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Словарь звуков"
+          }
+        }
+      }
+    },
+    "soundDictionary.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть"
+          }
+        }
+      }
+    },
+    "soundDictionary.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загружаем..."
+          }
+        }
+      }
+    },
+    "soundDictionary.hero.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "42 звука русского языка"
+          }
+        }
+      }
+    },
+    "soundDictionary.hero.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажми на букву, чтобы услышать звук и увидеть, как он образуется."
+          }
+        }
+      }
+    },
+    "soundDictionary.totalCount": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d звуков русского языка"
+          }
+        }
+      }
+    },
+    "soundDictionary.footer.note": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Образцы записаны логопедом. Слушай и повторяй вместе с Лялей."
+          }
+        }
+      }
+    },
+    "soundDictionary.cell.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук %@, пример: %@"
+          }
+        }
+      }
+    },
+    "soundDictionary.section.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %d звуков"
+          }
+        }
+      }
+    },
+    "soundDictionary.group.vowels": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Гласные"
+          }
+        }
+      }
+    },
+    "soundDictionary.group.whistling": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Свистящие"
+          }
+        }
+      }
+    },
+    "soundDictionary.group.hissing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шипящие"
+          }
+        }
+      }
+    },
+    "soundDictionary.group.sonants": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Соноры"
+          }
+        }
+      }
+    },
+    "soundDictionary.group.velar": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заднеязычные"
+          }
+        }
+      }
+    },
+    "soundDictionary.group.nasal": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Носовые"
+          }
+        }
+      }
+    },
+    "soundDictionary.group.labial": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Губные"
+          }
+        }
+      }
+    },
+    "soundDictionary.group.dental": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Переднеязычные"
+          }
+        }
+      }
+    },
+    "soundDictionary.group.glide": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Йот"
+          }
+        }
+      }
+    },
+    "soundDictionary.detail.example.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пример"
+          }
+        }
+      }
+    },
+    "soundDictionary.detail.articulation.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как произнести"
+          }
+        }
+      }
+    },
+    "soundDictionary.detail.cta.playAudio": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прослушать"
+          }
+        }
+      }
+    },
+    "soundDictionary.detail.cta.playAudio.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Воспроизводит образец звука"
+          }
+        }
+      }
+    },
+    "soundDictionary.detail.cta.practice": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поупражняться"
+          }
+        }
+      }
+    },
+    "soundDictionary.detail.cta.practice.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть тренировку этого звука"
+          }
+        }
+      }
+    },
+    "soundDictionary.audio.toast.tts": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Голосовой синтез"
+          }
+        }
+      }
+    },
+    "soundDictionary.audio.toast.failed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось воспроизвести звук"
+          }
+        }
+      }
+    },
+    "helpCenter.screen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помощь"
+          }
+        }
+      }
+    },
+    "helpCenter.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть"
+          }
+        }
+      }
+    },
+    "helpCenter.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загружаем..."
+          }
+        }
+      }
+    },
+    "helpCenter.hero.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Центр помощи"
+          }
+        }
+      }
+    },
+    "helpCenter.hero.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ответы на частые вопросы и видеоинструкции."
+          }
+        }
+      }
+    },
+    "helpCenter.faq.section.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Частые вопросы"
+          }
+        }
+      }
+    },
+    "helpCenter.faq.expand.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Раскрыть ответ"
+          }
+        }
+      }
+    },
+    "helpCenter.faq.collapse.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Свернуть ответ"
+          }
+        }
+      }
+    },
+    "helpCenter.category.gettingStarted": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "С чего начать"
+          }
+        }
+      }
+    },
+    "helpCenter.category.voiceRecognition": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Распознавание голоса"
+          }
+        }
+      }
+    },
+    "helpCenter.category.progress": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прогресс ребёнка"
+          }
+        }
+      }
+    },
+    "helpCenter.category.parentControl": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Родительский контроль"
+          }
+        }
+      }
+    },
+    "helpCenter.category.privacy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Приватность и безопасность"
+          }
+        }
+      }
+    },
+    "helpCenter.faq.gs1.question": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как начать первое занятие?"
+          }
+        }
+      }
+    },
+    "helpCenter.faq.gs1.answer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Откройте профиль ребёнка на главном экране и нажмите «Начать занятие». Приложение предложит подходящий сценарий на основе возраста и предыдущих сессий."
+          }
+        }
+      }
+    },
+    "helpCenter.faq.gs2.question": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сколько длится одно занятие?"
+          }
+        }
+      }
+    },
+    "helpCenter.faq.gs2.answer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Длительность подбирается под возраст: 5–6 лет — 7–10 минут, 6–7 лет — 10–12 минут, 7–8 лет — 12–15 минут. Можно остановиться в любой момент."
+          }
+        }
+      }
+    },
+    "helpCenter.faq.gs3.question": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Какие звуки можно отрабатывать?"
+          }
+        }
+      }
+    },
+    "helpCenter.faq.gs3.answer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сейчас доступны 4 группы: свистящие (С, З, Ц), шипящие (Ш, Ж, Ч, Щ), соноры (Р, Л) и заднеязычные (К, Г, Х)."
+          }
+        }
+      }
+    },
+    "helpCenter.faq.vr1.question": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почему приложение не слышит ребёнка?"
+          }
+        }
+      }
+    },
+    "helpCenter.faq.vr1.answer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проверьте разрешение на доступ к микрофону в Настройках iPhone. Уберите фоновый шум и попросите ребёнка говорить ближе к устройству."
+          }
+        }
+      }
+    },
+    "helpCenter.faq.vr2.question": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Распознавание работает без интернета?"
+          }
+        }
+      }
+    },
+    "helpCenter.faq.vr2.answer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Да. Распознавание речи полностью выполняется на устройстве через WhisperKit. Интернет не нужен."
+          }
+        }
+      }
+    },
+    "helpCenter.faq.vr3.question": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Можно ли тренироваться в шумном месте?"
+          }
+        }
+      }
+    },
+    "helpCenter.faq.vr3.answer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лучше выбрать тихое место — это помогает приложению точнее оценить произношение и снижает усталость ребёнка."
+          }
+        }
+      }
+    },
+    "helpCenter.faq.pr1.question": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Где посмотреть прогресс?"
+          }
+        }
+      }
+    },
+    "helpCenter.faq.pr1.answer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В разделе «Родителю» → «Прогресс». Там собрана статистика за неделю, месяц и квартал по каждому ребёнку."
+          }
+        }
+      }
+    },
+    "helpCenter.faq.pr2.question": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Можно ли экспортировать отчёт для логопеда?"
+          }
+        }
+      }
+    },
+    "helpCenter.faq.pr2.answer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Да. В разделе «Прогресс» нажмите «Экспорт PDF» — отчёт будет сохранён в Файлы и его можно отправить специалисту."
+          }
+        }
+      }
+    },
+    "helpCenter.faq.pc1.question": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как ограничить время использования?"
+          }
+        }
+      }
+    },
+    "helpCenter.faq.pc1.answer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Воспользуйтесь Экранным временем в Настройках iPhone. Приложение также показывает напоминание о паузе после 15 минут занятия."
+          }
+        }
+      }
+    },
+    "helpCenter.faq.pc2.question": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Можно ли отключить покупки внутри приложения?"
+          }
+        }
+      }
+    },
+    "helpCenter.faq.pc2.answer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В приложении нет встроенных покупок и рекламы — оно полностью соответствует требованиям Kids Category."
+          }
+        }
+      }
+    },
+    "helpCenter.faq.pv1.question": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Какие данные собирает приложение?"
+          }
+        }
+      }
+    },
+    "helpCenter.faq.pv1.answer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Только локальные данные о прогрессе ребёнка. Голосовые записи не отправляются на сервер — все вычисления делаются на устройстве."
+          }
+        }
+      }
+    },
+    "helpCenter.faq.pv2.question": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что соответствует COPPA?"
+          }
+        }
+      }
+    },
+    "helpCenter.faq.pv2.answer": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Приложение разработано в соответствии с COPPA: нет рекламы, нет сторонних трекеров, нет персонализированных рекомендаций для детей младше 13 лет."
+          }
+        }
+      }
+    },
+    "helpCenter.video.section.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Видеоинструкции"
+          }
+        }
+      }
+    },
+    "helpCenter.video.section.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Короткие видео о том, как пользоваться приложением."
+          }
+        }
+      }
+    },
+    "helpCenter.video.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Видеоинструкции пока недоступны."
+          }
+        }
+      }
+    },
+    "helpCenter.video.unavailable": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Видео временно недоступно"
+          }
+        }
+      }
+    },
+    "helpCenter.video.cell.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Видео: %@, длительность %@"
+          }
+        }
+      }
+    },
+    "helpCenter.video.howToPlay.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как играть"
+          }
+        }
+      }
+    },
+    "helpCenter.video.howToPlay.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Базовое руководство по началу занятий с ребёнком."
+          }
+        }
+      }
+    },
+    "helpCenter.video.articulation.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Артикуляционная гимнастика"
+          }
+        }
+      }
+    },
+    "helpCenter.video.articulation.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражнения для подготовки артикуляционного аппарата."
+          }
+        }
+      }
+    },
+    "helpCenter.video.breathing.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дыхательные упражнения"
+          }
+        }
+      }
+    },
+    "helpCenter.video.breathing.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как правильно дышать во время занятий."
+          }
+        }
+      }
+    },
+    "helpCenter.video.arSetup.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Настройка AR-камеры"
+          }
+        }
+      }
+    },
+    "helpCenter.video.arSetup.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подготовка устройства к работе с AR-упражнениями."
+          }
+        }
+      }
+    },
+    "helpCenter.video.progressTracking.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отслеживание прогресса"
+          }
+        }
+      }
+    },
+    "helpCenter.video.progressTracking.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как читать графики и интерпретировать отчёт."
+          }
+        }
+      }
+    },
+    "helpCenter.contact.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Связаться с логопедом"
+          }
+        }
+      }
+    },
+    "helpCenter.contact.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задайте вопрос специалисту прямо из приложения — бесплатно для родителей."
+          }
+        }
+      }
+    },
+    "helpCenter.contact.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть чат с логопедом"
+          }
+        }
+      }
+    },
+    "helpCenter.contact.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Откроется внутренний чат с логопедом"
+          }
+        }
+      }
+    },
+    "helpCenter.contact.toast.opened": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открываем чат с логопедом..."
+          }
+        }
+      }
+    },
+    "helpCenter.contact.toast.failed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось открыть чат"
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.vow-a.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Широко откройте рот, расслабьте язык — он лежит плоско."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.vow-o.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Округлите губы, как будто хотите подуть на свечу."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.vow-u.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вытяните губы трубочкой — короткое сильное «у»."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.vow-e.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слегка растяните губы, кончик языка касается нижних зубов."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.vow-i.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Широкая улыбка, язык приподнимается к нёбу."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.vow-y.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Губы напряжены, язык отодвинут назад — звук между «и» и «у»."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.wh-s.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зубы сомкнуты заборчиком, по середине языка идёт холодная струйка воздуха."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.wh-s-soft.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тот же С, но средняя часть языка приподнята к нёбу."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.wh-z.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как С, но голосовые связки работают — приложите руку к горлу и почувствуйте дрожь."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.wh-z-soft.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мягкий З: язык приподнят, голос звонкий."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.wh-ts.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слитный звук: сначала Т, потом мгновенно С."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.hs-sh.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Губы округлены и выдвинуты вперёд, язык поднят чашечкой к нёбу."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.hs-zh.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тот же Ш, но с голосом — почувствуйте дрожь в горле."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.hs-ch.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слитный звук: Ть и Щ произносятся одновременно."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.hs-shch.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Долгий мягкий звук, язык широко прижат к верхним зубам."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.son-r.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кончик языка вибрирует за верхними зубами под сильной струёй воздуха."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.son-r-soft.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мягкий Р: средняя часть языка приподнята, вибрация легче."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.son-l.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кончик языка упирается в верхние зубы, бока опущены."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.son-l-soft.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тот же Л, но язык приподнят к нёбу."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.vel-k.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задняя часть языка смыкается с мягким нёбом — короткий «взрыв»."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.vel-k-soft.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "К с приподнятой средней частью языка — звучит мягко."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.vel-g.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как К, но со звонким голосом."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.vel-g-soft.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мягкий Г: язык приподнят, голос звонкий."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.vel-h.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задняя часть языка приподнимается, воздух проходит с шумом — выдох."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.vel-h-soft.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тот же Х, но язык чуть выше и звук мягче."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.nas-m.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Губы сомкнуты, воздух идёт через нос. Голос есть."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.nas-m-soft.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тот же М, средняя часть языка приподнята."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.nas-n.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кончик языка касается верхних зубов, воздух выходит через нос."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.nas-n-soft.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мягкий Н: язык чуть выше, звук теплее."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.lab-b.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сомкнутые губы размыкаются, голос работает — звонкий «взрыв»."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.lab-b-soft.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мягкий Б: губы расслаблены, средняя часть языка вверх."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.lab-p.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сомкнутые губы размыкаются без голоса — глухой «хлопок»."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.lab-p-soft.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мягкий П: губы расслаблены, язык приподнят."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.lab-v.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нижняя губа лёгкое касание верхних зубов, голос работает."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.lab-v-soft.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мягкий В: губы расслаблены, средняя часть языка вверх."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.lab-f.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нижняя губа касается верхних зубов, голоса нет — только шум воздуха."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.lab-f-soft.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мягкий Ф: губы расслаблены, средняя часть языка вверх."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.den-t.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кончик языка касается верхних зубов и резко опускается — глухой «стук»."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.den-t-soft.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мягкий Т: язык приподнят к нёбу."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.den-d.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как Т, но со звонким голосом."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.den-d-soft.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мягкий Д: язык приподнят к нёбу, голос работает."
+          }
+        }
+      }
+    },
+    "soundDictionary.phoneme.gli-j.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кончик языка приподнимается к верхним зубам, средняя часть — к нёбу."
+          }
+        }
+      }
     }
   },
   "version": "1.0"
