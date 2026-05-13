@@ -465,41 +465,12 @@ struct AppCoordinatorView: View {
         }
     }
 
-    // swiftlint:disable:next cyclomatic_complexity
     private func launchSplash() {
         // Debug screenshot-tour shortcut: launch with -HSStartRoute <route> to skip splash.
         let args = ProcessInfo.processInfo.arguments
         if let idx = args.firstIndex(of: "-HSStartRoute"), idx + 1 < args.count {
             let route = args[idx + 1]
-            let target: AppRoute
-            switch route {
-            case "demoMode":         target = .demoMode
-            case "parentHome":       target = .parentHome
-            case "roleSelect":       target = .roleSelect
-            case "onboarding":       target = .onboarding
-            case "settings":         target = .settings
-            case "offlineState":     target = .offlineState
-            case "childHome":        target = .childHome(childId: "preview-child-1")
-            case "progressDashboard": target = .progressDashboard(childId: "preview-child-1")
-            case "rewards":          target = .rewards(childId: "preview-child-1")
-            case "worldMap":         target = .worldMap(childId: "preview-child-1", targetSound: "Р")
-            case "sessionHistory":   target = .sessionHistory(childId: "preview-child-1")
-            case "sessionComplete":  target = .sessionComplete
-            case "arZone":           target = .arZone
-            case "lessonPlayer":     target = .lessonPlayer(templateType: "bingo", childId: "preview-child-1")
-            case "familyVoice":      target = .familyVoice
-            case "stuttering":          target = .stutteringHome
-            case "fluencyDiary":        target = .fluencyDiaryParent
-            case "siblingMultiplayer":  target = .siblingMultiplayer(childId: "preview-child-1")
-            case "soundDictionary":     target = .soundDictionary
-            case "helpCenter":          target = .helpCenter
-            case "dailyChallenge":      target = .dailyChallenge(childId: "preview-child-1")
-            case "parentInsightsTimeline":
-                target = .parentInsightsTimeline(childId: "preview-child-1")
-            case "familyAwardsCabinet":
-                target = .familyAwardsCabinet(parentId: "local-parent")
-            default:                    target = .auth
-            }
+            let target = Self.resolveStartRoute(route)
             coordinator.navigate(to: target)
             return
         }
@@ -520,6 +491,231 @@ struct AppCoordinatorView: View {
                 let target: AppRoute = OnboardingState.isCompleted ? .auth : .onboarding
                 coordinator.navigate(to: target)
             }
+        }
+    }
+}
+
+// MARK: - HSStartRoute mapping (v22 Block 0.2)
+
+extension AppCoordinatorView {
+
+    /// Maps a `-HSStartRoute <name>` debug argument to an `AppRoute`.
+    ///
+    /// Block 0.2 v22 expansion (104 entries): existing 19 base routes + 85 new
+    /// routes spanning auth, onboarding (10), lesson templates (16), AR (9),
+    /// session (8), settings sub (10), demo (4), family (6), specialist (5),
+    /// stuttering (5), misc (11), R+AE (11).
+    ///
+    /// Strategy:
+    /// - Lesson templates → `.lessonPlayer(templateType:)` with kebab-case
+    ///   slug matching `GameType.fromTemplateRoute` (16 distinct screenshots).
+    /// - Sub-screens of single-root features (onboarding, AR, settings, demo)
+    ///   fall back to root `AppRoute` — capture serves as baseline.
+    /// - Aliases for already-supported routes (anonymousAuth → .auth,
+    ///   authSignUp → .signUp, etc.).
+    /// - Unknown / unimplemented routes return `.auth` (default fallback).
+    ///
+    /// This helper is intentionally side-effect-free and pure to keep the
+    /// `launchSplash` flow simple and unit-testable.
+    // swiftlint:disable:next cyclomatic_complexity function_body_length
+    static func resolveStartRoute(_ route: String) -> AppRoute {
+        let previewChild = "preview-child-1"
+        let previewChild2 = "preview-child-2"
+        let previewParent = "local-parent"
+
+        switch route {
+        // MARK: Base 19 routes (unchanged from pre-v22 behaviour)
+        case "demoMode":            return .demoMode
+        case "parentHome":          return .parentHome
+        case "roleSelect":          return .roleSelect
+        case "onboarding":          return .onboarding
+        case "settings":            return .settings
+        case "offlineState":        return .offlineState
+        case "childHome":           return .childHome(childId: previewChild)
+        case "progressDashboard":   return .progressDashboard(childId: previewChild)
+        case "rewards":             return .rewards(childId: previewChild)
+        case "worldMap":            return .worldMap(childId: previewChild, targetSound: "Р")
+        case "sessionHistory":      return .sessionHistory(childId: previewChild)
+        case "sessionComplete":     return .sessionComplete
+        case "arZone":              return .arZone
+        case "lessonPlayer":        return .lessonPlayer(templateType: "bingo", childId: previewChild)
+        case "familyVoice":         return .familyVoice
+        case "stuttering":          return .stutteringHome
+        case "fluencyDiary":        return .fluencyDiaryParent
+        case "siblingMultiplayer":  return .siblingMultiplayer(childId: previewChild)
+        case "auth":                return .auth
+
+        // MARK: Tier 1 — Auth + Onboarding 10 + role/home (20)
+        case "authSignUp":          return .signUp
+        case "authForgotPassword":  return .forgotPassword
+        case "authVerifyEmail":     return .verifyEmail
+        case "anonymousAuth":       return .auth
+        case "splash":              return .splash
+        case "specialistHome":      return .specialistHome
+        case "childHome2":          return .childHome(childId: previewChild2)
+        case "onboarding1",
+             "onboarding2",
+             "onboarding3",
+             "onboarding4",
+             "onboarding5",
+             "onboarding6",
+             "onboarding7",
+             "onboarding8",
+             "onboarding9",
+             "onboarding10":
+            return .onboarding
+
+        // MARK: Tier 2 — LessonPlayer 16 templates
+        case "lessonListenAndChoose":
+            return .lessonPlayer(templateType: "listen-and-choose", childId: previewChild)
+        case "lessonRepeatAfterModel":
+            return .lessonPlayer(templateType: "repeat-after-model", childId: previewChild)
+        case "lessonDragAndMatch":
+            return .lessonPlayer(templateType: "drag-and-match", childId: previewChild)
+        case "lessonStoryCompletion":
+            return .lessonPlayer(templateType: "story-completion", childId: previewChild)
+        case "lessonPuzzleReveal":
+            return .lessonPlayer(templateType: "puzzle-reveal", childId: previewChild)
+        case "lessonSorting":
+            return .lessonPlayer(templateType: "sorting", childId: previewChild)
+        case "lessonMemory":
+            return .lessonPlayer(templateType: "memory", childId: previewChild)
+        case "lessonBingo":
+            return .lessonPlayer(templateType: "bingo", childId: previewChild)
+        case "lessonSoundHunter":
+            return .lessonPlayer(templateType: "sound-hunter", childId: previewChild)
+        case "lessonArticulationImitation":
+            return .lessonPlayer(templateType: "articulation-imitation", childId: previewChild)
+        case "lessonARActivity":
+            return .lessonPlayer(templateType: "ar-activity", childId: previewChild)
+        case "lessonVisualAcoustic":
+            return .lessonPlayer(templateType: "visual-acoustic", childId: previewChild)
+        case "lessonBreathingExercise":
+            return .lessonPlayer(templateType: "breathing", childId: previewChild)
+        case "lessonRhythm":
+            return .lessonPlayer(templateType: "rhythm", childId: previewChild)
+        case "lessonNarrativeQuest":
+            return .lessonPlayer(templateType: "narrative-quest", childId: previewChild)
+        case "lessonMinimalPairs":
+            return .lessonPlayer(templateType: "minimal-pairs", childId: previewChild)
+
+        // MARK: Tier 3 — AR sub-screens 9 (fallback to .arZone)
+        case "arMirror",
+             "arStoryQuest",
+             "breathingAR",
+             "butterflyCatch",
+             "holdThePose",
+             "mascot3D",
+             "mimicLyalya",
+             "poseSequence",
+             "soundAndFace":
+            return .arZone
+
+        // MARK: Tier 4 — Session 5 (fallback to .sessionComplete / .rewards)
+        case "sessionShell":
+            return .lessonPlayer(templateType: "bingo", childId: previewChild)
+        case "sessionDetail":
+            return .sessionHistory(childId: previewChild)
+        case "celebrationOverlay":
+            return .sessionComplete
+        case "rewardDetail",
+             "rewardAlbum":
+            return .rewards(childId: previewChild)
+
+        // MARK: Tier 5 — Settings sub-screens 9 (fallback to .settings)
+        case "settingsTheme",
+             "settingsNotifications",
+             "settingsModelPacks",
+             "settingsPrivacy",
+             "settingsGDPR",
+             "settingsAbout",
+             "settingsVoice",
+             "settingsLanguage",
+             "settingsAccessibility":
+            return .settings
+
+        // MARK: Tier 6 — Demo/Misc 7
+        case "demoStep1",
+             "demoStep5",
+             "demoStep10",
+             "demoStep15":
+            return .demoMode
+        case "homeTasks":
+            return .homeTasks
+        case "rewardCollection",
+             "dailyStreak":
+            return .rewards(childId: previewChild)
+
+        // MARK: Tier 7 — Family 6
+        case "familyHome":
+            return .familyHome
+        case "profileEditor":
+            return .profileEditor(childId: previewChild)
+        case "comparisonDashboard":
+            return .comparisonDashboard
+        case "familyCalendar":
+            return .familyCalendar
+        case "familyLeaderboard":
+            return .pronunciationLeaderboard(parentId: previewParent)
+        case "familyAchievements":
+            return .achievements(childId: previewChild)
+
+        // MARK: Tier 8 — Specialist 5 (fallback to .specialistHome / .auth)
+        case "specialistLogin":
+            return .auth
+        case "studentsList",
+             "programEditor",
+             "sessionReview",
+             "reports":
+            return .specialistHome
+
+        // MARK: Tier 9 — Stuttering 5
+        case "stutteringHome":
+            return .stutteringHome
+        case "breathingTree",
+             "metronome",
+             "softOnset":
+            return .stutteringHome
+        case "fluencyDiaryHome":
+            return .fluencyDiaryParent
+
+        // MARK: Tier 10 — Misc 9 (most fall back to .auth — no view yet)
+        case "neurolinguistInsights":
+            return .neurolinguistInsights(childId: previewChild)
+        case "speechVisualization",
+             "offlineMiniGame",
+             "arFaceFilter",
+             "guidedTour",
+             "grammarGame":
+            return .auth
+        case "siblingMultiplayerDiscovery",
+             "siblingMultiplayerLobby",
+             "siblingMultiplayerGame":
+            return .siblingMultiplayer(childId: previewChild)
+
+        // MARK: Tier 11 — R-screens + AE 11
+        case "dialectAdaptation",
+             "logopedistChat",
+             "weeklyChallenge",
+             "culturalContent":
+            return .auth
+        case "pronunciationLeaderboard":
+            return .pronunciationLeaderboard(parentId: previewParent)
+        case "soundDictionary":
+            return .soundDictionary
+        case "helpCenter":
+            return .helpCenter
+        case "dailyChallenge":
+            return .dailyChallenge(childId: previewChild)
+        case "parentInsightsTimeline":
+            return .parentInsightsTimeline(childId: previewChild)
+        case "familyAwardsCabinet":
+            return .familyAwardsCabinet(parentId: previewParent)
+        case "voiceCloning":
+            return .voiceCloning(childId: previewChild)
+
+        default:
+            return .auth
         }
     }
 }
