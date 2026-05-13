@@ -49,7 +49,20 @@ struct ARGameHUD: View {
 
     let title: LocalizedStringKey
     let scoreText: String?
+    /// SF Symbol для иконки рядом со score (например, `star.fill`). Если nil — score
+    /// рендерится как обычный текст без иконки.
+    let scoreIcon: String?
     let onClose: () -> Void
+
+    init(title: LocalizedStringKey,
+         scoreText: String?,
+         scoreIcon: String? = nil,
+         onClose: @escaping () -> Void) {
+        self.title = title
+        self.scoreText = scoreText
+        self.scoreIcon = scoreIcon
+        self.onClose = onClose
+    }
 
     var body: some View {
         HStack(spacing: SpacingTokens.small) {
@@ -74,15 +87,27 @@ struct ARGameHUD: View {
             Spacer()
 
             if let scoreText {
-                Text(scoreText)
-                    .font(TypographyTokens.headline(16))
-                    .foregroundStyle(ColorTokens.Overlay.onAccent)
-                    .padding(.horizontal, SpacingTokens.small)
-                    .padding(.vertical, SpacingTokens.tiny)
-                    .background(ColorTokens.Brand.primary.opacity(0.9), in: Capsule())
+                scoreBadge(text: scoreText, icon: scoreIcon)
             }
         }
         .padding(.horizontal, SpacingTokens.regular)
         .padding(.top, SpacingTokens.small)
+    }
+
+    @ViewBuilder
+    private func scoreBadge(text: String, icon: String?) -> some View {
+        HStack(spacing: SpacingTokens.tiny) {
+            Text(text)
+                .font(TypographyTokens.headline(16))
+            if let icon {
+                Image(systemName: icon)
+                    .font(TypographyTokens.headline(14))
+                    .accessibilityHidden(true)
+            }
+        }
+        .foregroundStyle(ColorTokens.Overlay.onAccent)
+        .padding(.horizontal, SpacingTokens.small)
+        .padding(.vertical, SpacingTokens.tiny)
+        .background(ColorTokens.Brand.primary.opacity(0.9), in: Capsule())
     }
 }

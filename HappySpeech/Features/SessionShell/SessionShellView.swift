@@ -469,7 +469,10 @@ struct SessionShellBinder: View {
 
     private func rewardOverlay(_ vm: RewardViewModel) -> some View {
         VStack(spacing: SpacingTokens.small) {
-            Text(vm.emoji).font(TypographyTokens.kidDisplay(64)).accessibilityHidden(true)
+            Image(systemName: vm.iconName)
+                .font(.system(size: 64, weight: .bold))
+                .foregroundStyle(ColorTokens.Brand.gold)
+                .accessibilityHidden(true)
             Text(vm.title)
                 .font(TypographyTokens.title())
                 .foregroundStyle(ColorTokens.Kid.ink)
