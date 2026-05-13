@@ -12,10 +12,12 @@ final class DialectAdaptationInteractorTests: XCTestCase {
     private var sut: DialectAdaptationInteractor!
     private var spyPresenter: SpyDialectAdaptationPresenter!
     private var testDefaults: UserDefaults!
+    private var testSuiteName: String!
 
     override func setUp() {
         super.setUp()
-        testDefaults = UserDefaults(suiteName: "test.dialect.\(UUID().uuidString)")!
+        testSuiteName = "test.dialect.\(UUID().uuidString)"
+        testDefaults = UserDefaults(suiteName: testSuiteName)!
         spyPresenter = SpyDialectAdaptationPresenter()
         sut = DialectAdaptationInteractor(
             childId: "child-test-1",
@@ -26,7 +28,7 @@ final class DialectAdaptationInteractorTests: XCTestCase {
     }
 
     override func tearDown() {
-        testDefaults.removePersistentDomain(forName: testDefaults.suiteName ?? "")
+        testDefaults.removePersistentDomain(forName: testSuiteName)
         sut = nil
         spyPresenter = nil
         testDefaults = nil

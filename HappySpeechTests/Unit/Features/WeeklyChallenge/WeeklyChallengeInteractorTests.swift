@@ -12,10 +12,12 @@ final class WeeklyChallengeInteractorTests: XCTestCase {
     private var sut: WeeklyChallengeInteractor!
     private var spyPresenter: SpyWeeklyChallengePresenter!
     private var testDefaults: UserDefaults!
+    private var testSuiteName: String!
 
     override func setUp() {
         super.setUp()
-        testDefaults = UserDefaults(suiteName: "test.weekly.\(UUID().uuidString)")!
+        testSuiteName = "test.weekly.\(UUID().uuidString)"
+        testDefaults = UserDefaults(suiteName: testSuiteName)!
         spyPresenter = SpyWeeklyChallengePresenter()
         sut = WeeklyChallengeInteractor(
             childId: "child-weekly-1",
@@ -26,7 +28,7 @@ final class WeeklyChallengeInteractorTests: XCTestCase {
     }
 
     override func tearDown() {
-        testDefaults.removePersistentDomain(forName: testDefaults.suiteName ?? "")
+        testDefaults.removePersistentDomain(forName: testSuiteName)
         sut = nil
         spyPresenter = nil
         testDefaults = nil
