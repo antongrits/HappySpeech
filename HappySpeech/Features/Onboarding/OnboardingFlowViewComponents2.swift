@@ -120,58 +120,88 @@ struct ScheduleRow: View {
 
 // MARK: - Step 8: Permissions
 
+/// Plan v21 Block A.fix — permissions запрашиваются ТОЛЬКО на явный tap
+/// пользователя по «Разрешить ...» CTA на карточке. На arrival шаг просто
+/// показывает три карточки c кнопками — никакой iOS modal не открывается
+/// без explicit user action. Callbacks дёргают `OnboardingInteractor`,
+/// который запускает соответствующий системный API (AVAudioApplication /
+/// AVCaptureDevice / UNUserNotificationCenter).
+///
+/// Опциональные callbacks: если nil — кнопки скрываются (для Preview).
 struct OnboardingPermissionsStep: View {
+
+    let onRequestMicrophone: (() -> Void)?
+    let onRequestCamera: (() -> Void)?
+    let onRequestNotifications: (() -> Void)?
 
     @State private var appeared = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
+    init(
+        onRequestMicrophone: (() -> Void)? = nil,
+        onRequestCamera: (() -> Void)? = nil,
+        onRequestNotifications: (() -> Void)? = nil
+    ) {
+        self.onRequestMicrophone = onRequestMicrophone
+        self.onRequestCamera = onRequestCamera
+        self.onRequestNotifications = onRequestNotifications
+    }
+
     var body: some View {
-        VStack(spacing: SpacingTokens.medium) {
-            // Block I v19: scaleEffect убран с 2D Ляли.
-            LyalyaHeroView(state: .pointing, mood: 0.7, size: 200)
-                .opacity(appeared ? 1 : 0)
-                .accessibilityHidden(true)
+        ScrollView {
+            VStack(spacing: SpacingTokens.medium) {
+                // Block I v19: scaleEffect убран с 2D Ляли.
+                LyalyaHeroView(state: .pointing, mood: 0.7, size: 200)
+                    .opacity(appeared ? 1 : 0)
+                    .accessibilityHidden(true)
 
-            Text(String(localized: "onboarding.permissions.title"))
-                .font(TypographyTokens.title(24))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.8)
-                .padding(.horizontal, SpacingTokens.medium)
-                .accessibilityAddTraits(.isHeader)
+                Text(String(localized: "onboarding.permissions.title"))
+                    .font(TypographyTokens.title(24))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+                    .padding(.horizontal, SpacingTokens.medium)
+                    .accessibilityAddTraits(.isHeader)
 
-            Text(String(localized: "onboarding.permissions.subtitle"))
-                .font(TypographyTokens.body(14))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-                .padding(.horizontal, SpacingTokens.large)
+                Text(String(localized: "onboarding.permissions.subtitle"))
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .padding(.horizontal, SpacingTokens.large)
 
-            VStack(spacing: SpacingTokens.small) {
-                permissionCard(
-                    icon: "mic.circle.fill",
-                    title: String(localized: "onboarding.permissions.mic.title"),
-                    body: String(localized: "onboarding.permissions.mic.body"),
-                    color: ColorTokens.Brand.primary
-                )
-                permissionCard(
-                    icon: "camera.circle.fill",
-                    title: String(localized: "onboarding.permissions.camera.title"),
-                    body: String(localized: "onboarding.permissions.camera.body"),
-                    color: ColorTokens.Brand.lilac
-                )
-                permissionCard(
-                    icon: "bell.circle.fill",
-                    title: String(localized: "onboarding.permissions.notifications.title"),
-                    body: String(localized: "onboarding.permissions.notifications.body"),
-                    color: ColorTokens.Brand.butter
-                )
+                VStack(spacing: SpacingTokens.small) {
+                    permissionCard(
+                        icon: "mic.circle.fill",
+                        title: String(localized: "onboarding.permissions.mic.title"),
+                        body: String(localized: "onboarding.permissions.mic.body"),
+                        allowLabel: String(localized: "permissions.mic.allow"),
+                        color: ColorTokens.Brand.primary,
+                        action: onRequestMicrophone
+                    )
+                    permissionCard(
+                        icon: "camera.circle.fill",
+                        title: String(localized: "onboarding.permissions.camera.title"),
+                        body: String(localized: "onboarding.permissions.camera.body"),
+                        allowLabel: String(localized: "permissions.camera.allow"),
+                        color: ColorTokens.Brand.lilac,
+                        action: onRequestCamera
+                    )
+                    permissionCard(
+                        icon: "bell.circle.fill",
+                        title: String(localized: "onboarding.permissions.notifications.title"),
+                        body: String(localized: "onboarding.permissions.notifications.body"),
+                        allowLabel: String(localized: "permissions.notif.allow"),
+                        color: ColorTokens.Brand.butter,
+                        action: onRequestNotifications
+                    )
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+
+                Spacer(minLength: SpacingTokens.small)
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-
-            Spacer()
         }
         .onAppear {
             withAnimation(reduceMotion ? nil : MotionTokens.spring.delay(0.1)) {
@@ -180,30 +210,58 @@ struct OnboardingPermissionsStep: View {
         }
     }
 
-    private func permissionCard(icon: String, title: String, body: String, color: Color) -> some View {
+    private func permissionCard(
+        icon: String,
+        title: String,
+        body: String,
+        allowLabel: String,
+        color: Color,
+        action: (() -> Void)?
+    ) -> some View {
         HSLiquidGlassCard(style: .tinted(color), padding: SpacingTokens.medium) {
-            HStack(alignment: .top, spacing: SpacingTokens.medium) {
-                Image(systemName: icon)
-                    .font(TypographyTokens.display(32))
-                    .foregroundStyle(color)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                    Text(title)
-                        .font(TypographyTokens.headline(16))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
-                    Text(body)
-                        .font(TypographyTokens.body(13))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(3)
-                        .minimumScaleFactor(0.85)
+            VStack(alignment: .leading, spacing: SpacingTokens.small) {
+                HStack(alignment: .top, spacing: SpacingTokens.medium) {
+                    Image(systemName: icon)
+                        .font(TypographyTokens.display(32))
+                        .foregroundStyle(color)
+                        .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                        Text(title)
+                            .font(TypographyTokens.headline(16))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
+                        Text(body)
+                            .font(TypographyTokens.body(13))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .lineLimit(3)
+                            .minimumScaleFactor(0.85)
+                    }
+                    Spacer()
                 }
-                Spacer()
+
+                // Plan v21 Block A.fix — CTA «Разрешить ...» дёргает callback
+                // только при явном tap. iOS modal появляется после tap, что
+                // позволяет пользователю прочитать описание до запроса.
+                if let action {
+                    Button(action: action) {
+                        Text(allowLabel)
+                            .font(TypographyTokens.headline(14))
+                            .foregroundStyle(color)
+                            .padding(.horizontal, SpacingTokens.medium)
+                            .padding(.vertical, SpacingTokens.tiny)
+                            .background(
+                                Capsule()
+                                    .fill(color.opacity(0.14))
+                            )
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(allowLabel)
+                    .accessibilityAddTraits(.isButton)
+                }
             }
         }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(title). \(body)")
+        .accessibilityElement(children: .contain)
     }
 }
 

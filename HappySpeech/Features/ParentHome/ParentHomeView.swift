@@ -88,9 +88,7 @@ struct ParentHomeView: View {
                 case .settings:   SettingsView()
                 }
             } else {
-                ProgressView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(ColorTokens.Parent.bg)
+                loadingSection
             }
         }
         .navigationSplitViewStyle(.balanced)
@@ -140,9 +138,7 @@ struct ParentHomeView: View {
         if let vm = scene?.viewModel {
             ParentDashboardTab(viewModel: vm, coordinator: coordinator)
         } else {
-            ProgressView()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(ColorTokens.Parent.bg)
+            loadingSection
         }
     }
 
@@ -150,7 +146,7 @@ struct ParentHomeView: View {
         if let vm = scene?.viewModel {
             ParentSessionsTab(sessions: vm.recentSessions)
         } else {
-            Color.clear
+            loadingSection
         }
     }
 
@@ -158,12 +154,38 @@ struct ParentHomeView: View {
         if let vm = scene?.viewModel {
             ParentAnalyticsTab(progress: vm.soundProgress)
         } else {
-            Color.clear
+            loadingSection
         }
     }
 
     @ViewBuilder private var settingsTab: some View {
         SettingsView()
+    }
+
+    // MARK: - Loading placeholder
+    //
+    // Plan v21 Block A.fix — пока `scene?.viewModel == nil` (cold start
+    // ~5-6s на real device: Realm + Firebase + WhisperKit init), показываем
+    // дружелюбный placeholder с маскотом + индикатором вместо `ProgressView()`
+    // на пустом cream фоне. Это убирает «empty cream bg» восприятие при
+    // первом запуске. На последующих запусках scene создаётся синхронно
+    // в `bootstrapScene()` (P0.2 fix v19) — placeholder фактически не виден.
+    private var loadingSection: some View {
+        VStack(spacing: SpacingTokens.sp4) {
+            Spacer()
+            LyalyaMascotView(state: .thinking, size: 80)
+                .accessibilityHidden(true)
+            ProgressView()
+                .tint(ColorTokens.Parent.accent)
+            Text(String(localized: "general.loading"))
+                .font(TypographyTokens.body(14))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(ColorTokens.Parent.bg.ignoresSafeArea())
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(String(localized: "general.loading"))
     }
 }
 
