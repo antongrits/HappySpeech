@@ -492,7 +492,7 @@ private struct CabinetRealityView: View {
                     depth: shelfDepth
                 )
                 let woodMaterial = SimpleMaterial(
-                    color: UIColor(red: 0.42, green: 0.30, blue: 0.20, alpha: 1.0),
+                    color: ColorTokens.Wood.shelfUI,
                     isMetallic: false
                 )
                 let shelfEntity = ModelEntity(mesh: shelfMesh, materials: [woodMaterial])

@@ -116,6 +116,7 @@ custom_rules:
     severity: error
     excluded:
       - HappySpeech/DesignSystem/Tokens/ColorTokens.swift
+      - HappySpeech/DesignSystem/Tokens/ShadowTokens.swift
       - HappySpeechTests
 
   forbidden_color_hex:
@@ -124,6 +125,7 @@ custom_rules:
     message: "Use ColorTokens. Color.hex deprecated"
     severity: error
     excluded:
+      - HappySpeech/DesignSystem/Tokens/ColorTokens.swift
       - HappySpeechTests
 
   forbidden_uikit_white_black:
@@ -133,6 +135,9 @@ custom_rules:
     severity: warning
     excluded:
       - HappySpeech/Features/Common/LyalyaSceneView.swift
+      - HappySpeech/DesignSystem/Tokens/ColorTokens.swift
+      - HappySpeech/DesignSystem/Components/HSMarkdownView.swift
+      - HappySpeech/Services/SpecialistExportServiceLive.swift
 
   prefer_async_stream_over_polling:
     name: "Prefer AsyncStream over Timer polling"

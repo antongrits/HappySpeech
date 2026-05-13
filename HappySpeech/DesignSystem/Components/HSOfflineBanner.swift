@@ -53,7 +53,7 @@ public struct HSOfflineBanner: View {
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.vertical, SpacingTokens.sp2)
         }
-        .background(Color(hex: "#E85D35"))
+        .background(ColorTokens.Banner.offlineBg)
         .transition(.move(edge: .top).combined(with: .opacity))
         .accessibilityElement(children: .combine)
         .accessibilityLabel("Нет подключения к интернету. \(pendingCountText)")

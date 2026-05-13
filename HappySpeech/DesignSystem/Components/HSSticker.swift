@@ -134,8 +134,8 @@ public struct HSSticker: View {
 
     private var stickerIconColor: Color {
         switch type {
-        case .goldStar, .crown, .trophy: return Color(hex: "#E5A000")
-        case .silverStar:                return Color(hex: "#8899AA")
+        case .goldStar, .crown, .trophy: return ColorTokens.Sticker.goldTint
+        case .silverStar:                return ColorTokens.Sticker.silverTint
         case .butterfly:                 return ColorTokens.Brand.primary
         default:                         return Color.secondary
         }

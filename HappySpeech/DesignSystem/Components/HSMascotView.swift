@@ -257,16 +257,16 @@ private struct MoodAuraView: View {
 
     private var auraColor: Color {
         switch mood {
-        case .idle:        return Color(hex: "#B0C4FF")
-        case .happy:       return Color(hex: "#FFD700")
-        case .celebrating: return Color(hex: "#FF9E70")
-        case .thinking:    return Color(hex: "#C3B1E1")
-        case .sad:         return Color(hex: "#A8C8FF")
-        case .encouraging: return Color(hex: "#90EE90")
-        case .waving:      return Color(hex: "#FFD700")
-        case .explaining:  return Color(hex: "#FF9E70")
-        case .singing:     return Color(hex: "#FFB6D9")
-        case .pointing:    return Color(hex: "#FF9E70")
+        case .idle:        return ColorTokens.Mood.idle
+        case .happy:       return ColorTokens.Mood.happy
+        case .celebrating: return ColorTokens.Mood.celebrating
+        case .thinking:    return ColorTokens.Mood.thinking
+        case .sad:         return ColorTokens.Mood.sad
+        case .encouraging: return ColorTokens.Mood.encouraging
+        case .waving:      return ColorTokens.Mood.happy
+        case .explaining:  return ColorTokens.Mood.celebrating
+        case .singing:     return ColorTokens.Mood.singing
+        case .pointing:    return ColorTokens.Mood.celebrating
         }
     }
 

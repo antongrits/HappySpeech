@@ -181,7 +181,7 @@ public struct HSConfettiView: View {
     }
 
     private func makeStreakParticles() -> [ConfettiParticle] {
-        let goldColors: [Color] = [.yellow, Color(red: 1.0, green: 0.84, blue: 0), Color(red: 1.0, green: 0.72, blue: 0.05)]
+        let goldColors: [Color] = [.yellow, ColorTokens.Confetti.gold, ColorTokens.Confetti.amber]
         return (0..<40).map { i in
             let angle = Double(i) / 40.0 * 2 * .pi
             return ConfettiParticle(
@@ -203,7 +203,7 @@ public struct HSConfettiView: View {
     private func makeMedalParticles() -> [ConfettiParticle] {
         let burstColors: [Color] = [
             ColorTokens.Brand.primary,
-            .yellow, Color(red: 1.0, green: 0.84, blue: 0),
+            .yellow, ColorTokens.Confetti.gold,
             ColorTokens.Brand.gold, .white
         ]
         return (0..<50).map { i in
