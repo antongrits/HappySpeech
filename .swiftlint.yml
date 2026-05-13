@@ -108,3 +108,36 @@ custom_rules:
     regex: '"(TODO|placeholder|PLACEHOLDER|debug|DEBUG|test string)"'
     message: "No debug text in production UI"
     severity: error
+
+  forbidden_color_literal:
+    name: "Forbidden Color literal"
+    regex: 'Color\(red:\s*[0-9.]+,\s*green:\s*[0-9.]+,\s*blue:\s*[0-9.]+'
+    message: "Use ColorTokens. Define ColorSet в Assets.xcassets/Colors/"
+    severity: error
+    excluded:
+      - HappySpeech/DesignSystem/Tokens/ColorTokens.swift
+      - HappySpeechTests
+
+  forbidden_color_hex:
+    name: "Forbidden Color hex constructor"
+    regex: 'Color\(hex:\s*"#[0-9A-Fa-f]+"'
+    message: "Use ColorTokens. Color.hex deprecated"
+    severity: error
+    excluded:
+      - HappySpeechTests
+
+  forbidden_uikit_white_black:
+    name: "Forbidden UIColor white/black"
+    regex: 'UIColor\.(white|black)\b'
+    message: "Use UIColor(named:) from Assets.xcassets"
+    severity: warning
+    excluded:
+      - HappySpeech/Features/Common/LyalyaSceneView.swift
+
+  prefer_async_stream_over_polling:
+    name: "Prefer AsyncStream over Timer polling"
+    regex: 'Timer\.scheduledTimer\(withTimeInterval'
+    message: "Use AsyncStream для network polling"
+    severity: warning
+    excluded:
+      - HappySpeechTests
