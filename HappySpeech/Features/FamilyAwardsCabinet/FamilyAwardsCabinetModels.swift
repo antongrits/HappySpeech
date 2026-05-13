@@ -37,10 +37,10 @@ public enum AwardTier: String, CaseIterable, Sendable, Equatable {
     /// Цвет «материала» полки/трофея в RealityView fallback.
     public var displayColor: Color {
         switch self {
-        case .platinum: return Color(red: 0.85, green: 0.86, blue: 0.92)
+        case .platinum: return ColorTokens.Award.platinum
         case .gold:     return ColorTokens.Brand.gold
-        case .silver:   return Color(red: 0.79, green: 0.81, blue: 0.84)
-        case .bronze:   return Color(red: 0.80, green: 0.50, blue: 0.20)
+        case .silver:   return ColorTokens.Award.silver
+        case .bronze:   return ColorTokens.Badge.bronze
         }
     }
 

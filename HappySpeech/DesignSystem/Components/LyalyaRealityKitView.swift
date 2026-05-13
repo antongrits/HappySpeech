@@ -568,8 +568,8 @@ extension LyalyaRealityKitView {
         /// Изменяет цвет щёк через SimpleMaterial — розоватые для celebrating.
         private func applyCheerfulCheeks(active: Bool, mood: Float) {
             let cheekColor: UIColor = active
-                ? UIColor(red: 1.0, green: 0.65, blue: 0.65, alpha: min(1.0, 0.5 + Double(mood) * 0.5))
-                : UIColor(red: 0.95, green: 0.82, blue: 0.82, alpha: 0.3)
+                ? ColorTokens.Mascot.cheekActiveUI(mood: mood)
+                : ColorTokens.Mascot.cheekIdleUI
 
             [cheekLeftEntity, cheekRightEntity].forEach { cheekEntity in
                 guard let model = cheekEntity as? ModelEntity else { return }

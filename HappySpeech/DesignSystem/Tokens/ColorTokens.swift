@@ -553,6 +553,80 @@ public enum ColorTokens {
         public static let tigrTimur: [String]         = ["#FF8C00", "#FF4500"]
     }
 
+    // MARK: - Mascot Aura
+
+    /// Цвета ауры маскота «Ляля» (`MoodAuraView` в HSMascotView).
+    /// Каждое настроение имеет уникальный halo-цвет. Значения совпадают
+    /// с теми, что использовались до миграции через `Color(hex:)`.
+    public enum Mood {
+        /// Idle — светло-голубой (#B0C4FF).
+        public static let idle        = Color(red: 0.69, green: 0.77, blue: 1.00)
+        /// Happy / waving — золотой (#FFD700).
+        public static let happy       = Color(red: 1.00, green: 0.84, blue: 0.00)
+        /// Celebrating / explaining / pointing — тёплый коралл (#FF9E70).
+        public static let celebrating = Color(red: 1.00, green: 0.62, blue: 0.44)
+        /// Thinking — лавандовый (#C3B1E1).
+        public static let thinking    = Color(red: 0.76, green: 0.69, blue: 0.88)
+        /// Sad — мягкий голубой (#A8C8FF).
+        public static let sad         = Color(red: 0.66, green: 0.78, blue: 1.00)
+        /// Encouraging — лимонно-зелёный (#90EE90).
+        public static let encouraging = Color(red: 0.56, green: 0.93, blue: 0.56)
+        /// Singing — нежно-розовый (#FFB6D9).
+        public static let singing     = Color(red: 1.00, green: 0.71, blue: 0.85)
+    }
+
+    // MARK: - Sticker
+
+    /// Цвета иконок стикеров в `HSSticker`.
+    public enum Sticker {
+        /// Иконка золотой звезды / короны / трофея (#E5A000).
+        public static let goldTint   = Color(red: 0.90, green: 0.63, blue: 0.00)
+        /// Иконка серебряной звезды (#8899AA).
+        public static let silverTint = Color(red: 0.53, green: 0.60, blue: 0.67)
+    }
+
+    // MARK: - Banner
+
+    /// Цвета баннеров уведомлений (`HSOfflineBanner` и др.).
+    public enum Banner {
+        /// Фон offline-плашки — тёплый красно-оранжевый (#E85D35).
+        public static let offlineBg = Color(red: 0.91, green: 0.36, blue: 0.21)
+    }
+
+    // MARK: - Wood / 3D Materials
+
+    /// 3D-материалы для RealityKit сцен. `UI`-суффикс означает статичный
+    /// `UIColor` для `SimpleMaterial`.
+    public enum Wood {
+        /// Полка шкафа наград (`FamilyAwardsCabinet`) — тёплый коричневый.
+        public static let shelfUI = UIColor(red: 0.42, green: 0.30, blue: 0.20, alpha: 1.0)
+    }
+
+    // MARK: - Mascot Materials (RealityKit)
+
+    /// Дополнительные оттенки 3D-маскота (`LyalyaRealityKitView`).
+    public enum Mascot {
+        /// Базовый розоватый тон щёк маскота (idle), alpha = 0.3.
+        public static let cheekIdleUI = UIColor(red: 0.95, green: 0.82, blue: 0.82, alpha: 0.3)
+        /// Цвет щёк маскота при celebrating с заданной интенсивностью настроения.
+        /// - Parameter mood: 0…1 — степень счастья (контролирует alpha).
+        public static func cheekActiveUI(mood: Float) -> UIColor {
+            UIColor(red: 1.0, green: 0.65, blue: 0.65, alpha: min(1.0, 0.5 + Double(mood) * 0.5))
+        }
+    }
+
+    // MARK: - Award (FamilyAwardsCabinet tiers)
+
+    /// Платиновый и расширенный серебряный тон для `FamilyAwardsCabinet` наград.
+    /// Gold уже доступен через `ColorTokens.Brand.gold`, Bronze — через `ColorTokens.Badge.bronze`.
+    public enum Award {
+        /// Платиновый — холодный светло-серый (#D9DBEB).
+        public static let platinum = Color(red: 0.85, green: 0.86, blue: 0.92)
+        /// Серебряный — нейтральный для AwardTier (отдельно от `Badge.silver`,
+        /// который адаптивен через UITraitCollection).
+        public static let silver = Color(red: 0.79, green: 0.81, blue: 0.84)
+    }
+
     // MARK: - Lyalya Scene (SceneKit / SwiftUI)
 
     /// Цвета сцены SceneKit плейсхолдера Ляли (`LyalyaSceneView`).
