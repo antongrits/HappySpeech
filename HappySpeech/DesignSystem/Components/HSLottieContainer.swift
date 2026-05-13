@@ -93,8 +93,11 @@ public struct HSLottieContainer: View {
         HSLottieContainer(
             name: "nonexistent_animation",
             fallback: AnyView(
-                Text(verbatim: "🎉")
-                    .font(.system(size: 80))
+                // Plan v21 Block C: эмодзи запрещены в DesignSystem — SF Symbol fallback.
+                Image(systemName: "sparkles")
+                    .font(.system(size: 64))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .symbolRenderingMode(.hierarchical)
             ),
             size: CGSize(width: 200, height: 200)
         )

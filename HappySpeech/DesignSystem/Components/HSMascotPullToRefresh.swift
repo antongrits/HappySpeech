@@ -101,8 +101,11 @@ public struct HSMascotPullToRefresh: ViewModifier {
                 .fill(ColorTokens.Brand.primary.opacity(0.18))
                 .frame(width: 56, height: 56)
 
-            Text(state.fallbackEmoji)
+            // Plan v21 Block C: эмодзи запрещены в DesignSystem — SF Symbol fallback.
+            Image(systemName: state.fallbackSFSymbol)
                 .font(.system(size: 28))
+                .foregroundStyle(ColorTokens.Brand.primary)
+                .symbolRenderingMode(.hierarchical)
         }
         .accessibilityHidden(true)
     }
