@@ -373,7 +373,7 @@ private struct BeatDot: View {
             .frame(width: dotSize, height: dotSize)
             .overlay(
                 Circle()
-                    .stroke(wasHit ? Color.green : .clear, lineWidth: 3)
+                    .stroke(wasHit ? ColorTokens.Brand.mint : .clear, lineWidth: 3)
             )
             .scaleEffect(isActive ? 1.2 : 1.0)
             .animation(
