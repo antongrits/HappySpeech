@@ -10,13 +10,13 @@
 [![SwiftLint](https://img.shields.io/badge/SwiftLint-0%2F0-brightgreen.svg)](/)
 [![Firebase](https://img.shields.io/badge/Firebase-happyspeech--dfd95-orange.svg)](/)
 [![Russian Only](https://img.shields.io/badge/Language-Russian%20Only-blue.svg)](/)
-[![Tag](https://img.shields.io/badge/tag-v1.0.0--final--v21-blueviolet.svg)](/)
+[![Tag](https://img.shields.io/badge/tag-v1.0.0--final--v22-blueviolet.svg)](/)
 [![Screens](https://img.shields.io/badge/screens-105%2B-blue.svg)](/)
 [![Audio](https://img.shields.io/badge/audio-14%2C501%20files-green.svg)](/)
 [![CoreML](https://img.shields.io/badge/CoreML-12%20models%20304MB-orange.svg)](/)
 [![Status](https://img.shields.io/badge/status-production--ready-brightgreen.svg)](/)
 
-**Status v1.0.0-final-v21 (2026-05-13):** Production-ready на iPhone SE (3rd generation) simulator. App Store submission отложен — нет платного Apple Developer Account. Plan v21 закрыт.
+**Status v1.0.0-final-v22 (2026-05-13):** Production-ready на iPhone SE (3rd generation) simulator. Plan v22 закрыт — 15 audit gaps closed либо honest ADR defer. App Store submission отложен — нет платного Apple Developer Account.
 
 ---
 
@@ -179,6 +179,60 @@ xcodebuild test -scheme HappySpeech \
 ```bash
 swiftlint --strict
 ```
+
+---
+
+## Plan v22 — CLOSED (2026-05-13)
+
+**Status:** DIPLOMA-READY-EXTENDED (2026-05-13)
+**Tag:** v1.0.0-final-v22
+**Scope:** 25 blocks across 5 phases, 15 audit gaps reviewed.
+
+### v22 Highlights
+
+| Категория | Достижение |
+|---|---|
+| Tests | Все 18 XCTSkip закрыты → 0 active skips |
+| ML integration | 15 интеграционных тестов добавлено + FirebaseSnapshotMocks |
+| SwiftLint | --strict 0 violations, custom rules (hex/UIColor/AsyncStream) |
+| Theme | 54 hex color violations → 0 (ColorTokens enforced) |
+| Routing | AppRoute расширен 19 → 104 routes |
+| Screenshots | 196 PNG captured (98 routes × light/dark) |
+| Performance | Cold start + ML inference Os.signpost (9 markers) |
+| ML adaptive | Whisper selection по age + device tier |
+| Testing infra | TestDataBuilder + MockServices library |
+| Concurrency | AsyncStream migration (2 places) |
+| L10n | L10n.swift typed stub (SwiftGen defer to v23) |
+
+### Honest ADR Defers (8 v22)
+
+- ADR-V22-R-PHONEME-SYNTHETIC-CEILING — 88.9% ceiling без real-child data
+- ADR-V22-MODELS-SYNTHETIC-MAINTAINED — Emotion/Tongue same limitation
+- ADR-V22-L10N-SWIFTGEN-DEFER — Full SwiftGen v23
+- ADR-V22-DEAD-CODE-PARTIAL — Periphery scanner v23
+- ADR-V22-FDL-DEPRECATED — Universal Links v23
+- ADR-V22-RC-WHISPER-AB-PARAM — Firebase Console deploy user
+- ADR-V22-BLENDER-FINAL-DEFER — Third install attempt blocked
+- ADR-V22-APPICON-VERIFIED — 3 variants уже в Contents.json
+
+### v22 Commits (12 total)
+
+```
+ed0222c4  0.1  Plan v22 init + 7 skills + sprint
+a06c5923  0.2  AppRoute extension 19→104 + 196 PNG
+6e14ddd2  0.3  SwiftLint custom rules
+ebd84a8c  0.4  TestDataBuilder + MockServices
+4fe16a68  0.5  ColdStart Os.signpost
+97c41f92  1.1  Phoneme ADR defer (synthetic ceiling)
+669a7bcc  1.2  Whisper adaptive (age + device tier)
+a26af61c  1.3-1.5 ML revalidation + signposts
+5565c440  2.1  Hex colors 54 → 0
+bb793b0f  2.2-2.5 SwiftLint --strict + AsyncStream + L10n + dead code
+7f4f1794  3.1-3.5 Firebase verify + Blender/AppIcon defer + v23 backlog
+aae113ac  4.0-4.5 All 18 XCTSkip closed + ML integration
+```
+
+Production-ready для дипломной защиты.
 
 ---
 
