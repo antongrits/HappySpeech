@@ -3,6 +3,98 @@
 
 ---
 
+## ADR-V21-T-U-CV-STATE — G2P/IPA Russian + Real-time CV verified (2026-05-13)
+
+### Status: Accepted (Plan v21 Phase 4 Block T + U)
+
+### Context
+User explicit (Block T): «Использовать CMU Pronouncing Dictionary, IPA или модели для
+фонетического анализа. Не использовать обычную Speech-to-Text API».
+Block U: проверить наличие real-time CV (ARMirror lip-sync, PoseSequence body, Qwen kid LLM)
+и решить — verified или defer.
+
+### Block T audit — Phonetic analyzer depth
+
+**T.1 — G2P infrastructure (verified, no changes)**
+- `HappySpeech/ML/PhonemeAnalysis/G2PWorker.swift` (177 строк) — dictionary lookup
+  из `HappySpeech/Content/G2P/russian_phonemes.json` (7712 entries, IPA alphabet,
+  собран из 24 sound packs).
+- `HappySpeech/ML/Phonetics/RussianG2P.swift` (458 строк) — rule-based fallback
+  без bundle-зависимости, реализует:
+  - Палатализация перед е/ё/и/ю/я/ь
+  - Йотированные гласные (е/ё/ю/я → [j+V] на границе)
+  - Финальное оглушение (б→p, в→f, г→k, д→t, ж→ʂ, з→s)
+  - Регрессивная ассимиляция по глухости/звонкости
+  - Редукция безударных (akan'e: о/а → ʌ/ə; ikan'e: е/я → ɪ)
+  - Стяжение -тся/-ться → ts
+  - Дентально-альвеолярная ассимиляция мягкости
+
+**T.2 — IPA mapping (verified, 49 фонем покрытие)**
+- `HappySpeech/ML/Phonetics/IPADictionary.swift` (463 строки) — 49 фонем с метаданными:
+  category (vowel/stop/fricative/affricate/sonorant/sign),
+  voicing (voiced/voiceless/notApplicable),
+  hardness (hard/soft/alwaysSoft/alwaysHard/notApplicable),
+  logopedicGroup (свистящие/шипящие/соноры/заднеязычные/губные/зубные/гласные).
+- Покрывает все 42 требуемых русских фонем + 7 безударных редуцированных вариантов
+  (æ, ɔ, ɛ, ɵ, ə, ɪ, ʌ).
+- `articulationDistance(a, b)` для contextually-aware scoring: замена в той же
+  группе (s→ʂ) штрафуется меньше (0.4) чем кросс-категория (s→r, 1.0).
+
+**T.3 — EnsembleASRService integration (verified)**
+- `HappySpeech/Services/EnsembleASRService.swift:153` — `phoneticAccuracy(child:reference:)`
+  комбинирует Левенштейн-similarity (RussianG2P) + контекстный
+  articulationDistance (IPADictionary).
+- Формула: `0.5 × baseSimilarity + 0.5 × (1 - avgArticulationDistance)`.
+- Tier A (детский): only on-device PhonemeClassifier + PronunciationScorer + G2P.
+  Никаких сетевых вызовов (COPPA-safe).
+- Tier B (parent/specialist): добавляет Whisper для текстового транскрипта.
+
+### Block U audit — Real-time CV
+
+**U.1 — ARMirror lip-sync: VERIFIED**
+- `HappySpeech/Features/AR/ARMirror/ARMirrorView.swift:23` — использует
+  `@State private var facePoseWorker = UnifiedFacePoseWorker()`.
+- `HappySpeech/ML/Vision/UnifiedFacePoseWorker.swift:84` —
+  `analyze(faceAnchor: ARFaceAnchor, pixelBuffer: CVPixelBuffer)` извлекает
+  jawOpen, mouthPucker, mouthFunnel, mouthSmileLeft/Right, tongueOut blendshapes.
+- `HappySpeech/DesignSystem/Components/LyalyaRealityKitView.swift:126` —
+  «когда ARSession активна — lip-sync из ARFaceAnchor blendshapes (Block L)».
+- Sync c маскотом через `LyalyaLipSyncCoordinator` +
+  `EnvironmentValues+MascotLipSync.swift`. Никаких изменений не требуется.
+
+**U.2 — PoseSequence body tracking: VERIFIED (real + mock fallback)**
+- `HappySpeech/Features/AR/PoseSequence/Workers/BodyPoseWorker.swift:42` —
+  `isAvailable = ARBodyTrackingConfiguration.isSupported` (true на A12+ устройствах).
+- При `isAvailable == true`: запускает реальный `ARBodyTrackingConfiguration`
+  и читает `ARBodyAnchor.skeleton.jointLocalTransforms` (iOS 16+ через `isTracked`).
+- При `isAvailable == false` (симулятор/iPhone < A12): mock-ходьба ~10 fps через
+  `sin()`-фазу — это **fallback по device capability**, не stub. На реальном
+  устройстве A12+ работает полноценный ARBodyTracking. Не defer.
+
+**U.3 — Qwen kid LLM: VERIFIED**
+- `HappySpeech/ML/LLM/MLXEngine.swift:24` — `public actor MLXEngine` с прямым
+  доступом к MLX Qwen2.5-1.5B inference через `MLXLLM.generate`.
+- `HappySpeech/ML/LLM/KidLLMNarrationService.swift` — «Никакого Tier B (HF API) —
+  только on-device Qwen или rule-based». COPPA-safe.
+- `HappySpeech/ML/LLM/LocalLLMService.swift` использует `MLXEngine.shared`.
+
+### Decision
+- Block T: no code changes required. Infrastructure уже полная, превышает
+  требования user (rule-based G2P + 7712-entry dictionary + 49-phoneme IPA inventory
+  с articulation distance).
+- Block U: no code changes required. ARMirror, PoseSequence, Qwen LLM —
+  все verified production-ready (mock в PoseSequence — device-capability fallback,
+  не stub).
+
+### Consequences
+- Plan v21 Phase 4 Block T + U закрыт **в режиме verify-only** (без code changes).
+- Существующая инфраструктура удовлетворяет user-explicit constraint «IPA вместо
+  обычной Speech-to-Text API» — Tier A pipeline полностью локальный, без сети.
+- PronunciationScorer + RussianPhonemeClassifier + RussianG2P образуют ансамбль
+  для Tier A scoring через EnsembleASRService.phoneticAccuracy.
+
+---
+
 ## ADR-V21-R-PHONEME-DEFER — RussianPhonemeClassifier retrain deferred to v22+ (2026-05-13)
 
 ### Status: Accepted (Block R v21)
