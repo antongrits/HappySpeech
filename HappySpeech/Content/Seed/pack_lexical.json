@@ -1631,6 +1631,67 @@
           "hint": "Умный лис придумывает. Глупый волк попадается.",
           "difficulty": 2,
           "audio_file": "Audio/Content/Lexical/lex-an-24.m4a"
+        },
+        {
+          "id": "lex-an-25",
+          "word": "добрый — злой",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-an-25.m4a",
+          "hint": "Характер человека: противоположности."
+        },
+        {
+          "id": "lex-an-26",
+          "word": "смелый — трусливый",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-an-26.m4a"
+        },
+        {
+          "id": "lex-an-27",
+          "word": "тихий — громкий",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-an-27.m4a"
+        },
+        {
+          "id": "lex-an-28",
+          "word": "чистый — грязный",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-an-28.m4a"
+        },
+        {
+          "id": "lex-an-29",
+          "word": "сладкий — горький",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-an-29.m4a"
+        },
+        {
+          "id": "lex-an-30",
+          "word": "острый — тупой",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-an-30.m4a"
+        },
+        {
+          "id": "lex-an-31",
+          "word": "лёгкий — тяжёлый",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-an-31.m4a"
+        },
+        {
+          "id": "lex-an-32",
+          "word": "высокий — низкий",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-an-32.m4a"
+        },
+        {
+          "id": "lex-an-33",
+          "word": "холодный — горячий",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-an-33.m4a"
+        },
+        {
+          "id": "lex-an-34",
+          "word": "мокрый — сухой",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-an-34.m4a"
         }
       ]
     },
@@ -4153,6 +4214,67 @@
           "hint": "Скажи по-другому: красивый — ... (прекрасный, чудесный).",
           "difficulty": 3,
           "audio_file": "Audio/Content/Lexical/lex-syn-24.m4a"
+        },
+        {
+          "id": "lex-syn-25",
+          "word": "большой — огромный — гигантский",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-syn-25.m4a",
+          "hint": "Синонимический ряд по размеру."
+        },
+        {
+          "id": "lex-syn-26",
+          "word": "маленький — крошечный — крохотный",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-syn-26.m4a"
+        },
+        {
+          "id": "lex-syn-27",
+          "word": "грустный — печальный — унылый",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-syn-27.m4a"
+        },
+        {
+          "id": "lex-syn-28",
+          "word": "радостный — весёлый — счастливый",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-syn-28.m4a"
+        },
+        {
+          "id": "lex-syn-29",
+          "word": "быстро — скоро — стремительно",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-syn-29.m4a"
+        },
+        {
+          "id": "lex-syn-30",
+          "word": "дом — жилище — изба",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-syn-30.m4a"
+        },
+        {
+          "id": "lex-syn-31",
+          "word": "идти — шагать — топать",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-syn-31.m4a"
+        },
+        {
+          "id": "lex-syn-32",
+          "word": "смотреть — глядеть — видеть",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-syn-32.m4a"
+        },
+        {
+          "id": "lex-syn-33",
+          "word": "говорить — рассказывать — сообщать",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-syn-33.m4a"
+        },
+        {
+          "id": "lex-syn-34",
+          "word": "красивый — прекрасный — чудесный",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-syn-34.m4a"
         }
       ]
     },
@@ -4696,6 +4818,76 @@
           "hint": "Соедини: хлеб + рез = хлеборез! Твоя очередь придумать!",
           "difficulty": 4,
           "audio_file": "Audio/Content/Lexical/lex-wb-24.m4a"
+        },
+        {
+          "id": "lex-wb-25",
+          "word": "снег — снежинка — снеговик",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-wb-25.m4a",
+          "hint": "Однокоренные слова от СНЕГ."
+        },
+        {
+          "id": "lex-wb-26",
+          "word": "лес — лесник — лесной",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-wb-26.m4a",
+          "hint": "Однокоренные от ЛЕС."
+        },
+        {
+          "id": "lex-wb-27",
+          "word": "вода — водяной — водопад",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-wb-27.m4a",
+          "hint": "Однокоренные от ВОДА."
+        },
+        {
+          "id": "lex-wb-28",
+          "word": "рыба — рыбак — рыбалка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-wb-28.m4a",
+          "hint": "Однокоренные от РЫБА."
+        },
+        {
+          "id": "lex-wb-29",
+          "word": "гриб — грибник — грибной",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-wb-29.m4a",
+          "hint": "Однокоренные от ГРИБ."
+        },
+        {
+          "id": "lex-wb-30",
+          "word": "сад — садовник — садовый",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-wb-30.m4a",
+          "hint": "Однокоренные от САД."
+        },
+        {
+          "id": "lex-wb-31",
+          "word": "книга — книжный — книжка",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-wb-31.m4a",
+          "hint": "Однокоренные от КНИГА."
+        },
+        {
+          "id": "lex-wb-32",
+          "word": "цвет — цветок — цветной",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-wb-32.m4a",
+          "hint": "Однокоренные от ЦВЕТ."
+        },
+        {
+          "id": "lex-wb-33",
+          "word": "земля — земляника — земляной",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-wb-33.m4a",
+          "hint": "Однокоренные от ЗЕМЛЯ."
+        },
+        {
+          "id": "lex-wb-34",
+          "word": "день — дневник — днём",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-wb-34.m4a",
+          "hint": "Однокоренные от ДЕНЬ."
         }
       ]
     },
@@ -5723,6 +5915,76 @@
           "hint": "ДЬ мягкое: ДИвная.",
           "difficulty": 4,
           "audio_file": "Audio/Content/Lex/lex-em-85.m4a"
+        },
+        {
+          "id": "lex-em-86",
+          "word": "удивление",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-em-86.m4a",
+          "hint": "Что ты чувствуешь, когда видишь что-то необычное?"
+        },
+        {
+          "id": "lex-em-87",
+          "word": "интерес",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Lexical/lex-em-87.m4a",
+          "hint": "Хочу узнать что-то новое."
+        },
+        {
+          "id": "lex-em-88",
+          "word": "скука",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-em-88.m4a",
+          "hint": "Когда нечем заняться."
+        },
+        {
+          "id": "lex-em-89",
+          "word": "любопытство",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-em-89.m4a",
+          "hint": "Хочу посмотреть, что там."
+        },
+        {
+          "id": "lex-em-90",
+          "word": "смущение",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-em-90.m4a",
+          "hint": "Лицо покраснело, стало стыдно."
+        },
+        {
+          "id": "lex-em-91",
+          "word": "гордость",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-em-91.m4a",
+          "hint": "Я сделал что-то хорошее."
+        },
+        {
+          "id": "lex-em-92",
+          "word": "забота",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-em-92.m4a",
+          "hint": "Помогаю тому, кому нужна помощь."
+        },
+        {
+          "id": "lex-em-93",
+          "word": "нежность",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-em-93.m4a",
+          "hint": "Обнимаю маму."
+        },
+        {
+          "id": "lex-em-94",
+          "word": "беспокойство",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-em-94.m4a",
+          "hint": "Тревожусь за кого-то близкого."
+        },
+        {
+          "id": "lex-em-95",
+          "word": "облегчение",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-em-95.m4a",
+          "hint": "Всё хорошо, бояться больше нечего."
         }
       ]
     },
@@ -5904,6 +6166,66 @@
           "hint": "Жил-был колобок. Он убежал от дедушки, бабушки... Лисе встретился!",
           "difficulty": 4,
           "audio_file": "Audio/Content/Lexical/lex-ms-24.m4a"
+        },
+        {
+          "id": "lex-ms-25",
+          "word": "Утро в лесу: птицы поют, роса блестит, зайчик прыгает на полянке.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-ms-25.m4a"
+        },
+        {
+          "id": "lex-ms-26",
+          "word": "Кот Мурзик увидел мышку и погнался за ней по всему дому.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-ms-26.m4a"
+        },
+        {
+          "id": "lex-ms-27",
+          "word": "Дети строили снежную крепость и бросались снежками.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-ms-27.m4a"
+        },
+        {
+          "id": "lex-ms-28",
+          "word": "Щенок Пушок потерялся в парке, но мальчик Петя его нашёл.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-ms-28.m4a"
+        },
+        {
+          "id": "lex-ms-29",
+          "word": "Бабушка испекла пирожки, и вся семья собралась за столом.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-ms-29.m4a"
+        },
+        {
+          "id": "lex-ms-30",
+          "word": "Маша нашла гусеницу на листе и посадила её в баночку.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-ms-30.m4a"
+        },
+        {
+          "id": "lex-ms-31",
+          "word": "Ёжик нёс яблоко на спине домой через тёмный лес.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-ms-31.m4a"
+        },
+        {
+          "id": "lex-ms-32",
+          "word": "Медвежонок научился плавать и теперь не боится реки.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-ms-32.m4a"
+        },
+        {
+          "id": "lex-ms-33",
+          "word": "Воробышек выпал из гнезда, но мама-воробей его подняла.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Lexical/lex-ms-33.m4a"
+        },
+        {
+          "id": "lex-ms-34",
+          "word": "Ребята посадили цветы в горшки и поставили их на окно.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Lexical/lex-ms-34.m4a"
         }
       ]
     },

@@ -3415,6 +3415,66 @@
           "hint": "РУ+РЫ+КА — Р трижды.",
           "difficulty": 4,
           "audio_file": "Audio/Content/R/r-ph-109.m4a"
+        },
+        {
+          "id": "r-ph-110",
+          "word": "красный трамвай по дороге",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-ph-110.m4a"
+        },
+        {
+          "id": "r-ph-111",
+          "word": "рыбак рано встал у реки",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-ph-111.m4a"
+        },
+        {
+          "id": "r-ph-112",
+          "word": "радуга после грозы",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-ph-112.m4a"
+        },
+        {
+          "id": "r-ph-113",
+          "word": "ракета мчится к звёздам",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-ph-113.m4a"
+        },
+        {
+          "id": "r-ph-114",
+          "word": "рябина краснеет осенью",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-ph-114.m4a"
+        },
+        {
+          "id": "r-ph-115",
+          "word": "рысь прыгнула с ветки",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-ph-115.m4a"
+        },
+        {
+          "id": "r-ph-116",
+          "word": "румяные пирожки у бабушки",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-ph-116.m4a"
+        },
+        {
+          "id": "r-ph-117",
+          "word": "крупный карп в пруду",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-ph-117.m4a"
+        },
+        {
+          "id": "r-ph-118",
+          "word": "трактор работал на поле",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-ph-118.m4a"
+        },
+        {
+          "id": "r-ph-119",
+          "word": "рабочий строил высокий забор",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-ph-119.m4a"
         }
       ]
     },
@@ -3861,6 +3921,66 @@
           "hint": "РА+ТИ+ПРЫ+РО+РЕ — Р пять раз.",
           "difficulty": 5,
           "audio_file": "Audio/Content/R/r-sen-69.m4a"
+        },
+        {
+          "id": "r-sen-70",
+          "word": "Роман рисовал разноцветных рыбок в тетради.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-sen-70.m4a"
+        },
+        {
+          "id": "r-sen-71",
+          "word": "Рыжий котёнок убежал за ворота.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-sen-71.m4a"
+        },
+        {
+          "id": "r-sen-72",
+          "word": "Трамвай проехал по рельсам в центре.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-sen-72.m4a"
+        },
+        {
+          "id": "r-sen-73",
+          "word": "Рябина стоит красная у дороги осенью.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-sen-73.m4a"
+        },
+        {
+          "id": "r-sen-74",
+          "word": "Ранним утром роса блестела на траве.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-sen-74.m4a"
+        },
+        {
+          "id": "r-sen-75",
+          "word": "Ребята рыли ров на краю огорода.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-sen-75.m4a"
+        },
+        {
+          "id": "r-sen-76",
+          "word": "Красная ракета пронеслась над горами.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-sen-76.m4a"
+        },
+        {
+          "id": "r-sen-77",
+          "word": "Ворона громко кричала на заборе.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-sen-77.m4a"
+        },
+        {
+          "id": "r-sen-78",
+          "word": "Рита рвала ромашки рядом с рекой.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-sen-78.m4a"
+        },
+        {
+          "id": "r-sen-79",
+          "word": "Три трубача играли на параде.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/R/r-sen-79.m4a"
         }
       ]
     },
@@ -4118,6 +4238,76 @@
           "hint": "Речь — Р', лечь — Л'.",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-diff-19.m4a"
+        },
+        {
+          "id": "r-diff-20",
+          "word": "рак — лак",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-diff-20.m4a",
+          "hint": "Р сонорный вибрант, Л боковой сонорный."
+        },
+        {
+          "id": "r-diff-21",
+          "word": "рыба — лыба",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-diff-21.m4a",
+          "hint": "Р в начале против Л."
+        },
+        {
+          "id": "r-diff-22",
+          "word": "рот — лот",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-diff-22.m4a",
+          "hint": "Короткие слова: Р—Л."
+        },
+        {
+          "id": "r-diff-23",
+          "word": "рожь — ложь",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/R/r-diff-23.m4a",
+          "hint": "Мягкий: Р'—Л'."
+        },
+        {
+          "id": "r-diff-24",
+          "word": "жара — жала",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-diff-24.m4a",
+          "hint": "Р в середине против Л."
+        },
+        {
+          "id": "r-diff-25",
+          "word": "корень — колень",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-diff-25.m4a",
+          "hint": "Внутри слова: Р—Л."
+        },
+        {
+          "id": "r-diff-26",
+          "word": "игра — игла",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-diff-26.m4a",
+          "hint": "Стечение ГР против ГЛ."
+        },
+        {
+          "id": "r-diff-27",
+          "word": "прут — плут",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-diff-27.m4a",
+          "hint": "Стечение ПР против ПЛ."
+        },
+        {
+          "id": "r-diff-28",
+          "word": "кров — клов",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-diff-28.m4a",
+          "hint": "Стечение КР против КЛ."
+        },
+        {
+          "id": "r-diff-29",
+          "word": "рубль — любль",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/R/r-diff-29.m4a",
+          "hint": "Мягкие Р'—Л' в начале."
         }
       ]
     }

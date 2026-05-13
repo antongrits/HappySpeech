@@ -2276,6 +2276,66 @@
           "hint": "СТР+СТО+СКЛ — сложные стечения.",
           "difficulty": 5,
           "audio_file": "Audio/Content/S/s-ph-69.m4a"
+        },
+        {
+          "id": "s-ph-70",
+          "word": "синие сапоги в прихожей",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-ph-70.m4a"
+        },
+        {
+          "id": "s-ph-71",
+          "word": "слон спустился с горки",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-ph-71.m4a"
+        },
+        {
+          "id": "s-ph-72",
+          "word": "свежая смородина в корзине",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-ph-72.m4a"
+        },
+        {
+          "id": "s-ph-73",
+          "word": "стеклянный стакан с соком",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-ph-73.m4a"
+        },
+        {
+          "id": "s-ph-74",
+          "word": "сосны стоят в тишине",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-ph-74.m4a"
+        },
+        {
+          "id": "s-ph-75",
+          "word": "семена сажают весной",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-ph-75.m4a"
+        },
+        {
+          "id": "s-ph-76",
+          "word": "скрипучий стул у стола",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-ph-76.m4a"
+        },
+        {
+          "id": "s-ph-77",
+          "word": "сверкающий снег в саду",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-ph-77.m4a"
+        },
+        {
+          "id": "s-ph-78",
+          "word": "серая собака со двора",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-ph-78.m4a"
+        },
+        {
+          "id": "s-ph-79",
+          "word": "старая сосна у реки",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-ph-79.m4a"
         }
       ]
     },
@@ -2602,6 +2662,66 @@
           "hint": "СИ+СТР+СИ+СТЕ — пейзаж.",
           "difficulty": 5,
           "audio_file": "Audio/Content/S/s-sen-49.m4a"
+        },
+        {
+          "id": "s-sen-50",
+          "word": "Саша собрал сосновые шишки в лесу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-sen-50.m4a"
+        },
+        {
+          "id": "s-sen-51",
+          "word": "Синяя стрела летела сквозь облака.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-sen-51.m4a"
+        },
+        {
+          "id": "s-sen-52",
+          "word": "Слон и сова стали лучшими друзьями.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-sen-52.m4a"
+        },
+        {
+          "id": "s-sen-53",
+          "word": "Светлая сосна скрипит на сильном ветру.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-sen-53.m4a"
+        },
+        {
+          "id": "s-sen-54",
+          "word": "Сима слепила снежный ком в саду.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-sen-54.m4a"
+        },
+        {
+          "id": "s-sen-55",
+          "word": "Спелая слива созрела к сентябрю.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-sen-55.m4a"
+        },
+        {
+          "id": "s-sen-56",
+          "word": "Сестра сшила синее платье из ситца.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-sen-56.m4a"
+        },
+        {
+          "id": "s-sen-57",
+          "word": "Серый суслик спрятался среди стогов.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-sen-57.m4a"
+        },
+        {
+          "id": "s-sen-58",
+          "word": "Соня сделала салат из свежих овощей.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-sen-58.m4a"
+        },
+        {
+          "id": "s-sen-59",
+          "word": "Смелый стражник стоял у ворот замка.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/S/s-sen-59.m4a"
         }
       ]
     },
@@ -2939,6 +3059,76 @@
           "hint": "Семь — число с С, цемент — стройматериал с Ц.",
           "difficulty": 3,
           "audio_file": "Audio/Content/S/s-diff-34.m4a"
+        },
+        {
+          "id": "s-diff-35",
+          "word": "сок — цок",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/S/s-diff-35.m4a",
+          "hint": "С — зубной свистящий, Ц — аффриката."
+        },
+        {
+          "id": "s-diff-36",
+          "word": "слон — злон",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/S/s-diff-36.m4a",
+          "hint": "С глухой, З звонкий."
+        },
+        {
+          "id": "s-diff-37",
+          "word": "суп — шуп",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/S/s-diff-37.m4a",
+          "hint": "С свистит, Ш шипит."
+        },
+        {
+          "id": "s-diff-38",
+          "word": "сено — жено",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/S/s-diff-38.m4a",
+          "hint": "Свистящий против шипящего."
+        },
+        {
+          "id": "s-diff-39",
+          "word": "смех — змей",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-diff-39.m4a",
+          "hint": "Начало СМ против ЗМ."
+        },
+        {
+          "id": "s-diff-40",
+          "word": "сёмга — цёмга",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-diff-40.m4a",
+          "hint": "Мягкое С' против Ц."
+        },
+        {
+          "id": "s-diff-41",
+          "word": "сыр — цырк",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-diff-41.m4a",
+          "hint": "С в начале против Ц."
+        },
+        {
+          "id": "s-diff-42",
+          "word": "соль — шаль",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/S/s-diff-42.m4a",
+          "hint": "Свистящий против шипящего."
+        },
+        {
+          "id": "s-diff-43",
+          "word": "сани — жани",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/S/s-diff-43.m4a",
+          "hint": "С глухой, Ж звонкий шипящий."
+        },
+        {
+          "id": "s-diff-44",
+          "word": "сундук — зундук",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/S/s-diff-44.m4a",
+          "hint": "Пара по звонкости: С—З."
         }
       ]
     }

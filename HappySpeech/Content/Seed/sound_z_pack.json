@@ -1831,6 +1831,66 @@
           "hint": "ЗАС+ЗА — сложная конструкция.",
           "difficulty": 5,
           "audio_file": "Audio/Content/Z/z-ph-59.m4a"
+        },
+        {
+          "id": "z-ph-60",
+          "word": "звонкий зов кукушки",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-ph-60.m4a"
+        },
+        {
+          "id": "z-ph-61",
+          "word": "зелёная зона у реки",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-ph-61.m4a"
+        },
+        {
+          "id": "z-ph-62",
+          "word": "золотые звёзды на небе",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-ph-62.m4a"
+        },
+        {
+          "id": "z-ph-63",
+          "word": "зимний замок в лесу",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-ph-63.m4a"
+        },
+        {
+          "id": "z-ph-64",
+          "word": "зонтик в грозу",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Z/z-ph-64.m4a"
+        },
+        {
+          "id": "z-ph-65",
+          "word": "зубная щётка на полке",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Z/z-ph-65.m4a"
+        },
+        {
+          "id": "z-ph-66",
+          "word": "загадочная звезда вдали",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-ph-66.m4a"
+        },
+        {
+          "id": "z-ph-67",
+          "word": "земляника зреет в тени",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-ph-67.m4a"
+        },
+        {
+          "id": "z-ph-68",
+          "word": "зяблик запел на заре",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-ph-68.m4a"
+        },
+        {
+          "id": "z-ph-69",
+          "word": "заяц замер у изгороди",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-ph-69.m4a"
         }
       ]
     },
@@ -2078,6 +2138,66 @@
           "hint": "ЗЕ+ЗО+ЗА — насыщенный З-текст.",
           "difficulty": 5,
           "audio_file": "Audio/Content/Z/z-sen-37.m4a"
+        },
+        {
+          "id": "z-sen-38",
+          "word": "Зоя увидела зелёного зайца в сказке.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-sen-38.m4a"
+        },
+        {
+          "id": "z-sen-39",
+          "word": "Завтра зайдём за земляникой в лес.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-sen-39.m4a"
+        },
+        {
+          "id": "z-sen-40",
+          "word": "Зинаида зажгла свечу на закате.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Z/z-sen-40.m4a"
+        },
+        {
+          "id": "z-sen-41",
+          "word": "Звёзды зажглись на зимнем небе рано.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Z/z-sen-41.m4a"
+        },
+        {
+          "id": "z-sen-42",
+          "word": "Зонтик защитил от дождя в грозу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-sen-42.m4a"
+        },
+        {
+          "id": "z-sen-43",
+          "word": "Зимородок замер у зеркальной воды.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Z/z-sen-43.m4a"
+        },
+        {
+          "id": "z-sen-44",
+          "word": "Зубастый крокодил зевнул и закрыл пасть.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Z/z-sen-44.m4a"
+        },
+        {
+          "id": "z-sen-45",
+          "word": "Зорька паслась на лугу возле забора.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-sen-45.m4a"
+        },
+        {
+          "id": "z-sen-46",
+          "word": "Замёрзшая земля звенела под ногами.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Z/z-sen-46.m4a"
+        },
+        {
+          "id": "z-sen-47",
+          "word": "Зайцы играли у заснеженного забора.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-sen-47.m4a"
         }
       ]
     },
@@ -2287,6 +2407,76 @@
           "hint": "Запах — с З. Жапах — придумка.",
           "difficulty": 2,
           "audio_file": "Audio/Content/Z/z-diff-28.m4a"
+        },
+        {
+          "id": "z-diff-29",
+          "word": "зонт — сонт",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Z/z-diff-29.m4a",
+          "hint": "З звонкий, С глухой."
+        },
+        {
+          "id": "z-diff-30",
+          "word": "зебра — себра",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Z/z-diff-30.m4a",
+          "hint": "З в начале против С."
+        },
+        {
+          "id": "z-diff-31",
+          "word": "злой — слой",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Z/z-diff-31.m4a",
+          "hint": "Стечение ЗЛ против СЛ."
+        },
+        {
+          "id": "z-diff-32",
+          "word": "звук — свук",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-diff-32.m4a",
+          "hint": "Стечение ЗВ против СВ."
+        },
+        {
+          "id": "z-diff-33",
+          "word": "заяц — жаяц",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Z/z-diff-33.m4a",
+          "hint": "З свистящий, Ж шипящий, оба звонкие."
+        },
+        {
+          "id": "z-diff-34",
+          "word": "зима — жима",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Z/z-diff-34.m4a",
+          "hint": "З—Ж в начале мягкого слога."
+        },
+        {
+          "id": "z-diff-35",
+          "word": "зной — жной",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-diff-35.m4a",
+          "hint": "Стечение ЗН против ЖН."
+        },
+        {
+          "id": "z-diff-36",
+          "word": "узор — ужор",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Z/z-diff-36.m4a",
+          "hint": "В середине: З—Ж."
+        },
+        {
+          "id": "z-diff-37",
+          "word": "зерно — жерно",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Z/z-diff-37.m4a",
+          "hint": "Мягкая пара З'—Ж."
+        },
+        {
+          "id": "z-diff-38",
+          "word": "зубы — жубы",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Z/z-diff-38.m4a",
+          "hint": "З—Ж в начале."
         }
       ]
     }

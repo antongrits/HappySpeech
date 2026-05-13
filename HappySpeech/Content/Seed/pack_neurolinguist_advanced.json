@@ -4027,6 +4027,724 @@
           "audio_file": "Audio/Content/NL/nl-sen-49.m4a"
         }
       ]
+    },
+    "sound_position": {
+      "stageId": "sound_position",
+      "note": "Семантическое связывание: подбор слов-ассоциаций (нейролингвистический подход — активация семантических сетей по Лурии).",
+      "items": [
+        {
+          "id": "nl-sp-00",
+          "word": "кошка — молоко",
+          "difficulty": 1,
+          "hint": "Семантическая связь: кот пьёт молоко.",
+          "audio_file": "Audio/Content/NL/nl-sp-00.m4a"
+        },
+        {
+          "id": "nl-sp-01",
+          "word": "дождь — зонт",
+          "difficulty": 1,
+          "hint": "Защита от дождя.",
+          "audio_file": "Audio/Content/NL/nl-sp-01.m4a"
+        },
+        {
+          "id": "nl-sp-02",
+          "word": "зима — снег",
+          "difficulty": 1,
+          "hint": "Признак зимы.",
+          "audio_file": "Audio/Content/NL/nl-sp-02.m4a"
+        },
+        {
+          "id": "nl-sp-03",
+          "word": "лето — солнце",
+          "difficulty": 1,
+          "hint": "Признак лета.",
+          "audio_file": "Audio/Content/NL/nl-sp-03.m4a"
+        },
+        {
+          "id": "nl-sp-04",
+          "word": "книга — буква",
+          "difficulty": 1,
+          "hint": "Книга состоит из букв.",
+          "audio_file": "Audio/Content/NL/nl-sp-04.m4a"
+        },
+        {
+          "id": "nl-sp-05",
+          "word": "рыба — вода",
+          "difficulty": 1,
+          "hint": "Рыба живёт в воде.",
+          "audio_file": "Audio/Content/NL/nl-sp-05.m4a"
+        },
+        {
+          "id": "nl-sp-06",
+          "word": "птица — гнездо",
+          "difficulty": 1,
+          "hint": "Птица живёт в гнезде.",
+          "audio_file": "Audio/Content/NL/nl-sp-06.m4a"
+        },
+        {
+          "id": "nl-sp-07",
+          "word": "врач — больница",
+          "difficulty": 2,
+          "hint": "Врач работает в больнице.",
+          "audio_file": "Audio/Content/NL/nl-sp-07.m4a"
+        },
+        {
+          "id": "nl-sp-08",
+          "word": "повар — кухня",
+          "difficulty": 2,
+          "hint": "Повар работает на кухне.",
+          "audio_file": "Audio/Content/NL/nl-sp-08.m4a"
+        },
+        {
+          "id": "nl-sp-09",
+          "word": "учитель — класс",
+          "difficulty": 2,
+          "hint": "Учитель работает в классе.",
+          "audio_file": "Audio/Content/NL/nl-sp-09.m4a"
+        },
+        {
+          "id": "nl-sp-10",
+          "word": "огонь — жара",
+          "difficulty": 2,
+          "hint": "Огонь горячий.",
+          "audio_file": "Audio/Content/NL/nl-sp-10.m4a"
+        },
+        {
+          "id": "nl-sp-11",
+          "word": "лёд — холод",
+          "difficulty": 2,
+          "hint": "Лёд холодный.",
+          "audio_file": "Audio/Content/NL/nl-sp-11.m4a"
+        },
+        {
+          "id": "nl-sp-12",
+          "word": "цветок — пчела",
+          "difficulty": 2,
+          "hint": "Пчела летит к цветку.",
+          "audio_file": "Audio/Content/NL/nl-sp-12.m4a"
+        },
+        {
+          "id": "nl-sp-13",
+          "word": "мёд — сладкий",
+          "difficulty": 2,
+          "hint": "Мёд сладкий.",
+          "audio_file": "Audio/Content/NL/nl-sp-13.m4a"
+        },
+        {
+          "id": "nl-sp-14",
+          "word": "лук — горький",
+          "difficulty": 2,
+          "hint": "Лук горький.",
+          "audio_file": "Audio/Content/NL/nl-sp-14.m4a"
+        },
+        {
+          "id": "nl-sp-15",
+          "word": "мяч — играть",
+          "difficulty": 2,
+          "hint": "Дети играют с мячом.",
+          "audio_file": "Audio/Content/NL/nl-sp-15.m4a"
+        },
+        {
+          "id": "nl-sp-16",
+          "word": "карандаш — рисовать",
+          "difficulty": 2,
+          "hint": "Карандашом рисуют.",
+          "audio_file": "Audio/Content/NL/nl-sp-16.m4a"
+        },
+        {
+          "id": "nl-sp-17",
+          "word": "ножницы — резать",
+          "difficulty": 2,
+          "hint": "Ножницами режут.",
+          "audio_file": "Audio/Content/NL/nl-sp-17.m4a"
+        },
+        {
+          "id": "nl-sp-18",
+          "word": "иголка — шить",
+          "difficulty": 2,
+          "hint": "Иголкой шьют.",
+          "audio_file": "Audio/Content/NL/nl-sp-18.m4a"
+        },
+        {
+          "id": "nl-sp-19",
+          "word": "молоток — забивать",
+          "difficulty": 2,
+          "hint": "Молотком забивают гвозди.",
+          "audio_file": "Audio/Content/NL/nl-sp-19.m4a"
+        },
+        {
+          "id": "nl-sp-20",
+          "word": "дорога — машина",
+          "difficulty": 2,
+          "hint": "По дороге едет машина.",
+          "audio_file": "Audio/Content/NL/nl-sp-20.m4a"
+        },
+        {
+          "id": "nl-sp-21",
+          "word": "небо — самолёт",
+          "difficulty": 2,
+          "hint": "В небе летит самолёт.",
+          "audio_file": "Audio/Content/NL/nl-sp-21.m4a"
+        },
+        {
+          "id": "nl-sp-22",
+          "word": "море — корабль",
+          "difficulty": 2,
+          "hint": "По морю плывёт корабль.",
+          "audio_file": "Audio/Content/NL/nl-sp-22.m4a"
+        },
+        {
+          "id": "nl-sp-23",
+          "word": "гора — лыжи",
+          "difficulty": 3,
+          "hint": "С горы катаются на лыжах.",
+          "audio_file": "Audio/Content/NL/nl-sp-23.m4a"
+        },
+        {
+          "id": "nl-sp-24",
+          "word": "ночь — луна",
+          "difficulty": 2,
+          "hint": "Ночью светит луна.",
+          "audio_file": "Audio/Content/NL/nl-sp-24.m4a"
+        },
+        {
+          "id": "nl-sp-25",
+          "word": "сад — яблоко",
+          "difficulty": 2,
+          "hint": "В саду растут яблоки.",
+          "audio_file": "Audio/Content/NL/nl-sp-25.m4a"
+        },
+        {
+          "id": "nl-sp-26",
+          "word": "огород — морковь",
+          "difficulty": 2,
+          "hint": "В огороде растёт морковь.",
+          "audio_file": "Audio/Content/NL/nl-sp-26.m4a"
+        },
+        {
+          "id": "nl-sp-27",
+          "word": "берёза — листья",
+          "difficulty": 2,
+          "hint": "У берёзы зелёные листья.",
+          "audio_file": "Audio/Content/NL/nl-sp-27.m4a"
+        },
+        {
+          "id": "nl-sp-28",
+          "word": "снеговик — морковь",
+          "difficulty": 2,
+          "hint": "Вместо носа — морковка.",
+          "audio_file": "Audio/Content/NL/nl-sp-28.m4a"
+        },
+        {
+          "id": "nl-sp-29",
+          "word": "Новый год — ёлка",
+          "difficulty": 2,
+          "hint": "На Новый год ставят ёлку.",
+          "audio_file": "Audio/Content/NL/nl-sp-29.m4a"
+        },
+        {
+          "id": "nl-sp-30",
+          "word": "скрипка — смычок",
+          "difficulty": 3,
+          "hint": "Скрипка звучит со смычком.",
+          "audio_file": "Audio/Content/NL/nl-sp-30.m4a"
+        },
+        {
+          "id": "nl-sp-31",
+          "word": "пианино — клавиши",
+          "difficulty": 3,
+          "hint": "У пианино есть клавиши.",
+          "audio_file": "Audio/Content/NL/nl-sp-31.m4a"
+        },
+        {
+          "id": "nl-sp-32",
+          "word": "библиотека — книги",
+          "difficulty": 2,
+          "hint": "В библиотеке хранятся книги.",
+          "audio_file": "Audio/Content/NL/nl-sp-32.m4a"
+        },
+        {
+          "id": "nl-sp-33",
+          "word": "аптека — лекарство",
+          "difficulty": 2,
+          "hint": "В аптеке продают лекарства.",
+          "audio_file": "Audio/Content/NL/nl-sp-33.m4a"
+        },
+        {
+          "id": "nl-sp-34",
+          "word": "магазин — покупка",
+          "difficulty": 2,
+          "hint": "В магазине делают покупки.",
+          "audio_file": "Audio/Content/NL/nl-sp-34.m4a"
+        }
+      ]
+    },
+    "word_building": {
+      "stageId": "word_building",
+      "note": "Фонологическая осведомлённость: слогораздел, рифмы, звуковой анализ (подход Выготского — зона ближайшего развития фонематических навыков).",
+      "items": [
+        {
+          "id": "nl-pa-00",
+          "word": "Раздели слово: МА-МА",
+          "difficulty": 1,
+          "hint": "Слогораздел двусложного слова.",
+          "audio_file": "Audio/Content/NL/nl-pa-00.m4a"
+        },
+        {
+          "id": "nl-pa-01",
+          "word": "Раздели слово: РЫ-БА",
+          "difficulty": 1,
+          "hint": "Слогораздел.",
+          "audio_file": "Audio/Content/NL/nl-pa-01.m4a"
+        },
+        {
+          "id": "nl-pa-02",
+          "word": "Раздели слово: КОШ-КА",
+          "difficulty": 1,
+          "hint": "Слогораздел.",
+          "audio_file": "Audio/Content/NL/nl-pa-02.m4a"
+        },
+        {
+          "id": "nl-pa-03",
+          "word": "Раздели слово: МА-ШИ-НА",
+          "difficulty": 2,
+          "hint": "Три слога.",
+          "audio_file": "Audio/Content/NL/nl-pa-03.m4a"
+        },
+        {
+          "id": "nl-pa-04",
+          "word": "Раздели слово: РА-ДУ-ГА",
+          "difficulty": 2,
+          "hint": "Три слога.",
+          "audio_file": "Audio/Content/NL/nl-pa-04.m4a"
+        },
+        {
+          "id": "nl-pa-05",
+          "word": "Раздели слово: КА-РАН-ДАШ",
+          "difficulty": 2,
+          "hint": "Три слога.",
+          "audio_file": "Audio/Content/NL/nl-pa-05.m4a"
+        },
+        {
+          "id": "nl-pa-06",
+          "word": "Раздели слово: ЧЕ-РЕ-ПА-ХА",
+          "difficulty": 3,
+          "hint": "Четыре слога.",
+          "audio_file": "Audio/Content/NL/nl-pa-06.m4a"
+        },
+        {
+          "id": "nl-pa-07",
+          "word": "Раздели слово: ВЕ-ЛО-СИ-ПЕД",
+          "difficulty": 3,
+          "hint": "Четыре слога.",
+          "audio_file": "Audio/Content/NL/nl-pa-07.m4a"
+        },
+        {
+          "id": "nl-pa-08",
+          "word": "Сколько слогов в слове ДОМ?",
+          "difficulty": 1,
+          "hint": "Один слог.",
+          "audio_file": "Audio/Content/NL/nl-pa-08.m4a"
+        },
+        {
+          "id": "nl-pa-09",
+          "word": "Сколько слогов в слове СТОЛ?",
+          "difficulty": 1,
+          "hint": "Один слог.",
+          "audio_file": "Audio/Content/NL/nl-pa-09.m4a"
+        },
+        {
+          "id": "nl-pa-10",
+          "word": "Сколько слогов в слове ВОЛК?",
+          "difficulty": 1,
+          "hint": "Один слог.",
+          "audio_file": "Audio/Content/NL/nl-pa-10.m4a"
+        },
+        {
+          "id": "nl-pa-11",
+          "word": "Сколько слогов в слове ЗАЯЦ?",
+          "difficulty": 2,
+          "hint": "Два слога: ЗА-ЯЦ.",
+          "audio_file": "Audio/Content/NL/nl-pa-11.m4a"
+        },
+        {
+          "id": "nl-pa-12",
+          "word": "Сколько слогов в слове ЁЛКА?",
+          "difficulty": 2,
+          "hint": "Два слога: ЁЛ-КА.",
+          "audio_file": "Audio/Content/NL/nl-pa-12.m4a"
+        },
+        {
+          "id": "nl-pa-13",
+          "word": "Рифма к слову «кот»?",
+          "difficulty": 2,
+          "hint": "Рот, крот, мот — подбираем рифму.",
+          "audio_file": "Audio/Content/NL/nl-pa-13.m4a"
+        },
+        {
+          "id": "nl-pa-14",
+          "word": "Рифма к слову «мяч»?",
+          "difficulty": 2,
+          "hint": "Врач, удач — рифмование.",
+          "audio_file": "Audio/Content/NL/nl-pa-14.m4a"
+        },
+        {
+          "id": "nl-pa-15",
+          "word": "Рифма к слову «дом»?",
+          "difficulty": 2,
+          "hint": "Гном, лом, ком.",
+          "audio_file": "Audio/Content/NL/nl-pa-15.m4a"
+        },
+        {
+          "id": "nl-pa-16",
+          "word": "Рифма к слову «рыба»?",
+          "difficulty": 2,
+          "hint": "Глыба, зыбка — найди похожее окончание.",
+          "audio_file": "Audio/Content/NL/nl-pa-16.m4a"
+        },
+        {
+          "id": "nl-pa-17",
+          "word": "Рифма к слову «мама»?",
+          "difficulty": 2,
+          "hint": "Рама, прямо — рифма на -АМА.",
+          "audio_file": "Audio/Content/NL/nl-pa-17.m4a"
+        },
+        {
+          "id": "nl-pa-18",
+          "word": "Убери первый звук из слова «СТОЛ»",
+          "difficulty": 3,
+          "hint": "Получится «ТОЛ».",
+          "audio_file": "Audio/Content/NL/nl-pa-18.m4a"
+        },
+        {
+          "id": "nl-pa-19",
+          "word": "Убери первый звук из слова «КРАН»",
+          "difficulty": 3,
+          "hint": "Получится «РАН».",
+          "audio_file": "Audio/Content/NL/nl-pa-19.m4a"
+        },
+        {
+          "id": "nl-pa-20",
+          "word": "Добавь звук С в начало «ОК»",
+          "difficulty": 2,
+          "hint": "Получится «СОК».",
+          "audio_file": "Audio/Content/NL/nl-pa-20.m4a"
+        },
+        {
+          "id": "nl-pa-21",
+          "word": "Добавь звук Р в начало «АК»",
+          "difficulty": 2,
+          "hint": "Получится «РАК».",
+          "audio_file": "Audio/Content/NL/nl-pa-21.m4a"
+        },
+        {
+          "id": "nl-pa-22",
+          "word": "Добавь звук К в начало «ОТ»",
+          "difficulty": 2,
+          "hint": "Получится «КОТ».",
+          "audio_file": "Audio/Content/NL/nl-pa-22.m4a"
+        },
+        {
+          "id": "nl-pa-23",
+          "word": "Переставь слоги: ТА-МА",
+          "difficulty": 2,
+          "hint": "Получится МА-ТА (мата — игра).",
+          "audio_file": "Audio/Content/NL/nl-pa-23.m4a"
+        },
+        {
+          "id": "nl-pa-24",
+          "word": "Переставь слоги: КА-МЫШ",
+          "difficulty": 2,
+          "hint": "Получится ЫШ-КА? Нет — попробуй ещё!",
+          "audio_file": "Audio/Content/NL/nl-pa-24.m4a"
+        },
+        {
+          "id": "nl-pa-25",
+          "word": "Какие слова начинаются на М?",
+          "difficulty": 2,
+          "hint": "Мама, мяч, мишка, молоко.",
+          "audio_file": "Audio/Content/NL/nl-pa-25.m4a"
+        },
+        {
+          "id": "nl-pa-26",
+          "word": "Какие слова начинаются на С?",
+          "difficulty": 2,
+          "hint": "Собака, стол, сани, сок.",
+          "audio_file": "Audio/Content/NL/nl-pa-26.m4a"
+        },
+        {
+          "id": "nl-pa-27",
+          "word": "Какие слова начинаются на Р?",
+          "difficulty": 2,
+          "hint": "Рыба, рак, роза, ракета.",
+          "audio_file": "Audio/Content/NL/nl-pa-27.m4a"
+        },
+        {
+          "id": "nl-pa-28",
+          "word": "Найди лишнее: кот, кошка, корова, дом",
+          "difficulty": 2,
+          "hint": "Дом — не животное.",
+          "audio_file": "Audio/Content/NL/nl-pa-28.m4a"
+        },
+        {
+          "id": "nl-pa-29",
+          "word": "Найди лишнее: яблоко, груша, морковь, слива",
+          "difficulty": 2,
+          "hint": "Морковь — не фрукт.",
+          "audio_file": "Audio/Content/NL/nl-pa-29.m4a"
+        },
+        {
+          "id": "nl-pa-30",
+          "word": "Найди лишнее: ёлка, берёза, дуб, роза",
+          "difficulty": 2,
+          "hint": "Роза — не дерево.",
+          "audio_file": "Audio/Content/NL/nl-pa-30.m4a"
+        },
+        {
+          "id": "nl-pa-31",
+          "word": "Найди лишнее: шапка, шарф, ботинки, варежки",
+          "difficulty": 2,
+          "hint": "Ботинки — на ногах, остальное на руках/голове.",
+          "audio_file": "Audio/Content/NL/nl-pa-31.m4a"
+        },
+        {
+          "id": "nl-pa-32",
+          "word": "Подбери слово к образцу: хлеб — хлебный, молоко — ?",
+          "difficulty": 3,
+          "hint": "Молочный — образование прилагательного.",
+          "audio_file": "Audio/Content/NL/nl-pa-32.m4a"
+        },
+        {
+          "id": "nl-pa-33",
+          "word": "Подбери слово к образцу: лес — лесной, море — ?",
+          "difficulty": 3,
+          "hint": "Морской — образование прилагательного.",
+          "audio_file": "Audio/Content/NL/nl-pa-33.m4a"
+        },
+        {
+          "id": "nl-pa-34",
+          "word": "Подбери слово к образцу: учить — учитель, строить — ?",
+          "difficulty": 3,
+          "hint": "Строитель — образование существительного.",
+          "audio_file": "Audio/Content/NL/nl-pa-34.m4a"
+        }
+      ]
+    },
+    "phonemic_games": {
+      "stageId": "phonemic_games",
+      "note": "Упражнения на рабочую память и фонематическое внимание (теория условного рефлекса Павлова — повторение + немедленное подкрепление).",
+      "items": [
+        {
+          "id": "nl-wm-00",
+          "word": "Повтори: кот — рыба — мяч",
+          "difficulty": 2,
+          "hint": "Три слова в памяти.",
+          "audio_file": "Audio/Content/NL/nl-wm-00.m4a"
+        },
+        {
+          "id": "nl-wm-01",
+          "word": "Повтори: дом — лес — небо",
+          "difficulty": 2,
+          "hint": "Три слова.",
+          "audio_file": "Audio/Content/NL/nl-wm-01.m4a"
+        },
+        {
+          "id": "nl-wm-02",
+          "word": "Повтори: мама — папа — дедушка",
+          "difficulty": 2,
+          "hint": "Три слова семьи.",
+          "audio_file": "Audio/Content/NL/nl-wm-02.m4a"
+        },
+        {
+          "id": "nl-wm-03",
+          "word": "Повтори: яблоко — груша — слива",
+          "difficulty": 2,
+          "hint": "Три фрукта.",
+          "audio_file": "Audio/Content/NL/nl-wm-03.m4a"
+        },
+        {
+          "id": "nl-wm-04",
+          "word": "Повтори: красный — синий — жёлтый",
+          "difficulty": 2,
+          "hint": "Три цвета.",
+          "audio_file": "Audio/Content/NL/nl-wm-04.m4a"
+        },
+        {
+          "id": "nl-wm-05",
+          "word": "Повтори: кот — собака — птица — рыба",
+          "difficulty": 3,
+          "hint": "Четыре слова.",
+          "audio_file": "Audio/Content/NL/nl-wm-05.m4a"
+        },
+        {
+          "id": "nl-wm-06",
+          "word": "Повтори: стол — стул — шкаф — диван",
+          "difficulty": 3,
+          "hint": "Четыре слова мебели.",
+          "audio_file": "Audio/Content/NL/nl-wm-06.m4a"
+        },
+        {
+          "id": "nl-wm-07",
+          "word": "Повтори: зима — весна — лето — осень",
+          "difficulty": 2,
+          "hint": "Все четыре времени года.",
+          "audio_file": "Audio/Content/NL/nl-wm-07.m4a"
+        },
+        {
+          "id": "nl-wm-08",
+          "word": "Назови три животных на букву Л",
+          "difficulty": 3,
+          "hint": "Лиса, лось, лягушка.",
+          "audio_file": "Audio/Content/NL/nl-wm-08.m4a"
+        },
+        {
+          "id": "nl-wm-09",
+          "word": "Назови три слова на букву С",
+          "difficulty": 3,
+          "hint": "Собака, стол, сани.",
+          "audio_file": "Audio/Content/NL/nl-wm-09.m4a"
+        },
+        {
+          "id": "nl-wm-10",
+          "word": "Назови три слова на букву Р",
+          "difficulty": 3,
+          "hint": "Рыба, рак, роза.",
+          "audio_file": "Audio/Content/NL/nl-wm-10.m4a"
+        },
+        {
+          "id": "nl-wm-11",
+          "word": "Что изменилось? (кот, рыба, МЯЧ) — сначала МЯЧ был другим",
+          "difficulty": 3,
+          "hint": "Найди замену в ряду.",
+          "audio_file": "Audio/Content/NL/nl-wm-11.m4a"
+        },
+        {
+          "id": "nl-wm-12",
+          "word": "Послушай и повтори в обратном порядке: кот — рыба",
+          "difficulty": 3,
+          "hint": "Обратный порядок — высокая нагрузка на память.",
+          "audio_file": "Audio/Content/NL/nl-wm-12.m4a"
+        },
+        {
+          "id": "nl-wm-13",
+          "word": "Послушай и повтори в обратном порядке: дом — лес",
+          "difficulty": 3,
+          "hint": "Обратный порядок.",
+          "audio_file": "Audio/Content/NL/nl-wm-13.m4a"
+        },
+        {
+          "id": "nl-wm-14",
+          "word": "Я собрал в корзину: яблоко. Ты добавляй!",
+          "difficulty": 2,
+          "hint": "Накопительная игра.",
+          "audio_file": "Audio/Content/NL/nl-wm-14.m4a"
+        },
+        {
+          "id": "nl-wm-15",
+          "word": "Я собрал в корзину: яблоко, грушу. Ты добавляй!",
+          "difficulty": 2,
+          "hint": "Накопительная игра.",
+          "audio_file": "Audio/Content/NL/nl-wm-15.m4a"
+        },
+        {
+          "id": "nl-wm-16",
+          "word": "Я вижу на картинке: кошку. Ты добавляй!",
+          "difficulty": 2,
+          "hint": "Накопительная цепочка.",
+          "audio_file": "Audio/Content/NL/nl-wm-16.m4a"
+        },
+        {
+          "id": "nl-wm-17",
+          "word": "Я вижу: кошку, собаку. Ты добавляй!",
+          "difficulty": 2,
+          "hint": "Цепочка.",
+          "audio_file": "Audio/Content/NL/nl-wm-17.m4a"
+        },
+        {
+          "id": "nl-wm-18",
+          "word": "Запомни пару: кот — молоко. Что пьёт кот?",
+          "difficulty": 2,
+          "hint": "Ассоциативная пара.",
+          "audio_file": "Audio/Content/NL/nl-wm-18.m4a"
+        },
+        {
+          "id": "nl-wm-19",
+          "word": "Запомни пару: птица — гнездо. Где живёт птица?",
+          "difficulty": 2,
+          "hint": "Ассоциативная пара.",
+          "audio_file": "Audio/Content/NL/nl-wm-19.m4a"
+        },
+        {
+          "id": "nl-wm-20",
+          "word": "Запомни пару: рыба — вода. Где живёт рыба?",
+          "difficulty": 2,
+          "hint": "Ассоциативная пара.",
+          "audio_file": "Audio/Content/NL/nl-wm-20.m4a"
+        },
+        {
+          "id": "nl-wm-21",
+          "word": "Повтори ритм: та-та-ТА",
+          "difficulty": 2,
+          "hint": "Ритмическая память: два коротких, один длинный.",
+          "audio_file": "Audio/Content/NL/nl-wm-21.m4a"
+        },
+        {
+          "id": "nl-wm-22",
+          "word": "Повтори ритм: ТА-та-та",
+          "difficulty": 2,
+          "hint": "Длинный — два коротких.",
+          "audio_file": "Audio/Content/NL/nl-wm-22.m4a"
+        },
+        {
+          "id": "nl-wm-23",
+          "word": "Повтори ритм: та-ТА-та-ТА",
+          "difficulty": 3,
+          "hint": "Чередующийся ритм.",
+          "audio_file": "Audio/Content/NL/nl-wm-23.m4a"
+        },
+        {
+          "id": "nl-wm-24",
+          "word": "Скажи первый звук в каждом слове: мяч, арбуз, шар",
+          "difficulty": 3,
+          "hint": "М — А — Ш. Фонемный ряд.",
+          "audio_file": "Audio/Content/NL/nl-wm-24.m4a"
+        },
+        {
+          "id": "nl-wm-25",
+          "word": "Скажи первый звук: кот, осьминог, тигр",
+          "difficulty": 3,
+          "hint": "К — О — Т. Скрытое слово «кот»!",
+          "audio_file": "Audio/Content/NL/nl-wm-25.m4a"
+        },
+        {
+          "id": "nl-wm-26",
+          "word": "Скажи последний звук: рак, ура, кот",
+          "difficulty": 3,
+          "hint": "К — А — Т. Скрытое слово «кат».",
+          "audio_file": "Audio/Content/NL/nl-wm-26.m4a"
+        },
+        {
+          "id": "nl-wm-27",
+          "word": "Послушай предложение и назови только существительные: «Кот пьёт молоко»",
+          "difficulty": 3,
+          "hint": "Кот, молоко — существительные.",
+          "audio_file": "Audio/Content/NL/nl-wm-27.m4a"
+        },
+        {
+          "id": "nl-wm-28",
+          "word": "Послушай и назови только глаголы: «Птица летит и поёт»",
+          "difficulty": 3,
+          "hint": "Летит, поёт.",
+          "audio_file": "Audio/Content/NL/nl-wm-28.m4a"
+        },
+        {
+          "id": "nl-wm-29",
+          "word": "Сколько слов в предложении «Кот сидит на полу»?",
+          "difficulty": 3,
+          "hint": "Четыре слова.",
+          "audio_file": "Audio/Content/NL/nl-wm-29.m4a"
+        }
+      ]
     }
   }
 }

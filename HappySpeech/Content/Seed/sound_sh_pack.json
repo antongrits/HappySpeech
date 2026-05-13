@@ -2396,6 +2396,66 @@
           "hint": "ШЁЛ+ПО+ДУ+ШКА — длинная фраза.",
           "difficulty": 5,
           "audio_file": "Audio/Content/Sh/sh-ph-69.m4a"
+        },
+        {
+          "id": "sh-ph-70",
+          "word": "шёлковый платок на шее",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-ph-70.m4a"
+        },
+        {
+          "id": "sh-ph-71",
+          "word": "большой шар над площадью",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-ph-71.m4a"
+        },
+        {
+          "id": "sh-ph-72",
+          "word": "мышиный домик в поле",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-ph-72.m4a"
+        },
+        {
+          "id": "sh-ph-73",
+          "word": "кошачья лапа на подушке",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-ph-73.m4a"
+        },
+        {
+          "id": "sh-ph-74",
+          "word": "горошины рассыпались по полу",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-ph-74.m4a"
+        },
+        {
+          "id": "sh-ph-75",
+          "word": "ушки зайца торчат над травой",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-ph-75.m4a"
+        },
+        {
+          "id": "sh-ph-76",
+          "word": "шахматный конь прыгнул вперёд",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-ph-76.m4a"
+        },
+        {
+          "id": "sh-ph-77",
+          "word": "рубашка висит на крючке",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-ph-77.m4a"
+        },
+        {
+          "id": "sh-ph-78",
+          "word": "шустрая мышь под крыльцом",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-ph-78.m4a"
+        },
+        {
+          "id": "sh-ph-79",
+          "word": "пышная шапка на голове",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-ph-79.m4a"
         }
       ]
     },
@@ -2722,6 +2782,66 @@
           "hint": "ШМЕ+ШИ — Ш в начале двух слов.",
           "difficulty": 5,
           "audio_file": "Audio/Content/Sh/sh-sen-49.m4a"
+        },
+        {
+          "id": "sh-sen-50",
+          "word": "Шарик нашёл шишку под высокой елью.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-sen-50.m4a"
+        },
+        {
+          "id": "sh-sen-51",
+          "word": "Наша кошка любит спать на мягкой подушке.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-sen-51.m4a"
+        },
+        {
+          "id": "sh-sen-52",
+          "word": "Маша смешила малышей смешной шуткой.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-sen-52.m4a"
+        },
+        {
+          "id": "sh-sen-53",
+          "word": "Широкий шарф согревал в морозный день.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-sen-53.m4a"
+        },
+        {
+          "id": "sh-sen-54",
+          "word": "Мышата прятались в стогу соломы.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-sen-54.m4a"
+        },
+        {
+          "id": "sh-sen-55",
+          "word": "Шурик нашёл большого жука под камнем.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-sen-55.m4a"
+        },
+        {
+          "id": "sh-sen-56",
+          "word": "Шоколадный торт стоял на праздничном столе.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-sen-56.m4a"
+        },
+        {
+          "id": "sh-sen-57",
+          "word": "Хорошая лошадь слушалась своего хозяина.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-sen-57.m4a"
+        },
+        {
+          "id": "sh-sen-58",
+          "word": "Дошколята рисовали пышные ёлки карандашами.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-sen-58.m4a"
+        },
+        {
+          "id": "sh-sen-59",
+          "word": "Кукушка кричала в тишине лесной опушки.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Sh/sh-sen-59.m4a"
         }
       ]
     },
@@ -2975,6 +3095,76 @@
           "hint": "Только шелест — правильное слово.",
           "difficulty": 3,
           "audio_file": "Audio/Content/SH/sh-df-24.m4a"
+        },
+        {
+          "id": "sh-df-25",
+          "word": "шутка — сутка",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Sh/sh-df-25.m4a",
+          "hint": "Ш шипит, С свистит."
+        },
+        {
+          "id": "sh-df-26",
+          "word": "шуба — суба",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Sh/sh-df-26.m4a",
+          "hint": "Ш против С в начале."
+        },
+        {
+          "id": "sh-df-27",
+          "word": "шмель — смель",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-df-27.m4a",
+          "hint": "Стечение ШМ против СМ."
+        },
+        {
+          "id": "sh-df-28",
+          "word": "шалаш — салас",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-df-28.m4a",
+          "hint": "Оба звука в слове: Ш-Ш против С-С."
+        },
+        {
+          "id": "sh-df-29",
+          "word": "шить — жить",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Sh/sh-df-29.m4a",
+          "hint": "Ш глухой, Ж звонкий, оба шипящих."
+        },
+        {
+          "id": "sh-df-30",
+          "word": "наш — нас",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Sh/sh-df-30.m4a",
+          "hint": "Конец слова: Ш против С."
+        },
+        {
+          "id": "sh-df-31",
+          "word": "кошка — косьба",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-df-31.m4a",
+          "hint": "Ш в середине против С."
+        },
+        {
+          "id": "sh-df-32",
+          "word": "шорох — сорок",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Sh/sh-df-32.m4a",
+          "hint": "Ш в начале против С."
+        },
+        {
+          "id": "sh-df-33",
+          "word": "мишка — миска",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Sh/sh-df-33.m4a",
+          "hint": "Ш в середине против С."
+        },
+        {
+          "id": "sh-df-34",
+          "word": "крыша — крыса",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Sh/sh-df-34.m4a",
+          "hint": "Классическая пара Ш—С."
         }
       ]
     }
