@@ -137,7 +137,8 @@ struct StutteringView: View {
 
     private var mascotHeader: some View {
         VStack(spacing: SpacingTokens.sp2) {
-            HSMascotView(mood: .encouraging, size: 140)
+            // E v21: 3D Ляля hero на StutteringView (требование «3D героев на каждом экране»).
+            LyalyaHeroView(state: .encouraging, mood: 0.7, size: 160)
                 .accessibilityLabel(String(localized: "stuttering.mascot.accessibility"))
                 .accessibilityHidden(true)
 

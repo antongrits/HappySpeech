@@ -177,7 +177,8 @@ struct OnboardingNameStep: View {
             VStack(spacing: SpacingTokens.large) {
                 Spacer(minLength: SpacingTokens.medium)
 
-                LyalyaHeroView(state: .explaining, mood: 0.7, size: 200)
+                // E v21: Step 3 child name — .encouraging (3D Ляля поддерживает выбор имени).
+                LyalyaHeroView(state: .encouraging, mood: 0.7, size: 200)
                     .accessibilityHidden(true)
 
                 Text(String(localized: "onboarding.name.title"))
@@ -418,8 +419,8 @@ struct OnboardingGoalsStep: View {
 
     var body: some View {
         VStack(spacing: SpacingTokens.medium) {
-            // Block I v19: scaleEffect убран с 2D Ляли.
-            LyalyaHeroView(state: .celebrating, mood: 0.8, size: 200)
+            // E v21: Step 5 goals — .thinking (3D Ляля размышляет над целями).
+            LyalyaHeroView(state: .thinking, mood: 0.8, size: 200)
                 .opacity(appeared ? 1 : 0)
                 .accessibilityHidden(true)
                 .padding(.top, SpacingTokens.small)

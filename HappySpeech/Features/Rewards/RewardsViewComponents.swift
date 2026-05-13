@@ -224,6 +224,15 @@ struct StickerDetailSheet: View {
                     .grayscale(detail.isUnlocked ? 0 : 0.9)
             }
 
+            // E v21: 3D Ляля в StickerDetailSheet (reward detail screen).
+            // .celebrating если разблокирован, .thinking если ещё не открыт.
+            LyalyaHeroView(
+                state: detail.isUnlocked ? .celebrating : .thinking,
+                mood: detail.isUnlocked ? 1.0 : 0.4,
+                size: 100
+            )
+            .accessibilityHidden(true)
+
             VStack(spacing: SpacingTokens.tiny) {
                 Text(detail.name)
                     .font(TypographyTokens.title(22))

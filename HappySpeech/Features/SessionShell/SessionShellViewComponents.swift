@@ -268,7 +268,8 @@ struct PauseSheetView: View {
             ColorTokens.Kid.bg.ignoresSafeArea()
             HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.large) {
                 VStack(spacing: SpacingTokens.large) {
-                    HSMascotView(mood: .encouraging, size: 120)
+                    // E v21: 3D Ляля в pause sheet (требование пользователя).
+                    LyalyaHeroView(state: .encouraging, mood: 0.8, size: 140)
                         .accessibilityHidden(true)
 
                     Text(motivationalPhrase.isEmpty
