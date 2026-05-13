@@ -3405,3 +3405,165 @@ DocC defer не блокирует general bundle growth strategy.
 - ADR-V18-E-PARTIAL-PHONEME (v18 83.9% PARTIAL, post-v1.0 defer)
 - ADR-V19-D-PHONEME-RETRAIN (v19 heavy synthetic aug, 83.9% → 88.9%, target ≥85% achieved)
 - ADR-V21-R-PHONEME-DEFER (v21 product-acceptable maintained)
+
+---
+
+## ADR-V22-FDL-DEPRECATED — Firebase Dynamic Links migration defer
+
+**Date:** 2026-05-13
+**Status:** Defer to v23 (Universal Links migration)
+**Author:** antongrits
+**Plan:** v22 Block 3.1
+
+**Context:**
+- Plan v22 Block 3.1 — Firebase Dynamic Links Family invite verification.
+- HappySpeech уже имеет `HappySpeech/Services/DynamicLinksService.swift` — Live + Mock impl с поддержкой Family invite (primary/secondary/observer roles).
+- Google официально announced FDL sunset — **25 августа 2025**. Service продолжает работать до этой даты, но FDL не принимает новых customers и не получает updates.
+
+**Decision:**
+Defer FDL migration к Universal Links на v23.
+
+**Rationale:**
+- Текущая реализация работоспособна для diploma defense (тест в дев-окружении).
+- Migration к Universal Links требует:
+  - Apple Developer enrollment ($99/yr — отдельный P0 backlog item).
+  - AssociatedDomains entitlement.
+  - apple-app-site-association hosted на верифицированном домене (happyspeech.app).
+  - Refactor `DynamicLinksService` → `UniversalLinksRouter` с path-based URL parsing.
+- Объём работы 2-3 дня — не критично для v22 closure.
+
+**Migration path (v23 P1):**
+1. Apple Developer enrollment + domain verification.
+2. AssociatedDomains capability в entitlements.
+3. Host `/.well-known/apple-app-site-association` JSON.
+4. iOS — `UniversalLinksRouter` с парсингом `/invite/family/{id}?role=secondary&expires=...`.
+5. Migrate existing FDL payload structure к URL path/query schema.
+6. Deprecate `DynamicLinksService` (оставить как shim для legacy links на 6 мес).
+
+**Tracked in:** `.claude/team/firebase-config-v22.md` (Block 3.1 section) + `.claude/team/backlog-v23.md` (P1 Firebase migration).
+
+**Related ADRs:**
+- ADR-V18-FAMILY-INVITE (initial FDL Family Invite implementation)
+
+---
+
+## ADR-V22-RC-WHISPER-AB-PARAM — Remote Config whisper_model_override
+
+**Date:** 2026-05-13
+**Status:** Parameter documented, deploy deferred (user-side Firebase Console)
+**Author:** antongrits
+**Plan:** v22 Block 3.2
+
+**Context:**
+- Plan v22 Block 3.2 — Remote Config A/B test для Whisper model variants.
+- `RemoteConfigService.swift` уже имеет 20+ параметров (8 feature flags, 4 content, 3 session, 2 UI, 2 version, 1 A/B `tutorial_variant`).
+- Block 1.2 v22 уже реализовал device-tier auto-selection Whisper модели. A/B test проверяет hypothesis "fixed model лучше adaptive".
+
+**Decision:**
+- Document `whisper_model_override` parameter в registry (`.claude/team/firebase-config-v22.md`).
+- Deploy через Firebase Console — user-side action (Chrome MCP не active, dev console доступ требует user).
+- iOS protocol extension (`var whisperModelOverride: String`) — defer до v23 deploy.
+
+**Parameter spec:**
+
+| Field | Value |
+|---|---|
+| Key | `whisper_model_override` |
+| Type | string |
+| Default | `auto` |
+| Values | `auto` / `always_small` / `always_base` |
+| Audience | 100% (33/33/33 split) |
+| Metric | `speech_accuracy_score` (internal AnalyticsService) |
+
+**Rationale defer iOS extension:**
+- Добавление `whisperModelOverride` в protocol без active Firebase config — dead code (always returns default).
+- Coupled deploy: Firebase Console publish + iOS protocol extension должны идти в одном release.
+- v23 task: Console deploy + iOS extension + integration test.
+
+**Tracked in:** `.claude/team/firebase-config-v22.md` (Block 3.2) + `.claude/team/backlog-v23.md` (P1).
+
+**Related ADRs:**
+- ADR-V22-B-WHISPER-AUTO-SELECT (Block 1.2 device-tier logic)
+- ADR-V18-U5-TUTORIAL-AB (existing A/B `tutorial_variant`)
+
+---
+
+## ADR-V22-BLENDER-FINAL-DEFER — Blender 3D Lyalya emotional variants
+
+**Date:** 2026-05-13
+**Status:** Final defer
+**Author:** antongrits
+**Plan:** v22 Block 3.3
+
+**Context:**
+- Plan v22 Block 3.3 — Blender 3D Lyalya 8 emotional variants (happy/sad/surprised/thinking/listening/encouraging/celebrating/sleepy).
+- Plan v19 + v21 уже attempted (ADR-V19-H-DEFER-BLENDER, ADR-V21-AH-BLENDER-DEFER).
+- v22 verification: `which blender` → not found, `/Applications/Blender*` → not exists. Blender не установлен на dev machine, install требует user action (Homebrew cask либо .dmg download).
+
+**Decision:**
+Final defer Blender path. Current production использует RealityKit blendshapes через `lyalya3d.usdz` (v21 commissioned static rig).
+
+**Rationale:**
+- Triple-deferred (v19, v21, v22) — pattern говорит что dev-machine не подходящая environment для Blender работы.
+- RealityKit USDZ + AnimatedStoryPlayer compositions дают sufficient visual variety:
+  - 4 base poses от v21 USDZ
+  - 12+ animated sequences через story composition
+  - Emotional cues передаются через UI overlays + voice tone (Lyalya voice variants)
+- Diploma defense не требует кинематографического character rig.
+
+**Alternative implemented (v21):**
+- `Resources/Models/lyalya3d.usdz` — RealityKit-ready static rig
+- `Features/Story/AnimatedStoryPlayer.swift` — pose transitions через USDZ animation tracks
+- UI emotion overlays (SwiftUI sprite layer над RealityKit canvas)
+
+**Future (v23+ post-graduation):**
+1. **Option A:** Install Blender 4.x + import existing USDZ → add 8 blendshape targets → export per-emotion USDZ. Estimated 1-2 days.
+2. **Option B (preferred):** Commission Russian-native 3D artist для professional rig:
+   - Detailed face topology
+   - Lipsync-ready blendshapes (Viseme A-N)
+   - 8 emotion поз + transition animations
+   - Estimated budget: $500-1500 freelance
+
+**Tracked in:** `.claude/team/backlog-v23.md` (P0 Critical).
+
+**Related ADRs:**
+- ADR-V19-H-DEFER-BLENDER (first defer)
+- ADR-V21-AH-BLENDER-DEFER (second defer)
+- ADR-V21-LYALYA-USDZ (commissioned static USDZ — current production)
+
+---
+
+## ADR-V22-APPICON-VERIFIED — AppIcon Dark + Tinted variants present
+
+**Date:** 2026-05-13
+**Status:** Verified completed in earlier sprint (no v22 action needed)
+**Author:** antongrits
+**Plan:** v22 Block 3.4
+
+**Context:**
+- Plan v22 Block 3.4 — AppIcon Dark + Tinted variants.
+- v21 ADR-V21-AJ-DARKICON-DEFER documented procedural noise issue в Dark variant.
+
+**Verify result:**
+`HappySpeech/Resources/Assets.xcassets/AppIcon.appiconset/Contents.json` УЖЕ регистрирует все 3 варианта:
+- `AppIcon-Any-1024.png` (Light/default — universal idiom, iOS platform)
+- `AppIcon-Dark-1024.png` (appearance: luminosity = dark)
+- `AppIcon-Tinted-1024.png` (appearance: luminosity = tinted, iOS 18+)
+
+**Decision:**
+No v22 action. AppIcon technically complete для diploma build — iOS handles automatic selection по system appearance.
+
+**Acceptable for diploma defense:**
+- Dark variant **functional** (отображается в iOS dark mode).
+- Tinted variant **functional** (iOS 18+ home screen tinted mode).
+- Visual quality "ugly" issue (v21 finding) — design polish, не block-level defect.
+
+**Future (v23+ P0):**
+Manual Figma/Sketch redesign — see ADR-V21-AJ-DARKICON-DEFER continued tracking. Current procedural pipeline (Python PIL noise generation) не справляется с premium icon aesthetic.
+
+**Tracked in:**
+- `.claude/team/firebase-config-v22.md` (Block 3.4 — verify section)
+- `.claude/team/backlog-v23.md` (P0 Critical — AppIcon manual redesign)
+
+**Related ADRs:**
+- ADR-V21-AJ-DARKICON-DEFER (visual quality issue)
