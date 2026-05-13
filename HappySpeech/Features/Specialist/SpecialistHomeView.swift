@@ -11,6 +11,9 @@ struct SpecialistHomeView: View {
     @Environment(AppContainer.self) private var container
 
     enum SpecTab: String, CaseIterable {
+        // Block H v21 — labels хранят русские raw values для LocalizedStringKey lookup.
+        // Tab bar items имеют compact frame на iPhone SE 3 (320pt) — короткие слова
+        // безопасны при Dynamic Type вплоть до accessibilityLarge.
         case children  = "Дети"
         case sessions  = "Занятия"
         case reports   = "Отчёты"

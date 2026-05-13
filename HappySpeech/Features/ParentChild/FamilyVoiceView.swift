@@ -168,12 +168,17 @@ struct FamilyVoiceView: View {
                 Text(String(localized: "parent_child.recorder.title"))
                     .font(TypographyTokens.title(24))
                     .foregroundStyle(ColorTokens.Parent.ink)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
                     .multilineTextAlignment(.center)
 
                 Text(String(localized: "parent_child.recorder.subtitle"))
                     .font(TypographyTokens.body())
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
                     .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
                     .ctaTextStyle()
             }
             .frame(maxWidth: .infinity)
@@ -271,6 +276,9 @@ struct FamilyVoiceView: View {
                             systemImage: "play.circle"
                         )
                         .font(TypographyTokens.body(15).weight(.medium))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                        .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.bordered)
                     .disabled(!hasRecordingForWord || vm.recordingState == .recording)
@@ -286,6 +294,9 @@ struct FamilyVoiceView: View {
                             systemImage: "trash"
                         )
                         .font(TypographyTokens.body(15).weight(.medium))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
+                        .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.bordered)
                     .tint(ColorTokens.Semantic.error)
@@ -358,6 +369,8 @@ struct FamilyVoiceView: View {
         } label: {
             Text(String(localized: "parent_child.recorder.cta.done"))
                 .font(TypographyTokens.headline())
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
                 .frame(maxWidth: .infinity, minHeight: 56)
         }
         .buttonStyle(.borderedProminent)
@@ -400,12 +413,16 @@ private struct RecordingRowView: View {
                 Text(recording.word)
                     .font(TypographyTokens.headline())
                     .foregroundStyle(ColorTokens.Parent.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
                 Text(recording.durationText)
                     .font(TypographyTokens.caption())
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
             }
 
-            Spacer()
+            Spacer(minLength: SpacingTokens.tiny)
 
             Button(action: onDelete) {
                 Image(systemName: "trash")

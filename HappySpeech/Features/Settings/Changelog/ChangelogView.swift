@@ -34,7 +34,11 @@ struct ChangelogView: View {
                         Text(String(localized: "changelog.loadError"))
                             .font(TypographyTokens.body(15))
                             .foregroundStyle(ColorTokens.Parent.inkMuted)
+                            .lineLimit(nil)
+                            .minimumScaleFactor(0.85)
                             .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.horizontal, SpacingTokens.regular)
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.top, SpacingTokens.xLarge)

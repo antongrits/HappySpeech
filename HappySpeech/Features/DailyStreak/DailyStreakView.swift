@@ -148,10 +148,16 @@ struct DailyStreakView: View {
             Text(String(format: String(localized: "streak.days.unit"), viewModel.currentStreak))
                 .font(TypographyTokens.body())
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
+                .multilineTextAlignment(.center)
 
             Text(viewModel.statusLabel)
                 .font(TypographyTokens.caption())
                 .foregroundStyle(ColorTokens.Kid.inkSoft)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .multilineTextAlignment(.center)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, SpacingTokens.sp5)
@@ -178,6 +184,9 @@ struct DailyStreakView: View {
                 Text(String(format: String(localized: "streak.next.label"), nextTitle, nextDays))
                     .font(TypographyTokens.callout())
                     .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 ProgressView(value: viewModel.progressToNext)
                     .tint(ColorTokens.Brand.primary)
@@ -272,19 +281,25 @@ struct DailyStreakView: View {
                 Text("streak.saver.title")
                     .font(TypographyTokens.headline())
                     .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
             }
 
             Text(viewModel.saverHintLabel)
                 .font(TypographyTokens.caption())
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .lineLimit(nil)
+                .minimumScaleFactor(0.85)
                 .multilineTextAlignment(.leading)
+                .fixedSize(horizontal: false, vertical: true)
 
             Button {
                 Task { await useSaver() }
             } label: {
                 Text("streak.saver.cta")
                     .font(TypographyTokens.cta())
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
@@ -313,9 +328,13 @@ struct DailyStreakView: View {
                 Text("streak.longest.title")
                     .font(TypographyTokens.caption())
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
                 Text(String(format: String(localized: "streak.longest.value"), viewModel.longestStreak))
                     .font(TypographyTokens.headline())
                     .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
             }
             Spacer()
         }

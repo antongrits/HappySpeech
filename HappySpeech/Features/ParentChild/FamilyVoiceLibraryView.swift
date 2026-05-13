@@ -121,9 +121,12 @@ struct FamilyVoiceLibraryView: View {
                 Text(String(localized: "family.voice.priority_used"))
                     .font(TypographyTokens.body(13))
                     .foregroundStyle(ColorTokens.Parent.ink)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
                     .ctaTextStyle()
 
-                Spacer()
+                Spacer(minLength: SpacingTokens.tiny)
             }
         }
         .environment(\.circuitContext, .parent)
@@ -141,7 +144,10 @@ struct FamilyVoiceLibraryView: View {
             Text(String(localized: "family.voice.library.empty"))
                 .font(TypographyTokens.body())
                 .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
                 .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
                 .ctaTextStyle()
                 .padding(.horizontal, SpacingTokens.sp8)
 
@@ -153,6 +159,8 @@ struct FamilyVoiceLibraryView: View {
                     systemImage: "mic.badge.plus"
                 )
                 .font(TypographyTokens.headline())
+                .lineLimit(1)
+                .minimumScaleFactor(0.85)
                 .frame(minWidth: 200, minHeight: 48)
             }
             .buttonStyle(.borderedProminent)
@@ -197,6 +205,8 @@ struct FamilyRecordingRow: View {
                     Text(recording.word)
                         .font(TypographyTokens.headline())
                         .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
 
                     Text(
                         String(
@@ -207,13 +217,16 @@ struct FamilyRecordingRow: View {
                     .font(TypographyTokens.caption())
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                     .lineLimit(1)
+                    .minimumScaleFactor(0.85)
 
                     Text(recording.durationText)
                         .font(TypographyTokens.mono(11))
                         .foregroundStyle(ColorTokens.Parent.inkSoft)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                 }
 
-                Spacer()
+                Spacer(minLength: SpacingTokens.tiny)
 
                 // Rerecord
                 Button(action: onRerecord) {

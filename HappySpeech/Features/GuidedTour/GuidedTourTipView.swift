@@ -29,10 +29,14 @@ struct GuidedTourTipView: View {
             Text(step.title)
                 .font(TypographyTokens.title(22))
                 .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(3)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
             Text(step.body)
                 .font(TypographyTokens.body(16))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .lineLimit(nil)
+                .minimumScaleFactor(0.85)
                 .fixedSize(horizontal: false, vertical: true)
             actionRow
         }
@@ -43,7 +47,9 @@ struct GuidedTourTipView: View {
                 .stroke(ColorTokens.Brand.primary.opacity(0.25), lineWidth: 1)
         )
         .kidCardShadow()
-        .frame(maxWidth: 340)
+        // Block H v21 — iPhone SE 3 (320pt) safe max width. Was 340 → frame
+        // could overflow 320 viewport with horizontal padding sp5*2=24pt.
+        .frame(maxWidth: min(340, screenSize.width - SpacingTokens.sp5 * 2))
         .padding(.horizontal, SpacingTokens.sp5)
         .position(
             x: screenSize.width / 2,

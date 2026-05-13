@@ -91,9 +91,11 @@ struct ComparisonDashboardView: View {
                         Text(child.name)
                             .font(TypographyTokens.body(14))
                             .foregroundStyle(ColorTokens.Parent.ink)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
                     }
                 }
-                Spacer()
+                Spacer(minLength: 0)
             }
         }
     }
@@ -309,21 +311,27 @@ struct ComparisonDashboardView: View {
                     Text(child.name)
                         .font(TypographyTokens.headline(16))
                         .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
 
                     HStack(spacing: SpacingTokens.sp3) {
                         Label("\(child.currentStreak) \(String(localized: "streak.days.short"))",
                               systemImage: "flame.fill")
                             .font(TypographyTokens.caption(12))
                             .foregroundStyle(.orange)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
 
                         Label("\(child.totalMinutes) \(String(localized: "minutes.short"))",
                               systemImage: "clock.fill")
                             .font(TypographyTokens.caption(12))
                             .foregroundStyle(ColorTokens.Parent.inkMuted)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
                     }
                 }
 
-                Spacer()
+                Spacer(minLength: SpacingTokens.tiny)
 
                 Circle()
                     .fill(viewModel.chartColor(for: child.id))
@@ -349,11 +357,16 @@ struct ComparisonDashboardView: View {
             Text(String(localized: "comparison.empty.title"))
                 .font(TypographyTokens.title(22))
                 .foregroundStyle(ColorTokens.Parent.ink)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
                 .multilineTextAlignment(.center)
             Text(String(localized: "comparison.empty.message"))
                 .font(TypographyTokens.body())
                 .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
                 .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, SpacingTokens.large)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)

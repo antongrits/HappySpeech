@@ -53,6 +53,10 @@ struct FluencyDiaryView: View {
             Text(String(localized: "stuttering.feedback.complete"))
                 .font(TypographyTokens.title(24))
                 .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, SpacingTokens.regular)
 
             HSButton(
                 String(localized: "general.done"),
@@ -116,7 +120,10 @@ struct FluencyDiaryView: View {
         Text(String(localized: "stuttering.diary.instruction"))
             .font(TypographyTokens.title(24))
             .foregroundStyle(ColorTokens.Kid.ink)
+            .lineLimit(nil)
+            .minimumScaleFactor(0.85)
             .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
     }
 
     private func textBlock(interactor: FluencyDiaryInteractor) -> some View {
@@ -126,6 +133,8 @@ struct FluencyDiaryView: View {
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .lineSpacing(TypographyTokens.LineSpacing.relaxed * 1.5)
                 .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .fixedSize(horizontal: false, vertical: true)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
