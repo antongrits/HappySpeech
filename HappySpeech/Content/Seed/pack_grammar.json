@@ -148,6 +148,48 @@
           "hint": "Цыплёнок → цыплята → много цыплят. Другая форма!",
           "difficulty": 3,
           "audio_file": "Audio/Content/Grammar/gr-pl-19.m4a"
+        },
+        {
+          "id": "gr-pl-20",
+          "word": "лист — листья",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Grammar/gr-pl-20.m4a",
+          "hint": "Слова-исключения с чередованием."
+        },
+        {
+          "id": "gr-pl-21",
+          "word": "стул — стулья",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Grammar/gr-pl-21.m4a",
+          "hint": "Чередование Л—ЛЬЯ."
+        },
+        {
+          "id": "gr-pl-22",
+          "word": "друг — друзья",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-pl-22.m4a",
+          "hint": "Чередование Г—ЗЬЯ."
+        },
+        {
+          "id": "gr-pl-23",
+          "word": "брат — братья",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-pl-23.m4a",
+          "hint": "Мягкое множественное."
+        },
+        {
+          "id": "gr-pl-24",
+          "word": "дерево — деревья",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-pl-24.m4a",
+          "hint": "Чередование О—ЬЯ."
+        },
+        {
+          "id": "gr-pl-25",
+          "word": "перо — перья",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-pl-25.m4a",
+          "hint": "Чередование О—ЬЯ."
         }
       ]
     },
@@ -364,6 +406,55 @@
           "hint": "Тёплого дня. Родительный — мужской.",
           "difficulty": 4,
           "audio_file": "Audio/Content/Grammar/gr-adj-29.m4a"
+        },
+        {
+          "id": "gr-adj-30",
+          "word": "красивый — красивая — красивое",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-adj-30.m4a",
+          "hint": "Все три рода прилагательного."
+        },
+        {
+          "id": "gr-adj-31",
+          "word": "большой — большая — большое",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-adj-31.m4a",
+          "hint": "Родовые окончания."
+        },
+        {
+          "id": "gr-adj-32",
+          "word": "тёплый — тёплая — тёплое",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-adj-32.m4a",
+          "hint": "Согласование по роду."
+        },
+        {
+          "id": "gr-adj-33",
+          "word": "синий — синяя — синее",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-adj-33.m4a",
+          "hint": "Мягкий вариант согласования."
+        },
+        {
+          "id": "gr-adj-34",
+          "word": "лёгкий — лёгкая — лёгкое",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-adj-34.m4a",
+          "hint": "Чередование К—ЧК в произношении."
+        },
+        {
+          "id": "gr-adj-35",
+          "word": "свежий — свежая — свежее",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-adj-35.m4a",
+          "hint": "Шипящий в основе."
+        },
+        {
+          "id": "gr-adj-36",
+          "word": "добрый мальчик — добрая девочка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-adj-36.m4a",
+          "hint": "Полные фразы мужского и женского рода."
         }
       ]
     },
@@ -531,6 +622,55 @@
           "hint": "Нашёл НАД? Отлично! НАД — предлог!",
           "difficulty": 2,
           "audio_file": "Audio/Content/Grammar/gr-prep-22.m4a"
+        },
+        {
+          "id": "gr-prep-23",
+          "word": "книга лежит НАД полкой",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-prep-23.m4a",
+          "hint": "НАД — пространственное расположение выше."
+        },
+        {
+          "id": "gr-prep-24",
+          "word": "мяч катится ИЗ-ПОД стола",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-prep-24.m4a",
+          "hint": "ИЗ-ПОД — движение из-под предмета."
+        },
+        {
+          "id": "gr-prep-25",
+          "word": "кот сидит МЕЖДУ стульями",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-prep-25.m4a",
+          "hint": "МЕЖДУ — расположение посередине."
+        },
+        {
+          "id": "gr-prep-26",
+          "word": "птица улетела ОТ кормушки",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-prep-26.m4a",
+          "hint": "ОТ — удаление от места."
+        },
+        {
+          "id": "gr-prep-27",
+          "word": "рыбка плавает ВДОЛЬ берега",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-prep-27.m4a",
+          "hint": "ВДОЛЬ — направление параллельно."
+        },
+        {
+          "id": "gr-prep-28",
+          "word": "листья падают С деревьев",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-prep-28.m4a",
+          "hint": "С + родительный падеж."
+        },
+        {
+          "id": "gr-prep-29",
+          "word": "зайчик спрятался ЗА пенёк",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-prep-29.m4a",
+          "hint": "ЗА — расположение позади."
         }
       ]
     },
@@ -740,6 +880,55 @@
           "hint": "Несёшь! Второе лицо единственного числа.",
           "difficulty": 3,
           "audio_file": "Audio/Content/Grammar/gr-vf-28.m4a"
+        },
+        {
+          "id": "gr-vf-29",
+          "word": "рисую — рисуешь — рисует",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-vf-29.m4a",
+          "hint": "Спряжение глагола в наст. времени."
+        },
+        {
+          "id": "gr-vf-30",
+          "word": "пишу — пишешь — пишет",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-vf-30.m4a",
+          "hint": "Спряжение I тип."
+        },
+        {
+          "id": "gr-vf-31",
+          "word": "говорю — говоришь — говорит",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-vf-31.m4a",
+          "hint": "Спряжение II тип."
+        },
+        {
+          "id": "gr-vf-32",
+          "word": "иду — идёшь — идёт",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-vf-32.m4a",
+          "hint": "Спряжение с чередованием."
+        },
+        {
+          "id": "gr-vf-33",
+          "word": "беги — бегите",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-vf-33.m4a",
+          "hint": "Повелительное наклонение."
+        },
+        {
+          "id": "gr-vf-34",
+          "word": "играл — играла — играло",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-vf-34.m4a",
+          "hint": "Прошедшее время по родам."
+        },
+        {
+          "id": "gr-vf-35",
+          "word": "буду играть — будет играть",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-vf-35.m4a",
+          "hint": "Будущее составное время."
         }
       ]
     },
@@ -956,6 +1145,55 @@
           "hint": "Лёг на что? На диван! Винительный падеж направления.",
           "difficulty": 3,
           "audio_file": "Audio/Content/Grammar/gr-case-29.m4a"
+        },
+        {
+          "id": "gr-case-30",
+          "word": "нет (кого?) — кошки",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-case-30.m4a",
+          "hint": "Родительный падеж одушевлённых."
+        },
+        {
+          "id": "gr-case-31",
+          "word": "дал (кому?) — собаке",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-case-31.m4a",
+          "hint": "Дательный падеж."
+        },
+        {
+          "id": "gr-case-32",
+          "word": "вижу (кого?) — лису",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-case-32.m4a",
+          "hint": "Винительный одушевлённый."
+        },
+        {
+          "id": "gr-case-33",
+          "word": "говорю (о чём?) — о зиме",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-case-33.m4a",
+          "hint": "Предложный падеж."
+        },
+        {
+          "id": "gr-case-34",
+          "word": "иду (куда?) — в школу",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-case-34.m4a",
+          "hint": "Винительный направления."
+        },
+        {
+          "id": "gr-case-35",
+          "word": "живу (где?) — в городе",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-case-35.m4a",
+          "hint": "Предложный места."
+        },
+        {
+          "id": "gr-case-36",
+          "word": "приехал (откуда?) — из леса",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-case-36.m4a",
+          "hint": "Родительный с предлогом ИЗ."
         }
       ]
     },
@@ -1214,6 +1452,62 @@
           "hint": "Супплетивная форма! Разные корни.",
           "difficulty": 5,
           "audio_file": "Audio/Content/Grammar/gr-wc-35.m4a"
+        },
+        {
+          "id": "gr-wc-36",
+          "word": "стол — столик — столище",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-wc-36.m4a",
+          "hint": "Уменьшительный и увеличительный суффиксы."
+        },
+        {
+          "id": "gr-wc-37",
+          "word": "дом — домик — домище",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-wc-37.m4a",
+          "hint": "Суффиксы -ик, -ище."
+        },
+        {
+          "id": "gr-wc-38",
+          "word": "кот — котёнок — котята",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-wc-38.m4a",
+          "hint": "Детёныш и множественное."
+        },
+        {
+          "id": "gr-wc-39",
+          "word": "рыба — рыбка — рыбища",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-wc-39.m4a",
+          "hint": "Суффиксы оценки."
+        },
+        {
+          "id": "gr-wc-40",
+          "word": "нос — носик — носище",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-wc-40.m4a",
+          "hint": "Уменьшительный и увеличительный."
+        },
+        {
+          "id": "gr-wc-41",
+          "word": "лес — лесок — лесище",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-wc-41.m4a",
+          "hint": "Суффикс -ок и -ище."
+        },
+        {
+          "id": "gr-wc-42",
+          "word": "ухо — ушко — ушища",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-wc-42.m4a",
+          "hint": "С чередованием Х—Ш."
+        },
+        {
+          "id": "gr-wc-43",
+          "word": "лапа — лапка — лапища",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-wc-43.m4a",
+          "hint": "Чередование П—ПК."
         }
       ]
     },
@@ -1482,6 +1776,62 @@
           "hint": "Одновременность: пока + настоящее.",
           "difficulty": 4,
           "audio_file": "Audio/Content/Grammar/gr-sg-41.m4a"
+        },
+        {
+          "id": "gr-sg-42",
+          "word": "Маша кормит собаку.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Grammar/gr-sg-42.m4a",
+          "hint": "Субъект — глагол — объект."
+        },
+        {
+          "id": "gr-sg-43",
+          "word": "Папа читает книгу детям.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-sg-43.m4a",
+          "hint": "Подлежащее + сказуемое + два дополнения."
+        },
+        {
+          "id": "gr-sg-44",
+          "word": "Мама приготовила вкусный обед.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-sg-44.m4a",
+          "hint": "Согласование прилагательного с существительным."
+        },
+        {
+          "id": "gr-sg-45",
+          "word": "Дети играют в парке каждый день.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-sg-45.m4a",
+          "hint": "Обстоятельства места и времени."
+        },
+        {
+          "id": "gr-sg-46",
+          "word": "Красивая птица поёт на ветке.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-sg-46.m4a",
+          "hint": "Прилагательное + существительное."
+        },
+        {
+          "id": "gr-sg-47",
+          "word": "Бабушка вяжет тёплый шарф внуку.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-sg-47.m4a",
+          "hint": "Дательный падеж в предложении."
+        },
+        {
+          "id": "gr-sg-48",
+          "word": "Котёнок спрятался под мягким диваном.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Grammar/gr-sg-48.m4a",
+          "hint": "Творительный падеж с предлогом."
+        },
+        {
+          "id": "gr-sg-49",
+          "word": "Мы поехали в гости к бабушке.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Grammar/gr-sg-49.m4a",
+          "hint": "Предложный падеж с предлогом К."
         }
       ]
     },

@@ -1503,6 +1503,66 @@
           "word": "центральная площадь столицы",
           "difficulty": 4,
           "audio_file": "Audio/Content/C/c-ph-56.m4a"
+        },
+        {
+          "id": "c-ph-57",
+          "word": "цветной карандаш на столе",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/C/c-ph-57.m4a"
+        },
+        {
+          "id": "c-ph-58",
+          "word": "цыплята у курятника",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/C/c-ph-58.m4a"
+        },
+        {
+          "id": "c-ph-59",
+          "word": "целая корзина огурцов",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/C/c-ph-59.m4a"
+        },
+        {
+          "id": "c-ph-60",
+          "word": "цирковой артист в маске",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/C/c-ph-60.m4a"
+        },
+        {
+          "id": "c-ph-61",
+          "word": "цепочка из цветов",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/C/c-ph-61.m4a"
+        },
+        {
+          "id": "c-ph-62",
+          "word": "кольцо на пальце мамы",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/C/c-ph-62.m4a"
+        },
+        {
+          "id": "c-ph-63",
+          "word": "цифра ноль на доске",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/C/c-ph-63.m4a"
+        },
+        {
+          "id": "c-ph-64",
+          "word": "отец принёс гостинец",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/C/c-ph-64.m4a"
+        },
+        {
+          "id": "c-ph-65",
+          "word": "цапля стоит у пруда",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/C/c-ph-65.m4a"
+        },
+        {
+          "id": "c-ph-66",
+          "word": "птица поёт на ветке",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/C/c-ph-66.m4a"
         }
       ]
     },
@@ -1779,6 +1839,66 @@
           "word": "Цветочница продавала пёстрые цикламены на рынке.",
           "difficulty": 5,
           "audio_file": "Audio/Content/C/c-sen-44.m4a"
+        },
+        {
+          "id": "c-sen-45",
+          "word": "Цветы расцвели на солнечной поляне.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/C/c-sen-45.m4a"
+        },
+        {
+          "id": "c-sen-46",
+          "word": "Цыплята пищали и бежали к маме.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/C/c-sen-46.m4a"
+        },
+        {
+          "id": "c-sen-47",
+          "word": "Отец рассказал сказку перед сном.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/C/c-sen-47.m4a"
+        },
+        {
+          "id": "c-sen-48",
+          "word": "Цирк приехал в наш город в субботу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/C/c-sen-48.m4a"
+        },
+        {
+          "id": "c-sen-49",
+          "word": "Птица-синица прилетела на кормушку.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/C/c-sen-49.m4a"
+        },
+        {
+          "id": "c-sen-50",
+          "word": "Цапля медленно шла по мелкому дну.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/C/c-sen-50.m4a"
+        },
+        {
+          "id": "c-sen-51",
+          "word": "На площади стоял красивый дворец.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/C/c-sen-51.m4a"
+        },
+        {
+          "id": "c-sen-52",
+          "word": "Целый день цветы тянулись к солнцу.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/C/c-sen-52.m4a"
+        },
+        {
+          "id": "c-sen-53",
+          "word": "Цыган плясал и пел у костра.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/C/c-sen-53.m4a"
+        },
+        {
+          "id": "c-sen-54",
+          "word": "Кольцо из золота лежало в ящичке.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/C/c-sen-54.m4a"
         }
       ]
     },
@@ -2044,6 +2164,76 @@
           "hint": "Птица — с Ц, птиса — нет.",
           "difficulty": 2,
           "audio_file": "Audio/Content/C/c-diff-36.m4a"
+        },
+        {
+          "id": "c-diff-37",
+          "word": "цапля — сапля",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/C/c-diff-37.m4a",
+          "hint": "Ц аффриката, С чистый свистящий."
+        },
+        {
+          "id": "c-diff-38",
+          "word": "цифра — сифра",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/C/c-diff-38.m4a",
+          "hint": "Ц—С в начале."
+        },
+        {
+          "id": "c-diff-39",
+          "word": "цепь — сепь",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/C/c-diff-39.m4a",
+          "hint": "Ц—С перед мягкой гласной."
+        },
+        {
+          "id": "c-diff-40",
+          "word": "птица — птиса",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/C/c-diff-40.m4a",
+          "hint": "Ц—С в конце слова."
+        },
+        {
+          "id": "c-diff-41",
+          "word": "улица — улиса",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/C/c-diff-41.m4a",
+          "hint": "Ц—С в суффиксе."
+        },
+        {
+          "id": "c-diff-42",
+          "word": "цирк — сирк",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/C/c-diff-42.m4a",
+          "hint": "Ц—С перед И."
+        },
+        {
+          "id": "c-diff-43",
+          "word": "кольцо — кольсо",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/C/c-diff-43.m4a",
+          "hint": "Ц—С в середине."
+        },
+        {
+          "id": "c-diff-44",
+          "word": "конец — конес",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/C/c-diff-44.m4a",
+          "hint": "Ц—С на конце."
+        },
+        {
+          "id": "c-diff-45",
+          "word": "зайца — зайса",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/C/c-diff-45.m4a",
+          "hint": "Ц—С в родительном падеже."
+        },
+        {
+          "id": "c-diff-46",
+          "word": "цветок — сфетой",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/C/c-diff-46.m4a",
+          "hint": "Стечение ЦВ против СВ."
         }
       ]
     }

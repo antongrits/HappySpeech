@@ -2337,6 +2337,66 @@
           "hint": "ЧУ+ВЕ+ЧЕ+РЕ+ЧКИ — Ч трижды.",
           "difficulty": 5,
           "audio_file": "Audio/Content/Ch/ch-ph-74.m4a"
+        },
+        {
+          "id": "ch-ph-75",
+          "word": "чёрный чайник на плите",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-ph-75.m4a"
+        },
+        {
+          "id": "ch-ph-76",
+          "word": "чистая речка в лесу",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-ph-76.m4a"
+        },
+        {
+          "id": "ch-ph-77",
+          "word": "бочка мёда у пчелы",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-ph-77.m4a"
+        },
+        {
+          "id": "ch-ph-78",
+          "word": "ночное небо со звёздами",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-ph-78.m4a"
+        },
+        {
+          "id": "ch-ph-79",
+          "word": "мячик прыгает по полу",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Ch/ch-ph-79.m4a"
+        },
+        {
+          "id": "ch-ph-80",
+          "word": "ключ лежит на полке",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Ch/ch-ph-80.m4a"
+        },
+        {
+          "id": "ch-ph-81",
+          "word": "птенчик выглянул из гнезда",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-ph-81.m4a"
+        },
+        {
+          "id": "ch-ph-82",
+          "word": "горячий чай с лимоном",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-ph-82.m4a"
+        },
+        {
+          "id": "ch-ph-83",
+          "word": "чудесный закат над рекой",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-ph-83.m4a"
+        },
+        {
+          "id": "ch-ph-84",
+          "word": "пчела летит к цветку",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-ph-84.m4a"
         }
       ]
     },
@@ -2688,6 +2748,66 @@
           "hint": "МА+ЧЕ+ПЕ+ЧКИ — Ч трижды.",
           "difficulty": 5,
           "audio_file": "Audio/Content/Ch/ch-sen-54.m4a"
+        },
+        {
+          "id": "ch-sen-55",
+          "word": "Чайник долго кипел на горячей плите.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-sen-55.m4a"
+        },
+        {
+          "id": "ch-sen-56",
+          "word": "Птенчики кричали в гнезде под крышей.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-sen-56.m4a"
+        },
+        {
+          "id": "ch-sen-57",
+          "word": "Мячик укатился за скамейку в парке.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Ch/ch-sen-57.m4a"
+        },
+        {
+          "id": "ch-sen-58",
+          "word": "Черепаха медленно ползла по горячему камню.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-sen-58.m4a"
+        },
+        {
+          "id": "ch-sen-59",
+          "word": "Ночью летучие мыши охотятся за мошками.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Ch/ch-sen-59.m4a"
+        },
+        {
+          "id": "ch-sen-60",
+          "word": "Чистый ключ бил из-под земли у берёзы.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Ch/ch-sen-60.m4a"
+        },
+        {
+          "id": "ch-sen-61",
+          "word": "Пчела нашла красивый цветок на лугу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-sen-61.m4a"
+        },
+        {
+          "id": "ch-sen-62",
+          "word": "Врач пришёл и осмотрел маленького пациента.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Ch/ch-sen-62.m4a"
+        },
+        {
+          "id": "ch-sen-63",
+          "word": "Чёрный котёнок прыгнул на мягкое кресло.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-sen-63.m4a"
+        },
+        {
+          "id": "ch-sen-64",
+          "word": "Четыре чашки стояли рядом на столе.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-sen-64.m4a"
         }
       ]
     },
@@ -2939,6 +3059,76 @@
           "hint": "Скрипач — с Ч на конце.",
           "difficulty": 3,
           "audio_file": "Audio/Content/CH/ch-df-34.m4a"
+        },
+        {
+          "id": "ch-df-35",
+          "word": "чашка — щашка",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Ch/ch-df-35.m4a",
+          "hint": "Ч краткий, Щ длинный."
+        },
+        {
+          "id": "ch-df-36",
+          "word": "речь — рещь",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Ch/ch-df-36.m4a",
+          "hint": "Ч—Щ на конце."
+        },
+        {
+          "id": "ch-df-37",
+          "word": "чай — щай",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Ch/ch-df-37.m4a",
+          "hint": "Ч—Щ в начале."
+        },
+        {
+          "id": "ch-df-38",
+          "word": "мяч — мяш",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Ch/ch-df-38.m4a",
+          "hint": "Ч—Ш на конце."
+        },
+        {
+          "id": "ch-df-39",
+          "word": "чайка — шайка",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Ch/ch-df-39.m4a",
+          "hint": "Ч—Ш в начале."
+        },
+        {
+          "id": "ch-df-40",
+          "word": "точка — тошка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-df-40.m4a",
+          "hint": "Ч—Ш в середине."
+        },
+        {
+          "id": "ch-df-41",
+          "word": "ночь — ноч — нош",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-df-41.m4a",
+          "hint": "Ч—Ш мягкие."
+        },
+        {
+          "id": "ch-df-42",
+          "word": "печка — пешка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-df-42.m4a",
+          "hint": "Ч—Ш в суффиксе."
+        },
+        {
+          "id": "ch-df-43",
+          "word": "ручка — рушка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-df-43.m4a",
+          "hint": "Ч—Ш в суффиксе уменьшительном."
+        },
+        {
+          "id": "ch-df-44",
+          "word": "бочка — бошка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Ch/ch-df-44.m4a",
+          "hint": "Ч—Ш в уменьшительном."
         }
       ]
     },

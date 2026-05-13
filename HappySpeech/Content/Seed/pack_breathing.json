@@ -2884,6 +2884,216 @@
           "hint": "Широкий язык наверху: ш-ш-ш.",
           "difficulty": 2,
           "audio_file": "Audio/Content/Br/br-vw-80.m4a"
+        },
+        {
+          "id": "br-vw-81",
+          "word": "мычание: м-м-м",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Breathing/br-vw-81.m4a",
+          "hint": "Тяни ровно, почувствуй вибрацию губ."
+        },
+        {
+          "id": "br-vw-82",
+          "word": "нытьё: н-н-н",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Breathing/br-vw-82.m4a",
+          "hint": "Кончик языка у верхних зубов."
+        },
+        {
+          "id": "br-vw-83",
+          "word": "жужжание: ж-ж-ж",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Breathing/br-vw-83.m4a",
+          "hint": "Шипящий на выдохе — как пчёлка."
+        },
+        {
+          "id": "br-vw-84",
+          "word": "шипение: ш-ш-ш",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Breathing/br-vw-84.m4a",
+          "hint": "Широкий язык вверх."
+        },
+        {
+          "id": "br-vw-85",
+          "word": "свист: с-с-с",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Breathing/br-vw-85.m4a",
+          "hint": "Струйка воздуха в зубы."
+        },
+        {
+          "id": "br-vw-86",
+          "word": "рычание: р-р-р",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Breathing/br-vw-86.m4a",
+          "hint": "Вибрирует кончик языка."
+        },
+        {
+          "id": "br-vw-87",
+          "word": "пение гласных А-О-У",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Breathing/br-vw-87.m4a",
+          "hint": "Один выдох — три гласных плавно."
+        },
+        {
+          "id": "br-vw-88",
+          "word": "«поезд»: чух-чух-чух",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Breathing/br-vw-88.m4a",
+          "hint": "Ритмичный выдох толчками."
+        },
+        {
+          "id": "br-vw-89",
+          "word": "«ветер»: в-в-в",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Breathing/br-vw-89.m4a",
+          "hint": "Щелевой звук на длинном выдохе."
+        },
+        {
+          "id": "br-vw-90",
+          "word": "«насос»: с-с-с быстро",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Breathing/br-vw-90.m4a",
+          "hint": "Короткие выдохи — как насос."
+        },
+        {
+          "id": "br-vw-91",
+          "word": "«вьюга»: у-у-у тихо-громко",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Breathing/br-vw-91.m4a",
+          "hint": "Нарастание и убывание голоса."
+        },
+        {
+          "id": "br-vw-92",
+          "word": "«гудок»: у-у-у длинно",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Breathing/br-vw-92.m4a",
+          "hint": "Длинный равномерный выдох."
+        },
+        {
+          "id": "br-vw-93",
+          "word": "«колокол»: бом-бом-бом",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Breathing/br-vw-93.m4a",
+          "hint": "Смычный с гласным на выдохе."
+        },
+        {
+          "id": "br-vw-94",
+          "word": "«мотор»: тр-р-р",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Breathing/br-vw-94.m4a",
+          "hint": "Вибрант с глухим смычным."
+        },
+        {
+          "id": "br-vw-95",
+          "word": "«змея»: з-з-з",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Breathing/br-vw-95.m4a",
+          "hint": "Звонкий свистящий на выдохе."
+        },
+        {
+          "id": "br-vw-96",
+          "word": "«комар»: з-з-з тонко",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Breathing/br-vw-96.m4a",
+          "hint": "Высокий регистр голоса."
+        },
+        {
+          "id": "br-vw-97",
+          "word": "«слон»: у-у-у низко",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Breathing/br-vw-97.m4a",
+          "hint": "Низкий регистр голоса."
+        },
+        {
+          "id": "br-vw-98",
+          "word": "«лягушки»: ква-ква-ква",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Breathing/br-vw-98.m4a",
+          "hint": "Взрывной звук + гласный."
+        },
+        {
+          "id": "br-vw-99",
+          "word": "«кошка»: мяу-мяу",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Breathing/br-vw-99.m4a",
+          "hint": "Два слога на одном выдохе."
+        },
+        {
+          "id": "br-vw-100",
+          "word": "«петух»: ку-ка-ре-ку",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Breathing/br-vw-100.m4a",
+          "hint": "Четыре слога — плавно."
+        },
+        {
+          "id": "br-vw-101",
+          "word": "счёт на выдохе: раз-два-три",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Breathing/br-vw-101.m4a",
+          "hint": "Считаем медленно, не задыхаясь."
+        },
+        {
+          "id": "br-vw-102",
+          "word": "«пузыри»: п-п-п",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Breathing/br-vw-102.m4a",
+          "hint": "Взрывные выдохи."
+        },
+        {
+          "id": "br-vw-103",
+          "word": "«ракета»: у-у-у нарастая",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Breathing/br-vw-103.m4a",
+          "hint": "Усиление голоса на подъёме."
+        },
+        {
+          "id": "br-vw-104",
+          "word": "«самолёт»: ж-ж-ж плавно",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Breathing/br-vw-104.m4a",
+          "hint": "Ровный шипящий на длинном выдохе."
+        },
+        {
+          "id": "br-vw-105",
+          "word": "«барабан»: та-та-та",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Breathing/br-vw-105.m4a",
+          "hint": "Чёткие ритмичные слоги."
+        },
+        {
+          "id": "br-vw-106",
+          "word": "скороговорка-дыхание: са-шо-су-ши",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Breathing/br-vw-106.m4a",
+          "hint": "Смешанные слоги на одном выдохе."
+        },
+        {
+          "id": "br-vw-107",
+          "word": "«буря»: в-з-ж нарастая",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Breathing/br-vw-107.m4a",
+          "hint": "Последовательность щелевых на одном выдохе."
+        },
+        {
+          "id": "br-vw-108",
+          "word": "«эхо»: ау-ау тихо",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Breathing/br-vw-108.m4a",
+          "hint": "Дальний голос — тихо и протяжно."
+        },
+        {
+          "id": "br-vw-109",
+          "word": "«зов»: эй, отзовись!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Breathing/br-vw-109.m4a",
+          "hint": "Голосовой призыв на выдохе."
+        },
+        {
+          "id": "br-vw-110",
+          "word": "«засыпаем»: тихое а-а-а",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Breathing/br-vw-110.m4a",
+          "hint": "Очень тихий убывающий выдох."
         }
       ]
     }

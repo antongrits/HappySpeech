@@ -2263,6 +2263,66 @@
           "hint": "ЛУ+ЛЕ — Л в двух словах.",
           "difficulty": 3,
           "audio_file": "Audio/Content/L/l-ph-69.m4a"
+        },
+        {
+          "id": "l-ph-70",
+          "word": "лунный свет в окошке",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-70.m4a"
+        },
+        {
+          "id": "l-ph-71",
+          "word": "ловкий лосёнок в лесу",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-71.m4a"
+        },
+        {
+          "id": "l-ph-72",
+          "word": "ласточка летит над полем",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-72.m4a"
+        },
+        {
+          "id": "l-ph-73",
+          "word": "лиловый цветок на клумбе",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-73.m4a"
+        },
+        {
+          "id": "l-ph-74",
+          "word": "летний лагерь у озера",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-74.m4a"
+        },
+        {
+          "id": "l-ph-75",
+          "word": "лёгкий ветерок в долине",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-75.m4a"
+        },
+        {
+          "id": "l-ph-76",
+          "word": "ленивый кот на солнышке",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-76.m4a"
+        },
+        {
+          "id": "l-ph-77",
+          "word": "лопата у огородника",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-ph-77.m4a"
+        },
+        {
+          "id": "l-ph-78",
+          "word": "белые облака над полем",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-ph-78.m4a"
+        },
+        {
+          "id": "l-ph-79",
+          "word": "флажки висят на флагштоке",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-ph-79.m4a"
         }
       ]
     },
@@ -2559,6 +2619,66 @@
           "hint": "ЛЕС+ЁЛ+ЛУН — Л трижды.",
           "difficulty": 5,
           "audio_file": "Audio/Content/L/l-sen-44.m4a"
+        },
+        {
+          "id": "l-sen-45",
+          "word": "Лёша нашёл лягушку у лесной лужи.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-sen-45.m4a"
+        },
+        {
+          "id": "l-sen-46",
+          "word": "Ласточки летели над лугом стройной стаей.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-sen-46.m4a"
+        },
+        {
+          "id": "l-sen-47",
+          "word": "Белые лилии плавали по спокойному озеру.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-sen-47.m4a"
+        },
+        {
+          "id": "l-sen-48",
+          "word": "Луна светила всю ночь над полями.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-sen-48.m4a"
+        },
+        {
+          "id": "l-sen-49",
+          "word": "Лосёнок лизал соль у лесного камня.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-sen-49.m4a"
+        },
+        {
+          "id": "l-sen-50",
+          "word": "Лена лепила куклу из мягкой глины.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-sen-50.m4a"
+        },
+        {
+          "id": "l-sen-51",
+          "word": "Лётчик поднял самолёт в облачное небо.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-sen-51.m4a"
+        },
+        {
+          "id": "l-sen-52",
+          "word": "Плотный туман лежал в долине всё утро.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-sen-52.m4a"
+        },
+        {
+          "id": "l-sen-53",
+          "word": "Лошадь галопом мчалась по зелёному лугу.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/L/l-sen-53.m4a"
+        },
+        {
+          "id": "l-sen-54",
+          "word": "Голуби летали около колокольни.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-sen-54.m4a"
         }
       ]
     },
@@ -2781,6 +2901,76 @@
           "hint": "Блеск — Л', бреск — Р.",
           "difficulty": 4,
           "audio_file": "Audio/Content/L/l-diff-19.m4a"
+        },
+        {
+          "id": "l-diff-20",
+          "word": "лак — рак",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-diff-20.m4a",
+          "hint": "Л боковой, Р вибрант."
+        },
+        {
+          "id": "l-diff-21",
+          "word": "лыко — рыко",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-diff-21.m4a",
+          "hint": "Л против Р в начале."
+        },
+        {
+          "id": "l-diff-22",
+          "word": "лук — рук",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-diff-22.m4a",
+          "hint": "Короткое слово Л—Р."
+        },
+        {
+          "id": "l-diff-23",
+          "word": "лев — рев",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/L/l-diff-23.m4a",
+          "hint": "Мягкие Л'—Р'."
+        },
+        {
+          "id": "l-diff-24",
+          "word": "полка — порка",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-diff-24.m4a",
+          "hint": "В середине: Л—Р."
+        },
+        {
+          "id": "l-diff-25",
+          "word": "слон — срон",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-diff-25.m4a",
+          "hint": "Стечение СЛ против СР."
+        },
+        {
+          "id": "l-diff-26",
+          "word": "плот — прот",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-diff-26.m4a",
+          "hint": "Стечение ПЛ против ПР."
+        },
+        {
+          "id": "l-diff-27",
+          "word": "клад — крад",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-diff-27.m4a",
+          "hint": "Стечение КЛ против КР."
+        },
+        {
+          "id": "l-diff-28",
+          "word": "лебедь — ребедь",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-diff-28.m4a",
+          "hint": "Мягкие в начале."
+        },
+        {
+          "id": "l-diff-29",
+          "word": "соль — сорь",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/L/l-diff-29.m4a",
+          "hint": "Мягкий Л' на конце против Р'."
         }
       ]
     }

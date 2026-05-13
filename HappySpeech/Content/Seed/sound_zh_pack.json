@@ -1961,6 +1961,66 @@
           "hint": "ЖЕ+ЛЕЗ — Ж в середине слова.",
           "difficulty": 3,
           "audio_file": "Audio/Content/Zh/zh-ph-54.m4a"
+        },
+        {
+          "id": "zh-ph-55",
+          "word": "жёлтые жёлуди на земле",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Zh/zh-ph-55.m4a"
+        },
+        {
+          "id": "zh-ph-56",
+          "word": "живая изгородь у дома",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Zh/zh-ph-56.m4a"
+        },
+        {
+          "id": "zh-ph-57",
+          "word": "жаркое лето в деревне",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Zh/zh-ph-57.m4a"
+        },
+        {
+          "id": "zh-ph-58",
+          "word": "ежи ежатся в листве",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Zh/zh-ph-58.m4a"
+        },
+        {
+          "id": "zh-ph-59",
+          "word": "жук жужжал над цветком",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Zh/zh-ph-59.m4a"
+        },
+        {
+          "id": "zh-ph-60",
+          "word": "журнал лежал на столе",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Zh/zh-ph-60.m4a"
+        },
+        {
+          "id": "zh-ph-61",
+          "word": "жирная лужа после дождя",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Zh/zh-ph-61.m4a"
+        },
+        {
+          "id": "zh-ph-62",
+          "word": "медведь дружит с медвежатами",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Zh/zh-ph-62.m4a"
+        },
+        {
+          "id": "zh-ph-63",
+          "word": "жираф вытянул шею вверх",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Zh/zh-ph-63.m4a"
+        },
+        {
+          "id": "zh-ph-64",
+          "word": "уже наступает рассвет",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Zh/zh-ph-64.m4a"
         }
       ]
     },
@@ -2208,6 +2268,66 @@
           "hint": "ЖА+ЖЕ+ЖИ+ДО+РО — насыщенный Ж-нарратив.",
           "difficulty": 5,
           "audio_file": "Audio/Content/Zh/zh-sen-37.m4a"
+        },
+        {
+          "id": "zh-sen-38",
+          "word": "Ежата дружно бежали за мамой-ежихой.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Zh/zh-sen-38.m4a"
+        },
+        {
+          "id": "zh-sen-39",
+          "word": "Жадная сорока утащила блестящее кольцо.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Zh/zh-sen-39.m4a"
+        },
+        {
+          "id": "zh-sen-40",
+          "word": "Ужин уже стоял на столе.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Zh/zh-sen-40.m4a"
+        },
+        {
+          "id": "zh-sen-41",
+          "word": "Жираф жевал листья у высокого дерева.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Zh/zh-sen-41.m4a"
+        },
+        {
+          "id": "zh-sen-42",
+          "word": "Журчала вода в каждом овражке.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Zh/zh-sen-42.m4a"
+        },
+        {
+          "id": "zh-sen-43",
+          "word": "Животные жили дружно в большом лесу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Zh/zh-sen-43.m4a"
+        },
+        {
+          "id": "zh-sen-44",
+          "word": "Жёлтые жёлуди упали на дорожку.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Zh/zh-sen-44.m4a"
+        },
+        {
+          "id": "zh-sen-45",
+          "word": "Ножи лежали у повара в ящике.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Zh/zh-sen-45.m4a"
+        },
+        {
+          "id": "zh-sen-46",
+          "word": "Живой ёжик нашёл грибок под можжевельником.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Zh/zh-sen-46.m4a"
+        },
+        {
+          "id": "zh-sen-47",
+          "word": "Женя ждал поезд на железной дороге.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Zh/zh-sen-47.m4a"
         }
       ]
     },
@@ -2354,6 +2474,76 @@
           "hint": "Кружка — с Ж.",
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-df-19.m4a"
+        },
+        {
+          "id": "zh-df-20",
+          "word": "жук — зук",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Zh/zh-df-20.m4a",
+          "hint": "Ж шипящий звонкий, З свистящий звонкий."
+        },
+        {
+          "id": "zh-df-21",
+          "word": "жать — зать",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Zh/zh-df-21.m4a",
+          "hint": "Ж—З в начале."
+        },
+        {
+          "id": "zh-df-22",
+          "word": "жар — шар",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Zh/zh-df-22.m4a",
+          "hint": "Ж звонкий, Ш глухой."
+        },
+        {
+          "id": "zh-df-23",
+          "word": "жить — шить",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Zh/zh-df-23.m4a",
+          "hint": "Ж—Ш в начале мягкого слога."
+        },
+        {
+          "id": "zh-df-24",
+          "word": "лужа — луша",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Zh/zh-df-24.m4a",
+          "hint": "В середине: Ж—Ш."
+        },
+        {
+          "id": "zh-df-25",
+          "word": "рожи — роши",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Zh/zh-df-25.m4a",
+          "hint": "Ж—Ш в середине."
+        },
+        {
+          "id": "zh-df-26",
+          "word": "жить — зить",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Zh/zh-df-26.m4a",
+          "hint": "Мягкое Ж—З."
+        },
+        {
+          "id": "zh-df-27",
+          "word": "уже — узе",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Zh/zh-df-27.m4a",
+          "hint": "Ж—З в позиции после гласной."
+        },
+        {
+          "id": "zh-df-28",
+          "word": "жало — зало",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Zh/zh-df-28.m4a",
+          "hint": "Ж—З начало слова."
+        },
+        {
+          "id": "zh-df-29",
+          "word": "ежи — ези",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Zh/zh-df-29.m4a",
+          "hint": "Ж—З в середине после Е."
         }
       ]
     }

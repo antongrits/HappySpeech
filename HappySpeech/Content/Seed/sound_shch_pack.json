@@ -1898,6 +1898,66 @@
           "hint": "ЗА + ЩИТ + ЧЕС + ЯЩИ — три шипящих.",
           "difficulty": 5,
           "audio_file": "Audio/Content/Shch/shch-ph-61.m4a"
+        },
+        {
+          "id": "shch-ph-62",
+          "word": "щенок прыгал по лужам",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-ph-62.m4a"
+        },
+        {
+          "id": "shch-ph-63",
+          "word": "свежая щавелевая каша",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SHCH/shch-ph-63.m4a"
+        },
+        {
+          "id": "shch-ph-64",
+          "word": "ящик с инструментами",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-ph-64.m4a"
+        },
+        {
+          "id": "shch-ph-65",
+          "word": "роща шумит на ветру",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-ph-65.m4a"
+        },
+        {
+          "id": "shch-ph-66",
+          "word": "щётка на умывальнике",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SHCH/shch-ph-66.m4a"
+        },
+        {
+          "id": "shch-ph-67",
+          "word": "плащ висит у двери",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SHCH/shch-ph-67.m4a"
+        },
+        {
+          "id": "shch-ph-68",
+          "word": "щука плывёт у берега",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-ph-68.m4a"
+        },
+        {
+          "id": "shch-ph-69",
+          "word": "овощной ящик на рынке",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-ph-69.m4a"
+        },
+        {
+          "id": "shch-ph-70",
+          "word": "защита от дождя",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-ph-70.m4a"
+        },
+        {
+          "id": "shch-ph-71",
+          "word": "общая площадка во дворе",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-ph-71.m4a"
         }
       ]
     },
@@ -2219,6 +2279,66 @@
           "hint": "ДО + ЩА + ЩА + РО + ЩИ — три Щ.",
           "difficulty": 5,
           "audio_file": "Audio/Content/Shch/shch-sen-49.m4a"
+        },
+        {
+          "id": "shch-sen-50",
+          "word": "Щенок нашёл щётку под кроватью.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-sen-50.m4a"
+        },
+        {
+          "id": "shch-sen-51",
+          "word": "Щавель растёт у берёзовой рощи.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-sen-51.m4a"
+        },
+        {
+          "id": "shch-sen-52",
+          "word": "В ящике лежали разные инструменты.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-sen-52.m4a"
+        },
+        {
+          "id": "shch-sen-53",
+          "word": "Щука поймала рыбку в камышах.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-sen-53.m4a"
+        },
+        {
+          "id": "shch-sen-54",
+          "word": "Плащ промок насквозь под ливнем.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-sen-54.m4a"
+        },
+        {
+          "id": "shch-sen-55",
+          "word": "Защитник стоял у крепостных стен.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SHCH/shch-sen-55.m4a"
+        },
+        {
+          "id": "shch-sen-56",
+          "word": "Свежие овощи сложили в широкий ящик.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-sen-56.m4a"
+        },
+        {
+          "id": "shch-sen-57",
+          "word": "Щёки малыша раскраснелись на морозе.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-sen-57.m4a"
+        },
+        {
+          "id": "shch-sen-58",
+          "word": "Мы нашли грибы в молодой роще.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-sen-58.m4a"
+        },
+        {
+          "id": "shch-sen-59",
+          "word": "Ещё раз скажи: щит, плащ, щека.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SHCH/shch-sen-59.m4a"
         }
       ]
     },
@@ -2400,6 +2520,76 @@
           "hint": "Щётка — с Щ в начале.",
           "difficulty": 2,
           "audio_file": "Audio/Content/SHCH/shch-df-24.m4a"
+        },
+        {
+          "id": "shch-df-25",
+          "word": "щётка — шётка",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SHCH/shch-df-25.m4a",
+          "hint": "Щ длинный мягкий, Ш твёрдый."
+        },
+        {
+          "id": "shch-df-26",
+          "word": "щенок — шенок",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SHCH/shch-df-26.m4a",
+          "hint": "Щ—Ш в начале."
+        },
+        {
+          "id": "shch-df-27",
+          "word": "щи — ши",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SHCH/shch-df-27.m4a",
+          "hint": "Щ—Ш с гласным И."
+        },
+        {
+          "id": "shch-df-28",
+          "word": "плащ — плаш",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SHCH/shch-df-28.m4a",
+          "hint": "Щ—Ш на конце."
+        },
+        {
+          "id": "shch-df-29",
+          "word": "пища — пиша",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SHCH/shch-df-29.m4a",
+          "hint": "Щ—Ш в середине."
+        },
+        {
+          "id": "shch-df-30",
+          "word": "роща — роча",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SHCH/shch-df-30.m4a",
+          "hint": "Щ—Ч в середине."
+        },
+        {
+          "id": "shch-df-31",
+          "word": "вещи — вечи",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-df-31.m4a",
+          "hint": "Щ—Ч в суффиксе."
+        },
+        {
+          "id": "shch-df-32",
+          "word": "ящик — ячик",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-df-32.m4a",
+          "hint": "Щ—Ч после Я."
+        },
+        {
+          "id": "shch-df-33",
+          "word": "щука — чука",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-df-33.m4a",
+          "hint": "Щ—Ч в начале."
+        },
+        {
+          "id": "shch-df-34",
+          "word": "клещи — клечи",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SHCH/shch-df-34.m4a",
+          "hint": "Щ—Ч в конце."
         }
       ]
     }
