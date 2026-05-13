@@ -91,6 +91,66 @@ final class WeeklyChallengePresenterTests: XCTestCase {
         // Assert
         XCTAssertTrue(spyDisplay.displaySwitchKindCalled)
     }
+
+    // MARK: - Тесты из v18 (уникальное покрытие)
+
+    func test_presentLoad_progressLabel_formattedCorrectly() async {
+        let state = WeeklyChallengeState(
+            kind: .soundStreak,
+            weekStart: Date(),
+            dayStates: Array(repeating: .pending, count: 7),
+            completed: 4,
+            totalRequired: 7
+        )
+        let reward = WeeklyChallengeReward(id: "r1", titleKey: "t", symbolName: "star", isUnlocked: false)
+        let response = WeeklyChallengeModels.Load.Response(state: state, reward: reward, daysUntilEndOfWeek: 2)
+        await sut.presentLoad(response: response)
+        XCTAssertEqual(spyDisplay.lastLoadViewModel?.progressLabel, "4/7",
+                       "progressLabel должен быть '4/7'")
+    }
+
+    func test_presentLoad_endOfWeekToday_whenDaysUntilZero() async {
+        let state = WeeklyChallengeState(
+            kind: .soundStreak,
+            weekStart: Date(),
+            dayStates: Array(repeating: .pending, count: 7),
+            completed: 3,
+            totalRequired: 7
+        )
+        let reward = WeeklyChallengeReward(id: "r1", titleKey: "t", symbolName: "star", isUnlocked: false)
+        let response = WeeklyChallengeModels.Load.Response(state: state, reward: reward, daysUntilEndOfWeek: 0)
+        await sut.presentLoad(response: response)
+        XCTAssertFalse(spyDisplay.lastLoadViewModel?.endOfWeekLabel.isEmpty ?? true,
+                       "endOfWeekLabel должен быть задан при daysUntilEndOfWeek=0")
+    }
+
+    func test_presentMarkDay_normalDay_celebrateIsFalse() async {
+        let state = WeeklyChallengeState(
+            kind: .soundStreak,
+            weekStart: Date(),
+            dayStates: Array(repeating: .pending, count: 7),
+            completed: 2,
+            totalRequired: 7
+        )
+        let response = WeeklyChallengeModels.MarkDay.Response(updatedState: state, unlockedReward: false)
+        await sut.presentMarkDay(response: response)
+        XCTAssertFalse(spyDisplay.lastMarkDayViewModel?.celebrate ?? true,
+                       "Без unlock reward celebrate должен быть false")
+    }
+
+    func test_presentSwitchKind_callsDisplay_withToastMessage() async {
+        let state = WeeklyChallengeState(
+            kind: .soundStreak,
+            weekStart: Date(),
+            dayStates: Array(repeating: .locked, count: 7),
+            completed: 0,
+            totalRequired: 5
+        )
+        let response = WeeklyChallengeModels.SwitchKind.Response(newState: state)
+        await sut.presentSwitchKind(response: response)
+        XCTAssertFalse(spyDisplay.lastSwitchKindToastMessage?.isEmpty ?? true,
+                       "SwitchKind должен устанавливать toastMessage")
+    }
 }
 
 // MARK: - SpyWeeklyChallengeDisplay
@@ -104,6 +164,7 @@ private final class SpyWeeklyChallengeDisplay: WeeklyChallengeDisplayLogic {
 
     var lastLoadViewModel: WeeklyChallengeModels.Load.ViewModel?
     var lastMarkDayViewModel: WeeklyChallengeModels.MarkDay.ViewModel?
+    var lastSwitchKindToastMessage: String?
 
     func displayLoad(viewModel: WeeklyChallengeModels.Load.ViewModel) async {
         displayLoadCalled = true
@@ -117,5 +178,6 @@ private final class SpyWeeklyChallengeDisplay: WeeklyChallengeDisplayLogic {
 
     func displaySwitchKind(viewModel: WeeklyChallengeModels.SwitchKind.ViewModel) async {
         displaySwitchKindCalled = true
+        lastSwitchKindToastMessage = viewModel.toastMessage
     }
 }

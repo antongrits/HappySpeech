@@ -82,6 +82,78 @@ final class LogopedistChatPresenterTests: XCTestCase {
         // Assert
         XCTAssertTrue(spyDisplay.displaySendCalled)
     }
+
+    // MARK: - Тесты из v18 (уникальное покрытие)
+
+    func test_presentLoad_withSpecialist_setsSpecialistName() async {
+        let specialist = SpecialistInfo(
+            displayName: "Иванова Мария",
+            credentialsKey: "specialist.credentials.logopedist",
+            isOnline: true,
+            lastSeenAt: nil
+        )
+        let response = LogopedistChatModels.Load.Response(
+            specialist: specialist,
+            messages: [],
+            isConnected: true
+        )
+        await sut.presentLoad(response: response)
+        XCTAssertEqual(spyDisplay.lastLoadViewModel?.specialistName, "Иванова Мария")
+        XCTAssertTrue(spyDisplay.lastLoadViewModel?.isOnline ?? false)
+    }
+
+    func test_presentLoad_offline_setsConnectionHint() async {
+        let response = LogopedistChatModels.Load.Response(
+            specialist: nil,
+            messages: [],
+            isConnected: false
+        )
+        await sut.presentLoad(response: response)
+        XCTAssertNotNil(spyDisplay.lastLoadViewModel?.connectionHint,
+                        "Оффлайн-состояние должно устанавливать connectionHint")
+    }
+
+    func test_presentLoad_withMessages_mapsAllRows() async {
+        let messages = [
+            ChatMessage(id: UUID().uuidString, sender: .parent,  text: "Добрый день", createdAt: Date(), status: .sent),
+            ChatMessage(id: UUID().uuidString, sender: .specialist, text: "Здравствуйте!", createdAt: Date(), status: .delivered)
+        ]
+        let response = LogopedistChatModels.Load.Response(
+            specialist: nil,
+            messages: messages,
+            isConnected: true
+        )
+        await sut.presentLoad(response: response)
+        XCTAssertEqual(spyDisplay.lastLoadViewModel?.messages.count, 2,
+                       "Presenter должен отображать все сообщения")
+    }
+
+    func test_presentLoad_parentMessage_isFromParentTrue() async {
+        let messages = [
+            ChatMessage(id: "m1", sender: .parent, text: "Привет", createdAt: Date(), status: .sent)
+        ]
+        let response = LogopedistChatModels.Load.Response(
+            specialist: nil,
+            messages: messages,
+            isConnected: true
+        )
+        await sut.presentLoad(response: response)
+        XCTAssertTrue(spyDisplay.lastLoadViewModel?.messages.first?.isFromParent ?? false,
+                      "Сообщение от parent должно иметь isFromParent=true")
+    }
+
+    func test_presentAttachAudio_callsDisplayAttachAudio() async {
+        let message = ChatMessage(
+            id: "audio-msg",
+            sender: .parent,
+            text: "",
+            createdAt: Date(),
+            status: .sending
+        )
+        let response = LogopedistChatModels.AttachAudio.Response(createdMessage: message)
+        await sut.presentAttachAudio(response: response)
+        XCTAssertTrue(spyDisplay.displayAttachAudioCalled)
+    }
 }
 
 // MARK: - SpyLogopedistChatDisplay

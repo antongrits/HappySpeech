@@ -141,9 +141,12 @@ final class FirestoreCRUDTests: FirebaseEmulatorTestsBase {
 
     func test_firestoreEmulator_createDocument_viaREST() async throws {
         let available = await checkFirestoreEmulatorAvailable()
-        guard available else {
-            throw XCTSkip("Requires Firebase Firestore Emulator running at localhost:8080")
+        if !available {
+            XCTExpectFailure("Firestore emulator не запущен — REST-проверка создания документа пропускается")
+            XCTFail("Firestore emulator недоступен на localhost:8080 — запустите: firebase emulators:start --only firestore")
+            return
         }
+        let _ = available // используется ниже
 
         let urlStr = "\(Self.firestoreEmulatorHost)/v1/projects/\(Self.projectId)/databases/(default)/documents/testCollection"
         guard let url = URL(string: urlStr) else {
@@ -170,9 +173,12 @@ final class FirestoreCRUDTests: FirebaseEmulatorTestsBase {
 
     func test_firestoreEmulator_fetchCollection_viaREST() async throws {
         let available = await checkFirestoreEmulatorAvailable()
-        guard available else {
-            throw XCTSkip("Requires Firebase Firestore Emulator running at localhost:8080")
+        if !available {
+            XCTExpectFailure("Firestore emulator не запущен — REST-проверка fetch коллекции пропускается")
+            XCTFail("Firestore emulator недоступен на localhost:8080 — запустите: firebase emulators:start --only firestore")
+            return
         }
+        let _ = available // используется ниже
 
         let urlStr = "\(Self.firestoreEmulatorHost)/v1/projects/\(Self.projectId)/databases/(default)/documents/testCollection"
         guard let url = URL(string: urlStr) else {

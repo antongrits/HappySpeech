@@ -78,7 +78,7 @@ final class FamilyAchievementsPresenterTests: XCTestCase {
             streakState: streak
         )
         await sut.presentLoad(response: response)
-        XCTAssertEqual(spy.loadVM?.streakHero.progressFraction, 1.0, accuracy: 0.001)
+        XCTAssertEqual(spy.loadVM?.streakHero.progressFraction ?? -1.0, 1.0, accuracy: 0.001)
     }
 
     func test_presentLoad_partialActive_progressFractionIsPartial() async {
@@ -92,7 +92,7 @@ final class FamilyAchievementsPresenterTests: XCTestCase {
             streakState: streak
         )
         await sut.presentLoad(response: response)
-        XCTAssertEqual(spy.loadVM?.streakHero.progressFraction, 0.5, accuracy: 0.001)
+        XCTAssertEqual(spy.loadVM?.streakHero.progressFraction ?? -1.0, 0.5, accuracy: 0.001)
     }
 
     func test_presentLoad_emptyMembers_progressFractionIsZero() async {
@@ -111,7 +111,7 @@ final class FamilyAchievementsPresenterTests: XCTestCase {
             streakState: streak
         )
         await sut.presentLoad(response: response)
-        XCTAssertEqual(spy.loadVM?.streakHero.progressFraction, 0.0, accuracy: 0.001)
+        XCTAssertEqual(spy.loadVM?.streakHero.progressFraction ?? -1.0, 0.0, accuracy: 0.001)
     }
 
     func test_presentLoad_achievementsSorted_unlockedFirst() async {
