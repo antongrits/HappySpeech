@@ -104,16 +104,16 @@ final class WorldMapInteractorTests: XCTestCase {
 
     // MARK: - 6. selectZone заблокированной зоны → canOpen = false
 
-    func test_selectZone_locked_canOpenFalse() throws {
+    func test_selectZone_locked_canOpenFalse() {
         let (sut, spy) = makeSUT()
         sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
-        // Ищем заблокированную зону из seed
-        if let locked = spy.lastLoadMap?.zones.first(where: { $0.isLocked }) {
-            sut.selectZone(.init(zoneId: locked.id))
-            XCTAssertFalse(spy.lastSelectZone?.canOpen ?? true)
-        } else {
-            throw XCTSkip("Нет заблокированных зон в seed")
+        // Seed должен содержать заблокированные зоны — если нет, это регрессия
+        guard let locked = spy.lastLoadMap?.zones.first(where: { $0.isLocked }) else {
+            XCTFail("Seed должен содержать хотя бы одну заблокированную зону; отсутствие locked зон — регрессия WorldMapInteractor.makeSeedZones()")
+            return
         }
+        sut.selectZone(.init(zoneId: locked.id))
+        XCTAssertFalse(spy.lastSelectZone?.canOpen ?? true, "Заблокированная зона не должна открываться (canOpen=false)")
     }
 
     // MARK: - 7. refreshProgress вызывает presentRefreshProgress

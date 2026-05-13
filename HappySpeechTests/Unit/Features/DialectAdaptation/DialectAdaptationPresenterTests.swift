@@ -73,6 +73,36 @@ final class DialectAdaptationPresenterTests: XCTestCase {
         XCTAssertTrue(spyDisplay.displaySelectCalled)
         XCTAssertTrue(spyDisplay.lastSelectViewModel?.success == true)
     }
+
+    // MARK: - presentLoad with appliedAt
+
+    func test_presentLoad_withAppliedAt_setsAppliedAtText() async {
+        // Arrange
+        let past = Date(timeIntervalSinceNow: -3600)
+        let response = DialectAdaptationModels.Load.Response(
+            currentDialect: RegionalDialect.default,
+            availableDialects: RegionalDialect.all,
+            appliedAt: past
+        )
+        // Act
+        await sut.presentLoad(response: response)
+        // Assert
+        XCTAssertNotNil(spyDisplay.lastLoadViewModel?.appliedAtText,
+                        "appliedAtText должен быть установлен когда appliedAt != nil")
+    }
+
+    // MARK: - presentReset
+
+    func test_presentReset_callsDisplayReset_withToastMessage() async {
+        // Arrange
+        let response = DialectAdaptationModels.Reset.Response(
+            restored: RegionalDialect.default
+        )
+        // Act
+        await sut.presentReset(response: response)
+        // Assert
+        XCTAssertTrue(spyDisplay.displayResetCalled)
+    }
 }
 
 // MARK: - SpyDialectAdaptationDisplay
