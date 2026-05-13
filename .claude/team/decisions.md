@@ -3,6 +3,72 @@
 
 ---
 
+## ADR-V22-MODELS-SYNTHETIC-MAINTAINED — EmotionDetection + TonguePostureClassifier maintained, no retrain (2026-05-13)
+
+### Status: Accepted
+
+### Context
+
+Plan v22 Block 1.3 требует revalidation EmotionDetection (272 KB, v14) и
+TonguePostureClassifier (700 KB, v21) моделей.
+
+**Текущее состояние (verified 2026-05-13):**
+- `Resources/Models/EmotionDetection.mlpackage` (272 KB, 4 emotion classes, 95.83% val accuracy на синтетических MFCC).
+- `Resources/Models/TonguePostureClassifier.mlpackage` (700 KB, 9 poses, 97.22% val accuracy на heavy-aug синтетических blendshapes).
+
+Обе модели изначально обучены на синтетических данных (Plan v18 Block O.4 +
+Plan v21 Block S) с heavy augmentation. **Real children data отсутствует.**
+
+### Decision
+
+**Maintain v14 EmotionDetection и v21 TonguePostureClassifier без retrain.**
+Не проводить новое обучение в Plan v22.
+
+### Reasons
+
+1. **Synthetic ceiling reached.** Block S v21 уже применил максимально агрессивную аугментацию
+   (gaussian σ=0.05–0.15, scale jitter ±10%, feature masking 7%, mixup λ=0.7–0.95). Дальнейшая
+   аугментация только понижает effective sample diversity, не повышая robustness.
+
+2. **Та же причина, что и Plan v22 Block 1.1 (ADR-V22-PHONEME-DEFER).** No real children dataset,
+   no Apple Developer Account (User #29), no GDPR consent infrastructure → real-data retrain
+   blocked до post-diploma.
+
+3. **Текущие metrics достаточны для diploma defence.** 95.83% и 97.22% (synthetic, honestly disclosed)
+   достаточно для demonstration оригинальности pipeline. Inflated synthetic accuracy ≠ production claim.
+
+4. **Risk минимален.** Models используются как auxiliary signals (emotion feedback adaptation, tongue posture
+   AR coaching). Не critical-path inference.
+
+### Honest disclosure
+
+В ResearchDocs/, ml-models.md, и diploma defence явно указано:
+- "Accuracy XX% (synthetic data, augmentation-heavy)"
+- "Real-world accuracy expected 80–90% range"
+- "Post-diploma: real-data retrain required"
+
+### Alternative (post-diploma)
+
+1. Collect consented dataset:
+   - EmotionDetection: ≥500 samples/emotion × 4 emotions = 2000 real recordings.
+   - TonguePosture: ≥300 ARKit FaceMesh sessions × 9 poses = 2700 tracking runs.
+2. Replace synthetic-trained weights with fine-tuned variants.
+3. Honest accuracy drop expected; document new baseline.
+
+### Files
+
+- `HappySpeech/Resources/Models/EmotionDetection.mlpackage` — unchanged (v14)
+- `HappySpeech/Resources/Models/TonguePostureClassifier.mlpackage` — unchanged (v21)
+- `.claude/team/ml-models.md` — added Block 1.3 v22 verification entry
+
+### Impact
+
+- Build: unchanged, BUILD SUCCEEDED.
+- Tests: TonguePostureClassifierMLTests (8) и EmotionDetectionServiceLive tests pass.
+- Diploma defence: positive (honest about synthetic limitations).
+
+---
+
 ## ADR-V21-AJ-DARKICON-DEFER — AppIcon Dark variant: defer regeneration (2026-05-13)
 
 ### Status: Accepted

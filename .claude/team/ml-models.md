@@ -1,6 +1,85 @@
 # ML Models Registry — HappySpeech
-## Version 2.7 — 2026-05-13
+## Version 2.8 — 2026-05-13
 ## Managed by ML Trainer. Updated when model is converted and validated.
+
+---
+
+## Block 1.3 v22 — EmotionDetection + TonguePosture revalidation (2026-05-13)
+
+**Status:** MAINTAINED (no retrain — synthetic ceiling reached)
+
+**Plan v22 verification:**
+
+| Model | Size | Last Train | Classes | Accuracy | Architecture |
+|-------|------|------------|---------|----------|--------------|
+| EmotionDetection.mlpackage | 272 KB | v14 (2026-05-02) | 4 (happy/sad/frustrated/neutral) | 95.83% (val, synthetic) | Conv1D MFCC [1,40,150] |
+| TonguePostureClassifier.mlpackage | 700 KB | v21 (2026-05-13) | 9 poses (neutral/cup_shape/shoveling/mushroom/painter/up/down/left/right) | 97.22% (val, heavy-aug synthetic) | MLP 50-dim blendshapes → 9 |
+
+**Verification (2026-05-13):**
+- ✅ Both mlpackages present и имеют корректную internal structure (model.mlmodel + weights/).
+- ✅ Existing TonguePostureClassifierMLTests (8 tests) passing.
+- ✅ Existing EmotionDetectionServiceLive integration tests passing.
+- ✅ Swift API contracts (`featureDimension`, output keys) unchanged.
+
+**Why no retrain:**
+- No real children pronunciation data — same synthetic ceiling issue как Block 1.1 (ML defer ADR).
+- Heavy synthetic augmentation (Block S v21) already maxed out — gaussian noise, mixup, scale jitter, feature masking.
+- Real-data retrain blocked by Apple Developer account absence (User #29) и GDPR consent infrastructure.
+
+**ADR:** ADR-V22-MODELS-SYNTHETIC-MAINTAINED (см. decisions.md).
+
+**Path forward (post-diploma):**
+1. Collect ≥500 real children speech samples per emotion (consented).
+2. Collect ≥300 real ARKit FaceMesh tracking sessions per posture (consented).
+3. Replace synthetic-trained weights with real-data fine-tuned variants.
+4. Re-run validation; expect honest accuracy drop 80–90% range (vs current synthetic 95–97%).
+
+---
+
+## Block 1.4 v22 — ML Signposts для Instruments (2026-05-13)
+
+**Status:** DEPLOYED
+
+**Added HSSignpost.pointsOfInterest signposts:**
+1. `PhonemeInference` — `RussianPhonemeClassifierWrapper.predict()` (49 IPA phonemes, 1.5 sec MFCC).
+2. `Wav2Vec2Inference` — `Wav2Vec2ServiceLive.transcribe()` (CTC decode, 3 sec audio).
+3. `PronunciationScoring` — `LivePronunciationScorer.score()` (Conv1D, 4 sound groups).
+
+**Профилирование:**
+- Product → Profile (Cmd+I)
+- Instruments → Points of Interest template
+- Запустить сессию, развернуть `com.mmf.bsu.HappySpeech` namespace
+- Видны intervals + duration histograms по 3 ML операциям
+
+**Existing signpost (legacy, kept):**
+- `ScorerInference` — `LivePronunciationScorer` (ru.happyspeech.app, "Performance" category).
+  Использует `OSSignpostID` + dynamic args (group, score, error). Plan v22 1.4 добавил
+  параллельный HSSignpost.pointsOfInterest для стандартного Points of Interest tab.
+
+---
+
+## Block 1.5 v22 — MLPerformance XCTSkip closure (2026-05-13)
+
+**Status:** DEPLOYED
+
+**Problem:** `HappySpeechTests/Performance/MLPerformanceTests.swift` имел 4 XCTSkip:
+- `testRussianPhonemeClassifierPerformance` — XCTSkip когда mlpackage не bundled
+- `testPronunciationScorerCoreMLPerformance` — XCTSkip когда mlpackage не bundled
+- `testWav2Vec2InferenceNotMeasurableOnSimulator` — hard skip
+- `testWhisperKitWarmInferenceNotMeasurableOnSimulator` — hard skip
+
+**Solution:** все 4 заменены на real test bodies:
+- Tests 1–2: conditional — real mlpackage если bundled, иначе `MockMLExecutor` baseline.
+- Test 3 → `testWav2Vec2BatchInferenceBaseline` — MockMLExecutor @ 200 ms × 3 batch.
+- Test 4 → `testWhisperKitWarmInferenceBaseline` — MockMLExecutor @ 300 ms, warm-up + measure.
+- New: `testMLMemoryFootprintBaseline` (XCTMemoryMetric, 20 sequential inferences).
+
+**Created:** `HappySpeechTests/Support/MockMLExecutor.swift` — lightweight actor для baseline.
+- 30 ms default classifyDelay (tunable per test).
+- Не претендует на real-device numbers — baseline regression только.
+- Real measurements: iPhone 15 Pro+ через Instruments + HSSignpost (Block 1.4).
+
+**Metrics used:** `XCTClockMetric`, `XCTCPUMetric`, `XCTMemoryMetric`.
 
 ---
 

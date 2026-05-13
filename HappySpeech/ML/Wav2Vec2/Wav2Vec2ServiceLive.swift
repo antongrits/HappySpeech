@@ -2,6 +2,7 @@ import Accelerate
 import AVFoundation
 @preconcurrency import CoreML
 import Foundation
+import os.signpost
 import OSLog
 
 // MARK: - Wav2Vec2ServiceLive
@@ -46,6 +47,10 @@ public actor Wav2Vec2ServiceLive: Wav2Vec2Service {
     // MARK: - Wav2Vec2Service
 
     public func transcribe(audio: Data) async throws -> CTCDecodeResult {
+        // Plan v22 Block 1.4 — Points of Interest signpost для Instruments.
+        os_signpost(.begin, log: HSSignpost.pointsOfInterest, name: "Wav2Vec2Inference")
+        defer { os_signpost(.end, log: HSSignpost.pointsOfInterest, name: "Wav2Vec2Inference") }
+
         let model = try loadModelIfNeeded()
 
         // 1. Data -> [Float]

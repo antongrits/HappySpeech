@@ -437,6 +437,10 @@ actor LivePronunciationScorer: PronunciationScorerProtocol {
         os_signpost(.begin, log: perfLog, name: "ScorerInference", signpostID: signID,
                     "group=%{public}@", group.rawValue)
 
+        // Plan v22 Block 1.4 — Points of Interest signpost для Instruments tab.
+        os_signpost(.begin, log: HSSignpost.pointsOfInterest, name: "PronunciationScoring")
+        defer { os_signpost(.end, log: HSSignpost.pointsOfInterest, name: "PronunciationScoring") }
+
         do {
             let model  = try loadModel(for: group)
             let mfcc   = try MFCCExtractor.extract(from: buffer)
