@@ -10,13 +10,13 @@
 [![SwiftLint](https://img.shields.io/badge/SwiftLint-0%2F0-brightgreen.svg)](/)
 [![Firebase](https://img.shields.io/badge/Firebase-happyspeech--dfd95-orange.svg)](/)
 [![Russian Only](https://img.shields.io/badge/Language-Russian%20Only-blue.svg)](/)
-[![Tag](https://img.shields.io/badge/tag-v1.0.0--final--v18-blueviolet.svg)](/)
+[![Tag](https://img.shields.io/badge/tag-v1.0.0--final--v21-blueviolet.svg)](/)
 [![Screens](https://img.shields.io/badge/screens-105%2B-blue.svg)](/)
 [![Audio](https://img.shields.io/badge/audio-14%2C501%20files-green.svg)](/)
 [![CoreML](https://img.shields.io/badge/CoreML-12%20models%20304MB-orange.svg)](/)
 [![Status](https://img.shields.io/badge/status-production--ready-brightgreen.svg)](/)
 
-**Status v1.0.0-final-v18 (2026-05-08):** Production-ready на iPhone SE (3rd generation) simulator. App Store submission отложен — нет платного Apple Developer Account.
+**Status v1.0.0-final-v21 (2026-05-13):** Production-ready на iPhone SE (3rd generation) simulator. App Store submission отложен — нет платного Apple Developer Account. Plan v21 закрыт.
 
 ---
 
@@ -179,6 +179,39 @@ xcodebuild test -scheme HappySpeech \
 ```bash
 swiftlint --strict
 ```
+
+---
+
+## Plan v21 — CLOSED (2026-05-13)
+
+**Status:** DIPLOMA-READY (2026-05-13)
+**Tag:** v1.0.0-final-v21
+**Phase 9 Block AJ — App Store metadata final + Info.plist polish**
+
+### What Plan v21 brought
+
+| Компонент | Изменение |
+|---|---|
+| Info.plist | UIApplicationSupportsMultipleScenes false (fix расхождения с project.yml) |
+| App Store metadata | docs/appstore-metadata.md — финальный проход, All fields ru+en READY |
+| Privacy/Terms | GitHub Pages live: antongrits.github.io/HappySpeech/ |
+| AppIcon Dark | ADR-V21-AJ-DARKICON-DEFER — defer до активации Apple Developer Account |
+| README | Обновлён tag v21, статус diploma-ready |
+| decisions.md | ADR-V21-AJ-DARKICON-DEFER + ADR-V21-AJ-INFOPLIST-FIX |
+
+### Plan v21 Final state
+
+- BUILD: SUCCEEDED (iPhone SE 3rd generation)
+- SwiftLint --strict: 0 errors
+- Info.plist: все NS*UsageDescription на русском, portrait-only, arkit required
+- LSApplicationCategoryType: public.app-category.education
+- CFBundleDevelopmentRegion: ru
+- MARKETING_VERSION: 1.0.0
+- KidsAgeRange: 5-8
+- App Store metadata: ru + en COMPLETE (docs/appstore-metadata.md)
+- Privacy Policy + Terms: deployed GitHub Pages
+- AppIcon: Any + Tinted production-ready; Dark defer ADR-V21-AJ-DARKICON-DEFER
+- App Store submission: DEFERRED (no Apple Developer Account, confirmed by user #23)
 
 ---
 

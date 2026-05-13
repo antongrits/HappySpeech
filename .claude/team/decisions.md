@@ -3,6 +3,63 @@
 
 ---
 
+## ADR-V21-AJ-DARKICON-DEFER — AppIcon Dark variant: defer regeneration (2026-05-13)
+
+### Status: Accepted
+
+### Context
+
+User complaint #40: «Только dark версия выглядит некрасиво — чёрные пятна».
+Block AJ v21 требует либо регенерировать AppIcon-Dark-1024.png, либо задокументировать defer.
+
+### Decision
+
+Defer. AppIcon Dark variant (`AppIcon-Dark-1024.png`) остаётся как есть.
+
+### Reasons
+
+1. FLUX-1-schnell MCP недоступен в текущей сессии — HuggingFace Inference API не подключён как MCP-инструмент.
+2. Python PIL/Pillow скриптовая обработка запрещена — порождает именно те «чёрные пятна», на которые жалуется пользователь (procedural noise при инверсии без alpha masking).
+3. Приложение не публикуется в App Store (пользователь #23, #29 — нет Apple Developer Account). Dark variant влияет только на Home Screen при Dark Mode на реальном устройстве.
+4. Any-appearance icon (`AppIcon-Any-1024.png`) корректен и является основным для App Review Team.
+
+### Alternative (post-diploma)
+
+Когда пользователь подключит Apple Developer Account и откроет Figma/Sketch:
+- Открыть Any-вариант иконки
+- Сменить фон на `#0D1B2A` (navy dark)
+- Убедиться в full bleed (без внутренних rounded corners)
+- Экспортировать 1024×1024 PNG без прозрачности
+- Заменить `HappySpeech/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon-Dark-1024.png`
+
+### Impact
+
+- App Store submission: не блокирует (submission отложен по #23)
+- Diploma defence: не влияет (оценивается code quality, not icon aesthetics)
+- Dark Mode on simulator: Any-variant используется как fallback
+
+---
+
+## ADR-V21-AJ-INFOPLIST-FIX — Info.plist UIApplicationSupportsMultipleScenes fix (2026-05-13)
+
+### Status: Accepted
+
+### Context
+
+Расхождение между `project.yml` (UIApplicationSupportsMultipleScenes: false) и
+`HappySpeech/Resources/Info.plist` (UIApplicationSupportsMultipleScenes: true).
+
+### Decision
+
+Исправлено в `Info.plist` — `<false/>`. iPhone-only таргет (TARGETED_DEVICE_FAMILY=1)
+не поддерживает multi-window. Значение `true` было legacy от iPad-этапа Plan v13.
+
+### Files Changed
+
+- `HappySpeech/Resources/Info.plist` — UIApplicationSupportsMultipleScenes false
+
+---
+
 ## ADR-V21-T-U-CV-STATE — G2P/IPA Russian + Real-time CV verified (2026-05-13)
 
 ### Status: Accepted (Plan v21 Phase 4 Block T + U)
