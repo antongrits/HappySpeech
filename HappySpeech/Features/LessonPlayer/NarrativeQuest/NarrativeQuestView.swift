@@ -135,8 +135,9 @@ struct NarrativeQuestView: View {
             Spacer(minLength: 0)
 
             VStack(spacing: SpacingTokens.medium) {
-                Text(display.finalRewardEmoji)
-                    .font(TypographyTokens.kidDisplay(96))
+                Image(systemName: display.finalRewardEmoji)
+                    .font(.system(size: 96, weight: .bold))
+                    .foregroundStyle(ColorTokens.Brand.gold)
                     .accessibilityHidden(true)
 
                 Text(display.questTitle)
@@ -298,8 +299,9 @@ struct NarrativeQuestView: View {
             HSMascotView(mood: .celebrating, size: 140)
                 .accessibilityHidden(true)
 
-            Text(display.finalRewardEmoji)
-                .font(TypographyTokens.kidDisplay(84))
+            Image(systemName: display.finalRewardEmoji)
+                .font(.system(size: 84, weight: .bold))
+                .foregroundStyle(ColorTokens.Brand.gold)
                 .accessibilityHidden(true)
 
             if !display.collectedEmojis.isEmpty {
