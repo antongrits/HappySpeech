@@ -468,7 +468,11 @@ struct WeeklyChallengeView: View {
 
     private var rewardBurstOverlay: some View {
         ZStack {
-            Color.black.opacity(0.001)
+            // 3.H v23: ранее использовался невидимый hit-target через
+            // hardcoded цвет с opacity 0.001. Заменено на Color.clear +
+            // contentShape — тот же эффект без нарушения design tokens rule.
+            Color.clear
+                .contentShape(Rectangle())
                 .ignoresSafeArea()
             HSRewardBurst(isShowing: holder.showRewardBurst)
                 .task {

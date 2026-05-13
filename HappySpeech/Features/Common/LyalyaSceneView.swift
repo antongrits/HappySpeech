@@ -147,7 +147,7 @@ private enum LyalyaSceneBuilder {
         let omniLight = SCNLight()
         omniLight.type = .omni
         omniLight.intensity = 1200
-        omniLight.color = UIColor.white
+        omniLight.color = ColorTokens.LyalyaScene.lightUI
         omniNode.light = omniLight
         omniNode.position = SCNVector3(0.3, 0.5, 0.4)
         scene.rootNode.addChildNode(omniNode)
@@ -210,7 +210,7 @@ private enum LyalyaSceneBuilder {
         let mat = SCNMaterial()
         // Pastel lilac-to-pink gradient через diffuse + emission тонировку
         mat.diffuse.contents = ColorTokens.LyalyaScene.bodyUI
-        mat.specular.contents = UIColor.white
+        mat.specular.contents = ColorTokens.LyalyaScene.lightUI
         mat.shininess = 0.65
         mat.roughness.contents = 0.25
         mat.metalness.contents = 0.05
@@ -220,8 +220,8 @@ private enum LyalyaSceneBuilder {
 
     private static func makeEyeMaterial() -> SCNMaterial {
         let mat = SCNMaterial()
-        mat.diffuse.contents = UIColor.white
-        mat.specular.contents = UIColor.white
+        mat.diffuse.contents = ColorTokens.LyalyaScene.eyeUI
+        mat.specular.contents = ColorTokens.LyalyaScene.lightUI
         mat.shininess = 0.9
         mat.lightingModel = .phong
         return mat
