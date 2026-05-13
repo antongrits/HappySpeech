@@ -36,6 +36,7 @@ final class AccessibilityVariantsSnapshotTests: XCTestCase {
     func test_onboardingStep1_dynamicTypeLarge() throws {
         let view = OnboardingFlowView(onComplete: { _ in })
             .environment(AppCoordinator())
+            .environment(AppContainer.preview())
         try recordAccessibility(
             view,
             screen: "OnboardingStep1_DT_Large",
@@ -49,6 +50,7 @@ final class AccessibilityVariantsSnapshotTests: XCTestCase {
     func test_onboardingStep1_dynamicTypeAccessibilityLarge() throws {
         let view = OnboardingFlowView(onComplete: { _ in })
             .environment(AppCoordinator())
+            .environment(AppContainer.preview())
         try recordAccessibility(
             view,
             screen: "OnboardingStep1_DT_AccessibilityL",

@@ -60,6 +60,7 @@ final class KeyScreensSnapshotTests: XCTestCase {
     func test_onboardingFlow_rendersInBothThemes() throws {
         let view = OnboardingFlowView(onComplete: { _ in })
             .environment(AppCoordinator())
+            .environment(AppContainer.preview())
         try record(view, screen: "OnboardingFlowView")
     }
 

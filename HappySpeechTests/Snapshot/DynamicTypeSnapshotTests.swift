@@ -102,6 +102,7 @@ final class DynamicTypeSnapshotTests: XCTestCase {
     func test_onboarding_dynamicType() throws {
         let view = OnboardingFlowView(onComplete: { _ in })
             .environment(AppCoordinator())
+            .environment(AppContainer.preview())
         try recordDT(view, screen: "OnboardingDT")
     }
 

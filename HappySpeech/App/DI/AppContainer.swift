@@ -132,6 +132,10 @@ public final class AppContainer {
         return new
     }
 
+    // Block V (v21): MLModelWarmupService — параллельный прогрев Pronunciation + ASR + VAD
+    // во время онбординга для быстрого старта первой сессии.
+    private var _mlWarmupService: (any MLModelWarmupServiceProtocol)?
+
     // Factory closures (injected at init)
     private let audioServiceFactory: () -> any AudioService
     private let asrServiceFactory: () -> any ASRService
@@ -603,6 +607,21 @@ public final class AppContainer {
         return service
     }
 
+    // MARK: - Block V v21: ML Model Warm-up
+
+    /// Параллельный прогрев Pronunciation + ASR + VAD моделей во время онбординга.
+    /// Делает первую игровую сессию быстрее — кэш Core ML уже горячий.
+    /// См. ``MLModelWarmupServiceProtocol``.
+    public var mlWarmupService: any MLModelWarmupServiceProtocol {
+        if let existing = _mlWarmupService { return existing }
+        let service = LiveMLModelWarmupService(
+            pronunciation: pronunciationService,
+            asr: asrService
+        )
+        _mlWarmupService = service
+        return service
+    }
+
     /// Библиотека анимированных историй. Singleton — создаётся один раз для всего приложения.
     public var storyLibrary: StoryLibrary { StoryLibrary.shared }
 
@@ -816,6 +835,8 @@ public extension AppContainer {
             familyInvite: MockFamilyInviteService(),
             realtimeDatabase: MockRealtimeDatabaseService()
         )
+        // Block V (v21): ML warm-up — no-op в preview/tests, чтобы не грузить CoreML.
+        container._mlWarmupService = MockMLModelWarmupService()
         return container
     }
 }
