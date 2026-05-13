@@ -23,7 +23,8 @@ struct SoundAndFaceView: View {
             VStack {
                 ARGameHUD(
                     title: "ar.soundFace.title",
-                    scoreText: display.lastStars.map { "\($0)⭐" },
+                    scoreText: display.lastStars.map { "\($0)" },
+                    scoreIcon: display.lastStars == nil ? nil : "star.fill",
                     onClose: { dismiss() }
                 )
                 HStack(spacing: SpacingTokens.medium) {

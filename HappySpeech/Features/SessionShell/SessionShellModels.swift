@@ -213,7 +213,9 @@ struct SessionReward: Sendable, Equatable {
 }
 
 struct RewardViewModel: Sendable, Equatable {
-    let emoji: String
+    /// SF Symbol для рендера в reward overlay (например, `star.fill`).
+    /// Используется вместо эмодзи, чтобы соблюсти DesignSystem правило «no emoji в UI».
+    let iconName: String
     let title: String
     let subtitle: String
 }

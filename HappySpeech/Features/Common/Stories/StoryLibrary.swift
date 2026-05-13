@@ -343,7 +343,7 @@ public final class StoryLibrary: Sendable {
             scenes: [
                 AnimatedStoryScene(
                     id: "raketa-ryzhik-1",
-                    backgroundEmoji: "⭐",
+                    backgroundEmoji: "",
                     characterEmoji: "",
                     narrativeText: "Рыжая ракета Рыжик мечтала долететь до самой далёкой звезды.",
                     targetWord: "ракета",
@@ -352,8 +352,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "raketa-ryzhik-2",
-                    backgroundEmoji: "⭐",
-                    characterEmoji: "⭐",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Рыжик разогнался и рванул вверх, оставляя рыжий след в небе.",
                     targetWord: "рванул",
                     animationType: .slide,
@@ -432,8 +432,8 @@ public final class StoryLibrary: Sendable {
                 ),
                 AnimatedStoryScene(
                     id: "luna-i-lena-2",
-                    backgroundEmoji: "⭐",
-                    characterEmoji: "⭐",
+                    backgroundEmoji: "",
+                    characterEmoji: "",
                     narrativeText: "Лена собирала вокруг себя звёздочки и строила из них ласковый букет.",
                     targetWord: "Лена",
                     animationType: .float,
@@ -641,7 +641,7 @@ public final class StoryLibrary: Sendable {
                 AnimatedStoryScene(
                     id: "pingvin-pyotr-3",
                     backgroundEmoji: "",
-                    characterEmoji: "⭐",
+                    characterEmoji: "",
                     narrativeText: "Пингвин Пётр стал лучшим папой и получил почётную полярную звезду.",
                     targetWord: "пингвин",
                     animationType: .grow,

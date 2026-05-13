@@ -54,7 +54,7 @@ final class SessionShellPresenter: SessionShellPresentationLogic {
     func presentCompleteActivity(_ response: SessionShellModels.CompleteActivity.Response) async {
         let rewardVM: RewardViewModel? = response.earnedReward.map { _ in
             RewardViewModel(
-                emoji: "⭐️",
+                iconName: "star.fill",
                 title: String(localized: "session.reward.title"),
                 subtitle: String(localized: "session.reward.subtitle")
             )
