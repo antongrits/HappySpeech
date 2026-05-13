@@ -66,22 +66,43 @@ final class DesignSystemSnapshotTests: XCTestCase {
         }
     }
 
-    // MARK: - Tests (stubs — activate per component once stable)
+    // MARK: - Tests (all components stable as of Plan v21 Block Z)
 
     func test_HSButton_primary_renders() throws {
-        throw XCTSkip("Enable after HSButton ABI stabilises in M8")
-        // try record(HSButton(title: "Начать", style: .primary, action: {}), component: "HSButton_primary")
+        let view = HSButton("Начать урок", style: .primary, size: .large) {}
+        try record(view, component: "HSButton_primary")
     }
 
     func test_HSSpeechBubble_lyalya_renders() throws {
-        throw XCTSkip("Enable when HSSpeechBubble stable")
+        let view = HSSpeechBubble("Привет! Я Ляля. Давай учиться!", direction: .left, style: .lyalya)
+        try record(view.padding(16), component: "HSSpeechBubble_lyalya")
     }
 
     func test_HSPictTile_correct_renders() throws {
-        throw XCTSkip("Enable when HSPictTile state machine stable")
+        let view = HSPictTile(symbol: "sun.max.fill", label: "Солнце", state: .correct) {}
+        try record(view, component: "HSPictTile_correct")
     }
 
     func test_GuidedTourTipView_firstStep_renders() throws {
-        throw XCTSkip("Enable after GuidedTour UI passes design review")
+        let step = TourStep(
+            id: "welcome",
+            title: "Добро пожаловать!",
+            body: "Это ваш первый шаг в HappySpeech. Давайте познакомимся с приложением.",
+            highlightKey: "childHome.dailyPlan",
+            lyalyaPhrase: nil,
+            autoAdvanceAfter: nil,
+            allowSkip: true
+        )
+        let view = GuidedTourTipView(
+            step: step,
+            stepNumber: 1,
+            totalSteps: 5,
+            spotlightRect: .zero,
+            screenSize: CGSize(width: 375, height: 667),
+            isLastStep: false,
+            onNext: {},
+            onSkip: {}
+        )
+        try record(view.padding(16), component: "GuidedTourTipView_firstStep")
     }
 }

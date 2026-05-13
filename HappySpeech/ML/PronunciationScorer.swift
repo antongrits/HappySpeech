@@ -8,7 +8,7 @@ import OSLog
 
 /// Группа звуков русского языка для выбора нужной Core ML модели.
 ///
-/// `PhonemeGroup` определяет, какая из четырёх `PronunciationScorer_*.mlpackage`
+/// `PronunciationPhonemeGroup` определяет, какая из четырёх `PronunciationScorer_*.mlpackage`
 /// моделей используется при оценке произношения. Каждая группа обучена на
 /// своём наборе звуков с разной точностью.
 ///
@@ -22,7 +22,7 @@ import OSLog
 /// ## See Also
 /// - ``PronunciationScorerProtocol``
 /// - ``PronunciationResult``
-enum PhonemeGroup: String, CaseIterable, Sendable {
+enum PronunciationPhonemeGroup: String, CaseIterable, Sendable {
     case whistling  // С, З, Ц
     case hissing    // Ш, Ж, Ч, Щ
     case sonants    // Р, Л
@@ -56,7 +56,7 @@ enum PhonemeGroup: String, CaseIterable, Sendable {
 /// `displayScore` — нормированный 0–100 для progress bar в SessionComplete.
 ///
 /// ## See Also
-/// - ``PhonemeGroup``
+/// - ``PronunciationPhonemeGroup``
 /// - ``PronunciationScorerProtocol``
 struct PronunciationResult: Sendable {
     /// Вероятность правильного произношения (0.0–1.0).
@@ -66,7 +66,7 @@ struct PronunciationResult: Sendable {
     /// Класс с максимальной вероятностью.
     let predictedLabel: String
     /// Группа звуков, для которой была оценка.
-    let phonemeGroup: PhonemeGroup
+    let phonemeGroup: PronunciationPhonemeGroup
 
     /// Удобный флаг: произношение считается правильным при correctProbability >= 0.6.
     var isCorrect: Bool { correctProbability >= 0.6 }
@@ -80,7 +80,7 @@ struct PronunciationResult: Sendable {
 /// Сервис оценки произношения через on-device Core ML. Основной ML-компонент детского контура.
 ///
 /// `PronunciationScorerProtocol` абстрагирует четыре Core ML модели под единый API.
-/// Правильная модель выбирается автоматически по `PhonemeGroup`.
+/// Правильная модель выбирается автоматически по `PronunciationPhonemeGroup`.
 ///
 /// **Вход модели:** MFCC тензор `[1, 40, 150]`, 16kHz mono, 1.5 сек.
 /// MFCC вычисляется через `MFCCExtractor` (vDSP/Accelerate, нет Python зависимостей).
@@ -101,7 +101,7 @@ struct PronunciationResult: Sendable {
 /// ```
 ///
 /// ## See Also
-/// - ``PhonemeGroup``
+/// - ``PronunciationPhonemeGroup``
 /// - ``PronunciationResult``
 /// - ``MFCCExtractor``
 /// - ``SileroVAD``
@@ -113,7 +113,7 @@ protocol PronunciationScorerProtocol: Sendable {
     /// - Returns: результат оценки
     func score(
         audio buffer: AVAudioPCMBuffer,
-        phonemeGroup group: PhonemeGroup
+        phonemeGroup group: PronunciationPhonemeGroup
     ) async throws -> PronunciationResult
 }
 
@@ -397,7 +397,7 @@ enum MFCCExtractor {
 // MARK: - Errors
 
 enum PronunciationScorerError: LocalizedError, Sendable {
-    case modelNotFound(PhonemeGroup)
+    case modelNotFound(PronunciationPhonemeGroup)
     case invalidAudioBuffer
     case inferenceFailure(String)
     case featureExtractionFailure
@@ -427,11 +427,11 @@ enum PronunciationScorerError: LocalizedError, Sendable {
 actor LivePronunciationScorer: PronunciationScorerProtocol {
     private let logger  = Logger(subsystem: "HappySpeech", category: "PronunciationScorer")
     private let perfLog = OSLog(subsystem: "ru.happyspeech.app", category: "Performance")
-    private var loadedModels: [PhonemeGroup: MLModel] = [:]
+    private var loadedModels: [PronunciationPhonemeGroup: MLModel] = [:]
 
     func score(
         audio buffer: AVAudioPCMBuffer,
-        phonemeGroup group: PhonemeGroup
+        phonemeGroup group: PronunciationPhonemeGroup
     ) async throws -> PronunciationResult {
         let signID = OSSignpostID(log: perfLog)
         os_signpost(.begin, log: perfLog, name: "ScorerInference", signpostID: signID,
@@ -456,7 +456,7 @@ actor LivePronunciationScorer: PronunciationScorerProtocol {
 
     // MARK: Private
 
-    private func loadModel(for group: PhonemeGroup) throws -> MLModel {
+    private func loadModel(for group: PronunciationPhonemeGroup) throws -> MLModel {
         if let existing = loadedModels[group] {
             return existing
         }
@@ -481,7 +481,7 @@ actor LivePronunciationScorer: PronunciationScorerProtocol {
 
     nonisolated private static func parseOutput(
         _ output: MLFeatureProvider,
-        group: PhonemeGroup
+        group: PronunciationPhonemeGroup
     ) throws -> PronunciationResult {
         // Ожидаем выход "output" — float32 [1, 2] (logits)
         guard let outputFeature = output.featureValue(for: "output"),
@@ -522,7 +522,7 @@ final class MockPronunciationScorer: PronunciationScorerProtocol, @unchecked Sen
 
     func score(
         audio buffer: AVAudioPCMBuffer,
-        phonemeGroup group: PhonemeGroup
+        phonemeGroup group: PronunciationPhonemeGroup
     ) async throws -> PronunciationResult {
         if simulatedLatency > 0 {
             try await Task.sleep(for: .seconds(simulatedLatency))
