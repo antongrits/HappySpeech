@@ -3,6 +3,68 @@
 
 ---
 
+## ADR-V21-R-PHONEME-DEFER — RussianPhonemeClassifier retrain deferred to v22+ (2026-05-13)
+
+### Status: Accepted (Block R v21)
+
+### Context
+Plan v21 Block R запросил retrain RussianPhonemeClassifier 88.9% → ≥92% val accuracy
+с heavy synthetic augmentation, wider BiLSTM (256→512), multi-head self-attention,
+knowledge distillation from Wav2Vec2RuChild.
+
+Reality check post-Block N (_workshop pruning 763 MB → 68 MB):
+- v19 Block D финализированная модель оставлена, но training pipeline (`_workshop/scripts/`,
+  raw/clean/splits datasets для 42–49 фонем) удалён из _workshop как «finalized».
+- Папка `/Users/antongric/Downloads/HappySpeech/_workshop/` отсутствует на машине.
+- v14 baseline 92.24% по `ml-models.md` уже превышает v21 target ≥92%
+  (хотя относится к более ранней архитектуре, не к текущему deployed `.mlpackage`).
+- Реальные детские аудио недоступны (no Apple Developer per req #29, TestFlight pre-enablement).
+- Knowledge distillation from Wav2Vec2RuChild требует verified matching phoneme inventory —
+  не подтверждено (current classifier output: 49 классов, не 42 как описано в задаче).
+- Нет физического iPhone SE 3 для inference benchmark <50 ms.
+
+### Decision
+**Defer retrain to v22+.** Existing `RussianPhonemeClassifier.mlpackage` (v19 Block D)
+оставлен как production baseline для v21. Никаких изменений в `Resources/Models/` и
+Swift-интеграции.
+
+### Current model state (inspected 2026-05-13)
+- **File:** `HappySpeech/Resources/Models/RussianPhonemeClassifier.mlpackage`
+- **Manifest version:** 1.0.0 (Core ML mlProgram format)
+- **Total size on disk:** 1.5 MB (weights 1,558,754 bytes = 1.49 MB; spec `model.mlmodel` 11,852 bytes)
+- **Spec type:** `mlProgram` (Core ML 5+ / iOS 15+)
+- **Input:** `mfcc` multiArray FLOAT16 shape `[1, 40, 100]`
+  (40 MFCC коэффициентов × 100 временных шагов, ~1.0 s @ 10 ms hop)
+- **Output:** `var_130` multiArray FLOAT16 shape `[1, 49]` — 49 phoneme logits
+  (НЕ 42 как в исходном задании Block R; реальный inventory шире)
+- **Metadata `shortDescription`:** `RussianPhonemeClassifier v19 | val_acc=88.9%`
+- **Metadata `author`:** `HappySpeech ML Pipeline (D v19)`
+- **Created:** 2026-05-10 14:29
+
+### Why no metrics fake / no random retrain
+- `_workshop/datasets/` отсутствует (Block N cleared) — невозможно воспроизвести val split.
+- Random-weight `.mlpackage` с подписью «92%+» = фальсификация метрик
+  (запрещено правилом «НЕ ВЫДУМЫВАЙ»).
+- v14 92.24% в `ml-models.md` относится к более старой sklearn-baseline,
+  не сравним 1-в-1 с v19 mlProgram (49 классов).
+
+### Future (v22+ prerequisites before retrain)
+1. Re-establish training pipeline в `_workshop/scripts/` (train + augment + convert).
+2. Восстановить или собрать заново 42–49 phoneme dataset (CommonVoice RU + force-alignment либо OpenSLR SLR96 + MFA).
+3. После TestFlight enablement — собрать реальные детские записи с parental consent.
+4. Verify phoneme inventory match с Wav2Vec2RuChild перед knowledge distillation.
+5. Architecture experiments: wider BiLSTM (512) + multi-head attention + KD.
+6. Физический iPhone SE 3 либо `coremltools` performance report для inference benchmark.
+
+### Consequences
+- v21 Block R закрывается как **DEFERRED** (acceptable: deployed модель уже работает в production).
+- v14 entry 92.24% в `ml-models.md` остаётся информативной (другая архитектура, не текущий .mlpackage).
+- Нет риска fake metrics, нет ломки build, нет изменений Swift integration
+  (`Wav2Vec2RuChild.swift`, `RussianPhonemeClassifier.swift` etc.).
+- Block R unblocked v21 flow для следующих блоков.
+
+---
+
 ## ADR-V21-LOTTIE-DEFER — Lottie collection already real, no replacement needed (2026-05-13)
 
 ### Status: Accepted (Block P v21)
