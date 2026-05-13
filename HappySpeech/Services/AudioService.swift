@@ -50,6 +50,26 @@ public protocol ASRService: Sendable {
     func loadModel(tier: ASRTier) async throws
 }
 
+public extension ASRService {
+
+    /// Адаптивно выбирает Whisper-пак под возраст ребёнка и performance tier
+    /// устройства и загружает соответствующий ``ASRTier``.
+    ///
+    /// Plan v22 Block 1.2 (ADR-V22-WHISPER-ADAPTIVE).
+    ///
+    /// - Параметры:
+    ///   - age: возраст ребёнка (полные годы).
+    /// - Замечание: вызывается ТОЛЬКО из parent/specialist контекста. Детский
+    ///   контур всегда использует ``ASRTier/kidOnDevice`` (whisper-tiny) для
+    ///   COPPA-совместимости — см. ``MLModelWarmupService``.
+    func loadModelAdaptive(age: Int) async throws {
+        let deviceTier = WhisperAdaptiveSelector.currentDeviceTier()
+        let pack = WhisperAdaptiveSelector.selectAndLog(age: age, deviceTier: deviceTier)
+        let tier = WhisperAdaptiveSelector.asrTier(for: pack)
+        try await loadModel(tier: tier)
+    }
+}
+
 public struct ASRResult: Sendable {
     public let transcript: String
     public let confidence: Double
