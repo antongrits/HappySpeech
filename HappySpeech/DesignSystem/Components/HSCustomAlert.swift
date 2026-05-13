@@ -198,8 +198,11 @@ public struct HSCustomAlertView: View {
                 Circle()
                     .fill(ColorTokens.Brand.primary.opacity(0.15))
                     .frame(width: 72, height: 72)
-                Text(state.fallbackEmoji)
+                // Plan v21 Block C: эмодзи запрещены в DesignSystem — SF Symbol fallback.
+                Image(systemName: state.fallbackSFSymbol)
                     .font(.system(size: 36))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .symbolRenderingMode(.hierarchical)
             }
         case .none:
             EmptyView()

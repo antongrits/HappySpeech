@@ -142,9 +142,12 @@ public struct HSOnboardingParallax: View {
                     .resizable()
                     .scaledToFit()
             } else {
-                // Fallback — emoji маскота, если ассет отсутствует.
-                Text(page.mascotState.fallbackEmoji)
+                // Fallback — SF Symbol маскота, если ассет отсутствует.
+                // Plan v21 Block C: эмодзи запрещены в DesignSystem.
+                Image(systemName: page.mascotState.fallbackSFSymbol)
                     .font(.system(size: 140))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .symbolRenderingMode(.hierarchical)
             }
         }
         .scrollTransition(isMotionReduced ? .identity : .interactive) { effect, phase in

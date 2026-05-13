@@ -10,7 +10,7 @@ import SwiftUI
 ///
 /// При добавлении нового состояния обновить:
 /// 1. `rivIndex` в `HSRiveView.swift` (Rive state machine input)
-/// 2. `fallbackEmoji` — для accessibility и SwiftUI-fallback
+/// 2. `fallbackSFSymbol` — для accessibility и SwiftUI-fallback
 /// 3. `localizedDescription` — для Preview и VoiceOver
 ///
 /// ## Пример
@@ -51,20 +51,21 @@ public enum LyalyaState: String, CaseIterable, Sendable {
         }
     }
 
-    /// SF Symbol / emoji fallback для каждого состояния
-    /// (используется в accessibilityLabel и в SwiftUI fallback UI)
-    public var fallbackEmoji: String {
+    /// SF Symbol fallback для каждого состояния
+    /// (используется в accessibilityLabel и в SwiftUI fallback UI).
+    /// Plan v21 Block C: эмодзи запрещены в DesignSystem — только SF Symbols.
+    public var fallbackSFSymbol: String {
         switch self {
-        case .idle:        return "🦋"
-        case .waving:      return "👋"
-        case .celebrating: return "🎉"
-        case .thinking:    return "🤔"
-        case .explaining:  return "📢"
-        case .singing:     return "🎵"
-        case .sad:         return "😢"
-        case .pointing:    return "👆"
-        case .happy:       return "😊"
-        case .encouraging: return "💪"
+        case .idle:        return "face.smiling"
+        case .waving:      return "hand.wave.fill"
+        case .celebrating: return "party.popper.fill"
+        case .thinking:    return "questionmark.bubble.fill"
+        case .explaining:  return "speaker.wave.2.fill"
+        case .singing:     return "music.note"
+        case .sad:         return "face.dashed"
+        case .pointing:    return "hand.point.up.left.fill"
+        case .happy:       return "star.fill"
+        case .encouraging: return "hands.sparkles.fill"
         }
     }
 
@@ -320,8 +321,10 @@ extension LyalyaState: Equatable {}
             ForEach(LyalyaState.allCases, id: \.rawValue) { lyalyaState in
                 VStack(spacing: 8) {
                     LyalyaMascotView(state: lyalyaState, size: 100)
-                    Text(lyalyaState.fallbackEmoji)
+                    Image(systemName: lyalyaState.fallbackSFSymbol)
                         .font(.title2)
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                        .symbolRenderingMode(.hierarchical)
                     Text(lyalyaState.localizedDescription)
                         .font(.caption2)
                         .foregroundStyle(.secondary)
@@ -390,8 +393,13 @@ extension LyalyaState: Equatable {}
             }
         )
 
-        Text("Состояние: \(lyalyaState.localizedDescription) \(lyalyaState.fallbackEmoji)")
-            .font(.headline)
+        HStack(spacing: SpacingTokens.small) {
+            Text("Состояние: \(lyalyaState.localizedDescription)")
+            Image(systemName: lyalyaState.fallbackSFSymbol)
+                .foregroundStyle(ColorTokens.Brand.primary)
+                .symbolRenderingMode(.hierarchical)
+        }
+        .font(.headline)
 
         VStack(alignment: .leading, spacing: 4) {
             Text("Амплитуда рта: \(String(format: "%.2f", amplitude))")
