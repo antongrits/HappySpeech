@@ -217,7 +217,20 @@ struct OnboardingFlowView: View {
                     }
                 )
             case .permissions:
-                OnboardingPermissionsStep()
+                // Plan v21 Block A.fix — permissions запрашиваются ТОЛЬКО на
+                // явный tap пользователя по «Разрешить ...» CTA. iOS modal не
+                // должен появляться при arrival на шаг (anti-blocking UX).
+                OnboardingPermissionsStep(
+                    onRequestMicrophone: {
+                        interactor?.requestMicrophonePermission(.init())
+                    },
+                    onRequestCamera: {
+                        interactor?.requestCameraPermission(.init())
+                    },
+                    onRequestNotifications: {
+                        interactor?.requestNotificationPermission(.init())
+                    }
+                )
             case .modelDownload:
                 OnboardingModelDownloadStep(
                     status: display.modelStatus,
