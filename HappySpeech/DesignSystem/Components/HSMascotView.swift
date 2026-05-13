@@ -243,13 +243,17 @@ public struct HSMascotView: View {
 // MARK: - MoodAuraView (ambient glow под маскотом)
 
 /// Радиальный градиент-halo под маскотом — цвет и непрозрачность зависят от состояния.
-/// Reduced Motion: не отображается.
+/// Reduced Motion: вью не отображается (родитель скрывает через `if !reduceMotion`).
+///
+/// Plan v21 Block J: удалена `idlePulse.repeatForever` анимация — пульсация ауры
+/// воспринималась как «мигание» 2D-слоя. Аура статична; цвет меняется по `mood`
+/// через `spring` (с guard на reduceMotion). Subtle breathing допустим, но
+/// repeatForever на 2D-элементах запрещён по правилу «2D героев нельзя анимировать».
 private struct MoodAuraView: View {
     let mood: MascotMood
     let size: CGFloat
 
-    @State private var auraScale: CGFloat = 0.8
-    @State private var auraOpacity: Double = 0
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private var auraColor: Color {
         switch mood {
@@ -289,15 +293,7 @@ private struct MoodAuraView: View {
             )
             .frame(width: size * 1.4, height: size * 0.55)
             .offset(y: size * 0.32)
-            .scaleEffect(auraScale)
-            .opacity(auraOpacity)
-            .animation(MotionTokens.spring, value: mood)
-            .onAppear {
-                withAnimation(MotionTokens.idlePulse) {
-                    auraScale = 1.08
-                    auraOpacity = 1.0
-                }
-            }
+            .animation(reduceMotion ? .none : MotionTokens.spring, value: mood)
     }
 }
 
