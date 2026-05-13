@@ -1,5 +1,6 @@
 @preconcurrency import CoreML
 import Foundation
+import os.signpost
 import OSLog
 
 // MARK: - RussianPhonemeClassifierWrapper
@@ -73,6 +74,10 @@ public actor RussianPhonemeClassifierWrapper {
         guard let model else {
             throw PhonemeAnalysisError.modelNotLoaded
         }
+
+        // Plan v22 Block 1.4 — Points of Interest signpost для Instruments.
+        os_signpost(.begin, log: HSSignpost.pointsOfInterest, name: "PhonemeInference")
+        defer { os_signpost(.end, log: HSSignpost.pointsOfInterest, name: "PhonemeInference") }
 
         // Pad/truncate до 150 фреймов
         let paddedFrames = padOrTruncate(mfcc, target: Self.nFrames)

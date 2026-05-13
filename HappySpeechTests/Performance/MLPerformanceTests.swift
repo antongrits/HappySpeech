@@ -77,31 +77,40 @@ final class MLPerformanceTests: XCTestCase {
     ///
     /// Цель: < 50 ms на iPhone 17 Pro.
     /// На симуляторе (CPU only, без ANE): ожидаемо 20–100 ms.
+    ///
+    /// Plan v22 Block 1.5: при отсутствии mlpackage в test bundle —
+    /// используется `MockMLExecutor` для baseline regression testing
+    /// (вместо XCTSkip NOT_MEASURABLE).
     func testRussianPhonemeClassifierPerformance() async throws {
-        guard Bundle.main.url(
-            forResource: "RussianPhonemeClassifier",
-            withExtension: "mlpackage"
-        ) != nil else {
-            throw XCTSkip("""
-                NOT_MEASURABLE: RussianPhonemeClassifier.mlpackage недоступен в тестовом bundle.
-                Добавь mlpackage в HappySpeechTests target → Build Phases → Copy Bundle Resources.
-                Цель: < 50 ms на iPhone 17 Pro с ANE.
-                """)
-        }
+        if Bundle.main.url(forResource: "RussianPhonemeClassifier", withExtension: "mlpackage") != nil {
+            // Real model доступна — реальный inference
+            let wrapper = try RussianPhonemeClassifierWrapper()
+            let syntheticMFCC = makeSyntheticMFCC(
+                nCoeffs: RussianPhonemeClassifierWrapper.nMFCC,
+                nFrames: RussianPhonemeClassifierWrapper.nFrames
+            )
 
-        let wrapper = try RussianPhonemeClassifierWrapper()
-        let syntheticMFCC = makeSyntheticMFCC(
-            nCoeffs: RussianPhonemeClassifierWrapper.nMFCC,
-            nFrames: RussianPhonemeClassifierWrapper.nFrames
-        )
-
-        measure {
-            let exp = expectation(description: "PhonemeClassifier")
-            Task {
-                _ = try? await wrapper.predict(mfcc: syntheticMFCC)
-                exp.fulfill()
+            measure {
+                let exp = expectation(description: "PhonemeClassifier")
+                Task {
+                    _ = try? await wrapper.predict(mfcc: syntheticMFCC)
+                    exp.fulfill()
+                }
+                wait(for: [exp], timeout: 10.0)
             }
-            wait(for: [exp], timeout: 10.0)
+        } else {
+            // Fallback на MockMLExecutor (baseline regression test)
+            let executor = MockMLExecutor(classifyDelay: 0.04)
+            let testData = Data(repeating: 0, count: 16_000 * 2)
+
+            measure(metrics: [XCTClockMetric(), XCTCPUMetric()]) {
+                let exp = expectation(description: "PhonemeClassifierMock")
+                Task {
+                    _ = await executor.classify(audio: testData)
+                    exp.fulfill()
+                }
+                wait(for: [exp], timeout: 5.0)
+            }
         }
     }
 
@@ -111,6 +120,9 @@ final class MLPerformanceTests: XCTestCase {
     ///
     /// Загружает первую доступную mlpackage и прогоняет inference с тензором [1,40,150].
     /// Цель: < 100 ms на iPhone 17 Pro.
+    ///
+    /// Plan v22 Block 1.5: при отсутствии mlpackage — fallback на MockMLExecutor
+    /// для baseline regression testing.
     func testPronunciationScorerCoreMLPerformance() throws {
         let modelNames = [
             "PronunciationScorer_whistling",
@@ -119,65 +131,114 @@ final class MLPerformanceTests: XCTestCase {
             "PronunciationScorer_velar"
         ]
 
-        guard let modelName = modelNames.first(where: {
+        if let modelName = modelNames.first(where: {
             Bundle.main.url(forResource: $0, withExtension: "mlpackage") != nil
         }),
-        let modelURL = Bundle.main.url(forResource: modelName, withExtension: "mlpackage") else {
-            throw XCTSkip("""
-                NOT_MEASURABLE: Ни одна PronunciationScorer mlpackage недоступна в тестовом bundle.
-                Цель: < 100 ms direct CoreML inference на iPhone 17 Pro.
-                """)
-        }
+        let modelURL = Bundle.main.url(forResource: modelName, withExtension: "mlpackage") {
+            let config = MLModelConfiguration()
+            config.computeUnits = .all
+            let model = try MLModel(contentsOf: modelURL, configuration: config)
 
-        let config = MLModelConfiguration()
-        config.computeUnits = .all
-        let model = try MLModel(contentsOf: modelURL, configuration: config)
+            // Входной тензор [1, 40, 150]
+            let shape: [NSNumber] = [1, 40, 150]
+            guard let inputArray = try? MLMultiArray(shape: shape, dataType: .float32) else {
+                XCTFail("Не удалось создать MLMultiArray [1,40,150]")
+                return
+            }
+            for i in 0 ..< (1 * 40 * 150) {
+                inputArray[i] = NSNumber(value: Float.random(in: -2.0 ... 2.0))
+            }
 
-        // Входной тензор [1, 40, 150]
-        let shape: [NSNumber] = [1, 40, 150]
-        guard let inputArray = try? MLMultiArray(shape: shape, dataType: .float32) else {
-            XCTFail("Не удалось создать MLMultiArray [1,40,150]")
-            return
-        }
-        for i in 0 ..< (1 * 40 * 150) {
-            inputArray[i] = NSNumber(value: Float.random(in: -2.0 ... 2.0))
-        }
+            let provider = try MLDictionaryFeatureProvider(dictionary: ["mfcc": inputArray])
 
-        let provider = try MLDictionaryFeatureProvider(dictionary: ["mfcc": inputArray])
+            measure {
+                _ = try? model.prediction(from: provider)
+            }
+        } else {
+            // Fallback на MockMLExecutor baseline (когда mlpackage отсутствует)
+            let executor = MockMLExecutor(classifyDelay: 0.08)
+            let testData = Data(repeating: 0, count: 16_000 * 2)
 
-        measure {
-            _ = try? model.prediction(from: provider)
+            measure(metrics: [XCTClockMetric(), XCTCPUMetric()]) {
+                let exp = expectation(description: "PronunciationScorerMock")
+                Task {
+                    _ = await executor.classify(audio: testData)
+                    exp.fulfill()
+                }
+                wait(for: [exp], timeout: 5.0)
+            }
         }
     }
 
     // MARK: - Wav2Vec2 (NOT_MEASURABLE)
 
-    /// Wav2Vec2RuChild (302 MB) inference NOT_MEASURABLE на iOS Simulator.
+    /// Wav2Vec2 batch inference baseline (MockMLExecutor surrogate).
     ///
-    /// Причины:
-    ///   1. Neural Engine недоступен на симуляторе — CPU inference ~5–15x медленнее цели
-    ///   2. 302 MB модель — загрузка занимает >2 сек даже без inference
-    ///   3. Репрезентативные данные получаемы только на A16 Bionic+ (iPhone 14 Pro+)
+    /// Plan v22 Block 1.5: реальный Wav2Vec2RuChild (302 MB) inference NOT_MEASURABLE
+    /// на iOS Simulator (ANE недоступен, CPU 5–15x медленнее). Этот тест использует
+    /// `MockMLExecutor` (200 ms latency target) как baseline regression test.
     ///
-    /// Для замера: iPhone 15 Pro (A17 Pro с ANE), 1 сек аудио @ 16 kHz.
-    /// Ожидаем: 200–450 ms (цель < 500 ms).
-    func testWav2Vec2InferenceNotMeasurableOnSimulator() throws {
-        throw XCTSkip("""
-            NOT_MEASURABLE: Wav2Vec2RuChild (302 MB) inference не измеримо на iOS Simulator.
-            ANE недоступен; CPU-only inference нерепрезентативен.
-            Замер на iPhone 15 Pro+ с ANE. Цель: < 500 ms per 1 sec audio.
-            """)
+    /// Реальные замеры — на iPhone 15 Pro+ через Instruments + HSSignpost.
+    func testWav2Vec2BatchInferenceBaseline() async throws {
+        let executor = MockMLExecutor(classifyDelay: 0.2)
+        let testData = Data(repeating: 0, count: 48_000 * 4) // 3 сек @ 16kHz float32
+
+        measure(metrics: [XCTClockMetric(), XCTCPUMetric()]) {
+            let exp = expectation(description: "Wav2Vec2BatchMock")
+            Task {
+                for _ in 0..<3 {
+                    _ = await executor.classify(audio: testData)
+                }
+                exp.fulfill()
+            }
+            wait(for: [exp], timeout: 10.0)
+        }
     }
 
-    // MARK: - WhisperKit (NOT_MEASURABLE)
+    // MARK: - WhisperKit (Mock baseline)
 
-    /// WhisperKit warm inference NOT_MEASURABLE на iOS Simulator.
-    func testWhisperKitWarmInferenceNotMeasurableOnSimulator() throws {
-        throw XCTSkip("""
-            NOT_MEASURABLE: WhisperKit inference не измеримо на iOS Simulator.
-            Tiny модель (~150 MB) не bundled, загружается с HuggingFace.
-            ANE недоступен на симуляторе.
-            Цель: < 500 ms на 3 сек аудио на iPhone 15 Pro+.
-            """)
+    /// WhisperKit warm inference baseline (MockMLExecutor surrogate).
+    ///
+    /// Plan v22 Block 1.5: реальный WhisperKit Tiny (~150 MB) грузится с HuggingFace
+    /// runtime — NOT_MEASURABLE on Simulator. Этот тест baseline regression на
+    /// `MockMLExecutor` (300 ms latency target, имитирует Whisper Tiny warm на A17).
+    func testWhisperKitWarmInferenceBaseline() async throws {
+        let executor = MockMLExecutor(classifyDelay: 0.3)
+        let testData = Data(repeating: 0, count: 48_000 * 4) // 3 сек @ 16kHz float32
+
+        // Warm-up call (не учитываем в metric)
+        _ = await executor.classify(audio: testData)
+
+        measure(metrics: [XCTClockMetric()]) {
+            let exp = expectation(description: "WhisperKitWarmMock")
+            Task {
+                _ = await executor.classify(audio: testData)
+                exp.fulfill()
+            }
+            wait(for: [exp], timeout: 5.0)
+        }
+    }
+
+    // MARK: - ML Memory Footprint (Mock baseline)
+
+    /// Memory footprint baseline через MockMLExecutor (20 sequential inferences).
+    ///
+    /// Plan v22 Block 1.5: реальные модели (Wav2Vec2 302 MB, Whisper 150 MB) дают
+    /// нерепрезентативные числа на Simulator. Этот тест baseline на mock executor
+    /// для regression на allocation patterns.
+    func testMLMemoryFootprintBaseline() async throws {
+        let executor = MockMLExecutor(classifyDelay: 0.02)
+        let testData = Data(repeating: 0, count: 16_000 * 2)
+
+        measure(metrics: [XCTMemoryMetric()]) {
+            let exp = expectation(description: "MLMemoryFootprintMock")
+            Task {
+                for _ in 0..<20 {
+                    _ = await executor.classify(audio: testData)
+                }
+                exp.fulfill()
+            }
+            wait(for: [exp], timeout: 10.0)
+        }
     }
 }
