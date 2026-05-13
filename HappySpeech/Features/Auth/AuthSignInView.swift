@@ -138,7 +138,8 @@ struct AuthSignInView: View {
 
     private var headerSection: some View {
         VStack(spacing: SpacingTokens.sp3) {
-            HSMascotView(mood: .happy, size: 96)
+            // E v21: 3D Ляля в header AuthSignIn (требование «3D героев на каждом экране»).
+            LyalyaHeroView(state: .happy, mood: 0.8, size: 120)
                 .padding(.top, SpacingTokens.sp8)
                 .accessibilityHidden(true)
 

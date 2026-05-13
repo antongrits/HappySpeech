@@ -29,11 +29,17 @@ struct SpecChildListView: View {
                         .controlSize(.large)
                         .tint(ColorTokens.Spec.accent)
                 } else if filteredChildren.isEmpty && !isLoading {
-                    HSEmptyState(
-                        icon: "person.2.fill",
-                        title: String(localized: "spec.children.empty.title"),
-                        message: String(localized: "spec.children.empty.message")
-                    )
+                    // E v21: 3D Ляля в empty state SpecChildList (students list)
+                    // — требование «3D героев на каждом экране».
+                    VStack(spacing: SpacingTokens.regular) {
+                        LyalyaHeroView(state: .thinking, mood: 0.5, size: 140)
+                            .accessibilityHidden(true)
+                        HSEmptyState(
+                            icon: "person.2.fill",
+                            title: String(localized: "spec.children.empty.title"),
+                            message: String(localized: "spec.children.empty.message")
+                        )
+                    }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
                     List {

@@ -116,7 +116,10 @@ struct ChildHomeReactiveMascot: View {
     @State private var bobOffset: CGFloat = 0
 
     var body: some View {
-        LyalyaMascotView(state: mood.lyalyaState, size: 140)
+        // E v21: 3D hero маскот на главном экране ребёнка (требование пользователя
+        // «3D героев на каждом экране»). LyalyaHeroView внутри использует
+        // LyalyaRealityKitView (transparent bg .nonAR), при Reduce Motion → 2D fallback.
+        LyalyaHeroView(state: mood.lyalyaState, mood: 0.7, size: 140)
         .offset(y: bobOffset)
         .onAppear { startBobbing() }
         .onChange(of: mood) { _, _ in startBobbing() }

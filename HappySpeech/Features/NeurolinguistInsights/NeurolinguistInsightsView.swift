@@ -79,7 +79,8 @@ struct NeurolinguistInsightsView: View {
 
             Spacer(minLength: SpacingTokens.sp2)
 
-            LyalyaMascotView(state: .happy, size: 72)
+            // E v21: 3D Ляля в hero NeurolinguistInsights (требование «3D героев на каждом экране»).
+            LyalyaHeroView(state: .happy, mood: 0.7, size: 100)
                 .accessibilityHidden(true)
         }
         .padding(.top, SpacingTokens.sp3)

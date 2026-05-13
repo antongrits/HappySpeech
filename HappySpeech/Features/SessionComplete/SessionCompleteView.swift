@@ -177,7 +177,8 @@ struct SessionCompleteView: View {
         VStack(spacing: SpacingTokens.medium) {
             // Block I v19: scaleEffect убран с 2D Ляли — только opacity fade-in.
             // F.tier1 v21: hero — мягче в dark.
-            LyalyaMascotView(state: lyalyaResultState, size: 140)
+            // E v21: 3D hero на SessionComplete (celebration phase).
+            LyalyaHeroView(state: lyalyaResultState, mood: 1.0, size: 160)
                 .opacity(visible ? (colorScheme == .dark ? 0.92 : 1.0) : 0)
                 .animation(
                     reduceMotion ? nil : MotionTokens.spring,
