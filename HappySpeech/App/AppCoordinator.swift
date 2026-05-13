@@ -47,6 +47,9 @@ enum AppRoute: Hashable {
     case voiceCloning(childId: String)
     case pronunciationLeaderboard(parentId: String)
     case neurolinguistInsights(childId: String)
+    // Block AE v21: extension screens (110+ target)
+    case soundDictionary
+    case helpCenter
 }
 
 enum PermissionType: Hashable {
@@ -403,6 +406,16 @@ struct AppCoordinatorView: View {
                 NeurolinguistInsightsView(childId: childId)
             }
             .environment(\.circuitContext, .parent)
+
+        // MARK: - Block AE v21
+
+        case .soundDictionary:
+            SoundDictionaryView()
+                .environment(\.circuitContext, .parent)
+
+        case .helpCenter:
+            HelpCenterView()
+                .environment(\.circuitContext, .parent)
         }
     }
 
@@ -448,6 +461,8 @@ struct AppCoordinatorView: View {
             case "stuttering":          target = .stutteringHome
             case "fluencyDiary":        target = .fluencyDiaryParent
             case "siblingMultiplayer":  target = .siblingMultiplayer(childId: "preview-child-1")
+            case "soundDictionary":     target = .soundDictionary
+            case "helpCenter":          target = .helpCenter
             default:                    target = .auth
             }
             coordinator.navigate(to: target)
