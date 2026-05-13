@@ -32,6 +32,7 @@ final class OnboardingSnapshotTests: XCTestCase {
     func test_onboarding_step1_welcome() throws {
         let view = OnboardingFlowView(onComplete: { _ in })
             .environment(AppCoordinator())
+            .environment(AppContainer.preview())
         try record(view, screen: "OnboardingStep1_Welcome")
     }
 
@@ -40,6 +41,7 @@ final class OnboardingSnapshotTests: XCTestCase {
     func test_onboarding_step2_reloaded() throws {
         let view = OnboardingFlowView(onComplete: { _ in })
             .environment(AppCoordinator())
+            .environment(AppContainer.preview())
         try record(view, screen: "OnboardingStep2_Reload")
     }
 

@@ -18,6 +18,7 @@ struct OnboardingFlowView: View {
     // MARK: - Environment
 
     @Environment(AppCoordinator.self) private var coordinator
+    @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
@@ -90,6 +91,13 @@ struct OnboardingFlowView: View {
         .accessibilityIdentifier("OnboardingRoot")
         .environment(\.circuitContext, .kid)
         .task { await bootstrap() }
+        // Plan v21 Block V — прогрев on-device ML моделей на шаге permissions.
+        // Запускается параллельно с самим UI, не блокирует «Далее».
+        .task(id: display.currentStep) {
+            if display.currentStep == .permissions {
+                await container.mlWarmupService.warmUp()
+            }
+        }
         .onChange(of: display.pendingCompleted) { _, value in
             guard value else { return }
             display.consumeCompleted()
@@ -348,6 +356,7 @@ struct OnboardingFlowView: View {
 #Preview("Onboarding 10-step") {
     OnboardingFlowView(onComplete: { _ in })
         .environment(AppCoordinator())
+        .environment(AppContainer.preview())
 }
 
 #Preview("Onboarding About Step") {
