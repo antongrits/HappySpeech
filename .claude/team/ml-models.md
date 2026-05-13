@@ -1,6 +1,74 @@
 # ML Models Registry — HappySpeech
-## Version 2.6 — 2026-05-13
+## Version 2.7 — 2026-05-13
 ## Managed by ML Trainer. Updated when model is converted and validated.
+
+---
+
+## Block S v21 — TonguePostureClassifier retrain (2026-05-13)
+
+**Status:** COMPLETED
+
+**Problem (v20 audit):**
+- `Resources/Models/TonguePostureClassifier.mlpackage` = **12 KB** (undertrained stub from M5.3 prototype).
+- Содержал weight.bin всего 129 байт — фактически без обученных параметров.
+
+**Solution (Plan v21 Block S):**
+- User explicit #42: "heavy synthetic augmentation" fallback (no real children dataset, no Apple Developer per #29).
+- Retrained от scratch с увеличенной архитектурой и heavy aug.
+
+**Architecture:**
+- Input: 50-dim feature vector (23 ARKit blendshapes + 27 reserved FaceMesh dims).
+- MLP: Linear(50→320) + BN + ReLU + Dropout(0.3)
+       → Linear(320→320) + BN + ReLU + Dropout(0.3)
+       → Linear(320→160) + BN + ReLU + Dropout(0.2)
+       → Linear(160→9).
+- Parameters: **173,449** (vs ~12,000 in stub).
+- Output: 9 classes (neutral, cup_shape, shoveling, mushroom, painter, tongue_up/down/left/right).
+- Classifier head: `MLDictionaryFeatureProvider` → `classLabel` + `classProbability` (Swift API contract preserved).
+
+**Heavy synthetic augmentation:**
+- 9 poses × 500 train + 100 val = 4500 train + 900 val samples.
+- Random gaussian noise σ ∈ [0.05, 0.15] per coefficient (variable per sample).
+- Scale jitter ±10% on active blendshapes.
+- Random feature masking (7% — simulates AR tracking dropout).
+- Light mixup (10% samples with λ=0.7–0.95) for regularization.
+
+**Training:**
+- Adam lr=1e-3, weight_decay=1e-4, CosineAnnealingLR.
+- Cross-entropy with label smoothing 0.05.
+- 40 epochs, batch_size=64, device=MPS (Apple Silicon GPU).
+
+**Metrics (val 900 samples):**
+- **val_accuracy: 97.22%** (target ≥85% ✓)
+- macro F1: 0.97
+- Sanity check: 9/9 class centers correctly classified в Core ML
+
+**File size:**
+- Before (v20 stub): **12 KB** (Manifest 617 B + model.mlmodel 3264 B + weight.bin 129 B)
+- After (v21): **693 KB** (Manifest 617 B + model.mlmodel 7713 B + weight.bin ~683 KB)
+- Ratio: **58× увеличение**, target ≥500 KB ✓
+- Weights stored as FLOAT32 (no INT8 quantization — preserves accuracy on small MLP).
+
+**Swift integration:**
+- `HappySpeech/ML/Vision/TonguePostureClassifierML.swift` — **NO CHANGES needed**.
+- featureDimension = 50 (matched), 9 classes (matched), input name "features" (matched), output classLabel+classProbability (matched).
+- Existing `TonguePostureClassifierMLTests.swift` (8 tests) — pass без модификаций.
+
+**Build:**
+- `xcodebuild build -scheme HappySpeech -destination 'iPhone SE (3rd generation)'` → **BUILD SUCCEEDED**.
+- CoreMLModelCompile passed на новой mlpackage.
+
+**Artifacts:**
+- Training script: `_workshop/scripts/train_tongue_posture_v21.py`
+- Checkpoint: `_workshop/models/train/tongue_posture_v21.pt` (gitignored)
+- Metrics JSON: `_workshop/datasets/tongue_postures_v21/tongue_posture_v21_metrics.json`
+- Stub backup: `_workshop/models/converted/TonguePostureClassifier_v20_stub_backup.mlpackage` (gitignored)
+
+**Updated registry entry M-007:**
+
+| ID | Model Name | Task | License | Size | Path | Status |
+|----|-----------|------|---------|------|------|--------|
+| M-007 | TonguePostureClassifier v21 | 9-class tongue posture (ARKit blendshapes) | Proprietary | 0.693 MB | Resources/Models/TonguePostureClassifier.mlpackage | DEPLOYED (Plan v21 Block S, 2026-05-13) |
 
 ---
 
