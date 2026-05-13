@@ -86,8 +86,8 @@ struct DemoModeView: View {
     @State private var showOverview = false
     /// Локальный обратный отсчёт авто-перехода (5→0).
     @State private var countdownSeconds: Int = 5
-    /// Timer для отображения обратного отсчёта (отдельно от autoAdvanceTask в Interactor).
-    @State private var countdownTimer: Timer?
+    /// Task для отображения обратного отсчёта (AsyncStream-based, v22 Block 2.3).
+    @State private var countdownTask: Task<Void, Never>?
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "DemoModeView")
 
@@ -342,25 +342,43 @@ struct DemoModeView: View {
     }
 
     // MARK: - Countdown helpers
+    //
+    // v22 Block 2.3: AsyncStream-based countdown (no Timer.scheduledTimer).
+    // Stream yields each tick (1s cadence); view consumes via for-await.
+
+    /// AsyncStream tick generator (1s cadence). Каждый yield — следующее
+    /// значение `secondsLeft`, начиная с `start` и до 0.
+    private func countdownStream(start: Int) -> AsyncStream<Int> {
+        AsyncStream { continuation in
+            let task = Task {
+                var seconds = start
+                while !Task.isCancelled && seconds > 0 {
+                    try? await Task.sleep(for: .seconds(1))
+                    guard !Task.isCancelled else { break }
+                    seconds -= 1
+                    continuation.yield(seconds)
+                }
+                continuation.finish()
+            }
+            continuation.onTermination = { _ in task.cancel() }
+        }
+    }
 
     private func startCountdown() {
-        countdownSeconds = 5
         stopCountdown()
-        countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-            Task { @MainActor in
-                if self.countdownSeconds > 0 {
-                    self.countdownSeconds -= 1
-                } else {
-                    self.countdownTimer?.invalidate()
-                    self.countdownTimer = nil
-                }
+        countdownSeconds = 5
+        let stream = countdownStream(start: 5)
+        countdownTask = Task { @MainActor in
+            for await tick in stream {
+                guard !Task.isCancelled else { break }
+                countdownSeconds = tick
             }
         }
     }
 
     private func stopCountdown() {
-        countdownTimer?.invalidate()
-        countdownTimer = nil
+        countdownTask?.cancel()
+        countdownTask = nil
         countdownSeconds = 5
     }
 

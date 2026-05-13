@@ -204,7 +204,6 @@ public struct RussianG2P: Sendable {
     ///
     /// Возвращает массив фонем — обычно 1 элемент, но 2 для йотированных гласных
     /// в начале слова или после гласной/ь/ъ.
-    // swiftlint:disable cyclomatic_complexity function_body_length
     private func transcribeVowel(
         _ ch: Character,
         index: Int,
@@ -259,7 +258,6 @@ public struct RussianG2P: Sendable {
             return []
         }
     }
-    // swiftlint:enable cyclomatic_complexity function_body_length
 
     /// Возвращает редуцированную фонему для `а/о`.
     ///
@@ -333,8 +331,8 @@ public struct RussianG2P: Sendable {
     }
 
     /// Базовая фонема согласной с применением мягкости.
-    // swiftlint:disable cyclomatic_complexity
-    private func basePhoneme(for ch: Character, soft: Bool) -> String {
+    private func basePhoneme(for ch: Character, soft: Bool) -> String { // swiftlint:disable:this cyclomatic_complexity
+
         switch ch {
         // Always-fixed (без палатализации)
         case "ш": return "ʂ"
@@ -366,7 +364,6 @@ public struct RussianG2P: Sendable {
         default: return ""
         }
     }
-    // swiftlint:enable cyclomatic_complexity
 
     /// Делает фонему мягкой (добавляет `ʲ`), если ещё не мягкая.
     private func soften(_ phoneme: String) -> String {
@@ -393,8 +390,9 @@ public struct RussianG2P: Sendable {
         var result: [String] = []
         var i = 0
         while i < phonemes.count {
+            let isTOrSoftT = phonemes[i] == "t" || phonemes[i] == "tʲ"
             if i + 1 < phonemes.count,
-               (phonemes[i] == "t" || phonemes[i] == "tʲ"),
+               isTOrSoftT,
                phonemes[i + 1] == "s" {
                 result.append("ts")
                 i += 2

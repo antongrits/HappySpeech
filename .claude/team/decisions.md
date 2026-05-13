@@ -3567,3 +3567,73 @@ Manual Figma/Sketch redesign — see ADR-V21-AJ-DARKICON-DEFER continued trackin
 
 **Related ADRs:**
 - ADR-V21-AJ-DARKICON-DEFER (visual quality issue)
+
+
+## ADR-V22-L10N-SWIFTGEN-DEFER
+
+**Date:** 2026-05-13
+**Status:** Partial accept
+**Author:** antongrits
+
+**Context:**
+Plan v22 Block 2.4 requested SwiftGen integration для `L10n.swift` typed accessor generation от `Localizable.xcstrings` (4170+ keys).
+
+**Decision:**
+Manual `HappySpeech/Generated/L10n.swift` stub created с ~30 sample typed accessors для critical paths (Auth, ChildHome, ParentHome, Onboarding, Achievements, Demo, Action, ErrorMessage).
+Full SwiftGen build-phase integration deferred to v23+.
+
+**Rationale:**
+1. Manual stub provides type-safe accessor pattern для критических flow без сложной build-phase config.
+2. SwiftGen SwiftPM Plugin (`SwiftGenPlugin`) требует:
+   - Plugin declaration в `project.yml` package section.
+   - Per-target plugin invocation via `plugins:` build phase.
+   - `swiftgen.yml` config с input/output mappings к xcstrings.
+3. xcodegen + SwiftPM Plugin integration не trivial — proper testing нужен > diploma timeline.
+4. `String(localized:)` под капотом stub'a остаётся идиоматичным и future-proof — auto-migration к full SwiftGen output не требует rewrite usage sites (одинаковая API).
+
+**Future (v23+):**
+- Add `SwiftGenPlugin` SwiftPM dependency.
+- Create `swiftgen.yml` для xcstrings parsing.
+- Replace `Generated/L10n.swift` с auto-generated version (CI runs `swift package plugin --allow-writing-to-package-directory swiftgen`).
+- Full key coverage (4170+ → 100%).
+
+**Tracked in:**
+- `HappySpeech/Generated/L10n.swift` (stub)
+- `.claude/team/backlog-v23.md` (P1 — SwiftGen integration)
+
+
+## ADR-V22-DEAD-CODE-PARTIAL
+
+**Date:** 2026-05-13
+**Status:** Partial accept
+**Author:** antongrits
+
+**Context:**
+Plan v22 Block 2.5 requested re-audit of dead code (unused exports, deprecated declarations, orphaned files) across `HappySpeech/` (~768 Swift files, ~171 public types).
+
+**Decision:**
+Manual heuristic scan completed; results documented в `.claude/team/dead-code-audit-v22.md`. **No code removals** в v22.
+Full automated dead code analyzer deferred to v23+.
+
+**Rationale:**
+1. Heuristic scan (filename / grep / size-based) **cannot reliably detect**:
+   - SwiftUI `View` auto-discovery (Previews + #Preview macros).
+   - `@objc` runtime dispatch (selectors, KVC).
+   - Sendable / protocol witness tables.
+   - Realm auto-discovered models через `Realm.Configuration.migration`.
+2. Removing types based on heuristic risks **regressions** in production paths не covered by tests.
+3. Diploma timeline (Sprint 12, < 2 weeks) не permits proper validation of large-scale deletions.
+
+**Findings:**
+- 6 superfluous `// swiftlint:disable` pairs removed (no behavior change).
+- 1 small file confirmed legitimate (`ReportsRouter.swift`).
+- 0 actual dead files identified.
+
+**Future (v23+):**
+- Integrate `periphery` static analyzer — `brew install peripheryapp/periphery/periphery`.
+- CI step: `periphery scan --project HappySpeech.xcodeproj --strict`.
+- Address findings incrementally over 2-3 sprints (not bulk delete).
+
+**Tracked in:**
+- `.claude/team/dead-code-audit-v22.md`
+- `.claude/team/backlog-v23.md` (P2 — periphery integration)

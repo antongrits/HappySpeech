@@ -105,7 +105,12 @@ public struct HSStarRatingView: View {
                         .contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel(String(localized: "starRating.set", defaultValue: "Поставить") + " \(index) " + String(localized: "starRating.outOf", defaultValue: "из") + " \(maxStars)")
+                .accessibilityLabel(
+                    String(localized: "starRating.set", defaultValue: "Поставить")
+                    + " \(index) "
+                    + String(localized: "starRating.outOf", defaultValue: "из")
+                    + " \(maxStars)"
+                )
                 .accessibilityAddTraits(.isButton)
             }
         }
@@ -136,7 +141,10 @@ public struct HSStarRatingView: View {
 
     private var accessibilityLabelText: String {
         let value = mode == .interactive ? rating : displayRating
-        return String(localized: "starRating.label.prefix", defaultValue: "Оценка") + " \(value) " + String(localized: "starRating.outOf", defaultValue: "из") + " \(maxStars)"
+        return String(localized: "starRating.label.prefix", defaultValue: "Оценка")
+            + " \(value) "
+            + String(localized: "starRating.outOf", defaultValue: "из")
+            + " \(maxStars)"
     }
 }
 

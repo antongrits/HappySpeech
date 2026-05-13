@@ -101,7 +101,7 @@ public actor G2PWorker {
         return result.isEmpty ? ["a"] : result
     }
 
-    // swiftlint:disable cyclomatic_complexity function_parameter_count
+    // swiftlint:disable cyclomatic_complexity
     private func ruleBasedPhonemes(
         ch: Character,
         idx: Int,
@@ -163,7 +163,7 @@ public actor G2PWorker {
         default: return []
         }
     }
-    // swiftlint:enable cyclomatic_complexity function_parameter_count
+    // swiftlint:enable cyclomatic_complexity
 }
 
 // MARK: - G2PJSON

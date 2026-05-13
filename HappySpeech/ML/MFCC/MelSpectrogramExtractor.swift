@@ -179,7 +179,6 @@ public actor MelSpectrogramExtractor {
         return result
     }
 
-    // swiftlint:disable function_body_length
     private func computeMagnitudeSpectrum(_ frame: [Float]) -> [Float] {
         let halfN = Self.nFFT / 2
         let halfFFT = Self.nFFT / 2 + 1
@@ -222,7 +221,6 @@ public actor MelSpectrogramExtractor {
 
         return normalized
     }
-    // swiftlint:enable function_body_length
 
     private func applyMelFilterbank(_ magnitude: [Float]) -> [Float] {
         let halfFFT = Self.nFFT / 2 + 1
