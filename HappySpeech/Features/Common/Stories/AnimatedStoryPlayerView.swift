@@ -404,9 +404,9 @@ struct AnimatedStoryPlayerView: View {
             withAnimation(reduceMotion ? .none : MotionTokens.page) {
                 currentSceneIndex += 1
             }
-            DispatchQueue.main.asyncAfter(
-                deadline: .now() + (reduceMotion ? 0 : MotionTokens.Duration.pageTransition)
-            ) {
+            let delay = reduceMotion ? 0.0 : MotionTokens.Duration.pageTransition
+            Task { @MainActor in
+                try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
                 showScene()
             }
         }

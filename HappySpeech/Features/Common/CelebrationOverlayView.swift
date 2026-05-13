@@ -166,7 +166,8 @@ struct CelebrationOverlayView: View {
 
         // 2. Текст и звёзды с небольшой задержкой
         let delay1 = reduceMotion ? 0.0 : MotionTokens.Duration.moderate
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay1) {
+        Task { @MainActor in
+            try? await Task.sleep(nanoseconds: UInt64(delay1 * 1_000_000_000))
             withAnimation(reduceMotion ? .none : MotionTokens.spring) {
                 textVisible = true
                 starScale = 1.0
@@ -184,7 +185,8 @@ struct CelebrationOverlayView: View {
 
         // 3. Кнопка появляется в конце (конфетти запускается через ConfettiEmitterCanvas.onAppear)
         let delay2 = reduceMotion ? 0.1 : MotionTokens.Duration.slow + MotionTokens.Duration.standard
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay2) {
+        Task { @MainActor in
+            try? await Task.sleep(nanoseconds: UInt64(delay2 * 1_000_000_000))
             withAnimation(reduceMotion ? .none : MotionTokens.spring) {
                 buttonVisible = true
             }

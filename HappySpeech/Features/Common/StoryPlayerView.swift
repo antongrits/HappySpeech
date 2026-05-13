@@ -195,7 +195,8 @@ struct StoryPlayerView: View {
 
     private func scheduleSkipButton() {
         // Кнопка «Пропустить» появляется через 1 сек чтобы не мешать первому кадру
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        Task { @MainActor in
+            try? await Task.sleep(nanoseconds: 1_000_000_000)
             showSkip = true
         }
     }
