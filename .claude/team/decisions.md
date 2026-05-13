@@ -3,6 +3,57 @@
 
 ---
 
+## ADR-V21-WHISPER-CONSOLIDATION — Keep both whisper-base + whisper-small (2026-05-13)
+
+### Status: Accepted (Block M v21)
+
+### Context
+Plan v21 Block M audit: Resources/Models = 957 MB. Из них Whisper/ = 604 MB:
+- `whisper-base/` = 140 MB
+- `whisper-small/` = 464 MB
+
+User explicit per Plan v21: «не делать избыточно много», cleanup нужен. Вопрос — обе ли модели actually used at runtime?
+
+### Runtime usage analysis (grep по HappySpeech/**/*.swift)
+**Both models actively used:**
+
+| Tier | Модель | Контур | Файл |
+|---|---|---|---|
+| Tier B (`parentQuality`) | `whisper-base` | parent dashboard ASR | `ML/ASR/ASRServiceLive.swift:39-46, 89-96, 167-179` |
+| Tier C (`specialistQuality`) | `whisper-small` | specialist circuit ASR | `ML/ASR/ASRServiceLive.swift:30-37, 81-87, 147-159`; `Features/Specialist/SpecialistInteractor.swift:60, 92, 100` |
+| Tier A (`kidOnDevice`) | `whisper-tiny` (downloaded) | kid contour | fallback |
+
+Fallback chain (`ASRServiceLive.loadModel`):
+1. specialistQuality → bundled whisper-small → если не доступен → parentQuality
+2. parentQuality → bundled whisper-base → если не доступен → tiny
+3. kidOnDevice → downloaded whisper-tiny
+
+**Удаление любой из двух bundled моделей сломает fallback и снизит quality либо для parent (Tier B), либо для specialist (Tier C).**
+
+### Decision
+**Keep both whisper-base (140 MB) + whisper-small (464 MB).** Никакого Whisper удаления.
+
+### Consequences
+- Bundle Resources Whisper sector unchanged: 604 MB.
+- Tier B (parent) и Tier C (specialist) функционал сохранён.
+- Other Block M cleanup (backups) → see savings ниже.
+
+### Alternative considered: delete whisper-base, force parent → tiny
+- **Rejected:** quality drop для parent dashboard (tiny ASR показывает ~10-15% WER на детской русской речи vs ~5-7% у base). Parent контур требует readable transcripts для аналитики.
+
+### Future
+- v22+: рассмотреть quantization whisper-small до 4-bit (-50% size) если bundle limit нажмёт.
+- whisper-large upgrade откладывается — current quality acceptable для v21 dipломной защиты.
+
+### Block M v21 savings (other items)
+- `RussianPhonemeClassifier_v18_backup.mlpackage`: уже удалён ранее (0 KB сейчас).
+- `lyalya_backup_b.m4a`: -16 KB
+- `lyalya_backup_c.m4a`: -12 KB
+- `lyalya_setting_backup.m4a`: -18 KB
+- **Total Block M savings: ~46 KB** (модальное cleanup минимален — Whisper kept).
+
+---
+
 ## ADR-V19-G-VIDEOS-TARGET-MET — Remotion 100+ MP4 already achieved (2026-05-10)
 
 ### Status: Approved (Block G v19)

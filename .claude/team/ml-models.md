@@ -1,6 +1,31 @@
 # ML Models Registry — HappySpeech
-## Version 2.5 — 2026-05-07
+## Version 2.6 — 2026-05-13
 ## Managed by ML Trainer. Updated when model is converted and validated.
+
+---
+
+## Block M v21 — Whisper consolidation + backup cleanup (2026-05-13)
+
+**Status:** COMPLETED
+
+**Whisper analysis:**
+- Both `whisper-base` (140 MB, Tier B parent) и `whisper-small` (464 MB, Tier C specialist) actively used at runtime per `HappySpeech/ML/ASR/ASRServiceLive.swift`.
+- **Decision: KEEP BOTH** (ADR-V21-WHISPER-CONSOLIDATION in `.claude/team/decisions.md`).
+- Удаление любой из bundled моделей сломает fallback chain и снизит quality для parent либо specialist контура.
+
+**Backup files removed:**
+- `RussianPhonemeClassifier_v18_backup.mlpackage` — уже не существовало на момент Block M (cleaned ранее).
+- `lyalya_backup_b.m4a` — DELETED (-16 KB)
+- `lyalya_backup_c.m4a` — DELETED (-12 KB)
+- `lyalya_setting_backup.m4a` — DELETED (-18 KB)
+
+**Total Block M savings:** ~46 KB (минимальный, т.к. Whisper kept by design).
+
+**Registry state for Whisper (unchanged):**
+- M-001 WhisperKit large-v3-turbo (planned download, S5)
+- M-002 WhisperKit tiny — Tier A kid (downloaded)
+- Bundled `whisper-base` — Tier B parent (140 MB, Resources/Models/Whisper/whisper-base/)
+- Bundled `whisper-small` — Tier C specialist (464 MB, Resources/Models/Whisper/whisper-small/)
 
 ---
 
