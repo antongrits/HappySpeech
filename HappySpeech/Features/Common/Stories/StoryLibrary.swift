@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 // MARK: - StoryLibrary
 
@@ -55,7 +56,7 @@ public final class StoryLibrary: Sendable {
             difficulty: 1,
             ageMin: 5,
             ageMax: 7,
-            backgroundGradient: ["#FFA07A", "#FF6347"]
+            backgroundGradient: ColorTokens.Story.shustrayShishka
         ),
 
         AnimatedStory(
@@ -94,7 +95,7 @@ public final class StoryLibrary: Sendable {
             difficulty: 1,
             ageMin: 5,
             ageMax: 7,
-            backgroundGradient: ["#87CEEB", "#4169E1"]
+            backgroundGradient: ColorTokens.Story.zhukovVLuzhe
         ),
 
         AnimatedStory(
@@ -133,7 +134,7 @@ public final class StoryLibrary: Sendable {
             difficulty: 2,
             ageMin: 5,
             ageMax: 8,
-            backgroundGradient: ["#FFD700", "#FFA500"]
+            backgroundGradient: ColorTokens.Story.shchenokIShchetka
         ),
 
         AnimatedStory(
@@ -172,7 +173,7 @@ public final class StoryLibrary: Sendable {
             difficulty: 2,
             ageMin: 5,
             ageMax: 8,
-            backgroundGradient: ["#FF8C69", "#CD5C5C"]
+            backgroundGradient: ColorTokens.Story.chaynikChudak
         ),
 
         // ─── Свистящие ───────────────────────────────────────────────────────
@@ -213,7 +214,7 @@ public final class StoryLibrary: Sendable {
             difficulty: 1,
             ageMin: 5,
             ageMax: 7,
-            backgroundGradient: ["#87CEEB", "#1E90FF"]
+            backgroundGradient: ColorTokens.Story.sinyayaSobaka
         ),
 
         AnimatedStory(
@@ -252,7 +253,7 @@ public final class StoryLibrary: Sendable {
             difficulty: 1,
             ageMin: 5,
             ageMax: 7,
-            backgroundGradient: ["#90EE90", "#228B22"]
+            backgroundGradient: ColorTokens.Story.zaychikNaZaryadke
         ),
 
         AnimatedStory(
@@ -291,7 +292,7 @@ public final class StoryLibrary: Sendable {
             difficulty: 2,
             ageMin: 5,
             ageMax: 8,
-            backgroundGradient: ["#FFD700", "#FF8C00"]
+            backgroundGradient: ColorTokens.Story.tsyplyonokTsezar
         ),
 
         // ─── Соноры Р ───────────────────────────────────────────────────────
@@ -332,7 +333,7 @@ public final class StoryLibrary: Sendable {
             difficulty: 2,
             ageMin: 6,
             ageMax: 8,
-            backgroundGradient: ["#00CED1", "#20B2AA"]
+            backgroundGradient: ColorTokens.Story.rybkaRita
         ),
 
         AnimatedStory(
@@ -371,7 +372,7 @@ public final class StoryLibrary: Sendable {
             difficulty: 2,
             ageMin: 6,
             ageMax: 8,
-            backgroundGradient: ["#191970", "#4B0082"]
+            backgroundGradient: ColorTokens.Story.raketaRyzhik
         ),
 
         // ─── Соноры Л ───────────────────────────────────────────────────────
@@ -412,7 +413,7 @@ public final class StoryLibrary: Sendable {
             difficulty: 2,
             ageMin: 6,
             ageMax: 8,
-            backgroundGradient: ["#7CFC00", "#228B22"]
+            backgroundGradient: ColorTokens.Story.lisaIlyagushka
         ),
 
         AnimatedStory(
@@ -451,7 +452,7 @@ public final class StoryLibrary: Sendable {
             difficulty: 1,
             ageMin: 5,
             ageMax: 7,
-            backgroundGradient: ["#2C3E50", "#8E44AD"]
+            backgroundGradient: ColorTokens.Story.lunaIlena
         ),
 
         // ─── Заднеязычные ────────────────────────────────────────────────────
@@ -492,7 +493,7 @@ public final class StoryLibrary: Sendable {
             difficulty: 1,
             ageMin: 5,
             ageMax: 7,
-            backgroundGradient: ["#FF9966", "#FF5E62"]
+            backgroundGradient: ColorTokens.Story.kotKuzma
         ),
 
         AnimatedStory(
@@ -531,7 +532,7 @@ public final class StoryLibrary: Sendable {
             difficulty: 1,
             ageMin: 5,
             ageMax: 7,
-            backgroundGradient: ["#56AB2F", "#A8E063"]
+            backgroundGradient: ColorTokens.Story.gusGrisha
         ),
 
         AnimatedStory(
@@ -570,7 +571,7 @@ public final class StoryLibrary: Sendable {
             difficulty: 2,
             ageMin: 5,
             ageMax: 8,
-            backgroundGradient: ["#D4A056", "#A0522D"]
+            backgroundGradient: ColorTokens.Story.khomyakKhrabry
         ),
 
         // ─── Бонусные (смешанные/грамматика) ────────────────────────────────
@@ -611,7 +612,7 @@ public final class StoryLibrary: Sendable {
             difficulty: 1,
             ageMin: 5,
             ageMax: 7,
-            backgroundGradient: ["#8B4513", "#D2691E"]
+            backgroundGradient: ColorTokens.Story.mishkaIMishutka
         ),
 
         AnimatedStory(
@@ -650,7 +651,7 @@ public final class StoryLibrary: Sendable {
             difficulty: 1,
             ageMin: 5,
             ageMax: 7,
-            backgroundGradient: ["#00BFFF", "#87CEFA"]
+            backgroundGradient: ColorTokens.Story.pingvinPyotr
         ),
 
         AnimatedStory(
@@ -689,7 +690,7 @@ public final class StoryLibrary: Sendable {
             difficulty: 1,
             ageMin: 5,
             ageMax: 7,
-            backgroundGradient: ["#556B2F", "#8FBC8F"]
+            backgroundGradient: ColorTokens.Story.yozhikEgor
         ),
 
         AnimatedStory(
@@ -728,7 +729,7 @@ public final class StoryLibrary: Sendable {
             difficulty: 1,
             ageMin: 5,
             ageMax: 7,
-            backgroundGradient: ["#FF69B4", "#DA70D6"]
+            backgroundGradient: ColorTokens.Story.babochkaBella
         ),
 
         AnimatedStory(
@@ -767,7 +768,7 @@ public final class StoryLibrary: Sendable {
             difficulty: 2,
             ageMin: 6,
             ageMax: 8,
-            backgroundGradient: ["#B22222", "#FF4500"]
+            backgroundGradient: ColorTokens.Story.drakonDima
         ),
 
         AnimatedStory(
@@ -806,7 +807,7 @@ public final class StoryLibrary: Sendable {
             difficulty: 1,
             ageMin: 5,
             ageMax: 7,
-            backgroundGradient: ["#FF8C00", "#FF4500"]
+            backgroundGradient: ColorTokens.Story.tigrTimur
         )
     ]
 
