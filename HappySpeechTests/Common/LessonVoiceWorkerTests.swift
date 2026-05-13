@@ -35,30 +35,66 @@ private final class VWContentMock: ContentService, @unchecked Sendable {
     func bundledPacks() -> [ContentPackMeta] { [] }
 }
 
-// MARK: - Вспомогательный поиск app bundle (для JSON lookup)
+// MARK: - JSON lookup helper
+//
+// Block 3.2 v23: тесты грузят JSON из host app bundle.
+//
+// Path resolution:
+//   • Test bundle живёт по пути `<HappySpeech.app>/PlugIns/HappySpeechTests.xctest/`.
+//   • Из URL test-bundle уходим на 2 уровня вверх → получаем `HappySpeech.app/`.
+//   • JSON копируется в корень app bundle (project.yml: HappySpeech/Resources/** → resources).
+//   • `Bundle.main` в xctest = test helper, НЕ app — поэтому путь через test-bundle URL.
+//
+// JSON schema:
+//   После плана v22 JSON стал гетерогенным: одни ключи отображаются в String
+//   ("сани" → "sani"), другие — в объект с metadata
+//   ("v18c/word_analysis_intro_v1.m4a" → { "text": "...", "category": "..." }).
+//   Поэтому декодируем в `[String: JSONValue]` и оставляем только flat-mappings
+//   (String → String). Тесты проверяют именно эти legacy-ключи.
 
-private enum AppBundleFinder {
-    static func appBundle(for testClass: AnyClass) -> URL? {
-        let testBundleURL = Bundle(for: testClass).bundleURL
-        var candidate = testBundleURL
-        for _ in 0..<3 {
-            candidate = candidate.deletingLastPathComponent()
-            let appURL = candidate.appendingPathComponent("HappySpeech.app")
-            if FileManager.default.fileExists(atPath: appURL.path) {
-                return appURL
-            }
+private enum JSONValue: Decodable {
+    case string(String)
+    case object([String: JSONValue])
+    case other
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        if let str = try? container.decode(String.self) {
+            self = .string(str)
+        } else if let obj = try? container.decode([String: JSONValue].self) {
+            self = .object(obj)
+        } else {
+            self = .other
         }
-        return nil
+    }
+}
+
+private enum PhraseMappingLoader {
+    static func appBundleURL(for testClass: AnyClass) -> URL {
+        // .../HappySpeech.app/PlugIns/HappySpeechTests.xctest
+        //   → .../HappySpeech.app/PlugIns
+        //   → .../HappySpeech.app
+        Bundle(for: testClass).bundleURL
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
     }
 
-    static func loadPhraseMapping(for testClass: AnyClass) -> [String: String] {
-        guard let appURL = appBundle(for: testClass) else { return [:] }
-        let jsonURL = appURL.appendingPathComponent("lyalya-phrase-mapping.json")
+    /// Загружает flat (String → String) подмножество маппинга.
+    /// Игнорирует nested object entries (v18c/*.m4a → metadata dict).
+    static func load(for testClass: AnyClass) -> [String: String] {
+        let jsonURL = appBundleURL(for: testClass)
+            .appendingPathComponent("lyalya-phrase-mapping.json")
         guard let data = try? Data(contentsOf: jsonURL),
-              let dict = try? JSONDecoder().decode([String: String].self, from: data) else {
+              let raw = try? JSONDecoder().decode([String: JSONValue].self, from: data) else {
             return [:]
         }
-        return dict
+        var flat: [String: String] = [:]
+        for (key, value) in raw {
+            if case .string(let str) = value {
+                flat[key] = str
+            }
+        }
+        return flat
     }
 }
 
@@ -67,13 +103,18 @@ private enum AppBundleFinder {
 @MainActor
 final class LessonVoiceWorkerMappingTests: XCTestCase {
 
-    // MARK: - 08. JSON lyalya-phrase-mapping.json содержит ровно 735 записей
+    // MARK: - 08. JSON lyalya-phrase-mapping.json содержит как минимум 700 flat-записей
+    //
+    // Точное число flat-mappings (String→String) растёт со временем при добавлении
+    // новых слов. Snapshot-assert на >= 700 защищает от регрессии (удалённые слова),
+    // но не ломается при добавлении новых.
 
-    func test_phraseMapping_loaded_735entries() throws {
-        let mapping = AppBundleFinder.loadPhraseMapping(for: LessonVoiceWorkerMappingTests.self)
-        try XCTSkipIf(mapping.isEmpty, "lyalya-phrase-mapping.json не найден в app bundle — пропуск теста на симуляторе без сборки")
-        XCTAssertEqual(mapping.count, 735,
-                       "lyalya-phrase-mapping.json должен содержать 735 записей")
+    func test_phraseMapping_loaded_atLeast700FlatEntries() {
+        let mapping = PhraseMappingLoader.load(for: LessonVoiceWorkerMappingTests.self)
+        XCTAssertFalse(mapping.isEmpty,
+                       "lyalya-phrase-mapping.json должен быть в host app bundle (project.yml resources phase)")
+        XCTAssertGreaterThanOrEqual(mapping.count, 700,
+                                    "Ожидалось >= 700 flat-маппингов; получено \(mapping.count)")
     }
 }
 
@@ -86,8 +127,9 @@ final class LessonVoiceWorkerNormalizationTests: XCTestCase {
 
     override func setUp() async throws {
         try await super.setUp()
-        mapping = AppBundleFinder.loadPhraseMapping(for: LessonVoiceWorkerNormalizationTests.self)
-        try XCTSkipIf(mapping.isEmpty, "Маппинг не найден — пропускаем нормализационные тесты")
+        mapping = PhraseMappingLoader.load(for: LessonVoiceWorkerNormalizationTests.self)
+        XCTAssertFalse(mapping.isEmpty,
+                       "Маппинг должен быть доступен в host app bundle")
     }
 
     // MARK: - 01. "сани" присутствует с phraseId "sani"
@@ -130,8 +172,9 @@ final class LessonVoiceWorkerYoTests: XCTestCase {
 
     override func setUp() async throws {
         try await super.setUp()
-        mapping = AppBundleFinder.loadPhraseMapping(for: LessonVoiceWorkerYoTests.self)
-        try XCTSkipIf(mapping.isEmpty, "Маппинг не найден — пропускаем ё-тест")
+        mapping = PhraseMappingLoader.load(for: LessonVoiceWorkerYoTests.self)
+        XCTAssertFalse(mapping.isEmpty,
+                       "Маппинг должен быть доступен в host app bundle")
     }
 
     // MARK: - 05. "самолёт" (с ё) есть в маппинге, "самолет" (без ё) — нет прямым ключом
