@@ -1,3 +1,4 @@
+import os.signpost
 import OSLog
 import SwiftUI
 
@@ -47,6 +48,11 @@ struct ChildHomeView: View {
     // MARK: - R.5 v18 — Cultural Content (русские сказки/песни)
     // Tap на quick action card → sheet с CulturalContentView.
     @State private var showCulturalContentSheet: Bool = false
+
+    // MARK: - Plan v22 Block 0.5 — Cold start instrumentation
+    /// Флаг для одноразового signpost `ChildHomeFirstFrame` — фиксирует первый рендер
+    /// главного детского экрана после splash/auth, используется в Instruments POI.
+    @State private var firstFrameLogged: Bool = false
 
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(AppContainer.self) private var container
@@ -151,7 +157,17 @@ struct ChildHomeView: View {
             }
         }
         .accessibilityIdentifier("ChildHomeRoot")
-        .onAppear { bootstrap() }
+        .onAppear {
+            // Plan v22 Block 0.5 — фиксируем первый рендер главного детского экрана.
+            // Срабатывает один раз — повторные .onAppear (push/pop) не логируются.
+            if !firstFrameLogged {
+                firstFrameLogged = true
+                os_signpost(.event,
+                            log: HSSignpost.pointsOfInterest,
+                            name: "ChildHomeFirstFrame")
+            }
+            bootstrap()
+        }
         .task {
             await interactor?.fetchChildData(.init(childId: childId))
         }

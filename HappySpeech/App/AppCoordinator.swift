@@ -1,3 +1,4 @@
+import os.signpost
 import OSLog
 import SwiftUI
 
@@ -91,6 +92,17 @@ final class AppCoordinator {
     /// Attaches an auth-state listener. Call once at app bootstrap.
     /// When the user signs in/out, root route is switched between `.auth` and role-select / home.
     func bindAuthState(_ service: any AuthService) {
+        // Plan v22 Block 0.5 — AuthInit interval (Instruments Points of Interest).
+        // Замеряет время на удаление прошлой подписки + установку нового listener'а.
+        os_signpost(.begin,
+                    log: HSSignpost.pointsOfInterest,
+                    name: "AuthInit")
+        defer {
+            os_signpost(.end,
+                        log: HSSignpost.pointsOfInterest,
+                        name: "AuthInit")
+        }
+
         // Remove previous binding if any.
         if let previousHandle = authHandle, let previousService = boundAuthService {
             previousService.removeAuthStateListener(previousHandle)
