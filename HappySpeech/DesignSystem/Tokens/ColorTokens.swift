@@ -476,6 +476,83 @@ public enum ColorTokens {
         public static let backdropNight  = Color(red: 0.102, green: 0.039, blue: 0.231)
     }
 
+    // MARK: - Badge Palette
+
+    /// Палитра наград для пьедестала и leaderboard (`PronunciationLeaderboardView`).
+    /// Gold / Silver используют существующие brand-tokens; Bronze — отдельный warm-orange.
+    public enum Badge {
+        /// 1-е место — золото (alias на `Brand.gold`).
+        public static let gold   = ColorTokens.Brand.gold
+        /// 2-е место — серебро (alias на `Brand.silver`).
+        public static let silver = ColorTokens.Brand.silver
+        /// 3-е место — бронза (warm orange-brown).
+        public static let bronze = Color(red: 0.80, green: 0.50, blue: 0.20)
+    }
+
+    // MARK: - Story Backgrounds
+
+    /// Палитра градиентов для 20 анимированных историй (`StoryLibrary`).
+    ///
+    /// Каждая константа — пара hex-строк `[top, bottom]`, потребляемая
+    /// `AnimatedStoryPlayerView` через `Color(hex:)`. Тип `[String]` сохранён
+    /// для совместимости с `AnimatedStory.backgroundGradient: [String]` (Codable).
+    ///
+    /// Истории сгруппированы по фонетическим семействам:
+    /// шипящие → свистящие → соноры Р → соноры Л → заднеязычные → бонусные.
+    public enum Story {
+        // MARK: Шипящие
+        /// «Шустрая шишка» — Ш — light-salmon → tomato (тёплый осенний лес).
+        public static let shustrayShishka: [String]   = ["#FFA07A", "#FF6347"]
+        /// «Жучок в луже» — Ж — sky-blue → royal-blue (дождливая лужа).
+        public static let zhukovVLuzhe: [String]      = ["#87CEEB", "#4169E1"]
+        /// «Щенок и щётка» — Щ — gold → orange (тёплая комната).
+        public static let shchenokIShchetka: [String] = ["#FFD700", "#FFA500"]
+        /// «Чайник-чудак» — Ч — coral → indian-red (горячий чай).
+        public static let chaynikChudak: [String]     = ["#FF8C69", "#CD5C5C"]
+
+        // MARK: Свистящие
+        /// «Синяя собака» — С — sky-blue → dodger-blue (синий сад).
+        public static let sinyayaSobaka: [String]     = ["#87CEEB", "#1E90FF"]
+        /// «Зайчик на зарядке» — З — light-green → forest-green (зелёная полянка).
+        public static let zaychikNaZaryadke: [String] = ["#90EE90", "#228B22"]
+        /// «Цыплёнок Цезарь» — Ц — gold → dark-orange (солнечный птичий двор).
+        public static let tsyplyonokTsezar: [String]  = ["#FFD700", "#FF8C00"]
+
+        // MARK: Соноры Р
+        /// «Рыбка Рита» — Р — dark-turquoise → light-sea-green (морская глубина).
+        public static let rybkaRita: [String]         = ["#00CED1", "#20B2AA"]
+        /// «Ракета Рыжик» — Р — midnight-blue → indigo (звёздное небо).
+        public static let raketaRyzhik: [String]      = ["#191970", "#4B0082"]
+
+        // MARK: Соноры Л
+        /// «Лиса и лягушка» — Л — lawn-green → forest-green (лесная поляна).
+        public static let lisaIlyagushka: [String]    = ["#7CFC00", "#228B22"]
+        /// «Луна Лена» — Л — midnight-slate → purple-mauve (ночное небо).
+        public static let lunaIlena: [String]         = ["#2C3E50", "#8E44AD"]
+
+        // MARK: Заднеязычные
+        /// «Кот Кузьма» — К — sunset-coral → warm-red (домашний уют).
+        public static let kotKuzma: [String]          = ["#FF9966", "#FF5E62"]
+        /// «Гусь Гриша» — Г — meadow-green → light-green (зелёный луг).
+        public static let gusGrisha: [String]         = ["#56AB2F", "#A8E063"]
+        /// «Хомяк Храбрый» — Х — sand-tan → sienna (норка хомяка).
+        public static let khomyakKhrabry: [String]    = ["#D4A056", "#A0522D"]
+
+        // MARK: Бонусные (смешанные / грамматика)
+        /// «Мишка и мишутка» — Ш — saddle-brown → chocolate (медвежий шалаш).
+        public static let mishkaIMishutka: [String]   = ["#8B4513", "#D2691E"]
+        /// «Пингвин Пётр» — П — deep-sky-blue → light-sky-blue (ледяной океан).
+        public static let pingvinPyotr: [String]      = ["#00BFFF", "#87CEFA"]
+        /// «Ёжик Егор» — Е — dark-olive → dark-sea-green (хвойный лес).
+        public static let yozhikEgor: [String]        = ["#556B2F", "#8FBC8F"]
+        /// «Бабочка Белла» — Б — hot-pink → orchid (цветочный сад).
+        public static let babochkaBella: [String]     = ["#FF69B4", "#DA70D6"]
+        /// «Дракон Дима» — Д — fire-brick → orange-red (драконий огонь).
+        public static let drakonDima: [String]        = ["#B22222", "#FF4500"]
+        /// «Тигр Тимур» — Т — dark-orange → orange-red (тропический закат).
+        public static let tigrTimur: [String]         = ["#FF8C00", "#FF4500"]
+    }
+
     // MARK: - Lyalya Scene (SceneKit / SwiftUI)
 
     /// Цвета сцены SceneKit плейсхолдера Ляли (`LyalyaSceneView`).
