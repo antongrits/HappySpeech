@@ -3281,3 +3281,61 @@ DocC defer не блокирует general bundle growth strategy.
 **Приоритеты:** tutorials (8 файлов на видном месте), `celebrate_perfect_round` (kid-emotional trigger), `loader_voice_recording` (engagement-критический).
 
 **Метки:** ADR-V18-N-LOTTIE-DEFER, Block N v18, post-v1.0
+
+## ADR-V22-WHISPER-ADAPTIVE
+
+**Date:** 2026-05-13
+**Status:** Accepted
+**Context:** Plan v22 Block 1.2 — adaptive Whisper model selection vs uniform loading (v21 ADR-V21-WHISPER-CONSOLIDATION kept both base+small bundled, но всегда грузил тот, что соответствует tier'у вызывающего контура).
+**Decision:**
+- Age <6 OR low tier device → whisper-base (140 MB, faster)
+- Age 6-8 AND mid+ tier → whisper-small (464 MB, accuracy)
+**Consequences:**
+- iPhone SE 3 always uses base (low tier)
+- 14+ Pro for older kids uses small
+- Faster first session on weaker hardware
+- Better accuracy where capacity allows
+- COPPA: kid circuit (Tier A) остаётся на whisper-tiny via MLModelWarmupService — adaptive selector используется только в parent/specialist контурах (loadModelAdaptive(age:))
+**Implementation:** WhisperAdaptiveSelector.selectModel(age:deviceTier:) + currentDeviceTier() + ASRService.loadModelAdaptive(age:) extension. Logging через HSLogger.asr (`whisper_model_selected: <pack>, age: <N>, tier: <low|mid|high>`).
+
+## ADR-V22-R-PHONEME-SYNTHETIC-CEILING
+
+**Date:** 2026-05-13
+**Status:** Accepted defer
+**Context:** Plan v22 Block 1.1 — retrain RussianPhonemeClassifier 88.9% → 92%+ через heavy synthetic augmentation v22 (pitch ±5 semitones, formant ±20%, time 0.85-1.15×, noise SNR 15-30dB, SpecAugment 2×freq+2×time, speed 0.9-1.1×) + MultiheadAttention слой.
+**Decision:** Defer retrain. Current 88.9% (v19, 2026-05-10) — потолок synthetic procedural MFCC approach. Production .mlpackage maintained без изменений.
+
+**Rationale (honest ml-engineer audit):**
+- Training "data" v13/v18/v19 — **не реальный audio corpus**, а procedurally generated MFCC features из formant templates по индексу класса фонемы (`generate_synthetic_mfcc(phoneme_idx, ...)` в `_workshop/scripts/retrain_phoneme_classifier_v19_heavy_aug.py`). 49,980 train samples = 49 классов × 60 base × 17 augmentations, генерируемые на лету.
+- v19 heavy aug (17 variants per sample) исчерпал realistic gains: v18 83.9% → v19 88.9% (+5.0 p.p.). Дальнейшие variants дают marginal returns.
+- v22 plan augmentation технически не выполним в текущем MFCC-level pipeline:
+  - Formant shift ±20% требует audio domain processing (formant detection + LPC re-synthesis) — не реализуем без real audio.
+  - Pitch shift ±5 semitones через MFCC-coeff roll = крупная фейк-аппроксимация. Бóльшие сдвиги ломают структуру, не улучшают realism.
+  - Speed perturbation 0.9-1.1× дублирует time stretch на MFCC level.
+- MultiheadAttention 8 heads добавит ~262K params (итого ~1.05M) — увеличит compute но не data quality. Risk: inference time >50ms target на iPhone SE 3 (attention over 100 time steps).
+- 92%+ на synthetic данных = **overfitting к procedural patterns**. Real-audio accuracy после такого retrain может **degrade** (модель учится отделять рукотворные формантные шаблоны точнее, теряя generalization).
+
+**Verify production .mlpackage = v19 (no re-convert needed):**
+- `HappySpeech/Resources/Models/RussianPhonemeClassifier.mlpackage/Data/com.apple.CoreML/model.mlmodel` mtime = `_workshop/models/train/RussianPhonemeClassifier_v19.pt` mtime = **2026-05-10 14:29**.
+- weight.bin = 1.56 MB FP16 (mlprogram default; INT8 не применён в v19 из-за coremltools 9.0 API gap).
+
+**Consequences:**
+- v22 Phoneme accuracy: 88.9% (v19 maintained) — acceptable для diploma defense.
+- Realistic limitation документирована: модель хорошо работает на test данных того же synthetic origin, real-audio performance untested.
+- v19 ml-models.md entry получил status note "v22 maintained per ADR-V22-R-PHONEME-SYNTHETIC-CEILING".
+- Stale pointer на `RussianPhonemeClassifier_v18_backup.mlpackage` (cleaned в Block M v21) исправлен в реестре.
+
+**Future (v23+):**
+- **Option C (preferred):** real Russian phonetic corpus retrain
+  - Common Voice RU phonetic subset (CC0) — huggingface.co/datasets/mozilla-foundation/common_voice_17_0
+  - OpenSLR SLR96 (Apache 2.0) — openslr.org/96
+  - Forced alignment (montreal-forced-aligner либо wav2vec2 CTC) → frame-level phoneme labels
+  - Estimated work: 2-3 дня
+- **Option D:** child-recorded dataset через TestFlight (Apple Developer + parental consent + IRB review).
+- В обоих cases: target ≥92% становится realistic, т.к. ceiling определяется data quality, не augmentation parameters.
+
+**Related ADRs:**
+- ADR-V13-PHONEME-CLASSIFIER-PARTIAL (v13 partial 83.94%)
+- ADR-V18-E-PARTIAL-PHONEME (v18 83.9% PARTIAL, post-v1.0 defer)
+- ADR-V19-D-PHONEME-RETRAIN (v19 heavy synthetic aug, 83.9% → 88.9%, target ≥85% achieved)
+- ADR-V21-R-PHONEME-DEFER (v21 product-acceptable maintained)

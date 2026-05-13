@@ -704,9 +704,9 @@ Total models: 12 .mlpackage в HappySpeech/Resources/Models/ (9 production-ready
 - **Training time:** 8.3 мин (Apple Silicon M-серия, MPS)
 - **Тренировочный скрипт:** `_workshop/scripts/retrain_phoneme_classifier_v19_heavy_aug.py`
 - **PyTorch checkpoint:** `_workshop/models/train/RussianPhonemeClassifier_v19.pt`
-- **Backup v18:** `Resources/Models/RussianPhonemeClassifier_v18_backup.mlpackage`
+- **Backup v18:** stale pointer — backup был cleaned в Block M v21 (Whisper consolidation + backup cleanup, 2026-05-13). См. строки 75-98 этого реестра.
 - **Дата:** 2026-05-10
-- **Статус:** production (replaces v18 PARTIAL)
+- **Статус:** production (v22 maintained per ADR-V22-R-PHONEME-SYNTHETIC-CEILING — synthetic ceiling reached, real-audio retrain deferred к v23+)
 
 ### Validation Benchmarks — Block D v19
 
@@ -718,4 +718,77 @@ Total models: 12 .mlpackage в HappySpeech/Resources/Models/ (9 production-ready
 
 **Note:** INT8 квантизация не применена — `linearly_quantize_weights` отсутствует в coremltools 9.0 public API (доступно в coremltools.optimize.coreml, но под другим именем `linear_quantize_weights` с иной сигнатурой). Модель сохранена в fp16 (mlprogram default). Для prod-оптимизации рассмотреть обновление до coremltools ≥8.x с корректным API.
 
+
+---
+
+## Block 1.1 v22 — RussianPhonemeClassifier synthetic ceiling DEFER (2026-05-13)
+
+**Status:** DEFERRED per ADR-V22-R-PHONEME-SYNTHETIC-CEILING
+
+### Контекст
+
+Plan v22 Block 1.1 — retrain RussianPhonemeClassifier 88.9% → 92%+ через heavy synthetic augmentation v22 (pitch ±5 semitones, formant ±20%, time 0.85-1.15×, noise SNR 15-30dB, SpecAugment 2×freq+2×time, speed 0.9-1.1×) + добавление MultiheadAttention слоя.
+
+### Honest ml-engineer audit (2026-05-13)
+
+**Verify production .mlpackage = v19:**
+- `HappySpeech/Resources/Models/RussianPhonemeClassifier.mlpackage/Data/com.apple.CoreML/model.mlmodel` → mtime **2026-05-10 14:29**
+- `HappySpeech/Resources/Models/RussianPhonemeClassifier.mlpackage/Data/com.apple.CoreML/weights/weight.bin` (1.56 MB) → mtime **2026-05-10 14:29**
+- `_workshop/models/train/RussianPhonemeClassifier_v19.pt` (3.0 MB FP32) → mtime **2026-05-10 14:29**
+- **Вывод:** production .mlpackage = v19 (тот же timestamp как .pt checkpoint). Re-convert НЕ требуется.
+
+**Discovery — training data:**
+- `_workshop/datasets/clean/` содержит только `val/` (97 файлов) и `test/` (34 файла) — это `synthetic_synth_velar_Dmit_*` для PronunciationScorer_velar.
+- Phoneme "training data" в v13/v18/v19 — **не реальный audio dataset**, а procedurally generated MFCC features:
+  - `retrain_phoneme_classifier_v19_heavy_aug.py::generate_synthetic_mfcc(phoneme_idx, ...)` строит MFCC из формантных шаблонов по индексу класса.
+  - Train = 49 классов × 60 samples × 17 augmentations = 49,980 на лету, **БЕЗ load_audio()**.
+- 88.9% — это accuracy **на synthetic procedural features**, не на реальном русском аудио.
+
+**v22 plan infeasibility (technical):**
+| План v22 | Реальность v19 pipeline |
+|---|---|
+| Pitch shift ±5 semitones | Только MFCC-coeff roll (фейк, real pitch требует audio domain). Большие сдвиги = больше деградации структуры. |
+| Formant shift ±20% | **Невозможно на MFCC level** без переобработки audio. Не реализуем. |
+| Time stretch 0.85-1.15× | Realisable через `F.interpolate` (v19 делал 0.9-1.1×). |
+| Noise SNR 15-30dB | Realisable. |
+| SpecAugment 2×freq+2×time | Realisable (v19 был 1×). |
+| Speed perturbation 0.9-1.1× | Эквивалент time stretch на MFCC level (дублирует). |
+| MultiheadAttention 8 heads | Realisable, но добавит params без data quality gain. |
+
+**Реалистичный потолок:**
+- v18→v19 переход дал +5.0 p.p. через 17× augmentation
+- v22 plan добавляет ~30× variants — marginal gains tiny (модель уже хорошо отделяет synthetic patterns)
+- Attention layer над 100 time steps на iPhone SE 3 может увеличить inference >50ms target
+- 92%+ на synthetic = **overfitting** к procedural patterns (real-audio accuracy может degrade)
+
+### Decision
+
+**v22 maintained at v19 baseline (88.9%).** Real-audio retrain deferred до v23+.
+
+### v19 metrics maintained (production)
+
+| Metric | Value | Source |
+|---|---|---|
+| Val accuracy | 88.9% | `_workshop/logs/phoneme_retrain_v19_result.json` |
+| Params | 781,041 | Conv1d(40→64→128→128) + BiLSTM(2L, bidir 256) + Linear(256→128→49) |
+| Model size | 1.50 MB FP16 (mlprogram) | weight.bin 1.56 MB |
+| Training time | 8.3 min Apple Silicon MPS | v19 result.json |
+| Phonemes | 49 (Russian IPA inventory) | RUSSIAN_PHONEMES в v19 script |
+| Augmentation | 17 variants (pitch±3, speed 0.9-1.1, noise SNR 20-30, SpecAugment 1×) | v19 result.json `augmentation` |
+
+### Future (v23+)
+
+- **Option C (preferred):** real Russian phonetic corpus
+  - Common Voice RU phonetic subset (CC0)
+  - OpenSLR SLR96 (Apache 2.0)
+  - Forced alignment (montreal-forced-aligner или wav2vec2 CTC) → frame-level phoneme labels
+  - Estimated work: 2-3 дня
+- **Option D:** child-recorded dataset через TestFlight (Apple Developer + parental consent + IRB review required)
+
+### Файлы
+
+- ADR: `.claude/team/decisions.md` → `ADR-V22-R-PHONEME-SYNTHETIC-CEILING`
+- Audit transcript: эта сессия Plan v22 Block 1.1
+- v19 production .mlpackage (unchanged): `HappySpeech/Resources/Models/RussianPhonemeClassifier.mlpackage`
+- v19 .pt checkpoint (kept): `_workshop/models/train/RussianPhonemeClassifier_v19.pt`
 
