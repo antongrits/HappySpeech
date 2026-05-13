@@ -638,6 +638,11 @@ public enum ColorTokens {
         public static let bodyUI     = UIColor(red: 0.76, green: 0.63, blue: 0.95, alpha: 1)
         /// Цвет зрачков (тёмно-фиолетовый). (UIColor — статичный для SceneKit материала.)
         public static let pupilUI    = UIColor(red: 0.15, green: 0.10, blue: 0.25, alpha: 1)
+        /// Omni light + specular highlight для SCNMaterial — физический белый.
+        /// (Не Theme-зависимый: это physical lighting, а не UI цвет.)
+        public static let lightUI    = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1)
+        /// Цвет глаз (sclera) — почти белый, чуть тёплее для естественного вида.
+        public static let eyeUI      = UIColor(red: 0.99, green: 0.98, blue: 0.97, alpha: 1)
         /// Preview-фон idle — светло-сиреневый (Light: #F3EEFF, Dark: #2A1F3D — глубокий ночной фиолет).
         public static let backdropIdle = Color(uiColor: UIColor { trait in
             trait.userInterfaceStyle == .dark
