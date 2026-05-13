@@ -50,6 +50,10 @@ enum AppRoute: Hashable {
     // Block AE v21: extension screens (110+ target)
     case soundDictionary
     case helpCenter
+    // Block AE batch 2 v21: gamification + parent insights + 3D cabinet
+    case dailyChallenge(childId: String)
+    case parentInsightsTimeline(childId: String)
+    case familyAwardsCabinet(parentId: String)
 }
 
 enum PermissionType: Hashable {
@@ -416,6 +420,20 @@ struct AppCoordinatorView: View {
         case .helpCenter:
             HelpCenterView()
                 .environment(\.circuitContext, .parent)
+
+        // MARK: - Block AE batch 2 v21
+
+        case .dailyChallenge(let childId):
+            DailyChallengeView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .parentInsightsTimeline(let childId):
+            ParentInsightsTimelineView(childId: childId)
+                .environment(\.circuitContext, .parent)
+
+        case .familyAwardsCabinet(let parentId):
+            FamilyAwardsCabinetView(parentId: parentId)
+                .environment(\.circuitContext, .parent)
         }
     }
 
@@ -463,6 +481,11 @@ struct AppCoordinatorView: View {
             case "siblingMultiplayer":  target = .siblingMultiplayer(childId: "preview-child-1")
             case "soundDictionary":     target = .soundDictionary
             case "helpCenter":          target = .helpCenter
+            case "dailyChallenge":      target = .dailyChallenge(childId: "preview-child-1")
+            case "parentInsightsTimeline":
+                target = .parentInsightsTimeline(childId: "preview-child-1")
+            case "familyAwardsCabinet":
+                target = .familyAwardsCabinet(parentId: "local-parent")
             default:                    target = .auth
             }
             coordinator.navigate(to: target)
