@@ -252,12 +252,26 @@ final class LessonVoiceWorker: NSObject {
     // MARK: - Private: mapping load
 
     private static func loadPhraseMapping() -> [String: String] {
+        // 3.G v23: lyalya-phrase-mapping.json содержит гетерогенные значения —
+        // legacy записи "key": "filename.m4a" (String) и v18c записи
+        // "key": { "text": "...", "voice": "..." } (Object). Старый strict
+        // JSONDecoder([String:String]) бросал DecodingError → silent return [:]
+        // → fallback на TTS Siri вместо m4a Lyalya voice.
         guard let url = Bundle.main.url(forResource: "lyalya-phrase-mapping", withExtension: "json"),
               let data = try? Data(contentsOf: url),
-              let raw = try? JSONDecoder().decode([String: String].self, from: data) else {
+              let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
             return [:]
         }
-        return raw
+        var result: [String: String] = [:]
+        for (key, value) in json {
+            if let stringValue = value as? String {
+                result[key] = stringValue
+            } else if let object = value as? [String: Any],
+                      let text = object["text"] as? String {
+                result[key] = text
+            }
+        }
+        return result
     }
 }
 
