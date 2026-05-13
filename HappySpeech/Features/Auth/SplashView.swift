@@ -1,3 +1,4 @@
+import os.signpost
 import SwiftUI
 
 // MARK: - SplashView
@@ -76,7 +77,18 @@ struct SplashView: View {
                 .opacity(titleOpacity)
             }
         }
-        .onAppear { animateIn() }
+        .onAppear {
+            // Plan v22 Block 0.5 — Splash жизненный цикл (Instruments POI event).
+            os_signpost(.event,
+                        log: HSSignpost.pointsOfInterest,
+                        name: "LaunchScreenAppear")
+            animateIn()
+        }
+        .onDisappear {
+            os_signpost(.event,
+                        log: HSSignpost.pointsOfInterest,
+                        name: "LaunchScreenDisappear")
+        }
         .accessibilityLabel("HappySpeech. Загрузка...")
         .accessibilityIdentifier("SplashRoot")
     }

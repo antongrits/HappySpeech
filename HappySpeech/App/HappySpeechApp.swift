@@ -32,6 +32,12 @@ struct HappySpeechApp: App {
                     ProcessInfo.processInfo.processIdentifier,
                     ProcessInfo.processInfo.systemUptime)
 
+        // Plan v22 Block 0.5 — AppLaunch interval (Points of Interest).
+        // Закрывается в .onAppear корневой сцены — измеряет время до первого frame.
+        os_signpost(.begin,
+                    log: HSSignpost.pointsOfInterest,
+                    name: "AppLaunch")
+
         // Пропускаем Firebase bootstrap в XCTest-окружении: хост-процесс XCTest загружает
         // бинарь приложения, и отсутствующий GoogleService-Info.plist вызывает NSException SIGABRT
         // до запуска тестов.
@@ -107,6 +113,10 @@ struct HappySpeechApp: App {
                 .environment(\.mascotEyeContactState, container.mascotEyeContactState)
                 .preferredColorScheme(container.themeManager.preferredColorScheme)
                 .onAppear {
+                    // Plan v22 Block 0.5 — AppLaunch end (first scene visible).
+                    os_signpost(.end,
+                                log: HSSignpost.pointsOfInterest,
+                                name: "AppLaunch")
                     Task { await bootstrapApp() }
                 }
                 .onOpenURL { url in

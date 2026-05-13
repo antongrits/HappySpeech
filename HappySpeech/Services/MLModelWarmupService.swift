@@ -1,4 +1,5 @@
 import Foundation
+import os.signpost
 import OSLog
 
 // MARK: - MLModelWarmupServiceProtocol
@@ -55,6 +56,16 @@ public actor LiveMLModelWarmupService: MLModelWarmupServiceProtocol {
             return
         }
         didWarmUp = true
+
+        // Plan v22 Block 0.5 — MLWarmup interval (Instruments Points of Interest).
+        os_signpost(.begin,
+                    log: HSSignpost.pointsOfInterest,
+                    name: "MLWarmup")
+        defer {
+            os_signpost(.end,
+                        log: HSSignpost.pointsOfInterest,
+                        name: "MLWarmup")
+        }
 
         HSLogger.ml.info("MLModelWarmupService.warmUp: starting parallel preload")
         let started = Date()
