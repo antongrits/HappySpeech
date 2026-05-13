@@ -44867,6 +44867,963 @@
           }
         }
       }
+    },
+    "dailyChallenge.screen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Цель дня"
+          }
+        }
+      }
+    },
+    "dailyChallenge.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть"
+          }
+        }
+      }
+    },
+    "dailyChallenge.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готовим цель…"
+          }
+        }
+      }
+    },
+    "dailyChallenge.hero.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Привет, %@!"
+          }
+        }
+      }
+    },
+    "dailyChallenge.hero.tagline": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Маленький шаг каждый день — большая речь со временем."
+          }
+        }
+      }
+    },
+    "dailyChallenge.goal.repetitions.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторения"
+          }
+        }
+      }
+    },
+    "dailyChallenge.goal.repetitions.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Произнеси %1$d раз слова со звуком «%2$@»."
+          }
+        }
+      }
+    },
+    "dailyChallenge.goal.minutes.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Минуты практики"
+          }
+        }
+      }
+    },
+    "dailyChallenge.goal.minutes.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поиграй %1$d минут со звуком «%2$@»."
+          }
+        }
+      }
+    },
+    "dailyChallenge.goal.soundFocus.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Любимый звук"
+          }
+        }
+      }
+    },
+    "dailyChallenge.goal.soundFocus.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Произнеси правильно %1$d раз звук «%2$@»."
+          }
+        }
+      }
+    },
+    "dailyChallenge.goal.streakKeep.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сохрани серию"
+          }
+        }
+      }
+    },
+    "dailyChallenge.goal.streakKeep.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сделай хотя бы один подход — серия %1$d дней не прервётся (звук «%2$@»)."
+          }
+        }
+      }
+    },
+    "dailyChallenge.goal.completed.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Цель выполнена"
+          }
+        }
+      }
+    },
+    "dailyChallenge.progress.format": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$d из %2$d"
+          }
+        }
+      }
+    },
+    "dailyChallenge.streak.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серия: %d дней"
+          }
+        }
+      }
+    },
+    "dailyChallenge.streak.longest": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лучший рекорд: %d дней подряд"
+          }
+        }
+      }
+    },
+    "dailyChallenge.streak.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Текущая серия: %d дней подряд."
+          }
+        }
+      }
+    },
+    "dailyChallenge.reward.section.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Награда"
+          }
+        }
+      }
+    },
+    "dailyChallenge.reward.repetitions.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Стикер «Звёздочка»"
+          }
+        }
+      }
+    },
+    "dailyChallenge.reward.minutes.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Стикер «Время-чемпион»"
+          }
+        }
+      }
+    },
+    "dailyChallenge.reward.soundFocus.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Стикер «Звукознатель»"
+          }
+        }
+      }
+    },
+    "dailyChallenge.reward.streakKeep.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Стикер «Огонь серии»"
+          }
+        }
+      }
+    },
+    "dailyChallenge.reward.xp": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "+%d XP"
+          }
+        }
+      }
+    },
+    "dailyChallenge.cta.start": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поехали!"
+          }
+        }
+      }
+    },
+    "dailyChallenge.cta.share": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поделиться"
+          }
+        }
+      }
+    },
+    "dailyChallenge.cta.start.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открывает выбор упражнения для текущей цели дня."
+          }
+        }
+      }
+    },
+    "dailyChallenge.cta.share.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показывает родителю, что цель дня выполнена."
+          }
+        }
+      }
+    },
+    "dailyChallenge.share.heading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец!"
+          }
+        }
+      }
+    },
+    "dailyChallenge.share.toast": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Родителю отправлено сообщение об успехе."
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.screen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неделя в инсайтах"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.back.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Назад"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.refresh.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обновить"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Анализируем неделю…"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.hero.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неделя %@"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.hero.subtitle.range": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ — %2$@"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.source.llmA": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подсказки от on-device модели"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.source.heuristic": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Эвристическая аналитика"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.section.timeline.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "По дням"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.cell.metrics": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$d сессий · %2$d мин · %3$d%%"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.cell.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@: %2$@. %3$@"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.cell.today.badge": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодня"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.stat.sessions.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сессий за неделю"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.stat.minutes.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Минут за неделю"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.stat.minutes.value": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d мин"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.stat.successRate.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Средняя точность"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.stat.activeDays.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Активных дней"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.stat.activeDays.value": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d из 7"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.detail.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@, %2$@"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.detail.metrics": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$d сессий · %2$d мин · точность %3$d%%"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.detail.section.note": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что произошло"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.detail.recommendation.attention": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Стоит вернуться к практике сегодня — мягкое напоминание перед сном помогает."
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.detail.recommendation.positive": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хороший день. Закрепите успех завтра, повторив 1–2 любимых упражнения."
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.detail.cta.dashboard": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подробная аналитика"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.detail.cta.dashboard.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открывает экран Прогресс с графиками."
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.refresh.toast.success": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Данные обновлены"
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.footer.note": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все вычисления — на устройстве. Имя ребёнка не покидает iPhone."
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.heuristic.today.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодня пока не было сессий. Самое время для короткой 5-минутной игры."
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.heuristic.day.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В этот день занятий не было."
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.heuristic.day.great": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отличный день — точность %d%%. Закрепите этот результат."
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.heuristic.day.good": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хорошая работа: %d%% правильных попыток."
+          }
+        }
+      }
+    },
+    "parentInsightsTimeline.heuristic.day.tryAgain": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сегодня было %d минут практики — попробуйте короче и интереснее."
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.screen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кабинет наград"
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть"
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готовим витрину…"
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.hero.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Витрина семьи"
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.hero.subtitle.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока пусто. Каждый разблокированный трофей появится здесь."
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.hero.subtitle.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$d наград, %2$d детей"
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.tier.platinum": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Платина"
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.tier.gold": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Золото"
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.tier.silver": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серебро"
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.tier.bronze": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Бронза"
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.shelf.count": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d шт."
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.trophy.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@, %2$@, %3$@"
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока без наград"
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.empty.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Награды появятся после первых сессий и серий практики."
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.footer.note": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Награды обновляются автоматически на основе ваших сессий."
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.detail.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · %2$@"
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.detail.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Эту награду заработал(а) %1$@ — уровень «%2$@». Поддержите ребёнка похвалой!"
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.award.first_session": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Первый шаг"
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.award.streak_3": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серия 3 дня"
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.award.streak_7": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серия 7 дней"
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.award.streak_14": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Две недели подряд"
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.award.streak_30": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Месяц без перерывов"
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.award.minutes_60": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "60 минут практики"
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.award.minutes_180": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 часа практики"
+          }
+        }
+      }
+    },
+    "familyAwardsCabinet.award.minutes_600": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 часов практики"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
