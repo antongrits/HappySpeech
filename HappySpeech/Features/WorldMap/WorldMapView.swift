@@ -23,6 +23,7 @@ struct WorldMapView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.horizontalSizeClass) private var hSizeClass
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - VIP State
 
@@ -119,10 +120,11 @@ struct WorldMapView: View {
     // MARK: - Background
 
     private var backgroundLayer: some View {
+        // F.tier1 v21: lilac accent в gradient мягче в dark, чтобы карта не «фонила» фиолетом.
         LinearGradient(
             colors: [
                 ColorTokens.Kid.bg,
-                ColorTokens.Brand.lilac.opacity(0.18),
+                ColorTokens.Brand.lilac.opacity(colorScheme == .dark ? 0.10 : 0.18),
                 ColorTokens.Kid.bg
             ],
             startPoint: .top,
@@ -135,7 +137,9 @@ struct WorldMapView: View {
 
     private var mascotHeader: some View {
         HStack(spacing: SpacingTokens.regular) {
+            // F.tier1 v21: mascot мягче в dark.
             LyalyaMascotView(state: .idle, size: 80)
+                .opacity(colorScheme == .dark ? 0.92 : 1.0)
                 .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: SpacingTokens.tiny) {

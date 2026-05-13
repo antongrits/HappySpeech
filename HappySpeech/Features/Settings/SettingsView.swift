@@ -15,6 +15,7 @@ struct SettingsView: View {
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - VIP State
 
@@ -89,6 +90,8 @@ struct SettingsView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     LyalyaMascotView(state: .idle, size: 36)
+                        // F.tier1 v21: mascot чуть мягче в dark.
+                        .opacity(colorScheme == .dark ? 0.9 : 1.0)
                         .accessibilityHidden(true)
                 }
             }

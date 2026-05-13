@@ -32,6 +32,7 @@ struct PermissionFlowView: View {
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.openURL) private var openURL
+    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - VIP State
 
@@ -175,7 +176,9 @@ struct PermissionFlowView: View {
                 Spacer(minLength: SpacingTokens.large)
 
                 // Block I v19: повторяющийся scaleEffect убран с 2D Ляли.
+                // F.tier1 v21: hero мягче в dark.
                 LyalyaMascotView(state: card.lyalyaState, size: 200)
+                    .opacity(colorScheme == .dark ? 0.92 : 1.0)
                     .accessibilityLabel(String(localized: "permissions.lyalya.a11y.celebrating"))
 
                 VStack(spacing: SpacingTokens.small) {
@@ -266,7 +269,9 @@ struct PermissionFlowView: View {
 
     @ViewBuilder
     private func mascotBlock(_ step: PermissionStepCard) -> some View {
+        // F.tier1 v21: mascot мягче в dark.
         LyalyaMascotView(state: step.lyalyaState, size: 96)
+            .opacity(colorScheme == .dark ? 0.92 : 1.0)
             .frame(maxWidth: .infinity)
             .accessibilityLabel(
                 step.state == .granted

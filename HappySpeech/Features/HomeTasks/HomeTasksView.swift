@@ -15,6 +15,7 @@ struct HomeTasksView: View {
 
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - VIP State
 
@@ -106,9 +107,10 @@ struct HomeTasksView: View {
     /// родительскому контуру, но добавляет «домашнее» настроение для секции
     /// заданий.
     private var backgroundGradient: some View {
+        // F.tier1 v21: butter accent мягче в dark, чтобы home-task header не «жёлтел».
         LinearGradient(
             colors: [
-                ColorTokens.Brand.butter.opacity(0.35),
+                ColorTokens.Brand.butter.opacity(colorScheme == .dark ? 0.20 : 0.35),
                 ColorTokens.Parent.bg
             ],
             startPoint: .top,

@@ -20,6 +20,7 @@ struct OnboardingFlowView: View {
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - VIP State
 
@@ -51,7 +52,8 @@ struct OnboardingFlowView: View {
                 // mesh-фон от него для рovuсения parallax visual feel.
                 HSMeshGradientBackground(palette: .kidCool, animated: true)
                     .ignoresSafeArea()
-                    .opacity(0.35)
+                    // F.tier1 v21: mesh мягче в dark поверх насыщенного gradient.
+                    .opacity(colorScheme == .dark ? 0.22 : 0.35)
                     .blendMode(.softLight)
                     .accessibilityHidden(true)
                     .allowsHitTesting(false)

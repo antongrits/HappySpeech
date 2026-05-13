@@ -16,6 +16,7 @@ struct ProgressDashboardView: View {
 
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - VIP State
 
@@ -49,7 +50,8 @@ struct ProgressDashboardView: View {
                 // На iOS 17 fallback на RadialGradient (component-internal).
                 HSMeshGradientBackground(palette: .calm, animated: true)
                     .ignoresSafeArea()
-                    .opacity(0.22)
+                    // F.tier1 v21: чуть мягче mesh в dark поверх Parent.bg.
+                    .opacity(colorScheme == .dark ? 0.14 : 0.22)
                     .blendMode(.softLight)
                     .accessibilityHidden(true)
                     .allowsHitTesting(false)

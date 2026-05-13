@@ -438,9 +438,13 @@ struct OnboardingCompletionStep: View {
 struct OnboardingMascotBubble: View {
     let text: String
 
+    @Environment(\.colorScheme) private var colorScheme
+
     var body: some View {
         HStack(alignment: .top, spacing: SpacingTokens.small) {
             LyalyaMascotView(state: .explaining, size: 52)
+                // F.tier1 v21: mascot чуть мягче в dark.
+                .opacity(colorScheme == .dark ? 0.92 : 1.0)
                 .accessibilityHidden(true)
 
             Text(text)
@@ -587,6 +591,7 @@ struct OnboardingScreeningIntroStep: View {
 
     @State private var appeared = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     private let features: [(icon: String, text: String)] = [
         ("checkmark.circle.fill",
@@ -602,8 +607,9 @@ struct OnboardingScreeningIntroStep: View {
             Spacer(minLength: SpacingTokens.small)
 
             // Block I v19: scaleEffect убран с 2D Ляли.
+            // F.tier1 v21: hero opacity для dark — чуть мягче, чтобы не слепил.
             LyalyaMascotView(state: .thinking, size: 130)
-                .opacity(appeared ? 1 : 0)
+                .opacity(appeared ? (colorScheme == .dark ? 0.92 : 1.0) : 0)
                 .accessibilityHidden(true)
 
             VStack(spacing: SpacingTokens.small) {

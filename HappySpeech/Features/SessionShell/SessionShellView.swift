@@ -197,11 +197,14 @@ struct SessionShellBinder: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         ZStack(alignment: .top) {
             backgroundGradient
                 .ignoresSafeArea()
+                // F.tier1 v21: gradient чуть мягче в dark, чтобы не «зашумлял» game content.
+                .opacity(colorScheme == .dark ? 0.92 : 1.0)
 
             VStack(spacing: SpacingTokens.regular) {
                 SessionHUDView(

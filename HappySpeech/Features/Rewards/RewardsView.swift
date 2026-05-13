@@ -23,6 +23,7 @@ struct RewardsView: View {
     @Environment(AppContainer.self) private var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - VIP State
 
@@ -62,7 +63,8 @@ struct RewardsView: View {
                 // (gold/butter/primaryLo). iOS 18+ MeshGradient, fallback iOS 17.
                 HSMeshGradientBackground(palette: .rewards, animated: true)
                     .ignoresSafeArea()
-                    .opacity(0.30)
+                    // F.tier1 v21: rewards mesh мягче в dark, чтобы gold/butter не «выгорал».
+                    .opacity(colorScheme == .dark ? 0.18 : 0.30)
                     .blendMode(.softLight)
                     .accessibilityHidden(true)
                     .allowsHitTesting(false)

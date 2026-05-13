@@ -9,14 +9,16 @@ import SwiftUI
 struct OnboardingWelcomeStep: View {
     @State private var appeared = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         VStack(spacing: SpacingTokens.large) {
             Spacer()
             // Block I v19: scaleEffect убран с 2D Ляли (требование: 2D без анимаций).
             // Оставлен только opacity-вход (fade-in) — минимально допустимый UX-переход.
+            // F.tier1 v21: hero — мягче в dark.
             LyalyaHeroView(state: .waving, mood: 0.7, size: 240)
-                .opacity(appeared ? 1 : 0)
+                .opacity(appeared ? (colorScheme == .dark ? 0.92 : 1.0) : 0)
                 .accessibilityHidden(true)
 
             VStack(spacing: SpacingTokens.small) {
