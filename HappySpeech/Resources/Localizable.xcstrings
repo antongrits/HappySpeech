@@ -43283,6 +43283,204 @@
           }
         }
       }
+    },
+    "chat.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чат с логопедом"
+          }
+        }
+      }
+    },
+    "chat.entry.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задайте вопрос специалисту и получите рекомендации"
+          }
+        }
+      }
+    },
+    "child.home.action.cultural": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сказки и стихи"
+          }
+        }
+      }
+    },
+    "child.home.action.weekly": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Недельное задание"
+          }
+        }
+      }
+    },
+    "child.home.mission.completed.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задание дня выполнено"
+          }
+        }
+      }
+    },
+    "child.home.mission.pending.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задание дня ждёт выполнения"
+          }
+        }
+      }
+    },
+    "family.achievements.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Семейные достижения"
+          }
+        }
+      }
+    },
+    "family.achievements.entry.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Общий прогресс всей семьи и совместные награды"
+          }
+        }
+      }
+    },
+    "settings.dialect.row.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Диалект и произношение"
+          }
+        }
+      }
+    },
+    "settings.dialect.row.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Адаптация под региональные особенности речи"
+          }
+        }
+      }
+    },
+    "settings.dialect.row.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открывает настройки регионального диалекта"
+          }
+        }
+      }
+    },
+    "intent.open_lesson.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открывает занятие с заданным звуком и параметрами"
+          }
+        }
+      }
+    },
+    "intent.open_lesson.param.sound": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук"
+          }
+        }
+      }
+    },
+    "intent.open_lesson.param.sound.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук, который будем учить (например: С, Ш, Р, Л)"
+          }
+        }
+      }
+    },
+    "intent.play_with_lyalya.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открывает игру с маскотом Лялей"
+          }
+        }
+      }
+    },
+    "intent.show_progress.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показывает прогресс ребёнка за выбранный период"
+          }
+        }
+      }
+    },
+    "intent.show_todays_mission.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показывает задание дня для ребёнка"
+          }
+        }
+      }
+    },
+    "intent.start_breathing.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запускает дыхательное упражнение"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
