@@ -265,10 +265,16 @@ struct ComparisonDashboardView: View {
                                     String(localized: "day.fri"), String(localized: "day.sat"),
                                     String(localized: "day.sun")
                                 ]
-                                let idx = (intVal - 1) % 7
-                                Text(dayNames[idx])
-                                    .font(TypographyTokens.mono(10))
-                                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                                // v23 fix: Swift `%` для отрицательных возвращает
+                                // отрицательный результат, поэтому intVal=0 → -1 →
+                                // index out of range. Нормализуем через `(_ + 7) % 7`
+                                // и страхуемся `indices.contains`.
+                                let idx = ((intVal - 1) % 7 + 7) % 7
+                                if dayNames.indices.contains(idx) {
+                                    Text(dayNames[idx])
+                                        .font(TypographyTokens.mono(10))
+                                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                                }
                             }
                         }
                     }

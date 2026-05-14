@@ -64,6 +64,9 @@ public final class SpectrogramAudioRecorder: @unchecked Sendable {
 
     nonisolated(unsafe) private var accumulatedSamples: [Float] = []
     nonisolated(unsafe) private var totalSamplesRecorded: Int = 0
+    /// Фактический sample rate hardware (определяется в `configureInputTap`).
+    /// Используется в `downsampleIfNeeded` для приведения к `targetSampleRate`.
+    nonisolated(unsafe) private var nativeSampleRate: Double = 16_000
 
     // MARK: - Logger
 
@@ -82,6 +85,15 @@ public final class SpectrogramAudioRecorder: @unchecked Sendable {
     public func startRecording() async throws {
         guard !isRecording else { return }
 
+        // v23 fix: в UI-test окружении пропускаем real audio engine — installTap'ы
+        // могут падать с NSException на simulator hardware mismatch, что terminate'ит
+        // процесс и срывает UI tour screenshot capture.
+        if ProcessInfo.processInfo.arguments.contains("-UITESTING") {
+            logger.info("SpectrogramAudioRecorder: UI-test mode, audio engine пропущен")
+            isRecording = true
+            return
+        }
+
         let granted = await requestMicrophonePermission()
         guard granted else {
             throw SpectrogramError.microphonePermissionDenied
@@ -93,7 +105,7 @@ public final class SpectrogramAudioRecorder: @unchecked Sendable {
         isRecording = true
         accumulatedSamples = []
         totalSamplesRecorded = 0
-        logger.info("SpectrogramAudioRecorder: запись запущена")
+        logger.info("SpectrogramAudioRecorder: запись запущена native=\(self.nativeSampleRate)Hz")
     }
 
     /// Останавливает запись и возвращает итоговую спектрограмму.
@@ -101,6 +113,11 @@ public final class SpectrogramAudioRecorder: @unchecked Sendable {
     public func stopRecording() -> Spectrogram {
         guard isRecording else { return .empty }
         isRecording = false
+
+        // v23 fix: в UI-test mode audio engine не запускался — пропускаем removeTap/stop.
+        if ProcessInfo.processInfo.arguments.contains("-UITESTING") {
+            return .empty
+        }
 
         audioEngine.inputNode.removeTap(onBus: 0)
         audioEngine.stop()
@@ -132,26 +149,47 @@ public final class SpectrogramAudioRecorder: @unchecked Sendable {
     }
 
     private func configureInputTap() throws {
-        let format = AVAudioFormat(
-            commonFormat: .pcmFormatFloat32,
-            sampleRate: targetSampleRate,
-            channels: 1,
-            interleaved: false
-        )
-        guard let tapFormat = format else {
+        // v23 fix: используем **hardware native format** для tap, иначе AVAudioEngine
+        // бросает NSException ('Failed to create tap due to format mismatch') когда
+        // hardware sample rate (обычно 48 kHz на симуляторе) ≠ targetSampleRate (16 kHz).
+        // NSException не ловится Swift try/catch → процесс terminate. Поэтому берём
+        // фактический формат входа и downsample'им в processSamples при необходимости.
+        let nativeFormat = audioEngine.inputNode.inputFormat(forBus: 0)
+        guard nativeFormat.sampleRate > 0 else {
+            // На симуляторе/устройстве без mic input native format пустой — graceful skip.
             throw SpectrogramError.audioFormatUnsupported
         }
 
+        nativeSampleRate = nativeFormat.sampleRate
         let hopCount = AVAudioFrameCount(hopSize)
         audioEngine.inputNode.installTap(
             onBus: 0,
             bufferSize: hopCount,
-            format: tapFormat
+            format: nativeFormat
         ) { [weak self] buffer, _ in
             guard let self else { return }
             let samples = self.extractSamples(from: buffer)
-            self.processSamples(samples)
+            let downsampled = self.downsampleIfNeeded(samples)
+            self.processSamples(downsampled)
         }
+    }
+
+    /// Простая линейная децимация samples → targetSampleRate, если hardware
+    /// отдал другой sample rate. Не идеально для DSP, но достаточно для UI
+    /// визуализации спектрограммы (Mel filterbank сглаживает aliasing artefacts).
+    private func downsampleIfNeeded(_ samples: [Float]) -> [Float] {
+        guard nativeSampleRate > targetSampleRate, !samples.isEmpty else {
+            return samples
+        }
+        let ratio = nativeSampleRate / targetSampleRate
+        let targetCount = max(1, Int(Double(samples.count) / ratio))
+        var result = [Float]()
+        result.reserveCapacity(targetCount)
+        for i in 0..<targetCount {
+            let srcIdx = min(samples.count - 1, Int(Double(i) * ratio))
+            result.append(samples[srcIdx])
+        }
+        return result
     }
 
     // MARK: - Private: Processing
