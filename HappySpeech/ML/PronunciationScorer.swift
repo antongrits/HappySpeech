@@ -30,10 +30,10 @@ enum PronunciationPhonemeGroup: String, CaseIterable, Sendable {
 
     var localizedName: String {
         switch self {
-        case .whistling: return String(localized: "Свистящие (С, З, Ц)")
-        case .hissing:   return String(localized: "Шипящие (Ш, Ж, Ч, Щ)")
-        case .sonants:   return String(localized: "Соноры (Р, Л)")
-        case .velar:     return String(localized: "Заднеязычные (К, Г, Х)")
+        case .whistling: return String(localized: "phoneme.group.whistling")
+        case .hissing:   return String(localized: "phoneme.group.hissing")
+        case .sonants:   return String(localized: "phoneme.group.sonants")
+        case .velar:     return String(localized: "phoneme.group.velar")
         }
     }
 

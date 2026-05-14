@@ -45914,6 +45914,50 @@
           }
         }
       }
+    },
+    "phoneme.group.whistling": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Свистящие (С, З, Ц)"
+          }
+        }
+      }
+    },
+    "phoneme.group.hissing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шипящие (Ш, Ж, Ч, Щ)"
+          }
+        }
+      }
+    },
+    "phoneme.group.sonants": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Соноры (Р, Л)"
+          }
+        }
+      }
+    },
+    "phoneme.group.velar": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заднеязычные (К, Г, Х)"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
