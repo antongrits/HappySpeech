@@ -3759,3 +3759,133 @@ SwiftUI composite (`HSMascotView` + `LyalyaMascotView`) обеспечивает
 - v1.0 mascot: полностью функционален (3D USDZ + SwiftUI composite + audio).
 - Diploma defence: не блокирован.
 - App Store: нет блокеров.
+
+---
+
+## ADR-V23-TOUR — UI Test Tour Sub-Navigation Defer (2026-05-14)
+
+**Дата:** 2026-05-14
+**Статус:** ACCEPTED
+
+### Контекст
+
+`AllScreensTourUITests` (118 route methods) использует `-HSStartRoute <name>`
+для прямой навигации к экранам в обход обычных user-flow. `resolveStartRoute(_:)`
+v22 mapping имеет ~33 routes которые резолвят к root AppRoute (нет AppRoute case
+для sub-screen):
+
+- 10 settings sub-routes (`settingsTheme`, `settingsNotifications`,
+  `settingsModelPacks`, `settingsPrivacy`, `settingsGDPR`, `settingsAbout`,
+  `settingsVoice`, `settingsLanguage`, `settingsAccessibility`) → `.settings` root
+- 4 `demoStep1/5/10/15` → `.demoMode` root
+- 4 `siblingMultiplayer*` sub → `.siblingMultiplayer` root
+- 5 specialist sub (`specialistLogin`, `studentsList`, `programEditor`,
+  `sessionReview`, `reports`) → `.specialistHome` root
+- 10 `onboarding1..10` → `.onboarding` root
+- 5 stuttering sub (`breathingTree`, `metronome`, `softOnset`,
+  `fluencyDiaryHome`, `stutteringHome`) → `.stuttering` / `.stutteringHome` root
+
+В итоге ~33/118 screenshots дублируют root view of feature (визуально cluster
+на parent screen).
+
+### Решение
+
+Defer expansion `resolveStartRoute` для sub-screens в v23. Sub-routes
+screenshots = parent root screenshot. Документировано как known limitation
+в ADR; tour продолжает выдавать 118 routes × 2 темы.
+
+### Rationale
+
+- **App architecture:** sub-screens доступны через user tap из parent screen
+  (children-friendly UX, без deep linking в UI).
+- **Test harness expansion** требует ~33 individual UI flows с accessibility
+  identifiers на каждом sub-row (`settings.theme.cell`, `demo.step1.button`,
+  etc.) — все они отсутствуют в текущей кодовой базе.
+- **Diploma deadline** — приоритет Features fixes и mic/dark theme blockers,
+  не test coverage expansion.
+- **Альтернатива** (sub-screens screenshots identical to root parent)
+  acceptable для visual review baseline — recensor может проверить sub-screens
+  manually через user flow.
+
+### Files
+
+- `HappySpeech/App/AppCoordinator.swift` `resolveStartRoute(_:)` — без изменений
+- `HappySpeechUITests/Flows/AllScreensTourUITests.swift` — 118 test methods
+  (33 будут identical to parent root в visual diff)
+
+### Impact
+
+- Build: без изменений.
+- v1.0 release: не блокирован.
+- v23+ backlog: при расширении `AppRoute` enum sub-cases (например
+  `.settingsSubScreen(SettingsRow)`) пересмотреть mapping в
+  `resolveStartRoute` и удалить эту ADR.
+
+---
+
+## ADR-V23-TEST-HARNESS — Mic Permission + Dark Theme Test Harness Fix (2026-05-14)
+
+**Дата:** 2026-05-14
+**Статус:** ACCEPTED
+
+### Контекст
+
+Block 1.3 audit (99 P0 findings) обнаружил что ~80 findings — это
+test-harness issues, не Features bugs:
+
+1. **Issue #1 — Mic permission alert** оверлеит ~56 P0 screens (Light Batch B).
+   После первого route запрашивающего microphone (lesson*) — system alert
+   pops up, blocks subsequent screenshots.
+2. **Issue #2 — Dark theme не применяется** на 117/117 Dark screenshots
+   (Dark Batch A+B). `-AppleInterfaceStyle Dark` launchArg — macOS-only, не
+   работает для iOS.
+3. **Issue #3 — Sub-navigation routes** дают identical screenshots
+   (см. ADR-V23-TOUR).
+
+### Решение
+
+Двусторонний fix для Issues #1, #2:
+
+**Test harness side (`AllScreensTourUITests.swift`):**
+- `override class func setUp()` — `xcrun simctl privacy booted grant`
+  для microphone/camera/notifications/location ОДИН раз перед всем classом.
+- `setUpWithError()` — `XCUIDevice.shared.appearance = .dark/.light`
+  (iOS 13+ API) на основе `HS_THEME` env-var.
+- `captureScreen(...)` — `addUIInterruptionMonitor` с button labels
+  ["Разрешить", "OK", "Allow", "Не разрешать", "Don't Allow", …] как
+  fallback. После `app.launch()` — `app.swipeUp() + app.swipeDown()` чтобы
+  trigger monitor.
+
+**App side (`HappySpeechApp.swift`):**
+- Новый launchArg `-HSForceDarkTheme 0|1`. `1` → `.dark`, `0` → `.light`,
+  отсутствие → `ThemeManager.preferredColorScheme` (default).
+- Helper `resolvedColorScheme(from:)` парсит arg и используется в
+  `.preferredColorScheme(...)` модификаторе на `AppCoordinatorView`.
+
+### Rationale
+
+- **Pre-grant via simctl** надёжнее чем interruption monitor: alert
+  никогда не появляется → не нужен flush, не блокирует первый screenshot.
+- **Interruption monitor** — defense-in-depth: при добавлении нового
+  permission service (HealthKit, FaceID), alert будет автоматически
+  dismissed без падения теста.
+- **`XCUIDevice.appearance`** влияет на UIKit-уровень (status bar, system
+  controls), а `-HSForceDarkTheme` — на SwiftUI ColorScheme. Оба нужны
+  для полного покрытия экранов.
+
+### Files
+
+- `HappySpeech/App/HappySpeechApp.swift` — добавлен `resolvedColorScheme(from:)`,
+  изменён `.preferredColorScheme(...)`.
+- `HappySpeechUITests/Flows/AllScreensTourUITests.swift` — class-level
+  `setUp` для simctl grant, `setUpWithError` для XCUIDevice appearance,
+  `captureScreen` с interruption monitor + `-HSForceDarkTheme` launchArg.
+
+### Impact
+
+- Build: без изменений (новый launchArg парсится только при presence).
+- Production behaviour: `-HSForceDarkTheme` принимается только при наличии
+  в launchArguments — production users не затронуты.
+- Test runtime: +0 seconds (simctl grant выполняется один раз class-level).
+- v23 re-run UI tour: должны видеть actual Dark screenshots + отсутствие
+  alert overlays.
