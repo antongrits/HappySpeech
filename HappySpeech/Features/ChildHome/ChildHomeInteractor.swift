@@ -601,7 +601,10 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
             format: String(localized: "child.home.widget.sound_title"),
             soundName
         )
-        let description = String(localized: "\(mission.requiredReps) раундов")
+        let description = String(
+            format: NSLocalizedString("child.home.mission.rounds_count", comment: ""),
+            mission.requiredReps
+        )
         let progress: Double = mission.requiredReps > 0
             ? Double(mission.completedReps) / Double(mission.requiredReps)
             : 0.0
