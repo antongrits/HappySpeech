@@ -15,15 +15,48 @@ import XCTest
 //
 // Routes маппятся в `AppCoordinatorView.resolveStartRoute(_:)` (v22 Block 0.2,
 // 104 entries). Если route неизвестен — fallback `.auth`.
+//
+// === Plan v23 Block 1.3 — Test harness fixes ===
+//
+// Issue #1: Mic permission alert overlays ~56 P0 screens.
+//   Fix: pre-grant microphone/camera/notifications через shell helper
+//   `scripts/grant_uitest_permissions.sh` (запускается ПЕРЕД xcodebuild test —
+//   Foundation.Process недоступен в iOS test runner) + addUIInterruptionMonitor
+//   с button labels {"Разрешить", "OK", "Allow", …} как defense-in-depth.
+//
+// Issue #2: Dark theme не применяется (117/117 Dark screenshots рендерят Light).
+//   Fix: `XCUIDevice.shared.appearance = .dark` (iOS 13+ API) для UIKit-уровня
+//   + новый App launchArg `-HSForceDarkTheme 1` для SwiftUI ColorScheme
+//   (см. HappySpeechApp.resolvedColorScheme(from:)). Env var `HS_THEME`
+//   передаётся через `TEST_RUNNER_HS_THEME=dark` префикс для xcodebuild test.
+//
+// Issue #3: Sub-navigation routes (settings.*, demoStep*, rewards*, specialist*)
+//   резолвят к root AppRoute → identical screenshots. Defer через ADR-V23-TOUR
+//   (см. .claude/team/decisions.md). Sub-routes screenshots = parent root.
 
 final class AllScreensTourUITests: XCTestCase {
 
     // MARK: - Setup
 
+    /// Plan v23 Issue #1 — pre-grant permissions через shell helper
+    /// `scripts/grant_uitest_permissions.sh` который вызывается ПЕРЕД
+    /// `xcodebuild test`. `Foundation.Process` недоступен в iOS test runner
+    /// (только macOS), поэтому grant выполняется снаружи. Внутри теста —
+    /// только interruption monitor как fallback (см. captureScreen).
     override func setUpWithError() throws {
         // continueAfterFailure = true → если один screen не зарендерился, tour
         // не останавливается и остальные 103 routes всё равно проверяются.
         continueAfterFailure = true
+
+        // Plan v23 Issue #2 — Dark theme на уровне симулятора (UIKit) через
+        // XCUIDevice (iOS 13+). SwiftUI ColorScheme дополнительно форсится через
+        // `-HSForceDarkTheme 1` launchArg в captureScreen.
+        let theme = ProcessInfo.processInfo.environment["HS_THEME"] ?? "light"
+        if theme.lowercased() == "dark" {
+            XCUIDevice.shared.appearance = .dark
+        } else {
+            XCUIDevice.shared.appearance = .light
+        }
     }
 
     // MARK: - Helper
@@ -36,18 +69,49 @@ final class AllScreensTourUITests: XCTestCase {
     ///   - anchorTimeout: максимум секунд на появление любого XCUIElement.
     private func captureScreen(route: String, anchorTimeout: TimeInterval) {
         let theme = ProcessInfo.processInfo.environment["HS_THEME"] ?? "light"
-        let themeArg = theme.lowercased() == "dark" ? "Dark" : "Light"
+        let isDark = theme.lowercased() == "dark"
+        let themeTag = isDark ? "dark" : "light"
 
         let app = XCUIApplication()
         app.launchArguments = [
             "-HSStartRoute", route,
-            "-AppleInterfaceStyle", themeArg,
-            "-UITESTING", "1"
+            "-UITESTING", "1",
+            // Plan v23 Issue #2 — App-side force theme (SwiftUI .preferredColorScheme).
+            "-HSForceDarkTheme", isDark ? "1" : "0"
         ]
+
+        // Plan v23 Issue #1 — fallback interruption monitor для permission alerts.
+        // Pre-grant в `setUp()` должен покрыть основное, но монитор страхует случаи
+        // когда симулятор откатил privacy state либо новый service не был granted.
+        let interruptionToken = addUIInterruptionMonitor(
+            withDescription: "Permission alert handler"
+        ) { alert in
+            let candidates = [
+                "Разрешить",
+                "OK",
+                "Allow",
+                "Не разрешать",
+                "Don't Allow",
+                "Allow While Using App",
+                "Разрешить при использовании"
+            ]
+            for label in candidates {
+                let btn = alert.buttons[label]
+                if btn.exists {
+                    btn.tap()
+                    return true
+                }
+            }
+            return false
+        }
+        defer { removeUIInterruptionMonitor(interruptionToken) }
+
         app.launch()
 
         // Ждём пока появится любой UI-элемент — гарантирует что render
-        // действительно произошёл, а не получаем пустой launch-image.
+        // действительно произошёл, а не получаем пустой launch-image. Если на
+        // экране всплыл system permission alert, он также является descendant —
+        // waitForExistence вернёт true до того как мы попробуем dismiss его.
         let anyElement = app.descendants(matching: .any).firstMatch
         let rendered = anyElement.waitForExistence(timeout: anchorTimeout)
         XCTAssertTrue(
@@ -55,13 +119,19 @@ final class AllScreensTourUITests: XCTestCase {
             "Screen '\(route)' did not render in \(anchorTimeout)s"
         )
 
+        // Plan v23 Issue #1 — flush interruption monitor через benign tap.
+        // Без user-interaction interruption monitor не вызовется. Tap по
+        // application bounds — для большинства SwiftUI экранов no-op,
+        // но если alert pending — monitor его dismiss'ит здесь.
+        app.tap()
+
         // Дополнительная пауза — Lottie / SwiftUI transitions / first-frame
         // SF Symbols layout успевают завершить первую кадровую отрисовку.
         Thread.sleep(forTimeInterval: 1.2)
 
         let screenshot = app.screenshot()
         let attachment = XCTAttachment(screenshot: screenshot)
-        attachment.name = "\(route)_\(themeArg.lowercased())"
+        attachment.name = "\(route)_\(themeTag)"
         attachment.lifetime = .keepAlways
         add(attachment)
 

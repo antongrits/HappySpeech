@@ -78,6 +78,30 @@ struct HappySpeechApp: App {
     @State private var coordinator: AppCoordinator = AppCoordinator()
     @State private var spotlightCoordinator: SpotlightIndexCoordinator?
 
+    // MARK: - v23 Test harness — Dark theme override
+
+    /// Plan v23 Block 1.3 — UI-test harness override темы.
+    ///
+    /// Launch arg `-HSForceDarkTheme 1` форсит `.dark` ColorScheme на уровне App,
+    /// `0` — форсит `.light`. Отсутствие флага → используется `ThemeManager`
+    /// (user preference / system).
+    ///
+    /// Нужен потому что macOS-only `-AppleInterfaceStyle Dark` не работает для
+    /// iOS launchArgs, а `XCUIDevice.shared.appearance = .dark` влияет только
+    /// на UIKit-уровень симулятора — SwiftUI `@Environment(\.colorScheme)`
+    /// иногда не пропагируется до системной перерисовки.
+    private static func resolvedColorScheme(from manager: ThemeManager) -> ColorScheme? {
+        let args = ProcessInfo.processInfo.arguments
+        if let idx = args.firstIndex(of: "-HSForceDarkTheme"), idx + 1 < args.count {
+            switch args[idx + 1] {
+            case "1": return .dark
+            case "0": return .light
+            default: break
+            }
+        }
+        return manager.preferredColorScheme
+    }
+
     /// Выбирает production или preview-контейнер в зависимости от launch arguments.
     /// При запуске UI-тестов с флагами -UITestMockServices или -UITestOffline
     /// используется AppContainer.preview() с MockNetworkMonitor.
@@ -111,7 +135,7 @@ struct HappySpeechApp: App {
                 .environment(container)
                 .environment(\.mascotLipSyncState, container.mascotLipSyncState)
                 .environment(\.mascotEyeContactState, container.mascotEyeContactState)
-                .preferredColorScheme(container.themeManager.preferredColorScheme)
+                .preferredColorScheme(Self.resolvedColorScheme(from: container.themeManager))
                 .onAppear {
                     // Plan v22 Block 0.5 — AppLaunch end (first scene visible).
                     os_signpost(.end,
