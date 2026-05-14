@@ -54,7 +54,7 @@ struct BingoView: View {
             }
         }
         .accessibilityElement(children: .contain)
-        .accessibilityLabel(String(localized: "Бинго: ищи слово на карточке"))
+        .accessibilityLabel(String(localized: "bingo.accessibility.label"))
     }
 
     // MARK: - Content switch
@@ -78,7 +78,7 @@ struct BingoView: View {
             ProgressView()
                 .scaleEffect(1.4)
                 .tint(ColorTokens.Brand.primary)
-            Text(String(localized: "Готовим карточку…"))
+            Text(String(localized: "bingo.status.preparing"))
                 .font(TypographyTokens.body())
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
         }
@@ -136,7 +136,7 @@ struct BingoView: View {
                 .accessibilityHidden(true)
 
             Text(display.calledWord.isEmpty
-                 ? String(localized: "Слушай внимательно…")
+                 ? String(localized: "bingo.hint.listen_carefully")
                  : display.calledWord)
                 .font(TypographyTokens.title(22))
                 .foregroundStyle(ColorTokens.Kid.ink)
@@ -144,8 +144,11 @@ struct BingoView: View {
                 .minimumScaleFactor(0.7)
                 .accessibilityLabel(
                     display.calledWord.isEmpty
-                        ? String(localized: "Слушай внимательно")
-                        : String(localized: "Названо слово: \(display.calledWord)")
+                        ? String(localized: "bingo.hint.listen")
+                        : String(
+                            format: NSLocalizedString("bingo.status.word_called %@", comment: ""),
+                            display.calledWord
+                        )
                 )
 
             Spacer()

@@ -45859,6 +45859,61 @@
           }
         }
       }
+    },
+    "bingo.accessibility.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Бинго: ищи слово на карточке"
+          }
+        }
+      }
+    },
+    "bingo.status.preparing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готовим карточку…"
+          }
+        }
+      }
+    },
+    "bingo.hint.listen_carefully": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слушай внимательно…"
+          }
+        }
+      }
+    },
+    "bingo.hint.listen": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слушай внимательно"
+          }
+        }
+      }
+    },
+    "bingo.status.word_called %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Названо слово: %@"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
