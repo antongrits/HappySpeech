@@ -45824,6 +45824,41 @@
           }
         }
       }
+    },
+    "child.home.mission.rounds_count": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld раунд"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld раунда"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld раундов"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld раунда"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "version": "1.0"
