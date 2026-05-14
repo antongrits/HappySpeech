@@ -89,7 +89,7 @@ struct ProgramEditorView: View {
                     .minimumScaleFactor(0.85)
                 Text("\(totalMinutes) " + String(localized: "program.editor.minutes"))
                     .font(TypographyTokens.title(22))
-                    .foregroundStyle(isValid ? ColorTokens.Kid.ink : .red)
+                    .foregroundStyle(isValid ? ColorTokens.Kid.ink : ColorTokens.Semantic.error)
                     .lineLimit(1)
                     .minimumScaleFactor(0.85)
             }
