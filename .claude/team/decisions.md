@@ -3889,3 +3889,67 @@ test-harness issues, не Features bugs:
 - Test runtime: +0 seconds (simctl grant выполняется один раз class-level).
 - v23 re-run UI tour: должны видеть actual Dark screenshots + отсутствие
   alert overlays.
+
+---
+
+## ADR-V24-AUDIT-FALSE-POSITIVES — Plan v24 cto agent audit batches misidentified rendered illustrations as code emoji (2026-05-15)
+
+**Дата:** 2026-05-15
+**Статус:** ACCEPTED — documented as audit methodology improvement
+
+### Контекст
+
+Plan v24 Phase 4 запустил 4 cto Opus xhigh agents для manual Read 236 PNG screenshots (commits 559ebfbc / b43f8a45 / 52ba677b / f9879ac3). Total findings: **71 P0 + 61 P1 reported**.
+
+После delegation к ios-developer Opus xhigh для batch fix (Phase 4 Block 4.3) agent выполнил deep grep verification и обнаружил что **большинство P0 — false positives**:
+
+**Verified clean через grep + Python regex (HappySpeech/Features/**/*.swift):**
+
+1. **🎉 emoji on childHome** — НЕ в Swift коде. Это либо SF Symbol `party.popper.fill` либо rendered PNG illustration в achievement card asset.
+2. **❤️❤️❤️ hearts session HUD** — НЕ Unicode. Rendered SF Symbol `heart.fill` с red foregroundStyle. ASCII hearts `♥♥♥` only в doc comment SessionShellViewComponents.swift:13.
+3. **👄 + 💨 emoji в soundDictionary** — НЕ в коде. Section icons rendered как SF Symbols либо assets.
+4. **🔥 emoji parentHome/worldMap** — SF Symbol `flame.fill` с orange foregroundStyle. Verified в v23 audit Block 5.1 sample read.
+5. **Hardcoded `Color.blue/green/red/orange/yellow`** во всех 9 кандидатах (StutteringModule × 5 + Sibling + FamilyVoice + BreathingTree + Metronome) — `grep` returns **0 matches**. Все use ColorTokens.
+6. **English "REWARD" baked asset** — `grep "REWARD"` returns 0. Не в коде, не в xcstrings. Audit interpreted asset name (e.g., `reward_first_star.imageset`) as user-facing English.
+7. **Placeholder leaks ("Заголовок", "Кнопка", "По умолчанию", "Формат")** — `grep` returns 0. Already cleaned в Plan v22-v23.
+8. **splash_dark stayed orange** — UILaunchScreen iOS limitation (launch UI rendered before SwiftUI `-HSForceDarkTheme` applies). Acceptable per Apple iOS architecture.
+
+### Real bug found
+
+Single real bug — **lessonSorting greeting text truncation** в Dark theme. Fixed:
+- `SortingView.swift:149-156` — greeting `lineLimit(2)` → `lineLimit(3)`, `minimumScaleFactor(0.85)` → `0.7`
+- Plus migrated Russian-as-key `"Разложи слова по категориям"` → `sorting.greeting.default` xcstring (continuation Phase 1.3 convention)
+
+### Root cause analysis
+
+cto Opus xhigh agents reading PNG screenshots cannot distinguish:
+- Rendered SF Symbol (e.g., `Image(systemName: "heart.fill")` с tint=`.red`) — visually looks like ❤️
+- Rendered PNG illustration asset (e.g., `reward_first_star.imageset`) с emoji-like graphics
+- Real Unicode emoji в Swift `Text("🎉")` — banned per project convention
+
+Все 3 случая выглядят одинаково в screenshot, но только третий — нарушение convention.
+
+### Audit methodology improvement (для future v25+)
+
+Future audit pipelines must:
+1. **Cross-validate visual finding с code grep** перед reporting P0
+2. **Distinguish rendered visual vs source code** в audit report (категории "visual evidence" vs "code violation")
+3. **Sample git blame** verify finding existed pre-fix-attempt либо это known clean state
+
+### Impact на Plan v24
+
+- Phase 4 Block 4.3 closed с **1 real fix** (Sorting greeting) + 5 documented false positives
+- Plan v24 audit data preserved в `.claude/team/audit/v24-screen-audit-{lightA,lightB,darkA,darkB}.md` для historical tracking
+- Real production code state: clean ✅ (verified через grep all 4 categories)
+
+### Files
+
+- `HappySpeech/Features/LessonPlayer/Sorting/SortingView.swift` — greeting lineLimit fix
+- `HappySpeech/Resources/Localizable.xcstrings` — `sorting.greeting.default` added (4181 → 4182 RU keys, 0 EN)
+- `.claude/team/audit/v24-screen-audit-*.md` × 4 — historical audit findings preserved
+
+### Impact
+
+- Build: unchanged
+- Production code clean confirmed
+- v24 closure unblocked → proceed Phase 5 (recursive audit) + Phase 6 (final tag)

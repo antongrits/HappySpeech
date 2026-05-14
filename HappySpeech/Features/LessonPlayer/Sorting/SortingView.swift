@@ -147,13 +147,13 @@ struct SortingView: View {
                 timerLabel
             }
             Text(display.greeting.isEmpty
-                 ? String(localized: "Разложи слова по категориям")
+                 ? String(localized: "sorting.greeting.default")
                  : display.greeting)
                 .font(TypographyTokens.title(22))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.85)
+                .lineLimit(3)
+                .minimumScaleFactor(0.7)
             HSProgressBar(value: progressValue)
                 .frame(height: 8)
             HStack {
