@@ -163,7 +163,7 @@ struct BingoView: View {
                     .padding(.vertical, SpacingTokens.tiny)
             }
             .buttonStyle(.plain)
-            .accessibilityLabel(String(localized: "Следующее слово"))
+            .accessibilityLabel(String(localized: "bingo.accessibility.next_word"))
         }
         .padding(.horizontal, SpacingTokens.regular)
         .padding(.vertical, SpacingTokens.small)
@@ -181,7 +181,11 @@ struct BingoView: View {
             HSProgressBar(value: display.progressFraction)
                 .frame(height: 8)
                 .accessibilityLabel(
-                    String(localized: "Прогресс зачитывания: \(display.calledWordIndex) из \(display.totalWords)")
+                    String(
+                        format: NSLocalizedString("bingo.accessibility.read_progress %lld %lld", comment: ""),
+                        display.calledWordIndex,
+                        display.totalWords
+                    )
                 )
             Text("\(display.calledWordIndex)/\(display.totalWords)")
                 .font(TypographyTokens.mono(13))
@@ -221,12 +225,12 @@ struct BingoView: View {
                         .font(.system(size: 64, weight: .regular))
                         .foregroundStyle(ColorTokens.Brand.gold)
                         .accessibilityHidden(true)
-                    Text(String(localized: "БИНГО!"))
+                    Text(String(localized: "bingo.celebration.bingo"))
                         .font(TypographyTokens.display(40))
                         .foregroundStyle(ColorTokens.Kid.ink)
                         .lineLimit(1)
                         .minimumScaleFactor(0.6)
-                    Text(String(localized: "Ты собрал пять в ряд!"))
+                    Text(String(localized: "bingo.celebration.five_in_row"))
                         .font(TypographyTokens.body(17))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                         .multilineTextAlignment(.center)
@@ -234,7 +238,7 @@ struct BingoView: View {
                         .minimumScaleFactor(0.85)
                         .padding(.horizontal, SpacingTokens.xLarge)
                     HSButton(
-                        String(localized: "Завершить"),
+                        String(localized: "bingo.action.finish"),
                         style: .primary,
                         icon: "checkmark.circle.fill"
                     ) {
@@ -247,7 +251,7 @@ struct BingoView: View {
         }
         .transition(.opacity)
         .accessibilityElement(children: .contain)
-        .accessibilityLabel(String(localized: "Бинго! Ты собрал пять в ряд."))
+        .accessibilityLabel(String(localized: "bingo.accessibility.bingo_win"))
     }
 
     // MARK: - Completed
@@ -269,7 +273,7 @@ struct BingoView: View {
                 .padding(.horizontal, SpacingTokens.xLarge)
             Spacer()
             HSButton(
-                String(localized: "Завершить"),
+                String(localized: "bingo.action.finish"),
                 style: .primary,
                 icon: "checkmark.circle.fill"
             ) {
@@ -280,7 +284,7 @@ struct BingoView: View {
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
         .accessibilityElement(children: .contain)
-        .accessibilityLabel(String(localized: "Игра завершена"))
+        .accessibilityLabel(String(localized: "bingo.accessibility.game_over"))
     }
 
     private var starsRow: some View {
@@ -304,7 +308,10 @@ struct BingoView: View {
             }
         }
         .accessibilityLabel(
-            String(localized: "Получено звёзд: \(display.starsEarned) из 3")
+            String(
+                format: NSLocalizedString("bingo.summary.stars_earned %lld", comment: ""),
+                display.starsEarned
+            )
         )
     }
 
@@ -411,10 +418,10 @@ private struct BingoCellView: View {
         .accessibilityLabel(cell.word)
         .accessibilityValue(
             cell.isWinner
-                ? String(localized: "Часть выигрышной линии")
+                ? String(localized: "bingo.accessibility.winning_line_cell")
                 : (cell.isMarked
-                    ? String(localized: "Отмечено")
-                    : String(localized: "Не отмечено"))
+                    ? String(localized: "bingo.accessibility.marked")
+                    : String(localized: "bingo.accessibility.unmarked"))
         )
         .accessibilityAddTraits(cell.isMarked ? [] : .isButton)
     }
