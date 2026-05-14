@@ -87,7 +87,7 @@ struct SortingView: View {
             }
         }
         .accessibilityElement(children: .contain)
-        .accessibilityLabel(String(localized: "Разложи слова по категориям"))
+        .accessibilityLabel(String(localized: "sorting.greeting.default"))
     }
 
     // MARK: - Content switch
@@ -113,7 +113,7 @@ struct SortingView: View {
             ProgressView()
                 .scaleEffect(1.4)
                 .tint(ColorTokens.Brand.primary)
-            Text(String(localized: "Готовим игру…"))
+            Text(String(localized: "sorting.status.preparing"))
                 .font(TypographyTokens.body())
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
         }
@@ -170,7 +170,11 @@ struct SortingView: View {
         .frame(maxWidth: .infinity)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
-            String(localized: "Слово \(display.currentWordIndex + 1) из \(display.words.count)")
+            String(
+                format: NSLocalizedString("sorting.progress.word_position %lld %lld", comment: ""),
+                display.currentWordIndex + 1,
+                display.words.count
+            )
         )
     }
 
@@ -183,14 +187,24 @@ struct SortingView: View {
                 .monospacedDigit()
         }
         .foregroundStyle(timerColor(for: display.timerColor))
-        .accessibilityLabel(String(localized: "Осталось времени: \(display.timerLabel)"))
+        .accessibilityLabel(
+            String(
+                format: NSLocalizedString("sorting.accessibility.time_remaining %@", comment: ""),
+                display.timerLabel
+            )
+        )
     }
 
     private var streakBadge: some View {
         HStack(spacing: SpacingTokens.micro) {
             Image(systemName: "flame.fill")
                 .font(TypographyTokens.caption(12))
-            Text(String(localized: "серия ×\(display.currentStreak)"))
+            Text(
+                String(
+                    format: NSLocalizedString("sorting.streak.label %lld", comment: ""),
+                    display.currentStreak
+                )
+            )
                 .font(TypographyTokens.caption(12))
         }
         .padding(.horizontal, SpacingTokens.tiny)
@@ -214,7 +228,7 @@ struct SortingView: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.6)
                 if display.autoPlacedWords.contains(word.id) {
-                    Label(String(localized: "Авто"), systemImage: "wand.and.stars")
+                    Label(String(localized: "sorting.action.auto"), systemImage: "wand.and.stars")
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                 }
@@ -240,7 +254,12 @@ struct SortingView: View {
                 value: word.id
             )
             .accessibilityElement(children: .combine)
-            .accessibilityLabel(String(localized: "\(word.word), перетащи в нужную корзину"))
+            .accessibilityLabel(
+                String(
+                    format: NSLocalizedString("sorting.accessibility.drag_to_bin %@", comment: ""),
+                    word.word
+                )
+            )
         }
     }
 
@@ -297,14 +316,14 @@ struct SortingView: View {
         .buttonStyle(.plain)
         .disabled(display.phase != .classifying)
         .accessibilityLabel(category.title)
-        .accessibilityHint(String(localized: "Положить слово в эту корзину"))
+        .accessibilityHint(String(localized: "sorting.accessibility.bin_hint"))
     }
 
     private var hintButton: some View {
         Button {
             requestHint()
         } label: {
-            Label(String(localized: "Подсказка"), systemImage: "lightbulb.fill")
+            Label(String(localized: "sorting.action.hint"), systemImage: "lightbulb.fill")
                 .font(TypographyTokens.caption(14))
                 .foregroundStyle(ColorTokens.Brand.primary)
                 .padding(.horizontal, SpacingTokens.medium)
@@ -316,8 +335,8 @@ struct SortingView: View {
         }
         .buttonStyle(.plain)
         .disabled(display.phase != .classifying)
-        .accessibilityLabel(String(localized: "Попросить подсказку"))
-        .accessibilityHint(String(localized: "Три уровня подсказки доступны"))
+        .accessibilityLabel(String(localized: "sorting.accessibility.hint_label"))
+        .accessibilityHint(String(localized: "sorting.accessibility.hint_levels"))
     }
 
     // MARK: - Feedback overlay
@@ -341,7 +360,12 @@ struct SortingView: View {
                     HStack(spacing: SpacingTokens.tiny) {
                         Image(systemName: "flame.fill")
                             .foregroundStyle(ColorTokens.Brand.butter)
-                        Text(String(localized: "Серия ×\(display.currentStreak)"))
+                        Text(
+                            String(
+                                format: NSLocalizedString("sorting.streak.title %lld", comment: ""),
+                                display.currentStreak
+                            )
+                        )
                             .font(TypographyTokens.caption(13))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
                     }
@@ -416,7 +440,12 @@ struct SortingView: View {
                 }
 
                 if display.autoPlacedCount > 0 {
-                    Text(String(localized: "Помогли: \(display.autoPlacedCount) слова"))
+                    Text(
+                        String(
+                            format: NSLocalizedString("sorting.summary.auto_placed", comment: ""),
+                            display.autoPlacedCount
+                        )
+                    )
                         .font(TypographyTokens.caption(13))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                         .lineLimit(1)
@@ -425,7 +454,7 @@ struct SortingView: View {
 
                 Spacer(minLength: SpacingTokens.large)
                 HSButton(
-                    String(localized: "Завершить"),
+                    String(localized: "sorting.action.finish"),
                     style: .primary,
                     icon: "checkmark.circle.fill"
                 ) { finalize() }
@@ -435,7 +464,7 @@ struct SortingView: View {
             .padding(.horizontal, SpacingTokens.screenEdge)
         }
         .accessibilityElement(children: .contain)
-        .accessibilityLabel(String(localized: "Игра завершена"))
+        .accessibilityLabel(String(localized: "sorting.accessibility.game_over"))
     }
 
     private var starsRow: some View {
@@ -457,13 +486,16 @@ struct SortingView: View {
             }
         }
         .accessibilityLabel(
-            String(localized: "Получено звёзд: \(display.starsEarned) из 3")
+            String(
+                format: NSLocalizedString("sorting.summary.stars_earned %lld", comment: ""),
+                display.starsEarned
+            )
         )
     }
 
     private var categoryBreakdownView: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.small) {
-            Text(String(localized: "По категориям"))
+            Text(String(localized: "sorting.section.by_category"))
                 .font(TypographyTokens.headline(15))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
             ForEach(display.categoryBreakdown, id: \.categoryId) { stat in
@@ -482,10 +514,23 @@ struct SortingView: View {
                         .monospacedDigit()
                 }
                 .accessibilityElement(children: .combine)
-                .accessibilityLabel(String(localized: "\(stat.title): \(stat.correct) из \(stat.total)"))
+                .accessibilityLabel(
+                    String(
+                        format: NSLocalizedString("sorting.accessibility.category_stat %@ %lld %lld", comment: ""),
+                        stat.title,
+                        stat.correct,
+                        stat.total
+                    )
+                )
             }
             if let best = display.bestCategoryTitle {
-                Label(String(localized: "Лучшая: \(best)"), systemImage: "crown.fill")
+                Label(
+                    String(
+                        format: NSLocalizedString("sorting.summary.best %@", comment: ""),
+                        best
+                    ),
+                    systemImage: "crown.fill"
+                )
                     .font(TypographyTokens.caption(13))
                     .foregroundStyle(ColorTokens.Brand.butter)
             }

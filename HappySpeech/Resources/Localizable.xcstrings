@@ -5353,6 +5353,28 @@
         }
       }
     },
+    "bingo.accessibility.bingo_win": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Бинго! Ты собрал пять в ряд."
+          }
+        }
+      }
+    },
+    "bingo.accessibility.game_over": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Игра завершена"
+          }
+        }
+      }
+    },
     "bingo.accessibility.label": {
       "extractionState": "manual",
       "localizations": {
@@ -5360,6 +5382,105 @@
           "stringUnit": {
             "state": "translated",
             "value": "Бинго: ищи слово на карточке"
+          }
+        }
+      }
+    },
+    "bingo.accessibility.marked": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отмечено"
+          }
+        }
+      }
+    },
+    "bingo.accessibility.next_word": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Следующее слово"
+          }
+        }
+      }
+    },
+    "bingo.accessibility.read_progress %lld %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прогресс зачитывания: %1$lld из %2$lld"
+          }
+        }
+      }
+    },
+    "bingo.accessibility.unmarked": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не отмечено"
+          }
+        }
+      }
+    },
+    "bingo.accessibility.winning_line_cell": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Часть выигрышной линии"
+          }
+        }
+      }
+    },
+    "bingo.action.finish": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завершить"
+          }
+        }
+      }
+    },
+    "bingo.celebration.bingo": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "БИНГО!"
+          }
+        }
+      }
+    },
+    "bingo.celebration.five_in_row": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ты собрал пять в ряд!"
+          }
+        }
+      }
+    },
+    "bingo.summary.stars_earned %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Получено звёзд: %lld из 3"
           }
         }
       }
@@ -33646,6 +33767,116 @@
         }
       }
     },
+    "sorting.accessibility.category_stat %@ %lld %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@: %2$lld из %3$lld"
+          }
+        }
+      }
+    },
+    "sorting.accessibility.drag_to_bin %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, перетащи в нужную корзину"
+          }
+        }
+      }
+    },
+    "sorting.accessibility.bin_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Положить слово в эту корзину"
+          }
+        }
+      }
+    },
+    "sorting.accessibility.game_over": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Игра завершена"
+          }
+        }
+      }
+    },
+    "sorting.accessibility.hint_label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попросить подсказку"
+          }
+        }
+      }
+    },
+    "sorting.accessibility.hint_levels": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Три уровня подсказки доступны"
+          }
+        }
+      }
+    },
+    "sorting.accessibility.time_remaining %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Осталось времени: %@"
+          }
+        }
+      }
+    },
+    "sorting.action.auto": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Авто"
+          }
+        }
+      }
+    },
+    "sorting.action.finish": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завершить"
+          }
+        }
+      }
+    },
+    "sorting.action.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подсказка"
+          }
+        }
+      }
+    },
     "sorting.check": {
       "extractionState": "manual",
       "localizations": {
@@ -33668,6 +33899,17 @@
         }
       }
     },
+    "sorting.progress.word_position %lld %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слово %1$lld из %2$lld"
+          }
+        }
+      }
+    },
     "sorting.right": {
       "extractionState": "manual",
       "localizations": {
@@ -33675,6 +33917,107 @@
           "stringUnit": {
             "state": "translated",
             "value": "Без звука"
+          }
+        }
+      }
+    },
+    "sorting.section.by_category": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "По категориям"
+          }
+        }
+      }
+    },
+    "sorting.status.preparing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готовим игру…"
+          }
+        }
+      }
+    },
+    "sorting.streak.label %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "серия ×%lld"
+          }
+        }
+      }
+    },
+    "sorting.streak.title %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серия ×%lld"
+          }
+        }
+      }
+    },
+    "sorting.summary.auto_placed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Помогли: %lld слова"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Помогли: %lld слов"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Помогли: %lld слово"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Помогли: %lld слова"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "sorting.summary.best %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лучшая: %@"
+          }
+        }
+      }
+    },
+    "sorting.summary.stars_earned %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Получено звёзд: %lld из 3"
           }
         }
       }
