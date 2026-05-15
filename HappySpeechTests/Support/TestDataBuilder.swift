@@ -154,6 +154,144 @@ public enum TestDataBuilder {
     public static func pronunciationScore(value: Double = 0.82) -> PronunciationScore {
         PronunciationScore(rawValue: value)
     }
+
+    // MARK: - FluencySessionData (StutteringModule)
+
+    static func fluencySession(
+        id: String = UUID().uuidString,
+        date: Date = Date(),
+        dysfluencyCount: Int = 2,
+        totalSyllables: Int = 40,
+        rate: Float = 5.0,
+        transcript: String = "Тестовая фраза для дневника плавности"
+    ) -> FluencySessionData {
+        FluencySessionData(
+            id: id,
+            date: date,
+            dysfluencyCount: dysfluencyCount,
+            totalSyllables: totalSyllables,
+            rate: rate,
+            transcript: transcript
+        )
+    }
+
+    // MARK: - DysfluencyAnalysis (StutteringModule)
+
+    static func dysfluencyAnalysis(
+        repetitions: Int = 1,
+        prolongations: Int = 1,
+        insideWordPauses: Int = 0,
+        totalSyllables: Int = 40,
+        rate: Float = 5.0,
+        isStub: Bool = false
+    ) -> DysfluencyAnalysis {
+        DysfluencyAnalysis(
+            repetitions: repetitions,
+            prolongations: prolongations,
+            insideWordPauses: insideWordPauses,
+            totalSyllables: totalSyllables,
+            rate: rate,
+            isStub: isStub
+        )
+    }
+
+    // MARK: - VoiceSampleData (VoiceCloning)
+
+    static func voiceSample(
+        id: String = UUID().uuidString,
+        childId: String = "test-child-001",
+        word: String = "рыба",
+        targetSound: String = "Р",
+        audioFilePath: String = "VoiceArchive/test/sample.m4a",
+        durationSeconds: Double = 5.0,
+        recordedAt: Date = Date(),
+        note: String = ""
+    ) -> VoiceSampleData {
+        VoiceSampleData(
+            id: id,
+            childId: childId,
+            word: word,
+            targetSound: targetSound,
+            audioFilePath: audioFilePath,
+            durationSeconds: durationSeconds,
+            recordedAt: recordedAt,
+            note: note
+        )
+    }
+
+    // MARK: - SessionRecord (SessionHistory)
+
+    static func sessionRecord(
+        id: String = UUID().uuidString,
+        date: Date = Date(),
+        gameType: TemplateType = .listenAndChoose,
+        soundTarget: String = "Р",
+        score: Float = 0.85,
+        durationSec: Int = 180,
+        attempts: Int = 10,
+        isPassed: Bool = true
+    ) -> SessionRecord {
+        SessionRecord(
+            id: id,
+            date: date,
+            gameType: gameType,
+            soundTarget: soundTarget,
+            score: score,
+            durationSec: durationSec,
+            attempts: attempts,
+            isPassed: isPassed
+        )
+    }
+
+    // MARK: - SessionAttemptRecord (SessionHistory)
+
+    static func sessionAttemptRecord(
+        id: String = UUID().uuidString,
+        word: String = "рак",
+        score: Float = 0.88,
+        isCorrect: Bool = true,
+        durationMs: Int = 1_200
+    ) -> SessionAttemptRecord {
+        SessionAttemptRecord(
+            id: id,
+            word: word,
+            score: score,
+            isCorrect: isCorrect,
+            durationMs: durationMs
+        )
+    }
+
+    // MARK: - AdaptiveRoute / RouteStepItem (AdaptivePlanner)
+
+    public static func routeStep(
+        templateType: TemplateType = .listenAndChoose,
+        targetSound: String = "Р",
+        stage: CorrectionStage = .wordInit,
+        difficulty: Int = 2,
+        wordCount: Int = 10,
+        durationTargetSec: Int = 180
+    ) -> RouteStepItem {
+        RouteStepItem(
+            templateType: templateType,
+            targetSound: targetSound,
+            stage: stage,
+            difficulty: difficulty,
+            wordCount: wordCount,
+            durationTargetSec: durationTargetSec
+        )
+    }
+
+    public static func adaptiveRoute(
+        steps: [RouteStepItem]? = nil,
+        maxDurationSec: Int = 900,
+        fatigueLevel: FatigueLevel = .fresh
+    ) -> AdaptiveRoute {
+        AdaptiveRoute(
+            steps: steps ?? [routeStep(), routeStep(templateType: .repeatAfterModel)],
+            maxDurationSec: maxDurationSec,
+            fatigueLevel: fatigueLevel
+        )
+    }
 }
 
 // MARK: - Private Anchor
