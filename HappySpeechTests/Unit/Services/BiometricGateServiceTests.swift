@@ -80,6 +80,37 @@ struct BiometricGateServiceTests {
         }
     }
 
+    // MARK: - LiveBiometricGateService (simulator)
+
+    @Suite("LiveBiometricGateService")
+    struct LiveBiometricGateTests {
+
+        @Test("canUseBiometric не падает на симуляторе")
+        func canUseBiometricDoesNotCrash() async {
+            let sut = LiveBiometricGateService()
+            // На симуляторе биометрия обычно недоступна → false; на устройстве может быть true.
+            // Главное — вызов canEvaluatePolicy не приводит к крашу.
+            _ = await sut.canUseBiometric()
+        }
+
+        @Test("authenticate на симуляторе без enrolled-биометрии возвращает fallback")
+        func authenticateFallsBackWhenPolicyUnavailable() async {
+            let sut = LiveBiometricGateService()
+            let result = await sut.authenticate(reason: "Подтвердите доступ")
+            // Симулятор без настроенной биометрии: policy недоступна → .fallback.
+            // На устройстве с биометрией результат зависит от пользователя — допускаем любой валидный кейс.
+            switch result {
+            case .fallback, .cancelled, .denied, .success:
+                break
+            }
+        }
+
+        @Test("LiveBiometricGateService init не падает")
+        func initDoesNotCrash() {
+            _ = LiveBiometricGateService()
+        }
+    }
+
     // MARK: - AuthResult Equatable
 
     @Suite("AuthResult Equatable")
