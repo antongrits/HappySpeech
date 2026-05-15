@@ -76,7 +76,7 @@ final class SoundServiceTests: XCTestCase {
         XCTAssertFalse(mock.isMuted)
     }
 
-    // MARK: - LiveSoundService init
+    // MARK: - LiveSoundService
 
     func test_LiveSoundService_initDoesNotCrash() {
         // Verifies actor-less lock-based impl initializes cleanly and
@@ -85,5 +85,50 @@ final class SoundServiceTests: XCTestCase {
         XCTAssertFalse(live.isMuted)
         live.setMuted(true)
         XCTAssertTrue(live.isMuted)
+    }
+
+    func test_LiveSoundService_muteRoundTrip() {
+        let live = LiveSoundService()
+        live.setMuted(true)
+        XCTAssertTrue(live.isMuted)
+        live.setMuted(false)
+        XCTAssertFalse(live.isMuted)
+    }
+
+    func test_LiveSoundService_playUISoundWhenMutedIsNoop() {
+        // При isMuted == true playUISound делает ранний выход — без краша.
+        let live = LiveSoundService()
+        live.setMuted(true)
+        live.playUISound(.tap)
+        live.playUISound(.correct)
+    }
+
+    func test_LiveSoundService_playLyalyaWhenMutedIsNoop() {
+        let live = LiveSoundService()
+        live.setMuted(true)
+        live.playLyalya(.greeting01)
+    }
+
+    func test_LiveSoundService_playUISoundMissingAssetDoesNotCrash() {
+        // .caf-ассеты могут отсутствовать в тестовом бандле — logger.warning, без краша.
+        let live = LiveSoundService()
+        live.setMuted(false)
+        for sound in UISound.allCases.prefix(5) {
+            live.playUISound(sound)
+        }
+    }
+
+    func test_LiveSoundService_playLyalyaMissingAssetDoesNotCrash() {
+        let live = LiveSoundService()
+        live.setMuted(false)
+        live.playLyalya(.greeting01)
+    }
+
+    func test_LiveSoundService_repeatedPlayUsesCacheWithoutCrash() {
+        // Повторный вызов того же звука проходит ветку кэша (или повторный warning).
+        let live = LiveSoundService()
+        live.setMuted(false)
+        live.playUISound(.reward)
+        live.playUISound(.reward)
     }
 }
