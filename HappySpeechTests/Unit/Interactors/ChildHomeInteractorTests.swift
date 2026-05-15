@@ -39,7 +39,10 @@ final class ChildHomeInteractorTests: XCTestCase {
     func test_fetchChildData_firesPresentFetch() async {
         let (sut, spy) = makeSUT()
         await sut.fetchChildData(.init(childId: "preview-child-1"))
-        XCTAssertEqual(spy.fetchResponses.count, 1)
+        // P0.3 v19: fetchChildData делает два presentFetch — сначала seed-ответ
+        // мгновенно (экран не пустой пока идёт async Realm-запрос), затем
+        // реальные данные. Оба вызова — ожидаемое поведение.
+        XCTAssertEqual(spy.fetchResponses.count, 2)
     }
 
     func test_fetchChildData_populatesDailySound() async {
@@ -89,7 +92,8 @@ final class ChildHomeInteractorTests: XCTestCase {
     func test_refreshData_callsPresentFetch() async {
         let (sut, spy) = makeSUT()
         await sut.refreshData(childId: "preview-child-1")
-        XCTAssertEqual(spy.fetchResponses.count, 1)
+        // refreshData проксирует в fetchChildData → seed-ответ + реальные данные.
+        XCTAssertEqual(spy.fetchResponses.count, 2)
     }
 
     // MARK: - recordMissionTap
@@ -110,9 +114,11 @@ final class ChildHomeInteractorTests: XCTestCase {
         let spy = SpyPresenter()
         interactor.presenter = spy
         await interactor.fetchChildData(.init(childId: "nonexistent"))
-        // Должен вернуть seed-данные без crash
-        XCTAssertEqual(spy.fetchResponses.count, 1)
+        // Должен вернуть seed-данные без crash: первый presentFetch — seed (мгновенно),
+        // второй — seed-fallback после ошибки репозитория.
+        XCTAssertEqual(spy.fetchResponses.count, 2)
         XCTAssertFalse(spy.fetchResponses.first?.childName.isEmpty ?? true)
+        XCTAssertFalse(spy.fetchResponses.last?.childName.isEmpty ?? true)
     }
 
     // MARK: - Helpers

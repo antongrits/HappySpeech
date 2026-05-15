@@ -41,10 +41,21 @@ struct ARMascot3DHero: View {
                 )
                 .shadow(color: ColorTokens.Brand.lilac.opacity(0.3), radius: 14, x: 0, y: 6)
 
-            LyalyaRealityKitView(state: .waving, mood: 0.7)
-                .frame(width: size * 0.85, height: size * 0.85)
-                .clipShape(Circle())
-                .accessibilityHidden(true)
+            // Под XCTest 3D ARView не рендерится (нестабилен в симуляторе) —
+            // показываем SF Symbol fallback.
+            if ProcessInfo.processInfo.isRunningUnitTests {
+                Image(systemName: "hand.wave.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: size * 0.4, height: size * 0.4)
+                    .foregroundStyle(ColorTokens.Brand.lilac)
+                    .accessibilityHidden(true)
+            } else {
+                LyalyaRealityKitView(state: .waving, mood: 0.7)
+                    .frame(width: size * 0.85, height: size * 0.85)
+                    .clipShape(Circle())
+                    .accessibilityHidden(true)
+            }
         }
         .frame(width: size, height: size)
         .accessibilityLabel(Text("ar.zone.mascot.accessibility"))
