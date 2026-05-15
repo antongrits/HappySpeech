@@ -81,6 +81,7 @@ final class ARSnapshotTests: XCTestCase {
 
     func test_breathingAR_smoke() throws {
         let view = BreathingARView()
+            .environment(AppContainer.preview())
         try record(view, screen: "AR_BreathingARSmoke")
     }
 

@@ -46,6 +46,7 @@ final class SpecialistSnapshotTests: XCTestCase {
     func test_sessionReview_bothThemes() throws {
         let view = SessionReviewView(sessionId: "sess-1")
             .environment(AppContainer.preview())
+            .environment(AppCoordinator())
         try record(view, screen: "SessionReviewSnap")
     }
 
