@@ -1,4 +1,3 @@
-import AVFoundation
 import Foundation
 import OSLog
 
@@ -50,7 +49,7 @@ final class SessionHistoryInteractor: SessionHistoryBusinessLogic {
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "SessionHistory")
     private let exportService: SpecialistExportServiceLive
-    private var audioPlayer: AVAudioPlayer?
+    private let audioPlayer: any AudioFilePlaying
 
     // MARK: - State
 
@@ -68,8 +67,9 @@ final class SessionHistoryInteractor: SessionHistoryBusinessLogic {
 
     // MARK: - Init
 
-    init() {
+    init(audioPlayer: any AudioFilePlaying = LiveAudioFilePlayer()) {
         self.exportService = SpecialistExportServiceLive()
+        self.audioPlayer = audioPlayer
         let seed = Self.makeSeedSessions()
         self.allSessions = seed.sessions
         self.attemptsBySession = seed.attempts
@@ -360,11 +360,7 @@ final class SessionHistoryInteractor: SessionHistoryBusinessLogic {
 
         do {
             let fileURL = URL(fileURLWithPath: filePath)
-            let player = try AVAudioPlayer(contentsOf: fileURL)
-            player.volume = 1.0
-            player.prepareToPlay()
-            player.play()
-            audioPlayer = player
+            try audioPlayer.play(contentsOf: fileURL)
             isPlayingAudio = true
             currentPlayingSessionId = request.sessionId
 
@@ -372,7 +368,7 @@ final class SessionHistoryInteractor: SessionHistoryBusinessLogic {
                 sessionId: request.sessionId,
                 isPlaying: true,
                 progress: 0,
-                durationSeconds: player.duration
+                durationSeconds: audioPlayer.duration
             ))
         } catch {
             logger.error("playAudio failed: \(error.localizedDescription, privacy: .public)")
@@ -749,14 +745,7 @@ private extension SessionHistoryInteractor {
 private extension SessionHistoryInteractor {
 
     func stopCurrentAudioIfNeeded() {
-        guard let player = audioPlayer, player.isPlaying else {
-            audioPlayer = nil
-            isPlayingAudio = false
-            currentPlayingSessionId = nil
-            return
-        }
-        player.stop()
-        audioPlayer = nil
+        audioPlayer.stop()
         isPlayingAudio = false
         currentPlayingSessionId = nil
     }

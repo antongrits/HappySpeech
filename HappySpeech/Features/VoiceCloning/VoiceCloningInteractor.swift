@@ -1,4 +1,3 @@
-import AVFoundation
 import Foundation
 import OSLog
 
@@ -26,6 +25,7 @@ final class VoiceCloningInteractor {
 
     private let audioService: any AudioService
     private let realmActor: RealmActor
+    private let filePlayer: any AudioFilePlaying
 
     // MARK: - State
 
@@ -35,7 +35,6 @@ final class VoiceCloningInteractor {
     private var pendingWord: String = ""
     private var recordingStartedAt: Date?
     private var recordingTimer: Task<Void, Never>?
-    private var playbackPlayer: AVAudioPlayer?
 
     // MARK: - Constants
 
@@ -45,9 +44,14 @@ final class VoiceCloningInteractor {
 
     // MARK: - Init
 
-    init(audioService: any AudioService, realmActor: RealmActor) {
+    init(
+        audioService: any AudioService,
+        realmActor: RealmActor,
+        filePlayer: any AudioFilePlaying = LiveAudioFilePlayer(activatesPlaybackSession: true)
+    ) {
         self.audioService = audioService
         self.realmActor = realmActor
+        self.filePlayer = filePlayer
     }
 
     // Note: no deinit cleanup — Task auto-cancels when its parent is deallocated,
@@ -175,7 +179,7 @@ final class VoiceCloningInteractor {
             return
         }
 
-        playbackPlayer?.stop()
+        filePlayer.stop()
 
         let absoluteURL = absoluteURL(forRelativePath: sample.audioFilePath)
         guard FileManager.default.fileExists(atPath: absoluteURL.path) else {
@@ -184,19 +188,15 @@ final class VoiceCloningInteractor {
         }
 
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
-            try AVAudioSession.sharedInstance().setActive(true, options: [])
-            let player = try AVAudioPlayer(contentsOf: absoluteURL)
-            player.prepareToPlay()
-            player.play()
-            playbackPlayer = player
+            try filePlayer.play(contentsOf: absoluteURL)
             presenter?.presentPlayback(VoiceCloning.PlaybackResponse(
                 isPlaying: true,
                 currentSampleId: request.sampleId
             ))
             // Авто-завершение по длительности.
+            let playbackDuration = filePlayer.duration
             Task { [weak self] in
-                let waitFor = max(0.3, player.duration)
+                let waitFor = max(0.3, playbackDuration)
                 try? await Task.sleep(for: .seconds(waitFor + 0.1))
                 await MainActor.run {
                     self?.presenter?.presentPlayback(VoiceCloning.PlaybackResponse(
@@ -211,8 +211,7 @@ final class VoiceCloningInteractor {
     }
 
     func stopPlayback() {
-        playbackPlayer?.stop()
-        playbackPlayer = nil
+        filePlayer.stop()
         presenter?.presentPlayback(VoiceCloning.PlaybackResponse(
             isPlaying: false,
             currentSampleId: nil
