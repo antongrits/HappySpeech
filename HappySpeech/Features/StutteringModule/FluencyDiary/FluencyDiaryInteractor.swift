@@ -1,4 +1,3 @@
-import AVFoundation
 import Foundation
 import OSLog
 
@@ -51,12 +50,12 @@ final class FluencyDiaryInteractor {
     private let storageWorker: any DiaryStorageWorkerProtocol
     private let whisperWorker: WhisperTranscriptionWorker
     private let hapticService: any HapticService
+    private let fileRecorder: any AudioFileRecording
     private let logger = HSLogger.audio
 
     // MARK: - Session state
 
     private var textIndex: Int = 0
-    private var audioRecorder: AVAudioRecorder?
     private var recordedFileURL: URL?
     private var recordingStartTime: Date?
 
@@ -75,13 +74,15 @@ final class FluencyDiaryInteractor {
         analyzerWorker: any FluencyAnalyzerWorkerProtocol = FluencyAnalyzerWorker(),
         storageWorker: any DiaryStorageWorkerProtocol,
         whisperWorker: WhisperTranscriptionWorker = WhisperTranscriptionWorker(),
-        hapticService: any HapticService = LiveHapticService()
+        hapticService: any HapticService = LiveHapticService(),
+        fileRecorder: any AudioFileRecording = LiveAudioFileRecorder()
     ) {
         self.audioWorker = audioWorker
         self.analyzerWorker = analyzerWorker
         self.storageWorker = storageWorker
         self.whisperWorker = whisperWorker
         self.hapticService = hapticService
+        self.fileRecorder = fileRecorder
     }
 
     // MARK: - Public API
@@ -178,28 +179,17 @@ final class FluencyDiaryInteractor {
     private func startFileRecording() {
         let tempURL = FileManager.default.temporaryDirectory
             .appendingPathComponent("fluency_\(UUID().uuidString).m4a")
-        let settings: [String: Any] = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-            AVSampleRateKey: 16000,
-            AVNumberOfChannelsKey: 1,
-            AVEncoderAudioQualityKey: AVAudioQuality.medium.rawValue
-        ]
-        do {
-            let recorder = try AVAudioRecorder(url: tempURL, settings: settings)
-            recorder.record()
-            audioRecorder = recorder
+        if fileRecorder.startRecording(to: tempURL) {
             recordedFileURL = tempURL
             logger.info("FluencyDiary: file recorder started → \(tempURL.lastPathComponent, privacy: .public)")
-        } catch {
-            logger.warning("FluencyDiary: file recorder failed — \(error.localizedDescription, privacy: .public)")
-            audioRecorder = nil
+        } else {
+            logger.warning("FluencyDiary: file recorder failed to start")
             recordedFileURL = nil
         }
     }
 
     private func stopFileRecording() {
-        audioRecorder?.stop()
-        audioRecorder = nil
+        fileRecorder.stopRecording()
     }
 
     // MARK: - Analysis & persistence
