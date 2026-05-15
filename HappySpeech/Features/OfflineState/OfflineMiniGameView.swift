@@ -194,8 +194,7 @@ private struct TapLyalyaGameView: View {
                 // Block J v17: 3D Ляля вместо Image("mascot_lyalya_wave").
                 // Размер 80pt — compact игровой target, но всё равно 3D
                 // согласно правилу «только 3D герои».
-                LyalyaRealityKitView(state: isRunning ? .happy : .idle, mood: 0.6)
-                    .frame(width: 80, height: 80)
+                OfflineMascotView(state: isRunning ? .happy : .idle, mood: 0.6, side: 80)
                     .position(mascotPosition)
                     .onTapGesture {
                         guard isRunning else { return }
@@ -341,8 +340,7 @@ private struct DragCloudsGameView: View {
                     ZStack {
                         // Block J v17: 3D Ляля вместо Image("mascot_lyalya_wave").
                         // Static target для drag-and-drop игры, idle-анимации внутри RealityKit.
-                        LyalyaRealityKitView(state: .waving, mood: 0.5)
-                            .frame(width: 70, height: 70)
+                        OfflineMascotView(state: .waving, mood: 0.5, side: 70)
                             .position(mascotPosition)
                             .accessibilityHidden(true)
 
@@ -619,6 +617,33 @@ private struct FindPairGameView: View {
         moves = 0
         isFinished = false
         firstFlipped = nil
+    }
+}
+
+// MARK: - OfflineMascotView
+
+/// 3D-маскот Ляля для офлайн мини-игр.
+///
+/// Под XCTest-раннером `LyalyaRealityKitView` (ARView) не создаётся: нестабильный
+/// в симуляторе CoreRE-рендер роняет test host. Вместо него — SF Symbol fallback.
+private struct OfflineMascotView: View {
+
+    let state: LyalyaState
+    let mood: Float
+    let side: CGFloat
+
+    var body: some View {
+        if ProcessInfo.processInfo.isRunningUnitTests {
+            Image(systemName: state.fallbackSFSymbol)
+                .resizable()
+                .scaledToFit()
+                .frame(width: side * 0.55, height: side * 0.55)
+                .foregroundStyle(ColorTokens.Brand.lilac)
+                .frame(width: side, height: side)
+        } else {
+            LyalyaRealityKitView(state: state, mood: mood)
+                .frame(width: side, height: side)
+        }
     }
 }
 

@@ -239,6 +239,9 @@ final class SiblingGameInteractor: SiblingGameBusinessLogic {
     private var peerTotalPoints: Int = 0
     private var ourRoundScore: Float = 0.0
     private var peerRoundScore: Float = 0.0
+    /// Защита от двойного начисления: раунд оценивается ровно один раз,
+    /// когда оба score получены. Сбрасывается в `startRound`.
+    private var roundEvaluated: Bool = false
     private var localDisplayName: String = ""
     private var peerDisplayName: String = ""
     private var roundResultTask: Task<Void, Never>?
@@ -273,6 +276,7 @@ final class SiblingGameInteractor: SiblingGameBusinessLogic {
         currentRound = index
         ourRoundScore = 0.0
         peerRoundScore = 0.0
+        roundEvaluated = false
         guard index >= 1, index <= words.count else { return }
         let word = words[index - 1]
         let isHost = localDisplayName < peerDisplayName
@@ -320,7 +324,11 @@ final class SiblingGameInteractor: SiblingGameBusinessLogic {
     }
 
     private func evaluateRoundIfReady() {
-        guard ourRoundScore > 0 || peerRoundScore > 0 else { return }
+        // Раунд оценивается ровно один раз и только когда оба игрока прислали
+        // свой score. Раньше guard был `||` — это приводило к двойному
+        // начислению очков (по разу за каждый прибывший score).
+        guard !roundEvaluated, ourRoundScore > 0, peerRoundScore > 0 else { return }
+        roundEvaluated = true
         let winnerName: String?
         if ourRoundScore > peerRoundScore {
             ourTotalPoints += 1

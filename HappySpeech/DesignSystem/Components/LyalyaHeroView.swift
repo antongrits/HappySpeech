@@ -69,7 +69,9 @@ public struct LyalyaHeroView: View {
         // запускаются внутри RealityKit Coordinator → даже если reduceMotion
         // обрабатывается там же, мы для GPU-экономии force-switch на 2D.
         // Также если callsite явно запросил force2D (например в header 36pt).
-        if reduceMotion || force2D || size < 80 {
+        // Под XCTest-раннером 3D отключаем: ARView-рендер нестабилен в симуляторе
+        // и роняет test host.
+        if reduceMotion || force2D || size < 80 || ProcessInfo.processInfo.isRunningUnitTests {
             LyalyaMascotView(
                 state: state,
                 size: size * 0.9

@@ -185,14 +185,21 @@ public struct HSMascotView: View {
         let amplitude = audioAmplitude?.wrappedValue ?? 0
         let viseme: LyalyaViseme = mood == .singing || mood == .explaining ? .a : .rest
 
-        LyalyaRealityKitView(
-            state: mood.lyalyaState,
-            mood: 0.7,
-            mouthOpen: amplitude,
-            viseme: viseme
-        )
-        .frame(width: size, height: size)
-        .accessibilityHidden(true)
+        // Под XCTest-раннером 3D-маскот не рендерится: нестабильный в симуляторе
+        // CoreRE рендер ARView роняет test host до установки соединения.
+        // Слой 2 (2D-иллюстрация) полностью покрывает кадр и остаётся видимым.
+        if ProcessInfo.processInfo.isRunningUnitTests {
+            EmptyView()
+        } else {
+            LyalyaRealityKitView(
+                state: mood.lyalyaState,
+                mood: 0.7,
+                mouthOpen: amplitude,
+                viseme: viseme
+            )
+            .frame(width: size, height: size)
+            .accessibilityHidden(true)
+        }
     }
 
     // MARK: - Entrance animation

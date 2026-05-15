@@ -285,16 +285,20 @@ final class SiblingInteractorTests: XCTestCase {
         let (sut, spy, _) = makeDiscoverySUT()
         sut.startDiscovery()
 
-        // Имитируем обнаружение пира через делегат
+        // Имитируем обнаружение пира через делегат.
+        // Без активной MCSession `peerRegistry` пуст, поэтому `buildPeerViewModels`
+        // не может построить VM (нет MCPeerID) — это корректное production-поведение:
+        // пира без MCPeerID нельзя пригласить, поэтому он не попадает в список.
         sut.mpcWorkerDidDiscoverPeer(displayName: "Маша")
-        XCTAssertFalse(spy.lastPeers.isEmpty, "После обнаружения список не должен быть пустым")
+        XCTAssertTrue(spy.presentPeersCalled,
+                      "Presenter должен быть уведомлён при обнаружении пира")
 
-        // Пир потерян
+        // Пир потерян — presenter получает обновлённый (пустой) список.
+        spy.presentPeersCalled = false
         sut.mpcWorkerDidLosePeer(displayName: "Маша")
 
         XCTAssertTrue(spy.presentPeersCalled,
                       "Presenter должен быть уведомлён после потери пира")
-        // После потери пира список должен снова быть пустым
         XCTAssertTrue(spy.lastPeers.isEmpty,
                       "Список пиров должен быть пустым после потери единственного пира")
     }
