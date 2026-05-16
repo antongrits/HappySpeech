@@ -50,6 +50,24 @@ final class SessionCompleteInteractorTests: XCTestCase {
         func presentFailure(_ response: SessionCompleteModels.Failure.Response) {
             failureCalled = true
         }
+
+        var achievementUnlockedCalled = false
+        var stickerRevealCalled = false
+        var streakUpdateCalled = false
+        var lastStickerReveal: SessionCompleteModels.StickerReveal.Response?
+        var lastStreakUpdate: SessionCompleteModels.StreakUpdate.Response?
+
+        func presentAchievementUnlocked(_ response: SessionCompleteModels.AchievementUnlocked.Response) {
+            achievementUnlockedCalled = true
+        }
+        func presentStickerReveal(_ response: SessionCompleteModels.StickerReveal.Response) {
+            stickerRevealCalled = true
+            lastStickerReveal = response
+        }
+        func presentStreakUpdate(_ response: SessionCompleteModels.StreakUpdate.Response) {
+            streakUpdateCalled = true
+            lastStreakUpdate = response
+        }
     }
 
     private var sampleResult: SessionResult {
@@ -159,5 +177,93 @@ final class SessionCompleteInteractorTests: XCTestCase {
             text.contains("С") || text.contains("Слушай"),
             "shareText должен содержать информацию об игре/звуке"
         )
+    }
+
+    // MARK: - 9. computeStars: правила начисления звёзд
+
+    func test_computeStars_threeStars_highAccuracyNoHints() {
+        XCTAssertEqual(SessionCompleteInteractor.computeStars(accuracy: 0.9, noHints: true), 3)
+    }
+
+    func test_computeStars_twoStars_highAccuracyWithHints() {
+        // ≥85% но с подсказками → только 2 звезды
+        XCTAssertEqual(SessionCompleteInteractor.computeStars(accuracy: 0.9, noHints: false), 2)
+    }
+
+    func test_computeStars_twoStars_mediumAccuracy() {
+        XCTAssertEqual(SessionCompleteInteractor.computeStars(accuracy: 0.65, noHints: true), 2)
+    }
+
+    func test_computeStars_oneStar_lowAccuracy() {
+        XCTAssertEqual(SessionCompleteInteractor.computeStars(accuracy: 0.3, noHints: true), 1)
+    }
+
+    func test_computeStars_boundaryAtTwoStarsThreshold() {
+        // ровно 0.60 → 2 звезды
+        XCTAssertEqual(SessionCompleteInteractor.computeStars(accuracy: 0.60, noHints: false), 2)
+    }
+
+    // MARK: - 10. breakdown — расчёт счёта
+
+    func test_breakdown_noHints_hasStreakBonus() {
+        let result = SessionResult(
+            score: 0.8, starsEarned: 3, gameTitle: "Игра", soundTarget: "Р",
+            attempts: 10, hintsUsed: 0, durationSec: 120, nextLessonTitle: nil
+        )
+        XCTAssertEqual(result.breakdown.streakBonus, 15)
+        XCTAssertTrue(result.breakdown.noHints)
+    }
+
+    func test_breakdown_withHints_hasPenalty() {
+        let result = SessionResult(
+            score: 0.8, starsEarned: 2, gameTitle: "Игра", soundTarget: "Р",
+            attempts: 10, hintsUsed: 3, durationSec: 120, nextLessonTitle: nil
+        )
+        XCTAssertEqual(result.breakdown.streakBonus, 0)
+        XCTAssertLessThan(result.breakdown.hintPenalty, 0)
+        XCTAssertFalse(result.breakdown.noHints)
+    }
+
+    // MARK: - 11. loadResult с childId → persistence pipeline вызывает презентер
+
+    func test_loadResult_withChildId_runsPersistencePipeline() async {
+        let childRepo = MockChildRepository(children: [TestDataBuilder.childProfile(id: "c-1")])
+        let sut = SessionCompleteInteractor(
+            realmActor: RealmActor(),
+            sessionRepository: MockSessionRepository(),
+            childRepository: childRepo
+        )
+        let spy = SpyPresenter()
+        sut.presenter = spy
+        let result = SessionResult(
+            score: 0.9, starsEarned: 3, gameTitle: "Игра", soundTarget: "С",
+            attempts: 10, correctAttempts: 9, hintsUsed: 0, durationSec: 150,
+            nextLessonTitle: nil, childId: "c-1", sessionId: "sess-x"
+        )
+        sut.loadResult(.init(result: result))
+        // persistence pipeline async — ждём
+        try? await Task.sleep(nanoseconds: 1_000_000_000)
+        XCTAssertTrue(spy.stickerRevealCalled, "Persistence pipeline должен раскрыть стикер")
+        XCTAssertTrue(spy.streakUpdateCalled)
+    }
+
+    // MARK: - 12. loadResult без childId (preview mode) не крашит
+
+    func test_loadResult_emptyChildId_previewMode_doesNotCrash() async {
+        let (sut, spy) = makeSUT()
+        // sampleResult имеет childId по умолчанию ""
+        sut.loadResult(.init(result: sampleResult))
+        try? await Task.sleep(nanoseconds: 800_000_000)
+        XCTAssertTrue(spy.loadResultCalled)
+    }
+
+    // MARK: - 13. makePreview создаёт валидный Interactor
+
+    func test_makePreview_createsInteractor() {
+        let sut = SessionCompleteInteractor.makePreview()
+        let spy = SpyPresenter()
+        sut.presenter = spy
+        sut.advancePhase(.init(to: .celebration))
+        XCTAssertTrue(spy.advancePhaseCalled)
     }
 }

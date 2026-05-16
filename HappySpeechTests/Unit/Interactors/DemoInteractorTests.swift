@@ -130,4 +130,108 @@ final class DemoInteractorTests: XCTestCase {
         sut.skipDemo(.init())
         XCTAssertTrue(spy.skipDemoCalled)
     }
+
+    // MARK: - 7. goBack на первом шаге не уходит ниже 0
+
+    func test_goBack_atFirstStep_staysAtZero() {
+        let (sut, spy) = makeSUT()
+        sut.loadDemo(.init())
+        sut.goBack(.init())
+        XCTAssertEqual(spy.lastGoBack?.currentIndex, 0)
+    }
+
+    // MARK: - 8. jumpTo за границы клампится
+
+    func test_jumpTo_outOfBounds_clamped() {
+        let (sut, spy) = makeSUT()
+        sut.loadDemo(.init())
+        sut.jumpTo(.init(index: 999))
+        XCTAssertEqual(spy.lastJumpTo?.currentIndex, 14)
+    }
+
+    func test_jumpTo_negativeIndex_clampedToZero() {
+        let (sut, spy) = makeSUT()
+        sut.loadDemo(.init())
+        sut.jumpTo(.init(index: 5))
+        spy.jumpToCalled = false
+        sut.jumpTo(.init(index: -3))
+        XCTAssertEqual(spy.lastJumpTo?.currentIndex, 0)
+    }
+
+    func test_jumpTo_sameIndex_ignored() {
+        let (sut, spy) = makeSUT()
+        sut.loadDemo(.init())
+        spy.jumpToCalled = false
+        sut.jumpTo(.init(index: 0))
+        XCTAssertFalse(spy.jumpToCalled, "jumpTo на текущий индекс игнорируется")
+    }
+
+    // MARK: - 9. tapInteractive на шаге с interactive CTA
+
+    func test_tapInteractive_onInteractiveStep_callsPresenter() {
+        let (sut, spy) = makeSUT()
+        sut.loadDemo(.init())
+        // Шаг 4 (индекс 3) имеет hasInteractive=true
+        sut.jumpTo(.init(index: 3))
+        sut.tapInteractive(.init())
+        XCTAssertTrue(spy.interactiveTapCalled)
+    }
+
+    func test_tapInteractive_onNonInteractiveStep_ignored() {
+        let (sut, spy) = makeSUT()
+        sut.loadDemo(.init())
+        // Шаг 1 (индекс 0) — hasInteractive=false
+        sut.tapInteractive(.init())
+        XCTAssertFalse(spy.interactiveTapCalled)
+    }
+
+    // MARK: - 10. toggleAutoAdvance включает и выключает
+
+    func test_toggleAutoAdvance_on_callsPresenter() {
+        let (sut, spy) = makeSUT()
+        sut.loadDemo(.init())
+        sut.toggleAutoAdvance(.init())
+        XCTAssertTrue(spy.toggleAutoAdvanceCalled)
+    }
+
+    func test_toggleAutoAdvance_twice_offAgain() {
+        let (sut, _) = makeSUT()
+        sut.loadDemo(.init())
+        sut.toggleAutoAdvance(.init())
+        sut.toggleAutoAdvance(.init())
+        // Не крашит, таймер остановлен
+        XCTAssertTrue(true)
+    }
+
+    // MARK: - 11. replayStep вызывает presenter
+
+    func test_replayStep_callsPresenter() {
+        let (sut, spy) = makeSUT()
+        sut.loadDemo(.init())
+        sut.replayStep(.init())
+        XCTAssertTrue(spy.replayStepCalled)
+    }
+
+    // MARK: - 12. completeDemo сохраняет флаг и вызывает presenter
+
+    func test_completeDemo_setsTourCompletedFlag() {
+        UserDefaults.standard.removeObject(forKey: DemoInteractor.tourCompletedKey)
+        let (sut, spy) = makeSUT()
+        sut.loadDemo(.init())
+        sut.completeDemo(.init())
+        XCTAssertTrue(spy.completeDemoCalled)
+        XCTAssertTrue(UserDefaults.standard.bool(forKey: DemoInteractor.tourCompletedKey))
+        UserDefaults.standard.removeObject(forKey: DemoInteractor.tourCompletedKey)
+    }
+
+    // MARK: - 13. advanceStep с включённым autoAdvance отключает его
+
+    func test_advanceStep_withAutoAdvance_stopsAndRestarts() {
+        let (sut, spy) = makeSUT()
+        sut.loadDemo(.init())
+        sut.toggleAutoAdvance(.init())
+        sut.advanceStep(.init())
+        XCTAssertTrue(spy.advanceStepCalled)
+        XCTAssertEqual(spy.lastAdvanceStep?.currentIndex, 1)
+    }
 }

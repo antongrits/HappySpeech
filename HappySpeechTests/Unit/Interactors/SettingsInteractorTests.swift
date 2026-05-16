@@ -78,10 +78,28 @@ final class SettingsInteractorTests: XCTestCase {
         func presentFailure(_ response: SettingsModels.Failure.Response) {
             failureCalled = true
         }
-        func presentToggleKidDailyReminder(_ response: SettingsModels.ToggleKidDailyReminder.Response) {}
-        func presentToggleWeeklyParentSummary(_ response: SettingsModels.ToggleWeeklyParentSummary.Response) {}
-        func presentUpdateHaptics(_ response: SettingsModels.UpdateHaptics.Response) {}
-        func presentTogglePerformanceMonitoring(_ response: SettingsModels.TogglePerformanceMonitoring.Response) {}
+        var toggleKidDailyReminderCalled = false
+        var toggleWeeklyParentSummaryCalled = false
+        var updateHapticsCalled = false
+        var togglePerformanceMonitoringCalled = false
+
+        var lastUpdateHaptics: SettingsModels.UpdateHaptics.Response?
+        var lastTogglePerformanceMonitoring: SettingsModels.TogglePerformanceMonitoring.Response?
+
+        func presentToggleKidDailyReminder(_ response: SettingsModels.ToggleKidDailyReminder.Response) {
+            toggleKidDailyReminderCalled = true
+        }
+        func presentToggleWeeklyParentSummary(_ response: SettingsModels.ToggleWeeklyParentSummary.Response) {
+            toggleWeeklyParentSummaryCalled = true
+        }
+        func presentUpdateHaptics(_ response: SettingsModels.UpdateHaptics.Response) {
+            updateHapticsCalled = true
+            lastUpdateHaptics = response
+        }
+        func presentTogglePerformanceMonitoring(_ response: SettingsModels.TogglePerformanceMonitoring.Response) {
+            togglePerformanceMonitoringCalled = true
+            lastTogglePerformanceMonitoring = response
+        }
     }
 
     private func makeSUT() -> (SettingsInteractor, SpyPresenter) {
@@ -434,5 +452,101 @@ final class SettingsInteractorTests: XCTestCase {
         XCTAssertEqual(spy.lastLoadSettings?.settings.childAge, 7)
         XCTAssertEqual(spy.lastLoadSettings?.settings.childAvatar, "word_dog")
         XCTAssertTrue(spy.lastLoadSettings?.settings.specialistConnected ?? false)
+    }
+
+    // MARK: - 29. updateHaptics меняет уровень тактильной отдачи
+
+    func test_updateHaptics_updatesLevel() {
+        let (sut, spy) = makeSUT()
+        sut.loadSettings(.init())
+        sut.updateHaptics(.init(level: .subtle))
+        XCTAssertTrue(spy.updateHapticsCalled)
+        XCTAssertEqual(spy.lastUpdateHaptics?.settings.hapticsLevel, .subtle)
+    }
+
+    func test_updateHaptics_off_persists() {
+        let suite = "test-\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: suite)!
+        let sut = SettingsInteractor(
+            themeManager: ThemeManager(),
+            notificationService: MockNotificationService(),
+            hapticService: MockHapticService(),
+            sessionRepository: MockSessionRepository(),
+            defaults: defaults
+        )
+        let spy = SpyPresenter()
+        sut.presenter = spy
+        sut.loadSettings(.init())
+        sut.updateHaptics(.init(level: .off))
+        XCTAssertEqual(spy.lastUpdateHaptics?.settings.hapticsLevel, .off)
+    }
+
+    // MARK: - 30. toggleKidDailyReminder on/off
+
+    func test_toggleKidDailyReminder_on_callsPresenter() async throws {
+        let (sut, spy) = makeSUT()
+        sut.loadSettings(.init())
+        sut.toggleKidDailyReminder(.init(enabled: true))
+        try await Task.sleep(nanoseconds: 100_000_000)
+        XCTAssertTrue(spy.toggleKidDailyReminderCalled)
+    }
+
+    func test_toggleKidDailyReminder_off_callsPresenter() async throws {
+        let (sut, spy) = makeSUT()
+        sut.loadSettings(.init())
+        sut.toggleKidDailyReminder(.init(enabled: false))
+        try await Task.sleep(nanoseconds: 100_000_000)
+        XCTAssertTrue(spy.toggleKidDailyReminderCalled)
+    }
+
+    // MARK: - 31. toggleWeeklyParentSummary on/off
+
+    func test_toggleWeeklyParentSummary_on_callsPresenter() async throws {
+        let (sut, spy) = makeSUT()
+        sut.loadSettings(.init())
+        sut.toggleWeeklyParentSummary(.init(enabled: true))
+        try await Task.sleep(nanoseconds: 100_000_000)
+        XCTAssertTrue(spy.toggleWeeklyParentSummaryCalled)
+    }
+
+    func test_toggleWeeklyParentSummary_off_callsPresenter() async throws {
+        let (sut, spy) = makeSUT()
+        sut.loadSettings(.init())
+        sut.toggleWeeklyParentSummary(.init(enabled: false))
+        try await Task.sleep(nanoseconds: 100_000_000)
+        XCTAssertTrue(spy.toggleWeeklyParentSummaryCalled)
+    }
+
+    // MARK: - 32. togglePerformanceMonitoring
+
+    func test_togglePerformanceMonitoring_enabled_callsPresenter() {
+        let (sut, spy) = makeSUT()
+        sut.loadSettings(.init())
+        sut.togglePerformanceMonitoring(.init(enabled: true))
+        XCTAssertTrue(spy.togglePerformanceMonitoringCalled)
+        XCTAssertEqual(spy.lastTogglePerformanceMonitoring?.settings.performanceMonitoringEnabled, true)
+    }
+
+    func test_togglePerformanceMonitoring_disabled_callsPresenter() {
+        let (sut, spy) = makeSUT()
+        sut.loadSettings(.init())
+        sut.togglePerformanceMonitoring(.init(enabled: false))
+        XCTAssertEqual(spy.lastTogglePerformanceMonitoring?.settings.performanceMonitoringEnabled, false)
+    }
+
+    // MARK: - 33. exportData CSV / JSON форматы
+
+    func test_exportData_csv_callsPresenter() async throws {
+        let (sut, spy) = makeSUT()
+        sut.exportData(.init(format: .csv, childId: "child-1"))
+        try await Task.sleep(nanoseconds: 300_000_000)
+        XCTAssertTrue(spy.exportDataCalled)
+    }
+
+    func test_exportData_json_callsPresenter() async throws {
+        let (sut, spy) = makeSUT()
+        sut.exportData(.init(format: .json, childId: "child-1"))
+        try await Task.sleep(nanoseconds: 300_000_000)
+        XCTAssertTrue(spy.exportDataCalled)
     }
 }

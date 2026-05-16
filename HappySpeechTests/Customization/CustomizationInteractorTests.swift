@@ -47,7 +47,11 @@ final class CustomizationInteractorTests: XCTestCase {
             displayVoicePreviewStateCalled = true
             lastPlayingVoice = playingVoice
         }
-        func displayLockedItemAttempt(viewModel: CustomizationViewModel) {}
+        var displayLockedItemAttemptCalled = false
+        func displayLockedItemAttempt(viewModel: CustomizationViewModel) {
+            displayLockedItemAttemptCalled = true
+            lastViewModel = viewModel
+        }
     }
 
     // MARK: - Stub AuthService
@@ -252,5 +256,107 @@ final class CustomizationInteractorTests: XCTestCase {
                        "LyalyaCustomizationStorage.colorVariant должен обновиться до .nature")
         XCTAssertEqual(storage.voice, .soft,
                        "LyalyaCustomizationStorage.voice должен обновиться до .soft")
+    }
+
+    // MARK: - 11. selectOutfit разблокированного наряда (everyday — всегда открыт)
+
+    func test_selectOutfit_everyday_updatesViewModel() {
+        let (sut, display, _, _) = makeSUT()
+        sut.selectOutfit(.init(outfit: .everyday))
+        XCTAssertTrue(display.displaySelectionChangedCalled)
+    }
+
+    // MARK: - 12. selectOutfit заблокированного наряда → presentLockedItemAttempt
+
+    func test_selectOutfit_locked_callsLockedAttempt() {
+        let (sut, display, _, _) = makeSUT()
+        // Наряд с requiredStreak > 0 при childStreakDays = 0 → заблокирован
+        guard let lockedOutfit = LyalyaOutfit.allCases.first(where: { $0.requiredStreak > 0 }) else {
+            return  // нет заблокированных нарядов — пропускаем
+        }
+        sut.selectOutfit(.init(outfit: lockedOutfit))
+        XCTAssertTrue(display.displayLockedItemAttemptCalled)
+    }
+
+    // MARK: - 13. selectOutfit разблокированного по streak наряда
+
+    func test_selectOutfit_unlockedByStreak() async throws {
+        let (sut, display, _, _) = makeSUT()
+        // Загружаем с высоким streak — все наряды разблокированы
+        sut.loadCustomization(.init(childStreakDays: 999, unlockedAchievements: []))
+        try await Task.sleep(nanoseconds: 600_000_000)
+        guard let streakOutfit = LyalyaOutfit.allCases.first(where: { $0.requiredStreak > 0 }) else {
+            return
+        }
+        display.displaySelectionChangedCalled = false
+        sut.selectOutfit(.init(outfit: streakOutfit))
+        XCTAssertTrue(display.displaySelectionChangedCalled)
+    }
+
+    // MARK: - 14. selectHairColor / selectEyeColor / selectSkinTone
+
+    func test_selectHairColor_updatesViewModel() {
+        let (sut, display, _, _) = makeSUT()
+        sut.selectHairColor(.init(color: .chestnut))
+        XCTAssertTrue(display.displaySelectionChangedCalled)
+    }
+
+    func test_selectEyeColor_updatesViewModel() {
+        let (sut, display, _, _) = makeSUT()
+        sut.selectEyeColor(.init(color: .green))
+        XCTAssertTrue(display.displaySelectionChangedCalled)
+    }
+
+    func test_selectSkinTone_updatesViewModel() {
+        let (sut, display, _, _) = makeSUT()
+        sut.selectSkinTone(.init(tone: .medium))
+        XCTAssertTrue(display.displaySelectionChangedCalled)
+    }
+
+    // MARK: - 15. toggleAccessory без achievement-блокировки
+
+    func test_toggleAccessory_availableAccessory_toggles() {
+        let (sut, display, _, _) = makeSUT()
+        guard let freeAccessory = LyalyaAccessory.allCases.first(where: { $0.requiredAchievement == nil }) else {
+            return
+        }
+        sut.toggleAccessory(.init(accessory: freeAccessory))
+        XCTAssertTrue(display.displaySelectionChangedCalled)
+    }
+
+    func test_toggleAccessory_locked_callsLockedAttempt() {
+        let (sut, display, _, _) = makeSUT()
+        guard let lockedAccessory = LyalyaAccessory.allCases.first(where: { $0.requiredAchievement != nil }) else {
+            return
+        }
+        sut.toggleAccessory(.init(accessory: lockedAccessory))
+        XCTAssertTrue(display.displayLockedItemAttemptCalled)
+    }
+
+    // MARK: - 16. selectBackground
+
+    func test_selectBackground_updatesViewModel() {
+        let (sut, display, _, _) = makeSUT()
+        sut.selectBackground(.init(background: .garden))
+        XCTAssertTrue(display.displaySelectionChangedCalled)
+    }
+
+    // MARK: - 17. resetToDefault сбрасывает и сохраняет
+
+    func test_resetToDefault_callsSave() async throws {
+        let (sut, display, _, _) = makeSUT()
+        sut.selectSkin(.init(skin: .artist))
+        sut.resetToDefault(.init())
+        try await Task.sleep(nanoseconds: 2_000_000_000)
+        XCTAssertTrue(display.displaySaveResultCalled)
+    }
+
+    // MARK: - 18. viewWillDisappear не крашит
+
+    func test_viewWillDisappear_doesNotCrash() {
+        let (sut, _, _, _) = makeSUT()
+        sut.previewVoice(.init(voice: .classic))
+        sut.viewWillDisappear()
+        XCTAssertTrue(true)
     }
 }
