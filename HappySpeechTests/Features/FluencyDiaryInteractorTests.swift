@@ -52,6 +52,28 @@ final class FluencyDiaryInteractorTests: XCTestCase {
         )
     }
 
+    /// SUT с инжектированным MockBreathingAudioWorker — позволяет покрыть
+    /// startRecording/stopRecording/analyzeAndSave без реального микрофона.
+    private func makeAudioSUT(
+        seed: [FluencySessionData] = [],
+        micGranted: Bool = true,
+        scriptedAmplitudes: [Float] = [],
+        recorderFails: Bool = false
+    ) -> (FluencyDiaryInteractor, MockBreathingAudioWorker, MockAudioFileRecorder) {
+        let audio = MockBreathingAudioWorker()
+        audio.isPermissionGranted = micGranted
+        audio.scriptedAmplitudes = scriptedAmplitudes
+        let recorder = MockAudioFileRecorder()
+        recorder.shouldFailStart = recorderFails
+        let sut = FluencyDiaryInteractor(
+            audioWorker: audio,
+            storageWorker: MockDiaryStorageWorker(seed: seed),
+            hapticService: MockHapticService(),
+            fileRecorder: recorder
+        )
+        return (sut, audio, recorder)
+    }
+
     private func session(
         id: String = UUID().uuidString,
         daysAgo: Int,
@@ -215,5 +237,190 @@ final class FluencyDiaryInteractorTests: XCTestCase {
         XCTAssertFalse(sut.display.isAnalyzing)
         XCTAssertEqual(sut.display.totalSessions, 0)
         XCTAssertTrue(sut.display.isStubAnalysis)
+    }
+
+    // MARK: - Batch 2.6a v25: startRecording / stopRecording / analyzeAndSave
+
+    func test_startRecording_micGranted_setsIsRecording() async {
+        let (sut, audio, recorder) = makeAudioSUT(micGranted: true)
+        sut.startSession()
+        await sut.startRecording()
+        XCTAssertTrue(sut.display.isRecording)
+        XCTAssertEqual(audio.startCount, 1)
+        XCTAssertEqual(recorder.startCallCount, 1)
+        sut.stopRecording()
+    }
+
+    func test_startRecording_micDenied_setsErrorMessage() async {
+        let (sut, _, _) = makeAudioSUT(micGranted: false)
+        sut.startSession()
+        await sut.startRecording()
+        XCTAssertFalse(sut.display.isRecording)
+        XCTAssertNotNil(sut.display.errorMessage)
+    }
+
+    func test_startRecording_whenAlreadyRecording_isIgnored() async {
+        let (sut, audio, _) = makeAudioSUT(micGranted: true)
+        sut.startSession()
+        await sut.startRecording()
+        let startCountAfterFirst = audio.startCount
+        await sut.startRecording() // повторный вызов — guard
+        XCTAssertEqual(audio.startCount, startCountAfterFirst)
+        sut.stopRecording()
+    }
+
+    func test_startRecording_recorderFails_stillSetsIsRecording() async {
+        // fileRecorder.startRecording возвращает false → recordedFileURL=nil,
+        // но audioWorker всё равно стартует и display.isRecording=true.
+        let (sut, _, recorder) = makeAudioSUT(micGranted: true, recorderFails: true)
+        sut.startSession()
+        await sut.startRecording()
+        XCTAssertTrue(sut.display.isRecording)
+        XCTAssertEqual(recorder.startCallCount, 1)
+        sut.stopRecording()
+    }
+
+    func test_stopRecording_afterStart_analyzesAndCompletes() async throws {
+        let (sut, _, _) = makeAudioSUT(micGranted: true)
+        sut.startSession()
+        await sut.startRecording()
+        sut.stopRecording()
+        XCTAssertFalse(sut.display.isRecording)
+        // analyzeAndSave запускает Task — даём ему завершиться (stub-путь).
+        try await Task.sleep(for: .milliseconds(300))
+        XCTAssertTrue(sut.display.showComplete, "stub-анализ должен завершить сессию")
+        XCTAssertFalse(sut.display.isAnalyzing)
+        XCTAssertTrue(sut.display.isStubAnalysis, "Короткая запись без WhisperKit → stub")
+        XCTAssertFalse(sut.display.severityLabel.isEmpty)
+    }
+
+    func test_stopRecording_incrementsTotalSessions() async throws {
+        let (sut, _, _) = makeAudioSUT(micGranted: true)
+        sut.startSession()
+        await sut.startRecording()
+        sut.stopRecording()
+        try await Task.sleep(for: .milliseconds(300))
+        XCTAssertEqual(sut.display.totalSessions, 1)
+        XCTAssertNotNil(sut.display.lastSessionDate)
+    }
+
+    func test_startRecording_scriptedAmplitudes_fillWaveform() async throws {
+        let (sut, _, _) = makeAudioSUT(
+            micGranted: true,
+            scriptedAmplitudes: [0.2, 0.3, 0.25, 0.4, 0.35]
+        )
+        sut.startSession()
+        await sut.startRecording()
+        // MockBreathingAudioWorker пушит сэмплы с cadence 50 мс.
+        try await Task.sleep(for: .milliseconds(300))
+        XCTAssertFalse(sut.display.waveformLevels.isEmpty,
+                       "handleAmplitude должен заполнять waveformLevels")
+        sut.stopRecording()
+        try await Task.sleep(for: .milliseconds(300))
+    }
+
+    func test_stopRecording_buildsChartDataAfterAnalysis() async throws {
+        let (sut, _, _) = makeAudioSUT(micGranted: true)
+        sut.startSession()
+        await sut.startRecording()
+        sut.stopRecording()
+        try await Task.sleep(for: .milliseconds(300))
+        // analyzeAndSave → updateChartData(from: recentSessions) с непустым кешем.
+        XCTAssertEqual(sut.display.chartData.count, 14)
+        // Сегодняшний день должен иметь данные после сохранённой сессии.
+        let today = sut.display.chartData.last
+        XCTAssertNotNil(today)
+        XCTAssertTrue(today?.hasData ?? false, "Сегодняшний день содержит только что записанную сессию")
+    }
+
+    func test_multipleRecordings_accumulateSessions() async throws {
+        let (sut, _, _) = makeAudioSUT(micGranted: true)
+        sut.startSession()
+        for _ in 0..<3 {
+            await sut.startRecording()
+            sut.stopRecording()
+            try await Task.sleep(for: .milliseconds(250))
+        }
+        XCTAssertEqual(sut.display.totalSessions, 3)
+    }
+
+    func test_startSession_afterRecording_resetsState() async throws {
+        let (sut, _, _) = makeAudioSUT(micGranted: true)
+        sut.startSession()
+        await sut.startRecording()
+        sut.stopRecording()
+        try await Task.sleep(for: .milliseconds(300))
+        XCTAssertTrue(sut.display.showComplete)
+
+        // Новая сессия сбрасывает showComplete и waveform.
+        sut.startSession()
+        XCTAssertFalse(sut.display.showComplete)
+        XCTAssertTrue(sut.display.waveformLevels.isEmpty)
+        XCTAssertEqual(sut.display.recordingDuration, 0)
+    }
+
+    // MARK: - Batch 2.6a v25 (доп.): fallback-анализ через non-FluencyAnalyzerWorker
+
+    /// Мок-анализатор, который НЕ является `FluencyAnalyzerWorker` — заставляет
+    /// `analyzeAndSave` пойти по ветке `makeFallbackAnalysis`.
+    private final class StubAnalyzer: FluencyAnalyzerWorkerProtocol, @unchecked Sendable {
+        func classifyOnset(
+            rmsBuffer: [Float],
+            threshold: Float,
+            difficulty: StutteringDifficulty
+        ) -> (classification: OnsetClassification, attackTimeMs: Float) {
+            (.soft, 120)
+        }
+        func analyzeDysfluency(transcript: String) -> (repetitions: Int, totalTokens: Int) {
+            (0, 0)
+        }
+        func estimateSyllableCount(in text: String) -> Int { 0 }
+        func dysfluencyRate(count: Int, syllables: Int) -> Float { 0 }
+    }
+
+    private func makeFallbackSUT(
+        micGranted: Bool = true
+    ) -> (FluencyDiaryInteractor, MockBreathingAudioWorker) {
+        let audio = MockBreathingAudioWorker()
+        audio.isPermissionGranted = micGranted
+        let sut = FluencyDiaryInteractor(
+            audioWorker: audio,
+            analyzerWorker: StubAnalyzer(),
+            storageWorker: MockDiaryStorageWorker(),
+            hapticService: MockHapticService(),
+            fileRecorder: MockAudioFileRecorder()
+        )
+        return (sut, audio)
+    }
+
+    func test_stopRecording_withStubAnalyzer_usesFallbackAnalysis() async throws {
+        let (sut, _) = makeFallbackSUT()
+        sut.startSession()
+        await sut.startRecording()
+        sut.stopRecording()
+        try await Task.sleep(for: .milliseconds(350))
+        // analyzerWorker не FluencyAnalyzerWorker → makeFallbackAnalysis → isStub true.
+        XCTAssertTrue(sut.display.showComplete)
+        XCTAssertTrue(sut.display.isStubAnalysis)
+    }
+
+    func test_stopRecording_withStubAnalyzer_incrementsSessions() async throws {
+        let (sut, _) = makeFallbackSUT()
+        sut.startSession()
+        await sut.startRecording()
+        sut.stopRecording()
+        try await Task.sleep(for: .milliseconds(350))
+        XCTAssertEqual(sut.display.totalSessions, 1)
+    }
+
+    func test_stopRecording_withStubAnalyzer_buildsChartAfterAnalysis() async throws {
+        let (sut, _) = makeFallbackSUT()
+        sut.startSession()
+        await sut.startRecording()
+        sut.stopRecording()
+        try await Task.sleep(for: .milliseconds(350))
+        XCTAssertFalse(sut.display.chartData.isEmpty,
+                       "Fallback-анализ всё равно строит 14-дневный chart")
+        XCTAssertFalse(sut.display.severityLabel.isEmpty)
     }
 }

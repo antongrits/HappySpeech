@@ -2,12 +2,25 @@ import AVFoundation
 import Foundation
 import OSLog
 
+// MARK: - FamilyVoiceRecording
+
+/// Recording/playback contract used by `FamilyVoiceInteractor`.
+/// Allows unit tests to substitute the live `AVAudioRecorder`-backed worker
+/// with a deterministic mock. Production behaviour is unchanged.
+protocol FamilyVoiceRecording: Sendable {
+    func startRecording(word: String) async throws -> URL
+    func stopRecording() async throws -> (url: URL, duration: Double)
+    func currentRMSLevel() async -> Float
+    func playRecording(filePath: String) async throws -> Double
+    func deleteRecording(filePath: String) async throws
+}
+
 // MARK: - FamilyVoiceRecorderWorker
 
 /// Wraps AVAudioRecorder for family recording sessions.
 /// Stores recordings in Documents/family_recordings/<id>.m4a (16kHz mono AAC).
 /// All file I/O performed on a background task; caller switches to MainActor as needed.
-final class FamilyVoiceRecorderWorker: NSObject, Sendable {
+final class FamilyVoiceRecorderWorker: NSObject, FamilyVoiceRecording, Sendable {
 
     // MARK: - Constants
 

@@ -45,7 +45,7 @@ final class FluencyDiaryInteractor {
 
     // MARK: - Dependencies
 
-    private let audioWorker: BreathingAudioWorker
+    private let audioWorker: any BreathingAudioWorkerProtocol
     private let analyzerWorker: any FluencyAnalyzerWorkerProtocol
     private let storageWorker: any DiaryStorageWorkerProtocol
     private let whisperWorker: WhisperTranscriptionWorker
@@ -70,7 +70,7 @@ final class FluencyDiaryInteractor {
     // MARK: - Init
 
     init(
-        audioWorker: BreathingAudioWorker = BreathingAudioWorker(),
+        audioWorker: any BreathingAudioWorkerProtocol = BreathingAudioWorker(),
         analyzerWorker: any FluencyAnalyzerWorkerProtocol = FluencyAnalyzerWorker(),
         storageWorker: any DiaryStorageWorkerProtocol,
         whisperWorker: WhisperTranscriptionWorker = WhisperTranscriptionWorker(),

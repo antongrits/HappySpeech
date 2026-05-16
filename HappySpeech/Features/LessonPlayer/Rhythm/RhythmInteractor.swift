@@ -595,6 +595,20 @@ final class RhythmInteractor: RhythmBusinessLogic {
     func _test_forceRecording(_ recording: Bool) {
         isRecording = recording
     }
+
+    /// Сдвигает `recordingStartedAt` в прошлое, чтобы `pulseRecordingTimer`
+    /// детерминированно достиг условия завершения записи. Test-only seam.
+    func _test_setRecordingStartedAgo(_ seconds: TimeInterval) {
+        recordingStartedAt = Date().addingTimeInterval(-seconds)
+    }
+
+    func _test_setDetectedBeats(_ count: Int) {
+        detectedBeats = count
+    }
+
+    func _test_pulseRecordingTimer() {
+        pulseRecordingTimer()
+    }
     // swiftlint:enable identifier_name
     #endif
 }

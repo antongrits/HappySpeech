@@ -402,4 +402,225 @@ final class BreathingInteractorTests: XCTestCase {
         let b = BreathingGameState.playing(elapsedMs: 100, amplitude: 0.5, objectScale: 1.5)
         XCTAssertEqual(a, b)
     }
+
+    // MARK: - Batch 2.6a v25: completeSuccess / fail / termination paths
+
+    func test_playingPhase_loudSamples_emitSnapshots() {
+        let (sut, spy, _, _) = makeSUT()
+        sut._test_forceEnterPlaying(baseline: 0.03) // threshold ≈ 0.06
+        for _ in 0..<40 { sut._test_pushAmplitude(0.9) }
+        XCTAssertFalse(spy.updateResponses.isEmpty)
+    }
+
+    func test_pulseTimer_warmUp_progressesOutOfWarmUp() async throws {
+        let audio = MockBreathingAudioWorker()
+        audio.isPermissionGranted = true
+        // Без scriptedAmplitudes mock не пушит сэмплы — переход обеспечивается
+        // именно pulseTimer.
+        let haptic = MockBreathingHapticWorker()
+        let sut = BreathingInteractor(audioWorker: audio, hapticWorker: haptic)
+        let spy = SpyPresenter()
+        sut.presenter = spy
+
+        // Детерминированно: входим в warmUp и прогоняем pulseTimer достаточно
+        // раз, чтобы накопленный elapsedMs превысил warmUpSec (easy = 3 с,
+        // tickIntervalSec = 0.05 → нужно > 60 тиков).
+        sut._test_forceState(.warmUp(elapsedMs: 0))
+        for _ in 0..<80 { sut._test_pulseTimer() }
+        try await Task.sleep(for: .milliseconds(120))
+
+        if case .warmUp = sut._test_currentState() {
+            XCTFail("pulseTimer должен был вывести из warmUp после 80 тиков")
+        }
+        await sut.cancel()
+        XCTAssertFalse(spy.updateResponses.isEmpty)
+    }
+
+    func test_forceEnterPlaying_thenMarkInterrupted_emitsFinishSummary() async {
+        let (sut, spy, audio, haptic) = makeSUT()
+        sut._test_forceEnterPlaying(baseline: 0.05)
+        sut.markInterrupted()
+        try? await Task.sleep(for: .milliseconds(60))
+        XCTAssertEqual(spy.finishResponses.count, 1)
+        XCTAssertFalse(spy.finishResponses.first?.result.didSucceed ?? true)
+        XCTAssertGreaterThanOrEqual(audio.stopCount, 1)
+        XCTAssertEqual(haptic.failureCount, 1)
+        if case .summary = sut.state {
+            // ok
+        } else {
+            XCTFail("Ожидалось summary после markInterrupted, получено \(sut.state)")
+        }
+    }
+
+    func test_handlePlayingSample_firstLoudSample_triggersBlowStart() {
+        let (sut, spy, _, haptic) = makeSUT()
+        sut._test_forceEnterPlaying(baseline: 0.03)
+        for _ in 0..<20 { sut._test_pushAmplitude(0.9) }
+        XCTAssertEqual(haptic.blowStartCount, 1, "Первый громкий сэмпл триггерит blowStart")
+        XCTAssertFalse(spy.updateResponses.isEmpty)
+    }
+
+    func test_handleWarmUpSample_collectsBaselineQuietly() {
+        let (sut, _, _, _) = makeSUT()
+        sut._test_forceState(.warmUp(elapsedMs: 0))
+        for _ in 0..<40 { sut._test_pushAmplitude(0.02) }
+        if case .warmUp = sut.state {
+            // ok
+        } else {
+            XCTFail("warmUp не должен завершаться на тихих сэмплах в пределах окна")
+        }
+    }
+
+    func test_handleAmplitude_inSummaryState_ignored() {
+        let (sut, _, _, _) = makeSUT()
+        let result = BreathingResult(
+            difficulty: .easy, durationSec: 5, stableRatio: 0.8,
+            score: 0.8, stars: 2, petalsBlown: 12, totalPetals: 12, didSucceed: true
+        )
+        sut._test_forceState(.summary(result: result))
+        sut._test_pushAmplitude(0.9)
+        XCTAssertEqual(sut._test_currentStableRatio(), 0)
+    }
+
+    func test_cancel_fromPlaying_resetsToIdleAndStopsAudio() async {
+        let (sut, spy, audio, _) = makeSUT()
+        sut._test_forceEnterPlaying(baseline: 0.05)
+        await sut.cancel()
+        XCTAssertEqual(sut.state, .idle)
+        XCTAssertGreaterThanOrEqual(audio.stopCount, 1)
+        XCTAssertFalse(spy.updateResponses.isEmpty)
+    }
+
+    func test_beginGame_resetsRuntimeStateBetweenSessions() async {
+        let (sut, _, _, _) = makeSUT(micGranted: true)
+        sut._test_forceEnterPlaying(baseline: 0.03)
+        for _ in 0..<10 { sut._test_pushAmplitude(0.9) }
+        XCTAssertGreaterThan(sut._test_currentStableRatio(), 0)
+
+        await sut.beginGame(activityId: "reset-1", difficulty: .medium)
+        XCTAssertEqual(sut._test_currentStableRatio(), 0, "resetRuntimeState обнуляет статистику")
+    }
+
+    func test_markInterrupted_fromWarmUp_emitsFailure() async {
+        let (sut, spy, _, haptic) = makeSUT(micGranted: true)
+        await sut.beginGame(activityId: "int-1", difficulty: .easy)
+        sut._test_forceState(.warmUp(elapsedMs: 100))
+        sut.markInterrupted()
+        try? await Task.sleep(for: .milliseconds(60))
+        XCTAssertEqual(haptic.failureCount, 1)
+        XCTAssertEqual(spy.finishResponses.count, 1)
+    }
+
+    func test_emitCurrentSnapshot_summaryState_doesNotEmitUpdateSignal() async {
+        let (sut, spy, _, _) = makeSUT()
+        let result = BreathingResult(
+            difficulty: .easy, durationSec: 5, stableRatio: 0.8,
+            score: 0.8, stars: 2, petalsBlown: 12, totalPetals: 12, didSucceed: true
+        )
+        sut._test_forceState(.success(score: 0.8, duration: 5))
+        // success/failure ветки emitCurrentSnapshot — intentionally empty.
+        await sut.cancel() // эмитит snapshot для idle уже после reset
+        _ = result
+        XCTAssertFalse(spy.updateResponses.isEmpty)
+    }
+
+    // MARK: - Batch 2.6a v25 (доп.): termination-ветви handlePlayingSample
+
+    func test_handlePlayingSample_durationReached_loudSamples_completesSuccess() async {
+        let (sut, spy, audio, haptic) = makeSUT()
+        sut._test_forceEnterPlaying(baseline: 0.03) // threshold ≈ 0.06
+        // Накапливаем громкие сэмплы → stableRatio высокий.
+        for _ in 0..<30 { sut._test_pushAmplitude(0.9) }
+        // Сдвигаем старт в прошлое за required (easy = 5 с) → следующий сэмпл
+        // достигает termination-ветви completeSuccess.
+        sut._test_backdatePlayStart(by: 30)
+        sut._test_pushAmplitude(0.9)
+        try? await Task.sleep(for: .milliseconds(80))
+        XCTAssertEqual(spy.finishResponses.count, 1)
+        XCTAssertTrue(spy.finishResponses.first?.result.didSucceed ?? false)
+        XCTAssertEqual(haptic.successCount, 1)
+        XCTAssertGreaterThanOrEqual(audio.stopCount, 1)
+    }
+
+    func test_handlePlayingSample_durationReached_quietSamples_failsTooQuiet() async {
+        let (sut, spy, _, _) = makeSUT()
+        sut._test_forceEnterPlaying(baseline: 0.1) // threshold ≈ 0.2
+        // Тихие сэмплы → stableRatio ниже minStableRatio.
+        for _ in 0..<20 { sut._test_pushAmplitude(0.001) }
+        sut._test_backdatePlayStart(by: 30)
+        sut._test_pushAmplitude(0.001)
+        try? await Task.sleep(for: .milliseconds(80))
+        XCTAssertEqual(spy.finishResponses.count, 1)
+        XCTAssertFalse(spy.finishResponses.first?.result.didSucceed ?? true)
+    }
+
+    func test_handlePlayingSample_burstThenSilence_failsTooShort() async {
+        let (sut, spy, _, _) = makeSUT()
+        sut._test_forceEnterPlaying(baseline: 0.03) // threshold ≈ 0.06
+        // Короткий громкий всплеск → hasBegunBlowing = true.
+        sut._test_pushAmplitude(0.9)
+        // Сдвигаем старт чтобы elapsedMs > 1500. Подаём много тихих сэмплов:
+        // доля громких падает ниже 15% → срабатывает fail(.tooShort).
+        sut._test_backdatePlayStart(by: 2)
+        for _ in 0..<25 { sut._test_pushAmplitude(0.001) }
+        try? await Task.sleep(for: .milliseconds(120))
+        XCTAssertGreaterThanOrEqual(spy.finishResponses.count, 1)
+        XCTAssertFalse(spy.finishResponses.first?.result.didSucceed ?? true)
+        if case .summary = sut.state {
+            // ok — игра завершилась неуспехом
+        } else {
+            XCTFail("Ожидалось summary после fail(.tooShort), получено \(sut.state)")
+        }
+    }
+
+    func test_pulseTimer_playingState_emitsSnapshot() {
+        let (sut, spy, _, _) = makeSUT()
+        sut._test_forceEnterPlaying(baseline: 0.05)
+        spy.updateResponses.removeAll()
+        sut._test_pulseTimer()
+        XCTAssertFalse(spy.updateResponses.isEmpty, "pulseTimer в playing эмитит snapshot")
+    }
+
+    func test_pulseTimer_playingNoBlowAfter10s_forcesFailTooQuiet() async {
+        let (sut, spy, _, _) = makeSUT()
+        sut._test_forceEnterPlaying(baseline: 0.05)
+        // Никакого blow → hasBegunBlowing == false. Сдвигаем старт > 10 с.
+        sut._test_backdatePlayStart(by: 11)
+        sut._test_pulseTimer()
+        try? await Task.sleep(for: .milliseconds(80))
+        XCTAssertEqual(spy.finishResponses.count, 1)
+        XCTAssertFalse(spy.finishResponses.first?.result.didSucceed ?? true)
+    }
+
+    func test_pulseTimer_warmUpState_advancesElapsed() {
+        let (sut, spy, _, _) = makeSUT()
+        sut._test_forceState(.warmUp(elapsedMs: 0))
+        spy.updateResponses.removeAll()
+        sut._test_pulseTimer()
+        // warmUp elapsed увеличивается, snapshot эмитится асинхронно — проверяем
+        // что состояние осталось warmUp с возросшим elapsedMs.
+        if case .warmUp(let ms) = sut._test_currentState() {
+            XCTAssertGreaterThan(ms, 0)
+        } else {
+            XCTFail("Ожидалось warmUp после pulseTimer")
+        }
+    }
+
+    func test_pulseTimer_idleState_noEffect() {
+        let (sut, _, _, _) = makeSUT()
+        sut._test_forceState(.idle)
+        sut._test_pulseTimer()
+        XCTAssertEqual(sut._test_currentState(), .idle)
+    }
+
+    func test_handlePlayingSample_petalsBlow_progressively() {
+        let (sut, spy, _, haptic) = makeSUT()
+        sut._test_forceEnterPlaying(baseline: 0.03)
+        // Сдвигаем старт так, чтобы часть лепестков уже была "сдута".
+        sut._test_backdatePlayStart(by: 3)
+        sut._test_pushAmplitude(0.9)
+        XCTAssertGreaterThanOrEqual(haptic.petalCount, 1,
+                                    "Длительное дутьё постепенно сдувает лепестки")
+        XCTAssertFalse(spy.updateResponses.isEmpty)
+    }
 }

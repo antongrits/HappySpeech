@@ -99,6 +99,22 @@ final class BreathingExtendedInteractor {
         )
     }
 
+    #if DEBUG
+    /// Test-only init с инъекцией core audio worker. Позволяет unit-тестам
+    /// прогонять полный `startSession` → `beginRound` цикл без реального
+    /// AVAudioEngine / запроса разрешения микрофона. Поведение прод-кода
+    /// (обычный `init()`) не меняется.
+    init(testCoreAudioWorker: any BreathingAudioWorkerProtocol) {
+        let haptic = MockBreathingHapticWorker()
+        self.audioWorker = BreathingAudioWorker()
+        self.hapticWorker = haptic
+        self.coreInteractor = BreathingInteractor(
+            audioWorker: testCoreAudioWorker,
+            hapticWorker: haptic
+        )
+    }
+    #endif
+
     // MARK: - Public API
 
     func startSession(difficulty: StutteringDifficulty) async {
@@ -322,6 +338,71 @@ final class BreathingExtendedInteractor {
         case .hard:   return .hard
         }
     }
+
+    // MARK: - Test hooks
+    //
+    // BreathingExtendedInteractor.init() жёстко создаёт собственный
+    // BreathingAudioWorker + BreathingInteractor (нет inject-seam), а
+    // startSession() блокируется на реальной 4-7-8 фазовой последовательности
+    // (await phaseTask?.value) + AVAudioEngine. Эти хуки позволяют unit-тестам
+    // прогонять детерминированную синхронную бизнес-логику (раунды, scoring,
+    // фазовые инструкции) без аудио-стека. Поведение прод-кода не меняется.
+
+    #if DEBUG
+    // swiftlint:disable identifier_name
+    func _test_configure(difficulty: StutteringDifficulty) {
+        self.difficulty = difficulty
+        display.roundsRequired = difficulty.roundCount
+        display.roundsComplete = 0
+        display.roundScores = []
+        display.treeProgress = 0
+        display.showSuccess = false
+        display.sessionScore = 0
+        display.breathingTip = breathingTip(for: difficulty)
+        rmsThreshold = rmsThresholdForDifficulty(difficulty)
+    }
+
+    func _test_handleCoreUpdate(state: BreathingGameState, progress: Float, amplitude: Float) {
+        handleCoreUpdate(state: state, progress: progress, amplitude: amplitude)
+    }
+
+    func _test_completeRound(score: Int) {
+        completeRound(score: score)
+    }
+
+    func _test_calculateRoundScore() -> Int {
+        calculateRoundScore()
+    }
+
+    func _test_calculateSessionScore(_ scores: [Int]) -> Int {
+        calculateSessionScore(roundScores: scores)
+    }
+
+    func _test_instructionForPhase(_ phase: BreathingPhase) -> String {
+        instructionForPhase(phase)
+    }
+
+    func _test_setSuccessfulFrames(_ count: Int) {
+        successfulFramesThisRound = count
+    }
+
+    var _test_inhaleSeconds: Int { inhaleSeconds }
+    var _test_holdSeconds: Int { holdSeconds }
+    var _test_exhaleSeconds: Int { exhaleSeconds }
+    var _test_breathingDifficulty: BreathingDifficulty { breathingDifficulty }
+
+    /// Прогоняет `runPhase` с `seconds == 0`, чтобы покрыть установку
+    /// `currentPhase` / `instruction` / `phaseCountdown` без реальных
+    /// `Task.sleep`. Поведение прод-кода не меняется.
+    func _test_runPhaseZeroSeconds(_ phase: BreathingPhase) async {
+        await runPhase(phase, seconds: 0)
+    }
+
+    func _test_setRoundsComplete(_ count: Int) {
+        display.roundsComplete = count
+    }
+    // swiftlint:enable identifier_name
+    #endif
 }
 
 // MARK: - BreathingPhase

@@ -241,4 +241,180 @@ final class PoseSequenceInteractorTests: XCTestCase {
         sut.startGame(.init(postures: [.mushroom, .pucker, .smile]))
         XCTAssertEqual(spy.lastStartGame?.postures, [.mushroom, .pucker, .smile])
     }
+
+    // MARK: - Batch 2.6a v25: face-mode hold dynamics + edge cases
+
+    func test_updateFrame_holdThenDecrementThenRebuild_advances() {
+        let (sut, spy) = makeSUT()
+        sut.startGame(.init(postures: [.smile]))
+        // Накапливаем 15 кадров, сбрасываем 5, добиваем 20+.
+        for _ in 0..<15 { sut.updateFrame(.init(blendshapes: blendshapes(for: .smile))) }
+        for _ in 0..<5 { sut.updateFrame(.init(blendshapes: FaceBlendshapes())) }
+        for _ in 0..<25 { sut.updateFrame(.init(blendshapes: blendshapes(for: .smile))) }
+        XCTAssertEqual(spy.lastUpdateFrame?.advanced, true)
+        XCTAssertEqual(spy.scoreCallCount, 1)
+    }
+
+    func test_updateFrame_wrongPostureBlendshapes_lowConfidence() {
+        let (sut, spy) = makeSUT()
+        sut.startGame(.init(postures: [.pucker]))
+        // Подаём улыбку, ожидаем pucker → confidence низкая.
+        for _ in 0..<10 { sut.updateFrame(.init(blendshapes: blendshapes(for: .smile))) }
+        XCTAssertEqual(spy.lastUpdateFrame?.currentIndex, 0)
+        XCTAssertEqual(spy.lastUpdateFrame?.advanced, false)
+    }
+
+    func test_updateFrame_allFourDefaultPostures_completeGame() {
+        let (sut, spy) = makeSUT()
+        sut.startGame(.init(postures: [.smile, .pucker, .cupShape, .mushroom]))
+        let order: [ArticulationPosture] = [.smile, .pucker, .cupShape, .mushroom]
+        for posture in order {
+            for _ in 0..<20 {
+                sut.updateFrame(.init(blendshapes: blendshapes(for: posture)))
+            }
+        }
+        XCTAssertEqual(spy.scoreCallCount, 1)
+        XCTAssertEqual(spy.lastScore?.stars, 3)
+    }
+
+    func test_updateBodyPose_withoutStart_ignored() {
+        let (sut, spy) = makeSUT()
+        let update = BodyPoseUpdate(joints: [:], confidence: 1.0)
+        sut.updateBodyPose(.init(update: update))
+        XCTAssertEqual(spy.updateBodyPoseCallCount, 0)
+    }
+
+    func test_scoreAttempt_completedExceedsTotal_clampedToThreeStars() {
+        let (sut, spy) = makeSUT()
+        sut.scoreAttempt(.init(completedCount: 10, totalCount: 5))
+        // ratio = 2.0 ≥ 1 → 3 звезды.
+        XCTAssertEqual(spy.lastScore?.stars, 3)
+    }
+
+    func test_startGame_emptyPosturesOnSimulator_fourFaceDefaults() {
+        // На симуляторе ARBodyTrackingConfiguration.isSupported == false →
+        // face-режим с 4 дефолтными позами.
+        let (sut, spy) = makeSUT()
+        sut.startGame(.init(postures: []))
+        if spy.lastStartGame?.mode == .face {
+            XCTAssertEqual(spy.lastStartGame?.postures.count, 4)
+            XCTAssertEqual(spy.lastStartGame?.postures, [.smile, .pucker, .cupShape, .mushroom])
+        }
+    }
+
+    func test_updateFrame_singlePosture_partialHold_noScore() {
+        let (sut, spy) = makeSUT()
+        sut.startGame(.init(postures: [.smile]))
+        for _ in 0..<10 { sut.updateFrame(.init(blendshapes: blendshapes(for: .smile))) }
+        XCTAssertEqual(spy.scoreCallCount, 0, "Незавершённое удержание не вызывает scoreAttempt")
+    }
+
+    // MARK: - Batch 2.6a v25: body-режим через инъекцию bodyTrackingSupported
+    //
+    // На симуляторе ARBodyTrackingConfiguration.isSupported == false. С новым
+    // inject-seam `bodyTrackingSupported` body-ветка становится тестируемой —
+    // покрываются startBodyGame, updateBodyPose (async-closure с
+    // PoseSimilarityWorker) и body-mode guard-ы.
+
+    private func makeBodySUT() -> (PoseSequenceInteractor, SpyPoseSequencePresenter) {
+        let sut = PoseSequenceInteractor(bodyTrackingSupported: true)
+        let spy = SpyPoseSequencePresenter()
+        sut.presenter = spy
+        return (sut, spy)
+    }
+
+    func test_startGame_bodyTrackingSupported_emptyPostures_startsBodyMode() {
+        let (sut, spy) = makeBodySUT()
+        sut.startGame(.init(postures: []))
+        XCTAssertEqual(spy.startGameCallCount, 1)
+        XCTAssertEqual(spy.lastStartGame?.mode, .body)
+        XCTAssertEqual(spy.lastStartGame?.targetPoses.count, TargetPosesRepository.allPoses.count)
+        XCTAssertTrue(spy.lastStartGame?.postures.isEmpty ?? false)
+        XCTAssertEqual(spy.lastStartGame?.currentIndex, 0)
+    }
+
+    func test_startGame_bodyTrackingSupported_withPostures_usesFaceMode() {
+        // Непустой набор поз → face-режим даже при поддержке body tracking.
+        let (sut, spy) = makeBodySUT()
+        sut.startGame(.init(postures: [.smile, .pucker]))
+        XCTAssertEqual(spy.lastStartGame?.mode, .face)
+    }
+
+    func test_updateBodyPose_inBodyMode_emitsResponse() async {
+        let (sut, spy) = makeBodySUT()
+        sut.startGame(.init(postures: []))
+        let target = TargetPosesRepository.allPoses[0]
+        // Подаём суставы, точно совпадающие с эталоном → высокий score.
+        let update = BodyPoseUpdate(joints: target.jointTargets, confidence: 1.0)
+        sut.updateBodyPose(.init(update: update))
+        // updateBodyPose запускает async-задачу со scoring — ждём её.
+        try? await Task.sleep(for: .milliseconds(120))
+        XCTAssertEqual(spy.updateBodyPoseCallCount, 1)
+        XCTAssertGreaterThan(spy.lastUpdateBodyPose?.score ?? -1, 0)
+    }
+
+    func test_updateBodyPose_perfectMatch_advancesAfterHold() async {
+        let (sut, spy) = makeBodySUT()
+        sut.startGame(.init(postures: []))
+        let target = TargetPosesRepository.allPoses[0]
+        let update = BodyPoseUpdate(joints: target.jointTargets, confidence: 1.0)
+        // bodyHoldFramesRequired == 20: подаём 25 идеальных кадров.
+        for _ in 0..<25 {
+            sut.updateBodyPose(.init(update: update))
+            try? await Task.sleep(for: .milliseconds(8))
+        }
+        try? await Task.sleep(for: .milliseconds(120))
+        XCTAssertGreaterThanOrEqual(spy.lastUpdateBodyPose?.currentIndex ?? 0, 1,
+                                    "Удержание идеальной позы продвигает индекс")
+    }
+
+    func test_updateBodyPose_lowScore_doesNotAdvance() async {
+        let (sut, spy) = makeBodySUT()
+        sut.startGame(.init(postures: []))
+        // Пустые суставы → score 0 → не продвигается.
+        let update = BodyPoseUpdate(joints: [:], confidence: 1.0)
+        for _ in 0..<10 {
+            sut.updateBodyPose(.init(update: update))
+            try? await Task.sleep(for: .milliseconds(8))
+        }
+        try? await Task.sleep(for: .milliseconds(120))
+        XCTAssertEqual(spy.lastUpdateBodyPose?.currentIndex, 0)
+        XCTAssertEqual(spy.lastUpdateBodyPose?.advanced, false)
+    }
+
+    func test_updateBodyPose_providesHintForCurrentPose() async {
+        let (sut, spy) = makeBodySUT()
+        sut.startGame(.init(postures: []))
+        let target = TargetPosesRepository.allPoses[0]
+        let update = BodyPoseUpdate(joints: target.jointTargets, confidence: 1.0)
+        sut.updateBodyPose(.init(update: update))
+        try? await Task.sleep(for: .milliseconds(120))
+        XCTAssertFalse(spy.lastUpdateBodyPose?.currentHint.isEmpty ?? true,
+                       "Body-режим отдаёт подсказку для текущей позы")
+    }
+
+    func test_updateBodyPose_completingAllPoses_triggersScore() async {
+        let (sut, spy) = makeBodySUT()
+        sut.startGame(.init(postures: []))
+        // Прогоняем все позы: для каждой удерживаем идеальный матч.
+        for index in 0..<TargetPosesRepository.allPoses.count {
+            let target = TargetPosesRepository.allPoses[index]
+            let update = BodyPoseUpdate(joints: target.jointTargets, confidence: 1.0)
+            for _ in 0..<25 {
+                sut.updateBodyPose(.init(update: update))
+                try? await Task.sleep(for: .milliseconds(6))
+            }
+        }
+        try? await Task.sleep(for: .milliseconds(200))
+        XCTAssertGreaterThanOrEqual(spy.scoreCallCount, 1,
+                                    "Завершение всех body-поз вызывает scoreAttempt")
+    }
+
+    func test_updateFrame_inBodyMode_ignored() async {
+        let (sut, spy) = makeBodySUT()
+        sut.startGame(.init(postures: []))
+        // В body-режиме face-обновления игнорируются.
+        sut.updateFrame(.init(blendshapes: blendshapes(for: .smile)))
+        XCTAssertEqual(spy.updateFrameCallCount, 0)
+    }
 }

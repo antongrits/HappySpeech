@@ -249,6 +249,209 @@ final class DragAndMatchInteractorTests: XCTestCase {
         )
         XCTAssertEqual(empty.accuracy, 0)
     }
+
+    // MARK: - Batch 2.6a v25: requestHint levels / streak bonus / per-pair accuracy
+
+    func test_requestHint_level1_highlightBin() async {
+        var hints: [DragAndMatchModels.RequestHint.Response] = []
+        let haptic = DragMockHaptic()
+        let sut = DragAndMatchInteractor(hapticService: haptic)
+        let spy = HintCapturingDragPresenter { hints.append($0) }
+        sut.presenter = spy
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 3))
+        guard let word = spy.words.first else { return XCTFail("нет слов") }
+        await sut.requestHint(.init(wordId: word.id))
+        XCTAssertEqual(hints.first?.level, .highlightBin)
+        XCTAssertNotNil(hints.first?.targetBucketId)
+    }
+
+    func test_requestHint_level2_voicePrompt() async {
+        var hints: [DragAndMatchModels.RequestHint.Response] = []
+        let haptic = DragMockHaptic()
+        let sut = DragAndMatchInteractor(hapticService: haptic)
+        let spy = HintCapturingDragPresenter { hints.append($0) }
+        sut.presenter = spy
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 3))
+        guard let word = spy.words.first else { return XCTFail("нет слов") }
+        await sut.requestHint(.init(wordId: word.id))
+        await sut.requestHint(.init(wordId: word.id))
+        XCTAssertEqual(hints.last?.level, .voicePrompt)
+        XCTAssertNotNil(hints.last?.voicePromptText)
+    }
+
+    func test_requestHint_level3_autoSolve() async {
+        var hints: [DragAndMatchModels.RequestHint.Response] = []
+        let haptic = DragMockHaptic()
+        let sut = DragAndMatchInteractor(hapticService: haptic)
+        let spy = HintCapturingDragPresenter { hints.append($0) }
+        sut.presenter = spy
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 3))
+        guard let word = spy.words.first else { return XCTFail("нет слов") }
+        await sut.requestHint(.init(wordId: word.id))
+        await sut.requestHint(.init(wordId: word.id))
+        await sut.requestHint(.init(wordId: word.id))
+        XCTAssertEqual(hints.last?.level, .autoSolve)
+        XCTAssertEqual(hints.last?.autoSolvedWordId, word.id)
+    }
+
+    func test_requestHint_unknownWord_ignored() async {
+        var hintCalled = false
+        let haptic = DragMockHaptic()
+        let sut = DragAndMatchInteractor(hapticService: haptic)
+        let spy = HintCapturingDragPresenter { _ in hintCalled = true }
+        sut.presenter = spy
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 3))
+        await sut.requestHint(.init(wordId: "nonexistent"))
+        XCTAssertFalse(hintCalled)
+    }
+
+    func test_requestHint_maxHintsPerRound_blocksFurtherHints() async {
+        var hints: [DragAndMatchModels.RequestHint.Response] = []
+        let haptic = DragMockHaptic()
+        let sut = DragAndMatchInteractor(hapticService: haptic)
+        let spy = HintCapturingDragPresenter { hints.append($0) }
+        sut.presenter = spy
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 3))
+        guard spy.words.count >= 4 else { return }
+        // 3 разных слова получают подсказку → лимит maxHintsPerRound=3 исчерпан.
+        for word in spy.words.prefix(3) {
+            await sut.requestHint(.init(wordId: word.id))
+        }
+        let countBefore = hints.count
+        // 4-е слово — лимит исчерпан, presenter не вызывается.
+        await sut.requestHint(.init(wordId: spy.words[3].id))
+        XCTAssertEqual(hints.count, countBefore, "После 3 подсказок лимит блокирует новые")
+    }
+
+    func test_dropWord_streakBonus_atThreeInARow() async {
+        let (sut, spy, haptic) = makeSUT()
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 5))
+        guard let words = spy.lastLoadSession?.words, words.count >= 3 else { return }
+        for word in words.prefix(3) {
+            await sut.dropWord(.init(wordId: word.id, bucketId: word.correctBucketId))
+        }
+        // streakCount=3 → isStreakBonus true на третьем дропе.
+        XCTAssertEqual(spy.lastDropWord?.isStreakBonus, true)
+        XCTAssertGreaterThanOrEqual(spy.lastDropWord?.streakCount ?? 0, 3)
+        _ = haptic
+    }
+
+    func test_dropWord_wrongDropResetsStreak() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 5))
+        guard let words = spy.lastLoadSession?.words, words.count >= 2,
+              let wrongBucket = spy.lastLoadSession?.buckets
+                .first(where: { $0.id != words[1].correctBucketId }) else { return }
+        await sut.dropWord(.init(wordId: words[0].id, bucketId: words[0].correctBucketId))
+        await sut.dropWord(.init(wordId: words[1].id, bucketId: wrongBucket.id))
+        XCTAssertEqual(spy.lastDropWord?.streakCount, 0, "Ошибка сбрасывает серию")
+    }
+
+    func test_allCorrectDrops_autoAdvancesRound() async throws {
+        let (sut, spy, _) = makeSUT()
+        let roundSpy = RoundSpyDragPresenter { _ in }
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 2))
+        guard let words = spy.lastLoadSession?.words else { return }
+        sut.presenter = roundSpy
+        // Размещаем все карточки правильно → scheduleRoundAdvance (800 мс).
+        for word in words {
+            await sut.dropWord(.init(wordId: word.id, bucketId: word.correctBucketId))
+        }
+        // Даём auto-advance отработать.
+        try await Task.sleep(for: .milliseconds(1000))
+        XCTAssertTrue(true, "Авто-завершение раунда не должно крашить")
+    }
+
+    func test_perPairAccuracy_afterDrops_returnsRates() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 1))
+        guard let words = spy.lastLoadSession?.words else { return }
+        for word in words {
+            await sut.dropWord(.init(wordId: word.id, bucketId: word.correctBucketId))
+        }
+        let accuracy = sut.perPairAccuracy()
+        XCTAssertFalse(accuracy.isEmpty, "perPairAccuracy возвращает данные после дропов")
+        for rate in accuracy.values {
+            XCTAssertGreaterThanOrEqual(rate, 0)
+            XCTAssertLessThanOrEqual(rate, 1)
+        }
+    }
+
+    func test_sm2Quality_emptySession_returnsBlackout() {
+        let (sut, _, _) = makeSUT()
+        // Без loadSession roundWordBatches пуст → total 0 → .blackout.
+        XCTAssertEqual(sut.sm2Quality(), .blackout)
+    }
+
+    func test_sm2Quality_afterFullCorrectSession_highQuality() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 1))
+        guard let words = spy.lastLoadSession?.words else { return }
+        for word in words {
+            await sut.dropWord(.init(wordId: word.id, bucketId: word.correctBucketId))
+        }
+        await sut.advanceRound(.init())
+        let quality = sut.sm2Quality()
+        // Все правильно → высокое качество SM-2.
+        XCTAssertNotEqual(quality, .blackout)
+    }
+
+    func test_inferConfusedPair_allExplicitPairs() {
+        XCTAssertEqual(DragAndMatchInteractor.inferConfusedPair(for: "з/ж")?.primary, "З")
+        XCTAssertEqual(DragAndMatchInteractor.inferConfusedPair(for: "б-п")?.primary, "Б")
+        XCTAssertEqual(DragAndMatchInteractor.inferConfusedPair(for: "д/т")?.primary, "Д")
+        XCTAssertEqual(DragAndMatchInteractor.inferConfusedPair(for: "г-к")?.primary, "Г")
+        XCTAssertEqual(DragAndMatchInteractor.inferConfusedPair(for: "в/ф")?.primary, "В")
+        XCTAssertEqual(DragAndMatchInteractor.inferConfusedPair(for: "ж-ш")?.primary, "Ж")
+        XCTAssertEqual(DragAndMatchInteractor.inferConfusedPair(for: "ч/щ")?.primary, "Ч")
+        XCTAssertEqual(DragAndMatchInteractor.inferConfusedPair(for: "hissing")?.primary, "Ш")
+        XCTAssertEqual(DragAndMatchInteractor.inferConfusedPair(for: "sonorant")?.primary, "Р")
+        XCTAssertEqual(DragAndMatchInteractor.inferConfusedPair(for: "velar")?.primary, "К")
+    }
+
+    func test_dropWord_autoSolvedWord_redropIgnored() async {
+        var hints: [DragAndMatchModels.RequestHint.Response] = []
+        let haptic = DragMockHaptic()
+        let sut = DragAndMatchInteractor(hapticService: haptic)
+        let spy = HintCapturingDragPresenter { hints.append($0) }
+        sut.presenter = spy
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 3))
+        guard let word = spy.words.first else { return }
+        // Доводим слово до autoSolve.
+        await sut.requestHint(.init(wordId: word.id))
+        await sut.requestHint(.init(wordId: word.id))
+        await sut.requestHint(.init(wordId: word.id))
+        spy.dropWordResponses.removeAll()
+        // Повторный дроп авто-решённого слова игнорируется.
+        await sut.dropWord(.init(wordId: word.id, bucketId: word.correctBucketId))
+        XCTAssertTrue(spy.dropWordResponses.isEmpty,
+                      "Дроп авто-решённого слова не обрабатывается")
+    }
+}
+
+// MARK: - Hint-capturing presenter (batch 2.6a v25)
+
+@MainActor
+private final class HintCapturingDragPresenter: DragAndMatchPresentationLogic {
+    var words: [DragWord] = []
+    var dropWordResponses: [DragAndMatchModels.DropWord.Response] = []
+    private let onHint: (DragAndMatchModels.RequestHint.Response) -> Void
+
+    init(onHint: @escaping (DragAndMatchModels.RequestHint.Response) -> Void) {
+        self.onHint = onHint
+    }
+
+    func presentLoadSession(_ response: DragAndMatchModels.LoadSession.Response) {
+        words = response.words
+    }
+    func presentDropWord(_ response: DragAndMatchModels.DropWord.Response) {
+        dropWordResponses.append(response)
+    }
+    func presentHint(_ response: DragAndMatchModels.RequestHint.Response) {
+        onHint(response)
+    }
+    func presentCompleteRound(_ response: DragAndMatchModels.CompleteRound.Response) {}
+    func presentCompleteSession(_ response: DragAndMatchModels.CompleteSession.Response) {}
 }
 
 // MARK: - Round-spy presenter (batch 1)

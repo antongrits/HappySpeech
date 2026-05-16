@@ -284,4 +284,150 @@ final class MetronomeInteractorTests: XCTestCase {
         XCTAssertFalse(sut.display.showSessionReport)
         XCTAssertFalse(sut.display.showReward)
     }
+
+    // MARK: - Batch 2.6a v25: handleTick / handleAmplitude / completeWord paths
+
+    func test_startSession_setsSyllablesForFirstWord() async {
+        let (sut, _, _) = makeSUT()
+        await sut.startSession(difficulty: .easy)
+        XCTAssertFalse(sut.display.syllables.isEmpty,
+                       "loadCurrentWord должен заполнить слоги первого слова")
+        XCTAssertFalse(sut.display.progressLabel.isEmpty)
+    }
+
+    func test_fireTick_whenRunning_animatesActiveSyllable() async throws {
+        let (sut, worker, _) = makeSUT()
+        await sut.startSession(difficulty: .easy)
+        XCTAssertTrue(sut.display.isRunning)
+        let firstWordSyllableCount = sut.display.syllables.count
+
+        // MockMetronomeWorker захватывает onTick — прогоняем тик вручную.
+        worker.fireTick()
+        // handleTick делает первый слог .active и планирует advance.
+        XCTAssertEqual(sut.display.syllables.count, firstWordSyllableCount)
+        // Даём окну слога (~0.4с) закрыться → advanceToNextSyllable.
+        try await Task.sleep(for: .milliseconds(500))
+        sut.stopSession()
+    }
+
+    func test_fireTick_whenNotRunning_isIgnored() {
+        let (sut, worker, _) = makeSUT()
+        // Сессия не запущена → display.isRunning == false.
+        worker.fireTick()
+        XCTAssertFalse(sut.display.isRunning)
+        XCTAssertTrue(sut.display.syllables.isEmpty)
+    }
+
+    func test_handleAmplitude_loudSamplesUpdateWaveform() async throws {
+        let metronomeWorker = MockMetronomeWorker()
+        let haptic = MockMetronomeHapticService()
+        let audioWorker = MockBreathingAudioWorker()
+        audioWorker.isPermissionGranted = true
+        // Скриптованные громкие сэмплы → handleAmplitude вызывается из стрима.
+        audioWorker.scriptedAmplitudes = [0.5, 0.6, 0.55, 0.5]
+        let sut = MetronomeInteractor(
+            metronomeWorker: metronomeWorker,
+            audioWorker: audioWorker,
+            hapticService: haptic
+        )
+        await sut.startSession(difficulty: .easy)
+        // Даём стриму прокачать несколько сэмплов (cadence 50 мс).
+        try await Task.sleep(for: .milliseconds(300))
+        XCTAssertFalse(sut.display.waveformLevels.isEmpty,
+                       "handleAmplitude должен заполнять waveformLevels")
+        sut.stopSession()
+    }
+
+    func test_handleAmplitude_detectsSyllableWithinTickWindow() async throws {
+        let metronomeWorker = MockMetronomeWorker()
+        let haptic = MockMetronomeHapticService()
+        let audioWorker = MockBreathingAudioWorker()
+        audioWorker.isPermissionGranted = true
+        // Громкие сэмплы выше adaptiveThreshold(easy)=0.07.
+        audioWorker.scriptedAmplitudes = [0.4, 0.4, 0.4, 0.4, 0.4, 0.4]
+        let sut = MetronomeInteractor(
+            metronomeWorker: metronomeWorker,
+            audioWorker: audioWorker,
+            hapticService: haptic
+        )
+        await sut.startSession(difficulty: .easy)
+        // Тик открывает окно детекции слога.
+        metronomeWorker.fireTick()
+        try await Task.sleep(for: .milliseconds(250))
+        // Слог в пределах окна должен быть отмечен completed либо
+        // продвинуться дальше — проверяем что взаимодействие не падает.
+        XCTAssertGreaterThanOrEqual(sut.display.currentSyllableIndex, 0)
+        sut.stopSession()
+    }
+
+    func test_completeWordChain_singleSyllableWord_progresses() async throws {
+        // "кот"/"шар"/"рот" — односложные слова easy-набора.
+        let (sut, worker, _) = makeSUT()
+        await sut.startSession(difficulty: .easy)
+        // Прогоняем тик: для односложного слова advance → completeWord.
+        worker.fireTick()
+        try await Task.sleep(for: .milliseconds(600))
+        // После completeWord display.showReward становится true (на 1.5с).
+        // Проверяем что цикл не крашит и сессия валидна.
+        XCTAssertTrue(sut.display.isRunning || sut.display.showSessionReport)
+        sut.stopSession()
+    }
+
+    func test_stopSession_afterStartRunning_buildsSessionReport() async {
+        let (sut, _, _) = makeSUT()
+        await sut.startSession(difficulty: .easy)
+        XCTAssertTrue(sut.display.isRunning)
+        sut.stopSession()
+        // stopSession при isRunning сохраняет запись + показывает отчёт.
+        XCTAssertFalse(sut.display.isRunning)
+        XCTAssertTrue(sut.display.showSessionReport)
+        XCTAssertFalse(sut.display.sessionReportLabel.isEmpty)
+        XCTAssertEqual(sut.loadHistory().count, 1)
+    }
+
+    func test_changeBPM_duringSession_keepsSessionRunning() async {
+        let (sut, _, _) = makeSUT()
+        await sut.startSession(difficulty: .medium)
+        sut.changeBPM(to: 85)
+        XCTAssertTrue(sut.display.isRunning, "Смена BPM не прерывает сессию")
+        XCTAssertEqual(sut.display.bpm, 85)
+        sut.stopSession()
+    }
+
+    func test_startSession_micDenied_doesNotStartRunning() async {
+        let metronomeWorker = MockMetronomeWorker()
+        let haptic = MockMetronomeHapticService()
+        let audioWorker = MockBreathingAudioWorker()
+        audioWorker.isPermissionGranted = false // отказ микрофона
+        let sut = MetronomeInteractor(
+            metronomeWorker: metronomeWorker,
+            audioWorker: audioWorker,
+            hapticService: haptic
+        )
+        await sut.startSession(difficulty: .easy)
+        XCTAssertFalse(sut.display.isRunning,
+                       "При отказе микрофона сессия не должна запускаться")
+    }
+
+    func test_loadHistory_limitedToTenRecords() async {
+        let (sut, _, _) = makeSUT()
+        // Прогоняем 12 циклов start/stop → история обрезается до 10.
+        for _ in 0..<12 {
+            await sut.startSession(difficulty: .easy)
+            sut.stopSession()
+        }
+        XCTAssertLessThanOrEqual(sut.loadHistory().count, 10,
+                                 "История метронома ограничена 10 записями")
+    }
+
+    func test_buildSessionRecord_capturesAccuracyZeroWhenNoHits() async {
+        let (sut, _, _) = makeSUT()
+        await sut.startSession(difficulty: .easy)
+        sut.stopSession()
+        let record = sut.loadHistory().first
+        XCTAssertNotNil(record)
+        XCTAssertEqual(record?.accuracy ?? -1, 0.0, accuracy: 0.001,
+                       "Без попаданий точность сессии = 0")
+        XCTAssertEqual(record?.resultLevel, .needsWork)
+    }
 }

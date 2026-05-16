@@ -14,9 +14,13 @@ final class FamilyVoiceInteractor {
 
     // MARK: - Workers
 
-    private let recorderWorker: FamilyVoiceRecorderWorker
+    private let recorderWorker: any FamilyVoiceRecording
     private let scoringWorker: FamilyVoiceScoringWorker
     private let realmActor: RealmActor
+
+    /// Resolves the current microphone permission. Injectable so unit tests can
+    /// exercise the recording paths without the real `AVAudioApplication`.
+    private let micPermissionProvider: @Sendable () async -> Bool
 
     // MARK: - State
 
@@ -41,11 +45,16 @@ final class FamilyVoiceInteractor {
 
     init(
         realmActor: RealmActor,
-        pronunciationScorer: (any PronunciationScorerService)? = nil
+        pronunciationScorer: (any PronunciationScorerService)? = nil,
+        recorderWorker: (any FamilyVoiceRecording)? = nil,
+        micPermissionProvider: (@Sendable () async -> Bool)? = nil
     ) {
         self.realmActor = realmActor
-        self.recorderWorker = FamilyVoiceRecorderWorker()
+        self.recorderWorker = recorderWorker ?? FamilyVoiceRecorderWorker()
         self.scoringWorker = FamilyVoiceScoringWorker(pronunciationScorer: pronunciationScorer)
+        self.micPermissionProvider = micPermissionProvider ?? {
+            await FamilyVoiceInteractor.systemMicPermission()
+        }
     }
 
     // MARK: - Fetch recordings
@@ -262,6 +271,11 @@ final class FamilyVoiceInteractor {
     // MARK: - Microphone permission
 
     private func checkMicPermission() async -> Bool {
+        await micPermissionProvider()
+    }
+
+    /// Live microphone permission check backed by `AVAudioApplication`.
+    private static func systemMicPermission() async -> Bool {
         switch AVAudioApplication.shared.recordPermission {
         case .granted:
             return true

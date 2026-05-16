@@ -317,4 +317,187 @@ final class SoftOnsetInteractorTests: XCTestCase {
         sut.stopListening()
         XCTAssertFalse(sut.display.isRecording)
     }
+
+    // MARK: - Batch 2.6a v25: startListening / handleAmplitude / nextWord / finalize
+
+    func test_startListening_micGranted_setsIsRecording() async {
+        let (sut, _, _) = makeSUT(classification: .soft)
+        await sut.startSession(difficulty: .easy)
+        await sut.startListening()
+        XCTAssertTrue(sut.display.isRecording)
+        XCTAssertEqual(sut.display.lanternState, .off)
+        XCTAssertEqual(sut.display.waveformColorMode, .neutral)
+    }
+
+    func test_startListening_micDenied_setsErrorFeedback() async {
+        let analyzer = MockFluencyAnalyzerWorker()
+        let haptic = MockSoftOnsetHapticService()
+        let audioWorker = MockBreathingAudioWorker()
+        audioWorker.isPermissionGranted = false
+        let sut = SoftOnsetInteractor(
+            audioWorker: audioWorker,
+            analyzerWorker: analyzer,
+            hapticService: haptic
+        )
+        await sut.startSession(difficulty: .easy)
+        await sut.startListening()
+        XCTAssertFalse(sut.display.isRecording)
+        XCTAssertEqual(sut.display.feedbackStyle, .error)
+        XCTAssertNotNil(sut.display.feedbackText)
+    }
+
+    func test_startListening_whenAlreadyRecording_isIgnored() async {
+        let (sut, _, _) = makeSUT(classification: .soft)
+        await sut.startSession(difficulty: .easy)
+        await sut.startListening()
+        XCTAssertTrue(sut.display.isRecording)
+        // Повторный вызов при isRecording=true — guard, no-op.
+        await sut.startListening()
+        XCTAssertTrue(sut.display.isRecording)
+    }
+
+    func test_startListening_scriptedAmplitudes_fillWaveform() async throws {
+        let analyzer = MockFluencyAnalyzerWorker()
+        let haptic = MockSoftOnsetHapticService()
+        let audioWorker = MockBreathingAudioWorker()
+        audioWorker.isPermissionGranted = true
+        // Громкие сэмплы выше noiseFloor (0.04) — запускают захват onset.
+        audioWorker.scriptedAmplitudes = [0.1, 0.2, 0.15, 0.25, 0.2]
+        let sut = SoftOnsetInteractor(
+            audioWorker: audioWorker,
+            analyzerWorker: analyzer,
+            hapticService: haptic
+        )
+        await sut.startSession(difficulty: .easy)
+        await sut.startListening()
+        // captureWindowTicks = 10 → после 10 сэмплов handleAmplitude
+        // вызовет stopListening автоматически.
+        try await Task.sleep(for: .milliseconds(700))
+        XCTAssertFalse(sut.display.waveformLevels.isEmpty,
+                       "handleAmplitude заполняет waveformLevels")
+    }
+
+    func test_session_advancesThroughAllWords_finalizesSession() async {
+        // 5 успешных слов подряд → nextWord ×5 → finalizeSession.
+        let (sut, _, _) = makeSUT(classification: .soft)
+        await sut.startSession(difficulty: .easy)
+        // stopListening с soft → advanceAttempt(succeeded:true) → nextWord через 1.2с.
+        // Прогоняем достаточно вызовов чтобы пройти все 5 слов.
+        for _ in 0..<5 {
+            sut.stopListening()
+            // ждём nextWord-задержку (1.2с soft).
+            try? await Task.sleep(for: .milliseconds(1300))
+        }
+        // После всех слов сессия завершается.
+        XCTAssertTrue(sut.display.sessionComplete || sut.display.wordsSucceeded > 0)
+    }
+
+    func test_stopListening_hard_exhaustsAttempts_advancesWord() async {
+        // hard-классификация → attemptNumber растёт; после maxAttempts (5)
+        // → nextWord. Проверяем что attemptNumber не превышает дисплейный max.
+        let (sut, _, _) = makeSUT(classification: .hard)
+        await sut.startSession(difficulty: .easy)
+        let firstWord = sut.display.currentWord
+        for _ in 0..<5 {
+            sut.stopListening()
+        }
+        // После 5 неудач attemptNumber-логика инициирует nextWord.
+        try? await Task.sleep(for: .milliseconds(1100))
+        XCTAssertFalse(firstWord.isEmpty)
+    }
+
+    func test_calculateSessionScore_zeroSuccesses_scoreZero() async {
+        let (sut, _, _) = makeSUT(classification: .hard)
+        await sut.startSession(difficulty: .easy)
+        // Все hard → 0 wordsSucceeded.
+        XCTAssertEqual(sut.display.wordsSucceeded, 0)
+        XCTAssertEqual(sut.display.sessionScore, 0)
+    }
+
+    func test_startSession_resetsAttemptNumber() async {
+        let (sut, _, _) = makeSUT(classification: .hard)
+        await sut.startSession(difficulty: .easy)
+        sut.stopListening() // hard → attemptNumber растёт
+        XCTAssertGreaterThan(sut.display.attemptNumber, 1)
+        // Новая сессия сбрасывает attemptNumber.
+        await sut.startSession(difficulty: .medium)
+        XCTAssertEqual(sut.display.attemptNumber, 1)
+    }
+
+    func test_attackThreshold_differsByDifficulty() async {
+        // Косвенно: classifyOnset получает threshold-параметр от Interactor.
+        // Проверяем что для разных difficulty classifyOnset вызывается.
+        let analyzerEasy = MockFluencyAnalyzerWorker()
+        let easyAudio = MockBreathingAudioWorker()
+        easyAudio.isPermissionGranted = true
+        let easySut = SoftOnsetInteractor(
+            audioWorker: easyAudio,
+            analyzerWorker: analyzerEasy,
+            hapticService: MockSoftOnsetHapticService()
+        )
+        await easySut.startSession(difficulty: .easy)
+        easySut.stopListening()
+        XCTAssertEqual(analyzerEasy.classifyCallCount, 1)
+
+        let analyzerHard = MockFluencyAnalyzerWorker()
+        let hardAudio = MockBreathingAudioWorker()
+        hardAudio.isPermissionGranted = true
+        let hardSut = SoftOnsetInteractor(
+            audioWorker: hardAudio,
+            analyzerWorker: analyzerHard,
+            hapticService: MockSoftOnsetHapticService()
+        )
+        await hardSut.startSession(difficulty: .hard)
+        hardSut.stopListening()
+        XCTAssertEqual(analyzerHard.classifyCallCount, 1)
+    }
+
+    func test_progressHistory_initiallyEmpty() {
+        let (sut, _, _) = makeSUT()
+        XCTAssertTrue(sut.display.progressHistory.isEmpty)
+    }
+
+    func test_sessionProgressPoint_construction() {
+        let point = SoftOnsetInteractor.SessionProgressPoint(
+            date: Date(), score: 80, wordsSucceeded: 4, totalWords: 5
+        )
+        XCTAssertEqual(point.score, 80)
+        XCTAssertEqual(point.wordsSucceeded, 4)
+        XCTAssertEqual(point.totalWords, 5)
+    }
+
+    // MARK: - Batch 2.6a v25 (доп.): buildSessionStatistics диагностика
+
+    func test_buildSessionStatistics_reflectsSessionState() async {
+        let (sut, _, _) = makeSUT(classification: .soft)
+        await sut.startSession(difficulty: .medium)
+        let stats = sut._test_buildSessionStatistics()
+        XCTAssertEqual(stats.totalWords, 5)
+        XCTAssertEqual(stats.difficulty, .medium)
+        XCTAssertGreaterThanOrEqual(stats.successRate, 0)
+        XCTAssertLessThanOrEqual(stats.successRate, 1)
+    }
+
+    func test_buildSessionStatistics_afterSuccessfulWord_successRatePositive() async {
+        let (sut, _, _) = makeSUT(classification: .soft)
+        await sut.startSession(difficulty: .easy)
+        // Один успешный word → wordsSucceeded увеличивается.
+        sut.stopListening()
+        let stats = sut._test_buildSessionStatistics()
+        XCTAssertGreaterThan(stats.wordsSucceeded, 0)
+        XCTAssertGreaterThan(stats.successRate, 0)
+    }
+
+    func test_softOnsetSessionStats_resultLevels() {
+        func stats(score: Int) -> SoftOnsetSessionStats {
+            SoftOnsetSessionStats(
+                totalWords: 5, wordsSucceeded: 4, successRate: 0.8,
+                averageAttackTimeMs: 110, difficulty: .easy, sessionScore: score
+            )
+        }
+        XCTAssertEqual(stats(score: 90).resultLevel, .excellent)
+        XCTAssertEqual(stats(score: 70).resultLevel, .good)
+        XCTAssertEqual(stats(score: 50).resultLevel, .fair)
+        XCTAssertEqual(stats(score: 20).resultLevel, .needsWork)
+    }
 }

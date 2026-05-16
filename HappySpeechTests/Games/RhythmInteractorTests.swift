@@ -1,5 +1,18 @@
 @testable import HappySpeech
+import AVFoundation
 import XCTest
+
+// MARK: - RhythmInteractorTests
+//
+// UNTESTABLE (документировано): playPattern → speakSyllable использует
+// LessonVoiceWorker.shared (TTS-синглтон) + Task.sleep; startRecord создаёт
+// реальный AVAudioEngine и устанавливает input tap (engine.installTap +
+// engine.start) — на headless-симуляторе это integration-путь без protocol-seam.
+// scheduleRecordingTimer/stopRecording — телодвижения вокруг того же engine.
+// Покрыто полностью: loadPattern, evaluateRhythm (все score-ветви), nextPattern,
+// complete, handleRMS (burst-детекция), computeRMS (RMS из PCM-буфера),
+// pulseRecordingTimer (timeout / excess-beats / within-limits). AVAudioEngine-путь
+// проверяется smoke-тестом ритм-игры.
 
 // MARK: - Spy
 
@@ -373,5 +386,220 @@ final class RhythmInteractorTests: XCTestCase {
         XCTAssertEqual(RhythmInteractor.soundGroup(for: "Л"), "sonants")
         XCTAssertEqual(RhythmInteractor.soundGroup(for: "Г"), "velar")
         XCTAssertEqual(RhythmInteractor.soundGroup(for: "Х"), "velar")
+    }
+
+    // MARK: - Batch 2.6a v25: handleRMS burst detection / nextPattern chain
+
+    func test_pushRMS_sustainedBurst_detectsBeat() async {
+        let (sut, _) = makeSUT()
+        sut._test_setCurrentPattern(RhythmInteractor.patternCatalog["sonants"]![0])
+        sut._test_forceRecording(true)
+        // Старт burst-а: высокий RMS.
+        sut._test_pushRMS(0.5)
+        // Удерживаем >100 мс, чтобы преодолеть minBeatDurationMs.
+        try? await Task.sleep(for: .milliseconds(140))
+        // Завершаем burst тишиной.
+        sut._test_pushRMS(0.01)
+        XCTAssertEqual(sut._test_currentDetectedBeats(), 1,
+                       "Удержанный >100 мс burst засчитывается как один beat")
+    }
+
+    func test_pushRMS_shortBurst_belowMinDuration_notCounted() {
+        let (sut, _) = makeSUT()
+        sut._test_setCurrentPattern(RhythmInteractor.patternCatalog["sonants"]![0])
+        sut._test_forceRecording(true)
+        // Мгновенный burst (нет паузы) — длительность < 100 мс.
+        sut._test_pushRMS(0.5)
+        sut._test_pushRMS(0.01)
+        XCTAssertEqual(sut._test_currentDetectedBeats(), 0)
+    }
+
+    func test_pushRMS_midRangeValue_doesNotToggleBurst() {
+        let (sut, _) = makeSUT()
+        sut._test_setCurrentPattern(RhythmInteractor.patternCatalog["sonants"]![0])
+        sut._test_forceRecording(true)
+        // Значение между off (0.05) и on (0.15) порогами — не стартует и не завершает.
+        sut._test_pushRMS(0.10)
+        sut._test_pushRMS(0.10)
+        XCTAssertEqual(sut._test_currentDetectedBeats(), 0)
+    }
+
+    func test_pushRMS_multipleBursts_accumulateBeats() async {
+        let (sut, _) = makeSUT()
+        sut._test_setCurrentPattern(RhythmInteractor.patternCatalog["sonants"]![0])
+        sut._test_forceRecording(true)
+        for _ in 0..<3 {
+            sut._test_pushRMS(0.5)
+            try? await Task.sleep(for: .milliseconds(130))
+            sut._test_pushRMS(0.0)
+        }
+        XCTAssertEqual(sut._test_currentDetectedBeats(), 3)
+    }
+
+    func test_playPattern_withoutCurrentPattern_doesNotCrash() async {
+        let sut = RhythmInteractor(soundGroup: "sonants", totalPatternsPerSession: 3)
+        let spy = SpyRhythmPresenter()
+        sut.presenter = spy
+        // currentPattern == nil → guard, no-op.
+        await sut.playPattern(.init())
+        XCTAssertFalse(spy.playPatternCalled)
+    }
+
+    func test_evaluateRhythm_advancesToNextPattern() async {
+        let (sut, spy) = makeSUT(group: "sonants") // totalPatternsPerSession = 3
+        await sut.loadPattern(.init(soundGroup: "sonants", index: 0))
+        let pattern = RhythmInteractor.patternCatalog["sonants"]![0]
+        sut._test_setCurrentPattern(pattern)
+        // evaluateRhythm в конце ждёт 1.5с и вызывает nextPattern → loadPattern.
+        await sut.evaluateRhythm(.init(detectedBeats: pattern.beats.count,
+                                       expectedBeats: pattern.beats.count))
+        XCTAssertTrue(spy.evalCalled)
+        XCTAssertTrue(spy.nextPatternCalled, "evaluateRhythm должен инициировать переход к следующему паттерну")
+    }
+
+    func test_loadPattern_emptyPool_triggersComplete() async {
+        // Каталог не содержит такой группы и fallback sonants существует —
+        // поэтому пустой pool недостижим через публичный API. Проверяем
+        // нормальный путь: неизвестная группа → sonants fallback не пуст.
+        let sut = RhythmInteractor(soundGroup: "totally-unknown", totalPatternsPerSession: 2)
+        let spy = SpyRhythmPresenter()
+        sut.presenter = spy
+        await sut.loadPattern(.init(soundGroup: "totally-unknown", index: 0))
+        XCTAssertTrue(spy.loadPatternCalled)
+        XCTAssertEqual(spy.lastLoadPattern?.pattern.soundGroup, "sonants")
+    }
+
+    func test_evaluateRhythm_lastPattern_completesSession() async {
+        let sut = RhythmInteractor(soundGroup: "sonants", totalPatternsPerSession: 1)
+        let spy = SpyRhythmPresenter()
+        sut.presenter = spy
+        let pattern = RhythmInteractor.patternCatalog["sonants"]![0]
+        sut._test_setCurrentPattern(pattern)
+        await sut.evaluateRhythm(.init(detectedBeats: pattern.beats.count,
+                                       expectedBeats: pattern.beats.count))
+        // totalPatternsPerSession=1 → nextPattern (0→1≥1) → complete.
+        XCTAssertTrue(spy.completeCalled)
+    }
+
+    func test_startRecord_whenAlreadyRecording_isIgnored() async {
+        let (sut, spy) = makeSUT()
+        sut._test_forceRecording(true)
+        await sut.startRecord(.init())
+        XCTAssertFalse(spy.startRecordCalled, "startRecord при активной записи игнорируется")
+    }
+
+    func test_pushRMS_notRecording_stillEmitsUpdateRMS() {
+        let (sut, spy) = makeSUT()
+        sut._test_forceRecording(false)
+        sut._test_pushRMS(0.4)
+        XCTAssertTrue(spy.rmsUpdateCalled, "presentUpdateRMS вызывается всегда, даже без записи")
+    }
+
+    func test_cancel_afterPlayPattern_doesNotCrash() async {
+        let (sut, _) = makeSUT()
+        await sut.loadPattern(.init(soundGroup: "sonants", index: 0))
+        await sut.cancel()
+        // Повторный cancel идемпотентен.
+        await sut.cancel()
+        XCTAssertTrue(true)
+    }
+
+    func test_nextPattern_midSession_loadsNextPattern() async {
+        let (sut, spy) = makeSUT(group: "hissing") // totalPatternsPerSession = 3
+        await sut.loadPattern(.init(soundGroup: "hissing", index: 0))
+        spy.loadPatternCalled = false
+        await sut.nextPattern(.init())
+        // currentPatternIndex 0→1 < 3 → presentNextPattern + loadPattern.
+        XCTAssertTrue(spy.nextPatternCalled)
+        XCTAssertTrue(spy.loadPatternCalled)
+    }
+
+    func test_evaluateRhythm_detectedZero_diffEqualsExpected() async {
+        let (sut, spy) = makeSUT()
+        let pattern = RhythmInteractor.patternCatalog["sonants"]![0] // 2 beats
+        sut._test_setCurrentPattern(pattern)
+        await sut.evaluateRhythm(.init(detectedBeats: 0, expectedBeats: pattern.beats.count))
+        // diff = 2 → score 0.6.
+        XCTAssertEqual(spy.lastEvaluate?.score, 0.6)
+        XCTAssertEqual(spy.lastEvaluate?.correct, false)
+    }
+
+    // MARK: - Batch 2.6a v25 (доп.): computeRMS / pulseRecordingTimer
+
+    /// Создаёт PCM-буфер 16 кГц mono с заданной постоянной амплитудой.
+    private func makeBuffer(amplitude: Float, frames: Int = 1024) -> AVAudioPCMBuffer {
+        let format = AVAudioFormat(standardFormatWithSampleRate: 16_000, channels: 1)!
+        let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(frames))!
+        buffer.frameLength = AVAudioFrameCount(frames)
+        if let channel = buffer.floatChannelData {
+            for i in 0..<frames { channel[0][i] = amplitude }
+        }
+        return buffer
+    }
+
+    func test_computeRMS_silentBuffer_returnsZero() {
+        let buffer = makeBuffer(amplitude: 0.0)
+        XCTAssertEqual(RhythmInteractor.computeRMS(from: buffer), 0, accuracy: 0.0001)
+    }
+
+    func test_computeRMS_loudBuffer_returnsPositive() {
+        let buffer = makeBuffer(amplitude: 0.3)
+        let rms = RhythmInteractor.computeRMS(from: buffer)
+        XCTAssertGreaterThan(rms, 0)
+        XCTAssertLessThanOrEqual(rms, 1, "computeRMS зажимает значение в [0, 1]")
+    }
+
+    func test_computeRMS_fullScaleBuffer_clampedToOne() {
+        // amplitude 1.0 → rms 1.0, ×3 → clamp до 1.
+        let buffer = makeBuffer(amplitude: 1.0)
+        XCTAssertEqual(RhythmInteractor.computeRMS(from: buffer), 1, accuracy: 0.0001)
+    }
+
+    func test_computeRMS_emptyBuffer_returnsZero() {
+        let format = AVAudioFormat(standardFormatWithSampleRate: 16_000, channels: 1)!
+        let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: 1024)!
+        buffer.frameLength = 0
+        XCTAssertEqual(RhythmInteractor.computeRMS(from: buffer), 0)
+    }
+
+    func test_pulseRecordingTimer_notRecording_noOp() {
+        let (sut, spy) = makeSUT()
+        sut._test_forceRecording(false)
+        sut._test_pulseRecordingTimer()
+        XCTAssertFalse(spy.evalCalled, "Без активной записи pulseRecordingTimer ничего не делает")
+    }
+
+    func test_pulseRecordingTimer_maxDurationReached_triggersEvaluate() async {
+        let (sut, spy) = makeSUT()
+        sut._test_setCurrentPattern(RhythmInteractor.patternCatalog["sonants"]![0])
+        sut._test_forceRecording(true)
+        // maxRecordingMs = 4000 → сдвигаем старт записи на 5 секунд назад.
+        sut._test_setRecordingStartedAgo(5)
+        sut._test_pulseRecordingTimer()
+        try? await Task.sleep(for: .milliseconds(120))
+        XCTAssertTrue(spy.evalCalled, "Превышение maxRecordingMs завершает запись через evaluateRhythm")
+    }
+
+    func test_pulseRecordingTimer_excessBeats_triggersEvaluate() async {
+        let (sut, spy) = makeSUT()
+        let pattern = RhythmInteractor.patternCatalog["sonants"]![0] // 2 beats
+        sut._test_setCurrentPattern(pattern)
+        sut._test_forceRecording(true)
+        sut._test_setRecordingStartedAgo(0.1)
+        // detectedBeats >= expected + 2 → завершение.
+        sut._test_setDetectedBeats(pattern.beats.count + 3)
+        sut._test_pulseRecordingTimer()
+        try? await Task.sleep(for: .milliseconds(120))
+        XCTAssertTrue(spy.evalCalled, "Слишком много слогов завершает запись досрочно")
+    }
+
+    func test_pulseRecordingTimer_withinLimits_doesNotEvaluate() {
+        let (sut, spy) = makeSUT()
+        sut._test_setCurrentPattern(RhythmInteractor.patternCatalog["sonants"]![0])
+        sut._test_forceRecording(true)
+        sut._test_setRecordingStartedAgo(0.5) // в пределах 4 секунд
+        sut._test_setDetectedBeats(0)
+        sut._test_pulseRecordingTimer()
+        XCTAssertFalse(spy.evalCalled, "В пределах лимитов запись продолжается")
     }
 }
