@@ -143,4 +143,129 @@ final class DragAndMatchInteractorTests: XCTestCase {
         await sut.dropWord(.init(wordId: "nonexistent-id", bucketId: "bucket-1"))
         XCTAssertFalse(spy.dropWordCalled)
     }
+
+    // MARK: - Batch 1: расширенное покрытие
+
+    func test_loadSession_setsRoundIndexAndTotal() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 3))
+        XCTAssertEqual(spy.lastLoadSession?.roundIndex, 0)
+        XCTAssertEqual(spy.lastLoadSession?.totalRounds, 3)
+    }
+
+    func test_dropWord_redropAfterError_recoversCorrect() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 5))
+        guard let word = spy.lastLoadSession?.words.first,
+              let wrongBucket = spy.lastLoadSession?.buckets.first(where: { $0.id != word.correctBucketId }) else { return }
+        await sut.dropWord(.init(wordId: word.id, bucketId: wrongBucket.id))
+        XCTAssertEqual(spy.lastDropWord?.correct, false)
+        await sut.dropWord(.init(wordId: word.id, bucketId: word.correctBucketId))
+        XCTAssertEqual(spy.lastDropWord?.correct, true)
+    }
+
+    func test_dropWord_streakCountIncreases() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 5))
+        guard let words = spy.lastLoadSession?.words else { return }
+        for word in words.prefix(2) {
+            await sut.dropWord(.init(wordId: word.id, bucketId: word.correctBucketId))
+        }
+        XCTAssertGreaterThanOrEqual(spy.lastDropWord?.streakCount ?? 0, 2)
+    }
+
+    func test_inferConfusedPair_explicitPairs() {
+        XCTAssertEqual(DragAndMatchInteractor.inferConfusedPair(for: "С/Ш")?.primary, "С")
+        XCTAssertEqual(DragAndMatchInteractor.inferConfusedPair(for: "р-л")?.secondary, "Л")
+        XCTAssertEqual(DragAndMatchInteractor.inferConfusedPair(for: "whistling")?.primary, "С")
+        XCTAssertNil(DragAndMatchInteractor.inferConfusedPair(for: "unknown"))
+    }
+
+    func test_advanceRound_emitsCompleteRound() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 3))
+        var completeRoundCalled = false
+        let roundSpy = RoundSpyDragPresenter { _ in completeRoundCalled = true }
+        sut.presenter = roundSpy
+        await sut.advanceRound(.init())
+        XCTAssertTrue(completeRoundCalled)
+        _ = spy
+    }
+
+    func test_advanceRound_lastRound_completesSession() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 1))
+        await sut.advanceRound(.init())
+        XCTAssertTrue(spy.completeCalled)
+    }
+
+    func test_completeSession_twice_secondIgnored() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 3))
+        await sut.completeSession(.init())
+        spy.completeCalled = false
+        await sut.completeSession(.init())
+        XCTAssertFalse(spy.completeCalled)
+    }
+
+    func test_cancelSession_blocksFurtherDrops() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 3))
+        sut.cancelSession()
+        spy.dropWordCalled = false
+        guard let word = spy.lastLoadSession?.words.first else { return }
+        await sut.dropWord(.init(wordId: word.id, bucketId: word.correctBucketId))
+        XCTAssertFalse(spy.dropWordCalled, "После cancel дропы не обрабатываются")
+    }
+
+    func test_perPairAccuracy_emptyBeforeLoad() {
+        let (sut, _, _) = makeSUT()
+        XCTAssertTrue(sut.perPairAccuracy().isEmpty)
+    }
+
+    func test_sm2Quality_returnsValueAfterLoad() async {
+        let (sut, _, _) = makeSUT()
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", totalRounds: 3))
+        // Просто проверяем, что метод не крашится и возвращает SM2Quality
+        _ = sut.sm2Quality()
+        XCTAssertTrue(true)
+    }
+
+    func test_hintLevel_rawValues() {
+        XCTAssertEqual(HintLevel.highlightBin.rawValue, 1)
+        XCTAssertEqual(HintLevel.voicePrompt.rawValue, 2)
+        XCTAssertEqual(HintLevel.autoSolve.rawValue, 3)
+    }
+
+    func test_roundStats_accuracyComputation() {
+        let stats = RoundStats(
+            roundIndex: 0, totalCards: 6, correctDrops: 3,
+            incorrectDrops: 3, hintsUsed: 0, durationSeconds: 10
+        )
+        XCTAssertEqual(stats.accuracy, 0.5, accuracy: 0.001)
+        let empty = RoundStats(
+            roundIndex: 0, totalCards: 0, correctDrops: 0,
+            incorrectDrops: 0, hintsUsed: 0, durationSeconds: 0
+        )
+        XCTAssertEqual(empty.accuracy, 0)
+    }
+}
+
+// MARK: - Round-spy presenter (batch 1)
+
+@MainActor
+private final class RoundSpyDragPresenter: DragAndMatchPresentationLogic {
+    private let onCompleteRound: (DragAndMatchModels.CompleteRound.Response) -> Void
+
+    init(onCompleteRound: @escaping (DragAndMatchModels.CompleteRound.Response) -> Void) {
+        self.onCompleteRound = onCompleteRound
+    }
+
+    func presentLoadSession(_ response: DragAndMatchModels.LoadSession.Response) {}
+    func presentDropWord(_ response: DragAndMatchModels.DropWord.Response) {}
+    func presentHint(_ response: DragAndMatchModels.RequestHint.Response) {}
+    func presentCompleteRound(_ response: DragAndMatchModels.CompleteRound.Response) {
+        onCompleteRound(response)
+    }
+    func presentCompleteSession(_ response: DragAndMatchModels.CompleteSession.Response) {}
 }

@@ -126,4 +126,143 @@ final class MinimalPairsInteractorTests: XCTestCase {
         let rounds = MinimalPairRound.rounds(count: 5, contrast: "Р-Л")
         XCTAssertEqual(rounds.count, 5)
     }
+
+    // MARK: - Batch 1: расширенное покрытие
+
+    func test_sessionRoundCount_byAge() async {
+        let (sut5, spy5) = makeSUT()
+        await sut5.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childAge: 5))
+        XCTAssertEqual(spy5.lastLoadSession?.rounds.count, 7)
+
+        let (sut6, spy6) = makeSUT()
+        await sut6.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childAge: 6))
+        XCTAssertEqual(spy6.lastLoadSession?.rounds.count, 8)
+
+        let (sut7, spy7) = makeSUT()
+        await sut7.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childAge: 7))
+        XCTAssertEqual(spy7.lastLoadSession?.rounds.count, 9)
+
+        let (sut8, spy8) = makeSUT()
+        await sut8.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childAge: 8))
+        XCTAssertEqual(spy8.lastLoadSession?.rounds.count, 10)
+    }
+
+    func test_buildRounds_emptyContrast_usesFullCatalog() {
+        let rounds = MinimalPairsInteractor.buildRounds(contrast: "", count: 10)
+        XCTAssertEqual(rounds.count, 10)
+    }
+
+    func test_buildRounds_unknownContrast_fallsBack() {
+        // Несуществующий контраст → pool пуст → используется весь каталог
+        let rounds = MinimalPairsInteractor.buildRounds(contrast: "Я-Ю", count: 5)
+        XCTAssertEqual(rounds.count, 5)
+    }
+
+    func test_selectOption_streakIncrements() async {
+        let (sut, spy) = makeSUT()
+        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childAge: 8))
+        await sut.startRound(.init(roundIndex: 0))
+        await sut.selectOption(.init(selectedIsTarget: true))
+        XCTAssertEqual(spy.lastSelectOption?.streakCount, 1)
+    }
+
+    func test_selectOption_wrongResetsStreak() async {
+        let (sut, spy) = makeSUT()
+        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childAge: 8))
+        await sut.startRound(.init(roundIndex: 0))
+        await sut.selectOption(.init(selectedIsTarget: true))
+        await sut.startRound(.init(roundIndex: 1))
+        await sut.selectOption(.init(selectedIsTarget: false))
+        XCTAssertEqual(spy.lastSelectOption?.streakCount, 0)
+    }
+
+    func test_completeSession_pairAccuracyPopulated() async {
+        let (sut, spy) = makeSUT()
+        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childAge: 8))
+        await sut.startRound(.init(roundIndex: 0))
+        await sut.selectOption(.init(selectedIsTarget: true))
+        await sut.completeSession(.init())
+        XCTAssertFalse(spy.lastComplete?.pairAccuracy.isEmpty ?? true)
+    }
+
+    func test_completeSession_afterCorrect_correctCountPositive() async {
+        let (sut, spy) = makeSUT()
+        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childAge: 8))
+        await sut.startRound(.init(roundIndex: 0))
+        await sut.selectOption(.init(selectedIsTarget: true))
+        await sut.completeSession(.init())
+        XCTAssertEqual(spy.lastComplete?.correctCount, 1)
+    }
+
+    func test_completeSession_twice_secondIgnored() async {
+        let (sut, spy) = makeSUT()
+        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childAge: 8))
+        await sut.completeSession(.init())
+        spy.completeCalled = false
+        await sut.completeSession(.init())
+        XCTAssertFalse(spy.completeCalled, "Повторный complete игнорируется (isSessionOver)")
+    }
+
+    func test_cancelSession_doesNotComplete() async {
+        let (sut, spy) = makeSUT()
+        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childAge: 8))
+        sut.cancelSession()
+        await sut.completeSession(.init())
+        XCTAssertFalse(spy.completeCalled)
+    }
+
+    func test_requestHint_capturedThroughHintSpy() async {
+        let spy = HintSpyMinimalPairsPresenter()
+        let sut = MinimalPairsInteractor()
+        sut.presenter = spy
+        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childAge: 8))
+        await sut.startRound(.init(roundIndex: 0))
+        await sut.requestHint(.init())
+        XCTAssertEqual(spy.lastHint?.level, .highlight)
+        await sut.requestHint(.init())
+        XCTAssertEqual(spy.lastHint?.level, .voiceClarification)
+        // Третий запрос — cap reached
+        await sut.requestHint(.init())
+        XCTAssertEqual(spy.lastHint?.capReached, true)
+    }
+
+    func test_replayWord_capReachedAfterThree() async {
+        let spy = HintSpyMinimalPairsPresenter()
+        let sut = MinimalPairsInteractor()
+        sut.presenter = spy
+        await sut.loadSession(.init(soundContrast: "С-Ш", childName: "Маша", childAge: 8))
+        await sut.startRound(.init(roundIndex: 0))
+        await sut.replayCurrentWord()
+        await sut.replayCurrentWord()
+        await sut.replayCurrentWord()
+        await sut.replayCurrentWord()
+        XCTAssertEqual(spy.lastReplay?.capReached, true)
+    }
+
+    func test_hintLevels_rawValues() {
+        XCTAssertEqual(MinimalPairsHintLevel.highlight.rawValue, 1)
+        XCTAssertEqual(MinimalPairsHintLevel.voiceClarification.rawValue, 2)
+    }
+
+    func test_extendedCatalog_hasMinimum16Pairs() {
+        XCTAssertGreaterThanOrEqual(MinimalPairRound.extendedCatalog.count, 16)
+        XCTAssertEqual(MinimalPairRound.catalog.count, 10)
+    }
+}
+
+// MARK: - Hint/Replay capturing presenter (batch 1)
+
+@MainActor
+private final class HintSpyMinimalPairsPresenter: MinimalPairsPresentationLogic {
+    var lastHint: MinimalPairsModels.RequestHint.Response?
+    var lastReplay: MinimalPairsModels.ReplayWord.Response?
+    var lastBonus: MinimalPairsModels.BonusRoundAdded.Response?
+
+    func presentLoadSession(_ response: MinimalPairsModels.LoadSession.Response) {}
+    func presentStartRound(_ response: MinimalPairsModels.StartRound.Response) {}
+    func presentSelectOption(_ response: MinimalPairsModels.SelectOption.Response) {}
+    func presentCompleteSession(_ response: MinimalPairsModels.CompleteSession.Response) {}
+    func presentReplayWord(_ response: MinimalPairsModels.ReplayWord.Response) { lastReplay = response }
+    func presentHint(_ response: MinimalPairsModels.RequestHint.Response) { lastHint = response }
+    func presentBonusRoundAdded(_ response: MinimalPairsModels.BonusRoundAdded.Response) { lastBonus = response }
 }

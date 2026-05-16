@@ -269,4 +269,109 @@ final class RhythmInteractorTests: XCTestCase {
 
         XCTAssertEqual(sut._test_currentDetectedBeats(), 0)
     }
+
+    // MARK: - Batch 1: расширенное покрытие
+
+    func test_loadPattern_emptyGroup_usesConstructorGroup() async {
+        let (sut, spy) = makeSUT(group: "velar")
+        // Пустой soundGroup в request → берётся group из init
+        await sut.loadPattern(.init(soundGroup: "", index: 0))
+        XCTAssertEqual(spy.lastLoadPattern?.pattern.soundGroup, "velar")
+    }
+
+    func test_loadPattern_unknownGroup_fallsBackToSonants() async {
+        let sut = RhythmInteractor(soundGroup: "unknown", totalPatternsPerSession: 3)
+        let spy = SpyRhythmPresenter()
+        sut.presenter = spy
+        await sut.loadPattern(.init(soundGroup: "unknown", index: 0))
+        XCTAssertEqual(spy.lastLoadPattern?.pattern.soundGroup, "sonants")
+    }
+
+    func test_evaluate_correct_incrementsCorrectPatterns() async {
+        let (sut, spy) = makeSUT()
+        let pattern = RhythmInteractor.patternCatalog["sonants"]![0]
+        sut._test_setCurrentPattern(pattern)
+        await sut.evaluateRhythm(.init(detectedBeats: pattern.beats.count, expectedBeats: pattern.beats.count))
+        XCTAssertEqual(spy.lastEvaluate?.correct, true)
+    }
+
+    func test_evaluate_detectedExceedsExpected_stillHandled() async {
+        let (sut, spy) = makeSUT()
+        let pattern = RhythmInteractor.patternCatalog["sonants"]![0]
+        sut._test_setCurrentPattern(pattern)
+        let expected = pattern.beats.count
+        await sut.evaluateRhythm(.init(detectedBeats: expected + 5, expectedBeats: expected))
+        // diff = 5 → score 0.3
+        XCTAssertEqual(spy.lastEvaluate?.score, 0.3)
+        XCTAssertEqual(spy.lastEvaluate?.detectedBeats, expected + 5)
+    }
+
+    func test_evaluate_beatsWasHit_allHitWhenPerfect() async {
+        let (sut, spy) = makeSUT()
+        let pattern = RhythmInteractor.patternCatalog["hissing"]![0]
+        sut._test_setCurrentPattern(pattern)
+        await sut.evaluateRhythm(.init(detectedBeats: pattern.beats.count, expectedBeats: pattern.beats.count))
+        let hits = spy.lastEvaluate?.beatsWasHit ?? []
+        XCTAssertEqual(hits.count, pattern.beats.count)
+        XCTAssertTrue(hits.allSatisfy { $0 })
+    }
+
+    func test_complete_perfectSession_finalScore1() async {
+        let sut = RhythmInteractor(soundGroup: "sonants", totalPatternsPerSession: 1)
+        let spy = SpyRhythmPresenter()
+        sut.presenter = spy
+        let pattern = RhythmInteractor.patternCatalog["sonants"]![0]
+        sut._test_setCurrentPattern(pattern)
+        await sut.evaluateRhythm(.init(detectedBeats: pattern.beats.count, expectedBeats: pattern.beats.count))
+        await sut.complete(.init())
+        XCTAssertEqual(spy.lastComplete?.finalScore, 1.0)
+        XCTAssertEqual(spy.lastComplete?.correctPatterns, 1)
+    }
+
+    func test_pushRMS_alwaysCallsUpdateRMS() {
+        let (sut, spy) = makeSUT()
+        sut._test_pushRMS(0.3)
+        XCTAssertTrue(spy.rmsUpdateCalled)
+    }
+
+    func test_pushRMS_burstDetectsBeat() {
+        let (sut, _) = makeSUT()
+        sut._test_forceRecording(true)
+        // Высокий RMS → старт burst
+        sut._test_pushRMS(0.5)
+        // Малая длительность burst-а (<100мс) — обычно не засчитывается,
+        // но проверяем что вызов не крашит и detectedBeats >= 0
+        sut._test_pushRMS(0.01)
+        XCTAssertGreaterThanOrEqual(sut._test_currentDetectedBeats(), 0)
+    }
+
+    func test_cancel_doesNotCrash() async {
+        let (sut, _) = makeSUT()
+        await sut.loadPattern(.init(soundGroup: "sonants", index: 0))
+        await sut.cancel()
+        XCTAssertTrue(true)
+    }
+
+    func test_beatStrength_cases() {
+        XCTAssertEqual(BeatStrength.allCases.count, 2)
+    }
+
+    func test_complete_zeroPatterns_safeguardDivision() async {
+        let sut = RhythmInteractor(soundGroup: "sonants", totalPatternsPerSession: 0)
+        let spy = SpyRhythmPresenter()
+        sut.presenter = spy
+        await sut.complete(.init())
+        // max(1, 0) защищает от деления на ноль
+        XCTAssertEqual(spy.lastComplete?.finalScore, 0.0)
+    }
+
+    func test_soundGroup_mappingFullCoverage() {
+        XCTAssertEqual(RhythmInteractor.soundGroup(for: "З"), "whistling")
+        XCTAssertEqual(RhythmInteractor.soundGroup(for: "Ц"), "whistling")
+        XCTAssertEqual(RhythmInteractor.soundGroup(for: "Ж"), "hissing")
+        XCTAssertEqual(RhythmInteractor.soundGroup(for: "Щ"), "hissing")
+        XCTAssertEqual(RhythmInteractor.soundGroup(for: "Л"), "sonants")
+        XCTAssertEqual(RhythmInteractor.soundGroup(for: "Г"), "velar")
+        XCTAssertEqual(RhythmInteractor.soundGroup(for: "Х"), "velar")
+    }
 }

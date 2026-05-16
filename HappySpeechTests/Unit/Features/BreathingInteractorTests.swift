@@ -349,4 +349,57 @@ final class BreathingInteractorTests: XCTestCase {
 
         XCTAssertEqual(sut._test_currentStableRatio(), 0.0, accuracy: 0.001)
     }
+
+    // MARK: - Batch 1: расширенное покрытие
+
+    func test_loadSession_emitsThreeHintItems() {
+        let (sut, spy, _, _) = makeSUT()
+        sut.loadSession(.init(sessionId: "b1", difficulty: .easy))
+        XCTAssertEqual(spy.loadResponses.first?.items.count, 3)
+        XCTAssertEqual(spy.loadResponses.first?.scene, .dandelion)
+    }
+
+    func test_loadSession_easyConfig() {
+        let (sut, spy, _, _) = makeSUT()
+        sut.loadSession(.init(sessionId: "b2", difficulty: .easy))
+        XCTAssertEqual(spy.loadResponses.first?.config.difficulty, .easy)
+    }
+
+    func test_submitAttempt_emitsNeutralZeroScore() {
+        let (sut, spy, _, _) = makeSUT()
+        sut.submitAttempt(.init(selectedWord: "x", audioURL: nil))
+        XCTAssertEqual(spy.submitResponses.first?.isCorrect, false)
+        XCTAssertEqual(spy.submitResponses.first?.score, 0)
+    }
+
+    func test_beginGame_emitsUpdateSignalSnapshot() async {
+        let (sut, spy, _, _) = makeSUT(micGranted: true)
+        await sut.beginGame(activityId: "b3", difficulty: .easy)
+        XCTAssertFalse(spy.updateResponses.isEmpty, "Tutorial-старт эмитит snapshot")
+    }
+
+    func test_pushAmplitude_inIdle_noEffect() {
+        let (sut, _, _, _) = makeSUT()
+        sut._test_forceState(.idle)
+        sut._test_pushAmplitude(0.5)
+        XCTAssertEqual(sut._test_currentStableRatio(), 0)
+    }
+
+    func test_difficulty_minStableRatio_increasesWithLevel() {
+        XCTAssertLessThan(
+            BreathingDifficulty.easy.minStableRatio,
+            BreathingDifficulty.hard.minStableRatio
+        )
+    }
+
+    func test_failureReason_equatable() {
+        XCTAssertEqual(BreathingFailureReason.tooQuiet, .tooQuiet)
+        XCTAssertNotEqual(BreathingFailureReason.tooQuiet, .interrupted)
+    }
+
+    func test_gameState_equatable_playing() {
+        let a = BreathingGameState.playing(elapsedMs: 100, amplitude: 0.5, objectScale: 1.5)
+        let b = BreathingGameState.playing(elapsedMs: 100, amplitude: 0.5, objectScale: 1.5)
+        XCTAssertEqual(a, b)
+    }
 }

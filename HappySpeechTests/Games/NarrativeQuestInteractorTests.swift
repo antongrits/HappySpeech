@@ -145,4 +145,142 @@ final class NarrativeQuestInteractorTests: XCTestCase {
         XCTAssertEqual(score, 1.0)
         XCTAssertTrue(passed)
     }
+
+    // MARK: - Batch 1: расширенное покрытие
+
+    func test_loadQuest_allGroups_loadCorrectScript() {
+        for (target, expectedStages) in [("С", 4), ("Ш", 4), ("Р", 4), ("К", 4)] {
+            let (sut, spy) = makeSUT()
+            sut.loadQuest(.init(soundTarget: target, childName: "Маша"))
+            XCTAssertEqual(spy.lastLoadQuest?.script.stages.count, expectedStages)
+        }
+    }
+
+    func test_startStage_outOfBounds_ignored() {
+        let (sut, spy) = makeSUT()
+        sut.loadQuest(.init(soundTarget: "С", childName: "Маша"))
+        spy.startStageCalled = false
+        sut.startStage(.init(stageIndex: 99))
+        XCTAssertFalse(spy.startStageCalled)
+    }
+
+    func test_startStage_progressFraction() {
+        let (sut, spy) = makeSUT()
+        sut.loadQuest(.init(soundTarget: "С", childName: "Маша"))
+        sut.startStage(.init(stageIndex: 2))
+        // 2 / 4 = 0.5
+        XCTAssertEqual(spy.lastStartStage?.progressFraction ?? -1, 0.5, accuracy: 0.01)
+    }
+
+    func test_recordWord_setsListening() {
+        var listeningStates: [Bool] = []
+        let spy = RecordSpyNarrativePresenter { listeningStates.append($0) }
+        let sut = NarrativeQuestInteractor(presenter: spy)
+        sut.loadQuest(.init(soundTarget: "С", childName: "Маша"))
+        sut.startStage(.init(stageIndex: 0))
+        sut.recordWord(.init(stageIndex: 0))
+        XCTAssertTrue(listeningStates.contains(true))
+    }
+
+    func test_evaluateWord_failed_lowScore() {
+        let (sut, spy) = makeSUT()
+        sut.loadQuest(.init(soundTarget: "С", childName: "Маша"))
+        sut.startStage(.init(stageIndex: 0))
+        sut.evaluateWord(.init(transcript: "абракадабра", confidence: 0.1))
+        XCTAssertEqual(spy.lastEvaluate?.passed, false)
+        XCTAssertEqual(spy.lastEvaluate?.score, 0.5)
+    }
+
+    func test_evaluateWord_rewardEmojiPresent() {
+        let (sut, spy) = makeSUT()
+        sut.loadQuest(.init(soundTarget: "С", childName: "Маша"))
+        sut.startStage(.init(stageIndex: 0))
+        sut.evaluateWord(.init(transcript: "сова", confidence: 0.95))
+        XCTAssertFalse(spy.lastEvaluate?.rewardEmoji.isEmpty ?? true)
+    }
+
+    func test_advanceStage_lastStage_completesQuest() {
+        let (sut, spy) = makeSUT()
+        sut.loadQuest(.init(soundTarget: "С", childName: "Маша"))
+        sut.startStage(.init(stageIndex: 3))   // последний этап (index 3 из 4)
+        sut.advanceStage(.init())
+        XCTAssertTrue(spy.completeQuestCalled)
+    }
+
+    func test_advanceStage_midStage_emitsNextIndex() {
+        let (sut, spy) = makeSUT()
+        sut.loadQuest(.init(soundTarget: "С", childName: "Маша"))
+        sut.startStage(.init(stageIndex: 0))
+        sut.advanceStage(.init())
+        XCTAssertTrue(spy.advanceStageCalled)
+    }
+
+    func test_resolveSoundGroup_fallbackById() {
+        XCTAssertEqual(NarrativeQuestInteractor.resolveSoundGroup("sonorant"), "sonants")
+        XCTAssertEqual(NarrativeQuestInteractor.resolveSoundGroup("hissing"), "hissing")
+        XCTAssertEqual(NarrativeQuestInteractor.resolveSoundGroup("неизвестно"), "whistling")
+    }
+
+    func test_scoreAttempt_prefixMatch_highConfidence() {
+        let (score, passed) = NarrativeQuestInteractor.scoreAttempt(
+            transcript: "соба", target: "сова", confidence: 0.9
+        )
+        // prefix >= 2, confidence >= 0.6 → 0.85
+        XCTAssertEqual(score, 0.85)
+        XCTAssertTrue(passed)
+    }
+
+    func test_scoreAttempt_prefixMatch_lowConfidence() {
+        let (score, passed) = NarrativeQuestInteractor.scoreAttempt(
+            transcript: "соба", target: "сова", confidence: 0.3
+        )
+        // prefix >= 2 но confidence < 0.6 → 0.7
+        XCTAssertEqual(score, 0.7)
+        XCTAssertTrue(passed)
+    }
+
+    func test_scoreAttempt_emptyTarget_zero() {
+        let (score, passed) = NarrativeQuestInteractor.scoreAttempt(
+            transcript: "что-то", target: "", confidence: 0.9
+        )
+        XCTAssertEqual(score, 0)
+        XCTAssertFalse(passed)
+    }
+
+    func test_scoreAttempt_noMatch_softFail() {
+        let (score, passed) = NarrativeQuestInteractor.scoreAttempt(
+            transcript: "молоко", target: "ракета", confidence: 0.5
+        )
+        XCTAssertEqual(score, 0.5)
+        XCTAssertFalse(passed)
+    }
+
+    func test_completeQuest_collectedEmojisInResponse() {
+        let (sut, spy) = makeSUT()
+        sut.loadQuest(.init(soundTarget: "С", childName: "Маша"))
+        sut.startStage(.init(stageIndex: 0))
+        sut.evaluateWord(.init(transcript: "сова", confidence: 0.95))
+        sut.completeQuest(.init())
+        XCTAssertEqual(spy.lastComplete?.collectedEmojis.count, 1)
+    }
+}
+
+// MARK: - Record-spy presenter (batch 1)
+
+@MainActor
+private final class RecordSpyNarrativePresenter: NarrativeQuestPresentationLogic {
+    private let onRecord: (Bool) -> Void
+
+    init(onRecord: @escaping (Bool) -> Void) {
+        self.onRecord = onRecord
+    }
+
+    func presentLoadQuest(_ response: NarrativeQuestModels.LoadQuest.Response) {}
+    func presentStartStage(_ response: NarrativeQuestModels.StartStage.Response) {}
+    func presentRecordWord(_ response: NarrativeQuestModels.RecordWord.Response) {
+        onRecord(response.isListening)
+    }
+    func presentEvaluateWord(_ response: NarrativeQuestModels.EvaluateWord.Response) {}
+    func presentAdvanceStage(_ response: NarrativeQuestModels.AdvanceStage.Response) {}
+    func presentCompleteQuest(_ response: NarrativeQuestModels.CompleteQuest.Response) {}
 }
