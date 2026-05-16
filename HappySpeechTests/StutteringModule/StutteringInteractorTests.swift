@@ -27,8 +27,19 @@ private final class SpyStutteringPresenter: StutteringPresentationLogic {
         lastSelectResponse = response
     }
 
-    func presentLoadProgress(_ response: StutteringModels.LoadProgress.Response) {}
-    func presentAdaptiveRecommendation(_ response: StutteringModels.LoadAdaptiveRecommendation.Response) {}
+    var presentLoadProgressCalled = false
+    var presentAdaptiveCalled = false
+    var lastProgressResponse: StutteringModels.LoadProgress.Response?
+    var lastAdaptiveResponse: StutteringModels.LoadAdaptiveRecommendation.Response?
+
+    func presentLoadProgress(_ response: StutteringModels.LoadProgress.Response) {
+        presentLoadProgressCalled = true
+        lastProgressResponse = response
+    }
+    func presentAdaptiveRecommendation(_ response: StutteringModels.LoadAdaptiveRecommendation.Response) {
+        presentAdaptiveCalled = true
+        lastAdaptiveResponse = response
+    }
 }
 
 // MARK: - StutteringInteractorTests
@@ -108,6 +119,133 @@ final class StutteringInteractorTests: XCTestCase {
         XCTAssertTrue(modes.contains(.breathing),  "Дыхание должно быть в карточках")
         XCTAssertTrue(modes.contains(.softOnset),  "Мягкая атака должна быть в карточках")
         XCTAssertTrue(modes.contains(.diary),      "Дневник должен быть в карточках")
+    }
+
+    // MARK: - Batch 2.8.3 v25: расширенное покрытие
+    //
+    // Note: StutteringInteractor использует UserDefaults.standard напрямую.
+    // Тесты очищают ключи в setUp/локально для изоляции.
+
+    private func cleanStutteringDefaults() {
+        let defaults = UserDefaults.standard
+        for mode in StutteringMode.allCases {
+            defaults.removeObject(forKey: "stuttering_streak_\(mode.rawValue)")
+            defaults.removeObject(forKey: "stuttering_completed_today_\(mode.rawValue)")
+            defaults.removeObject(forKey: "stuttering_streak_last_date_\(mode.rawValue)")
+        }
+        defaults.removeObject(forKey: "stuttering_session_count_total")
+        defaults.removeObject(forKey: "stuttering_fluency_improvement_pct")
+    }
+
+    // MARK: - 6. loadProgress: presenter получает прогресс по всем режимам
+
+    func test_loadProgress_deliversProgressForAllModes() {
+        cleanStutteringDefaults()
+        let (sut, spy) = makeSUT()
+        sut.loadProgress(.init())
+
+        XCTAssertTrue(spy.presentLoadProgressCalled)
+        XCTAssertEqual(spy.lastProgressResponse?.featureProgress.count, StutteringMode.allCases.count)
+    }
+
+    // MARK: - 7. loadProgress: свежие defaults → totalSessions 0
+
+    func test_loadProgress_freshDefaults_zeroSessions() {
+        cleanStutteringDefaults()
+        let (sut, spy) = makeSUT()
+        sut.loadProgress(.init())
+        XCTAssertEqual(spy.lastProgressResponse?.totalSessions, 0)
+    }
+
+    // MARK: - 8. loadAdaptiveRecommendation: presenter получает режим
+
+    func test_loadAdaptiveRecommendation_deliversRecommendedMode() {
+        cleanStutteringDefaults()
+        let (sut, spy) = makeSUT()
+        sut.loadAdaptiveRecommendation(.init())
+
+        XCTAssertTrue(spy.presentAdaptiveCalled)
+        XCTAssertNotNil(spy.lastAdaptiveResponse?.recommendedMode)
+        XCTAssertFalse(spy.lastAdaptiveResponse?.voicePromptText.isEmpty ?? true)
+        XCTAssertTrue(spy.lastAdaptiveResponse?.shouldShowGlow ?? false)
+    }
+
+    // MARK: - 9. recordSessionCompleted: увеличивает totalSessions
+
+    func test_recordSessionCompleted_incrementsTotalSessions() {
+        cleanStutteringDefaults()
+        let (sut, spy) = makeSUT()
+        sut.recordSessionCompleted(.init(mode: .metronome, fluencyScore: 0.8))
+        sut.loadProgress(.init())
+
+        XCTAssertEqual(spy.lastProgressResponse?.totalSessions, 1)
+    }
+
+    // MARK: - 10. recordSessionCompleted: первый раз → стрик режима = 1
+
+    func test_recordSessionCompleted_setsStreakToOne() {
+        cleanStutteringDefaults()
+        let (sut, spy) = makeSUT()
+        sut.recordSessionCompleted(.init(mode: .breathing, fluencyScore: 0.5))
+        sut.loadProgress(.init())
+
+        XCTAssertEqual(spy.lastProgressResponse?.featureProgress[.breathing]?.streak, 1)
+        XCTAssertEqual(spy.lastProgressResponse?.featureProgress[.breathing]?.completedToday, true)
+    }
+
+    // MARK: - 11. recommendedSessionDuration: по возрасту
+
+    func test_recommendedSessionDuration_byAge() {
+        let (sut, _) = makeSUT()
+        XCTAssertEqual(sut.recommendedSessionDuration(ageYears: 5), 7...10)
+        XCTAssertEqual(sut.recommendedSessionDuration(ageYears: 6), 10...12)
+        XCTAssertEqual(sut.recommendedSessionDuration(ageYears: 8), 12...15)
+    }
+
+    // MARK: - 12. completedModesTodayCount: после одной сессии = 1
+
+    func test_completedModesTodayCount_afterOneSession() {
+        cleanStutteringDefaults()
+        let (sut, _) = makeSUT()
+        XCTAssertEqual(sut.completedModesTodayCount(), 0)
+        sut.recordSessionCompleted(.init(mode: .softOnset, fluencyScore: 0.7))
+        XCTAssertEqual(sut.completedModesTodayCount(), 1)
+    }
+
+    // MARK: - 13. symbol(for:): каждый режим даёт непустой символ
+
+    func test_symbolForMode_nonEmpty() {
+        let (sut, _) = makeSUT()
+        for mode in StutteringMode.allCases {
+            XCTAssertFalse(sut.symbol(for: mode).isEmpty)
+        }
+    }
+
+    // MARK: - 14. overallStreakDays: свежие defaults → 0
+
+    func test_overallStreakDays_freshIsZero() {
+        cleanStutteringDefaults()
+        let (sut, _) = makeSUT()
+        XCTAssertEqual(sut.overallStreakDays(), 0)
+    }
+
+    // MARK: - 15. validateAllStreaks: не крашит на свежих defaults
+
+    func test_validateAllStreaks_doesNotCrash() {
+        cleanStutteringDefaults()
+        let (sut, _) = makeSUT()
+        sut.validateAllStreaks()
+        XCTAssertTrue(true)
+    }
+
+    // MARK: - 16. recordSessionCompleted: нулевой fluencyScore не обновляет improvement
+
+    func test_recordSessionCompleted_zeroScoreNoImprovementUpdate() {
+        cleanStutteringDefaults()
+        let (sut, spy) = makeSUT()
+        sut.recordSessionCompleted(.init(mode: .pacing, fluencyScore: 0))
+        sut.loadProgress(.init())
+        XCTAssertEqual(spy.lastProgressResponse?.fluencyImprovementPct ?? -1, 0, accuracy: 0.001)
     }
 }
 
