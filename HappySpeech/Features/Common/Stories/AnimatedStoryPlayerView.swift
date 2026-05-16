@@ -40,11 +40,18 @@ struct AnimatedStoryPlayerView: View {
     // MARK: - Computed
 
     private static func mp4URL(for storyId: String) -> URL? {
-        Bundle.main.url(
+        // Истории располагаются в `Resources/Videos/stories/<id>.mp4`.
+        // Сначала ищем через subdirectory (folder-reference раскладка).
+        if let url = Bundle.main.url(
             forResource: storyId,
             withExtension: "mp4",
             subdirectory: "stories"
-        )
+        ) {
+            return url
+        }
+        // Fallback: без subdirectory — xcodegen с `type: group` кладёт
+        // ресурсы плоской структурой в корень бандла.
+        return Bundle.main.url(forResource: storyId, withExtension: "mp4")
     }
 
     private var hasVideo: Bool {

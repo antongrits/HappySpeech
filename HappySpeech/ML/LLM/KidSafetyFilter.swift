@@ -40,10 +40,17 @@ public actor KidSafetyFilter {
             return .unsafe(reason: "empty_text")
         }
 
-        let lowered = text.lowercased()
-        for banned in Self.bannedWords where lowered.contains(banned) {
-            logger.warning("KidSafetyFilter banned word detected: \(banned, privacy: .private)")
-            return .unsafe(reason: "banned_word:\(banned)")
+        // Разбиваем на слова и сравниваем по границам слова, а не подстрокой:
+        // подстрочный поиск давал ложные срабатывания
+        // (например «боль» внутри безопасного «большой»).
+        let wordSeparators = CharacterSet.whitespacesAndNewlines
+            .union(.punctuationCharacters)
+        let loweredWords = text.lowercased()
+            .components(separatedBy: wordSeparators)
+            .filter { !$0.isEmpty }
+        for word in loweredWords where Self.bannedWords.contains(word) {
+            logger.warning("KidSafetyFilter banned word detected: \(word, privacy: .private)")
+            return .unsafe(reason: "banned_word:\(word)")
         }
 
         let wordCount = text.split(separator: " ").count

@@ -89,7 +89,11 @@ final class VIPFlowIntegrationTests: FirebaseEmulatorTestsBase {
         XCTAssertEqual(spy.lastSetProfile?.profile.childName, "Аня",
                        "После setProfile имя должно быть 'Аня'")
 
-        // Шаг 4: завершение онбординга
+        // Шаг 4: согласие с политикой приватности — обязательный шаг (COPPA).
+        // Без него completeOnboarding блокируется и не вызывает presenter.
+        sut.acceptPrivacyConsent(.init(accepted: true))
+
+        // Шаг 5: завершение онбординга
         sut.completeOnboarding(.init())
         XCTAssertTrue(spy.completeOnboardingCalled,
                       "completeOnboarding должен вызвать presenter")
