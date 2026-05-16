@@ -11669,7 +11669,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ — %2$@ на %3$@%% лучше"
+            "value": "%1$@ — %2$@ на %3$lld%% лучше"
           }
         }
       }
