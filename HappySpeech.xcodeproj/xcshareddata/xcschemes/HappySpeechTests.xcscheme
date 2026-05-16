@@ -40,17 +40,6 @@
          </BuildableReference>
       </MacroExpansion>
       <Testables>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "80409027269012E01A4CED5F"
-               BuildableName = "HappySpeechTests.xctest"
-               BlueprintName = "HappySpeechTests"
-               ReferencedContainer = "container:HappySpeech.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <CommandLineArguments>
       </CommandLineArguments>
