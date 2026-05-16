@@ -50,7 +50,13 @@ final class SoftOnsetInteractorTests: XCTestCase {
         analyzer.stubbedClassification = classification
         analyzer.stubbedAttackMs = attackMs
         let haptic = MockSoftOnsetHapticService()
+        // Внедряем MockBreathingAudioWorker: без него Interactor создаёт реальный
+        // BreathingAudioWorker, и startSession() зависает на
+        // AVAudioApplication.requestRecordPermission() в headless-симуляторе.
+        let audioWorker = MockBreathingAudioWorker()
+        audioWorker.isPermissionGranted = true
         let sut = SoftOnsetInteractor(
+            audioWorker: audioWorker,
             analyzerWorker: analyzer,
             hapticService: haptic
         )

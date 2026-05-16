@@ -27,8 +27,15 @@ final class MetronomeInteractorTests: XCTestCase {
     ) {
         let metronomeWorker = MockMetronomeWorker()
         let haptic = MockMetronomeHapticService()
+        // Внедряем MockBreathingAudioWorker: без него Interactor создаёт реальный
+        // BreathingAudioWorker, и startSession() уходит в await на
+        // AVAudioApplication.requestRecordPermission() — в headless-симуляторе этот
+        // системный диалог не вызывает completion, и тест-процесс зависает навсегда.
+        let audioWorker = MockBreathingAudioWorker()
+        audioWorker.isPermissionGranted = true
         let sut = MetronomeInteractor(
             metronomeWorker: metronomeWorker,
+            audioWorker: audioWorker,
             hapticService: haptic
         )
         return (sut, metronomeWorker, haptic)
@@ -121,14 +128,10 @@ final class MetronomeInteractorTests: XCTestCase {
     // MARK: - 5. stopSession сохраняет запись в истории
 
     func test_stopSession_whenRunning_addsToHistory() async {
-        let (sut, worker, _) = makeSUT()
+        let (sut, _, _) = makeSUT()
 
-        // Имитируем запущенную сессию: устанавливаем isRunning вручную через startSession
-        // (без реального аудио — mic denied, поэтому stopSession завершит gracefully)
-        let audio = MockBreathingAudioWorker()
-        audio.isPermissionGranted = false
-        // Вместо полного запуска мы вызываем stopSession когда display.isRunning = false
-        // (нет записи в history, если сессия не была running)
+        // Вызываем stopSession когда display.isRunning = false:
+        // нет записи в history, если сессия не была running.
         sut.stopSession()
 
         let history = sut.loadHistory()
@@ -200,12 +203,9 @@ final class MetronomeInteractorTests: XCTestCase {
     func test_adaptiveThreshold_easy_lowestValue() async {
         // Проверяем что сессия easy стартует с bpm = 75 (StutteringDifficulty.easy.bpm)
         let (sut, worker, _) = makeSUT()
-        let audio = MockBreathingAudioWorker()
-        audio.isPermissionGranted = false
 
         await sut.startSession(difficulty: .easy)
 
-        // Если микрофон не выдан — сессия не запустится, но BPM должен быть задан
         XCTAssertGreaterThan(sut.display.bpm, 0)
         XCTAssertGreaterThanOrEqual(sut.display.bpm, 50)
         _ = worker.lastBPM

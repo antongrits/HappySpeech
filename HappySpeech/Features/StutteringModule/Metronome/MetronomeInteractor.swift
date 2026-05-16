@@ -45,7 +45,7 @@ final class MetronomeInteractor {
     // MARK: - Dependencies
 
     private let metronomeWorker: any MetronomeWorkerProtocol
-    private let audioWorker: BreathingAudioWorker
+    private let audioWorker: any BreathingAudioWorkerProtocol
     private let hapticService: any HapticService
     private let logger = HSLogger.audio
 
@@ -117,7 +117,7 @@ final class MetronomeInteractor {
 
     init(
         metronomeWorker: any MetronomeWorkerProtocol = MetronomeWorker(),
-        audioWorker: BreathingAudioWorker = BreathingAudioWorker(),
+        audioWorker: any BreathingAudioWorkerProtocol = BreathingAudioWorker(),
         hapticService: any HapticService = LiveHapticService()
     ) {
         self.metronomeWorker = metronomeWorker

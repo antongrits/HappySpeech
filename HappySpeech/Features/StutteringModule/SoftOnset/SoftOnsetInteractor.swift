@@ -61,7 +61,7 @@ final class SoftOnsetInteractor {
 
     // MARK: - Dependencies
 
-    private let audioWorker: BreathingAudioWorker
+    private let audioWorker: any BreathingAudioWorkerProtocol
     private let analyzerWorker: any FluencyAnalyzerWorkerProtocol
     private let hapticService: any HapticService
     private let logger = HSLogger.audio
@@ -94,7 +94,7 @@ final class SoftOnsetInteractor {
     // MARK: - Init
 
     init(
-        audioWorker: BreathingAudioWorker = BreathingAudioWorker(),
+        audioWorker: any BreathingAudioWorkerProtocol = BreathingAudioWorker(),
         analyzerWorker: any FluencyAnalyzerWorkerProtocol = FluencyAnalyzerWorker(),
         hapticService: any HapticService = LiveHapticService()
     ) {
