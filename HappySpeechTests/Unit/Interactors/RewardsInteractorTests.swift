@@ -45,12 +45,44 @@ final class RewardsInteractorTests: XCTestCase {
             failureCalled = true
             lastFailure = response
         }
-        func presentSortStickers(_ response: RewardsModels.SortStickers.Response) {}
-        func presentSearchStickers(_ response: RewardsModels.SearchStickers.Response) {}
-        func presentChangeAlbumTheme(_ response: RewardsModels.ChangeAlbumTheme.Response) {}
-        func presentPrepareShare(_ response: RewardsModels.PrepareShare.Response) {}
-        func presentOpenAchievement(_ response: RewardsModels.OpenAchievement.Response) {}
-        func presentClaimStreakReward(_ response: RewardsModels.ClaimStreakReward.Response) {}
+        var sortCalled = false
+        var searchCalled = false
+        var changeThemeCalled = false
+        var prepareShareCalled = false
+        var openAchievementCalled = false
+        var claimStreakRewardCalled = false
+
+        var lastSort: RewardsModels.SortStickers.Response?
+        var lastSearch: RewardsModels.SearchStickers.Response?
+        var lastChangeTheme: RewardsModels.ChangeAlbumTheme.Response?
+        var lastPrepareShare: RewardsModels.PrepareShare.Response?
+        var lastOpenAchievement: RewardsModels.OpenAchievement.Response?
+        var lastClaimStreakReward: RewardsModels.ClaimStreakReward.Response?
+
+        func presentSortStickers(_ response: RewardsModels.SortStickers.Response) {
+            sortCalled = true
+            lastSort = response
+        }
+        func presentSearchStickers(_ response: RewardsModels.SearchStickers.Response) {
+            searchCalled = true
+            lastSearch = response
+        }
+        func presentChangeAlbumTheme(_ response: RewardsModels.ChangeAlbumTheme.Response) {
+            changeThemeCalled = true
+            lastChangeTheme = response
+        }
+        func presentPrepareShare(_ response: RewardsModels.PrepareShare.Response) {
+            prepareShareCalled = true
+            lastPrepareShare = response
+        }
+        func presentOpenAchievement(_ response: RewardsModels.OpenAchievement.Response) {
+            openAchievementCalled = true
+            lastOpenAchievement = response
+        }
+        func presentClaimStreakReward(_ response: RewardsModels.ClaimStreakReward.Response) {
+            claimStreakRewardCalled = true
+            lastClaimStreakReward = response
+        }
     }
 
     private func makeSUT() -> (RewardsInteractor, SpyPresenter) {
@@ -147,5 +179,154 @@ final class RewardsInteractorTests: XCTestCase {
         sut.claimReward(.init(id: "ghost-id"))
         XCTAssertFalse(spy.claimRewardCalled)
         XCTAssertTrue(spy.failureCalled)
+    }
+
+    // MARK: - 10. claimReward уже заявленного стикера → presentOpenSticker
+
+    func test_claimReward_alreadyClaimed_presentsOpenSticker() {
+        let (sut, spy) = makeSUT()
+        sut.loadRewards(.init(childId: "child-1", forceReload: false))
+        // animals.cat — isNew: false в seed
+        sut.claimReward(.init(id: "animals.cat"))
+        XCTAssertTrue(spy.openStickerCalled)
+        XCTAssertFalse(spy.claimRewardCalled)
+    }
+
+    // MARK: - 11. sortStickers для каждого порядка
+
+    func test_sortStickers_byDate() {
+        let (sut, spy) = makeSUT()
+        sut.loadRewards(.init(childId: "child-1", forceReload: false))
+        sut.sortStickers(.init(sortOrder: .byDate))
+        XCTAssertTrue(spy.sortCalled)
+        XCTAssertEqual(spy.lastSort?.sortOrder, .byDate)
+    }
+
+    func test_sortStickers_byRarity() {
+        let (sut, spy) = makeSUT()
+        sut.loadRewards(.init(childId: "child-1", forceReload: false))
+        sut.sortStickers(.init(sortOrder: .byRarity))
+        XCTAssertEqual(spy.lastSort?.sortOrder, .byRarity)
+    }
+
+    func test_sortStickers_byCollection() {
+        let (sut, spy) = makeSUT()
+        sut.loadRewards(.init(childId: "child-1", forceReload: false))
+        sut.sortStickers(.init(sortOrder: .byCollection))
+        XCTAssertEqual(spy.lastSort?.sortOrder, .byCollection)
+    }
+
+    // MARK: - 12. searchStickers
+
+    func test_searchStickers_returnsResponse() {
+        let (sut, spy) = makeSUT()
+        sut.loadRewards(.init(childId: "child-1", forceReload: false))
+        sut.searchStickers(.init(query: "  кот  "))
+        XCTAssertTrue(spy.searchCalled)
+        XCTAssertEqual(spy.lastSearch?.query, "кот")
+    }
+
+    func test_searchStickers_emptyQuery() {
+        let (sut, spy) = makeSUT()
+        sut.loadRewards(.init(childId: "child-1", forceReload: false))
+        sut.searchStickers(.init(query: ""))
+        XCTAssertTrue(spy.searchCalled)
+        XCTAssertEqual(spy.lastSearch?.query, "")
+    }
+
+    // MARK: - 13. changeAlbumTheme
+
+    func test_changeAlbumTheme_updatesTheme() {
+        let (sut, spy) = makeSUT()
+        sut.loadRewards(.init(childId: "child-1", forceReload: false))
+        sut.changeAlbumTheme(.init(theme: .neon))
+        XCTAssertTrue(spy.changeThemeCalled)
+        XCTAssertEqual(spy.lastChangeTheme?.theme, .neon)
+    }
+
+    func test_changeAlbumTheme_persistsAcrossInstances() {
+        let (sut, _) = makeSUT()
+        sut.loadRewards(.init(childId: "child-1", forceReload: false))
+        sut.changeAlbumTheme(.init(theme: .pastel))
+        // Новый Interactor читает сохранённую тему
+        let (sut2, spy2) = makeSUT()
+        sut2.loadRewards(.init(childId: "child-1", forceReload: false))
+        XCTAssertEqual(spy2.lastLoadRewards?.albumTheme, .pastel)
+    }
+
+    // MARK: - 14. prepareShare
+
+    func test_prepareShare_returnsTopStickers() {
+        let (sut, spy) = makeSUT()
+        sut.loadRewards(.init(childId: "child-1", forceReload: false))
+        sut.prepareShare(.init(childId: "child-1"))
+        XCTAssertTrue(spy.prepareShareCalled)
+        XCTAssertGreaterThan(spy.lastPrepareShare?.totalCount ?? 0, 0)
+        XCTAssertLessThanOrEqual(spy.lastPrepareShare?.topStickers.count ?? 99, 5)
+    }
+
+    // MARK: - 15. openAchievement
+
+    func test_openAchievement_existing_callsPresenter() {
+        let (sut, spy) = makeSUT()
+        sut.loadRewards(.init(childId: "child-1", forceReload: false))
+        sut.openAchievement(.init(key: "first_session"))
+        XCTAssertTrue(spy.openAchievementCalled)
+        XCTAssertEqual(spy.lastOpenAchievement?.achievement.key, "first_session")
+    }
+
+    func test_openAchievement_notFound_callsFailure() {
+        let (sut, spy) = makeSUT()
+        sut.loadRewards(.init(childId: "child-1", forceReload: false))
+        sut.openAchievement(.init(key: "nonexistent_achievement"))
+        XCTAssertFalse(spy.openAchievementCalled)
+        XCTAssertTrue(spy.failureCalled)
+    }
+
+    // MARK: - 16. claimStreakReward
+
+    func test_claimStreakReward_validStreak_succeeds() {
+        // Свежий suite чтобы не было ранее заявленных streak
+        UserDefaults.standard.removeObject(forKey: "rewards.claimedStreaks")
+        let (sut, spy) = makeSUT()
+        sut.loadRewards(.init(childId: "child-1", forceReload: false))
+        // currentStreak = 7 в init → можно заявить 7 дней
+        sut.claimStreakReward(.init(streakDays: 7))
+        XCTAssertTrue(spy.claimStreakRewardCalled)
+        XCTAssertEqual(spy.lastClaimStreakReward?.reward.streakDays, 7)
+        UserDefaults.standard.removeObject(forKey: "rewards.claimedStreaks")
+    }
+
+    func test_claimStreakReward_insufficientStreak_callsFailure() {
+        UserDefaults.standard.removeObject(forKey: "rewards.claimedStreaks")
+        let (sut, spy) = makeSUT()
+        sut.loadRewards(.init(childId: "child-1", forceReload: false))
+        // currentStreak = 7 < 30 → недостаточно
+        sut.claimStreakReward(.init(streakDays: 30))
+        XCTAssertTrue(spy.failureCalled)
+        XCTAssertFalse(spy.claimStreakRewardCalled)
+        UserDefaults.standard.removeObject(forKey: "rewards.claimedStreaks")
+    }
+
+    func test_claimStreakReward_alreadyClaimed_callsFailure() {
+        UserDefaults.standard.removeObject(forKey: "rewards.claimedStreaks")
+        let (sut, spy) = makeSUT()
+        sut.loadRewards(.init(childId: "child-1", forceReload: false))
+        sut.claimStreakReward(.init(streakDays: 7))
+        spy.failureCalled = false
+        spy.claimStreakRewardCalled = false
+        sut.claimStreakReward(.init(streakDays: 7))
+        XCTAssertTrue(spy.failureCalled)
+        XCTAssertFalse(spy.claimStreakRewardCalled)
+        UserDefaults.standard.removeObject(forKey: "rewards.claimedStreaks")
+    }
+
+    // MARK: - 17. filterByCollection возвращает корректный набор для коллекции
+
+    func test_filterByCollection_space_recordsCollection() {
+        let (sut, spy) = makeSUT()
+        sut.loadRewards(.init(childId: "child-1", forceReload: false))
+        sut.filterByCollection(.init(collection: .space))
+        XCTAssertEqual(spy.lastFilter?.activeCollection, .space)
     }
 }

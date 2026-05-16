@@ -31,13 +31,31 @@ final class ProgramEditorInteractorTests: XCTestCase {
 
         // MARK: D.1 v15 — новые методы протокола
 
-        func presentValidation(_ response: ProgramEditorModels.ValidateProgram.Response) async {}
-        func presentValidationWarning(_ response: ProgramEditorModels.ValidationWarning.Response) async {}
-        func presentAssignToChild(_ response: ProgramEditorModels.AssignToChild.Response) async {}
+        var validationCalled = false
+        var validationWarningCalled = false
+        var assignCalled = false
+        var lastValidation: ProgramEditorModels.ValidateProgram.Response?
+        var lastValidationWarning: ProgramEditorModels.ValidationWarning.Response?
+        var lastAssign: ProgramEditorModels.AssignToChild.Response?
+
+        func presentValidation(_ response: ProgramEditorModels.ValidateProgram.Response) async {
+            validationCalled = true
+            lastValidation = response
+        }
+        func presentValidationWarning(_ response: ProgramEditorModels.ValidationWarning.Response) async {
+            validationWarningCalled = true
+            lastValidationWarning = response
+        }
+        func presentAssignToChild(_ response: ProgramEditorModels.AssignToChild.Response) async {
+            assignCalled = true
+            lastAssign = response
+        }
     }
 
-    private func makeSUT() -> (ProgramEditorInteractor, SpyPresenter) {
-        let i = ProgramEditorInteractor()
+    private func makeSUT(
+        childRepository: (any ChildRepository)? = nil
+    ) -> (ProgramEditorInteractor, SpyPresenter) {
+        let i = ProgramEditorInteractor(childRepository: childRepository)
         let s = SpyPresenter()
         i.presenter = s
         return (i, s)
@@ -137,5 +155,134 @@ final class ProgramEditorInteractorTests: XCTestCase {
 
     func test_isValid_defaultTemplate_true() {
         XCTAssertTrue(ProgramEditorPresenter.isValid(ProgramEditorInteractor.defaultTemplate()))
+    }
+
+    // MARK: - validateProgram
+
+    func test_validateProgram_defaultTemplate_isValid() async {
+        let (sut, spy) = makeSUT()
+        await sut.loadProgram(.init(childId: "c1"))
+        await sut.validateProgram(.init())
+        XCTAssertTrue(spy.validationCalled)
+        XCTAssertEqual(spy.lastValidation?.isValid, true)
+        XCTAssertGreaterThan(spy.lastValidation?.totalDurationMinutes ?? 0, 0)
+    }
+
+    func test_validateProgram_emptyProgram_hasErrors() async {
+        let emptyProgram = Program(childId: "", blocks: [], specialistNotes: "", updatedAt: Date())
+        let sut = ProgramEditorInteractor(seed: emptyProgram)
+        let spy = SpyPresenter()
+        sut.presenter = spy
+        await sut.validateProgram(.init())
+        XCTAssertEqual(spy.lastValidation?.isValid, false)
+        XCTAssertFalse(spy.lastValidation?.errors.isEmpty ?? true)
+    }
+
+    // MARK: - addBlock prerequisite warning
+
+    func test_addBlock_wordsWithoutSyllables_triggersPrereqWarning() async {
+        // Программа без syllables-блока
+        let program = Program(
+            childId: "c1",
+            blocks: [ProgramBlock(type: .warmup, durationMinutes: 2)],
+            specialistNotes: "", updatedAt: Date()
+        )
+        let sut = ProgramEditorInteractor(seed: program)
+        let spy = SpyPresenter()
+        sut.presenter = spy
+        await sut.addBlock(.init(type: .wordsInitial, durationMinutes: 4, targetSound: "Р"))
+        XCTAssertTrue(spy.validationWarningCalled)
+        XCTAssertFalse(spy.lastValidationWarning?.message.isEmpty ?? true)
+    }
+
+    // MARK: - duplicateBlock
+
+    func test_duplicateBlock_insertsCopy() async {
+        let (sut, spy) = makeSUT()
+        await sut.loadProgram(.init(childId: "c1"))
+        let countBefore = spy.lastBlocks.count
+        let targetId = spy.lastBlocks.first!.id
+        await sut.duplicateBlock(.init(blockId: targetId))
+        XCTAssertEqual(spy.lastBlocks.count, countBefore + 1)
+        // копия — другой UUID, тот же type
+        XCTAssertEqual(spy.lastBlocks[0].type, spy.lastBlocks[1].type)
+        XCTAssertNotEqual(spy.lastBlocks[0].id, spy.lastBlocks[1].id)
+    }
+
+    func test_duplicateBlock_unknownId_ignored() async {
+        let (sut, spy) = makeSUT()
+        await sut.loadProgram(.init(childId: "c1"))
+        let countBefore = spy.lastBlocks.count
+        await sut.duplicateBlock(.init(blockId: UUID()))
+        XCTAssertEqual(spy.lastBlocks.count, countBefore)
+    }
+
+    // MARK: - moveBlock unknown id
+
+    func test_moveBlock_unknownId_ignored() async {
+        let (sut, spy) = makeSUT()
+        await sut.loadProgram(.init(childId: "c1"))
+        let blocksBefore = spy.lastBlocks
+        await sut.moveBlock(.init(blockId: UUID(), targetIndex: 0))
+        XCTAssertEqual(spy.lastBlocks.map(\.id), blocksBefore.map(\.id))
+    }
+
+    // MARK: - assignToChild
+
+    func test_assignToChild_validProgram_succeeds() async {
+        let childRepo = SpyChildRepository(children: [TestDataBuilder.childProfile(id: "c1")])
+        let (sut, spy) = makeSUT(childRepository: childRepo)
+        await sut.loadProgram(.init(childId: "c1"))
+        await sut.assignToChild(.init(childId: "c1"))
+        XCTAssertTrue(spy.assignCalled)
+        XCTAssertEqual(spy.lastAssign?.success, true)
+    }
+
+    func test_assignToChild_invalidProgram_fails() async {
+        let emptyProgram = Program(childId: "", blocks: [], specialistNotes: "", updatedAt: Date())
+        let sut = ProgramEditorInteractor(seed: emptyProgram)
+        let spy = SpyPresenter()
+        sut.presenter = spy
+        await sut.assignToChild(.init(childId: "c1"))
+        XCTAssertEqual(spy.lastAssign?.success, false)
+        XCTAssertNotNil(spy.lastAssign?.errorMessage)
+    }
+
+    func test_assignToChild_repositoryFails_returnsError() async {
+        let childRepo = SpyChildRepository(children: [TestDataBuilder.childProfile(id: "c1")])
+        childRepo.shouldFail = true
+        let (sut, spy) = makeSUT(childRepository: childRepo)
+        await sut.loadProgram(.init(childId: "c1"))
+        await sut.assignToChild(.init(childId: "c1"))
+        XCTAssertEqual(spy.lastAssign?.success, false)
+    }
+
+    func test_assignToChild_noRepository_succeedsLocally() async {
+        let (sut, spy) = makeSUT(childRepository: nil)
+        await sut.loadProgram(.init(childId: "c1"))
+        await sut.assignToChild(.init(childId: "c1"))
+        // Без репозитория saveAssignedProgram возвращает без ошибки → success
+        XCTAssertEqual(spy.lastAssign?.success, true)
+    }
+
+    // MARK: - currentProgramSnapshot
+
+    func test_currentProgramSnapshot_reflectsState() async {
+        let (sut, _) = makeSUT()
+        await sut.loadProgram(.init(childId: "c-snap"))
+        let snapshot = sut.currentProgramSnapshot()
+        XCTAssertEqual(snapshot.childId, "c-snap")
+        XCTAssertFalse(snapshot.blocks.isEmpty)
+    }
+
+    // MARK: - removeBlock пересчитывает длительность
+
+    func test_removeBlock_updatesTotalDuration() async {
+        let (sut, spy) = makeSUT()
+        await sut.loadProgram(.init(childId: "c1"))
+        await sut.addBlock(.init(type: .phrases, durationMinutes: 5, targetSound: nil))
+        let added = spy.lastBlocks.last!
+        await sut.removeBlock(.init(blockId: added.id))
+        XCTAssertFalse(spy.lastBlocks.contains { $0.id == added.id })
     }
 }

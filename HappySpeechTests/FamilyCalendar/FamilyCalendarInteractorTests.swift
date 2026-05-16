@@ -55,9 +55,23 @@ final class FamilyCalendarInteractorTests: XCTestCase {
         func displayClearToast() {
             displayClearToastCalled = true
         }
-        func displayLessonScheduled(voiceHint: String) {}
-        func displayWeekSummary(viewModel: WeekSummaryViewModel) {}
-        func displayToast(message: String) {}
+        var displayLessonScheduledCalled = false
+        var lastVoiceHint: String?
+        var displayWeekSummaryCalled = false
+        var lastWeekSummary: WeekSummaryViewModel?
+        var lastToastMessage: String?
+
+        func displayLessonScheduled(voiceHint: String) {
+            displayLessonScheduledCalled = true
+            lastVoiceHint = voiceHint
+        }
+        func displayWeekSummary(viewModel: WeekSummaryViewModel) {
+            displayWeekSummaryCalled = true
+            lastWeekSummary = viewModel
+        }
+        func displayToast(message: String) {
+            lastToastMessage = message
+        }
     }
 
     // MARK: - Factory
@@ -331,5 +345,206 @@ final class FamilyCalendarInteractorTests: XCTestCase {
                       "displayError должен вызываться при ошибке репозитория")
         XCTAssertFalse(display.displayFamilyDataCalled,
                        "displayFamilyData НЕ должен вызываться при ошибке загрузки")
+    }
+
+    // MARK: - 11. changeWeek next/previous обновляет неделю
+
+    func test_changeWeek_next_thenPrevious_updatesGrid() async throws {
+        let child = makeChild(id: "c-1", name: "Миша")
+        let (sut, display, _, _) = makeSUT(children: [child])
+        await sut.loadFamilyData(request: .init(parentId: "parent-1"))
+        try await Task.sleep(nanoseconds: 200_000_000)
+        display.displayFamilyDataCalled = false
+
+        sut.changeWeek(request: .init(direction: .next))
+        XCTAssertTrue(display.displayFamilyDataCalled, "changeWeek next должен обновить экран")
+
+        display.displayFamilyDataCalled = false
+        sut.changeWeek(request: .init(direction: .previous))
+        XCTAssertTrue(display.displayFamilyDataCalled, "changeWeek previous должен обновить экран")
+    }
+
+    // MARK: - 12. changeWeek не выходит за границу +1 будущее
+
+    func test_changeWeek_beyondFutureLimit_ignored() async throws {
+        let child = makeChild(id: "c-1", name: "Миша")
+        let (sut, display, _, _) = makeSUT(children: [child])
+        await sut.loadFamilyData(request: .init(parentId: "parent-1"))
+        try await Task.sleep(nanoseconds: 200_000_000)
+
+        // offset 0 → +1 (ок) → +2 (игнор)
+        sut.changeWeek(request: .init(direction: .next))
+        display.displayFamilyDataCalled = false
+        sut.changeWeek(request: .init(direction: .next))
+        XCTAssertFalse(display.displayFamilyDataCalled,
+                       "Переход за +1 неделю в будущее должен игнорироваться")
+    }
+
+    // MARK: - 13. changeMonth делегирует в changeWeek
+
+    func test_changeMonth_delegatesToChangeWeek() async throws {
+        let child = makeChild(id: "c-1", name: "Миша")
+        let (sut, display, _, _) = makeSUT(children: [child])
+        await sut.loadFamilyData(request: .init(parentId: "parent-1"))
+        try await Task.sleep(nanoseconds: 200_000_000)
+        display.displayFamilyDataCalled = false
+
+        sut.changeMonth(request: .init(direction: .previous))
+        XCTAssertTrue(display.displayFamilyDataCalled)
+    }
+
+    // MARK: - 14. selectDay вызывает displayDayDetail
+
+    func test_selectDay_callsDayDetail() async throws {
+        let child = makeChild(id: "c-1", name: "Миша")
+        let session = makeSession(childId: "c-1", daysAgo: 0)
+        let (sut, display, _, _) = makeSUT(children: [child], sessions: [session])
+        await sut.loadFamilyData(request: .init(parentId: "parent-1"))
+        try await Task.sleep(nanoseconds: 200_000_000)
+
+        sut.selectDay(request: .init(date: Date()))
+        XCTAssertTrue(display.displayDayDetailCalled)
+        XCTAssertFalse(display.lastDayDetail?.dateText.isEmpty ?? true)
+    }
+
+    // MARK: - 15. scheduleLesson создаёт план и показывает voice hint
+
+    func test_scheduleLesson_addsPlanAndVoiceHint() async throws {
+        let child = makeChild(id: "c-1", name: "Миша")
+        let (sut, display, _, _) = makeSUT(children: [child])
+        await sut.loadFamilyData(request: .init(parentId: "parent-1"))
+        try await Task.sleep(nanoseconds: 200_000_000)
+
+        await sut.scheduleLesson(request: .init(
+            childId: "c-1", childName: "Миша", date: Date(),
+            lessonTemplate: "listen-and-choose", enableReminder: false
+        ))
+        XCTAssertTrue(display.displayLessonScheduledCalled)
+        XCTAssertFalse(display.lastVoiceHint?.isEmpty ?? true)
+    }
+
+    // MARK: - 16. scheduleLesson с reminder и notificationService
+
+    func test_scheduleLesson_withReminder_doesNotCrash() async throws {
+        let childRepo = MockChildRepository(children: [makeChild(id: "c-1", name: "Миша")])
+        let sessionRepo = MockSessionRepository(sessions: [])
+        let spy = SpyDisplay()
+        let presenter = FamilyCalendarPresenter()
+        presenter.display = spy
+        let sut = FamilyCalendarInteractor(
+            childRepository: childRepo,
+            sessionRepository: sessionRepo,
+            notificationService: MockNotificationService(),
+            llmDecisionService: nil
+        )
+        sut.presenter = presenter
+        await sut.loadFamilyData(request: .init(parentId: "parent-1"))
+        try await Task.sleep(nanoseconds: 200_000_000)
+
+        await sut.scheduleLesson(request: .init(
+            childId: "c-1", childName: "Миша", date: Date(),
+            lessonTemplate: "memory", enableReminder: true
+        ))
+        XCTAssertTrue(spy.displayLessonScheduledCalled)
+    }
+
+    // MARK: - 17. addRecurringPlan / removeRecurringPlan
+
+    func test_recurringPlan_addAndRemove() async throws {
+        let child = makeChild(id: "c-1", name: "Миша")
+        let (sut, display, _, _) = makeSUT(children: [child])
+        await sut.loadFamilyData(request: .init(parentId: "parent-1"))
+        try await Task.sleep(nanoseconds: 200_000_000)
+
+        sut.addRecurringPlan(request: .init(
+            childId: "c-1", weekday: 2, hour: 17, minute: 30,
+            lessonTemplate: "rhythm"
+        ))
+        XCTAssertEqual(display.lastToastMessage?.isEmpty, false)
+
+        display.lastToastMessage = nil
+        sut.removeRecurringPlan(request: .init(planId: "any-id"))
+        XCTAssertNotNil(display.lastToastMessage)
+    }
+
+    // MARK: - 18. setWeeklyGoal обновляет цель и экран
+
+    func test_setWeeklyGoal_updatesScreen() async throws {
+        let child = makeChild(id: "c-1", name: "Миша")
+        let (sut, display, _, _) = makeSUT(children: [child])
+        await sut.loadFamilyData(request: .init(parentId: "parent-1"))
+        try await Task.sleep(nanoseconds: 200_000_000)
+        display.displayFamilyDataCalled = false
+
+        sut.setWeeklyGoal(request: .init(childId: "c-1", sessionsPerWeek: 6))
+        XCTAssertTrue(display.displayFamilyDataCalled)
+    }
+
+    // MARK: - 19. addSpecialistVisit добавляет визит
+
+    func test_addSpecialistVisit_addsVisit() async throws {
+        let child = makeChild(id: "c-1", name: "Миша")
+        let (sut, display, _, _) = makeSUT(children: [child])
+        await sut.loadFamilyData(request: .init(parentId: "parent-1"))
+        try await Task.sleep(nanoseconds: 200_000_000)
+
+        sut.addSpecialistVisit(request: .init(
+            childId: "c-1", childName: "Миша", date: Date(),
+            specialistName: "Логопед Иванова", notes: "Плановый осмотр",
+            requestReport: true, enableReminder: false
+        ))
+        XCTAssertNotNil(display.lastToastMessage)
+        XCTAssertTrue(display.displayFamilyDataCalled)
+    }
+
+    // MARK: - 20. removePlannedSession обновляет неделю
+
+    func test_removePlannedSession_updatesWeek() async throws {
+        let child = makeChild(id: "c-1", name: "Миша")
+        let (sut, display, _, _) = makeSUT(children: [child])
+        await sut.loadFamilyData(request: .init(parentId: "parent-1"))
+        try await Task.sleep(nanoseconds: 200_000_000)
+
+        await sut.scheduleLesson(request: .init(
+            childId: "c-1", childName: "Миша", date: Date(),
+            lessonTemplate: "memory", enableReminder: false
+        ))
+        display.displayFamilyDataCalled = false
+        sut.removePlannedSession(request: .init(sessionId: "any-session"))
+        XCTAssertTrue(display.displayFamilyDataCalled)
+    }
+
+    // MARK: - 21. generateWeekSummary формирует сводку
+
+    func test_generateWeekSummary_buildsSummary() async throws {
+        let child = makeChild(id: "c-1", name: "Миша")
+        let sessions = [
+            makeSession(childId: "c-1", daysAgo: 0),
+            makeSession(childId: "c-1", daysAgo: 1)
+        ]
+        let (sut, display, _, _) = makeSUT(children: [child], sessions: sessions)
+        await sut.loadFamilyData(request: .init(parentId: "parent-1"))
+        try await Task.sleep(nanoseconds: 200_000_000)
+
+        let weekStart = Calendar.current.dateInterval(of: .weekOfYear, for: Date())?.start ?? Date()
+        sut.generateWeekSummary(request: .init(weekStart: weekStart))
+        XCTAssertTrue(display.displayWeekSummaryCalled)
+        XCTAssertNotNil(display.lastWeekSummary)
+    }
+
+    // MARK: - 22. selectChild затем generateWeekSummary только по выбранному ребёнку
+
+    func test_generateWeekSummary_afterSelectChild_scoped() async throws {
+        let childA = makeChild(id: "c-a", name: "Аня")
+        let childB = makeChild(id: "c-b", name: "Боря")
+        let sessions = [makeSession(childId: "c-a", daysAgo: 0)]
+        let (sut, display, _, _) = makeSUT(children: [childA, childB], sessions: sessions)
+        await sut.loadFamilyData(request: .init(parentId: "parent-1"))
+        try await Task.sleep(nanoseconds: 200_000_000)
+        await sut.selectChild(request: .init(childId: "c-a"))
+
+        let weekStart = Calendar.current.dateInterval(of: .weekOfYear, for: Date())?.start ?? Date()
+        sut.generateWeekSummary(request: .init(weekStart: weekStart))
+        XCTAssertTrue(display.displayWeekSummaryCalled)
     }
 }

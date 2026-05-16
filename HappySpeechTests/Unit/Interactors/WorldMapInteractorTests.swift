@@ -32,17 +32,43 @@ final class WorldMapInteractorTests: XCTestCase {
         }
         func presentLoadZoneDetail(_ response: WorldMapModels.LoadZoneDetail.Response) {
             loadZoneDetailCalled = true
+            lastZoneDetail = response
         }
         func presentRefreshProgress(_ response: WorldMapModels.RefreshProgress.Response) {
             refreshProgressCalled = true
+            lastRefreshProgress = response
         }
         func presentFailure(_ response: WorldMapModels.Failure.Response) {
             failureCalled = true; lastFailure = response
         }
-        func presentVoicePrompt(_ response: WorldMapModels.VoicePrompt.Response) {}
-        func presentCollectTreasure(_ response: WorldMapModels.CollectTreasure.Response) {}
-        func presentSelectLevel(_ response: WorldMapModels.SelectLevel.Response) {}
-        func presentAdaptiveRecommendation(_ response: WorldMapModels.AdaptiveRecommendation.Response) {}
+        var voicePromptCalled = false
+        var collectTreasureCalled = false
+        var selectLevelCalled = false
+        var adaptiveRecommendationCalled = false
+
+        var lastVoicePrompt: WorldMapModels.VoicePrompt.Response?
+        var lastCollectTreasure: WorldMapModels.CollectTreasure.Response?
+        var lastSelectLevel: WorldMapModels.SelectLevel.Response?
+        var lastAdaptiveRecommendation: WorldMapModels.AdaptiveRecommendation.Response?
+        var lastZoneDetail: WorldMapModels.LoadZoneDetail.Response?
+        var lastRefreshProgress: WorldMapModels.RefreshProgress.Response?
+
+        func presentVoicePrompt(_ response: WorldMapModels.VoicePrompt.Response) {
+            voicePromptCalled = true
+            lastVoicePrompt = response
+        }
+        func presentCollectTreasure(_ response: WorldMapModels.CollectTreasure.Response) {
+            collectTreasureCalled = true
+            lastCollectTreasure = response
+        }
+        func presentSelectLevel(_ response: WorldMapModels.SelectLevel.Response) {
+            selectLevelCalled = true
+            lastSelectLevel = response
+        }
+        func presentAdaptiveRecommendation(_ response: WorldMapModels.AdaptiveRecommendation.Response) {
+            adaptiveRecommendationCalled = true
+            lastAdaptiveRecommendation = response
+        }
     }
 
     private func makeSUT() -> (WorldMapInteractor, SpyPresenter) {
@@ -123,5 +149,189 @@ final class WorldMapInteractorTests: XCTestCase {
         sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
         sut.refreshProgress(.init(childId: "child-1"))
         XCTAssertTrue(spy.refreshProgressCalled)
+    }
+
+    // MARK: - 8. loadZoneDetail с существующей зоной
+
+    func test_loadZoneDetail_existing_callsPresenter() {
+        let (sut, spy) = makeSUT()
+        sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
+        guard let zoneId = spy.lastLoadMap?.zones.first?.id else {
+            return XCTFail("Нет зон")
+        }
+        sut.loadZoneDetail(.init(zoneId: zoneId))
+        XCTAssertTrue(spy.loadZoneDetailCalled)
+        XCTAssertNotNil(spy.lastZoneDetail)
+    }
+
+    func test_loadZoneDetail_notFound_callsFailure() {
+        let (sut, spy) = makeSUT()
+        sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
+        sut.loadZoneDetail(.init(zoneId: "nonexistent-zone"))
+        XCTAssertTrue(spy.failureCalled)
+        XCTAssertFalse(spy.loadZoneDetailCalled)
+    }
+
+    // MARK: - 9. loadZoneDetail заблокированной зоны → unlocksNeeded
+
+    func test_loadZoneDetail_lockedZone_hasUnlocksNeeded() {
+        let (sut, spy) = makeSUT()
+        sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
+        guard let locked = spy.lastLoadMap?.zones.first(where: { $0.isLocked }) else {
+            return XCTFail("Нет заблокированных зон")
+        }
+        sut.loadZoneDetail(.init(zoneId: locked.id))
+        XCTAssertGreaterThanOrEqual(spy.lastZoneDetail?.unlocksNeeded ?? -1, 0)
+    }
+
+    // MARK: - 10. tapLyalya возвращает приветствие
+
+    func test_tapLyalya_returnsLyalyaPrompt() {
+        let (sut, spy) = makeSUT()
+        sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
+        sut.tapLyalya(.init())
+        XCTAssertTrue(spy.voicePromptCalled)
+        XCTAssertEqual(spy.lastVoicePrompt?.isLyalya, true)
+        XCTAssertFalse(spy.lastVoicePrompt?.text.isEmpty ?? true)
+    }
+
+    // MARK: - 11. collectTreasure собирает сокровище
+
+    func test_collectTreasure_collectsAndIncreasesStars() {
+        let (sut, spy) = makeSUT()
+        sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
+        guard let collectible = spy.lastLoadMap?.collectibles.first else {
+            return XCTFail("Нет collectibles")
+        }
+        let starsBefore = spy.lastLoadMap?.totalStars ?? 0
+        sut.collectTreasure(.init(collectibleId: collectible.id))
+        XCTAssertTrue(spy.collectTreasureCalled)
+        XCTAssertGreaterThan(spy.lastCollectTreasure?.totalStars ?? 0, starsBefore)
+    }
+
+    func test_collectTreasure_twice_secondIgnored() {
+        let (sut, spy) = makeSUT()
+        sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
+        guard let collectible = spy.lastLoadMap?.collectibles.first else {
+            return XCTFail("Нет collectibles")
+        }
+        sut.collectTreasure(.init(collectibleId: collectible.id))
+        spy.collectTreasureCalled = false
+        sut.collectTreasure(.init(collectibleId: collectible.id))
+        XCTAssertFalse(spy.collectTreasureCalled, "Повторный сбор того же сокровища игнорируется")
+    }
+
+    func test_collectTreasure_unknownId_ignored() {
+        let (sut, spy) = makeSUT()
+        sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
+        sut.collectTreasure(.init(collectibleId: "nonexistent"))
+        XCTAssertFalse(spy.collectTreasureCalled)
+    }
+
+    // MARK: - 12. selectLevel разблокированного уровня
+
+    func test_selectLevel_unlocked_callsPresenter() {
+        let (sut, spy) = makeSUT()
+        sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
+        // vowel-l1 разблокирован в seed
+        sut.selectLevel(.init(levelId: "vowel-l1"))
+        XCTAssertTrue(spy.selectLevelCalled)
+        XCTAssertEqual(spy.lastSelectLevel?.level.id, "vowel-l1")
+    }
+
+    func test_selectLevel_locked_callsFailure() {
+        let (sut, spy) = makeSUT()
+        sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
+        // velar-l1 заблокирован в seed
+        sut.selectLevel(.init(levelId: "velar-l1"))
+        XCTAssertTrue(spy.failureCalled)
+        XCTAssertFalse(spy.selectLevelCalled)
+    }
+
+    func test_selectLevel_unknownId_callsFailure() {
+        let (sut, spy) = makeSUT()
+        sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
+        sut.selectLevel(.init(levelId: "nonexistent-level"))
+        XCTAssertTrue(spy.failureCalled)
+    }
+
+    // MARK: - 13. loadAdaptiveRecommendation
+
+    func test_loadAdaptiveRecommendation_returnsRecommendation() {
+        let (sut, spy) = makeSUT()
+        sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
+        sut.loadAdaptiveRecommendation(.init(childId: "child-1"))
+        XCTAssertTrue(spy.adaptiveRecommendationCalled)
+        XCTAssertFalse(spy.lastAdaptiveRecommendation?.voiceHint.isEmpty ?? true)
+    }
+
+    // MARK: - 14. recordSessionResult обновляет прогресс
+
+    func test_recordSessionResult_updatesProgress() {
+        let (sut, spy) = makeSUT()
+        sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
+        sut.recordSessionResult(.init(
+            islandId: "island-hissing", levelId: "hiss-l2",
+            successRate: 0.9, fatigueDetected: false
+        ))
+        XCTAssertTrue(spy.refreshProgressCalled)
+    }
+
+    func test_recordSessionResult_highFatigue_triggersEasiestRecommendation() {
+        let (sut, spy) = makeSUT()
+        sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
+        // 3 сессии подряд с усталостью
+        for _ in 0..<3 {
+            sut.recordSessionResult(.init(
+                islandId: "island-hissing", levelId: "hiss-l2",
+                successRate: 0.5, fatigueDetected: true
+            ))
+        }
+        sut.loadAdaptiveRecommendation(.init(childId: "child-1"))
+        XCTAssertNotNil(spy.lastAdaptiveRecommendation?.recommendedIslandId)
+    }
+
+    // MARK: - 15. loadVoicePrompt для каждого контекста
+
+    func test_loadVoicePrompt_islandUnlocked() {
+        let (sut, spy) = makeSUT()
+        sut.loadVoicePrompt(.init(context: .islandUnlocked(name: "Остров шипящих")))
+        XCTAssertTrue(spy.voicePromptCalled)
+        XCTAssertFalse(spy.lastVoicePrompt?.text.isEmpty ?? true)
+    }
+
+    func test_loadVoicePrompt_levelCompleted() {
+        let (sut, spy) = makeSUT()
+        sut.loadVoicePrompt(.init(context: .levelCompleted(levelName: "Слоги", islandName: "Остров")))
+        XCTAssertFalse(spy.lastVoicePrompt?.text.isEmpty ?? true)
+    }
+
+    func test_loadVoicePrompt_nearUnlock() {
+        let (sut, spy) = makeSUT()
+        sut.loadVoicePrompt(.init(context: .nearUnlock(name: "Остров", count: 3)))
+        XCTAssertFalse(spy.lastVoicePrompt?.text.isEmpty ?? true)
+    }
+
+    func test_loadVoicePrompt_firstVisit() {
+        let (sut, spy) = makeSUT()
+        sut.loadVoicePrompt(.init(context: .firstVisit))
+        XCTAssertFalse(spy.lastVoicePrompt?.text.isEmpty ?? true)
+    }
+
+    func test_loadVoicePrompt_encouragement() {
+        let (sut, spy) = makeSUT()
+        sut.loadVoicePrompt(.init(context: .encouragement))
+        XCTAssertFalse(spy.lastVoicePrompt?.text.isEmpty ?? true)
+        XCTAssertEqual(spy.lastVoicePrompt?.isLyalya, false)
+    }
+
+    // MARK: - 16. loadMap с разным возрастом ребёнка
+
+    func test_loadMap_withChildAge_doesNotCrash() {
+        let (sut, spy) = makeSUT()
+        for age in [5, 6, 7, 8] {
+            sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: age))
+            XCTAssertTrue(spy.loadMapCalled)
+        }
     }
 }
