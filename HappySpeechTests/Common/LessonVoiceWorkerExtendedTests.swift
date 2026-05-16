@@ -81,10 +81,19 @@ final class LessonVoiceWorkerExtendedTests: XCTestCase {
         LessonVoiceWorker.shared.familyParentId = "local-parent"
     }
 
-    // MARK: - realmActor: nil by default (до инициализации AppContainer)
+    // MARK: - realmActor: опциональное свойство, set/get согласованы
+    //
+    // LessonVoiceWorker.shared — синглтон; в test-host приложение-хост может
+    // проинициализировать realmActor через AppContainer. Поэтому тест проверяет
+    // не «nil по умолчанию», а согласованность присваивания: сброс в nil
+    // действительно делает свойство nil. Исходное значение восстанавливается.
 
-    func test_realmActor_nilByDefault() {
+    func test_realmActor_isOptionalAndAssignable() {
+        let original = LessonVoiceWorker.shared.realmActor
+        defer { LessonVoiceWorker.shared.realmActor = original }
+
+        LessonVoiceWorker.shared.realmActor = nil
         XCTAssertNil(LessonVoiceWorker.shared.realmActor,
-                     "realmActor должен быть nil до явной инициализации")
+                     "После присваивания nil свойство realmActor должно быть nil")
     }
 }

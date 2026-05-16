@@ -97,6 +97,11 @@ final class FluencyAnalyzerWorker: FluencyAnalyzerWorkerProtocol, @unchecked Sen
             .filter { !$0.isEmpty }
         let totalTokens = words.count
 
+        // Меньше двух токенов — повторений быть не может (и диапазон 1..<count невалиден).
+        guard words.count > 1 else {
+            return (0, totalTokens)
+        }
+
         // Simple repetition heuristic: consecutive identical tokens or 2-3 char prefix repeats.
         var repetitions = 0
         for i in 1..<words.count {

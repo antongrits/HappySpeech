@@ -12340,7 +12340,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ ч %@ мин"
+            "value": "%lld ч %lld мин"
           }
         }
       }
@@ -12351,7 +12351,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ мин"
+            "value": "%lld мин"
           }
         }
       }
@@ -12362,7 +12362,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ занятий"
+            "value": "%lld из %lld занятий"
           }
         }
       }
@@ -31089,7 +31089,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ ч %@ мин"
+            "value": "%lld ч %lld мин"
           }
         }
       }
@@ -31100,7 +31100,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ ч"
+            "value": "%lld ч"
           }
         }
       }
