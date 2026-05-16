@@ -164,13 +164,20 @@ final class SettingsInteractorTests: XCTestCase {
 
     // MARK: - 6. clearCache вызывает presentClearCache (bytesFreed >= 0)
     // В тестовом окружении симулятора кэш может быть пустым → 0 байт корректный результат.
+    // clearCache выполняется в Task с реальным обходом файловой системы кэша —
+    // длительность непредсказуема (зависит от объёма кэша симулятора), поэтому
+    // ждём callback через polling, а не фиксированным sleep (детерминизм).
 
     func test_clearCache_callsPresenterWithBytes() async throws {
         let (sut, spy) = makeSUT()
         sut.clearCache(.init())
-        // clearCache выполняется в Task — даём ему завершиться
-        try await Task.sleep(nanoseconds: 200_000_000)
-        XCTAssertTrue(spy.clearCacheCalled)
+
+        let deadline = Date().addingTimeInterval(10)
+        while !spy.clearCacheCalled && Date() < deadline {
+            try await Task.sleep(nanoseconds: 20_000_000)
+        }
+
+        XCTAssertTrue(spy.clearCacheCalled, "presentClearCache должен быть вызван")
         XCTAssertGreaterThanOrEqual(spy.lastClearCache?.bytesFreed ?? -1, 0)
     }
 

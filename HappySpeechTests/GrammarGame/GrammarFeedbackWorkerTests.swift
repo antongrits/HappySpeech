@@ -2,23 +2,28 @@
 import UIKit
 import XCTest
 
-// MARK: - MockHapticService
+// MARK: - MainActorHapticSpy
+//
+// @MainActor-изолированный дубль HapticService. Доступ к `patterns`
+// детерминирован: тест читает на MainActor, мок мутирует на MainActor —
+// без дата-рейса (важно при полном прогоне набора тестов).
 
-private final class MockHapticService: HapticService, @unchecked Sendable {
+@MainActor
+private final class MainActorHapticSpy: HapticService {
     private(set) var patterns: [HapticPattern] = []
-    var isAvailable: Bool = true
+    nonisolated var isAvailable: Bool { true }
 
     func play(pattern: HapticPattern) async {
         patterns.append(pattern)
     }
 
-    func setIntensityScale(_ scale: Float) {}
+    nonisolated func setIntensityScale(_ scale: Float) {}
 
     func stop() async {}
 
-    func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {}
-    func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) {}
-    func selection() {}
+    nonisolated func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {}
+    nonisolated func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) {}
+    nonisolated func selection() {}
 }
 
 // MARK: - GrammarFeedbackWorkerTests
@@ -26,12 +31,12 @@ private final class MockHapticService: HapticService, @unchecked Sendable {
 @MainActor
 final class GrammarFeedbackWorkerTests: XCTestCase {
 
-    private var mockHaptic: MockHapticService!
+    private var mockHaptic: MainActorHapticSpy!
     private var sut: GrammarFeedbackWorker!
 
     override func setUp() {
         super.setUp()
-        mockHaptic = MockHapticService()
+        mockHaptic = MainActorHapticSpy()
         sut = GrammarFeedbackWorker(hapticService: mockHaptic)
     }
 

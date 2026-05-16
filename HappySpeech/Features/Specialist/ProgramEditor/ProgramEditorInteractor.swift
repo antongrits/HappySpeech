@@ -301,28 +301,32 @@ final class ProgramEditorInteractor: ProgramEditorBusinessLogic {
             errors.append(String(localized: "program_editor.error.no_production_block"))
         }
 
-        // 3. Смежные break блоки
-        for i in 1..<blocks.count {
-            if blocks[i].type == .breakRest && blocks[i-1].type == .breakRest {
-                warnings.append(String(localized: "program_editor.warning.adjacent_breaks"))
-                break
-            }
-        }
-
-        // 4. Антифатиговое правило: не более maxSameTypeConsecutive подряд
-        var consecutiveCount = 1
-        for i in 1..<blocks.count {
-            if blocks[i].type == blocks[i-1].type {
-                consecutiveCount += 1
-                if consecutiveCount > maxSameTypeConsecutive {
-                    warnings.append(String(
-                        format: String(localized: "program_editor.warning.too_many_same_type"),
-                        blocks[i].type.rawValue
-                    ))
+        // Правила смежности проверяются только при наличии пары блоков —
+        // иначе диапазон 1..<count невалиден.
+        if blocks.count > 1 {
+            // 3. Смежные break блоки
+            for i in 1..<blocks.count {
+                if blocks[i].type == .breakRest && blocks[i-1].type == .breakRest {
+                    warnings.append(String(localized: "program_editor.warning.adjacent_breaks"))
                     break
                 }
-            } else {
-                consecutiveCount = 1
+            }
+
+            // 4. Антифатиговое правило: не более maxSameTypeConsecutive подряд
+            var consecutiveCount = 1
+            for i in 1..<blocks.count {
+                if blocks[i].type == blocks[i-1].type {
+                    consecutiveCount += 1
+                    if consecutiveCount > maxSameTypeConsecutive {
+                        warnings.append(String(
+                            format: String(localized: "program_editor.warning.too_many_same_type"),
+                            blocks[i].type.rawValue
+                        ))
+                        break
+                    }
+                } else {
+                    consecutiveCount = 1
+                }
             }
         }
 
