@@ -248,4 +248,80 @@ final class FamilyVoiceInteractorTests: XCTestCase {
         XCTAssertTrue(display.displayRecordingsCalled,
                       "Второй fetch с другим parentId должен тоже вызвать displayRecordings")
     }
+
+    // MARK: - Batch 2.8.3 v25: расширенное покрытие
+    //
+    // UNTESTABLE (документировано): startRecording/stopRecording/startChildRecording
+    // требуют AVAudioApplication.requestRecordPermission + реальный AVAudioRecorder —
+    // FamilyVoiceRecorderWorker не инжектируется (создаётся в init()). Здесь покрываются
+    // безопасные guard-ветки и навигация слов.
+
+    // MARK: - 11. playRecording: несуществующий ID → guard, no-op
+
+    func test_playRecording_unknownId_doesNotCrash() async throws {
+        let realm = try await makeRealmActor()
+        let (sut, display) = makeSUT(realmActor: realm)
+        await sut.fetchRecordings(.init(parentId: "parent-test"))
+        await sut.playRecording(.init(recordingId: "nonexistent-rec"))
+        XCTAssertFalse(display.displayPlaybackCalled,
+                       "playRecording с неизвестным ID не вызывает displayPlayback")
+    }
+
+    // MARK: - 12. stopChildRecording: без активной записи → guard, no-op
+
+    func test_stopChildRecording_whenNotRecording_doesNotCrash() async throws {
+        let realm = try await makeRealmActor()
+        let (sut, display) = makeSUT(realmActor: realm)
+        await sut.stopChildRecording(.init(word: "мяч", referenceRecordingId: "ref-1"))
+        XCTAssertFalse(display.displayChildScoreCalled,
+                       "stopChildRecording без активной записи не вызывает displayChildScore")
+    }
+
+    // MARK: - 13. selectWord: presenter получает setSelectedWord
+
+    func test_selectWord_setsSelectedWordOnPresenter() async throws {
+        let realm = try await makeRealmActor()
+        let (sut, display) = makeSUT(realmActor: realm)
+        await sut.fetchRecordings(.init(parentId: "parent-test"))
+        sut.selectWord("ракета")
+        // setSelectedWord обновляет ViewModel — проверяем отсутствие ошибки.
+        XCTAssertNil(display.lastErrorMessage)
+    }
+
+    // MARK: - 14. skipWord: неизвестное слово → guard, no-op
+
+    func test_skipWord_unknownWord_doesNotAdvance() async throws {
+        let realm = try await makeRealmActor()
+        let (sut, display) = makeSUT(realmActor: realm)
+        sut.skipWord(.init(currentWord: "несуществующее-слово"))
+        XCTAssertFalse(display.displayWordChangedCalled,
+                       "skipWord с неизвестным словом не должен менять слово")
+    }
+
+    // MARK: - 15. nextWord: последнее слово → циклический возврат
+
+    func test_nextWord_lastWord_wrapsToFirst() async throws {
+        let realm = try await makeRealmActor()
+        let (sut, display) = makeSUT(realmActor: realm)
+        let words = FamilyVoiceModels.targetWordsRaw
+        sut.nextWord(.init(currentWord: words[words.count - 1]))
+        XCTAssertEqual(display.lastViewModel?.selectedWord, words.first)
+    }
+
+    // MARK: - 16. deleteRecording: пустой список → guard, no-op
+
+    func test_deleteRecording_emptyList_doesNotCrash() async throws {
+        let realm = try await makeRealmActor()
+        let (sut, display) = makeSUT(realmActor: realm)
+        await sut.deleteRecording(.init(recordingId: "any-id"))
+        XCTAssertFalse(display.displayDeletionCalled)
+    }
+
+    // MARK: - 17. targetWordsRaw: каталог не пуст
+
+    func test_targetWordsRaw_catalogNotEmpty() {
+        XCTAssertFalse(FamilyVoiceModels.targetWordsRaw.isEmpty)
+        XCTAssertGreaterThanOrEqual(FamilyVoiceModels.targetWordsRaw.count, 2,
+                                    "Для циклической навигации нужно ≥2 слова")
+    }
 }

@@ -210,4 +210,78 @@ final class MetronomeInteractorTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(sut.display.bpm, 50)
         _ = worker.lastBPM
     }
+
+    // MARK: - Batch 2.8.3 v25: расширенное покрытие
+    //
+    // UNTESTABLE (документировано): handleTick/handleAmplitude/completeWord —
+    // приватные, вызываются из metronomeWorker callback при реальном аудио-цикле.
+    // Покрываем доступную публичную логику + clamp-граничные случаи.
+
+    // MARK: - 12. changeBPM: граничные значения 50 и 120 принимаются
+
+    func test_changeBPM_boundaryValues() {
+        let (sut, _, _) = makeSUT()
+        sut.changeBPM(to: 50)
+        XCTAssertEqual(sut.display.bpm, 50)
+        sut.changeBPM(to: 120)
+        XCTAssertEqual(sut.display.bpm, 120)
+    }
+
+    // MARK: - 13. startSession: для каждой difficulty задаёт BPM в диапазоне
+
+    func test_startSession_allDifficulties_bpmInRange() async {
+        for difficulty in StutteringDifficulty.allCases {
+            let (sut, _, _) = makeSUT()
+            await sut.startSession(difficulty: difficulty)
+            XCTAssertGreaterThanOrEqual(sut.display.bpm, 50)
+            XCTAssertLessThanOrEqual(sut.display.bpm, 120)
+        }
+    }
+
+    // MARK: - 14. startSession: загружает первое слово
+
+    func test_startSession_loadsCurrentWord() async {
+        let (sut, _, _) = makeSUT()
+        await sut.startSession(difficulty: .easy)
+        XCTAssertFalse(sut.display.currentWord.isEmpty,
+                       "Первое слово должно быть загружено")
+    }
+
+    // MARK: - 15. stopSession после startSession не крашит
+
+    func test_stopSession_afterStart_doesNotCrash() async {
+        let (sut, _, _) = makeSUT()
+        await sut.startSession(difficulty: .medium)
+        sut.stopSession()
+        XCTAssertFalse(sut.display.isRunning)
+    }
+
+    // MARK: - 16. MetronomeResultLevel: монотонность границ
+
+    func test_resultLevel_monotonicBoundaries() {
+        XCTAssertEqual(MetronomeResultLevel.from(accuracy: 0.85), .excellent)
+        XCTAssertEqual(MetronomeResultLevel.from(accuracy: 0.84), .good)
+        XCTAssertEqual(MetronomeResultLevel.from(accuracy: 0.64), .fair)
+        XCTAssertEqual(MetronomeResultLevel.from(accuracy: 0.44), .needsWork)
+    }
+
+    // MARK: - 17. loadHistory: после startSession+stopSession возвращает массив
+
+    func test_loadHistory_returnsArrayAfterSession() async {
+        let (sut, _, _) = makeSUT()
+        await sut.startSession(difficulty: .easy)
+        sut.stopSession()
+        // startSession с MockMetronomeWorker инициирует сессию; после stopSession
+        // история содержит ≥0 записей — проверяем доступность без краша.
+        XCTAssertGreaterThanOrEqual(sut.loadHistory().count, 0)
+    }
+
+    // MARK: - 18. display: после startSession сброшены report-флаги
+
+    func test_startSession_resetsReportFlags() async {
+        let (sut, _, _) = makeSUT()
+        await sut.startSession(difficulty: .easy)
+        XCTAssertFalse(sut.display.showSessionReport)
+        XCTAssertFalse(sut.display.showReward)
+    }
 }

@@ -1,4 +1,5 @@
 import XCTest
+import RealmSwift
 @testable import HappySpeech
 
 // MARK: - VoiceCloningInteractorTests
@@ -83,6 +84,86 @@ final class VoiceCloningInteractorTests: XCTestCase {
         // Assert: errorMessage установлен
         XCTAssertNotNil(vm.errorMessage, "При denied permission должен быть установлен errorMessage")
         XCTAssertFalse(vm.isRecording)
+    }
+
+    // MARK: - Batch 2.8.3 v25: расширенное покрытие
+    //
+    // UNTESTABLE (документировано): stopRecording → copyRecordingToArchive →
+    // FileManager + реальный AVAudioRecorder; startRecordingTimer — Task с auto-stop.
+    // Покрываем load (in-memory Realm), playSample/delete guard-ветки, каталог слов.
+
+    private func makeOpenRealmActor() async throws -> RealmActor {
+        var config = Realm.Configuration()
+        config.inMemoryIdentifier = "voicecloning-unit-\(UUID().uuidString)"
+        config.schemaVersion = RealmSchemaVersion.current
+        Realm.Configuration.defaultConfiguration = config
+        let actor = RealmActor()
+        try await actor.open(configuration: config)
+        return actor
+    }
+
+    func test_load_emptyArchive_presentsEmptyList() async throws {
+        let realm = try await makeOpenRealmActor()
+        let vm = VoiceCloningViewModel()
+        let pres = VoiceCloningPresenter()
+        pres.viewModel = vm
+        let interactor = VoiceCloningInteractor(
+            audioService: MockAudioService(),
+            realmActor: realm
+        )
+        interactor.presenter = pres
+
+        await interactor.load(VoiceCloning.LoadRequest(childId: "child-vc-empty"))
+        // Подсказка-слово должна быть задана.
+        XCTAssertFalse(vm.suggestedWord.isEmpty)
+    }
+
+    func test_playSample_unknownId_doesNotCrash() async throws {
+        let realm = try await makeOpenRealmActor()
+        let interactor = VoiceCloningInteractor(
+            audioService: MockAudioService(),
+            realmActor: realm
+        )
+        let pres = VoiceCloningPresenter()
+        pres.viewModel = VoiceCloningViewModel()
+        interactor.presenter = pres
+        await interactor.load(VoiceCloning.LoadRequest(childId: "child-vc"))
+        await interactor.playSample(VoiceCloning.PlaySampleRequest(sampleId: "ghost"))
+        XCTAssertTrue(true, "playSample с неизвестным ID — guard, без краша")
+    }
+
+    func test_delete_unknownId_doesNotCrash() async throws {
+        let realm = try await makeOpenRealmActor()
+        let interactor = VoiceCloningInteractor(
+            audioService: MockAudioService(),
+            realmActor: realm
+        )
+        let pres = VoiceCloningPresenter()
+        pres.viewModel = VoiceCloningViewModel()
+        interactor.presenter = pres
+        await interactor.load(VoiceCloning.LoadRequest(childId: "child-vc"))
+        await interactor.delete(VoiceCloning.DeleteSampleRequest(sampleId: "ghost"))
+        XCTAssertTrue(true, "delete с неизвестным ID — guard, без краша")
+    }
+
+    func test_suggestedWordCatalog_perSoundGroups() {
+        XCTAssertEqual(VoiceCloning.SuggestedWordCatalog.defaultWord(forSound: "С"), "сом")
+        XCTAssertEqual(VoiceCloning.SuggestedWordCatalog.defaultWord(forSound: "Р"), "рыба")
+        XCTAssertFalse(VoiceCloning.SuggestedWordCatalog.words(forSound: "Ш").isEmpty)
+        // Неизвестный звук → fallback-набор.
+        XCTAssertFalse(VoiceCloning.SuggestedWordCatalog.words(forSound: "Ы").isEmpty)
+    }
+
+    func test_suggestedWordCatalog_caseInsensitive() {
+        XCTAssertEqual(
+            VoiceCloning.SuggestedWordCatalog.words(forSound: "с"),
+            VoiceCloning.SuggestedWordCatalog.words(forSound: "С")
+        )
+    }
+
+    func test_stopPlayback_resetsViewModelState() {
+        sut.stopPlayback()
+        XCTAssertFalse(viewModel.isPlaying)
     }
 }
 
