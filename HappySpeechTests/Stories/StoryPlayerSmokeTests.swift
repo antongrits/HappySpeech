@@ -15,16 +15,26 @@ final class StoryPlayerSmokeTests: XCTestCase {
     /// Воспроизводит логику mp4URL(for:) из AnimatedStoryPlayerView,
     /// которая объявлена private. Тест обращается к Bundle напрямую
     /// (smoke-уровень: ищем ресурс в том же bundle, что и production-код).
+    ///
+    /// Тесты выполняются hosted в `HappySpeech.app` (TEST_HOST), поэтому
+    /// `Bundle.main` указывает на бандл приложения. xcodegen добавляет
+    /// `Resources` как `type: group` → ресурсы кладутся плоской структурой,
+    /// поэтому помимо поиска по subdirectory есть flat-fallback.
     private func mp4URL(for storyId: String) -> URL? {
-        Bundle(for: type(of: self)).url(
-            forResource: storyId,
-            withExtension: "mp4",
-            subdirectory: "stories"
-        ) ?? Bundle.main.url(
-            forResource: storyId,
-            withExtension: "mp4",
-            subdirectory: "stories"
-        )
+        let bundles = [Bundle.main, Bundle(for: type(of: self))]
+        for bundle in bundles {
+            if let url = bundle.url(
+                forResource: storyId,
+                withExtension: "mp4",
+                subdirectory: "stories"
+            ) {
+                return url
+            }
+            if let url = bundle.url(forResource: storyId, withExtension: "mp4") {
+                return url
+            }
+        }
+        return nil
     }
 
     // MARK: - Тест 1: MP4 для существующей истории находится в bundle

@@ -250,25 +250,46 @@ public actor LiveEmotionDetectionService: EmotionDetectionServiceProtocol {
 /// Mock-реализация для unit-тестов и SwiftUI Preview.
 ///
 /// По умолчанию всегда возвращает `.happy` с уверенностью 0.95.
+///
+/// `analyze` объявлен `async` (через async-границу возможна смена потока),
+/// поэтому изменяемая конфигурация защищена `NSLock` — это исключает
+/// неопределённое поведение при доступе из разных потоков.
 public final class MockEmotionDetectionService: EmotionDetectionServiceProtocol, @unchecked Sendable {
 
-    public var mockEmotion: DetectedEmotion
-    public var mockConfidence: Float
+    private let lock = NSLock()
+    private var _mockEmotion: DetectedEmotion
+    private var _mockConfidence: Float
+
+    /// Доминирующая эмоция, возвращаемая mock'ом. Потокобезопасно.
+    public var mockEmotion: DetectedEmotion {
+        get { lock.withLock { _mockEmotion } }
+        set { lock.withLock { _mockEmotion = newValue } }
+    }
+
+    /// Уверенность, возвращаемая mock'ом. Потокобезопасно.
+    public var mockConfidence: Float {
+        get { lock.withLock { _mockConfidence } }
+        set { lock.withLock { _mockConfidence = newValue } }
+    }
 
     public init(emotion: DetectedEmotion = .happy, confidence: Float = 0.95) {
-        self.mockEmotion = emotion
-        self.mockConfidence = confidence
+        self._mockEmotion = emotion
+        self._mockConfidence = confidence
     }
 
     public func analyze(pcmData: Data) async -> EmotionResult {
+        // Снимаем согласованный снимок конфигурации под одним lock.
+        let (emotionSnapshot, confidenceSnapshot) = lock.withLock {
+            (_mockEmotion, _mockConfidence)
+        }
         var allScores: [DetectedEmotion: Float] = [:]
-        let remaining = (1.0 - mockConfidence) / Float(DetectedEmotion.allCases.count - 1)
+        let remaining = (1.0 - confidenceSnapshot) / Float(DetectedEmotion.allCases.count - 1)
         for emotion in DetectedEmotion.allCases {
-            allScores[emotion] = emotion == mockEmotion ? mockConfidence : remaining
+            allScores[emotion] = emotion == emotionSnapshot ? confidenceSnapshot : remaining
         }
         return EmotionResult(
-            emotion: mockEmotion,
-            confidence: mockConfidence,
+            emotion: emotionSnapshot,
+            confidence: confidenceSnapshot,
             allScores: allScores
         )
     }

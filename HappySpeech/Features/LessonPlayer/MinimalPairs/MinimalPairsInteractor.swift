@@ -368,7 +368,9 @@ final class MinimalPairsInteractor: MinimalPairsBusinessLogic {
 
         let response = MinimalPairsModels.CompleteSession.Response(
             correctCount: correctCount,
-            totalRounds: totalAnswered,
+            // totalRounds — общее число раундов в сессии (не число отвеченных).
+            // accuracy/sm2Quality считаются отдельно по totalAnswered выше.
+            totalRounds: rounds.count,
             pairAccuracy: pairAccuracy.mapValues { v in
                 v.total > 0 ? Double(v.correct) / Double(v.total) : 0
             },

@@ -413,7 +413,9 @@ final class SettingsInteractorTests: XCTestCase {
         let defaults = UserDefaults(suiteName: suite)!
         defaults.set("Катя", forKey: SettingsKey.childName)
         defaults.set(7, forKey: SettingsKey.childAge)
-        defaults.set("🐼", forKey: SettingsKey.childAvatar)
+        // Block D v16 migration: аватар хранится как имя ассета-иллюстрации,
+        // эмодзи считаются legacy и заменяются на default. Используем валидное имя.
+        defaults.set("word_dog", forKey: SettingsKey.childAvatar)
         defaults.set(true, forKey: SettingsKey.specialistConnected)
         defaults.set("654321", forKey: SettingsKey.specialistCode)
 
@@ -430,7 +432,7 @@ final class SettingsInteractorTests: XCTestCase {
 
         XCTAssertEqual(spy.lastLoadSettings?.settings.childName, "Катя")
         XCTAssertEqual(spy.lastLoadSettings?.settings.childAge, 7)
-        XCTAssertEqual(spy.lastLoadSettings?.settings.childAvatar, "🐼")
+        XCTAssertEqual(spy.lastLoadSettings?.settings.childAvatar, "word_dog")
         XCTAssertTrue(spy.lastLoadSettings?.settings.specialistConnected ?? false)
     }
 }
