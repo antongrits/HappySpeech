@@ -260,8 +260,12 @@ targets:
         embed: true
     scheme:
       testTargets:
-        - HappySpeechTests
-        - HappySpeechUITests
+        - name: HappySpeechTests
+          parallelizable: false
+          randomExecutionOrder: false
+        - name: HappySpeechUITests
+          parallelizable: false
+          randomExecutionOrder: false
       gatherCoverageData: true
 
   HappySpeechTests:
