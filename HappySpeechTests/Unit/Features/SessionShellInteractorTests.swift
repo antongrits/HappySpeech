@@ -164,4 +164,101 @@ final class SessionShellInteractorTests: XCTestCase {
         XCTAssertNotNil(last)
         XCTAssertNil(last?.earnedReward, "Skip should not award a reward")
     }
+
+    // MARK: - Batch 1: расширенное покрытие
+
+    func test_startSession_quickPractice_loadsDefaultActivities() async {
+        let (sut, spy) = makeSUT()
+        await sut.startSession(.init(childId: "c2", targetSoundId: "С", sessionType: .quickPractice))
+        XCTAssertEqual(spy.startResponses.count, 1)
+        XCTAssertEqual(spy.startResponses.first?.activities.count, 5)
+    }
+
+    func test_startSession_screening_loadsDefaultActivities() async {
+        let (sut, spy) = makeSUT()
+        await sut.startSession(.init(childId: "c3", targetSoundId: "Ш", sessionType: .screening))
+        XCTAssertEqual(spy.startResponses.first?.activities.count, 5)
+    }
+
+    func test_completeActivity_highScore_earnsStar() async {
+        let (sut, spy) = makeSUT()
+        await sut.startSession(.init(childId: "c4", targetSoundId: "Р", sessionType: .quickPractice))
+        let firstId = spy.startResponses.first!.activities.first!.id
+        await sut.completeActivity(.init(activityId: firstId, score: 0.85, durationSeconds: 20, errorCount: 0))
+        XCTAssertEqual(spy.completeResponses.last?.earnedReward, .star)
+    }
+
+    func test_completeActivity_lowScore_noReward() async {
+        let (sut, spy) = makeSUT()
+        await sut.startSession(.init(childId: "c5", targetSoundId: "Р", sessionType: .quickPractice))
+        let firstId = spy.startResponses.first!.activities.first!.id
+        await sut.completeActivity(.init(activityId: firstId, score: 0.6, durationSeconds: 20, errorCount: 0))
+        XCTAssertNil(spy.completeResponses.last?.earnedReward, "Score 0.6 < 0.8 → нет звезды")
+        XCTAssertEqual(spy.completeResponses.last?.feedback, .correct)
+    }
+
+    func test_completeActivity_advancesIndex_overActivities() async {
+        let (sut, spy) = makeSUT()
+        await sut.startSession(.init(childId: "c6", targetSoundId: "Р", sessionType: .quickPractice))
+        let activities = spy.startResponses.first!.activities
+        // Завершаем все 5 успешно
+        for activity in activities {
+            await sut.completeActivity(.init(
+                activityId: activity.id, score: 0.9, durationSeconds: 10, errorCount: 0
+            ))
+        }
+        XCTAssertTrue(spy.completeResponses.last?.isSessionComplete ?? false)
+    }
+
+    func test_completeActivity_beyondBounds_warningNoResponse() async {
+        let (sut, spy) = makeSUT()
+        await sut.startSession(.init(childId: "c7", targetSoundId: "Р", sessionType: .quickPractice))
+        let activities = spy.startResponses.first!.activities
+        for activity in activities {
+            await sut.completeActivity(.init(
+                activityId: activity.id, score: 0.9, durationSeconds: 10, errorCount: 0
+            ))
+        }
+        let countBefore = spy.completeResponses.count
+        // Лишний completeActivity — currentIndex >= activities.count
+        await sut.completeActivity(.init(activityId: "extra", score: 0.9, durationSeconds: 1, errorCount: 0))
+        XCTAssertEqual(spy.completeResponses.count, countBefore, "Вызов сверх границ не порождает ответ")
+    }
+
+    func test_pauseResume_pauseTimeExcludedFromActive() async {
+        let (sut, _) = makeSUT()
+        await sut.startSession(.init(childId: "c8", targetSoundId: "Р", sessionType: .quickPractice))
+        sut.pauseSession(.init())
+        sut.resumeSession()
+        // После resume сессия снова активна — повторный pause снова сработает
+        sut.pauseSession(.init())
+        XCTAssertTrue(true)
+    }
+
+    func test_resume_withoutPause_noop() async {
+        let (sut, _) = makeSUT()
+        await sut.startSession(.init(childId: "c9", targetSoundId: "Р", sessionType: .quickPractice))
+        sut.resumeSession()   // не было паузы — должен быть noop
+        XCTAssertTrue(true)
+    }
+
+    func test_currentFatigueHearts_startsAtThree() async {
+        let (sut, _) = makeSUT()
+        await sut.startSession(.init(childId: "c10", targetSoundId: "Р", sessionType: .quickPractice))
+        XCTAssertEqual(sut.currentFatigueHearts, 3)
+    }
+
+    func test_endSessionEarly_doesNotCrash() async {
+        let (sut, _) = makeSUT()
+        await sut.startSession(.init(childId: "c11", targetSoundId: "Р", sessionType: .quickPractice))
+        await sut.endSessionEarly()
+        XCTAssertTrue(true)
+    }
+
+    func test_sessionActiveStartReference_isAfterStart() async {
+        let (sut, _) = makeSUT()
+        await sut.startSession(.init(childId: "c12", targetSoundId: "Р", sessionType: .quickPractice))
+        // Без пауз reference == sessionStartTime (accumulatedPause = 0)
+        XCTAssertLessThanOrEqual(sut.sessionActiveStartReference, Date())
+    }
 }

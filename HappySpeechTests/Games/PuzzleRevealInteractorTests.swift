@@ -133,4 +133,105 @@ final class PuzzleRevealInteractorTests: XCTestCase {
             XCTAssertEqual(spy.lastLoadPuzzle?.tiles.count, 9, "Sound \(sound) должен давать 9 плиток")
         }
     }
+
+    // MARK: - Batch 1: расширенное покрытие
+
+    func test_loadPuzzle_setsPuzzleIndex() {
+        let (sut, spy) = makeSUT()
+        sut.loadPuzzle(.init(activity: makeActivity(), puzzleIndex: 2))
+        XCTAssertEqual(spy.lastLoadPuzzle?.puzzleIndex, 2)
+        XCTAssertEqual(spy.lastLoadPuzzle?.totalPuzzles, 5)
+    }
+
+    func test_loadPuzzle_negativeIndex_clampedToZero() {
+        let (sut, spy) = makeSUT()
+        sut.loadPuzzle(.init(activity: makeActivity(), puzzleIndex: -3))
+        XCTAssertEqual(spy.lastLoadPuzzle?.puzzleIndex, 0)
+    }
+
+    func test_loadPuzzle_largeIndex_clampedToLast() {
+        let (sut, spy) = makeSUT()
+        sut.loadPuzzle(.init(activity: makeActivity(), puzzleIndex: 99))
+        XCTAssertLessThanOrEqual(spy.lastLoadPuzzle?.puzzleIndex ?? 99, 4)
+    }
+
+    func test_loadPuzzle_attemptNumberStartsAt1() {
+        let (sut, spy) = makeSUT()
+        sut.loadPuzzle(.init(activity: makeActivity(), puzzleIndex: 0))
+        XCTAssertEqual(spy.lastLoadPuzzle?.attemptNumber, 1)
+    }
+
+    func test_loadPuzzle_wordNotEmpty() {
+        let (sut, spy) = makeSUT()
+        sut.loadPuzzle(.init(activity: makeActivity(sound: "Ш"), puzzleIndex: 0))
+        XCTAssertFalse(spy.lastLoadPuzzle?.word.isEmpty ?? true)
+        XCTAssertFalse(spy.lastLoadPuzzle?.hintText.isEmpty ?? true)
+    }
+
+    func test_startRecord_twice_secondIgnored() {
+        let (sut, spy) = makeSUT()
+        sut.loadPuzzle(.init(activity: makeActivity(), puzzleIndex: 0))
+        sut.startRecord(.init())
+        spy.startRecordCalled = false
+        sut.startRecord(.init())
+        XCTAssertFalse(spy.startRecordCalled, "Повторный startRecord игнорируется")
+    }
+
+    func test_stopRecord_withoutStart_ignored() {
+        let (sut, spy) = makeSUT()
+        sut.loadPuzzle(.init(activity: makeActivity(), puzzleIndex: 0))
+        sut.stopRecord(.init())
+        XCTAssertFalse(spy.stopRecordCalled, "stopRecord без startRecord игнорируется")
+    }
+
+    func test_stopRecord_afterStart_emitsStopRecord() {
+        let (sut, spy) = makeSUT()
+        sut.loadPuzzle(.init(activity: makeActivity(), puzzleIndex: 0))
+        sut.startRecord(.init())
+        sut.stopRecord(.init())
+        // presentStopRecord вызывается синхронно (revealTile может быть async через ASR)
+        XCTAssertTrue(spy.stopRecordCalled)
+    }
+
+    func test_stopRecord_revealsTile_eventually() async {
+        let (sut, spy) = makeSUT()
+        sut.loadPuzzle(.init(activity: makeActivity(), puzzleIndex: 0))
+        sut.startRecord(.init())
+        sut.stopRecord(.init())
+        // revealTile может прийти синхронно (fallback) или асинхронно (ASR-путь)
+        for _ in 0..<20 where !spy.revealTileCalled {
+            try? await Task.sleep(for: .milliseconds(50))
+        }
+        XCTAssertTrue(spy.revealTileCalled)
+        let score = spy.lastRevealTile?.score ?? -1
+        XCTAssertGreaterThanOrEqual(score, 0)
+        XCTAssertLessThanOrEqual(score, 1)
+    }
+
+    func test_nextPuzzle_lastPuzzle_completes() {
+        let (sut, spy) = makeSUT()
+        sut.loadPuzzle(.init(activity: makeActivity(), puzzleIndex: 4))
+        sut.nextPuzzle(.init())
+        XCTAssertTrue(spy.completeCalled)
+    }
+
+    func test_nextPuzzle_midPuzzle_loadsNext() {
+        let (sut, spy) = makeSUT()
+        sut.loadPuzzle(.init(activity: makeActivity(), puzzleIndex: 0))
+        sut.nextPuzzle(.init())
+        XCTAssertTrue(spy.nextPuzzleCalled)
+        XCTAssertEqual(spy.lastLoadPuzzle?.puzzleIndex, 1)
+    }
+
+    func test_complete_emptyScores_starsAtLeastOne() {
+        let (sut, spy) = makeSUT()
+        sut.complete(.init())
+        // Пустой allRevealScores → avg 0 → 1 звезда (< 0.5)
+        XCTAssertGreaterThanOrEqual(spy.lastComplete?.starsEarned ?? 0, 1)
+    }
+
+    func test_resolveSoundGroup_unknownFallback() {
+        XCTAssertEqual(PuzzleRevealInteractor.resolveSoundGroup(for: "Б"), "whistling")
+        XCTAssertEqual(PuzzleRevealInteractor.resolveSoundGroup(for: ""), "whistling")
+    }
 }

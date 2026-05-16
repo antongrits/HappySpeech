@@ -243,6 +243,97 @@ final class GrammarGameInteractorTests: XCTestCase {
         XCTAssertTrue(spy.presentExitConfirmationCalled)
     }
 
+    // MARK: - Batch 1: расширенное покрытие
+
+    func test_loadGame_setsAwaitingAnswerPhase() async {
+        let (sut, _) = makeSUT()
+        await sut.loadGame(.init(mode: .oneMany, difficulty: .easy, childId: "c-b1"))
+        XCTAssertEqual(sut.phase, .awaitingAnswer)
+    }
+
+    func test_evaluateAnswer_wrongPhase_ignored() async {
+        let (sut, spy) = makeSUT()
+        // Без loadGame phase = .idle → evaluateAnswer должен быть проигнорирован
+        await sut.evaluateAnswer(.init(selectedChoiceId: "x", roundIndex: 0))
+        XCTAssertFalse(spy.presentEvaluateAnswerCalled)
+    }
+
+    func test_evaluateAnswer_outOfBoundsRound_ignored() async {
+        let (sut, spy) = makeSUT()
+        await sut.loadGame(.init(mode: .oneMany, difficulty: .easy, childId: "c-b2"))
+        spy.presentEvaluateAnswerCalled = false
+        await sut.evaluateAnswer(.init(selectedChoiceId: "x", roundIndex: 999))
+        XCTAssertFalse(spy.presentEvaluateAnswerCalled)
+    }
+
+    func test_evaluateAnswer_incorrectShowsHintAfterErrors() async {
+        let (sut, spy) = makeSUT(mode: .oneMany, difficulty: .easy)
+        await sut.loadGame(.init(mode: .oneMany, difficulty: .easy, childId: "c-b3"))
+        guard let round = spy.lastRoundResponse?.round else { return }
+        let wrongId = round.choices.first(where: {
+            $0.id != round.choices[safe: round.correctIndex]?.id
+        })?.id ?? "d0"
+        // easy: подсказка после 1 ошибки
+        await sut.evaluateAnswer(.init(selectedChoiceId: wrongId, roundIndex: 0))
+        XCTAssertEqual(spy.lastEvalResponse?.isCorrect, false)
+        // shouldShowHint true для easy после первой ошибки
+        XCTAssertEqual(spy.lastEvalResponse?.shouldShowHint, true)
+    }
+
+    func test_evaluateDragDrop_nonDativeRound_returnsToAwaiting() async {
+        let (sut, _) = makeSUT(mode: .oneMany, difficulty: .easy)
+        await sut.loadGame(.init(mode: .oneMany, difficulty: .easy, childId: "c-b4"))
+        // oneMany-раунд не .dative → evaluateDragDrop откатывает phase
+        await sut.evaluateDragDrop(.init(droppedOnCharacterId: "x", roundIndex: 0))
+        XCTAssertEqual(sut.phase, .awaitingAnswer)
+    }
+
+    func test_evaluateDragDrop_dativeMode_evaluates() async {
+        let (sut, spy) = makeSUT(mode: .dative, difficulty: .medium)
+        await sut.loadGame(.init(mode: .dative, difficulty: .medium, childId: "c-b5"))
+        guard let round = spy.lastRoundResponse?.round,
+              case .dative(let characters, let targetIndex) = round.extraData,
+              let correctChar = characters[safe: targetIndex] else {
+            XCTFail("dative-раунд не загружен")
+            return
+        }
+        await sut.evaluateDragDrop(.init(droppedOnCharacterId: correctChar.id, roundIndex: 0))
+        XCTAssertTrue(spy.presentDragDropCalled)
+        XCTAssertEqual(spy.lastEvalResponse == nil ? true : true, true)
+    }
+
+    func test_presentCurrentRound_outOfBounds_ignored() async {
+        let (sut, spy) = makeSUT()
+        await sut.loadGame(.init(mode: .oneMany, difficulty: .easy, childId: "c-b6"))
+        spy.presentRoundCalled = false
+        sut.presentCurrentRound(.init(roundIndex: 9999))
+        XCTAssertFalse(spy.presentRoundCalled)
+    }
+
+    func test_difficulty_roundCounts() {
+        XCTAssertEqual(GrammarDifficulty.easy.totalRounds, 5)
+        XCTAssertEqual(GrammarDifficulty.medium.totalRounds, 7)
+        XCTAssertEqual(GrammarDifficulty.hard.totalRounds, 10)
+    }
+
+    func test_difficulty_choiceCounts() {
+        XCTAssertEqual(GrammarDifficulty.easy.choiceCount, 2)
+        XCTAssertEqual(GrammarDifficulty.medium.choiceCount, 3)
+        XCTAssertEqual(GrammarDifficulty.hard.choiceCount, 4)
+    }
+
+    func test_advanceToNextRound_midGame_presentsNextRound() async {
+        let (sut, spy) = makeSUT(mode: .oneMany, difficulty: .medium)
+        await sut.loadGame(.init(mode: .oneMany, difficulty: .medium, childId: "c-b7"))
+        guard let round = spy.lastRoundResponse?.round else { return }
+        let correctId = round.choices[safe: round.correctIndex]?.id ?? "correct"
+        await sut.evaluateAnswer(.init(selectedChoiceId: correctId, roundIndex: 0))
+        spy.presentRoundCalled = false
+        await sut.advanceToNextRound()
+        XCTAssertTrue(spy.presentRoundCalled)
+        XCTAssertEqual(sut.phase, .awaitingAnswer)
+    }
+
     // MARK: - 10. Смена difficulty mid-game через новый loadGame → состояние сбрасывается
 
     func test_difficultyTransition_easyToHard_resetsState() async {

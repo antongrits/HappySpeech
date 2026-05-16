@@ -304,4 +304,93 @@ final class LetterTracingInteractorTests: XCTestCase {
         XCTAssertEqual(LetterTracingModels.HintState.direction.next, .fullTemplate)
         XCTAssertEqual(LetterTracingModels.HintState.fullTemplate.next, .fullTemplate)
     }
+
+    // MARK: - Batch 1: расширенное покрытие
+
+    func test_loadExercise_difficulty2_threeLettersWithSimilar() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadExercise(.init(targetLetter: "А", difficulty: 2))
+        // difficulty>1 → [target, target] + 1 similar
+        XCTAssertEqual(spy.lastLoadResponse?.totalRounds, 3)
+        XCTAssertEqual(spy.lastLoadResponse?.tracingLevel, .dotsOnly)
+    }
+
+    func test_loadExercise_strokeCountPositive() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadExercise(.init(targetLetter: "Ф", difficulty: 1))
+        XCTAssertGreaterThan(spy.lastLoadResponse?.strokeCount ?? 0, 0)
+    }
+
+    func test_loadExercise_hintStateNoneInitially() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadExercise(.init(targetLetter: "Б", difficulty: 1))
+        XCTAssertEqual(spy.lastLoadResponse?.hintState, LetterTracingModels.HintState.none)
+    }
+
+    func test_loadExercise_promptNotEmpty() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadExercise(.init(targetLetter: "В", difficulty: 1))
+        XCTAssertFalse(spy.lastLoadResponse?.promptText.isEmpty ?? true)
+    }
+
+    func test_submitDrawing_recognitionScoreZeroForEmpty() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadExercise(.init(targetLetter: "А", difficulty: 1))
+        await sut.submitDrawing(.init(drawing: PKDrawing(), targetLetter: "А", drawingDuration: 3.0))
+        // Пустой рисунок не будет распознан как буква
+        XCTAssertEqual(spy.lastSubmitResponse?.recognitionScore ?? 1.0, 0.0, accuracy: 0.001)
+    }
+
+    func test_submitDrawing_threeAttempts_advancesAndCompletes() async {
+        let (sut, spy, router) = makeSUT()
+        await sut.loadExercise(.init(targetLetter: "А", difficulty: 1))
+        // 3 раунда × 3 попытки = форс-переход к завершению
+        for _ in 0..<9 {
+            await sut.submitDrawing(.init(drawing: PKDrawing(), targetLetter: "А", drawingDuration: 3.0))
+        }
+        // scheduleSessionComplete асинхронный — даём время
+        try? await Task.sleep(for: .milliseconds(1400))
+        XCTAssertTrue(spy.presentCompleteCalled)
+        XCTAssertTrue(router.routeToCompleteCalled)
+    }
+
+    func test_submitDrawing_bestScoreReported() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadExercise(.init(targetLetter: "А", difficulty: 1))
+        await sut.submitDrawing(.init(drawing: PKDrawing(), targetLetter: "А", drawingDuration: 3.0))
+        XCTAssertNotNil(spy.lastSubmitResponse?.bestScore)
+    }
+
+    func test_requestHint_descriptionForFullTemplate() {
+        let (sut, spy, _) = makeSUT()
+        sut.requestHint(.init(letter: "С"))
+        sut.requestHint(.init(letter: "С"))
+        sut.requestHint(.init(letter: "С"))
+        XCTAssertEqual(spy.lastHintResponse?.hintState, .fullTemplate)
+        XCTAssertFalse(spy.lastHintResponse?.hintDescription.isEmpty ?? true)
+    }
+
+    func test_tracingLevel_localizedTitles() {
+        XCTAssertFalse(LetterTracingModels.TracingLevel.overTemplate.localizedTitle.isEmpty)
+        XCTAssertFalse(LetterTracingModels.TracingLevel.dotsOnly.localizedTitle.isEmpty)
+        XCTAssertFalse(LetterTracingModels.TracingLevel.freeWrite.localizedTitle.isEmpty)
+    }
+
+    func test_letterProficiency_initialState() {
+        let prof = LetterTracingModels.LetterProficiency(letter: "Р")
+        XCTAssertEqual(prof.letter, "Р")
+        XCTAssertEqual(prof.attempts, 0)
+        XCTAssertEqual(prof.bestScore, 0)
+        XCTAssertFalse(prof.isAchieved)
+    }
+
+    func test_phonemeWord_specificLetters() {
+        XCTAssertEqual(LetterTracingInteractor.phonemeWord(for: "С"), "сани")
+        XCTAssertEqual(LetterTracingInteractor.phonemeWord(for: "Ш"), "шапка")
+        XCTAssertEqual(LetterTracingInteractor.phonemeWord(for: "Я"), "яблоко")
+    }
+
+    func test_strokeCount_letterI_isThree() {
+        XCTAssertEqual(LetterTracingInteractor.strokeCount(for: "И"), 3)
+    }
 }

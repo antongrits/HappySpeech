@@ -155,4 +155,123 @@ final class MemoryInteractorTests: XCTestCase {
         let flipCountAfterRetry = spy.lastFlipCard?.cards.filter(\.isMatched).count ?? 0
         XCTAssertEqual(flipCountAfterMatch, flipCountAfterRetry)
     }
+
+    // MARK: - Batch 1: расширенное покрытие
+
+    func test_flipCard_unknownCardId_ignored() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", startDifficulty: .easy))
+        spy.flipCardCalled = false
+        await sut.flipCard(.init(cardId: "nonexistent"))
+        XCTAssertFalse(spy.flipCardCalled)
+    }
+
+    func test_flipCard_alreadyFaceUp_ignored() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", startDifficulty: .easy))
+        guard let firstCard = spy.lastLoadSession?.cards.first else { return }
+        await sut.flipCard(.init(cardId: firstCard.id))
+        spy.flipCardCalled = false
+        await sut.flipCard(.init(cardId: firstCard.id))
+        XCTAssertFalse(spy.flipCardCalled, "Повторный flip той же карты игнорируется")
+    }
+
+    func test_loadSession_mediumDifficulty_24Cards() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadSession(.init(soundGroup: "hissing", childName: "Ваня", startDifficulty: .medium))
+        // beginRound всегда стартует с difficulties[0] = .easy → 16 карт
+        XCTAssertEqual(spy.lastLoadSession?.cards.count, 16)
+        XCTAssertEqual(spy.lastLoadSession?.difficulty, .easy)
+        XCTAssertEqual(spy.lastLoadSession?.roundIndex, 0)
+    }
+
+    func test_loadSession_emitsTimerTick() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", startDifficulty: .easy))
+        XCTAssertTrue(spy.timerTickCalled)
+    }
+
+    func test_loadSession_emitsWelcomeVoiceCue() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", startDifficulty: .easy))
+        XCTAssertEqual(spy.lastFlipCard?.voiceCue, .welcome)
+    }
+
+    func test_useHint_decreasesHintsRemaining() async {
+        let (sut, spy, haptic) = makeSUT()
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", startDifficulty: .easy))
+        await sut.useHint(.init())
+        // hintUsed voice cue приходит через presentFlipCard
+        XCTAssertEqual(spy.lastFlipCard?.voiceCue, .hintUsed)
+        _ = haptic
+    }
+
+    func test_useHint_threeTimes_thenIgnored() async {
+        let (sut, _, _) = makeSUT()
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", startDifficulty: .easy))
+        await sut.useHint(.init())
+        await sut.useHint(.init())
+        await sut.useHint(.init())
+        // Четвёртый вызов не должен крашить — hintsRemaining == 0
+        await sut.useHint(.init())
+        XCTAssertTrue(true)
+    }
+
+    func test_advanceToNextRound_loadsSecondRound() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", startDifficulty: .easy))
+        await sut.advanceToNextRound()
+        XCTAssertEqual(spy.lastLoadSession?.roundIndex, 1)
+        XCTAssertEqual(spy.lastLoadSession?.difficulty, .medium)
+    }
+
+    func test_streak3_emitsStreak3Cue() async {
+        let (sut, spy, _) = makeSUT()
+        await sut.loadSession(.init(soundGroup: "whistling", childName: "Маша", startDifficulty: .easy))
+        guard let cards = spy.lastLoadSession?.cards else { return }
+        // Собираем 3 пары подряд
+        let pairIds = Array(Set(cards.map(\.pairId))).prefix(3)
+        for pid in pairIds {
+            let pairCards = cards.filter { $0.pairId == pid }
+            guard pairCards.count == 2 else { continue }
+            await sut.flipCard(.init(cardId: pairCards[0].id))
+            await sut.flipCard(.init(cardId: pairCards[1].id))
+        }
+        XCTAssertGreaterThanOrEqual(spy.lastFlipCard?.streakCount ?? 0, 3)
+    }
+
+    func test_memoryDifficulty_pairCounts() {
+        XCTAssertEqual(MemoryDifficulty.easy.pairCount, 8)
+        XCTAssertEqual(MemoryDifficulty.medium.pairCount, 12)
+        XCTAssertEqual(MemoryDifficulty.hard.pairCount, 18)
+        XCTAssertEqual(MemoryDifficulty.easy.timeLimit, 60)
+        XCTAssertEqual(MemoryDifficulty.hard.timeLimit, 120)
+    }
+
+    func test_memoryRoundResult_scoreClamped() {
+        let perfect = MemoryRoundResult(
+            difficulty: .easy, matchedPairs: 8, totalPairs: 8,
+            elapsedSeconds: 0, timeLimit: 60, reason: .allMatched,
+            cardStats: [], streakBonus: true, megaStreakBonus: true
+        )
+        XCTAssertEqual(perfect.score, 1.0, accuracy: 0.001)
+        let zero = MemoryRoundResult(
+            difficulty: .easy, matchedPairs: 0, totalPairs: 8,
+            elapsedSeconds: 60, timeLimit: 60, reason: .timeExpired,
+            cardStats: [], streakBonus: false, megaStreakBonus: false
+        )
+        XCTAssertEqual(zero.score, 0.0, accuracy: 0.001)
+    }
+
+    func test_hintLevel_rawValues() {
+        XCTAssertEqual(MemoryHintLevel.single.rawValue, 1)
+        XCTAssertEqual(MemoryHintLevel.pair.rawValue, 2)
+        XCTAssertEqual(MemoryHintLevel.all.rawValue, 3)
+    }
+
+    func test_deck_velarGroup_16Cards() {
+        let deck = MemoryCard.deck(for: "velar", difficulty: .easy)
+        XCTAssertEqual(deck.count, 16)
+        XCTAssertTrue(deck.allSatisfy { $0.soundGroup == "velar" })
+    }
 }

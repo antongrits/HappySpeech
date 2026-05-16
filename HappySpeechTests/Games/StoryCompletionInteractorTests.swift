@@ -150,4 +150,103 @@ final class StoryCompletionInteractorTests: XCTestCase {
         let correctWord = scene.choices[scene.correctIndex]
         XCTAssertTrue(filledText.contains(correctWord))
     }
+
+    // MARK: - Batch 1: расширенное покрытие
+
+    func test_loadStory_clampsNegativeIndex() {
+        let (sut, spy) = makeSUT()
+        sut.loadStory(.init(activity: makeActivity(), sceneIndex: -5))
+        XCTAssertEqual(spy.lastLoadStory?.sceneIndex, 0)
+    }
+
+    func test_loadStory_clampsLargeIndex() {
+        let (sut, spy) = makeSUT()
+        sut.loadStory(.init(activity: makeActivity(), sceneIndex: 99))
+        XCTAssertLessThanOrEqual(spy.lastLoadStory?.sceneIndex ?? 99, 4)
+    }
+
+    func test_chooseWord_correct_incrementsScore() {
+        let (sut, spy) = makeSUT()
+        sut.loadStory(.init(activity: makeActivity(), sceneIndex: 0))
+        guard let scene = spy.lastLoadStory?.scene else { return }
+        sut.chooseWord(.init(choiceIndex: scene.correctIndex))
+        sut.complete()
+        XCTAssertEqual(spy.lastComplete?.correctCount, 1)
+    }
+
+    func test_chooseWord_correctIndexInResponse() {
+        let (sut, spy) = makeSUT()
+        sut.loadStory(.init(activity: makeActivity(), sceneIndex: 0))
+        guard let scene = spy.lastLoadStory?.scene else { return }
+        sut.chooseWord(.init(choiceIndex: scene.correctIndex))
+        XCTAssertEqual(spy.lastChooseWord?.correctIndex, scene.correctIndex)
+    }
+
+    func test_chooseWord_outOfBoundsIndex_emptyChosenWord() {
+        let (sut, spy) = makeSUT()
+        sut.loadStory(.init(activity: makeActivity(), sceneIndex: 0))
+        sut.chooseWord(.init(choiceIndex: 99))
+        XCTAssertEqual(spy.lastChooseWord?.chosenWord, "")
+        XCTAssertEqual(spy.lastChooseWord?.isCorrect, false)
+    }
+
+    func test_chooseWord_afterComplete_ignored() {
+        let (sut, spy) = makeSUT()
+        sut.loadStory(.init(activity: makeActivity(), sceneIndex: 0))
+        sut.complete()
+        spy.chooseWordCalled = false
+        sut.chooseWord(.init(choiceIndex: 0))
+        XCTAssertFalse(spy.chooseWordCalled, "После complete chooseWord игнорируется")
+    }
+
+    func test_nextScene_emitsHasNextScene() {
+        let (sut, spy) = makeSUT()
+        sut.loadStory(.init(activity: makeActivity(), sceneIndex: 0))
+        sut.nextScene()
+        XCTAssertTrue(spy.nextSceneCalled)
+    }
+
+    func test_nextScene_lastScene_completes() {
+        let (sut, spy) = makeSUT()
+        sut.loadStory(.init(activity: makeActivity(), sceneIndex: 4))
+        sut.nextScene()
+        XCTAssertTrue(spy.completeCalled)
+    }
+
+    func test_complete_perfectGame_scoreOne() {
+        let (sut, spy) = makeSUT()
+        sut.loadStory(.init(activity: makeActivity(), sceneIndex: 0))
+        // Отвечаем правильно на все 5 сцен
+        for idx in 0..<5 {
+            sut.loadStory(.init(activity: makeActivity(), sceneIndex: idx))
+            guard let scene = spy.lastLoadStory?.scene else { break }
+            sut.chooseWord(.init(choiceIndex: scene.correctIndex))
+        }
+        sut.complete()
+        XCTAssertEqual(spy.lastComplete?.score, 1.0)
+    }
+
+    func test_loadStory_afterCancel_ignored() {
+        let (sut, spy) = makeSUT()
+        sut.loadStory(.init(activity: makeActivity(), sceneIndex: 0))
+        sut.cancel()
+        spy.loadStoryCalled = false
+        sut.loadStory(.init(activity: makeActivity(), sceneIndex: 1))
+        XCTAssertFalse(spy.loadStoryCalled, "После cancel loadStory игнорируется")
+    }
+
+    func test_resolveSoundGroup_unknownFallback() {
+        XCTAssertEqual(StoryCompletionInteractor.resolveSoundGroup(for: "Б"), "whistling")
+        XCTAssertEqual(StoryCompletionInteractor.resolveSoundGroup(for: ""), "whistling")
+    }
+
+    func test_buildScenes_allChoicesHaveThreeOptions() {
+        for group in ["whistling", "hissing", "sonants", "velar"] {
+            let scenes = StoryCompletionInteractor.buildScenes(for: group, total: 5)
+            for scene in scenes {
+                XCTAssertEqual(scene.choices.count, 3, "Сцена группы \(group) должна иметь 3 варианта")
+                XCTAssertTrue(scene.choices.indices.contains(scene.correctIndex))
+            }
+        }
+    }
 }

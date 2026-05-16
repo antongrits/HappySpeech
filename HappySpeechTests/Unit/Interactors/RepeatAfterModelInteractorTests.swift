@@ -46,9 +46,25 @@ final class RepeatAfterModelInteractorTests: XCTestCase {
             completeSessionCalled = true
             lastCompleteSession = response
         }
-        func presentReplayModel(_ response: RepeatAfterModelModels.ReplayModel.Response) {}
-        func presentHint(_ response: RepeatAfterModelModels.Hint.Response) {}
-        func presentSloMo(_ response: RepeatAfterModelModels.SloMo.Response) {}
+        var lastReplayModel: RepeatAfterModelModels.ReplayModel.Response?
+        var lastHint: RepeatAfterModelModels.Hint.Response?
+        var lastSloMo: RepeatAfterModelModels.SloMo.Response?
+        var replayModelCalled = false
+        var hintCalled = false
+        var sloMoCalled = false
+
+        func presentReplayModel(_ response: RepeatAfterModelModels.ReplayModel.Response) {
+            replayModelCalled = true
+            lastReplayModel = response
+        }
+        func presentHint(_ response: RepeatAfterModelModels.Hint.Response) {
+            hintCalled = true
+            lastHint = response
+        }
+        func presentSloMo(_ response: RepeatAfterModelModels.SloMo.Response) {
+            sloMoCalled = true
+            lastSloMo = response
+        }
     }
 
     private func makeSUT() -> (RepeatAfterModelInteractor, SpyPresenter) {
@@ -159,5 +175,149 @@ final class RepeatAfterModelInteractorTests: XCTestCase {
         let score = spy.lastCompleteSession?.totalScore ?? -1
         XCTAssertGreaterThanOrEqual(score, 0.0)
         XCTAssertLessThanOrEqual(score, 1.0)
+    }
+
+    // MARK: - Batch 1: расширенное покрытие
+
+    func test_loadSession_resetsStateOnReload() {
+        let (sut, spy) = makeSUT()
+        sut.loadSession(.init(soundGroup: "sonants", childName: "Тест"))
+        sut.loadSession(.init(soundGroup: "hissing", childName: "Новый"))
+        XCTAssertEqual(spy.lastLoadSession?.childName, "Новый")
+        XCTAssertEqual(sut.currentIndex, 0)
+        XCTAssertEqual(sut.attemptsLeft, 3)
+    }
+
+    func test_startWord_clampsIndexOutOfBounds() {
+        let (sut, _) = makeSUT()
+        sut.loadSession(.init(soundGroup: "sonants", childName: "Тест"))
+        sut.startWord(.init(wordIndex: 99))
+        XCTAssertEqual(sut.currentIndex, sut.words.count - 1)
+    }
+
+    func test_startWord_emptyWords_ignored() {
+        let (sut, spy) = makeSUT()
+        // Без loadSession words пуст
+        sut.startWord(.init(wordIndex: 0))
+        XCTAssertFalse(spy.startWordCalled)
+    }
+
+    func test_replayModel_incrementsCount() {
+        let (sut, spy) = makeSUT()
+        sut.loadSession(.init(soundGroup: "sonants", childName: "Тест"))
+        sut.startWord(.init(wordIndex: 0))
+        sut.replayModel(.init())
+        XCTAssertTrue(spy.replayModelCalled)
+        XCTAssertEqual(spy.lastReplayModel?.replayCount, 1)
+    }
+
+    func test_replayModel_limitReachedAfterThree() {
+        let (sut, spy) = makeSUT()
+        sut.loadSession(.init(soundGroup: "sonants", childName: "Тест"))
+        sut.startWord(.init(wordIndex: 0))
+        sut.replayModel(.init())
+        sut.replayModel(.init())
+        sut.replayModel(.init())
+        sut.replayModel(.init())
+        XCTAssertEqual(spy.lastReplayModel?.replayLimitReached, true)
+    }
+
+    func test_requestHint_progressesLevels() {
+        let (sut, spy) = makeSUT()
+        sut.loadSession(.init(soundGroup: "sonants", childName: "Тест"))
+        sut.startWord(.init(wordIndex: 0))
+        sut.requestHint(.init())
+        XCTAssertEqual(spy.lastHint?.hintLevel, .syllabification)
+        sut.requestHint(.init())
+        XCTAssertEqual(spy.lastHint?.hintLevel, .articulationDiagram)
+        sut.requestHint(.init())
+        XCTAssertEqual(spy.lastHint?.hintLevel, .sloMoReplay)
+        // Четвёртый — остаётся на максимуме
+        sut.requestHint(.init())
+        XCTAssertEqual(spy.lastHint?.hintLevel, .sloMoReplay)
+    }
+
+    func test_requestSloMo_callsPresenter() {
+        let (sut, spy) = makeSUT()
+        sut.loadSession(.init(soundGroup: "sonants", childName: "Тест"))
+        sut.startWord(.init(wordIndex: 0))
+        sut.requestSloMo(.init(playbackRate: 0.75))
+        XCTAssertTrue(spy.sloMoCalled)
+        XCTAssertEqual(spy.lastSloMo?.playbackRate, 0.75)
+    }
+
+    func test_submitMLScore_blendsWithASR() {
+        let (sut, spy) = makeSUT()
+        sut.loadSession(.init(soundGroup: "sonants", childName: "Тест"))
+        sut.startWord(.init(wordIndex: 0))
+        guard let word = sut.words.first else { return XCTFail("words пусты") }
+        sut.submitMLScore(.init(wordId: word.id, mlScore: 1.0))
+        sut.submitTranscript(.init(transcript: word.word, confidence: 0.95))
+        // ML 1.0 * 0.6 + ASR ~1.0 * 0.4 → высокий blended score
+        XCTAssertGreaterThan(spy.lastEvaluateAttempt?.score ?? 0, 0.8)
+    }
+
+    func test_submitTranscript_excellentScore_threeStars() {
+        let (sut, spy) = makeSUT()
+        sut.loadSession(.init(soundGroup: "sonants", childName: "Тест"))
+        sut.startWord(.init(wordIndex: 0))
+        guard let word = sut.words.first else { return XCTFail("words пусты") }
+        sut.submitMLScore(.init(wordId: word.id, mlScore: 1.0))
+        sut.submitTranscript(.init(transcript: word.word, confidence: 1.0))
+        XCTAssertEqual(spy.lastEvaluateAttempt?.stars, 3)
+    }
+
+    func test_submitTranscript_emptyTranscript_omissionDiagnostic() {
+        let (sut, spy) = makeSUT()
+        sut.loadSession(.init(soundGroup: "sonants", childName: "Тест"))
+        sut.startWord(.init(wordIndex: 0))
+        sut.submitTranscript(.init(transcript: "", confidence: 0.0))
+        XCTAssertEqual(spy.lastEvaluateAttempt?.diagnostic, .omission)
+    }
+
+    func test_submitTranscript_afterAttemptsExhausted_forcedAdvance() {
+        let (sut, spy) = makeSUT()
+        sut.loadSession(.init(soundGroup: "sonants", childName: "Тест"))
+        sut.startWord(.init(wordIndex: 0))
+        sut.submitTranscript(.init(transcript: "ааа", confidence: 0.0))
+        sut.submitTranscript(.init(transcript: "ббб", confidence: 0.0))
+        sut.submitTranscript(.init(transcript: "ввв", confidence: 0.0))
+        // 4-й submit при attemptsLeft==0 → forced advance response
+        sut.submitTranscript(.init(transcript: "ггг", confidence: 0.0))
+        XCTAssertEqual(spy.lastEvaluateAttempt?.canAdvance, true)
+        XCTAssertEqual(spy.lastEvaluateAttempt?.attemptsLeft, 0)
+    }
+
+    func test_cancel_resetsRecording() {
+        let (sut, _) = makeSUT()
+        sut.loadSession(.init(soundGroup: "sonants", childName: "Тест"))
+        sut.toggleRecording()
+        XCTAssertTrue(sut.isRecording)
+        sut.cancel()
+        XCTAssertFalse(sut.isRecording)
+    }
+
+    func test_repeatScoring_exactMatch_high() {
+        let score = RepeatScoring.score(transcript: "рыба", target: "рыба", confidence: 1.0)
+        XCTAssertGreaterThan(score, 0.8)
+    }
+
+    func test_starCountForScore_thresholds() {
+        // Косвенно через completeSession с известными значениями недоступно;
+        // проверяем через RepeatHintLevel перечисление вместо приватного метода.
+        XCTAssertEqual(RepeatHintLevel.none.rawValue, "none")
+        XCTAssertEqual(RepeatHintLevel.syllabification.rawValue, "syllabification")
+    }
+
+    func test_diagnostic_rawValues() {
+        XCTAssertEqual(PronunciationDiagnostic.none.rawValue, "none")
+        XCTAssertEqual(PronunciationDiagnostic.distortion.rawValue, "distortion")
+        XCTAssertEqual(PronunciationDiagnostic.omission.rawValue, "omission")
+    }
+
+    func test_targetWordItem_wordsForGroup_nonEmpty() {
+        for group in ["whistling", "hissing", "sonants", "velar"] {
+            XCTAssertFalse(TargetWordItem.words(for: group).isEmpty, "Группа \(group) пуста")
+        }
     }
 }

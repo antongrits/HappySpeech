@@ -178,4 +178,97 @@ final class BingoInteractorTests: XCTestCase {
         let lines = sut.checkBingo()
         XCTAssertTrue(lines.isEmpty)
     }
+
+    // MARK: - Batch 1: расширенное покрытие
+
+    func test_loadGame_totalWordsIs25() {
+        let (sut, spy) = makeSUT()
+        sut.loadGame(.init(activity: makeActivity()))
+        XCTAssertEqual(spy.lastLoadResponse?.totalWords, 25)
+    }
+
+    func test_loadGame_allCellsUnmarkedInitially() {
+        let (sut, spy) = makeSUT()
+        sut.loadGame(.init(activity: makeActivity()))
+        let markedCount = spy.lastLoadResponse?.cells.filter(\.isMarked).count ?? -1
+        XCTAssertEqual(markedCount, 0)
+    }
+
+    func test_markCell_unknownCellId_ignored() {
+        let (sut, spy) = makeSUT()
+        sut.loadGame(.init(activity: makeActivity()))
+        spy.markCellCalled = false
+        sut.markCell(.init(cellId: UUID()))
+        XCTAssertFalse(spy.markCellCalled)
+    }
+
+    func test_markCell_allMarked_completesGame() {
+        let (sut, spy) = makeSUT()
+        sut.loadGame(.init(activity: makeActivity()))
+        guard let cells = spy.lastLoadResponse?.cells else { return }
+        for cell in cells {
+            sut.markCell(.init(cellId: cell.id))
+        }
+        XCTAssertTrue(spy.completeGameCalled, "Пометка всех 25 клеток завершает игру")
+    }
+
+    func test_markCell_allMarked_scoreIsOne() {
+        let (sut, spy) = makeSUT()
+        sut.loadGame(.init(activity: makeActivity()))
+        guard let cells = spy.lastLoadResponse?.cells else { return }
+        for cell in cells {
+            sut.markCell(.init(cellId: cell.id))
+        }
+        XCTAssertEqual(spy.lastCompleteResponse?.score, 1.0)
+    }
+
+    func test_completeGame_twice_secondIgnored() {
+        let (sut, spy) = makeSUT()
+        sut.loadGame(.init(activity: makeActivity()))
+        sut.completeGame()
+        spy.completeGameCalled = false
+        sut.completeGame()
+        XCTAssertFalse(spy.completeGameCalled, "Повторный completeGame игнорируется")
+    }
+
+    func test_completeGame_reportsMarkedCount() {
+        let (sut, spy) = makeSUT()
+        sut.loadGame(.init(activity: makeActivity()))
+        guard let firstCell = spy.lastLoadResponse?.cells.first else { return }
+        sut.markCell(.init(cellId: firstCell.id))
+        sut.completeGame()
+        XCTAssertEqual(spy.lastCompleteResponse?.markedCells, 1)
+        XCTAssertEqual(spy.lastCompleteResponse?.totalCells, 25)
+    }
+
+    func test_cancel_blocksMarkCell() {
+        let (sut, spy) = makeSUT()
+        sut.loadGame(.init(activity: makeActivity()))
+        sut.cancel()
+        spy.markCellCalled = false
+        guard let firstCell = spy.lastLoadResponse?.cells.first else { return }
+        sut.markCell(.init(cellId: firstCell.id))
+        XCTAssertFalse(spy.markCellCalled, "После cancel markCell не обрабатывается")
+    }
+
+    func test_callNextWord_afterCancel_ignored() {
+        let (sut, spy) = makeSUT()
+        sut.loadGame(.init(activity: makeActivity()))
+        sut.cancel()
+        spy.callWordCalled = false
+        sut.callNextWord()
+        XCTAssertFalse(spy.callWordCalled)
+    }
+
+    func test_resolveSoundGroup_unknownFallback() {
+        XCTAssertEqual(BingoInteractor.resolveSoundGroup(for: "Б"), "whistling")
+        XCTAssertEqual(BingoInteractor.resolveSoundGroup(for: ""), "whistling")
+    }
+
+    func test_loadGame_velarGroup_25Cells() {
+        let (sut, spy) = makeSUT()
+        sut.loadGame(.init(activity: makeActivity(sound: "К")))
+        XCTAssertEqual(spy.lastLoadResponse?.cells.count, 25)
+        XCTAssertTrue(spy.lastLoadResponse?.cells.allSatisfy { $0.soundGroup == "velar" } ?? false)
+    }
 }
