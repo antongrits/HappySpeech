@@ -202,4 +202,43 @@ final class PoseSequenceInteractorTests: XCTestCase {
         XCTAssertTrue(TargetPosesRepository.allPoses.allSatisfy { !$0.name.isEmpty })
         XCTAssertTrue(TargetPosesRepository.allPoses.allSatisfy { !$0.jointTargets.isEmpty })
     }
+
+    // MARK: - Batch 4 v25: дополнительное покрытие
+
+    func test_updateFrame_withoutStart_ignored() {
+        // mode по умолчанию .face, postures пуст → guard currentIndex < postures.count
+        let (sut, spy) = makeSUT()
+        sut.updateFrame(.init(blendshapes: blendshapes(for: .smile)))
+        XCTAssertEqual(spy.updateFrameCallCount, 0, "Без startGame кадры игнорируются")
+    }
+
+    func test_scoreAttempt_boundary90_twoStars() {
+        // ratio 0.9 → >= 0.7 но < 1 → 2 звезды
+        let (sut, spy) = makeSUT()
+        sut.scoreAttempt(.init(completedCount: 9, totalCount: 10))
+        XCTAssertEqual(spy.lastScore?.stars, 2)
+    }
+
+    func test_scoreAttempt_belowThreshold_oneStar() {
+        let (sut, spy) = makeSUT()
+        sut.scoreAttempt(.init(completedCount: 2, totalCount: 10))
+        XCTAssertEqual(spy.lastScore?.stars, 1)
+    }
+
+    func test_updateFrame_multipleConfidentFrames_accumulatesHold() {
+        let (sut, spy) = makeSUT()
+        sut.startGame(.init(postures: [.smile, .pucker]))
+        // 19 кадров — ещё не достигнут holdFramesRequired (20)
+        for _ in 0..<19 {
+            sut.updateFrame(.init(blendshapes: blendshapes(for: .smile)))
+        }
+        XCTAssertEqual(spy.lastUpdateFrame?.advanced, false)
+        XCTAssertEqual(spy.lastUpdateFrame?.currentIndex, 0)
+    }
+
+    func test_startGame_customPostures_preservedOrder() {
+        let (sut, spy) = makeSUT()
+        sut.startGame(.init(postures: [.mushroom, .pucker, .smile]))
+        XCTAssertEqual(spy.lastStartGame?.postures, [.mushroom, .pucker, .smile])
+    }
 }
