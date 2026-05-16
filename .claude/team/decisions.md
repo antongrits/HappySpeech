@@ -3953,3 +3953,35 @@ Future audit pipelines must:
 - Build: unchanged
 - Production code clean confirmed
 - v24 closure unblocked → proceed Phase 5 (recursive audit) + Phase 6 (final tag)
+
+---
+
+## ADR-V25-COVERAGE — Honest residual unit-test coverage (2026-05-16)
+
+### Context
+Plan v25 целевое покрытие — 90%+ бизнес-логики (Interactor/Presenter/Worker/Service/ML).
+Phase 2 (v25) добавила ~2500+ тест-функций в 15 батчах.
+
+### Result
+Бизнес-логика **77.68%** (Presenter 95.12%, Interactor 83.77%, Worker 68.18%, Service 43.25%).
+Полный отчёт: `.claude/team/v25-coverage-final.md`.
+
+### Decision
+Цель 90% НЕ достигнута. Остаток (~7766 непокрытых строк, 47 файлов) — genuinely
+SDK-/hardware-bound код, недостижимый в unit-окружении headless-симулятора:
+- Категория A — Firebase SDK (delegate/сеть): нужен FirebaseApp.configure() + сеть.
+- Категория B — ML-инференс (CoreML/WhisperKit): нужны .mlpackage/Whisper модели в тест-бандле.
+- Категория C — AR/камера/биометрия: ARKit face/body tracking, LAContext — нужно железо.
+- Категория D — аудио-железо: AVAudioEngine/микрофон — mic permission в симуляторе не отвечает.
+- Категория E — Multipeer/GroupActivities: нужно несколько устройств.
+
+Принято: документировать честный residual. Реалистичный потолок unit-покрытия для
+данной архитектуры — ~80-83%. Дальнейший рост требует Firebase Emulator integration-стенда
+и моделей в тест-бандле — отложено post-v25 (риск регрессий перед сдачей диплома).
+Эти слои покрываются на поведенческом уровне через Functional UI tests (Phase 3) +
+manual MCP verification (Phase 4).
+
+### Side effect — реальные баги, найденные при написании тестов
+Покрытие вскрыло production-баги (все исправлены в v25): `%@`/Int format-string segfault,
+`1..<0` Range crash, testability-баг Metronome/SoftOnset (mic permission вешал test-process),
+MockEmotionDetectionService data race, SiblingInteractor double-scoring.
