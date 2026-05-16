@@ -74,10 +74,22 @@ final class PoseSequenceInteractor: PoseSequenceBusinessLogic {
     private var currentIndex: Int = 0
     private var mode: PoseSequenceMode = .face
 
+    /// Whether ARKit body tracking is available. Injectable so unit tests can
+    /// exercise the body-mode branch (the `ARBodyTrackingConfiguration` API
+    /// always reports `false` on the iOS Simulator). Production default keeps
+    /// the live capability check.
+    private let bodyTrackingSupported: Bool
+
+    // MARK: - Init
+
+    init(bodyTrackingSupported: Bool = ARBodyTrackingConfiguration.isSupported) {
+        self.bodyTrackingSupported = bodyTrackingSupported
+    }
+
     // MARK: - StartGame
 
     func startGame(_ request: PoseSequenceModels.StartGame.Request) {
-        if ARBodyTrackingConfiguration.isSupported, request.postures.isEmpty {
+        if bodyTrackingSupported, request.postures.isEmpty {
             startBodyGame()
         } else {
             startFaceGame(request)

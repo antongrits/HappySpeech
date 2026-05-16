@@ -546,6 +546,20 @@ final class BreathingInteractor: BreathingBusinessLogic {
     func _test_currentStableRatio() -> Float {
         computeStableRatio()
     }
+
+    /// Сдвигает `playStartedAt` в прошлое на `seconds`, чтобы тест мог
+    /// детерминированно достичь termination-ветвей handlePlayingSample
+    /// (completeSuccess / fail) без реального ожидания. Поведение прод-кода
+    /// не меняется — это test-only seam.
+    func _test_backdatePlayStart(by seconds: TimeInterval) {
+        playStartedAt = Date().addingTimeInterval(-seconds)
+    }
+
+    func _test_pulseTimer() {
+        pulseTimer()
+    }
+
+    func _test_currentState() -> BreathingGameState { state }
     // swiftlint:enable identifier_name
     #endif
 }

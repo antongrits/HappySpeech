@@ -361,6 +361,18 @@ final class SoftOnsetInteractor {
         let wordsSucceeded: Int
         let totalWords: Int
     }
+
+    // MARK: - Test hooks
+
+    #if DEBUG
+    // swiftlint:disable identifier_name
+    /// Прокси к `buildSessionStatistics` для unit-тестов диагностической
+    /// статистики сессии. Поведение прод-кода не меняется.
+    func _test_buildSessionStatistics() -> SoftOnsetSessionStats {
+        buildSessionStatistics()
+    }
+    // swiftlint:enable identifier_name
+    #endif
 }
 
 // MARK: - SoftOnsetSessionStats

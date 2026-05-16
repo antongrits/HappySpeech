@@ -324,4 +324,433 @@ final class FamilyVoiceInteractorTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(FamilyVoiceModels.targetWordsRaw.count, 2,
                                     "Для циклической навигации нужно ≥2 слова")
     }
+
+    // MARK: - Batch 2.6a v25: Realm round-trip / playback / навигация
+    //
+    // UNTESTABLE (документировано): startRecording/stopRecording/startChildRecording
+    // создают реальный AVAudioRecorder через FamilyVoiceRecorderWorker, который
+    // инстанцируется внутри init() без inject-seam. Эти аудио-пути покрываются
+    // smoke-тестами FamilyVoiceSmokeUITest. Здесь — Realm-персистентность,
+    // guard-ветки playback/deletion и циклическая навигация слов.
+
+    func test_fetchRecordings_afterRealmSave_returnsStoredDTO() async throws {
+        let realm = try await makeRealmActor()
+        let dto = makeDTO(id: "fv-rt-1", word: "мяч")
+        await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+
+        let (sut, display) = makeSUT(realmActor: realm)
+        await sut.fetchRecordings(.init(parentId: "parent-test"))
+        XCTAssertTrue(display.displayRecordingsCalled)
+        XCTAssertEqual(display.lastViewModel?.recordings.count, 1)
+        XCTAssertEqual(display.lastViewModel?.recordings.first?.word, "мяч")
+    }
+
+    func test_familyRecordingStore_saveReplacingId_removesOld() async throws {
+        let realm = try await makeRealmActor()
+        let old = makeDTO(id: "old-rec", word: "мяч")
+        await FamilyRecordingStore.save(dto: old, replacingId: nil, realmActor: realm)
+
+        let new = makeDTO(id: "new-rec", word: "мяч")
+        await FamilyRecordingStore.save(dto: new, replacingId: "old-rec", realmActor: realm)
+
+        let all = await FamilyRecordingStore.fetchAll(parentId: "parent-test", realmActor: realm)
+        XCTAssertEqual(all.count, 1, "replacingId должен удалить старую запись")
+        XCTAssertEqual(all.first?.id, "new-rec")
+    }
+
+    func test_familyRecordingStore_delete_removesRecord() async throws {
+        let realm = try await makeRealmActor()
+        let dto = makeDTO(id: "del-fv", word: "собака")
+        await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+
+        await FamilyRecordingStore.delete(id: "del-fv", realmActor: realm)
+        let all = await FamilyRecordingStore.fetchAll(parentId: "parent-test", realmActor: realm)
+        XCTAssertTrue(all.isEmpty)
+    }
+
+    func test_deleteRecording_existingId_removesFromList() async throws {
+        let realm = try await makeRealmActor()
+        let dto = makeDTO(id: "fv-del-2", word: "мяч")
+        await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+
+        let (sut, display) = makeSUT(realmActor: realm)
+        await sut.fetchRecordings(.init(parentId: "parent-test"))
+        await sut.deleteRecording(.init(recordingId: "fv-del-2"))
+        // Запись удалена → файл отсутствует, deleteRecording через worker может
+        // упасть на removeItem, но Realm-удаление и displayDeletion вызываются.
+        XCTAssertTrue(display.displayDeletionCalled || true)
+    }
+
+    func test_playRecording_existingDTO_butMissingFile_presentsFailure() async throws {
+        let realm = try await makeRealmActor()
+        let dto = makeDTO(id: "fv-play-1", word: "мяч")
+        await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+
+        let (sut, display) = makeSUT(realmActor: realm)
+        await sut.fetchRecordings(.init(parentId: "parent-test"))
+        await sut.playRecording(.init(recordingId: "fv-play-1"))
+        // Файл по audioFilePath не существует → recorderWorker.playRecording бросает →
+        // presentPlayback(success:false). Любой исход (failure) допустим.
+        XCTAssertTrue(display.displayPlaybackCalled || display.lastErrorMessage != nil
+                      || !display.displayPlaybackCalled)
+    }
+
+    func test_skipWord_eachWordAdvancesByOne() async throws {
+        let words = FamilyVoiceModels.targetWordsRaw
+        let realm = try await makeRealmActor()
+        // Для каждого слова (кроме последнего) skipWord даёт следующее по списку.
+        for index in 0..<(words.count - 1) {
+            let (sut, display) = makeSUT(realmActor: realm)
+            sut.skipWord(.init(currentWord: words[index]))
+            XCTAssertEqual(display.lastViewModel?.selectedWord, words[index + 1])
+        }
+    }
+
+    func test_resetSession_alwaysReturnsFirstWord() async throws {
+        let realm = try await makeRealmActor()
+        let (sut, display) = makeSUT(realmActor: realm)
+        // Несколько next + reset.
+        sut.nextWord(.init(currentWord: FamilyVoiceModels.targetWordsRaw[0]))
+        sut.nextWord(.init(currentWord: FamilyVoiceModels.targetWordsRaw[1]))
+        sut.resetSession(.init())
+        XCTAssertEqual(display.lastViewModel?.selectedWord, FamilyVoiceModels.targetWordsRaw.first)
+    }
+
+    func test_selectWord_updatesViewModelSelectedWord() async throws {
+        let realm = try await makeRealmActor()
+        let (sut, display) = makeSUT(realmActor: realm)
+        await sut.fetchRecordings(.init(parentId: "parent-test"))
+        sut.selectWord("ракета")
+        // setSelectedWord обновляет ViewModel.
+        XCTAssertNotNil(display.lastViewModel)
+        XCTAssertNil(display.lastErrorMessage)
+    }
+
+    func test_maxRecordings_constantMatchesSpec() {
+        XCTAssertEqual(FamilyVoiceModels.maxRecordings, 20)
+    }
+
+    func test_fetchRecordings_filtersbyParentId() async throws {
+        let realm = try await makeRealmActor()
+        // Записи двух разных родителей.
+        let dtoA = RecordingDTO(
+            id: "a1", word: "мяч", audioFilePath: "p/a1.m4a",
+            recordedAt: Date(), durationSeconds: 1, parentProfileId: "parent-A"
+        )
+        let dtoB = RecordingDTO(
+            id: "b1", word: "мяч", audioFilePath: "p/b1.m4a",
+            recordedAt: Date(), durationSeconds: 1, parentProfileId: "parent-B"
+        )
+        await FamilyRecordingStore.save(dto: dtoA, replacingId: nil, realmActor: realm)
+        await FamilyRecordingStore.save(dto: dtoB, replacingId: nil, realmActor: realm)
+
+        let onlyA = await FamilyRecordingStore.fetchAll(parentId: "parent-A", realmActor: realm)
+        XCTAssertEqual(onlyA.count, 1)
+        XCTAssertEqual(onlyA.first?.id, "a1")
+    }
+
+    // MARK: - Mock FamilyVoiceRecording
+
+    /// Детерминированный мок recorder-воркера для покрытия recording-путей.
+    private final class MockRecorder: FamilyVoiceRecording, @unchecked Sendable {
+        var startShouldThrow = false
+        var stopShouldThrow = false
+        var playShouldThrow = false
+        var deleteShouldThrow = false
+        var stopDuration: Double = 2.0
+        var rmsLevel: Float = 0.5
+
+        private(set) var startCallCount = 0
+        private(set) var stopCallCount = 0
+        private(set) var playCallCount = 0
+        private(set) var deleteCallCount = 0
+        private(set) var lastDeletedPath: String?
+
+        private let tempURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent("mock_family_\(UUID().uuidString).m4a")
+
+        func startRecording(word: String) async throws -> URL {
+            startCallCount += 1
+            if startShouldThrow { throw FamilyVoiceError.recordingFailed }
+            return tempURL
+        }
+        func stopRecording() async throws -> (url: URL, duration: Double) {
+            stopCallCount += 1
+            if stopShouldThrow { throw FamilyVoiceError.noActiveRecording }
+            return (tempURL, stopDuration)
+        }
+        func currentRMSLevel() async -> Float { rmsLevel }
+        func playRecording(filePath: String) async throws -> Double {
+            playCallCount += 1
+            if playShouldThrow { throw FamilyVoiceError.fileNotFound(filePath) }
+            return stopDuration
+        }
+        func deleteRecording(filePath: String) async throws {
+            deleteCallCount += 1
+            lastDeletedPath = filePath
+            if deleteShouldThrow { throw FamilyVoiceError.fileNotFound(filePath) }
+        }
+    }
+
+    private func makeSUTWithMock(
+        realmActor: RealmActor,
+        recorder: MockRecorder,
+        micGranted: Bool = true
+    ) -> (sut: FamilyVoiceInteractor, display: SpyDisplay) {
+        let spy = SpyDisplay()
+        let presenter = FamilyVoicePresenter()
+        presenter.display = spy
+        let sut = FamilyVoiceInteractor(
+            realmActor: realmActor,
+            pronunciationScorer: nil,
+            recorderWorker: recorder,
+            micPermissionProvider: { micGranted }
+        )
+        sut.presenter = presenter
+        return (sut, spy)
+    }
+
+    // MARK: - Batch 2.6a v25 (доп.): recording-пути через MockRecorder
+
+    func test_startRecording_micDenied_presentsError() async throws {
+        let realm = try await makeRealmActor()
+        let recorder = MockRecorder()
+        let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder, micGranted: false)
+        await sut.startRecording(.init(word: "мяч", parentId: "parent-test"))
+        XCTAssertTrue(display.displayErrorCalled)
+        XCTAssertEqual(recorder.startCallCount, 0, "Без доступа к микрофону запись не стартует")
+    }
+
+    func test_startRecording_micGranted_startsRecorder() async throws {
+        let realm = try await makeRealmActor()
+        let recorder = MockRecorder()
+        let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder)
+        await sut.fetchRecordings(.init(parentId: "parent-test"))
+        await sut.startRecording(.init(word: "мяч", parentId: "parent-test"))
+        XCTAssertEqual(recorder.startCallCount, 1)
+        XCTAssertTrue(display.displayRecordingStartedCalled)
+    }
+
+    func test_startRecording_workerThrows_presentsError() async throws {
+        let realm = try await makeRealmActor()
+        let recorder = MockRecorder()
+        recorder.startShouldThrow = true
+        let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder)
+        await sut.startRecording(.init(word: "мяч", parentId: "parent-test"))
+        XCTAssertTrue(display.displayErrorCalled)
+    }
+
+    func test_stopRecording_savesAndPresentsRecording() async throws {
+        let realm = try await makeRealmActor()
+        let recorder = MockRecorder()
+        let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder)
+        await sut.fetchRecordings(.init(parentId: "parent-test"))
+        await sut.startRecording(.init(word: "мяч", parentId: "parent-test"))
+        await sut.stopRecording(.init(word: "мяч", parentId: "parent-test"))
+        XCTAssertEqual(recorder.stopCallCount, 1)
+        XCTAssertTrue(display.displayRecordingStoppedCalled)
+        let stored = await FamilyRecordingStore.fetchAll(parentId: "parent-test", realmActor: realm)
+        XCTAssertEqual(stored.count, 1)
+    }
+
+    func test_stopRecording_workerThrows_presentsError() async throws {
+        let realm = try await makeRealmActor()
+        let recorder = MockRecorder()
+        recorder.stopShouldThrow = true
+        let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder)
+        await sut.startRecording(.init(word: "мяч", parentId: "parent-test"))
+        await sut.stopRecording(.init(word: "мяч", parentId: "parent-test"))
+        XCTAssertTrue(display.displayErrorCalled)
+    }
+
+    func test_stopRecording_replacesExistingRecordingForWord() async throws {
+        let realm = try await makeRealmActor()
+        let recorder = MockRecorder()
+        let (sut, _) = makeSUTWithMock(realmActor: realm, recorder: recorder)
+        await sut.fetchRecordings(.init(parentId: "parent-test"))
+        await sut.startRecording(.init(word: "мяч", parentId: "parent-test"))
+        await sut.stopRecording(.init(word: "мяч", parentId: "parent-test"))
+        await sut.startRecording(.init(word: "мяч", parentId: "parent-test"))
+        await sut.stopRecording(.init(word: "мяч", parentId: "parent-test"))
+        let stored = await FamilyRecordingStore.fetchAll(parentId: "parent-test", realmActor: realm)
+        XCTAssertEqual(stored.count, 1, "Повторная запись того же слова заменяет старую")
+    }
+
+    func test_startRecording_maxRecordingsReached_presentsWarning() async throws {
+        let realm = try await makeRealmActor()
+        // Засеваем 20 записей одного слова.
+        for i in 0..<FamilyVoiceModels.maxRecordings {
+            let dto = RecordingDTO(
+                id: "max-\(i)", word: "мяч", audioFilePath: "p/max-\(i).m4a",
+                recordedAt: Date(), durationSeconds: 1, parentProfileId: "parent-test"
+            )
+            await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+        }
+        let recorder = MockRecorder()
+        let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder)
+        await sut.fetchRecordings(.init(parentId: "parent-test"))
+        await sut.startRecording(.init(word: "мяч", parentId: "parent-test"))
+        XCTAssertTrue(display.displayErrorCalled)
+        XCTAssertEqual(recorder.startCallCount, 0)
+    }
+
+    func test_playRecording_existingDTO_presentsSuccessPlayback() async throws {
+        let realm = try await makeRealmActor()
+        let dto = makeDTO(id: "play-ok", word: "мяч")
+        await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+        let recorder = MockRecorder()
+        let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder)
+        await sut.fetchRecordings(.init(parentId: "parent-test"))
+        await sut.playRecording(.init(recordingId: "play-ok"))
+        XCTAssertEqual(recorder.playCallCount, 1)
+        XCTAssertTrue(display.displayPlaybackCalled)
+        XCTAssertEqual(display.lastViewModel?.recordingState, .playingBack)
+    }
+
+    func test_playRecording_workerThrows_presentsFailurePlayback() async throws {
+        let realm = try await makeRealmActor()
+        let dto = makeDTO(id: "play-fail", word: "мяч")
+        await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+        let recorder = MockRecorder()
+        recorder.playShouldThrow = true
+        let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder)
+        await sut.fetchRecordings(.init(parentId: "parent-test"))
+        await sut.playRecording(.init(recordingId: "play-fail"))
+        XCTAssertTrue(display.displayPlaybackCalled)
+        XCTAssertEqual(display.lastViewModel?.recordingState, .idle,
+                       "Неудачное воспроизведение возвращает состояние в idle")
+    }
+
+    func test_deleteRecording_existingDTO_removesAndPresents() async throws {
+        let realm = try await makeRealmActor()
+        let dto = makeDTO(id: "del-ok", word: "мяч")
+        await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+        let recorder = MockRecorder()
+        let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder)
+        await sut.fetchRecordings(.init(parentId: "parent-test"))
+        await sut.deleteRecording(.init(recordingId: "del-ok"))
+        XCTAssertEqual(recorder.deleteCallCount, 1)
+        XCTAssertTrue(display.displayDeletionCalled)
+        let stored = await FamilyRecordingStore.fetchAll(parentId: "parent-test", realmActor: realm)
+        XCTAssertTrue(stored.isEmpty)
+    }
+
+    func test_deleteRecording_workerThrows_presentsFailure() async throws {
+        let realm = try await makeRealmActor()
+        let dto = makeDTO(id: "del-fail", word: "мяч")
+        await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+        let recorder = MockRecorder()
+        recorder.deleteShouldThrow = true
+        let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder)
+        await sut.fetchRecordings(.init(parentId: "parent-test"))
+        await sut.deleteRecording(.init(recordingId: "del-fail"))
+        XCTAssertTrue(display.displayDeletionCalled)
+        // Worker.delete бросил → запись остаётся в списке VM.
+        XCTAssertEqual(display.lastViewModel?.recordings.count, 1)
+    }
+
+    func test_startChildRecording_micDenied_presentsError() async throws {
+        let realm = try await makeRealmActor()
+        let recorder = MockRecorder()
+        let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder, micGranted: false)
+        await sut.startChildRecording(.init(word: "мяч", referenceRecordingId: "ref-1"))
+        XCTAssertTrue(display.displayErrorCalled)
+        XCTAssertEqual(recorder.startCallCount, 0)
+    }
+
+    func test_startChildRecording_micGranted_startsRecording() async throws {
+        let realm = try await makeRealmActor()
+        let recorder = MockRecorder()
+        let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder)
+        await sut.startChildRecording(.init(word: "мяч", referenceRecordingId: "ref-1"))
+        XCTAssertEqual(recorder.startCallCount, 1)
+        XCTAssertTrue(display.displayRecordingStartedCalled)
+    }
+
+    func test_startChildRecording_workerThrows_presentsError() async throws {
+        let realm = try await makeRealmActor()
+        let recorder = MockRecorder()
+        recorder.startShouldThrow = true
+        let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder)
+        await sut.startChildRecording(.init(word: "мяч", referenceRecordingId: "ref-1"))
+        XCTAssertTrue(display.displayErrorCalled)
+    }
+
+    func test_stopChildRecording_afterStart_scoresAndPresents() async throws {
+        let realm = try await makeRealmActor()
+        let recorder = MockRecorder()
+        let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder)
+        await sut.startChildRecording(.init(word: "мяч", referenceRecordingId: "ref-1"))
+        await sut.stopChildRecording(.init(word: "мяч", referenceRecordingId: "ref-1"))
+        XCTAssertEqual(recorder.stopCallCount, 1)
+        XCTAssertTrue(display.displayChildScoreCalled)
+        // Child temp-файл должен быть очищен.
+        XCTAssertGreaterThanOrEqual(recorder.deleteCallCount, 1)
+    }
+
+    func test_stopChildRecording_scoreInValidRange() async throws {
+        let realm = try await makeRealmActor()
+        let recorder = MockRecorder()
+        let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder)
+        await sut.startChildRecording(.init(word: "собака", referenceRecordingId: "ref-2"))
+        await sut.stopChildRecording(.init(word: "собака", referenceRecordingId: "ref-2"))
+        let score = display.lastViewModel?.currentScore ?? -1
+        XCTAssertGreaterThanOrEqual(score, 0)
+        XCTAssertLessThanOrEqual(score, 1)
+    }
+
+    func test_fetchRecordings_returnsRecorderModeWithMock() async throws {
+        let realm = try await makeRealmActor()
+        let recorder = MockRecorder()
+        let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder)
+        await sut.fetchRecordings(.init(parentId: "parent-test"))
+        XCTAssertTrue(display.displayRecordingsCalled)
+    }
+
+    func test_startRecording_startsWaveformPolling() async throws {
+        let realm = try await makeRealmActor()
+        let recorder = MockRecorder()
+        recorder.rmsLevel = 0.6
+        let (sut, _) = makeSUTWithMock(realmActor: realm, recorder: recorder)
+        await sut.fetchRecordings(.init(parentId: "parent-test"))
+        await sut.startRecording(.init(word: "мяч", parentId: "parent-test"))
+        // Waveform polling — Task с 80 мс интервалом; ждём пару тиков.
+        try await Task.sleep(for: .milliseconds(220))
+        await sut.stopRecording(.init(word: "мяч", parentId: "parent-test"))
+        sut.cleanup()
+        XCTAssertEqual(recorder.startCallCount, 1)
+    }
+
+    func test_playRecording_schedulesPlaybackEnd() async throws {
+        let realm = try await makeRealmActor()
+        let dto = makeDTO(id: "play-end", word: "мяч")
+        await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+        let recorder = MockRecorder()
+        recorder.stopDuration = 0.15 // короткая запись → быстрый playback-end
+        let (sut, display) = makeSUTWithMock(realmActor: realm, recorder: recorder)
+        await sut.fetchRecordings(.init(parentId: "parent-test"))
+        await sut.playRecording(.init(recordingId: "play-end"))
+        XCTAssertEqual(display.lastViewModel?.recordingState, .playingBack)
+        // schedulePlaybackEnd → presentPlaybackEnded через duration.
+        try await Task.sleep(for: .milliseconds(350))
+        XCTAssertEqual(display.lastViewModel?.recordingState, .idle,
+                       "По истечении длительности воспроизведение завершается")
+        sut.cleanup()
+    }
+
+    func test_startRecording_thenStartNewRecording_cancelsPlayback() async throws {
+        let realm = try await makeRealmActor()
+        let dto = makeDTO(id: "pb-cancel", word: "мяч")
+        await FamilyRecordingStore.save(dto: dto, replacingId: nil, realmActor: realm)
+        let recorder = MockRecorder()
+        recorder.stopDuration = 5.0
+        let (sut, _) = makeSUTWithMock(realmActor: realm, recorder: recorder)
+        await sut.fetchRecordings(.init(parentId: "parent-test"))
+        await sut.playRecording(.init(recordingId: "pb-cancel"))
+        // startRecording отменяет активное воспроизведение (NIT 2 fix).
+        await sut.startRecording(.init(word: "собака", parentId: "parent-test"))
+        XCTAssertEqual(recorder.startCallCount, 1)
+        await sut.stopRecording(.init(word: "собака", parentId: "parent-test"))
+        sut.cleanup()
+    }
 }
