@@ -27,11 +27,18 @@ final class SpectrogramCrossCorrelatorTests: XCTestCase {
         )
     }
 
-    /// Синтетическая спектрограмма: `frames` фреймов × `bins` бинов, значения = index.
+    /// Синтетическая спектрограмма: `frames` фреймов × `bins` бинов.
+    ///
+    /// Значение каждой ячейки = `bin + frame`, то есть варьируется И по бинам,
+    /// И по времени. Ненулевая дисперсия по времени обязательна для корректной
+    /// per-bin корреляции Пирсона (для константного по времени бина Pearson
+    /// не определён → `0`).
     private func makeRampSpec(frames: Int, bins: Int = MelSpectrogram.melBinCount) -> MelSpectrogram {
-        let frame = (0..<bins).map { Float($0) }
+        let frameRows = (0..<frames).map { frameIndex in
+            (0..<bins).map { Float($0 + frameIndex) }
+        }
         return MelSpectrogram(
-            frames: Array(repeating: frame, count: frames),
+            frames: frameRows,
             sampleRate: 16000,
             duration: Double(frames) * 0.01
         )
