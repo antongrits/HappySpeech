@@ -17,6 +17,7 @@ protocol ChildHomeRoutingLogic {
     func routeToVoiceCloning(childId: String)
     func routeToArticulationGym()
     func routeToWordBank(childId: String)
+    func routeToGrammarGame(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -93,5 +94,10 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     /// F-303 v25 — WordBank «Копилка слов».
     func routeToWordBank(childId: String) {
         coordinator?.navigate(to: .wordBank(childId: childId))
+    }
+
+    /// v26 2.1 — GrammarGame «Грамматика-игра».
+    func routeToGrammarGame(childId: String) {
+        coordinator?.navigate(to: .grammarGame(childId: childId))
     }
 }

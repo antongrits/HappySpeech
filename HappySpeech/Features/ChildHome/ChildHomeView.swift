@@ -707,6 +707,17 @@ struct ChildHomeView: View {
                 ) {
                     showCulturalContentSheet = true
                 }
+                // v26 2.1 — Grammar Game entry «Грамматика-игра».
+                ChildHomeQuickActionTile(
+                    title: String(localized: "child.home.action.grammar"),
+                    icon: "textformat.abc",
+                    color: ColorTokens.Brand.lilac,
+                    heroId: "quickaction_grammar",
+                    namespace: heroNamespace,
+                    reduceMotion: reduceMotion
+                ) {
+                    router?.routeToGrammarGame(childId: childId)
+                }
             }
         }
     }

@@ -93,15 +93,25 @@ struct GrammarGameView: View {
 
     // MARK: - Init (DI через инициализатор)
 
+    /// Bootstrap-замыкание (опционально). Вызывается один раз в `.task` уже на
+    /// экземпляре View, установленном в иерархию, и получает `GrammarGameDisplayHost`,
+    /// привязанный к актуальным `@State`. Координатор использует его, чтобы связать
+    /// `Presenter.display` и запустить загрузку игры.
+    private let onBootstrap: ((GrammarGameDisplayHost) -> Void)?
+
+    @State private var didBootstrap = false
+
     init(
         mode: GrammarGameMode,
         difficulty: GrammarDifficulty = .medium,
         childId: String = "default",
         interactor: any GrammarGameBusinessLogic,
-        router: GrammarGameRouter
+        router: GrammarGameRouter,
+        onBootstrap: ((GrammarGameDisplayHost) -> Void)? = nil
     ) {
         self.interactor = interactor
         self.router = router
+        self.onBootstrap = onBootstrap
         self._modeTitle = State(initialValue: mode.localizedTitle)
     }
 
@@ -145,6 +155,11 @@ struct GrammarGameView: View {
             }
         }
         .accessibilityLabel(String(localized: "grammar.game.title.\(modeTitle)"))
+        .task {
+            guard !didBootstrap, let onBootstrap else { return }
+            didBootstrap = true
+            onBootstrap(makeDisplayHost())
+        }
     }
 
     // MARK: - Background

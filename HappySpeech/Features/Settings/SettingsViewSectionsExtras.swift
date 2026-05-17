@@ -303,6 +303,25 @@ extension SettingsView {
             .frame(minHeight: 44)
 
             Button {
+                // Перезапуск обзорного тура. Закрываем Settings, чтобы spotlight-overlay
+                // лёг поверх основного экрана.
+                container.guidedTourCoordinator.start(force: true)
+                dismiss()
+            } label: {
+                Label {
+                    Text(String(localized: "settings.about.tour"))
+                        .font(TypographyTokens.body(15))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                } icon: {
+                    Image(systemName: "lightbulb")
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                }
+            }
+            .frame(minHeight: 44)
+            .accessibilityLabel(String(localized: "settings.about.tour"))
+            .accessibilityHint(String(localized: "settings.about.tour.hint"))
+
+            Button {
                 if display.licenses.isEmpty {
                     interactor?.loadLicenses(.init())
                 }

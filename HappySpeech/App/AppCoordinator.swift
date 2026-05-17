@@ -59,6 +59,15 @@ enum AppRoute: Hashable {
     case weeklyReport(childId: String, weekOffset: Int)
     case articulationGym(soundGroup: ArticulationSoundGroup)
     case wordBank(childId: String)
+    // v26 2.1: ранее не подключённые экраны (полный VIP, недостижимы из навигации)
+    case grammarGame(childId: String)
+    case guidedTour
+    case speechVisualization(word: String, targetSound: String)
+    case arFaceFilter
+    case dialectAdaptation(childId: String)
+    case logopedistChat(parentId: String, specialistId: String)
+    case culturalContent(childId: String)
+    case weeklyChallenge(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -467,6 +476,50 @@ struct AppCoordinatorView: View {
         case .wordBank(let childId):
             WordBankView(childId: childId)
                 .environment(\.circuitContext, .kid)
+
+        // MARK: - v26 2.1: ранее не подключённые экраны
+
+        case .grammarGame(let childId):
+            GrammarGameScene(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .guidedTour:
+            GuidedTourLaunchView()
+                .environment(\.circuitContext, .kid)
+
+        case .speechVisualization(let word, let targetSound):
+            NavigationStack {
+                SpeechVisualizationView(word: word, targetSound: targetSound)
+            }
+            .environment(\.circuitContext, .parent)
+
+        case .arFaceFilter:
+            ARFaceFilterView()
+                .environment(\.circuitContext, .kid)
+
+        case .dialectAdaptation(let childId):
+            NavigationStack {
+                DialectAdaptationView(childId: childId)
+            }
+            .environment(\.circuitContext, .parent)
+
+        case .logopedistChat(let parentId, let specialistId):
+            NavigationStack {
+                LogopedistChatView(parentId: parentId, specialistId: specialistId)
+            }
+            .environment(\.circuitContext, .parent)
+
+        case .culturalContent(let childId):
+            NavigationStack {
+                CulturalContentView(childId: childId)
+            }
+            .environment(\.circuitContext, .kid)
+
+        case .weeklyChallenge(let childId):
+            NavigationStack {
+                WeeklyChallengeView(childId: childId)
+            }
+            .environment(\.circuitContext, .kid)
         }
     }
 
@@ -706,11 +759,15 @@ extension AppCoordinatorView {
         // MARK: Tier 10 — Misc 9 (most fall back to .auth — no view yet)
         case "neurolinguistInsights":
             return .neurolinguistInsights(childId: previewChild)
-        case "speechVisualization",
-             "offlineMiniGame",
-             "arFaceFilter",
-             "guidedTour",
-             "grammarGame":
+        case "speechVisualization":
+            return .speechVisualization(word: "сова", targetSound: "С")
+        case "arFaceFilter":
+            return .arFaceFilter
+        case "guidedTour":
+            return .guidedTour
+        case "grammarGame":
+            return .grammarGame(childId: previewChild)
+        case "offlineMiniGame":
             return .auth
         case "siblingMultiplayerDiscovery",
              "siblingMultiplayerLobby",
@@ -718,11 +775,14 @@ extension AppCoordinatorView {
             return .siblingMultiplayer(childId: previewChild)
 
         // MARK: Tier 11 — R-screens + AE 11
-        case "dialectAdaptation",
-             "logopedistChat",
-             "weeklyChallenge",
-             "culturalContent":
-            return .auth
+        case "dialectAdaptation":
+            return .dialectAdaptation(childId: previewChild)
+        case "logopedistChat":
+            return .logopedistChat(parentId: previewParent, specialistId: "specialist-default")
+        case "weeklyChallenge":
+            return .weeklyChallenge(childId: previewChild)
+        case "culturalContent":
+            return .culturalContent(childId: previewChild)
         case "pronunciationLeaderboard":
             return .pronunciationLeaderboard(parentId: previewParent)
         case "soundDictionary":

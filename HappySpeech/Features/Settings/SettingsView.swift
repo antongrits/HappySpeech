@@ -12,9 +12,11 @@ struct SettingsView: View {
 
     // MARK: - Environment
 
-    @Environment(AppContainer.self) private var container
+    // Видимость internal (не private) — секции в SettingsViewSectionsExtras.swift
+    // обращаются к container и dismiss из extension того же типа.
+    @Environment(AppContainer.self) var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - VIP State

@@ -6345,6 +6345,17 @@
         }
       }
     },
+    "chat.attach.dialog.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прикрепить аудиозапись"
+          }
+        }
+      }
+    },
     "chat.attachment.audio.placeholder": {
       "extractionState": "manual",
       "localizations": {
@@ -6422,6 +6433,28 @@
         }
       }
     },
+    "chat.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть чат"
+          }
+        }
+      }
+    },
+    "chat.composer.attach.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прикрепить аудиозапись"
+          }
+        }
+      }
+    },
     "chat.composer.placeholder": {
       "extractionState": "manual",
       "localizations": {
@@ -6429,6 +6462,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Написать логопеду..."
+          }
+        }
+      }
+    },
+    "chat.composer.send.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отправить сообщение"
           }
         }
       }
@@ -6495,6 +6539,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@: %@, вложение %@, %@"
+          }
+        }
+      }
+    },
+    "chat.screen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чат с логопедом"
           }
         }
       }
@@ -6598,6 +6653,17 @@
         }
       }
     },
+    "chat.specialist.seed.credentials": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Логопед, стаж 12 лет"
+          }
+        }
+      }
+    },
     "chat.specialist.seed.name": {
       "extractionState": "manual",
       "localizations": {
@@ -6605,6 +6671,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Елена Ивановна"
+          }
+        }
+      }
+    },
+    "chat.specialist.unknown.credentials": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Специалист-логопед"
           }
         }
       }
@@ -6868,6 +6945,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Сказки и стихи"
+          }
+        }
+      }
+    },
+    "child.home.action.grammar": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Грамматика-игра"
           }
         }
       }
@@ -8177,6 +8265,17 @@
         }
       }
     },
+    "cultural.categories.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Категории"
+          }
+        }
+      }
+    },
     "cultural.category.a11y": {
       "extractionState": "manual",
       "localizations": {
@@ -8184,6 +8283,105 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@, %d материалов"
+          }
+        }
+      }
+    },
+    "cultural.category.all": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все"
+          }
+        }
+      }
+    },
+    "cultural.category.fairyTale.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сказки"
+          }
+        }
+      }
+    },
+    "cultural.category.poem.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Стихи"
+          }
+        }
+      }
+    },
+    "cultural.category.song.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Песенки"
+          }
+        }
+      }
+    },
+    "cultural.category.tongueTwister.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скороговорки"
+          }
+        }
+      }
+    },
+    "cultural.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть"
+          }
+        }
+      }
+    },
+    "cultural.footer.note": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новые материалы добавляются регулярно."
+          }
+        }
+      }
+    },
+    "cultural.hero.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сказки, стихи и потешки для развития речи"
+          }
+        }
+      }
+    },
+    "cultural.hero.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Народная мудрость"
           }
         }
       }
@@ -8221,6 +8419,17 @@
         }
       }
     },
+    "cultural.items.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Материалы"
+          }
+        }
+      }
+    },
     "cultural.list.empty": {
       "extractionState": "manual",
       "localizations": {
@@ -8239,6 +8448,83 @@
           "stringUnit": {
             "state": "translated",
             "value": "%d материалов"
+          }
+        }
+      }
+    },
+    "cultural.poem.barto.author": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Агния Барто"
+          }
+        }
+      }
+    },
+    "cultural.poem.barto.bear.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мишка"
+          }
+        }
+      }
+    },
+    "cultural.poem.chuk.author": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Корней Чуковский"
+          }
+        }
+      }
+    },
+    "cultural.poem.chuk.muha.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Муха-Цокотуха"
+          }
+        }
+      }
+    },
+    "cultural.reader.bookmark.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавить в избранное"
+          }
+        }
+      }
+    },
+    "cultural.reader.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть чтение"
+          }
+        }
+      }
+    },
+    "cultural.reader.navTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чтение"
           }
         }
       }
@@ -8265,6 +8551,116 @@
         }
       }
     },
+    "cultural.reader.play.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прослушать материал вслух"
+          }
+        }
+      }
+    },
+    "cultural.reader.restart.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать сначала"
+          }
+        }
+      }
+    },
+    "cultural.reader.transcript.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Текст"
+          }
+        }
+      }
+    },
+    "cultural.reader.unbookmark.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Убрать из избранного"
+          }
+        }
+      }
+    },
+    "cultural.screen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сказки и стихи"
+          }
+        }
+      }
+    },
+    "cultural.song.elka.author": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Раиса Кудашева"
+          }
+        }
+      }
+    },
+    "cultural.song.elka.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В лесу родилась ёлочка"
+          }
+        }
+      }
+    },
+    "cultural.tale.folk.author": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Народная сказка"
+          }
+        }
+      }
+    },
+    "cultural.tale.kolobok.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Колобок"
+          }
+        }
+      }
+    },
+    "cultural.tale.repka.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Репка"
+          }
+        }
+      }
+    },
     "cultural.toast.bookmarked": {
       "extractionState": "manual",
       "localizations": {
@@ -8283,6 +8679,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Удалено из избранного"
+          }
+        }
+      }
+    },
+    "cultural.twist.bobry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скороговорка про бобров"
+          }
+        }
+      }
+    },
+    "cultural.twist.shasha.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скороговорка про Сашу"
           }
         }
       }
@@ -10586,6 +11004,50 @@
         }
       }
     },
+    "dialect.central.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Литературная норма — без ярких диалектных черт."
+          }
+        }
+      }
+    },
+    "dialect.central.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Центральный говор"
+          }
+        }
+      }
+    },
+    "dialect.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть"
+          }
+        }
+      }
+    },
+    "dialect.footer.note": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Настройку можно изменить в любой момент."
+          }
+        }
+      }
+    },
     "dialect.hero.a11y": {
       "extractionState": "manual",
       "localizations": {
@@ -10593,6 +11055,116 @@
           "stringUnit": {
             "state": "translated",
             "value": "Текущий диалект: %@"
+          }
+        }
+      }
+    },
+    "dialect.hero.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Региональный говор"
+          }
+        }
+      }
+    },
+    "dialect.intro.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите говор вашего региона — упражнения будут учитывать особенности местного произношения."
+          }
+        }
+      }
+    },
+    "dialect.intro.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зачем это нужно"
+          }
+        }
+      }
+    },
+    "dialect.list.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите говор"
+          }
+        }
+      }
+    },
+    "dialect.moscow.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Аканье, редукция безударных гласных, мягкое «г»."
+          }
+        }
+      }
+    },
+    "dialect.moscow.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Московский говор"
+          }
+        }
+      }
+    },
+    "dialect.petersburg.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чёткое произношение, твёрдое «ч», характерная интонация."
+          }
+        }
+      }
+    },
+    "dialect.petersburg.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Петербургский говор"
+          }
+        }
+      }
+    },
+    "dialect.reset.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сбросить выбор"
+          }
+        }
+      }
+    },
+    "dialect.reset.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вернуться к литературной норме произношения"
           }
         }
       }
@@ -10619,6 +11191,39 @@
         }
       }
     },
+    "dialect.screen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Говор и диалекты"
+          }
+        }
+      }
+    },
+    "dialect.south.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фрикативное «г», мягкое «т» в окончаниях глаголов."
+          }
+        }
+      }
+    },
+    "dialect.south.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Южный говор"
+          }
+        }
+      }
+    },
     "dialect.toast.applied": {
       "extractionState": "manual",
       "localizations": {
@@ -10637,6 +11242,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Восстановлен диалект «%@»"
+          }
+        }
+      }
+    },
+    "dialect.ural.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Быстрый темп речи, особое произношение шипящих."
+          }
+        }
+      }
+    },
+    "dialect.ural.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Уральский говор"
           }
         }
       }
@@ -32233,6 +32860,28 @@
         }
       }
     },
+    "settings.about.tour": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показать обзорный тур"
+          }
+        }
+      }
+    },
+    "settings.about.tour.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запустить обучающий тур по приложению заново"
+          }
+        }
+      }
+    },
     "settings.about.version": {
       "extractionState": "manual",
       "localizations": {
@@ -38998,6 +39647,17 @@
         }
       }
     },
+    "weekly.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть"
+          }
+        }
+      }
+    },
     "weekly.day.a11y.completed": {
       "extractionState": "manual",
       "localizations": {
@@ -39042,6 +39702,17 @@
         }
       }
     },
+    "weekly.day.tap.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отметить день как выполненный"
+          }
+        }
+      }
+    },
     "weekly.endOfWeek.days": {
       "extractionState": "manual",
       "localizations": {
@@ -39075,6 +39746,28 @@
         }
       }
     },
+    "weekly.footer.note": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Челлендж обновляется каждый понедельник."
+          }
+        }
+      }
+    },
+    "weekly.grid.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дни недели"
+          }
+        }
+      }
+    },
     "weekly.hero.a11y": {
       "extractionState": "manual",
       "localizations": {
@@ -39082,6 +39775,160 @@
           "stringUnit": {
             "state": "translated",
             "value": "Недельный вызов: %@, %@"
+          }
+        }
+      }
+    },
+    "weekly.kind.bingo.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрой все клетки игрового поля."
+          }
+        }
+      }
+    },
+    "weekly.kind.bingo.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Бинго звуков"
+          }
+        }
+      }
+    },
+    "weekly.kind.count.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Произнеси как можно больше слов за неделю."
+          }
+        }
+      }
+    },
+    "weekly.kind.count.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Копилка слов"
+          }
+        }
+      }
+    },
+    "weekly.kind.mixed.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разные задания на каждый день недели."
+          }
+        }
+      }
+    },
+    "weekly.kind.mixed.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Смешанный режим"
+          }
+        }
+      }
+    },
+    "weekly.kind.storyteller.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Составь и расскажи историю каждый день."
+          }
+        }
+      }
+    },
+    "weekly.kind.storyteller.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рассказчик"
+          }
+        }
+      }
+    },
+    "weekly.kind.streak.description": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Занимайся каждый день без пропусков."
+          }
+        }
+      }
+    },
+    "weekly.kind.streak.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Серия дней"
+          }
+        }
+      }
+    },
+    "weekly.kindPicker.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Каждую неделю — новая цель"
+          }
+        }
+      }
+    },
+    "weekly.kindPicker.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите челлендж"
+          }
+        }
+      }
+    },
+    "weekly.progress.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прогресс челленджа"
+          }
+        }
+      }
+    },
+    "weekly.progress.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прогресс недели"
           }
         }
       }
@@ -39097,6 +39944,28 @@
         }
       }
     },
+    "weekly.reward.bingo.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Награда за бинго звуков"
+          }
+        }
+      }
+    },
+    "weekly.reward.count.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Награда за копилку слов"
+          }
+        }
+      }
+    },
     "weekly.reward.locked.label": {
       "extractionState": "manual",
       "localizations": {
@@ -39108,6 +39977,39 @@
         }
       }
     },
+    "weekly.reward.mixed.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Награда за смешанный режим"
+          }
+        }
+      }
+    },
+    "weekly.reward.storyteller.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Награда рассказчика"
+          }
+        }
+      }
+    },
+    "weekly.reward.streak.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Награда за серию дней"
+          }
+        }
+      }
+    },
     "weekly.reward.unlocked.label": {
       "extractionState": "manual",
       "localizations": {
@@ -39115,6 +40017,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Получена"
+          }
+        }
+      }
+    },
+    "weekly.screen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Челлендж недели"
           }
         }
       }

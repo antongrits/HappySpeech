@@ -566,6 +566,7 @@
 		6354D17C9FAAE71C9125EA68 /* seasonal in Resources */ = {isa = PBXBuildFile; fileRef = BBA6C89938A42DD12C6CE1E9 /* seasonal */; };
 		637E5FB0864FD73FA5E2294E /* DialectAdaptationPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06B35F150374C2A97DC596E9 /* DialectAdaptationPresenterTests.swift */; };
 		63C53F797361D1CEFC7BCBBE /* LetterTracingInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B72BB8E7E0120F07D3BC77 /* LetterTracingInteractorTests.swift */; };
+		63DA012D4B3285760EFC9104 /* GrammarGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427A9F49A1561DDC1CA53B50 /* GrammarGameScene.swift */; };
 		63E340A632D7BADCE8C7221A /* RhythmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D051290AA96A8EBD2CF0D682 /* RhythmView.swift */; };
 		642ED701B32F77B4E8580DA6 /* SiblingMultiplayerSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A37063F35A33A54A464512CB /* SiblingMultiplayerSnapshotTests.swift */; };
 		64A896DECB8E9B4B04399F0D /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = C8AAF0BB4481FECBD56A0BB7 /* FirebaseFunctions */; };
@@ -1118,6 +1119,7 @@
 		CF96252B5D77FDB0FD7F27A5 /* BreathingARView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64DF2D0B3EDFB96B758CE585 /* BreathingARView.swift */; };
 		D002DC7435A4A64EF0C8468C /* InstallationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB662F1E5BE3B84515181365 /* InstallationsService.swift */; };
 		D058B5E29CE0BC221CF1CB0D /* GrammarGameInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E53C5E751F39FBB3CDE80E /* GrammarGameInteractor.swift */; };
+		D076676669FC6740EDD690E9 /* GuidedTourLaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB491F2A1D977EFFB2B2932F /* GuidedTourLaunchView.swift */; };
 		D08CCE2473943BEC6B0BD0F9 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA76F518AED852858B59103 /* SyncService.swift */; };
 		D12A41C5FB49E9D47274CD15 /* breathingExhale.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 4F951103581A43BBDCF10B1A /* breathingExhale.ahap */; };
 		D1416C1D2DC6A407D1D0D042 /* EmailAuthWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8331B2CEB1E3CCC5E1A44D95 /* EmailAuthWorkerTests.swift */; };
@@ -1714,6 +1716,7 @@
 		420F5D879E1598FC9F2D8E53 /* FamilyAwardsCabinetInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyAwardsCabinetInteractor.swift; sourceTree = "<group>"; };
 		4269D9F775177D1AC7B9B366 /* SortingDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingDisplayLogic.swift; sourceTree = "<group>"; };
 		427A4142340CA2895B65A7CD /* ArticulationGymView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticulationGymView.swift; sourceTree = "<group>"; };
+		427A9F49A1561DDC1CA53B50 /* GrammarGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarGameScene.swift; sourceTree = "<group>"; };
 		4289309A8D17FBC7F55F47D9 /* RewardsDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardsDisplayLogic.swift; sourceTree = "<group>"; };
 		429D1E4A82ECDBDF7133308E /* ChildHomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildHomeRouter.swift; sourceTree = "<group>"; };
 		42BA2D0574E1569FC16175D4 /* lyalyaTap.ahap */ = {isa = PBXFileReference; path = lyalyaTap.ahap; sourceTree = "<group>"; };
@@ -2584,6 +2587,7 @@
 		EAF225BCFCB8AE8862C290FD /* ReportsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsPresenter.swift; sourceTree = "<group>"; };
 		EAF736B03F0F0C911DA8F23C /* SettingsViewSectionsExtras.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewSectionsExtras.swift; sourceTree = "<group>"; };
 		EB025CC6CF68962D9392B7C1 /* SessionHistoryRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionHistoryRouter.swift; sourceTree = "<group>"; };
+		EB491F2A1D977EFFB2B2932F /* GuidedTourLaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidedTourLaunchView.swift; sourceTree = "<group>"; };
 		EB662F1E5BE3B84515181365 /* InstallationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationsService.swift; sourceTree = "<group>"; };
 		EB6C0373F5F5F8639EFC9CA4 /* PoseSequenceInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseSequenceInteractor.swift; sourceTree = "<group>"; };
 		EB7746881A02442C85F77734 /* RoleSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoleSelectView.swift; sourceTree = "<group>"; };
@@ -3060,6 +3064,7 @@
 				7F33BD5BEFBC6023577026E6 /* GrammarGameModels.swift */,
 				7B20DBABE75F07761C70766B /* GrammarGamePresenter.swift */,
 				EA30F7E5B51F837B64997301 /* GrammarGameRouter.swift */,
+				427A9F49A1561DDC1CA53B50 /* GrammarGameScene.swift */,
 				CEB167096E42600255383B1C /* GrammarGameView.swift */,
 				870A8F606A8B0E250941882A /* GrammarGameViewComponents.swift */,
 				6D486A5FBACCC122EB2812D8 /* GrammarGameViewSections.swift */,
@@ -5391,6 +5396,7 @@
 				9E87C0B6CD7D05E483532C46 /* GuidedTourCoordinator.swift */,
 				85F3CF5E3ACAD1AC09E379C0 /* GuidedTourDisplayLogic.swift */,
 				584B9B403EA61238E399E629 /* GuidedTourInteractor.swift */,
+				EB491F2A1D977EFFB2B2932F /* GuidedTourLaunchView.swift */,
 				1228AA9EA10A2A64526AB68A /* GuidedTourModels.swift */,
 				1EB2C7BB6E870774F9627366 /* GuidedTourPresenter.swift */,
 				8A73C9111F579ABC43F71FC5 /* GuidedTourRouter.swift */,
@@ -7057,6 +7063,7 @@
 				84283D2C0948157AEDAB0914 /* GrammarGameModels.swift in Sources */,
 				5A448DE6631402D2277182FC /* GrammarGamePresenter.swift in Sources */,
 				2ED8B1EF9895C756EC1B5C54 /* GrammarGameRouter.swift in Sources */,
+				63DA012D4B3285760EFC9104 /* GrammarGameScene.swift in Sources */,
 				A6FC61AB1F3020ABF37300D4 /* GrammarGameView.swift in Sources */,
 				EF35905A500743C0C184F92A /* GrammarGameViewComponents.swift in Sources */,
 				2607FB9115E7A36257D6C4DF /* GrammarGameViewSections.swift in Sources */,
@@ -7065,6 +7072,7 @@
 				DC02F154775B85D993FFDAA1 /* GuidedTourCoordinator.swift in Sources */,
 				3F51A4BAB6ECD3873F10E720 /* GuidedTourDisplayLogic.swift in Sources */,
 				3616B285648EC728D584794A /* GuidedTourInteractor.swift in Sources */,
+				D076676669FC6740EDD690E9 /* GuidedTourLaunchView.swift in Sources */,
 				7BDB3E2D9E1DB8ECAB656832 /* GuidedTourModels.swift in Sources */,
 				9A6A879F6DC1CB4DF74A8585 /* GuidedTourPresenter.swift in Sources */,
 				200BB3FB5A0221C7D29D183C /* GuidedTourRouter.swift in Sources */,
