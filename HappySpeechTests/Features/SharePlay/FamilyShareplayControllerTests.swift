@@ -82,11 +82,35 @@ final class SyncMessageCodableTests: XCTestCase {
     }
 
     func test_syncMessage_equatable() {
-        let m1 = SyncMessage.roundStart(roundIndex: 1, soundId: "x", senderId: "s")
-        let m2 = SyncMessage.roundStart(roundIndex: 1, soundId: "x", senderId: "s")
-        let m3 = SyncMessage.roundStart(roundIndex: 2, soundId: "x", senderId: "s")
+        // Фабрики (`SyncMessage.roundStart`) проставляют `timestamp` через `Date()`,
+        // поэтому два вызова подряд дают разный timestamp и не равны. Equatable
+        // учитывает все поля, включая timestamp, — поэтому здесь фиксируем его явно
+        // через memberwise-инициализатор, чтобы проверять именно семантику равенства.
+        let fixedTimestamp: TimeInterval = 1_700_000_000
+        let m1 = SyncMessage(
+            kind: .roundStart(roundIndex: 1, soundId: "x"),
+            timestamp: fixedTimestamp,
+            senderId: "s"
+        )
+        let m2 = SyncMessage(
+            kind: .roundStart(roundIndex: 1, soundId: "x"),
+            timestamp: fixedTimestamp,
+            senderId: "s"
+        )
+        let m3 = SyncMessage(
+            kind: .roundStart(roundIndex: 2, soundId: "x"),
+            timestamp: fixedTimestamp,
+            senderId: "s"
+        )
+        // Разный timestamp → не равны, даже при одинаковом kind/senderId.
+        let m4 = SyncMessage(
+            kind: .roundStart(roundIndex: 1, soundId: "x"),
+            timestamp: fixedTimestamp + 1,
+            senderId: "s"
+        )
         XCTAssertEqual(m1, m2)
         XCTAssertNotEqual(m1, m3)
+        XCTAssertNotEqual(m1, m4)
     }
 }
 

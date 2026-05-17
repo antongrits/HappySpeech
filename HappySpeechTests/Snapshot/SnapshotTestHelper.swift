@@ -77,6 +77,21 @@ enum SnapshotTestHelper {
         return dir.appendingPathComponent("\(name)_\(appearance).png")
     }
 
+    // MARK: - Async settling
+
+    /// Прокручивает главный run loop, давая SwiftUI выполнить отложенные `.task`/`.onAppear`
+    /// замыкания перед снятием снапшота.
+    ///
+    /// Экраны с VIP-bootstrap (`PermissionFlowView` и др.) инициализируют состояние
+    /// внутри `.task { await bootstrap() }`. Без прокрутки run loop снапшот ловит
+    /// промежуточный кадр (`ProgressView`), что делает тест flaky. Несколько коротких
+    /// итераций run loop гарантируют, что синхронная часть `.task` отработала.
+    static func settleMainRunLoop(iterations: Int = 12, interval: TimeInterval = 0.02) {
+        for _ in 0 ..< iterations {
+            RunLoop.main.run(until: Date().addingTimeInterval(interval))
+        }
+    }
+
     // MARK: - Pixel comparison
 
     /// Максимальный допустимый процент отличающихся пикселей (5%).
