@@ -109,7 +109,7 @@ struct SiblingLobbyView: View {
     }
 
     private var vsLabel: some View {
-        Text("VS")
+        Text(String(localized: "sibling.lobby.vs"))
             .font(TypographyTokens.display(36))
             .foregroundStyle(ColorTokens.Brand.primary)
             .scaleEffect(viewModel.vsPulse ? 1.1 : 1.0)

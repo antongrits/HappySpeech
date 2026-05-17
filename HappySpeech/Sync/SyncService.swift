@@ -1,3 +1,4 @@
+import FirebaseFirestore
 import Foundation
 import Network
 import OSLog
@@ -75,6 +76,14 @@ public actor LiveSyncService: SyncService {
     private let networkMonitor: any NetworkMonitorService
     private let policy: SyncPolicy
     private let sleeper: @Sendable (Double) async -> Void
+
+    /// Firestore-клиент для batch-выгрузки прогресса. SDK потокобезопасен;
+    /// лениво резолвится при первом обращении, чтобы actor можно было
+    /// конструировать в unit-тестах без сконфигурированного `FirebaseApp`.
+    private lazy var firestore: Firestore = Firestore.firestore()
+
+    /// Максимум операций в одном `WriteBatch` Firestore (лимит SDK — 500).
+    private let firestoreBatchLimit = 450
 
     // MARK: - Sync state stream
 
@@ -394,15 +403,17 @@ public actor LiveSyncService: SyncService {
         return min(raw, cap)
     }
 
-    /// Firestore batch write. Stub until `import FirebaseFirestore` is wired at module level
-    /// — builds correct document shapes (`users/{uid}/children/{cid}` etc.), validates JSON
-    /// serialisability, simulates network latency. Server-side merge-by-max is enforced by
-    /// `functions/src/progress.js` Cloud Function + `setData(merge: true)` on the client.
+    /// Firestore batch write. Строит документы по схеме
+    /// `users/{uid}/children/{cid}`, `users/{uid}/sessions/{sid}`,
+    /// `users/{uid}/progress/{pid}` и выгружает их через `WriteBatch` с
+    /// `setData(merge: true)`. Серверный merge-by-max численных полей
+    /// (`successRate`, `currentStreak`, `totalSessionMinutes`) обеспечивает
+    /// Cloud Function `functions/src/progress.js`.
     ///
-    /// Пока это заглушка, но контракт с реальным Firestore-бэкендом уже моделируется:
-    /// пустой `userId` трактуется как серверный reject (non-2xx) и пробрасывается как
-    /// `SyncError.remoteRejected` — именно его UI будет показывать при отказах вида
-    /// `PERMISSION_DENIED` / `UNAUTHENTICATED`, когда Firebase SDK будет подключён.
+    /// Документы режутся на чанки по `firestoreBatchLimit`, т.к. один `WriteBatch`
+    /// Firestore поддерживает максимум 500 операций. Пустой `userId` трактуется
+    /// как серверный reject (`PERMISSION_DENIED` / `UNAUTHENTICATED`) и
+    /// пробрасывается как `SyncError.remoteRejected`.
     private func performFirestoreBatchWrite(
         userId: String,
         children: [ChildProfileSnapshot],
@@ -413,21 +424,46 @@ public actor LiveSyncService: SyncService {
             throw SyncError.remoteRejected("empty userId")
         }
 
-        let childDocs = children.map { $0.firestoreDict() }
-        let sessionDocs = sessions.map { $0.firestoreDict(parentId: userId) }
-        let progressDocs = progress.map { $0.firestoreDict(parentId: userId) }
+        let userDoc = firestore.collection("users").document(userId)
+        let childrenCol = userDoc.collection("children")
+        let sessionsCol = userDoc.collection("sessions")
+        let progressCol = userDoc.collection("progress")
 
-        for dict in childDocs + sessionDocs + progressDocs {
-            guard JSONSerialization.isValidJSONObject(dict) else {
-                throw SyncError.invalidPayload
-            }
+        // Собираем все записи в единый список (ссылка на документ + payload),
+        // валидируем JSON-сериализуемость и затем режем на batch-чанки.
+        var writes: [(ref: DocumentReference, data: [String: Any])] = []
+
+        for child in children {
+            let dict = child.firestoreDict()
+            guard JSONSerialization.isValidJSONObject(dict) else { throw SyncError.invalidPayload }
+            writes.append((childrenCol.document(child.id), dict))
         }
-        try await Task.sleep(for: .milliseconds(120))
-        let cCount = childDocs.count
-        let sCount = sessionDocs.count
-        let pCount = progressDocs.count
-        HSLogger.sync.debug(
-            "Firestore stub uid=\(userId, privacy: .private) c=\(cCount) s=\(sCount) p=\(pCount)"
+        for session in sessions {
+            let dict = session.firestoreDict(parentId: userId)
+            guard JSONSerialization.isValidJSONObject(dict) else { throw SyncError.invalidPayload }
+            writes.append((sessionsCol.document(session.id), dict))
+        }
+        for entry in progress {
+            let dict = entry.firestoreDict(parentId: userId)
+            guard JSONSerialization.isValidJSONObject(dict) else { throw SyncError.invalidPayload }
+            writes.append((progressCol.document(entry.id), dict))
+        }
+
+        guard !writes.isEmpty else { return }
+
+        for chunk in writes.chunked(into: firestoreBatchLimit) {
+            let batch = firestore.batch()
+            for write in chunk {
+                batch.setData(write.data, forDocument: write.ref, merge: true)
+            }
+            try await batch.commit()
+        }
+
+        HSLogger.sync.info(
+            """
+            Firestore batch committed uid=\(userId, privacy: .private) \
+            c=\(children.count) s=\(sessions.count) p=\(progress.count)
+            """
         )
     }
 
@@ -536,6 +572,19 @@ public actor LiveSyncService: SyncService {
         case let (left?, nil): return left
         case let (nil, right?): return right
         case (nil, nil): return nil
+        }
+    }
+}
+
+// MARK: - Array chunking
+
+private extension Array {
+    /// Делит массив на под-массивы максимум по `size` элементов.
+    /// Используется для нарезки документов под лимит Firestore `WriteBatch` (500).
+    func chunked(into size: Int) -> [[Element]] {
+        guard size > 0 else { return [self] }
+        return stride(from: 0, to: count, by: size).map {
+            Array(self[$0..<Swift.min($0 + size, count)])
         }
     }
 }

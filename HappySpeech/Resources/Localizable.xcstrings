@@ -5474,17 +5474,6 @@
         }
       }
     },
-    "bingo.summary.stars_earned %lld": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Получено звёзд: %lld из 3"
-          }
-        }
-      }
-    },
     "bingo.finish": {
       "extractionState": "manual",
       "localizations": {
@@ -5536,6 +5525,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Названо слово: %@"
+          }
+        }
+      }
+    },
+    "bingo.summary.stars_earned %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Получено звёзд: %lld из 3"
           }
         }
       }
@@ -33758,6 +33758,18 @@
         }
       }
     },
+    "sibling.lobby.vs": {
+      "comment": "Декоративный versus-индикатор в лобби игры на двоих",
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ПРОТИВ"
+          }
+        }
+      }
+    },
     "sibling.lobby.waiting": {
       "extractionState": "manual",
       "localizations": {
@@ -33791,6 +33803,17 @@
         }
       }
     },
+    "sorting.accessibility.bin_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Положить слово в эту корзину"
+          }
+        }
+      }
+    },
     "sorting.accessibility.category_stat %@ %lld %lld": {
       "extractionState": "manual",
       "localizations": {
@@ -33809,17 +33832,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@, перетащи в нужную корзину"
-          }
-        }
-      }
-    },
-    "sorting.accessibility.bin_hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Положить слово в эту корзину"
           }
         }
       }
