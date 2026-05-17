@@ -319,6 +319,8 @@ enum ChildHomeModels {
     struct HomeTaskPreviewData: Sendable {
         let id: String
         let titleKey: String
+        /// Количество заданий по звуку — подставляется в `%d` plural-строки `titleKey`.
+        let taskCount: Int
         let targetSound: String
         let dueDate: Date?
         let isCompleted: Bool
