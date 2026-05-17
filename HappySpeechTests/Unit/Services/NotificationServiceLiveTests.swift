@@ -193,6 +193,70 @@ final class NotificationServiceLiveTests: XCTestCase {
         XCTAssertNotNil(pending)
     }
 
+    // MARK: - Non-Kids-mode path (authorization gate)
+    //
+    // Без Kids-mode методы доходят до проверки isAuthorized. В unit-окружении
+    // permission == .notDetermined → isAuthorized == false → методы no-op без выброса.
+
+    func test_scheduleDailyReminder_noKidsMode_unauthorized_doesNotThrow() async {
+        // Kids-mode выключен (дефолт false в изолированном suite).
+        let sut = makeSUT()
+        var components = DateComponents()
+        components.hour = 8
+        components.minute = 15
+        do {
+            try await sut.scheduleDailyReminder(at: components)
+        } catch {
+            XCTFail("Без авторизации scheduleDailyReminder должен no-op, а не бросать: \(error)")
+        }
+    }
+
+    func test_scheduleStreakReminder_noKidsMode_unauthorized_doesNotThrow() async {
+        let sut = makeSUT()
+        do {
+            try await sut.scheduleStreakReminder(streakDays: 12)
+        } catch {
+            XCTFail("Без авторизации scheduleStreakReminder должен no-op: \(error)")
+        }
+    }
+
+    func test_scheduleWeeklyReport_noKidsMode_unauthorized_doesNotThrow() async {
+        let sut = makeSUT()
+        do {
+            try await sut.scheduleWeeklyReport()
+        } catch {
+            XCTFail("Без авторизации scheduleWeeklyReport должен no-op: \(error)")
+        }
+    }
+
+    func test_scheduleParentTip_noKidsMode_returnsPrefixedIdentifier() async throws {
+        let sut = makeSUT()
+        var when = DateComponents()
+        when.hour = 11
+        when.minute = 30
+        let identifier = try await sut.scheduleParentTip(content: "Подсказка дня", when: when)
+        XCTAssertTrue(identifier.hasPrefix(NotificationServiceLive.Identifier.parentTipPrefix))
+    }
+
+    func test_scheduleDailyKidReminder_noKidsMode_unauthorized_doesNotCrash() async {
+        let sut = makeSUT()
+        await sut.scheduleDailyKidReminder(childName: "Лена")
+    }
+
+    func test_scheduleWeeklyParentSummary_noKidsMode_unauthorized_doesNotCrash() async {
+        let sut = makeSUT()
+        await sut.scheduleWeeklyParentSummary(achievementsCount: 5, streakDays: 14)
+    }
+
+    func test_scheduleDailyReminder_intSignature_noKidsMode_doesNotThrow() async {
+        let sut = makeSUT()
+        do {
+            try await sut.scheduleDailyReminder(at: 7, minute: 45)
+        } catch {
+            XCTFail("Legacy int-сигнатура без Kids-mode должна no-op: \(error)")
+        }
+    }
+
     // MARK: - State isolation
 
     func test_kidsModeFlag_isReadFromInjectedDefaults() async {

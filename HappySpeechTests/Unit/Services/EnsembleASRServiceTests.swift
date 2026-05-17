@@ -1,3 +1,4 @@
+@preconcurrency import AVFoundation
 @testable import HappySpeech
 import XCTest
 
@@ -114,6 +115,81 @@ final class EnsembleASRServiceTests: XCTestCase {
         let mock = MockEnsembleASRService()
         await mock.warmUp(tier: .a)
         await mock.warmUp(tier: .b)
+    }
+
+    // MARK: - LiveEnsembleASRService — recognize (через mock-зависимости + реальный WAV)
+
+    /// Создаёт валидный WAV-файл 16kHz mono в tmp для LiveEnsembleASRService.loadPCMData.
+    private func makeTempWAV(durationSec: Double = 1.0) throws -> URL {
+        guard let format = AVAudioFormat(
+            commonFormat: .pcmFormatFloat32,
+            sampleRate: 16_000,
+            channels: 1,
+            interleaved: false
+        ) else {
+            throw NSError(domain: "EnsembleASRTest", code: 1)
+        }
+        let frameCount = AVAudioFrameCount(16_000 * durationSec)
+        guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: frameCount) else {
+            throw NSError(domain: "EnsembleASRTest", code: 2)
+        }
+        buffer.frameLength = frameCount
+        if let channel = buffer.floatChannelData?[0] {
+            for index in 0..<Int(frameCount) {
+                channel[index] = sin(2.0 * .pi * 440.0 * Float(index) / 16_000.0) * 0.3
+            }
+        }
+        let url = FileManager.default.temporaryDirectory
+            .appendingPathComponent("ensemble_\(UUID().uuidString).wav")
+        let file = try AVAudioFile(forWriting: url, settings: format.settings)
+        try file.write(from: buffer)
+        return url
+    }
+
+    func test_live_recognize_tierA_returnsResultWithTierA() async throws {
+        let sut = makeLive()
+        let url = try makeTempWAV()
+        defer { try? FileManager.default.removeItem(at: url) }
+        let result = try await sut.recognize(url: url, tier: .a)
+        XCTAssertEqual(result.detectedTier, .a, "Tier A — детский on-device контур")
+        XCTAssertGreaterThanOrEqual(result.confidence, 0.0)
+        XCTAssertLessThanOrEqual(result.confidence, 1.0)
+        XCTAssertGreaterThanOrEqual(result.processingTimeMs, 0)
+    }
+
+    func test_live_recognize_tierB_returnsResultWithTierB() async throws {
+        let sut = makeLive()
+        let url = try makeTempWAV()
+        defer { try? FileManager.default.removeItem(at: url) }
+        let result = try await sut.recognize(url: url, tier: .b)
+        XCTAssertEqual(result.detectedTier, .b, "Tier B — родительский/специалист контур")
+        XCTAssertGreaterThanOrEqual(result.confidence, 0.0)
+    }
+
+    func test_live_recognize_tierB_usesWhisperTranscript() async throws {
+        let sut = makeLive()
+        let url = try makeTempWAV()
+        defer { try? FileManager.default.removeItem(at: url) }
+        let result = try await sut.recognize(url: url, tier: .b)
+        // MockASRService возвращает "рыба" — Tier B берёт Whisper-транскрипт.
+        XCTAssertEqual(result.transcript, "рыба")
+    }
+
+    func test_live_recognize_invalidURL_throws() async {
+        let sut = makeLive()
+        let badURL = URL(fileURLWithPath: "/tmp/definitely_missing_\(UUID().uuidString).wav")
+        do {
+            _ = try await sut.recognize(url: badURL, tier: .a)
+            XCTFail("Несуществующий файл должен бросить ошибку")
+        } catch {
+            // Ожидаемо — AVAudioFile не открывает несуществующий путь.
+        }
+    }
+
+    func test_live_warmUp_doesNotCrash() async {
+        let sut = makeLive()
+        await sut.warmUp(tier: .a)
+        await sut.warmUp(tier: .b)
     }
 
     // MARK: - EnsembleASRResult — value semantics
