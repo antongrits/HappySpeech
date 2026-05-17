@@ -198,6 +198,7 @@ struct RepeatAfterModelView: View {
             ) {
                 startRecording()
             }
+            .accessibilityIdentifier("recordButton")
             .accessibilityHint(String(localized: "repeat.button.record.hint"))
 
             // Кнопка подсказки (только если ещё есть уровни).
@@ -541,6 +542,7 @@ struct RepeatAfterModelView: View {
                     container.soundService.playUISound(.tap)
                     interactor.advanceWord()
                 }
+                .accessibilityIdentifier("gameNextButton")
             } else {
                 HSButton(
                     String(localized: "repeat.button.retry"),
@@ -551,6 +553,7 @@ struct RepeatAfterModelView: View {
                     // Возвращаемся к wordPreview того же слова — попыток ещё есть.
                     display.phase = .wordPreview
                 }
+                .accessibilityIdentifier("gameNextButton")
             }
         }
         .padding(.horizontal, SpacingTokens.screenEdge)

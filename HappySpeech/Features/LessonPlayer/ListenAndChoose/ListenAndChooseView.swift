@@ -159,6 +159,7 @@ struct ListenAndChooseView: View {
                 reduceMotion: reduceMotion,
                 onTap: { playSample(targetWord: vm.targetWord) }
             )
+            .accessibilityIdentifier("audioPlayButton")
             .accessibilityLabel(String(localized: "Прослушать слово \(vm.targetWord)"))
             .accessibilityHint(String(localized: "listen.audio.button.hint"))
 
@@ -241,6 +242,7 @@ struct ListenAndChooseView: View {
         }
         .buttonStyle(.plain)
         .disabled(phase != .choosing || feedbackIsCorrect == true || revealAnswer)
+        .accessibilityIdentifier("answerOption_\(index)")
         .accessibilityLabel(String(localized: "Вариант: \(option.word)"))
         .accessibilityAddTraits(.isButton)
         .accessibilityValue(

@@ -159,6 +159,7 @@ struct NarrativeQuestView: View {
                 interactor.startStage(.init(stageIndex: 0))
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
+            .accessibilityIdentifier("gameNextButton")
             .accessibilityHint(String(localized: "Начнёт первый этап квеста"))
         }
         .padding(.vertical, SpacingTokens.medium)
@@ -349,6 +350,7 @@ struct NarrativeQuestView: View {
                 onComplete(display.lastScore)
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
+            .accessibilityIdentifier("gameNextButton")
         }
         .padding(.vertical, SpacingTokens.medium)
     }

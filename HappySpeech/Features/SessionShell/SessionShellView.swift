@@ -216,6 +216,7 @@ struct SessionShellBinder: View {
                 content
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .accessibilityElement(children: .contain)
+                    .accessibilityIdentifier("gameContentArea")
             }
             .padding(.vertical, SpacingTokens.large)
 
@@ -280,6 +281,7 @@ struct SessionShellBinder: View {
                 }
             }
         }
+        .accessibilityIdentifier("SessionShellRoot")
     }
 
     // MARK: - Background
@@ -354,7 +356,9 @@ struct SessionShellBinder: View {
                 onSessionFinished()
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
+            .accessibilityIdentifier("sessionCompletedButton")
         }
+        .accessibilityIdentifier("sessionCompletedView")
     }
 
     @ViewBuilder
@@ -461,6 +465,7 @@ struct SessionShellBinder: View {
                 Task { await onComplete(activity.id, 0.9) }
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
+            .accessibilityIdentifier("gameNextButton")
         }
         .padding()
     }
@@ -495,5 +500,6 @@ struct SessionShellBinder: View {
         .padding(.top, SpacingTokens.xxLarge)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(vm.title). \(vm.subtitle)")
+        .accessibilityIdentifier("rewardOverlay")
     }
 }

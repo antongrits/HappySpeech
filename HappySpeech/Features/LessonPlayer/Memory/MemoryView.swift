@@ -222,8 +222,9 @@ struct MemoryView: View {
             count: display.columns
         )
         return LazyVGrid(columns: cols, spacing: SpacingTokens.small) {
-            ForEach(display.cards) { card in
+            ForEach(Array(display.cards.enumerated()), id: \.element.id) { index, card in
                 cardTile(card)
+                    .accessibilityIdentifier("memoryCard_\(index)")
             }
         }
     }
@@ -409,6 +410,7 @@ struct MemoryView: View {
                     Task { await interactor.advanceToNextRound() }
                 }
                 .frame(maxWidth: 320)
+                .accessibilityIdentifier("gameNextButton")
                 .accessibilityLabel(String(localized: "Перейти к следующему раунду"))
             } else {
                 HSButton(
@@ -417,6 +419,7 @@ struct MemoryView: View {
                     icon: "checkmark.circle.fill"
                 ) { finalize() }
                 .frame(maxWidth: 320)
+                .accessibilityIdentifier("gameNextButton")
             }
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
@@ -450,6 +453,7 @@ struct MemoryView: View {
             ) { finalize() }
             .frame(maxWidth: 320)
             .padding(.bottom, SpacingTokens.large)
+            .accessibilityIdentifier("gameNextButton")
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
         .accessibilityElement(children: .contain)

@@ -225,6 +225,7 @@ struct SoundHunterView: View {
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.bottom, SpacingTokens.large)
+            .accessibilityIdentifier("gameNextButton")
             .accessibilityHint(String(localized: "Вернуться к занятию"))
         }
     }

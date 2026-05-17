@@ -268,8 +268,9 @@ struct SortingView: View {
             ? [GridItem(.flexible()), GridItem(.flexible())]
             : [GridItem(.flexible()), GridItem(.flexible())]
         return LazyVGrid(columns: columns, spacing: SpacingTokens.medium) {
-            ForEach(display.categories) { category in
+            ForEach(Array(display.categories.enumerated()), id: \.element.id) { index, category in
                 categoryButton(category)
+                    .accessibilityIdentifier("sortingCategory_\(index)")
             }
         }
     }
@@ -460,6 +461,7 @@ struct SortingView: View {
                 ) { finalize() }
                 .frame(maxWidth: 320)
                 .padding(.bottom, SpacingTokens.large)
+                .accessibilityIdentifier("gameNextButton")
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
         }
