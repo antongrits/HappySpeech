@@ -81,6 +81,95 @@ final class RemoteConfigServiceTests: XCTestCase {
         XCTAssertEqual(sut.minAppVersion, "1.0.0")
     }
 
+    // MARK: - Remaining feature-flag defaults
+
+    func test_defaultFeatureFlags_remainingValues() {
+        let sut = makeSUT()
+        XCTAssertFalse(sut.featureRealtimeLipsyncEnabled)
+        XCTAssertTrue(sut.featureSpectrogramEnabled)
+        XCTAssertTrue(sut.featureEmotionDetectionEnabled)
+        XCTAssertTrue(sut.featureSpeakerVerificationEnabled)
+        XCTAssertFalse(sut.featureQwenKidCircuit)
+    }
+
+    // MARK: - Remaining content-config defaults
+
+    func test_defaultContentConfig_summaryDays() {
+        let sut = makeSUT()
+        XCTAssertEqual(sut.weeklySummaryDay, "sunday")
+        XCTAssertEqual(sut.parentSummaryDay, "sunday")
+    }
+
+    func test_defaultOnboardingConfig_values() {
+        let sut = makeSUT()
+        XCTAssertTrue(sut.onboardingSkipAllowed)
+        XCTAssertEqual(sut.demoModeSteps, 15)
+    }
+
+    func test_defaultUIFlags_values() {
+        let sut = makeSUT()
+        XCTAssertTrue(sut.homeShowStreakCelebration)
+        XCTAssertTrue(sut.parentDashboardShowMLInsights)
+    }
+
+    func test_defaultVersionManagement_forceUpdateMinVersion() {
+        let sut = makeSUT()
+        XCTAssertEqual(sut.forceUpdateMinVersion, "1.0.0")
+    }
+
+    // MARK: - Overrides — full surface
+
+    func test_overrideFeatureFlags_propagate() {
+        let sut = makeSUT()
+        sut.featureSeasonalEventsEnabled = false
+        sut.featureBodyTrackingEnabled = false
+        sut.featureRealtimeLipsyncEnabled = true
+        sut.featureSpectrogramEnabled = false
+        sut.featureEmotionDetectionEnabled = false
+        sut.featureSpeakerVerificationEnabled = false
+        sut.featureQwenKidCircuit = true
+        XCTAssertFalse(sut.featureSeasonalEventsEnabled)
+        XCTAssertFalse(sut.featureBodyTrackingEnabled)
+        XCTAssertTrue(sut.featureRealtimeLipsyncEnabled)
+        XCTAssertFalse(sut.featureSpectrogramEnabled)
+        XCTAssertFalse(sut.featureEmotionDetectionEnabled)
+        XCTAssertFalse(sut.featureSpeakerVerificationEnabled)
+        XCTAssertTrue(sut.featureQwenKidCircuit)
+    }
+
+    func test_overrideContentAndVersionConfig_propagate() {
+        let sut = makeSUT()
+        sut.lyalyaVoiceDefault = "cute"
+        sut.dailyReminderTime = "19:30"
+        sut.weeklySummaryDay = "monday"
+        sut.parentSummaryDay = "friday"
+        sut.maxSessionDurationMin = 30
+        sut.minAppVersion = "2.1.0"
+        sut.forceUpdateMinVersion = "2.0.0"
+        sut.homeShowStreakCelebration = false
+        sut.parentDashboardShowMLInsights = false
+        sut.onboardingSkipAllowed = false
+        XCTAssertEqual(sut.lyalyaVoiceDefault, "cute")
+        XCTAssertEqual(sut.dailyReminderTime, "19:30")
+        XCTAssertEqual(sut.weeklySummaryDay, "monday")
+        XCTAssertEqual(sut.parentSummaryDay, "friday")
+        XCTAssertEqual(sut.maxSessionDurationMin, 30)
+        XCTAssertEqual(sut.minAppVersion, "2.1.0")
+        XCTAssertEqual(sut.forceUpdateMinVersion, "2.0.0")
+        XCTAssertFalse(sut.homeShowStreakCelebration)
+        XCTAssertFalse(sut.parentDashboardShowMLInsights)
+        XCTAssertFalse(sut.onboardingSkipAllowed)
+    }
+
+    // MARK: - startRealtimeUpdates (mock no-op)
+
+    func test_startRealtimeUpdates_isSafe() {
+        let sut = makeSUT()
+        sut.startRealtimeUpdates()
+        sut.startRealtimeUpdates()
+        // Повторный вызов безопасен — mock no-op.
+    }
+
     // MARK: - fetch / activate (mock no-ops)
 
     func test_fetch_doesNotThrow() async {
