@@ -117,6 +117,7 @@ targets:
           - PrivacyInfo.xcprivacy
           - Models/Whisper/whisper-base/**
           - Models/Whisper/whisper-small/**
+          - Audio/**
         type: group
         buildPhase: resources
       - path: HappySpeech/Resources/PrivacyInfo.xcprivacy
@@ -126,6 +127,9 @@ targets:
         type: folder
         buildPhase: resources
       - path: HappySpeech/Resources/Models/Whisper/whisper-small
+        type: folder
+        buildPhase: resources
+      - path: HappySpeech/Resources/Audio
         type: folder
         buildPhase: resources
       - path: HappySpeech/Content/Seed/seasonal

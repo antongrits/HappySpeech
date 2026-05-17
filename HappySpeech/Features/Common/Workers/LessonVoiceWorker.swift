@@ -188,11 +188,13 @@ final class LessonVoiceWorker: NSObject {
     // MARK: - Private: lookup
 
     private static func lyalyaURL(for phraseId: String) -> URL? {
-        // Folder reference кладёт папку напрямую в корень .app bundle.
+        // Audio/ подключён в project.yml как folder reference (type: folder),
+        // поэтому структура подпапок сохраняется внутри .app bundle:
+        // <bundle>/Audio/Lyalya/lessons/<phraseId>.m4a
         Bundle.main.url(
             forResource: phraseId,
             withExtension: "m4a",
-            subdirectory: "lessons"
+            subdirectory: "Audio/Lyalya/lessons"
         )
     }
 

@@ -5,8 +5,9 @@ import OSLog
 // MARK: - GrammarFeedbackWorker
 
 /// Воспроизводит звуковую и тактильную обратную связь при ответах.
-/// Использует профессиональные m4a-фразы Ляли (Resources/Audio/Lyalya/),
-/// с откатом на AVSpeechSynthesizer TTS если файл не найден.
+/// Использует записанные m4a-фразы Ляли (Resources/Audio/Lyalya/),
+/// с откатом на `LessonVoiceWorker` (тоже голос Ляли) если файл не найден.
+/// Siri-TTS не используется.
 @MainActor
 final class GrammarFeedbackWorker: NSObject {
 
@@ -120,14 +121,15 @@ final class GrammarFeedbackWorker: NSObject {
 
     // MARK: - Private
 
-    /// Воспроизводит m4a-файл из Resources/Audio/Lyalya/.
+    /// Воспроизводит m4a-файл из Audio/Lyalya/.
+    /// Audio/ подключён как folder reference, путь в бандле: <bundle>/Audio/Lyalya/<name>.m4a.
     /// Возвращает true если файл найден и воспроизведение запущено.
     @discardableResult
     private func playLyalyaAsset(named name: String) -> Bool {
         guard let url = Bundle.main.url(
             forResource: name,
             withExtension: "m4a",
-            subdirectory: "Lyalya"
+            subdirectory: "Audio/Lyalya"
         ) else {
             logger.debug("Lyalya asset not found: \(name, privacy: .public) — falling back to TTS")
             return false
