@@ -158,4 +158,54 @@ final class GrammarContentLoaderWorkerTests: XCTestCase {
         let rounds = GrammarContentLoaderWorker.fallbackRounds(mode: .oneMany, difficulty: .hard)
         XCTAssertFalse(rounds.isEmpty)
     }
+
+    func test_fallbackRounds_dativeMode_preservesMode() {
+        let rounds = GrammarContentLoaderWorker.fallbackRounds(mode: .dative, difficulty: .easy)
+        for round in rounds {
+            XCTAssertEqual(round.mode, .dative)
+        }
+    }
+
+    // MARK: - loadRounds (в unit-окружении JSON недоступен → fallback)
+
+    func test_loadRounds_oneMany_returnsNonEmpty() async {
+        let worker = GrammarContentLoaderWorker()
+        let rounds = await worker.loadRounds(mode: .oneMany, difficulty: .easy)
+        XCTAssertFalse(rounds.isEmpty, "loadRounds должен вернуть хотя бы fallback-раунды")
+    }
+
+    func test_loadRounds_dative_returnsNonEmpty() async {
+        let worker = GrammarContentLoaderWorker()
+        let rounds = await worker.loadRounds(mode: .dative, difficulty: .medium)
+        XCTAssertFalse(rounds.isEmpty)
+    }
+
+    func test_loadRounds_genitive_returnsNonEmpty() async {
+        let worker = GrammarContentLoaderWorker()
+        let rounds = await worker.loadRounds(mode: .genitive, difficulty: .hard)
+        XCTAssertFalse(rounds.isEmpty)
+    }
+
+    func test_loadRounds_instrumental_returnsNonEmpty() async {
+        let worker = GrammarContentLoaderWorker()
+        let rounds = await worker.loadRounds(mode: .instrumental, difficulty: .easy)
+        XCTAssertFalse(rounds.isEmpty)
+    }
+
+    func test_loadRounds_respectsTotalRoundsLimit() async {
+        let worker = GrammarContentLoaderWorker()
+        let rounds = await worker.loadRounds(mode: .oneMany, difficulty: .easy)
+        XCTAssertLessThanOrEqual(rounds.count, GrammarDifficulty.easy.totalRounds)
+    }
+
+    func test_loadRounds_eachRoundHasCorrectAnswerInChoices() async {
+        let worker = GrammarContentLoaderWorker()
+        let rounds = await worker.loadRounds(mode: .oneMany, difficulty: .medium)
+        for round in rounds where !round.choices.isEmpty {
+            XCTAssertTrue(
+                round.choices.contains(where: { $0.text == round.correctAnswer }),
+                "Среди вариантов должен быть правильный ответ"
+            )
+        }
+    }
 }

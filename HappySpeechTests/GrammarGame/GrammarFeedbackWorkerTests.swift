@@ -110,10 +110,51 @@ final class GrammarFeedbackWorkerTests: XCTestCase {
         XCTAssertNoThrow(sut.speakLevelComplete(difficulty: "legendary"))
     }
 
+    // MARK: - speakQuestion: routing does not crash
+
+    func test_speakQuestion_withoutMode_doesNotCrash() {
+        XCTAssertNoThrow(sut.speakQuestion("Сколько шариков?"))
+    }
+
+    func test_speakQuestion_withMode_doesNotCrash() {
+        XCTAssertNoThrow(sut.speakQuestion("Один или много?", mode: "one_many"))
+    }
+
+    func test_speakQuestion_dativeMode_doesNotCrash() {
+        XCTAssertNoThrow(sut.speakQuestion("Кому дать мяч?", mode: "dative"))
+    }
+
+    // MARK: - speakCorrectFeedback / speakIncorrectFeedback / speakHint
+
+    func test_speakCorrectFeedback_doesNotCrash() {
+        XCTAssertNoThrow(sut.speakCorrectFeedback("Молодец!"))
+    }
+
+    func test_speakIncorrectFeedback_doesNotCrash() {
+        XCTAssertNoThrow(sut.speakIncorrectFeedback("Попробуй ещё раз"))
+    }
+
+    func test_speakHint_doesNotCrash() {
+        XCTAssertNoThrow(sut.speakHint("Посчитай предметы"))
+    }
+
+    // MARK: - speakQuestion после speak — отмена предыдущей задачи
+
+    func test_speakQuestion_calledRepeatedly_cancelsPrevious() {
+        sut.speakQuestion("Первый вопрос")
+        sut.speakQuestion("Второй вопрос")
+        XCTAssertNoThrow(sut.stopSpeaking())
+    }
+
     // MARK: - stopSpeaking: idempotent
 
     func test_stopSpeaking_calledTwice_doesNotCrash() {
         sut.stopSpeaking()
+        XCTAssertNoThrow(sut.stopSpeaking())
+    }
+
+    func test_stopSpeaking_afterSpeak_doesNotCrash() {
+        sut.speakHint("подсказка")
         XCTAssertNoThrow(sut.stopSpeaking())
     }
 }

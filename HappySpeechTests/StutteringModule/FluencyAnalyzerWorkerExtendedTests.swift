@@ -139,4 +139,112 @@ final class FluencyAnalyzerWorkerExtendedTests: XCTestCase {
         let count = worker.estimateSyllableCount(in: "apple")
         XCTAssertEqual(count, 2, "«apple» — 2 гласных (a, e)")
     }
+
+    // MARK: - analyzeRealTranscript: повторения слов (regex)
+
+    func test_analyzeRealTranscript_wordRepetition_counted() {
+        let transcript = WhisperTranscript(
+            fullText: "мама мама пошла домой",
+            segments: []
+        )
+        let analysis = worker.analyzeRealTranscript(transcript)
+        XCTAssertEqual(analysis.repetitions, 1, "«мама мама» — одно повторение")
+        XCTAssertFalse(analysis.isStub)
+    }
+
+    func test_analyzeRealTranscript_noRepetition_zero() {
+        let transcript = WhisperTranscript(
+            fullText: "кот сидит на окне",
+            segments: []
+        )
+        let analysis = worker.analyzeRealTranscript(transcript)
+        XCTAssertEqual(analysis.repetitions, 0)
+    }
+
+    // MARK: - analyzeRealTranscript: пролонгации (короткий сегмент > 300ms)
+
+    func test_analyzeRealTranscript_prolongation_counted() {
+        let segments = [
+            WhisperSegment(text: "с", startMs: 0, endMs: 500),      // 500ms, 1 символ → пролонгация
+            WhisperSegment(text: "собака", startMs: 500, endMs: 900)
+        ]
+        let transcript = WhisperTranscript(fullText: "с собака", segments: segments)
+        let analysis = worker.analyzeRealTranscript(transcript)
+        XCTAssertEqual(analysis.prolongations, 1)
+    }
+
+    func test_analyzeRealTranscript_shortSegmentFastEnough_noProlongation() {
+        let segments = [
+            WhisperSegment(text: "с", startMs: 0, endMs: 100)       // 100ms < 300ms → нет
+        ]
+        let transcript = WhisperTranscript(fullText: "с", segments: segments)
+        let analysis = worker.analyzeRealTranscript(transcript)
+        XCTAssertEqual(analysis.prolongations, 0)
+    }
+
+    // MARK: - analyzeRealTranscript: внутрисловные паузы (> 800ms)
+
+    func test_analyzeRealTranscript_insideWordPause_counted() {
+        let segments = [
+            WhisperSegment(text: "ма", startMs: 0, endMs: 200),
+            WhisperSegment(text: "шина", startMs: 1100, endMs: 1500) // gap 900ms > 800ms
+        ]
+        let transcript = WhisperTranscript(fullText: "ма шина", segments: segments)
+        let analysis = worker.analyzeRealTranscript(transcript)
+        XCTAssertEqual(analysis.insideWordPauses, 1)
+    }
+
+    func test_analyzeRealTranscript_smallGap_noPause() {
+        let segments = [
+            WhisperSegment(text: "ма", startMs: 0, endMs: 200),
+            WhisperSegment(text: "шина", startMs: 400, endMs: 800)  // gap 200ms < 800ms
+        ]
+        let transcript = WhisperTranscript(fullText: "ма шина", segments: segments)
+        let analysis = worker.analyzeRealTranscript(transcript)
+        XCTAssertEqual(analysis.insideWordPauses, 0)
+    }
+
+    func test_analyzeRealTranscript_singleSegment_noPause() {
+        let segments = [WhisperSegment(text: "слово", startMs: 0, endMs: 400)]
+        let transcript = WhisperTranscript(fullText: "слово", segments: segments)
+        let analysis = worker.analyzeRealTranscript(transcript)
+        XCTAssertEqual(analysis.insideWordPauses, 0)
+    }
+
+    func test_analyzeRealTranscript_emptySegments_noProlongationsOrPauses() {
+        let transcript = WhisperTranscript(fullText: "просто текст", segments: [])
+        let analysis = worker.analyzeRealTranscript(transcript)
+        XCTAssertEqual(analysis.prolongations, 0)
+        XCTAssertEqual(analysis.insideWordPauses, 0)
+    }
+
+    // MARK: - analyzeRealTranscript: rate и слоги
+
+    func test_analyzeRealTranscript_emptyText_zeroRate() {
+        let transcript = WhisperTranscript(fullText: "", segments: [])
+        let analysis = worker.analyzeRealTranscript(transcript)
+        XCTAssertEqual(analysis.totalSyllables, 0)
+        XCTAssertEqual(analysis.rate, 0)
+    }
+
+    func test_analyzeRealTranscript_countsSyllables() {
+        let transcript = WhisperTranscript(fullText: "мама", segments: [])
+        let analysis = worker.analyzeRealTranscript(transcript)
+        XCTAssertEqual(analysis.totalSyllables, 2, "«мама» — 2 гласных")
+    }
+
+    func test_analyzeRealTranscript_rateComputed() {
+        // 1 повторение, «мама мама» — 4 гласных → rate = 100/4 = 25
+        let transcript = WhisperTranscript(fullText: "мама мама", segments: [])
+        let analysis = worker.analyzeRealTranscript(transcript)
+        XCTAssertEqual(analysis.rate, 25.0, accuracy: 0.01)
+    }
+
+    // MARK: - makeStubAnalysis: дополнительные ветви
+
+    func test_makeStubAnalysis_withRepetition_countsIt() {
+        let analysis = worker.makeStubAnalysis(text: "да да да")
+        XCTAssertEqual(analysis.repetitions, 2)
+        XCTAssertTrue(analysis.isStub)
+    }
 }

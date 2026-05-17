@@ -1,4 +1,5 @@
 @testable import HappySpeech
+import RealmSwift
 import XCTest
 
 // MARK: - DiaryStorageWorkerTests
@@ -144,5 +145,97 @@ final class DiaryStorageWorkerProtocolTests: XCTestCase {
         XCTAssertEqual(saved.rate, 6.0, accuracy: 0.001)
         XCTAssertEqual(saved.transcript, "мама мама")
         XCTAssertEqual(saved.date.timeIntervalSince1970, date.timeIntervalSince1970, accuracy: 1)
+    }
+}
+
+// MARK: - DiaryStorageWorkerLiveTests (реальный DiaryStorageWorker + in-memory Realm)
+//
+// Покрывает live-реализацию DiaryStorageWorker через изолированный in-memory
+// RealmActor — без обращения к диску.
+
+final class DiaryStorageWorkerLiveTests: XCTestCase {
+
+    private var realmActor: RealmActor!
+    private var sut: DiaryStorageWorker!
+
+    override func setUp() async throws {
+        try await super.setUp()
+        var config = Realm.Configuration()
+        config.inMemoryIdentifier = "diary-live-\(UUID().uuidString)"
+        config.schemaVersion = RealmSchemaVersion.current
+        Realm.Configuration.defaultConfiguration = config
+        realmActor = RealmActor()
+        try await realmActor.open(configuration: config)
+        sut = DiaryStorageWorker(realmActor: realmActor)
+    }
+
+    override func tearDown() {
+        sut = nil
+        realmActor = nil
+        super.tearDown()
+    }
+
+    // MARK: - saveSession / fetchSessions
+
+    func test_saveSession_thenFetch_returnsSession() async {
+        let session = FluencySessionData(
+            id: "live-001",
+            date: Date(timeIntervalSince1970: 2000),
+            dysfluencyCount: 2,
+            totalSyllables: 40,
+            rate: 5.0,
+            transcript: "тест"
+        )
+        await sut.saveSession(session)
+        let result = await sut.fetchSessions(limit: 0)
+        XCTAssertEqual(result.count, 1)
+        XCTAssertEqual(result.first?.id, "live-001")
+        XCTAssertEqual(result.first?.dysfluencyCount, 2)
+    }
+
+    func test_saveSession_sameId_upserts() async {
+        let first = FluencySessionData(
+            id: "live-dup", date: Date(), dysfluencyCount: 1,
+            totalSyllables: 10, rate: 1, transcript: "a"
+        )
+        let second = FluencySessionData(
+            id: "live-dup", date: Date(), dysfluencyCount: 9,
+            totalSyllables: 90, rate: 9, transcript: "b"
+        )
+        await sut.saveSession(first)
+        await sut.saveSession(second)
+        let result = await sut.fetchSessions(limit: 0)
+        XCTAssertEqual(result.count, 1, "Одинаковый id → апдейт")
+        XCTAssertEqual(result.first?.dysfluencyCount, 9)
+    }
+
+    func test_fetchSessions_sortedByDateDescending() async {
+        await sut.saveSession(FluencySessionData(
+            id: "old", date: Date(timeIntervalSince1970: 100),
+            dysfluencyCount: 0, totalSyllables: 1, rate: 0, transcript: ""
+        ))
+        await sut.saveSession(FluencySessionData(
+            id: "new", date: Date(timeIntervalSince1970: 9000),
+            dysfluencyCount: 0, totalSyllables: 1, rate: 0, transcript: ""
+        ))
+        let result = await sut.fetchSessions(limit: 0)
+        XCTAssertEqual(result.first?.id, "new")
+    }
+
+    func test_fetchSessions_limitApplied() async {
+        for index in 0..<5 {
+            await sut.saveSession(FluencySessionData(
+                id: "s-\(index)",
+                date: Date(timeIntervalSince1970: TimeInterval(index * 100)),
+                dysfluencyCount: 0, totalSyllables: 1, rate: 0, transcript: ""
+            ))
+        }
+        let result = await sut.fetchSessions(limit: 2)
+        XCTAssertEqual(result.count, 2)
+    }
+
+    func test_fetchSessions_emptyStorage_returnsEmpty() async {
+        let result = await sut.fetchSessions(limit: 10)
+        XCTAssertTrue(result.isEmpty)
     }
 }
