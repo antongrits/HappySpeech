@@ -13,13 +13,10 @@ import XCTest
 
 // MARK: - In-memory diary storage mock
 //
-// Note: FluencyDiaryInteractor.loadHistory() вызывает `fetchRecentSessions(limit:)`,
-// который объявлен только как protocol-extension с дефолтной реализацией `{ [] }`
-// (см. FluencyDiaryInteractor.swift). Метод НЕ входит в requirements
-// DiaryStorageWorkerProtocol, поэтому диспетчеризуется статически к extension
-// default — любой `any DiaryStorageWorkerProtocol` (включая live-воркер) при
-// вызове через protocol-тип получит пустой массив. Это поведение прода;
-// тесты loadHistory проверяют корректную обработку пустого результата.
+// FluencyDiaryInteractor.loadHistory() вызывает `fetchSessions(limit:)` —
+// requirement протокола DiaryStorageWorkerProtocol, реализованный реально
+// в LiveDiaryStorageWorker и в этом mock. Тесты loadHistory проверяют
+// фактическую загрузку seed-истории.
 
 private actor MockDiaryStorageWorker: DiaryStorageWorkerProtocol {
     private var store: [FluencySessionData] = []
@@ -74,6 +71,20 @@ final class FluencyDiaryInteractorTests: XCTestCase {
         return (sut, audio, recorder)
     }
 
+    /// Детерминированное ожидание условия с коротким polling и таймаутом.
+    /// Используется только там, где результат зависит от внешней cadence
+    /// (амплитудные сэмплы mock-аудио), а не от завершаемой Task.
+    private func waitUntil(
+        timeout: TimeInterval = 2.0,
+        _ condition: () -> Bool
+    ) async {
+        let deadline = Date().addingTimeInterval(timeout)
+        while !condition() && Date() < deadline {
+            await Task.yield()
+            try? await Task.sleep(for: .milliseconds(10))
+        }
+    }
+
     private func session(
         id: String = UUID().uuidString,
         daysAgo: Int,
@@ -122,19 +133,17 @@ final class FluencyDiaryInteractorTests: XCTestCase {
         XCTAssertNil(sut.display.lastSessionDate)
     }
 
-    // MARK: - 4. loadHistory — корректно обрабатывает пустой результат
-    //
-    // Note: loadHistory читает через fetchRecentSessions — protocol-extension
-    // default возвращает []. Проверяем что Display не падает и валиден.
+    // MARK: - 4. loadHistory — реально загружает seed-историю
 
-    func test_loadHistory_handlesEmptyExtensionResult() async {
+    func test_loadHistory_loadsSeededSessions() async {
         let seed = [session(daysAgo: 0), session(daysAgo: 1), session(daysAgo: 2)]
         let sut = makeSUT(seed: seed)
         await sut.loadHistory()
 
-        // fetchRecentSessions (extension default) → [], totalSessions = 0.
-        XCTAssertEqual(sut.display.totalSessions, 0)
-        XCTAssertNil(sut.display.lastSessionDate)
+        XCTAssertEqual(sut.display.totalSessions, 3, "Seed из 3 сессий должен быть загружен")
+        XCTAssertNotNil(sut.display.lastSessionDate)
+        XCTAssertTrue(sut.display.chartData.contains { $0.hasData },
+                      "Загруженные сессии должны отражаться в chart")
     }
 
     // MARK: - 5. loadHistory — строит chartData на 14 дней
@@ -198,7 +207,7 @@ final class FluencyDiaryInteractorTests: XCTestCase {
         await sut.loadHistory()
         await sut.loadHistory()
         XCTAssertEqual(sut.display.chartData.count, 14)
-        XCTAssertEqual(sut.display.totalSessions, 0)
+        XCTAssertEqual(sut.display.totalSessions, 1)
     }
 
     // MARK: - 12. stopRecording — без активной записи → no-op (не крашит)
@@ -280,26 +289,26 @@ final class FluencyDiaryInteractorTests: XCTestCase {
         sut.stopRecording()
     }
 
-    func test_stopRecording_afterStart_analyzesAndCompletes() async throws {
+    func test_stopRecording_afterStart_analyzesAndCompletes() async {
         let (sut, _, _) = makeAudioSUT(micGranted: true)
         sut.startSession()
         await sut.startRecording()
         sut.stopRecording()
         XCTAssertFalse(sut.display.isRecording)
-        // analyzeAndSave запускает Task — даём ему завершиться (stub-путь).
-        try await Task.sleep(for: .milliseconds(300))
+        // analyzeAndSave запускает фоновую Task — детерминированно ждём её завершения.
+        await sut.awaitAnalysisForTesting()
         XCTAssertTrue(sut.display.showComplete, "stub-анализ должен завершить сессию")
         XCTAssertFalse(sut.display.isAnalyzing)
         XCTAssertTrue(sut.display.isStubAnalysis, "Короткая запись без WhisperKit → stub")
         XCTAssertFalse(sut.display.severityLabel.isEmpty)
     }
 
-    func test_stopRecording_incrementsTotalSessions() async throws {
+    func test_stopRecording_incrementsTotalSessions() async {
         let (sut, _, _) = makeAudioSUT(micGranted: true)
         sut.startSession()
         await sut.startRecording()
         sut.stopRecording()
-        try await Task.sleep(for: .milliseconds(300))
+        await sut.awaitAnalysisForTesting()
         XCTAssertEqual(sut.display.totalSessions, 1)
         XCTAssertNotNil(sut.display.lastSessionDate)
     }
@@ -311,20 +320,20 @@ final class FluencyDiaryInteractorTests: XCTestCase {
         )
         sut.startSession()
         await sut.startRecording()
-        // MockBreathingAudioWorker пушит сэмплы с cadence 50 мс.
-        try await Task.sleep(for: .milliseconds(300))
+        // MockBreathingAudioWorker пушит сэмплы с cadence 50 мс — ждём появления уровней.
+        await waitUntil { !sut.display.waveformLevels.isEmpty }
         XCTAssertFalse(sut.display.waveformLevels.isEmpty,
                        "handleAmplitude должен заполнять waveformLevels")
         sut.stopRecording()
-        try await Task.sleep(for: .milliseconds(300))
+        await sut.awaitAnalysisForTesting()
     }
 
-    func test_stopRecording_buildsChartDataAfterAnalysis() async throws {
+    func test_stopRecording_buildsChartDataAfterAnalysis() async {
         let (sut, _, _) = makeAudioSUT(micGranted: true)
         sut.startSession()
         await sut.startRecording()
         sut.stopRecording()
-        try await Task.sleep(for: .milliseconds(300))
+        await sut.awaitAnalysisForTesting()
         // analyzeAndSave → updateChartData(from: recentSessions) с непустым кешем.
         XCTAssertEqual(sut.display.chartData.count, 14)
         // Сегодняшний день должен иметь данные после сохранённой сессии.
@@ -333,23 +342,23 @@ final class FluencyDiaryInteractorTests: XCTestCase {
         XCTAssertTrue(today?.hasData ?? false, "Сегодняшний день содержит только что записанную сессию")
     }
 
-    func test_multipleRecordings_accumulateSessions() async throws {
+    func test_multipleRecordings_accumulateSessions() async {
         let (sut, _, _) = makeAudioSUT(micGranted: true)
         sut.startSession()
         for _ in 0..<3 {
             await sut.startRecording()
             sut.stopRecording()
-            try await Task.sleep(for: .milliseconds(250))
+            await sut.awaitAnalysisForTesting()
         }
         XCTAssertEqual(sut.display.totalSessions, 3)
     }
 
-    func test_startSession_afterRecording_resetsState() async throws {
+    func test_startSession_afterRecording_resetsState() async {
         let (sut, _, _) = makeAudioSUT(micGranted: true)
         sut.startSession()
         await sut.startRecording()
         sut.stopRecording()
-        try await Task.sleep(for: .milliseconds(300))
+        await sut.awaitAnalysisForTesting()
         XCTAssertTrue(sut.display.showComplete)
 
         // Новая сессия сбрасывает showComplete и waveform.
@@ -393,32 +402,32 @@ final class FluencyDiaryInteractorTests: XCTestCase {
         return (sut, audio)
     }
 
-    func test_stopRecording_withStubAnalyzer_usesFallbackAnalysis() async throws {
+    func test_stopRecording_withStubAnalyzer_usesFallbackAnalysis() async {
         let (sut, _) = makeFallbackSUT()
         sut.startSession()
         await sut.startRecording()
         sut.stopRecording()
-        try await Task.sleep(for: .milliseconds(350))
+        await sut.awaitAnalysisForTesting()
         // analyzerWorker не FluencyAnalyzerWorker → makeFallbackAnalysis → isStub true.
         XCTAssertTrue(sut.display.showComplete)
         XCTAssertTrue(sut.display.isStubAnalysis)
     }
 
-    func test_stopRecording_withStubAnalyzer_incrementsSessions() async throws {
+    func test_stopRecording_withStubAnalyzer_incrementsSessions() async {
         let (sut, _) = makeFallbackSUT()
         sut.startSession()
         await sut.startRecording()
         sut.stopRecording()
-        try await Task.sleep(for: .milliseconds(350))
+        await sut.awaitAnalysisForTesting()
         XCTAssertEqual(sut.display.totalSessions, 1)
     }
 
-    func test_stopRecording_withStubAnalyzer_buildsChartAfterAnalysis() async throws {
+    func test_stopRecording_withStubAnalyzer_buildsChartAfterAnalysis() async {
         let (sut, _) = makeFallbackSUT()
         sut.startSession()
         await sut.startRecording()
         sut.stopRecording()
-        try await Task.sleep(for: .milliseconds(350))
+        await sut.awaitAnalysisForTesting()
         XCTAssertFalse(sut.display.chartData.isEmpty,
                        "Fallback-анализ всё равно строит 14-дневный chart")
         XCTAssertFalse(sut.display.severityLabel.isEmpty)

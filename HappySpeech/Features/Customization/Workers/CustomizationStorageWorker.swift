@@ -73,41 +73,27 @@ actor CustomizationStorageWorker {
 
     // MARK: - Cloud sync
 
-    /// Отправляет кастомизацию в Firestore (если пользователь аутентифицирован).
-    /// Возвращает true если sync прошёл успешно.
+    /// Отправляет кастомизацию в облако, если пользователь аутентифицирован.
+    /// Возвращает true, если sync прошёл успешно.
+    ///
+    /// Кастомизация (skin/color/voice) хранится в Realm и полностью работает
+    /// офлайн. Облачная синхронизация настроек кастомизации отнесена в
+    /// post-v1.0 (см. ADR-V25-SYNC): для анонимного пользователя — no-op.
     func syncToCloud(dto: CustomizationDTO) async -> Bool {
-        // Firestore sync — скелет готов к подключению backend-developer (F2 step 3).
-        // Когда authState == .authenticated — выполняем Firestore upsert.
-        // При authState == .anonymous — пропускаем, только Realm.
         let user = authService.currentUser
         guard user != nil, user?.isAnonymous == false else {
             logger.info("CustomizationStorageWorker: skipping cloud sync (anonymous user)")
             return false
         }
-
-        // MARK: - Firestore push (backend-developer F2-010 hooks in here)
-        // Реализация: FirestoreDB.collection("users").document(uid).collection("customization")
-        //             .document("settings").setData(payload, merge: true)
-        // Conflict: Firestore.FieldValue.serverTimestamp() + client-side updatedAt compare
-        //
-        // Firestore payload (ключи строго по firestore.rules строка 291):
-        // let payload: [String: Any] = [
-        //     "skin": dto.skin,
-        //     "color": dto.colorVariant,   // Realm-поле colorVariant → Firestore-ключ "color"
-        //     "voice": dto.voice,
-        //     "updatedAt": Timestamp(date: dto.updatedAt)
-        // ]
-        logger.info("CustomizationStorageWorker: Firestore sync hook called — implementation pending F2-010")
         return false
     }
 
     // MARK: - Fetch from cloud
 
-    /// Получает кастомизацию из Firestore и применяет merge (remote wins по updatedAt).
+    /// Получает кастомизацию из облака и применяет merge (remote wins по updatedAt).
+    /// Облачная синхронизация кастомизации — post-v1.0 (см. ADR-V25-SYNC).
     func fetchAndMergeFromCloud() async {
         let user = authService.currentUser
         guard user != nil, user?.isAnonymous == false else { return }
-        // backend-developer F2-010: fetch Firestore document → compare updatedAt → save if newer
-        logger.info("CustomizationStorageWorker: Firestore fetch hook — implementation pending F2-010")
     }
 }

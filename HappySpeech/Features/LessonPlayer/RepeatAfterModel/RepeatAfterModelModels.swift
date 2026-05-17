@@ -187,6 +187,7 @@ enum RepeatAfterModelModels {
             let word: TargetWordItem
             let progressLabel: String
             let attemptsLabel: String
+            let attemptsLeft: Int
             let syllabification: String
             let canReplay: Bool
             let replayCount: Int
@@ -232,6 +233,7 @@ enum RepeatAfterModelModels {
             let encouragement: String?
             let hintAvailable: Bool
             let stars: Int
+            let attemptsLeft: Int
         }
     }
 
@@ -325,6 +327,9 @@ final class RepeatAfterModelDisplay {
     var currentWord: TargetWordItem?
     var progressLabel: String = ""
     var attemptsLabel: String = ""
+    /// Число оставшихся попыток как Int — для индикатора-кружков.
+    /// Источник истины: Interactor → Presenter, View не парсит строки.
+    var attemptsLeft: Int = 3
     var syllabification: String = ""
     var isRecording: Bool = false
     var micLabel: String = ""

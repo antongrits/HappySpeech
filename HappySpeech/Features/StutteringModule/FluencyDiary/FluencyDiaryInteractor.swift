@@ -59,6 +59,10 @@ final class FluencyDiaryInteractor {
     private var recordedFileURL: URL?
     private var recordingStartTime: Date?
 
+    /// Хэндл фоновой задачи анализа — позволяет детерминированно дождаться
+    /// завершения `analyzeAndSave()` (используется тестами вместо фиксированного sleep).
+    private var analysisTask: Task<Void, Never>?
+
     // MARK: - Chart & analytics state
 
     /// Кеш последних 14 дней для chart.
@@ -100,7 +104,7 @@ final class FluencyDiaryInteractor {
 
     /// Загружает историю сессий и строит chart data.
     func loadHistory() async {
-        let sessions = await storageWorker.fetchRecentSessions(limit: 14)
+        let sessions = await storageWorker.fetchSessions(limit: 14)
         recentSessions = sessions
         display.totalSessions = sessions.count
         display.lastSessionDate = sessions.first?.date
@@ -201,7 +205,7 @@ final class FluencyDiaryInteractor {
         let duration = display.recordingDuration
         recordedFileURL = nil
 
-        Task {
+        analysisTask = Task {
             let analysis: DysfluencyAnalysis
 
             // Анализируем только если запись достаточно длинная.
@@ -355,6 +359,16 @@ final class FluencyDiaryInteractor {
             )
         }
     }
+
+    // MARK: - Test seam
+
+    #if DEBUG
+    /// Детерминированно ожидает завершения фоновой задачи анализа,
+    /// запущенной из `analyzeAndSave()`. Используется тестами вместо `Task.sleep`.
+    func awaitAnalysisForTesting() async {
+        await analysisTask?.value
+    }
+    #endif
 }
 
 // MARK: - FluencyChartPoint
@@ -366,12 +380,4 @@ struct FluencyChartPoint: Identifiable, Sendable {
     let label: String
     let dysfluencyRate: Double   // -1 означает «нет данных»
     let hasData: Bool
-}
-
-// MARK: - DiaryStorageWorkerProtocol extension
-
-/// Расширение протокола для загрузки истории.
-/// Реализация в LiveDiaryStorageWorker.
-extension DiaryStorageWorkerProtocol {
-    func fetchRecentSessions(limit: Int) async -> [FluencySessionData] { [] }
 }

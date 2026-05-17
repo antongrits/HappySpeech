@@ -104,6 +104,7 @@ final class RepeatAfterModelStoreBridge: RepeatAfterModelDisplayLogic {
         display.currentWord = viewModel.word
         display.progressLabel = viewModel.progressLabel
         display.attemptsLabel = viewModel.attemptsLabel
+        display.attemptsLeft = viewModel.attemptsLeft
         display.syllabification = viewModel.syllabification
         display.isRecording = false
         display.micLabel = String(localized: "repeat.mic.tap_to_record")
@@ -130,6 +131,7 @@ final class RepeatAfterModelStoreBridge: RepeatAfterModelDisplayLogic {
         display.passed = viewModel.passed
         display.feedbackText = viewModel.feedbackText
         display.attemptsLabel = viewModel.attemptsLabel
+        display.attemptsLeft = viewModel.attemptsLeft
         display.canAdvance = viewModel.canAdvance
         display.diagnosticText = viewModel.diagnosticText
         display.encouragement = viewModel.encouragement

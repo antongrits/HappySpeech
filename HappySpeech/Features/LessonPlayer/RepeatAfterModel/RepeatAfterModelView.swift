@@ -689,15 +689,11 @@ struct RepeatAfterModelView: View {
         return Color.clear
     }
 
-    /// Аппроксимация attemptsLeft на основе строки `attemptsLabel` от Presenter.
-    /// `attemptsLabel` имеет формат "Попыток осталось: %lld" — мы вытаскиваем
-    /// число и подставляем в кружки.
+    /// Оставшиеся попытки берутся напрямую из числового поля Display
+    /// (`attemptsLeft`), которое заполняет Presenter из Interactor — без
+    /// парсинга локализованной строки.
     private var currentAttemptsLeft: Int {
-        let digits = display.attemptsLabel.compactMap { $0.isNumber ? $0 : nil }
-        if let value = Int(String(digits)) {
-            return max(0, min(3, value))
-        }
-        return 3
+        max(0, min(3, display.attemptsLeft))
     }
 
     // MARK: - Recording control

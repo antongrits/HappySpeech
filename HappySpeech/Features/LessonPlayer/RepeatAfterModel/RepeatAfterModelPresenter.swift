@@ -54,6 +54,7 @@ final class RepeatAfterModelPresenter: RepeatAfterModelPresentationLogic {
             word: response.word,
             progressLabel: progressLabel,
             attemptsLabel: attemptsLabel,
+            attemptsLeft: response.attemptsLeft,
             syllabification: response.word.syllabification,
             canReplay: response.canReplay,
             replayCount: response.replayCount
@@ -92,7 +93,8 @@ final class RepeatAfterModelPresenter: RepeatAfterModelPresentationLogic {
             diagnosticText: diagnosticText,
             encouragement: response.encouragement,
             hintAvailable: hintAvailable,
-            stars: response.stars
+            stars: response.stars,
+            attemptsLeft: response.attemptsLeft
         )
         viewModel?.displayEvaluateAttempt(vm)
     }
