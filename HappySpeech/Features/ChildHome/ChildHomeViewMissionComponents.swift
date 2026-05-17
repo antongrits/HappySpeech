@@ -33,6 +33,7 @@ struct ChildHomeDailyMissionDetailCard: View {
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text("\(mission.title). \(mission.description). \(mission.repsCounterText)"))
         .accessibilityHint(Text(String(localized: "child.home.daily.a11y.hint")))
+        .accessibilityIdentifier("childHomeDailyMissionCard")
     }
 
     private var topRow: some View {
@@ -159,6 +160,7 @@ struct ChildHomeQuickPlayCard: View {
             item.difficulty
         )))
         .accessibilityHint(String(localized: "child.home.quick.a11y.hint"))
+        .accessibilityIdentifier("childHomeLessonCard")
     }
 }
 

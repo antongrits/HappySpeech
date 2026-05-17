@@ -113,26 +113,31 @@ struct ParentHomeView: View {
                     Label(ParentTab.dashboard.rawValue, systemImage: ParentTab.dashboard.icon)
                 }
                 .tag(ParentTab.dashboard)
+                .accessibilityIdentifier("parentDashboardTab")
 
             sessionsTab
                 .tabItem {
                     Label(ParentTab.sessions.rawValue, systemImage: ParentTab.sessions.icon)
                 }
                 .tag(ParentTab.sessions)
+                .accessibilityIdentifier("parentSessionsTab")
 
             analyticsTab
                 .tabItem {
                     Label(ParentTab.analytics.rawValue, systemImage: ParentTab.analytics.icon)
                 }
                 .tag(ParentTab.analytics)
+                .accessibilityIdentifier("parentAnalyticsTab")
 
             settingsTab
                 .tabItem {
                     Label(ParentTab.settings.rawValue, systemImage: ParentTab.settings.icon)
                 }
                 .tag(ParentTab.settings)
+                .accessibilityIdentifier("parentSettingsTab")
         }
         .tint(ColorTokens.Parent.accent)
+        .accessibilityIdentifier("ParentHomeRoot")
     }
 
     @ViewBuilder private var dashboardTab: some View {

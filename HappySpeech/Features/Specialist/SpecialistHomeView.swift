@@ -48,6 +48,7 @@ struct SpecialistHomeView: View {
         }
         .tint(ColorTokens.Spec.accent)
         .environment(\.circuitContext, .specialist)
+        .accessibilityIdentifier("SpecialistHomeRoot")
     }
 
     @ViewBuilder
