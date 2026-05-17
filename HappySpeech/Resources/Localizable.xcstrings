@@ -122,17 +122,6 @@
         }
       }
     },
-    "\\(mission.requiredReps) раундов": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "\\(mission.requiredReps) раундов"
-          }
-        }
-      }
-    },
     "\\(scorePct)%": {
       "extractionState": "manual",
       "localizations": {
@@ -155,17 +144,6 @@
         }
       }
     },
-    "\\(stat.title): \\(stat.correct) из \\(stat.total)": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "\\(stat.title): \\(stat.correct) из \\(stat.total)"
-          }
-        }
-      }
-    },
     "\\(viewModel.childAge) лет · \\(viewModel.targetSoundsText)": {
       "extractionState": "manual",
       "localizations": {
@@ -173,17 +151,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "\\(viewModel.childAge) лет · \\(viewModel.targetSoundsText)"
-          }
-        }
-      }
-    },
-    "\\(word.word), перетащи в нужную корзину": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "\\(word.word), перетащи в нужную корзину"
           }
         }
       }
@@ -199,17 +166,6 @@
         }
       }
     },
-    "a11y.button.back": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Назад"
-          }
-        }
-      }
-    },
     "a11y.button.close": {
       "extractionState": "manual",
       "localizations": {
@@ -217,61 +173,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Закрыть"
-          }
-        }
-      }
-    },
-    "a11y.button.complete": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Завершить"
-          }
-        }
-      }
-    },
-    "a11y.button.continue": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Продолжить"
-          }
-        }
-      }
-    },
-    "a11y.button.help": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Помощь"
-          }
-        }
-      }
-    },
-    "a11y.button.next": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Следующий"
-          }
-        }
-      }
-    },
-    "a11y.button.pause": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Пауза"
           }
         }
       }
@@ -298,50 +199,6 @@
         }
       }
     },
-    "a11y.button.replay_audio": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Прослушать ещё раз"
-          }
-        }
-      }
-    },
-    "a11y.button.retry": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Повторить"
-          }
-        }
-      }
-    },
-    "a11y.button.settings": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Настройки"
-          }
-        }
-      }
-    },
-    "a11y.button.skip": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Пропустить"
-          }
-        }
-      }
-    },
     "a11y.button.stop": {
       "extractionState": "manual",
       "localizations": {
@@ -360,160 +217,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Остановить запись"
-          }
-        }
-      }
-    },
-    "a11y.card.completed": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Задание выполнено"
-          }
-        }
-      }
-    },
-    "a11y.card.lesson": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Урок"
-          }
-        }
-      }
-    },
-    "a11y.card.locked": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Задание заблокировано"
-          }
-        }
-      }
-    },
-    "a11y.card.world_zone": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Зона мира"
-          }
-        }
-      }
-    },
-    "a11y.feedback.correct": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Правильно"
-          }
-        }
-      }
-    },
-    "a11y.feedback.incorrect": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Неправильно, попробуй ещё раз"
-          }
-        }
-      }
-    },
-    "a11y.hearts.remaining": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Осталось жизней: %lld из %lld"
-          }
-        }
-      }
-    },
-    "a11y.mascot.lyalya": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Маскот Ляля"
-          }
-        }
-      }
-    },
-    "a11y.progress": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Прогресс: %lld процентов"
-          }
-        }
-      }
-    },
-    "a11y.recording.in_progress": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Идёт запись"
-          }
-        }
-      }
-    },
-    "a11y.stars.earned": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Заработано звёзд: %lld из %lld"
-          }
-        }
-      }
-    },
-    "a11y.streak.days": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld дней подряд"
-          }
-        }
-      }
-    },
-    "a11y.timer.remaining": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Осталось времени: %@"
-          }
-        }
-      }
-    },
-    "accessibility.back": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Назад"
           }
         }
       }
@@ -573,17 +276,6 @@
         }
       }
     },
-    "accessibility.go_to_signin": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Перейти ко входу в аккаунт"
-          }
-        }
-      }
-    },
     "accessibility.go_to_signup": {
       "extractionState": "manual",
       "localizations": {
@@ -602,39 +294,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Войти через аккаунт Google"
-          }
-        }
-      }
-    },
-    "accessibility.mascot.decorative": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Маскот HappySpeech"
-          }
-        }
-      }
-    },
-    "accessibility.name_field": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Поле имени"
-          }
-        }
-      }
-    },
-    "accessibility.name_field.hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Введите ваше имя"
           }
         }
       }
@@ -661,28 +320,6 @@
         }
       }
     },
-    "accessibility.password_repeat_field": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Поле повторения пароля"
-          }
-        }
-      }
-    },
-    "accessibility.password_repeat_field.hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Введите тот же пароль ещё раз"
-          }
-        }
-      }
-    },
     "accessibility.sign_in_button": {
       "extractionState": "manual",
       "localizations": {
@@ -701,28 +338,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Проверит данные и откроет главный экран"
-          }
-        }
-      }
-    },
-    "accessibility.sign_up_button": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Создать новый аккаунт"
-          }
-        }
-      }
-    },
-    "accessibility.sign_up_button.hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Создаст аккаунт и отправит письмо подтверждения"
           }
         }
       }
@@ -3796,28 +3411,6 @@
         }
       }
     },
-    "articulation.finished": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Готово!"
-          }
-        }
-      }
-    },
-    "articulation.got_it": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Получилось"
-          }
-        }
-      }
-    },
     "articulation.greeting.default": {
       "extractionState": "manual",
       "localizations": {
@@ -3979,17 +3572,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Артикуляционная гимнастика"
-          }
-        }
-      }
-    },
-    "articulation.try_later": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Попробую позже"
           }
         }
       }
@@ -4594,12 +4176,6 @@
         "ru": {
           "variations": {
             "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Осталась %d секунда"
-                }
-              },
               "few": {
                 "stringUnit": {
                   "state": "translated",
@@ -4610,6 +4186,12 @@
                 "stringUnit": {
                   "state": "translated",
                   "value": "Осталось %d секунд"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Осталась %d секунда"
                 }
               },
               "other": {
@@ -5305,17 +4887,6 @@
         }
       }
     },
-    "auth.delete.cta": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Удалить аккаунт"
-          }
-        }
-      }
-    },
     "auth.delete_account.gate_required": {
       "extractionState": "manual",
       "localizations": {
@@ -5323,17 +4894,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Авторизация"
-          }
-        }
-      }
-    },
-    "auth.demo.cta": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Попробовать демо"
           }
         }
       }
@@ -5382,17 +4942,6 @@
         }
       }
     },
-    "auth.error.generic": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ошибка входа"
-          }
-        }
-      }
-    },
     "auth.error.name_too_long": {
       "extractionState": "manual",
       "localizations": {
@@ -5422,17 +4971,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ошибка"
-          }
-        }
-      }
-    },
-    "auth.error.ok": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Понятно"
           }
         }
       }
@@ -5503,28 +5041,6 @@
         }
       }
     },
-    "auth.forgot.reset": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отправить ссылку для сброса"
-          }
-        }
-      }
-    },
-    "auth.forgot.sent": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Мы отправили письмо со ссылкой. Проверьте почту."
-          }
-        }
-      }
-    },
     "auth.google.cta": {
       "extractionState": "manual",
       "localizations": {
@@ -5532,17 +5048,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Войти через Google"
-          }
-        }
-      }
-    },
-    "auth.google.soon": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Вход через Google — скоро"
           }
         }
       }
@@ -5565,39 +5070,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Войдите, чтобы следить за прогрессом ребёнка"
-          }
-        }
-      }
-    },
-    "auth.landing.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Добро пожаловать!"
-          }
-        }
-      }
-    },
-    "auth.name.label": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Имя"
-          }
-        }
-      }
-    },
-    "auth.name.placeholder": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ваше имя"
           }
         }
       }
@@ -5646,39 +5118,6 @@
         }
       }
     },
-    "auth.password.min6": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Пароль (мин. 6 символов)"
-          }
-        }
-      }
-    },
-    "auth.password.mismatch.body": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Повторите пароль в обоих полях."
-          }
-        }
-      }
-    },
-    "auth.password.mismatch.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Пароли не совпадают"
-          }
-        }
-      }
-    },
     "auth.password.placeholder": {
       "extractionState": "manual",
       "localizations": {
@@ -5686,17 +5125,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Пароль"
-          }
-        }
-      }
-    },
-    "auth.password.repeat": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Повторите пароль"
           }
         }
       }
@@ -5712,28 +5140,6 @@
         }
       }
     },
-    "auth.role.parent": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Родитель"
-          }
-        }
-      }
-    },
-    "auth.role.specialist": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Логопед"
-          }
-        }
-      }
-    },
     "auth.signIn": {
       "extractionState": "manual",
       "localizations": {
@@ -5745,61 +5151,6 @@
         }
       }
     },
-    "auth.signin.cta": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Войти через эл. почту"
-          }
-        }
-      }
-    },
-    "auth.signin.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Войти"
-          }
-        }
-      }
-    },
-    "auth.signup.cta": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Создать аккаунт"
-          }
-        }
-      }
-    },
-    "auth.signup.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Создайте аккаунт, чтобы сохранить прогресс ребёнка"
-          }
-        }
-      }
-    },
-    "auth.signup.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Создать аккаунт"
-          }
-        }
-      }
-    },
     "auth.tryWithoutLogin": {
       "extractionState": "manual",
       "localizations": {
@@ -5807,83 +5158,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Попробовать без входа"
-          }
-        }
-      }
-    },
-    "auth.validation.email.invalid": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Проверьте адрес электронной почты"
-          }
-        }
-      }
-    },
-    "auth.validation.name.empty": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Укажите ваше имя"
-          }
-        }
-      }
-    },
-    "auth.validation.password.short": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Пароль должен быть не короче 8 символов"
-          }
-        }
-      }
-    },
-    "auth.verify.body": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Мы отправили письмо на %@. Откройте его и перейдите по ссылке, чтобы активировать аккаунт."
-          }
-        }
-      }
-    },
-    "auth.verify.check": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Я подтвердил"
-          }
-        }
-      }
-    },
-    "auth.verify.resend": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отправить снова"
-          }
-        }
-      }
-    },
-    "auth.verify.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Подтвердите почту"
           }
         }
       }
@@ -6099,17 +5373,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ты собрал пять в ряд!"
-          }
-        }
-      }
-    },
-    "bingo.finish": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Готово"
           }
         }
       }
@@ -6883,39 +6146,6 @@
         }
       }
     },
-    "child.home.achievements.badge.a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Достижение: %@"
-          }
-        }
-      }
-    },
-    "child.home.achievements.empty": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Первое достижение совсем рядом!"
-          }
-        }
-      }
-    },
-    "child.home.achievements.section": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Достижения"
-          }
-        }
-      }
-    },
     "child.home.action.achievements": {
       "extractionState": "manual",
       "localizations": {
@@ -6956,17 +6186,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Грамматика-игра"
-          }
-        }
-      }
-    },
-    "child.home.action.quick_play": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Быстрая игра"
           }
         }
       }
@@ -7026,17 +6245,6 @@
         }
       }
     },
-    "child.home.daily.section": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Задание дня"
-          }
-        }
-      }
-    },
     "child.home.daily.title": {
       "extractionState": "manual",
       "localizations": {
@@ -7076,12 +6284,6 @@
         "ru": {
           "variations": {
             "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%d задание"
-                }
-              },
               "few": {
                 "stringUnit": {
                   "state": "translated",
@@ -7094,6 +6296,12 @@
                   "value": "%d заданий"
                 }
               },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d задание"
+                }
+              },
               "other": {
                 "stringUnit": {
                   "state": "translated",
@@ -7101,17 +6309,6 @@
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "child.home.hometasks.empty": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Новых заданий нет"
           }
         }
       }
@@ -7378,17 +6575,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Мой прогресс"
-          }
-        }
-      }
-    },
-    "child.home.pull_to_refresh": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Потяни вниз, чтобы обновить"
           }
         }
       }
@@ -7912,17 +7098,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Нажми, чтобы услышать произношение"
-          }
-        }
-      }
-    },
-    "child.home.today.words.empty": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Слова появятся после первого урока"
           }
         }
       }
@@ -8960,17 +8135,6 @@
         }
       }
     },
-    "customization.cta.cancel": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отмена"
-          }
-        }
-      }
-    },
     "customization.cta.reset": {
       "extractionState": "manual",
       "localizations": {
@@ -9940,17 +9104,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Подсказки появятся после нескольких сессий"
-          }
-        }
-      }
-    },
-    "dashboard.insights.error": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Не удалось загрузить подсказки"
           }
         }
       }
@@ -10927,50 +10080,6 @@
         }
       }
     },
-    "demo.today.words.desc": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Это слова, которые ты будешь тренировать сегодня."
-          }
-        }
-      }
-    },
-    "demo.today.words.mascot": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Запомни эти слова — они нам понадобятся!"
-          }
-        }
-      }
-    },
-    "demo.today.words.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Словарный запас"
-          }
-        }
-      }
-    },
-    "demo.today.words.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Слова дня"
-          }
-        }
-      }
-    },
     "demo.try": {
       "extractionState": "manual",
       "localizations": {
@@ -11264,83 +10373,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Уральский говор"
-          }
-        }
-      }
-    },
-    "drag.check": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Готово"
-          }
-        }
-      }
-    },
-    "drag.position.final": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Конец"
-          }
-        }
-      }
-    },
-    "drag.position.initial": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Начало слова"
-          }
-        }
-      }
-    },
-    "drag.position.medial": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Середина"
-          }
-        }
-      }
-    },
-    "drag.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Коснись слова, потом коснись корзины"
-          }
-        }
-      }
-    },
-    "ds.ar.scene.a11y_label": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "AR-сцена"
-          }
-        }
-      }
-    },
-    "ds.ar.scene.fallback_a11y_label": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Запасное изображение AR-сцены"
           }
         }
       }
@@ -11894,17 +10926,6 @@
         }
       }
     },
-    "facetime.usage.description": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "HappySpeech использует FaceTime для совместных логопедических занятий под контролем родителей"
-          }
-        }
-      }
-    },
     "family.ach.a11y.locked": {
       "extractionState": "manual",
       "localizations": {
@@ -12115,6 +11136,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Играть вдвоём"
+          }
+        }
+      }
+    },
+    "family.home.play_together.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Совместная игра на одном устройстве"
+          }
+        }
+      }
+    },
+    "family.home.shareplay_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Играть на расстоянии"
           }
         }
       }
@@ -12965,17 +12008,6 @@
         }
       }
     },
-    "family_calendar.cta.compare_all": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сравнить всех"
-          }
-        }
-      }
-    },
     "family_calendar.detail.day_format": {
       "extractionState": "manual",
       "localizations": {
@@ -13071,17 +12103,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Не удалось загрузить статистику"
-          }
-        }
-      }
-    },
-    "family_calendar.filter.label": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Фильтр"
           }
         }
       }
@@ -13328,39 +12349,6 @@
         }
       }
     },
-    "family_calendar.month.label": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Календарь активности"
-          }
-        }
-      }
-    },
-    "family_calendar.month.next": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Следующий месяц"
-          }
-        }
-      }
-    },
-    "family_calendar.month.previous": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Предыдущий месяц"
-          }
-        }
-      }
-    },
     "family_calendar.schedule.child_picker": {
       "extractionState": "manual",
       "localizations": {
@@ -13467,17 +12455,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "%1$@ играл %2$d дней подряд — отличный темп!"
-          }
-        }
-      }
-    },
-    "family_calendar.streak.today": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сегодня играл!"
           }
         }
       }
@@ -13801,28 +12778,6 @@
         }
       }
     },
-    "game.feedback.excellent": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отлично!"
-          }
-        }
-      }
-    },
-    "game.feedback.incorrect": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Попробуй ещё"
-          }
-        }
-      }
-    },
     "game.letter_tracing": {
       "extractionState": "manual",
       "localizations": {
@@ -13841,17 +12796,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Слушай и выбери"
-          }
-        }
-      }
-    },
-    "game.listen_and_choose.instruction": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Слушай и выбери правильную картинку"
           }
         }
       }
@@ -13922,17 +12866,6 @@
         }
       }
     },
-    "game.repeat_after_model.instruction": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Повтори за Лялей"
-          }
-        }
-      }
-    },
     "game.rhythm": {
       "extractionState": "manual",
       "localizations": {
@@ -13999,17 +12932,6 @@
         }
       }
     },
-    "game.try_again": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ещё раз"
-          }
-        }
-      }
-    },
     "game.visual_acoustic": {
       "extractionState": "manual",
       "localizations": {
@@ -14017,50 +12939,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Визуально-акустическое"
-          }
-        }
-      }
-    },
-    "general.back": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Назад"
-          }
-        }
-      }
-    },
-    "general.cancel": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отмена"
-          }
-        }
-      }
-    },
-    "general.close": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Закрыть"
-          }
-        }
-      }
-    },
-    "general.delete": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Удалить"
           }
         }
       }
@@ -14076,39 +12954,6 @@
         }
       }
     },
-    "general.error.generic": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Что-то пошло не так. Попробуйте ещё раз."
-          }
-        }
-      }
-    },
-    "general.error.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ошибка"
-          }
-        }
-      }
-    },
-    "general.got_it": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Понятно"
-          }
-        }
-      }
-    },
     "general.loading": {
       "extractionState": "manual",
       "localizations": {
@@ -14116,61 +12961,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Загрузка…"
-          }
-        }
-      }
-    },
-    "general.next": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Далее"
-          }
-        }
-      }
-    },
-    "general.ok": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "OK"
-          }
-        }
-      }
-    },
-    "general.retry": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Повторить"
-          }
-        }
-      }
-    },
-    "general.save": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сохранить"
-          }
-        }
-      }
-    },
-    "general.skip": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Пропустить"
           }
         }
       }
@@ -14248,26 +13038,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Нажмите, чтобы выбрать этот вариант"
-          }
-        }
-      }
-    },
-    "grammar.game.cta.check": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Проверить"
-          }
-        }
-      }
-    },
-    "grammar.game.cta.confirm": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Подтвердить"
           }
         }
       }
@@ -14629,28 +13399,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Помаши рукой"
-          }
-        }
-      }
-    },
-    "healthkit.error.not_authorized": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нет доступа к Apple Health"
-          }
-        }
-      }
-    },
-    "healthkit.error.not_available": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Apple Health недоступен на этом устройстве"
           }
         }
       }
@@ -15634,17 +14382,6 @@
         }
       }
     },
-    "homeTasks.empty.celebrating.label": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Маскот Ляля радуется выполненным заданиям"
-          }
-        }
-      }
-    },
     "homeTasks.empty.completed.message": {
       "extractionState": "manual",
       "localizations": {
@@ -16237,17 +14974,43 @@
             "value": "За эту неделю — %#@sessions@, около %#@minutes@ практики, средняя точность %d%%."
           },
           "substitutions": {
+            "minutes": {
+              "argNum": 2,
+              "formatSpecifier": "d",
+              "variations": {
+                "plural": {
+                  "few": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d минут"
+                    }
+                  },
+                  "many": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d минут"
+                    }
+                  },
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d минуты"
+                    }
+                  },
+                  "other": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d минут"
+                    }
+                  }
+                }
+              }
+            },
             "sessions": {
               "argNum": 1,
               "formatSpecifier": "d",
               "variations": {
                 "plural": {
-                  "one": {
-                    "stringUnit": {
-                      "state": "translated",
-                      "value": "%d занятие"
-                    }
-                  },
                   "few": {
                     "stringUnit": {
                       "state": "translated",
@@ -16260,42 +15023,16 @@
                       "value": "%d занятий"
                     }
                   },
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d занятие"
+                    }
+                  },
                   "other": {
                     "stringUnit": {
                       "state": "translated",
                       "value": "%d занятий"
-                    }
-                  }
-                }
-              }
-            },
-            "minutes": {
-              "argNum": 2,
-              "formatSpecifier": "d",
-              "variations": {
-                "plural": {
-                  "one": {
-                    "stringUnit": {
-                      "state": "translated",
-                      "value": "%d минуты"
-                    }
-                  },
-                  "few": {
-                    "stringUnit": {
-                      "state": "translated",
-                      "value": "%d минут"
-                    }
-                  },
-                  "many": {
-                    "stringUnit": {
-                      "state": "translated",
-                      "value": "%d минут"
-                    }
-                  },
-                  "other": {
-                    "stringUnit": {
-                      "state": "translated",
-                      "value": "%d минут"
                     }
                   }
                 }
@@ -17713,28 +16450,6 @@
         }
       }
     },
-    "letter_tracing.iphone_fallback.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Для написания букв используй iPad с Apple Pencil или пальцем"
-          }
-        }
-      }
-    },
-    "letter_tracing.iphone_fallback.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Упражнение доступно на iPad"
-          }
-        }
-      }
-    },
     "letter_tracing.level.dots": {
       "extractionState": "manual",
       "localizations": {
@@ -17896,17 +16611,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Голос"
-          }
-        }
-      }
-    },
-    "listen.audio.button.a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Кнопка прослушивания слова"
           }
         }
       }
@@ -18175,28 +16879,6 @@
         }
       }
     },
-    "memory.card_back": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Карточка"
-          }
-        }
-      }
-    },
-    "memory.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Найди пары"
-          }
-        }
-      }
-    },
     "metronome.result.excellent": {
       "extractionState": "manual",
       "localizations": {
@@ -18237,50 +16919,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Нужна тренировка"
-          }
-        }
-      }
-    },
-    "minimal_pairs.correct": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Правильно!"
-          }
-        }
-      }
-    },
-    "minimal_pairs.listen_again": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Послушать ещё раз"
-          }
-        }
-      }
-    },
-    "minimal_pairs.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Найди пару"
-          }
-        }
-      }
-    },
-    "minimal_pairs.try_again": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Попробуй ещё"
           }
         }
       }
@@ -18653,16 +17291,6 @@
         }
       }
     },
-    "notifications.toggle.disabled": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отключено"
-          }
-        }
-      }
-    },
     "notifications.toggle.weekly": {
       "localizations": {
         "ru": {
@@ -18724,17 +17352,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "object_hunt.accuracy_label \\(accuracy)"
-          }
-        }
-      }
-    },
-    "object_hunt.continue": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Продолжить"
           }
         }
       }
@@ -18827,28 +17444,6 @@
         }
       }
     },
-    "object_hunt.next_round": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Дальше"
-          }
-        }
-      }
-    },
-    "object_hunt.next_round_a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Перейти к следующему раунду"
-          }
-        }
-      }
-    },
     "object_hunt.next_scene": {
       "extractionState": "manual",
       "localizations": {
@@ -18882,39 +17477,6 @@
         }
       }
     },
-    "object_hunt.scanning_a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сканирование комнаты"
-          }
-        }
-      }
-    },
-    "object_hunt.scanning_hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Направь камеру на предметы в комнате"
-          }
-        }
-      }
-    },
-    "object_hunt.scene_change": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Молодец! Найдём что-то ещё?"
-          }
-        }
-      }
-    },
     "object_hunt.score_correct": {
       "extractionState": "manual",
       "localizations": {
@@ -18922,17 +17484,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Правильно"
-          }
-        }
-      }
-    },
-    "object_hunt.score_label": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Результат: %lld%%"
           }
         }
       }
@@ -19043,17 +17594,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "object_hunt.total_score \\(response.totalScore)"
-          }
-        }
-      }
-    },
-    "object_hunt.try_again": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Поищи в другом месте"
           }
         }
       }
@@ -19267,39 +17807,6 @@
         }
       }
     },
-    "offline.minigame.difficulty.easy": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Легко"
-          }
-        }
-      }
-    },
-    "offline.minigame.difficulty.hard": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сложно"
-          }
-        }
-      }
-    },
-    "offline.minigame.difficulty.medium": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Средне"
-          }
-        }
-      }
-    },
     "offline.minigame.drag.cloud.a11y": {
       "extractionState": "manual",
       "localizations": {
@@ -19406,28 +17913,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Пары"
-          }
-        }
-      }
-    },
-    "offline.minigame.paused.banner": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Игра на паузе"
-          }
-        }
-      }
-    },
-    "offline.minigame.paused.cta": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Продолжить"
           }
         }
       }
@@ -19894,17 +18379,6 @@
         }
       }
     },
-    "onboarding.goal.hissing": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Шипящие (Ш, Ж, Ч, Щ)"
-          }
-        }
-      }
-    },
     "onboarding.goal.pronunciation": {
       "extractionState": "manual",
       "localizations": {
@@ -19916,17 +18390,6 @@
         }
       }
     },
-    "onboarding.goal.rhotic": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Звуки Р и Л"
-          }
-        }
-      }
-    },
     "onboarding.goal.vocabulary": {
       "extractionState": "manual",
       "localizations": {
@@ -19934,17 +18397,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Словарный запас"
-          }
-        }
-      }
-    },
-    "onboarding.goal.whistling": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Свистящие (С, З, Ц)"
           }
         }
       }
@@ -20433,28 +18885,6 @@
         }
       }
     },
-    "onboarding.profile.name.placeholder": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Например: Миша"
-          }
-        }
-      }
-    },
-    "onboarding.profile.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Расскажи о ребёнке"
-          }
-        }
-      }
-    },
     "onboarding.progress.label": {
       "extractionState": "manual",
       "localizations": {
@@ -20638,17 +19068,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Пройти скрининг"
-          }
-        }
-      }
-    },
-    "onboarding.screening.mascot": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Это займёт всего 2–3 минуты!"
           }
         }
       }
@@ -20862,50 +19281,6 @@
         }
       }
     },
-    "parent.home.analytics.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Аналитика"
-          }
-        }
-      }
-    },
-    "parent.home.attempts": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Попыток"
-          }
-        }
-      }
-    },
-    "parent.home.child.years_sounds": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld лет · %@"
-          }
-        }
-      }
-    },
-    "parent.home.dashboard.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Прогресс"
-          }
-        }
-      }
-    },
     "parent.home.date.today": {
       "extractionState": "manual",
       "localizations": {
@@ -21005,50 +19380,6 @@
         }
       }
     },
-    "parent.home.hometask.label": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Домашнее задание"
-          }
-        }
-      }
-    },
-    "parent.home.no_sessions.cta": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Начать занятие"
-          }
-        }
-      }
-    },
-    "parent.home.no_sessions.message": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Начните первое занятие вместе с ребёнком"
-          }
-        }
-      }
-    },
-    "parent.home.no_sessions.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Занятий пока нет"
-          }
-        }
-      }
-    },
     "parent.home.reco.default": {
       "extractionState": "manual",
       "localizations": {
@@ -21089,195 +19420,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Главная"
-          }
-        }
-      }
-    },
-    "parent.home.recommendations": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Рекомендации"
-          }
-        }
-      }
-    },
-    "parent.home.result.label": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Результат занятия"
-          }
-        }
-      }
-    },
-    "parent.home.sessions.empty.message": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "История занятий появится здесь после первого сеанса"
-          }
-        }
-      }
-    },
-    "parent.home.sessions.empty.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Занятий ещё не было"
-          }
-        }
-      }
-    },
-    "parent.home.sessions.history": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "История занятий"
-          }
-        }
-      }
-    },
-    "parent.home.sessions_today.format": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "variations": {
-            "plural": {
-              "few": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%d занятия сегодня"
-                }
-              },
-              "many": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%d занятий сегодня"
-                }
-              },
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%d занятие сегодня"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%d занятий сегодня"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "parent.home.stat.averageRate": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Средний результат"
-          }
-        }
-      }
-    },
-    "parent.home.stat.minutes": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Минут всего"
-          }
-        }
-      }
-    },
-    "parent.home.stat.streak": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Дней подряд"
-          }
-        }
-      }
-    },
-    "parent.home.switch_to_kid": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Переключиться на детский режим"
-          }
-        }
-      }
-    },
-    "parent.home.tab.analytics": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Аналитика"
-          }
-        }
-      }
-    },
-    "parent.home.tab.dashboard": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Обзор"
-          }
-        }
-      }
-    },
-    "parent.home.tab.sessions": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Занятия"
-          }
-        }
-      }
-    },
-    "parent.home.tab.settings": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Настройки"
-          }
-        }
-      }
-    },
-    "parent.home.weekly_report": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отчёт за неделю"
           }
         }
       }
@@ -21450,12 +19592,6 @@
               "formatSpecifier": "d",
               "variations": {
                 "plural": {
-                  "one": {
-                    "stringUnit": {
-                      "state": "translated",
-                      "value": "%d сессия"
-                    }
-                  },
                   "few": {
                     "stringUnit": {
                       "state": "translated",
@@ -21466,6 +19602,12 @@
                     "stringUnit": {
                       "state": "translated",
                       "value": "%d сессий"
+                    }
+                  },
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d сессия"
                     }
                   },
                   "other": {
@@ -21528,12 +19670,6 @@
               "formatSpecifier": "d",
               "variations": {
                 "plural": {
-                  "one": {
-                    "stringUnit": {
-                      "state": "translated",
-                      "value": "%d сессия"
-                    }
-                  },
                   "few": {
                     "stringUnit": {
                       "state": "translated",
@@ -21544,6 +19680,12 @@
                     "stringUnit": {
                       "state": "translated",
                       "value": "%d сессий"
+                    }
+                  },
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d сессия"
                     }
                   },
                   "other": {
@@ -21900,28 +20042,6 @@
         }
       }
     },
-    "parent_child.entry.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Запишите голос для совместных игр"
-          }
-        }
-      }
-    },
-    "parent_child.entry.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Семейный голос"
-          }
-        }
-      }
-    },
     "parent_child.error.file_not_found": {
       "localizations": {
         "ru": {
@@ -21994,28 +20114,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Прослушать"
-          }
-        }
-      }
-    },
-    "parent_child.recorder.cta.start": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Записать"
-          }
-        }
-      }
-    },
-    "parent_child.recorder.cta.stop": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Остановить"
           }
         }
       }
@@ -22097,17 +20195,6 @@
         }
       }
     },
-    "parent_child.split.cta.record_child": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Скажи слово!"
-          }
-        }
-      }
-    },
     "parent_child.split.cta.reset": {
       "extractionState": "manual",
       "localizations": {
@@ -22126,17 +20213,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Пропустить"
-          }
-        }
-      }
-    },
-    "parent_child.split.empty": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сначала запишите голос"
           }
         }
       }
@@ -24874,72 +22950,6 @@
         }
       }
     },
-    "puzzle.complete": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Пазл собран!"
-          }
-        }
-      }
-    },
-    "puzzle.say_it": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Получилось"
-          }
-        }
-      }
-    },
-    "puzzle.skip": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Пропустить"
-          }
-        }
-      }
-    },
-    "puzzle.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Открой пазл"
-          }
-        }
-      }
-    },
-    "quest.end": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Конец истории"
-          }
-        }
-      }
-    },
-    "quest.said_it": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сказал(а)"
-          }
-        }
-      }
-    },
     "quest.skip": {
       "extractionState": "manual",
       "localizations": {
@@ -24947,17 +22957,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Дальше"
-          }
-        }
-      }
-    },
-    "quest.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Квест с Лялей"
           }
         }
       }
@@ -24980,17 +22979,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Попыток осталось: %lld"
-          }
-        }
-      }
-    },
-    "repeat.attempts.label": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Попытка"
           }
         }
       }
@@ -25402,17 +23390,6 @@
         }
       }
     },
-    "repeat.phase.intro": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Послушай внимательно"
-          }
-        }
-      }
-    },
     "repeat.phase.model_playing": {
       "extractionState": "manual",
       "localizations": {
@@ -25435,28 +23412,6 @@
         }
       }
     },
-    "repeat.phase.recording": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Говори сейчас!"
-          }
-        }
-      }
-    },
-    "repeat.phase.result": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отлично!"
-          }
-        }
-      }
-    },
     "repeat.phase.waiting": {
       "extractionState": "manual",
       "localizations": {
@@ -25475,28 +23430,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Слово %lld из %lld"
-          }
-        }
-      }
-    },
-    "repeat.recording.button.a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Запись голоса"
-          }
-        }
-      }
-    },
-    "repeat.recording.button.hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нажми и говори слово"
           }
         }
       }
@@ -27030,28 +24963,6 @@
         }
       }
     },
-    "rewards.collection.holidays": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Праздники"
-          }
-        }
-      }
-    },
-    "rewards.collection.letters": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Буквы"
-          }
-        }
-      }
-    },
     "rewards.collection.newYear": {
       "extractionState": "manual",
       "localizations": {
@@ -27129,17 +25040,6 @@
         }
       }
     },
-    "rewards.cond.balloon": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Получи 5 наград подряд"
-          }
-        }
-      }
-    },
     "rewards.cond.bat": {
       "extractionState": "manual",
       "localizations": {
@@ -27202,17 +25102,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Бабочка"
-          }
-        }
-      }
-    },
-    "rewards.cond.cake": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Занимайся 3 дня подряд в каникулы"
           }
         }
       }
@@ -27371,17 +25260,6 @@
         }
       }
     },
-    "rewards.cond.firstStar": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Заверши первое занятие"
-          }
-        }
-      }
-    },
     "rewards.cond.fish": {
       "extractionState": "manual",
       "localizations": {
@@ -27503,72 +25381,6 @@
         }
       }
     },
-    "rewards.cond.letterK": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Освой звук К на уровне слов"
-          }
-        }
-      }
-    },
-    "rewards.cond.letterL": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Освой звук Л на уровне слов"
-          }
-        }
-      }
-    },
-    "rewards.cond.letterR": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Освой звук Р на уровне слов"
-          }
-        }
-      }
-    },
-    "rewards.cond.letterS": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Освой звук С на уровне слов"
-          }
-        }
-      }
-    },
-    "rewards.cond.letterSh": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Освой звук Ш на уровне слов"
-          }
-        }
-      }
-    },
-    "rewards.cond.letterZh": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Освой звук Ж на уровне слов"
-          }
-        }
-      }
-    },
     "rewards.cond.lion": {
       "extractionState": "manual",
       "localizations": {
@@ -27653,28 +25465,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Заверши 20 занятий"
-          }
-        }
-      }
-    },
-    "rewards.cond.party": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Заверши 100 занятий"
-          }
-        }
-      }
-    },
-    "rewards.cond.perfect": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Получи 100% в одной сессии"
           }
         }
       }
@@ -27789,17 +25579,6 @@
         }
       }
     },
-    "rewards.cond.shine": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Достигни уровня «Мастер» по 3 звукам"
-          }
-        }
-      }
-    },
     "rewards.cond.skeleton": {
       "extractionState": "manual",
       "localizations": {
@@ -27873,39 +25652,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Звезда"
-          }
-        }
-      }
-    },
-    "rewards.cond.streak3": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Занимайся 3 дня подряд"
-          }
-        }
-      }
-    },
-    "rewards.cond.streak30": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Занимайся 30 дней подряд"
-          }
-        }
-      }
-    },
-    "rewards.cond.streak7": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Занимайся 7 дней подряд"
           }
         }
       }
@@ -28383,17 +26129,6 @@
         }
       }
     },
-    "rewards.sticker.balloon": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Шарик"
-          }
-        }
-      }
-    },
     "rewards.sticker.bat": {
       "extractionState": "manual",
       "localizations": {
@@ -28456,17 +26191,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Бабочка"
-          }
-        }
-      }
-    },
-    "rewards.sticker.cake": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Торт"
           }
         }
       }
@@ -28768,72 +26492,6 @@
         }
       }
     },
-    "rewards.sticker.letterK": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Звук К"
-          }
-        }
-      }
-    },
-    "rewards.sticker.letterL": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Звук Л"
-          }
-        }
-      }
-    },
-    "rewards.sticker.letterR": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Звук Р"
-          }
-        }
-      }
-    },
-    "rewards.sticker.letterS": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Звук С"
-          }
-        }
-      }
-    },
-    "rewards.sticker.letterSh": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Звук Ш"
-          }
-        }
-      }
-    },
-    "rewards.sticker.letterZh": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Звук Ж"
-          }
-        }
-      }
-    },
     "rewards.sticker.lion": {
       "extractionState": "manual",
       "localizations": {
@@ -28918,17 +26576,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Панда"
-          }
-        }
-      }
-    },
-    "rewards.sticker.party": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Праздник"
           }
         }
       }
@@ -29153,28 +26800,6 @@
         }
       }
     },
-    "rewards.sticker.streak30": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Месяц подряд"
-          }
-        }
-      }
-    },
-    "rewards.sticker.streak7": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Неделя занятий"
-          }
-        }
-      }
-    },
     "rewards.sticker.sun": {
       "extractionState": "manual",
       "localizations": {
@@ -29259,17 +26884,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Наклейка"
-          }
-        }
-      }
-    },
-    "rewards.sticker.week": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Неделя подряд"
           }
         }
       }
@@ -29450,61 +27064,6 @@
         }
       }
     },
-    "rewards.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Собирай стикеры за занятия"
-          }
-        }
-      }
-    },
-    "rewards.tab.games": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Игры"
-          }
-        }
-      }
-    },
-    "rewards.tab.sounds": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Звуки"
-          }
-        }
-      }
-    },
-    "rewards.tab.special": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Особые"
-          }
-        }
-      }
-    },
-    "rewards.tab.streaks": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Серии"
-          }
-        }
-      }
-    },
     "rewards.theme.bright": {
       "extractionState": "manual",
       "localizations": {
@@ -29593,28 +27152,6 @@
         }
       }
     },
-    "rewards.unlock.sparkle.a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Получен новый стикер"
-          }
-        }
-      }
-    },
-    "rewards.unlocked.date": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Получено"
-          }
-        }
-      }
-    },
     "rewards.wallet.a11y": {
       "extractionState": "manual",
       "localizations": {
@@ -29626,28 +27163,6 @@
         }
       }
     },
-    "rhythm.done": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Завершить"
-          }
-        }
-      }
-    },
-    "rhythm.next": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Следующий"
-          }
-        }
-      }
-    },
     "rhythm.title": {
       "extractionState": "manual",
       "localizations": {
@@ -29655,17 +27170,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Повтори ритм"
-          }
-        }
-      }
-    },
-    "rhythm.your_turn": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Твой ход"
           }
         }
       }
@@ -30154,17 +27658,6 @@
         }
       }
     },
-    "screening.outcome.saved": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Результаты сохранены"
-          }
-        }
-      }
-    },
     "screening.prompt.listen": {
       "extractionState": "manual",
       "localizations": {
@@ -30227,50 +27720,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Сохраняем результаты..."
-          }
-        }
-      }
-    },
-    "screening.score.good": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Хорошо"
-          }
-        }
-      }
-    },
-    "screening.score.partial": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Почти"
-          }
-        }
-      }
-    },
-    "screening.score.perfect": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Супер"
-          }
-        }
-      }
-    },
-    "screening.score.wrong": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нет"
           }
         }
       }
@@ -30352,17 +27801,6 @@
         }
       }
     },
-    "screening.summary.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Итоги диагностики"
-          }
-        }
-      }
-    },
     "screening.verdict.intervention": {
       "extractionState": "manual",
       "localizations": {
@@ -30396,28 +27834,6 @@
         }
       }
     },
-    "seasonal.a11y.banner_hint": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Открыть сезонный урок"
-          }
-        }
-      }
-    },
-    "seasonal.a11y.no_event": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нет активных сезонных событий"
-          }
-        }
-      }
-    },
     "seasonal.banner.cta": {
       "extractionState": "manual",
       "localizations": {
@@ -30436,17 +27852,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Особое событие сейчас!"
-          }
-        }
-      }
-    },
-    "seasonal.empty.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сейчас нет активных событий"
           }
         }
       }
@@ -30480,28 +27885,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Новый год"
-          }
-        }
-      }
-    },
-    "seasonal.override.none": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нет (по календарю)"
-          }
-        }
-      }
-    },
-    "seasonal.override.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Активное событие"
           }
         }
       }
@@ -30546,17 +27929,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Пора отдохнуть"
-          }
-        }
-      }
-    },
-    "session.fatigue.continue": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Продолжить ещё немного"
           }
         }
       }
@@ -30634,17 +28006,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Осталось энергии: %lld из 3"
-          }
-        }
-      }
-    },
-    "session.hud.fatigue.label": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Энергия"
           }
         }
       }
@@ -30792,105 +28153,6 @@
         }
       }
     },
-    "session.resume": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Продолжить"
-          }
-        }
-      }
-    },
-    "session.review.back": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Назад"
-          }
-        }
-      }
-    },
-    "session.review.correct": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Верно"
-          }
-        }
-      }
-    },
-    "session.review.duration": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Длительность"
-          }
-        }
-      }
-    },
-    "session.review.export": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Экспортировать PDF"
-          }
-        }
-      }
-    },
-    "session.review.games": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Игры"
-          }
-        }
-      }
-    },
-    "session.review.phonemes": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Звуки"
-          }
-        }
-      }
-    },
-    "session.review.recommendation": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Рекомендация"
-          }
-        }
-      }
-    },
-    "session.review.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Обзор занятия"
-          }
-        }
-      }
-    },
     "session.reward.subtitle": {
       "extractionState": "manual",
       "localizations": {
@@ -30909,17 +28171,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Молодец!"
-          }
-        }
-      }
-    },
-    "session.skip": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Пропустить"
           }
         }
       }
@@ -30953,17 +28204,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "%1$d процентов точности, %2$d звёзд, %3$d попыток"
-          }
-        }
-      }
-    },
-    "sessionComplete.accuracy": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "точность"
           }
         }
       }
@@ -31089,17 +28329,6 @@
         }
       }
     },
-    "sessionComplete.celebration.continue": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Продолжить"
-          }
-        }
-      }
-    },
     "sessionComplete.cta.continue": {
       "extractionState": "manual",
       "localizations": {
@@ -31217,17 +28446,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Шипящие — знакомство со звуком Ш"
-          }
-        }
-      }
-    },
-    "sessionComplete.score.caption": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "точности"
           }
         }
       }
@@ -32926,72 +30144,6 @@
         }
       }
     },
-    "settings.ambient.full": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Полные"
-          }
-        }
-      }
-    },
-    "settings.ambient.medium": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Средние"
-          }
-        }
-      }
-    },
-    "settings.ambient.off": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Выкл"
-          }
-        }
-      }
-    },
-    "settings.ambient.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Атмосферные звуки сцен"
-          }
-        }
-      }
-    },
-    "settings.ambient.subtle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Лёгкие"
-          }
-        }
-      }
-    },
-    "settings.ambient.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Фоновые звуки"
-          }
-        }
-      }
-    },
     "settings.cache.confirm.action": {
       "extractionState": "manual",
       "localizations": {
@@ -33157,61 +30309,6 @@
         }
       }
     },
-    "settings.delete.account": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Удалить аккаунт"
-          }
-        }
-      }
-    },
-    "settings.delete.alert.message": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Это действие нельзя отменить. Все данные о занятиях и прогрессе будут удалены."
-          }
-        }
-      }
-    },
-    "settings.delete.alert.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Удалить все данные?"
-          }
-        }
-      }
-    },
-    "settings.delete.all": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Удалить все данные ребёнка"
-          }
-        }
-      }
-    },
-    "settings.delete.footer": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Удаление необратимо. Все записи занятий и прогресс будут удалены с устройства и из облака."
-          }
-        }
-      }
-    },
     "settings.dialect.row.hint": {
       "extractionState": "manual",
       "localizations": {
@@ -33241,17 +30338,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Диалект и произношение"
-          }
-        }
-      }
-    },
-    "settings.export.confirm.action": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Экспортировать"
           }
         }
       }
@@ -33432,50 +30518,6 @@
         }
       }
     },
-    "settings.healthkit.explanation": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Дыхательные упражнения и практика речи будут сохраняться как mindful sessions в Apple Health. Только для взрослых, отключено по умолчанию."
-          }
-        }
-      }
-    },
-    "settings.healthkit.toggle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сохранять упражнения в Apple Health"
-          }
-        }
-      }
-    },
-    "settings.help": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Справка и поддержка"
-          }
-        }
-      }
-    },
-    "settings.help.body": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Раздел помощи"
-          }
-        }
-      }
-    },
     "settings.karaoke.hint": {
       "extractionState": "manual",
       "localizations": {
@@ -33571,17 +30613,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Открыть исходный код"
-          }
-        }
-      }
-    },
-    "settings.model_packs.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Модели распознавания"
           }
         }
       }
@@ -33828,28 +30859,6 @@
         }
       }
     },
-    "settings.notifications.reminders": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Напоминания о занятиях"
-          }
-        }
-      }
-    },
-    "settings.notifications.section_title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Уведомления"
-          }
-        }
-      }
-    },
     "settings.notifications.time": {
       "extractionState": "manual",
       "localizations": {
@@ -33905,28 +30914,6 @@
         }
       }
     },
-    "settings.notifications.weekly_summary_description": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Получайте уведомления с итогами недели каждое воскресенье. Только для родителей."
-          }
-        }
-      }
-    },
-    "settings.notifications.weekly_summary_toggle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Еженедельные сводки прогресса"
-          }
-        }
-      }
-    },
     "settings.performance.a11y.hint": {
       "extractionState": "manual",
       "localizations": {
@@ -33960,39 +30947,6 @@
         }
       }
     },
-    "settings.performance.metrics_description": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Помогите улучшить приложение, разрешив сбор анонимных данных о скорости загрузки экранов. Только для взрослых экранов. Данные не содержат персональной информации."
-          }
-        }
-      }
-    },
-    "settings.performance.metrics_toggle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Анонимные метрики производительности"
-          }
-        }
-      }
-    },
-    "settings.performance.section_title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Улучшение приложения"
-          }
-        }
-      }
-    },
     "settings.performance.subtitle": {
       "extractionState": "manual",
       "localizations": {
@@ -34022,50 +30976,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Аналитика производительности включена"
-          }
-        }
-      }
-    },
-    "settings.privacy": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Политика конфиденциальности"
-          }
-        }
-      }
-    },
-    "settings.privacy.body": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "HappySpeech не передаёт данные третьим лицам и не использует рекламу. Все данные хранятся на устройстве и синхронизируются только с вашим аккаунтом."
-          }
-        }
-      }
-    },
-    "settings.privacy.short": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Конфиденциальность"
-          }
-        }
-      }
-    },
-    "settings.privacy.use_face_id": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Использовать Face ID для родительских разделов"
           }
         }
       }
@@ -34202,17 +31112,6 @@
         }
       }
     },
-    "settings.section.account": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Аккаунт"
-          }
-        }
-      }
-    },
     "settings.section.appearance": {
       "extractionState": "manual",
       "localizations": {
@@ -34242,17 +31141,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Данные"
-          }
-        }
-      }
-    },
-    "settings.section.health": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Apple Health"
           }
         }
       }
@@ -34319,28 +31207,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Специалист"
-          }
-        }
-      }
-    },
-    "settings.section.support": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Поддержка"
-          }
-        }
-      }
-    },
-    "settings.signOut": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Выйти из аккаунта"
           }
         }
       }
@@ -34466,28 +31332,6 @@
         }
       }
     },
-    "settings.sync": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Синхронизация"
-          }
-        }
-      }
-    },
-    "settings.theme.a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Тема: %@"
-          }
-        }
-      }
-    },
     "settings.theme.label": {
       "extractionState": "manual",
       "localizations": {
@@ -34495,17 +31339,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Тема"
-          }
-        }
-      }
-    },
-    "settings.theme.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Тема оформления"
           }
         }
       }
@@ -34528,17 +31361,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Настройки"
-          }
-        }
-      }
-    },
-    "settings.version": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Версия приложения"
           }
         }
       }
@@ -35193,28 +32015,6 @@
         }
       }
     },
-    "sibling.permission.bluetooth": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нужно разрешение на Bluetooth"
-          }
-        }
-      }
-    },
-    "sibling.permission.local_network": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Нужно разрешение на локальную сеть"
-          }
-        }
-      }
-    },
     "sorting.accessibility.bin_hint": {
       "extractionState": "manual",
       "localizations": {
@@ -35325,17 +32125,6 @@
         }
       }
     },
-    "sorting.check": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Проверить"
-          }
-        }
-      }
-    },
     "sorting.greeting.default": {
       "extractionState": "manual",
       "localizations": {
@@ -35354,17 +32143,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Слово %1$lld из %2$lld"
-          }
-        }
-      }
-    },
-    "sorting.right": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Без звука"
           }
         }
       }
@@ -35466,28 +32244,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Получено звёзд: %lld из 3"
-          }
-        }
-      }
-    },
-    "sorting.tap_to_move": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Коснись, чтобы переместить"
-          }
-        }
-      }
-    },
-    "sorting.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Разложи по группам"
           }
         }
       }
@@ -37065,17 +33821,6 @@
         }
       }
     },
-    "spectrogram.bingo.a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Спектрограмма"
-          }
-        }
-      }
-    },
     "spectrogram.canvas.hint.live": {
       "extractionState": "manual",
       "localizations": {
@@ -37127,17 +33872,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Спектрограмма"
-          }
-        }
-      }
-    },
-    "spectrogram.compare.sounds": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Звуки"
           }
         }
       }
@@ -37259,17 +33993,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ритм"
-          }
-        }
-      }
-    },
-    "spectrogram.sound_preview.a11y": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Спектрограмма"
           }
         }
       }
@@ -37494,17 +34217,6 @@
         }
       }
     },
-    "story.correct": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Молодец!"
-          }
-        }
-      }
-    },
     "story.player.accessibility_label %@": {
       "extractionState": "manual",
       "localizations": {
@@ -37578,17 +34290,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Не удалось загрузить видео"
-          }
-        }
-      }
-    },
-    "story.wrong": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Не совсем"
           }
         }
       }
@@ -38277,17 +34978,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Отлично!"
-          }
-        }
-      }
-    },
-    "stuttering.feedback.try_again": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Попробуй ещё раз"
           }
         }
       }
@@ -39192,72 +35882,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Привет! Я Ляля"
-          }
-        }
-      }
-    },
-    "visual.done": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Готово"
-          }
-        }
-      }
-    },
-    "visual.record": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Записать"
-          }
-        }
-      }
-    },
-    "visual.reference": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Эталон"
-          }
-        }
-      }
-    },
-    "visual.stop": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Остановить"
-          }
-        }
-      }
-    },
-    "visual.title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Твой голос"
-          }
-        }
-      }
-    },
-    "visual.you": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ты"
           }
         }
       }
@@ -40401,12 +37025,6 @@
         "ru": {
           "variations": {
             "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Занятие: %d"
-                }
-              },
               "few": {
                 "stringUnit": {
                   "state": "translated",
@@ -40417,6 +37035,12 @@
                 "stringUnit": {
                   "state": "translated",
                   "value": "Занятий: %d"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Занятие: %d"
                 }
               },
               "other": {
@@ -40480,12 +37104,6 @@
         "ru": {
           "variations": {
             "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%d занятие"
-                }
-              },
               "few": {
                 "stringUnit": {
                   "state": "translated",
@@ -40496,6 +37114,12 @@
                 "stringUnit": {
                   "state": "translated",
                   "value": "%d занятий"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d занятие"
                 }
               },
               "other": {
@@ -40563,17 +37187,6 @@
         }
       }
     },
-    "widget.mission.default_title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Звук Р"
-          }
-        }
-      }
-    },
     "widget.streak.format": {
       "localizations": {
         "ru": {
@@ -40611,12 +37224,6 @@
         "ru": {
           "variations": {
             "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "В твоей копилке %d слово"
-                }
-              },
               "few": {
                 "stringUnit": {
                   "state": "translated",
@@ -40627,6 +37234,12 @@
                 "stringUnit": {
                   "state": "translated",
                   "value": "В твоей копилке %d слов"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "В твоей копилке %d слово"
                 }
               },
               "other": {
@@ -40657,12 +37270,6 @@
         "ru": {
           "variations": {
             "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Сказано %d раз"
-                }
-              },
               "few": {
                 "stringUnit": {
                   "state": "translated",
@@ -40670,6 +37277,12 @@
                 }
               },
               "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Сказано %d раз"
+                }
+              },
+              "one": {
                 "stringUnit": {
                   "state": "translated",
                   "value": "Сказано %d раз"
@@ -40725,12 +37338,6 @@
         "ru": {
           "variations": {
             "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%d звезда"
-                }
-              },
               "few": {
                 "stringUnit": {
                   "state": "translated",
@@ -40741,6 +37348,12 @@
                 "stringUnit": {
                   "state": "translated",
                   "value": "%d звёзд"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d звезда"
                 }
               },
               "other": {
@@ -40826,12 +37439,6 @@
         "ru": {
           "variations": {
             "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "последний раз %d день назад"
-                }
-              },
               "few": {
                 "stringUnit": {
                   "state": "translated",
@@ -40842,6 +37449,12 @@
                 "stringUnit": {
                   "state": "translated",
                   "value": "последний раз %d дней назад"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "последний раз %d день назад"
                 }
               },
               "other": {
@@ -40905,12 +37518,6 @@
         "ru": {
           "variations": {
             "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%d звезда"
-                }
-              },
               "few": {
                 "stringUnit": {
                   "state": "translated",
@@ -40921,6 +37528,12 @@
                 "stringUnit": {
                   "state": "translated",
                   "value": "%d звёзд"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d звезда"
                 }
               },
               "other": {
@@ -41495,28 +38108,6 @@
         }
       }
     },
-    "worldMap.zone.ar": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Остров AR"
-          }
-        }
-      }
-    },
-    "worldMap.zone.ar.desc": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Специальные AR-упражнения с камерой. Видим артикуляцию в реальном времени!"
-          }
-        }
-      }
-    },
     "worldMap.zone.grammar": {
       "extractionState": "manual",
       "localizations": {
@@ -41715,17 +38306,6 @@
         }
       }
     },
-    "worldmap.island.lessons": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "уроков"
-          }
-        }
-      }
-    },
     "worldmap.island.locked": {
       "extractionState": "manual",
       "localizations": {
@@ -41744,17 +38324,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Остров Свистящих"
-          }
-        }
-      }
-    },
-    "worldmap.island.sonorant.l": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Остров Сонора Л"
           }
         }
       }
@@ -41876,17 +38445,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Гласные, пройдено"
-          }
-        }
-      }
-    },
-    "worldmap.progress.total": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Общий прогресс"
           }
         }
       }
@@ -42121,17 +38679,6 @@
         }
       }
     },
-    "БИНГО!": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "БИНГО!"
-          }
-        }
-      }
-    },
     "Без подсказок!": {
       "extractionState": "manual",
       "localizations": {
@@ -42139,28 +38686,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Без подсказок!"
-          }
-        }
-      }
-    },
-    "Бинго! Ты собрал пять в ряд.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Бинго! Ты собрал пять в ряд."
-          }
-        }
-      }
-    },
-    "Бинго: ищи слово на карточке": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Бинго: ищи слово на карточке"
           }
         }
       }
@@ -42513,17 +39038,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Готовим историю…"
-          }
-        }
-      }
-    },
-    "Готовим карточку…": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Готовим карточку…"
           }
         }
       }
@@ -43892,17 +40406,6 @@
         }
       }
     },
-    "Лучшая: \\(best)": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Лучшая: \\(best)"
-          }
-        }
-      }
-    },
     "Лягушка": {
       "extractionState": "manual",
       "localizations": {
@@ -44464,17 +40967,6 @@
         }
       }
     },
-    "Названо слово: \\(display.calledWord)": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Названо слово: \\(display.calledWord)"
-          }
-        }
-      }
-    },
     "Найдена": {
       "extractionState": "manual",
       "localizations": {
@@ -44801,17 +41293,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Не беда, \\(name). Попробуй ещё раз — получится!"
-          }
-        }
-      }
-    },
-    "Не отмечено": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Не отмечено"
           }
         }
       }
@@ -45234,17 +41715,6 @@
         }
       }
     },
-    "Отмечено": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отмечено"
-          }
-        }
-      }
-    },
     "Отправить письмо ещё раз": {
       "extractionState": "manual",
       "localizations": {
@@ -45582,17 +42052,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "По звукам"
-          }
-        }
-      }
-    },
-    "По категориям": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "По категориям"
           }
         }
       }
@@ -45938,17 +42397,6 @@
         }
       }
     },
-    "Положить слово в эту корзину": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Положить слово в эту корзину"
-          }
-        }
-      }
-    },
     "Получено звёзд: \\(display.starsEarned) из 3": {
       "extractionState": "manual",
       "localizations": {
@@ -45967,17 +42415,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Получилось!"
-          }
-        }
-      }
-    },
-    "Помогли: \\(display.autoPlacedCount) слова": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Помогли: \\(display.autoPlacedCount) слова"
           }
         }
       }
@@ -47346,17 +43783,6 @@
         }
       }
     },
-    "Следующее слово": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Следующее слово"
-          }
-        }
-      }
-    },
     "Следующий раунд": {
       "extractionState": "manual",
       "localizations": {
@@ -47408,17 +43834,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Слово '\\(word)' не найдено в словаре"
-          }
-        }
-      }
-    },
-    "Слово \\(display.currentWordIndex + 1) из \\(display.words.count)": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Слово \\(display.currentWordIndex + 1) из \\(display.words.count)"
           }
         }
       }
@@ -47852,17 +44267,6 @@
         }
       }
     },
-    "Три уровня подсказки доступны": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Три уровня подсказки доступны"
-          }
-        }
-      }
-    },
     "Ты открыл \\(percent) процентов пазла!": {
       "extractionState": "manual",
       "localizations": {
@@ -47881,17 +44285,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ты собрал все пазлы! Ляля в восторге."
-          }
-        }
-      }
-    },
-    "Ты собрал пять в ряд!": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ты собрал пять в ряд!"
           }
         }
       }
@@ -47936,17 +44329,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Удержи позу"
-          }
-        }
-      }
-    },
-    "Уже есть аккаунт?": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Уже есть аккаунт?"
           }
         }
       }
@@ -48156,17 +44538,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Чайник засвистел — значит, какао готово!"
-          }
-        }
-      }
-    },
-    "Часть выигрышной линии": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Часть выигрышной линии"
           }
         }
       }
@@ -48699,17 +45070,6 @@
         }
       }
     },
-    "серия ×\\(display.currentStreak)": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "серия ×\\(display.currentStreak)"
-          }
-        }
-      }
-    },
     "сова": {
       "extractionState": "manual",
       "localizations": {
@@ -48827,28 +45187,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "≈ \\(minutes) мин \\(seconds) с"
-          }
-        }
-      }
-    },
-    "family.home.shareplay_title": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Играть на расстоянии"
-          }
-        }
-      }
-    },
-    "family.home.play_together.subtitle": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Совместная игра на одном устройстве"
           }
         }
       }
