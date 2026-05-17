@@ -64,6 +64,7 @@ struct ProgramEditorView: View {
             }
             .task { await bootstrap() }
             .environment(\.circuitContext, .specialist)
+            .accessibilityIdentifier("ProgramEditorRoot")
             .safeAreaInset(edge: .bottom) {
                 if let confirmation {
                     Text(confirmation)

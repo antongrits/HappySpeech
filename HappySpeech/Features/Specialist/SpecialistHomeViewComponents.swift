@@ -43,7 +43,7 @@ struct SpecChildListView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
                     List {
-                        ForEach(filteredChildren) { child in
+                        ForEach(Array(filteredChildren.enumerated()), id: \.element.id) { index, child in
                             ZStack {
                                 NavigationLink(value: child.id) {
                                     EmptyView()
@@ -52,10 +52,12 @@ struct SpecChildListView: View {
                                 SpecChildRow(child: child)
                             }
                             .listRowBackground(ColorTokens.Spec.surface)
+                            .accessibilityIdentifier("specialistStudentRow_\(index)")
                         }
                     }
                     .listStyle(.insetGrouped)
                     .scrollContentBackground(.hidden)
+                    .accessibilityIdentifier("specialistStudentList")
                 }
             }
             .searchable(

@@ -71,6 +71,7 @@ struct SettingsView: View {
                 .listStyle(.insetGrouped)
                 .scrollContentBackground(.hidden)
                 .background(ColorTokens.Parent.bg)
+                .accessibilityIdentifier("SettingsRoot")
 
                 if let toast = display.toastMessage {
                     HSToast(toast, type: display.toastIsError ? .error : .success)

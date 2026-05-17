@@ -75,6 +75,7 @@ struct SessionReviewView: View {
             await viewModel.interactor?.loadAttemptBreakdown(.init(sessionId: sessionId))
         }
         .environment(\.circuitContext, .specialist)
+        .accessibilityIdentifier("SessionReviewRoot")
     }
 
     // MARK: - Background
