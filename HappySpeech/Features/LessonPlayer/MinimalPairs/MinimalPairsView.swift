@@ -132,20 +132,6 @@ struct MinimalPairsView: View {
             lyalyaMascotHeader
             progressHeader
             promptBlock
-            // Spectrogram — сравнение двух звуков визуально.
-            // Показывает живой голос ребёнка для сравнения с образцом.
-            // Reduce Motion: SpectrogramVisualizerView переключается на StaticSpectrogramView.
-            if !display.isAnswered {
-                SpectrogramVisualizerView(
-                    referenceSpectrogram: nil,
-                    style: .ocean
-                )
-                .frame(maxWidth: .infinity)
-                .frame(height: 120)
-                .accessibilityLabel(
-                    String(localized: "spectrogram.compare.sounds", defaultValue: "Сравни звуки визуально")
-                )
-            }
             optionsRow
             hintReplayRow
             Spacer(minLength: 0)
