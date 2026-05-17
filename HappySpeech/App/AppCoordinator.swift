@@ -55,6 +55,10 @@ enum AppRoute: Hashable {
     case dailyChallenge(childId: String)
     case parentInsightsTimeline(childId: String)
     case familyAwardsCabinet(parentId: String)
+    // v25 6.2: new features (F-301 / F-302 / F-303)
+    case weeklyReport(childId: String, weekOffset: Int)
+    case articulationGym(soundGroup: ArticulationSoundGroup)
+    case wordBank(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -446,6 +450,23 @@ struct AppCoordinatorView: View {
         case .familyAwardsCabinet(let parentId):
             FamilyAwardsCabinetView(parentId: parentId)
                 .environment(\.circuitContext, .parent)
+
+        // MARK: - v25 6.2: F-301 / F-302 / F-303
+
+        case .weeklyReport(let childId, let weekOffset):
+            WeeklySoundReportView(childId: childId, weekOffset: weekOffset)
+                .environment(\.circuitContext, .parent)
+
+        case .articulationGym(let soundGroup):
+            ArticulationGymView(
+                childId: container.currentChildId,
+                soundGroup: soundGroup
+            )
+            .environment(\.circuitContext, .kid)
+
+        case .wordBank(let childId):
+            WordBankView(childId: childId)
+                .environment(\.circuitContext, .kid)
         }
     }
 
@@ -713,6 +734,14 @@ extension AppCoordinatorView {
             return .familyAwardsCabinet(parentId: previewParent)
         case "voiceCloning":
             return .voiceCloning(childId: previewChild)
+
+        // MARK: v25 6.2 — F-301 / F-302 / F-303
+        case "weeklyReport":
+            return .weeklyReport(childId: previewChild, weekOffset: 0)
+        case "articulationGym":
+            return .articulationGym(soundGroup: .hissing)
+        case "wordBank":
+            return .wordBank(childId: previewChild)
 
         default:
             return .auth
