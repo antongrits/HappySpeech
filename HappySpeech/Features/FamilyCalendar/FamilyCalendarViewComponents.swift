@@ -38,9 +38,9 @@ struct ChildAvatarCard: View {
                 Text(child.name)
                     .font(TypographyTokens.caption())
                     .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.75)
-                    .frame(width: 80)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+                    .frame(width: 88)
                     .multilineTextAlignment(.center)
 
                 if child.streak > 0 {
@@ -56,7 +56,7 @@ struct ChildAvatarCard: View {
                     Spacer().frame(height: 14)
                 }
             }
-            .frame(width: 80, height: 100)
+            .frame(width: 96, height: 116)
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card)
                     .fill(isSelected ? ColorTokens.Brand.primary.opacity(0.08) : ColorTokens.Parent.surface)
@@ -96,13 +96,13 @@ struct AddChildCapsule: View {
                 Text(String(localized: "family_calendar.children.add"))
                     .font(TypographyTokens.caption())
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.75)
-                    .frame(width: 80)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+                    .frame(width: 88)
                     .multilineTextAlignment(.center)
                 Spacer().frame(height: 14)
             }
-            .frame(width: 80, height: 100)
+            .frame(width: 96, height: 116)
             .background(RoundedRectangle(cornerRadius: RadiusTokens.card).fill(ColorTokens.Parent.surface))
         }
         .buttonStyle(.plain)

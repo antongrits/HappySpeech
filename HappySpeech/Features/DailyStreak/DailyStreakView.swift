@@ -165,9 +165,9 @@ struct DailyStreakView: View {
         .frame(maxWidth: .infinity)
         .padding(.vertical, SpacingTokens.sp5)
         .background(
-            RoundedRectangle(cornerRadius: 24)
+            RoundedRectangle(cornerRadius: RadiusTokens.card)
                 .fill(ColorTokens.Kid.surface)
-                .shadow(color: .black.opacity(0.05), radius: 12, y: 4)
+                .shadow(color: ColorTokens.Overlay.shadow, radius: 12, y: 4)
         )
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(String(
@@ -361,7 +361,7 @@ struct DailyStreakView: View {
             .background(
                 Capsule().fill(ColorTokens.Brand.primary)
             )
-            .shadow(color: .black.opacity(0.18), radius: 8, y: 4)
+            .shadow(color: ColorTokens.Overlay.shadow, radius: 8, y: 4)
             .task {
                 try? await Task.sleep(for: .seconds(2.5))
                 holder.showToast = false

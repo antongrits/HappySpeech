@@ -162,7 +162,7 @@ struct PeriodChipView: View {
     }
 
     private var textColor: Color {
-        option.isSelected ? .white : ColorTokens.Parent.ink
+        option.isSelected ? ColorTokens.Overlay.onAccent : ColorTokens.Parent.ink
     }
 }
 

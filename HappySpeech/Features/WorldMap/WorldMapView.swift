@@ -291,7 +291,7 @@ struct WorldMapView: View {
             Spacer(minLength: 0)
 
             if display.hasStreak {
-                HStack(spacing: 4) {
+                HStack(spacing: SpacingTokens.micro) {
                     Image(systemName: "flame.fill")
                         .foregroundStyle(ColorTokens.Brand.primary)
                         .font(TypographyTokens.caption(14).weight(.semibold))
@@ -301,7 +301,7 @@ struct WorldMapView: View {
                         .foregroundStyle(ColorTokens.Kid.ink)
                 }
                 .padding(.horizontal, SpacingTokens.small)
-                .padding(.vertical, 6)
+                .padding(.vertical, SpacingTokens.tiny)
                 .background(
                     Capsule().fill(ColorTokens.Brand.primary.opacity(0.12))
                 )

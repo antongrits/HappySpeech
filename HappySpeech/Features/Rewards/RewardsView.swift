@@ -211,7 +211,7 @@ struct RewardsView: View {
                                     )
                                 )
                         }
-                        .foregroundStyle(tab.isActive ? .white : ColorTokens.Kid.ink)
+                        .foregroundStyle(tab.isActive ? ColorTokens.Overlay.onAccent : ColorTokens.Kid.ink)
                         .padding(.horizontal, SpacingTokens.medium)
                         .padding(.vertical, SpacingTokens.tiny)
                         .frame(minHeight: 56)

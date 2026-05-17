@@ -110,7 +110,7 @@ struct AchievementsView: View {
         } label: {
             Text(title)
                 .font(TypographyTokens.caption(14))
-                .foregroundStyle(selectedTab == tab ? .white : ColorTokens.Kid.inkMuted)
+                .foregroundStyle(selectedTab == tab ? ColorTokens.Overlay.onAccent : ColorTokens.Kid.inkMuted)
                 .frame(maxWidth: .infinity)
                 .frame(height: 38)
                 .background(

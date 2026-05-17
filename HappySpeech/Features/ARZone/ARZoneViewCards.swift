@@ -257,7 +257,7 @@ struct ARGameCardView: View {
             )
             .cornerRadius(RadiusTokens.lg)
             .shadow(
-                color: colors.first?.opacity(0.3) ?? .black.opacity(0.15),
+                color: colors.first?.opacity(0.3) ?? ColorTokens.Overlay.shadow,
                 radius: reduceMotion ? 0 : 8,
                 x: 0, y: 4
             )

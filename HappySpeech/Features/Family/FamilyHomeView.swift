@@ -203,11 +203,18 @@ struct FamilyHomeView: View {
                             .font(TypographyTokens.headline(22))
                             .foregroundStyle(ColorTokens.Brand.lilac)
                             .accessibilityHidden(true)
-                        Text(String(localized: "family.home.play_together"))
-                            .font(TypographyTokens.headline(16))
-                            .foregroundStyle(ColorTokens.Parent.ink)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.85)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(String(localized: "family.home.play_together"))
+                                .font(TypographyTokens.headline(16))
+                                .foregroundStyle(ColorTokens.Parent.ink)
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.85)
+                            Text(String(localized: "family.home.play_together.subtitle"))
+                                .font(TypographyTokens.caption(12))
+                                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.85)
+                        }
                         Spacer(minLength: SpacingTokens.sp1)
                         Image(systemName: "chevron.right")
                             .font(TypographyTokens.caption(14))
@@ -228,7 +235,7 @@ struct FamilyHomeView: View {
                             .foregroundStyle(ColorTokens.Brand.primary)
                             .accessibilityHidden(true)
                         VStack(alignment: .leading, spacing: 2) {
-                            Text(String(localized: "shareplay.startButton"))
+                            Text(String(localized: "family.home.shareplay_title"))
                                 .font(TypographyTokens.headline(16))
                                 .foregroundStyle(ColorTokens.Parent.ink)
                                 .lineLimit(2)
@@ -246,7 +253,7 @@ struct FamilyHomeView: View {
                             .accessibilityHidden(true)
                     }
                 }
-                .accessibilityLabel(String(localized: "shareplay.startButton"))
+                .accessibilityLabel(String(localized: "family.home.shareplay_title"))
                 .accessibilityHint(String(localized: "shareplay.family_home.a11y_hint"))
             }
         }
@@ -350,7 +357,7 @@ private struct ChildCardView: View {
                 HStack(spacing: SpacingTokens.sp1) {
                     Image(systemName: "flame.fill")
                         .font(TypographyTokens.caption(12))
-                        .foregroundStyle(.orange)
+                        .foregroundStyle(ColorTokens.Brand.primary)
                         .accessibilityHidden(true)
                     Text("\(child.currentStreak) \(String(localized: "streak.days.short"))")
                         .font(TypographyTokens.caption(12))

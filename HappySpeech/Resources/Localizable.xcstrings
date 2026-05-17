@@ -48830,6 +48830,28 @@
           }
         }
       }
+    },
+    "family.home.shareplay_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Играть на расстоянии"
+          }
+        }
+      }
+    },
+    "family.home.play_together.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Совместная игра на одном устройстве"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

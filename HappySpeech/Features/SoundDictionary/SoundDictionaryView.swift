@@ -393,7 +393,7 @@ struct SoundDictionaryView: View {
             .background(
                 Capsule().fill(ColorTokens.Brand.primary)
             )
-            .shadow(color: .black.opacity(0.18), radius: 8, y: 4)
+            .shadow(color: ColorTokens.Overlay.shadow, radius: 8, y: 4)
             .task {
                 try? await Task.sleep(for: .seconds(2.0))
                 holder.showToast = false

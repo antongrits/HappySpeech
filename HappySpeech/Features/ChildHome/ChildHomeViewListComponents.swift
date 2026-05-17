@@ -241,7 +241,7 @@ struct ChildHomeStreakBanner: View {
         }
         .foregroundStyle(ColorTokens.Brand.gold)
         .padding(.horizontal, SpacingTokens.sp2)
-        .padding(.vertical, 4)
+        .padding(.vertical, SpacingTokens.micro)
         .background(Capsule().fill(ColorTokens.Brand.gold.opacity(0.18)))
         .accessibilityHidden(true)
     }
@@ -436,8 +436,8 @@ struct ChildHomeTaskPreviewRow: View {
                         Text(task.targetSound)
                             .font(TypographyTokens.mono(11))
                             .foregroundStyle(ColorTokens.Brand.primary)
-                            .padding(.horizontal, 6)
-                            .padding(.vertical, 2)
+                            .padding(.horizontal, SpacingTokens.tiny)
+                            .padding(.vertical, SpacingTokens.micro / 2)
                             .background(
                                 Capsule()
                                     .fill(ColorTokens.Brand.primary.opacity(0.10))
