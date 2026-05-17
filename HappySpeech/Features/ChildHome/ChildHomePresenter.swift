@@ -228,9 +228,15 @@ final class ChildHomePresenter: ChildHomePresentationLogic {
         from response: ChildHomeModels.Fetch.Response
     ) -> [ChildHomeModels.HomeTaskPreview] {
         response.homeTasks.map { data in
-            ChildHomeModels.HomeTaskPreview(
+            // P2-02 v25: titleKey — plural-строка с `%d`; форматируем счётчиком
+            // заданий, иначе в UI отображался литеральный «%d задания».
+            let title = String.localizedStringWithFormat(
+                String(localized: String.LocalizationValue(data.titleKey)),
+                data.taskCount
+            )
+            return ChildHomeModels.HomeTaskPreview(
                 id: data.id,
-                title: String(localized: String.LocalizationValue(data.titleKey)),
+                title: title,
                 targetSound: data.targetSound,
                 dueDate: data.dueDate,
                 isCompleted: data.isCompleted

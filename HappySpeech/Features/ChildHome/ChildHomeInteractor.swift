@@ -571,6 +571,7 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
             .init(
                 id: "ht-seed-1",
                 titleKey: "child.home.hometasks.count",
+                taskCount: 2,
                 targetSound: "Р",
                 dueDate: now.addingTimeInterval(86_400),
                 isCompleted: false
@@ -578,6 +579,7 @@ final class ChildHomeInteractor: ChildHomeBusinessLogic {
             .init(
                 id: "ht-seed-2",
                 titleKey: "child.home.hometasks.count",
+                taskCount: 3,
                 targetSound: "Ш",
                 dueDate: now.addingTimeInterval(172_800),
                 isCompleted: true

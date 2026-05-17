@@ -43,6 +43,11 @@ struct SpecialistHomeView: View {
             ) { tab in
                 (tab.icon, LocalizedStringKey(tab.rawValue))
             }
+            // P1-03 v25: fixedSize по вертикали — внутри ZStack(.bottom) на iOS 26
+            // SE3 matchedGeometryEffect-капсула выбранного таба растягивалась на
+            // всю высоту экрана (623pt). Фиксируем intrinsic-высоту строки.
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: .infinity)
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.bottom, SpacingTokens.sp2)
         }

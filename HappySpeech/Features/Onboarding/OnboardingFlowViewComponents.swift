@@ -63,42 +63,49 @@ struct OnboardingRoleStep: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        VStack(spacing: SpacingTokens.medium) {
-            // Block I v19: scaleEffect убран с 2D Ляли.
-            LyalyaHeroView(state: .pointing, mood: 0.7, size: 200)
-                .opacity(appeared ? 1 : 0)
-                .accessibilityHidden(true)
-                .padding(.top, SpacingTokens.small)
+        // P1-01 v25: обёрнут в ScrollView (как соседние шаги childName/goals/sounds) —
+        // маскот 200pt + 3 карточки переполняли экран iPhone SE (667pt),
+        // карточка «Ребёнок» и кнопка «Далее» уходили за нижний край без прокрутки.
+        ScrollView {
+            VStack(spacing: SpacingTokens.medium) {
+                Spacer(minLength: SpacingTokens.small)
 
-            Text(String(localized: "onboarding.role.title"))
-                .font(TypographyTokens.title(24))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.8)
-                .padding(.horizontal, SpacingTokens.medium)
-                .accessibilityAddTraits(.isHeader)
+                // Block I v19: scaleEffect убран с 2D Ляли.
+                LyalyaHeroView(state: .pointing, mood: 0.7, size: 200)
+                    .opacity(appeared ? 1 : 0)
+                    .accessibilityHidden(true)
 
-            Text(String(localized: "onboarding.role.subtitle"))
-                .font(TypographyTokens.body(14))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-                .padding(.horizontal, SpacingTokens.large)
+                Text(String(localized: "onboarding.role.title"))
+                    .font(TypographyTokens.title(24))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+                    .padding(.horizontal, SpacingTokens.medium)
+                    .accessibilityAddTraits(.isHeader)
 
-            VStack(spacing: SpacingTokens.small) {
-                ForEach(UserRole.allCases) { role in
-                    OnboardingRoleCard(
-                        role: role,
-                        isSelected: role == selectedRole,
-                        onTap: { onSelect(role) }
-                    )
+                Text(String(localized: "onboarding.role.subtitle"))
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .padding(.horizontal, SpacingTokens.large)
+
+                VStack(spacing: SpacingTokens.small) {
+                    ForEach(UserRole.allCases) { role in
+                        OnboardingRoleCard(
+                            role: role,
+                            isSelected: role == selectedRole,
+                            onTap: { onSelect(role) }
+                        )
+                    }
                 }
-            }
-            .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.horizontal, SpacingTokens.screenEdge)
 
-            Spacer()
+                Spacer(minLength: SpacingTokens.medium)
+            }
+            .frame(maxWidth: .infinity)
         }
         .onAppear {
             withAnimation(reduceMotion ? nil : MotionTokens.spring.delay(0.1)) {

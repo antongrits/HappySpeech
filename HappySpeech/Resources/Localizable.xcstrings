@@ -6357,9 +6357,33 @@
       "extractionState": "manual",
       "localizations": {
         "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%d задания"
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d задание"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d задания"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d заданий"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d задания"
+                }
+              }
+            }
           }
         }
       }
