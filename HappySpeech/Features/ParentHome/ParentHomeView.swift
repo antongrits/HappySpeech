@@ -263,6 +263,9 @@ private struct ParentDashboardTab: View {
                         noSessionCard
                     }
 
+                    // F-301 v25 — Weekly Sound Report «Итоги недели».
+                    weeklyReportCard
+
                     // Streak & stats
                     statsRow
 
@@ -694,6 +697,48 @@ private struct ParentDashboardTab: View {
         .accessibilityLabel(
             String(localized: "leaderboard.entry.title") + ". " +
             String(localized: "leaderboard.entry.subtitle")
+        )
+        .accessibilityAddTraits(.isButton)
+        .environment(\.circuitContext, .parent)
+    }
+
+    // MARK: - F-301 v25: Weekly Sound Report card
+
+    private var weeklyReportCard: some View {
+        HSCard(style: .elevated) {
+            HStack(spacing: SpacingTokens.sp3) {
+                Image(systemName: "calendar.badge.clock")
+                    .font(TypographyTokens.titleLarge(28))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "weeklyReport.entry.title"))
+                        .font(TypographyTokens.headline())
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "weeklyReport.entry.subtitle"))
+                        .font(TypographyTokens.body())
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: SpacingTokens.sp1)
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp4)
+        }
+        .onTapGesture {
+            coordinator.navigate(
+                to: .weeklyReport(childId: viewModel.childId, weekOffset: 0)
+            )
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            String(localized: "weeklyReport.entry.title") + ". " +
+            String(localized: "weeklyReport.entry.subtitle")
         )
         .accessibilityAddTraits(.isButton)
         .environment(\.circuitContext, .parent)

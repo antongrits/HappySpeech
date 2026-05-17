@@ -15,6 +15,8 @@ protocol ChildHomeRoutingLogic {
     func routeToSeasonalLesson(event: SeasonalEvent, childId: String)
     func routeToAchievements(childId: String)
     func routeToVoiceCloning(childId: String)
+    func routeToArticulationGym()
+    func routeToWordBank(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -81,5 +83,15 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     /// Block T v17 — VoiceCloning «Голосовой архив».
     func routeToVoiceCloning(childId: String) {
         coordinator?.navigate(to: .voiceCloning(childId: childId))
+    }
+
+    /// F-302 v25 — ArticulationGym «Зарядка для язычка».
+    func routeToArticulationGym() {
+        coordinator?.navigate(to: .articulationGym(soundGroup: .hissing))
+    }
+
+    /// F-303 v25 — WordBank «Копилка слов».
+    func routeToWordBank(childId: String) {
+        coordinator?.navigate(to: .wordBank(childId: childId))
     }
 }

@@ -614,6 +614,26 @@ struct ChildHomeView: View {
             .accessibilityLabel(String(localized: "voice_cloning.entry.title"))
             .accessibilityHint(String(localized: "voice_cloning.entry.hint"))
 
+            // F-302 v25 — Articulation Gym «Зарядка для язычка».
+            ChildHomeV25EntryCard(
+                titleKey: "articulationGym.entry.title",
+                hintKey: "articulationGym.entry.hint",
+                iconName: "mouth.fill",
+                accent: ColorTokens.Brand.mint
+            ) {
+                router?.routeToArticulationGym()
+            }
+
+            // F-303 v25 — Word Bank «Копилка слов».
+            ChildHomeV25EntryCard(
+                titleKey: "wordBank.entry.title",
+                hintKey: "wordBank.entry.hint",
+                iconName: "star.square.on.square.fill",
+                accent: ColorTokens.Brand.gold
+            ) {
+                router?.routeToWordBank(childId: childId)
+            }
+
             let columns: [GridItem] = hSizeClass == .regular
                 ? [GridItem(.flexible()), GridItem(.flexible()),
                    GridItem(.flexible()), GridItem(.flexible())]

@@ -3994,6 +3994,635 @@
         }
       }
     },
+    "articulationGym.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть зарядку"
+          }
+        }
+      }
+    },
+    "articulationGym.completion.again": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ещё раз"
+          }
+        }
+      }
+    },
+    "articulationGym.completion.startLesson": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать урок"
+          }
+        }
+      }
+    },
+    "articulationGym.completion.startLesson.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перейти к карте занятий"
+          }
+        }
+      }
+    },
+    "articulationGym.completion.text": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово! Язычок размят — можно тренироваться!"
+          }
+        }
+      }
+    },
+    "articulationGym.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разминка перед занятием"
+          }
+        }
+      }
+    },
+    "articulationGym.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зарядка для язычка"
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.bridge.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выгни язык мостиком, держи кончик внизу."
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.bridge.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мостик"
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.cup.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подними края языка — получится чашечка."
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.cup.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чашечка"
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.deepcup.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подними края языка повыше — глубокая чашечка."
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.deepcup.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Глубокая чашечка"
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.drum.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Постучи язычком за верхними зубами: д-д-д."
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.drum.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Барабанщик"
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.fence.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сомкни зубы и покажи их, как заборчик."
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.fence.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заборчик"
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.focus.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сдуй ватку с носа вверх язычком-чашечкой."
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.focus.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фокус"
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.horse.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пощёлкай язычком, как цокает лошадка."
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.horse.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лошадка"
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.mushroom.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Приклей язык к нёбу и удерживай, как грибок."
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.mushroom.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Грибок"
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.painter.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проведи язычком по нёбу вперёд-назад, как кисточкой."
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.painter.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Маляр"
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.pancake.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Язык широкий, спокойно лежит на нижней губе."
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.pancake.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Блинчик"
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.pump.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подуй на ладошку тонкой холодной струйкой."
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.pump.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Насос"
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.sail.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подними язык за верхние зубы, держи как парус."
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.sail.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Парус"
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.slide.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кончик языка упри в нижние зубы, спинку выгни горкой."
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.slide.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Горка"
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.smile.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Широко улыбнись и удерживай губы."
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.smile.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Улыбка"
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.spatula.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Язык широкий и расслабленный, как лопатка."
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.spatula.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лопатка"
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.swing.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Двигай кончик языка вверх и вниз."
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.swing.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Качели"
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.thread.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сделай тонкую ровную струйку воздуха."
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.thread.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ниточка"
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.tube.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вытяни губы вперёд трубочкой."
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.tube.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Трубочка"
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.turkey.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Быстро води языком по верхней губе: бл-бл-бл."
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.turkey.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Индюк"
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.woodpecker.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Стучи язычком по бугоркам за зубами быстро и звонко."
+          }
+        }
+      }
+    },
+    "articulationGym.exercise.woodpecker.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дятел"
+          }
+        }
+      }
+    },
+    "articulationGym.group.hissing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шипящие"
+          }
+        }
+      }
+    },
+    "articulationGym.group.sibilant": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Свистящие"
+          }
+        }
+      }
+    },
+    "articulationGym.group.sonor": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Соноры"
+          }
+        }
+      }
+    },
+    "articulationGym.progress.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражнение %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "articulationGym.screen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зарядка для язычка"
+          }
+        }
+      }
+    },
+    "articulationGym.skip.button": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пропустить"
+          }
+        }
+      }
+    },
+    "articulationGym.skip.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перейти к следующему упражнению"
+          }
+        }
+      }
+    },
+    "articulationGym.timer.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Осталась %d секунда"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Осталось %d секунды"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Осталось %d секунд"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Осталось %d секунд"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "artposeA.hint1": {
       "extractionState": "manual",
       "localizations": {
@@ -38400,6 +39029,448 @@
         }
       }
     },
+    "weeklyReport.activeDays.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Занятых дней на неделе: %d из 7"
+          }
+        }
+      }
+    },
+    "weeklyReport.card.expand.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите, чтобы посмотреть слова и рекомендацию"
+          }
+        }
+      }
+    },
+    "weeklyReport.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть отчёт"
+          }
+        }
+      }
+    },
+    "weeklyReport.detail.noWords": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На этой неделе слов по этому звуку пока нет."
+          }
+        }
+      }
+    },
+    "weeklyReport.detail.topWords": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лучшие слова"
+          }
+        }
+      }
+    },
+    "weeklyReport.detail.weakWords": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слова для повторения"
+          }
+        }
+      }
+    },
+    "weeklyReport.empty.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Когда ребёнок проведёт занятия, здесь появится сводка по звукам."
+          }
+        }
+      }
+    },
+    "weeklyReport.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Занятий пока нет"
+          }
+        }
+      }
+    },
+    "weeklyReport.entry.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сводка прогресса по звукам за 7 дней"
+          }
+        }
+      }
+    },
+    "weeklyReport.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Итоги недели"
+          }
+        }
+      }
+    },
+    "weeklyReport.error.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попробуйте открыть отчёт ещё раз."
+          }
+        }
+      }
+    },
+    "weeklyReport.error.retry": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторить"
+          }
+        }
+      }
+    },
+    "weeklyReport.error.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось загрузить отчёт"
+          }
+        }
+      }
+    },
+    "weeklyReport.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Собираем итоги недели…"
+          }
+        }
+      }
+    },
+    "weeklyReport.nav.next": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Следующая"
+          }
+        }
+      }
+    },
+    "weeklyReport.nav.next.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показать следующую неделю"
+          }
+        }
+      }
+    },
+    "weeklyReport.nav.previous": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прошлая"
+          }
+        }
+      }
+    },
+    "weeklyReport.nav.previous.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показать прошлую неделю"
+          }
+        }
+      }
+    },
+    "weeklyReport.recommendation.keepGoing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжайте заниматься со звуком %@ — регулярность важнее всего."
+          }
+        }
+      }
+    },
+    "weeklyReport.recommendation.positionFinal": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На следующей неделе уделите больше внимания звуку %@ в конце слова."
+          }
+        }
+      }
+    },
+    "weeklyReport.recommendation.positionInitial": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На следующей неделе уделите больше внимания звуку %@ в начале слова."
+          }
+        }
+      }
+    },
+    "weeklyReport.recommendation.positionMiddle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На следующей неделе уделите больше внимания звуку %@ в середине слова."
+          }
+        }
+      }
+    },
+    "weeklyReport.ring.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Успешность звука %1$@: %2$d процентов"
+          }
+        }
+      }
+    },
+    "weeklyReport.screen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Итоги недели"
+          }
+        }
+      }
+    },
+    "weeklyReport.share.button": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поделиться отчётом"
+          }
+        }
+      }
+    },
+    "weeklyReport.share.button.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поделиться отчётом за неделю"
+          }
+        }
+      }
+    },
+    "weeklyReport.share.header": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Итоги недели — HappySpeech"
+          }
+        }
+      }
+    },
+    "weeklyReport.share.soundLine": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@: %2$d%%"
+          }
+        }
+      }
+    },
+    "weeklyReport.sound.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук %@"
+          }
+        }
+      }
+    },
+    "weeklyReport.sound.sessions": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Занятие: %d"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Занятия: %d"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Занятий: %d"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Занятий: %d"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "weeklyReport.summary.defaultName": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Малыш"
+          }
+        }
+      }
+    },
+    "weeklyReport.summary.empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На этой неделе занятий ещё не было. Самое время начать!"
+          }
+        }
+      }
+    },
+    "weeklyReport.summary.great": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ %2$@ — отличный результат!"
+          }
+        }
+      }
+    },
+    "weeklyReport.summary.normal": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ %2$@ на этой неделе."
+          }
+        }
+      }
+    },
+    "weeklyReport.trend.down.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Динамика снижается"
+          }
+        }
+      }
+    },
+    "weeklyReport.trend.stable.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Динамика стабильная"
+          }
+        }
+      }
+    },
+    "weeklyReport.trend.up.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Динамика улучшается"
+          }
+        }
+      }
+    },
+    "weeklyReport.word.formatted": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ — %2$d%%"
+          }
+        }
+      }
+    },
     "widget.a11y": {
       "localizations": {
         "ru": {
@@ -38437,6 +39508,346 @@
           "stringUnit": {
             "state": "translated",
             "value": "Миссия дня"
+          }
+        }
+      }
+    },
+    "wordBank.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть копилку слов"
+          }
+        }
+      }
+    },
+    "wordBank.counter.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "В твоей копилке %d слово"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "В твоей копилке %d слова"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "В твоей копилке %d слов"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "В твоей копилке %d слов"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "wordBank.counter.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "слов в копилке"
+          }
+        }
+      }
+    },
+    "wordBank.detail.attemptCount": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Сказано %d раз"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Сказано %d раза"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Сказано %d раз"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Сказано %d раз"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "wordBank.detail.close": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть"
+          }
+        }
+      }
+    },
+    "wordBank.detail.practiceAgain": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сказать снова"
+          }
+        }
+      }
+    },
+    "wordBank.detail.practiceAgain.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть упражнение с этим словом"
+          }
+        }
+      }
+    },
+    "wordBank.detail.stars.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d звезда"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d звезды"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d звёзд"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d звёзд"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "wordBank.empty.action": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "К урокам"
+          }
+        }
+      }
+    },
+    "wordBank.empty.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Здесь появятся слова, которые ты научишься говорить. Начни своё первое занятие!"
+          }
+        }
+      }
+    },
+    "wordBank.empty.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Копилка пока пуста"
+          }
+        }
+      }
+    },
+    "wordBank.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слова, которые ты научился говорить"
+          }
+        }
+      }
+    },
+    "wordBank.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Копилка слов"
+          }
+        }
+      }
+    },
+    "wordBank.filter.all": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все"
+          }
+        }
+      }
+    },
+    "wordBank.lastPracticed.daysAgo": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "последний раз %d день назад"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "последний раз %d дня назад"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "последний раз %d дней назад"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "последний раз %d дней назад"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "wordBank.lastPracticed.today": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "последний раз сегодня"
+          }
+        }
+      }
+    },
+    "wordBank.lastPracticed.yesterday": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "последний раз вчера"
+          }
+        }
+      }
+    },
+    "wordBank.screen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мои слова"
+          }
+        }
+      }
+    },
+    "wordBank.tile.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@, %2$@, звук %3$@"
+          }
+        }
+      }
+    },
+    "wordBank.tile.stars.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d звезда"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d звезды"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d звёзд"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d звёзд"
+                }
+              }
+            }
           }
         }
       }
