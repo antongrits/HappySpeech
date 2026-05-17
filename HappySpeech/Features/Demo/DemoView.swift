@@ -85,14 +85,14 @@ struct DemoDotNavigator: View {
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 6) {
+                HStack(spacing: SpacingTokens.tiny) {
                     ForEach(0..<totalSteps, id: \.self) { index in
                         dotButton(index: index)
                             .id(index)
                     }
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.vertical, 4)
+                .padding(.vertical, SpacingTokens.micro)
             }
             .onChange(of: currentIndex) { _, newIndex in
                 withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.25)) {
@@ -154,7 +154,7 @@ struct DemoOverviewSheet: View {
                                 Text("\(index + 1)")
                                     .font(TypographyTokens.mono(13))
                                     .foregroundStyle(
-                                        index == currentIndex ? .white : ColorTokens.Kid.inkMuted
+                                        index == currentIndex ? ColorTokens.Overlay.onAccent : ColorTokens.Kid.inkMuted
                                     )
                             }
                             .accessibilityHidden(true)

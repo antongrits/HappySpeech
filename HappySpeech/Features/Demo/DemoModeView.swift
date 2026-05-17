@@ -238,7 +238,7 @@ struct DemoModeView: View {
 
             ProgressView(value: display.progress)
                 .progressViewStyle(.linear)
-                .tint(.white)
+                .tint(ColorTokens.Overlay.onAccent)
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .accessibilityHidden(true)
 
@@ -299,7 +299,8 @@ struct DemoModeView: View {
         } label: {
             Image(systemName: display.autoAdvanceEnabled ? "play.circle.fill" : "play.circle")
                 .font(TypographyTokens.headline(17))
-                .foregroundStyle(display.autoAdvanceEnabled ? .white : .white.opacity(0.7))
+                .foregroundStyle(ColorTokens.Overlay.onAccent
+                    .opacity(display.autoAdvanceEnabled ? 1.0 : 0.7))
                 .frame(minWidth: 44, minHeight: 44)
                 .contentShape(Rectangle())
         }
@@ -393,7 +394,7 @@ struct DemoModeView: View {
             HSCard(style: .elevated, padding: SpacingTokens.xLarge) {
                 ProgressView()
                     .progressViewStyle(.circular)
-                    .tint(.white)
+                    .tint(ColorTokens.Overlay.onAccent)
             }
             .frame(maxWidth: .infinity)
             .padding(.horizontal, SpacingTokens.screenEdge)

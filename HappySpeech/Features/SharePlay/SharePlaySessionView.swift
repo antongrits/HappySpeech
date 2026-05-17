@@ -95,7 +95,7 @@ struct SharePlaySessionView: View {
 
             // Кнопка завершения
             Button(action: onEnd) {
-                HStack(spacing: 4) {
+                HStack(spacing: SpacingTokens.micro) {
                     Image(systemName: "xmark")
                         .font(TypographyTokens.caption(12))
                     Text(String(localized: "shareplay.session.end"))

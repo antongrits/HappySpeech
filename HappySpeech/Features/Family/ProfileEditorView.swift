@@ -260,7 +260,7 @@ struct ProfileEditorView: View {
         let isSelected = viewModel.age == ageValue
         return Text("\(ageValue)")
             .font(TypographyTokens.headline(18))
-            .foregroundStyle(isSelected ? .white : ColorTokens.Parent.ink)
+            .foregroundStyle(isSelected ? ColorTokens.Overlay.onAccent : ColorTokens.Parent.ink)
             .frame(width: 44, height: 44)
             .background(
                 Circle().fill(isSelected

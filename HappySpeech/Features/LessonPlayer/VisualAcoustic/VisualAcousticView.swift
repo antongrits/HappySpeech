@@ -522,8 +522,8 @@ private struct ChoiceTile: View {
     private var foregroundColor: Color {
         switch result {
         case .none:     return ColorTokens.Kid.ink
-        case .correct:  return .white
-        case .wrong:    return .white
+        case .correct:  return ColorTokens.Overlay.onAccent
+        case .wrong:    return ColorTokens.Overlay.onAccent
         }
     }
 

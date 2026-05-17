@@ -219,7 +219,7 @@ struct ARMirrorView: View {
                 .font(TypographyTokens.caption(11))
                 .foregroundStyle(eyeContactState.isEyeContact
                     ? ColorTokens.Brand.mint
-                    : .white.opacity(0.5))
+                    : ColorTokens.Overlay.onAccent.opacity(0.5))
                 .accessibilityHidden(true)
             GeometryReader { proxy in
                 ZStack(alignment: .leading) {

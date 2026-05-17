@@ -353,7 +353,7 @@ private struct ArchiveRowView: View {
                             .frame(width: 44, height: 44)
                         Image(systemName: isPlaying ? "pause.fill" : "play.fill")
                             .font(TypographyTokens.headline(16))
-                            .foregroundStyle(isPlaying ? .white : ColorTokens.Brand.primary)
+                            .foregroundStyle(isPlaying ? ColorTokens.Overlay.onAccent : ColorTokens.Brand.primary)
                     }
                 }
                 .buttonStyle(.plain)

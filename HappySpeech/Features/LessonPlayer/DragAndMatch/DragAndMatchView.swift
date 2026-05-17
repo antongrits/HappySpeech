@@ -122,15 +122,15 @@ struct DragAndMatchView: View {
 
     private var playingView: some View {
         ZStack {
-            VStack(spacing: SpacingTokens.large) {
+            VStack(spacing: SpacingTokens.medium) {
                 header
                 wordsPool
-                Spacer(minLength: 0)
+                Spacer(minLength: SpacingTokens.tiny)
                 bucketsRow
                 hintButton
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.top, SpacingTokens.large)
+            .padding(.top, SpacingTokens.regular)
             .padding(.bottom, SpacingTokens.large)
             .animation(
                 reduceMotion ? nil : .spring(response: 0.4, dampingFraction: 0.85),
@@ -260,12 +260,16 @@ struct DragAndMatchView: View {
         let columns = [
             GridItem(.adaptive(minimum: 108), spacing: SpacingTokens.small)
         ]
-        return LazyVGrid(columns: columns, spacing: SpacingTokens.small) {
-            ForEach(unplaced) { word in
-                wordChip(word)
+        return ScrollView(.vertical, showsIndicators: false) {
+            LazyVGrid(columns: columns, spacing: SpacingTokens.small) {
+                ForEach(unplaced) { word in
+                    wordChip(word)
+                }
             }
+            .padding(.vertical, SpacingTokens.tiny)
+            .frame(maxWidth: .infinity, alignment: .top)
         }
-        .frame(minHeight: 140)
+        .frame(height: 200)
         .accessibilityLabel(String(localized: "Слова для сортировки"))
     }
 
@@ -361,8 +365,11 @@ struct DragAndMatchView: View {
                     .minimumScaleFactor(0.8)
             }
             LazyVGrid(
-                columns: [GridItem(.flexible(), spacing: 6), GridItem(.flexible(), spacing: 6)],
-                spacing: 6
+                columns: [
+                    GridItem(.flexible(), spacing: SpacingTokens.tiny),
+                    GridItem(.flexible(), spacing: SpacingTokens.tiny)
+                ],
+                spacing: SpacingTokens.tiny
             ) {
                 ForEach(contents) { word in
                     placedChip(word, bucket: bucket)
@@ -371,7 +378,7 @@ struct DragAndMatchView: View {
             .frame(minHeight: 72)
         }
         .padding(SpacingTokens.small)
-        .frame(maxWidth: .infinity, minHeight: 180, alignment: .top)
+        .frame(maxWidth: .infinity, minHeight: 152, alignment: .top)
         .background(
             RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                 .fill(
@@ -443,7 +450,7 @@ struct DragAndMatchView: View {
                 .minimumScaleFactor(0.7)
         }
         .padding(.horizontal, SpacingTokens.tiny)
-        .padding(.vertical, 4)
+        .padding(.vertical, SpacingTokens.micro)
         .background(
             Capsule().fill(ColorTokens.Kid.surface)
         )

@@ -246,10 +246,10 @@ struct AuthSignUpView: View {
         Button {
             coordinator.navigate(to: .auth)
         } label: {
-            HStack(spacing: 4) {
-                Text(String(localized: "Уже есть аккаунт?"))
+            HStack(spacing: SpacingTokens.micro) {
+                Text(String(localized: "auth.haveAccount"))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
-                Text(String(localized: "Войти"))
+                Text(String(localized: "auth.signIn"))
                     .foregroundStyle(ColorTokens.Brand.primary)
                     .fontWeight(.semibold)
             }

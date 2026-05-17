@@ -321,7 +321,7 @@ private struct PermissionOverviewCardView: View {
                 .font(TypographyTokens.body(13).weight(.semibold))
                 .foregroundStyle(card.accentColor)
                 .padding(.horizontal, SpacingTokens.regular)
-                .padding(.vertical, 6)
+                .padding(.vertical, SpacingTokens.tiny)
                 .background(
                     Capsule().fill(card.accentColor.opacity(0.12))
                 )
@@ -334,7 +334,7 @@ private struct PermissionOverviewCardView: View {
 
     private var settingsButton: some View {
         Button(action: onOpenSettings) {
-            HStack(spacing: 4) {
+            HStack(spacing: SpacingTokens.micro) {
                 Image(systemName: "gearshape.fill")
                     .font(TypographyTokens.caption(11))
                     .accessibilityHidden(true)
@@ -343,7 +343,7 @@ private struct PermissionOverviewCardView: View {
             }
             .foregroundStyle(ColorTokens.Semantic.error)
             .padding(.horizontal, SpacingTokens.regular)
-            .padding(.vertical, 6)
+            .padding(.vertical, SpacingTokens.tiny)
             .background(
                 Capsule().fill(ColorTokens.Semantic.errorBg)
             )

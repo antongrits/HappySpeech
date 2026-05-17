@@ -250,7 +250,7 @@ struct AuthSignInView: View {
             Button {
                 coordinator.navigate(to: .signUp)
             } label: {
-                HStack(spacing: 4) {
+                HStack(spacing: SpacingTokens.micro) {
                     Text(String(localized: "auth.noAccount"))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                     Text(String(localized: "auth.register.cta"))

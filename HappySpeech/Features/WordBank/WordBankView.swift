@@ -255,7 +255,7 @@ struct WordBankView: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
 
-            HStack(spacing: 4) {
+            HStack(spacing: SpacingTokens.micro) {
                 ForEach(0..<detail.starRating, id: \.self) { _ in
                     Image(systemName: "star.fill")
                         .font(.system(size: 22))

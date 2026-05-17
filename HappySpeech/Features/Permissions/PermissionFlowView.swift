@@ -71,7 +71,7 @@ struct PermissionFlowView: View {
                 VStack {
                     Spacer()
                     HSToast(toast, type: toastType(for: display.currentStep?.state))
-                        .padding(.bottom, 130)
+                        .padding(.bottom, SpacingTokens.sp16 * 2)
                         .transition(.move(edge: .bottom).combined(with: .opacity))
                         .task {
                             try? await Task.sleep(for: .seconds(2.4))

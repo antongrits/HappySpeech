@@ -330,7 +330,7 @@ private struct LeaderboardRowView: View {
     private var positionColor: Color {
         switch row.position {
         case 1: return ColorTokens.Badge.gold
-        case 2: return Color.gray
+        case 2: return ColorTokens.Badge.silver
         case 3: return ColorTokens.Badge.bronze
         default: return ColorTokens.Brand.primary
         }
@@ -347,7 +347,7 @@ private enum PodiumAccent {
     var color: Color {
         switch self {
         case .gold:   return ColorTokens.Badge.gold
-        case .silver: return Color.gray
+        case .silver: return ColorTokens.Badge.silver
         case .bronze: return ColorTokens.Badge.bronze
         }
     }

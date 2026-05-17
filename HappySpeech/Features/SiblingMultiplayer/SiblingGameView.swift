@@ -359,7 +359,7 @@ struct SiblingGameView: View {
                     )
 
                 HStack(spacing: SpacingTokens.sp5) {
-                    VStack(spacing: 4) {
+                    VStack(spacing: SpacingTokens.micro) {
                         Text(display.localDisplayName)
                             .font(TypographyTokens.caption(12))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
@@ -370,7 +370,7 @@ struct SiblingGameView: View {
                     Text("—")
                         .font(TypographyTokens.headline(18))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    VStack(spacing: 4) {
+                    VStack(spacing: SpacingTokens.micro) {
                         Text(display.peerDisplayName)
                             .font(TypographyTokens.caption(12))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)

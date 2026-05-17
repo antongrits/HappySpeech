@@ -106,7 +106,7 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "rot_lot",
             targetWord: "рот", foilWord: "лот",
-            targetEmoji: "mouth.fill", foilEmoji: "textformat.123",
+            targetEmoji: "mouth.fill", foilEmoji: "tag.fill",
             soundContrast: "Р-Л", targetIsLeft: true
         ),
 
@@ -252,7 +252,7 @@ extension MinimalPairRound {
         MinimalPairRound(
             id: "mol_nol",
             targetWord: "моль", foilWord: "ноль",
-            targetEmoji: "word_butterfly_insect", foilEmoji: "0️⃣",
+            targetEmoji: "word_butterfly_insect", foilEmoji: "0.circle.fill",
             soundContrast: "М-Н", targetIsLeft: false
         ),
 

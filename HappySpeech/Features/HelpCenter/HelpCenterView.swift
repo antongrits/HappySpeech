@@ -132,7 +132,7 @@ struct HelpCenterView: View {
     private var heroSection: some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
             HStack(alignment: .top) {
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
                     Text("helpCenter.hero.title")
                         .font(TypographyTokens.title(22))
                         .foregroundStyle(ColorTokens.Parent.ink)
@@ -309,7 +309,7 @@ struct HelpCenterView: View {
                         Image(systemName: "play.fill")
                             .font(.caption2)
                             .foregroundStyle(ColorTokens.Brand.primary)
-                            .padding(4)
+                            .padding(SpacingTokens.micro)
                             .background(Circle().fill(ColorTokens.Overlay.onAccent))
                             .offset(x: 18, y: 18)
                             .accessibilityHidden(true)
@@ -425,7 +425,7 @@ struct HelpCenterView: View {
                     )
                     .accessibilityHidden(true)
 
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
                     Text("helpCenter.contact.title")
                         .font(TypographyTokens.body(15).weight(.medium))
                         .foregroundStyle(ColorTokens.Parent.ink)
@@ -486,7 +486,7 @@ struct HelpCenterView: View {
             .padding(.horizontal, SpacingTokens.sp4)
             .padding(.vertical, SpacingTokens.sp2)
             .background(Capsule().fill(ColorTokens.Brand.primary))
-            .shadow(color: .black.opacity(0.18), radius: 8, y: 4)
+            .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 8, y: 4)
             .task {
                 try? await Task.sleep(for: .seconds(2.0))
                 holder.showToast = false

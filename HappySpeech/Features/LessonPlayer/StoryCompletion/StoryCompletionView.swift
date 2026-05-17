@@ -446,7 +446,7 @@ private struct ChoiceButton: View {
     private var foregroundColor: Color {
         switch state {
         case .idle:     return ColorTokens.Kid.ink
-        case .correct, .wrong, .revealed: return .white
+        case .correct, .wrong, .revealed: return ColorTokens.Overlay.onAccent
         }
     }
 

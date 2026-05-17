@@ -165,7 +165,7 @@ private struct HandPoseHintBanner: View {
         HStack(spacing: SpacingTokens.small) {
             Image(systemName: isMatching ? "hand.thumbsup.fill" : "hand.raised.fill")
                 .font(.title2)
-                .foregroundStyle(isMatching ? ColorTokens.Semantic.success : .white)
+                .foregroundStyle(isMatching ? ColorTokens.Semantic.success : ColorTokens.Overlay.onAccent)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(hintText)

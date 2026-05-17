@@ -83,7 +83,7 @@ struct SiblingLobbyView: View {
                 .minimumScaleFactor(0.75)
                 .frame(maxWidth: 100)
 
-            HStack(spacing: 4) {
+            HStack(spacing: SpacingTokens.micro) {
                 Image(systemName: badgeSymbol)
                     .font(TypographyTokens.caption(12))
                 Text(badgeText)
@@ -91,7 +91,7 @@ struct SiblingLobbyView: View {
             }
             .foregroundStyle(isReady ? ColorTokens.Semantic.success : ColorTokens.Semantic.warning)
             .padding(.horizontal, SpacingTokens.sp2)
-            .padding(.vertical, 4)
+            .padding(.vertical, SpacingTokens.micro)
             .background(
                 Capsule().fill(badgeColor)
             )
