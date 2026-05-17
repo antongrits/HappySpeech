@@ -15,7 +15,7 @@ import SwiftUI
 //                                                    │
 //                                             RhythmInteractor
 //                                                    ↕
-//                                          AVAudioEngine + AVSpeechSynthesizer
+//                                       AVAudioEngine + LessonVoiceWorker (голос Ляли)
 
 struct RhythmView: View {
 

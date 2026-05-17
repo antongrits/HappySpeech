@@ -17,8 +17,9 @@ protocol NarrativeQuestBusinessLogic: AnyObject {
 // MARK: - NarrativeQuestInteractor
 //
 // Бизнес-логика «Квеста с Лялей». Держит текущий сценарий, индекс этапа,
-// накопленные эмодзи и скоры. Управляет TTS (AVSpeechSynthesizer) для
-// нарратива и делегирует scoring presenter'у через Response.
+// накопленные эмодзи и скоры. Озвучивает нарратив записанным голосом Ляли
+// через `LessonVoiceWorker` (Siri-TTS не используется) и делегирует
+// scoring presenter'у через Response.
 // Все операции — @MainActor; отложенные переходы между фазами делаются
 // через отменяемые `Task` — чтобы при dismiss экрана не было «призрачных»
 // переходов.

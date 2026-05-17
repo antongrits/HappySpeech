@@ -16,7 +16,8 @@ protocol StoryCompletionBusinessLogic: AnyObject {
 //
 // Бизнес-логика «Заверши историю».
 //   1. `loadStory` — достаёт сцену из каталога по `soundGroup` + `sceneIndex`,
-//      запускает TTS через AVSpeechSynthesizer (ru-RU), шлёт Response.
+//      озвучивает текст записанным голосом Ляли через `LessonVoiceWorker`
+//      (m4a из bundle, Siri-TTS не используется), шлёт Response.
 //   2. `chooseWord` — проверяет правильность, подсвечивает варианты,
 //      автоматически планирует переход к следующей сцене: 1.2 с на correct,
 //      1.8 с на wrong (ребёнок успевает увидеть правильный вариант).
@@ -24,8 +25,8 @@ protocol StoryCompletionBusinessLogic: AnyObject {
 //      `complete`, иначе подгружает следующую.
 //   4. `complete` — считает финальный score = correctCount / totalScenes.
 //
-// AVSpeechSynthesizer хранится как instance var, чтобы система не освободила
-// его до завершения речи.
+// Озвучка идёт через отменяемый `speakTask` — чтобы при dismiss экрана
+// не было «призрачного» воспроизведения.
 
 @MainActor
 final class StoryCompletionInteractor: NSObject, StoryCompletionBusinessLogic {

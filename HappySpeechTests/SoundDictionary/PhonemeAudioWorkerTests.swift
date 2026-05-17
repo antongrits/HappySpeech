@@ -3,9 +3,10 @@ import XCTest
 
 // MARK: - PhonemeAudioWorkerTests
 //
-// PhonemeAudioWorker воспроизводит звук через AVAudioPlayer или TTS-fallback.
-// В тест-бандле нет m4a-файлов — тестируем путь TTS-fallback и stop().
-// Реальный AVAudioPlayer/AVSpeechSynthesizer — hardware: проверяем возврат (true, true).
+// PhonemeAudioWorker воспроизводит звук через AVAudioPlayer или, при
+// отсутствии bundle-файла, через записанный голос Ляли (LessonVoiceWorker).
+// Siri TTS больше не используется (v25): usedFallbackTTS всегда false.
+// В тест-бандле нет m4a-файлов — тестируем fallback-путь и stop().
 
 // MARK: - PhonemeEntry builder
 
@@ -35,22 +36,22 @@ final class PhonemeAudioWorkerTests: XCTestCase {
         sut = PhonemeAudioWorker()
     }
 
-    // MARK: - playSample: TTS fallback (нет bundle-файла)
+    // MARK: - playSample: fallback на голос Ляли (нет bundle-файла)
 
-    func test_playSample_withoutBundleFile_returnsTrueAndUsedFallbackTTS() async {
+    func test_playSample_withoutBundleFile_returnsTrueAndNoSiriFallback() async {
         let entry = makeEntry(cyrillic: "С", audioResourceName: nil)
         let (success, usedFallback) = await sut.playSample(for: entry)
 
-        XCTAssertTrue(success, "При TTS-fallback success должен быть true")
-        XCTAssertTrue(usedFallback, "Без bundle-файла должен использоваться TTS-fallback")
+        XCTAssertTrue(success, "При fallback на голос Ляли success должен быть true")
+        XCTAssertFalse(usedFallback, "Siri TTS не используется — usedFallbackTTS всегда false")
     }
 
-    func test_playSample_withNonexistentBundleFile_fallsBackToTTS() async {
+    func test_playSample_withNonexistentBundleFile_fallsBackToLyalyaVoice() async {
         let entry = makeEntry(cyrillic: "Ш", audioResourceName: "sound_sh_nonexistent")
         let (success, usedFallback) = await sut.playSample(for: entry)
 
-        XCTAssertTrue(success, "При отсутствии bundle-файла TTS должен отработать")
-        XCTAssertTrue(usedFallback, "Несуществующий bundle-файл → TTS fallback")
+        XCTAssertTrue(success, "При отсутствии bundle-файла fallback на голос Ляли отрабатывает")
+        XCTAssertFalse(usedFallback, "Несуществующий bundle-файл → голос Ляли, не Siri")
     }
 
     // MARK: - stop: не крашит без предварительного play

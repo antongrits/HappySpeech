@@ -3,8 +3,9 @@ import SwiftUI
 
 // MARK: - Bingo VIP Models
 //
-// «Бинго со звуком»: 5×5 карточка слов. Логопед-маскот зачитывает слово
-// (AVSpeechSynthesizer ru-RU), ребёнок ищет его в своей карточке и нажимает.
+// «Бинго со звуком»: 5×5 карточка слов. Маскот Ляля зачитывает слово
+// записанным голосом (LessonVoiceWorker, m4a из bundle — без Siri-TTS),
+// ребёнок ищет его в своей карточке и нажимает.
 // Цель — собрать 5 в ряд (горизонталь / вертикаль / диагональ).
 //
 // Все модели согласованы с Clean Swift VIP: Request → Response → ViewModel.
@@ -125,7 +126,7 @@ final class BingoViewDisplay {
     var calledWord: String = ""
     var calledWordIndex: Int = 0       // 0 пока ничего не называли
     var totalWords: Int = 0
-    var isCalling: Bool = false        // TTS сейчас говорит — для анимации иконки динамика
+    var isCalling: Bool = false        // Ляля сейчас называет слово — для анимации иконки динамика
 
     // Состояние игры
     var phase: BingoPhase = .loading

@@ -18,17 +18,17 @@ protocol VisualAcousticBusinessLogic: AnyObject {
 // Бизнес-логика «Визуально-акустическая связь».
 //   1. `loadRound` — при первом входе фиксирует активити и выбирает 6 раундов
 //      из каталога для группы звуков ребёнка; шлёт Response в Presenter.
-//   2. `playAudio` — запускает TTS (AVSpeechSynthesizer, ru-RU) с полным
-//      текстом вопроса и вариантов. Когда речь заканчивается —
-//      AVSpeechSynthesizerDelegate переводит фазу в .choosing.
+//   2. `playAudio` — озвучивает вопрос и варианты записанным голосом Ляли
+//      через `LessonVoiceWorker` (m4a из bundle, Siri-TTS не используется).
+//      Когда воспроизведение завершается — фаза переходит в .choosing.
 //   3. `chooseWord` — проверяет правильность, шлёт Response,
 //      планирует автопереход: 1.2 с на correct, 1.5 с на wrong.
 //   4. `nextRound` — инкрементит roundIndex; если раунды закончились —
 //      вызывает `complete`, иначе подгружает следующий.
 //   5. `complete` — считает финальный score = correctCount / totalRounds.
 //
-// AVSpeechSynthesizer хранится как instance var, чтобы система не
-// освободила его до завершения речи (типичная ловушка с локальной переменной).
+// Озвучка идёт через `speakTask` — отменяемый Task, чтобы при dismiss
+// экрана не было «призрачного» воспроизведения.
 
 @MainActor
 final class VisualAcousticInteractor: VisualAcousticBusinessLogic {

@@ -7,7 +7,7 @@ import OSLog
 @MainActor
 protocol PhonemeAudioWorkerProtocol: AnyObject {
     /// Воспроизводит сэмпл фонемы. Если в bundle нет нужного файла —
-    /// fallback на ``AVSpeechSynthesizer`` (RU).
+    /// fallback на голос Ляли (записанное слово-пример через ``LessonVoiceWorker``).
     /// Возвращает `(success, usedFallbackTTS)`.
     func playSample(for entry: PhonemeEntry) async -> (Bool, Bool)
     func stop()
@@ -17,12 +17,13 @@ protocol PhonemeAudioWorkerProtocol: AnyObject {
 //
 // Block AE v21 — звуковой воркер для SoundDictionary.
 //
-// Стратегия:
+// Стратегия (v25 — без Siri TTS):
 //  1. Если у фонемы есть `audioResourceName` и файл найден в bundle —
 //     воспроизводим через ``AVAudioPlayer``.
-//  2. Иначе — fallback: ``AVSpeechSynthesizer`` с русским голосом
-//     и pre-utterance delay 0.05s. Скорость 0.45 — медленнее обычной,
-//     чтобы ребёнок слышал артикуляцию.
+//  2. Иначе — fallback: записанный голос Ляли через ``LessonVoiceWorker``.
+//     Озвучивается слово-пример фонемы (например «солнце» для «С»), а не
+//     одиночная буква — слово есть в `lyalya-phrase-mapping.json`. Если и
+//     слова в маппинге нет — тишина (silent skip), но НИКОГДА не Siri.
 //
 // Поток: воркер привязан к main actor; для playback используется
 // `AVAudioPlayer` (фоновое декодирование внутри AVF).
@@ -36,7 +37,7 @@ final class PhonemeAudioWorker: PhonemeAudioWorkerProtocol {
     )
 
     private var player: AVAudioPlayer?
-    private let synthesizer = AVSpeechSynthesizer()
+    private var speakTask: Task<Void, Never>?
 
     init() {}
 
@@ -59,21 +60,27 @@ final class PhonemeAudioWorker: PhonemeAudioWorkerProtocol {
             }
         }
 
-        // 2. Fallback to TTS.
-        let utterance = AVSpeechUtterance(string: entry.cyrillic)
-        utterance.voice = AVSpeechSynthesisVoice(language: "ru-RU")
-        utterance.rate = 0.45
-        utterance.preUtteranceDelay = 0.05
-        synthesizer.speak(utterance)
-        Self.logger.debug("playSample TTS fallback: \(entry.cyrillic, privacy: .public)")
-        return (true, true)
+        // 2. Fallback — голос Ляли: озвучиваем слово-пример фонемы.
+        //    Если слова нет в маппинге Ляли — LessonVoiceWorker делает
+        //    silent skip. Siri TTS не используется.
+        Self.logger.debug("playSample Lyalya fallback: \(entry.exampleWord, privacy: .public)")
+        speakTask?.cancel()
+        speakTask = Task { @MainActor [weak self] in
+            await LessonVoiceWorker.shared.speak(
+                entry.exampleWord,
+                lessonType: "sound_dictionary"
+            )
+            self?.speakTask = nil
+        }
+        // usedFallbackTTS=false: системный Siri-TTS больше не задействован.
+        return (true, false)
     }
 
     func stop() {
         player?.stop()
         player = nil
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
-        }
+        speakTask?.cancel()
+        speakTask = nil
+        LessonVoiceWorker.shared.stop()
     }
 }
