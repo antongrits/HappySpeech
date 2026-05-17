@@ -267,6 +267,7 @@ struct StoryCompletionView: View {
             }
             .frame(maxWidth: 320)
             .padding(.bottom, SpacingTokens.large)
+            .accessibilityIdentifier("gameNextButton")
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
         .accessibilityElement(children: .contain)

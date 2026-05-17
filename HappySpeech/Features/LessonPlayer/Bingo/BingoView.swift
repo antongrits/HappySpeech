@@ -163,6 +163,7 @@ struct BingoView: View {
                     .padding(.vertical, SpacingTokens.tiny)
             }
             .buttonStyle(.plain)
+            .accessibilityIdentifier("bingoNextWordButton")
             .accessibilityLabel(String(localized: "bingo.accessibility.next_word"))
         }
         .padding(.horizontal, SpacingTokens.regular)
@@ -203,11 +204,12 @@ struct BingoView: View {
             count: BingoLineCatalog.side
         )
         return LazyVGrid(columns: columns, spacing: SpacingTokens.tiny) {
-            ForEach(display.cells) { cell in
+            ForEach(Array(display.cells.enumerated()), id: \.element.id) { index, cell in
                 BingoCellView(cell: cell, reduceMotion: reduceMotion) {
                     handleTap(cell: cell)
                 }
                 .disabled(display.phase != .playing || cell.isMarked)
+                .accessibilityIdentifier("bingoCell_\(index)")
             }
         }
     }
@@ -245,6 +247,7 @@ struct BingoView: View {
                         interactor?.completeGame()
                     }
                     .frame(maxWidth: 320)
+                    .accessibilityIdentifier("gameNextButton")
                 }
             }
             .padding(.horizontal, SpacingTokens.large)
@@ -281,6 +284,7 @@ struct BingoView: View {
             }
             .frame(maxWidth: 320)
             .padding(.bottom, SpacingTokens.large)
+            .accessibilityIdentifier("gameNextButton")
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
         .accessibilityElement(children: .contain)

@@ -66,6 +66,7 @@ struct ARActivityView: View {
                 .environment(container)
         }
         .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("ARActivityRoot")
     }
 
     // MARK: - Loading

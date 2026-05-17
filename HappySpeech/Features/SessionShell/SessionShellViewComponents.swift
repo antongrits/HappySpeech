@@ -53,6 +53,10 @@ struct SessionHUDView: View {
         .accessibilityLabel(String(
             localized: "session.hud.progress.a11y \(state.currentIndex + 1) \(max(state.totalSteps, 1))"
         ))
+        // UI-тест: стабильный identifier + value со строкой "step/total" для
+        // отслеживания продвижения сессии без знания внутренней игры.
+        .accessibilityIdentifier("sessionHUDProgress")
+        .accessibilityValue("\(state.currentIndex + 1)/\(max(state.totalSteps, 1))")
     }
 
     private var progressFraction: Double {
@@ -112,6 +116,7 @@ struct SessionHUDView: View {
                 .accessibilityHidden(true)
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier("sessionPauseButton")
         .accessibilityLabel(String(localized: "session.hud.pause"))
         .accessibilityAddTraits(.isButton)
     }
