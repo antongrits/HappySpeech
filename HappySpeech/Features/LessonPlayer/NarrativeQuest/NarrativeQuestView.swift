@@ -132,26 +132,26 @@ struct NarrativeQuestView: View {
     private var questIntroView: some View {
         VStack(spacing: SpacingTokens.large) {
             header
-            Spacer(minLength: 0)
 
-            VStack(spacing: SpacingTokens.medium) {
-                Image(systemName: display.finalRewardEmoji)
-                    .font(.system(size: 96, weight: .bold))
-                    .foregroundStyle(ColorTokens.Brand.gold)
-                    .accessibilityHidden(true)
+            ScrollView {
+                VStack(spacing: SpacingTokens.medium) {
+                    Image(systemName: display.finalRewardEmoji)
+                        .font(.system(size: 96, weight: .bold))
+                        .foregroundStyle(ColorTokens.Brand.gold)
+                        .accessibilityHidden(true)
 
-                Text(display.questTitle)
-                    .font(TypographyTokens.title(28))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
+                    Text(display.questTitle)
+                        .font(TypographyTokens.title(28))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
 
-                lyalyaBubble(text: display.introNarration)
-                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    lyalyaBubble(text: display.introNarration)
+                        .padding(.horizontal, SpacingTokens.screenEdge)
+                }
+                .padding(.vertical, SpacingTokens.small)
             }
-
-            Spacer(minLength: 0)
 
             HSButton(String(localized: "Начать"), style: .primary, icon: "sparkles") {
                 container.soundService.playUISound(.tap)
@@ -444,7 +444,7 @@ struct NarrativeQuestView: View {
                         .font(TypographyTokens.body(16))
                         .foregroundStyle(ColorTokens.Kid.ink)
                         .lineLimit(nil)
-                        .minimumScaleFactor(0.9)
+                        .minimumScaleFactor(0.85)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }

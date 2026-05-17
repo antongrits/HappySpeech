@@ -87,19 +87,6 @@ struct SoundHunterView: View {
             hintBanner
             sceneIndicator
             grid
-            // Mini spectrogram preview — показывает звуковой след последнего нажатого предмета.
-            // Помогает ребёнку визуально услышать звук слова.
-            // Reduce Motion: StaticSpectrogramView (один фрейм, без анимации).
-            SpectrogramVisualizerView(
-                referenceSpectrogram: nil,
-                style: .forest
-            )
-            .frame(maxWidth: .infinity)
-            .frame(height: 90)
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .accessibilityLabel(
-                String(localized: "spectrogram.sound_preview.a11y", defaultValue: "Звук слова")
-            )
             Spacer(minLength: 0)
             HSProgressBar(value: display.progressFraction)
                 .frame(height: 8)

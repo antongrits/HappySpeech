@@ -164,7 +164,7 @@ struct AuthVerifyEmailView: View {
                         Text(String(localized: "Мы отправили письмо на"))
                             .font(TypographyTokens.body(14))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        Text(container.authService.currentUser?.email ?? "")
+                        Text(displayEmail)
                             .font(TypographyTokens.headline(16))
                             .foregroundStyle(ColorTokens.Brand.primary)
                             .lineLimit(1)
@@ -186,9 +186,16 @@ struct AuthVerifyEmailView: View {
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
             String(localized: "Письмо отправлено на") + " " +
-            (container.authService.currentUser?.email ?? "") + ". " +
+            displayEmail + ". " +
             String(localized: "Перейдите по ссылке в письме, затем вернитесь сюда.")
         )
+    }
+
+    /// Email текущего пользователя, либо нейтральный плейсхолдер,
+    /// чтобы фраза «Мы отправили письмо на …» никогда не обрывалась.
+    private var displayEmail: String {
+        let email = container.authService.currentUser?.email ?? ""
+        return email.isEmpty ? String(localized: "вашу электронную почту") : email
     }
 
     private var actionsSection: some View {

@@ -92,21 +92,6 @@ struct BingoView: View {
             lyalyaHeader
             calledWordBanner
             progressBar
-            // Spectrogram — toggle через Settings → Display → Показать спектрограмму.
-            // По умолчанию показывается только во время озвучивания слова Лялей.
-            // Reduce Motion: StaticSpectrogramView (один фрейм, без анимации).
-            if display.isCalling {
-                SpectrogramVisualizerView(
-                    referenceSpectrogram: nil,
-                    style: .neutral
-                )
-                .frame(maxWidth: .infinity)
-                .frame(height: 90)
-                .transition(.opacity.animation(.easeInOut(duration: 0.3)))
-                .accessibilityLabel(
-                    String(localized: "spectrogram.bingo.a11y", defaultValue: "Звук называемого слова")
-                )
-            }
             grid
             Spacer(minLength: 0)
         }

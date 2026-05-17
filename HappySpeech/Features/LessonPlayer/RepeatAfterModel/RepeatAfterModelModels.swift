@@ -48,10 +48,12 @@ extension TargetWordItem {
             ]
         case SoundFamily.sonorant.rawValue:
             return [
-                TargetWordItem(id: "raketa", word: "Ракета", soundGroup: soundGroup, syllabification: "ра-ке-та", audioFilename: nil, emoji: "reward_rocket"),
+                TargetWordItem(id: "raketa", word: "Ракета",
+                               soundGroup: soundGroup, syllabification: "ра-ке-та",
+                               audioFilename: nil, emoji: "airplane.departure"),
                 TargetWordItem(id: "ryba", word: "Рыба", soundGroup: soundGroup, syllabification: "ры-ба", audioFilename: nil, emoji: "word_fish"),
                 TargetWordItem(id: "luna", word: "Луна", soundGroup: soundGroup, syllabification: "лу-на", audioFilename: nil, emoji: "word_moon"),
-                TargetWordItem(id: "lev", word: "Лев", soundGroup: soundGroup, syllabification: "лев", audioFilename: nil, emoji: "reward_champion"),
+                TargetWordItem(id: "lev", word: "Лев", soundGroup: soundGroup, syllabification: "лев", audioFilename: nil, emoji: "pawprint.fill"),
                 TargetWordItem(id: "radio", word: "Радио",
                                soundGroup: soundGroup, syllabification: "ра-ди-о",
                                audioFilename: nil,

@@ -678,8 +678,11 @@ extension AppCoordinatorView {
             return .familyCalendar
         case "familyLeaderboard":
             return .pronunciationLeaderboard(parentId: previewParent)
-        case "familyAchievements":
+        case "familyAchievements",
+             "achievements":
             return .achievements(childId: previewChild)
+        case "screening":
+            return .screening(childId: previewChild)
 
         // MARK: Tier 8 — Specialist 5 (fallback to .specialistHome / .auth)
         case "specialistLogin":

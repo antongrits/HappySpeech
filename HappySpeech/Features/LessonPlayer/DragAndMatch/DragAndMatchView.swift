@@ -225,23 +225,29 @@ struct DragAndMatchView: View {
                 .font(TypographyTokens.title(22))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
+                .lineLimit(nil)
                 .minimumScaleFactor(0.85)
             if !display.roundLabel.isEmpty {
                 Text(display.roundLabel)
                     .font(TypographyTokens.caption(14))
                     .foregroundStyle(ColorTokens.Brand.primary)
                     .monospacedDigit()
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
             }
             if let pairLabel = display.confusedPairLabel {
                 Text(pairLabel)
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
             }
             Text(progressLabel)
                 .font(TypographyTokens.caption(13))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
                 .monospacedDigit()
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
         }
         .frame(maxWidth: .infinity)
         .accessibilityElement(children: .combine)

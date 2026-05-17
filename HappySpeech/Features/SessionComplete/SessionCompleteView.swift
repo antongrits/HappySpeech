@@ -167,6 +167,12 @@ struct SessionCompleteView: View {
         .onChange(of: display.scoreInt) { _, target in
             animateScoreCountUp(to: target)
         }
+        .onChange(of: display.currentPhase) { _, phase in
+            // Подстраховка: если scoreInt был выставлен до регистрации onChange,
+            // count-up не стартует. Запускаем его при появлении кольца счёта.
+            guard phase >= .scoreReveal, animatedScore == 0, display.scoreInt > 0 else { return }
+            animateScoreCountUp(to: display.scoreInt)
+        }
     }
 
     // MARK: - Stage 1: Celebration (маскот)

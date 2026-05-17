@@ -71,10 +71,10 @@ struct FamilyAwardsCabinetView: View {
                     VStack(alignment: .leading, spacing: SpacingTokens.sp5) {
                         if let viewModel = holder.loadVM {
                             heroSection(viewModel: viewModel)
-                            cabinet3DSection(viewModel: viewModel)
                             if viewModel.cabinetIsEmpty {
                                 emptyState(viewModel: viewModel)
                             } else {
+                                cabinet3DSection(viewModel: viewModel)
                                 shelvesSection(viewModel: viewModel)
                             }
                             footerNote

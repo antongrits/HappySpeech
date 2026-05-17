@@ -118,6 +118,8 @@ targets:
           - Models/Whisper/whisper-base/**
           - Models/Whisper/whisper-small/**
           - Audio/**
+          - ARAssets/**
+          - Videos/**
         type: group
         buildPhase: resources
       - path: HappySpeech/Resources/PrivacyInfo.xcprivacy
@@ -130,6 +132,12 @@ targets:
         type: folder
         buildPhase: resources
       - path: HappySpeech/Resources/Audio
+        type: folder
+        buildPhase: resources
+      - path: HappySpeech/Resources/ARAssets
+        type: folder
+        buildPhase: resources
+      - path: HappySpeech/Resources/Videos
         type: folder
         buildPhase: resources
       - path: HappySpeech/Content/Seed/seasonal

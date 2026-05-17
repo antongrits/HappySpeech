@@ -3659,7 +3659,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Формат"
+            "value": "Попытка %d"
           }
         }
       }
@@ -3670,7 +3670,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Формат"
+            "value": "Осталось попыток: %d"
           }
         }
       }
@@ -3692,7 +3692,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Кнопка"
+            "value": "Подсказка"
           }
         }
       }
@@ -3703,7 +3703,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Подсказка"
+            "value": "Покажет, как выполнить упражнение"
           }
         }
       }
@@ -3714,7 +3714,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Кнопка"
+            "value": "Отпустить"
           }
         }
       }
@@ -3725,7 +3725,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Подсказка"
+            "value": "Закончить удержание позы"
           }
         }
       }
@@ -3747,7 +3747,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Подсказка"
+            "value": "Начать упражнение для язычка"
           }
         }
       }
@@ -3758,7 +3758,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Отзыв"
+            "value": "Получилась звёздочка!"
           }
         }
       }
@@ -3769,7 +3769,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Отзыв"
+            "value": "Почти! Попробуем ещё раз"
           }
         }
       }
@@ -3780,7 +3780,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Отзыв"
+            "value": "Здорово получилось!"
           }
         }
       }
@@ -3791,7 +3791,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Отзыв"
+            "value": "Давай попробуем ещё раз"
           }
         }
       }
@@ -3824,7 +3824,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "По умолчанию"
+            "value": "Повтори за Лялей"
           }
         }
       }
@@ -3835,7 +3835,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Артикуляция"
+            "value": "Повтори за Лялей, %@!"
           }
         }
       }
@@ -3846,7 +3846,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Заголовок"
+            "value": "Держим позу!"
           }
         }
       }
@@ -3890,7 +3890,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Артикуляция"
+            "value": "Хорошая работа, продолжай тренироваться!"
           }
         }
       }
@@ -3901,7 +3901,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Артикуляция"
+            "value": "Не расстраивайся — в следующий раз получится лучше!"
           }
         }
       }
@@ -3912,7 +3912,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Формат"
+            "value": "Упражнение %1$d из %2$d"
           }
         }
       }
@@ -3934,7 +3934,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Формат"
+            "value": "%1$d из %2$d звёздочек"
           }
         }
       }
@@ -3967,7 +3967,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Формат"
+            "value": "Осталось %d сек"
           }
         }
       }
@@ -12476,7 +12476,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Заголовок"
+            "value": "Цели недели"
           }
         }
       }
@@ -12828,7 +12828,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Заголовок"
+            "value": "Расписание занятий"
           }
         }
       }
@@ -12971,7 +12971,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Заголовок"
+            "value": "Эта неделя"
           }
         }
       }
@@ -13026,7 +13026,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Заголовок"
+            "value": "Итоги недели"
           }
         }
       }
@@ -14474,7 +14474,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Центр помощи"
+            "value": "Чем помочь?"
           }
         }
       }
@@ -15607,7 +15607,73 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "За эту неделю — %d занятий, около %d минут практики, средняя точность %d%%."
+            "value": "За эту неделю — %#@sessions@, около %#@minutes@ практики, средняя точность %d%%."
+          },
+          "substitutions": {
+            "sessions": {
+              "argNum": 1,
+              "formatSpecifier": "d",
+              "variations": {
+                "plural": {
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d занятие"
+                    }
+                  },
+                  "few": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d занятия"
+                    }
+                  },
+                  "many": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d занятий"
+                    }
+                  },
+                  "other": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d занятий"
+                    }
+                  }
+                }
+              }
+            },
+            "minutes": {
+              "argNum": 2,
+              "formatSpecifier": "d",
+              "variations": {
+                "plural": {
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d минуты"
+                    }
+                  },
+                  "few": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d минут"
+                    }
+                  },
+                  "many": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d минут"
+                    }
+                  },
+                  "other": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d минут"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -15772,7 +15838,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Insights от Ляли"
+            "value": "Наблюдения от Ляли"
           }
         }
       }
@@ -15904,7 +15970,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Insights от Ляли"
+            "value": "Наблюдения от Ляли"
           }
         }
       }
@@ -20749,7 +20815,41 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d сессий · %2$d мин · %3$d%%"
+            "value": "%1$#@sess@ · %2$d мин · %3$d%%"
+          },
+          "substitutions": {
+            "sess": {
+              "argNum": 1,
+              "formatSpecifier": "d",
+              "variations": {
+                "plural": {
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d сессия"
+                    }
+                  },
+                  "few": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d сессии"
+                    }
+                  },
+                  "many": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d сессий"
+                    }
+                  },
+                  "other": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d сессий"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -20793,7 +20893,41 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d сессий · %2$d мин · точность %3$d%%"
+            "value": "%1$#@sess@ · %2$d мин · точность %3$d%%"
+          },
+          "substitutions": {
+            "sess": {
+              "argNum": 1,
+              "formatSpecifier": "d",
+              "variations": {
+                "plural": {
+                  "one": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d сессия"
+                    }
+                  },
+                  "few": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d сессии"
+                    }
+                  },
+                  "many": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d сессий"
+                    }
+                  },
+                  "other": {
+                    "stringUnit": {
+                      "state": "translated",
+                      "value": "%d сессий"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -32633,7 +32767,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Настройки"
+            "value": "Здесь всё под контролем"
           }
         }
       }
@@ -35001,7 +35135,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "42 звука русского языка"
+            "value": "Все звуки русского языка"
           }
         }
       }

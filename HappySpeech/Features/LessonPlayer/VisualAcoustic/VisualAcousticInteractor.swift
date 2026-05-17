@@ -415,7 +415,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
             "sonants": [
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "reward_brave_heart",
+                    imageEmoji: "word_cat",
                     imageLabel: String(localized: "Тигр"),
                     question: String(localized: "Как звучит тигр?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Р»"),
@@ -426,7 +426,7 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 ),
                 VisualAcousticRound(
                     id: UUID(),
-                    imageEmoji: "reward_rocket",
+                    imageEmoji: "airplane.departure",
                     imageLabel: String(localized: "Ракета"),
                     question: String(localized: "На чём летят в космос?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Р»"),
