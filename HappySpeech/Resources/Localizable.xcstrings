@@ -39427,6 +39427,41 @@
         }
       }
     },
+    "weeklyReport.summary.sessionsCount": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d занятие"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d занятия"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d занятий"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d занятий"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "weeklyReport.trend.down.a11y": {
       "extractionState": "manual",
       "localizations": {
