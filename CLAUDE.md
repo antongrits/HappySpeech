@@ -4,6 +4,23 @@
 
 ---
 
+## 📚 Память проекта — в Obsidian LLM-Wiki
+
+Вся накопленная **память проекта** (бывшие `.claude/team/`, `HappySpeech/ResearchDocs/`,
+`HappySpeech/ProductSpecs/`) перенесена в персистентную LLM-Wiki по методу Andrej Karpathy:
+
+**`/Users/antongric/Documents/Obsidian Vault/HappySpeech/`**
+
+- `index.md` — каталог знаний (читать первым при поиске)
+- `wiki/` — синтез: `entities/`, `concepts/`, `timeline/`, `overview.md`, `synthesis.md`
+- `raw/` — неизменяемые исходники (`team/`, `research-docs/`, `product-specs/`, `claude-memory/`)
+- `CLAUDE.md` хранилища — схема wiki и workflow (ingest/query/lint)
+
+Новые командные артефакты (отчёты, аудиты, спеки) агенты пишут в `…/HappySpeech/raw/team/`.
+В этом репозитории кода файлов памяти больше нет.
+
+---
+
 ## 1. Что это за проект
 
 **HappySpeech** — русскоязычное логопедическое iOS-приложение для детей 5–8 лет.
@@ -51,9 +68,10 @@ Features/<FeatureName>/
 - `ML/` — обёртки над WhisperKit / Silero VAD / PronunciationScorer / LocalLLM
 - `Sync/` — Firestore-мост, очередь, конфликт-резолвер
 - `Analytics/` — локальная событийная шина (без внешних SDK)
-- `ResearchDocs/` — методологические документы (от speech-methodologist)
-- `ProductSpecs/` — продуктовые спецификации
 - `Resources/` — Assets.xcassets, звуки, Core ML модели, локализации
+
+> Методология логопедии и продуктовые спецификации (бывшие `ResearchDocs/`,
+> `ProductSpecs/`) теперь в Obsidian LLM-Wiki — см. баннер вверху файла.
 
 **Зависимости между слоями** (стрелки — разрешённый импорт):
 ```
@@ -99,7 +117,7 @@ Features **никогда** напрямую не импортируют Data, M
 - `@Observable` (iOS 17+) вместо `ObservableObject` для новых моделей.
 - Протоколы — для всех сервисов и репозиториев (→ тестируемость).
 - Никаких force-unwrap (`!`) в production-коде кроме сгенерированных `@IBOutlet` (если они есть) и тестов.
-- Никаких `TODO`, `FIXME`, `HACK`, `XXX` в коде — задачи трекаются только в `~/.claude/team/backlog.md`.
+- Никаких `TODO`, `FIXME`, `HACK`, `XXX` в коде — задачи трекаются только в бэклоге wiki (`…/Obsidian Vault/HappySpeech/raw/team/backlog.md`).
 - Никаких `print(...)` — только `Logger` через OSLog.
 - Никакого закомментированного кода.
 - Никаких debug-строк в user-facing UI (ошибки — через `LocalizedError` с русскими сообщениями).
@@ -128,7 +146,7 @@ Features **никогда** напрямую не импортируют Data, M
 
 ## 5. Структура контента и методологии
 
-**Источник методики:** `HappySpeech/ResearchDocs/` (методологические документы русской логопедии) + `~/.claude/team/speech-methodology.md`.
+**Источник методики:** Obsidian LLM-Wiki — `wiki/concepts/speech-methodology.md` (синтез) и `raw/research-docs/` (исходники методологии русской логопедии).
 
 **Контент-движок:** `HappySpeech/Content/`:
 - `Schemas/content-pack.schema.json` — формат пака
@@ -193,7 +211,7 @@ _workshop/
 └── logs/
 ```
 
-В репозиторий попадают **только финальные `.mlpackage`** (в `HappySpeech/Resources/Models/`) и реестр моделей (`~/.claude/team/ml-models.md`).
+В репозиторий попадают **только финальные `.mlpackage`** (в `HappySpeech/Resources/Models/`); реестр моделей — в wiki (`raw/team/ml-models.md`, синтез — `wiki/entities/ml-models.md`).
 
 ---
 
@@ -221,7 +239,7 @@ _workshop/
 - `ml-data-engineer` + `ml-trainer` — датасеты и обучение
 - `sound-curator` — CC0/royalty-free аудио-ассеты
 
-Артефакты команды: `~/.claude/team/`.
+Артефакты команды: Obsidian LLM-Wiki, `…/Obsidian Vault/HappySpeech/raw/team/`.
 
 ---
 
@@ -237,7 +255,7 @@ _workshop/
 - [ ] Snapshot-тесты на View (оба темы)
 - [ ] Release-билд без варнингов
 - [ ] Нет `print`, `TODO`, `FIXME`, debug-текстов в UI
-- [ ] Запись в `~/.claude/team/decisions.md` если принято архитектурное решение
+- [ ] Запись в журнал решений wiki (`raw/team/decisions.md`) если принято архитектурное решение
 
 ---
 
@@ -268,13 +286,17 @@ _workshop/
 
 ## 12. Где искать ответы
 
-- Методология: `HappySpeech/ResearchDocs/speech-methodology.md`
-- Продуктовая спецификация: `HappySpeech/ProductSpecs/product-spec.md`
-- Карта экранов: `~/.claude/team/screen-map.md`
-- API-контракты: `~/.claude/team/api-contracts.md`
-- Дизайн-токены: `HappySpeech/DesignSystem/Tokens/`
-- Реестр моделей: `~/.claude/team/ml-models.md`
-- Журнал решений: `~/.claude/team/decisions.md`
+Память проекта — в Obsidian LLM-Wiki (`…/Obsidian Vault/HappySpeech/`). Начинать
+с `index.md`. Ключевые места:
+
+- Обзор и текущий статус: `wiki/overview.md`, `wiki/synthesis.md`
+- Методология логопедии: `wiki/concepts/speech-methodology.md` (исходники — `raw/research-docs/`)
+- Карта экранов: `wiki/entities/screens.md` (исходник — `raw/team/screen-map.md`)
+- API-контракты: `wiki/entities/firebase-backend.md` (исходник — `raw/team/api-contracts.md`)
+- Реестр ML-моделей: `wiki/entities/ml-models.md` (исходник — `raw/team/ml-models.md`)
+- Журнал решений: `raw/team/decisions.md`
+- Хронология версий: `wiki/timeline/version-timeline.md`
+- Дизайн-токены (код): `HappySpeech/DesignSystem/Tokens/`
 - Исходный research-отчёт: `happyspeech-design/project/uploads/deep-research-report-happyspeech.md` (локально, не в репо)
 - Дизайн-прототип: `happyspeech-design/project/*.jsx` (локально, не в репо)
 
@@ -283,85 +305,25 @@ _workshop/
 ## 13. Быстрый старт для нового контрибьютора (и для Claude Code в новой сессии)
 
 1. Прочитай этот файл целиком.
-2. Прочитай `HappySpeech/ResearchDocs/speech-methodology.md`.
-3. Прочитай `HappySpeech/ProductSpecs/product-spec.md` и `screen-map.md`.
-4. Посмотри текущие TODO в `~/.claude/team/sprint.md`.
+2. Открой Obsidian LLM-Wiki (`…/Obsidian Vault/HappySpeech/`), прочитай `index.md`, `wiki/overview.md`, `wiki/synthesis.md`.
+3. Методика и продукт — `wiki/concepts/speech-methodology.md`, карта экранов — `wiki/entities/screens.md`.
+4. Текущие задачи — бэклог в `raw/team/backlog.md`, хронология — `wiki/timeline/version-timeline.md`.
 5. Не добавляй новых зависимостей без обновления этого файла.
 
 ---
 
-## 14. CTO — Запуск команды агентов
+## 14. Запуск команды агентов
 
-**Когда пользователь говорит "запусти проект", "начни разработку", "старт":**
+Команда агентов оркеструется через **Agent tool** (15 локальных агентов из
+`.claude/agents/`). Прежний tmux/mailbox-механизм отменён.
 
-```bash
-# Прочитать текущее состояние фаз
-cat "$(pwd)/.claude/team/orchestration/phases.json"
+**Когда пользователь говорит «запусти проект», «старт»:**
+1. Открой Obsidian LLM-Wiki, прочитай `index.md`, `wiki/overview.md`, `wiki/synthesis.md`,
+   бэклог `raw/team/backlog.md` — пойми текущее состояние.
+2. Декомпозируй задачу и спавни нужных агентов через Agent tool (фоном для параллельных).
+3. Новые артефакты агенты пишут в `…/Obsidian Vault/HappySpeech/raw/team/`.
+4. Крупные решения — фиксируй в `raw/team/decisions.md`; затем обнови wiki-страницы
+   (`wiki/`) и журнал `log.md` хранилища (ingest по схеме wiki).
 
-# Запустить оркестратор в фоне (он сам ведёт все 5 фаз)
-bash ~/.claude/scripts/orchestrator.sh "$(pwd)" &
-ORCH_PID=$!
-echo "Оркестратор запущен (PID $ORCH_PID)"
-```
-
-**Одновременно запусти параллельные агенты** (они не в phases.json):
-```python
-import json, time, fcntl, os
-PROJECT_DIR = os.getcwd()
-ORCH = f"{PROJECT_DIR}/.claude/team/orchestration"
-os.makedirs(f"{ORCH}/mailbox", exist_ok=True)
-os.makedirs(f"{ORCH}/locks", exist_ok=True)
-
-def send(agent, message, task_id):
-    mailbox = f"{ORCH}/mailbox/{agent}.jsonl"
-    lock_path = f"{ORCH}/locks/{agent}.mailbox.lock"
-    msg = {"from":"cto","to":agent,"task_id":task_id,"message":message,
-           "timestamp":time.strftime("%Y-%m-%dT%H:%M:%SZ",time.gmtime())}
-    with open(lock_path,'w') as lf:
-        fcntl.flock(lf, fcntl.LOCK_EX)
-        with open(mailbox,'a') as f: f.write(json.dumps(msg,ensure_ascii=False)+'\n')
-        fcntl.flock(lf, fcntl.LOCK_UN)
-    print(f"→ {agent}: {task_id}")
-
-# Параллельные задачи (не зависят от фаз оркестратора)
-send("ml-data-engineer",
-     "Read ProductSpecs/master-plan.md Phase 4 ML requirements. Collect Russian speech datasets. Save to ~/Downloads/datasets/. Write registry to .claude/team/ml-datasets.md",
-     "ml-data-001")
-send("research",
-     "Research iOS speech therapy app market, WhisperKit integration examples, ARKit blendshapes for mouth tracking. Save to .claude/team/decisions.md under ## Research Findings",
-     "research-001")
-send("anthropic-docs",
-     "Look up Claude Code best practices for iOS simulator, xcodebuild, Swift code review. Save to .claude/team/decisions.md under ## Claude Code Best Practices",
-     "docs-001")
-```
-
-**Проверить прогресс:**
-```bash
-# Статус фаз
-python3 -c "import json; d=json.load(open('.claude/team/orchestration/phases.json')); [print(f'Phase {p[\"id\"]} ({p[\"name\"]}): {p[\"status\"]}') for p in d['phases']]"
-
-# Статус всех агентов
-for f in .claude/team/orchestration/status/*.status; do echo "$(basename $f .status): $(cat $f)"; done
-```
-
-**Порядок фаз (orchestrator.sh управляет автоматически):**
-- Phase 0: speech-methodologist + speech-analyst → пишут ТЗ игр и анализ конкурентов
-- Phase 1: pm + designer-ui + backend-lead + speech-content-curator → план, дизайн, API
-- Phase 2: ios-dev-arch → архитектура (SEQUENTIAL — ждёт Phase 1)
-- Phase 3: ios-lead + backend-dev-api → реализация в git worktrees
-- Phase 4: qa-simulator + qa-unit → тестирование
-
-**После Phase 1 designer-ui finished** — отправь designer-visual:
-```python
-send("designer-visual",
-     "design-specs.md ready. Create ColorTokens.swift, TypographyTokens.swift, SpacingTokens.swift, MotionTokens.swift. Read .claude/team/design-specs.md",
-     "design-visual-001")
-```
-
-**После ml-data-engineer finished** — отправь ml-trainer:
-```python
-send("ml-trainer",
-     "Dataset ready at ~/Downloads/datasets/. Read .claude/team/ml-datasets.md. Train Core ML pronunciation scorer. Save to ~/Downloads/models/. Write .claude/team/ml-models.md",
-     "ml-train-001")
-```
-6. Не трогай `ResearchDocs/` и `ProductSpecs/` без согласования с `speech-methodologist` / `pm`.
+**Не трогать без согласования с `speech-methodologist` / `pm`:** методологию
+(`raw/research-docs/`) и продуктовые спецификации (`raw/product-specs/`).
