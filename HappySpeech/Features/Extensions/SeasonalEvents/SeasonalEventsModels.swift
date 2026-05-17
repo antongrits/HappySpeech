@@ -53,25 +53,6 @@ enum SeasonalEvent: String, CaseIterable, Sendable {
     }
 }
 
-// MARK: - SeasonalEvents.Request
-
-enum SeasonalEventsRequest {
-    struct LoadEvent {
-        let date: Date
-    }
-    struct OverrideEvent {
-        let event: SeasonalEvent?
-    }
-}
-
-// MARK: - SeasonalEvents.Response
-
-enum SeasonalEventsResponse {
-    struct EventLoaded {
-        let event: SeasonalEvent?
-    }
-}
-
 // MARK: - SeasonalEventsViewModel
 
 @Observable

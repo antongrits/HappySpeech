@@ -512,11 +512,6 @@ enum ScoreTier: Sendable, Equatable {
     case low        // < 0.5
 }
 
-struct SessionFilterChip: Sendable, Identifiable, Equatable {
-    let id: String
-    let label: String
-}
-
 // MARK: - Detail view-model
 
 struct SessionDetailViewModel: Sendable, Equatable, Hashable {
