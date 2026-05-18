@@ -2,118 +2,40 @@
 
 ---
 
-## lyalya3d.usdz / lyalya3d_v2.usdz
+## Статус каталога (ADR-V28-MASCOT-2D-CANON, 2026-05-18)
 
-- Описание: Маскот «Ляля» 3D-модель (v1 и v2)
-- Источник: собственный ассет HappySpeech
-- Лицензия: проприетарная (HappySpeech project)
+Каталог `ARAssets/` **больше не содержит USDZ-моделей**.
 
----
+Ранее здесь лежали:
 
-## scene_solar_panels.usdz
+- `lyalya3d.usdz` / `lyalya3d_v2.usdz` — 3D-модель маскота «Ляля»;
+- `scene_solar_panels.usdz` — Apple Quick Look сцена «солнечные панели»;
+- 10 «логопедических» USDZ-объектов (`apple_red`, `mouse_grey`, `fox_orange`,
+  `snake_green`, `cup_steaming`, `bell_brass`, `truck_red`, `whale_blue`,
+  `rocket_silver`, `drum_wooden`).
 
-- Описание: Солнечные панели (наука, экология)
-- Оригинальное имя: solar_panels.usdz
-- Источник: https://developer.apple.com/augmented-reality/quick-look/models/solar-panels/solar_panels.usdz
-- Лицензия: Apple Sample Code License
-- Использование в HappySpeech: school_classroom scene, ARActivity тема «Наука», NarrativeQuest «Энергия солнца»
+Все они удалены, потому что:
 
----
+1. **3D-маскот выведен из рендера** (решение D-3 v27 и ADR-V28-MASCOT-2D-CANON).
+   Приложение использует единый 2D-канон «подружка-пчёлка» — иллюстрации
+   `mascot_lyalya_*` в `Assets.xcassets`, согласованные с `AppIcon`.
+   3D-компоненты (`LyalyaRealityKitView`, `LyalyaRealityView`, `LyalyaSceneView`)
+   в рендере нигде не инстанцируются.
+2. **10 «логопедических» USDZ были заглушками 4–12 KB** — процедурные примитивы
+   без реальной геометрии. На симуляторе давали пустой/битый 3D-вид. Они нигде
+   не загружались кодом. Честная замена — 2D-иллюстрации предметов из
+   `Assets.xcassets` (`word_*`).
+3. `scene_solar_panels.usdz` нигде не использовался кодом.
 
-## Логопедические объекты (Block F v16 — процедурная генерация)
-
-Все нижеперечисленные модели сгенерированы программатически с использованием
-Pixar OpenUSD Python API (pxr) — собственные ассеты HappySpeech.
-Лицензия: MIT (HappySpeech project).
-Геометрия: примитивы USD (Sphere, Cylinder, Cone, Cube) + UsdPreviewSurface PBR.
-ARKit-совместимость: upAxis=Y, metersPerUnit=1.0.
-
----
-
-### apple_red.usdz
-
-- Описание: Красное яблоко (звук А) — тело + стебель + листик + блик
-- Звуковая ассоциация: А («Яблоко» — А в начале слова)
-- Использование: ARZone sound-hunter, RepeatAfterModel (А)
+Если в будущем понадобится настоящий 3D/AR-контент (полноценные модели
+10–15 MB, реальные blendshapes) — это отдельная задача; на момент v28
+3D-ассеты в проекте отсутствуют намеренно.
 
 ---
 
-### mouse_grey.usdz
+## Текущее содержимое `ARAssets/`
 
-- Описание: Серая мышь (звук Ы) — тело + голова + уши + хвост
-- Звуковая ассоциация: Ы («мЫшь» — Ы в середине слова)
-- Использование: ARZone sound-hunter, ArticulationImitation (Ы)
+- `LICENSES.md` — этот файл.
 
----
-
-### fox_orange.usdz
-
-- Описание: Оранжевая лиса (звуки Ль/Ф) — тело + голова + уши + хвост
-- Звуковая ассоциация: Ль («Лиса» — мягкий Л), Ф («Лиса» — Ф в слове «рыжая»)
-- Использование: ARZone ArticulationImitation (Ль, Ф)
-
----
-
-### snake_green.usdz
-
-- Описание: Зелёная змея (звуки С/Ш) — свитое тело + голова + язык
-- Звуковая ассоциация: С («Змея» — шипение), Ш («ШШШипит»)
-- Использование: ARZone sound-hunter (С/Ш), ArticulationImitation
-
----
-
-### cup_steaming.usdz
-
-- Описание: Кружка с паром (звуки К/Ч/П) — кружка + ручка + пар
-- Звуковая ассоциация: К («Кружка»), Ч («Чашка»), П («Пар»)
-- Использование: ARZone sound-hunter (шипящие и взрывные), BreathingExercises
-
----
-
-### bell_brass.usdz
-
-- Описание: Латунный колокол (звуки Л/Н) — тело + обод + корона + язык
-- Звуковая ассоциация: Л («Колокол»), Н («коНь звенит»)
-- Использование: ARZone ArticulationImitation (Л, Н), RhythmExercises
-
----
-
-### truck_red.usdz
-
-- Описание: Красный грузовик (звуки Р/Г) — кабина + кузов + 4 колеса
-- Звуковая ассоциация: Р («РРРычит мотор»), Г («Грузовик»)
-- Использование: ARZone sound-hunter (Р вибрация), ArticulationImitation
-
----
-
-### whale_blue.usdz
-
-- Описание: Синий кит (звуки Х/В) — тело + плавники + фонтан
-- Звуковая ассоциация: Х («Хвост», «выдох — ХХХ»), В («Волна»)
-- Использование: ARZone BreathingExercises (выдох), sound-hunter (Х, В)
-
----
-
-### rocket_silver.usdz
-
-- Описание: Серебряная ракета (звуки Р/Т) — корпус + стабилизаторы + пламя
-- Звуковая ассоциация: Р («РакеТа»), Т («ракеТа»)
-- Использование: ARZone NarrativeQuest «Космос», sound-hunter (Р, Т)
-
----
-
-### drum_wooden.usdz
-
-- Описание: Деревянный барабан (звуки Д/Б) — корпус + кожи + палочки
-- Звуковая ассоциация: Д («Барабан — Д-Д-Д»), Б («БаБаБа — ритм»)
-- Использование: ARZone RhythmExercises, ArticulationImitation (Д, Б)
-
----
-
-## Примечания
-
-1. Блок F v16: удалены 13 нерелевантных Apple Quick Look моделей (~150 MB).
-2. Добавлены 10 логопедических процедурных моделей (собственные ассеты).
-3. Apple Sample Code License модели (lyalya3d*, scene_solar_panels):
-   https://developer.apple.com/terms/intellectual-property/
-4. Логопедические модели: MIT-совместимая лицензия HappySpeech project.
+Каталог сохранён как точка подключения ресурсов (folder-reference в
+`project.yml` / `pbxproj`) на случай будущего AR-контента.
