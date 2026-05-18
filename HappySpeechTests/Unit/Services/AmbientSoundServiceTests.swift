@@ -107,7 +107,7 @@ final class AmbientSoundServiceTests: XCTestCase {
         XCTAssertEqual(count, 2)
     }
 
-    // MARK: - LiveAmbientSoundService (missing assets)
+    // MARK: - LiveAmbientSoundService
 
     func testLiveInitDoesNotCrash() async {
         let service = LiveAmbientSoundService()
@@ -115,12 +115,14 @@ final class AmbientSoundServiceTests: XCTestCase {
         XCTAssertNil(scene)
     }
 
-    func testLivePlayMissingAssetKeepsSceneNil() async {
+    func testLivePlayPresentAssetSetsScene() async {
         let service = LiveAmbientSoundService()
-        // .caf отсутствует в тестовом бандле → warning, currentScene остаётся nil.
+        // neutral_warm.caf присутствует в бандле приложения → play() успешно
+        // создаёт плеер и выставляет currentScene.
         await service.play(scene: .neutralWarm, fadeDuration: 0.1)
         let scene = await service.currentScene
-        XCTAssertNil(scene, "Отсутствующий ассет не выставляет currentScene")
+        XCTAssertEqual(scene, .neutralWarm, "Доступный ассет выставляет currentScene")
+        await service.stop(fadeDuration: 0.05)
     }
 
     func testLiveStopWhenIdleIsNoop() async {

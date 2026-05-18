@@ -136,16 +136,19 @@ final class DesignSystemTokensExtendedTests: XCTestCase {
 
     // MARK: - ShadowTokens: структура значений
 
-    func test_shadowKidCard_radius12() {
-        XCTAssertEqual(ShadowTokens.Kid.card.radius, 12, accuracy: 0.001)
+    func test_shadowKidCard_radius16() {
+        // v29 Phase 7 — углублённые тени: kid card radius 12 → 16.
+        XCTAssertEqual(ShadowTokens.Kid.card.radius, 16, accuracy: 0.001)
     }
 
-    func test_shadowKidCard_opacity8pct() {
-        XCTAssertEqual(ShadowTokens.Kid.card.opacity, 0.08, accuracy: 0.001)
+    func test_shadowKidCard_opacity11pct() {
+        // v29 Phase 7 — kid card opacity 0.08 → 0.11.
+        XCTAssertEqual(ShadowTokens.Kid.card.opacity, 0.11, accuracy: 0.001)
     }
 
-    func test_shadowKidCard_y4() {
-        XCTAssertEqual(ShadowTokens.Kid.card.y, 4, accuracy: 0.001)
+    func test_shadowKidCard_y6() {
+        // v29 Phase 7 — kid card y-offset 4 → 6.
+        XCTAssertEqual(ShadowTokens.Kid.card.y, 6, accuracy: 0.001)
     }
 
     func test_shadowKidCard_x0() {
@@ -160,8 +163,9 @@ final class DesignSystemTokensExtendedTests: XCTestCase {
         XCTAssertLessThan(ShadowTokens.Kid.tile.radius, ShadowTokens.Kid.card.radius)
     }
 
-    func test_shadowParentCard_radius3() {
-        XCTAssertEqual(ShadowTokens.Parent.card.radius, 3, accuracy: 0.001)
+    func test_shadowParentCard_radius8() {
+        // v29 Phase 7 — parent card radius 3 → 8.
+        XCTAssertEqual(ShadowTokens.Parent.card.radius, 8, accuracy: 0.001)
     }
 
     func test_shadowParentElevated_greaterRadiusThanCard() {
@@ -172,8 +176,9 @@ final class DesignSystemTokensExtendedTests: XCTestCase {
 
     func test_shadowStyle_isSendable() {
         let style: ShadowTokens.ShadowStyle = ShadowTokens.Kid.card
-        // Статическое свойство доступно — тест что тип компилируется как Sendable
-        XCTAssertEqual(style.radius, 12, accuracy: 0.001)
+        // Статическое свойство доступно — тест что тип компилируется как Sendable.
+        // v29 Phase 7 — kid card radius 12 → 16.
+        XCTAssertEqual(style.radius, 16, accuracy: 0.001)
     }
 
     // MARK: - SpacingTokens: алиасы числовых значений

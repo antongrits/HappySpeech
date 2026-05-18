@@ -424,8 +424,12 @@ final class ArticulationImitationInteractorTests: XCTestCase {
         sut.loadSession(.init(soundGroup: "any", childName: "Маша"))
         sut.startPose(.init(poseIndex: 0))
         sut.beginHold()
-        // Hold-таск идёт 3 секунды — ждём завершения.
-        try? await Task.sleep(nanoseconds: 3_600_000_000)
+        // Hold-таск идёт ~3 сек (30 тиков по 0.1 с + накладные расходы планировщика).
+        // Опрашиваем результат вместо фиксированного sleep — устраняет флейки
+        // при медленном симуляторе, не ослабляя проверку.
+        for _ in 0..<60 where spy.completeExerciseCount == 0 {
+            try? await Task.sleep(nanoseconds: 200_000_000)
+        }
         XCTAssertGreaterThanOrEqual(spy.holdProgressCount, 1)
         XCTAssertEqual(spy.completeExerciseCount, 1)
         XCTAssertEqual(spy.lastCompleteExercise?.earnedStar, true)
