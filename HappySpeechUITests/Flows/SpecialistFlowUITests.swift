@@ -52,9 +52,10 @@ final class SpecialistFlowUITests: XCTestCase {
     // MARK: - 2. Список учеников виден на вкладке «Дети»
 
     func test_childrenTab_studentListVisible() throws {
-        guard waitForSpecialistHomeLoaded() else {
-            throw XCTSkip("SpecialistHome не загрузился в отведённое время")
-        }
+        XCTAssertTrue(
+            waitForSpecialistHomeLoaded(),
+            "SpecialistHome должен загрузиться при -HSStartRoute specialistHome"
+        )
 
         // Вкладка «Дети» активна по умолчанию
         let studentList = app.otherElements["specialistStudentList"].firstMatch
@@ -72,9 +73,10 @@ final class SpecialistFlowUITests: XCTestCase {
     // MARK: - 3. Строка ученика кликабельна → открывается SpecChildDashboard
 
     func test_studentRow_tap_opensDashboard() throws {
-        guard waitForSpecialistHomeLoaded() else {
-            throw XCTSkip("SpecialistHome не загрузился в отведённое время")
-        }
+        XCTAssertTrue(
+            waitForSpecialistHomeLoaded(),
+            "SpecialistHome должен загрузиться при -HSStartRoute specialistHome"
+        )
 
         // Ждём появления хотя бы первой строки ученика
         let firstRow = app.otherElements["specialistStudentRow_0"].firstMatch
@@ -110,14 +112,17 @@ final class SpecialistFlowUITests: XCTestCase {
     // MARK: - 4. Вкладка «Занятия» переключается без краша
 
     func test_sessionsTab_navigation() throws {
-        guard waitForSpecialistHomeLoaded() else {
-            throw XCTSkip("SpecialistHome не загрузился в отведённое время")
-        }
+        XCTAssertTrue(
+            waitForSpecialistHomeLoaded(),
+            "SpecialistHome должен загрузиться при -HSStartRoute specialistHome"
+        )
 
         let sessionsTab = findTabButton(labelContains: ["занятия", "sessions", "waveform"])
-        guard sessionsTab.waitForExistence(timeout: 6), sessionsTab.isHittable else {
-            throw XCTSkip("Вкладка «Занятия» недоступна")
-        }
+        let sessionsTabFound = sessionsTab.waitForExistence(timeout: 6)
+        XCTAssertTrue(
+            sessionsTabFound,
+            "Вкладка «Занятия» должна присутствовать в таббаре специалиста"
+        )
 
         sessionsTab.tap()
         Thread.sleep(forTimeInterval: 0.4)
@@ -127,14 +132,17 @@ final class SpecialistFlowUITests: XCTestCase {
     // MARK: - 5. Вкладка «Отчёты» переключается без краша
 
     func test_reportsTab_navigation() throws {
-        guard waitForSpecialistHomeLoaded() else {
-            throw XCTSkip("SpecialistHome не загрузился в отведённое время")
-        }
+        XCTAssertTrue(
+            waitForSpecialistHomeLoaded(),
+            "SpecialistHome должен загрузиться при -HSStartRoute specialistHome"
+        )
 
         let reportsTab = findTabButton(labelContains: ["отчёт", "reports", "doc.text"])
-        guard reportsTab.waitForExistence(timeout: 6), reportsTab.isHittable else {
-            throw XCTSkip("Вкладка «Отчёты» недоступна")
-        }
+        let reportsTabFound = reportsTab.waitForExistence(timeout: 6)
+        XCTAssertTrue(
+            reportsTabFound,
+            "Вкладка «Отчёты» должна присутствовать в таббаре специалиста"
+        )
 
         reportsTab.tap()
         Thread.sleep(forTimeInterval: 0.4)
@@ -144,14 +152,17 @@ final class SpecialistFlowUITests: XCTestCase {
     // MARK: - 6. Вкладка «Настройки» переключается → SettingsView виден
 
     func test_settingsTab_navigation_settingsVisible() throws {
-        guard waitForSpecialistHomeLoaded() else {
-            throw XCTSkip("SpecialistHome не загрузился в отведённое время")
-        }
+        XCTAssertTrue(
+            waitForSpecialistHomeLoaded(),
+            "SpecialistHome должен загрузиться при -HSStartRoute specialistHome"
+        )
 
         let settingsTab = findTabButton(labelContains: ["настройки", "settings", "gearshape"])
-        guard settingsTab.waitForExistence(timeout: 6), settingsTab.isHittable else {
-            throw XCTSkip("Вкладка «Настройки» недоступна")
-        }
+        let settingsTabFound = settingsTab.waitForExistence(timeout: 6)
+        XCTAssertTrue(
+            settingsTabFound,
+            "Вкладка «Настройки» должна присутствовать в таббаре специалиста"
+        )
 
         settingsTab.tap()
 
@@ -168,9 +179,10 @@ final class SpecialistFlowUITests: XCTestCase {
     // MARK: - 7. Сортировка учеников — кнопка сортировки доступна
 
     func test_childrenTab_sortButton_accessible() throws {
-        guard waitForSpecialistHomeLoaded() else {
-            throw XCTSkip("SpecialistHome не загрузился в отведённое время")
-        }
+        XCTAssertTrue(
+            waitForSpecialistHomeLoaded(),
+            "SpecialistHome должен загрузиться при -HSStartRoute specialistHome"
+        )
 
         // Кнопка сортировки в navigation bar «Дети» (spec.sort.button)
         let sortPredicate = NSPredicate(
@@ -197,9 +209,10 @@ final class SpecialistFlowUITests: XCTestCase {
     // MARK: - 8. Поиск по списку учеников работает без краша
 
     func test_childrenTab_search_doesNotCrash() throws {
-        guard waitForSpecialistHomeLoaded() else {
-            throw XCTSkip("SpecialistHome не загрузился в отведённое время")
-        }
+        XCTAssertTrue(
+            waitForSpecialistHomeLoaded(),
+            "SpecialistHome должен загрузиться при -HSStartRoute specialistHome"
+        )
 
         // Searchable modifier создаёт UISearchBar / search field
         let searchField = app.searchFields.firstMatch

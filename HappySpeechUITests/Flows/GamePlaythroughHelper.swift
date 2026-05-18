@@ -90,9 +90,11 @@ final class GamePlaythroughHelper {
             Thread.sleep(forTimeInterval: settleDelay)
         }
 
-        guard appeared else {
-            throw XCTSkip("SessionShell с игрой не открылся — точка входа недоступна на симуляторе")
-        }
+        XCTAssertTrue(
+            appeared,
+            "SessionShell с игрой должен открыться при -HSStartRoute lesson<...> — "
+                + "launch-hook роутит напрямую в LessonPlayer, минуя splash/auth/onboarding"
+        )
     }
 
     /// Проверяет результат прохождения игры: либо достигнут признак завершения

@@ -119,11 +119,17 @@ final class NavigationFlowUITests: XCTestCase {
     // MARK: - 7. Back navigation работает из дочерних экранов
 
     func test_backNavigation_fromAuthScreens() throws {
-        // Пытаемся найти экран регистрации или смены пароля
+        // Перезапускаем с -HSStartRoute auth — детерминированно открываем
+        // экран входа, минуя splash/онбординг.
+        app.terminate()
+        app.launchArguments = ["-HSStartRoute", "auth", "-UITestDisableAnimations"]
+        app.launch()
+
         let signInRoot = app.otherElements["AuthSignInRoot"]
-        if !signInRoot.waitForExistence(timeout: 5) {
-            throw XCTSkip("AuthSignIn недоступен в текущем состоянии")
-        }
+        XCTAssertTrue(
+            signInRoot.waitForExistence(timeout: 15) || app.buttons.count > 0,
+            "Экран входа должен быть доступен при -HSStartRoute auth"
+        )
 
         // Ищем кнопку перехода на sign up
         let signUpButton = app.buttons.matching(

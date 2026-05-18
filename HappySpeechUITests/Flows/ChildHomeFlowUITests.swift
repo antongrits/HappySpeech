@@ -55,9 +55,10 @@ final class ChildHomeFlowUITests: XCTestCase {
     // MARK: - 2. Quick Play карточка урока доступна и кликабельна
 
     func test_lessonCard_isVisible_andTappable() throws {
-        guard waitForChildHomeLoaded() else {
-            throw XCTSkip("ChildHome не загрузился в отведённое время")
-        }
+        XCTAssertTrue(
+            waitForChildHomeLoaded(),
+            "ChildHome должен загрузиться при -HSStartRoute childHome"
+        )
 
         let card = app.buttons["childHomeLessonCard"].firstMatch
         let appeared = card.waitForExistence(timeout: 10)
@@ -76,9 +77,10 @@ final class ChildHomeFlowUITests: XCTestCase {
     // MARK: - 3. Daily Mission карточка отображается
 
     func test_dailyMissionCard_visible() throws {
-        guard waitForChildHomeLoaded() else {
-            throw XCTSkip("ChildHome не загрузился в отведённое время")
-        }
+        XCTAssertTrue(
+            waitForChildHomeLoaded(),
+            "ChildHome должен загрузиться при -HSStartRoute childHome"
+        )
         let missionCard = app.buttons["childHomeDailyMissionCard"].firstMatch
         let visible = missionCard.waitForExistence(timeout: 8)
         XCTAssertTrue(
@@ -90,15 +92,21 @@ final class ChildHomeFlowUITests: XCTestCase {
     // MARK: - 4. Тап на Daily Mission → SessionShell открывается
 
     func test_missionCard_tap_opensSession() throws {
-        guard waitForChildHomeLoaded() else {
-            throw XCTSkip("ChildHome не загрузился в отведённое время")
-        }
+        XCTAssertTrue(
+            waitForChildHomeLoaded(),
+            "ChildHome должен загрузиться при -HSStartRoute childHome"
+        )
 
         let missionCard = app.buttons["childHomeDailyMissionCard"].firstMatch
-        guard missionCard.waitForExistence(timeout: 8), missionCard.isHittable else {
-            throw XCTSkip("Карточка миссии недоступна для тапа")
-        }
+        XCTAssertTrue(
+            missionCard.waitForExistence(timeout: 10),
+            "Карточка ежедневной миссии должна присутствовать на детском экране"
+        )
 
+        // Карточка может быть частично за пределами вьюпорта — подскролливаем к ней.
+        scrollToElement(missionCard)
+        // Тап по центру через координату окна устойчив к isHittable=false,
+        // когда элемент видим, но AX считает его не-hittable из-за анимаций.
         safeTapCenter(missionCard)
 
         // Если открылся hero overlay — тапаем «Начать»
@@ -125,9 +133,10 @@ final class ChildHomeFlowUITests: XCTestCase {
     // MARK: - 5. Кнопка «Позвать родителя» присутствует на экране
 
     func test_sosButton_visible() throws {
-        guard waitForChildHomeLoaded() else {
-            throw XCTSkip("ChildHome не загрузился в отведённое время")
-        }
+        XCTAssertTrue(
+            waitForChildHomeLoaded(),
+            "ChildHome должен загрузиться при -HSStartRoute childHome"
+        )
 
         // Кнопка SOS — внизу экрана, нужно проскроллить
         let scrollView = app.scrollViews.firstMatch
@@ -147,9 +156,10 @@ final class ChildHomeFlowUITests: XCTestCase {
     // MARK: - 6. Прокрутка вниз — прогресс звуков виден
 
     func test_soundProgress_section_visible_afterScroll() throws {
-        guard waitForChildHomeLoaded() else {
-            throw XCTSkip("ChildHome не загрузился в отведённое время")
-        }
+        XCTAssertTrue(
+            waitForChildHomeLoaded(),
+            "ChildHome должен загрузиться при -HSStartRoute childHome"
+        )
 
         let scrollView = app.scrollViews.firstMatch
         if scrollView.exists {
@@ -163,9 +173,10 @@ final class ChildHomeFlowUITests: XCTestCase {
     // MARK: - 7. Кнопка родителя (верхний правый угол) — SOS-алерт появляется
 
     func test_parentButton_topRight_showsSOSAlert() throws {
-        guard waitForChildHomeLoaded() else {
-            throw XCTSkip("ChildHome не загрузился в отведённое время")
-        }
+        XCTAssertTrue(
+            waitForChildHomeLoaded(),
+            "ChildHome должен загрузиться при -HSStartRoute childHome"
+        )
 
         let parentButtonPredicate = NSPredicate(
             format: "label CONTAINS[c] 'parent' OR label CONTAINS[c] 'родит' OR label CONTAINS[c] 'режим'"
@@ -187,19 +198,19 @@ final class ChildHomeFlowUITests: XCTestCase {
     // MARK: - 8. Session flow: Quick Play → игра → завершение / возврат
 
     func test_quickPlayCard_tap_leadsToSession_andStaysStable() throws {
-        guard waitForChildHomeLoaded() else {
-            throw XCTSkip("ChildHome не загрузился в отведённое время")
-        }
+        XCTAssertTrue(
+            waitForChildHomeLoaded(),
+            "ChildHome должен загрузиться при -HSStartRoute childHome"
+        )
 
         // Тапаем первую доступную карточку Quick Play
-        let cards = app.buttons.matching(
-            NSPredicate(format: "identifier == 'childHomeLessonCard'")
-        ).allElementsBoundByIndex
+        let card = app.buttons["childHomeLessonCard"].firstMatch
+        XCTAssertTrue(
+            card.waitForExistence(timeout: 10),
+            "На детском экране должна быть карточка Quick Play"
+        )
 
-        guard let card = cards.first, card.isHittable else {
-            throw XCTSkip("Quick Play карточки не загрузились или недоступны для тапа")
-        }
-
+        scrollToElement(card)
         safeTapCenter(card)
 
         // Ждём SessionShell или игровую область
@@ -238,6 +249,20 @@ final class ChildHomeFlowUITests: XCTestCase {
             Thread.sleep(forTimeInterval: 0.5)
         }
         return false
+    }
+
+    /// Подскролливает контент так, чтобы элемент попал во вьюпорт.
+    /// Делает до 4 свайпов; останавливается как только элемент стал hittable.
+    private func scrollToElement(_ element: XCUIElement, maxSwipes: Int = 4) {
+        guard element.exists else { return }
+        let scrollView = app.scrollViews.firstMatch
+        guard scrollView.exists else { return }
+        var attempts = 0
+        while !element.isHittable, attempts < maxSwipes {
+            scrollView.swipeUp()
+            Thread.sleep(forTimeInterval: 0.3)
+            attempts += 1
+        }
     }
 
     /// Тап по центру элемента через координату окна — устойчив к AX-scroll и

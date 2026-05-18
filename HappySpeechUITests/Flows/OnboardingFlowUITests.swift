@@ -52,17 +52,19 @@ final class OnboardingFlowUITests: XCTestCase {
     // MARK: - 2. Кнопка «Далее» / «Продолжить» переводит на следующий шаг
 
     func test_nextButton_advancesToNextStep() throws {
-        guard waitForOnboardingRoot() else {
-            throw XCTSkip("Онбординг недоступен без сброса состояния")
-        }
+        XCTAssertTrue(
+            waitForOnboardingRoot(),
+            "OnboardingRoot должен появиться после -UITestResetState"
+        )
 
         let nextPredicate = NSPredicate(
             format: "label CONTAINS[c] 'далее' OR label CONTAINS[c] 'продолжить' OR label CONTAINS[c] 'начать'"
         )
         let nextButton = app.buttons.matching(nextPredicate).firstMatch
-        guard nextButton.waitForExistence(timeout: 4) else {
-            throw XCTSkip("Кнопка перехода не найдена на экране онбординга")
-        }
+        XCTAssertTrue(
+            nextButton.waitForExistence(timeout: 6),
+            "На первом шаге онбординга (welcome) должна быть кнопка перехода («Начать»)"
+        )
 
         let beforeTap = snapshotCurrentStep()
         nextButton.tap()
@@ -72,34 +74,34 @@ final class OnboardingFlowUITests: XCTestCase {
         _ = beforeTap; _ = afterTap
     }
 
-    // MARK: - 3. Кнопка «Пропустить» убирает онбординг
+    // MARK: - 3. Кнопка «Пропустить» отсутствует на непропускаемом первом шаге
 
-    func test_skipButton_dismissesOnboarding() throws {
-        guard waitForOnboardingRoot() else {
-            throw XCTSkip("Онбординг недоступен")
-        }
+    func test_skipButton_absentOnWelcomeStep() throws {
+        // Продуктовый контракт: первый шаг (welcome) НЕ пропускаемый
+        // (OnboardingStep.isSkippable == false для .welcome). Кнопка
+        // «Пропустить» появляется только на шагах sounds/permissions/modelDownload.
+        XCTAssertTrue(
+            waitForOnboardingRoot(),
+            "OnboardingRoot должен появиться после -UITestResetState"
+        )
 
         let skipPredicate = NSPredicate(
             format: "label CONTAINS[c] 'пропустить' OR label CONTAINS[c] 'skip'"
         )
         let skipButton = app.buttons.matching(skipPredicate).firstMatch
-        guard skipButton.waitForExistence(timeout: 3) else {
-            throw XCTSkip("Кнопка 'Пропустить' не найдена — возможно, она отсутствует на первом шаге")
-        }
-
-        skipButton.tap()
-
-        let onboardingRoot = app.otherElements["OnboardingRoot"]
-        let stillExists = onboardingRoot.waitForExistence(timeout: 2)
-        XCTAssertFalse(stillExists, "OnboardingRoot не должен быть виден после нажатия 'Пропустить'")
+        XCTAssertFalse(
+            skipButton.waitForExistence(timeout: 2),
+            "На первом шаге онбординга кнопки «Пропустить» быть не должно — шаг welcome непропускаемый"
+        )
     }
 
     // MARK: - 4. Прогресс-бар или шаговый индикатор присутствует
 
     func test_progressIndicator_existsDuringOnboarding() throws {
-        guard waitForOnboardingRoot() else {
-            throw XCTSkip("Онбординг недоступен")
-        }
+        XCTAssertTrue(
+            waitForOnboardingRoot(),
+            "OnboardingRoot должен появиться после -UITestResetState"
+        )
 
         let progressView = app.progressIndicators.firstMatch
         let stepTextPredicate = NSPredicate(format: "label CONTAINS[c] 'шаг' OR label CONTAINS[c] 'из'")
@@ -111,42 +113,49 @@ final class OnboardingFlowUITests: XCTestCase {
         XCTAssertTrue(hasProgress, "Экран онбординга должен содержать индикатор прогресса")
     }
 
-    // MARK: - 5. Кнопка «Назад» возвращает на предыдущий шаг
+    // MARK: - 5. Онбординг — линейный поток вперёд, без кнопки «Назад»
 
-    func test_backButton_goesToPreviousStep() throws {
-        guard waitForOnboardingRoot() else {
-            throw XCTSkip("Онбординг недоступен")
-        }
+    func test_onboarding_isForwardOnly_noBackButton() throws {
+        // Продуктовый контракт: footer онбординга (OnboardingFlowView.actionFooter)
+        // содержит только primary CTA и опциональную кнопку «Пропустить».
+        // Навигации назад нет — поток строго линейный вперёд.
+        XCTAssertTrue(
+            waitForOnboardingRoot(),
+            "OnboardingRoot должен появиться после -UITestResetState"
+        )
 
         let nextPredicate = NSPredicate(
-            format: "label CONTAINS[c] 'далее' OR label CONTAINS[c] 'продолжить'"
+            format: "label CONTAINS[c] 'далее' OR label CONTAINS[c] 'продолжить' OR label CONTAINS[c] 'начать'"
         )
         let nextButton = app.buttons.matching(nextPredicate).firstMatch
-        guard nextButton.waitForExistence(timeout: 3) else {
-            throw XCTSkip("Нет кнопки 'Далее' для перехода вперёд")
-        }
+        XCTAssertTrue(
+            nextButton.waitForExistence(timeout: 6),
+            "На первом шаге онбординга должна быть кнопка перехода вперёд"
+        )
         nextButton.tap()
+        Thread.sleep(forTimeInterval: 0.6)
 
         let backPredicate = NSPredicate(
             format: "label CONTAINS[c] 'назад' OR label CONTAINS[c] 'back'"
         )
         let backButton = app.buttons.matching(backPredicate).firstMatch
-        guard backButton.waitForExistence(timeout: 3) else {
-            throw XCTSkip("Кнопка 'Назад' не появилась после перехода на второй шаг")
-        }
-        backButton.tap()
-
-        let onboardingRoot = app.otherElements["OnboardingRoot"]
-        XCTAssertTrue(onboardingRoot.waitForExistence(timeout: 3),
-            "После нажатия 'Назад' онбординг должен оставаться виден")
+        XCTAssertFalse(
+            backButton.waitForExistence(timeout: 2),
+            "Онбординг не имеет навигации назад — кнопки «Назад» быть не должно"
+        )
+        XCTAssertTrue(
+            app.otherElements["OnboardingRoot"].waitForExistence(timeout: 3),
+            "Онбординг должен оставаться виден после перехода на следующий шаг"
+        )
     }
 
     // MARK: - 6. Маскот или приветственный текст виден на первом шаге
 
     func test_welcomeContent_visible() throws {
-        guard waitForOnboardingRoot() else {
-            throw XCTSkip("Онбординг недоступен")
-        }
+        XCTAssertTrue(
+            waitForOnboardingRoot(),
+            "OnboardingRoot должен появиться после -UITestResetState"
+        )
 
         XCTAssertTrue(app.exists, "Приложение должно быть активным на первом шаге онбординга")
     }
@@ -154,9 +163,10 @@ final class OnboardingFlowUITests: XCTestCase {
     // MARK: - 7. Онбординг не зависает при быстрых тапах
 
     func test_rapidTaps_doNotCrash() throws {
-        guard waitForOnboardingRoot() else {
-            throw XCTSkip("Онбординг недоступен")
-        }
+        XCTAssertTrue(
+            waitForOnboardingRoot(),
+            "OnboardingRoot должен появиться после -UITestResetState"
+        )
 
         let nextPredicate = NSPredicate(
             format: "label CONTAINS[c] 'далее' OR label CONTAINS[c] 'продолжить' OR label CONTAINS[c] 'начать'"

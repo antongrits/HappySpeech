@@ -53,9 +53,10 @@ final class ParentDashboardUITests: XCTestCase {
     // MARK: - 2. Tab-bar содержит четыре вкладки
 
     func test_tabBar_hasFourTabs() throws {
-        guard waitForParentHomeLoaded() else {
-            throw XCTSkip("ParentHome не загрузился в отведённое время")
-        }
+        XCTAssertTrue(
+            waitForParentHomeLoaded(),
+            "ParentHome должен загрузиться при -HSStartRoute parentHome"
+        )
         // Системный TabView экспонирует вкладки как кнопки в таббаре
         let tabBars = app.tabBars.firstMatch
         let tabBarAppeared = tabBars.waitForExistence(timeout: 6)
@@ -68,17 +69,19 @@ final class ParentDashboardUITests: XCTestCase {
     // MARK: - 3. Переход на вкладку «Занятия» работает
 
     func test_sessionsTab_navigation() throws {
-        guard waitForParentHomeLoaded() else {
-            throw XCTSkip("ParentHome не загрузился в отведённое время")
-        }
+        XCTAssertTrue(
+            waitForParentHomeLoaded(),
+            "ParentHome должен загрузиться при -HSStartRoute parentHome"
+        )
 
         let sessionsTab = findTabBarButton(
             identifiers: ["parentSessionsTab"],
             labelContains: ["занятия", "sessions"]
         )
-        guard sessionsTab.waitForExistence(timeout: 6), sessionsTab.isHittable else {
-            throw XCTSkip("Вкладка «Занятия» недоступна")
-        }
+        XCTAssertTrue(
+            sessionsTab.waitForExistence(timeout: 6),
+            "Вкладка «Занятия» должна присутствовать в таббаре родителя"
+        )
 
         sessionsTab.tap()
         Thread.sleep(forTimeInterval: 0.4)
@@ -88,17 +91,19 @@ final class ParentDashboardUITests: XCTestCase {
     // MARK: - 4. Переход на вкладку «Аналитика» работает
 
     func test_analyticsTab_navigation() throws {
-        guard waitForParentHomeLoaded() else {
-            throw XCTSkip("ParentHome не загрузился в отведённое время")
-        }
+        XCTAssertTrue(
+            waitForParentHomeLoaded(),
+            "ParentHome должен загрузиться при -HSStartRoute parentHome"
+        )
 
         let analyticsTab = findTabBarButton(
             identifiers: ["parentAnalyticsTab"],
             labelContains: ["аналитика", "analytics"]
         )
-        guard analyticsTab.waitForExistence(timeout: 6), analyticsTab.isHittable else {
-            throw XCTSkip("Вкладка «Аналитика» недоступна")
-        }
+        XCTAssertTrue(
+            analyticsTab.waitForExistence(timeout: 6),
+            "Вкладка «Аналитика» должна присутствовать в таббаре родителя"
+        )
 
         analyticsTab.tap()
         Thread.sleep(forTimeInterval: 0.4)
@@ -108,17 +113,19 @@ final class ParentDashboardUITests: XCTestCase {
     // MARK: - 5. Переход на вкладку «Настройки» — Settings открывается
 
     func test_settingsTab_navigation_settingsVisible() throws {
-        guard waitForParentHomeLoaded() else {
-            throw XCTSkip("ParentHome не загрузился в отведённое время")
-        }
+        XCTAssertTrue(
+            waitForParentHomeLoaded(),
+            "ParentHome должен загрузиться при -HSStartRoute parentHome"
+        )
 
         let settingsTab = findTabBarButton(
             identifiers: ["parentSettingsTab"],
             labelContains: ["настройки", "settings"]
         )
-        guard settingsTab.waitForExistence(timeout: 6), settingsTab.isHittable else {
-            throw XCTSkip("Вкладка «Настройки» недоступна")
-        }
+        XCTAssertTrue(
+            settingsTab.waitForExistence(timeout: 6),
+            "Вкладка «Настройки» должна присутствовать в таббаре родителя"
+        )
 
         settingsTab.tap()
 
@@ -136,24 +143,32 @@ final class ParentDashboardUITests: XCTestCase {
     // MARK: - 6. Переключение темы в настройках не крашит приложение
 
     func test_settingsTab_themeToggle_doesNotCrash() throws {
-        guard waitForParentHomeLoaded() else {
-            throw XCTSkip("ParentHome не загрузился в отведённое время")
-        }
+        XCTAssertTrue(
+            waitForParentHomeLoaded(),
+            "ParentHome должен загрузиться при -HSStartRoute parentHome"
+        )
 
         // Открыть вкладку настроек
         let settingsTab = findTabBarButton(
             identifiers: ["parentSettingsTab"],
             labelContains: ["настройки", "settings"]
         )
-        guard settingsTab.waitForExistence(timeout: 6), settingsTab.isHittable else {
-            throw XCTSkip("Вкладка «Настройки» недоступна")
-        }
+        XCTAssertTrue(
+            settingsTab.waitForExistence(timeout: 6),
+            "Вкладка «Настройки» должна присутствовать в таббаре родителя"
+        )
         settingsTab.tap()
 
-        // Ждём появления списка настроек
-        guard app.tables.firstMatch.waitForExistence(timeout: 8) else {
-            throw XCTSkip("Список настроек не загрузился")
-        }
+        // Ждём появления экрана настроек. SwiftUI List экспонируется по-разному
+        // (table / collectionView / SettingsRoot otherElement) — проверяем все.
+        let settingsRoot = app.otherElements["SettingsRoot"]
+        let settingsAppeared = settingsRoot.waitForExistence(timeout: 8)
+            || app.tables.firstMatch.waitForExistence(timeout: 3)
+            || app.collectionViews.firstMatch.waitForExistence(timeout: 3)
+        XCTAssertTrue(
+            settingsAppeared,
+            "После перехода на «Настройки» должен появиться экран настроек"
+        )
 
         // Ищем любой переключатель в настройках (уведомления, тема и т.п.)
         let toggles = app.switches.allElementsBoundByIndex
@@ -173,9 +188,10 @@ final class ParentDashboardUITests: XCTestCase {
     // MARK: - 7. Dashboard-вкладка: прогресс ребёнка отображается
 
     func test_dashboard_childProgressCard_visible() throws {
-        guard waitForParentHomeLoaded() else {
-            throw XCTSkip("ParentHome не загрузился в отведённое время")
-        }
+        XCTAssertTrue(
+            waitForParentHomeLoaded(),
+            "ParentHome должен загрузиться при -HSStartRoute parentHome"
+        )
 
         // Находимся на dashboard (вкладка по умолчанию)
         let dashboardTab = findTabBarButton(
@@ -199,9 +215,10 @@ final class ParentDashboardUITests: XCTestCase {
     // MARK: - 8. Прокрутка dashboard вниз — рекомендации видны
 
     func test_dashboard_scroll_showsRecommendations() throws {
-        guard waitForParentHomeLoaded() else {
-            throw XCTSkip("ParentHome не загрузился в отведённое время")
-        }
+        XCTAssertTrue(
+            waitForParentHomeLoaded(),
+            "ParentHome должен загрузиться при -HSStartRoute parentHome"
+        )
 
         // Убеждаемся, что на dashboard
         let dashboardTab = findTabBarButton(
@@ -214,9 +231,10 @@ final class ParentDashboardUITests: XCTestCase {
         }
 
         let scrollView = app.scrollViews.firstMatch
-        guard scrollView.waitForExistence(timeout: 6) else {
-            throw XCTSkip("Прокручиваемый контент недоступен на dashboard")
-        }
+        XCTAssertTrue(
+            scrollView.waitForExistence(timeout: 6),
+            "Dashboard родителя должен содержать прокручиваемый контент"
+        )
 
         scrollView.swipeUp()
         Thread.sleep(forTimeInterval: 0.3)

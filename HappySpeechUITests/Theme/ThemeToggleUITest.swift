@@ -51,9 +51,10 @@ final class ThemeToggleUITest: XCTestCase {
     // MARK: - 2. Элементы выбора темы присутствуют в Settings
 
     func test_themeOptions_existInSettings() throws {
-        guard waitForSettings() else {
-            throw XCTSkip("Settings экран недоступен")
-        }
+        XCTAssertTrue(
+            waitForSettings(),
+            "Settings экран должен открываться при -HSStartRoute settings"
+        )
 
         // Ищем picker или кнопки темы в текущей иерархии
         let hasLightOption = findThemeButton(.light).waitForExistence(timeout: 4)
@@ -67,14 +68,17 @@ final class ThemeToggleUITest: XCTestCase {
     // MARK: - 3. Переключение на светлую тему не крашит приложение
 
     func test_lightTheme_toggle_nocrash() throws {
-        guard waitForSettings() else {
-            throw XCTSkip("Settings экран недоступен")
-        }
+        XCTAssertTrue(
+            waitForSettings(),
+            "Settings экран должен открываться при -HSStartRoute settings"
+        )
 
         let lightButton = findThemeButton(.light)
-        guard lightButton.waitForExistence(timeout: 4) else {
-            throw XCTSkip("Кнопка светлой темы не найдена в Settings")
-        }
+        scrollToThemePicker()
+        XCTAssertTrue(
+            lightButton.waitForExistence(timeout: 6),
+            "Сегмент выбора темы должен присутствовать в разделе «Оформление»"
+        )
 
         lightButton.tap()
 
@@ -85,14 +89,17 @@ final class ThemeToggleUITest: XCTestCase {
     // MARK: - 4. Переключение на тёмную тему не крашит приложение
 
     func test_darkTheme_toggle_nocrash() throws {
-        guard waitForSettings() else {
-            throw XCTSkip("Settings экран недоступен")
-        }
+        XCTAssertTrue(
+            waitForSettings(),
+            "Settings экран должен открываться при -HSStartRoute settings"
+        )
 
         let darkButton = findThemeButton(.dark)
-        guard darkButton.waitForExistence(timeout: 4) else {
-            throw XCTSkip("Кнопка тёмной темы не найдена в Settings")
-        }
+        scrollToThemePicker()
+        XCTAssertTrue(
+            darkButton.waitForExistence(timeout: 6),
+            "Сегмент выбора темы должен присутствовать в разделе «Оформление»"
+        )
 
         darkButton.tap()
 
@@ -103,17 +110,19 @@ final class ThemeToggleUITest: XCTestCase {
     // MARK: - 5. Переключение Light → Dark изменяет яркость экрана
 
     func test_lightToDark_screenBrightnessChanges() throws {
-        guard waitForSettings() else {
-            throw XCTSkip("Settings экран недоступен")
-        }
+        XCTAssertTrue(
+            waitForSettings(),
+            "Settings экран должен открываться при -HSStartRoute settings"
+        )
 
         let lightButton = findThemeButton(.light)
         let darkButton = findThemeButton(.dark)
 
-        guard lightButton.waitForExistence(timeout: 4),
-              darkButton.waitForExistence(timeout: 2) else {
-            throw XCTSkip("Кнопки переключения темы не найдены")
-        }
+        scrollToThemePicker()
+        XCTAssertTrue(lightButton.waitForExistence(timeout: 6),
+                      "Сегмент светлой темы должен присутствовать")
+        XCTAssertTrue(darkButton.waitForExistence(timeout: 4),
+                      "Сегмент тёмной темы должен присутствовать")
 
         // Применяем светлую тему и снимаем скриншот
         lightButton.tap()
@@ -163,14 +172,17 @@ final class ThemeToggleUITest: XCTestCase {
     // MARK: - 6. Системная тема применяется без краша
 
     func test_systemTheme_toggle_nocrash() throws {
-        guard waitForSettings() else {
-            throw XCTSkip("Settings экран недоступен")
-        }
+        XCTAssertTrue(
+            waitForSettings(),
+            "Settings экран должен открываться при -HSStartRoute settings"
+        )
 
         let systemButton = findThemeButton(.system)
-        guard systemButton.waitForExistence(timeout: 4) else {
-            throw XCTSkip("Кнопка системной темы не найдена")
-        }
+        scrollToThemePicker()
+        XCTAssertTrue(
+            systemButton.waitForExistence(timeout: 6),
+            "Сегмент выбора темы должен присутствовать в разделе «Оформление»"
+        )
 
         systemButton.tap()
 
@@ -196,6 +208,22 @@ final class ThemeToggleUITest: XCTestCase {
         )
         return app.staticTexts.matching(themePredicate).firstMatch.waitForExistence(timeout: 4)
             || app.scrollViews.firstMatch.waitForExistence(timeout: 4)
+    }
+
+    /// Подскролливает Settings так, чтобы раздел выбора темы попал во вьюпорт.
+    private func scrollToThemePicker(maxSwipes: Int = 4) {
+        let lightById = app.buttons["ThemeLightButton"]
+        let lightByLabel = app.buttons.matching(
+            NSPredicate(format: "label CONTAINS[c] 'светл' OR label CONTAINS[c] 'light'")
+        ).firstMatch
+        let scrollView = app.scrollViews.firstMatch
+        guard scrollView.exists else { return }
+        var attempts = 0
+        while !lightById.isHittable, !lightByLabel.isHittable, attempts < maxSwipes {
+            scrollView.swipeUp()
+            Thread.sleep(forTimeInterval: 0.3)
+            attempts += 1
+        }
     }
 
     /// Ищет кнопку выбора темы по типу.

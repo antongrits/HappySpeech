@@ -53,14 +53,35 @@ final class OnboardingToFirstLessonUITests: XCTestCase {
     }
 
     func test_tapStartLesson_navigatesToSessionShell() throws {
-        let startButton = app.buttons["kidStartLessonButton"]
-        guard startButton.waitForExistence(timeout: 4.0) else {
-            throw XCTSkip("Start Lesson button not reachable without auth stub")
-        }
+        // Перезапускаем с -HSStartRoute childHome — детерминированно открываем
+        // детский экран (preview-контейнер, seed-контент), минуя auth.
+        app.terminate()
+        app.launchArguments = ["-HSStartRoute", "childHome", "-UITestDisableAnimations"]
+        app.launch()
+
+        // Карточка ежедневной миссии — основная точка входа в урок на ChildHome.
+        let startButton = app.buttons["childHomeDailyMissionCard"].firstMatch
+        XCTAssertTrue(
+            startButton.waitForExistence(timeout: 15),
+            "Карточка запуска урока (childHomeDailyMissionCard) должна быть доступна на ChildHome"
+        )
         startButton.tap()
 
+        // Если открылся hero overlay — тапаем «Начать».
+        let startPredicate = NSPredicate(format: "label CONTAINS[c] 'начать' OR label CONTAINS[c] 'старт'")
+        let heroStart = app.buttons.matching(startPredicate).firstMatch
+        if heroStart.waitForExistence(timeout: 3), heroStart.isHittable {
+            heroStart.tap()
+        }
+
         let shell = app.otherElements["SessionShellRoot"]
-        XCTAssertTrue(shell.waitForExistence(timeout: 4.0),
-                      "SessionShell should become visible after tapping Start")
+        let gameArea = app.otherElements["gameContentArea"]
+        let hud = app.otherElements["sessionHUDProgress"]
+        XCTAssertTrue(
+            shell.waitForExistence(timeout: 15)
+                || gameArea.waitForExistence(timeout: 3)
+                || hud.waitForExistence(timeout: 3),
+            "SessionShell должен открыться после тапа на карточку урока"
+        )
     }
 }

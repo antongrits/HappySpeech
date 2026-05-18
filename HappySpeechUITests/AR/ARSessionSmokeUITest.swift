@@ -105,9 +105,10 @@ final class ARSessionSmokeUITest: XCTestCase {
         )
         let arButton = app.buttons.matching(arGamePredicate).firstMatch
 
-        guard arButton.waitForExistence(timeout: 4) else {
-            throw XCTSkip("Карточки AR-игр не найдены — возможно AR не поддерживается на этом симуляторе")
-        }
+        XCTAssertTrue(
+            arButton.waitForExistence(timeout: 6),
+            "ARZone должна показывать карточки AR-игр (список рендерится и без ARKit)"
+        )
 
         arButton.tap()
 
@@ -129,9 +130,10 @@ final class ARSessionSmokeUITest: XCTestCase {
         )
         let mirrorButton = app.buttons.matching(mirrorPredicate).firstMatch
 
-        guard mirrorButton.waitForExistence(timeout: 4) else {
-            throw XCTSkip("Кнопка AR Mirror не найдена на данном симуляторе")
-        }
+        XCTAssertTrue(
+            mirrorButton.waitForExistence(timeout: 6),
+            "Карточка AR Mirror должна присутствовать в ARZone"
+        )
 
         mirrorButton.tap()
 
@@ -167,9 +169,10 @@ final class ARSessionSmokeUITest: XCTestCase {
             format: "label CONTAINS[c] 'AR' OR label CONTAINS[c] 'игра' OR label CONTAINS[c] 'Зеркало'"
         )).firstMatch
 
-        guard anyARButton.waitForExistence(timeout: 4) else {
-            throw XCTSkip("AR игры не найдены на данном симуляторе")
-        }
+        XCTAssertTrue(
+            anyARButton.waitForExistence(timeout: 6),
+            "ARZone должна показывать хотя бы одну карточку AR-игры"
+        )
 
         anyARButton.tap()
 

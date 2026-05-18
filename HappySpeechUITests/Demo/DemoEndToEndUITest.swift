@@ -54,9 +54,10 @@ final class DemoEndToEndUITest: XCTestCase {
     // MARK: - 2. Кнопка «Далее» присутствует на первом шаге
 
     func test_nextButton_existsOnFirstStep() throws {
-        guard waitForDemoScreen() else {
-            throw XCTSkip("Demo экран недоступен")
-        }
+        XCTAssertTrue(
+            waitForDemoScreen(),
+            "Demo-экран должен появиться при -HSStartRoute demoMode"
+        )
 
         let nextButton = findNextButton()
         XCTAssertTrue(nextButton.waitForExistence(timeout: 5),
@@ -66,9 +67,10 @@ final class DemoEndToEndUITest: XCTestCase {
     // MARK: - 3. Прохождение первых 5 шагов — приложение не крашится
 
     func test_firstFiveSteps_nocrash() throws {
-        guard waitForDemoScreen() else {
-            throw XCTSkip("Demo экран недоступен")
-        }
+        XCTAssertTrue(
+            waitForDemoScreen(),
+            "Demo-экран должен появиться при -HSStartRoute demoMode"
+        )
 
         var stepCount = 0
         for _ in 1...5 {
@@ -90,14 +92,16 @@ final class DemoEndToEndUITest: XCTestCase {
     // MARK: - 4. Кнопка «Пропустить» работает на первом шаге
 
     func test_skipButton_dismissesDemo() throws {
-        guard waitForDemoScreen() else {
-            throw XCTSkip("Demo экран недоступен")
-        }
+        XCTAssertTrue(
+            waitForDemoScreen(),
+            "Demo-экран должен появиться при -HSStartRoute demoMode"
+        )
 
         let skipButton = findSkipButton()
-        guard skipButton.waitForExistence(timeout: 5) else {
-            throw XCTSkip("Кнопка 'Пропустить' не найдена на первом шаге Demo")
-        }
+        XCTAssertTrue(
+            skipButton.waitForExistence(timeout: 5),
+            "Кнопка «Пропустить» должна присутствовать в Demo-режиме"
+        )
 
         skipButton.tap()
 
@@ -117,9 +121,10 @@ final class DemoEndToEndUITest: XCTestCase {
     // MARK: - 5. Прогресс-индикатор виден во время Demo
 
     func test_progressIndicator_visibleDuringDemo() throws {
-        guard waitForDemoScreen() else {
-            throw XCTSkip("Demo экран недоступен")
-        }
+        XCTAssertTrue(
+            waitForDemoScreen(),
+            "Demo-экран должен появиться при -HSStartRoute demoMode"
+        )
 
         // Ищем текст «Шаг N из 15» или прогресс-бар
         let progressLabelPredicate = NSPredicate(
@@ -137,9 +142,10 @@ final class DemoEndToEndUITest: XCTestCase {
     // MARK: - 6. Последний шаг показывает «Начать!» или «Готово!»
 
     func test_lastStep_showsCompletionButton() throws {
-        guard waitForDemoScreen() else {
-            throw XCTSkip("Demo экран недоступен")
-        }
+        XCTAssertTrue(
+            waitForDemoScreen(),
+            "Demo-экран должен появиться при -HSStartRoute demoMode"
+        )
 
         // Быстро прокручиваем все шаги (до 20 попыток)
         var attempts = 0
