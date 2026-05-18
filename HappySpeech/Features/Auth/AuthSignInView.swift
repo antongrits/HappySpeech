@@ -120,13 +120,16 @@ struct AuthSignInView: View {
 
     // MARK: - Layout
 
+    // v27 visual modernization (#7): hero-зона Auth переведена с плоского
+    // эллипса на HSMeshGradientBackground(palette: .kidWarm, animated: false).
+    // Mesh подрезается эллиптической формой — мягкий «купол» вверху экрана.
     private var topDecoration: some View {
         GeometryReader { geo in
             ZStack(alignment: .top) {
-                Ellipse()
-                    .fill(GradientTokens.kidHeroDecoration)
-                    .opacity(heroDecorationOpacity)
+                HSMeshGradientBackground(palette: .kidWarm, animated: false)
                     .frame(width: geo.size.width * 1.3, height: 320)
+                    .clipShape(Ellipse())
+                    .opacity(heroDecorationOpacity)
                     .offset(x: -geo.size.width * 0.15, y: -100)
             }
         }

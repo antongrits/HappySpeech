@@ -24,21 +24,21 @@ public enum ShadowTokens {
     public enum Kid {
         public static let card = ShadowStyle(
             color: Color(red: 0.23, green: 0.16, blue: 0.11),
-            radius: 12,
-            x: 0, y: 4,
-            opacity: 0.08
+            radius: 16,
+            x: 0, y: 6,
+            opacity: 0.11
         )
         public static let cardLg = ShadowStyle(
             color: Color(red: 0.23, green: 0.16, blue: 0.11),
-            radius: 20,
-            x: 0, y: 8,
-            opacity: 0.10
+            radius: 28,
+            x: 0, y: 12,
+            opacity: 0.13
         )
         public static let tile = ShadowStyle(
             color: Color(red: 0.23, green: 0.16, blue: 0.11),
-            radius: 8,
-            x: 0, y: 2,
-            opacity: 0.06
+            radius: 10,
+            x: 0, y: 3,
+            opacity: 0.08
         )
     }
 
@@ -47,15 +47,15 @@ public enum ShadowTokens {
     public enum Parent {
         public static let card = ShadowStyle(
             color: Color(red: 0.06, green: 0.09, blue: 0.16),
-            radius: 3,
-            x: 0, y: 1,
-            opacity: 0.05
+            radius: 8,
+            x: 0, y: 3,
+            opacity: 0.07
         )
         public static let elevated = ShadowStyle(
             color: Color(red: 0.06, green: 0.09, blue: 0.16),
-            radius: 8,
-            x: 0, y: 2,
-            opacity: 0.08
+            radius: 16,
+            x: 0, y: 6,
+            opacity: 0.10
         )
     }
 }

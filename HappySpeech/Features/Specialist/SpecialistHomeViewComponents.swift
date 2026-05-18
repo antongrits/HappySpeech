@@ -20,10 +20,28 @@ struct SpecChildListView: View {
         return children.filter { $0.name.lowercased().contains(searchText.lowercased()) }
     }
 
+    // v27 visual modernization (#9) — специалист аналитический контур: depth
+    // скромный. Поверх Spec.bg — едва заметный accent-radial в hero-зоне
+    // (верхний угол), чтобы экран не был чисто системно-серым.
+    @ViewBuilder
+    private var specBackground: some View {
+        ZStack(alignment: .top) {
+            ColorTokens.Spec.bg
+            RadialGradient(
+                colors: [ColorTokens.Spec.accent.opacity(0.07), .clear],
+                center: .topLeading,
+                startRadius: 0,
+                endRadius: 320
+            )
+        }
+        .ignoresSafeArea()
+        .accessibilityHidden(true)
+    }
+
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Spec.bg.ignoresSafeArea()
+                specBackground
                 if isLoading {
                     ProgressView()
                         .controlSize(.large)

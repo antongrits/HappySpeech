@@ -31,6 +31,7 @@ public struct HSMeshGradientBackground: View {
 
     public enum Palette {
         case kidWarm
+        case kidWarmDark
         case kidCool
         case rewards
         case calm
@@ -42,6 +43,14 @@ public struct HSMeshGradientBackground: View {
                     ColorTokens.Brand.primaryLo, ColorTokens.Brand.butter, ColorTokens.Brand.rose,
                     ColorTokens.Kid.bgSofter, ColorTokens.Brand.primaryLo.opacity(0.7), ColorTokens.Brand.butter,
                     ColorTokens.Brand.rose, ColorTokens.Kid.bg, ColorTokens.Brand.primary.opacity(0.4)
+                ]
+            case .kidWarmDark:
+                // Тёплый глубокий тёмный фон для ChildHome в dark режиме —
+                // вместо монотонного коричневого (v27-spec, изменение #1).
+                return [
+                    ColorTokens.Brand.primary.opacity(0.25), ColorTokens.Brand.rose.opacity(0.20), ColorTokens.Kid.bgDeep,
+                    ColorTokens.Brand.rose.opacity(0.18), ColorTokens.Kid.bgDeep, ColorTokens.Brand.primary.opacity(0.16),
+                    ColorTokens.Kid.bgDeep, ColorTokens.Brand.primary.opacity(0.22), ColorTokens.Brand.rose.opacity(0.20)
                 ]
             case .kidCool:
                 return [

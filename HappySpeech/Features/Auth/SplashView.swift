@@ -13,19 +13,24 @@ struct SplashView: View {
     // D-7 v27 — splash-фон адаптируется к тёмной теме: в dark вместо
     // яркого кораллового градиента используется глубокий тёмный фон,
     // чтобы splash не «светил» оранжевым на тёмной системе.
+    //
+    // v27 visual modernization (#3): в light-режиме монотонный coral заменён
+    // трёхцветным диагональным градиентом primary → primaryHi → rose —
+    // задаёт современную планку с первого экрана.
     private var backgroundColors: [Color] {
         colorScheme == .dark
             ? [ColorTokens.Kid.bg, ColorTokens.Kid.bgDeep]
-            : [ColorTokens.Brand.primary, ColorTokens.Brand.primaryHi]
+            : [ColorTokens.Brand.primary, ColorTokens.Brand.primaryHi, ColorTokens.Brand.rose]
     }
 
     var body: some View {
         ZStack {
             // Background gradient matching design tokens (Brand coral / dark).
+            // v27: диагональный (topLeading → bottomTrailing) — даёт глубину.
             LinearGradient(
                 colors: backgroundColors,
-                startPoint: .top,
-                endPoint: .bottom
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
             )
             .ignoresSafeArea()
 

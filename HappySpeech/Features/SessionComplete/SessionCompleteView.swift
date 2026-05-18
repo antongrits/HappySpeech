@@ -619,23 +619,18 @@ struct SessionCompleteView: View {
 
     // MARK: - Background
 
+    // v27 visual modernization (#2) — celebration screen получает фон
+    // HSMeshGradientBackground(palette: .rewards, animated: false): золотое
+    // сияние под reward-reveal. Static (animated: false), т.к. поверх —
+    // конфетти и stage-анимации; статика бережёт кадры.
     @ViewBuilder
     private var backgroundLayer: some View {
-        let gradient = LinearGradient(
-            colors: [ColorTokens.Kid.bg, ColorTokens.Brand.lilac.opacity(0.18)],
-            startPoint: .top,
-            endPoint: .bottom
-        )
-        if #available(iOS 26.0, *) {
-            gradient
-                .overlay(
-                    Rectangle()
-                        .fill(.ultraThinMaterial)
-                        .opacity(0.35)
-                )
-        } else {
+        ZStack {
             ColorTokens.Kid.bg
+            HSMeshGradientBackground(palette: .rewards, animated: false)
+                .opacity(colorScheme == .dark ? 0.40 : 0.78)
         }
+        .accessibilityHidden(true)
     }
 
     // MARK: - Helpers

@@ -51,6 +51,19 @@ public enum GradientTokens {
         endPoint: .top
     )
 
+    /// Splash-фон: трёхцветный диагональный градиент primary → primaryHi → rose.
+    /// Заменяет плоский моноцветный coral на splash-экране — задаёт современную
+    /// планку первого впечатления (v27-spec, изменение #3).
+    public static let splashHero = LinearGradient(
+        colors: [
+            ColorTokens.Brand.primary,
+            ColorTokens.Brand.primaryHi,
+            ColorTokens.Brand.rose
+        ],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+
     // MARK: - Parent Circuit Backgrounds
 
     /// Нейтральный фон родительского контура.

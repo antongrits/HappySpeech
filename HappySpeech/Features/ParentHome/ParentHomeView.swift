@@ -240,11 +240,29 @@ private struct ParentDashboardTab: View {
 
     @Environment(\.horizontalSizeClass) private var hSizeClass
     @Environment(AppContainer.self) private var container
+    @Environment(\.colorScheme) private var colorScheme
 
     /// Block R.2 v18 — sheet с LogopedistChatView (parent ↔ specialist).
     @State private var showLogopedistChatSheet: Bool = false
     /// Block R.4 v18 — sheet с FamilyAchievementsView (общие достижения).
     @State private var showFamilyAchievementsSheet: Bool = false
+
+    // v27 visual modernization (#5) — фон parent-контура перестаёт выглядеть
+    // как системный Settings.app: поверх Parent.bg ложится очень мягкий
+    // mesh-слой палитры .calm (тот же, что в ProgressDashboard) — узнаваемый
+    // характер контура без потери спокойствия. Static, чтобы не отвлекать.
+    @ViewBuilder
+    private var dashboardBackground: some View {
+        ZStack {
+            ColorTokens.Parent.bg
+            HSMeshGradientBackground(palette: .calm, animated: false)
+                .opacity(colorScheme == .dark ? 0.12 : 0.20)
+                .blendMode(.softLight)
+                .allowsHitTesting(false)
+        }
+        .ignoresSafeArea()
+        .accessibilityHidden(true)
+    }
 
     var body: some View {
         NavigationStack {
@@ -306,7 +324,7 @@ private struct ParentDashboardTab: View {
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.bottom, SpacingTokens.sp16 + SpacingTokens.sp10)
             }
-            .background(ColorTokens.Parent.bg.ignoresSafeArea())
+            .background(dashboardBackground)
             .navigationTitle(String(localized: "Прогресс"))
             .navigationBarTitleDisplayMode(.large)
             // Block R.2 v18 — LogopedistChat sheet.

@@ -49,6 +49,7 @@ public struct HSLiquidGlassCard<Content: View>: View {
     private let content: () -> Content
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     public init(
         style: HSLiquidGlassStyle = .primary,
@@ -124,44 +125,51 @@ public struct HSLiquidGlassCard<Content: View>: View {
         }
     }
 
+    /// Light overlay для светлого режима делает стекло светящимся; в dark режиме
+    /// белый tint «загрязняет» материал, поэтому используем едва заметный осветляющий слой.
     @ViewBuilder
     private var tintLayer: some View {
         switch style {
         case .primary:
-            Color.white.opacity(0.18)
+            Color.white.opacity(colorScheme == .dark ? 0.06 : 0.18)
         case .elevated:
-            Color.white.opacity(0.32)
+            Color.white.opacity(colorScheme == .dark ? 0.10 : 0.32)
         case .tinted(let color):
-            color.opacity(0.22)
+            color.opacity(colorScheme == .dark ? 0.30 : 0.22)
         }
     }
 
+    /// Hairline border: светлый край в light режиме создаёт «приподнятость»,
+    /// в dark режиме слегка светлее — иначе край сливается с фоном.
     private var borderOverlay: some View {
         RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-            .strokeBorder(Color.white.opacity(0.2), lineWidth: 1)
+            .strokeBorder(
+                Color.white.opacity(colorScheme == .dark ? 0.14 : 0.32),
+                lineWidth: 0.5
+            )
     }
 
     // MARK: - Shadow tokens per style
 
     private var shadowColor: Color {
         switch style {
-        case .primary:           return .black.opacity(0.08)
-        case .elevated:          return .black.opacity(0.15)
-        case .tinted(let color): return color.opacity(0.18)
+        case .primary:           return .black.opacity(0.11)
+        case .elevated:          return .black.opacity(0.16)
+        case .tinted(let color): return color.opacity(0.20)
         }
     }
 
     private var shadowRadius: CGFloat {
         switch style {
-        case .elevated: return 20
-        default:        return 12
+        case .elevated: return 24
+        default:        return 16
         }
     }
 
     private var shadowY: CGFloat {
         switch style {
-        case .elevated: return 10
-        default:        return 4
+        case .elevated: return 12
+        default:        return 6
         }
     }
 }

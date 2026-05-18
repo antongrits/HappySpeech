@@ -59,13 +59,15 @@ struct RewardsView: View {
             ZStack(alignment: .bottom) {
                 ColorTokens.Kid.bg.ignoresSafeArea()
 
-                // Block J v18 — kavsoft-style mesh gradient palette .rewards
-                // (gold/butter/primaryLo). iOS 18+ MeshGradient, fallback iOS 17.
+                // v27 visual modernization (#2) — экран наград ощущается как
+                // кульминация: mesh-палитра .rewards (gold/butter/primaryLo)
+                // становится полноценным фоновым слоем, а не лёгким softLight-
+                // оверлеем. iOS 18+ — MeshGradient, fallback iOS 17 — radial.
                 HSMeshGradientBackground(palette: .rewards, animated: true)
                     .ignoresSafeArea()
-                    // F.tier1 v21: rewards mesh мягче в dark, чтобы gold/butter не «выгорал».
-                    .opacity(colorScheme == .dark ? 0.18 : 0.30)
-                    .blendMode(.softLight)
+                    // В dark mesh приглушён, чтобы gold/butter не «выгорал»,
+                    // в light — почти полный для тёплого золотого сияния.
+                    .opacity(colorScheme == .dark ? 0.45 : 0.85)
                     .accessibilityHidden(true)
                     .allowsHitTesting(false)
 

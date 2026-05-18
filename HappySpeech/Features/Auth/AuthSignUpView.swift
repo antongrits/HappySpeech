@@ -135,15 +135,19 @@ struct AuthSignUpView: View {
         .padding(.top, SpacingTokens.sp4)
     }
 
+    // v27 visual modernization (#7): hero-зона Auth переведена с плоского
+    // эллипса на HSMeshGradientBackground(palette: .kidWarm, animated: false),
+    // подрезанный эллиптической формой.
     private var topDecoration: some View {
         GeometryReader { geo in
-            Ellipse()
-                .fill(GradientTokens.kidHeroDecoration)
-                .opacity(heroDecorationOpacity)
+            HSMeshGradientBackground(palette: .kidWarm, animated: false)
                 .frame(width: geo.size.width * 1.3, height: 260)
+                .clipShape(Ellipse())
+                .opacity(heroDecorationOpacity)
                 .offset(x: -geo.size.width * 0.15, y: -120)
         }
         .ignoresSafeArea()
+        .accessibilityHidden(true)
     }
 
     private var header: some View {
