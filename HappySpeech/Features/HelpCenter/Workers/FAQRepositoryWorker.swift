@@ -41,16 +41,12 @@ final class FAQRepositoryWorker: FAQRepositoryWorkerProtocol {
     }
 
     func videoExists(_ resourceName: String) -> Bool {
-        // Туториалы располагаются в `Resources/Videos/tutorials/<name>.mp4`.
-        // Bundle.main.url с subdirectory корректно работает с folder-references.
-        if Bundle.main.url(
+        // `Videos` подключён как folder-reference: в бандле сохраняется
+        // структура каталогов, туториалы лежат в `Videos/tutorials/<name>.mp4`.
+        Bundle.main.url(
             forResource: resourceName,
             withExtension: "mp4",
-            subdirectory: "tutorials"
-        ) != nil {
-            return true
-        }
-        // Fallback: без subdirectory (на случай, если xcodegen положил по плоской структуре).
-        return Bundle.main.url(forResource: resourceName, withExtension: "mp4") != nil
+            subdirectory: "Videos/tutorials"
+        ) != nil
     }
 }

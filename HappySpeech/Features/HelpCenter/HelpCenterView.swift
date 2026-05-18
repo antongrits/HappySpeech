@@ -496,14 +496,13 @@ struct HelpCenterView: View {
     // MARK: - Helpers
 
     private func videoURL(for resourceName: String) -> URL? {
-        if let url = Bundle.main.url(
+        // `Videos` подключён как folder-reference: туториалы лежат
+        // в `Videos/tutorials/<name>.mp4` с сохранением структуры каталогов.
+        Bundle.main.url(
             forResource: resourceName,
             withExtension: "mp4",
-            subdirectory: "tutorials"
-        ) {
-            return url
-        }
-        return Bundle.main.url(forResource: resourceName, withExtension: "mp4")
+            subdirectory: "Videos/tutorials"
+        )
     }
 
     // MARK: - Wiring
