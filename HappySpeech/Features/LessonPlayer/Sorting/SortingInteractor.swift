@@ -268,6 +268,11 @@ final class SortingInteractor: SortingBusinessLogic {
         // Уровень 3 — авторасстановка без баллов.
         if nextLevel >= Self.maxHintsPerWord {
             await autoPlaceWord(word)
+            // Если авторасставлено последнее слово — завершаем сессию,
+            // иначе игра зависнет без экрана итогов.
+            if classifiedWords.count >= words.count {
+                await completeSession(reason: .allClassified)
+            }
         }
     }
 
