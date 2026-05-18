@@ -118,12 +118,10 @@ private extension View {
     func applyShadow(for circuit: CircuitContext, style: HSCardStyle) -> some View {
         switch style {
         case .elevated:
-            switch circuit {
-            case .kid:
-                self.kidCardShadow()
-            case .parent, .specialist:
-                self.parentCardShadow()
-            }
+            // v29 — raised cards use a two-layer depth shadow (tight
+            // contact + soft ambient) so they read clearly above the
+            // opaque base layer.
+            self.depthShadow(for: circuit)
         case .flat:
             self.overlay(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)

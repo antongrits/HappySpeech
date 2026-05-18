@@ -80,4 +80,22 @@ public enum RadiusTokens {
     public static let button: CGFloat = xl    // 32
     public static let sheet: CGFloat = xl    // 32
     public static let avatar: CGFloat = full
+
+    // MARK: - Concentric Radii (v29)
+    //
+    // For nested geometry (icon inside tile inside card) the inner radius
+    // must equal the outer radius minus the inset, so the corner curves
+    // stay parallel — Apple's iOS 26 hardware-aligned geometry. Mismatched
+    // radii are a subtle "amateur" tell.
+
+    /// Inner radius concentric with an outer corner, given the inset between them.
+    /// Never goes below `xs / 1.5` so very small nested elements stay rounded.
+    public static func concentric(outer: CGFloat, inset: CGFloat) -> CGFloat {
+        max(outer - inset, xs / 1.5)
+    }
+
+    /// Radius for an element inset inside a standard card by `inset` points.
+    public static func insideCard(inset: CGFloat = SpacingTokens.cardPad) -> CGFloat {
+        concentric(outer: card, inset: inset)
+    }
 }

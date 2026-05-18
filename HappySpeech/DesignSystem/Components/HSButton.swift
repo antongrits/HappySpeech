@@ -50,8 +50,6 @@ public struct HSButton: View {
     private let action: () -> Void
 
     @Environment(\.circuitContext) private var circuit
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @State private var isPressed = false
 
     public init(
         _ title: String,
@@ -95,28 +93,11 @@ public struct HSButton: View {
             .frame(height: height)
             .background(backgroundShape)
             .overlay(borderShape)
-            // D-21 v27 — насыщенная filled-CTA «выступает» мягкой тенью своего
-            // акцентного цвета: активная primary/danger явно читается как CTA,
-            // а не как disabled-плашка.
-            .shadow(
-                color: ctaShadowColor,
-                radius: isPressed ? 4 : 10,
-                x: 0,
-                y: isPressed ? 2 : 5
-            )
-            .scaleEffect(isPressed && !reduceMotion ? 0.97 : 1.0)
             .opacity(isLoading ? 0.7 : 1.0)
         }
-        .buttonStyle(.plain)
-        .animation(
-            reduceMotion ? nil : .spring(response: 0.25, dampingFraction: 0.7),
-            value: isPressed
-        )
-        .simultaneousGesture(
-            DragGesture(minimumDistance: 0)
-                .onChanged { _ in isPressed = true }
-                .onEnded { _ in isPressed = false }
-        )
+        // v29 — shared interactive press feedback (scale + light haptic).
+        // Filled CTA keeps its accent-coloured shadow via the modifier below.
+        .buttonStyle(HSCTAButtonStyle(shadowColor: ctaShadowColor))
         .accessibilityLabel(title)
         .accessibilityAddTraits(.isButton)
         .disabled(isLoading)
@@ -202,6 +183,40 @@ public struct HSButton: View {
         case .secondary, .ghost:
             return Color.clear
         }
+    }
+}
+
+// MARK: - HSCTAButtonStyle
+//
+// Press feedback for the filled-CTA: shared scale + light haptic, plus an
+// accent-coloured drop shadow that tightens on press so the button reads
+// as a physically depressible control.
+
+private struct HSCTAButtonStyle: ButtonStyle {
+
+    let shadowColor: Color
+
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.hapticService) private var hapticService
+
+    func makeBody(configuration: Configuration) -> some View {
+        let pressed = configuration.isPressed
+        return configuration.label
+            // D-21 v27 — насыщенная filled-CTA «выступает» мягкой тенью своего
+            // акцентного цвета; на press тень собирается к поверхности.
+            .shadow(
+                color: shadowColor,
+                radius: pressed ? 4 : 10,
+                x: 0,
+                y: pressed ? 2 : 5
+            )
+            .scaleEffect((pressed && !reduceMotion) ? 0.97 : 1.0)
+            .animation(MotionTokens.pressSpring(reduceMotion: reduceMotion), value: pressed)
+            .onChange(of: pressed) { _, isPressed in
+                guard isPressed else { return }
+                let service = hapticService
+                Task { await service.play(pattern: .buttonTap) }
+            }
     }
 }
 

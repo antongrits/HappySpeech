@@ -78,20 +78,17 @@ public struct HSLiquidGlassCard<Content: View>: View {
         let shape = RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
         return Group {
             switch style {
-            case .primary:
+            case .primary, .elevated:
                 content()
                     .padding(padding)
                     .glassEffect(.regular, in: shape)
-                    .shadow(color: shadowColor, radius: shadowRadius, y: shadowY)
-            case .elevated:
-                content()
-                    .padding(padding)
-                    .glassEffect(.regular, in: shape)
+                    .overlay(borderOverlay)
                     .shadow(color: shadowColor, radius: shadowRadius, y: shadowY)
             case .tinted(let color):
                 content()
                     .padding(padding)
                     .glassEffect(.regular.tint(color.opacity(0.28)), in: shape)
+                    .overlay(borderOverlay)
                     .shadow(color: shadowColor, radius: shadowRadius, y: shadowY)
             }
         }
@@ -139,14 +136,25 @@ public struct HSLiquidGlassCard<Content: View>: View {
         }
     }
 
-    /// Hairline border: светлый край в light режиме создаёт «приподнятость»,
-    /// в dark режиме слегка светлее — иначе край сливается с фоном.
+    /// Specular edge highlight: a 1px gradient stroke that is bright at the
+    /// top (catching light) and fades to clear at the bottom — the iOS 26
+    /// glass signature. Replaces the old flat hairline border.
     private var borderOverlay: some View {
         RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-            .strokeBorder(
-                Color.white.opacity(colorScheme == .dark ? 0.14 : 0.32),
-                lineWidth: 0.5
-            )
+            .strokeBorder(specularEdge, lineWidth: 1)
+    }
+
+    private var specularEdge: LinearGradient {
+        let topOpacity = colorScheme == .dark ? 0.30 : 0.65
+        let bottomOpacity = colorScheme == .dark ? 0.04 : 0.10
+        return LinearGradient(
+            colors: [
+                Color.white.opacity(topOpacity),
+                Color.white.opacity(bottomOpacity)
+            ],
+            startPoint: .top,
+            endPoint: .bottom
+        )
     }
 
     // MARK: - Shadow tokens per style
