@@ -76,6 +76,13 @@ enum AppRoute: Hashable {
     case phonemicListening(childId: String)
     case speechTempo(childId: String)
     case breatheAndSpeak(childId: String)
+    // v29 Фаза 8: новые функции (Волна 3)
+    case prosody(childId: String)
+    case retelling(childId: String)
+    case lexicalThemes(childId: String)
+    case storytelling(childId: String)
+    case coPlay(childId: String)
+    case assignedHomework(specialistId: String)
 }
 
 enum PermissionType: Hashable {
@@ -554,6 +561,32 @@ struct AppCoordinatorView: View {
         case .breatheAndSpeak(let childId):
             BreatheAndSpeakView(childId: childId)
                 .environment(\.circuitContext, .kid)
+
+        // MARK: - v29 Фаза 8: Волна 3
+
+        case .prosody(let childId):
+            ProsodyView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .retelling(let childId):
+            RetellingView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .lexicalThemes(let childId):
+            LexicalThemesView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .storytelling(let childId):
+            StorytellingView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .coPlay(let childId):
+            CoPlayView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .assignedHomework(let specialistId):
+            AssignedHomeworkView(specialistId: specialistId)
+                .environment(\.circuitContext, .specialist)
         }
     }
 
@@ -825,6 +858,18 @@ extension AppCoordinatorView {
             return .speechTempo(childId: previewChild)
         case "breatheAndSpeak":
             return .breatheAndSpeak(childId: previewChild)
+        case "prosody":
+            return .prosody(childId: previewChild)
+        case "retelling":
+            return .retelling(childId: previewChild)
+        case "lexicalThemes":
+            return .lexicalThemes(childId: previewChild)
+        case "storytelling":
+            return .storytelling(childId: previewChild)
+        case "coPlay":
+            return .coPlay(childId: previewChild)
+        case "assignedHomework":
+            return .assignedHomework(specialistId: "specialist-default")
         case "culturalContent":
             return .culturalContent(childId: previewChild)
         case "pronunciationLeaderboard":

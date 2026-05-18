@@ -1055,6 +1055,56 @@ extension ChildHomeView {
         ) {
             router?.routeToBreatheAndSpeak(childId: childId)
         }
+
+        // v29 Фаза 8 Ф.1 — Prosody «Голосовые краски».
+        ChildHomeV25EntryCard(
+            titleKey: "prosody.entry.title",
+            hintKey: "prosody.entry.hint",
+            iconName: "music.note",
+            accent: ColorTokens.Brand.lilac
+        ) {
+            router?.routeToProsody(childId: childId)
+        }
+
+        // v29 Фаза 8 Ф.2 — Retelling «Расскажи по-настоящему».
+        ChildHomeV25EntryCard(
+            titleKey: "retelling.entry.title",
+            hintKey: "retelling.entry.hint",
+            iconName: "book.fill",
+            accent: ColorTokens.Brand.sky
+        ) {
+            router?.routeToRetelling(childId: childId)
+        }
+
+        // v29 Фаза 8 Ф.7 — Lexical Themes «Мир слов».
+        ChildHomeV25EntryCard(
+            titleKey: "lexicalThemes.entry.title",
+            hintKey: "lexicalThemes.entry.hint",
+            iconName: "square.grid.3x3.fill",
+            accent: ColorTokens.Brand.gold
+        ) {
+            router?.routeToLexicalThemes(childId: childId)
+        }
+
+        // v29 Фаза 8 Ф.11 — Storytelling «Я расскажу историю».
+        ChildHomeV25EntryCard(
+            titleKey: "storytelling.entry.title",
+            hintKey: "storytelling.entry.hint",
+            iconName: "books.vertical.fill",
+            accent: ColorTokens.Brand.rose
+        ) {
+            router?.routeToStorytelling(childId: childId)
+        }
+
+        // v29 Фаза 8 Ф.8 — CoPlay «Занятие вместе».
+        ChildHomeV25EntryCard(
+            titleKey: "coPlay.entry.title",
+            hintKey: "coPlay.entry.hint",
+            iconName: "hands.and.sparkles.fill",
+            accent: ColorTokens.Brand.mint
+        ) {
+            router?.routeToCoPlay(childId: childId)
+        }
     }
 }
 

@@ -84,6 +84,7 @@ struct SpecChildDashboardView: View {
     let childId: String
 
     @Environment(AppContainer.self) private var container
+    @Environment(AppCoordinator.self) private var coordinator
     @Environment(\.colorScheme) private var colorScheme
     @State private var child: ChildProfileDTO?
     @State private var sessions: [SessionDTO] = []
@@ -141,6 +142,8 @@ struct SpecChildDashboardView: View {
                             onExportCSV: { Task { await performExport(.csv) } },
                             onMessage: { showMessageSheet = true }
                         )
+                        // v29 Фаза 8 Ф.4 — «Домашнее задание от логопеда».
+                        assignedHomeworkCard
                     }
                     .padding(.horizontal, SpacingTokens.regular)
                     .padding(.bottom, SpacingTokens.sp8)
@@ -245,6 +248,51 @@ struct SpecChildDashboardView: View {
     private func sendMessage() {
         showMessageSheet = false
         messageText = ""
+    }
+
+    // MARK: - v29 Фаза 8: Ф.4 «Домашнее задание от логопеда»
+
+    /// Карточка-вход в конструктор домашних заданий специалиста.
+    private var assignedHomeworkCard: some View {
+        Button {
+            coordinator.navigate(to: .assignedHomework(specialistId: "current-specialist"))
+        } label: {
+            HStack(spacing: SpacingTokens.sp3) {
+                Image(systemName: "tray.and.arrow.up.fill")
+                    .font(.title2)
+                    .foregroundStyle(ColorTokens.Spec.accent)
+                    .frame(width: 44)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "assignedHomework.entry.title"))
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(ColorTokens.Spec.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "assignedHomework.entry.subtitle"))
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(ColorTokens.Spec.inkMuted)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: 0)
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(ColorTokens.Spec.inkMuted)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp4)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.card)
+                    .fill(ColorTokens.Spec.panel)
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            Text(String(localized: "assignedHomework.entry.title") + ". " +
+                 String(localized: "assignedHomework.entry.subtitle"))
+        )
+        .accessibilityAddTraits(.isButton)
     }
 }
 

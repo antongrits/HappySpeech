@@ -21,6 +21,11 @@ protocol ChildHomeRoutingLogic {
     func routeToPhonemicListening(childId: String)
     func routeToSpeechTempo(childId: String)
     func routeToBreatheAndSpeak(childId: String)
+    func routeToProsody(childId: String)
+    func routeToRetelling(childId: String)
+    func routeToLexicalThemes(childId: String)
+    func routeToStorytelling(childId: String)
+    func routeToCoPlay(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -122,5 +127,30 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     /// v29 Фаза 8 Ф.10 — BreatheAndSpeak «Дыши и говори».
     func routeToBreatheAndSpeak(childId: String) {
         coordinator?.navigate(to: .breatheAndSpeak(childId: childId))
+    }
+
+    /// v29 Фаза 8 Ф.1 — Prosody «Голосовые краски».
+    func routeToProsody(childId: String) {
+        coordinator?.navigate(to: .prosody(childId: childId))
+    }
+
+    /// v29 Фаза 8 Ф.2 — Retelling «Расскажи по-настоящему».
+    func routeToRetelling(childId: String) {
+        coordinator?.navigate(to: .retelling(childId: childId))
+    }
+
+    /// v29 Фаза 8 Ф.7 — LexicalThemes «Мир слов».
+    func routeToLexicalThemes(childId: String) {
+        coordinator?.navigate(to: .lexicalThemes(childId: childId))
+    }
+
+    /// v29 Фаза 8 Ф.11 — Storytelling «Я расскажу историю».
+    func routeToStorytelling(childId: String) {
+        coordinator?.navigate(to: .storytelling(childId: childId))
+    }
+
+    /// v29 Фаза 8 Ф.8 — CoPlay «Занятие вместе».
+    func routeToCoPlay(childId: String) {
+        coordinator?.navigate(to: .coPlay(childId: childId))
     }
 }
