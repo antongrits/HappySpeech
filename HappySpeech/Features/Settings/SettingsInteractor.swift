@@ -55,7 +55,6 @@ final class SettingsInteractor: SettingsBusinessLogic {
 
     private var settings: AppSettings = .default
     private var asrProgress: [WhisperKitModelPack: Double] = [:]
-    private var llmProgress: [LLMModelPack: Double] = [:]
 
     // MARK: - Init
 
@@ -525,12 +524,13 @@ final class SettingsInteractor: SettingsBusinessLogic {
         for pack in LLMModelPack.allCases {
             let installed = await manager.isModelInstalled(pack)
             let inUse = await manager.isCurrentlyInUse(pack)
+            // Модель встроена в бандл — операций загрузки нет.
             states.append(LLMPackState(
                 pack: pack,
                 isInstalled: installed,
                 isInUse: inUse,
-                isDownloading: llmProgress[pack] != nil,
-                progress: llmProgress[pack] ?? 0
+                isDownloading: false,
+                progress: 0
             ))
         }
         return states
@@ -569,36 +569,16 @@ final class SettingsInteractor: SettingsBusinessLogic {
         }
     }
 
+    /// LLM-модель поставляется внутри бандла приложения — отдельной загрузки нет.
+    /// Метод подтверждает, что модель уже встроена и доступна для работы.
     private func downloadLLMPack(_ pack: LLMModelPack) async {
-        guard let manager = llmModelManager else {
-            presenter?.presentDownloadModelPack(.init(
-                success: false,
-                identifier: "llm.\(pack.rawValue)",
-                errorMessage: String(localized: "settings.models.error.unavailable")
-            ))
-            return
-        }
-        llmProgress[pack] = 0
-        logger.info("LLM pack download start: \(pack.rawValue, privacy: .public)")
-        do {
-            try await manager.downloadIfNeeded(pack)
-            llmProgress[pack] = nil
-            logger.info("LLM pack downloaded: \(pack.rawValue, privacy: .public)")
-            presenter?.presentDownloadModelPack(.init(
-                success: true,
-                identifier: "llm.\(pack.rawValue)",
-                errorMessage: nil
-            ))
-            loadModelPacks(.init())
-        } catch {
-            llmProgress[pack] = nil
-            logger.error("LLM download failed: \(error.localizedDescription, privacy: .public)")
-            presenter?.presentDownloadModelPack(.init(
-                success: false,
-                identifier: "llm.\(pack.rawValue)",
-                errorMessage: error.localizedDescription
-            ))
-        }
+        logger.info("LLM pack is bundled, no download needed: \(pack.rawValue, privacy: .public)")
+        presenter?.presentDownloadModelPack(.init(
+            success: true,
+            identifier: "llm.\(pack.rawValue)",
+            errorMessage: nil
+        ))
+        loadModelPacks(.init())
     }
 
     private func deleteASRPack(_ pack: WhisperKitModelPack) async {
@@ -629,32 +609,14 @@ final class SettingsInteractor: SettingsBusinessLogic {
         }
     }
 
+    /// LLM-модель встроена в бандл приложения и не может быть удалена.
     private func deleteLLMPack(_ pack: LLMModelPack) async {
-        guard let manager = llmModelManager else {
-            presenter?.presentDeleteModelPack(.init(
-                success: false,
-                identifier: "llm.\(pack.rawValue)",
-                errorMessage: String(localized: "settings.models.error.unavailable")
-            ))
-            return
-        }
-        do {
-            try await manager.deleteModel(pack)
-            logger.info("LLM pack deleted: \(pack.rawValue, privacy: .public)")
-            presenter?.presentDeleteModelPack(.init(
-                success: true,
-                identifier: "llm.\(pack.rawValue)",
-                errorMessage: nil
-            ))
-            loadModelPacks(.init())
-        } catch {
-            logger.error("LLM delete failed: \(error.localizedDescription, privacy: .public)")
-            presenter?.presentDeleteModelPack(.init(
-                success: false,
-                identifier: "llm.\(pack.rawValue)",
-                errorMessage: error.localizedDescription
-            ))
-        }
+        logger.info("LLM pack is bundled, cannot be deleted: \(pack.rawValue, privacy: .public)")
+        presenter?.presentDeleteModelPack(.init(
+            success: false,
+            identifier: "llm.\(pack.rawValue)",
+            errorMessage: String(localized: "settings.models.error.bundled")
+        ))
     }
 
     // MARK: - Export helpers

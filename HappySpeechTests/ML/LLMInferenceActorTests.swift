@@ -29,7 +29,6 @@ final class LLMInferenceActorTests: XCTestCase {
         func generateMicroStory(request: MicroStoryRequest) async throws -> MicroStoryResponse {
             throw LLMError.notLoaded
         }
-        func downloadModel() async throws {}
     }
 
     // MARK: - 1. modelId содержит "Qwen"

@@ -30729,6 +30729,17 @@
         }
       }
     },
+    "settings.models.error.bundled": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Модель встроена в приложение и не может быть удалена"
+          }
+        }
+      }
+    },
     "settings.models.error.unavailable": {
       "extractionState": "manual",
       "localizations": {

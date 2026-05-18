@@ -144,10 +144,6 @@ public final class LiveLocalLLMService: LocalLLMService, @unchecked Sendable {
     nonisolated(unsafe) public var isModelDownloaded: Bool = false
     nonisolated(unsafe) public var isModelLoaded: Bool = false
 
-    public func downloadModel() async throws {
-        HSLogger.llm.info("Qwen2.5-1.5B download — Sprint 11")
-    }
-
     public func generateParentSummary(request: ParentSummaryRequest) async throws -> ParentSummaryResponse {
         throw AppError.llmNotDownloaded
     }

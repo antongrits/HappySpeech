@@ -27,8 +27,6 @@ private final class SpyLocalLLMService: LocalLLMService, @unchecked Sendable {
     func generateMicroStory(request: MicroStoryRequest) async throws -> MicroStoryResponse {
         MicroStoryResponse(sentences: [], gapPositions: [])
     }
-
-    func downloadModel() async throws {}
 }
 
 // MARK: - DailyInsight builder helper

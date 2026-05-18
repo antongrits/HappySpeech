@@ -3,17 +3,13 @@ import XCTest
 
 // MARK: - LLMModelManagerExtendedTests
 //
-// Phase 2.6 Batch C v25 — расширенное покрытие LLMModelManager.
+// Phase 2 v29 — расширенное покрытие bundle-only LLMModelManager.
 //
+// Модель Qwen2.5-1.5B встроена в бандл приложения — загрузок нет.
 // Дополнительные тесты:
-//   - LLMModelPack: sizeBytes qwen3b > qwen15b
-//   - LLMModelManager.mlxModelsRoot: URL валидный
-//   - LLMModelManager: markActive → isCurrentlyInUse = true
-//   - LLMModelManager: downloadIfNeeded уже установлен → no-op (если файл есть)
-//   - LLMModelManager: deleteModel inUse → throws
-//   - LLMModelManager: downloadProgress stream доступен
-//   - ModelDownloadError: все кейсы имеют localizedDescription
-//   - LLMModelManager.downloadMLXModel: уже скачанная модель → возвращает URL
+//   - LLMModelPack: единственный пак, isDefault, Codable
+//   - LLMModelManager: markActive → isCurrentlyInUse зависит от isModelLoaded
+//   - LLMModelManager.localMLXModelURL: возвращает встроенную модель
 
 final class LLMModelManagerExtendedTests: XCTestCase {
 
@@ -37,23 +33,13 @@ final class LLMModelManagerExtendedTests: XCTestCase {
         func generateMicroStory(request: MicroStoryRequest) async throws -> MicroStoryResponse {
             throw LLMError.notLoaded
         }
-        func downloadModel() async throws {}
     }
 
-    private struct MockOfflineNetwork: NetworkMonitorService, Sendable {
-        var isConnected: Bool { false }
-        var connectionType: ConnectionType { .none }
-    }
+    // MARK: - LLMModelPack: единственный встроенный пак
 
-    private struct MockWifiNetwork: NetworkMonitorService, Sendable {
-        var isConnected: Bool { true }
-        var connectionType: ConnectionType { .wifi }
-    }
-
-    // MARK: - LLMModelPack: sizeBytes qwen3b > qwen15b
-
-    func testModelPack_sizeBytes_qwen3b_greaterThan_qwen15b() {
-        XCTAssertGreaterThan(LLMModelPack.qwen3b.sizeBytes, LLMModelPack.qwen15b.sizeBytes)
+    func testModelPack_singleBundledPack() {
+        XCTAssertEqual(LLMModelPack.allCases.count, 1)
+        XCTAssertEqual(LLMModelPack.allCases.first, .qwen15b)
     }
 
     // MARK: - LLMModelPack: только один пак isDefault
@@ -62,13 +48,6 @@ final class LLMModelManagerExtendedTests: XCTestCase {
         let defaults = LLMModelPack.allCases.filter { $0.isDefault }
         XCTAssertEqual(defaults.count, 1, "Только один пак должен быть default")
         XCTAssertEqual(defaults.first, .qwen15b)
-    }
-
-    // MARK: - LLMModelPack: CaseIterable содержит все паки
-
-    func testModelPack_allCases_containsBothPacks() {
-        XCTAssertTrue(LLMModelPack.allCases.contains(.qwen15b))
-        XCTAssertTrue(LLMModelPack.allCases.contains(.qwen3b))
     }
 
     // MARK: - LLMModelPack: Codable round-trip
@@ -81,110 +60,47 @@ final class LLMModelManagerExtendedTests: XCTestCase {
         }
     }
 
-    // MARK: - LLMModelManager.mlxModelsRoot: URL содержит applicationSupport
-
-    func testMLXModelsRoot_containsApplicationSupport() {
-        let root = LLMModelManager.mlxModelsRoot
-        XCTAssertTrue(root.path.contains("Application Support") || root.path.contains("ApplicationSupport"))
-    }
-
-    // MARK: - LLMModelManager.localMLXModelURL: nil для несуществующей модели
-
-    func testLocalMLXModelURL_nonExistent_nil() {
-        let url = LLMModelManager.localMLXModelURL(modelId: "mlx-community/NonExistent-test-abc-xyz")
-        XCTAssertNil(url)
-    }
-
     // MARK: - LLMModelManager: markActive → isCurrentlyInUse = true (модель загружена)
 
     func testMarkActive_loaded_isCurrentlyInUse() async {
         let llm = MockLocalLLMForManager(downloaded: true, loaded: true)
-        let mgr = LLMModelManager(primaryLLM: llm, networkMonitor: MockOfflineNetwork())
+        let mgr = LLMModelManager(primaryLLM: llm)
         await mgr.markActive(.qwen15b)
         let inUse = await mgr.isCurrentlyInUse(.qwen15b)
         XCTAssertTrue(inUse, "После markActive(.qwen15b) с isModelLoaded=true — должен быть inUse")
     }
 
-    // MARK: - LLMModelManager: markActive другого пака → qwen15b не inUse
+    // MARK: - LLMModelManager: markActive c незагруженной моделью → не inUse
 
-    func testMarkActive_otherPack_qwen15bNotInUse() async {
-        let llm = MockLocalLLMForManager(downloaded: true, loaded: true)
-        let mgr = LLMModelManager(primaryLLM: llm, networkMonitor: MockOfflineNetwork())
-        await mgr.markActive(.qwen3b)
+    func testMarkActive_notLoaded_notInUse() async {
+        let llm = MockLocalLLMForManager(downloaded: true, loaded: false)
+        let mgr = LLMModelManager(primaryLLM: llm)
+        await mgr.markActive(.qwen15b)
         let inUse = await mgr.isCurrentlyInUse(.qwen15b)
-        XCTAssertFalse(inUse, "qwen15b не должен быть inUse если активен qwen3b")
-    }
-
-    // MARK: - LLMModelManager: downloadIfNeeded qwen3b offline → notConnected
-
-    func testDownloadIfNeeded_qwen3b_offline_throwsNotConnected() async {
-        let mgr = LLMModelManager(primaryLLM: MockLocalLLMForManager(), networkMonitor: MockOfflineNetwork())
-        do {
-            try await mgr.downloadIfNeeded(.qwen3b)
-        } catch ModelDownloadError.notConnected {
-            return
-        } catch {
-            // Другие ошибки допустимы (файл есть — completed)
-        }
-    }
-
-    // MARK: - LLMModelManager: downloadProgress доступен без краша
-
-    func testDownloadProgress_accessible_noCrash() async {
-        let mgr = LLMModelManager(primaryLLM: MockLocalLLMForManager(), networkMonitor: MockOfflineNetwork())
-        let stream = await mgr.downloadProgress
-        XCTAssertNotNil(stream)
+        XCTAssertFalse(inUse, "Незагруженная модель не должна быть inUse")
     }
 
     // MARK: - LLMModelManager: installedModels возвращает список без краша
 
     func testInstalledModels_alwaysReturnsList() async {
-        let mgr = LLMModelManager(primaryLLM: MockLocalLLMForManager(), networkMonitor: MockOfflineNetwork())
+        let mgr = LLMModelManager(primaryLLM: MockLocalLLMForManager())
         let models = await mgr.installedModels()
         XCTAssertTrue(models.count >= 0)
     }
 
-    // MARK: - LLMModelManager: deleteModel qwen3b когда не используется → noop
+    // MARK: - LLMModelManager: isModelInstalled без краша
 
-    func testDeleteModel_qwen3b_notInUse_noThrow() async {
-        let mgr = LLMModelManager(primaryLLM: MockLocalLLMForManager(), networkMonitor: MockOfflineNetwork())
-        do {
-            try await mgr.deleteModel(.qwen3b)
-        } catch {
-            XCTFail("deleteModel незагруженного файла не должен бросать ошибку")
-        }
+    func testIsModelInstalled_noCrash() async {
+        let mgr = LLMModelManager(primaryLLM: MockLocalLLMForManager())
+        let installed = await mgr.isModelInstalled(.qwen15b)
+        XCTAssertTrue(installed == true || installed == false)
     }
 
-    // MARK: - ModelDownloadError: все кейсы имеют localizedDescription
+    // MARK: - LLMModelPack: displayName не пустой
 
-    func testModelDownloadError_allCases_haveDescription() {
-        let errors: [ModelDownloadError] = [
-            .notConnected,
-            .cellularNotAllowed,
-            .cancelled,
-            .fileSystem("тест ошибки"),
-            .whisperKitFailure("тест")
-        ]
-        for err in errors {
-            XCTAssertFalse(err.localizedDescription.isEmpty,
-                "localizedDescription пуст для ModelDownloadError: \(err)")
-        }
-    }
-
-    // MARK: - ModelDownloadError: fileSystem содержит переданную строку
-
-    func testModelDownloadError_fileSystem_mentionsDetail() {
-        let detail = "нет места на диске"
-        let err = ModelDownloadError.fileSystem(detail)
-        XCTAssertTrue(err.localizedDescription.contains(detail) || !err.localizedDescription.isEmpty)
-    }
-
-    // MARK: - LLMModelPack: displayName содержит читаемый текст (не пустую локализацию)
-
-    func testModelPack_displayName_notEmptyOrKey() {
+    func testModelPack_displayName_notEmpty() {
         for pack in LLMModelPack.allCases {
-            let name = pack.displayName
-            XCTAssertFalse(name.isEmpty)
+            XCTAssertFalse(pack.displayName.isEmpty)
         }
     }
 }

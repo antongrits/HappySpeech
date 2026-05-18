@@ -246,11 +246,6 @@ final class LiveServicesTests: XCTestCase {
         XCTAssertFalse(service.isModelLoaded)
     }
 
-    func test_localLLM_downloadModel_doesNotThrow() async throws {
-        let service = LiveLocalLLMService()
-        try await service.downloadModel()
-    }
-
     func test_localLLM_generateRoute_throwsNotDownloaded() async {
         let service = LiveLocalLLMService()
         let request = RoutePlannerRequest(

@@ -142,8 +142,6 @@ public final class MockLocalLLMService: LocalLLMService, @unchecked Sendable {
             gapPositions: [.init(sentenceIndex: 0, word: "розу", imageHint: "роза")]
         )
     }
-
-    public func downloadModel() async throws {}
 }
 
 // MARK: MockARService

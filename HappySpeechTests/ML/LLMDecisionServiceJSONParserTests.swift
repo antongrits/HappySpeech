@@ -42,7 +42,6 @@ final class LLMDecisionServiceJSONParserTests: XCTestCase {
         func generateMicroStory(request: MicroStoryRequest) async throws -> MicroStoryResponse {
             throw LLMError.notLoaded
         }
-        func downloadModel() async throws {}
     }
 
     /// HF клиент, возвращающий заданную строку.

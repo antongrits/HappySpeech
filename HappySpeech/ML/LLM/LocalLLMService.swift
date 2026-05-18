@@ -6,46 +6,26 @@ import OSLog
 // Реализует LocalLLMService через on-device Qwen2.5-1.5B-Instruct (MLX Swift).
 //
 // Tier A (arm64): MLX inference → ChildSafetyValidator → парсинг → rule-based если нужно.
-// Tier C (x86_64 / модель не скачана): rule-based напрямую.
+// Tier C (x86_64 / модель недоступна): rule-based напрямую.
 //
-// Загрузка модели — lazy, при первом обращении.
-// modelDirectoryName — имя папки в Application Support/HappySpeech/MLXModels/.
+// Модель поставляется внутри бандла приложения (`Resources/Models/LLM/`) —
+// загрузок во время работы нет, модель доступна полностью offline.
+// Загрузка в память — lazy, при первом обращении (см. `MLXEngine`).
 // ==================================================================================
 
 public final class LocalLLMServiceLive: LocalLLMService, @unchecked Sendable {
 
     // MARK: - State
 
-    nonisolated(unsafe) private var _isModelDownloaded: Bool = false
     nonisolated(unsafe) private var _isModelLoaded: Bool = false
 
-    public var isModelDownloaded: Bool { _isModelDownloaded }
+    /// Модель встроена в бандл — всегда доступна.
+    public var isModelDownloaded: Bool { LLMModelManager.bundledModelURL(for: .qwen15b) != nil }
     public var isModelLoaded: Bool { _isModelLoaded }
 
-    /// Имя директории модели в Application Support.
-    let modelDirectoryName = "qwen2.5-1.5b-instruct-4bit"
+    public init() {}
 
-    var modelDirectory: URL {
-        let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        return base
-            .appendingPathComponent("HappySpeech/MLXModels", isDirectory: true)
-            .appendingPathComponent(modelDirectoryName, isDirectory: true)
-    }
-
-    public init() {
-        _isModelDownloaded = FileManager.default.fileExists(atPath: modelDirectory.path)
-    }
-
-    // MARK: - Download (via Hub.snapshot)
-
-    public func downloadModel() async throws {
-        HSLogger.llm.info("LocalLLMService: starting Hub.snapshot for \(Self.mlxModelId)")
-        let destURL = try await LLMModelManager.downloadMLXModel(modelId: Self.mlxModelId)
-        _isModelDownloaded = FileManager.default.fileExists(atPath: destURL.path)
-        HSLogger.llm.info("LocalLLMService: model downloaded to \(destURL.path)")
-    }
-
-    /// HuggingFace model ID для MLX 4-bit Qwen2.5-1.5B.
+    /// Идентификатор встроенной MLX 4-bit модели Qwen2.5-1.5B.
     public static let mlxModelId = "mlx-community/Qwen2.5-1.5B-Instruct-4bit"
 
     // MARK: - Generate: Parent Summary

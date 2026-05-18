@@ -304,12 +304,12 @@ public protocol PronunciationScorerService: Sendable {
 // MARK: - LocalLLMService Protocol
 
 public protocol LocalLLMService: Sendable {
+    /// `true`, если модель встроена в бандл приложения и доступна для работы.
     var isModelDownloaded: Bool { get }
     var isModelLoaded: Bool { get }
     func generateParentSummary(request: ParentSummaryRequest) async throws -> ParentSummaryResponse
     func generateRoute(request: RoutePlannerRequest) async throws -> RoutePlannerResponse
     func generateMicroStory(request: MicroStoryRequest) async throws -> MicroStoryResponse
-    func downloadModel() async throws
 }
 
 public struct ParentSummaryRequest: Codable, Sendable {

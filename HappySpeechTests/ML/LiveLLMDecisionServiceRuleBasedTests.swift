@@ -56,7 +56,6 @@ final class LiveLLMDecisionServiceRuleBasedTests: XCTestCase {
         func generateMicroStory(request: MicroStoryRequest) async throws -> MicroStoryResponse {
             throw LLMError.notLoaded
         }
-        func downloadModel() async throws {}
     }
 
     /// Mock HFInferenceClient: всегда не настроен → HF ветка не вызывается.

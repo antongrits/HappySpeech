@@ -56,7 +56,6 @@ public final class AppContainer {
     // Block D: Firebase full services
     private var _remoteConfigService: (any RemoteConfigService)?
     private var _fcmService: (any FCMService)?
-    private var _contentPackDownloadService: (any ContentPackDownloadService)?
     private var _performanceMonitorService: (any PerformanceMonitorService)?
 
     // Block AA (v17): Firebase missing services
@@ -361,13 +360,6 @@ public final class AppContainer {
         return new
     }
 
-    public var contentPackDownloadService: any ContentPackDownloadService {
-        if let existing = _contentPackDownloadService { return existing }
-        let new = LiveContentPackDownloadService()
-        _contentPackDownloadService = new
-        return new
-    }
-
     public var performanceMonitorService: any PerformanceMonitorService {
         if let existing = _performanceMonitorService { return existing }
         let new = LivePerformanceMonitorService()
@@ -379,12 +371,10 @@ public final class AppContainer {
     public func overrideBlockDServices(
         remoteConfig: (any RemoteConfigService)? = nil,
         fcm: (any FCMService)? = nil,
-        contentPackDownload: (any ContentPackDownloadService)? = nil,
         performance: (any PerformanceMonitorService)? = nil
     ) {
         if let rc = remoteConfig { _remoteConfigService = rc }
         if let f = fcm { _fcmService = f }
-        if let cpd = contentPackDownload { _contentPackDownloadService = cpd }
         if let p = performance { _performanceMonitorService = p }
     }
 
@@ -719,7 +709,7 @@ public extension AppContainer {
             },
             llmDecisionLogRepositoryFactory: { sharedLLMLogRepo },
             llmModelManagerFactory: {
-                LLMModelManager(primaryLLM: sharedLocalLLM, networkMonitor: sharedNetworkMonitor)
+                LLMModelManager(primaryLLM: sharedLocalLLM)
             },
             whisperKitModelManagerFactory: {
                 WhisperKitModelManagerLive(networkMonitor: sharedNetworkMonitor)
@@ -786,7 +776,6 @@ public extension AppContainer {
         container.overrideBlockDServices(
             remoteConfig: MockRemoteConfigService(),
             fcm: MockFCMService(),
-            contentPackDownload: MockContentPackDownloadService(),
             performance: MockPerformanceMonitorService()
         )
         // Block H: использовать Mock для kid narration в preview/tests.

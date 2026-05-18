@@ -13,6 +13,7 @@
 		010C46BA02AD9A10A28AFC83 /* DragAndMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0315B19745D2A7E7F95646FA /* DragAndMatchView.swift */; };
 		011D4352ABC2CB729FC36CFD /* VoiceCloningPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A1B9DDFD0120AC02BE1B85 /* VoiceCloningPresenterTests.swift */; };
 		01551DF592BC89626E2B2FAD /* MLX in Frameworks */ = {isa = PBXBuildFile; productRef = C0031A6FC6B85264688DDCCF /* MLX */; };
+		01ACE99C2001A9FA312CB5CE /* LLM in Resources */ = {isa = PBXBuildFile; fileRef = 6CACDE75906EDC524EEE383C /* LLM */; };
 		01C0DC6DC82B5784CF4F814A /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 3C8823C71A32B424D2583F7E /* FirebasePerformance */; };
 		020F3A1951CAE3A411BB7582 /* TonguePostureClassifierMLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5356BC959038BD84332650 /* TonguePostureClassifierMLTests.swift */; };
 		02B09989AAA38E89B4DEED6D /* ObjectHuntInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC4FEA5B578F39F04FAB39E /* ObjectHuntInteractor.swift */; };
@@ -187,7 +188,6 @@
 		21F4075B9BDC2F64BD7DF829 /* PronunciationScorerExtendedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BA1565B052FB74B62A3FA8 /* PronunciationScorerExtendedTests.swift */; };
 		227A8DFCE0EAC0753D9F9871 /* GuidedTourCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8716B6D61BE26A5C971005EB /* GuidedTourCoordinatorTests.swift */; };
 		229826716592B27ED5AFDA6F /* Wav2Vec2Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F72C1AB87484D7C2029084 /* Wav2Vec2Models.swift */; };
-		22D12E648CF98DD9749A376D /* LyalyaSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08E09C170B09C99ABE09CD18 /* LyalyaSceneView.swift */; };
 		231B0B6B8AA0ACA348E2BEAD /* ProgramEditorRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D690292C6F46C9CD57B7174 /* ProgramEditorRouter.swift */; };
 		2351AEF1B8BB3B59D95091EE /* ObjectHuntModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370CEBE57F47E99AEDC90E40 /* ObjectHuntModels.swift */; };
 		23D0DB8A8866AB7E9B126AEB /* celebration.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 64FE1EA74037B0C917BB791F /* celebration.ahap */; };
@@ -490,7 +490,6 @@
 		55B627DCDF10D270B6D8FD91 /* SpotlightRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6633F92B41FB5E45725C0E31 /* SpotlightRegistry.swift */; };
 		55B870655A744E6981A36DE5 /* ParentInsightsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7623A59598AB58EBB099C9C /* ParentInsightsWorker.swift */; };
 		55D3441A80DEFB671F1739E4 /* StoryPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72B3B7435E11B4006B2A5E1 /* StoryPlayerView.swift */; };
-		55E676A65E1683933CB2E11F /* ContentPackDownloadServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8394C86AFD661723D9D2D3C0 /* ContentPackDownloadServiceTests.swift */; };
 		5627F186EF29C6B275BED013 /* SortingPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DD45628C71D89FDA24148 /* SortingPresenterTests.swift */; };
 		563101468B32A4BA8AFCD39C /* Wav2Vec2RuChildLogopedic.mlpackage in Resources */ = {isa = PBXBuildFile; fileRef = F068BBF1A0D44ED6A1C84B18 /* Wav2Vec2RuChildLogopedic.mlpackage */; };
 		566D205B4489DA79E5D79E22 /* SpeechVisualizationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159618D400917BF2CE8F7AF9 /* SpeechVisualizationPresenter.swift */; };
@@ -504,6 +503,7 @@
 		57B6DBE8BF7484A19FECE540 /* pack_easter.json in Resources */ = {isa = PBXBuildFile; fileRef = B5F6D4864C033297E0B4F0FB /* pack_easter.json */; };
 		57C9D44F4FC55AFE74444814 /* MascotLipSyncStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358B8E3F3B88A182C2BBE20C /* MascotLipSyncStateTests.swift */; };
 		57E2CE97EC672B8210B83B9F /* HSSpeechBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4AD77FF12CA94F5A0A0BB9 /* HSSpeechBubble.swift */; };
+		580690229FC06F9EAEFDCBD0 /* LyalyaAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C716B42967E212018F796D8F /* LyalyaAnimation.swift */; };
 		581B5F8C35C1F29B23783FE2 /* RealMFCCExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F144350EDAF7846E08A1C46 /* RealMFCCExtractor.swift */; };
 		585B0B7B8873AE4984C47758 /* LLMDecisionServiceJSONParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E1A345F23D7D461CB683F7 /* LLMDecisionServiceJSONParserTests.swift */; };
 		585F97B40157EB9AAC57A642 /* NeurolinguistInsightsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9205875BBA7E018A1A3AE325 /* NeurolinguistInsightsRouter.swift */; };
@@ -789,7 +789,6 @@
 		8D613954F113C80F4BB6F87F /* StutteringDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3708B9FF478B525EE8302D2B /* StutteringDisplayLogic.swift */; };
 		8D99E190872882E5B8856933 /* ARMirrorRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728F71E672980B682E909514 /* ARMirrorRouter.swift */; };
 		8DA0A3758052ECB86A1360C7 /* GrammarGameDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C213883C6A9263CD2F73CF /* GrammarGameDisplayLogic.swift */; };
-		8DB6EFA1D2E32386CF9D651A /* LyalyaRealityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C712E9C0A16B4B0CA9DB951F /* LyalyaRealityView.swift */; };
 		8E57095E80CB1C95B133A2A6 /* ObjectHuntDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF626A6C90F597262701DAB /* ObjectHuntDisplayLogic.swift */; };
 		8EAFCEE9D8F7463B8CB98A42 /* CulturalContentInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBB7E6D352FF109D7E948E6 /* CulturalContentInteractorTests.swift */; };
 		8ED06D47FF21FD63748BC18A /* SoundDictionaryPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B06AE3FA78034380B606C93 /* SoundDictionaryPresenterTests.swift */; };
@@ -1097,7 +1096,6 @@
 		CDE8179191F20D8EAE631F1E /* NotificationServiceLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48236027D9CCCF6F9D287C1A /* NotificationServiceLive.swift */; };
 		CE6D248C4BBB3BD880B17A34 /* SeasonalEventsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206EA125D69649E392AF78AE /* SeasonalEventsManager.swift */; };
 		CE9E57B2E6C12107E6D647F4 /* PacingModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15729E9F4A1AB562D3167D4 /* PacingModels.swift */; };
-		CEDBC936F1BA9E8AADD2F420 /* ContentPackDownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6A79A9714C62B33BD8A4866 /* ContentPackDownloadService.swift */; };
 		CF8D7C301298C73CBDACCD4A /* MFCCPerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A60A7AAD540588FC09BD6E /* MFCCPerformanceTests.swift */; };
 		CF8FAF8BE868D6428E14808E /* PoseSequenceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3852B7AD07291C7AD685E5EE /* PoseSequenceRouter.swift */; };
 		CF96252B5D77FDB0FD7F27A5 /* BreathingARView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64DF2D0B3EDFB96B758CE585 /* BreathingARView.swift */; };
@@ -1405,7 +1403,6 @@
 		083A52446EC67BB88DCB2B78 /* HappySpeechApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HappySpeechApp.swift; sourceTree = "<group>"; };
 		0861A7AEA66B17772DFE23B1 /* RepeatAfterModelInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatAfterModelInteractorTests.swift; sourceTree = "<group>"; };
 		0883D50AA059920BB765C1DF /* VADService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VADService.swift; sourceTree = "<group>"; };
-		08E09C170B09C99ABE09CD18 /* LyalyaSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyalyaSceneView.swift; sourceTree = "<group>"; };
 		09218AD56722A8C66B797856 /* SileroVAD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SileroVAD.swift; sourceTree = "<group>"; };
 		094D2939B36F7EC1DC87DDA5 /* SessionReviewPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionReviewPresenterTests.swift; sourceTree = "<group>"; };
 		0950E89CCE6F7724FBBCB547 /* HoldThePosePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldThePosePresenter.swift; sourceTree = "<group>"; };
@@ -1927,6 +1924,7 @@
 		6C3243217EA25C92B303F7D1 /* ARFaceFilterModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARFaceFilterModels.swift; sourceTree = "<group>"; };
 		6C35A1FB122A0AE20FD4BAF5 /* LessonGroupActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonGroupActivity.swift; sourceTree = "<group>"; };
 		6C6FADADAF1978D04EA52A1E /* PuzzleRevealInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleRevealInteractorTests.swift; sourceTree = "<group>"; };
+		6CACDE75906EDC524EEE383C /* LLM */ = {isa = PBXFileReference; lastKnownFileType = folder; name = LLM; path = HappySpeech/Resources/Models/LLM; sourceTree = SOURCE_ROOT; };
 		6CC5C3E23AA1813235CFAF1F /* GuidedTourInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidedTourInteractorTests.swift; sourceTree = "<group>"; };
 		6CE91F693AAC3562995743F7 /* InsightAggregatorWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightAggregatorWorker.swift; sourceTree = "<group>"; };
 		6D486A5FBACCC122EB2812D8 /* GrammarGameViewSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarGameViewSections.swift; sourceTree = "<group>"; };
@@ -2039,7 +2037,6 @@
 		8309C0A09AC0A90C46FBD825 /* ComparisonDashboardModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComparisonDashboardModels.swift; sourceTree = "<group>"; };
 		8331B2CEB1E3CCC5E1A44D95 /* EmailAuthWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAuthWorkerTests.swift; sourceTree = "<group>"; };
 		838385B7280CDF6072697828 /* ARZoneTutorialSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARZoneTutorialSheetView.swift; sourceTree = "<group>"; };
-		8394C86AFD661723D9D2D3C0 /* ContentPackDownloadServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentPackDownloadServiceTests.swift; sourceTree = "<group>"; };
 		83B6C15D7921988DC5A864EE /* PronunciationScorer_hissing.mlpackage */ = {isa = PBXFileReference; path = PronunciationScorer_hissing.mlpackage; sourceTree = "<group>"; };
 		83CDCDA44E565AFE287E10FB /* ThemeEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeEnvironment.swift; sourceTree = "<group>"; };
 		83E51B239BE351141BC1BB75 /* MockLLMDecisionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLLMDecisionService.swift; sourceTree = "<group>"; };
@@ -2368,7 +2365,7 @@
 		C6B8FDFF050F3B9C694FB0B9 /* FocusStateSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusStateSnapshotTests.swift; sourceTree = "<group>"; };
 		C6BC689052BFF0D916DA57B7 /* ArticulationImitationInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticulationImitationInteractorTests.swift; sourceTree = "<group>"; };
 		C6BF9C3167825E9315EB359D /* LLMDecisionLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMDecisionLog.swift; sourceTree = "<group>"; };
-		C712E9C0A16B4B0CA9DB951F /* LyalyaRealityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyalyaRealityView.swift; sourceTree = "<group>"; };
+		C716B42967E212018F796D8F /* LyalyaAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LyalyaAnimation.swift; sourceTree = "<group>"; };
 		C769656C4DB66CBA3076DFD7 /* HappySpeechWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HappySpeechWidgetExtension.entitlements; sourceTree = "<group>"; };
 		C76B3ACEA1EEA7E50B30EFDD /* WorldMapInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldMapInteractor.swift; sourceTree = "<group>"; };
 		C777E734E704659DF170C0B1 /* CulturalContentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CulturalContentInteractor.swift; sourceTree = "<group>"; };
@@ -2455,7 +2452,6 @@
 		D6509867AEF8239DFD73AA4A /* WhisperTranscriptionWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperTranscriptionWorker.swift; sourceTree = "<group>"; };
 		D65D5A47523D4BA76DCBF6A2 /* HSCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSCard.swift; sourceTree = "<group>"; };
 		D6818452DB25BED47CA1074B /* DemoRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoRouter.swift; sourceTree = "<group>"; };
-		D6A79A9714C62B33BD8A4866 /* ContentPackDownloadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentPackDownloadService.swift; sourceTree = "<group>"; };
 		D6D438F9A132AED1F956A574 /* DemoInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoInteractorTests.swift; sourceTree = "<group>"; };
 		D6FE8D36EA100BBC1552C0F4 /* LLMInferenceActorExtendedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMInferenceActorExtendedTests.swift; sourceTree = "<group>"; };
 		D796765992370B23EDE86631 /* ARMirrorInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARMirrorInteractorTests.swift; sourceTree = "<group>"; };
@@ -3373,7 +3369,6 @@
 				00EF543077114B3916857A9C /* BiometricGateService.swift */,
 				F5CDA40383ADC3E09FFA79CF /* ClaudeAPIClient.swift */,
 				4E628F66E4F84FC7B26738C7 /* CloudFunctionsService.swift */,
-				D6A79A9714C62B33BD8A4866 /* ContentPackDownloadService.swift */,
 				727E0FFC0DDBBC1AB7CBC2FC /* EmotionDetectionServiceLive.swift */,
 				AABCC8071609B566C2D8CA40 /* EnsembleASRService.swift */,
 				75215535F2D8BB7B4F566CC7 /* FaceAnalysisService.swift */,
@@ -3707,6 +3702,7 @@
 				A6F14C93433CC65C38C21A70 /* Resources */,
 				810D1C4F2ACB7B77B448DBAE /* ARAssets */,
 				4BDB11841F315359821EA30B /* Audio */,
+				6CACDE75906EDC524EEE383C /* LLM */,
 				BBA6C89938A42DD12C6CE1E9 /* seasonal */,
 				99583DD5C8E0FA0F261859F7 /* Videos */,
 				49EC64A47413A219105FFAE5 /* whisper-base */,
@@ -3828,7 +3824,7 @@
 		524E841D915DAF5F3A27849C /* Mascot3D */ = {
 			isa = PBXGroup;
 			children = (
-				C712E9C0A16B4B0CA9DB951F /* LyalyaRealityView.swift */,
+				C716B42967E212018F796D8F /* LyalyaAnimation.swift */,
 			);
 			path = Mascot3D;
 			sourceTree = "<group>";
@@ -4740,7 +4736,6 @@
 				B2579B99F043C2138D3A491A /* Workers */,
 				C54EAB75688958DD2BB8CDD0 /* CelebrationOverlayView.swift */,
 				2BE8EFD0DBFF96ABFAA73285 /* ConfettiEmitterView.swift */,
-				08E09C170B09C99ABE09CD18 /* LyalyaSceneView.swift */,
 				A72B3B7435E11B4006B2A5E1 /* StoryPlayerView.swift */,
 			);
 			path = Common;
@@ -5457,7 +5452,6 @@
 				3A72C4604F84B03805A794DF /* ClaudeAPIClientTests.swift */,
 				674FC62754BA1B80389F94B6 /* CloudFunctionsServiceTests.swift */,
 				891787FE84A8DE87DDFC404F /* ContentEngineTests.swift */,
-				8394C86AFD661723D9D2D3C0 /* ContentPackDownloadServiceTests.swift */,
 				B3E87D2CC65AA076A8AFCB87 /* EmotionDetectionServiceTests.swift */,
 				31279E960DB6C7EDEDF44033 /* EnsembleASRServiceTests.swift */,
 				73282ED690D2286772C93B7A /* FamilyInviteServiceTests.swift */,
@@ -6212,6 +6206,7 @@
 				27292E7D6D357283A6C19408 /* Audio in Resources */,
 				806630719632484F7768DE38 /* EmotionDetection.mlpackage in Resources */,
 				8C19E752D1F67CC0795BF785 /* GoogleService-Info.plist in Resources */,
+				01ACE99C2001A9FA312CB5CE /* LLM in Resources */,
 				730B7DAA2BF266F0D128B6BF /* Localizable.xcstrings in Resources */,
 				3AF9159589F127E66A4B78FF /* PrivacyInfo.xcprivacy in Resources */,
 				344590A4E754C80AE2A7DACD /* PronunciationScorer_hissing.mlpackage in Resources */,
@@ -6424,7 +6419,6 @@
 				54B03D688C02BAD9442277B6 /* ColdStartSignpostTests.swift in Sources */,
 				A63E56E73FC49DB01E54453B /* ComparisonDashboardInteractorTests.swift in Sources */,
 				29F23788B7490EF452A5121A /* ContentEngineTests.swift in Sources */,
-				55E676A65E1683933CB2E11F /* ContentPackDownloadServiceTests.swift in Sources */,
 				B69FD1A3C5ABD513768B80B9 /* ContentPackTests.swift in Sources */,
 				8EAFCEE9D8F7463B8CB98A42 /* CulturalContentInteractorTests.swift in Sources */,
 				319705FFD88A6A43AC99349A /* CulturalContentPresenterTests.swift in Sources */,
@@ -6845,7 +6839,6 @@
 				404EAA54386230DFFD2B7174 /* ComparisonDashboardView.swift in Sources */,
 				C243C727660406D35A0121C1 /* ConfettiEmitterView.swift in Sources */,
 				D991F782694B4DE4DA856681 /* ContentEngine.swift in Sources */,
-				CEDBC936F1BA9E8AADD2F420 /* ContentPackDownloadService.swift in Sources */,
 				E06B5012230EA57308853BA1 /* CulturalContentDisplayLogic.swift in Sources */,
 				2D94EEEA60E52230527B355D /* CulturalContentInteractor.swift in Sources */,
 				F46C4CBD0C653E394D98F8CC /* CulturalContentModels.swift in Sources */,
@@ -7094,13 +7087,12 @@
 				DB72A71C0CF4D293A59BF56B /* LogopedistChatPresenter.swift in Sources */,
 				1908BEDBCE01FC3088D41E3F /* LogopedistChatRouter.swift in Sources */,
 				BB291B15E86A94B87D8A35F6 /* LogopedistChatView.swift in Sources */,
+				580690229FC06F9EAEFDCBD0 /* LyalyaAnimation.swift in Sources */,
 				A269018009E6C6C1CEAADDB5 /* LyalyaCustomizationStorage.swift in Sources */,
 				B57426F474B4A39B2E1E7592 /* LyalyaHeroView.swift in Sources */,
 				61782181658FBBE9C1AB6506 /* LyalyaLipSyncCoordinator.swift in Sources */,
 				1DE0F27B4C7FDA86C738DC11 /* LyalyaMascotView.swift in Sources */,
 				6C0D574777A5A15A1DB886ED /* LyalyaRealityKitView.swift in Sources */,
-				8DB6EFA1D2E32386CF9D651A /* LyalyaRealityView.swift in Sources */,
-				22D12E648CF98DD9749A376D /* LyalyaSceneView.swift in Sources */,
 				4558B31DC1106ACC31648BC1 /* MLModelWarmupService.swift in Sources */,
 				89A341E4B76B10EBC9E5F468 /* MLXEngine.swift in Sources */,
 				B272C12A1ADADD91827A4C0C /* MLXTokenizerBridge.swift in Sources */,

@@ -353,13 +353,13 @@ final class SettingsPresenterTests: XCTestCase {
 
     // MARK: - formatBytes helper (indirect via presentLoadModelPacks)
 
-    func test_formatBytes_largePack_showsGB() {
+    func test_formatBytes_bundledLLMPack_showsSize() {
         let (sut, spy) = makeSUT()
-        // LLM qwen3b = ~1.8 GB — sizeBytes > 1024 MB → должен показаться в ГБ
-        let llmPacks = [LLMPackState(pack: .qwen3b, isInstalled: false, isInUse: false, isDownloading: false, progress: 0)]
+        // Встроенная LLM-модель qwen15b (~900 МБ) — sizeText не должен быть пустым.
+        let llmPacks = [LLMPackState(pack: .qwen15b, isInstalled: true, isInUse: false, isDownloading: false, progress: 0)]
         sut.presentLoadModelPacks(.init(asrPacks: [], llmPacks: llmPacks))
         let item = spy.loadModelPacksVM?.llmItems.first
-        XCTAssertTrue(item?.sizeText.contains("ГБ") ?? false)
+        XCTAssertFalse(item?.sizeText.isEmpty ?? true, "Размер встроенной модели должен отображаться")
     }
 
     // MARK: - subtitleASR (indirect via presentLoadModelPacks)

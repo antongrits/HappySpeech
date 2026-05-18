@@ -1,27 +1,25 @@
 import Foundation
-import Hub
 import OSLog
 
 // MARK: - LLMModelPack
 
-/// Пакеты локальной LLM. Пользователь может скачать несколько.
-/// `qwen15b` — детский tier A (on-device, COPPA-safe).
-/// `qwen3b` — opt-in tier B для аналитики родителей / специалистов.
+/// Локальная LLM-модель приложения.
+///
+/// `qwen15b` — единственная встроенная модель (детский tier A, on-device, COPPA-safe).
+/// Модель поставляется внутри бандла приложения — никаких загрузок во время работы.
 public enum LLMModelPack: String, CaseIterable, Sendable, Codable {
     case qwen15b = "qwen2.5-1.5b"
-    case qwen3b  = "qwen2.5-3b"
 
     public var displayName: String {
         switch self {
         case .qwen15b: return String(localized: "modelManager.llm.pack.qwen15b.name")
-        case .qwen3b:  return String(localized: "modelManager.llm.pack.qwen3b.name")
         }
     }
 
+    /// Приблизительный размер встроенной модели (4-bit safetensors).
     public var sizeBytes: Int64 {
         switch self {
         case .qwen15b: return 900 * 1024 * 1024
-        case .qwen3b:  return Int64(1.8 * 1024 * 1024 * 1024)
         }
     }
 
@@ -30,106 +28,62 @@ public enum LLMModelPack: String, CaseIterable, Sendable, Codable {
     public var tierDescription: String {
         switch self {
         case .qwen15b: return String(localized: "modelManager.llm.pack.qwen15b.tier")
-        case .qwen3b:  return String(localized: "modelManager.llm.pack.qwen3b.tier")
         }
     }
 
-    /// Имя файла модели на диске (gguf q4 — лёгкий, работает на iPhone).
-    fileprivate var fileName: String {
+    /// Имя директории модели внутри бандла (`Resources/Models/LLM/`).
+    fileprivate var bundleDirectoryName: String {
         switch self {
-        case .qwen15b: return "qwen2.5-1.5b-instruct-q4_k_m.gguf"
-        case .qwen3b:  return "qwen2.5-3b-instruct-q4_k_m.gguf"
-        }
-    }
-
-    /// URL для скачивания (CDN). Для 3B пака заглушка — реальный URL появится при релизе.
-    fileprivate var remoteURL: URL? {
-        switch self {
-        case .qwen15b:
-            return URL(string: "https://storage.googleapis.com/happyspeech-models/qwen2.5-1.5b-instruct-q4_k_m.gguf")
-        case .qwen3b:
-            return URL(string: "https://storage.googleapis.com/happyspeech-models/qwen2.5-3b-instruct-q4_k_m.gguf")
+        case .qwen15b: return "Qwen2.5-1.5B-Instruct-4bit"
         }
     }
 }
 
 // MARK: - LLMModelManagerProtocol
 
+/// Управление встроенными LLM-моделями.
+///
+/// Все модели поставляются внутри бандла приложения. Протокол сохранён для DI
+/// и для отображения статуса модели в настройках — операций загрузки нет.
 public protocol LLMModelManagerProtocol: AnyObject, Sendable {
-    var downloadProgress: AsyncStream<ModelDownloadState> { get async }
-
+    /// Возвращает `true`, если модель присутствует в бандле приложения.
     func isModelInstalled(_ pack: LLMModelPack) async -> Bool
+
+    /// Список встроенных моделей.
     func installedModels() async -> [LLMModelPack]
 
-    /// Скачать пак, если не установлен. Wi-Fi-only жёстко.
-    func downloadIfNeeded(_ pack: LLMModelPack) async throws
-
-    /// Удалить пак с диска (нельзя, если активно используется).
-    func deleteModel(_ pack: LLMModelPack) async throws
-
-    /// Проверить, используется ли пак (например, загружен в `LocalLLMService`).
+    /// Используется ли модель прямо сейчас (загружена в `LocalLLMService`).
     func isCurrentlyInUse(_ pack: LLMModelPack) async -> Bool
 }
 
 // MARK: - LLMModelManager (actor)
 
-/// Рефактор предыдущего `LLMModelDownloadManager` в мульти-пак actor.
+/// Менеджер встроенных LLM-моделей.
 ///
-/// Ключевые свойства:
-///   * Wi-Fi-only (LLM > 900 МБ — сотовая сеть недопустима).
-///   * `AsyncStream` для UI прогресса.
-///   * Проверка свободного места перед загрузкой.
-///   * `deleteModel` защищает активно используемый пак.
+/// Модель Qwen2.5-1.5B-Instruct-4bit поставляется внутри бандла приложения
+/// (`Resources/Models/LLM/`). Загрузок во время работы приложения нет —
+/// модель всегда доступна offline.
 public actor LLMModelManager: LLMModelManagerProtocol {
 
     // MARK: - Dependencies
 
-    private let networkMonitor: any NetworkMonitorService
-    /// Ссылка на основной LLM-сервис — чтобы вызвать `downloadModel()` и знать, какой пак сейчас загружен.
+    /// Ссылка на основной LLM-сервис — чтобы знать, загружена ли модель в память.
     private let primaryLLM: any LocalLLMService
 
     // MARK: - State
 
-    private var activeDownloadPack: LLMModelPack?
     private var activePack: LLMModelPack = .qwen15b
-
-    // MARK: - Progress stream
-
-    private var progressContinuation: AsyncStream<ModelDownloadState>.Continuation?
-    private lazy var progressStream: AsyncStream<ModelDownloadState> = {
-        AsyncStream { continuation in
-            self.progressContinuation = continuation
-        }
-    }()
 
     // MARK: - Init
 
-    public init(primaryLLM: any LocalLLMService, networkMonitor: any NetworkMonitorService) {
+    public init(primaryLLM: any LocalLLMService) {
         self.primaryLLM = primaryLLM
-        self.networkMonitor = networkMonitor
-    }
-
-    // MARK: - Paths
-
-    private var rootDirectory: URL {
-        let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        return base.appendingPathComponent("HappySpeech/Models", isDirectory: true)
-    }
-
-    private func fileURL(for pack: LLMModelPack) -> URL {
-        rootDirectory.appendingPathComponent(pack.fileName)
-    }
-
-    // MARK: - Protocol: stream
-
-    public var downloadProgress: AsyncStream<ModelDownloadState> {
-        get async { progressStream }
     }
 
     // MARK: - Protocol: installed state
 
     public func isModelInstalled(_ pack: LLMModelPack) async -> Bool {
-        FileManager.default.fileExists(atPath: fileURL(for: pack).path)
+        Self.bundledModelURL(for: pack) != nil
     }
 
     public func installedModels() async -> [LLMModelPack] {
@@ -149,141 +103,27 @@ public actor LLMModelManager: LLMModelManagerProtocol {
         activePack = pack
     }
 
-    // MARK: - Protocol: download
+    // MARK: - Bundled model location
 
-    public func downloadIfNeeded(_ pack: LLMModelPack) async throws {
-        // Если для `qwen15b` уже скачано (через primaryLLM на этапе инициализации) — no-op.
-        if await isModelInstalled(pack) {
-            HSLogger.llm.info("LLM pack \(pack.rawValue) already installed")
-            emitLLM(.completed(pack: .tiny))
-            return
+    /// URL директории встроенной MLX-модели внутри бандла приложения.
+    /// Возвращает `nil`, только если модель отсутствует в бандле (ошибка сборки).
+    static func bundledModelURL(for pack: LLMModelPack) -> URL? {
+        let name = pack.bundleDirectoryName
+        if let url = Bundle.main.url(forResource: name, withExtension: nil, subdirectory: "Models/LLM") {
+            return directoryIfExists(url)
         }
-
-        // Сеть: только Wi-Fi (жёстко для LLM, минимум 900 МБ).
-        guard networkMonitor.isConnected else {
-            emitLLM(.failed(pack: .tiny, error: ModelDownloadError.notConnected.localizedDescription))
-            throw ModelDownloadError.notConnected
+        if let url = Bundle.main.url(forResource: name, withExtension: nil) {
+            return directoryIfExists(url)
         }
-        guard networkMonitor.connectionType == .wifi else {
-            HSLogger.llm.info("LLM download blocked — not on Wi-Fi (pack: \(pack.rawValue))")
-            emitLLM(.failed(pack: .tiny, error: ModelDownloadError.cellularNotAllowed.localizedDescription))
-            throw ModelDownloadError.cellularNotAllowed
-        }
-
-        // Свободное место.
-        if let freeBytes = freeDiskSpaceBytes(), freeBytes < pack.sizeBytes + (200 * 1024 * 1024) {
-            HSLogger.llm.error("Not enough disk space: free=\(freeBytes), need=\(pack.sizeBytes)")
-            throw ModelDownloadError.fileSystem(String(localized: "modelManager.error.notEnoughSpace"))
-        }
-
-        if activeDownloadPack != nil {
-            throw ModelDownloadError.whisperKitFailure("Another LLM download is already in progress")
-        }
-
-        activeDownloadPack = pack
-        defer { activeDownloadPack = nil }
-
-        try createDirectoryIfNeeded()
-
-        HSLogger.llm.info("Starting LLM download: \(pack.rawValue)")
-
-        // Прогресс-эмиттер: у `LocalLLMServiceLive.downloadModel()` нет колбэка,
-        // поэтому симулируем плавное нарастание от 0 до 0.97 (как в предыдущей реализации).
-        let progressTask = Task { [weak self] in
-            guard let self else { return }
-            var fake: Double = 0
-            while !Task.isCancelled {
-                try? await Task.sleep(nanoseconds: 500_000_000)
-                fake = min(0.97, fake + 0.02)
-                let bytes = Int64(Double(pack.sizeBytes) * fake)
-                await self.emitLLM(.downloading(
-                    pack: .tiny, // state использует WhisperKit enum; UI проверяет activeDownloadPack отдельно
-                    progress: fake,
-                    bytesDownloaded: bytes,
-                    totalBytes: pack.sizeBytes
-                ))
-            }
-        }
-
-        do {
-            // Для qwen15b делегируем уже существующему `LocalLLMService.downloadModel()` —
-            // он знает точный URL и имя файла.
-            if pack == .qwen15b {
-                try await primaryLLM.downloadModel()
-            } else {
-                // Для дополнительных паков (qwen3b) — прямая загрузка через URLSession.
-                try await directDownload(pack: pack)
-            }
-
-            progressTask.cancel()
-            emitLLM(.completed(pack: .tiny))
-            markActive(pack)
-            HSLogger.llm.info("LLM pack \(pack.rawValue) downloaded")
-        } catch is CancellationError {
-            progressTask.cancel()
-            emitLLM(.failed(pack: .tiny, error: ModelDownloadError.cancelled.localizedDescription))
-            throw ModelDownloadError.cancelled
-        } catch {
-            progressTask.cancel()
-            emitLLM(.failed(pack: .tiny, error: error.localizedDescription))
-            HSLogger.llm.error("LLM download failed: \(error.localizedDescription)")
-            throw ModelDownloadError.whisperKitFailure(error.localizedDescription)
-        }
+        return nil
     }
 
-    // MARK: - Protocol: delete
-
-    public func deleteModel(_ pack: LLMModelPack) async throws {
-        if await isCurrentlyInUse(pack) {
-            throw ModelDownloadError.fileSystem(String(localized: "modelManager.error.packInUse"))
-        }
-        let url = fileURL(for: pack)
-        guard FileManager.default.fileExists(atPath: url.path) else { return }
-        do {
-            try FileManager.default.removeItem(at: url)
-            HSLogger.llm.info("LLM pack \(pack.rawValue) deleted")
-        } catch {
-            throw ModelDownloadError.fileSystem(error.localizedDescription)
-        }
-    }
-
-    // MARK: - Private helpers
-
-    private func createDirectoryIfNeeded() throws {
-        do {
-            try FileManager.default.createDirectory(at: rootDirectory, withIntermediateDirectories: true)
-        } catch {
-            throw ModelDownloadError.fileSystem(error.localizedDescription)
-        }
-    }
-
-    private func freeDiskSpaceBytes() -> Int64? {
-        let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        do {
-            let values = try url.resourceValues(forKeys: [.volumeAvailableCapacityForImportantUsageKey])
-            return values.volumeAvailableCapacityForImportantUsage
-        } catch {
+    private static func directoryIfExists(_ url: URL) -> URL? {
+        var isDir: ObjCBool = false
+        guard FileManager.default.fileExists(atPath: url.path, isDirectory: &isDir), isDir.boolValue else {
             return nil
         }
-    }
-
-    private func directDownload(pack: LLMModelPack) async throws {
-        guard let remote = pack.remoteURL else {
-            throw ModelDownloadError.whisperKitFailure("No remote URL for pack \(pack.rawValue)")
-        }
-        let (tempURL, _) = try await URLSession.shared.download(from: remote)
-        let dest = fileURL(for: pack)
-        if FileManager.default.fileExists(atPath: dest.path) {
-            try FileManager.default.removeItem(at: dest)
-        }
-        try FileManager.default.moveItem(at: tempURL, to: dest)
-    }
-
-    // `ModelDownloadState` типизирован под `WhisperKitModelPack`; для LLM-потока мы
-    // переиспользуем этот же стрим (UI различает LLM vs WhisperKit по отдельным менеджерам),
-    // поэтому используем плейсхолдер-пак `.tiny` как неинформативный.
-    private func emitLLM(_ state: ModelDownloadState) {
-        progressContinuation?.yield(state)
+        return url
     }
 }
 
@@ -291,64 +131,12 @@ public actor LLMModelManager: LLMModelManagerProtocol {
 
 extension LLMModelManager {
 
-    // MARK: - MLX Local Directory
-
-    /// Директория для MLX-моделей (safetensors формат).
-    static var mlxModelsRoot: URL {
-        let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        return base.appendingPathComponent("HappySpeech/MLXModels", isDirectory: true)
-    }
-
-    /// URL к конкретной MLX-модели по её HuggingFace id.
-    /// Пример: "mlx-community/Qwen2.5-1.5B-Instruct-4bit" → …/MLXModels/Qwen2.5-1.5B-Instruct-4bit/
-    public static func localMLXModelURL(modelId: String = LocalLLMServiceLive.mlxModelId) -> URL? {
-        let modelName = String(modelId.split(separator: "/").last ?? Substring(modelId))
-        let url = mlxModelsRoot.appendingPathComponent(modelName, isDirectory: true)
-        guard FileManager.default.fileExists(atPath: url.path) else { return nil }
-        return url
-    }
-
-    // MARK: - Hub.snapshot Download
-
-    /// Скачивает MLX-модель с HuggingFace через Hub.snapshot (swift-transformers).
-    /// Возвращает URL директории с safetensors + tokenizer файлами.
-    ///
-    /// Wi-Fi-only — бросает ModelDownloadError.cellularNotAllowed если не Wi-Fi.
-    public static func downloadMLXModel(modelId: String) async throws -> URL {
-        let modelName = String(modelId.split(separator: "/").last ?? Substring(modelId))
-        let targetDir = mlxModelsRoot.appendingPathComponent(modelName, isDirectory: true)
-
-        // Уже скачано?
-        if FileManager.default.fileExists(atPath: targetDir.path) {
-            HSLogger.llm.info("LLMModelManager: MLX model already at \(targetDir.path)")
-            return targetDir
-        }
-
-        // Создаём директорию назначения
-        try FileManager.default.createDirectory(at: mlxModelsRoot, withIntermediateDirectories: true)
-
-        HSLogger.llm.info("LLMModelManager: Hub.snapshot for \(modelId)")
-        let repo = Hub.Repo(id: modelId)
-        let downloadedURL = try await Hub.snapshot(
-            from: repo,
-            matching: ["*.safetensors", "*.json", "tokenizer.json", "*.model"]
-        )
-
-        // Hub.snapshot возвращает системный кэш-путь — копируем в наш MLXModels
-        if downloadedURL.path != targetDir.path {
-            if FileManager.default.fileExists(atPath: targetDir.path) {
-                try FileManager.default.removeItem(at: targetDir)
-            }
-            try FileManager.default.copyItem(at: downloadedURL, to: targetDir)
-        }
-
-        HSLogger.llm.info("LLMModelManager: MLX model ready at \(targetDir.path)")
-        return targetDir
+    /// URL встроенной MLX-модели (safetensors + tokenizer) внутри бандла приложения.
+    /// Используется `MLXEngine` для загрузки модели в память.
+    public static func localMLXModelURL(
+        modelId: String = LocalLLMServiceLive.mlxModelId
+    ) -> URL? {
+        _ = modelId
+        return bundledModelURL(for: .qwen15b)
     }
 }
-
-// MARK: - Legacy alias
-
-/// Старое имя для совместимости со ссылками в коде (`AppContainer.llmDownloadManager`).
-/// Новый код должен использовать `LLMModelManager`.
-public typealias LLMModelDownloadManagerLegacy = LLMModelManager

@@ -79,7 +79,6 @@ final class OnboardingInteractor: OnboardingBusinessLogic {
     private var profile = OnboardingProfile()
     private var permissionsStatus = OnboardingPermissionsStatus()
     private var modelStatus: ModelDownloadStatus = .idle
-    private var downloadTask: Task<Void, Never>?
 
     // MARK: - Resume keys
 
@@ -92,10 +91,6 @@ final class OnboardingInteractor: OnboardingBusinessLogic {
 
     init(notificationService: any NotificationService = NotificationServiceLive()) {
         self.notificationService = notificationService
-    }
-
-    deinit {
-        downloadTask?.cancel()
     }
 
     // MARK: - BusinessLogic: Load
@@ -355,33 +350,19 @@ final class OnboardingInteractor: OnboardingBusinessLogic {
         }
     }
 
-    // MARK: - BusinessLogic: Model Download
+    // MARK: - BusinessLogic: Model Readiness
 
+    /// ML-модели (Whisper ASR, Qwen LLM, Core ML scorers) поставляются внутри
+    /// бандла приложения — загрузок нет. Шаг подтверждает готовность к работе.
     func startModelDownload(_ request: OnboardingModels.StartModelDownload.Request) {
-        guard downloadTask == nil else {
-            logger.info("startModelDownload: already in progress")
-            return
-        }
-        modelStatus = .downloading(progress: 0.0)
+        modelStatus = .completed
+        logger.info("models bundled, ready — no download")
         presenter?.presentStartModelDownload(.init(status: modelStatus))
-
-        downloadTask = Task { [weak self] in
-            // Симуляция 12 шагов по 250 мс (~3 с). На M8 — реальный WhisperKitModelManager.
-            for step in 1...12 {
-                if Task.isCancelled { return }
-                try? await Task.sleep(for: .milliseconds(250))
-                let progress = Double(step) / 12.0
-                self?.publishDownloadProgress(progress)
-            }
-            self?.completeModelDownload()
-        }
     }
 
     func skipModelDownload(_ request: OnboardingModels.SkipModelDownload.Request) {
-        downloadTask?.cancel()
-        downloadTask = nil
-        modelStatus = .skipped
-        logger.info("skipModelDownload")
+        modelStatus = .completed
+        logger.info("models bundled, ready — no download")
         presenter?.presentStartModelDownload(.init(status: modelStatus))
     }
 
@@ -394,9 +375,6 @@ final class OnboardingInteractor: OnboardingBusinessLogic {
             presenter?.presentPrivacyConsentRequired(.init())
             return
         }
-
-        downloadTask?.cancel()
-        downloadTask = nil
 
         // 1. Сохраняем флаг завершения и профиль
         OnboardingState.markCompleted(profile: profile)
@@ -472,20 +450,6 @@ final class OnboardingInteractor: OnboardingBusinessLogic {
         case 7:     return 12
         default:    return 15
         }
-    }
-
-    // MARK: - Private: Model download helpers
-
-    private func publishDownloadProgress(_ progress: Double) {
-        modelStatus = .downloading(progress: progress)
-        presenter?.presentStartModelDownload(.init(status: modelStatus))
-    }
-
-    private func completeModelDownload() {
-        modelStatus = .completed
-        downloadTask = nil
-        logger.info("modelDownload completed")
-        presenter?.presentStartModelDownload(.init(status: modelStatus))
     }
 
     // MARK: - Private: Reminder scheduling

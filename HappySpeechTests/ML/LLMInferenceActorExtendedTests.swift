@@ -39,7 +39,6 @@ final class LLMInferenceActorExtendedTests: XCTestCase {
             if let r = microStoryResponse { return r }
             throw LLMError.generationFailed("нет ответа")
         }
-        func downloadModel() async throws {}
     }
 
     /// LLM, который никогда не загружен.
@@ -55,7 +54,6 @@ final class LLMInferenceActorExtendedTests: XCTestCase {
         func generateMicroStory(request: MicroStoryRequest) async throws -> MicroStoryResponse {
             throw LLMError.notLoaded
         }
-        func downloadModel() async throws {}
     }
 
     /// LLM с задержкой для тестирования isBusy.
@@ -72,7 +70,6 @@ final class LLMInferenceActorExtendedTests: XCTestCase {
         func generateMicroStory(request: MicroStoryRequest) async throws -> MicroStoryResponse {
             throw LLMError.notLoaded
         }
-        func downloadModel() async throws {}
     }
 
     // MARK: - Helpers
