@@ -6,7 +6,17 @@ import OSLog
 
 public final class LiveNetworkMonitor: NetworkMonitorService, @unchecked Sendable {
     private let monitor = NWPathMonitor()
-    nonisolated(unsafe) private var path: NWPath?
+
+    /// `path` пишется из фоновой очереди `NWPathMonitor` и читается из
+    /// произвольных потоков (`isConnected`/`connectionType`). Доступ
+    /// синхронизируется `lock` — иначе это гонка данных (UB).
+    private let lock = NSLock()
+    private var _path: NWPath?
+
+    private var path: NWPath? {
+        lock.lock(); defer { lock.unlock() }
+        return _path
+    }
 
     public var isConnected: Bool { path?.status == .satisfied }
 
@@ -19,7 +29,10 @@ public final class LiveNetworkMonitor: NetworkMonitorService, @unchecked Sendabl
 
     public init() {
         monitor.pathUpdateHandler = { [weak self] path in
-            self?.path = path
+            guard let self else { return }
+            self.lock.lock()
+            self._path = path
+            self.lock.unlock()
             if path.status == .satisfied {
                 HSLogger.network.info("Network: connected (\(path.usesInterfaceType(.wifi) ? "wifi" : "cellular"))")
             } else {

@@ -755,13 +755,25 @@ private extension SessionHistoryInteractor {
 
 private extension SessionHistoryInteractor {
 
+    /// Опорная дата seed-данных истории сессий.
+    ///
+    /// Seed используется как в SwiftUI Preview, так и в snapshot-тестах.
+    /// Привязка к `Date()` делала снимки недетерминированными: относительные
+    /// даты и подписи осей графика дрейфовали при смене суток. Фиксированная
+    /// «сегодня» снимает дрейф; в snapshot-тестах рендер стабилен.
+    static let seedReferenceDate: Date = {
+        Calendar.current.date(from: DateComponents(
+            year: 2026, month: 1, day: 15, hour: 12, minute: 0
+        )) ?? Date()
+    }()
+
     static func makeSeedSessions() -> (
         sessions: [SessionRecord],
         attempts: [String: [SessionAttemptRecord]],
         audioFiles: [String: String]
     ) {
         let calendar = Calendar.current
-        let now = Date()
+        let now = seedReferenceDate
 
         func dateAt(daysAgo: Int, hour: Int = 17, minute: Int = 30) -> Date {
             let baseDay = calendar.date(byAdding: .day, value: -daysAgo, to: now) ?? now

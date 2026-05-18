@@ -72,14 +72,14 @@ final class WeeklyChallengeInteractor: WeeklyChallengeBusinessLogic, WeeklyChall
     init(
         childId: String,
         hapticService: any HapticService,
-        userDefaults: UserDefaults = .standard,
-        calendar: Calendar = .current
+        userDefaults: UserDefaults = .standard
     ) {
         self.childId = childId
         self.hapticService = hapticService
         self.userDefaults = userDefaults
 
-        // Используем iso8601 calendar с monday-start для российской локали.
+        // Неделя считается строго по ISO-8601 (Mon–Sun) — challenge привязан
+        // к неделе, поэтому календарь фиксирован и не инъектируется.
         var iso = Calendar(identifier: .iso8601)
         iso.firstWeekday = 2 // Monday
         iso.locale = Locale(identifier: "ru_RU")

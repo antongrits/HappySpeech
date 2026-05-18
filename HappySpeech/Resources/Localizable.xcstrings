@@ -10210,6 +10210,17 @@
         }
       }
     },
+    "dailyChallenge.share.snapshot": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Цель дня выполнена: %1$d из %2$d"
+          }
+        }
+      }
+    },
     "dailyChallenge.share.toast": {
       "extractionState": "manual",
       "localizations": {

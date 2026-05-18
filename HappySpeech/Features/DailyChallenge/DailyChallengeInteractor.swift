@@ -150,7 +150,10 @@ final class DailyChallengeInteractor: DailyChallengeBusinessLogic, DailyChalleng
             Self.logger.debug("shareCompletion ignored: goal not completed")
             return
         }
-        let snapshot = "Цель дня выполнена: \(goal.target) из \(goal.target)"
+        let snapshot = String(
+            format: String(localized: "dailyChallenge.share.snapshot"),
+            goal.current, goal.target
+        )
         let response = DailyChallengeModels.ShareCompletion.Response(
             snapshotText: snapshot,
             toastKey: "dailyChallenge.share.toast"
