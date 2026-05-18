@@ -63,14 +63,14 @@ final class StutteringInteractorTests: XCTestCase {
 
     // MARK: - 1. loadScreen: presenter получает 4 карточки
 
-    func test_loadScreen_deliversFourCards() {
+    func test_loadScreen_deliversFiveCards() {
         let (sut, spy) = makeSUT()
 
         sut.loadScreen(.init())
 
         XCTAssertTrue(spy.presentLoadScreenCalled)
-        XCTAssertEqual(spy.lastLoadResponse?.cards.count, 7,
-                       "loadScreen должен передавать 7 карточек упражнений")
+        XCTAssertEqual(spy.lastLoadResponse?.cards.count, 5,
+                       "loadScreen должен передавать 5 карточек упражнений")
     }
 
     // MARK: - 2. loadScreen: hasSeenWelcome=false при чистых UserDefaults

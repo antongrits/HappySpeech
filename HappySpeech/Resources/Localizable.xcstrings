@@ -5173,16 +5173,6 @@
         }
       }
     },
-    "avatar.butterfly": {
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Бабочка"
-          }
-        }
-      }
-    },
     "avatar.bear": {
       "extractionState": "manual",
       "localizations": {
@@ -5190,6 +5180,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Мишка"
+          }
+        }
+      }
+    },
+    "avatar.butterfly": {
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Бабочка"
           }
         }
       }
@@ -5685,61 +5685,6 @@
         }
       }
     },
-    "chat.autoreply.default": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Спасибо за сообщение! Отвечу в ближайшее время."
-          }
-        }
-      }
-    },
-    "chat.autoreply.fallback": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сообщение получено."
-          }
-        }
-      }
-    },
-    "chat.autoreply.question": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Хороший вопрос! Отвечу подробнее при следующем сеансе."
-          }
-        }
-      }
-    },
-    "chat.autoreply.short": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Понял, принял к сведению."
-          }
-        }
-      }
-    },
-    "chat.autoreply.thanks": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Рад помочь! Продолжайте занятия."
-          }
-        }
-      }
-    },
     "chat.close.a11y": {
       "extractionState": "manual",
       "localizations": {
@@ -5791,6 +5736,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "Нет подключения. Сообщение будет отправлено при восстановлении связи."
+          }
+        }
+      }
+    },
+    "chat.empty.connected.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Напишите специалисту первое сообщение — он ответит, когда будет онлайн."
+          }
+        }
+      }
+    },
+    "chat.empty.connected.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Здесь начнётся ваш диалог"
+          }
+        }
+      }
+    },
+    "chat.empty.notConnected.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подключите логопеда вашего ребёнка, чтобы общаться здесь. Когда специалист появится в семье, вы сможете задавать вопросы и отправлять аудиозаписи занятий."
+          }
+        }
+      }
+    },
+    "chat.empty.notConnected.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Логопед пока не подключён"
           }
         }
       }
@@ -5857,28 +5846,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Чат с логопедом"
-          }
-        }
-      }
-    },
-    "chat.seed.intro": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Здесь вы можете задавать вопросы о занятиях и отправлять аудиозаписи для анализа."
-          }
-        }
-      }
-    },
-    "chat.seed.welcome": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Здравствуйте! Я %@ — ваш логопед в HappySpeech. Рада начать работу с вашим ребёнком."
           }
         }
       }
@@ -5956,28 +5923,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "В сети"
-          }
-        }
-      }
-    },
-    "chat.specialist.seed.credentials": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Логопед, стаж 12 лет"
-          }
-        }
-      }
-    },
-    "chat.specialist.seed.name": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Елена Ивановна"
           }
         }
       }
@@ -35295,6 +35240,116 @@
         }
       }
     },
+    "stuttering.pacing.control.pause": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пауза"
+          }
+        }
+      }
+    },
+    "stuttering.pacing.control.restart": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сначала"
+          }
+        }
+      }
+    },
+    "stuttering.pacing.control.resume": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжить"
+          }
+        }
+      }
+    },
+    "stuttering.pacing.control.start": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать"
+          }
+        }
+      }
+    },
+    "stuttering.pacing.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Говори вместе с зайчиком — не спеши!"
+          }
+        }
+      }
+    },
+    "stuttering.pacing.phrase_accessibility": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фраза для проговаривания: %@"
+          }
+        }
+      }
+    },
+    "stuttering.pacing.phrase_done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Плавно получилось!"
+          }
+        }
+      }
+    },
+    "stuttering.pacing.progress.format": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фраза %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "stuttering.pacing.session_done.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец!"
+          }
+        }
+      }
+    },
+    "stuttering.pacing.summary.format": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ты плавно проговорил %1$d фраз!"
+          }
+        }
+      }
+    },
     "stuttering.progress.fluency": {
       "extractionState": "manual",
       "localizations": {
@@ -39510,6 +39565,17 @@
         }
       }
     },
+    "Ещё": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ещё"
+          }
+        }
+      }
+    },
     "Жираф": {
       "extractionState": "manual",
       "localizations": {
@@ -39572,17 +39638,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Заверши историю: выбери пропущенное слово"
-          }
-        }
-      }
-    },
-    "Ещё": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ещё"
           }
         }
       }

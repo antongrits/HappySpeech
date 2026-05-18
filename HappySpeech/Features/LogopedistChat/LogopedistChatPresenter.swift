@@ -55,26 +55,40 @@ final class LogopedistChatPresenter: LogopedistChatPresentationLogic {
     // MARK: - Load
 
     func presentLoad(response: LogopedistChatModels.Load.Response) async {
+        let isConnected = response.specialist != nil
+
         let specialistName = response.specialist?.displayName
             ?? String(localized: "chat.specialist.notConnected")
         let credentialsKey = response.specialist?.credentialsKey ?? "chat.specialist.unknown.credentials"
         let credentials = String(localized: String.LocalizationValue(credentialsKey))
 
-        let onlineLabel: String
-        if response.specialist?.isOnline == true {
-            onlineLabel = String(localized: "chat.specialist.online")
-        } else if let lastSeen = response.specialist?.lastSeenAt {
-            onlineLabel = String(
-                format: String(localized: "chat.specialist.lastSeen"),
-                dateFormatter.string(from: lastSeen)
-            )
+        // Presence-подпись показывается ТОЛЬКО для реально подключённого
+        // специалиста. Если специалиста нет — никакого индикатора присутствия
+        // (не имитируем доступность живого логопеда, CLAUDE.md §11).
+        let onlineLabel: String?
+        if let specialist = response.specialist {
+            if specialist.isOnline {
+                onlineLabel = String(localized: "chat.specialist.online")
+            } else if let lastSeen = specialist.lastSeenAt {
+                onlineLabel = String(
+                    format: String(localized: "chat.specialist.lastSeen"),
+                    dateFormatter.string(from: lastSeen)
+                )
+            } else {
+                onlineLabel = nil
+            }
         } else {
-            onlineLabel = String(localized: "chat.specialist.offline")
+            onlineLabel = nil
         }
 
-        let connectionHint: String? = response.isConnected
+        // Подсказка про офлайн-доставку имеет смысл только когда специалист
+        // подключён, но связи сейчас нет.
+        let connectionHint: String? = nil
+
+        // Честное пустое состояние, когда специалист не подключён к семье.
+        let emptyStateHint: String? = isConnected
             ? nil
-            : String(localized: "chat.connection.offline.hint")
+            : String(localized: "chat.empty.notConnected.hint")
 
         let messageRows = response.messages.map { msg -> LogopedistChatModels.Load.MessageRow in
             mapMessage(msg)
@@ -85,10 +99,11 @@ final class LogopedistChatPresenter: LogopedistChatPresentationLogic {
             credentials: credentials,
             onlineStatusLabel: onlineLabel,
             isOnline: response.specialist?.isOnline ?? false,
-            isConnected: response.isConnected,
+            isConnected: isConnected,
             connectionHint: connectionHint,
+            emptyStateHint: emptyStateHint,
             messages: messageRows,
-            composerEnabled: response.specialist != nil
+            composerEnabled: isConnected
         )
 
         await displayLogic?.displayLoad(viewModel: viewModel)

@@ -4,7 +4,9 @@ import XCTest
 // MARK: - LogopedistChatInteractorTests
 //
 // Block AA v21 — Smoke tests для LogopedistChatInteractor.
-// 3 теста: load (seed данные), send (non-empty text), send (empty text — silent skip).
+// v28 Фаза 2 — этический рефактор: чат больше не имитирует живого логопеда.
+// Пока реальный специалист не подключён, `load` отдаёт пустое состояние
+// (specialist == nil, нет сообщений), а `send` молча игнорируется.
 
 @MainActor
 final class LogopedistChatInteractorTests: XCTestCase {
@@ -32,23 +34,26 @@ final class LogopedistChatInteractorTests: XCTestCase {
 
     // MARK: - Tests
 
-    func test_load_callsPresenterWithSeedMessages() async {
+    func test_load_noConnectedSpecialist_returnsEmptyHonestState() async {
         // Act
         await sut.load(request: LogopedistChatModels.Load.Request(
             parentId: "parent-test-1",
             specialistId: "specialist-test-1"
         ))
-        // Assert
+        // Assert: пока реальный логопед не подключён — никакого фейкового
+        // собеседника и никакой выдуманной переписки.
         XCTAssertTrue(spyPresenter.presentLoadCalled)
-        XCTAssertNotNil(spyPresenter.lastLoadResponse?.specialist, "Специалист должен быть задан (seed)")
-        XCTAssertFalse(
-            spyPresenter.lastLoadResponse?.messages.isEmpty ?? true,
-            "Seed сообщения должны присутствовать"
+        XCTAssertNil(spyPresenter.lastLoadResponse?.specialist,
+                     "Без реального специалиста собеседник не выдумывается")
+        XCTAssertTrue(
+            spyPresenter.lastLoadResponse?.messages.isEmpty ?? false,
+            "Фейковых seed-сообщений быть не должно"
         )
+        XCTAssertEqual(spyPresenter.lastLoadResponse?.isConnected, false)
     }
 
-    func test_send_nonEmptyText_callsPresenter() async {
-        // Arrange: предварительно загружаем (чтобы инициализировать seed)
+    func test_send_withoutConnectedSpecialist_isIgnored() async {
+        // Arrange
         await sut.load(request: LogopedistChatModels.Load.Request(
             parentId: "parent-test-1",
             specialistId: "specialist-test-1"
@@ -62,8 +67,9 @@ final class LogopedistChatInteractorTests: XCTestCase {
             text: "Привет, вопрос по занятию",
             now: Date()
         ))
-        // Assert
-        XCTAssertTrue(spyPresenter.presentSendCalled, "Непустое сообщение должно вызвать presentSend")
+        // Assert: без подключённого специалиста отправлять некому.
+        XCTAssertFalse(spyPresenter.presentSendCalled,
+                       "Без подключённого специалиста send не должен вызывать presenter")
     }
 
     func test_send_emptyText_doesNotCallPresenter() async {
@@ -81,45 +87,41 @@ final class LogopedistChatInteractorTests: XCTestCase {
         )
     }
 
-    // MARK: - Batch 2.8.3 v25: расширенное покрытие
+    // MARK: - Batch 2.8.3 v25 / v28 Фаза 2: расширенное покрытие
 
-    func test_load_specialistIsOnline() async {
+    func test_load_noFakePresence() async {
         await sut.load(request: .init(
             parentId: "parent-test-1", specialistId: "specialist-test-1"
         ))
-        XCTAssertEqual(spyPresenter.lastLoadResponse?.specialist?.isOnline, true)
-        XCTAssertEqual(spyPresenter.lastLoadResponse?.isConnected, true)
+        // Никакого индикатора присутствия выдуманного логопеда.
+        XCTAssertNil(spyPresenter.lastLoadResponse?.specialist?.isOnline)
+        XCTAssertEqual(spyPresenter.lastLoadResponse?.isConnected, false)
     }
 
-    func test_load_seedMessagesFromSpecialist() async {
+    func test_load_noSeedMessages() async {
         await sut.load(request: .init(
             parentId: "parent-test-1", specialistId: "specialist-test-1"
         ))
-        let messages = spyPresenter.lastLoadResponse?.messages ?? []
-        XCTAssertTrue(messages.allSatisfy { $0.sender == .specialist },
-                      "Все seed-сообщения — от специалиста")
-        XCTAssertTrue(messages.allSatisfy { $0.isOptional },
-                      "Seed-сообщения помечены isOptional")
+        XCTAssertTrue((spyPresenter.lastLoadResponse?.messages ?? []).isEmpty,
+                      "Тред пуст, пока реальный специалист не ответит")
     }
 
-    func test_send_appendsParentMessage() async {
-        await sut.load(request: .init(
-            parentId: "parent-test-1", specialistId: "specialist-test-1"
-        ))
+    func test_send_emptyText_isIgnoredEvenWithoutSpecialist() async {
         await sut.send(request: .init(
             parentId: "parent-test-1", specialistId: "specialist-test-1",
-            text: "Здравствуйте", now: Date()
+            text: "   ", now: Date()
         ))
-        XCTAssertEqual(spyPresenter.lastSendResponse?.createdMessage.sender, .parent)
-        XCTAssertEqual(spyPresenter.lastSendResponse?.createdMessage.text, "Здравствуйте")
+        XCTAssertNil(spyPresenter.lastSendResponse?.createdMessage)
     }
 
-    func test_send_messageStatusIsSent() async {
+    func test_send_noAutoReply() async {
+        // Отправка не порождает авто-ответа «специалиста».
         await sut.send(request: .init(
             parentId: "parent-test-1", specialistId: "specialist-test-1",
-            text: "Вопрос", now: Date()
+            text: "Вопрос?", now: Date()
         ))
-        XCTAssertEqual(spyPresenter.lastSendResponse?.createdMessage.status, .sent)
+        XCTAssertNil(spyPresenter.lastSendResponse,
+                     "Авто-ответ логопеда не имитируется")
     }
 
     func test_attachAudio_createsMessageWithAttachment() async {
@@ -142,12 +144,12 @@ final class LogopedistChatInteractorTests: XCTestCase {
         XCTAssertTrue(true)
     }
 
-    func test_markAsRead_existingSeedIds() async {
+    func test_markAsRead_emptyThread_doesNotCrash() async {
         await sut.load(request: .init(
             parentId: "parent-test-1", specialistId: "specialist-test-1"
         ))
         await sut.markAsRead(request: .init(
-            parentId: "parent-test-1", messageIds: ["seed.welcome", "seed.intro"]
+            parentId: "parent-test-1", messageIds: []
         ))
         XCTAssertTrue(true)
     }

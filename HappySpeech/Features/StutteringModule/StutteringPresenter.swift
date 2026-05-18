@@ -95,8 +95,6 @@ final class StutteringPresenter: StutteringPresentationLogic {
         case .softOnset:       return String(localized: "stuttering.exercise.soft_start.title")
         case .diary:           return String(localized: "stuttering.exercise.diary.title")
         case .pacing:          return String(localized: "stuttering.exercise.pacing.title")
-        case .metronomeRhythm: return String(localized: "stuttering.exercise.metronome_rhythm.title")
-        case .easySpeech:      return String(localized: "stuttering.exercise.easy_speech.title")
         }
     }
 
@@ -107,8 +105,6 @@ final class StutteringPresenter: StutteringPresentationLogic {
         case .softOnset:       return String(localized: "stuttering.exercise.soft_start.subtitle")
         case .diary:           return String(localized: "stuttering.exercise.diary.subtitle")
         case .pacing:          return String(localized: "stuttering.exercise.pacing.subtitle")
-        case .metronomeRhythm: return String(localized: "stuttering.exercise.metronome_rhythm.subtitle")
-        case .easySpeech:      return String(localized: "stuttering.exercise.easy_speech.subtitle")
         }
     }
 }

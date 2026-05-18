@@ -178,14 +178,17 @@ struct LogopedistChatView: View {
                     .font(TypographyTokens.caption(11))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                     .lineLimit(1)
-                Text(viewModel.onlineStatusLabel)
-                    .font(TypographyTokens.caption(10))
-                    .foregroundStyle(
-                        viewModel.isOnline
-                            ? ColorTokens.Semantic.success
-                            : ColorTokens.Parent.inkSoft
-                    )
-                    .lineLimit(1)
+                // Presence-подпись — только когда специалист реально подключён.
+                if let onlineLabel = viewModel.onlineStatusLabel {
+                    Text(onlineLabel)
+                        .font(TypographyTokens.caption(10))
+                        .foregroundStyle(
+                            viewModel.isOnline
+                                ? ColorTokens.Semantic.success
+                                : ColorTokens.Parent.inkSoft
+                        )
+                        .lineLimit(1)
+                }
             }
 
             Spacer(minLength: 0)
@@ -197,7 +200,7 @@ struct LogopedistChatView: View {
             format: String(localized: "chat.header.a11y"),
             viewModel.specialistName,
             viewModel.credentials,
-            viewModel.onlineStatusLabel
+            viewModel.onlineStatusLabel ?? ""
         )))
     }
 
@@ -221,21 +224,33 @@ struct LogopedistChatView: View {
     }
 
     // MARK: - Hero (empty state)
+    //
+    // Честное пустое состояние: пока к ребёнку не подключён реальный логопед,
+    // никакой переписки нет. Не имитируем живого специалиста (CLAUDE.md §11).
 
-    private var chatHeroEmptyState: some View {
+    @ViewBuilder
+    private func chatHeroEmptyState(
+        viewModel: LogopedistChatModels.Load.ViewModel
+    ) -> some View {
+        let title: String = viewModel.isConnected
+            ? String(localized: "chat.empty.connected.title")
+            : String(localized: "chat.empty.notConnected.title")
+        let hint: String = viewModel.emptyStateHint
+            ?? String(localized: "chat.empty.connected.hint")
+
         VStack(spacing: SpacingTokens.sp3) {
             LyalyaMascotView(state: .waving, size: 140)
                 .frame(height: 140)
                 .accessibilityHidden(true)
 
-            Text(verbatim: "Здесь начнётся ваш диалог")
+            Text(title)
                 .font(TypographyTokens.title(20))
                 .foregroundStyle(ColorTokens.Parent.ink)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .minimumScaleFactor(0.85)
 
-            Text(verbatim: "Напишите специалисту первое сообщение — Ляля поможет начать беседу.")
+            Text(hint)
                 .font(TypographyTokens.body(13))
                 .foregroundStyle(ColorTokens.Parent.inkMuted)
                 .multilineTextAlignment(.center)
@@ -250,7 +265,7 @@ struct LogopedistChatView: View {
                 .shadow(color: .black.opacity(0.05), radius: 8, y: 2)
         )
         .accessibilityElement(children: .combine)
-        .accessibilityLabel(Text(verbatim: "Здесь начнётся ваш диалог. Напишите специалисту первое сообщение."))
+        .accessibilityLabel(Text("\(title). \(hint)"))
     }
 
     // MARK: - Messages
@@ -261,7 +276,7 @@ struct LogopedistChatView: View {
             ScrollView {
                 LazyVStack(spacing: SpacingTokens.sp2) {
                     if viewModel.messages.isEmpty {
-                        chatHeroEmptyState
+                        chatHeroEmptyState(viewModel: viewModel)
                             .padding(.top, SpacingTokens.sp6)
                     }
                     ForEach(viewModel.messages) { message in

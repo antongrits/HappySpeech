@@ -30,7 +30,7 @@ final class LogopedistChatPresenterTests: XCTestCase {
         // Arrange
         let specialist = SpecialistInfo(
             displayName: "Ирина Петрова",
-            credentialsKey: "chat.specialist.seed.credentials",
+            credentialsKey: "chat.specialist.unknown.credentials",
             isOnline: true,
             lastSeenAt: nil
         )
@@ -102,15 +102,20 @@ final class LogopedistChatPresenterTests: XCTestCase {
         XCTAssertTrue(spyDisplay.lastLoadViewModel?.isOnline ?? false)
     }
 
-    func test_presentLoad_offline_setsConnectionHint() async {
+    func test_presentLoad_noSpecialist_setsEmptyStateHint_andNoPresence() async {
         let response = LogopedistChatModels.Load.Response(
             specialist: nil,
             messages: [],
             isConnected: false
         )
         await sut.presentLoad(response: response)
-        XCTAssertNotNil(spyDisplay.lastLoadViewModel?.connectionHint,
-                        "Оффлайн-состояние должно устанавливать connectionHint")
+        // Честное пустое состояние вместо фейковой переписки.
+        XCTAssertNotNil(spyDisplay.lastLoadViewModel?.emptyStateHint,
+                        "Без специалиста должна показываться честная подсказка")
+        // Никакого индикатора присутствия выдуманного логопеда.
+        XCTAssertNil(spyDisplay.lastLoadViewModel?.onlineStatusLabel,
+                     "Без специалиста presence-подпись не показывается")
+        XCTAssertFalse(spyDisplay.lastLoadViewModel?.isOnline ?? true)
     }
 
     func test_presentLoad_withMessages_mapsAllRows() async {

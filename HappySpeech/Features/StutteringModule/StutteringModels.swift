@@ -79,8 +79,6 @@ enum StutteringMode: String, CaseIterable, Sendable {
     case softOnset
     case diary
     case pacing
-    case metronomeRhythm
-    case easySpeech
 }
 
 // MARK: - ExerciseCardData / ExerciseCardViewModel

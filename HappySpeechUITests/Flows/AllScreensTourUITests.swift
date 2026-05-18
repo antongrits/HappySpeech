@@ -660,4 +660,22 @@ final class AllScreensTourUITests: XCTestCase {
     func test_route_wordBank() {
         captureScreen(route: "wordBank", anchorTimeout: 8)
     }
+
+    // MARK: - v28 Фаза 2 — ранее недостижимые маршруты (4)
+
+    func test_route_permissionFlow() {
+        captureScreen(route: "permissionFlow", anchorTimeout: 8)
+    }
+
+    func test_route_sharePlay() {
+        captureScreen(route: "sharePlay", anchorTimeout: 8)
+    }
+
+    func test_route_familyVoiceSplit() {
+        captureScreen(route: "familyVoiceSplit", anchorTimeout: 8)
+    }
+
+    func test_route_familyVoiceLibrary() {
+        captureScreen(route: "familyVoiceLibrary", anchorTimeout: 8)
+    }
 }

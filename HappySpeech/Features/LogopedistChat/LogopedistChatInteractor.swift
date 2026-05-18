@@ -21,20 +21,25 @@ protocol LogopedistChatDataStore: AnyObject {
 
 // MARK: - LogopedistChatInteractor (Clean Swift: Interactor)
 //
-// Block R.2 v18 — чат родитель ↔ специалист.
+// Block R.2 v18 — чат родитель ↔ реальный специалист.
 //
 // Логика:
-//   1. `load` — собрать данные о специалисте + историю messages
-//   2. `send` — добавить parent message, optionally с auto-reply seed
+//   1. `load` — собрать данные о подключённом специалисте + историю messages
+//   2. `send` — добавить parent message в локальный тред (исходящая очередь)
 //   3. `attachAudio` — добавить parent message с audio attachment
 //   4. `markAsRead` — пометить delivered → read
 //
-// Persistence: in-memory (на parent layer) + UserDefaults seed для preview.
+// Persistence: in-memory (на parent layer).
 // Production: должен заменить на Firestore listener (см. ParentChild scheme).
 //
 // COPPA: вся логика только в parent контуре.
-// Note: т.к. Firestore listener в MVP не реализован, используется seed-данные
-// + локальное эхо. Это допустимо для дипломной демонстрации.
+//
+// Этика (CLAUDE.md §11): приложение НЕ заменяет живого логопеда и НЕ
+// имитирует его. Пока к семье не подключён реальный специалист, экран
+// показывает честное пустое состояние — без выдуманного собеседника,
+// фейковых сообщений и индикатора «В сети». Никаких авто-ответов:
+// сообщения от специалиста появляются только когда реальный логопед
+// действительно ответит (через Firestore listener в production).
 
 @MainActor
 final class LogopedistChatInteractor: LogopedistChatBusinessLogic, LogopedistChatDataStore {
@@ -52,7 +57,6 @@ final class LogopedistChatInteractor: LogopedistChatBusinessLogic, LogopedistCha
 
     private var messages: [ChatMessage]
     private var specialistInfo: SpecialistInfo?
-    private var autoReplyTask: Task<Void, Never>?
 
     // MARK: - Dependencies
 
@@ -88,19 +92,18 @@ final class LogopedistChatInteractor: LogopedistChatBusinessLogic, LogopedistCha
     // MARK: - Load
 
     func load(request: LogopedistChatModels.Load.Request) async {
-        // Specialist info — seed.
-        let specialist = makeSeedSpecialist()
+        // Подтягиваем реального подключённого специалиста.
+        // Пока интеграция с Firestore не реализована, реального специалиста
+        // нет — поэтому возвращаем `nil`. Presenter покажет честное пустое
+        // состояние «Подключите логопеда вашего ребёнка», а не фейковую
+        // переписку с выдуманным собеседником (CLAUDE.md §11).
+        let specialist = connectedSpecialist()
         specialistInfo = specialist
-
-        // Загружаем messages: либо seed, либо в памяти.
-        if messages.isEmpty {
-            messages = makeSeedMessages(specialistName: specialist.displayName)
-        }
 
         let response = LogopedistChatModels.Load.Response(
             specialist: specialist,
             messages: messages,
-            isConnected: true
+            isConnected: specialist != nil
         )
 
         await presenter?.presentLoad(response: response)
@@ -112,6 +115,8 @@ final class LogopedistChatInteractor: LogopedistChatBusinessLogic, LogopedistCha
         guard !request.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return
         }
+        // Сообщение можно отправить только реальному подключённому специалисту.
+        guard connectedSpecialist() != nil else { return }
 
         let parentMessage = ChatMessage(
             id: UUID().uuidString,
@@ -123,42 +128,13 @@ final class LogopedistChatInteractor: LogopedistChatBusinessLogic, LogopedistCha
             isOptional: false
         )
         messages.append(parentMessage)
-        Self.logger.info("Parent message sent (\(request.text.count) chars)")
+        Self.logger.info("Parent message queued for specialist (\(request.text.count) chars)")
 
-        // Cancel предыдущий auto-reply если есть (защита от накопления при rapid send).
-        autoReplyTask?.cancel()
-
-        // Через 2 секунды (моделируем delay) добавляем auto-reply от specialist
-        // — для дипломной демонстрации.
-        let autoReply = ChatMessage(
-            id: UUID().uuidString,
-            sender: .specialist,
-            text: makeAutoReply(for: request.text),
-            createdAt: request.now.addingTimeInterval(2),
-            status: .delivered,
-            attachment: nil,
-            isOptional: true
-        )
-
+        // Никаких авто-ответов: ответ появится только когда реальный логопед
+        // ответит через Firestore listener (CLAUDE.md §11 — не имитируем специалиста).
         let response = LogopedistChatModels.Send.Response(
             createdMessage: parentMessage,
             appendedMessages: [parentMessage]
-        )
-        await presenter?.presentSend(response: response)
-
-        // Fire-and-forget auto-reply через 2 секунды (cancellable).
-        autoReplyTask = Task { [weak self] in
-            try? await Task.sleep(for: .seconds(2))
-            guard !Task.isCancelled, let self else { return }
-            await self.appendAutoReply(autoReply, parentMessage: parentMessage)
-        }
-    }
-
-    private func appendAutoReply(_ autoReply: ChatMessage, parentMessage: ChatMessage) async {
-        messages.append(autoReply)
-        let response = LogopedistChatModels.Send.Response(
-            createdMessage: parentMessage,
-            appendedMessages: [autoReply]
         )
         await presenter?.presentSend(response: response)
     }
@@ -204,60 +180,15 @@ final class LogopedistChatInteractor: LogopedistChatBusinessLogic, LogopedistCha
         Self.logger.debug("MarkAsRead: \(updatedIds.count) messages")
     }
 
-    // MARK: - Seed builders
+    // MARK: - Specialist resolution
 
-    private func makeSeedSpecialist() -> SpecialistInfo {
-        SpecialistInfo(
-            displayName: String(localized: "chat.specialist.seed.name"),
-            credentialsKey: "chat.specialist.seed.credentials",
-            isOnline: true,
-            lastSeenAt: nil
-        )
-    }
-
-    private func makeSeedMessages(specialistName: String) -> [ChatMessage] {
-        let now = Date()
-        return [
-            ChatMessage(
-                id: "seed.welcome",
-                sender: .specialist,
-                text: String(
-                    format: String(localized: "chat.seed.welcome"),
-                    specialistName
-                ),
-                createdAt: now.addingTimeInterval(-3600 * 24 * 2),
-                status: .read,
-                attachment: nil,
-                isOptional: true
-            ),
-            ChatMessage(
-                id: "seed.intro",
-                sender: .specialist,
-                text: String(localized: "chat.seed.intro"),
-                createdAt: now.addingTimeInterval(-3600 * 24 * 2 + 30),
-                status: .read,
-                attachment: nil,
-                isOptional: true
-            )
-        ]
-    }
-
-    /// Заглушка auto-reply: специалист «отвечает» в зависимости от длины
-    /// родительского сообщения. Для дипломной демонстрации.
-    private func makeAutoReply(for text: String) -> String {
-        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
-        if trimmed.isEmpty {
-            return String(localized: "chat.autoreply.fallback")
-        }
-        if trimmed.count < 30 {
-            return String(localized: "chat.autoreply.short")
-        }
-        if trimmed.lowercased().contains("спасибо") {
-            return String(localized: "chat.autoreply.thanks")
-        }
-        if trimmed.contains("?") {
-            return String(localized: "chat.autoreply.question")
-        }
-        return String(localized: "chat.autoreply.default")
+    /// Возвращает реально подключённого к семье специалиста или `nil`.
+    ///
+    /// Production: чтение из Firestore (ParentChild scheme) — специалист,
+    /// которого родитель сам пригласил/подтвердил для своего ребёнка.
+    /// Пока интеграция не реализована, подключённого специалиста нет —
+    /// экран честно показывает пустое состояние и не выдумывает собеседника.
+    private func connectedSpecialist() -> SpecialistInfo? {
+        nil
     }
 }

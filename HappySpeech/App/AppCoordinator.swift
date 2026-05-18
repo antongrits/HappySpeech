@@ -806,6 +806,16 @@ extension AppCoordinatorView {
         case "wordBank":
             return .wordBank(childId: previewChild)
 
+        // MARK: v28 Фаза 2 — ранее недостижимые маршруты (4)
+        case "permissionFlow":
+            return .permissionFlow(.microphone)
+        case "sharePlay":
+            return .sharePlay
+        case "familyVoiceSplit":
+            return .familyVoiceSplit
+        case "familyVoiceLibrary":
+            return .familyVoiceLibrary
+
         default:
             return .auth
         }

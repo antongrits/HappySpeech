@@ -341,8 +341,6 @@ private struct AdaptiveRecommendationCard: View {
         case .softOnset:       return String(localized: "stuttering.exercise.soft_start.title")
         case .diary:           return String(localized: "stuttering.exercise.diary.title")
         case .pacing:          return String(localized: "stuttering.exercise.pacing.title")
-        case .metronomeRhythm: return String(localized: "stuttering.exercise.metronome_rhythm.title")
-        case .easySpeech:      return String(localized: "stuttering.exercise.easy_speech.title")
         }
     }
 }

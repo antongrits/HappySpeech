@@ -121,10 +121,15 @@ enum LogopedistChatModels {
         struct ViewModel: Sendable {
             let specialistName: String
             let credentials: String
-            let onlineStatusLabel: String
+            /// Подпись о присутствии специалиста. `nil`, когда специалист
+            /// не подключён — тогда presence-индикатор не показывается вовсе
+            /// (никакой фейковой доступности).
+            let onlineStatusLabel: String?
             let isOnline: Bool
             let isConnected: Bool
             let connectionHint: String?
+            /// Текст честного пустого состояния, когда специалист не подключён.
+            let emptyStateHint: String?
             let messages: [MessageRow]
             let composerEnabled: Bool
         }

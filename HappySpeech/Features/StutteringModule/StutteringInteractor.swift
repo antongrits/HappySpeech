@@ -159,22 +159,6 @@ final class StutteringInteractor: StutteringBusinessLogic {
                 symbol: "timer",
                 symbolColor: .rose,
                 duration: "~4 мин"
-            ),
-            ExerciseCardData(
-                mode: .metronomeRhythm,
-                titleKey: "stuttering.exercise.metronome_rhythm.title",
-                subtitleKey: "stuttering.exercise.metronome_rhythm.subtitle",
-                symbol: "waveform",
-                symbolColor: .lilac,
-                duration: "~5 мин"
-            ),
-            ExerciseCardData(
-                mode: .easySpeech,
-                titleKey: "stuttering.exercise.easy_speech.title",
-                subtitleKey: "stuttering.exercise.easy_speech.subtitle",
-                symbol: "face.smiling.fill",
-                symbolColor: .gold,
-                duration: "~6 мин"
             )
         ]
     }
@@ -207,10 +191,6 @@ final class StutteringInteractor: StutteringBusinessLogic {
             return String(localized: "stuttering.voice.recommend.diary")
         case .pacing:
             return String(localized: "stuttering.voice.recommend.pacing")
-        case .metronomeRhythm:
-            return String(localized: "stuttering.voice.recommend.metronome_rhythm")
-        case .easySpeech:
-            return String(localized: "stuttering.voice.recommend.easy_speech")
         }
     }
 
@@ -310,8 +290,6 @@ final class StutteringInteractor: StutteringBusinessLogic {
         case .softOnset:       return "light.beacon.max"
         case .diary:           return "book.fill"
         case .pacing:          return "timer"
-        case .metronomeRhythm: return "waveform"
-        case .easySpeech:      return "face.smiling.fill"
         }
     }
 }
