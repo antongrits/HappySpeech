@@ -118,14 +118,22 @@ public struct HSStarRatingView: View {
 
     @ViewBuilder
     private func starImage(isFilled: Bool) -> some View {
-        Image(systemName: isFilled ? "star.fill" : "star")
+        let icon = Image(systemName: isFilled ? "star.fill" : "star")
             .font(.system(size: starSize, weight: .semibold))
             .foregroundStyle(isFilled ? ColorTokens.Brand.gold : Color.secondary)
+            // v29 — star/star.fill swap is a native symbol replace.
+            .contentTransition(.symbolEffect(.replace))
             .scaleEffect(isFilled && !reduceMotion ? 1.1 : 1.0)
             .animation(
-                reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.6),
+                MotionTokens.reward(reduceMotion: reduceMotion),
                 value: isFilled
             )
+        if reduceMotion {
+            icon
+        } else {
+            // Reward bounce when the star fills.
+            icon.symbolEffect(.bounce, value: isFilled)
+        }
     }
 
     // MARK: - Tap

@@ -82,13 +82,25 @@ public struct HSAudioRecorderView: View {
             Image(systemName: "mic.fill")
                 .font(.system(size: 36, weight: .semibold))
         case .listening:
-            Image(systemName: "waveform")
-                .font(.system(size: 36, weight: .semibold))
+            listeningIcon
         case .processing:
             ProgressView()
                 .progressViewStyle(.circular)
                 .tint(.white)
                 .scaleEffect(1.4)
+        }
+    }
+
+    /// «Слушаю» — variableColor SF Symbol effect передаёт активное
+    /// прослушивание нативно. Под Reduce Motion — статичный waveform.
+    @ViewBuilder
+    private var listeningIcon: some View {
+        let icon = Image(systemName: "waveform")
+            .font(.system(size: 36, weight: .semibold))
+        if reduceMotion {
+            icon
+        } else {
+            icon.symbolEffect(.variableColor.iterative, options: .repeating)
         }
     }
 
