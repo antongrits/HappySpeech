@@ -83,6 +83,7 @@ struct SoundDictionaryView: View {
                             heroSection(viewModel: viewModel)
                             ForEach(viewModel.sections) { section in
                                 sectionView(section)
+                                    .hsScrollEffect(.scaleFade)
                             }
                             footerNote
                         } else {

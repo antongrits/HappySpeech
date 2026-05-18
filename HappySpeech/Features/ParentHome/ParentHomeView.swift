@@ -299,51 +299,66 @@ private struct ParentDashboardTab: View {
                     childSection
 
                     // Last session card
-                    if let lastSession = viewModel.lastSession {
-                        lastSessionCard(lastSession)
-                    } else {
-                        noSessionCard
+                    Group {
+                        if let lastSession = viewModel.lastSession {
+                            lastSessionCard(lastSession)
+                        } else {
+                            noSessionCard
+                        }
                     }
+                    .hsScrollEffect(.scaleFade)
 
                     // F-301 v25 — Weekly Sound Report «Итоги недели».
                     weeklyReportCard
+                        .hsScrollEffect(.scaleFade)
 
                     // Streak & stats
                     statsRow
+                        .hsScrollEffect(.scaleFade)
 
                     // M6.16: Screening card (если скрининг пройден)
                     if let screening = viewModel.screeningCard {
                         screeningCard(screening)
+                            .hsScrollEffect(.scaleFade)
                     }
 
                     // Home task from LLM
                     if let homeTask = viewModel.homeTask {
                         homeTaskCard(homeTask)
+                            .hsScrollEffect(.scaleFade)
                     }
 
                     // Family Voice card
                     familyVoiceCard
+                        .hsScrollEffect(.scaleFade)
 
                     // Block T v17 — Pronunciation Leaderboard (parent-only, COPPA-safe).
                     pronunciationLeaderboardCard
+                        .hsScrollEffect(.scaleFade)
 
                     // Block T v17 — Neurolinguist Insights (rule-based summary).
                     neurolinguistInsightsCard
+                        .hsScrollEffect(.scaleFade)
 
                     // Family Calendar card
                     familyCalendarCard
+                        .hsScrollEffect(.scaleFade)
 
                     // Block R.2 v18 — Logopedist chat card.
                     logopedistChatCard
+                        .hsScrollEffect(.scaleFade)
 
                     // Block R.4 v18 — Family achievements card.
                     familyAchievementsCard
+                        .hsScrollEffect(.scaleFade)
 
                     // Stuttering / Fluency module (if hasFluencyGoal enabled)
                     stutteringCard
+                        .hsScrollEffect(.scaleFade)
 
                     // Recommendations
                     recommendationsSection
+                        .hsScrollEffect(.scaleFade)
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.bottom, SpacingTokens.sp16 + SpacingTokens.sp10)
