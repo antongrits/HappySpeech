@@ -69,15 +69,22 @@ private struct TapFeedbackModifier: ViewModifier {
     let scale: CGFloat
     @State private var isPressed = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.hapticService) private var hapticService
 
     func body(content: Content) -> some View {
         content
             .scaleEffect(isPressed && !reduceMotion ? scale : 1.0)
-            .opacity(isPressed ? 0.85 : 1.0)
-            .animation(reduceMotion ? nil : .spring(response: 0.25, dampingFraction: 0.7), value: isPressed)
+            .opacity(isPressed ? 0.9 : 1.0)
+            // v29 — unified press vocabulary via MotionTokens.pressSpring.
+            .animation(MotionTokens.pressSpring(reduceMotion: reduceMotion), value: isPressed)
             .simultaneousGesture(
                 DragGesture(minimumDistance: 0)
-                    .onChanged { _ in isPressed = true }
+                    .onChanged { _ in
+                        guard !isPressed else { return }
+                        isPressed = true
+                        let service = hapticService
+                        Task { await service.play(pattern: .cardSelect) }
+                    }
                     .onEnded { _ in isPressed = false }
             )
     }

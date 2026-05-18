@@ -15,6 +15,8 @@ struct ChildHomeDailyMissionDetailCard: View {
     let mission: ChildHomeModels.DailyMissionDetail
     let onTap: () -> Void
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     var body: some View {
         Button(action: onTap) {
             HSLiquidGlassCard(style: .primary, padding: SpacingTokens.cardPad) {
@@ -60,10 +62,22 @@ struct ChildHomeDailyMissionDetailCard: View {
 
             Spacer(minLength: 0)
 
-            Image(systemName: "play.circle.fill")
-                .font(TypographyTokens.title(32))
-                .foregroundStyle(ColorTokens.Brand.primary)
-                .accessibilityHidden(true)
+            playIcon
+        }
+    }
+
+    /// «Играть» — мягкий повторяющийся pulse привлекает внимание к CTA.
+    /// Под Reduce Motion — статичная иконка (symbolEffect не применяется).
+    @ViewBuilder
+    private var playIcon: some View {
+        let icon = Image(systemName: "play.circle.fill")
+            .font(TypographyTokens.title(32))
+            .foregroundStyle(ColorTokens.Brand.primary)
+            .accessibilityHidden(true)
+        if reduceMotion || mission.isCompleted {
+            icon
+        } else {
+            icon.symbolEffect(.pulse, options: .repeating)
         }
     }
 
@@ -77,6 +91,12 @@ struct ChildHomeDailyMissionDetailCard: View {
                 Text(mission.repsCounterText)
                     .font(TypographyTokens.mono(13))
                     .foregroundStyle(ColorTokens.Kid.ink)
+                    .monospacedDigit()
+                    .contentTransition(.numericText())
+                    .animation(
+                        MotionTokens.scrollTransition(reduceMotion: reduceMotion),
+                        value: mission.progress
+                    )
             }
 
             HSProgressBar(
@@ -144,7 +164,7 @@ struct ChildHomeQuickPlayCard: View {
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
                     .fill(ColorTokens.Kid.surface)
-                    .kidCardShadow()
+                    .depthShadow(for: .kid)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
@@ -219,7 +239,7 @@ struct ChildHomeQuickActionTile: View {
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.lg, style: .continuous)
                     .fill(ColorTokens.Kid.surface)
-                    .kidCardShadow()
+                    .depthShadow(for: .kid)
             )
         }
         .buttonStyle(.plain)

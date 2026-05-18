@@ -42,15 +42,16 @@ struct ChildHomeV25EntryCard: View {
             .padding(.horizontal, SpacingTokens.sp4)
             .frame(maxWidth: .infinity, minHeight: 100)
             .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
+                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                     .fill(accent.opacity(0.12))
             )
             .overlay(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
+                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                     .strokeBorder(accent.opacity(0.3), lineWidth: 1)
             )
         }
         .buttonStyle(.plain)
+        .tapFeedback()
         .accessibilityLabel(Text(LocalizedStringKey(titleKey)))
         .accessibilityHint(Text(LocalizedStringKey(hintKey)))
     }

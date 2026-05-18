@@ -104,31 +104,40 @@ struct ChildHomeView: View {
 
                     dailyMissionSection
                         .spotlightAnchor(key: "daily_mission_card")
+                        .hsScrollEffect(.scaleFade)
 
                     // M8.7 v6: Слова дня
                     if !viewModel.todayWords.isEmpty {
                         todayWordsSection
+                            .hsScrollEffect(.scaleFade)
                     }
 
                     quickPlaySection
                         .spotlightAnchor(key: "quick_play_strip")
+                        .hsScrollEffect(.scaleFade)
 
                     quickActionsSection
                         .spotlightAnchor(key: "start_lesson_button")
+                        .hsScrollEffect(.scaleFade)
 
                     // M8.7 v6: Задания логопеда
                     if !viewModel.homeTasks.isEmpty {
                         homeTasksSection
+                            .hsScrollEffect(.scaleFade)
                     }
 
                     worldMapPreviewSection
+                        .hsScrollEffect(.scaleFade)
 
                     progressSection
                         .spotlightAnchor(key: "streak_banner")
+                        .hsScrollEffect(.scaleFade)
 
                     recentRewardsSection
+                        .hsScrollEffect(.scaleFade)
 
                     recentSessionsSection
+                        .hsScrollEffect(.scaleFade)
 
                     sosSection
 
