@@ -72,7 +72,10 @@ private final class FirebasePerformanceTrace: PerformanceTrace, @unchecked Senda
     private let trace: Trace?
 
     init(name: String) {
-        trace = Performance.startTrace(name: name)
+        // `trace(name:)` создаёт трейс без запуска — старт явно выполняет `start()`.
+        // `startTrace` запустил бы трейс сразу, и последующий `start()` дал бы
+        // двойной старт (Firebase Performance логирует это как ошибку).
+        trace = Performance.sharedInstance().trace(name: name)
     }
 
     func start() {

@@ -201,6 +201,13 @@ actor LiveSileroVAD: VADProtocol {
         return VADSession(chunks: results)
     }
 
+    /// Пробует загрузить CoreML-модель заранее. Бросает `VADError.modelNotFound`,
+    /// если `SileroVAD.mlpackage` отсутствует в бандле — используется фабрикой
+    /// `makeVAD()` для решения о graceful fallback на `AmplitudeVAD`.
+    func prepare() async throws {
+        _ = try await loadModel()
+    }
+
     // MARK: Private
 
     private func loadModel() async throws -> MLModel {
@@ -348,11 +355,8 @@ actor AmplitudeVAD: VADProtocol {
 func makeVAD(threshold: Float = VADResult.Constants.defaultThreshold) async -> any VADProtocol {
     do {
         let live = LiveSileroVAD(threshold: threshold)
-        // Пробуем загрузить модель — если нет, вернём fallback
-        _ = try await live.detectSpeech(
-            chunk: AVAudioPCMBuffer(),
-            timestamp: 0
-        )
+        // Пробуем загрузить модель — если её нет, деградируем до AmplitudeVAD.
+        try await live.prepare()
         return live
     } catch VADError.modelNotFound {
         let logger = Logger(subsystem: "HappySpeech", category: "SileroVAD")
