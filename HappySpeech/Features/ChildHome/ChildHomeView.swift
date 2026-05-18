@@ -623,25 +623,7 @@ struct ChildHomeView: View {
             .accessibilityLabel(String(localized: "voice_cloning.entry.title"))
             .accessibilityHint(String(localized: "voice_cloning.entry.hint"))
 
-            // F-302 v25 — Articulation Gym «Зарядка для язычка».
-            ChildHomeV25EntryCard(
-                titleKey: "articulationGym.entry.title",
-                hintKey: "articulationGym.entry.hint",
-                iconName: "mouth.fill",
-                accent: ColorTokens.Brand.mint
-            ) {
-                router?.routeToArticulationGym()
-            }
-
-            // F-303 v25 — Word Bank «Копилка слов».
-            ChildHomeV25EntryCard(
-                titleKey: "wordBank.entry.title",
-                hintKey: "wordBank.entry.hint",
-                iconName: "star.square.on.square.fill",
-                accent: ColorTokens.Brand.gold
-            ) {
-                router?.routeToWordBank(childId: childId)
-            }
+            v25EntryCards
 
             let columns: [GridItem] = hSizeClass == .regular
                 ? [GridItem(.flexible()), GridItem(.flexible()),
@@ -1000,6 +982,48 @@ struct ChildHomeView: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.9)
             Spacer(minLength: 0)
+        }
+    }
+}
+
+// MARK: - ChildHomeView + v25EntryCards
+//
+// v29 Фаза 8 — секция full-width карточек-входов вынесена в extension,
+// чтобы не раздувать тело `ChildHomeView` (SwiftLint type_body_length).
+
+extension ChildHomeView {
+
+    /// Группа карточек-входов в дополнительные детские режимы.
+    @ViewBuilder
+    var v25EntryCards: some View {
+        // F-302 v25 — Articulation Gym «Зарядка для язычка».
+        ChildHomeV25EntryCard(
+            titleKey: "articulationGym.entry.title",
+            hintKey: "articulationGym.entry.hint",
+            iconName: "mouth.fill",
+            accent: ColorTokens.Brand.mint
+        ) {
+            router?.routeToArticulationGym()
+        }
+
+        // F-303 v25 — Word Bank «Копилка слов».
+        ChildHomeV25EntryCard(
+            titleKey: "wordBank.entry.title",
+            hintKey: "wordBank.entry.hint",
+            iconName: "star.square.on.square.fill",
+            accent: ColorTokens.Brand.gold
+        ) {
+            router?.routeToWordBank(childId: childId)
+        }
+
+        // v29 Фаза 8 Ф.5 — Sound Traffic Light «Звуковой светофор».
+        ChildHomeV25EntryCard(
+            titleKey: "soundTrafficLight.entry.title",
+            hintKey: "soundTrafficLight.entry.hint",
+            iconName: "car.2.fill",
+            accent: ColorTokens.Brand.sky
+        ) {
+            router?.routeToSoundTrafficLight(childId: childId)
         }
     }
 }

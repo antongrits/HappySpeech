@@ -68,6 +68,10 @@ enum AppRoute: Hashable {
     case logopedistChat(parentId: String, specialistId: String)
     case culturalContent(childId: String)
     case weeklyChallenge(childId: String)
+    // v29 Фаза 8: новые функции (Волна 1)
+    case plainProgress(childId: String)
+    case parentGuide(childId: String)
+    case soundTrafficLight(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -518,6 +522,20 @@ struct AppCoordinatorView: View {
                 WeeklyChallengeView(childId: childId)
             }
             .environment(\.circuitContext, .kid)
+
+        // MARK: - v29 Фаза 8: Волна 1
+
+        case .plainProgress(let childId):
+            PlainProgressView(childId: childId)
+                .environment(\.circuitContext, .parent)
+
+        case .parentGuide(let childId):
+            ParentGuideView(childId: childId)
+                .environment(\.circuitContext, .parent)
+
+        case .soundTrafficLight(let childId):
+            SoundTrafficLightView(childId: childId)
+                .environment(\.circuitContext, .kid)
         }
     }
 
@@ -777,6 +795,12 @@ extension AppCoordinatorView {
             return .logopedistChat(parentId: previewParent, specialistId: "specialist-default")
         case "weeklyChallenge":
             return .weeklyChallenge(childId: previewChild)
+        case "plainProgress":
+            return .plainProgress(childId: previewChild)
+        case "parentGuide":
+            return .parentGuide(childId: previewChild)
+        case "soundTrafficLight":
+            return .soundTrafficLight(childId: previewChild)
         case "culturalContent":
             return .culturalContent(childId: previewChild)
         case "pronunciationLeaderboard":

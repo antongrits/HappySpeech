@@ -340,6 +340,14 @@ private struct ParentDashboardTab: View {
                     neurolinguistInsightsCard
                         .hsScrollEffect(.scaleFade)
 
+                    // v29 Фаза 8 Ф.9 — «Понятный прогресс»: аналитика обычным языком.
+                    plainProgressCard
+                        .hsScrollEffect(.scaleFade)
+
+                    // v29 Фаза 8 Ф.3 — «Логопед для родителей»: обучающая база.
+                    parentGuideCard
+                        .hsScrollEffect(.scaleFade)
+
                     // Family Calendar card
                     familyCalendarCard
                         .hsScrollEffect(.scaleFade)
@@ -992,6 +1000,80 @@ private struct ParentDashboardTab: View {
         .accessibilityLabel(
             String(localized: "family.achievements.entry.title") + ". " +
             String(localized: "family.achievements.entry.subtitle")
+        )
+        .accessibilityAddTraits(.isButton)
+        .environment(\.circuitContext, .parent)
+    }
+
+    // MARK: - v29 Фаза 8: Ф.9 «Понятный прогресс»
+
+    private var plainProgressCard: some View {
+        HSCard(style: .elevated) {
+            HStack(spacing: SpacingTokens.sp3) {
+                parentNavIcon("text.book.closed.fill", tint: ColorTokens.Brand.mint)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "plainProgress.entry.title"))
+                        .font(TypographyTokens.headline())
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "plainProgress.entry.subtitle"))
+                        .font(TypographyTokens.body())
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: SpacingTokens.sp1)
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp4)
+        }
+        .onTapGesture {
+            coordinator.navigate(to: .plainProgress(childId: viewModel.childId))
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            String(localized: "plainProgress.entry.title") + ". " +
+            String(localized: "plainProgress.entry.subtitle")
+        )
+        .accessibilityAddTraits(.isButton)
+        .environment(\.circuitContext, .parent)
+    }
+
+    // MARK: - v29 Фаза 8: Ф.3 «Логопед для родителей»
+
+    private var parentGuideCard: some View {
+        HSCard(style: .elevated) {
+            HStack(spacing: SpacingTokens.sp3) {
+                parentNavIcon("graduationcap.fill", tint: ColorTokens.Brand.lilac)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "parentGuide.entry.title"))
+                        .font(TypographyTokens.headline())
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "parentGuide.entry.subtitle"))
+                        .font(TypographyTokens.body())
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: SpacingTokens.sp1)
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp4)
+        }
+        .onTapGesture {
+            coordinator.navigate(to: .parentGuide(childId: viewModel.childId))
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            String(localized: "parentGuide.entry.title") + ". " +
+            String(localized: "parentGuide.entry.subtitle")
         )
         .accessibilityAddTraits(.isButton)
         .environment(\.circuitContext, .parent)

@@ -100,4 +100,9 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     func routeToGrammarGame(childId: String) {
         coordinator?.navigate(to: .grammarGame(childId: childId))
     }
+
+    /// v29 Фаза 8 Ф.5 — SoundTrafficLight «Звуковой светофор».
+    func routeToSoundTrafficLight(childId: String) {
+        coordinator?.navigate(to: .soundTrafficLight(childId: childId))
+    }
 }

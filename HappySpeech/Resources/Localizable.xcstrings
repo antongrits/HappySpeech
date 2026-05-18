@@ -19591,6 +19591,1051 @@
         }
       }
     },
+    "parentGuide.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть"
+          }
+        }
+      }
+    },
+    "parentGuide.entry.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Короткие уроки: как заниматься дома правильно"
+          }
+        }
+      }
+    },
+    "parentGuide.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Логопед для родителей"
+          }
+        }
+      }
+    },
+    "parentGuide.header.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Короткие уроки о том, как правильно заниматься дома. Карточки по вашей цели — выше."
+          }
+        }
+      }
+    },
+    "parentGuide.header.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Учимся помогать ребёнку"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.addFavorite": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В избранное"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.alreadyRead": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Урок прочитан"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.artic.hold.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Многие упражнения требуют удержать положение языка несколько секунд — например, «лопаточка» или «грибок». Это не пауза, а основная работа: так тренируется сила и выносливость мышц. Начинайте с 3 секунд и постепенно доводите до 5–7. Считайте вслух вместе с ребёнком — это превращает удержание в игру."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.artic.hold.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Статические упражнения развивают силу мышц."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.artic.hold.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зачем удерживать позу"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.artic.mirror.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Артикуляционная гимнастика готовит мышцы языка и губ к правильному произношению. Делайте её перед зеркалом: так ребёнок видит и сравнивает своё движение с вашим показом. Сначала покажите упражнение сами, медленно и чётко. Затем выполните вместе. Каждое движение повторяйте 4–6 раз. Гимнастику делают ежедневно — это её главное правило."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.artic.mirror.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зеркало даёт ребёнку зрительный контроль."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.artic.mirror.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Гимнастика перед зеркалом"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.artic.sonants.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуки Р и Л требуют сильного и подвижного языка. Полезны упражнения «Грибок», «Лошадка», «Маляр», «Барабанщик» — они поднимают язык вверх и развивают его кончик. Делайте их в комплексе, по порядку, каждый день. Не пытайтесь ставить сам звук Р дома без логопеда: важно сначала подготовить мышцы, а постановку звука доверить специалисту."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.artic.sonants.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражнения, которые готовят язык к Р и Л."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.artic.sonants.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Гимнастика для звуков Р и Л"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.artic.whistling.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для свистящих звуков С, З, Ц язык должен быть широким и спокойно лежать за нижними зубами. Помогают упражнения «Лопаточка», «Почистим зубки», «Горка», «Загнать мяч в ворота» — они формируют нужный воздушный поток. Следите, чтобы язык не высовывался между зубами. Делайте комплекс ежедневно перед звуковыми играми."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.artic.whistling.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подготовка языка к звукам С, З, Ц."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.artic.whistling.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Гимнастика для свистящих звуков"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.basics.duration.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для ребёнка 5–6 лет достаточно 7–10 минут, для 6–8 лет — 10–15 минут. Если ребёнок отвлекается и теряет интерес — занятие пора заканчивать, даже если прошло меньше времени. Лучше закончить на успехе и хорошем настроении, чем продолжать через силу. Внимание дошкольника ограничено, и это нормально."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.basics.duration.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5–8 лет: от 7 до 15 минут по возрасту."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.basics.duration.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сколько длится занятие"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.basics.environment.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите тихое место без телевизора и лишних игрушек на виду. Для артикуляционных упражнений пригодится небольшое зеркало — ребёнок должен видеть свой язык и губы. Сядьте рядом так, чтобы ваше лицо было хорошо видно. Говорите спокойно, не торопите. Занятие — это совместная игра, а не экзамен."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.basics.environment.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тихое место, зеркало, без спешки."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.basics.environment.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Где и как заниматься"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.basics.mistakes.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не передразнивайте неправильную речь ребёнка и не требуйте «скажи правильно» без показа, как именно. Не сравнивайте ребёнка с другими детьми. Не занимайтесь, когда раздражены. Не ругайте за ошибки — ошибка это часть обучения. И не перескакивайте через этапы: звук закрепляется постепенно, от изолированного произнесения к словам и фразам."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.basics.mistakes.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чего стоит избегать на домашних занятиях."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.basics.mistakes.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Частые ошибки родителей"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.basics.routine.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лучше всего заниматься каждый день в одно и то же время — так занятие становится привычкой и не вызывает протеста. Подойдёт спокойное время: утром после завтрака или днём после прогулки. Избегайте занятий, когда ребёнок устал, голоден или перевозбуждён. Короткое ежедневное занятие даёт больше, чем длинное раз в неделю."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.basics.routine.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Регулярность важнее длительности."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.basics.routine.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Когда лучше заниматься"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.fluency.calm.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Плавность речи тесно связана с эмоциональным состоянием. Усталость, спешка, ссоры, избыток впечатлений усиливают запинки. Помогают предсказуемый режим дня, достаточный сон, спокойные игры, ограничение экранов перед сном. Это не значит «оберегать от всего» — речь о ровном, без перегрузок, ритме жизни."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.fluency.calm.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Эмоциональный фон влияет на плавность."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.fluency.calm.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спокойная обстановка дома"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.fluency.donts.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не говорите ребёнку «не торопись», «вдохни», «повтори спокойно» — это фиксирует внимание на речи и усиливает запинки. Не перебивайте и не договаривайте за него. Не требуйте говорить при чужих людях, если ему трудно. Не показывайте тревогу из-за его речи. Не наказывайте за запинки. Ребёнок не должен чувствовать, что с его речью что-то «не так»."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.fluency.donts.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слова и действия, которые усиливают запинки."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.fluency.donts.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заикание: чего нельзя делать"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.fluency.dos.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Говорите с ребёнком спокойно и неторопливо — ваш темп речи он перенимает. Делайте паузы, не перебивайте, дайте договорить. Слушайте, что ребёнок говорит, а не как. Хвалите за спокойную речь, но не делайте на ней акцент. Соблюдайте режим дня и снижайте перегрузки. Спокойная доброжелательная обстановка дома — главная поддержка."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.fluency.dos.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что поддерживает плавную речь."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.fluency.dos.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заикание: как помогать ребёнку"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.fluency.tempo.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дети подстраивают свой темп речи под взрослого. Если вы говорите быстро, ребёнку с запинками труднее. Попробуйте сами говорить чуть медленнее и с мягкими паузами — не нарочито, а естественно. Это снижает речевую нагрузку и даёт ребёнку время. Такой «замедленный» стиль общения — простой и действенный приём."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.fluency.tempo.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спокойный темп взрослого помогает ребёнку."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.fluency.tempo.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Темп речи имеет значение"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.markRead": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прочитано"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.motiv.effort.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Если хвалить только за идеальный звук, ребёнок начнёт бояться ошибок. Хвалите за попытку: «ты очень старался», «ты не сдался». Так ребёнок понимает, что ценно само усилие, и не боится пробовать. Это особенно важно на трудных этапах, когда звук ещё не получается. Установка «ошибаться можно» помогает учиться."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.motiv.effort.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Усилие важнее идеального произношения."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.motiv.effort.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хвалите за старание, а не за результат"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.motiv.patience.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Исправление произношения занимает месяцы, и прогресс идёт неравномерно: после рывка может быть период «топтания на месте». Это нормально. Не ждите быстрых результатов и не передавайте ребёнку своё нетерпение. Сравнивайте ребёнка только с ним самим месяц назад. Спокойствие и регулярность взрослого — половина успеха."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.motiv.patience.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Коррекция речи — это месяцы, а не дни."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.motiv.patience.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Терпение и реалистичные ожидания"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.motiv.play.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для ребёнка 5–8 лет игра — главный способ учиться. «Скучные» повторения звуков превращайте в игру: соревнование с игрушкой, поиск предметов на звук дома, придумывание смешных слов. Меняйте задания, чтобы не приедалось. Если ребёнку весело, он занимается охотно и дольше удерживает внимание."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.motiv.play.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Игра — естественный способ обучения дошкольника."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.motiv.play.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Превращайте занятия в игру"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.motiv.praise.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хвалите конкретно: не просто «молодец», а «ты так чётко сказал звук С в слове сок». Конкретная похвала показывает ребёнку, что именно у него получилось, и закрепляет это. Хвалите искренне и вовремя — сразу после успеха. Избегайте похвалы «за всё подряд»: она обесценивается. Замечайте маленькие шаги — из них складывается результат."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.motiv.praise.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Конкретная похвала работает лучше общей."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.motiv.praise.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как правильно хвалить"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.phon.games.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поиграйте: «хлопни, когда услышишь звук С» в ряду слов; «назови слова на звук М»; «какой звук первый в слове кот». Полезна игра «что лишнее»: мак-рак-лук-бак — лишнее «лук», в нём нет звука «а» в… (выбирайте по уровню). Такие игры можно вести по дороге, в очереди, на прогулке — без всяких материалов."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.phon.games.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Простые игры без специальных материалов."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.phon.games.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Игры на фонематический слух дома"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.phon.school.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Если к школе фонематический слух развит слабо, ребёнку будет трудно делить слова на звуки, а значит — учиться писать и читать. Многие школьные ошибки (пропуск букв, замена похожих) уходят корнями именно сюда. Поэтому игры на различение звуков в 5–7 лет — это вложение в будущую успеваемость, а не просто развлечение."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.phon.school.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Профилактика трудностей с письмом и чтением."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.phon.school.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фонематический слух и школа"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.phon.why.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фонематический слух — это способность различать звуки речи: слышать разницу между «дом» и «том», «мишка» и «миска». Это не то же самое, что обычный слух. Без развитого фонематического слуха ребёнку трудно правильно произносить звуки и потом учиться читать и писать. Хорошая новость: его можно и нужно тренировать в игре."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.phon.why.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Умение различать звуки речи на слух."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.phon.why.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зачем нужен фонематический слух"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.read": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "прочитано"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.readMinutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d мин чтения"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.recommendedBadge": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ВАМ"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.removeFavorite": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Из избранного"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.sounds.automation.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Когда ребёнок научился произносить звук, его нужно автоматизировать — то есть закрепить так, чтобы он звучал правильно без контроля. Это самый долгий этап. Повторяйте звук в словах и фразах в игре, по чуть-чуть, но каждый день. На первых порах ребёнок будет произносить звук правильно только когда о нём думает — это нормально, постепенно навык станет автоматическим."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.sounds.automation.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрепление звука до привычки."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.sounds.automation.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что такое автоматизация звука"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.sounds.differentiation.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "После того как звук поставлен и закреплён, ребёнок может путать его с похожим — например, говорить «суба» вместо «шуба». Дифференциация учит различать близкие звуки на слух и в речи. Это важно не только для произношения, но и для будущего письма: путаница звуков ведёт к ошибкам на письме. В приложении этому помогает игра «Звуковой светофор»."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.sounds.differentiation.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чтобы ребёнок не путал похожие звуки."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.sounds.differentiation.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зачем нужна дифференциация звуков"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.sounds.r.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук Р в норме появляется одним из последних — к 5–6 годам. Он требует сильного, вибрирующего кончика языка, и это сложное движение. Если ребёнку 5 лет и Р ещё нет — это часто вариант нормы. Не ставьте звук дома «на горло» или искусственными приёмами: неправильный Р потом трудно исправлять. Готовьте язык гимнастикой, а постановку доверьте логопеду."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.sounds.r.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Р — один из самых поздних звуков."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.sounds.r.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почему звук Р даётся трудно"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.sounds.stages.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук осваивается по шагам: сначала подготовка артикуляции, затем изолированное произнесение, потом слоги, слова, словосочетания, фразы и, наконец, свободная речь. Перескакивать через ступени нельзя — навык не закрепится. Если на каком-то этапе трудно, вернитесь на шаг назад. Терпение здесь важнее скорости."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.sounds.stages.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "От изолированного звука к свободной речи."
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.sounds.stages.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Этапы работы над звуком"
+          }
+        }
+      }
+    },
+    "parentGuide.lesson.unread": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "не прочитано"
+          }
+        }
+      }
+    },
+    "parentGuide.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открываем уроки…"
+          }
+        }
+      }
+    },
+    "parentGuide.screen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Логопед для родителей"
+          }
+        }
+      }
+    },
+    "parentGuide.tipOfDay.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Совет дня"
+          }
+        }
+      }
+    },
+    "parentGuide.tipOfDay.open": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть урок"
+          }
+        }
+      }
+    },
+    "parentGuide.topic.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Артикуляционная гимнастика"
+          }
+        }
+      }
+    },
+    "parentGuide.topic.basics": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Основы домашних занятий"
+          }
+        }
+      }
+    },
+    "parentGuide.topic.collapse.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Свернуть тему"
+          }
+        }
+      }
+    },
+    "parentGuide.topic.expand.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Развернуть тему"
+          }
+        }
+      }
+    },
+    "parentGuide.topic.fluency": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Плавность речи"
+          }
+        }
+      }
+    },
+    "parentGuide.topic.motivation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мотивация и похвала"
+          }
+        }
+      }
+    },
+    "parentGuide.topic.phonemic": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фонематический слух"
+          }
+        }
+      }
+    },
+    "parentGuide.topic.sounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуки: постановка и закрепление"
+          }
+        }
+      }
+    },
+    "parentGuide.topics.sectionTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Темы"
+          }
+        }
+      }
+    },
     "parentInsightsTimeline.back.a11y": {
       "extractionState": "manual",
       "localizations": {
@@ -21405,6 +22450,534 @@
           "stringUnit": {
             "state": "translated",
             "value": "Свистящие (С, З, Ц)"
+          }
+        }
+      }
+    },
+    "plainProgress.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть"
+          }
+        }
+      }
+    },
+    "plainProgress.comparison.delta.down": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "За месяц точность немного снизилась — примерно на %@. Это повод вернуться к спокойному режиму занятий."
+          }
+        }
+      }
+    },
+    "plainProgress.comparison.delta.same": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "За месяц точность держится на одном уровне — навык закрепляется."
+          }
+        }
+      }
+    },
+    "plainProgress.comparison.delta.up": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "За месяц точность выросла примерно на %@."
+          }
+        }
+      }
+    },
+    "plainProgress.comparison.monthAgo": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Месяц назад"
+          }
+        }
+      }
+    },
+    "plainProgress.comparison.now": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сейчас"
+          }
+        }
+      }
+    },
+    "plainProgress.comparison.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Месяц назад и сейчас"
+          }
+        }
+      }
+    },
+    "plainProgress.empty.text": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "За эту неделю занятий ещё не было. Когда ребёнок позанимается, здесь появится понятный разбор прогресса."
+          }
+        }
+      }
+    },
+    "plainProgress.entry.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что улучшилось за неделю — обычными словами"
+          }
+        }
+      }
+    },
+    "plainProgress.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Понятный прогресс"
+          }
+        }
+      }
+    },
+    "plainProgress.error.load": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось собрать данные. Попробуйте позже."
+          }
+        }
+      }
+    },
+    "plainProgress.header.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Простой разбор занятий: %@ и его речь за неделю"
+          }
+        }
+      }
+    },
+    "plainProgress.header.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как идут дела"
+          }
+        }
+      }
+    },
+    "plainProgress.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Собираем итоги недели…"
+          }
+        }
+      }
+    },
+    "plainProgress.milestone.firstSession": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Первые занятия начались"
+          }
+        }
+      }
+    },
+    "plainProgress.milestone.highAccuracy": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Высокая точность речи"
+          }
+        }
+      }
+    },
+    "plainProgress.milestone.inProgress": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "в работе"
+          }
+        }
+      }
+    },
+    "plainProgress.milestone.reached": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "достигнуто"
+          }
+        }
+      }
+    },
+    "plainProgress.milestone.sectionTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вехи"
+          }
+        }
+      }
+    },
+    "plainProgress.milestone.soundStable": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Целевой звук звучит уверенно"
+          }
+        }
+      }
+    },
+    "plainProgress.milestone.tenSessions": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Десять занятий за неделю"
+          }
+        }
+      }
+    },
+    "plainProgress.milestone.weekStreak": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Неделя занятий без пропусков"
+          }
+        }
+      }
+    },
+    "plainProgress.narrative.closing.improved": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжайте в том же духе — регулярность важнее объёма."
+          }
+        }
+      }
+    },
+    "plainProgress.narrative.closing.noData": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": ""
+          }
+        }
+      }
+    },
+    "plainProgress.narrative.closing.steady": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Небольшие, но регулярные занятия дают устойчивый результат."
+          }
+        }
+      }
+    },
+    "plainProgress.narrative.closing.support": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не торопите ребёнка: спокойные короткие занятия помогут вернуть уверенность."
+          }
+        }
+      }
+    },
+    "plainProgress.narrative.focus.early": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук «%1$@» ещё в работе — точность около %2$@, и это нормально на раннем этапе."
+          }
+        }
+      }
+    },
+    "plainProgress.narrative.focus.progress": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук «%1$@» постепенно получается лучше — сейчас точность около %2$@."
+          }
+        }
+      }
+    },
+    "plainProgress.narrative.focus.strong": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук «%1$@» уже звучит уверенно — точность около %2$@."
+          }
+        }
+      }
+    },
+    "plainProgress.narrative.metrics": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Занятий за неделю: %1$d · Практика: %2$d мин · Средняя точность: %3$@"
+          }
+        }
+      }
+    },
+    "plainProgress.narrative.metrics.none": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "За неделю занятий пока не было."
+          }
+        }
+      }
+    },
+    "plainProgress.narrative.opening.improved": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "За эту неделю %@ стал произносить звуки заметно точнее, чем раньше."
+          }
+        }
+      }
+    },
+    "plainProgress.narrative.opening.noData": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока занятий слишком мало, чтобы сделать выводы. Дайте ребёнку позаниматься несколько дней — и здесь появится понятный разбор."
+          }
+        }
+      }
+    },
+    "plainProgress.narrative.opening.steady": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На этой неделе %@ занимался стабильно, без резких перемен — это нормальный рабочий темп."
+          }
+        }
+      }
+    },
+    "plainProgress.narrative.opening.support": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На этой неделе %@ давалось чуть труднее обычного. Так бывает — это часть пути."
+          }
+        }
+      }
+    },
+    "plainProgress.narrative.title.improved": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Есть заметный рост"
+          }
+        }
+      }
+    },
+    "plainProgress.narrative.title.noData": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока мало данных"
+          }
+        }
+      }
+    },
+    "plainProgress.narrative.title.steady": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Идём ровно"
+          }
+        }
+      }
+    },
+    "plainProgress.narrative.title.support": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сейчас нужна поддержка"
+          }
+        }
+      }
+    },
+    "plainProgress.reco.advance": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук «%@» уже звучит уверенно — можно переходить к словам и коротким фразам с ним."
+          }
+        }
+      }
+    },
+    "plainProgress.reco.noData": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начните с коротких ежедневных занятий по 7–10 минут — и через несколько дней здесь появятся понятные рекомендации."
+          }
+        }
+      }
+    },
+    "plainProgress.reco.practice": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На следующей неделе сделайте упор на звук «%@» в простых словах. Совет: поиграйте дома в слова на этот звук по дороге в садик."
+          }
+        }
+      }
+    },
+    "plainProgress.reco.sectionTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что делать дальше"
+          }
+        }
+      }
+    },
+    "plainProgress.reco.support": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вернитесь к более простым заданиям со звуком «%@» и хвалите ребёнка за каждую попытку — так вернётся уверенность."
+          }
+        }
+      }
+    },
+    "plainProgress.screen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Понятный прогресс"
+          }
+        }
+      }
+    },
+    "plainProgress.share.button": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поделиться сводкой"
+          }
+        }
+      }
+    },
+    "plainProgress.share.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отправить краткий итог недели специалисту"
+          }
+        }
+      }
+    },
+    "plainProgress.share.summary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Итоги недели: %1$@. Средняя точность %2$@, занятий %3$d, практика %4$d мин. Фокус-звук — «%5$@». Сводка из приложения HappySpeech."
           }
         }
       }
@@ -33117,6 +34690,226 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "soundTrafficLight.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть игру"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.encourage.good": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хорошо получается! Ещё немного практики."
+          }
+        }
+      }
+    },
+    "soundTrafficLight.encourage.great": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ты отлично различаешь звуки!"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.encourage.keepGoing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец, что попробовал! Сыграем ещё?"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Игра: разложи слова по звукам в два гаража"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуковой светофор"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.feedback.correct": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Верно! Поехали дальше"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.feedback.tryAgain": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почти! Слушай внимательнее"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.garage.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отправить слово в этот гараж"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.garage.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук «%@»"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Послушай слово и отправь машинку в нужный гараж"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готовим игру…"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.progress": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слово %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.round.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слово «%1$@». %2$@"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.summary.again": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Играть ещё раз"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.summary.again.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать новую игру"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.summary.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.summary.score": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Правильно: %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.summary.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Игра окончена!"
+          }
+        }
+      }
+    },
+    "soundTrafficLight.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуковой светофор"
           }
         }
       }
