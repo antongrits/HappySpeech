@@ -275,7 +275,7 @@ struct ChildHomeView: View {
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
 
                     Text("\(viewModel.displayedName)!")
-                        .font(TypographyTokens.title(28))
+                        .font(TypographyTokens.kidHero(30))
                         .foregroundStyle(ColorTokens.Kid.ink)
                         .lineLimit(2)
                         .minimumScaleFactor(0.8)

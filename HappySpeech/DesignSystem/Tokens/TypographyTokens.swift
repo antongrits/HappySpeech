@@ -113,6 +113,32 @@ public enum TypographyTokens {
         .system(size: size, weight: weight, design: .rounded)
     }
 
+    // MARK: - Kid Circuit Hierarchy (v29)
+    //
+    // The kid circuit needs a heavier, friendlier hierarchy: rounded design
+    // throughout, bolder titles and a larger, more legible reading size
+    // (≥17pt) so 5–8 year-olds and their parents read comfortably.
+
+    /// Kid hero title — heavy rounded headline above a section.
+    public static func kidHero(_ size: CGFloat = 30) -> Font {
+        .system(size: size, weight: .heavy, design: .rounded)
+    }
+
+    /// Kid section title — bold rounded, sits above tile groups.
+    public static func kidTitle(_ size: CGFloat = 22) -> Font {
+        .system(size: size, weight: .bold, design: .rounded)
+    }
+
+    /// Kid card title — semibold rounded headline for a tile/card.
+    public static func kidCardTitle(_ size: CGFloat = 18) -> Font {
+        .system(size: size, weight: .semibold, design: .rounded)
+    }
+
+    /// Kid body — larger, rounded reading text for the child circuit.
+    public static func kidBody(_ size: CGFloat = 17) -> Font {
+        .system(size: size, weight: .medium, design: .rounded)
+    }
+
     // MARK: - Dynamic Type Scaled Variants
 
     /// Body scaled to Dynamic Type.
