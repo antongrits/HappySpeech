@@ -360,7 +360,9 @@ final class FluencyDiaryInteractor {
     /// Показываем reminder-баннер если последняя запись > 3 дней назад.
     private func checkReminderBanner(sessions: [FluencySessionData]) {
         guard let lastDate = sessions.first?.date else {
-            display.showReminderBanner = !sessions.isEmpty
+            // Истории ещё нет — нечего напоминать, баннер скрыт.
+            // (Ветка достижима только при пустом `sessions`.)
+            display.showReminderBanner = false
             return
         }
         let daysSinceLast = Calendar.current.dateComponents([.day], from: lastDate, to: Date()).day ?? 0

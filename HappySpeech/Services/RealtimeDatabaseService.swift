@@ -66,24 +66,30 @@ public enum RealtimeDatabaseError: LocalizedError, Sendable {
 
 /// Хэндл активной подписки на изменения сессии.
 ///
-/// Содержит ссылку на Firebase observer handle. Cancel вызывается через
-/// `RealtimeDatabaseService.cancelObservation(_:)` или автоматически
-/// при deinit через `Task` отмену.
+/// Инкапсулирует логику отмены подписки через замыкание `onCancel`. Live-реализация
+/// передаёт замыкание, снимающее Firebase observer; mock — чистый no-op без какой-либо
+/// ссылки на Firebase. Cancel вызывается через `RealtimeDatabaseService.cancelObservation(_:)`
+/// или автоматически при deinit.
 public final class SharePlayObservation: @unchecked Sendable {
-    fileprivate let reference: DatabaseReference
-    fileprivate let handle: DatabaseHandle
+    /// Замыкание отмены. Не помечено `@Sendable`: live-реализация захватывает
+    /// `DatabaseReference` (non-Sendable). Потокобезопасность гарантируется
+    /// `@unchecked Sendable` самого класса — отмена идемпотентна.
+    private let onCancel: () -> Void
+    private var isCancelled = false
 
-    fileprivate init(reference: DatabaseReference, handle: DatabaseHandle) {
-        self.reference = reference
-        self.handle = handle
+    fileprivate init(onCancel: @escaping () -> Void) {
+        self.onCancel = onCancel
     }
 
     public func cancel() {
-        reference.removeObserver(withHandle: handle)
+        guard !isCancelled else { return }
+        isCancelled = true
+        onCancel()
     }
 
     deinit {
-        reference.removeObserver(withHandle: handle)
+        guard !isCancelled else { return }
+        onCancel()
     }
 }
 
@@ -242,7 +248,7 @@ public final class LiveRealtimeDatabaseService: RealtimeDatabaseServiceProtocol,
         }
 
         logger.info("SharePlay observation started: id=\(sessionId, privacy: .public)")
-        return SharePlayObservation(reference: ref, handle: handle)
+        return SharePlayObservation { ref.removeObserver(withHandle: handle) }
     }
 
     public func updateSession(
@@ -426,11 +432,9 @@ public final class MockRealtimeDatabaseService: RealtimeDatabaseServiceProtocol,
             onChange(snapshot)
         }
 
-        // Возвращаем dummy observation — Firebase reference нужен только для cancel().
-        // В моке reference указывает на invalid host, removeObserver — no-op.
-        let dummyDB = Database.database(url: "https://example.invalid")
-        let dummyRef = dummyDB.reference().child("dummy")
-        return SharePlayObservation(reference: dummyRef, handle: 0)
+        // Чистый in-memory observation: mock НИКОГДА не обращается к Firebase.
+        // cancel — no-op, in-memory store не требует снятия observer'а.
+        return SharePlayObservation {}
     }
 
     public func updateSession(

@@ -73,7 +73,11 @@ enum FluencyDiaryTexts {
     }
 
     /// Текст по индексу из общего списка (циклически).
+    /// Индекс нормализуется в диапазон `0..<count` — отрицательные значения
+    /// не приводят к выходу за границы массива.
     static func text(at index: Int) -> String {
-        texts[index % texts.count]
+        let count = texts.count
+        let normalized = ((index % count) + count) % count
+        return texts[normalized]
     }
 }

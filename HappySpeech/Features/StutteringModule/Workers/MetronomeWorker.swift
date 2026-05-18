@@ -25,22 +25,25 @@ final class MetronomeWorker: MetronomeWorkerProtocol {
         stop()
         let interval = 60.0 / Double(max(1, bpm))
         prepareClickSound()
-        Task { @MainActor [weak self] in
-            guard let self else { return }
-            self.timer = Timer.scheduledTimer(
-                withTimeInterval: interval,
-                repeats: true
-            ) { [weak self] _ in
-                Task { @MainActor [weak self] in
-                    guard let self else { return }
-                    self.player?.stop()
-                    self.player?.currentTime = 0
-                    self.player?.play()
-                    onTick()
-                }
+        // Timer создаётся синхронно: метод уже на @MainActor. Отложенное создание
+        // через Task привело бы к гонке — stop() мог отработать раньше, чем
+        // Task создаст таймер, оставляя «висящий» таймер после остановки.
+        timer = Timer.scheduledTimer(
+            withTimeInterval: interval,
+            repeats: true
+        ) { [weak self] _ in
+            // onTick вызывается синхронно в колбэке таймера: после stop()
+            // таймер инвалидирован, поэтому «лишних» тиков не будет.
+            // Воспроизведение клика требует self.player и уходит в @MainActor Task.
+            onTick()
+            Task { @MainActor [weak self] in
+                guard let self else { return }
+                self.player?.stop()
+                self.player?.currentTime = 0
+                self.player?.play()
             }
-            self.logger.info("MetronomeWorker started bpm=\(bpm, privacy: .public) interval=\(interval, privacy: .public)")
         }
+        logger.info("MetronomeWorker started bpm=\(bpm, privacy: .public) interval=\(interval, privacy: .public)")
     }
 
     func stop() {
