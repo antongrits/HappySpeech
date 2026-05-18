@@ -69,32 +69,33 @@ public extension MascotMood {
 
 // MARK: - HSMascotView
 
-/// 2D-рендер маскота Ляли (канон «подружка-пчёлка») + mood aura.
+/// Рендер маскота Ляли — 3D-модель поверх 2D-канона + mood aura.
 ///
 /// `HSMascotView` — низкоуровневый рендер-компонент. На экранах фич используйте
 /// ``LyalyaMascotView`` вместо прямого обращения к `HSMascotView`.
 ///
-/// ### Канон облика (D-3 v27 — унификация маскота)
-/// Единственный канон Ляли — 2D-иллюстрации `mascot_lyalya_*` из `Assets.xcassets`,
-/// согласованные с `AppIcon`: жёлто-кремовая пчёлка-бабочка с антеннами,
-/// большими глазами, розовыми щёчками и маленькими крыльями.
-/// 3D-рендер (`lyalya3d_v2.usdz`) изображал серого «робота», расходящегося
-/// с брендом, и был убран из всех общих компонентов маскота.
+/// ### Канон облика (ADR-V29-MASCOT-3D)
+/// Канон Ляли — профессиональная 3D-модель `lyalya3d_v3.usdz` (создана в Blender
+/// по `AppIcon`: кремово-белая пчёлка-фея с большими глазами, антеннами,
+/// розовыми щёчками и янтарными крылышками). 2D-иллюстрации `mascot_lyalya_*`
+/// остаются fallback-слоем.
 ///
 /// ### Архитектура слоёв (снизу вверх в ZStack)
 ///
 /// 1. `MoodAuraView` — ambient radial glow под маскотом, цвет зависит от настроения
-/// 2. 2D-иллюстрация (`mascot_lyalya_*`) — отображает текущее настроение через `illustrationName`
-/// 3. Entrance анимация: scale + opacity при появлении
+/// 2. 2D-иллюстрация (`mascot_lyalya_*`) — fallback-слой; виден при ошибке
+///    загрузки 3D-модели или при Reduce Motion
+/// 3. ``LyalyaRealityKitView`` — 3D-модель Ляли с запечённой idle-анимацией;
+///    скрывает 2D-слой, когда модель успешно загружена
 ///
 /// ### Lip-sync
 /// AR lip-sync рисуется отдельным 2D-оверлеем `MouthBubbleOverlay` поверх
 /// маскота внутри ``LyalyaMascotView`` (когда `MascotLipSyncState.isTracking`).
+/// 3D-модель не содержит blendshapes рта, поэтому lip-sync остаётся на 2D-слое.
 ///
-/// ### Состояния маскота
-/// Состояние выбирает подходящую 2D-иллюстрацию через `MascotMood.illustrationName`.
-/// 2D PNG статичны — по правилу «2D героев нельзя анимировать»; оживляет только
-/// плавный entrance fade и mood-переход aura.
+/// ### Reduced Motion
+/// При `accessibilityReduceMotion` 3D-слой не запускает idle-анимацию
+/// (модель замирает статично) — см. ``LyalyaRealityKitView``.
 ///
 /// ## Пример
 /// ```swift
@@ -123,13 +124,14 @@ public struct HSMascotView: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    // Entrance / transition animation (единственная 2D анимация — плавное появление)
+    // Entrance / transition animation (плавное появление слоёв)
     @State private var entranceScale: CGFloat = 0.85
     @State private var entranceOpacity: Double = 0
     @State private var moodTransitionID: Int = 0
 
-    // 2D rendering: маскот Ляля рендерится 2D-иллюстрацией mascot_lyalya_* —
-    // единый канон, согласованный с AppIcon (D-3 v27).
+    // 3D-слой: nil — загрузка не завершена; true — модель загружена (показываем 3D);
+    // false — ошибка загрузки (остаётся 2D-fallback). ADR-V29-MASCOT-3D.
+    @State private var is3DReady: Bool?
 
     // MARK: - Init
 
@@ -154,18 +156,27 @@ public struct HSMascotView: View {
                 MoodAuraView(mood: mood, size: size)
             }
 
-            // Layer 2: 2D-иллюстрация маскота — единый канон Ляли (D-3 v27).
+            // Layer 2: 2D-иллюстрация маскота — fallback-слой (ADR-V29-MASCOT-3D).
+            // Виден при ошибке загрузки 3D-модели или при Reduce Motion.
             // Иллюстрация выбирается по настроению через `MascotMood.illustrationName`.
-            // 2D PNG не анимируется по содержанию (правило «2D героев нельзя
-            // анимировать») — оживляет только плавный entrance fade.
             Image(mood.illustrationName)
                 .resizable()
                 .scaledToFit()
                 .frame(width: size, height: size)
                 .scaleEffect(entranceScale)
-                .opacity(entranceOpacity)
+                .opacity(twoDLayerOpacity)
                 .id(moodTransitionID)
                 .accessibilityHidden(true)
+
+            // Layer 3: 3D-модель Ляли (lyalya3d_v3.usdz) с запечённой idle-анимацией.
+            // Скрывает 2D-слой при успешной загрузке. Reduce Motion: idle-анимация
+            // не запускается (модель статична) — обрабатывается внутри LyalyaRealityKitView.
+            LyalyaRealityKitView(onLoadResult: { ok in
+                is3DReady = ok
+            })
+            .frame(width: size, height: size)
+            .opacity(is3DReady == true ? entranceOpacity : 0)
+            .accessibilityHidden(true)
         }
         .frame(width: size, height: size)
         .accessibilityLabel(accessibilityLabel)
@@ -176,6 +187,14 @@ public struct HSMascotView: View {
         .onChange(of: mood) { _, _ in
             playMoodTransition()
         }
+    }
+
+    // MARK: - Layer compositing
+
+    /// Непрозрачность 2D fallback-слоя. Пока 3D загружается (`is3DReady == nil`)
+    /// или при ошибке загрузки — 2D виден. При успешной загрузке 3D — 2D скрыт.
+    private var twoDLayerOpacity: Double {
+        is3DReady == true ? 0 : entranceOpacity
     }
 
     // MARK: - Entrance animation

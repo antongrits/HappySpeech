@@ -6,7 +6,7 @@ import XCTest
 // Phase 2.4 v25 — расширенное покрытие токенов DesignSystem.
 // Охватывает: TypographyTokens, ShadowTokens, ColorTokens (non-asset),
 // GradientTokens, ColorTokens.Confetti, ColorTokens.Celebration,
-// ColorTokens.Story, ColorTokens.Theme, ColorTokens.Mascot,
+// ColorTokens.Story, ColorTokens.Theme,
 // ColorTokens.Badge, ColorTokens.Award.
 // SwiftUI Views тестами НЕ покрываются — только value-логика.
 
@@ -367,29 +367,6 @@ final class DesignSystemTokensExtendedTests: XCTestCase {
 
     func test_colorAward_silver_notNil() {
         XCTAssertNotNil(ColorTokens.Award.silver)
-    }
-
-    // MARK: - ColorTokens.Mascot.cheekActiveUI: mood clamp
-
-    func test_mascotCheek_zeroMood_alphaAbove05() {
-        let color = ColorTokens.Mascot.cheekActiveUI(mood: 0.0)
-        var alpha: CGFloat = 0
-        color.getRed(nil, green: nil, blue: nil, alpha: &alpha)
-        XCTAssertGreaterThanOrEqual(alpha, 0.45)
-    }
-
-    func test_mascotCheek_maxMood_alphaOne() {
-        let color = ColorTokens.Mascot.cheekActiveUI(mood: 1.0)
-        var alpha: CGFloat = 0
-        color.getRed(nil, green: nil, blue: nil, alpha: &alpha)
-        XCTAssertEqual(alpha, 1.0, accuracy: 0.01)
-    }
-
-    func test_mascotCheek_overMood_clampedToOne() {
-        let colorOver = ColorTokens.Mascot.cheekActiveUI(mood: 2.0)
-        var alpha: CGFloat = 0
-        colorOver.getRed(nil, green: nil, blue: nil, alpha: &alpha)
-        XCTAssertLessThanOrEqual(Double(alpha), 1.0)
     }
 
     // MARK: - ColorTokens.Sticker

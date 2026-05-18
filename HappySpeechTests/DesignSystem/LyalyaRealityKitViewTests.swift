@@ -4,18 +4,17 @@ import Testing
 
 // MARK: - LyalyaRealityKitViewTests
 //
-// Unit-тесты для LyalyaRealityKitView и LyalyaLipSyncCoordinator.
+// Unit-тесты для типов lip-sync маскота Ляли (ADR-V29-MASCOT-3D).
 //
-// Snapshot-тесты ARView невозможны в стандартном simulator (Metal not available),
-// поэтому тесты сосредоточены на:
-//  1. Reduced Motion статичные трансформации
-//  2. Переходы состояний (state machine logic)
-//  3. Viseme → scale mapping (математика lip-sync)
-//  4. LyalyaLipSyncCoordinator normalization (dB → 0..1)
+// Snapshot-тесты ARView невозможны в стандартном simulator (Metal недоступен),
+// поэтому тесты сосредоточены на value-логике:
+//  1. LyalyaViseme — состав и уникальность кейсов
+//  2. Viseme → scale mapping (математика 2D lip-sync оверлея)
+//  3. LyalyaState — полнота состояний
+//  4. LyalyaLipSyncCoordinator — инициализация и сброс
 //
-// ADR-V13-LYALYA-3D-BLENDSHAPES-DEFERRED:
-// Тест реальных blendshape weights невозможен без DCC-инструментов (Blender/Reality Composer Pro).
-// Тестируем логику маппинга через публичные enum / helper методы.
+// 3D-модель lyalya3d_v3.usdz не содержит blendshapes рта — lip-sync остаётся
+// на 2D-оверлее MouthBubbleOverlay; тестируется математика visemeScale.
 
 @Suite("LyalyaRealityKitView")
 struct LyalyaRealityKitViewTests {

@@ -132,9 +132,8 @@ public struct LyalyaMascotView: View {
 
     // MARK: - Animation state
 
-    // Block I v19: breathingScale анимация удалена — 2D PNG Ляли не должен
-    // двигаться (требование пользователя: «2d героев нельзя анимировать»).
-    // Idle-дыхание живёт внутри LyalyaRealityKitView (3D только).
+    // ADR-V29-MASCOT-3D: idle-движение маскота живёт в запечённой анимации
+    // 3D-модели (LyalyaRealityKitView). 2D PNG-fallback остаётся статичным.
 
     // v12: haptic feedback при переходе между состояниями
     @State private var previousState: LyalyaState = .idle

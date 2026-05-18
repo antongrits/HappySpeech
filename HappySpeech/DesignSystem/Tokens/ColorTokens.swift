@@ -602,19 +602,6 @@ public enum ColorTokens {
         public static let shelfUI = UIColor(red: 0.42, green: 0.30, blue: 0.20, alpha: 1.0)
     }
 
-    // MARK: - Mascot Materials (RealityKit)
-
-    /// Дополнительные оттенки 3D-маскота (`LyalyaRealityKitView`).
-    public enum Mascot {
-        /// Базовый розоватый тон щёк маскота (idle), alpha = 0.3.
-        public static let cheekIdleUI = UIColor(red: 0.95, green: 0.82, blue: 0.82, alpha: 0.3)
-        /// Цвет щёк маскота при celebrating с заданной интенсивностью настроения.
-        /// - Parameter mood: 0…1 — степень счастья (контролирует alpha).
-        public static func cheekActiveUI(mood: Float) -> UIColor {
-            UIColor(red: 1.0, green: 0.65, blue: 0.65, alpha: min(1.0, 0.5 + Double(mood) * 0.5))
-        }
-    }
-
     // MARK: - Award (FamilyAwardsCabinet tiers)
 
     /// Платиновый и расширенный серебряный тон для `FamilyAwardsCabinet` наград.
@@ -625,36 +612,6 @@ public enum ColorTokens {
         /// Серебряный — нейтральный для AwardTier (отдельно от `Badge.silver`,
         /// который адаптивен через UITraitCollection).
         public static let silver = Color(red: 0.79, green: 0.81, blue: 0.84)
-    }
-
-    // MARK: - Lyalya Scene (SceneKit / SwiftUI)
-
-    /// Цвета сцены SceneKit плейсхолдера Ляли (`LyalyaSceneView`).
-    /// Используются как `UIColor` для SCNMaterial и как SwiftUI `Color` для preview-фонов.
-    public enum LyalyaScene {
-        /// Ambient light — тёплый сиренево-белый. (UIColor — статичный для SceneKit материала.)
-        public static let ambientUI  = UIColor(red: 0.95, green: 0.93, blue: 1.00, alpha: 1)
-        /// Цвет тела (pastel lilac). (UIColor — статичный для SceneKit материала.)
-        public static let bodyUI     = UIColor(red: 0.76, green: 0.63, blue: 0.95, alpha: 1)
-        /// Цвет зрачков (тёмно-фиолетовый). (UIColor — статичный для SceneKit материала.)
-        public static let pupilUI    = UIColor(red: 0.15, green: 0.10, blue: 0.25, alpha: 1)
-        /// Omni light + specular highlight для SCNMaterial — физический белый.
-        /// (Не Theme-зависимый: это physical lighting, а не UI цвет.)
-        public static let lightUI    = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1)
-        /// Цвет глаз (sclera) — почти белый, чуть тёплее для естественного вида.
-        public static let eyeUI      = UIColor(red: 0.99, green: 0.98, blue: 0.97, alpha: 1)
-        /// Preview-фон idle — светло-сиреневый (Light: #F3EEFF, Dark: #2A1F3D — глубокий ночной фиолет).
-        public static let backdropIdle = Color(uiColor: UIColor { trait in
-            trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0.165, green: 0.122, blue: 0.239, alpha: 1.0)
-                : UIColor(red: 0.953, green: 0.933, blue: 1.000, alpha: 1.0)
-        })
-        /// Preview-фон celebrating — тёплый кремово-жёлтый (Light: #FFF8E0, Dark: #3D3520 — тёплый ночной янтарь).
-        public static let backdropCelebrate = Color(uiColor: UIColor { trait in
-            trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0.239, green: 0.208, blue: 0.125, alpha: 1.0)
-                : UIColor(red: 1.000, green: 0.973, blue: 0.878, alpha: 1.0)
-        })
     }
 }
 
