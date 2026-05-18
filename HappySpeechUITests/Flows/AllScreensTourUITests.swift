@@ -120,10 +120,17 @@ final class AllScreensTourUITests: XCTestCase {
         )
 
         // Plan v23 Issue #1 — flush interruption monitor через benign tap.
-        // Без user-interaction interruption monitor не вызовется. Tap по
-        // application bounds — для большинства SwiftUI экранов no-op,
-        // но если alert pending — monitor его dismiss'ит здесь.
-        app.tap()
+        // Без user-interaction interruption monitor не вызовется.
+        //
+        // v27 fix (N-1 / N-2): tap по центру окна случайно активировал кнопки
+        // на интерактивных экранах — roleSelect открывал ParentHome (попадание
+        // по карточке «Родитель»), familyHome открывал Onboarding (попадание
+        // по AddChildCard). Тапаем по безопасной точке у верхнего края, под
+        // статус-баром, где на экранах HappySpeech нет интерактивных контролов.
+        let safeFlushPoint = app.coordinate(
+            withNormalizedOffset: CGVector(dx: 0.5, dy: 0.04)
+        )
+        safeFlushPoint.tap()
 
         // Дополнительная пауза — Lottie / SwiftUI transitions / first-frame
         // SF Symbols layout успевают завершить первую кадровую отрисовку.
@@ -634,5 +641,23 @@ final class AllScreensTourUITests: XCTestCase {
 
     func test_route_voiceCloning() {
         captureScreen(route: "voiceCloning", anchorTimeout: 8)
+    }
+
+    // MARK: - Coverage gap (4) — routes present in resolveStartRoute без теста
+
+    func test_route_screening() {
+        captureScreen(route: "screening", anchorTimeout: 8)
+    }
+
+    func test_route_weeklyReport() {
+        captureScreen(route: "weeklyReport", anchorTimeout: 8)
+    }
+
+    func test_route_articulationGym() {
+        captureScreen(route: "articulationGym", anchorTimeout: 8)
+    }
+
+    func test_route_wordBank() {
+        captureScreen(route: "wordBank", anchorTimeout: 8)
     }
 }

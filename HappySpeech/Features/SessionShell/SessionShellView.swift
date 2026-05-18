@@ -303,12 +303,16 @@ struct SessionShellBinder: View {
         switch type {
         case .listenAndChoose, .repeatAfterModel, .minimalPairs:
             return (ColorTokens.Brand.sky.opacity(0.18), ColorTokens.Kid.bgSoft)
-        case .breathing, .rhythm:
+        case .rhythm:
             return (ColorTokens.Brand.mint.opacity(0.18), ColorTokens.Kid.bgSoft)
         case .narrativeQuest, .storyCompletion:
             return (ColorTokens.Brand.lilac.opacity(0.18), ColorTokens.Kid.bgSoft)
-        case .arActivity, .articulationImitation, .visualAcoustic:
+        case .arActivity, .visualAcoustic:
             return (ColorTokens.Brand.butter.opacity(0.18), ColorTokens.Kid.bgSoft)
+        case .breathing, .articulationImitation:
+            // D-23: общий розово-кремовый фон уроков — без выбивающегося
+            // жёлто-зелёного оттенка.
+            return (ColorTokens.Kid.bgSoft, ColorTokens.Kid.bg)
         case .letterTracing:
             return (ColorTokens.Brand.sky.opacity(0.12), ColorTokens.Kid.bgSoft)
         default:

@@ -6,7 +6,9 @@ import RealmSwift
 
 protocol DiaryStorageWorkerProtocol: AnyObject, Sendable {
     func saveSession(_ data: FluencySessionData) async
-    func fetchSessions(limit: Int) async -> [FluencySessionData]
+    /// Бросает ошибку при сбое чтения хранилища — вызывающая сторона
+    /// отличает реальное отсутствие записей от ошибки загрузки.
+    func fetchSessions(limit: Int) async throws -> [FluencySessionData]
 }
 
 // MARK: - DiaryStorageWorker
@@ -34,8 +36,8 @@ final class DiaryStorageWorker: DiaryStorageWorkerProtocol, @unchecked Sendable 
         logger.info("DiaryStorage: saved session id=\(data.id, privacy: .private)")
     }
 
-    func fetchSessions(limit: Int) async -> [FluencySessionData] {
-        let all = await realmActor.fetchFluencySessions()
+    func fetchSessions(limit: Int) async throws -> [FluencySessionData] {
+        let all = try await realmActor.fetchFluencySessions()
         let sorted = all.sorted { $0.date > $1.date }
         return limit > 0 ? Array(sorted.prefix(limit)) : sorted
     }

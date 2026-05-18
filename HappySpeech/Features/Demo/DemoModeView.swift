@@ -522,8 +522,8 @@ struct DemoModeView: View {
 
     private var mascotBubble: some View {
         HStack(alignment: .top, spacing: SpacingTokens.small) {
-            // E v21: 3D Ляля в Demo bubble (требование «3D героев на каждом экране»).
-            LyalyaHeroView(state: display.lyalyaState, mood: 0.6, size: 100)
+            // D-3 v27: единый 2D-канон маскота в Demo bubble.
+            LyalyaHeroView(state: display.lyalyaState, size: 100)
                 .accessibilityHidden(true)
 
             HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.medium) {

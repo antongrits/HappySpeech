@@ -1,8 +1,8 @@
 import SwiftUI
 
 // MARK: - MascotMood
-// 10 состояний маскота Ляли для Rive state machine "LyalyaSM".
-// 3D-рендер через LyalyaRealityKitView (lyalya3d_v2.usdz) — кастомные blendshapes / named entity transforms.
+// 10 состояний маскота Ляли. Каждое маппируется в 2D-иллюстрацию
+// mascot_lyalya_* — единый канон облика, согласованный с AppIcon (D-3 v27).
 
 public enum MascotMood: Sendable {
     case idle           // 0 — нежное парение, крылья медленно
@@ -26,7 +26,7 @@ public enum PointingDirection: Sendable {
 // MARK: - MascotMood+LyalyaState
 
 public extension MascotMood {
-    /// Маппинг MascotMood → LyalyaState для передачи в LyalyaRealityKitView.
+    /// Маппинг MascotMood → LyalyaState для передачи в LyalyaMascotView / LyalyaHeroView.
     var lyalyaState: LyalyaState {
         switch self {
         case .idle:        return .idle
@@ -69,25 +69,32 @@ public extension MascotMood {
 
 // MARK: - HSMascotView
 
-/// 3D-рендер маскота Ляли через RealityKit + mood aura.
+/// 2D-рендер маскота Ляли (канон «подружка-пчёлка») + mood aura.
 ///
 /// `HSMascotView` — низкоуровневый рендер-компонент. На экранах фич используйте
 /// ``LyalyaMascotView`` вместо прямого обращения к `HSMascotView`.
 ///
+/// ### Канон облика (D-3 v27 — унификация маскота)
+/// Единственный канон Ляли — 2D-иллюстрации `mascot_lyalya_*` из `Assets.xcassets`,
+/// согласованные с `AppIcon`: жёлто-кремовая пчёлка-бабочка с антеннами,
+/// большими глазами, розовыми щёчками и маленькими крыльями.
+/// 3D-рендер (`lyalya3d_v2.usdz`) изображал серого «робота», расходящегося
+/// с брендом, и был убран из всех общих компонентов маскота.
+///
 /// ### Архитектура слоёв (снизу вверх в ZStack)
 ///
-/// 1. `LyalyaRealityKitView` — 3D маскот из `lyalya3d_v2.usdz` (RealityKit, nonAR, прозрачный фон)
-/// 2. `MoodAuraView` — ambient radial glow под маскотом, цвет зависит от настроения
-/// 3. Entrance анимация: scale + opacity при появлении (только 3D blendshapes управляют состоянием)
+/// 1. `MoodAuraView` — ambient radial glow под маскотом, цвет зависит от настроения
+/// 2. 2D-иллюстрация (`mascot_lyalya_*`) — отображает текущее настроение через `illustrationName`
+/// 3. Entrance анимация: scale + opacity при появлении
 ///
 /// ### Lip-sync
-/// Real-time lip-sync через `audioAmplitude` → `LyalyaRealityKitView.mouthOpen`.
-/// При AR-сессии: `MascotLipSyncState` из environment переопределяет mouthOpen.
+/// AR lip-sync рисуется отдельным 2D-оверлеем `MouthBubbleOverlay` поверх
+/// маскота внутри ``LyalyaMascotView`` (когда `MascotLipSyncState.isTracking`).
 ///
 /// ### Состояния маскота
-/// Все переходы состояний (celebrating, encouraging, waving, pointing и т.д.) выполняются
-/// через 3D blendshapes / named entity transforms внутри `LyalyaRealityKitView`.
-/// 2D overlay-анимации удалены — 3D-рендер полностью отвечает за визуальное состояние.
+/// Состояние выбирает подходящую 2D-иллюстрацию через `MascotMood.illustrationName`.
+/// 2D PNG статичны — по правилу «2D героев нельзя анимировать»; оживляет только
+/// плавный entrance fade и mood-переход aura.
 ///
 /// ## Пример
 /// ```swift
@@ -121,9 +128,8 @@ public struct HSMascotView: View {
     @State private var entranceOpacity: Double = 0
     @State private var moodTransitionID: Int = 0
 
-    // 3D rendering: маскот Ляля рендерится через LyalyaRealityKitView (lyalya3d_v2.usdz).
-    // Все состояния (encouraging shake, waving arm, celebrating jump) реализованы
-    // через named entity transforms в LyalyaRealityKitView.Coordinator.applyEmotionState.
+    // 2D rendering: маскот Ляля рендерится 2D-иллюстрацией mascot_lyalya_* —
+    // единый канон, согласованный с AppIcon (D-3 v27).
 
     // MARK: - Init
 
@@ -148,21 +154,18 @@ public struct HSMascotView: View {
                 MoodAuraView(mood: mood, size: size)
             }
 
-            // Layer 2: 2D fallback illustration (видна, если 3D не загрузился —
-            // simulator без USDZ, mock-контекст, медленная асинхронная загрузка).
-            // RealityKit ARView с .clear фоном пропускает 2D слой сквозь себя
-            // ровно до момента, когда USDZ-сцена окажется в кадре.
+            // Layer 2: 2D-иллюстрация маскота — единый канон Ляли (D-3 v27).
+            // Иллюстрация выбирается по настроению через `MascotMood.illustrationName`.
+            // 2D PNG не анимируется по содержанию (правило «2D героев нельзя
+            // анимировать») — оживляет только плавный entrance fade.
             Image(mood.illustrationName)
                 .resizable()
                 .scaledToFit()
                 .frame(width: size, height: size)
-                .accessibilityHidden(true)
-
-            // Layer 3: 3D маскот через LyalyaRealityKitView (прозрачный фон)
-            illustrationLayer
                 .scaleEffect(entranceScale)
                 .opacity(entranceOpacity)
                 .id(moodTransitionID)
+                .accessibilityHidden(true)
         }
         .frame(width: size, height: size)
         .accessibilityLabel(accessibilityLabel)
@@ -172,33 +175,6 @@ public struct HSMascotView: View {
         }
         .onChange(of: mood) { _, _ in
             playMoodTransition()
-        }
-    }
-
-    // MARK: - Illustration Layer (3D RealityKit)
-
-    /// Отображает 3D-маскот Лялю через `LyalyaRealityKitView` (`lyalya3d_v2.usdz`).
-    /// Прозрачный фон обеспечен через `cameraMode: .nonAR` + `environment.background = .color(.clear)`.
-    /// Все состояния маскота управляются через 3D blendshapes / named entity transforms.
-    @ViewBuilder
-    private var illustrationLayer: some View {
-        let amplitude = audioAmplitude?.wrappedValue ?? 0
-        let viseme: LyalyaViseme = mood == .singing || mood == .explaining ? .a : .rest
-
-        // Под XCTest-раннером 3D-маскот не рендерится: нестабильный в симуляторе
-        // CoreRE рендер ARView роняет test host до установки соединения.
-        // Слой 2 (2D-иллюстрация) полностью покрывает кадр и остаётся видимым.
-        if ProcessInfo.processInfo.isRunningUnitTests {
-            EmptyView()
-        } else {
-            LyalyaRealityKitView(
-                state: mood.lyalyaState,
-                mood: 0.7,
-                mouthOpen: amplitude,
-                viseme: viseme
-            )
-            .frame(width: size, height: size)
-            .accessibilityHidden(true)
         }
     }
 

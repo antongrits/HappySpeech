@@ -13,8 +13,6 @@ struct SpecialistHomeView: View {
 
     enum SpecTab: String, CaseIterable {
         // Block H v21 — labels хранят русские raw values для LocalizedStringKey lookup.
-        // Tab bar items имеют compact frame на iPhone SE 3 (320pt) — короткие слова
-        // безопасны при Dynamic Type вплоть до accessibilityLarge.
         case children  = "Дети"
         case sessions  = "Занятия"
         case reports   = "Отчёты"
@@ -28,6 +26,18 @@ struct SpecialistHomeView: View {
             case .settings: return "gearshape.fill"
             }
         }
+
+        /// D-11 v27 — короткая подпись для таб-бара: 4 таба должны помещаться
+        /// целиком на iPhone SE 3 (320pt). Полное название («Настройки») — это
+        /// заголовок экрана, в таб-баре используется компактный вариант.
+        var tabTitle: LocalizedStringKey {
+            switch self {
+            case .children: return "Дети"
+            case .sessions: return "Занятия"
+            case .reports:  return "Отчёты"
+            case .settings: return "Ещё"
+            }
+        }
     }
 
     var body: some View {
@@ -39,9 +49,10 @@ struct SpecialistHomeView: View {
 
             HSAnimatedTabBar(
                 selection: $selectedTab,
-                items: SpecTab.allCases
+                items: SpecTab.allCases,
+                alwaysShowsLabels: true
             ) { tab in
-                (tab.icon, LocalizedStringKey(tab.rawValue))
+                (tab.icon, tab.tabTitle)
             }
             // P1-03 v25: fixedSize по вертикали — внутри ZStack(.bottom) на iOS 26
             // SE3 matchedGeometryEffect-капсула выбранного таба растягивалась на

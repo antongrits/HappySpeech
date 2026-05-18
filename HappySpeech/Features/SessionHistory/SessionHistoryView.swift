@@ -80,7 +80,7 @@ struct SessionHistoryView: View {
                 }
             }
             .navigationTitle(String(localized: "sessionHistory.navTitle"))
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
             // P0.5 fix v19: explicit toolbar background prevents iOS 26 Liquid Glass
             // from washing out the navigation title contrast on parent circuit.
             .toolbarBackground(ColorTokens.Parent.bg, for: .navigationBar)
@@ -157,6 +157,18 @@ struct SessionHistoryView: View {
         } else {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: SpacingTokens.regular, pinnedViews: []) {
+                    // D-17 v27 — явный заголовок экрана: large-title навбара
+                    // на iOS 26 не отрисовывался поверх ScrollView в ZStack.
+                    Text(String(localized: "sessionHistory.navTitle"))
+                        .font(TypographyTokens.title(28))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, SpacingTokens.screenEdge)
+                        .padding(.top, SpacingTokens.regular)
+                        .accessibilityAddTraits(.isHeader)
+
                     if !display.activeSoundChips.isEmpty
                         || display.activeFilter.fromDate != nil
                         || display.activeFilter.toDate != nil {

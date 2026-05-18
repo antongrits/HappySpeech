@@ -107,27 +107,27 @@ extension MemoryCard {
         switch soundGroup {
         case "whistling":
             return [
-                ("word_bird", "сова"), ("word_fish", "змея"), ("word_sun", "солнце"),
-                ("word_apple", "апельсин"), ("word_elephant", "слон"), ("word_flower", "зелень"),
-                ("word_bird", "цапля"), ("word_flower", "цветок"), ("word_bag", "замок"),
-                ("word_car", "поезд"), ("word_hare", "зебра"), ("word_moon", "звезда"),
-                ("word_butterfly_insect", "стрекоза"), ("word_apple", "лимон"), ("word_fish", "земля"),
+                ("word_bird", "сова"), ("word_fish", "рыба"), ("word_sun", "солнце"),
+                ("word_apple", "яблоко"), ("word_elephant", "слон"), ("word_flower", "цветок"),
+                ("word_bird", "птица"), ("word_bag", "сумка"), ("word_bag", "замок"),
+                ("word_train", "поезд"), ("word_hare", "заяц"), ("word_moon", "луна"),
+                ("word_butterfly_insect", "стрекоза"), ("word_apple", "фрукт"), ("word_forest", "лес"),
                 ("word_forest", "зима"), ("music.note", "звук"), ("word_bird", "сокол")
             ]
         case "hissing":
             return [
-                ("word_fish", "жаба"), ("word_tree", "шишка"), ("word_bear", "медведь"),
+                ("word_frog", "жаба"), ("word_tree", "шишка"), ("word_bear", "медведь"),
                 ("word_bear", "мишка"), ("word_car", "машина"), ("word_hare", "ёжик"),
                 ("reward_champion", "лев"), ("word_bird", "птица"), ("word_forest", "ель"),
                 ("word_flower", "гриб"), ("word_house", "крыша"), ("word_butterfly_insect", "пчела"),
                 ("word_flower", "ромашка"), ("house.fill", "цирк"), ("word_fish", "рыба"),
-                ("word_cup", "щавель"), ("word_flower", "чашка"), ("word_bird", "попугай")
+                ("word_flower", "щавель"), ("word_cup", "чашка"), ("word_bird", "попугай")
             ]
         case "sonorant":
             return [
                 ("reward_rocket", "ракета"), ("word_fish", "рыба"), ("word_flower", "роза"),
-                ("word_frog", "лягушка"), ("word_moon", "луна"), ("word_cat", "лиса"),
-                ("reward_champion", "лев"), ("word_fish", "крокодил"), ("reward_rainbow", "радуга"),
+                ("word_frog", "лягушка"), ("word_moon", "луна"), ("word_fox", "лиса"),
+                ("reward_champion", "лев"), ("word_frog", "крокодил"), ("reward_rainbow", "радуга"),
                 ("word_butterfly_insect", "бабочка"), ("music.note", "лира"), ("word_forest", "гора"),
                 ("word_dog", "кролик"), ("word_flower", "лютик"), ("target", "руль"),
                 ("word_fox", "лось"), ("word_flower", "лопух"), ("word_elephant", "лопата")
@@ -135,11 +135,11 @@ extension MemoryCard {
         case "velar":
             return [
                 ("word_cat", "кот"), ("word_forest", "гора"), ("word_bird", "гусь"),
-                ("word_fish", "карась"), ("birthday.cake.fill", "торт"), ("word_hen", "курица"),
-                ("word_flower", "трава"), ("house.fill", "кегля"), ("target", "кольцо"),
+                ("word_fish", "карась"), ("word_cake", "торт"), ("word_hen", "курица"),
+                ("word_flower", "трава"), ("word_house", "кегля"), ("target", "кольцо"),
                 ("word_bear", "козёл"), ("word_bird", "кукушка"), ("word_flower", "герань"),
                 ("word_house", "коридор"), ("word_bird", "ястреб"), ("music.note", "гитара"),
-                ("word_fish", "крокодил"), ("word_moon", "хомяк"), ("leaf.fill", "клён")
+                ("word_frog", "крокодил"), ("word_hare", "хомяк"), ("leaf.fill", "клён")
             ]
         default:
             return [
@@ -148,7 +148,7 @@ extension MemoryCard {
                 ("word_cat", "кот"), ("word_forest", "гора"), ("word_flower", "цветок"),
                 ("word_butterfly_insect", "бабочка"), ("word_frog", "лягушка"), ("reward_rainbow", "радуга"),
                 ("word_bear", "медведь"), ("balloon.fill", "шарик"), ("word_bird", "птица"),
-                ("word_apple", "яблоко"), ("word_car", "поезд"), ("word_fish", "волна")
+                ("word_apple", "яблоко"), ("word_train", "поезд"), ("word_fish", "рыба")
             ]
         }
     }

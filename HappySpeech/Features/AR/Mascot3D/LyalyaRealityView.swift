@@ -40,6 +40,18 @@ public enum LyalyaAnimation: String, CaseIterable, Sendable {
         case .sad:         return [Color("BrandRose"), Color("BrandLilac")]
         }
     }
+
+    /// Маппинг в ``LyalyaState`` для рендера единым 2D-каноном маскота (D-3 v27).
+    var lyalyaState: LyalyaState {
+        switch self {
+        case .idle:        return .idle
+        case .waving:      return .waving
+        case .celebrating: return .celebrating
+        case .thinking:    return .thinking
+        case .pointing:    return .pointing
+        case .sad:         return .sad
+        }
+    }
 }
 
 // MARK: - LyalyaAnimationHelper
@@ -167,20 +179,18 @@ enum LyalyaAnimationHelper {
 
 /// SwiftUI-обёртка для 3D-маскота Ляли из `lyalya3d.usdz`.
 ///
-/// Используется на экранах **Onboarding**, **Demo**, **SessionComplete**, **Rewards**.
+/// - Warning: **УСТАРЕЛО (D-3 v27 — унификация маскота).** 3D-модель Ляли
+///   расходилась с брендовым каноном «подружка-пчёлка» (2D-иллюстрации
+///   `mascot_lyalya_*`, согласованные с `AppIcon`). Все экраны переведены
+///   на единый 2D-канон через ``LyalyaMascotView`` / ``LyalyaHeroView``.
+///   **Не используйте этот компонент в новом коде.**
 ///
 /// Стратегия деградации:
 /// - iOS 17+: `ARView(cameraMode: .nonAR)` через `UIViewRepresentable` (чистый 3D, без AR)
 /// - iOS 18+: нативный `RealityView` (SwiftUI)
-/// - Любая ошибка загрузки USDZ → 2D-фоллбэк (градиент + emoji)
+/// - Любая ошибка загрузки USDZ → 2D-фоллбэк (градиент + SF Symbol)
 ///
 /// Все длительности — через `MotionTokens`. Reduced Motion учтён.
-///
-/// ### Использование
-/// ```swift
-/// LyalyaRealityView(animation: .celebrating, size: 240)
-/// LyalyaRealityView.large(animation: .waving)
-/// ```
 public struct LyalyaRealityView: View {
 
     // MARK: - Properties

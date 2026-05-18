@@ -74,14 +74,20 @@ struct SpeechVisualizationView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: SpacingTokens.sp4) {
+            Group {
                 if let viewModel = holder.loadVM {
-                    headerSection
-                    wordSection(viewModel: viewModel)
-                    spectrogramSection
-                    Spacer(minLength: 0)
-                    summarySection
-                    primaryCTA
+                    ScrollView(showsIndicators: false) {
+                        VStack(spacing: SpacingTokens.sp4) {
+                            headerSection
+                            wordSection(viewModel: viewModel)
+                            spectrogramSection
+                            summarySection
+                            primaryCTA
+                        }
+                        .padding(.horizontal, SpacingTokens.screenEdge)
+                        .padding(.vertical, SpacingTokens.sp4)
+                    }
+                    .scrollBounceBehavior(.basedOnSize)
                 } else {
                     // H v18 — Lyalya hero на loading-экране.
                     VStack(spacing: SpacingTokens.sp3) {
@@ -93,8 +99,6 @@ struct SpeechVisualizationView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.vertical, SpacingTokens.sp4)
             .background(ColorTokens.Kid.bg.ignoresSafeArea())
             .navigationTitle(Text("karaoke.screen.title"))
             .navigationBarTitleDisplayMode(.inline)
@@ -167,7 +171,7 @@ struct SpeechVisualizationView: View {
     private var spectrogramSection: some View {
         // Reuse существующего компонента (referenceSpectrogram=nil → live-only).
         SpectrogramVisualizerView(referenceSpectrogram: nil, style: .ocean)
-            .frame(height: 220)
+            .frame(height: 180)
             .accessibilityLabel(Text("karaoke.spectrogram.a11y"))
     }
 

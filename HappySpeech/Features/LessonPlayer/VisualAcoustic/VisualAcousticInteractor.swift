@@ -276,24 +276,24 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 VisualAcousticRound(
                     id: UUID(),
                     imageEmoji: "word_fish",
-                    imageLabel: String(localized: "Змея"),
-                    question: String(localized: "Как звучит змея?"),
+                    imageLabel: String(localized: "Рыба"),
+                    question: String(localized: "Кто плавает в реке?"),
                     questionWithSound: String(localized: "Найди слово со звуком «С»"),
-                    choices: ["шипит", "рычит", "свистит", "мяукает"],
-                    correctIndex: 2,
+                    choices: ["лещ", "сом", "карп", "ёрш"],
+                    correctIndex: 1,
                     soundGroup: "whistling",
-                    ttsText: String(localized: "Как звучит змея? Найди слово со звуком С. Шипит. Рычит. Свистит. Мяукает.")
+                    ttsText: String(localized: "Кто плавает в реке? Найди слово со звуком С. Лещ. Сом. Карп. Ёрш.")
                 ),
                 VisualAcousticRound(
                     id: UUID(),
                     imageEmoji: "word_butterfly_insect",
-                    imageLabel: String(localized: "Комар"),
-                    question: String(localized: "Как звучит комар?"),
+                    imageLabel: String(localized: "Бабочка"),
+                    question: String(localized: "Как зовут это насекомое?"),
                     questionWithSound: String(localized: "Найди слово со звуком «З»"),
-                    choices: ["звенит", "лает", "рычит", "пищит"],
-                    correctIndex: 0,
+                    choices: ["бабочка", "стрекоза", "пчела", "жук"],
+                    correctIndex: 1,
                     soundGroup: "whistling",
-                    ttsText: String(localized: "Как звучит комар? Найди слово со звуком З. Звенит. Лает. Рычит. Пищит.")
+                    ttsText: String(localized: "Как зовут это насекомое? Найди слово со звуком З. Бабочка. Стрекоза. Пчела. Жук.")
                 ),
                 VisualAcousticRound(
                     id: UUID(),
@@ -309,24 +309,24 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 VisualAcousticRound(
                     id: UUID(),
                     imageEmoji: "word_forest",
-                    imageLabel: String(localized: "Сосна"),
-                    question: String(localized: "Какое это дерево?"),
+                    imageLabel: String(localized: "Лес"),
+                    question: String(localized: "Где растут деревья?"),
                     questionWithSound: String(localized: "Найди слово со звуком «С»"),
-                    choices: ["дуб", "берёза", "сосна", "клён"],
-                    correctIndex: 2,
+                    choices: ["поле", "лес", "море", "степь"],
+                    correctIndex: 1,
                     soundGroup: "whistling",
-                    ttsText: String(localized: "Какое это дерево? Найди слово со звуком С. Дуб. Берёза. Сосна. Клён.")
+                    ttsText: String(localized: "Где растут деревья? Найди слово со звуком С. Поле. Лес. Море. Степь.")
                 ),
                 VisualAcousticRound(
                     id: UUID(),
                     imageEmoji: "word_hare",
-                    imageLabel: String(localized: "Зебра"),
-                    question: String(localized: "Кто это в полоску?"),
+                    imageLabel: String(localized: "Заяц"),
+                    question: String(localized: "Кто прыгает по лесу?"),
                     questionWithSound: String(localized: "Найди слово со звуком «З»"),
-                    choices: ["тигр", "зебра", "лошадь", "корова"],
+                    choices: ["кот", "заяц", "лиса", "волк"],
                     correctIndex: 1,
                     soundGroup: "whistling",
-                    ttsText: String(localized: "Кто это в полоску? Найди слово со звуком З. Тигр. Зебра. Лошадь. Корова.")
+                    ttsText: String(localized: "Кто прыгает по лесу? Найди слово со звуком З. Кот. Заяц. Лиса. Волк.")
                 ),
                 VisualAcousticRound(
                     id: UUID(),
@@ -357,24 +357,24 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 VisualAcousticRound(
                     id: UUID(),
                     imageEmoji: "word_cat",
-                    imageLabel: String(localized: "Мышка"),
-                    question: String(localized: "Кто пищит в норке?"),
+                    imageLabel: String(localized: "Кошка"),
+                    question: String(localized: "Кто мяукает?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Ш»"),
-                    choices: ["птица", "мышка", "крот", "лиса"],
+                    choices: ["птица", "кошка", "крот", "лиса"],
                     correctIndex: 1,
                     soundGroup: "hissing",
-                    ttsText: String(localized: "Кто пищит в норке? Найди слово со звуком Ш. Птица. Мышка. Крот. Лиса.")
+                    ttsText: String(localized: "Кто мяукает? Найди слово со звуком Ш. Птица. Кошка. Крот. Лиса.")
                 ),
                 VisualAcousticRound(
                     id: UUID(),
                     imageEmoji: "word_lamp",
-                    imageLabel: String(localized: "Часы"),
-                    question: String(localized: "Что показывает время?"),
+                    imageLabel: String(localized: "Лампа"),
+                    question: String(localized: "Что светит в комнате?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Ч»"),
-                    choices: ["зеркало", "часы", "лампа", "окно"],
-                    correctIndex: 1,
+                    choices: ["свеча", "лампа", "фонарь", "факел"],
+                    correctIndex: 0,
                     soundGroup: "hissing",
-                    ttsText: String(localized: "Что показывает время? Найди слово со звуком Ч. Зеркало. Часы. Лампа. Окно.")
+                    ttsText: String(localized: "Что светит в комнате? Найди слово со звуком Ч. Свеча. Лампа. Фонарь. Факел.")
                 ),
                 VisualAcousticRound(
                     id: UUID(),
@@ -390,24 +390,24 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 VisualAcousticRound(
                     id: UUID(),
                     imageEmoji: "word_elephant",
-                    imageLabel: String(localized: "Жираф"),
-                    question: String(localized: "Кто самый высокий?"),
+                    imageLabel: String(localized: "Слон"),
+                    question: String(localized: "У кого длинный хобот?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Ж»"),
                     choices: ["слон", "жираф", "зебра", "лев"],
-                    correctIndex: 1,
+                    correctIndex: 0,
                     soundGroup: "hissing",
-                    ttsText: String(localized: "Кто самый высокий? Найди слово со звуком Ж. Слон. Жираф. Зебра. Лев.")
+                    ttsText: String(localized: "У кого длинный хобот? Найди слово со звуком Ж. Слон. Жираф. Зебра. Лев.")
                 ),
                 VisualAcousticRound(
                     id: UUID(),
                     imageEmoji: "word_bag",
-                    imageLabel: String(localized: "Шуба"),
-                    question: String(localized: "Что надевают зимой?"),
+                    imageLabel: String(localized: "Сумка"),
+                    question: String(localized: "Что берут в школу?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Ш»"),
-                    choices: ["майка", "шуба", "панама", "кофта"],
+                    choices: ["сумка", "шапка", "панама", "кофта"],
                     correctIndex: 1,
                     soundGroup: "hissing",
-                    ttsText: String(localized: "Что надевают зимой? Найди слово со звуком Ш. Майка. Шуба. Панама. Кофта.")
+                    ttsText: String(localized: "Что берут в школу? Найди слово со звуком Ш. Сумка. Шапка. Панама. Кофта.")
                 )
             ],
 
@@ -416,13 +416,13 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 VisualAcousticRound(
                     id: UUID(),
                     imageEmoji: "word_cat",
-                    imageLabel: String(localized: "Тигр"),
-                    question: String(localized: "Как звучит тигр?"),
+                    imageLabel: String(localized: "Кошка"),
+                    question: String(localized: "Как говорит кошка?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Р»"),
                     choices: ["рычит", "хрюкает", "мяукает", "свистит"],
-                    correctIndex: 0,
+                    correctIndex: 2,
                     soundGroup: "sonants",
-                    ttsText: String(localized: "Как звучит тигр? Найди слово со звуком Р. Рычит. Хрюкает. Мяукает. Свистит.")
+                    ttsText: String(localized: "Как говорит кошка? Найди слово со звуком Р. Рычит. Хрюкает. Мяукает. Свистит.")
                 ),
                 VisualAcousticRound(
                     id: UUID(),
@@ -438,13 +438,13 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 VisualAcousticRound(
                     id: UUID(),
                     imageEmoji: "word_apple",
-                    imageLabel: String(localized: "Лимон"),
-                    question: String(localized: "Какой жёлтый и кислый?"),
+                    imageLabel: String(localized: "Яблоко"),
+                    question: String(localized: "Какой красный и сладкий фрукт?"),
                     questionWithSound: String(localized: "Найди слово со звуком «Л»"),
-                    choices: ["банан", "лимон", "груша", "киви"],
+                    choices: ["груша", "яблоко", "слива", "апельсин"],
                     correctIndex: 1,
                     soundGroup: "sonants",
-                    ttsText: String(localized: "Какой жёлтый и кислый? Найди слово со звуком Л. Банан. Лимон. Груша. Киви.")
+                    ttsText: String(localized: "Какой красный и сладкий фрукт? Найди слово со звуком Л. Груша. Яблоко. Слива. Апельсин.")
                 ),
                 VisualAcousticRound(
                     id: UUID(),
@@ -508,13 +508,13 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 VisualAcousticRound(
                     id: UUID(),
                     imageEmoji: "word_cake",
-                    imageLabel: String(localized: "Хлеб"),
-                    question: String(localized: "Что пекут в печке?"),
-                    questionWithSound: String(localized: "Найди слово со звуком «Х»"),
-                    choices: ["суп", "хлеб", "каша", "пирог"],
-                    correctIndex: 1,
+                    imageLabel: String(localized: "Торт"),
+                    question: String(localized: "Что едят на день рождения?"),
+                    questionWithSound: String(localized: "Найди слово со звуком «К»"),
+                    choices: ["торт", "суп", "каша", "кисель"],
+                    correctIndex: 0,
                     soundGroup: "velar",
-                    ttsText: String(localized: "Что пекут в печке? Найди слово со звуком Х. Суп. Хлеб. Каша. Пирог.")
+                    ttsText: String(localized: "Что едят на день рождения? Найди слово со звуком К. Торт. Суп. Каша. Кисель.")
                 ),
                 VisualAcousticRound(
                     id: UUID(),
@@ -530,24 +530,24 @@ final class VisualAcousticInteractor: VisualAcousticBusinessLogic {
                 VisualAcousticRound(
                     id: UUID(),
                     imageEmoji: "word_apple",
-                    imageLabel: String(localized: "Виноград"),
-                    question: String(localized: "Какая ягода гроздью?"),
-                    questionWithSound: String(localized: "Найди слово со звуком «Г»"),
-                    choices: ["вишня", "виноград", "малина", "слива"],
-                    correctIndex: 1,
+                    imageLabel: String(localized: "Яблоко"),
+                    question: String(localized: "Какой фрукт красный и круглый?"),
+                    questionWithSound: String(localized: "Найди слово со звуком «К»"),
+                    choices: ["груша", "слива", "яблоко", "кокос"],
+                    correctIndex: 3,
                     soundGroup: "velar",
-                    ttsText: String(localized: "Какая ягода гроздью? Найди слово со звуком Г. Вишня. Виноград. Малина. Слива.")
+                    ttsText: String(localized: "Какой фрукт красный и круглый? Найди слово со звуком К. Груша. Слива. Яблоко. Кокос.")
                 ),
                 VisualAcousticRound(
                     id: UUID(),
                     imageEmoji: "word_hare",
-                    imageLabel: String(localized: "Хомяк"),
-                    question: String(localized: "Кто грызёт зёрна в клетке?"),
-                    questionWithSound: String(localized: "Найди слово со звуком «Х»"),
-                    choices: ["мышь", "хомяк", "заяц", "ёжик"],
-                    correctIndex: 1,
+                    imageLabel: String(localized: "Заяц"),
+                    question: String(localized: "Кто прячется в кустах?"),
+                    questionWithSound: String(localized: "Найди слово со звуком «К»"),
+                    choices: ["волк", "заяц", "козёл", "лиса"],
+                    correctIndex: 2,
                     soundGroup: "velar",
-                    ttsText: String(localized: "Кто грызёт зёрна в клетке? Найди слово со звуком Х. Мышь. Хомяк. Заяц. Ёжик.")
+                    ttsText: String(localized: "Кто прячется в кустах? Найди слово со звуком К. Волк. Заяц. Козёл. Лиса.")
                 )
             ]
         ]

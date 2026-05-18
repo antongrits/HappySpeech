@@ -304,7 +304,7 @@ private struct ParentDashboardTab: View {
                     recommendationsSection
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.bottom, SpacingTokens.sp16)
+                .padding(.bottom, SpacingTokens.sp16 + SpacingTokens.sp10)
             }
             .background(ColorTokens.Parent.bg.ignoresSafeArea())
             .navigationTitle(String(localized: "Прогресс"))

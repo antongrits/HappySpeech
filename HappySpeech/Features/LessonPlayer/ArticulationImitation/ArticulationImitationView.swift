@@ -171,7 +171,9 @@ struct ArticulationImitationView: View {
             Spacer(minLength: 0)
             holdingBottom
         }
-        .padding(.vertical, SpacingTokens.medium)
+        .padding(.top, SpacingTokens.medium)
+        .padding(.bottom, SpacingTokens.medium)
+        .safeAreaPadding(.bottom, SpacingTokens.tiny)
     }
 
     private var holdingBody: some View {
@@ -179,7 +181,7 @@ struct ArticulationImitationView: View {
             ZStack {
                 Circle()
                     .stroke(ColorTokens.Kid.line, lineWidth: 10)
-                    .frame(width: 220, height: 220)
+                    .frame(width: 180, height: 180)
                 Circle()
                     .trim(from: 0, to: CGFloat(display.holdFraction))
                     .stroke(
@@ -187,7 +189,7 @@ struct ArticulationImitationView: View {
                         style: StrokeStyle(lineWidth: 10, lineCap: .round)
                     )
                     .rotationEffect(.degrees(-90))
-                    .frame(width: 220, height: 220)
+                    .frame(width: 180, height: 180)
                     .animation(
                         reduceMotion ? nil : .linear(duration: 0.1),
                         value: display.holdFraction

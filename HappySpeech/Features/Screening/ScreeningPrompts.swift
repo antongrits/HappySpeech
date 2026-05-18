@@ -45,7 +45,7 @@ enum ScreeningPromptFactory {
                 block: .wordPronunciation,
                 targetSound: "Ш",
                 stimulus: "шапка",
-                imageAsset: "word_hat",
+                imageAsset: nil,
                 referenceAudio: "ref_shapka",
                 acceptableHoldSeconds: nil
             ),
@@ -63,7 +63,7 @@ enum ScreeningPromptFactory {
                 block: .wordPronunciation,
                 targetSound: "Ж",
                 stimulus: "жираф",
-                imageAsset: "word_giraffe",
+                imageAsset: nil,
                 referenceAudio: "ref_zhiraf",
                 acceptableHoldSeconds: nil
             ),
@@ -99,7 +99,7 @@ enum ScreeningPromptFactory {
                 block: .wordPronunciation,
                 targetSound: "Щ",
                 stimulus: "щётка",
-                imageAsset: "word_brush",
+                imageAsset: nil,
                 referenceAudio: "ref_shjotka",
                 acceptableHoldSeconds: nil
             ),
@@ -108,7 +108,7 @@ enum ScreeningPromptFactory {
                 block: .wordPronunciation,
                 targetSound: "Ц",
                 stimulus: "цапля",
-                imageAsset: "word_heron",
+                imageAsset: "word_bird",
                 referenceAudio: "ref_tsaplya",
                 acceptableHoldSeconds: nil
             ),
@@ -131,35 +131,35 @@ enum ScreeningPromptFactory {
         [
             ScreeningPrompt(id: "art_s", block: .articulationImitation, targetSound: "С",
                             stimulus: "улыбнись и подуй на язычок",
-                            imageAsset: "articulation_s", referenceAudio: "ref_art_s",
+                            imageAsset: nil, referenceAudio: "ref_art_s",
                             acceptableHoldSeconds: nil),
             ScreeningPrompt(id: "art_z", block: .articulationImitation, targetSound: "З",
                             stimulus: "тот же звук, но звонкий",
-                            imageAsset: "articulation_z", referenceAudio: "ref_art_z",
+                            imageAsset: nil, referenceAudio: "ref_art_z",
                             acceptableHoldSeconds: nil),
             ScreeningPrompt(id: "art_sh", block: .articulationImitation, targetSound: "Ш",
                             stimulus: "язык наверх, «чашечка»",
-                            imageAsset: "articulation_sh", referenceAudio: "ref_art_sh",
+                            imageAsset: nil, referenceAudio: "ref_art_sh",
                             acceptableHoldSeconds: nil),
             ScreeningPrompt(id: "art_zh", block: .articulationImitation, targetSound: "Ж",
                             stimulus: "как «Ш», но с голосом",
-                            imageAsset: "articulation_zh", referenceAudio: "ref_art_zh",
+                            imageAsset: nil, referenceAudio: "ref_art_zh",
                             acceptableHoldSeconds: nil),
             ScreeningPrompt(id: "art_r", block: .articulationImitation, targetSound: "Р",
                             stimulus: "вибрируй язычком у нёба",
-                            imageAsset: "articulation_r", referenceAudio: "ref_art_r",
+                            imageAsset: nil, referenceAudio: "ref_art_r",
                             acceptableHoldSeconds: nil),
             ScreeningPrompt(id: "art_l", block: .articulationImitation, targetSound: "Л",
                             stimulus: "язык к зубам, гудим",
-                            imageAsset: "articulation_l", referenceAudio: "ref_art_l",
+                            imageAsset: nil, referenceAudio: "ref_art_l",
                             acceptableHoldSeconds: nil),
             ScreeningPrompt(id: "art_k", block: .articulationImitation, targetSound: "К",
                             stimulus: "язык к нёбу сзади, кашляем",
-                            imageAsset: "articulation_k", referenceAudio: "ref_art_k",
+                            imageAsset: nil, referenceAudio: "ref_art_k",
                             acceptableHoldSeconds: nil),
             ScreeningPrompt(id: "art_g", block: .articulationImitation, targetSound: "Г",
                             stimulus: "как «К», но с голосом",
-                            imageAsset: "articulation_g", referenceAudio: "ref_art_g",
+                            imageAsset: nil, referenceAudio: "ref_art_g",
                             acceptableHoldSeconds: nil)
         ]
     }
@@ -168,11 +168,11 @@ enum ScreeningPromptFactory {
         // 8 words — two per key sound with different position.
         [
             ScreeningPrompt(id: "word_s_init", block: .wordPronunciation, targetSound: "С",
-                            stimulus: "санки", imageAsset: "word_sled", referenceAudio: "ref_sanki", acceptableHoldSeconds: nil),
+                            stimulus: "санки", imageAsset: nil, referenceAudio: "ref_sanki", acceptableHoldSeconds: nil),
             ScreeningPrompt(id: "word_s_med", block: .wordPronunciation, targetSound: "С",
-                            stimulus: "косы", imageAsset: "word_scythe", referenceAudio: "ref_kosy", acceptableHoldSeconds: nil),
+                            stimulus: "косы", imageAsset: nil, referenceAudio: "ref_kosy", acceptableHoldSeconds: nil),
             ScreeningPrompt(id: "word_sh_init", block: .wordPronunciation, targetSound: "Ш",
-                            stimulus: "шапка", imageAsset: "word_hat", referenceAudio: "ref_shapka", acceptableHoldSeconds: nil),
+                            stimulus: "шапка", imageAsset: nil, referenceAudio: "ref_shapka", acceptableHoldSeconds: nil),
             ScreeningPrompt(id: "word_sh_med", block: .wordPronunciation, targetSound: "Ш",
                             stimulus: "кошка", imageAsset: "word_cat", referenceAudio: "ref_koshka", acceptableHoldSeconds: nil),
             ScreeningPrompt(id: "word_r_init", block: .wordPronunciation, targetSound: "Р",
@@ -190,13 +190,13 @@ enum ScreeningPromptFactory {
         // 3 minimal-pair discrimination prompts.
         [
             ScreeningPrompt(id: "pair_s_sh", block: .minimalPairs, targetSound: "С/Ш",
-                            stimulus: "миска — мишка", imageAsset: "pair_bowl_bear",
+                            stimulus: "миска — мишка", imageAsset: nil,
                             referenceAudio: "ref_miska_mishka", acceptableHoldSeconds: nil),
             ScreeningPrompt(id: "pair_r_l", block: .minimalPairs, targetSound: "Р/Л",
-                            stimulus: "рак — лак", imageAsset: "pair_crab_lacquer",
+                            stimulus: "рак — лак", imageAsset: nil,
                             referenceAudio: "ref_rak_lak", acceptableHoldSeconds: nil),
             ScreeningPrompt(id: "pair_k_g", block: .minimalPairs, targetSound: "К/Г",
-                            stimulus: "кот — год", imageAsset: "pair_cat_year",
+                            stimulus: "кот — год", imageAsset: nil,
                             referenceAudio: "ref_kot_god", acceptableHoldSeconds: nil)
         ]
     }
@@ -207,7 +207,7 @@ enum ScreeningPromptFactory {
         return [
             ScreeningPrompt(id: "breathing_hold", block: .breathingDuration, targetSound: "—",
                             stimulus: "дуй ровно на шарик \(hold) секунд",
-                            imageAsset: "breathing_balloon", referenceAudio: nil,
+                            imageAsset: nil, referenceAudio: nil,
                             acceptableHoldSeconds: Double(hold))
         ]
     }

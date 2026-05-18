@@ -135,9 +135,16 @@ struct StickerCellView: View {
     }
 
     // S12: emoji с опциональным matchedGeometryEffect (source или destination).
+    // D-22 v27: стикер-иллюстрация унифицирована — любой ассет (с белым фоном
+    // или прозрачный) обрезается в общий круг на едином светлом фоне, поэтому
+    // все стикеры выглядят в одном стиле.
     @ViewBuilder
     private var emojiView: some View {
         let base = HSContentSymbol(cell.emoji, size: 38, tint: ColorTokens.Brand.gold)
+            .padding(SpacingTokens.micro)
+            .frame(width: 56, height: 56)
+            .background(Circle().fill(ColorTokens.Kid.surface))
+            .clipShape(Circle())
             .scaleEffect(bounce ? 1.08 : 1.0)
         if let ns = heroNamespace {
             base.matchedGeometryEffect(
@@ -173,7 +180,11 @@ struct StickerCellView: View {
                     .fill(ColorTokens.Kid.surfaceAlt)
                     .frame(width: 64, height: 64)
 
+                // D-22 v27: locked-стикер тоже обрезан общим кругом — единый стиль.
                 HSContentSymbol(cell.emoji, size: 38, tint: ColorTokens.Kid.inkSoft)
+                    .padding(SpacingTokens.micro)
+                    .frame(width: 56, height: 56)
+                    .clipShape(Circle())
                     .grayscale(0.95)
                     .opacity(0.35)
 

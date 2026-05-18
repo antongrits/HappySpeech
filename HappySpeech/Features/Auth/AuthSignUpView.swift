@@ -34,7 +34,7 @@ struct AuthSignUpView: View {
                 navBar
 
                 ScrollView(showsIndicators: false) {
-                    VStack(spacing: SpacingTokens.sp5) {
+                    VStack(spacing: SpacingTokens.sp2) {
                         header
                             .offset(y: appeared ? 0 : 24)
                             .opacity(appeared ? 1 : 0)
@@ -53,9 +53,11 @@ struct AuthSignUpView: View {
                         footerLink
                     }
                     .padding(.horizontal, SpacingTokens.screenEdge)
-                    .padding(.top, SpacingTokens.sp5)
-                    .padding(.bottom, SpacingTokens.sp12)
+                    .padding(.top, SpacingTokens.sp3)
+                    .padding(.bottom, SpacingTokens.sp4)
                 }
+                .scrollBounceBehavior(.basedOnSize)
+                .safeAreaPadding(.bottom, SpacingTokens.sp3)
             }
         }
         .onAppear { appeared = true }
@@ -130,7 +132,7 @@ struct AuthSignUpView: View {
             Spacer()
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
-        .padding(.top, SpacingTokens.sp10)
+        .padding(.top, SpacingTokens.sp4)
     }
 
     private var topDecoration: some View {
@@ -146,8 +148,7 @@ struct AuthSignUpView: View {
 
     private var header: some View {
         VStack(spacing: SpacingTokens.sp2) {
-            LyalyaMascotView(state: .celebrating, size: 96)
-                .padding(.top, SpacingTokens.sp2)
+            LyalyaMascotView(state: .celebrating, size: 48)
 
             Text(String(localized: "Создать аккаунт"))
                 .font(TypographyTokens.title(24))
@@ -155,7 +156,6 @@ struct AuthSignUpView: View {
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .minimumScaleFactor(0.8)
-                .padding(.top, SpacingTokens.sp3)
                 .padding(.horizontal, SpacingTokens.medium)
 
             Text(String(localized: "Создайте аккаунт, чтобы сохранить прогресс ребёнка"))
@@ -169,13 +169,13 @@ struct AuthSignUpView: View {
     }
 
     private var formGlassSection: some View {
-        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.sp4) {
+        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.sp2) {
             formSection
         }
     }
 
     private var formSection: some View {
-        VStack(spacing: SpacingTokens.sp3) {
+        VStack(spacing: SpacingTokens.sp2) {
             AuthInputField(
                 title: String(localized: "Имя"),
                 text: $name,

@@ -95,6 +95,15 @@ public struct HSButton: View {
             .frame(height: height)
             .background(backgroundShape)
             .overlay(borderShape)
+            // D-21 v27 — насыщенная filled-CTA «выступает» мягкой тенью своего
+            // акцентного цвета: активная primary/danger явно читается как CTA,
+            // а не как disabled-плашка.
+            .shadow(
+                color: ctaShadowColor,
+                radius: isPressed ? 4 : 10,
+                x: 0,
+                y: isPressed ? 2 : 5
+            )
             .scaleEffect(isPressed && !reduceMotion ? 0.97 : 1.0)
             .opacity(isLoading ? 0.7 : 1.0)
         }
@@ -180,6 +189,18 @@ public struct HSButton: View {
             return Color.clear
         case .danger:
             return ColorTokens.Semantic.error
+        }
+    }
+
+    /// Цвет тени filled-CTA. Для secondary/ghost — прозрачная (нет фона → нет тени).
+    private var ctaShadowColor: Color {
+        switch style {
+        case .primary:
+            return accentColor.opacity(0.35)
+        case .danger:
+            return ColorTokens.Semantic.error.opacity(0.35)
+        case .secondary, .ghost:
+            return Color.clear
         }
     }
 }

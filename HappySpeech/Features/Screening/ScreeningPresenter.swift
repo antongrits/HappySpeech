@@ -40,7 +40,10 @@ final class ScreeningPresenter: ScreeningPresentationLogic {
         let fraction = response.totalStages > 0
             ? Double(response.stageIndex + 1) / Double(response.totalStages)
             : 0
-        let soundHint = String(localized: "screening.sound_hint.\(response.prompt.targetSound)")
+        let soundHint = String(
+            format: String(localized: "screening.sound_hint_format"),
+            response.prompt.targetSound
+        )
         let vm = ScreeningModels.PrepareStage.ViewModel(
             stageIndex: response.stageIndex,
             totalStages: response.totalStages,

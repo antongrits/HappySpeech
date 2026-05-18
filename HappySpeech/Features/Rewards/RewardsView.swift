@@ -189,7 +189,7 @@ struct RewardsView: View {
 
     private var tabFilterSection: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: SpacingTokens.tiny) {
+            HStack(spacing: SpacingTokens.small) {
                 ForEach(display.collections) { tab in
                     Button {
                         interactor?.filterByCollection(.init(collection: tab.collection))
@@ -229,8 +229,11 @@ struct RewardsView: View {
                     .accessibilityAddTraits(tab.isActive ? [.isButton, .isSelected] : .isButton)
                 }
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
+            // D-19 v27 — contentMargins даёт «дышащий» отступ по обоим краям,
+            // последний чип не обрезается жёстко — видно, что ряд скроллится.
+            .padding(.vertical, SpacingTokens.micro)
         }
+        .contentMargins(.horizontal, SpacingTokens.screenEdge, for: .scrollContent)
         .padding(.bottom, SpacingTokens.small)
     }
 

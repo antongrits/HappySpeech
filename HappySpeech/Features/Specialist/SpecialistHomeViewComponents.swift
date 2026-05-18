@@ -43,16 +43,39 @@ struct SpecChildListView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
                     List {
-                        ForEach(Array(filteredChildren.enumerated()), id: \.element.id) { index, child in
-                            ZStack {
-                                NavigationLink(value: child.id) {
-                                    EmptyView()
+                        Section {
+                            ForEach(Array(filteredChildren.enumerated()), id: \.element.id) { index, child in
+                                ZStack {
+                                    NavigationLink(value: child.id) {
+                                        EmptyView()
+                                    }
+                                    .opacity(0)
+                                    SpecChildRow(child: child)
                                 }
-                                .opacity(0)
-                                SpecChildRow(child: child)
+                                .listRowBackground(ColorTokens.Spec.surface)
+                                .accessibilityIdentifier("specialistStudentRow_\(index)")
                             }
-                            .listRowBackground(ColorTokens.Spec.surface)
-                            .accessibilityIdentifier("specialistStudentRow_\(index)")
+                        } header: {
+                            Text(String(
+                                format: String(localized: "spec.children.listHeader"),
+                                filteredChildren.count
+                            ))
+                            .font(TypographyTokens.caption(12).weight(.semibold))
+                            .foregroundStyle(ColorTokens.Spec.inkMuted)
+                            .textCase(.uppercase)
+                        } footer: {
+                            HStack(alignment: .top, spacing: SpacingTokens.sp2) {
+                                Image(systemName: "lightbulb.fill")
+                                    .font(TypographyTokens.caption(12))
+                                    .foregroundStyle(ColorTokens.Spec.accent)
+                                    .accessibilityHidden(true)
+                                Text(String(localized: "spec.children.hint"))
+                                    .font(TypographyTokens.caption(12))
+                                    .foregroundStyle(ColorTokens.Spec.inkMuted)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
+                            .padding(.top, SpacingTokens.sp2)
+                            .accessibilityElement(children: .combine)
                         }
                     }
                     .listStyle(.insetGrouped)

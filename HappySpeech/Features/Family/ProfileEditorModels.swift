@@ -43,23 +43,23 @@ enum ProfileEditor {
         let localizedName: String
     }
 
-    // Block D v16 / G v18: иллюстрационные ассеты для аватаров.
+    // D-14 v27: нейтральные аватар-иллюстрации (звери), без reward-бейджей.
     //   butterfly → mascot_lyalya_wave (Lyalya — бабочка)
-    //   star      → reward_gold_star
-    //   rocket    → reward_rocket
-    //   dragon    → reward_brave_heart (fallback)
-    //   unicorn   → reward_rainbow (fallback)
+    //   cat       → word_cat
+    //   fox       → word_fox
+    //   bear      → word_bear
+    //   frog      → word_frog
     static let avatarPresets: [AvatarPreset] = [
         AvatarPreset(id: "butterfly", illustrationName: "mascot_lyalya_wave",
                      localizedName: String(localized: "avatar.butterfly")),
-        AvatarPreset(id: "star",      illustrationName: "reward_gold_star",
-                     localizedName: String(localized: "avatar.star")),
-        AvatarPreset(id: "rocket",    illustrationName: "reward_rocket",
-                     localizedName: String(localized: "avatar.rocket")),
-        AvatarPreset(id: "dragon",    illustrationName: "reward_brave_heart",
-                     localizedName: String(localized: "avatar.dragon")),
-        AvatarPreset(id: "unicorn",   illustrationName: "reward_rainbow",
-                     localizedName: String(localized: "avatar.unicorn"))
+        AvatarPreset(id: "cat",       illustrationName: "word_cat",
+                     localizedName: String(localized: "avatar.cat")),
+        AvatarPreset(id: "fox",       illustrationName: "word_fox",
+                     localizedName: String(localized: "avatar.fox")),
+        AvatarPreset(id: "bear",      illustrationName: "word_bear",
+                     localizedName: String(localized: "avatar.bear")),
+        AvatarPreset(id: "frog",      illustrationName: "word_frog",
+                     localizedName: String(localized: "avatar.frog"))
     ]
 
     // MARK: - Domain: Theme presets

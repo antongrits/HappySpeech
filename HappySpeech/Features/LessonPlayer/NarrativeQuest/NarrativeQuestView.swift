@@ -130,18 +130,18 @@ struct NarrativeQuestView: View {
     // MARK: - Quest intro
 
     private var questIntroView: some View {
-        VStack(spacing: SpacingTokens.large) {
+        VStack(spacing: SpacingTokens.medium) {
             header
 
-            ScrollView {
-                VStack(spacing: SpacingTokens.medium) {
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: SpacingTokens.small) {
                     Image(systemName: display.finalRewardEmoji)
-                        .font(.system(size: 96, weight: .bold))
+                        .font(.system(size: 64, weight: .bold))
                         .foregroundStyle(ColorTokens.Brand.gold)
                         .accessibilityHidden(true)
 
                     Text(display.questTitle)
-                        .font(TypographyTokens.title(28))
+                        .font(TypographyTokens.title(24))
                         .foregroundStyle(ColorTokens.Kid.ink)
                         .multilineTextAlignment(.center)
                         .lineLimit(nil)
@@ -150,8 +150,10 @@ struct NarrativeQuestView: View {
                     lyalyaBubble(text: display.introNarration)
                         .padding(.horizontal, SpacingTokens.screenEdge)
                 }
-                .padding(.vertical, SpacingTokens.small)
+                .padding(.top, SpacingTokens.small)
+                .padding(.bottom, SpacingTokens.small)
             }
+            .scrollBounceBehavior(.basedOnSize)
 
             HSButton(String(localized: "Начать"), style: .primary, icon: "sparkles") {
                 container.soundService.playUISound(.tap)
@@ -162,33 +164,34 @@ struct NarrativeQuestView: View {
             .accessibilityIdentifier("gameNextButton")
             .accessibilityHint(String(localized: "Начнёт первый этап квеста"))
         }
-        .padding(.vertical, SpacingTokens.medium)
+        .padding(.vertical, SpacingTokens.regular)
     }
 
     // MARK: - Stage narration
 
     private var stageNarrationView: some View {
-        VStack(spacing: SpacingTokens.medium) {
+        VStack(spacing: SpacingTokens.small) {
             header
             stageIndicator
-            Spacer(minLength: 0)
 
-            VStack(spacing: SpacingTokens.medium) {
-                lyalyaBubble(text: display.narration)
-                taskCard
-                targetWordChip
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: SpacingTokens.small) {
+                    lyalyaBubble(text: display.narration)
+                    taskCard
+                    targetWordChip
 
-                // Block H: кнопка-подсказки — загружает LLM hint в фоне.
-                HintButtonView(
-                    gameType: "narrative_quest",
-                    currentStep: "\(display.stageNumber)"
-                )
-                .frame(maxWidth: .infinity, alignment: .trailing)
-                .padding(.trailing, SpacingTokens.small)
+                    // Block H: кнопка-подсказки — загружает LLM hint в фоне.
+                    HintButtonView(
+                        gameType: "narrative_quest",
+                        currentStep: "\(display.stageNumber)"
+                    )
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .padding(.trailing, SpacingTokens.small)
+                }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.vertical, SpacingTokens.small)
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-
-            Spacer(minLength: 0)
+            .scrollBounceBehavior(.basedOnSize)
 
             HSButton(String(localized: "Я готов!"), style: .primary, icon: "mic.fill") {
                 container.soundService.playUISound(.tap)
@@ -198,7 +201,7 @@ struct NarrativeQuestView: View {
             .padding(.horizontal, SpacingTokens.screenEdge)
             .accessibilityHint(String(localized: "Начнёт запись голоса"))
         }
-        .padding(.vertical, SpacingTokens.medium)
+        .padding(.vertical, SpacingTokens.regular)
     }
 
     // MARK: - Recording

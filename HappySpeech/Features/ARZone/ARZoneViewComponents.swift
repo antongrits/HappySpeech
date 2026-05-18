@@ -14,17 +14,17 @@ private extension Array {
     }
 }
 
-// MARK: - ARMascot3DHero (Block J v17 — 3D primary, 2D Image() removed)
+// MARK: - ARMascot3DHero
 
-/// 3D-маскот Ляля для AR-зоны на компактных устройствах (iPhone SE).
+/// Маскот Ляля для AR-зоны.
 ///
-/// Block J v17: ранее `ARMascot2DFallback` использовал `Image("mascot_lyalya_wave")`
-/// с rebound `bob`-анимацией. Заменён на `LyalyaRealityKitView` (3D, .waving state)
-/// согласно user explicit rule «лучше убрать 2D героев и сделать только 3D героев»
-/// (size 160 ≥ 100pt → hero → 3D). Все 2D bob/scale rebound анимации удалены —
-/// оставлен только entrance fade через стандартный `.transition(.opacity)`.
+/// D-3 v27: единый 2D-канон маскота через `LyalyaMascotView`
+/// (2D-иллюстрация `mascot_lyalya_*`, согласованная с `AppIcon`).
+/// Ранее использовался 3D-рендер `lyalya3d_v2.usdz`, изображавший серого
+/// «робота» и расходившийся с брендом «подружка-пчёлка».
+/// Имя типа сохранено для совместимости callsite.
 ///
-/// Reduced Motion соблюдается внутри `LyalyaRealityKitView`.
+/// Reduced Motion соблюдается внутри `LyalyaMascotView`.
 struct ARMascot3DHero: View {
     let size: CGFloat
 
@@ -41,21 +41,9 @@ struct ARMascot3DHero: View {
                 )
                 .shadow(color: ColorTokens.Brand.lilac.opacity(0.3), radius: 14, x: 0, y: 6)
 
-            // Под XCTest 3D ARView не рендерится (нестабилен в симуляторе) —
-            // показываем SF Symbol fallback.
-            if ProcessInfo.processInfo.isRunningUnitTests {
-                Image(systemName: "hand.wave.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: size * 0.4, height: size * 0.4)
-                    .foregroundStyle(ColorTokens.Brand.lilac)
-                    .accessibilityHidden(true)
-            } else {
-                LyalyaRealityKitView(state: .waving, mood: 0.7)
-                    .frame(width: size * 0.85, height: size * 0.85)
-                    .clipShape(Circle())
-                    .accessibilityHidden(true)
-            }
+            LyalyaMascotView(state: .waving, size: size * 0.85)
+                .clipShape(Circle())
+                .accessibilityHidden(true)
         }
         .frame(width: size, height: size)
         .accessibilityLabel(Text("ar.zone.mascot.accessibility"))
@@ -193,7 +181,9 @@ struct ARHeroBanner: View {
             if isCompactDevice {
                 ARMascot3DHero(size: 160)
             } else {
-                LyalyaRealityView(animation: mascotState, size: 220)
+                // D-3 v27: единый 2D-канон маскота через LyalyaMascotView.
+                LyalyaMascotView(state: mascotState.lyalyaState, size: 220)
+                    .accessibilityHidden(true)
                 if phase == .loading {
                     ARMascotLoadingPlaceholder(size: 220)
                         .transition(.opacity)

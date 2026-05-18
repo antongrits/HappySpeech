@@ -127,11 +127,11 @@ extension DragWord {
                      correctBucketId: "sound_s", soundGroup: "whistling"),
             DragWord(id: "sobaka2", word: "собака", emoji: "word_dog",
                      correctBucketId: "sound_s", soundGroup: "whistling"),
-            DragWord(id: "shapka", word: "шапка", emoji: "word_bag",
+            DragWord(id: "shapka", word: "мешок", emoji: "word_bag",
                      correctBucketId: "sound_sh", soundGroup: "hissing"),
             DragWord(id: "kashka", word: "кашка", emoji: "word_cup",
                      correctBucketId: "sound_sh", soundGroup: "hissing"),
-            DragWord(id: "mashka", word: "мышка", emoji: "word_cat",
+            DragWord(id: "mashka", word: "машина", emoji: "word_car",
                      correctBucketId: "sound_sh", soundGroup: "hissing")
         ],
         [
@@ -143,13 +143,13 @@ extension DragWord {
     /// Набор для шипящих: "Есть звук Ш" vs "Нет звука Ш".
     static let hissingSet: ([DragWord], [DragBucket]) = (
         [
-            DragWord(id: "shapka2", word: "шапка", emoji: "word_bag",
+            DragWord(id: "shapka2", word: "мешок", emoji: "word_bag",
                      correctBucketId: "has_sh", soundGroup: "hissing"),
             DragWord(id: "kashka2", word: "кашка", emoji: "word_cup",
                      correctBucketId: "has_sh", soundGroup: "hissing"),
-            DragWord(id: "mashka2", word: "мышка", emoji: "word_cat",
+            DragWord(id: "mashka2", word: "машина", emoji: "word_car",
                      correctBucketId: "has_sh", soundGroup: "hissing"),
-            DragWord(id: "shuba", word: "шуба", emoji: "word_bag",
+            DragWord(id: "shuba", word: "кошка", emoji: "word_cat",
                      correctBucketId: "has_sh", soundGroup: "hissing"),
             DragWord(id: "kot2", word: "кот", emoji: "word_cat",
                      correctBucketId: "no_sh", soundGroup: "hissing"),
@@ -169,7 +169,7 @@ extension DragWord {
     /// Набор для дифференциации З/Ж.
     static let zVsZhSet: ([DragWord], [DragBucket]) = (
         [
-            DragWord(id: "zont", word: "зонт", emoji: "word_bag",
+            DragWord(id: "zont", word: "заяц", emoji: "word_hare",
                      correctBucketId: "sound_z", soundGroup: "whistling"),
             DragWord(id: "zvezda", word: "звезда", emoji: "reward_gold_star",
                      correctBucketId: "sound_z", soundGroup: "whistling"),
@@ -177,7 +177,7 @@ extension DragWord {
                      correctBucketId: "sound_z", soundGroup: "whistling"),
             DragWord(id: "zhuk", word: "жук", emoji: "word_butterfly_insect",
                      correctBucketId: "sound_zh", soundGroup: "hissing"),
-            DragWord(id: "ezh", word: "ёж", emoji: "word_hare",
+            DragWord(id: "ezh", word: "жаба", emoji: "word_frog",
                      correctBucketId: "sound_zh", soundGroup: "hissing"),
             DragWord(id: "nozh", word: "нож", emoji: "word_fork",
                      correctBucketId: "sound_zh", soundGroup: "hissing")
@@ -191,7 +191,7 @@ extension DragWord {
     /// Набор для соноров: "Есть звук Р" vs "Нет звука Р".
     static let sonorantSet: ([DragWord], [DragBucket]) = (
         [
-            DragWord(id: "rak", word: "рак", emoji: "word_fish",
+            DragWord(id: "rak", word: "ручка", emoji: "word_pen",
                      correctBucketId: "has_r", soundGroup: "sonorant"),
             DragWord(id: "rosa", word: "роза", emoji: "word_flower",
                      correctBucketId: "has_r", soundGroup: "sonorant"),
@@ -203,7 +203,7 @@ extension DragWord {
                      correctBucketId: "no_r", soundGroup: "sonorant"),
             DragWord(id: "luna3", word: "луна", emoji: "word_moon",
                      correctBucketId: "no_r", soundGroup: "sonorant"),
-            DragWord(id: "vaza", word: "ваза", emoji: "word_cup",
+            DragWord(id: "vaza", word: "лиса", emoji: "word_fox",
                      correctBucketId: "no_r", soundGroup: "sonorant"),
             DragWord(id: "dom3", word: "дом", emoji: "word_house",
                      correctBucketId: "no_r", soundGroup: "sonorant")
@@ -217,11 +217,11 @@ extension DragWord {
     /// Набор для дифференциации Р/Л.
     static let rVsLSet: ([DragWord], [DragBucket]) = (
         [
-            DragWord(id: "rak2", word: "рак", emoji: "word_fish",
+            DragWord(id: "rak2", word: "ручка", emoji: "word_pen",
                      correctBucketId: "sound_r", soundGroup: "sonorant"),
             DragWord(id: "rosa2", word: "роза", emoji: "word_flower",
                      correctBucketId: "sound_r", soundGroup: "sonorant"),
-            DragWord(id: "reka", word: "река", emoji: "word_park",
+            DragWord(id: "reka", word: "рыба", emoji: "word_fish",
                      correctBucketId: "sound_r", soundGroup: "sonorant"),
             DragWord(id: "lampa", word: "лампа", emoji: "word_lamp",
                      correctBucketId: "sound_l", soundGroup: "sonorant"),
@@ -241,7 +241,7 @@ extension DragWord {
         [
             DragWord(id: "kot4", word: "кот", emoji: "word_cat",
                      correctBucketId: "sound_k", soundGroup: "velar"),
-            DragWord(id: "kub", word: "куб", emoji: "word_window",
+            DragWord(id: "kub", word: "книга", emoji: "word_book",
                      correctBucketId: "sound_k", soundGroup: "velar"),
             DragWord(id: "klyuch", word: "ключ", emoji: "word_door",
                      correctBucketId: "sound_k", soundGroup: "velar"),
@@ -251,7 +251,7 @@ extension DragWord {
                      correctBucketId: "sound_g", soundGroup: "velar"),
             DragWord(id: "hleb", word: "хлеб", emoji: "word_cake",
                      correctBucketId: "sound_h", soundGroup: "velar"),
-            DragWord(id: "uho", word: "ухо", emoji: "word_bear",
+            DragWord(id: "uho", word: "петух", emoji: "word_rooster",
                      correctBucketId: "sound_h", soundGroup: "velar"),
             DragWord(id: "muha", word: "муха", emoji: "ant.fill",
                      correctBucketId: "sound_h", soundGroup: "velar")
@@ -266,17 +266,17 @@ extension DragWord {
     /// Набор для Б/П — глухие/звонкие.
     static let bVsPSet: ([DragWord], [DragBucket]) = (
         [
-            DragWord(id: "banan", word: "банан", emoji: "word_apple",
+            DragWord(id: "banan", word: "бабочка", emoji: "word_butterfly_insect",
                      correctBucketId: "sound_b", soundGroup: "bilabial"),
             DragWord(id: "bulka", word: "булка", emoji: "word_cake",
                      correctBucketId: "sound_b", soundGroup: "bilabial"),
             DragWord(id: "belka", word: "белка", emoji: "word_hare",
                      correctBucketId: "sound_b", soundGroup: "bilabial"),
-            DragWord(id: "papa", word: "папа", emoji: "mascot_lyalya_read",
+            DragWord(id: "papa", word: "папа", emoji: "mascot_lyalya_wave",
                      correctBucketId: "sound_p", soundGroup: "bilabial"),
             DragWord(id: "ptica", word: "птица", emoji: "word_bird",
                      correctBucketId: "sound_p", soundGroup: "bilabial"),
-            DragWord(id: "pila", word: "пила", emoji: "hammer.fill",
+            DragWord(id: "pila", word: "поезд", emoji: "word_train",
                      correctBucketId: "sound_p", soundGroup: "bilabial")
         ],
         [
@@ -290,15 +290,15 @@ extension DragWord {
         [
             DragWord(id: "dom4", word: "дом", emoji: "word_house",
                      correctBucketId: "sound_d", soundGroup: "dental"),
-            DragWord(id: "dynya", word: "дыня", emoji: "word_apple",
+            DragWord(id: "dynya", word: "дерево", emoji: "word_tree",
                      correctBucketId: "sound_d", soundGroup: "dental"),
             DragWord(id: "doroga", word: "дорога", emoji: "word_park",
                      correctBucketId: "sound_d", soundGroup: "dental"),
-            DragWord(id: "tigr", word: "тигр", emoji: "reward_brave_heart",
+            DragWord(id: "tigr", word: "тигр", emoji: "word_cat",
                      correctBucketId: "sound_t", soundGroup: "dental"),
-            DragWord(id: "tarelka", word: "тарелка", emoji: "word_cup",
+            DragWord(id: "tarelka", word: "тарелка", emoji: "word_spoon",
                      correctBucketId: "sound_t", soundGroup: "dental"),
-            DragWord(id: "telefon", word: "телефон", emoji: "word_lamp",
+            DragWord(id: "telefon", word: "торт", emoji: "word_cake",
                      correctBucketId: "sound_t", soundGroup: "dental")
         ],
         [

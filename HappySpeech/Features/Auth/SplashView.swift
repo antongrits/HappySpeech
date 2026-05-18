@@ -8,15 +8,22 @@ struct SplashView: View {
     @State private var titleOpacity: Double = 0
     @State private var progressWidth: CGFloat = 0
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
+
+    // D-7 v27 — splash-фон адаптируется к тёмной теме: в dark вместо
+    // яркого кораллового градиента используется глубокий тёмный фон,
+    // чтобы splash не «светил» оранжевым на тёмной системе.
+    private var backgroundColors: [Color] {
+        colorScheme == .dark
+            ? [ColorTokens.Kid.bg, ColorTokens.Kid.bgDeep]
+            : [ColorTokens.Brand.primary, ColorTokens.Brand.primaryHi]
+    }
 
     var body: some View {
         ZStack {
-            // Background gradient matching design tokens (Brand coral)
+            // Background gradient matching design tokens (Brand coral / dark).
             LinearGradient(
-                colors: [
-                    ColorTokens.Brand.primary,
-                    ColorTokens.Brand.primaryHi
-                ],
+                colors: backgroundColors,
                 startPoint: .top,
                 endPoint: .bottom
             )
@@ -43,8 +50,8 @@ struct SplashView: View {
                         .minimumScaleFactor(0.7)
 
                     Text(String(localized: "Говорим волшебно"))
-                        .font(TypographyTokens.caption(13))
-                        .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
+                        .font(TypographyTokens.caption(13).weight(.semibold))
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .tracking(2.5)
                         .textCase(.uppercase)
                         .multilineTextAlignment(.center)

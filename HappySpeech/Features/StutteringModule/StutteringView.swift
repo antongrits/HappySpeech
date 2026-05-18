@@ -460,6 +460,8 @@ struct StutteringWelcomeSheet: View {
 
     var body: some View {
         VStack(spacing: SpacingTokens.sp6) {
+            Spacer(minLength: 0)
+
             HSMascotView(mood: .idle)
                 .frame(width: 120, height: 120)
 
@@ -477,6 +479,8 @@ struct StutteringWelcomeSheet: View {
             }
             .padding(.horizontal, SpacingTokens.sp5)
 
+            Spacer(minLength: 0)
+
             HSButton(
                 String(localized: "stuttering.welcome.cta"),
                 style: .primary,
@@ -485,7 +489,10 @@ struct StutteringWelcomeSheet: View {
             .padding(.horizontal, SpacingTokens.screenEdge)
             .frame(height: 56)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(.vertical, SpacingTokens.sp8)
+        .background(ColorTokens.Kid.bg.ignoresSafeArea())
+        .presentationDetents([.medium, .large])
         .environment(\.circuitContext, .parent)
     }
 }

@@ -313,12 +313,6 @@ struct ProgressDashboardView: View {
                     )
                     .foregroundStyle(barColor(for: point.value))
                     .cornerRadius(6)
-                    .annotation(position: .top, alignment: .center, spacing: 2) {
-                        Text("\(Int(point.value))")
-                            .font(TypographyTokens.mono(10))
-                            .foregroundStyle(ColorTokens.Parent.inkMuted)
-                            .accessibilityHidden(true)
-                    }
                 }
                 .chartYScale(domain: 0...100)
                 .chartYAxis {

@@ -12,6 +12,9 @@ struct FluencyDiaryParentView: View {
     @State private var sessions: [FluencySessionViewModel] = []
     @State private var chartData: [ChartPoint] = []
     @State private var isLoading: Bool = true
+    /// Текст ошибки загрузки хранилища. Отличает реальный сбой Realm от
+    /// «записей ещё нет» — иначе пустое состояние маскировало бы ошибку.
+    @State private var loadError: String?
     private let normalThreshold: Float = 5.0
 
     var body: some View {
@@ -22,6 +25,15 @@ struct FluencyDiaryParentView: View {
                     if isLoading {
                         ProgressView()
                             .frame(maxWidth: .infinity, minHeight: 200)
+                    } else if let loadError {
+                        // Состояние ошибки загрузки — отдельно от пустого
+                        // состояния, чтобы не маскировать сбой Realm.
+                        HSEmptyStateView(
+                            mascot: .thinking,
+                            title: String(localized: "fluency_diary.error.title"),
+                            subtitle: loadError
+                        )
+                        .frame(maxWidth: .infinity, minHeight: 300)
                     } else if sessions.isEmpty {
                         // G.1 v17 — HSEmptyStateView (mascot=encouraging).
                         // Замена inline VStack: единый бренд-стиль empty-state'ов.
@@ -168,8 +180,16 @@ struct FluencyDiaryParentView: View {
 
     private func loadData() async {
         isLoading = true
+        loadError = nil
         let worker = DiaryStorageWorker(realmActor: container.realmActor)
-        let rawSessions = await worker.fetchSessions(limit: 28)
+        let rawSessions: [FluencySessionData]
+        do {
+            rawSessions = try await worker.fetchSessions(limit: 28)
+        } catch {
+            loadError = String(localized: "fluency_diary.error.load_failed")
+            isLoading = false
+            return
+        }
 
         let calendar = Calendar.current
         let now = Date()

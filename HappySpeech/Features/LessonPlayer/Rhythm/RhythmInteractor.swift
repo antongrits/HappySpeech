@@ -387,8 +387,8 @@ final class RhythmInteractor: RhythmBusinessLogic {
             RhythmPattern(
                 id: UUID(),
                 beats: [.strong, .weak, .weak],
-                syllableWord: "СА-мо-лёт",
-                targetWord: "самолёт",
+                syllableWord: "ЗМЕ-ё-нок",
+                targetWord: "змеёнок",
                 soundGroup: "whistling",
                 emoji: "word_kite",
                 displayPattern: "ТА • та • та"
@@ -405,8 +405,8 @@ final class RhythmInteractor: RhythmBusinessLogic {
             RhythmPattern(
                 id: UUID(),
                 beats: [.weak, .strong, .weak],
-                syllableWord: "ка-ПУС-та",
-                targetWord: "капуста",
+                syllableWord: "цве-ТОК-мой",
+                targetWord: "цветочек",
                 soundGroup: "whistling",
                 emoji: "word_flower",
                 displayPattern: "та • ТА • та"
@@ -425,8 +425,8 @@ final class RhythmInteractor: RhythmBusinessLogic {
             RhythmPattern(
                 id: UUID(),
                 beats: [.strong, .weak],
-                syllableWord: "ШАП-ка",
-                targetWord: "шапка",
+                syllableWord: "МЕ-шок",
+                targetWord: "мешок",
                 soundGroup: "hissing",
                 emoji: "word_bag",
                 displayPattern: "ТА • та"
@@ -490,8 +490,8 @@ final class RhythmInteractor: RhythmBusinessLogic {
             RhythmPattern(
                 id: UUID(),
                 beats: [.strong, .weak],
-                syllableWord: "ЛО-шадь",
-                targetWord: "лошадь",
+                syllableWord: "КО-ро-ва",
+                targetWord: "корова",
                 soundGroup: "sonants",
                 emoji: "word_cow",
                 displayPattern: "ТА • та"

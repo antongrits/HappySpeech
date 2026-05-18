@@ -403,12 +403,14 @@ public actor LiveSyncService: SyncService {
         return min(raw, cap)
     }
 
-    /// Firestore batch write. Строит документы по схеме
-    /// `users/{uid}/children/{cid}`, `users/{uid}/sessions/{sid}`,
-    /// `users/{uid}/progress/{pid}` и выгружает их через `WriteBatch` с
-    /// `setData(merge: true)`. Серверный merge-by-max численных полей
-    /// (`successRate`, `currentStreak`, `totalSessionMinutes`) обеспечивает
-    /// Cloud Function `functions/src/progress.js`.
+    /// Firestore batch write. Строит документы по схеме api-contracts:
+    /// - `users/{uid}/children/{cid}` — профиль ребёнка
+    /// - `users/{uid}/children/{cid}/sessions/{sid}` — сессии вложены под ребёнка
+    /// - `users/{uid}/children/{cid}/progress/{soundTarget}` — прогресс по звуку вложен под ребёнка
+    ///
+    /// Использует `setData(merge: true)` — не перезаписывает поля, которых нет в payload.
+    /// Серверный merge-by-max численных полей (`successRate`, `currentStreak`,
+    /// `totalSessionMinutes`) обеспечивает Cloud Function `functions/src/progress.js`.
     ///
     /// Документы режутся на чанки по `firestoreBatchLimit`, т.к. один `WriteBatch`
     /// Firestore поддерживает максимум 500 операций. Пустой `userId` трактуется
@@ -426,8 +428,6 @@ public actor LiveSyncService: SyncService {
 
         let userDoc = firestore.collection("users").document(userId)
         let childrenCol = userDoc.collection("children")
-        let sessionsCol = userDoc.collection("sessions")
-        let progressCol = userDoc.collection("progress")
 
         // Собираем все записи в единый список (ссылка на документ + payload),
         // валидируем JSON-сериализуемость и затем режем на batch-чанки.
@@ -438,15 +438,29 @@ public actor LiveSyncService: SyncService {
             guard JSONSerialization.isValidJSONObject(dict) else { throw SyncError.invalidPayload }
             writes.append((childrenCol.document(child.id), dict))
         }
-        for session in sessions {
-            let dict = session.firestoreDict(parentId: userId)
-            guard JSONSerialization.isValidJSONObject(dict) else { throw SyncError.invalidPayload }
-            writes.append((sessionsCol.document(session.id), dict))
+
+        // Сессии и прогресс хранятся вложенно под `children/{cid}` по api-contracts.
+        // Группируем по childId, чтобы построить правильные пути.
+        let sessionsByChild = Dictionary(grouping: sessions, by: \.childId)
+        for (childId, childSessions) in sessionsByChild {
+            let sessionsCol = childrenCol.document(childId).collection("sessions")
+            for session in childSessions {
+                let dict = session.firestoreDict(parentId: userId)
+                guard JSONSerialization.isValidJSONObject(dict) else { throw SyncError.invalidPayload }
+                writes.append((sessionsCol.document(session.id), dict))
+            }
         }
-        for entry in progress {
-            let dict = entry.firestoreDict(parentId: userId)
-            guard JSONSerialization.isValidJSONObject(dict) else { throw SyncError.invalidPayload }
-            writes.append((progressCol.document(entry.id), dict))
+
+        let progressByChild = Dictionary(grouping: progress, by: \.childId)
+        for (childId, childProgress) in progressByChild {
+            let progressCol = childrenCol.document(childId).collection("progress")
+            for entry in childProgress {
+                let dict = entry.firestoreDict(parentId: userId)
+                guard JSONSerialization.isValidJSONObject(dict) else { throw SyncError.invalidPayload }
+                // Документ прогресса идентифицируется по soundTarget (как в api-contracts),
+                // не по entry.id — это позволяет Cloud Function выполнить merge-by-max.
+                writes.append((progressCol.document(entry.soundTarget), dict))
+            }
         }
 
         guard !writes.isEmpty else { return }
@@ -520,9 +534,8 @@ public actor LiveSyncService: SyncService {
     // MARK: - Upload + conflict resolution
 
     private func uploadToFirebase(item: SyncQueueItemDTO) async throws {
-        // Placeholder until Firebase SDK is wired. Merge-by-max:
-        // если payload — прогресс, сливаем его с «удалённым» snapshot перед отправкой.
-        let effectivePayload = try mergedPayload(for: item)
+        // Merge-by-max применяется только для progress-entity перед отправкой.
+        let effectivePayload = try await mergedPayload(for: item)
         try await performNetworkUpload(
             entityType: item.entityType,
             entityId: item.entityId,
@@ -530,7 +543,7 @@ public actor LiveSyncService: SyncService {
         )
     }
 
-    private func mergedPayload(for item: SyncQueueItemDTO) throws -> String {
+    private func mergedPayload(for item: SyncQueueItemDTO) async throws -> String {
         // Применяем merge-by-max только для progress-entity.
         guard item.entityType == "progress" || item.entityType == "child_progress" else {
             return item.payload
@@ -539,7 +552,7 @@ public actor LiveSyncService: SyncService {
 
         let client = (try? JSONDecoder().decode(ProgressMergePayload.self, from: data))
             ?? ProgressMergePayload(percent: nil, streak: nil, totalSessionMinutes: nil)
-        let remote = fetchRemoteProgressSnapshot(entityId: item.entityId)
+        let remote = await fetchRemoteProgressSnapshot(entityId: item.entityId)
 
         let merged = ProgressMergePayload(
             percent: maxOptional(client.percent, remote.percent),
@@ -551,20 +564,162 @@ public actor LiveSyncService: SyncService {
         return String(data: encoded, encoding: .utf8) ?? item.payload
     }
 
-    /// Заглушка под будущий Firestore GET. Возвращает пустой snapshot — при отсутствии
-    /// удалённой записи merge-by-max эквивалентно «отправить client state как есть».
-    private func fetchRemoteProgressSnapshot(entityId: String) -> ProgressMergePayload {
-        ProgressMergePayload(percent: nil, streak: nil, totalSessionMinutes: nil)
+    /// Читает текущий `ProgressMergePayload` из Firestore для merge-by-max разрешения конфликтов.
+    ///
+    /// Документ ищется в `users/{parentId}/children/{childId}/progress/{entityId}`.
+    /// `entityId` формата `{childId}__{soundTarget}` — именно в таком виде он
+    /// попадает в `SyncQueueItem.entityId` при постановке в очередь.
+    ///
+    /// Если документ не существует (первая запись), Firestore возвращает `exists=false` —
+    /// метод возвращает пустой snapshot, и merge-by-max сводится к «взять client-значение».
+    /// Сетевые ошибки также приводят к пустому snapshot (fail-open): лучше отправить
+    /// локальные данные, чем заблокировать синхронизацию из-за недоступности сервера.
+    private func fetchRemoteProgressSnapshot(entityId: String) async -> ProgressMergePayload {
+        // entityId форматируется как "{childId}__{soundTarget}" при постановке в очередь.
+        // Пример: "abc123__Р"
+        let parts = entityId.components(separatedBy: "__")
+        guard parts.count >= 2 else {
+            HSLogger.sync.warning("fetchRemoteProgressSnapshot: cannot parse entityId=\(entityId, privacy: .private)")
+            return ProgressMergePayload(percent: nil, streak: nil, totalSessionMinutes: nil)
+        }
+        let childId = parts[0]
+        let soundTarget = parts[1]
+
+        // Чтобы получить parentId нам нужен childId → ищем в Realm.
+        let parentIds = await realmActor.asyncFetchMapped(ChildProfile.self) { profile in
+            profile.id == childId ? profile.parentId : nil
+        }
+        guard let parentId = parentIds.compactMap({ $0 }).first, !parentId.isEmpty else {
+            HSLogger.sync.warning("fetchRemoteProgressSnapshot: parentId not found for childId=\(childId, privacy: .private)")
+            return ProgressMergePayload(percent: nil, streak: nil, totalSessionMinutes: nil)
+        }
+
+        let docRef = firestore
+            .collection("users").document(parentId)
+            .collection("children").document(childId)
+            .collection("progress").document(soundTarget)
+
+        do {
+            let snapshot = try await docRef.getDocument()
+            guard snapshot.exists, let data = snapshot.data() else {
+                return ProgressMergePayload(percent: nil, streak: nil, totalSessionMinutes: nil)
+            }
+            let percent = data["successRate"] as? Double
+            let streak = data["currentStreak"] as? Int
+            let totalSessionMinutes = data["totalMinutes"] as? Int
+            return ProgressMergePayload(percent: percent, streak: streak, totalSessionMinutes: totalSessionMinutes)
+        } catch {
+            // Fail-open: сетевая ошибка не блокирует синхронизацию.
+            HSLogger.sync.warning(
+                "fetchRemoteProgressSnapshot: Firestore read failed for \(entityId, privacy: .private) — \(error.localizedDescription). Using empty snapshot."
+            )
+            return ProgressMergePayload(percent: nil, streak: nil, totalSessionMinutes: nil)
+        }
     }
 
+    /// Загружает один элемент очереди синхронизации в Firestore.
+    ///
+    /// Поддерживаемые типы (`entityType`):
+    /// - `"session"` → `users/{parentId}/children/{childId}/sessions/{entityId}`
+    /// - `"progress"` / `"child_progress"` → `users/{parentId}/children/{childId}/progress/{soundTarget}`
+    /// - `"childProfile"` → `users/{parentId}/children/{entityId}`
+    /// - `"delete"` → удаляет соответствующий документ
+    ///
+    /// Payload — JSON-строка, должна содержать поля `parentId` и `childId` (выставляются
+    /// при постановке в очередь в `SyncService.enqueue`). Если поля отсутствуют —
+    /// выбрасывается `SyncError.invalidPayload`.
+    ///
+    /// Использует `setData(merge: true)` — документ создаётся или обновляется атомарно.
+    /// При отсутствии сети Firestore SDK бросает `NSError` с кодом `Unavailable` —
+    /// он пробрасывается наверх, элемент остаётся в очереди и будет повторён с backoff.
     private func performNetworkUpload(entityType: String, entityId: String, payload: String) async throws {
-        try await Task.sleep(for: .milliseconds(100))
+        guard let payloadData = payload.data(using: .utf8),
+              let dict = try? JSONSerialization.jsonObject(with: payloadData) as? [String: Any]
+        else {
+            throw SyncError.invalidPayload
+        }
+
+        guard let parentId = dict["parentId"] as? String, !parentId.isEmpty else {
+            HSLogger.sync.error("performNetworkUpload: missing parentId in payload for entityId=\(entityId, privacy: .private)")
+            throw SyncError.invalidPayload
+        }
+
+        let userDoc = firestore.collection("users").document(parentId)
+
+        switch entityType {
+        case "session":
+            guard let childId = dict["childId"] as? String, !childId.isEmpty else {
+                throw SyncError.invalidPayload
+            }
+            let docRef = userDoc
+                .collection("children").document(childId)
+                .collection("sessions").document(entityId)
+            try await docRef.setData(dict, merge: true)
+
+        case "progress", "child_progress":
+            // entityId форматируется как "{childId}__{soundTarget}" при постановке в очередь.
+            let parts = entityId.components(separatedBy: "__")
+            guard parts.count >= 2 else { throw SyncError.invalidPayload }
+            let childId = parts[0]
+            let soundTarget = parts[1]
+            let docRef = userDoc
+                .collection("children").document(childId)
+                .collection("progress").document(soundTarget)
+            try await docRef.setData(dict, merge: true)
+
+        case "childProfile":
+            let docRef = userDoc.collection("children").document(entityId)
+            try await docRef.setData(dict, merge: true)
+
+        case "delete":
+            // Для операции удаления payload должен содержать поле `targetPath` —
+            // относительный путь от `users/{parentId}/`, например
+            // "children/{cid}/sessions/{sid}" или "children/{cid}".
+            // Если `targetPath` отсутствует — пробуем legacy формат с `childId`.
+            let deleteRef: DocumentReference
+            if let targetPath = dict["targetPath"] as? String, !targetPath.isEmpty {
+                deleteRef = try resolveDocumentRef(from: userDoc, relativePath: targetPath)
+            } else if let childId = dict["childId"] as? String, !childId.isEmpty {
+                deleteRef = userDoc.collection("children").document(childId)
+            } else {
+                throw SyncError.invalidPayload
+            }
+            try await deleteRef.delete()
+
+        default:
+            HSLogger.sync.warning("performNetworkUpload: unknown entityType=\(entityType) for \(entityId, privacy: .private) — skipping")
+            throw SyncError.remoteRejected("unknown entityType: \(entityType)")
+        }
+
         HSLogger.sync.debug(
             "Uploaded \(entityType):\(entityId, privacy: .private) payload=\(payload.count) bytes"
         )
     }
 
     // MARK: - Helpers
+
+    /// Разрешает DocumentReference по относительному пути от `base`.
+    /// Путь имеет вид `"collection/docId/subcollection/subdocId"` —
+    /// чередующиеся сегменты коллекции и документа. Нечётное число сегментов
+    /// (т.е. путь заканчивается на коллекцию) считается ошибкой.
+    private func resolveDocumentRef(
+        from base: DocumentReference,
+        relativePath: String
+    ) throws -> DocumentReference {
+        let segments = relativePath.components(separatedBy: "/").filter { !$0.isEmpty }
+        guard segments.count >= 2, segments.count % 2 == 0 else {
+            throw SyncError.invalidPayload
+        }
+        var currentDoc = base
+        var idx = 0
+        while idx < segments.count - 1 {
+            let collectionName = segments[idx]
+            let docId = segments[idx + 1]
+            currentDoc = currentDoc.collection(collectionName).document(docId)
+            idx += 2
+        }
+        return currentDoc
+    }
 
     private func maxOptional<T: Comparable>(_ lhs: T?, _ rhs: T?) -> T? {
         switch (lhs, rhs) {

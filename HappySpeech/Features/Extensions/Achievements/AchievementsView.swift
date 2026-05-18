@@ -16,7 +16,12 @@ struct AchievementsView: View {
 
     @State private var viewModel: AchievementsModels.Load.ViewModel?
     @State private var interactor: AchievementsInteractor?
+    @State private var presenter: AchievementsPresenter?
     @State private var router: AchievementsRouter?
+    // Сильная ссылка на presenter-proxy: `presenter.view` — weak. Без strong-владельца
+    // proxy освобождается сразу после setupScene() и displayAchievements никогда
+    // не вызывается — экран навсегда зависает на ProgressView.
+    @State private var displayProxy: AchievementsDisplayProxy?
     @State private var selectedTab: AchievementsTab = .list
     @State private var toastViewModel: AchievementsModels.ToastUnlocked.ViewModel?
     @State private var showToast: Bool = false
@@ -432,7 +437,9 @@ struct AchievementsView: View {
     // MARK: - Scene setup
 
     private func setupScene() async {
-        let presenter = AchievementsPresenter()
+        guard interactor == nil else { return }
+
+        let achievementsPresenter = AchievementsPresenter()
         let achievementsInteractor = AchievementsInteractor(
             realmActor: container.realmActor,
             childRepository: container.childRepository,
@@ -440,12 +447,15 @@ struct AchievementsView: View {
         )
         let achievementsRouter = AchievementsRouter()
 
-        achievementsInteractor.presenter = presenter
-        presenter.view = makeDisplayProxy()
+        let proxy = makeDisplayProxy()
+        achievementsInteractor.presenter = achievementsPresenter
+        achievementsPresenter.view = proxy
         achievementsRouter.coordinator = coordinator
 
         interactor = achievementsInteractor
+        presenter = achievementsPresenter
         router = achievementsRouter
+        displayProxy = proxy
 
         await interactor?.loadAchievements(.init(childId: childId))
     }

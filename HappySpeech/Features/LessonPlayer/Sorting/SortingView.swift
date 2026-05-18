@@ -144,7 +144,8 @@ struct SortingView: View {
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
                 Spacer()
-                timerLabel
+                // D-10 v27 — убран дублирующий внутриигровой таймер:
+                // время сессии уже показывает шапка SessionShell.
             }
             Text(display.greeting.isEmpty
                  ? String(localized: "sorting.greeting.default")
@@ -174,23 +175,6 @@ struct SortingView: View {
                 format: NSLocalizedString("sorting.progress.word_position %lld %lld", comment: ""),
                 display.currentWordIndex + 1,
                 display.words.count
-            )
-        )
-    }
-
-    private var timerLabel: some View {
-        HStack(spacing: SpacingTokens.tiny) {
-            Image(systemName: "timer")
-                .font(TypographyTokens.caption(13))
-            Text(display.timerLabel)
-                .font(TypographyTokens.mono(14))
-                .monospacedDigit()
-        }
-        .foregroundStyle(timerColor(for: display.timerColor))
-        .accessibilityLabel(
-            String(
-                format: NSLocalizedString("sorting.accessibility.time_remaining %@", comment: ""),
-                display.timerLabel
             )
         )
     }
@@ -588,14 +572,6 @@ struct SortingView: View {
 
     private var progressLabel: String {
         "\(min(display.currentWordIndex + 1, display.words.count)) / \(display.words.count)"
-    }
-
-    private func timerColor(for name: String) -> Color {
-        switch name {
-        case "red":    return ColorTokens.Feedback.incorrect
-        case "orange": return ColorTokens.Brand.butter
-        default:       return ColorTokens.Brand.mint
-        }
     }
 
     // MARK: - Group key inference

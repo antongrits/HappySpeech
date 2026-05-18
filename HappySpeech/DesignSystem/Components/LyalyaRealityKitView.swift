@@ -63,6 +63,14 @@ public enum LyalyaViseme: String, CaseIterable, Sendable {
 /// - ``LyalyaLipSyncCoordinator``
 /// - ``LyalyaState``
 /// - ``LyalyaViseme``
+///
+/// - Warning: **УСТАРЕЛО (D-3 v27 — унификация маскота).** 3D-рендер
+///   `lyalya3d_v2.usdz` изображал серого «робота», расходящегося с брендовым
+///   каноном Ляли («подружка-пчёлка»: 2D-иллюстрации `mascot_lyalya_*`,
+///   согласованные с `AppIcon`). Все экраны переведены на единый 2D-канон
+///   через ``LyalyaMascotView`` / ``LyalyaHeroView``. **Не используйте этот
+///   компонент в новом коде** — он сохранён только для возможного будущего
+///   AR-сценария с настоящими blendshapes.
 public struct LyalyaRealityKitView: UIViewRepresentable {
 
     // MARK: - Public API

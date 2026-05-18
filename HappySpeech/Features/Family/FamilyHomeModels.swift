@@ -66,16 +66,17 @@ final class FamilyHomeViewModel {
         }
     }
 
-    /// Block D v16: возвращает имя иллюстрации из Assets.xcassets для аватара ребёнка.
-    /// FALLBACK: dragon → reward_brave_heart, unicorn → reward_rainbow.
+    /// D-14 v27: имя нейтральной аватар-иллюстрации (звери) из Assets.xcassets.
+    /// Legacy-стили (star/rocket/dragon/unicorn) маппятся на зверей, чтобы не
+    /// показывать reward-бейджи как аватар ребёнка.
     func avatarIllustrationName(for child: FamilyHome.ChildSummary) -> String {
         switch child.avatarStyle {
-        case "butterfly":  return "mascot_lyalya_wave"
-        case "star":       return "reward_gold_star"
-        case "rocket":     return "reward_rocket"
-        case "dragon":     return "reward_brave_heart"
-        case "unicorn":    return "reward_rainbow"
-        default:           return "mascot_lyalya_happy"
+        case "butterfly":          return "mascot_lyalya_wave"
+        case "cat", "star":        return "word_cat"
+        case "fox", "rocket":      return "word_fox"
+        case "bear", "dragon":     return "word_bear"
+        case "frog", "unicorn":    return "word_frog"
+        default:                   return "mascot_lyalya_wave"
         }
     }
 }

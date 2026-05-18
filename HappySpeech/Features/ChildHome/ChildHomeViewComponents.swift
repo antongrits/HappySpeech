@@ -116,14 +116,10 @@ struct ChildHomeReactiveMascot: View {
     @State private var bobOffset: CGFloat = 0
 
     var body: some View {
-        // E v21: 3D hero маскот на главном экране ребёнка (требование пользователя
-        // «3D героев на каждом экране»). LyalyaHeroView внутри использует
-        // LyalyaRealityKitView (transparent bg .nonAR), при Reduce Motion → 2D fallback.
-        // 3.I v23: size 140 → 160. Audit Light A flagged 'отсутствует 3D Lyalya на
-        // primary kid screen' — RealityKit USDZ занимал слишком много времени на
-        // первый paint в screenshot tour, выглядел как outline. Увеличили pre-load
-        // visibility: 160pt сохраняет 3D switch (>=80) и заметнее на 320pt SE.
-        LyalyaHeroView(state: mood.lyalyaState, mood: 0.7, size: 160)
+        // D-3 v27: hero-маскот на главном экране ребёнка через единый 2D-канон
+        // Ляли (LyalyaHeroView → LyalyaMascotView, иллюстрация mascot_lyalya_*,
+        // согласованная с AppIcon). Size 160pt — заметный hero на 320pt SE.
+        LyalyaHeroView(state: mood.lyalyaState, size: 160)
         .offset(y: bobOffset)
         .onAppear { startBobbing() }
         .onChange(of: mood) { _, _ in startBobbing() }

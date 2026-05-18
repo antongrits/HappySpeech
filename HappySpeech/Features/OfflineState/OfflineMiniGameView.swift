@@ -192,9 +192,8 @@ private struct TapLyalyaGameView: View {
                     .position(x: geo.size.width / 2, y: 50)
 
                 // Block J v17: 3D Ляля вместо Image("mascot_lyalya_wave").
-                // Размер 80pt — compact игровой target, но всё равно 3D
-                // согласно правилу «только 3D герои».
-                OfflineMascotView(state: isRunning ? .happy : .idle, mood: 0.6, side: 80)
+                // D-3 v27: единый 2D-канон маскота.
+                OfflineMascotView(state: isRunning ? .happy : .idle, side: 80)
                     .position(mascotPosition)
                     .onTapGesture {
                         guard isRunning else { return }
@@ -338,9 +337,8 @@ private struct DragCloudsGameView: View {
             } else {
                 GeometryReader { geo in
                     ZStack {
-                        // Block J v17: 3D Ляля вместо Image("mascot_lyalya_wave").
-                        // Static target для drag-and-drop игры, idle-анимации внутри RealityKit.
-                        OfflineMascotView(state: .waving, mood: 0.5, side: 70)
+                        // D-3 v27: единый 2D-канон маскота, drag-and-drop target.
+                        OfflineMascotView(state: .waving, side: 70)
                             .position(mascotPosition)
                             .accessibilityHidden(true)
 
@@ -622,28 +620,17 @@ private struct FindPairGameView: View {
 
 // MARK: - OfflineMascotView
 
-/// 3D-маскот Ляля для офлайн мини-игр.
+/// Маскот Ляля для офлайн мини-игр.
 ///
-/// Под XCTest-раннером `LyalyaRealityKitView` (ARView) не создаётся: нестабильный
-/// в симуляторе CoreRE-рендер роняет test host. Вместо него — SF Symbol fallback.
+/// D-3 v27: единый 2D-канон маскота через `LyalyaMascotView`
+/// (2D-иллюстрация `mascot_lyalya_*`, согласованная с `AppIcon`).
 private struct OfflineMascotView: View {
 
     let state: LyalyaState
-    let mood: Float
     let side: CGFloat
 
     var body: some View {
-        if ProcessInfo.processInfo.isRunningUnitTests {
-            Image(systemName: state.fallbackSFSymbol)
-                .resizable()
-                .scaledToFit()
-                .frame(width: side * 0.55, height: side * 0.55)
-                .foregroundStyle(ColorTokens.Brand.lilac)
-                .frame(width: side, height: side)
-        } else {
-            LyalyaRealityKitView(state: state, mood: mood)
-                .frame(width: side, height: side)
-        }
+        LyalyaMascotView(state: state, size: side)
     }
 }
 

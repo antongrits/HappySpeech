@@ -345,6 +345,11 @@ struct WorldMapView: View {
         guard !bootstrapped else { return }
         bootstrapped = true
 
+        // D-18 v27 — гарантируем, что карта показывается первой:
+        // detail-sheet зоны открывается только осознанным тапом по зоне,
+        // а не остаётся поднятым из stale-состояния при входе на экран.
+        display.dismissZoneDetailSheet()
+
         let interactor = WorldMapInteractor()
         let presenter = WorldMapPresenter()
         let router = WorldMapRouter()

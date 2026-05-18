@@ -150,7 +150,8 @@ struct MemoryView: View {
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
                 }
                 Spacer()
-                timerBadge
+                // D-10 v27 — убран дублирующий внутриигровой таймер:
+                // время сессии уже показывает шапка SessionShell.
             }
             HStack(spacing: SpacingTokens.small) {
                 Text(String(localized: "Найдено пар: \(display.matchedPairs) из \(display.totalPairs)"))
@@ -169,25 +170,6 @@ struct MemoryView: View {
                 .frame(height: 8)
         }
         .frame(maxWidth: .infinity)
-    }
-
-    private var timerBadge: some View {
-        HStack(spacing: SpacingTokens.tiny) {
-            Image(systemName: "timer")
-                .font(TypographyTokens.caption(13).weight(.semibold))
-                .accessibilityHidden(true)
-            Text(display.timerLabel)
-                .font(TypographyTokens.mono(14))
-                .monospacedDigit()
-        }
-        .padding(.horizontal, SpacingTokens.small)
-        .padding(.vertical, 6)
-        .background(
-            Capsule(style: .continuous)
-                .fill(ColorTokens.Kid.surfaceAlt)
-        )
-        .foregroundStyle(timerColor(for: display.timerColor))
-        .accessibilityLabel(String(localized: "Осталось времени: \(display.timerLabel)"))
     }
 
     private var streakBadge: some View {
@@ -506,14 +488,6 @@ struct MemoryView: View {
     private var matchedProgress: Double {
         let total = max(display.totalPairs, 1)
         return Double(display.matchedPairs) / Double(total)
-    }
-
-    private func timerColor(for name: String) -> Color {
-        switch name {
-        case "red":    return ColorTokens.Feedback.incorrect
-        case "orange": return ColorTokens.Brand.butter
-        default:       return ColorTokens.Brand.mint
-        }
     }
 
     private var cardHeight: CGFloat {

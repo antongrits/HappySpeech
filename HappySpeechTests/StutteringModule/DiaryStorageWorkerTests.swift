@@ -177,7 +177,7 @@ final class DiaryStorageWorkerLiveTests: XCTestCase {
 
     // MARK: - saveSession / fetchSessions
 
-    func test_saveSession_thenFetch_returnsSession() async {
+    func test_saveSession_thenFetch_returnsSession() async throws {
         let session = FluencySessionData(
             id: "live-001",
             date: Date(timeIntervalSince1970: 2000),
@@ -187,13 +187,13 @@ final class DiaryStorageWorkerLiveTests: XCTestCase {
             transcript: "тест"
         )
         await sut.saveSession(session)
-        let result = await sut.fetchSessions(limit: 0)
+        let result = try await sut.fetchSessions(limit: 0)
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result.first?.id, "live-001")
         XCTAssertEqual(result.first?.dysfluencyCount, 2)
     }
 
-    func test_saveSession_sameId_upserts() async {
+    func test_saveSession_sameId_upserts() async throws {
         let first = FluencySessionData(
             id: "live-dup", date: Date(), dysfluencyCount: 1,
             totalSyllables: 10, rate: 1, transcript: "a"
@@ -204,12 +204,12 @@ final class DiaryStorageWorkerLiveTests: XCTestCase {
         )
         await sut.saveSession(first)
         await sut.saveSession(second)
-        let result = await sut.fetchSessions(limit: 0)
+        let result = try await sut.fetchSessions(limit: 0)
         XCTAssertEqual(result.count, 1, "Одинаковый id → апдейт")
         XCTAssertEqual(result.first?.dysfluencyCount, 9)
     }
 
-    func test_fetchSessions_sortedByDateDescending() async {
+    func test_fetchSessions_sortedByDateDescending() async throws {
         await sut.saveSession(FluencySessionData(
             id: "old", date: Date(timeIntervalSince1970: 100),
             dysfluencyCount: 0, totalSyllables: 1, rate: 0, transcript: ""
@@ -218,11 +218,11 @@ final class DiaryStorageWorkerLiveTests: XCTestCase {
             id: "new", date: Date(timeIntervalSince1970: 9000),
             dysfluencyCount: 0, totalSyllables: 1, rate: 0, transcript: ""
         ))
-        let result = await sut.fetchSessions(limit: 0)
+        let result = try await sut.fetchSessions(limit: 0)
         XCTAssertEqual(result.first?.id, "new")
     }
 
-    func test_fetchSessions_limitApplied() async {
+    func test_fetchSessions_limitApplied() async throws {
         for index in 0..<5 {
             await sut.saveSession(FluencySessionData(
                 id: "s-\(index)",
@@ -230,12 +230,12 @@ final class DiaryStorageWorkerLiveTests: XCTestCase {
                 dysfluencyCount: 0, totalSyllables: 1, rate: 0, transcript: ""
             ))
         }
-        let result = await sut.fetchSessions(limit: 2)
+        let result = try await sut.fetchSessions(limit: 2)
         XCTAssertEqual(result.count, 2)
     }
 
-    func test_fetchSessions_emptyStorage_returnsEmpty() async {
-        let result = await sut.fetchSessions(limit: 10)
+    func test_fetchSessions_emptyStorage_returnsEmpty() async throws {
+        let result = try await sut.fetchSessions(limit: 10)
         XCTAssertTrue(result.isEmpty)
     }
 }

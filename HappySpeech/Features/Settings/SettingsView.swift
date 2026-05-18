@@ -17,7 +17,6 @@ struct SettingsView: View {
     @Environment(AppContainer.self) var container
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) var dismiss
-    @Environment(\.colorScheme) private var colorScheme
 
     // MARK: - VIP State
 
@@ -90,14 +89,8 @@ struct SettingsView: View {
             }
             .navigationTitle(String(localized: "settings.navTitle"))
             .navigationBarTitleDisplayMode(.large)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    LyalyaMascotView(state: .idle, size: 36)
-                        // F.tier1 v21: mascot чуть мягче в dark.
-                        .opacity(colorScheme == .dark ? 0.9 : 1.0)
-                        .accessibilityHidden(true)
-                }
-            }
+            // D-26 v27 — убран дублирующий маленький маскот из toolbar:
+            // крупная Ляля уже присутствует в settingsHeaderSection.
             .confirmationDialog(
                 String(localized: "settings.cache.confirm.title"),
                 isPresented: $showClearCacheConfirm,

@@ -4,30 +4,23 @@ import SwiftUI
 
 /// Hero-представление маскота Ляли — обёртка над `LyalyaMascotView`.
 ///
-/// Hybrid-архитектура (см. `HSMascotView`):
-/// - **Layer 2**: 2D PNG-иллюстрация (`mascot_lyalya_*` из Assets) — гарантирует
-///   видимость маскота на симуляторе без TrueDepth и до загрузки 3D usdz.
-/// - **Layer 3**: `LyalyaRealityKitView` (`lyalya3d_v2.usdz`, RealityKit nonAR
-///   с прозрачным фоном) — рендерится поверх 2D, когда сцена загружена.
+/// ### Канон облика (D-3 v27 — унификация маскота)
+/// `LyalyaHeroView` рендерит **единый 2D-канон** Ляли через `LyalyaMascotView`
+/// (2D-иллюстрации `mascot_lyalya_*`, согласованные с `AppIcon`).
+/// Ранее hero-экраны использовали 3D-рендер `lyalya3d_v2.usdz`, который
+/// изображал серого «робота» и расходился с брендом «подружка-пчёлка».
+/// 3D-слой убран — на всех экранах теперь один облик маскота.
 ///
-/// История фиксов прозрачного фона:
-/// - KK v14 (8c06a48f) — временно отключил RealityKit из-за артефакта розового фона.
-/// - F.1 v15 (ec6c2072) — починил `arView.environment.background = .color(.clear)`,
-///   `cameraMode = .nonAR`, `isOpaque = false`.
-/// - K v17 (1bb8b6d1) — visual audit 94 файлов, 0 артефактов прозрачности.
-/// - H v18 — visual verify iPhone SE (3rd gen): pink rectangle не воспроизводится.
-/// - E v21 — `LyalyaHeroView` теперь использует `LyalyaRealityKitView` 3D
-///   как основной слой (требование пользователя: 3D героев на каждом экране).
-///   При `accessibilityReduceMotion = true` или `force2D = true` fallback на 2D.
+/// Параметры `mood`, `mouthOpen`, `viseme`, `force2D` сохранены для
+/// совместимости callsite, но `force2D` теперь не влияет на рендер
+/// (он всегда 2D), а `mouthOpen`/`viseme` 2D-каноном не используются.
 ///
 /// Используется на онбординге, SessionComplete, Rewards и других hero-экранах.
 ///
 /// ## Пример
 /// ```swift
-/// LyalyaHeroView(state: .waving, mood: 0.7, size: 180)
-/// LyalyaHeroView(state: .celebrating, mood: 1.0, size: 150)
-/// // Принудительный 2D fallback (например, в headers где >1 hero на экране):
-/// LyalyaHeroView(state: .pointing, size: 60, force2D: true)
+/// LyalyaHeroView(state: .waving, size: 180)
+/// LyalyaHeroView(state: .celebrating, size: 150)
 /// ```
 public struct LyalyaHeroView: View {
 
@@ -38,11 +31,9 @@ public struct LyalyaHeroView: View {
     public let size: CGFloat
     public let mouthOpen: Float
     public let viseme: LyalyaViseme
-    /// Принудительный 2D fallback (для случаев когда нужно несколько Ляль на экране,
-    /// или для headers / small-size mini-mascots, где 3D overkill GPU-wise).
+    /// Сохранён для совместимости callsite. С D-3 v27 рендер всегда 2D,
+    /// поэтому флаг больше не влияет на отображение.
     public let force2D: Bool
-
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     // MARK: - Init
 
@@ -65,41 +56,27 @@ public struct LyalyaHeroView: View {
     // MARK: - Body
 
     public var body: some View {
-        // Reduce Motion fallback: 3D idle-анимации (breathing, sway, blink)
-        // запускаются внутри RealityKit Coordinator → даже если reduceMotion
-        // обрабатывается там же, мы для GPU-экономии force-switch на 2D.
-        // Также если callsite явно запросил force2D (например в header 36pt).
-        // Под XCTest-раннером 3D отключаем: ARView-рендер нестабилен в симуляторе
-        // и роняет test host.
-        if reduceMotion || force2D || size < 80 || ProcessInfo.processInfo.isRunningUnitTests {
-            LyalyaMascotView(
-                state: state,
-                size: size * 0.9
-            )
-            .frame(width: size, height: size)
-        } else {
-            LyalyaRealityKitView(
-                state: state,
-                mood: mood,
-                mouthOpen: mouthOpen,
-                viseme: viseme
-            )
-            .frame(width: size, height: size)
-            .accessibilityHidden(true)
-        }
+        // D-3 v27: единый 2D-канон маскота на всех hero-экранах.
+        // LyalyaMascotView рисует 2D-иллюстрацию mascot_lyalya_*, согласованную
+        // с AppIcon. Reduce Motion обрабатывается внутри LyalyaMascotView.
+        LyalyaMascotView(
+            state: state,
+            size: size * 0.9
+        )
+        .frame(width: size, height: size)
     }
 }
 
 // MARK: - Preview
 
 #Preview("LyalyaHeroView — waving") {
-    LyalyaHeroView(state: .waving, mood: 0.7, size: 180)
+    LyalyaHeroView(state: .waving, size: 180)
         .padding(20)
         .background(Color(.systemBackground))
 }
 
 #Preview("LyalyaHeroView — celebrating") {
-    LyalyaHeroView(state: .celebrating, mood: 1.0, size: 150)
+    LyalyaHeroView(state: .celebrating, size: 150)
         .padding(20)
         .background(Color.yellow.opacity(0.15))
 }

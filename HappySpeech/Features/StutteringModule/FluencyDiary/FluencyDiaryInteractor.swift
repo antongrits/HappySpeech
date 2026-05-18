@@ -103,8 +103,20 @@ final class FluencyDiaryInteractor {
     }
 
     /// Загружает историю сессий и строит chart data.
+    ///
+    /// При сбое чтения хранилища выставляет `display.errorMessage` — UI должен
+    /// показать состояние ошибки, а не пустое «Записей ещё нет», которое
+    /// маскировало бы реальный сбой Realm.
     func loadHistory() async {
-        let sessions = await storageWorker.fetchSessions(limit: 14)
+        let sessions: [FluencySessionData]
+        do {
+            sessions = try await storageWorker.fetchSessions(limit: 14)
+        } catch {
+            logger.error("FluencyDiary: loadHistory failed \(error.localizedDescription, privacy: .public)")
+            display.errorMessage = String(localized: "fluency_diary.error.load_failed")
+            return
+        }
+        display.errorMessage = nil
         recentSessions = sessions
         display.totalSessions = sessions.count
         display.lastSessionDate = sessions.first?.date

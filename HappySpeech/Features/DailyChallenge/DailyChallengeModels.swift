@@ -113,7 +113,7 @@ enum DailyChallengeModels {
             let streakAccessibilityLabel: String
             let longestStreakLabel: String
             let rewardTitle: String        // «Получи стикер Звёздочка»
-            let rewardSubtitle: String     // «+20 XP»
+            let rewardSubtitle: String     // «+20 очков»
             let rewardSticker: String      // image name
             let ctaTitle: String           // «В путь!» / «Поделиться»
             let heroSubtitle: String       // «Привет, Маша!»

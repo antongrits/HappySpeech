@@ -27,21 +27,19 @@ struct AuthSignInView: View {
 
             topDecoration
 
-            VStack(spacing: 0) {
-                headerSection
-
-                ScrollView(showsIndicators: false) {
-                    VStack(spacing: SpacingTokens.sp4) {
-                        welcomeSection
-                        formSection
-                        authButtonsSection
-                        footerLinks
-                    }
-                    .padding(.horizontal, SpacingTokens.screenEdge)
-                    .padding(.top, SpacingTokens.sp4)
-                    .padding(.bottom, SpacingTokens.sp8)
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: SpacingTokens.sp4) {
+                    headerSection
+                    welcomeSection
+                    formSection
+                    authButtonsSection
+                    footerLinks
                 }
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.bottom, SpacingTokens.sp8)
             }
+            .scrollBounceBehavior(.basedOnSize)
+            .safeAreaPadding(.bottom, SpacingTokens.sp4)
         }
         .accessibilityIdentifier("AuthSignInRoot")
         .loadingOverlay(scene?.state.isLoading ?? false)
@@ -146,7 +144,6 @@ struct AuthSignInView: View {
             Text("HappySpeech")
                 .font(TypographyTokens.kidDisplay(30))
                 .foregroundStyle(ColorTokens.Overlay.onAccent)
-                .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 4, y: 2)
                 .lineLimit(nil)
                 .minimumScaleFactor(0.85)
                 .accessibilityAddTraits(.isHeader)

@@ -92,12 +92,17 @@ struct BingoView: View {
             lyalyaHeader
             calledWordBanner
             progressBar
-            grid
-            Spacer(minLength: 0)
+
+            ScrollView(showsIndicators: false) {
+                grid
+                    .padding(.bottom, SpacingTokens.medium)
+            }
+            .scrollBounceBehavior(.basedOnSize)
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
         .padding(.top, SpacingTokens.large)
         .padding(.bottom, SpacingTokens.medium)
+        .safeAreaPadding(.bottom, SpacingTokens.tiny)
     }
 
     private var lyalyaHeader: some View {
@@ -392,7 +397,7 @@ private struct BingoCellView: View {
                         .padding(.horizontal, 4)
                 }
             }
-            .frame(maxWidth: .infinity, minHeight: 56)
+            .frame(maxWidth: .infinity, minHeight: 60)
             .overlay(
                 RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
                     .strokeBorder(borderColor, lineWidth: cell.isWinner ? 3 : 1)

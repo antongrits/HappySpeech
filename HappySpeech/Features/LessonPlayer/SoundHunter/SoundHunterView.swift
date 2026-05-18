@@ -317,7 +317,8 @@ private struct HuntItemTile: View {
     private var iconView: some View {
         Image(systemName: item.icon)
             .font(TypographyTokens.display(36))
-            .foregroundStyle(foregroundColor)
+            .symbolRenderingMode(.hierarchical)
+            .foregroundStyle(iconColor)
             .frame(height: 40)
             .accessibilityHidden(true)
     }
@@ -389,6 +390,17 @@ private struct HuntItemTile: View {
     private var foregroundColor: Color {
         switch item.tapState {
         case .idle:     return ColorTokens.Kid.ink
+        case .correct:  return ColorTokens.Feedback.correct
+        case .wrong:    return ColorTokens.Feedback.incorrect
+        case .revealed: return ColorTokens.Brand.gold
+        }
+    }
+
+    /// Цвет иконки предмета. В состоянии покоя — брендовый тон вместо чёрного
+    /// силуэта, чтобы карточки оставались в общей цветной палитре приложения.
+    private var iconColor: Color {
+        switch item.tapState {
+        case .idle:     return ColorTokens.Brand.primary
         case .correct:  return ColorTokens.Feedback.correct
         case .wrong:    return ColorTokens.Feedback.incorrect
         case .revealed: return ColorTokens.Brand.gold

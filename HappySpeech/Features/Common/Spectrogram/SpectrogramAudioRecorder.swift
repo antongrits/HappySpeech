@@ -246,10 +246,15 @@ public final class SpectrogramAudioRecorder: @unchecked Sendable {
         windowed.withUnsafeMutableBufferPointer { ptr in
             real.withUnsafeMutableBufferPointer { realPtr in
                 imag.withUnsafeMutableBufferPointer { imagPtr in
-                    // swiftlint:disable:next force_unwrapping
-                    var split = DSPSplitComplex(realp: realPtr.baseAddress!, imagp: imagPtr.baseAddress!)
-                    // swiftlint:disable:next force_unwrapping
-                    ptr.baseAddress!.withMemoryRebound(to: DSPComplex.self, capacity: frameSize / 2) { complexPtr in
+                    // Безопасное извлечение базовых адресов: пустой буфер даёт nil
+                    // baseAddress — в этом случае FFT пропускается (нулевой спектр).
+                    guard
+                        let realBase = realPtr.baseAddress,
+                        let imagBase = imagPtr.baseAddress,
+                        let windowBase = ptr.baseAddress
+                    else { return }
+                    var split = DSPSplitComplex(realp: realBase, imagp: imagBase)
+                    windowBase.withMemoryRebound(to: DSPComplex.self, capacity: frameSize / 2) { complexPtr in
                         vDSP_ctoz(complexPtr, 2, &split, 1, vDSP_Length(frameSize / 2))
                     }
                     fft.forward(input: split, output: &split)
@@ -260,8 +265,11 @@ public final class SpectrogramAudioRecorder: @unchecked Sendable {
         var magnitudes = [Float](repeating: 0, count: frameSize / 2)
         real.withUnsafeMutableBufferPointer { realPtr in
             imag.withUnsafeMutableBufferPointer { imagPtr in
-                // swiftlint:disable:next force_unwrapping
-                var split = DSPSplitComplex(realp: realPtr.baseAddress!, imagp: imagPtr.baseAddress!)
+                guard
+                    let realBase = realPtr.baseAddress,
+                    let imagBase = imagPtr.baseAddress
+                else { return }
+                var split = DSPSplitComplex(realp: realBase, imagp: imagBase)
                 vDSP_zvmags(&split, 1, &magnitudes, 1, vDSP_Length(frameSize / 2))
             }
         }

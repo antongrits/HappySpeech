@@ -5183,6 +5183,28 @@
         }
       }
     },
+    "avatar.bear": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Мишка"
+          }
+        }
+      }
+    },
+    "avatar.cat": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Котик"
+          }
+        }
+      }
+    },
     "avatar.category.animals": {
       "extractionState": "manual",
       "localizations": {
@@ -5222,6 +5244,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Дракон"
+          }
+        }
+      }
+    },
+    "avatar.fox": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лисёнок"
+          }
+        }
+      }
+    },
+    "avatar.frog": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лягушонок"
           }
         }
       }
@@ -9024,9 +9068,33 @@
       "extractionState": "manual",
       "localizations": {
         "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "+%d XP"
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "+%d очка"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "+%d очков"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "+%d очко"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "+%d очков"
+                }
+              }
+            }
           }
         }
       }
@@ -11706,7 +11774,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Пока пусто. Каждый разблокированный трофей появится здесь."
+            "value": "Здесь собираются трофеи всей семьи."
           }
         }
       }
@@ -12708,6 +12776,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Записей ещё нет"
+          }
+        }
+      }
+    },
+    "fluency_diary.error.load_failed": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось загрузить дневник. Проверьте свободное место и попробуйте снова."
+          }
+        }
+      }
+    },
+    "fluency_diary.error.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось загрузить"
           }
         }
       }
@@ -27757,13 +27847,13 @@
         }
       }
     },
-    "screening.sound_hint.\\(response.prompt.targetSound)": {
+    "screening.sound_hint_format": {
       "extractionState": "manual",
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "screening.sound_hint.\\(response.prompt.targetSound)"
+            "value": "Звук «%@»"
           }
         }
       }
@@ -33044,9 +33134,33 @@
       "extractionState": "manual",
       "localizations": {
         "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%d звуков русского языка"
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d звука русского языка"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d звуков русского языка"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d звук русского языка"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d звуков русского языка"
+                }
+              }
+            }
           }
         }
       }
@@ -33333,6 +33447,52 @@
           "stringUnit": {
             "state": "translated",
             "value": "Нет подопечных"
+          }
+        }
+      }
+    },
+    "spec.children.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите на карточку, чтобы открыть прогресс ребёнка и отчёты. Новых подопечных добавляйте кнопкой «+»."
+          }
+        }
+      }
+    },
+    "spec.children.listHeader": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "variations": {
+            "plural": {
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d ребёнка"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d детей"
+                }
+              },
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d ребёнок"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%d детей"
+                }
+              }
+            }
           }
         }
       }
@@ -39412,6 +39572,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Заверши историю: выбери пропущенное слово"
+          }
+        }
+      }
+    },
+    "Ещё": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ещё"
           }
         }
       }

@@ -89,16 +89,19 @@ struct StoryCompletionView: View {
     // MARK: - Playing
 
     private var playingView: some View {
-        VStack(spacing: SpacingTokens.medium) {
-            progressHeader
-            emojiTile
-            storyCard
-            Spacer(minLength: 0)
-            choicesSection
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: SpacingTokens.small) {
+                progressHeader
+                emojiTile
+                storyCard
+                choicesSection
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.top, SpacingTokens.small)
+            .padding(.bottom, SpacingTokens.small)
         }
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .padding(.top, SpacingTokens.large)
-        .padding(.bottom, SpacingTokens.large)
+        .scrollBounceBehavior(.basedOnSize)
+        .safeAreaPadding(.bottom, SpacingTokens.small)
     }
 
     private var progressHeader: some View {
@@ -119,9 +122,9 @@ struct StoryCompletionView: View {
     private var emojiTile: some View {
         HSLiquidGlassCard(style: .primary, padding: 0) {
             ZStack {
-                HSContentSymbol(display.emoji, size: 84)
+                HSContentSymbol(display.emoji, size: 56)
                     .frame(maxWidth: .infinity)
-                    .frame(height: 140)
+                    .frame(height: 80)
 
                 // Иконка TTS — показываем только в фазе reading.
                 if display.phase == .reading, display.isReading {

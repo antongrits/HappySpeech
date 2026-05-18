@@ -200,11 +200,11 @@ struct OfflineStateView: View {
                     ? String(localized: "offline.retrying")
                     : String(localized: "offline.retry"),
                 style: .primary,
-                icon: viewModel.isRetrying ? nil : "arrow.clockwise",
-                isLoading: viewModel.isRetrying
+                icon: "arrow.clockwise"
             ) {
                 retryConnection()
             }
+            .disabled(viewModel.isRetrying)
             .lineLimit(nil)
             .minimumScaleFactor(0.85)
             .accessibilityHint(String(localized: "offline.retry.a11y.hint"))

@@ -45,6 +45,10 @@ public struct HSAnimatedTabBar<Item: Hashable>: View {
     /// Опциональное число badge-уведомлений на табе (например, новые домашние задания).
     public var badgeProvider: ((Item) -> Int?)?
 
+    /// Показывать текстовую подпись у всех табов (а не только у выбранного).
+    /// По умолчанию `false` — kavsoft-стиль (подпись только у активного таба).
+    public var alwaysShowsLabels: Bool
+
     // MARK: - Environment
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -58,11 +62,13 @@ public struct HSAnimatedTabBar<Item: Hashable>: View {
         selection: Binding<Item>,
         items: [Item],
         badgeProvider: ((Item) -> Int?)? = nil,
+        alwaysShowsLabels: Bool = false,
         labelProvider: @escaping (Item) -> (icon: String, title: LocalizedStringKey)
     ) {
         self._selection = selection
         self.items = items
         self.badgeProvider = badgeProvider
+        self.alwaysShowsLabels = alwaysShowsLabels
         self.labelProvider = labelProvider
     }
 
@@ -101,8 +107,9 @@ public struct HSAnimatedTabBar<Item: Hashable>: View {
 
                 HStack(spacing: SpacingTokens.micro) {
                     Image(systemName: label.icon)
-                        .font(.system(size: 18, weight: .semibold))
+                        .font(.system(size: alwaysShowsLabels ? 16 : 18, weight: .semibold))
                         .symbolEffect(.bounce, value: isSelected)
+                        .layoutPriority(1)
                         .overlay(alignment: .topTrailing) {
                             if badge > 0 {
                                 badgeView(count: badge)
@@ -110,17 +117,23 @@ public struct HSAnimatedTabBar<Item: Hashable>: View {
                             }
                         }
 
-                    if isSelected {
+                    if isSelected || alwaysShowsLabels {
                         Text(label.title)
-                            .font(TypographyTokens.labelRounded(14, weight: .semibold))
+                            .font(TypographyTokens.labelRounded(
+                                alwaysShowsLabels ? 12 : 14,
+                                weight: .semibold
+                            ))
                             .lineLimit(1)
-                            .minimumScaleFactor(0.85)
+                            .minimumScaleFactor(0.6)
                             .transition(.opacity.combined(with: .scale(scale: 0.9)))
                     }
                 }
                 .foregroundStyle(isSelected ? Color.white : inactiveTint)
-                .padding(.horizontal, SpacingTokens.regular)
+                .padding(.horizontal, alwaysShowsLabels ? SpacingTokens.micro : SpacingTokens.regular)
                 .padding(.vertical, SpacingTokens.small)
+                // alwaysShowsLabels: все табы делят ширину поровну, чтобы на узком
+                // экране (iPhone SE 3, 320pt) подпись помещалась целиком.
+                .frame(maxWidth: alwaysShowsLabels ? .infinity : nil)
             }
         }
         .buttonStyle(.plain)

@@ -188,9 +188,11 @@ struct CulturalContentView: View {
                         categoryChip(row: row)
                     }
                 }
-                .padding(.horizontal, SpacingTokens.sp1)
                 .padding(.vertical, SpacingTokens.sp1)
             }
+            // D-19 v27 — contentMargins даёт ровный отступ по краям, последний
+            // чип не обрезается жёстко — виден намёк на скролл.
+            .contentMargins(.horizontal, SpacingTokens.sp1, for: .scrollContent)
         }
     }
 

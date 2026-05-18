@@ -122,14 +122,38 @@ struct ScreeningView: View {
         self.router = routerInstance
 
         let capturedRouter = routerInstance
+        let capturedInteractor = interactorInstance
+        // Индекс последнего этапа, для которого уже запрошен prepareStage —
+        // защита от повторных вызовов при каждом commit.
+        var preparedStageIndex: Int = -1
         let bridge = ScreeningDisplayBridge(state: state) { newState in
+            // Прокидываем обновлённое состояние в @State экрана — без этой
+            // записи body не перерисовывается и экран вечно висит на
+            // ProgressView (currentStageVM остаётся nil).
+            state = newState
             if newState.isFinished, let outcome = newState.outcome {
                 capturedRouter.complete(outcome: outcome.outcome)
+                return
+            }
+            // Презентер сообщает только об индексе текущего этапа; сам этап
+            // (target word, фраза Ляли) грузится отдельным запросом prepareStage.
+            // Без этого currentStageVM остаётся nil и экран висит на спиннере.
+            guard !newState.prompts.isEmpty,
+                  newState.currentStageVM?.stageIndex != newState.currentIndex,
+                  newState.currentIndex != preparedStageIndex else { return }
+            preparedStageIndex = newState.currentIndex
+            let nextIndex = newState.currentIndex
+            Task { @MainActor in
+                await capturedInteractor.prepareStage(.init(stageIndex: nextIndex))
             }
         }
         presenterInstance.display = bridge
         self.displayBridge = bridge
 
+        // startScreening наполняет только список промптов и вызывает commit
+        // через displayStartScreening — закрытие выше подхватит currentIndex=0
+        // и запросит prepareStage для первого этапа. Без этого StageCard
+        // никогда не появится и экран зависнет на ProgressView.
         await interactorInstance.startScreening(.init(childId: childId, childAge: childAge))
     }
 

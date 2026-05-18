@@ -89,23 +89,25 @@ struct VisualAcousticView: View {
     // MARK: - Playing
 
     private var playingView: some View {
-        VStack(spacing: SpacingTokens.medium) {
-            progressHeader
-            HStack(spacing: SpacingTokens.small) {
-                LyalyaMascotView(state: .encouraging, size: 56)
-                    .accessibilityHidden(true)
-                Spacer()
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: SpacingTokens.small) {
+                HStack(spacing: SpacingTokens.small) {
+                    LyalyaMascotView(state: .encouraging, size: 44)
+                        .accessibilityHidden(true)
+                    progressHeader
+                }
+                emojiTile
+                questionBlock
+                listenButton
+                choicesGrid
+                    .padding(.top, SpacingTokens.regular)
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
-            emojiTile
-            questionBlock
-            listenButton
-            Spacer(minLength: 0)
-            choicesGrid
+            .padding(.top, SpacingTokens.regular)
+            .padding(.bottom, SpacingTokens.regular)
         }
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .padding(.top, SpacingTokens.large)
-        .padding(.bottom, SpacingTokens.large)
+        .scrollBounceBehavior(.basedOnSize)
+        .safeAreaPadding(.bottom, SpacingTokens.small)
     }
 
     private var progressHeader: some View {
@@ -126,7 +128,7 @@ struct VisualAcousticView: View {
     private var emojiTile: some View {
         HSLiquidGlassCard(style: .primary, padding: 0) {
             ZStack {
-                HSContentSymbol(display.imageEmoji, size: 96)
+                HSContentSymbol(display.imageEmoji, size: 72)
                     .shadow(color: ColorTokens.Overlay.shadow, radius: 8, y: 4)
                     .scaleEffect(reduceMotion ? 1.0 : (display.isPlaying ? 1.04 : 1.0))
                     .animation(
@@ -136,7 +138,7 @@ struct VisualAcousticView: View {
                         value: display.isPlaying
                     )
                     .frame(maxWidth: .infinity)
-                    .frame(height: 160)
+                    .frame(height: 104)
                     .accessibilityLabel(display.imageLabel)
 
                 if display.isPlaying {

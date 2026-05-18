@@ -60,9 +60,10 @@ public extension RealmActor {
     }
 
     /// Fetches FluencySessionObject as value-type DTOs — Sendable-safe.
-    internal func fetchFluencySessions() async -> [FluencySessionData] {
-        let realmInstance = try? await Realm(actor: self)
-        guard let realmInstance else { return [] }
+    /// Бросает ошибку при сбое открытия Realm — вызывающая сторона должна
+    /// отличать «нет записей» от «не удалось прочитать хранилище».
+    internal func fetchFluencySessions() async throws -> [FluencySessionData] {
+        let realmInstance = try await Realm(actor: self)
         return Array(realmInstance.objects(FluencySessionObject.self)).map { obj in
             FluencySessionData(
                 id: obj.id,
