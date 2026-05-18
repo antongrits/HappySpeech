@@ -62,6 +62,10 @@ struct PhonemicListeningView: View {
     @State private var interactor: PhonemicListeningInteractor?
     @State private var presenter: PhonemicListeningPresenter?
     @State private var router: PhonemicListeningRouter?
+    /// Порядок отображения вариантов текущего раунда: `id` остаётся
+    /// оригинальным индексом (для проверки в Interactor), но позиция на
+    /// экране перемешана, чтобы правильный вариант не был всегда первым.
+    @State private var optionOrder: [Int] = []
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -156,7 +160,7 @@ struct PhonemicListeningView: View {
 
             // Answer options
             VStack(spacing: SpacingTokens.sp3) {
-                ForEach(round.options) { option in
+                ForEach(displayedOptions(round)) { option in
                     optionButton(option) {
                         Task { await answer(optionIndex: option.id) }
                     }
@@ -315,6 +319,28 @@ struct PhonemicListeningView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
+    // MARK: - Option ordering
+
+    /// Варианты в перемешанном порядке отображения; `id` остаётся
+    /// оригинальным индексом (для проверки в Interactor).
+    private func displayedOptions(
+        _ round: PhonemicListeningModels.Start.RoundViewModel
+    ) -> [PhonemicListeningModels.Start.OptionViewModel] {
+        guard optionOrder.count == round.options.count else {
+            return round.options
+        }
+        return optionOrder.compactMap { idx in
+            round.options.first { $0.id == idx }
+        }
+    }
+
+    private func refreshOptionOrder(
+        for round: PhonemicListeningModels.Start.RoundViewModel?
+    ) {
+        guard let round else { return }
+        optionOrder = round.options.map(\.id).shuffled()
+    }
+
     // MARK: - Wiring
 
     private func setupAndStart(forceRestart: Bool = false) async {
@@ -333,10 +359,12 @@ struct PhonemicListeningView: View {
         }
         _ = forceRestart
         await interactor?.start(request: .init(childId: childId))
+        refreshOptionOrder(for: holder.currentRound)
     }
 
     private func answer(optionIndex: Int) async {
         await interactor?.answer(request: .init(optionIndex: optionIndex))
+        refreshOptionOrder(for: holder.currentRound)
     }
 }
 
