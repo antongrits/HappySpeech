@@ -120,17 +120,29 @@ struct WorldMapView: View {
     // MARK: - Background
 
     private var backgroundLayer: some View {
-        // F.tier1 v21: lilac accent в gradient мягче в dark, чтобы карта не «фонила» фиолетом.
-        LinearGradient(
-            colors: [
-                ColorTokens.Kid.bg,
-                ColorTokens.Brand.lilac.opacity(colorScheme == .dark ? 0.10 : 0.18),
-                ColorTokens.Kid.bg
-            ],
-            startPoint: .top,
-            endPoint: .bottom
-        )
-        .ignoresSafeArea()
+        ZStack {
+            // F.tier1 v21: lilac accent в gradient мягче в dark, чтобы карта не «фонила» фиолетом.
+            LinearGradient(
+                colors: [
+                    ColorTokens.Kid.bg,
+                    ColorTokens.Brand.lilac.opacity(colorScheme == .dark ? 0.10 : 0.18),
+                    ColorTokens.Kid.bg
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+
+            // D-29 v27 — карта звуков «дышит» цветом как и ChildHome: мягкий
+            // прохладный mesh-слой поверх плоского градиента (softLight, низкая
+            // opacity). iOS 18+ — MeshGradient, iOS 17 — radial fallback.
+            HSMeshGradientBackground(palette: .kidCool, animated: true)
+                .ignoresSafeArea()
+                .opacity(colorScheme == .dark ? 0.16 : 0.28)
+                .blendMode(.softLight)
+                .accessibilityHidden(true)
+                .allowsHitTesting(false)
+        }
     }
 
     // MARK: - Mascot header

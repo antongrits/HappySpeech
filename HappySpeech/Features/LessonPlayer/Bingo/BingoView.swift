@@ -159,9 +159,17 @@ struct BingoView: View {
         .padding(.horizontal, SpacingTokens.regular)
         .padding(.vertical, SpacingTokens.small)
         .background(
+            // D-29 v27 — callout озвучки получает консистентный «материал»:
+            // hairline-бордер + мягкая тень, как у HSCard(.elevated) —
+            // карточка явно приподнята над акцентным фоном урока.
             RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
                 .fill(ColorTokens.Kid.surface)
         )
+        .overlay(
+            RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                .strokeBorder(ColorTokens.Overlay.highlight, lineWidth: 0.5)
+        )
+        .kidCardShadow()
         .opacity(display.isCalling || display.calledWord.isEmpty ? 1 : 0.85)
     }
 

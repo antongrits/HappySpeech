@@ -264,6 +264,30 @@ private struct ParentDashboardTab: View {
         .accessibilityHidden(true)
     }
 
+    /// D-29 v27 — подпись профиля ребёнка: возраст + (опционально) звуки.
+    /// Разделитель добавляется только когда `targetSoundsText` непустой.
+    private var childSubtitleText: String {
+        let age = String(localized: "\(viewModel.childAge) лет")
+        let sounds = viewModel.targetSoundsText.trimmingCharacters(in: .whitespaces)
+        return sounds.isEmpty ? age : "\(age) · \(sounds)"
+    }
+
+    /// D-29 v27 — единый icon-badge для navigation-карточек дашборда:
+    /// SF Symbol в тонированном круге. Раньше иконки «висели» голым
+    /// 28pt-глифом — список карточек читался плоско и однообразно (как
+    /// системные Настройки). Круглый контейнер задаёт ритм и глубину.
+    private func parentNavIcon(_ systemName: String, tint: Color) -> some View {
+        ZStack {
+            Circle()
+                .fill(tint.opacity(0.14))
+                .frame(width: 44, height: 44)
+            Image(systemName: systemName)
+                .font(TypographyTokens.subtitle(20))
+                .foregroundStyle(tint)
+        }
+        .accessibilityHidden(true)
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
@@ -370,13 +394,22 @@ private struct ParentDashboardTab: View {
 
     private var headerSection: some View {
         HStack(alignment: .center, spacing: SpacingTokens.sp3) {
-            VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+            VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                // D-29 v27 — приветствие получает полноценную иерархию: тёмный
+                // ink + title-вес. Раньше inkMuted + headline → терялось на фоне,
+                // экран читался как generic Settings. Заголовок-уровень даёт
+                // родительскому контуру характер и точку входа взгляда.
                 Text(viewModel.greeting)
-                    .font(TypographyTokens.headline())
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .font(TypographyTokens.title(22))
+                    .foregroundStyle(ColorTokens.Parent.ink)
                     .lineLimit(2)
                     .minimumScaleFactor(0.8)
                     .multilineTextAlignment(.leading)
+                Text(String(localized: "Прогресс и занятия вашего ребёнка"))
+                    .font(TypographyTokens.body(13))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
             }
             Spacer(minLength: SpacingTokens.sp2)
             // E v21: 3D Ляля в greeting header ParentHome (требование пользователя).
@@ -385,6 +418,8 @@ private struct ParentDashboardTab: View {
                 .accessibilityHidden(true)
         }
         .padding(.top, SpacingTokens.sp3)
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isHeader)
     }
 
     private var childSection: some View {
@@ -410,7 +445,9 @@ private struct ParentDashboardTab: View {
                         .foregroundStyle(ColorTokens.Parent.ink)
                         .lineLimit(1)
                         .minimumScaleFactor(0.85)
-                    Text(String(localized: "\(viewModel.childAge) лет · \(viewModel.targetSoundsText)"))
+                    // D-29 v27 — разделитель «·» показываем только при наличии
+                    // списка звуков, иначе на пустом профиле выводилось «0 лет · ».
+                    Text(childSubtitleText)
                         .font(TypographyTokens.body(13))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
                         .lineLimit(2)
@@ -530,9 +567,7 @@ private struct ParentDashboardTab: View {
     private func homeTaskCard(_ task: String) -> some View {
         HSCard(style: .tinted(ColorTokens.Brand.butter.opacity(0.15))) {
             HStack(alignment: .top, spacing: SpacingTokens.sp3) {
-                Image(systemName: "house.circle.fill")
-                    .font(TypographyTokens.titleLarge(28))
-                    .foregroundStyle(ColorTokens.Brand.gold)
+                parentNavIcon("house.fill", tint: ColorTokens.Brand.gold)
 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(String(localized: "Домашнее задание"))
@@ -641,10 +676,7 @@ private struct ParentDashboardTab: View {
     private var familyVoiceCard: some View {
         HSCard(style: .elevated) {
             HStack(spacing: SpacingTokens.sp3) {
-                Image(systemName: "mic.badge.plus")
-                    .font(TypographyTokens.titleLarge(28))
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                    .accessibilityHidden(true)
+                parentNavIcon("mic.badge.plus", tint: ColorTokens.Brand.primary)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(String(localized: "family.voice.library.title"))
                         .font(TypographyTokens.headline())
@@ -683,10 +715,7 @@ private struct ParentDashboardTab: View {
     private var pronunciationLeaderboardCard: some View {
         HSCard(style: .elevated) {
             HStack(spacing: SpacingTokens.sp3) {
-                Image(systemName: "trophy.fill")
-                    .font(TypographyTokens.titleLarge(28))
-                    .foregroundStyle(ColorTokens.Brand.gold)
-                    .accessibilityHidden(true)
+                parentNavIcon("trophy.fill", tint: ColorTokens.Brand.gold)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(String(localized: "leaderboard.entry.title"))
                         .font(TypographyTokens.headline())
@@ -725,10 +754,7 @@ private struct ParentDashboardTab: View {
     private var weeklyReportCard: some View {
         HSCard(style: .elevated) {
             HStack(spacing: SpacingTokens.sp3) {
-                Image(systemName: "calendar.badge.clock")
-                    .font(TypographyTokens.titleLarge(28))
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                    .accessibilityHidden(true)
+                parentNavIcon("calendar.badge.clock", tint: ColorTokens.Brand.primary)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(String(localized: "weeklyReport.entry.title"))
                         .font(TypographyTokens.headline())
@@ -767,10 +793,7 @@ private struct ParentDashboardTab: View {
     private var neurolinguistInsightsCard: some View {
         HSCard(style: .elevated) {
             HStack(spacing: SpacingTokens.sp3) {
-                Image(systemName: "sparkles")
-                    .font(TypographyTokens.titleLarge(28))
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                    .accessibilityHidden(true)
+                parentNavIcon("sparkles", tint: ColorTokens.Brand.lilac)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(String(localized: "insights.entry.title"))
                         .font(TypographyTokens.headline())
@@ -807,10 +830,7 @@ private struct ParentDashboardTab: View {
     private var familyCalendarCard: some View {
         HSCard(style: .elevated) {
             HStack(spacing: SpacingTokens.sp3) {
-                Image(systemName: "calendar.badge.checkmark")
-                    .font(TypographyTokens.titleLarge(28))
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                    .accessibilityHidden(true)
+                parentNavIcon("calendar.badge.checkmark", tint: ColorTokens.Brand.sky)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(String(localized: "family_calendar.card.title"))
                         .font(TypographyTokens.headline())
@@ -893,10 +913,7 @@ private struct ParentDashboardTab: View {
     private var logopedistChatCard: some View {
         HSCard(style: .elevated) {
             HStack(spacing: SpacingTokens.sp3) {
-                Image(systemName: "message.badge.filled.fill")
-                    .font(TypographyTokens.titleLarge(28))
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                    .accessibilityHidden(true)
+                parentNavIcon("message.badge.filled.fill", tint: ColorTokens.Brand.mint)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(String(localized: "chat.entry.title"))
                         .font(TypographyTokens.headline())
@@ -933,10 +950,7 @@ private struct ParentDashboardTab: View {
     private var familyAchievementsCard: some View {
         HSCard(style: .elevated) {
             HStack(spacing: SpacingTokens.sp3) {
-                Image(systemName: "trophy.circle.fill")
-                    .font(TypographyTokens.titleLarge(28))
-                    .foregroundStyle(ColorTokens.Brand.gold)
-                    .accessibilityHidden(true)
+                parentNavIcon("trophy.circle.fill", tint: ColorTokens.Brand.gold)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(String(localized: "family.achievements.entry.title"))
                         .font(TypographyTokens.headline())

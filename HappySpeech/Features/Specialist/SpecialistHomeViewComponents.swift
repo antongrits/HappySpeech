@@ -350,15 +350,18 @@ struct SpecDashboardHeader: View {
                     HStack(spacing: SpacingTokens.sp4) {
                         SpecMetricTile(
                             value: "\(summary.totalSessions)",
-                            label: String(localized: "spec.metric.sessions")
+                            label: String(localized: "spec.metric.sessions"),
+                            icon: "waveform.path"
                         )
                         SpecMetricTile(
                             value: "\(summary.totalMinutes)",
-                            label: String(localized: "spec.metric.minutes")
+                            label: String(localized: "spec.metric.minutes"),
+                            icon: "clock"
                         )
                         SpecMetricTile(
                             value: "\(Int(summary.overallSuccessRate * 100))%",
-                            label: String(localized: "spec.metric.success")
+                            label: String(localized: "spec.metric.success"),
+                            icon: "checkmark.seal"
                         )
                     }
                 }
@@ -384,9 +387,18 @@ struct SpecDashboardHeader: View {
 struct SpecMetricTile: View {
     let value: String
     let label: String
+    // D-29 v27 — опциональная иконка метрики: добавляет аналитичность
+    // специалистскому контуру, тайлы перестают быть голым текстом.
+    var icon: String? = nil
 
     var body: some View {
-        VStack(spacing: 2) {
+        VStack(spacing: SpacingTokens.micro) {
+            if let icon {
+                Image(systemName: icon)
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Spec.accent.opacity(0.75))
+                    .accessibilityHidden(true)
+            }
             Text(value)
                 .font(TypographyTokens.kidDisplay(20))
                 .foregroundStyle(ColorTokens.Spec.accent)

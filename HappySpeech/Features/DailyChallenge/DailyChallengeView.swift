@@ -56,6 +56,7 @@ struct DailyChallengeView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
 
@@ -68,6 +69,15 @@ struct DailyChallengeView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+
+                // v27 visual modernization (#2) — Daily Challenge ощущается как
+                // кульминация дня: тёплый золотой mesh-фон палитры .rewards
+                // вместо плоского Kid.bg. iOS 18+ — MeshGradient, iOS 17 — radial.
+                HSMeshGradientBackground(palette: .rewards, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.4 : 0.7)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
 
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: SpacingTokens.sectionGap) {
@@ -129,7 +139,7 @@ struct DailyChallengeView: View {
             HStack(alignment: .center) {
                 VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
                     Text(viewModel.heroSubtitle)
-                        .font(TypographyTokens.title(20))
+                        .font(TypographyTokens.title(22))
                         .foregroundStyle(ColorTokens.Kid.ink)
                         .lineLimit(2)
                         .minimumScaleFactor(0.85)
@@ -306,21 +316,15 @@ struct DailyChallengeView: View {
 
     @ViewBuilder
     private func ctaSection(viewModel: DailyChallengeModels.Load.ViewModel) -> some View {
-        Button {
+        // D-29 v27 — CTA на дизайн-системном HSButton (primary): единый вид кнопок
+        // во всём детском контуре вместо системного .borderedProminent.
+        HSButton(
+            viewModel.ctaTitle,
+            style: .primary,
+            icon: viewModel.isCompleted ? "square.and.arrow.up.fill" : "play.fill"
+        ) {
             Task { await handleCTA(viewModel: viewModel) }
-        } label: {
-            HStack {
-                Image(systemName: viewModel.isCompleted ? "square.and.arrow.up.fill" : "play.fill")
-                    .font(.headline)
-                Text(viewModel.ctaTitle)
-                    .font(TypographyTokens.cta())
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.85)
-            }
-            .frame(maxWidth: .infinity, minHeight: 48)
-            .padding(.horizontal, SpacingTokens.sp4)
         }
-        .buttonStyle(.borderedProminent)
         .accessibilityHint(
             Text(viewModel.isCompleted
                  ? "dailyChallenge.cta.share.hint"

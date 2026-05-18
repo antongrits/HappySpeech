@@ -143,7 +143,7 @@ struct RewardsView: View {
 
                 VStack(alignment: .leading, spacing: SpacingTokens.micro) {
                     Text(display.progressLabel)
-                        .font(TypographyTokens.title(20))
+                        .font(TypographyTokens.title(22))
                         .foregroundStyle(ColorTokens.Kid.ink)
                         .accessibilityAddTraits(.isHeader)
                         .lineLimit(1)
