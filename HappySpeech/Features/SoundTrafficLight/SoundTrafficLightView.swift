@@ -24,12 +24,17 @@ final class SoundTrafficLightViewModelHolder: SoundTrafficLightDisplayLogic {
     }
 
     func displaySort(viewModel: SoundTrafficLightModels.Sort.ViewModel) async {
-        self.lastFeedback = viewModel.feedbackText
-        self.lastWasCorrect = viewModel.wasCorrect
         self.isFinished = viewModel.isFinished
         self.summary = viewModel.summary
         if let next = viewModel.nextRound {
+            // Новый раунд — стираем обратную связь предыдущего, чтобы
+            // баннер не оставался висеть на следующем слове.
             self.currentRound = next
+            self.lastFeedback = nil
+            self.lastWasCorrect = nil
+        } else {
+            self.lastFeedback = viewModel.feedbackText
+            self.lastWasCorrect = viewModel.wasCorrect
         }
     }
 }

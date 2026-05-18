@@ -27,13 +27,18 @@ final class SpeechTempoViewModelHolder: SpeechTempoDisplayLogic {
     }
 
     func displayFinish(viewModel: SpeechTempoModels.Finish.ViewModel) async {
-        self.lastRatingText = viewModel.ratingText
-        self.lastRating = viewModel.rating
         self.isFinished = viewModel.isFinished
         self.summary = viewModel.summary
         self.tappedSyllables = 0
         if let next = viewModel.nextRhyme {
+            // Новая чистоговорка — стираем оценку предыдущей, чтобы баннер
+            // не висел на следующей.
             self.currentRhyme = next
+            self.lastRatingText = nil
+            self.lastRating = nil
+        } else {
+            self.lastRatingText = viewModel.ratingText
+            self.lastRating = viewModel.rating
         }
     }
 }

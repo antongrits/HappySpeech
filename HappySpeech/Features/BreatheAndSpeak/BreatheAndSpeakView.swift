@@ -53,6 +53,9 @@ struct BreatheAndSpeakView: View {
     @State private var router: BreatheAndSpeakRouter?
     @State private var holdRemaining: Int = 0
     @State private var isHolding: Bool = false
+    /// Идентификатор текущего удержания: устаревшие тик-таски прекращаются,
+    /// чтобы счётчик не убывал вдвое быстрее при быстрой смене шагов.
+    @State private var holdGeneration: Int = 0
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -330,6 +333,8 @@ struct BreatheAndSpeakView: View {
     // MARK: - Hold timer
 
     private func startHold(_ step: BreatheAndSpeakModels.Start.StepViewModel) {
+        holdGeneration += 1
+        let generation = holdGeneration
         holdRemaining = step.holdSeconds
         isHolding = true
         holdWasStarted = true
@@ -337,9 +342,10 @@ struct BreatheAndSpeakView: View {
         Task {
             while holdRemaining > 0 {
                 try? await Task.sleep(for: .seconds(1))
-                guard isHolding else { return }
+                guard isHolding, generation == holdGeneration else { return }
                 holdRemaining -= 1
             }
+            guard generation == holdGeneration else { return }
             isHolding = false
             container.hapticService.notification(.success)
         }
@@ -372,6 +378,7 @@ struct BreatheAndSpeakView: View {
     }
 
     private func resetHoldState() {
+        holdGeneration += 1
         isHolding = false
         holdWasStarted = false
         holdRemaining = 0
