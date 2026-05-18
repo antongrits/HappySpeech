@@ -62,7 +62,6 @@ public final class AppContainer {
     // Block AA (v17): Firebase missing services
     private var _cloudFunctionsService: (any CloudFunctionsServiceProtocol)?
     private var _installationsService: (any InstallationsServiceProtocol)?
-    private var _dynamicLinksService: (any DynamicLinksServiceProtocol)?
 
     // Block U (v18): Firebase full services replacement (Dynamic Links → Universal Links + Firestore)
     private var _familyInviteService: (any FamilyInviteServiceProtocol)?
@@ -408,31 +407,13 @@ public final class AppContainer {
         return new
     }
 
-    /// Firebase Dynamic Links — создание и обработка семейных приглашений.
-    /// Только родительский контур. Дети ссылки не получают и не отправляют (COPPA).
-    ///
-    /// - Note: `LiveDynamicLinksService` помечен `deprecated` (Firebase shutdown 25.08.2025);
-    ///   реальные приглашения создаёт `FamilyInviteService`. Свойство сохранено для совместимости
-    ///   и обработки legacy ссылок. Свойство также помечено deprecated, чтобы deprecation-warning
-    ///   от вызова `LiveDynamicLinksService()` подавлялся (Swift не репортит warning внутри
-    ///   уже deprecated-кода). Реальных callers у свойства нет.
-    @available(*, deprecated, message: "Заменён на FamilyInviteService — см. ADR-V18-U-DYNAMICLINKS-REPLACE")
-    public var dynamicLinksService: any DynamicLinksServiceProtocol {
-        if let existing = _dynamicLinksService { return existing }
-        let new = LiveDynamicLinksService()
-        _dynamicLinksService = new
-        return new
-    }
-
     /// Позволяет Preview/Tests подменить Block AA сервисы.
     public func overrideBlockAAServices(
         cloudFunctions: (any CloudFunctionsServiceProtocol)? = nil,
-        installations: (any InstallationsServiceProtocol)? = nil,
-        dynamicLinks: (any DynamicLinksServiceProtocol)? = nil
+        installations: (any InstallationsServiceProtocol)? = nil
     ) {
         if let cf = cloudFunctions { _cloudFunctionsService = cf }
         if let inst = installations { _installationsService = inst }
-        if let dl = dynamicLinks { _dynamicLinksService = dl }
     }
 
     // MARK: - Block U (v18): Firebase full services replacement
@@ -827,8 +808,7 @@ public extension AppContainer {
         // Block AA (v17): Firebase missing services mock — без сети в preview/tests.
         container.overrideBlockAAServices(
             cloudFunctions: MockCloudFunctionsService(),
-            installations: MockInstallationsService(),
-            dynamicLinks: MockDynamicLinksService()
+            installations: MockInstallationsService()
         )
         // Block U (v18): Firebase full services replacement mock — без сети в preview/tests.
         container.overrideBlockUServices(
