@@ -41,6 +41,14 @@ actor SyncStateCollector {
 
 final class SyncServiceTests: XCTestCase {
 
+    override func setUp() {
+        super.setUp()
+        // LiveSyncService.performFirestoreBatchWrite дёргает Firestore.firestore(),
+        // который требует сконфигурированного FirebaseApp. Firestore пишет в
+        // локальный offline-кэш, поэтому commit() завершается без сети.
+        FirebaseTestSupport.ensureConfigured()
+    }
+
     // MARK: - Helpers
 
     /// Создаёт RealmActor с изолированной in-memory Realm —

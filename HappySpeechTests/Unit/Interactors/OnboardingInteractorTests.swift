@@ -172,6 +172,23 @@ final class OnboardingInteractorTests: XCTestCase {
         return (sut, spy)
     }
 
+    /// Детерминированно ждёт выполнения условия вместо фиксированного sleep.
+    /// Interactor диспатчит разрешения/планирование в fire-and-forget Task —
+    /// polling по spy-счётчику устраняет гонку с планировщиком.
+    private func waitUntil(
+        timeout: TimeInterval = 5.0,
+        _ condition: @MainActor () -> Bool
+    ) async throws {
+        let deadline = Date().addingTimeInterval(timeout)
+        while !condition() {
+            if Date() > deadline {
+                XCTFail("waitUntil: условие не выполнено за \(timeout) с")
+                return
+            }
+            try await Task.sleep(nanoseconds: 5_000_000)
+        }
+    }
+
     // MARK: - loadOnboarding
 
     func test_loadOnboarding_freshStartAtWelcome() {
@@ -417,62 +434,52 @@ final class OnboardingInteractorTests: XCTestCase {
 
     // MARK: - requestNotificationPermission
 
-    func test_requestNotificationPermission_grantedEnablesReminder() async {
+    func test_requestNotificationPermission_grantedEnablesReminder() async throws {
         let (sut, spy) = makeSUT()
         notification.permissionResult = true
         sut.requestNotificationPermission(.init())
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        try await waitUntil { spy.permissionsStatusCount > 0 }
         XCTAssertEqual(notification.requestPermissionCount, 1)
         XCTAssertEqual(spy.lastPermissions?.permissionsStatus.notificationsGranted, true)
         XCTAssertEqual(spy.lastPermissions?.profile.reminderEnabled, true)
     }
 
-    func test_requestNotificationPermission_deniedDoesNotEnableReminder() async {
+    func test_requestNotificationPermission_deniedDoesNotEnableReminder() async throws {
         let (sut, spy) = makeSUT()
         notification.permissionResult = false
         sut.requestNotificationPermission(.init())
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        try await waitUntil { spy.permissionsStatusCount > 0 }
         XCTAssertEqual(spy.lastPermissions?.permissionsStatus.notificationsGranted, false)
     }
 
-    // MARK: - Model download
+    // MARK: - Model readiness
+    //
+    // v29: ML-модели (Whisper ASR, Qwen LLM, Core ML scorers) поставляются
+    // внутри бандла приложения — загрузок во время онбординга нет.
+    // startModelDownload/skipModelDownload синхронно подтверждают готовность
+    // (status == .completed) без асинхронной симуляции прогресса.
 
-    func test_startModelDownload_emitsDownloadingStatus() {
+    func test_startModelDownload_emitsCompletedStatus() {
         let (sut, spy) = makeSUT()
         sut.startModelDownload(.init())
         XCTAssertEqual(spy.modelDownloadCount, 1)
-        if case .downloading = spy.lastModelDownload?.status {
-            // ok
-        } else {
-            XCTFail("Expected .downloading status")
-        }
-        sut.skipModelDownload(.init())
+        XCTAssertEqual(spy.lastModelDownload?.status, .completed,
+                       "Модели в бандле → шаг сразу .completed")
     }
 
-    func test_skipModelDownload_emitsSkippedStatus() {
+    func test_skipModelDownload_emitsCompletedStatus() {
         let (sut, spy) = makeSUT()
         sut.skipModelDownload(.init())
-        XCTAssertEqual(spy.lastModelDownload?.status, .skipped)
-    }
-
-    func test_startModelDownload_doubleCallIgnored() {
-        let (sut, spy) = makeSUT()
-        sut.startModelDownload(.init())
-        let countAfterFirst = spy.modelDownloadCount
-        sut.startModelDownload(.init())
-        // Повторный вызов при активной загрузке игнорируется.
-        XCTAssertEqual(spy.modelDownloadCount, countAfterFirst)
-        sut.skipModelDownload(.init())
-    }
-
-    func test_startModelDownload_completesWithProgressUpdates() async {
-        let (sut, spy) = makeSUT()
-        sut.startModelDownload(.init())
-        // Загрузка симулируется 12 шагами по 250 мс (~3 с).
-        try? await Task.sleep(nanoseconds: 3_600_000_000)
         XCTAssertEqual(spy.lastModelDownload?.status, .completed)
-        // Промежуточные обновления прогресса эмитятся.
-        XCTAssertGreaterThan(spy.modelDownloadCount, 2)
+    }
+
+    func test_startModelDownload_isSynchronousAndIdempotent() {
+        let (sut, spy) = makeSUT()
+        sut.startModelDownload(.init())
+        sut.startModelDownload(.init())
+        // Шаг синхронный и идемпотентный: каждый вызов эмитит .completed.
+        XCTAssertEqual(spy.modelDownloadCount, 2)
+        XCTAssertEqual(spy.lastModelDownload?.status, .completed)
     }
 
     // MARK: - completeOnboarding
@@ -523,33 +530,33 @@ final class OnboardingInteractorTests: XCTestCase {
         XCTAssertEqual(AdaptivePlannerSeed.load()?.enableFluencyMode, true)
     }
 
-    func test_completeOnboarding_schedulesReminderWhenEnabledAndGranted() async {
-        let (sut, _) = makeSUT()
+    func test_completeOnboarding_schedulesReminderWhenEnabledAndGranted() async throws {
+        let (sut, spy) = makeSUT()
         sut.loadOnboarding(.init())
         // Включаем уведомления (reminderEnabled + notificationsGranted).
         notification.permissionResult = true
         sut.requestNotificationPermission(.init())
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        try await waitUntil { spy.permissionsStatusCount > 0 }
         sut.setReminderTime(.init(hour: 18, minute: 30))
         sut.acceptPrivacyConsent(.init(accepted: true))
         sut.completeOnboarding(.init())
-        try? await Task.sleep(nanoseconds: 150_000_000)
+        try await waitUntil { self.notification.scheduleDailyCount == 1 }
         XCTAssertEqual(notification.scheduleDailyCount, 1)
         XCTAssertEqual(notification.lastScheduledHour, 18)
         XCTAssertEqual(notification.lastScheduledMinute, 30)
     }
 
-    func test_completeOnboarding_scheduleReminderFailureIsTolerated() async {
+    func test_completeOnboarding_scheduleReminderFailureIsTolerated() async throws {
         let (sut, spy) = makeSUT()
         sut.loadOnboarding(.init())
         notification.permissionResult = true
         notification.failSchedule = true
         sut.requestNotificationPermission(.init())
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        try await waitUntil { spy.permissionsStatusCount > 0 }
         sut.setReminderTime(.init(hour: 9, minute: 0))
         sut.acceptPrivacyConsent(.init(accepted: true))
         sut.completeOnboarding(.init())
-        try? await Task.sleep(nanoseconds: 150_000_000)
+        try await waitUntil { spy.completeCount == 1 }
         // Сбой планирования напоминания не блокирует завершение онбординга.
         XCTAssertEqual(spy.completeCount, 1)
     }

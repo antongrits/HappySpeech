@@ -18,6 +18,13 @@ import XCTest
 
 final class LiveAuthServiceTests: XCTestCase {
 
+    override func setUp() {
+        super.setUp()
+        // LiveAuthService дёргает Auth.auth(), который требует
+        // сконфигурированного FirebaseApp — иначе крашит тестовый хост.
+        FirebaseTestSupport.ensureConfigured()
+    }
+
     // MARK: - Instantiation
 
     func test_liveAuthService_conformsToAuthService() {

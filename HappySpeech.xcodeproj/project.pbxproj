@@ -1002,6 +1002,7 @@
 		A82BDC20D02FE9D151FBFDD2 /* MimicLyalyaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A4585C5EB63662AF3A6DCF /* MimicLyalyaView.swift */; };
 		A899BB16C8699528392D7B11 /* StutteringModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BE1A2DA186105122A46554 /* StutteringModels.swift */; };
 		A8A9D1CFCE6DE39D3F7A93E7 /* OfflineStatePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708613A69FC7B20DCB65ED8B /* OfflineStatePresenter.swift */; };
+		A9047C25798E2AED4BE76C25 /* FirebaseTestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C8CF4BDC50069CF65B907F /* FirebaseTestSupport.swift */; };
 		A988838DD5668BA7956CBDEF /* G2PWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00FC8D18B0659418EA86F02 /* G2PWorker.swift */; };
 		A9981D2ECB5042763A093260 /* ParentGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA8EE98B729846DE76DDFCB /* ParentGuideView.swift */; };
 		A9CE2AD4A9E0C6FEF22CA6E4 /* AssignedHomeworkPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFBEEBE8EC24AE00504EB60 /* AssignedHomeworkPresenterTests.swift */; };
@@ -1519,6 +1520,7 @@
 		0638A6490D5D421707BF0454 /* AnalyticsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsServiceTests.swift; sourceTree = "<group>"; };
 		06461BFEF4BEF8127792F571 /* FamilyStatsWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyStatsWorkerTests.swift; sourceTree = "<group>"; };
 		06B35F150374C2A97DC596E9 /* DialectAdaptationPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialectAdaptationPresenterTests.swift; sourceTree = "<group>"; };
+		06C8CF4BDC50069CF65B907F /* FirebaseTestSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseTestSupport.swift; sourceTree = "<group>"; };
 		06D738D3467791EF1C9FF42E /* LLMPromptsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMPromptsTests.swift; sourceTree = "<group>"; };
 		06ED2449926E2BA141B7B229 /* ComparisonDashboardInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComparisonDashboardInteractorTests.swift; sourceTree = "<group>"; };
 		06F03EAB6A17F5DF45F03158 /* AuthFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthFlowTests.swift; sourceTree = "<group>"; };
@@ -3199,6 +3201,7 @@
 			isa = PBXGroup;
 			children = (
 				D5800FC34C87F3296B3FF444 /* FirebaseSnapshotMocks.swift */,
+				06C8CF4BDC50069CF65B907F /* FirebaseTestSupport.swift */,
 				7C7EB8D292110ED7E5DC59F0 /* MockAudioFileIO.swift */,
 				BEA54F87350924351E097537 /* MockMLExecutor.swift */,
 				E0095D88757B1EE79E09EEA1 /* MockServices.swift */,
@@ -7149,6 +7152,7 @@
 				97513E096E507F26696A1C4A /* FamilyVoiceSmokeUITest.swift in Sources */,
 				4EF87C531F17C79634938689 /* FirebaseEmulatorTestsBase.swift in Sources */,
 				F75B49EC3E45ECCBC4FC2F2A /* FirebaseSnapshotMocks.swift in Sources */,
+				A9047C25798E2AED4BE76C25 /* FirebaseTestSupport.swift in Sources */,
 				9B2993593DD2FB960204E124 /* FirestoreCRUDTests.swift in Sources */,
 				598A63E3D37030EDA7ACC3A9 /* FluencyAnalyzerWorkerExtendedTests.swift in Sources */,
 				6939E933F1E45BB55230FB9A /* FluencyDiaryInteractorTests.swift in Sources */,

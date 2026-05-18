@@ -17,18 +17,22 @@ final class StoryPlayerSmokeTests: XCTestCase {
     /// (smoke-уровень: ищем ресурс в том же bundle, что и production-код).
     ///
     /// Тесты выполняются hosted в `HappySpeech.app` (TEST_HOST), поэтому
-    /// `Bundle.main` указывает на бандл приложения. xcodegen добавляет
-    /// `Resources` как `type: group` → ресурсы кладутся плоской структурой,
-    /// поэтому помимо поиска по subdirectory есть flat-fallback.
+    /// `Bundle.main` указывает на бандл приложения. `Videos` подключён в
+    /// project.yml как folder-reference (`type: folder`), поэтому в бандле
+    /// сохраняется структура каталогов: `Videos/stories/<id>.mp4`.
+    /// Помимо поиска по subdirectory есть flat-fallback на случай иной упаковки.
     private func mp4URL(for storyId: String) -> URL? {
         let bundles = [Bundle.main, Bundle(for: type(of: self))]
+        let subdirectories = ["Videos/stories", "stories"]
         for bundle in bundles {
-            if let url = bundle.url(
-                forResource: storyId,
-                withExtension: "mp4",
-                subdirectory: "stories"
-            ) {
-                return url
+            for subdirectory in subdirectories {
+                if let url = bundle.url(
+                    forResource: storyId,
+                    withExtension: "mp4",
+                    subdirectory: subdirectory
+                ) {
+                    return url
+                }
             }
             if let url = bundle.url(forResource: storyId, withExtension: "mp4") {
                 return url
@@ -98,16 +102,25 @@ final class StoryPlayerSmokeTests: XCTestCase {
     /// проверяет, что MP4-файл реально находится через Bundle.main.url.
     /// Цель: 20 историй из manifest — все должны быть найдены.
     func test_videoManifest_allStoriesHaveCorrespondingMP4() throws {
-        // Ищем манифест в bundle теста или в main bundle
-        let manifestURL = Bundle(for: type(of: self)).url(
-            forResource: "video-manifest",
-            withExtension: "json"
-        ) ?? Bundle.main.url(
-            forResource: "video-manifest",
-            withExtension: "json"
-        )
+        // Ищем манифест: Videos подключён как folder-reference, поэтому
+        // манифест лежит в подкаталоге Videos/. Есть flat-fallback.
+        func locateManifest() -> URL? {
+            for bundle in [Bundle.main, Bundle(for: type(of: self))] {
+                if let url = bundle.url(
+                    forResource: "video-manifest",
+                    withExtension: "json",
+                    subdirectory: "Videos"
+                ) {
+                    return url
+                }
+                if let url = bundle.url(forResource: "video-manifest", withExtension: "json") {
+                    return url
+                }
+            }
+            return nil
+        }
         let resolvedURL = try XCTUnwrap(
-            manifestURL,
+            locateManifest(),
             "video-manifest.json должен быть в bundle"
         )
 

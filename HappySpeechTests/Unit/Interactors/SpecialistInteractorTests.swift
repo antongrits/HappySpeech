@@ -132,8 +132,21 @@ final class SpecialistInteractorTests: XCTestCase {
         ]
     }
 
-    private func waitTick() async throws {
-        try await Task.sleep(nanoseconds: 400_000_000)
+    /// Детерминированно ждёт выполнения условия (вместо фиксированного sleep).
+    /// `fetch`/`update` диспатчат работу в Task — нужно дождаться её завершения.
+    /// Polling устраняет гонку: тест не зависит от точного тайминга планировщика.
+    private func waitUntil(
+        timeout: TimeInterval = 5.0,
+        _ condition: @MainActor () -> Bool
+    ) async throws {
+        let deadline = Date().addingTimeInterval(timeout)
+        while !condition() {
+            if Date() > deadline {
+                XCTFail("waitUntil: условие не выполнено за \(timeout) с")
+                return
+            }
+            try await Task.sleep(nanoseconds: 5_000_000)
+        }
     }
 
     // MARK: - 1. fetch вызывает presentFetch
@@ -141,7 +154,7 @@ final class SpecialistInteractorTests: XCTestCase {
     func test_fetch_callsPresenter() async throws {
         let (sut, spy) = makeSUT()
         sut.fetch(.init())
-        try await waitTick()
+        try await waitUntil { spy.fetchCalled }
         XCTAssertTrue(spy.fetchCalled)
     }
 
@@ -150,7 +163,7 @@ final class SpecialistInteractorTests: XCTestCase {
     func test_update_callsPresenter() async throws {
         let (sut, spy) = makeSUT()
         sut.update(.init())
-        try await waitTick()
+        try await waitUntil { spy.updateCalled }
         XCTAssertTrue(spy.updateCalled)
     }
 
@@ -184,7 +197,9 @@ final class SpecialistInteractorTests: XCTestCase {
         let (sut, _) = makeSUT()
         sut.presenter = nil
         sut.fetch(.init())
-        try await waitTick()
+        // Без presenter нет наблюдаемого флага — даём диспатчнутому Task
+        // отработать через несколько hop'ов планировщика.
+        for _ in 0..<200 { await Task.yield() }
         XCTAssertTrue(true)
     }
 
@@ -193,7 +208,7 @@ final class SpecialistInteractorTests: XCTestCase {
     func test_fetch_withChildren_mapsEntries() async throws {
         let (sut, spy) = makeSUT(children: makeChildren())
         sut.fetch(.init())
-        try await waitTick()
+        try await waitUntil { spy.fetchCalled }
         XCTAssertEqual(spy.lastFetch?.children.count, 3)
     }
 
@@ -202,7 +217,7 @@ final class SpecialistInteractorTests: XCTestCase {
     func test_fetch_sortByName_sortsAlphabetically() async throws {
         let (sut, spy) = makeSUT(children: makeChildren())
         sut.fetch(.init(sortOrder: .byName, searchQuery: ""))
-        try await waitTick()
+        try await waitUntil { spy.fetchCalled }
         let names = spy.lastFetch?.children.map(\.name) ?? []
         XCTAssertEqual(names, names.sorted())
     }
@@ -212,7 +227,7 @@ final class SpecialistInteractorTests: XCTestCase {
     func test_fetch_sortByProgress_sortsDescending() async throws {
         let (sut, spy) = makeSUT(children: makeChildren())
         sut.fetch(.init(sortOrder: .byProgress, searchQuery: ""))
-        try await waitTick()
+        try await waitUntil { spy.fetchCalled }
         let rates = spy.lastFetch?.children.map(\.overallSuccessRate) ?? []
         XCTAssertEqual(rates, rates.sorted(by: >))
     }
@@ -222,7 +237,7 @@ final class SpecialistInteractorTests: XCTestCase {
     func test_fetch_sortByLastActivity_recentFirst() async throws {
         let (sut, spy) = makeSUT(children: makeChildren())
         sut.fetch(.init(sortOrder: .byLastActivity, searchQuery: ""))
-        try await waitTick()
+        try await waitUntil { spy.fetchCalled }
         let first = spy.lastFetch?.children.first
         XCTAssertEqual(first?.id, "c-anya")
     }
@@ -232,7 +247,7 @@ final class SpecialistInteractorTests: XCTestCase {
     func test_fetch_searchQuery_filtersByName() async throws {
         let (sut, spy) = makeSUT(children: makeChildren())
         sut.fetch(.init(sortOrder: .byName, searchQuery: "бор"))
-        try await waitTick()
+        try await waitUntil { spy.fetchCalled }
         XCTAssertEqual(spy.lastFetch?.children.count, 1)
         XCTAssertEqual(spy.lastFetch?.children.first?.name, "Борис")
     }
@@ -242,7 +257,7 @@ final class SpecialistInteractorTests: XCTestCase {
     func test_fetch_repositoryFails_callsError() async throws {
         let (sut, spy) = makeSUT(children: makeChildren(), childRepoFails: true)
         sut.fetch(.init())
-        try await waitTick()
+        try await waitUntil { spy.errorCalled }
         XCTAssertTrue(spy.errorCalled)
         XCTAssertFalse(spy.lastError?.isEmpty ?? true)
     }
