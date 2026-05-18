@@ -109,6 +109,10 @@ final class MinimalPairsInteractor: MinimalPairsBusinessLogic {
     private var currentHintsUsed: Int = 0
     private var currentReplaysUsed: Int = 0
 
+    /// Подсказки за всю сессию (не сбрасывается между раундами) — для
+    /// корректного `totalHintsUsed` и сигнала усталости в отчёте.
+    private var sessionHintsUsed: Int = 0
+
     // MARK: - Async tasks
 
     private var advanceTask: Task<Void, Never>?
@@ -143,6 +147,7 @@ final class MinimalPairsInteractor: MinimalPairsBusinessLogic {
         bonusRoundAdded = []
         currentHintsUsed = 0
         currentReplaysUsed = 0
+        sessionHintsUsed = 0
 
         rounds = Self.buildRounds(contrast: soundContrast, count: sessionRoundCount)
         let logMsg = "loadSession contrast=\(soundContrast) rounds=\(rounds.count) age=\(childAge)"
@@ -301,6 +306,7 @@ final class MinimalPairsInteractor: MinimalPairsBusinessLogic {
             return
         }
         currentHintsUsed += 1
+        sessionHintsUsed += 1
         let hintsRemaining = Self.maxHintsPerRound - currentHintsUsed
         let pair = rounds[currentIndex]
 
@@ -348,9 +354,10 @@ final class MinimalPairsInteractor: MinimalPairsBusinessLogic {
         let totalDuration = Date().timeIntervalSince(sessionStartTime)
         let totalAnswered = max(answeredCount, 1)
         let accuracy = Double(correctCount) / Double(totalAnswered)
-        let hintsTotal = rounds.prefix(currentIndex + 1).isEmpty ? 0 : currentHintsUsed
+        let hintsTotal = sessionHintsUsed
 
-        // SM-2 качество для SpacedRepetitionEngine.
+        // SM-2 качество для SpacedRepetitionEngine. Усталость — если за сессию
+        // потрачено больше подсказок, чем лимит одного раунда.
         let hadFatigue = hintsTotal > Self.maxHintsPerRound
         let quality = SM2Quality.fromSuccessRate(accuracy, hadFatigue: hadFatigue)
 
