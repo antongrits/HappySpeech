@@ -31,7 +31,6 @@ import OSLog
 ///
 /// ## See Also
 /// - ``FCMService``
-/// - ``ContentPackDownloadService``
 public protocol RemoteConfigService: AnyObject, Sendable {
     // Feature flags
     var featureSeasonalEventsEnabled: Bool { get }

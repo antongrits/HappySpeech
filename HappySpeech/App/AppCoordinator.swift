@@ -199,7 +199,6 @@ final class AppCoordinator {
 enum AppSheet: Identifiable, Hashable {
     case settings
     case childProfile(childId: String)
-    case downloadPacks
     case exportReport(childId: String)
     case parentGuide
 
@@ -207,7 +206,6 @@ enum AppSheet: Identifiable, Hashable {
         switch self {
         case .settings:             return "settings"
         case .childProfile(let id): return "childProfile_\(id)"
-        case .downloadPacks:        return "downloadPacks"
         case .exportReport(let id): return "exportReport_\(id)"
         case .parentGuide:          return "parentGuide"
         }
@@ -530,8 +528,6 @@ struct AppCoordinatorView: View {
             SettingsView()
         case .childProfile(let id):
             Text("Профиль ребёнка \(id)")
-        case .downloadPacks:
-            Text("Загрузка контента")
         case .exportReport(let id):
             Text("Экспорт отчёта \(id)")
         case .parentGuide:
