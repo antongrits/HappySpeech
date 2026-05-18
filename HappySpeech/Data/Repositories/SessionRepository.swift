@@ -125,6 +125,7 @@ public final class LiveSessionRepository: SessionRepository, @unchecked Sendable
                 attempt.id = a.id
                 attempt.word = a.word
                 attempt.audioLocalPath = a.audioLocalPath
+                attempt.audioStoragePath = a.audioStoragePath
                 attempt.asrTranscript = a.asrTranscript
                 attempt.asrScore = a.asrScore
                 attempt.pronunciationScore = a.pronunciationScore
