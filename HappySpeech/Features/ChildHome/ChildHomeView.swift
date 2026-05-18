@@ -1025,6 +1025,36 @@ extension ChildHomeView {
         ) {
             router?.routeToSoundTrafficLight(childId: childId)
         }
+
+        // v29 Фаза 8 Ф.12 — Phonemic Listening «Слушай внимательно».
+        ChildHomeV25EntryCard(
+            titleKey: "phonemicListening.entry.title",
+            hintKey: "phonemicListening.entry.hint",
+            iconName: "ear.fill",
+            accent: ColorTokens.Brand.lilac
+        ) {
+            router?.routeToPhonemicListening(childId: childId)
+        }
+
+        // v29 Фаза 8 Ф.6 — Speech Tempo «Темп-дорожка».
+        ChildHomeV25EntryCard(
+            titleKey: "speechTempo.entry.title",
+            hintKey: "speechTempo.entry.hint",
+            iconName: "metronome.fill",
+            accent: ColorTokens.Brand.rose
+        ) {
+            router?.routeToSpeechTempo(childId: childId)
+        }
+
+        // v29 Фаза 8 Ф.10 — Breathe And Speak «Дыши и говори».
+        ChildHomeV25EntryCard(
+            titleKey: "breatheAndSpeak.entry.title",
+            hintKey: "breatheAndSpeak.entry.hint",
+            iconName: "wind",
+            accent: ColorTokens.Brand.mint
+        ) {
+            router?.routeToBreatheAndSpeak(childId: childId)
+        }
     }
 }
 

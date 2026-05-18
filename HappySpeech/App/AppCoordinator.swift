@@ -72,6 +72,10 @@ enum AppRoute: Hashable {
     case plainProgress(childId: String)
     case parentGuide(childId: String)
     case soundTrafficLight(childId: String)
+    // v29 Фаза 8: новые функции (Волна 2)
+    case phonemicListening(childId: String)
+    case speechTempo(childId: String)
+    case breatheAndSpeak(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -536,6 +540,20 @@ struct AppCoordinatorView: View {
         case .soundTrafficLight(let childId):
             SoundTrafficLightView(childId: childId)
                 .environment(\.circuitContext, .kid)
+
+        // MARK: - v29 Фаза 8: Волна 2
+
+        case .phonemicListening(let childId):
+            PhonemicListeningView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .speechTempo(let childId):
+            SpeechTempoView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .breatheAndSpeak(let childId):
+            BreatheAndSpeakView(childId: childId)
+                .environment(\.circuitContext, .kid)
         }
     }
 
@@ -801,6 +819,12 @@ extension AppCoordinatorView {
             return .parentGuide(childId: previewChild)
         case "soundTrafficLight":
             return .soundTrafficLight(childId: previewChild)
+        case "phonemicListening":
+            return .phonemicListening(childId: previewChild)
+        case "speechTempo":
+            return .speechTempo(childId: previewChild)
+        case "breatheAndSpeak":
+            return .breatheAndSpeak(childId: previewChild)
         case "culturalContent":
             return .culturalContent(childId: previewChild)
         case "pronunciationLeaderboard":

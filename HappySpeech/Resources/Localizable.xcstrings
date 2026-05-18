@@ -47220,6 +47220,1183 @@
           }
         }
       }
+    },
+    "phonemicListening.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слушай внимательно"
+          }
+        }
+      }
+    },
+    "phonemicListening.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слушай внимательно"
+          }
+        }
+      }
+    },
+    "phonemicListening.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Игра: где звук, сколько звуков, собери слово"
+          }
+        }
+      }
+    },
+    "phonemicListening.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готовим звуки…"
+          }
+        }
+      }
+    },
+    "phonemicListening.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть игру"
+          }
+        }
+      }
+    },
+    "phonemicListening.progress": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "задание %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "phonemicListening.round.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ Слово: %2$@"
+          }
+        }
+      }
+    },
+    "phonemicListening.prompt.position": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Где спрятался звук «%@»?"
+          }
+        }
+      }
+    },
+    "phonemicListening.prompt.count": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сколько звуков в слове?"
+          }
+        }
+      }
+    },
+    "phonemicListening.prompt.synthesis": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Какое слово получится из этих звуков?"
+          }
+        }
+      }
+    },
+    "phonemicListening.position.start": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В начале"
+          }
+        }
+      }
+    },
+    "phonemicListening.position.middle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В середине"
+          }
+        }
+      }
+    },
+    "phonemicListening.position.end": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В конце"
+          }
+        }
+      }
+    },
+    "phonemicListening.option.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выбери этот ответ"
+          }
+        }
+      }
+    },
+    "phonemicListening.feedback.correct": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Верно! Молодец"
+          }
+        }
+      }
+    },
+    "phonemicListening.feedback.tryAgain": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Послушаем ещё разок"
+          }
+        }
+      }
+    },
+    "phonemicListening.summary.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Игра завершена"
+          }
+        }
+      }
+    },
+    "phonemicListening.summary.score": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Правильно: %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "phonemicListening.summary.again": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сыграть ещё"
+          }
+        }
+      }
+    },
+    "phonemicListening.summary.again.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать новую игру со звуками"
+          }
+        }
+      }
+    },
+    "phonemicListening.summary.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        }
+      }
+    },
+    "phonemicListening.encourage.great": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "У тебя отличный звуковой слух!"
+          }
+        }
+      }
+    },
+    "phonemicListening.encourage.good": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хорошо получается — слышишь звуки всё лучше."
+          }
+        }
+      }
+    },
+    "phonemicListening.encourage.keepGoing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуки — это интересно. Продолжай слушать!"
+          }
+        }
+      }
+    },
+    "speechTempo.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Темп-дорожка"
+          }
+        }
+      }
+    },
+    "speechTempo.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Темп-дорожка"
+          }
+        }
+      }
+    },
+    "speechTempo.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Игра: веди машинку ровно, отбивай слоги"
+          }
+        }
+      }
+    },
+    "speechTempo.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заводим машинку…"
+          }
+        }
+      }
+    },
+    "speechTempo.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть игру"
+          }
+        }
+      }
+    },
+    "speechTempo.instruction": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Говори чистоговорку по слогам и нажимай кнопку на каждый слог — ровно, не спеша."
+          }
+        }
+      }
+    },
+    "speechTempo.progress": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "дорожка %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "speechTempo.rhyme.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорка: %@"
+          }
+        }
+      }
+    },
+    "speechTempo.road.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дорожка с машинкой Ляли"
+          }
+        }
+      }
+    },
+    "speechTempo.drive.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кнопка слога"
+          }
+        }
+      }
+    },
+    "speechTempo.drive.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажимай на каждый слог чистоговорки"
+          }
+        }
+      }
+    },
+    "speechTempo.drive.ready": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        }
+      }
+    },
+    "speechTempo.finish": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорка сказана"
+          }
+        }
+      }
+    },
+    "speechTempo.finish.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завершить эту дорожку и узнать, ровно ли получилось"
+          }
+        }
+      }
+    },
+    "speechTempo.rating.smooth": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ровно! Машинка едет плавно"
+          }
+        }
+      }
+    },
+    "speechTempo.rating.slightlyUneven": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почти ровно — машинка чуть подпрыгнула"
+          }
+        }
+      }
+    },
+    "speechTempo.rating.uneven": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Попробуй ещё спокойнее и ровнее"
+          }
+        }
+      }
+    },
+    "speechTempo.summary.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дорожка пройдена"
+          }
+        }
+      }
+    },
+    "speechTempo.summary.score": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ровных дорожек: %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "speechTempo.summary.again": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проехать ещё"
+          }
+        }
+      }
+    },
+    "speechTempo.summary.again.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать новые дорожки"
+          }
+        }
+      }
+    },
+    "speechTempo.summary.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        }
+      }
+    },
+    "speechTempo.encourage.great": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Твоя речь звучит ровно и красиво!"
+          }
+        }
+      }
+    },
+    "speechTempo.encourage.good": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Получается ровнее — продолжай в спокойном темпе."
+          }
+        }
+      }
+    },
+    "speechTempo.encourage.keepGoing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не спеши — говори медленно и ровно, и всё получится."
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дыши и говори"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дыши и говори"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зарядка: гимнастика для язычка и дыхания"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готовим зарядку…"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть зарядку"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.step": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "упражнение %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.step.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@. %2$@. %3$@"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.kind.articulation": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упражнение для язычка"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.kind.breathing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дыхательное упражнение"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.timer.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Счётчик удержания"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.start": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать упражнение"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.start.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запустить счётчик удержания позы"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.holding": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Держим… дыши спокойно"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.next": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дальше"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.next.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Перейти к следующему упражнению"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.summary.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зарядка завершена"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.summary.encouragement": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Молодец! Язычок размялся и готов к красивым звукам."
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.summary.again": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Повторить зарядку"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.summary.again.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать комплекс заново"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.summary.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.complex.r.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Комплекс для звука Р"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.complex.s.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Комплекс для звука С"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.complex.sh.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Комплекс для звука Ш"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.complex.l.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Комплекс для звука Л"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.malyar.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Маляр"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.malyar.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открой ротик и «покрась» язычком нёбо вперёд-назад."
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.gribok.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Грибок"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.gribok.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Присоси широкий язычок к нёбу и подержи, как шляпку грибка."
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.loshadka.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лошадка"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.loshadka.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поцокай язычком, будто лошадка скачет по дорожке."
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.baraban.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Барабанщик"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.baraban.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Стучи кончиком язычка за верхними зубками: д-д-д."
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.motorchik.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Моторчик"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.motorchik.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заведи моторчик: дрожи язычком за зубками — дррр."
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.veter.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ветерок"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.veter.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сделай долгий плавный выдох ртом, как тёплый ветерок."
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.zaborchik.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заборчик"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.zaborchik.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Улыбнись и покажи сомкнутые зубки-заборчик."
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.lopatka.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лопаточка"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.lopatka.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Положи широкий спокойный язычок на нижнюю губу."
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.gorka.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Горка"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.gorka.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Упри кончик язычка в нижние зубки, спинку выгни горкой."
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.pochistim.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почистим зубки"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.pochistim.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кончиком язычка «почисти» нижние зубки изнутри."
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.svecha.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Задуй свечу"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.svecha.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сделай ровный долгий выдох, будто задуваешь свечку."
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.chashechka.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чашечка"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.chashechka.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подними края язычка вверх — получится чашечка."
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.vkusnoe.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вкусное варенье"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.vkusnoe.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Облизни широким язычком верхнюю губку сверху вниз."
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.listik.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Листик летит"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.listik.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Плавно подуй — пусть лёгкий листик долго парит в воздухе."
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.igolochka.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Иголочка"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.igolochka.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вытяни узкий острый язычок вперёд, как тонкую иголочку."
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.parohod.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пароход гудит"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.parohod.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прикуси кончик язычка и протяжно гуди: ы-ы-ы."
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.korablik.name": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Кораблик плывёт"
+          }
+        }
+      }
+    },
+    "breatheAndSpeak.ex.korablik.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дуй ровно и долго — пусть кораблик плывёт по воде."
+          }
+        }
+      }
     }
   },
   "version": "1.0"

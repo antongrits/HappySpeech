@@ -18,6 +18,9 @@ protocol ChildHomeRoutingLogic {
     func routeToArticulationGym()
     func routeToWordBank(childId: String)
     func routeToGrammarGame(childId: String)
+    func routeToPhonemicListening(childId: String)
+    func routeToSpeechTempo(childId: String)
+    func routeToBreatheAndSpeak(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -104,5 +107,20 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     /// v29 Фаза 8 Ф.5 — SoundTrafficLight «Звуковой светофор».
     func routeToSoundTrafficLight(childId: String) {
         coordinator?.navigate(to: .soundTrafficLight(childId: childId))
+    }
+
+    /// v29 Фаза 8 Ф.12 — PhonemicListening «Слушай внимательно».
+    func routeToPhonemicListening(childId: String) {
+        coordinator?.navigate(to: .phonemicListening(childId: childId))
+    }
+
+    /// v29 Фаза 8 Ф.6 — SpeechTempo «Темп-дорожка».
+    func routeToSpeechTempo(childId: String) {
+        coordinator?.navigate(to: .speechTempo(childId: childId))
+    }
+
+    /// v29 Фаза 8 Ф.10 — BreatheAndSpeak «Дыши и говори».
+    func routeToBreatheAndSpeak(childId: String) {
+        coordinator?.navigate(to: .breatheAndSpeak(childId: childId))
     }
 }
