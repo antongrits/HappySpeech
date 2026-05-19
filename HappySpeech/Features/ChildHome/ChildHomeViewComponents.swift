@@ -202,6 +202,9 @@ struct ChildHomeStreakBadge: View {
                 Text("\(streak)")
                     .font(TypographyTokens.caption(14).weight(.bold))
                     .foregroundStyle(ColorTokens.Semantic.warning)
+                    .monospacedDigit()
+                    .contentTransition(.numericText(value: Double(streak)))
+                    .animation(reduceMotion ? nil : MotionTokens.snappy, value: streak)
             }
             .padding(.horizontal, SpacingTokens.sp3)
             .padding(.vertical, SpacingTokens.sp2)

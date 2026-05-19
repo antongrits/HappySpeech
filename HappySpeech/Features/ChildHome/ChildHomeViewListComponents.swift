@@ -226,6 +226,7 @@ struct ChildHomeStreakBanner: View {
                 .font(TypographyTokens.title(28).weight(.bold))
                 .foregroundStyle(ColorTokens.Semantic.warning)
                 .rotationEffect(.degrees(flameRotation))
+                .symbolEffect(.bounce, value: streak)
                 .accessibilityHidden(true)
         }
     }
