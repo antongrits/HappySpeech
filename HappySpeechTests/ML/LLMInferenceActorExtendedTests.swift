@@ -168,8 +168,8 @@ final class LLMInferenceActorExtendedTests: XCTestCase {
         let req1 = makeParentSummaryRequest()
         let req2 = makeParentSummaryRequest()
 
-        try? await actor.generateParentSummary(req1)
-        try? await actor.generateParentSummary(req2)
+        _ = try? await actor.generateParentSummary(req1)
+        _ = try? await actor.generateParentSummary(req2)
     }
 
     // MARK: - 7. modelId: содержит mlx-community
@@ -210,7 +210,7 @@ final class LLMInferenceActorExtendedTests: XCTestCase {
         await withTaskGroup(of: Void.self) { group in
             for _ in 0..<5 {
                 group.addTask { [actor] in
-                    try? await actor.generateParentSummary(req)
+                    _ = try? await actor.generateParentSummary(req)
                 }
             }
         }

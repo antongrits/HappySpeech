@@ -131,7 +131,7 @@ final class LLMInferenceActorTests: XCTestCase {
                         childName: "Ваня", targetSound: "С", stage: "syllable",
                         totalAttempts: 5, correctAttempts: 4, errorWords: [], sessionDurationSec: 120
                     )
-                    try? await actor.generateParentSummary(request)
+                    _ = try? await actor.generateParentSummary(request)
                 }
             }
         }
