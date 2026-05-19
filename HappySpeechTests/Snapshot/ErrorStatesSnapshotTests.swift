@@ -132,15 +132,7 @@ final class ErrorStatesSnapshotTests: XCTestCase {
     // MARK: - Rendering engine
 
     private func render<V: View>(_ view: V, size: CGSize, style: UIUserInterfaceStyle) -> UIImage {
-        let sized = view.frame(width: size.width, height: size.height)
-        let host = UIHostingController(rootView: sized)
-        host.overrideUserInterfaceStyle = style
-        host.view.frame = CGRect(origin: .zero, size: size)
-        host.view.layoutIfNeeded()
-        let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { _ in
-            host.view.drawHierarchy(in: host.view.bounds, afterScreenUpdates: true)
-        }
+            SnapshotTestHelper.renderView(view, size: size, style: style)
     }
 
     private func snapshotURL(screen: String, device: String, appearance: String) -> URL {

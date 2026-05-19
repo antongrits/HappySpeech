@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 import UIKit
 import XCTest
 
@@ -201,5 +202,65 @@ enum SnapshotTestHelper {
                    label, diffRatio * 100, maxDiffRatio * 100),
             file: file, line: line
         )
+    }
+
+    // MARK: - View rendering
+
+    /// Рендерит SwiftUI-view в `UIImage` фиксированного размера.
+    ///
+    /// КРИТИЧНО: host-view ПРИКРЕПЛЯЕТСЯ к реальному on-screen `UIWindow`.
+    /// На iOS 26 / Xcode 26 `UIView.drawHierarchy(in:afterScreenUpdates:true)`
+    /// для view вне иерархии окна рендерит ПУСТОЙ кадр — все snapshot-тесты
+    /// тогда дают 100% diff. Прикрепление к key-window и `layer.render(in:)`
+    /// (вместо `drawHierarchy`) даёт детерминированный полноценный кадр без
+    /// зависимости от композитора экрана.
+    ///
+    /// - Parameters:
+    ///   - view: SwiftUI-view для снимка.
+    ///   - size: размер кадра в поинтах.
+    ///   - style: light / dark.
+    /// - Returns: отрендеренный `UIImage` (scale = scale экрана симулятора).
+    @MainActor
+    static func renderView<V: View>(
+        _ view: V,
+        size: CGSize,
+        style: UIUserInterfaceStyle
+    ) -> UIImage {
+        let sized = view.frame(width: size.width, height: size.height)
+        let host = UIHostingController(rootView: sized)
+        host.overrideUserInterfaceStyle = style
+        host.view.frame = CGRect(origin: .zero, size: size)
+        host.view.backgroundColor = host.view.backgroundColor
+
+        // Прикрепляем к реальному окну — без этого drawHierarchy/рендер слоя
+        // на iOS 26 даёт пустой кадр.
+        let window = UIWindow(frame: CGRect(origin: .zero, size: size))
+        window.overrideUserInterfaceStyle = style
+        window.rootViewController = host
+        window.isHidden = false
+        window.makeKeyAndVisible()
+
+        // Даём SwiftUI выполнить layout + первичную отрисовку.
+        host.view.setNeedsLayout()
+        host.view.layoutIfNeeded()
+        settleMainRunLoop(iterations: 6, interval: 0.02)
+
+        // Scale зафиксирован на 2.0: все эталонные PNG в `__Snapshots__`
+        // записаны при scale 2 (напр. iPhone 17 Pro 402×874pt → 804×1748px).
+        // `window.screen.scale` на @3x-симуляторе дал бы 1206×2622px и 100%
+        // diff из-за несовпадения размеров. Фиксированный scale делает снимок
+        // детерминированным независимо от модели симулятора.
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 2.0
+        let renderer = UIGraphicsImageRenderer(size: size, format: format)
+        let image = renderer.image { context in
+            host.view.layer.render(in: context.cgContext)
+        }
+
+        // Отвязываем окно — иначе оно удерживается до конца процесса.
+        window.isHidden = true
+        window.rootViewController = nil
+
+        return image
     }
 }

@@ -59,18 +59,8 @@ final class HSMascotViewSnapshotTests: XCTestCase {
 
     private func render<V: View>(_ view: V, style: UIUserInterfaceStyle) -> UIImage {
         let hosted = view
-            .frame(width: renderSize.width, height: renderSize.height)
             .background(style == .dark ? Color.black : Color.white)
-
-        let controller = UIHostingController(rootView: hosted)
-        controller.overrideUserInterfaceStyle = style
-        controller.view.frame = CGRect(origin: .zero, size: renderSize)
-        controller.view.layoutIfNeeded()
-
-        let renderer = UIGraphicsImageRenderer(size: renderSize)
-        return renderer.image { _ in
-            controller.view.drawHierarchy(in: controller.view.bounds, afterScreenUpdates: true)
-        }
+        return SnapshotTestHelper.renderView(hosted, size: renderSize, style: style)
     }
 
     private func referenceURL(name: String, appearance: String) -> URL {

@@ -183,21 +183,8 @@ final class DynamicTypeSnapshotTests: XCTestCase {
         contentSize: UIContentSizeCategory
     ) -> UIImage {
         let sized = view
-            .frame(width: size.width, height: size.height)
             .environment(\.sizeCategory, ContentSizeCategory(contentSize) ?? .large)
-        let host = UIHostingController(rootView: sized)
-        host.overrideUserInterfaceStyle = style
-        host.view.frame = CGRect(origin: .zero, size: size)
-        host.view.layoutIfNeeded()
-
-        // Даём SwiftUI выполнить отложенные `.task` (VIP-bootstrap), затем повторный layout.
-        SnapshotTestHelper.settleMainRunLoop()
-        host.view.layoutIfNeeded()
-
-        let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { _ in
-            host.view.drawHierarchy(in: host.view.bounds, afterScreenUpdates: true)
-        }
+        return SnapshotTestHelper.renderView(sized, size: size, style: style)
     }
 
     // MARK: - Reference storage
