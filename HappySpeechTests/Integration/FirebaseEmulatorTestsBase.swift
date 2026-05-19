@@ -32,6 +32,10 @@ class FirebaseEmulatorTestsBase: XCTestCase {
 
     override func setUp() async throws {
         try await super.setUp()
+        // LiveSyncService / другие Live-сервисы дёргают Firestore.firestore(),
+        // который требует сконфигурированного FirebaseApp. ensureConfigured()
+        // также направляет Firestore на локальный эмулятор, если он доступен.
+        FirebaseTestSupport.ensureConfigured()
         mockAuthService = MockAuthService()
         mockSyncService = MockSyncService()
         realmActor = RealmActor()
