@@ -620,14 +620,15 @@ struct SessionCompleteView: View {
     // MARK: - Background
 
     // v27 visual modernization (#2) — celebration screen получает фон
-    // HSMeshGradientBackground(palette: .rewards, animated: false): золотое
-    // сияние под reward-reveal. Static (animated: false), т.к. поверх —
-    // конфетти и stage-анимации; статика бережёт кадры.
+    // HSMeshGradientBackground(palette: .rewards): золотое сияние под
+    // reward-reveal. v30: control-points медленно дрейфуют (TimelineView),
+    // поэтому золотой фон «дышит» вместе с reward-reveal. Под Reduce Motion
+    // дрейф автоматически замораживается.
     @ViewBuilder
     private var backgroundLayer: some View {
         ZStack {
             ColorTokens.Kid.bg
-            HSMeshGradientBackground(palette: .rewards, animated: false)
+            HSMeshGradientBackground(palette: .rewards)
                 .opacity(colorScheme == .dark ? 0.40 : 0.78)
         }
         .accessibilityHidden(true)

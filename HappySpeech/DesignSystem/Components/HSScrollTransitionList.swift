@@ -68,6 +68,9 @@ private struct HSScrollEffectModifier: ViewModifier {
                     effect
                         .scaleEffect(1.0 - abs(phase.value) * 0.15)
                         .opacity(1.0 - abs(phase.value) * 0.5)
+                        // Off-screen tiles slightly de-saturate so the focused
+                        // content reads as the brightest layer (research #5).
+                        .saturation(1.0 - abs(phase.value) * (1.0 - MotionTokens.Scroll.saturationLow))
                 }
             case .parallax:
                 content.scrollTransition(.interactive) { effect, phase in

@@ -81,8 +81,6 @@ public struct HSMeshGradientBackground: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    @State private var t: CGFloat = 0
-
     public init(palette: Palette = .kidWarm, animated: Bool = true) {
         self.palette = palette
         self.animated = animated
@@ -98,27 +96,57 @@ public struct HSMeshGradientBackground: View {
                 fallbackLayer
             }
         }
-        .onAppear {
-            guard animated, !reduceMotion else { return }
-            withAnimation(.easeInOut(duration: 4).repeatForever(autoreverses: true)) {
-                t = 1
-            }
-        }
     }
 
     // MARK: - iOS 18 Mesh
+    //
+    // Control points drift organically along independent sine paths with
+    // prime-ratio periods, so the loop never visibly repeats (~18s feel).
+    // `TimelineView` drives a continuous phase; Reduce Motion freezes it.
 
     @available(iOS 18.0, *)
     @ViewBuilder
     private var meshLayer: some View {
-        let offset: Float = (animated && !reduceMotion) ? 0.18 : 0
-        let tF = Float(t)
-        let points: [SIMD2<Float>] = [
-            SIMD2(0, 0),                       SIMD2(0.5, 0),                     SIMD2(1, 0),
-            SIMD2(0, 0.5 - offset * tF),       SIMD2(0.5 + offset * tF, 0.5),     SIMD2(1, 0.5 + offset * tF),
-            SIMD2(0, 1),                       SIMD2(0.5, 1),                     SIMD2(1, 1)
+        if animated && !reduceMotion {
+            TimelineView(.animation) { timeline in
+                let phase = timeline.date.timeIntervalSinceReferenceDate
+                MeshGradient(
+                    width: 3, height: 3,
+                    points: driftingPoints(phase: phase),
+                    colors: palette.colors
+                )
+            }
+        } else {
+            MeshGradient(width: 3, height: 3, points: staticPoints, colors: palette.colors)
+        }
+    }
+
+    /// Nine mesh control points; the four edge-midpoints and the centre drift
+    /// on independent slow sine paths. Corners stay pinned for clean edges.
+    @available(iOS 18.0, *)
+    private func driftingPoints(phase: Double) -> [SIMD2<Float>] {
+        func drift(_ period: Double, _ amp: Float, _ seed: Double) -> Float {
+            Float(sin(phase / period + seed)) * amp
+        }
+        let tMid = SIMD2<Float>(0.5 + drift(7.3, 0.10, 0), drift(9.1, 0.05, 1.2))
+        let lMid = SIMD2<Float>(drift(8.7, 0.04, 2.0), 0.5 + drift(6.5, 0.11, 0.4))
+        let rMid = SIMD2<Float>(1 + drift(8.1, 0.04, 3.1), 0.5 + drift(7.7, 0.10, 2.6))
+        let bMid = SIMD2<Float>(0.5 + drift(9.5, 0.09, 1.8), 1 + drift(6.9, 0.05, 0.9))
+        let centre = SIMD2<Float>(0.5 + drift(11.0, 0.08, 0.6), 0.5 + drift(10.3, 0.08, 3.4))
+        return [
+            SIMD2(0, 0),  tMid,    SIMD2(1, 0),
+            lMid,         centre,  rMid,
+            SIMD2(0, 1),  bMid,    SIMD2(1, 1)
         ]
-        MeshGradient(width: 3, height: 3, points: points, colors: palette.colors)
+    }
+
+    @available(iOS 18.0, *)
+    private var staticPoints: [SIMD2<Float>] {
+        [
+            SIMD2(0, 0),   SIMD2(0.5, 0),   SIMD2(1, 0),
+            SIMD2(0, 0.5), SIMD2(0.5, 0.5), SIMD2(1, 0.5),
+            SIMD2(0, 1),   SIMD2(0.5, 1),   SIMD2(1, 1)
+        ]
     }
 
     // MARK: - iOS 17 Fallback
