@@ -1,4 +1,5 @@
 import Foundation
+import OSLog
 
 // MARK: - ProsodyCorpus
 //
@@ -6,72 +7,26 @@ import Foundation
 //
 // Корпус коротких фраз, размеченных по типу интонации (повествование /
 // вопрос / восклицание) и привязанных к лексическим темам. Лексика —
-// частотная, возрастная (6–8 лет), короткие фразы 2–4 слова (методически
-// верно для работы над мелодикой: Лопатина). Полностью offline / on-device.
+// частотная, возрастная (6–8 лет), короткие фразы 2–5 слов (методически
+// верно для работы над мелодикой: Лопатина).
+//
+// Контент загружается из бандл-ресурса `pack_prosody.json` (~150 фраз).
+// Полностью offline / on-device.
 
 enum ProsodyCorpus {
 
+    private static let logger = Logger(
+        subsystem: "ru.happyspeech",
+        category: "Prosody.Corpus"
+    )
+
     /// Сколько раундов в одной сессии (8–12 мин, антифатиговое правило).
-    static let roundsPerSession = 9
+    static let roundsPerSession = ProsodyPackLoader.shared.roundsPerSession
 
     // MARK: - Phrases
 
-    /// Полный размеченный корпус фраз.
-    static let phrases: [ProsodyPhrase] = [
-        // Повествование — спокойный нисходящий тон.
-        .init(id: "dec-1", text: "Кошка спит на коврике.",
-              intonation: .declarative, theme: "Домашние животные"),
-        .init(id: "dec-2", text: "На улице идёт дождь.",
-              intonation: .declarative, theme: "Времена года"),
-        .init(id: "dec-3", text: "Мама готовит вкусный суп.",
-              intonation: .declarative, theme: "Семья"),
-        .init(id: "dec-4", text: "В лесу растут грибы.",
-              intonation: .declarative, theme: "Лес"),
-        .init(id: "dec-5", text: "Машина едет по дороге.",
-              intonation: .declarative, theme: "Транспорт"),
-        .init(id: "dec-6", text: "Птицы улетают на юг.",
-              intonation: .declarative, theme: "Птицы"),
-        .init(id: "dec-7", text: "Дети играют во дворе.",
-              intonation: .declarative, theme: "Семья"),
-        .init(id: "dec-8", text: "Снег покрыл всю землю.",
-              intonation: .declarative, theme: "Времена года"),
-
-        // Вопрос — восходящий тон к концу фразы.
-        .init(id: "int-1", text: "Ты любишь мороженое?",
-              intonation: .interrogative, theme: "Еда"),
-        .init(id: "int-2", text: "Где живёт медведь?",
-              intonation: .interrogative, theme: "Дикие животные"),
-        .init(id: "int-3", text: "Куда поехал автобус?",
-              intonation: .interrogative, theme: "Транспорт"),
-        .init(id: "int-4", text: "Кто стучит в дверь?",
-              intonation: .interrogative, theme: "Дом"),
-        .init(id: "int-5", text: "Почему светит солнце?",
-              intonation: .interrogative, theme: "Времена года"),
-        .init(id: "int-6", text: "Ты пойдёшь гулять?",
-              intonation: .interrogative, theme: "Семья"),
-        .init(id: "int-7", text: "Какого цвета шарик?",
-              intonation: .interrogative, theme: "Игрушки"),
-        .init(id: "int-8", text: "Что растёт в саду?",
-              intonation: .interrogative, theme: "Овощи"),
-
-        // Восклицание — эмоциональный, с усилением.
-        .init(id: "exc-1", text: "Какой красивый закат!",
-              intonation: .exclamatory, theme: "Времена года"),
-        .init(id: "exc-2", text: "Ура, наступило лето!",
-              intonation: .exclamatory, theme: "Времена года"),
-        .init(id: "exc-3", text: "Как здорово ты прыгаешь!",
-              intonation: .exclamatory, theme: "Спорт"),
-        .init(id: "exc-4", text: "Смотри, какая радуга!",
-              intonation: .exclamatory, theme: "Времена года"),
-        .init(id: "exc-5", text: "Ах, как вкусно пахнет!",
-              intonation: .exclamatory, theme: "Еда"),
-        .init(id: "exc-6", text: "Какой огромный слон!",
-              intonation: .exclamatory, theme: "Дикие животные"),
-        .init(id: "exc-7", text: "Ой, как высоко летит!",
-              intonation: .exclamatory, theme: "Птицы"),
-        .init(id: "exc-8", text: "Как весело кататься с горки!",
-              intonation: .exclamatory, theme: "Игры")
-    ]
+    /// Полный размеченный корпус фраз (из `pack_prosody.json`).
+    static let phrases: [ProsodyPhrase] = ProsodyPackLoader.shared.phrases
 
     // MARK: - Queries
 
@@ -89,4 +44,88 @@ enum ProsodyCorpus {
         }
         return pool
     }
+}
+
+// MARK: - ProsodyPackLoader
+//
+// Разбирает `pack_prosody.json` один раз при старте. При отказе бандла —
+// возвращает безопасный минимальный набор, чтобы модуль оставался рабочим.
+
+struct ProsodyPackLoader {
+
+    static let shared = ProsodyPackLoader()
+
+    let roundsPerSession: Int
+    let phrases: [ProsodyPhrase]
+
+    private static let logger = Logger(
+        subsystem: "ru.happyspeech",
+        category: "Prosody.PackLoader"
+    )
+
+    private struct Pack: Decodable {
+        let roundsPerSession: Int
+        let phrases: [PhraseDTO]
+    }
+
+    private struct PhraseDTO: Decodable {
+        let id: String
+        let text: String
+        let intonation: String
+        let theme: String
+    }
+
+    private init() {
+        guard let url = Bundle.main.url(forResource: "pack_prosody", withExtension: "json") else {
+            Self.logger.error("pack_prosody.json not found in bundle — using fallback")
+            roundsPerSession = 9
+            phrases = ProsodyPackLoader.fallbackPhrases
+            return
+        }
+        do {
+            let data = try Data(contentsOf: url)
+            let pack = try JSONDecoder().decode(Pack.self, from: data)
+            roundsPerSession = pack.roundsPerSession
+            phrases = pack.phrases.compactMap { dto in
+                guard let intonation = IntonationType(rawValue: dto.intonation) else {
+                    Self.logger.error("Unknown intonation: \(dto.intonation, privacy: .public)")
+                    return nil
+                }
+                return ProsodyPhrase(
+                    id: dto.id,
+                    text: dto.text,
+                    intonation: intonation,
+                    theme: dto.theme
+                )
+            }
+        } catch {
+            Self.logger.error(
+                "pack_prosody.json decode error: \(error.localizedDescription, privacy: .public)"
+            )
+            roundsPerSession = 9
+            phrases = ProsodyPackLoader.fallbackPhrases
+        }
+    }
+
+    /// Минимальный безопасный набор на случай отказа бандла.
+    private static let fallbackPhrases: [ProsodyPhrase] = [
+        .init(id: "dec-1", text: "Кошка спит на коврике.",
+              intonation: .declarative, theme: "Домашние животные"),
+        .init(id: "dec-2", text: "На улице идёт дождь.",
+              intonation: .declarative, theme: "Времена года"),
+        .init(id: "dec-3", text: "Мама готовит вкусный суп.",
+              intonation: .declarative, theme: "Семья"),
+        .init(id: "int-1", text: "Ты любишь мороженое?",
+              intonation: .interrogative, theme: "Еда"),
+        .init(id: "int-2", text: "Где живёт медведь?",
+              intonation: .interrogative, theme: "Дикие животные"),
+        .init(id: "int-3", text: "Куда поехал автобус?",
+              intonation: .interrogative, theme: "Транспорт"),
+        .init(id: "exc-1", text: "Какой красивый закат!",
+              intonation: .exclamatory, theme: "Времена года"),
+        .init(id: "exc-2", text: "Ура, наступило лето!",
+              intonation: .exclamatory, theme: "Времена года"),
+        .init(id: "exc-3", text: "Смотри, какая радуга!",
+              intonation: .exclamatory, theme: "Времена года")
+    ]
 }
