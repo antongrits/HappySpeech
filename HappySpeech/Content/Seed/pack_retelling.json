@@ -1,0 +1,189 @@
+{
+  "id": "pack_retelling_v1",
+  "soundTarget": "пересказ",
+  "group": "нарративный",
+  "version": 1,
+  "description": "v29 Функция 2 «Расскажи по-настоящему». Короткие тексты с серией кадров-предложений и разметкой смысловых звеньев (hero/place/problem/solution). Тексты возрастные (6-8 лет), частотная лексика, простой синтаксис, причинно-следственная структура (Ткаченко, Нищева).",
+  "stories": [
+    { "id": "cat-and-bird", "title": "Кот и птичка", "frames": [
+      { "id": "cb-1", "sentence": "Жил во дворе пушистый кот Мурзик.", "link": "hero", "symbolName": "cat.fill" },
+      { "id": "cb-2", "sentence": "Он гулял по зелёному саду.", "link": "place", "symbolName": "tree.fill" },
+      { "id": "cb-3", "sentence": "Вдруг кот увидел птенчика, который выпал из гнезда.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "cb-4", "sentence": "Мурзик осторожно отнёс птенчика обратно в гнездо.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "lost-mitten", "title": "Потерянная варежка", "frames": [
+      { "id": "lm-1", "sentence": "Маленькая девочка Катя пошла гулять зимой.", "link": "hero", "symbolName": "person.fill" },
+      { "id": "lm-2", "sentence": "Она каталась с горки в снежном парке.", "link": "place", "symbolName": "snowflake" },
+      { "id": "lm-3", "sentence": "Дома Катя заметила, что потеряла одну варежку.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "lm-4", "sentence": "Мама помогла связать новую тёплую варежку.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "helpful-rain", "title": "Добрый дождик", "frames": [
+      { "id": "hr-1", "sentence": "На грядке рос маленький подсолнух.", "link": "hero", "symbolName": "sun.max.fill" },
+      { "id": "hr-2", "sentence": "Он жил в саду у бабушки.", "link": "place", "symbolName": "house.fill" },
+      { "id": "hr-3", "sentence": "Стояла жара, и подсолнух очень хотел пить.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "hr-4", "sentence": "Пришла туча, и тёплый дождик напоил подсолнух.", "link": "solution", "symbolName": "cloud.rain.fill" } ] },
+    { "id": "snowman-friend", "title": "Снеговик-друг", "frames": [
+      { "id": "sf-1", "sentence": "Брат и сестра слепили во дворе снеговика.", "link": "hero", "symbolName": "person.2.fill" },
+      { "id": "sf-2", "sentence": "Снеговик стоял возле большого дома.", "link": "place", "symbolName": "house.fill" },
+      { "id": "sf-3", "sentence": "Выглянуло солнце, и снеговик начал таять.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "sf-4", "sentence": "Дети перенесли снеговика в тень под деревом.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "brave-hedgehog", "title": "Смелый ёжик", "frames": [
+      { "id": "bh-1", "sentence": "В лесу жил колючий ёжик Пых.", "link": "hero", "symbolName": "hare.fill" },
+      { "id": "bh-2", "sentence": "Его норка была под старым пеньком.", "link": "place", "symbolName": "tree.fill" },
+      { "id": "bh-3", "sentence": "Однажды ёжик не смог найти дорогу домой.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "bh-4", "sentence": "Добрая белочка показала ёжику тропинку к норке.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "garden-harvest", "title": "Урожай в огороде", "frames": [
+      { "id": "gh-1", "sentence": "Дедушка посадил весной много овощей.", "link": "hero", "symbolName": "person.fill" },
+      { "id": "gh-2", "sentence": "Грядки были в большом огороде за домом.", "link": "place", "symbolName": "leaf.fill" },
+      { "id": "gh-3", "sentence": "Овощей выросло так много, что дедушка не успевал собрать.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "gh-4", "sentence": "Вся семья вместе собрала богатый урожай.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "thirsty-puppy", "title": "Щенок и миска", "frames": [
+      { "id": "tp-1", "sentence": "У Миши жил весёлый щенок Дружок.", "link": "hero", "symbolName": "dog.fill" },
+      { "id": "tp-2", "sentence": "Дружок целый день играл во дворе.", "link": "place", "symbolName": "sun.max.fill" },
+      { "id": "tp-3", "sentence": "После игры щенок захотел пить, но миска была пустой.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "tp-4", "sentence": "Миша налил Дружку свежей воды, и щенок напился.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "little-cloud", "title": "Облачко и ветер", "frames": [
+      { "id": "lc-1", "sentence": "По небу плыло маленькое белое облачко.", "link": "hero", "symbolName": "cloud.fill" },
+      { "id": "lc-2", "sentence": "Оно летело высоко над зелёным лугом.", "link": "place", "symbolName": "leaf.fill" },
+      { "id": "lc-3", "sentence": "Подул сильный ветер, и облачко заблудилось.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "lc-4", "sentence": "Солнышко согрело облачко и показало дорогу домой.", "link": "solution", "symbolName": "sun.max.fill" } ] },
+    { "id": "squirrel-nuts", "title": "Запасливая белка", "frames": [
+      { "id": "sn-1", "sentence": "Рыжая белка готовилась к зиме.", "link": "hero", "symbolName": "hare.fill" },
+      { "id": "sn-2", "sentence": "Она жила в дупле высокой сосны.", "link": "place", "symbolName": "tree.fill" },
+      { "id": "sn-3", "sentence": "Белка забыла, куда спрятала орешки.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "sn-4", "sentence": "Дятел помог белке найти все запасы.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "kitten-tree", "title": "Котёнок на дереве", "frames": [
+      { "id": "kt-1", "sentence": "Маленький котёнок Пушок любил лазить.", "link": "hero", "symbolName": "cat.fill" },
+      { "id": "kt-2", "sentence": "Он играл в саду возле старой берёзы.", "link": "place", "symbolName": "tree.fill" },
+      { "id": "kt-3", "sentence": "Котёнок забрался высоко и не мог слезть.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "kt-4", "sentence": "Папа принёс лестницу и снял Пушка с дерева.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "ant-leaf", "title": "Муравей и листок", "frames": [
+      { "id": "al-1", "sentence": "Трудолюбивый муравей нёс домой зёрнышко.", "link": "hero", "symbolName": "ant.fill" },
+      { "id": "al-2", "sentence": "Он шёл по узкой лесной тропинке.", "link": "place", "symbolName": "leaf.fill" },
+      { "id": "al-3", "sentence": "На пути появился широкий ручей.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "al-4", "sentence": "Муравей переплыл ручей на упавшем листке.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "boy-and-ball", "title": "Мяч в луже", "frames": [
+      { "id": "bb-1", "sentence": "Мальчик Петя играл новым мячом.", "link": "hero", "symbolName": "person.fill" },
+      { "id": "bb-2", "sentence": "Он бегал по детской площадке.", "link": "place", "symbolName": "figure.play" },
+      { "id": "bb-3", "sentence": "Мяч укатился прямо в большую лужу.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "bb-4", "sentence": "Петя достал мяч палкой и вытер его насухо.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "hungry-sparrow", "title": "Голодный воробей", "frames": [
+      { "id": "hs-1", "sentence": "Зимой по двору прыгал маленький воробей.", "link": "hero", "symbolName": "bird.fill" },
+      { "id": "hs-2", "sentence": "Вокруг лежал глубокий белый снег.", "link": "place", "symbolName": "snowflake" },
+      { "id": "hs-3", "sentence": "Воробей был очень голоден и не находил еды.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "hs-4", "sentence": "Дети повесили кормушку и насыпали туда зёрна.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "lost-puppy", "title": "Потерявшийся щенок", "frames": [
+      { "id": "lp-1", "sentence": "Маленький щенок гулял со своим хозяином.", "link": "hero", "symbolName": "dog.fill" },
+      { "id": "lp-2", "sentence": "Они шли по шумной городской улице.", "link": "place", "symbolName": "building.2.fill" },
+      { "id": "lp-3", "sentence": "Щенок засмотрелся на голубей и потерял хозяина.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "lp-4", "sentence": "Добрый прохожий помог щенку найти дорогу домой.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "apple-tree", "title": "Яблонька осенью", "frames": [
+      { "id": "at-1", "sentence": "В саду росла большая яблоня.", "link": "hero", "symbolName": "tree.fill" },
+      { "id": "at-2", "sentence": "Она стояла у самого забора.", "link": "place", "symbolName": "house.fill" },
+      { "id": "at-3", "sentence": "Осенью яблок стало так много, что ветки гнулись.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "at-4", "sentence": "Дети собрали яблоки в корзины и угостили друзей.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "frog-pond", "title": "Лягушонок и пруд", "frames": [
+      { "id": "fp-1", "sentence": "В пруду жил маленький зелёный лягушонок.", "link": "hero", "symbolName": "leaf.fill" },
+      { "id": "fp-2", "sentence": "Он любил сидеть на широком листе кувшинки.", "link": "place", "symbolName": "drop.fill" },
+      { "id": "fp-3", "sentence": "Однажды пруд почти высох от жары.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "fp-4", "sentence": "Прошёл дождь, и пруд снова наполнился водой.", "link": "solution", "symbolName": "cloud.rain.fill" } ] },
+    { "id": "snowdrop", "title": "Первый подснежник", "frames": [
+      { "id": "sd-1", "sentence": "Под снегом спал маленький подснежник.", "link": "hero", "symbolName": "leaf.fill" },
+      { "id": "sd-2", "sentence": "Он жил на лесной полянке.", "link": "place", "symbolName": "tree.fill" },
+      { "id": "sd-3", "sentence": "Цветку было холодно под толстым снегом.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "sd-4", "sentence": "Весеннее солнце растопило снег, и подснежник расцвёл.", "link": "solution", "symbolName": "sun.max.fill" } ] },
+    { "id": "puppy-and-bone", "title": "Косточка для друга", "frames": [
+      { "id": "pb-1", "sentence": "У щенка Бобика была вкусная косточка.", "link": "hero", "symbolName": "dog.fill" },
+      { "id": "pb-2", "sentence": "Он грыз её на тёплом крыльце.", "link": "place", "symbolName": "house.fill" },
+      { "id": "pb-3", "sentence": "К Бобику подошёл голодный котёнок.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "pb-4", "sentence": "Бобик поделился косточкой, и они стали друзьями.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "windy-day", "title": "Шапка на ветру", "frames": [
+      { "id": "wd-1", "sentence": "Девочка Лена шла домой из садика.", "link": "hero", "symbolName": "person.fill" },
+      { "id": "wd-2", "sentence": "Она шагала по осенней аллее.", "link": "place", "symbolName": "leaf.fill" },
+      { "id": "wd-3", "sentence": "Сильный ветер сорвал с Лены шапку.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "wd-4", "sentence": "Мама догнала шапку и надела её на дочку.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "bear-honey", "title": "Медвежонок и мёд", "frames": [
+      { "id": "bm-1", "sentence": "Маленький медвежонок очень любил мёд.", "link": "hero", "symbolName": "pawprint.fill" },
+      { "id": "bm-2", "sentence": "Он гулял по солнечной лесной поляне.", "link": "place", "symbolName": "tree.fill" },
+      { "id": "bm-3", "sentence": "Медвежонок не мог достать мёд с высокого дерева.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "bm-4", "sentence": "Мама-медведица подсадила малыша к дуплу.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "sailboat", "title": "Кораблик в ручье", "frames": [
+      { "id": "sb-1", "sentence": "Мальчики пускали бумажный кораблик.", "link": "hero", "symbolName": "sailboat.fill" },
+      { "id": "sb-2", "sentence": "Кораблик плыл по весеннему ручейку.", "link": "place", "symbolName": "drop.fill" },
+      { "id": "sb-3", "sentence": "Кораблик застрял между двумя камнями.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "sb-4", "sentence": "Дети длинной веткой освободили кораблик.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "lonely-fir", "title": "Ёлочка в лесу", "frames": [
+      { "id": "lf-1", "sentence": "В лесу росла маленькая зелёная ёлочка.", "link": "hero", "symbolName": "tree.fill" },
+      { "id": "lf-2", "sentence": "Она стояла на тихой опушке.", "link": "place", "symbolName": "leaf.fill" },
+      { "id": "lf-3", "sentence": "Зимой ёлочке было грустно и одиноко.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "lf-4", "sentence": "Звери нарядили ёлочку шишками и ягодами.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "chick-and-mom", "title": "Цыплёнок и мама", "frames": [
+      { "id": "cm-1", "sentence": "Жёлтый цыплёнок гулял с курицей-мамой.", "link": "hero", "symbolName": "bird.fill" },
+      { "id": "cm-2", "sentence": "Они искали зёрнышки во дворе.", "link": "place", "symbolName": "house.fill" },
+      { "id": "cm-3", "sentence": "Цыплёнок убежал далеко и потерял маму.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "cm-4", "sentence": "Цыплёнок громко запищал, и мама нашла его.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "broken-toy", "title": "Сломанная машинка", "frames": [
+      { "id": "bt-1", "sentence": "У Вани была любимая красная машинка.", "link": "hero", "symbolName": "car.fill" },
+      { "id": "bt-2", "sentence": "Он катал её по всей квартире.", "link": "place", "symbolName": "house.fill" },
+      { "id": "bt-3", "sentence": "У машинки отвалилось одно колесо.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "bt-4", "sentence": "Папа починил машинку, и она снова поехала.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "garden-bird", "title": "Скворец и скворечник", "frames": [
+      { "id": "gb-1", "sentence": "Весной прилетел чёрный скворец.", "link": "hero", "symbolName": "bird.fill" },
+      { "id": "gb-2", "sentence": "Он искал дом в старом саду.", "link": "place", "symbolName": "tree.fill" },
+      { "id": "gb-3", "sentence": "Скворцу негде было свить гнездо.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "gb-4", "sentence": "Дети повесили на дерево новый скворечник.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "rabbit-carrot", "title": "Зайчик и морковка", "frames": [
+      { "id": "rc-1", "sentence": "Серый зайчик проголодался зимой.", "link": "hero", "symbolName": "hare.fill" },
+      { "id": "rc-2", "sentence": "Он скакал по снежному полю.", "link": "place", "symbolName": "snowflake" },
+      { "id": "rc-3", "sentence": "Под снегом зайчик не мог найти еду.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "rc-4", "sentence": "Дети оставили зайчику морковку и капусту.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "fish-net", "title": "Рыбка и сачок", "frames": [
+      { "id": "fn-1", "sentence": "В аквариуме плавала золотая рыбка.", "link": "hero", "symbolName": "fish.fill" },
+      { "id": "fn-2", "sentence": "Аквариум стоял на светлом подоконнике.", "link": "place", "symbolName": "house.fill" },
+      { "id": "fn-3", "sentence": "Вода в аквариуме стала мутной и грязной.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "fn-4", "sentence": "Мальчик поменял воду, и рыбке стало хорошо.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "snail-rain", "title": "Улитка и дождик", "frames": [
+      { "id": "sr-1", "sentence": "По тропинке медленно ползла улитка.", "link": "hero", "symbolName": "tortoise.fill" },
+      { "id": "sr-2", "sentence": "Она направлялась к своему садовому домику.", "link": "place", "symbolName": "leaf.fill" },
+      { "id": "sr-3", "sentence": "Начался сильный дождь, и тропинка размокла.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "sr-4", "sentence": "Улитка спряталась в свой домик и переждала дождь.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "kind-girl", "title": "Добрая девочка", "frames": [
+      { "id": "kg-1", "sentence": "Девочка Маша гуляла в осеннем парке.", "link": "hero", "symbolName": "person.fill" },
+      { "id": "kg-2", "sentence": "Она шла по дорожке среди жёлтых листьев.", "link": "place", "symbolName": "leaf.fill" },
+      { "id": "kg-3", "sentence": "Маша увидела на земле замёрзшего птенчика.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "kg-4", "sentence": "Маша согрела птенчика и отнесла его домой.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "mushroom-rain", "title": "Грибок-зонтик", "frames": [
+      { "id": "mr-1", "sentence": "На лесной полянке вырос большой гриб.", "link": "hero", "symbolName": "leaf.fill" },
+      { "id": "mr-2", "sentence": "Он стоял под старым дубом.", "link": "place", "symbolName": "tree.fill" },
+      { "id": "mr-3", "sentence": "Начался дождь, и зверям негде было спрятаться.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "mr-4", "sentence": "Все звери укрылись от дождя под широким грибом.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "boy-and-puddle", "title": "Новые сапожки", "frames": [
+      { "id": "bp-1", "sentence": "Мальчику купили красивые жёлтые сапожки.", "link": "hero", "symbolName": "person.fill" },
+      { "id": "bp-2", "sentence": "Он вышел гулять во двор после дождя.", "link": "place", "symbolName": "cloud.rain.fill" },
+      { "id": "bp-3", "sentence": "Мальчик хотел перейти через большую лужу.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "bp-4", "sentence": "В новых сапожках он смело прошёл по луже.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "bee-flower", "title": "Пчёлка и цветок", "frames": [
+      { "id": "bf-1", "sentence": "Маленькая пчёлка летела за нектаром.", "link": "hero", "symbolName": "ant.fill" },
+      { "id": "bf-2", "sentence": "Она кружила над цветущим лугом.", "link": "place", "symbolName": "leaf.fill" },
+      { "id": "bf-3", "sentence": "Все цветы закрылись перед дождём.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "bf-4", "sentence": "Выглянуло солнце, цветы раскрылись, и пчёлка собрала нектар.", "link": "solution", "symbolName": "sun.max.fill" } ] },
+    { "id": "snowy-path", "title": "Тропинка к дому", "frames": [
+      { "id": "sp-1", "sentence": "Дедушка возвращался домой из леса.", "link": "hero", "symbolName": "person.fill" },
+      { "id": "sp-2", "sentence": "Он шёл по знакомой зимней дороге.", "link": "place", "symbolName": "snowflake" },
+      { "id": "sp-3", "sentence": "Снегопад замёл всю тропинку к дому.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "sp-4", "sentence": "Внук расчистил дорожку лопатой и встретил дедушку.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "duckling-swim", "title": "Утёнок учится плавать", "frames": [
+      { "id": "ds-1", "sentence": "Маленький утёнок впервые пришёл к пруду.", "link": "hero", "symbolName": "bird.fill" },
+      { "id": "ds-2", "sentence": "Пруд был большой и глубокий.", "link": "place", "symbolName": "drop.fill" },
+      { "id": "ds-3", "sentence": "Утёнок боялся заходить в воду.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "ds-4", "sentence": "Мама-утка показала, как плавать, и утёнок поплыл.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "warm-scarf", "title": "Тёплый шарф", "frames": [
+      { "id": "ws-1", "sentence": "Бабушка связала внуку тёплый шарф.", "link": "hero", "symbolName": "person.fill" },
+      { "id": "ws-2", "sentence": "Внук собирался гулять на морозной улице.", "link": "place", "symbolName": "snowflake" },
+      { "id": "ws-3", "sentence": "На улице было очень холодно и ветрено.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "ws-4", "sentence": "В тёплом шарфе внук совсем не замёрз.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] },
+    { "id": "puppy-and-storm", "title": "Щенок и гроза", "frames": [
+      { "id": "pst-1", "sentence": "Щенок Рекс играл в саду один.", "link": "hero", "symbolName": "dog.fill" },
+      { "id": "pst-2", "sentence": "Он бегал по зелёной лужайке.", "link": "place", "symbolName": "leaf.fill" },
+      { "id": "pst-3", "sentence": "Вдруг загремел гром, и Рекс испугался.", "link": "problem", "symbolName": "exclamationmark.bubble.fill" },
+      { "id": "pst-4", "sentence": "Хозяин позвал Рекса домой и успокоил его.", "link": "solution", "symbolName": "checkmark.seal.fill" } ] }
+  ]
+}
