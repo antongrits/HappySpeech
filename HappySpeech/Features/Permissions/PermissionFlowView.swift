@@ -120,7 +120,8 @@ struct PermissionFlowView: View {
 
     @ViewBuilder
     private func stepContent(_ step: PermissionStepCard) -> some View {
-        VStack(spacing: 0) {
+        ScrollView {
+            VStack(spacing: 0) {
             stepProgressIndicator
                 .padding(.top, SpacingTokens.regular)
                 .padding(.horizontal, SpacingTokens.screenEdge)
@@ -142,8 +143,10 @@ struct PermissionFlowView: View {
             actionsCard(step)
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.bottom, SpacingTokens.large)
+            }
+            .accessibilityElement(children: .contain)
         }
-        .accessibilityElement(children: .contain)
+        .scrollBounceBehavior(.basedOnSize)
     }
 
     // MARK: All-done content
