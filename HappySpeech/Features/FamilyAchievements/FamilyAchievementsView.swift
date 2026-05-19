@@ -111,7 +111,7 @@ struct FamilyAchievementsView: View {
     private var loadingSection: some View {
         VStack(spacing: SpacingTokens.sp3) {
             // E v21: 3D Ляля в loading state FamilyAchievements.
-            LyalyaHeroView(state: .happy, mood: 0.6, size: 110)
+            LyalyaHeroView(state: .happy, size: 110)
                 .accessibilityHidden(true)
             ProgressView()
                 .controlSize(.large)
@@ -127,7 +127,7 @@ struct FamilyAchievementsView: View {
     ) -> some View {
         VStack(spacing: SpacingTokens.sp3) {
             // E v21: 3D Ляля hero на FamilyAchievements streak (требование пользователя).
-            LyalyaHeroView(state: .celebrating, mood: 1.0, size: 160)
+            LyalyaHeroView(state: .celebrating, size: 160)
                 .frame(height: 160)
                 .accessibilityHidden(true)
 

@@ -69,33 +69,36 @@ public extension MascotMood {
 
 // MARK: - HSMascotView
 
-/// Рендер маскота Ляли — 3D-модель поверх 2D-канона + mood aura.
+/// Рендер маскота Ляли — профессионально анимированный 2D-канон + mood aura.
 ///
 /// `HSMascotView` — низкоуровневый рендер-компонент. На экранах фич используйте
 /// ``LyalyaMascotView`` вместо прямого обращения к `HSMascotView`.
 ///
-/// ### Канон облика (ADR-V29-MASCOT-3D)
-/// Канон Ляли — профессиональная 3D-модель `lyalya3d_v3.usdz` (создана в Blender
-/// по `AppIcon`: кремово-белая пчёлка-фея с большими глазами, антеннами,
-/// розовыми щёчками и янтарными крылышками). 2D-иллюстрации `mascot_lyalya_*`
-/// остаются fallback-слоем.
+/// ### Канон облика (ADR-V30-MASCOT-2D)
+/// Канон Ляли — единый набор 2D-иллюстраций `mascot_lyalya_*` (кремово-белая
+/// пчёлка-фея с большими глазами, антеннами, розовыми щёчками и янтарными
+/// крылышками), согласованный с `AppIcon`. 3D-рендер (`LyalyaRealityKitView` +
+/// `lyalya3d_v3.usdz`) удалён: процедурная USDZ-модель выглядела непрофессионально
+/// и вызывала видимый 2D/3D-«мигающий» переход при асинхронной загрузке.
+/// ADR-V30-MASCOT-2D сменяет ADR-V29-MASCOT-3D.
 ///
 /// ### Архитектура слоёв (снизу вверх в ZStack)
 ///
 /// 1. `MoodAuraView` — ambient radial glow под маскотом, цвет зависит от настроения
-/// 2. 2D-иллюстрация (`mascot_lyalya_*`) — fallback-слой; виден при ошибке
-///    загрузки 3D-модели или при Reduce Motion
-/// 3. ``LyalyaRealityKitView`` — 3D-модель Ляли с запечённой idle-анимацией;
-///    скрывает 2D-слой, когда модель успешно загружена
+/// 2. Анимированная 2D-иллюстрация (`mascot_lyalya_*`) — единственный слой облика
 ///
-/// ### Lip-sync
-/// AR lip-sync рисуется отдельным 2D-оверлеем `MouthBubbleOverlay` поверх
-/// маскота внутри ``LyalyaMascotView`` (когда `MascotLipSyncState.isTracking`).
-/// 3D-модель не содержит blendshapes рта, поэтому lip-sync остаётся на 2D-слое.
+/// ### «Живость» маскота
+/// 2D-иллюстрация оживляется процедурной SwiftUI-анимацией:
+/// - **дыхание** — лёгкое непрерывное масштабирование (breathe loop);
+/// - **парение** — мягкое вертикальное покачивание;
+/// - **микро-наклон** — едва заметный поворот, создаёт ощущение «дышит»;
+/// - **squash-stretch** — упругая реакция при смене настроения;
+/// - **кроссфейд** — плавный переход между PNG разных настроений (без жёсткой
+///   склейки и без пересоздания слоя — никакого «мигания»).
 ///
 /// ### Reduced Motion
-/// При `accessibilityReduceMotion` 3D-слой не запускает idle-анимацию
-/// (модель замирает статично) — см. ``LyalyaRealityKitView``.
+/// При `accessibilityReduceMotion` все процедурные анимации отключаются —
+/// маскот статичен, переход настроений мгновенный.
 ///
 /// ## Пример
 /// ```swift
@@ -103,7 +106,7 @@ public extension MascotMood {
 /// LyalyaMascotView(state: .celebrating, size: 160)
 ///
 /// // Прямое использование (только в компонентах DS):
-/// HSMascotView(mood: .happy, size: 120, audioAmplitude: $amplitude)
+/// HSMascotView(mood: .happy, size: 120)
 /// ```
 ///
 /// ## See Also
@@ -117,33 +120,34 @@ public struct HSMascotView: View {
 
     public let mood: MascotMood
     public let size: CGFloat
-    public let audioAmplitude: Binding<Float>?
     public let pointingDirection: PointingDirection
 
     // MARK: - Private state
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    // Entrance / transition animation (плавное появление слоёв)
+    // Entrance animation (плавное появление слоя облика).
     @State private var entranceScale: CGFloat = 0.85
     @State private var entranceOpacity: Double = 0
-    @State private var moodTransitionID: Int = 0
 
-    // 3D-слой: nil — загрузка не завершена; true — модель загружена (показываем 3D);
-    // false — ошибка загрузки (остаётся 2D-fallback). ADR-V29-MASCOT-3D.
-    @State private var is3DReady: Bool?
+    // Idle «живость»: дыхание, парение, микро-наклон. Запускаются циклично
+    // в onAppear; при Reduce Motion остаются в нейтральных значениях.
+    @State private var breathePhase: Bool = false
+    @State private var floatPhase: Bool = false
+    @State private var tiltPhase: Bool = false
+
+    // Squash-stretch — упругая реакция при смене настроения.
+    @State private var reactionScale: CGFloat = 1.0
 
     // MARK: - Init
 
     public init(
         mood: MascotMood = .idle,
         size: CGFloat = 120,
-        audioAmplitude: Binding<Float>? = nil,
         pointingDirection: PointingDirection = .up
     ) {
         self.mood = mood
         self.size = size
-        self.audioAmplitude = audioAmplitude
         self.pointingDirection = pointingDirection
     }
 
@@ -151,50 +155,81 @@ public struct HSMascotView: View {
 
     public var body: some View {
         ZStack {
-            // Layer 1: ambient mood aura (под маскотом)
+            // Layer 1: ambient mood aura (под маскотом).
             if !reduceMotion {
                 MoodAuraView(mood: mood, size: size)
             }
 
-            // Layer 2: 2D-иллюстрация маскота — fallback-слой (ADR-V29-MASCOT-3D).
-            // Виден при ошибке загрузки 3D-модели или при Reduce Motion.
+            // Layer 2: анимированная 2D-иллюстрация маскота — единый канон облика.
             // Иллюстрация выбирается по настроению через `MascotMood.illustrationName`.
+            // `.id` на слое НЕ ставится — иначе SwiftUI пересоздавал бы вью на каждой
+            // смене настроения (жёсткая склейка). Вместо этого crossfade обеспечивается
+            // сменой ресурса внутри одного стабильного `Image` + `.animation`.
             Image(mood.illustrationName)
                 .resizable()
                 .scaledToFit()
                 .frame(width: size, height: size)
-                .scaleEffect(entranceScale)
-                .opacity(twoDLayerOpacity)
-                .id(moodTransitionID)
+                .scaleEffect(entranceScale * breatheScale * reactionScale)
+                .rotationEffect(.degrees(tiltAngle))
+                .offset(y: floatOffset)
+                .opacity(entranceOpacity)
                 .accessibilityHidden(true)
-
-            // Layer 3: 3D-модель Ляли (lyalya3d_v3.usdz) с запечённой idle-анимацией.
-            // Скрывает 2D-слой при успешной загрузке. Reduce Motion: idle-анимация
-            // не запускается (модель статична) — обрабатывается внутри LyalyaRealityKitView.
-            LyalyaRealityKitView(onLoadResult: { ok in
-                is3DReady = ok
-            })
-            .frame(width: size, height: size)
-            .opacity(is3DReady == true ? entranceOpacity : 0)
-            .accessibilityHidden(true)
         }
         .frame(width: size, height: size)
         .accessibilityLabel(accessibilityLabel)
         .accessibilityHidden(false)
+        .animation(reduceMotion ? .none : MotionTokens.bounce, value: mood)
         .onAppear {
             playEntrance()
+            startIdleLoops()
         }
         .onChange(of: mood) { _, _ in
-            playMoodTransition()
+            playMoodReaction()
         }
     }
 
-    // MARK: - Layer compositing
+    // MARK: - Idle «живость» (дыхание / парение / наклон)
 
-    /// Непрозрачность 2D fallback-слоя. Пока 3D загружается (`is3DReady == nil`)
-    /// или при ошибке загрузки — 2D виден. При успешной загрузке 3D — 2D скрыт.
-    private var twoDLayerOpacity: Double {
-        is3DReady == true ? 0 : entranceOpacity
+    /// Масштаб дыхания: едва заметная пульсация (±1.5%).
+    private var breatheScale: CGFloat {
+        breathePhase ? 1.015 : 0.985
+    }
+
+    /// Вертикальное парение: мягкое покачивание относительно размера.
+    private var floatOffset: CGFloat {
+        floatPhase ? -size * 0.022 : size * 0.022
+    }
+
+    /// Микро-наклон: едва заметный поворот корпуса.
+    private var tiltAngle: Double {
+        tiltPhase ? 1.6 : -1.6
+    }
+
+    /// Запускает зацикленные idle-анимации. При Reduce Motion циклы не стартуют —
+    /// маскот остаётся статичным в нейтральной позе.
+    private func startIdleLoops() {
+        guard !reduceMotion else { return }
+
+        withAnimation(
+            .easeInOut(duration: MotionTokens.Mascot.breatheDuration)
+                .repeatForever(autoreverses: true)
+        ) {
+            breathePhase = true
+        }
+
+        withAnimation(
+            .easeInOut(duration: MotionTokens.Mascot.breatheDuration * 1.35)
+                .repeatForever(autoreverses: true)
+        ) {
+            floatPhase = true
+        }
+
+        withAnimation(
+            .easeInOut(duration: MotionTokens.Mascot.breatheDuration * 1.8)
+                .repeatForever(autoreverses: true)
+        ) {
+            tiltPhase = true
+        }
     }
 
     // MARK: - Entrance animation
@@ -213,14 +248,17 @@ public struct HSMascotView: View {
         }
     }
 
-    // MARK: - Mood transition
+    // MARK: - Mood reaction (squash-stretch)
 
-    private func playMoodTransition() {
+    /// Упругая реакция при смене настроения: маскот коротко «подпрыгивает».
+    /// Кроссфейд между PNG обеспечивается `.animation(...)` на `Image`.
+    private func playMoodReaction() {
         guard !reduceMotion else { return }
-        moodTransitionID += 1
-        withAnimation(MotionTokens.bounce) {
-            entranceScale = 1.0
-            entranceOpacity = 1.0
+        withAnimation(MotionTokens.Mascot.celebrateSpring) {
+            reactionScale = 1.08
+        }
+        withAnimation(MotionTokens.spring.delay(MotionTokens.Duration.quick)) {
+            reactionScale = 1.0
         }
     }
 
@@ -249,8 +287,7 @@ public struct HSMascotView: View {
 ///
 /// Plan v21 Block J: удалена `idlePulse.repeatForever` анимация — пульсация ауры
 /// воспринималась как «мигание» 2D-слоя. Аура статична; цвет меняется по `mood`
-/// через `spring` (с guard на reduceMotion). Subtle breathing допустим, но
-/// repeatForever на 2D-элементах запрещён по правилу «2D героев нельзя анимировать».
+/// через `spring` (с guard на reduceMotion).
 private struct MoodAuraView: View {
     let mood: MascotMood
     let size: CGFloat
@@ -342,23 +379,6 @@ extension MascotMood: CaseIterable {
         }
         .padding()
     }
-}
-
-#Preview("Lip-sync демо") {
-    @Previewable @State var amplitude: Float = 0
-
-    VStack(spacing: 24) {
-        HSMascotView(
-            mood: .explaining,
-            size: 160,
-            audioAmplitude: $amplitude
-        )
-        Slider(value: $amplitude, in: 0...1) {
-            Text("Амплитуда")
-        }
-        .padding(.horizontal)
-    }
-    .padding()
 }
 
 #Preview("Настроения маскота") {

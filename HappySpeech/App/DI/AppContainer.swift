@@ -99,10 +99,6 @@ public final class AppContainer {
     // Block L: MascotEyeContactState — singleton eye contact state (Block L)
     public let mascotEyeContactState: MascotEyeContactState = MascotEyeContactState()
 
-    // Block B v13: LyalyaLipSyncCoordinator — 3D маскот lip-sync через AVAudioPlayer amplitude.
-    // Singleton: один координатор на приложение, передаётся во все LyalyaRealityKitView.
-    public let lyalyaLipSyncCoordinator: LyalyaLipSyncCoordinator = LyalyaLipSyncCoordinator()
-
     // Block D v13: PhonemeAnalysisService — фонемный анализ произношения (DTW + CoreML).
     // Actor-typed, lazy. Требует G2PWorker (словарь 7712 слов) + RussianPhonemeClassifier (1.35 MB).
     private var _phonemeAnalysisService: (any PhonemeAnalysisService)?

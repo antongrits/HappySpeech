@@ -81,10 +81,9 @@ public enum LyalyaState: String, CaseIterable, Sendable {
 /// Маскот Ляля — высокоуровневая обёртка над ``HSMascotView`` с lip-sync поддержкой.
 ///
 /// `LyalyaMascotView` — основной способ отображать маскота на экранах детского контура.
-/// Принимает ``LyalyaState`` (10 состояний), размер и опциональный `Binding<Float>`
-/// для real-time синхронизации рта с аудиоамплитудой (TTS или запись голоса).
+/// Принимает ``LyalyaState`` (10 состояний), размер и опциональный tap-обработчик.
 ///
-/// Внутри использует ``HSMascotView`` (7-слойный рендер: Rive + aura + particles)
+/// Внутри использует ``HSMascotView`` (анимированный 2D-канон + mood aura)
 /// и `MouthBubbleOverlay` для ARFaceAnchor lip-sync, когда AR-сессия активна.
 ///
 /// Поддерживает `@Environment(\.accessibilityReduceMotion)` — все анимации отключаются.
@@ -94,13 +93,6 @@ public enum LyalyaState: String, CaseIterable, Sendable {
 /// ```swift
 /// // Стандартное использование
 /// LyalyaMascotView(state: .celebrating, size: 160)
-///
-/// // С lip-sync при воспроизведении TTS
-/// LyalyaMascotView(
-///     state: .explaining,
-///     size: 120,
-///     mouthAmplitude: $audioAmplitude
-/// )
 ///
 /// // С tap-обработчиком
 /// LyalyaMascotView(state: .idle, onTap: {
@@ -118,7 +110,6 @@ public struct LyalyaMascotView: View {
 
     public var state: LyalyaState
     public var size: CGFloat
-    public var mouthAmplitude: Binding<Float>?
     public var pointingDirection: PointingDirection
     public var onTap: (() -> Void)?
 
@@ -132,8 +123,8 @@ public struct LyalyaMascotView: View {
 
     // MARK: - Animation state
 
-    // ADR-V29-MASCOT-3D: idle-движение маскота живёт в запечённой анимации
-    // 3D-модели (LyalyaRealityKitView). 2D PNG-fallback остаётся статичным.
+    // ADR-V30-MASCOT-2D: idle-«живость» маскота (дыхание, парение, микро-наклон,
+    // squash-stretch) обеспечивается процедурной SwiftUI-анимацией в HSMascotView.
 
     // v12: haptic feedback при переходе между состояниями
     @State private var previousState: LyalyaState = .idle
@@ -143,13 +134,11 @@ public struct LyalyaMascotView: View {
     public init(
         state: LyalyaState = .idle,
         size: CGFloat = 120,
-        mouthAmplitude: Binding<Float>? = nil,
         pointingDirection: PointingDirection = .up,
         onTap: (() -> Void)? = nil
     ) {
         self.state = state
         self.size = size
-        self.mouthAmplitude = mouthAmplitude
         self.pointingDirection = pointingDirection
         self.onTap = onTap
     }
@@ -158,11 +147,10 @@ public struct LyalyaMascotView: View {
 
     public var body: some View {
         ZStack(alignment: .top) {
-            // Layer 1-5: Rive/SwiftUI маскот + skin tint + skin overlay
+            // Анимированный 2D-маскот + skin tint + skin overlay
             HSMascotView(
                 mood: state.mascotMood,
                 size: size,
-                audioAmplitude: mouthAmplitude,
                 pointingDirection: pointingDirection
             )
             .colorMultiply(skinTintColor)
@@ -290,24 +278,6 @@ public struct LyalyaMascotView: View {
     }
 }
 
-// MARK: - LyalyaMascotView + Convenience modifiers
-
-public extension LyalyaMascotView {
-
-    /// Быстрое переключение состояния с bouncy-переходом
-    func transition(to newState: LyalyaState) -> LyalyaMascotView {
-        var copy = self
-        copy.state = newState
-        return copy
-    }
-
-    /// Setter lip-sync без Binding (одиночное float значение, не реактивный)
-    /// Используй mouthAmplitude: $binding для реактивного варианта
-    func setMouthOpen(_ amplitude: Float) -> LyalyaMascotView {
-        self
-    }
-}
-
 // MARK: - LyalyaState + Equatable (для animation value)
 
 extension LyalyaState: Equatable {}
@@ -376,15 +346,13 @@ extension LyalyaState: Equatable {}
     .padding()
 }
 
-#Preview("LyalyaMascotView — lip-sync") {
-    @Previewable @State var amplitude: Float = 0
+#Preview("LyalyaMascotView — переключение состояний") {
     @Previewable @State var lyalyaState: LyalyaState = .explaining
 
     VStack(spacing: 24) {
         LyalyaMascotView(
             state: lyalyaState,
             size: 160,
-            mouthAmplitude: $amplitude,
             onTap: {
                 let states = LyalyaState.allCases
                 let current = states.firstIndex(of: lyalyaState) ?? 0
@@ -399,14 +367,6 @@ extension LyalyaState: Equatable {}
                 .symbolRenderingMode(.hierarchical)
         }
         .font(.headline)
-
-        VStack(alignment: .leading, spacing: 4) {
-            Text("Амплитуда рта: \(String(format: "%.2f", amplitude))")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-            Slider(value: $amplitude, in: 0...1)
-        }
-        .padding(.horizontal)
 
         Text("Нажми на Лялю → следующее состояние")
             .font(.caption2)

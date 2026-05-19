@@ -4,16 +4,12 @@ import SwiftUI
 
 /// Hero-представление маскота Ляли — обёртка над `LyalyaMascotView`.
 ///
-/// ### Канон облика (D-3 v27 — унификация маскота)
-/// `LyalyaHeroView` рендерит **единый 2D-канон** Ляли через `LyalyaMascotView`
-/// (2D-иллюстрации `mascot_lyalya_*`, согласованные с `AppIcon`).
-/// Ранее hero-экраны использовали 3D-рендер `lyalya3d_v2.usdz`, который
-/// изображал серого «робота» и расходился с брендом «подружка-пчёлка».
-/// 3D-слой убран — на всех экранах теперь один облик маскота.
-///
-/// Параметры `mood`, `mouthOpen`, `viseme`, `force2D` сохранены для
-/// совместимости callsite, но `force2D` теперь не влияет на рендер
-/// (он всегда 2D), а `mouthOpen`/`viseme` 2D-каноном не используются.
+/// ### Канон облика (ADR-V30-MASCOT-2D)
+/// `LyalyaHeroView` рендерит **единый профессионально анимированный 2D-канон**
+/// Ляли через `LyalyaMascotView` (иллюстрации `mascot_lyalya_*`, согласованные
+/// с `AppIcon`). 3D-рендер удалён: процедурная USDZ-модель выглядела
+/// непрофессионально и вызывала 2D/3D-«мигающий» переход. ADR-V30-MASCOT-2D
+/// сменяет ADR-V29-MASCOT-3D.
 ///
 /// Используется на онбординге, SessionComplete, Rewards и других hero-экранах.
 ///
@@ -27,38 +23,24 @@ public struct LyalyaHeroView: View {
     // MARK: - Public API
 
     public let state: LyalyaState
-    public let mood: Float
     public let size: CGFloat
-    public let mouthOpen: Float
-    public let viseme: LyalyaViseme
-    /// Сохранён для совместимости callsite. С D-3 v27 рендер всегда 2D,
-    /// поэтому флаг больше не влияет на отображение.
-    public let force2D: Bool
 
     // MARK: - Init
 
     public init(
         state: LyalyaState = .idle,
-        mood: Float = 0.5,
-        size: CGFloat = 160,
-        mouthOpen: Float = 0,
-        viseme: LyalyaViseme = .rest,
-        force2D: Bool = false
+        size: CGFloat = 160
     ) {
         self.state = state
-        self.mood = mood
         self.size = size
-        self.mouthOpen = mouthOpen
-        self.viseme = viseme
-        self.force2D = force2D
     }
 
     // MARK: - Body
 
     public var body: some View {
-        // D-3 v27: единый 2D-канон маскота на всех hero-экранах.
-        // LyalyaMascotView рисует 2D-иллюстрацию mascot_lyalya_*, согласованную
-        // с AppIcon. Reduce Motion обрабатывается внутри LyalyaMascotView.
+        // ADR-V30-MASCOT-2D: единый анимированный 2D-канон маскота на всех
+        // hero-экранах. LyalyaMascotView рисует иллюстрацию mascot_lyalya_*,
+        // согласованную с AppIcon. Reduce Motion обрабатывается внутри.
         LyalyaMascotView(
             state: state,
             size: size * 0.9

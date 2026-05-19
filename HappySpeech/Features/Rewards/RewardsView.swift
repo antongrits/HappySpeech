@@ -138,7 +138,7 @@ struct RewardsView: View {
             HStack(alignment: .center, spacing: SpacingTokens.medium) {
                 // E v21: 3D Ляля в header Rewards (требование «3D героев на каждом экране»).
                 // size=96 > 80 threshold → 3D через LyalyaHeroView.
-                LyalyaHeroView(state: lyalyaHeaderState, mood: 0.8, size: 96)
+                LyalyaHeroView(state: lyalyaHeaderState, size: 96)
                     .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: SpacingTokens.micro) {

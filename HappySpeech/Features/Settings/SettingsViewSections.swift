@@ -13,7 +13,7 @@ extension SettingsView {
         Section {
             HStack(spacing: SpacingTokens.regular) {
                 // E v21: 3D Ляля в header Settings (требование «3D героев на каждом экране»).
-                LyalyaHeroView(state: .idle, mood: 0.5, size: 96)
+                LyalyaHeroView(state: .idle, size: 96)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: SpacingTokens.micro) {
                     Text(String(localized: "settings.header.greeting"))

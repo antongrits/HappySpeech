@@ -348,7 +348,7 @@ struct SessionShellBinder: View {
     private var sessionCompletedView: some View {
         VStack(spacing: SpacingTokens.large) {
             // E v21: 3D Ляля на завершении сессии (требование пользователя).
-            LyalyaHeroView(state: .celebrating, mood: 1.0, size: 160)
+            LyalyaHeroView(state: .celebrating, size: 160)
             Text(String(localized: "session.completed.title"))
                 .font(TypographyTokens.title(28))
                 .foregroundStyle(ColorTokens.Kid.ink)

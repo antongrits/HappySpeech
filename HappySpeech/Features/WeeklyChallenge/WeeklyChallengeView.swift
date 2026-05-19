@@ -130,7 +130,7 @@ struct WeeklyChallengeView: View {
     private var loadingSection: some View {
         VStack(spacing: SpacingTokens.sp3) {
             // E v21: 3D Ляля в loading state WeeklyChallenge.
-            LyalyaHeroView(state: .happy, mood: 0.6, size: 110)
+            LyalyaHeroView(state: .happy, size: 110)
                 .accessibilityHidden(true)
             ProgressView()
                 .controlSize(.large)
@@ -144,7 +144,7 @@ struct WeeklyChallengeView: View {
     private func heroSection(viewModel: WeeklyChallengeModels.Load.ViewModel) -> some View {
         VStack(spacing: SpacingTokens.sp3) {
             // E v21: 3D Ляля hero на WeeklyChallenge (требование пользователя).
-            LyalyaHeroView(state: .celebrating, mood: 0.9, size: 160)
+            LyalyaHeroView(state: .celebrating, size: 160)
                 .frame(height: 160)
                 .accessibilityHidden(true)
 

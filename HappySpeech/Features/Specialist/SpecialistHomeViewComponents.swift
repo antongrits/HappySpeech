@@ -50,7 +50,7 @@ struct SpecChildListView: View {
                     // E v21: 3D Ляля в empty state SpecChildList (students list)
                     // — требование «3D героев на каждом экране».
                     VStack(spacing: SpacingTokens.regular) {
-                        LyalyaHeroView(state: .thinking, mood: 0.5, size: 140)
+                        LyalyaHeroView(state: .thinking, size: 140)
                             .accessibilityHidden(true)
                         HSEmptyState(
                             icon: "person.2.fill",

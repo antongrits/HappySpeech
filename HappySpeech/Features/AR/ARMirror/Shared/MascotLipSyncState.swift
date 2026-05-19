@@ -77,16 +77,4 @@ public extension LipSyncViseme {
         case .u:      self = .rounded
         }
     }
-
-    /// Конвертация в LyalyaViseme для использования в LyalyaRealityKitView (3D-маскот).
-    /// LyalyaViseme — тип DesignSystem/RealityKit слоя, отдельный от LipSyncViseme.
-    var lyalyaViseme: LyalyaViseme {
-        switch self {
-        case .neutral: return .rest
-        case .open:    return .a
-        case .wide:    return .i
-        case .rounded: return .uSound
-        case .smile:   return .consonantOpen
-        }
-    }
 }

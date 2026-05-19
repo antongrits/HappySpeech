@@ -18,7 +18,7 @@ struct OnboardingScheduleStep: View {
             Spacer(minLength: SpacingTokens.tiny)
 
             // Block I v19: scaleEffect убран с 2D Ляли.
-            LyalyaHeroView(state: .happy, mood: 0.8, size: 200)
+            LyalyaHeroView(state: .happy, size: 200)
                 .opacity(appeared ? 1 : 0)
                 .accessibilityHidden(true)
 
@@ -151,7 +151,7 @@ struct OnboardingPermissionsStep: View {
         ScrollView {
             VStack(spacing: SpacingTokens.medium) {
                 // Block I v19: scaleEffect убран с 2D Ляли.
-                LyalyaHeroView(state: .pointing, mood: 0.7, size: 200)
+                LyalyaHeroView(state: .pointing, size: 200)
                     .opacity(appeared ? 1 : 0)
                     .accessibilityHidden(true)
 
@@ -288,7 +288,7 @@ struct OnboardingModelDownloadStep: View {
             Spacer()
 
             // Block I v19: scaleEffect убран с 2D Ляли.
-            LyalyaHeroView(state: heroState, mood: 0.6, size: 220)
+            LyalyaHeroView(state: heroState, size: 220)
                 .opacity(appeared ? 1 : 0)
                 .accessibilityHidden(true)
 
@@ -384,7 +384,7 @@ struct OnboardingCompletionStep: View {
             VStack(spacing: SpacingTokens.large) {
                 Spacer()
 
-                LyalyaHeroView(state: .celebrating, mood: 1.0, size: 220)
+                LyalyaHeroView(state: .celebrating, size: 220)
                     .accessibilityHidden(true)
 
                 // Block D v16: avatar string is now an Asset name (illustrationName).

@@ -151,7 +151,7 @@ struct WorldMapView: View {
         HStack(spacing: SpacingTokens.regular) {
             // F.tier1 v21: mascot мягче в dark.
             // E v21: 3D Ляля в header WorldMap (требование пользователя).
-            LyalyaHeroView(state: .pointing, mood: 0.7, size: 96)
+            LyalyaHeroView(state: .pointing, size: 96)
                 .opacity(colorScheme == .dark ? 0.92 : 1.0)
                 .accessibilityHidden(true)
 

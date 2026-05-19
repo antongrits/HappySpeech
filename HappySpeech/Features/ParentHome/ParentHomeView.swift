@@ -180,7 +180,7 @@ struct ParentHomeView: View {
         VStack(spacing: SpacingTokens.sp4) {
             Spacer()
             // E v21: 3D Ляля на loading state ParentHome (требование пользователя).
-            LyalyaHeroView(state: .thinking, mood: 0.6, size: 120)
+            LyalyaHeroView(state: .thinking, size: 120)
                 // F.tier1 v21: mascot чуть мягче в dark, чтобы не светил.
                 .opacity(colorScheme == .dark ? 0.9 : 1.0)
                 .accessibilityHidden(true)
@@ -437,7 +437,7 @@ private struct ParentDashboardTab: View {
             Spacer(minLength: SpacingTokens.sp2)
             // E v21: 3D Ляля в greeting header ParentHome (требование пользователя).
             // size: 96 — выше threshold 80 → автоматически 3D через LyalyaHeroView.
-            LyalyaHeroView(state: .waving, mood: 0.6, size: 96)
+            LyalyaHeroView(state: .waving, size: 96)
                 .accessibilityHidden(true)
         }
         .padding(.top, SpacingTokens.sp3)

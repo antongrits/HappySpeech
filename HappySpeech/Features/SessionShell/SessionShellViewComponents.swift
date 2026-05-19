@@ -274,7 +274,7 @@ struct PauseSheetView: View {
             HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.large) {
                 VStack(spacing: SpacingTokens.large) {
                     // E v21: 3D Ляля в pause sheet (требование пользователя).
-                    LyalyaHeroView(state: .encouraging, mood: 0.8, size: 140)
+                    LyalyaHeroView(state: .encouraging, size: 140)
                         .accessibilityHidden(true)
 
                     Text(motivationalPhrase.isEmpty

@@ -109,7 +109,7 @@ struct ProgressDashboardView: View {
                 VStack(alignment: .leading, spacing: SpacingTokens.sectionGap) {
                     // E v21: 3D Ляля hero на ProgressDashboard
                     // (требование «3D героев на каждом экране»).
-                    LyalyaHeroView(state: .thinking, mood: 0.5, size: 110)
+                    LyalyaHeroView(state: .thinking, size: 110)
                         .frame(maxWidth: .infinity, alignment: .center)
                         .accessibilityHidden(true)
                         .padding(.top, SpacingTokens.small)

@@ -120,7 +120,7 @@ struct SpecChildDashboardView: View {
                     VStack(spacing: SpacingTokens.sp4) {
                         // E v21: 3D Ляля на главном экране специалиста
                         // (требование «3D героев на каждом экране»).
-                        LyalyaHeroView(state: .thinking, mood: 0.5, size: 120)
+                        LyalyaHeroView(state: .thinking, size: 120)
                             .frame(maxWidth: .infinity)
                             .accessibilityHidden(true)
                             .padding(.top, SpacingTokens.sp2)

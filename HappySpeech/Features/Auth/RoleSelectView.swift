@@ -50,7 +50,7 @@ struct RoleSelectView: View {
                 VStack(spacing: SpacingTokens.sp3) {
                     // F.tier1 v21: hero mascot мягче в dark.
                     // E v21: 3D Ляля в hero RoleSelectView (требование пользователя).
-                    LyalyaHeroView(state: .waving, mood: 0.8, size: 140)
+                    LyalyaHeroView(state: .waving, size: 140)
                         .opacity(colorScheme == .dark ? 0.92 : 1.0)
                         .padding(.bottom, SpacingTokens.sp2)
 

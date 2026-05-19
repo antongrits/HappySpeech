@@ -39,16 +39,6 @@ final class HSMascotViewSnapshotTests: XCTestCase {
     func test_singing_snapshot()     throws { try record(mood: .singing) }
     func test_pointing_snapshot()    throws { try record(mood: .pointing) }
 
-    // MARK: - Lip-sync fallback (фиксированная амплитуда 0.5)
-
-    func test_lipsync_open_snapshot() throws {
-        @State var amplitude: Float = 0.5
-        try record(
-            view: HSMascotView(mood: .explaining, size: 160, audioAmplitude: $amplitude),
-            name: "lipsync_open"
-        )
-    }
-
     // MARK: - Helpers
 
     private func record(mood: MascotMood) throws {

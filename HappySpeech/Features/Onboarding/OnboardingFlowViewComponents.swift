@@ -17,7 +17,7 @@ struct OnboardingWelcomeStep: View {
             // Block I v19: scaleEffect убран с 2D Ляли (требование: 2D без анимаций).
             // Оставлен только opacity-вход (fade-in) — минимально допустимый UX-переход.
             // F.tier1 v21: hero — мягче в dark.
-            LyalyaHeroView(state: .waving, mood: 0.7, size: 240)
+            LyalyaHeroView(state: .waving, size: 240)
                 .opacity(appeared ? (colorScheme == .dark ? 0.92 : 1.0) : 0)
                 .accessibilityHidden(true)
 
@@ -71,7 +71,7 @@ struct OnboardingRoleStep: View {
                 Spacer(minLength: SpacingTokens.small)
 
                 // Block I v19: scaleEffect убран с 2D Ляли.
-                LyalyaHeroView(state: .pointing, mood: 0.7, size: 200)
+                LyalyaHeroView(state: .pointing, size: 200)
                     .opacity(appeared ? 1 : 0)
                     .accessibilityHidden(true)
 
@@ -185,7 +185,7 @@ struct OnboardingNameStep: View {
                 Spacer(minLength: SpacingTokens.medium)
 
                 // E v21: Step 3 child name — .encouraging (3D Ляля поддерживает выбор имени).
-                LyalyaHeroView(state: .encouraging, mood: 0.7, size: 200)
+                LyalyaHeroView(state: .encouraging, size: 200)
                     .accessibilityHidden(true)
 
                 Text(String(localized: "onboarding.name.title"))
@@ -317,7 +317,7 @@ struct OnboardingAgeStep: View {
         VStack(spacing: SpacingTokens.large) {
             Spacer(minLength: SpacingTokens.medium)
 
-            LyalyaHeroView(state: .thinking, mood: 0.6, size: 200)
+            LyalyaHeroView(state: .thinking, size: 200)
                 .accessibilityHidden(true)
 
             VStack(spacing: SpacingTokens.small) {
@@ -427,7 +427,7 @@ struct OnboardingGoalsStep: View {
     var body: some View {
         VStack(spacing: SpacingTokens.medium) {
             // E v21: Step 5 goals — .thinking (3D Ляля размышляет над целями).
-            LyalyaHeroView(state: .thinking, mood: 0.8, size: 200)
+            LyalyaHeroView(state: .thinking, size: 200)
                 .opacity(appeared ? 1 : 0)
                 .accessibilityHidden(true)
                 .padding(.top, SpacingTokens.small)
@@ -526,7 +526,7 @@ struct OnboardingSoundsStep: View {
     var body: some View {
         VStack(spacing: SpacingTokens.medium) {
             // Block I v19: scaleEffect убран с 2D Ляли.
-            LyalyaHeroView(state: .explaining, mood: 0.7, size: 200)
+            LyalyaHeroView(state: .explaining, size: 200)
                 .opacity(appeared ? 1 : 0)
                 .accessibilityHidden(true)
                 .padding(.top, SpacingTokens.small)
