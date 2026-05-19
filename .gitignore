@@ -38,6 +38,8 @@ tmp/
 # Claude Code local settings
 .claude/settings.local.json
 .claude/.credentials.json
+.claude/worktrees/
+.claude/scheduled_tasks.lock
 
 # Xcode derived build output
 dist/
@@ -46,6 +48,13 @@ dist/
 # Screenshots (build artifacts)
 _workshop/screenshots/
 _screenshots/
+docs/screenshots/
+docs/screenshots-v12/
+docs/screenshots-v13/
+
+# QA / build artifacts
+*.xcresult
+sounds/
 
 # Firebase
 GoogleService-Info.plist
