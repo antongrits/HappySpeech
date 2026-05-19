@@ -18,6 +18,7 @@ import XCTest
 //   Tutorial sheet: содержит кнопки «ar.tutorial.cta.start» / «ar.tutorial.cta.skip»
 // ==========================================================================
 
+@MainActor
 final class ARSessionSmokeUITest: XCTestCase {
 
     private var app: XCUIApplication!

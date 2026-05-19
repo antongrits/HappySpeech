@@ -34,6 +34,7 @@ import XCTest
 //   резолвят к root AppRoute → identical screenshots. Defer через ADR-V23-TOUR
 //   (см. .claude/team/decisions.md). Sub-routes screenshots = parent root.
 
+@MainActor
 final class AllScreensTourUITests: XCTestCase {
 
     // MARK: - Setup

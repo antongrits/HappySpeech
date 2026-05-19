@@ -13,6 +13,7 @@ import XCTest
 // -UITestResetState роутил в онбординг, и все тесты скипались).
 // ==================================================================================
 
+@MainActor
 final class AuthFlowUITests: XCTestCase {
 
     private var app: XCUIApplication!

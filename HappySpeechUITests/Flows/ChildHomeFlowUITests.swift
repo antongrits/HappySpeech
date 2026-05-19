@@ -22,6 +22,7 @@ import XCTest
 //   sessionHUDProgress       — HUD-степпер (значение "step/total")
 // =========================================================================
 
+@MainActor
 final class ChildHomeFlowUITests: XCTestCase {
 
     private var app: XCUIApplication!

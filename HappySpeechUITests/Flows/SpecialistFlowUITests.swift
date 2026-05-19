@@ -19,6 +19,7 @@ import XCTest
 //   SessionReviewRoot        — ZStack экрана обзора сессии
 // =========================================================================
 
+@MainActor
 final class SpecialistFlowUITests: XCTestCase {
 
     private var app: XCUIApplication!

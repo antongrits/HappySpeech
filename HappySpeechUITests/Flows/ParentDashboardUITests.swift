@@ -20,6 +20,7 @@ import XCTest
 //   SettingsRoot          — List внутри SettingsView
 // =========================================================================
 
+@MainActor
 final class ParentDashboardUITests: XCTestCase {
 
     private var app: XCUIApplication!

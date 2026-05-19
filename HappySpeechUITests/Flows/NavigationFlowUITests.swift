@@ -13,6 +13,7 @@ import XCTest
 //   - Rewards: экран открывается
 //   - ProgressDashboard: экран открывается
 
+@MainActor
 final class NavigationFlowUITests: XCTestCase {
 
     private var app: XCUIApplication!

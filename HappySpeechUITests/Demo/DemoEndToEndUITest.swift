@@ -18,6 +18,7 @@ import XCTest
 //   «DemoProgressLabel» — текст «Шаг N из 15»
 // ==========================================================================
 
+@MainActor
 final class DemoEndToEndUITest: XCTestCase {
 
     private var app: XCUIApplication!

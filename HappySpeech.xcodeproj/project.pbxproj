@@ -935,6 +935,7 @@
 		9BFD1C68F7DBE86D84C8D17A /* ParentHomeDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8DD985EF4676F14BF5D560C /* ParentHomeDisplayLogic.swift */; };
 		9C06BEBE96C1BC91D17E0404 /* AmbientSoundServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74AD87E91167088238F1EFA /* AmbientSoundServiceTests.swift */; };
 		9C084C7C5120429194004FB2 /* ar-story-quest.json in Resources */ = {isa = PBXBuildFile; fileRef = C056271BC50153F86AC2487C /* ar-story-quest.json */; };
+		9C6CF5F340C2ABF736BDABEF /* KeyScreensInteractionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08D271EEDC98E3A75F9D91A9 /* KeyScreensInteractionUITests.swift */; };
 		9CCD4091DFCDF2ACD914CD5C /* FamilyRecordingObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4B18643ACAFD1544F0D8A8 /* FamilyRecordingObject.swift */; };
 		9D121DF3F5C152A3CD3D86CA /* SpotlightIndexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3604118EB3A2645FE843638 /* SpotlightIndexer.swift */; };
 		9D1EA3D180CC80191CE99F17 /* NarrativeQuestRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E93847BF93F4100201C582D /* NarrativeQuestRouter.swift */; };
@@ -1535,6 +1536,7 @@
 		083A52446EC67BB88DCB2B78 /* HappySpeechApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HappySpeechApp.swift; sourceTree = "<group>"; };
 		0861A7AEA66B17772DFE23B1 /* RepeatAfterModelInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatAfterModelInteractorTests.swift; sourceTree = "<group>"; };
 		0883D50AA059920BB765C1DF /* VADService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VADService.swift; sourceTree = "<group>"; };
+		08D271EEDC98E3A75F9D91A9 /* KeyScreensInteractionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyScreensInteractionUITests.swift; sourceTree = "<group>"; };
 		09218AD56722A8C66B797856 /* SileroVAD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SileroVAD.swift; sourceTree = "<group>"; };
 		094D2939B36F7EC1DC87DDA5 /* SessionReviewPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionReviewPresenterTests.swift; sourceTree = "<group>"; };
 		0950E89CCE6F7724FBBCB547 /* HoldThePosePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldThePosePresenter.swift; sourceTree = "<group>"; };
@@ -4444,6 +4446,7 @@
 				E27D4B539470C12018F8DADC /* ChildHomeFlowUITests.swift */,
 				B92A7EAAE23C8A38B6055E89 /* GamePlaythroughHelper.swift */,
 				0DE5043E85610271B83E3A3A /* GamePlaythroughUITests.swift */,
+				08D271EEDC98E3A75F9D91A9 /* KeyScreensInteractionUITests.swift */,
 				2823292CC309386CF6FB9E1F /* NavigationFlowUITests.swift */,
 				49A0ED34A0F97ED8A7F8F355 /* OnboardingFlowUITests.swift */,
 				5A0CA8BFD01204C1B767211C /* OnboardingToFirstLessonUITests.swift */,
@@ -7027,6 +7030,7 @@
 				13F9761E0AC5742AB2E16CB6 /* DemoEndToEndUITest.swift in Sources */,
 				7B7AF97E57C16DC9533629E2 /* GamePlaythroughHelper.swift in Sources */,
 				F9340620BA4A468DF56692C0 /* GamePlaythroughUITests.swift in Sources */,
+				9C6CF5F340C2ABF736BDABEF /* KeyScreensInteractionUITests.swift in Sources */,
 				2B03DB48BAB5C0BE6D230A2F /* NavigationFlowUITests.swift in Sources */,
 				D2F699E39C7F341CD901740A /* OfflineReconnectUITest.swift in Sources */,
 				3EB3D6CC6FC5B73E8AC35489 /* OnboardingFlowUITests.swift in Sources */,

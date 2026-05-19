@@ -13,6 +13,7 @@ import XCTest
 //   -UITestDisableAnimations  → ускоряет UI-тесты
 // ==================================================================================
 
+@MainActor
 final class OnboardingFlowUITests: XCTestCase {
 
     private var app: XCUIApplication!

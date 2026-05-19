@@ -17,6 +17,7 @@ import XCTest
 //   • continueAfterFailure = false.
 // ==========================================================================
 
+@MainActor
 final class ThemeToggleUITest: XCTestCase {
 
     private var app: XCUIApplication!

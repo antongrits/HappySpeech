@@ -16,6 +16,7 @@ import XCTest
 // short "any of these" probes so it doesn't become fragile to UX tweaks.
 // ==================================================================================
 
+@MainActor
 final class OnboardingToFirstLessonUITests: XCTestCase {
 
     private var app: XCUIApplication!

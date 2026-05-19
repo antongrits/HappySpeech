@@ -15,6 +15,7 @@ import XCTest
 //   • NSPredicate создаётся внутри test-методов (Swift 6 concurrency safe).
 // ==========================================================================
 
+@MainActor
 final class OfflineReconnectUITest: XCTestCase {
 
     private var app: XCUIApplication!
