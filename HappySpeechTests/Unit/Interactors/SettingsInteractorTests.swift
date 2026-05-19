@@ -115,6 +115,22 @@ final class SettingsInteractorTests: XCTestCase {
         return (sut, spy)
     }
 
+    /// Детерминированно ждёт выполнения условия (вместо фиксированного sleep).
+    /// Работа диспатчится в Task — polling устраняет гонку с планировщиком.
+    private func waitUntil(
+        timeout: TimeInterval = 5.0,
+        _ condition: @MainActor () -> Bool
+    ) async throws {
+        let deadline = Date().addingTimeInterval(timeout)
+        while !condition() {
+            if Date() > deadline {
+                XCTFail("waitUntil: условие не выполнено за \(timeout) с")
+                return
+            }
+            try await Task.sleep(nanoseconds: 5_000_000)
+        }
+    }
+
     // MARK: - 1. loadSettings вызывает presentLoadSettings
 
     func test_loadSettings_callsPresenter() {
@@ -157,8 +173,8 @@ final class SettingsInteractorTests: XCTestCase {
     func test_exportData_callsPresenter() async throws {
         let (sut, spy) = makeSUT()
         sut.exportData(.init(format: .pdf, childId: "test-child-id"))
-        // exportData выполняется в Task — даём ему завершиться
-        try await Task.sleep(nanoseconds: 200_000_000)
+        // exportData выполняется в Task — ждём callback детерминированно
+        try await waitUntil { spy.exportDataCalled }
         XCTAssertTrue(spy.exportDataCalled)
     }
 
@@ -280,8 +296,8 @@ final class SettingsInteractorTests: XCTestCase {
     func test_loadModelPacks_noManagers_returnsStubs() async throws {
         let (sut, spy) = makeSUT()
         sut.loadModelPacks(.init())
-        // Даём Task внутри loadModelPacks шанс выполниться.
-        try await Task.sleep(nanoseconds: 50_000_000)
+        // Ждём Task внутри loadModelPacks детерминированно.
+        try await waitUntil { spy.loadModelPacksCalled }
         XCTAssertTrue(spy.loadModelPacksCalled)
     }
 
@@ -302,7 +318,7 @@ final class SettingsInteractorTests: XCTestCase {
         let spy = SpyPresenter()
         sut.presenter = spy
         sut.loadModelPacks(.init())
-        try await Task.sleep(nanoseconds: 100_000_000)
+        try await waitUntil { spy.loadModelPacksCalled }
         XCTAssertTrue(spy.loadModelPacksCalled)
     }
 
@@ -311,7 +327,7 @@ final class SettingsInteractorTests: XCTestCase {
     func test_downloadModelPack_asr_noManager_callsPresenterFailure() async throws {
         let (sut, spy) = makeSUT()
         sut.downloadModelPack(.init(family: .asr(.tiny)))
-        try await Task.sleep(nanoseconds: 50_000_000)
+        try await waitUntil { spy.downloadModelPackCalled }
         XCTAssertTrue(spy.downloadModelPackCalled)
     }
 
@@ -320,7 +336,7 @@ final class SettingsInteractorTests: XCTestCase {
     func test_downloadModelPack_llm_noManager_callsPresenterFailure() async throws {
         let (sut, spy) = makeSUT()
         sut.downloadModelPack(.init(family: .llm(.qwen15b)))
-        try await Task.sleep(nanoseconds: 50_000_000)
+        try await waitUntil { spy.downloadModelPackCalled }
         XCTAssertTrue(spy.downloadModelPackCalled)
     }
 
@@ -329,7 +345,7 @@ final class SettingsInteractorTests: XCTestCase {
     func test_deleteModelPack_asr_noManager_callsPresenterFailure() async throws {
         let (sut, spy) = makeSUT()
         sut.deleteModelPack(.init(family: .asr(.tiny)))
-        try await Task.sleep(nanoseconds: 50_000_000)
+        try await waitUntil { spy.deleteModelPackCalled }
         XCTAssertTrue(spy.deleteModelPackCalled)
     }
 
@@ -338,7 +354,7 @@ final class SettingsInteractorTests: XCTestCase {
     func test_deleteModelPack_llm_noManager_callsPresenterFailure() async throws {
         let (sut, spy) = makeSUT()
         sut.deleteModelPack(.init(family: .llm(.qwen15b)))
-        try await Task.sleep(nanoseconds: 50_000_000)
+        try await waitUntil { spy.deleteModelPackCalled }
         XCTAssertTrue(spy.deleteModelPackCalled)
     }
 
@@ -358,7 +374,7 @@ final class SettingsInteractorTests: XCTestCase {
         let spy = SpyPresenter()
         sut.presenter = spy
         sut.downloadModelPack(SettingsModels.DownloadModelPack.Request(family: .asr(.tiny)))
-        try await Task.sleep(nanoseconds: 200_000_000)
+        try await waitUntil { spy.downloadModelPackCalled }
         XCTAssertTrue(spy.downloadModelPackCalled)
     }
 
@@ -378,7 +394,7 @@ final class SettingsInteractorTests: XCTestCase {
         let spy = SpyPresenter()
         sut.presenter = spy
         sut.deleteModelPack(SettingsModels.DeleteModelPack.Request(family: .asr(.base)))
-        try await Task.sleep(nanoseconds: 200_000_000)
+        try await waitUntil { spy.deleteModelPackCalled }
         XCTAssertTrue(spy.deleteModelPackCalled)
     }
 
@@ -387,7 +403,7 @@ final class SettingsInteractorTests: XCTestCase {
     func test_exportShare_writesFileAndCallsPresenter() async throws {
         let (sut, spy) = makeSUT()
         sut.exportShare(.init(userId: "user-123"))
-        try await Task.sleep(nanoseconds: 100_000_000)
+        try await waitUntil { spy.exportShareCalled }
         XCTAssertTrue(spy.exportShareCalled)
     }
 
@@ -405,7 +421,7 @@ final class SettingsInteractorTests: XCTestCase {
         let spy = SpyPresenter()
         sut.presenter = spy
         sut.toggleNotifications(.init(enabled: false, reminderTime: Date()))
-        try await Task.sleep(nanoseconds: 100_000_000)
+        try await waitUntil { spy.toggleNotificationsCalled }
         XCTAssertTrue(spy.toggleNotificationsCalled)
     }
 
@@ -427,7 +443,7 @@ final class SettingsInteractorTests: XCTestCase {
         components.minute = 0
         let reminderTime = Calendar.current.date(from: components) ?? Date()
         sut.toggleNotifications(.init(enabled: true, reminderTime: reminderTime))
-        try await Task.sleep(nanoseconds: 100_000_000)
+        try await waitUntil { spy.toggleNotificationsCalled }
         XCTAssertTrue(spy.toggleNotificationsCalled)
     }
 
@@ -494,7 +510,7 @@ final class SettingsInteractorTests: XCTestCase {
         let (sut, spy) = makeSUT()
         sut.loadSettings(.init())
         sut.toggleKidDailyReminder(.init(enabled: true))
-        try await Task.sleep(nanoseconds: 100_000_000)
+        try await waitUntil { spy.toggleKidDailyReminderCalled }
         XCTAssertTrue(spy.toggleKidDailyReminderCalled)
     }
 
@@ -502,7 +518,7 @@ final class SettingsInteractorTests: XCTestCase {
         let (sut, spy) = makeSUT()
         sut.loadSettings(.init())
         sut.toggleKidDailyReminder(.init(enabled: false))
-        try await Task.sleep(nanoseconds: 100_000_000)
+        try await waitUntil { spy.toggleKidDailyReminderCalled }
         XCTAssertTrue(spy.toggleKidDailyReminderCalled)
     }
 
@@ -512,7 +528,7 @@ final class SettingsInteractorTests: XCTestCase {
         let (sut, spy) = makeSUT()
         sut.loadSettings(.init())
         sut.toggleWeeklyParentSummary(.init(enabled: true))
-        try await Task.sleep(nanoseconds: 100_000_000)
+        try await waitUntil { spy.toggleWeeklyParentSummaryCalled }
         XCTAssertTrue(spy.toggleWeeklyParentSummaryCalled)
     }
 
@@ -520,7 +536,7 @@ final class SettingsInteractorTests: XCTestCase {
         let (sut, spy) = makeSUT()
         sut.loadSettings(.init())
         sut.toggleWeeklyParentSummary(.init(enabled: false))
-        try await Task.sleep(nanoseconds: 100_000_000)
+        try await waitUntil { spy.toggleWeeklyParentSummaryCalled }
         XCTAssertTrue(spy.toggleWeeklyParentSummaryCalled)
     }
 
@@ -546,14 +562,14 @@ final class SettingsInteractorTests: XCTestCase {
     func test_exportData_csv_callsPresenter() async throws {
         let (sut, spy) = makeSUT()
         sut.exportData(.init(format: .csv, childId: "child-1"))
-        try await Task.sleep(nanoseconds: 300_000_000)
+        try await waitUntil { spy.exportDataCalled }
         XCTAssertTrue(spy.exportDataCalled)
     }
 
     func test_exportData_json_callsPresenter() async throws {
         let (sut, spy) = makeSUT()
         sut.exportData(.init(format: .json, childId: "child-1"))
-        try await Task.sleep(nanoseconds: 300_000_000)
+        try await waitUntil { spy.exportDataCalled }
         XCTAssertTrue(spy.exportDataCalled)
     }
 }

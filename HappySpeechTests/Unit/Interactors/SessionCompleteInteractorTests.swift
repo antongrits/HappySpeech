@@ -93,6 +93,22 @@ final class SessionCompleteInteractorTests: XCTestCase {
         return (sut, spy)
     }
 
+    /// Детерминированно ждёт выполнения условия (вместо фиксированного sleep).
+    /// Persistence pipeline диспатчится в Task — polling устраняет гонку с планировщиком.
+    private func waitUntil(
+        timeout: TimeInterval = 5.0,
+        _ condition: @MainActor () -> Bool
+    ) async throws {
+        let deadline = Date().addingTimeInterval(timeout)
+        while !condition() {
+            if Date() > deadline {
+                XCTFail("waitUntil: условие не выполнено за \(timeout) с")
+                return
+            }
+            try await Task.sleep(nanoseconds: 5_000_000)
+        }
+    }
+
     // MARK: - 1. loadResult вызывает presentLoadResult
 
     func test_loadResult_callsPresenter() {
@@ -226,7 +242,7 @@ final class SessionCompleteInteractorTests: XCTestCase {
 
     // MARK: - 11. loadResult с childId → persistence pipeline вызывает презентер
 
-    func test_loadResult_withChildId_runsPersistencePipeline() async {
+    func test_loadResult_withChildId_runsPersistencePipeline() async throws {
         let childRepo = MockChildRepository(children: [TestDataBuilder.childProfile(id: "c-1")])
         let sut = SessionCompleteInteractor(
             realmActor: RealmActor(),
@@ -241,19 +257,19 @@ final class SessionCompleteInteractorTests: XCTestCase {
             nextLessonTitle: nil, childId: "c-1", sessionId: "sess-x"
         )
         sut.loadResult(.init(result: result))
-        // persistence pipeline async — ждём
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
+        // persistence pipeline async — ждём детерминированно завершения обоих этапов
+        try await waitUntil { spy.stickerRevealCalled && spy.streakUpdateCalled }
         XCTAssertTrue(spy.stickerRevealCalled, "Persistence pipeline должен раскрыть стикер")
         XCTAssertTrue(spy.streakUpdateCalled)
     }
 
     // MARK: - 12. loadResult без childId (preview mode) не крашит
 
-    func test_loadResult_emptyChildId_previewMode_doesNotCrash() async {
+    func test_loadResult_emptyChildId_previewMode_doesNotCrash() async throws {
         let (sut, spy) = makeSUT()
         // sampleResult имеет childId по умолчанию ""
         sut.loadResult(.init(result: sampleResult))
-        try? await Task.sleep(nanoseconds: 800_000_000)
+        try await waitUntil { spy.loadResultCalled }
         XCTAssertTrue(spy.loadResultCalled)
     }
 

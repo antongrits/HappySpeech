@@ -63,6 +63,22 @@ final class HomeTasksInteractorTests: XCTestCase {
         return (sut, spy)
     }
 
+    /// Детерминированно ждёт выполнения условия (вместо фиксированного sleep).
+    /// Работа диспатчится в Task — polling устраняет гонку с планировщиком.
+    private func waitUntil(
+        timeout: TimeInterval = 5.0,
+        _ condition: @MainActor () -> Bool
+    ) async throws {
+        let deadline = Date().addingTimeInterval(timeout)
+        while !condition() {
+            if Date() > deadline {
+                XCTFail("waitUntil: условие не выполнено за \(timeout) с")
+                return
+            }
+            try await Task.sleep(nanoseconds: 5_000_000)
+        }
+    }
+
     // MARK: - 1. fetch вызывает presentFetch с заданиями
 
     func test_fetch_callsPresenterWithTasks() {
@@ -195,8 +211,8 @@ final class HomeTasksInteractorTests: XCTestCase {
     func test_requestOverdueReminder_withService_callsPresenter() async throws {
         let (sut, spy) = makeSUT()
         sut.requestOverdueReminder(.init(hour: 9, minute: 0))
-        // 300ms: даёт @MainActor Task внутри requestOverdueReminder завершиться
-        try await Task.sleep(nanoseconds: 300_000_000)
+        // Ждём @MainActor Task внутри requestOverdueReminder детерминированно
+        try await waitUntil { spy.notifyOverdueCalled }
         XCTAssertTrue(spy.notifyOverdueCalled)
     }
 
@@ -219,7 +235,7 @@ final class HomeTasksInteractorTests: XCTestCase {
             sut2.presenter = spy2
             sut2.fetch(.init(forceReload: false))
             sut2.scheduleReminder(.init(taskId: firstTask.id, leadTimeMinutes: 30))
-            try await Task.sleep(nanoseconds: 100_000_000)
+            try await waitUntil { spy2.scheduleReminderCalled || spy2.failureCalled }
             XCTAssertTrue(spy2.scheduleReminderCalled || spy2.failureCalled)
             return
         }
@@ -249,7 +265,7 @@ final class HomeTasksInteractorTests: XCTestCase {
             return
         }
         sut.scheduleReminder(.init(taskId: taskWithDueDate.id, leadTimeMinutes: 30))
-        try await Task.sleep(nanoseconds: 200_000_000)
+        try await waitUntil { spy.scheduleReminderCalled }
         XCTAssertTrue(spy.scheduleReminderCalled)
     }
 }
