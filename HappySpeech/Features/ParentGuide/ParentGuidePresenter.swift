@@ -43,7 +43,7 @@ final class ParentGuidePresenter: ParentGuidePresentationLogic {
         }
 
         func makeLessonVM(_ lesson: GuideLesson) -> ParentGuideModels.Load.LessonViewModel {
-            let title = localized(lesson.titleKey)
+            let title = lesson.title
             let topicTitle = localized(lesson.topic.titleKey)
             let isRead = response.readLessonIds.contains(lesson.id)
             let recommended = isRecommended(lesson)
@@ -57,8 +57,8 @@ final class ParentGuidePresenter: ParentGuidePresentationLogic {
             return .init(
                 id: lesson.id,
                 title: title,
-                summary: localized(lesson.summaryKey),
-                body: localized(lesson.bodyKey),
+                summary: lesson.summary,
+                body: lesson.body,
                 topicTitle: topicTitle,
                 symbolName: lesson.topic.symbolName,
                 readLabel: readLabel,

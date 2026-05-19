@@ -1,13 +1,14 @@
 import Foundation
+import OSLog
 
 // MARK: - ParentGuideCorpus
 //
 // v29 Фаза 8, Функция 3 «Логопед для родителей».
 //
-// Статический корпус из 24 обучающих карточек-уроков, размеченных по
-// тематике и (где применимо) по группам звуков. Содержание уроков —
-// в Localizable.xcstrings; здесь — структура и метаданные.
+// Корпус обучающих карточек-уроков для родителя как со-терапевта,
+// размеченных по тематике и (где применимо) по группам звуков.
 //
+// Контент загружается из бандл-ресурса `pack_parent_guide.json` (~60 уроков).
 // Методическая основа (см. [[speech-methodology]]): принцип «доступность
 // родителю», ежедневная последовательная гимнастика (Фомичёва), щадящий
 // речевой режим при заикании, важность похвалы за попытку.
@@ -16,199 +17,8 @@ import Foundation
 
 enum ParentGuideCorpus {
 
-    /// Все уроки корпуса.
-    static let lessons: [GuideLesson] = basics + articulation + sounds + phonemic + fluency + motivation
-
-    // MARK: - Основы домашних занятий
-
-    private static let basics: [GuideLesson] = [
-        .init(id: "guide-basics-routine",
-              topic: .basics,
-              titleKey: "parentGuide.lesson.basics.routine.title",
-              summaryKey: "parentGuide.lesson.basics.routine.summary",
-              bodyKey: "parentGuide.lesson.basics.routine.body",
-              relevantSoundGroups: [],
-              readMinutes: 2),
-        .init(id: "guide-basics-duration",
-              topic: .basics,
-              titleKey: "parentGuide.lesson.basics.duration.title",
-              summaryKey: "parentGuide.lesson.basics.duration.summary",
-              bodyKey: "parentGuide.lesson.basics.duration.body",
-              relevantSoundGroups: [],
-              readMinutes: 2),
-        .init(id: "guide-basics-environment",
-              topic: .basics,
-              titleKey: "parentGuide.lesson.basics.environment.title",
-              summaryKey: "parentGuide.lesson.basics.environment.summary",
-              bodyKey: "parentGuide.lesson.basics.environment.body",
-              relevantSoundGroups: [],
-              readMinutes: 2),
-        .init(id: "guide-basics-mistakes",
-              topic: .basics,
-              titleKey: "parentGuide.lesson.basics.mistakes.title",
-              summaryKey: "parentGuide.lesson.basics.mistakes.summary",
-              bodyKey: "parentGuide.lesson.basics.mistakes.body",
-              relevantSoundGroups: [],
-              readMinutes: 3)
-    ]
-
-    // MARK: - Артикуляционная гимнастика
-
-    private static let articulation: [GuideLesson] = [
-        .init(id: "guide-artic-mirror",
-              topic: .articulation,
-              titleKey: "parentGuide.lesson.artic.mirror.title",
-              summaryKey: "parentGuide.lesson.artic.mirror.summary",
-              bodyKey: "parentGuide.lesson.artic.mirror.body",
-              relevantSoundGroups: [],
-              readMinutes: 2),
-        .init(id: "guide-artic-hold",
-              topic: .articulation,
-              titleKey: "parentGuide.lesson.artic.hold.title",
-              summaryKey: "parentGuide.lesson.artic.hold.summary",
-              bodyKey: "parentGuide.lesson.artic.hold.body",
-              relevantSoundGroups: [],
-              readMinutes: 2),
-        .init(id: "guide-artic-sonants",
-              topic: .articulation,
-              titleKey: "parentGuide.lesson.artic.sonants.title",
-              summaryKey: "parentGuide.lesson.artic.sonants.summary",
-              bodyKey: "parentGuide.lesson.artic.sonants.body",
-              relevantSoundGroups: ["sonants"],
-              readMinutes: 3),
-        .init(id: "guide-artic-whistling",
-              topic: .articulation,
-              titleKey: "parentGuide.lesson.artic.whistling.title",
-              summaryKey: "parentGuide.lesson.artic.whistling.summary",
-              bodyKey: "parentGuide.lesson.artic.whistling.body",
-              relevantSoundGroups: ["whistling"],
-              readMinutes: 3)
-    ]
-
-    // MARK: - Постановка и автоматизация звуков
-
-    private static let sounds: [GuideLesson] = [
-        .init(id: "guide-sounds-stages",
-              topic: .sounds,
-              titleKey: "parentGuide.lesson.sounds.stages.title",
-              summaryKey: "parentGuide.lesson.sounds.stages.summary",
-              bodyKey: "parentGuide.lesson.sounds.stages.body",
-              relevantSoundGroups: [],
-              readMinutes: 3),
-        .init(id: "guide-sounds-automation",
-              topic: .sounds,
-              titleKey: "parentGuide.lesson.sounds.automation.title",
-              summaryKey: "parentGuide.lesson.sounds.automation.summary",
-              bodyKey: "parentGuide.lesson.sounds.automation.body",
-              relevantSoundGroups: [],
-              readMinutes: 3),
-        .init(id: "guide-sounds-r",
-              topic: .sounds,
-              titleKey: "parentGuide.lesson.sounds.r.title",
-              summaryKey: "parentGuide.lesson.sounds.r.summary",
-              bodyKey: "parentGuide.lesson.sounds.r.body",
-              relevantSoundGroups: ["sonants"],
-              readMinutes: 3),
-        .init(id: "guide-sounds-differentiation",
-              topic: .sounds,
-              titleKey: "parentGuide.lesson.sounds.differentiation.title",
-              summaryKey: "parentGuide.lesson.sounds.differentiation.summary",
-              bodyKey: "parentGuide.lesson.sounds.differentiation.body",
-              relevantSoundGroups: ["whistling", "hissing"],
-              readMinutes: 3)
-    ]
-
-    // MARK: - Фонематический слух
-
-    private static let phonemic: [GuideLesson] = [
-        .init(id: "guide-phon-why",
-              topic: .phonemic,
-              titleKey: "parentGuide.lesson.phon.why.title",
-              summaryKey: "parentGuide.lesson.phon.why.summary",
-              bodyKey: "parentGuide.lesson.phon.why.body",
-              relevantSoundGroups: [],
-              readMinutes: 2),
-        .init(id: "guide-phon-games",
-              topic: .phonemic,
-              titleKey: "parentGuide.lesson.phon.games.title",
-              summaryKey: "parentGuide.lesson.phon.games.summary",
-              bodyKey: "parentGuide.lesson.phon.games.body",
-              relevantSoundGroups: [],
-              readMinutes: 3),
-        .init(id: "guide-phon-school",
-              topic: .phonemic,
-              titleKey: "parentGuide.lesson.phon.school.title",
-              summaryKey: "parentGuide.lesson.phon.school.summary",
-              bodyKey: "parentGuide.lesson.phon.school.body",
-              relevantSoundGroups: [],
-              readMinutes: 2)
-    ]
-
-    // MARK: - Плавность речи / заикание
-
-    private static let fluency: [GuideLesson] = [
-        .init(id: "guide-fluency-dos",
-              topic: .fluency,
-              titleKey: "parentGuide.lesson.fluency.dos.title",
-              summaryKey: "parentGuide.lesson.fluency.dos.summary",
-              bodyKey: "parentGuide.lesson.fluency.dos.body",
-              relevantSoundGroups: [],
-              readMinutes: 3),
-        .init(id: "guide-fluency-donts",
-              topic: .fluency,
-              titleKey: "parentGuide.lesson.fluency.donts.title",
-              summaryKey: "parentGuide.lesson.fluency.donts.summary",
-              bodyKey: "parentGuide.lesson.fluency.donts.body",
-              relevantSoundGroups: [],
-              readMinutes: 3),
-        .init(id: "guide-fluency-tempo",
-              topic: .fluency,
-              titleKey: "parentGuide.lesson.fluency.tempo.title",
-              summaryKey: "parentGuide.lesson.fluency.tempo.summary",
-              bodyKey: "parentGuide.lesson.fluency.tempo.body",
-              relevantSoundGroups: [],
-              readMinutes: 2),
-        .init(id: "guide-fluency-calm",
-              topic: .fluency,
-              titleKey: "parentGuide.lesson.fluency.calm.title",
-              summaryKey: "parentGuide.lesson.fluency.calm.summary",
-              bodyKey: "parentGuide.lesson.fluency.calm.body",
-              relevantSoundGroups: [],
-              readMinutes: 2)
-    ]
-
-    // MARK: - Мотивация и похвала
-
-    private static let motivation: [GuideLesson] = [
-        .init(id: "guide-motiv-praise",
-              topic: .motivation,
-              titleKey: "parentGuide.lesson.motiv.praise.title",
-              summaryKey: "parentGuide.lesson.motiv.praise.summary",
-              bodyKey: "parentGuide.lesson.motiv.praise.body",
-              relevantSoundGroups: [],
-              readMinutes: 2),
-        .init(id: "guide-motiv-effort",
-              topic: .motivation,
-              titleKey: "parentGuide.lesson.motiv.effort.title",
-              summaryKey: "parentGuide.lesson.motiv.effort.summary",
-              bodyKey: "parentGuide.lesson.motiv.effort.body",
-              relevantSoundGroups: [],
-              readMinutes: 2),
-        .init(id: "guide-motiv-play",
-              topic: .motivation,
-              titleKey: "parentGuide.lesson.motiv.play.title",
-              summaryKey: "parentGuide.lesson.motiv.play.summary",
-              bodyKey: "parentGuide.lesson.motiv.play.body",
-              relevantSoundGroups: [],
-              readMinutes: 2),
-        .init(id: "guide-motiv-patience",
-              topic: .motivation,
-              titleKey: "parentGuide.lesson.motiv.patience.title",
-              summaryKey: "parentGuide.lesson.motiv.patience.summary",
-              bodyKey: "parentGuide.lesson.motiv.patience.body",
-              relevantSoundGroups: [],
-              readMinutes: 2)
-    ]
+    /// Все уроки корпуса (из `pack_parent_guide.json`).
+    static let lessons: [GuideLesson] = ParentGuidePackLoader.shared.lessons
 
     /// Возвращает урок по идентификатору.
     static func lesson(forId id: String) -> GuideLesson? {
@@ -227,4 +37,138 @@ enum ParentGuideCorpus {
         if velar.contains(sound) { return "velar" }
         return nil
     }
+}
+
+// MARK: - ParentGuidePackLoader
+//
+// Разбирает `pack_parent_guide.json` один раз. При отказе бандла возвращает
+// безопасный минимальный набор, чтобы модуль оставался рабочим.
+
+struct ParentGuidePackLoader {
+
+    static let shared = ParentGuidePackLoader()
+
+    let lessons: [GuideLesson]
+
+    private static let logger = Logger(
+        subsystem: "ru.happyspeech",
+        category: "ParentGuide.PackLoader"
+    )
+
+    private struct Pack: Decodable {
+        let lessons: [LessonDTO]
+    }
+
+    private struct LessonDTO: Decodable {
+        let id: String
+        let topic: String
+        let title: String
+        let summary: String
+        let body: String
+        let relevantSoundGroups: [String]
+        let readMinutes: Int
+    }
+
+    private init() {
+        guard let url = Bundle.main.url(
+            forResource: "pack_parent_guide", withExtension: "json"
+        ) else {
+            Self.logger.error("pack_parent_guide.json not found in bundle — using fallback")
+            lessons = ParentGuidePackLoader.fallbackLessons
+            return
+        }
+        do {
+            let data = try Data(contentsOf: url)
+            let pack = try JSONDecoder().decode(Pack.self, from: data)
+            lessons = pack.lessons.compactMap { dto in
+                guard let topic = GuideTopic(rawValue: dto.topic) else {
+                    Self.logger.error("Unknown topic: \(dto.topic, privacy: .public)")
+                    return nil
+                }
+                return GuideLesson(
+                    id: dto.id,
+                    topic: topic,
+                    title: dto.title,
+                    summary: dto.summary,
+                    body: dto.body,
+                    relevantSoundGroups: dto.relevantSoundGroups,
+                    readMinutes: dto.readMinutes
+                )
+            }
+        } catch {
+            Self.logger.error(
+                "pack_parent_guide.json decode error: \(error.localizedDescription, privacy: .public)"
+            )
+            lessons = ParentGuidePackLoader.fallbackLessons
+        }
+    }
+
+    /// Минимальный безопасный набор на случай отказа бандла.
+    private static let fallbackLessons: [GuideLesson] = [
+        GuideLesson(
+            id: "guide-basics-routine", topic: .basics,
+            title: "Когда лучше заниматься",
+            summary: "Регулярность важнее длительности.",
+            body: """
+            Лучше всего заниматься каждый день в одно и то же время — так занятие \
+            становится привычкой. Короткое ежедневное занятие даёт больше, \
+            чем долгое раз в неделю.
+            """,
+            relevantSoundGroups: [], readMinutes: 2
+        ),
+        GuideLesson(
+            id: "guide-artic-mirror", topic: .articulation,
+            title: "Гимнастика перед зеркалом",
+            summary: "Зеркало помогает ребёнку контролировать движения.",
+            body: """
+            Артикуляционную гимнастику делайте перед зеркалом — ребёнок видит свой \
+            язык и губы и сравнивает с образцом. Зрительный контроль ускоряет \
+            освоение правильных укладов.
+            """,
+            relevantSoundGroups: [], readMinutes: 2
+        ),
+        GuideLesson(
+            id: "guide-fluency-dos", topic: .fluency,
+            title: "Как говорить с ребёнком, который заикается",
+            summary: "Говорите спокойно, медленно, не торопите.",
+            body: """
+            Сами говорите неторопливо и спокойно — ребёнок подстраивается под ваш \
+            темп. Не перебивайте, дайте договорить. Спокойная речь взрослого — \
+            лучший образец плавности.
+            """,
+            relevantSoundGroups: [], readMinutes: 3
+        ),
+        GuideLesson(
+            id: "guide-motiv-praise", topic: .motivation,
+            title: "Как правильно хвалить",
+            summary: "Хвалите конкретно и за дело.",
+            body: """
+            Вместо общего «молодец» скажите, что именно получилось: «Ты так чётко \
+            сказал звук С!». Конкретная похвала показывает ребёнку, что ценится, \
+            и он повторяет успех.
+            """,
+            relevantSoundGroups: [], readMinutes: 2
+        ),
+        GuideLesson(
+            id: "guide-phon-why", topic: .phonemic,
+            title: "Зачем нужен фонематический слух",
+            summary: "Это умение различать звуки речи на слух.",
+            body: """
+            Фонематический слух — способность слышать и различать звуки родного \
+            языка. Это основа правильного произношения и грамотного письма.
+            """,
+            relevantSoundGroups: [], readMinutes: 2
+        ),
+        GuideLesson(
+            id: "guide-sounds-stages", topic: .sounds,
+            title: "Этапы работы над звуком",
+            summary: "Звук проходит путь от изолированного до речи.",
+            body: """
+            Работа над звуком идёт по ступеням: подготовка артикуляции, постановка, \
+            автоматизация в слогах, словах, фразах и связной речи. Перескакивать \
+            ступени нельзя.
+            """,
+            relevantSoundGroups: [], readMinutes: 3
+        )
+    ]
 }

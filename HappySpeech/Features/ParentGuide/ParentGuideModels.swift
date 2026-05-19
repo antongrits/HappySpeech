@@ -49,13 +49,14 @@ public enum GuideTopic: String, CaseIterable, Sendable {
 // MARK: - GuideLesson
 
 /// Одна карточка-урок: заголовок, краткое резюме, полный текст.
-/// Тексты — ключи Localizable.xcstrings.
+/// Тексты — русскоязычный контент из бандл-пака `pack_parent_guide.json`
+/// (контентный пак, по своей природе одноязычный — ru-primary).
 public struct GuideLesson: Identifiable, Sendable, Equatable {
     public let id: String
     public let topic: GuideTopic
-    public let titleKey: String
-    public let summaryKey: String
-    public let bodyKey: String
+    public let title: String
+    public let summary: String
+    public let body: String
     /// Группы звуков, для которых урок особенно релевантен (для приоритизации).
     /// Пустой массив — урок универсален.
     public let relevantSoundGroups: [String]
@@ -64,17 +65,17 @@ public struct GuideLesson: Identifiable, Sendable, Equatable {
     public init(
         id: String,
         topic: GuideTopic,
-        titleKey: String,
-        summaryKey: String,
-        bodyKey: String,
+        title: String,
+        summary: String,
+        body: String,
         relevantSoundGroups: [String],
         readMinutes: Int
     ) {
         self.id = id
         self.topic = topic
-        self.titleKey = titleKey
-        self.summaryKey = summaryKey
-        self.bodyKey = bodyKey
+        self.title = title
+        self.summary = summary
+        self.body = body
         self.relevantSoundGroups = relevantSoundGroups
         self.readMinutes = readMinutes
     }
