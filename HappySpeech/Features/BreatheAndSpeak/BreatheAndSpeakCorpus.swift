@@ -114,8 +114,8 @@ enum BreatheAndSpeakCorpus {
         ComplexExercise(
             id: id,
             kind: kind,
-            name: String(localized: String.LocalizationValue("\(baseKey).name")),
-            instruction: String(localized: String.LocalizationValue("\(baseKey).hint")),
+            name: Bundle.main.localizedString(forKey: "\(baseKey).name", value: nil, table: nil),
+            instruction: Bundle.main.localizedString(forKey: "\(baseKey).hint", value: nil, table: nil),
             symbolName: symbol,
             holdSeconds: hold
         )
