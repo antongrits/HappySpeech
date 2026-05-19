@@ -14,7 +14,10 @@ import XCTest
 //   • SyncStateCollector — actor-based коллектор для безопасного захвата состояний
 //     через Task {} в Swift 6 strict concurrency.
 //
-// Тесты НЕ дёргают Firestore — performNetworkUpload стабово ждёт 100ms.
+// Большинство тестов НЕ дёргают сетевой Firestore (offline / queue / state-логика).
+// Тесты УСПЕШНОГО drain/upload (`testDrainQueue*OnSuccess`, `testSyncUserProgress*`)
+// дёргают `setData`/`batch.commit()`, чей `await` резолвится только после ack
+// сервера, — они помечены `XCTSkipUnless` и требуют Firestore-эмулятора.
 
 // MARK: - SyncStateCollector
 
@@ -43,13 +46,40 @@ final class SyncServiceTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        // LiveSyncService.performFirestoreBatchWrite дёргает Firestore.firestore(),
-        // который требует сконфигурированного FirebaseApp. Firestore пишет в
-        // локальный offline-кэш, поэтому commit() завершается без сети.
+        // LiveSyncService.performFirestoreBatchWrite / performNetworkUpload дёргают
+        // Firestore.firestore(), который требует сконфигурированного FirebaseApp.
         FirebaseTestSupport.ensureConfigured()
     }
 
     // MARK: - Helpers
+
+    /// Хост Firestore-эмулятора (по умолчанию — стандартный порт эмулятора).
+    private static let firestoreEmulatorHost = "http://127.0.0.1:8080"
+
+    /// Проверяет доступность Firestore-эмулятора.
+    ///
+    /// Async-методы записи Firestore (`setData`, `batch.commit()`) завершают
+    /// `await` ТОЛЬКО после подтверждения сервером — против локального offline-кэша
+    /// `await` не резолвится. Поэтому тесты УСПЕШНОГО drain/upload требуют реального
+    /// backend'а (эмулятора). Без него их `XCTSkipUnless` пропускает — это честно
+    /// (аналогично `SyncServiceIntegrationTests`), в отличие от зависания процесса.
+    private func checkFirestoreEmulatorAvailable() async -> Bool {
+        guard let url = URL(string: "\(Self.firestoreEmulatorHost)/") else { return false }
+        var request = URLRequest(url: url)
+        request.timeoutInterval = 2
+        do {
+            let (_, response) = try await URLSession.shared.data(for: request)
+            return ((response as? HTTPURLResponse)?.statusCode ?? 0) < 500
+        } catch {
+            return false
+        }
+    }
+
+    /// Сообщение для `XCTSkipUnless` тестов, требующих реальный Firestore backend.
+    private static let needsEmulatorReason =
+        "Успешный drain/upload требует Firestore-эмулятора: async setData/commit " +
+        "резолвят await только после ack сервера. Без backend'а тест зависает — " +
+        "поэтому пропускается (см. SyncServiceIntegrationTests)."
 
     /// Создаёт RealmActor с изолированной in-memory Realm —
     /// каждый тест получает чистое хранилище.
@@ -143,6 +173,8 @@ final class SyncServiceTests: XCTestCase {
     // MARK: - Test 2: drain очищает очередь при успехе
 
     func testDrainQueueEmptiesOnSuccess() async throws {
+        let emulatorAvailable = await checkFirestoreEmulatorAvailable()
+        try XCTSkipUnless(emulatorAvailable, Self.needsEmulatorReason)
         let realm = try await makeRealmActor()
         let sut = makeSUT(realmActor: realm)
         // Дать hydratePendingCount() из init завершиться до enqueue
@@ -158,6 +190,8 @@ final class SyncServiceTests: XCTestCase {
     // MARK: - Test 3: item с retryCount > 0 успешно дренируется (имитация «прошлой ошибки»)
 
     func testDrainQueueProcessesItemWithPriorRetry() async throws {
+        let emulatorAvailable = await checkFirestoreEmulatorAvailable()
+        try XCTSkipUnless(emulatorAvailable, Self.needsEmulatorReason)
         let realm = try await makeRealmActor()
         let itemId = UUID().uuidString
 
@@ -330,6 +364,8 @@ final class SyncServiceTests: XCTestCase {
     // MARK: - Test 10: syncUserProgress собирает snapshot из Realm
 
     func testSyncUserProgressCollectsSnapshot() async throws {
+        let emulatorAvailable = await checkFirestoreEmulatorAvailable()
+        try XCTSkipUnless(emulatorAvailable, Self.needsEmulatorReason)
         let realm = try await makeRealmActor()
         let childId = UUID().uuidString
 
@@ -362,6 +398,8 @@ final class SyncServiceTests: XCTestCase {
     // MARK: - Test 11: syncUserProgress успешно завершается без throw
 
     func testSyncUserProgressSucceeds() async throws {
+        let emulatorAvailable = await checkFirestoreEmulatorAvailable()
+        try XCTSkipUnless(emulatorAvailable, Self.needsEmulatorReason)
         let realm = try await makeRealmActor()
 
         await realm.asyncWrite { realmInstance in

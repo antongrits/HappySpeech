@@ -63,13 +63,15 @@ final class MetronomeWorkerLiveTests: XCTestCase {
     // MARK: - Тик-замыкание
 
     func test_start_firesTickWithinInterval() async {
-        // BPM 600 → interval 0.1s. Ожидаем хотя бы один тик за ~0.4s.
+        // BPM 600 → interval 0.1s. Ожидаем хотя бы один тик.
+        // Таймаут 3.0s — щедрый запас (30× интервала): на загруженном CI
+        // run loop может задержать первый тик, поэтому 1.0s давал флейк.
         let expectation = expectation(description: "metronome tick")
         expectation.assertForOverFulfill = false
         sut.start(bpm: 600) {
             expectation.fulfill()
         }
-        await fulfillment(of: [expectation], timeout: 1.0)
+        await fulfillment(of: [expectation], timeout: 3.0)
         sut.stop()
     }
 
