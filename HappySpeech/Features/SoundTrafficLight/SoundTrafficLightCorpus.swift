@@ -1,77 +1,25 @@
 import Foundation
+import OSLog
 
 // MARK: - SoundTrafficLightCorpus
 //
 // v29 Фаза 8, Функция 5 «Звуковой светофор».
 //
-// Корпус из 8 пар дифференцируемых звуков, по ~12 слов на звук.
-// Лексика — частотная, возрастная (5–8 лет), без сложных кластеров.
+// Корпус пар дифференцируемых звуков, по ~30 слов на звук (60+ единиц на
+// пару). Лексика — частотная, возрастная (5–8 лет), без сложных кластеров.
 // Методическая основа: дифференциация акустически близких пар на этапе
 // автоматизации ([[correction-stages]], Ткаченко).
 //
-// Слова — конкретные существительные, узнаваемые ребёнком на слух.
+// Контент загружается из бандл-ресурса `pack_differentiation.json`.
 // Полностью offline / on-device.
 
 enum SoundTrafficLightCorpus {
 
-    /// Все пары дифференциации.
-    static let pairs: [DifferentiationPair] = [
-        .init(id: "pair-s-sh",
-              soundA: "С", soundB: "Ш",
-              wordsA: ["санки", "сова", "суп", "сок", "сыр", "сумка",
-                       "собака", "стол", "сапоги", "снег", "слон", "сани"],
-              wordsB: ["шапка", "шуба", "шар", "шкаф", "шум", "шина",
-                       "шишка", "шмель", "шорты", "школа", "шахматы", "шалаш"]),
+    /// Все пары дифференциации (из `pack_differentiation.json`).
+    static let pairs: [DifferentiationPair] = SoundTrafficLightPackLoader.shared.pairs
 
-        .init(id: "pair-z-zh",
-              soundA: "З", soundB: "Ж",
-              wordsA: ["заяц", "замок", "зонт", "зубы", "зебра", "звезда",
-                       "забор", "зима", "ваза", "коза", "роза", "глаза"],
-              wordsB: ["жук", "жаба", "жираф", "желудь", "журнал", "жёлудь",
-                       "ёжик", "лужа", "ножи", "пижама", "флажок", "лыжи"]),
-
-        .init(id: "pair-r-l",
-              soundA: "Р", soundB: "Л",
-              wordsA: ["рыба", "рак", "роза", "ракета", "рука", "радуга",
-                       "ручка", "рысь", "ромашка", "робот", "рубашка", "ворота"],
-              wordsB: ["лампа", "лук", "лиса", "лодка", "лимон", "лопата",
-                       "лужа", "ложка", "лестница", "лето", "молоко", "пила"]),
-
-        .init(id: "pair-s-z",
-              soundA: "С", soundB: "З",
-              wordsA: ["сом", "сани", "сахар", "свет", "сумка", "стул",
-                       "коса", "лиса", "оса", "весы", "бусы", "колесо"],
-              wordsB: ["зал", "зуб", "забор", "зерно", "зелёный", "зайка",
-                       "коза", "ваза", "берёза", "глаза", "звонок", "морозы"]),
-
-        .init(id: "pair-sh-zh",
-              soundA: "Ш", soundB: "Ж",
-              wordsA: ["шуба", "шар", "шкаф", "шапка", "шина", "шишка",
-                       "мышка", "кошка", "подушка", "машина", "груша", "вишня"],
-              wordsB: ["жираф", "жук", "жаба", "журнал", "жёлудь", "жильё",
-                       "ножи", "лужа", "пижама", "лыжи", "флажок", "медвежонок"]),
-
-        .init(id: "pair-r-r-soft",
-              soundA: "Р", soundB: "Рь",
-              wordsA: ["рыба", "рак", "рот", "роза", "корова", "гора",
-                       "ворона", "топор", "сыр", "забор", "комар", "помидор"],
-              wordsB: ["река", "репа", "ремень", "рябина", "берёза", "грибы",
-                       "фонари", "сухари", "дверь", "зверь", "пузырь", "якорь"]),
-
-        .init(id: "pair-c-ch",
-              soundA: "Ц", soundB: "Ч",
-              wordsA: ["цапля", "цыплёнок", "цветок", "цепь", "цирк", "царь",
-                       "огурец", "заяц", "кольцо", "птица", "яйцо", "овца"],
-              wordsB: ["часы", "чашка", "чайник", "черепаха", "чемодан", "червяк",
-                       "ключ", "мяч", "врач", "печенье", "качели", "бабочка"]),
-
-        .init(id: "pair-sh-shch",
-              soundA: "Ш", soundB: "Щ",
-              wordsA: ["шапка", "шуба", "шар", "шкаф", "шина", "мишка",
-                       "мышка", "кошка", "лягушка", "катушка", "ромашка", "пушка"],
-              wordsB: ["щука", "щётка", "щенок", "щит", "щавель", "ящик",
-                       "клещи", "плащ", "вещи", "овощи", "роща", "борщ"])
-    ]
+    /// Размер раунда игры (число слов на сессию).
+    static let roundsPerSession = SoundTrafficLightPackLoader.shared.roundsPerSession
 
     /// Возвращает пару по идентификатору.
     static func pair(forId id: String) -> DifferentiationPair? {
@@ -85,9 +33,82 @@ enum SoundTrafficLightCorpus {
         let match = pairs.first { pair in
             target.contains(pair.soundA) || target.contains(pair.soundB)
         }
-        return match ?? pairs[0]
+        return match ?? pairs.first ?? SoundTrafficLightPackLoader.fallbackPairs[0]
+    }
+}
+
+// MARK: - SoundTrafficLightPackLoader
+//
+// Разбирает `pack_differentiation.json` один раз. При отказе бандла
+// возвращает безопасный минимальный набор, чтобы модуль оставался рабочим.
+
+struct SoundTrafficLightPackLoader {
+
+    static let shared = SoundTrafficLightPackLoader()
+
+    let roundsPerSession: Int
+    let pairs: [DifferentiationPair]
+
+    private static let logger = Logger(
+        subsystem: "ru.happyspeech",
+        category: "SoundTrafficLight.PackLoader"
+    )
+
+    private struct Pack: Decodable {
+        let roundsPerSession: Int
+        let pairs: [PairDTO]
     }
 
-    /// Размер раунда игры (число слов на сессию).
-    static let roundsPerSession = 8
+    private struct PairDTO: Decodable {
+        let id: String
+        let soundA: String
+        let soundB: String
+        let wordsA: [String]
+        let wordsB: [String]
+    }
+
+    private init() {
+        guard let url = Bundle.main.url(
+            forResource: "pack_differentiation", withExtension: "json"
+        ) else {
+            Self.logger.error("pack_differentiation.json not found in bundle — using fallback")
+            roundsPerSession = 8
+            pairs = SoundTrafficLightPackLoader.fallbackPairs
+            return
+        }
+        do {
+            let data = try Data(contentsOf: url)
+            let pack = try JSONDecoder().decode(Pack.self, from: data)
+            roundsPerSession = pack.roundsPerSession
+            pairs = pack.pairs.map { dto in
+                DifferentiationPair(
+                    id: dto.id,
+                    soundA: dto.soundA,
+                    soundB: dto.soundB,
+                    wordsA: dto.wordsA,
+                    wordsB: dto.wordsB
+                )
+            }
+        } catch {
+            Self.logger.error(
+                "pack_differentiation.json decode error: \(error.localizedDescription, privacy: .public)"
+            )
+            roundsPerSession = 8
+            pairs = SoundTrafficLightPackLoader.fallbackPairs
+        }
+    }
+
+    /// Минимальный безопасный набор на случай отказа бандла.
+    static let fallbackPairs: [DifferentiationPair] = [
+        .init(id: "pair-s-sh", soundA: "С", soundB: "Ш",
+              wordsA: ["санки", "сова", "суп", "сок", "сыр", "сумка",
+                       "собака", "стол", "сапоги", "снег", "слон", "сани"],
+              wordsB: ["шапка", "шуба", "шар", "шкаф", "шум", "шина",
+                       "шишка", "шмель", "шорты", "школа", "шахматы", "шалаш"]),
+        .init(id: "pair-r-l", soundA: "Р", soundB: "Л",
+              wordsA: ["рыба", "рак", "роза", "ракета", "рука", "радуга",
+                       "ручка", "рысь", "ромашка", "робот", "рубашка", "ворота"],
+              wordsB: ["лампа", "лук", "лиса", "лодка", "лимон", "лопата",
+                       "лужа", "ложка", "лестница", "лето", "молоко", "пила"])
+    ]
 }

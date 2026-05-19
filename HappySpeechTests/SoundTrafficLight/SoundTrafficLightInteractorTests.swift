@@ -140,8 +140,9 @@ final class SoundTrafficLightInteractorTests: XCTestCase {
 
 final class SoundTrafficLightCorpusTests: XCTestCase {
 
-    func test_corpus_hasEightPairs() {
-        XCTAssertEqual(SoundTrafficLightCorpus.pairs.count, 8)
+    func test_corpus_hasDifferentiationPairs() {
+        // v29: пак pack_differentiation.json содержит не менее 9 пар.
+        XCTAssertGreaterThanOrEqual(SoundTrafficLightCorpus.pairs.count, 9)
     }
 
     func test_corpus_pairsHaveWordsForBothSounds() {
