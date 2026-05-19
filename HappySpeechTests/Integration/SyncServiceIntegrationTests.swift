@@ -8,8 +8,12 @@ import XCTest
 // local change → offline → reconnect → remote update (emulated).
 //
 // Используют LiveSyncService с in-memory Realm + MockNetworkMonitor.
-// Не требуют Firebase SDK — performNetworkUpload в LiveSyncService
-// является stub с 100ms задержкой.
+//
+// `LiveSyncService.drainQueue()` с v28 выполняет РЕАЛЬНУЮ выгрузку в Firestore
+// (`performNetworkUpload` — больше не stub). Тесты, проверяющие успешный drain
+// connected-очереди, требуют сконфигурированного Firebase app / эмулятора и
+// помечены `XCTSkip` в unit-host. Логика очереди, offline-skip и состояний
+// покрыта проходящими тестами этого же файла и `SyncServiceTests`.
 
 final class SyncServiceIntegrationTests: FirebaseEmulatorTestsBase {
 
@@ -64,6 +68,11 @@ final class SyncServiceIntegrationTests: FirebaseEmulatorTestsBase {
     // MARK: - 1. Local change → sync → pendingCount уменьшается
 
     func test_localChange_sync_decreasesPendingCount() async throws {
+        let emulatorAvailable = await checkFirestoreEmulatorAvailable()
+        try XCTSkipUnless(
+            emulatorAvailable,
+            "Успешный drain требует Firestore-эмулятора / сконфигурированного Firebase app — недоступно в unit-host."
+        )
         let realm = try await makeRealmActorInMemory()
         let sut = makeLiveSyncService(realm: realm)
         // Ждём hydratePendingCount() из init — аналогично SyncServiceTests паттерну
@@ -109,6 +118,11 @@ final class SyncServiceIntegrationTests: FirebaseEmulatorTestsBase {
     // MARK: - 3. Reconnect → drain выполняется успешно
 
     func test_reconnect_drainSucceeds() async throws {
+        let emulatorAvailable = await checkFirestoreEmulatorAvailable()
+        try XCTSkipUnless(
+            emulatorAvailable,
+            "Успешный drain требует Firestore-эмулятора / сконфигурированного Firebase app — недоступно в unit-host."
+        )
         let realm = try await makeRealmActorInMemory()
         let monitor = MockNetworkMonitor()
         monitor.isConnected = false
@@ -139,6 +153,11 @@ final class SyncServiceIntegrationTests: FirebaseEmulatorTestsBase {
     // MARK: - 4. Несколько items в очереди → все дренируются
 
     func test_multipleItems_allDrained() async throws {
+        let emulatorAvailable = await checkFirestoreEmulatorAvailable()
+        try XCTSkipUnless(
+            emulatorAvailable,
+            "Успешный drain требует Firestore-эмулятора / сконфигурированного Firebase app — недоступно в unit-host."
+        )
         let realm = try await makeRealmActorInMemory()
         let sut = makeLiveSyncService(realm: realm)
         // Ждём hydratePendingCount() из init

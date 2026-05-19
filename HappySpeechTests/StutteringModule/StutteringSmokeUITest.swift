@@ -10,7 +10,7 @@ import XCTest
 @MainActor
 final class StutteringSmokeUITest: XCTestCase {
 
-    // MARK: - 1. Smoke: StutteringInteractor запускается и рендерит 4 карточки без краша
+    // MARK: - 1. Smoke: StutteringInteractor запускается и рендерит карточки без краша
 
     func test_stutteringInteractor_smoke_launchWithoutCrash() {
         UserDefaults.standard.removeObject(forKey: "stuttering_welcome_shown")
@@ -24,8 +24,8 @@ final class StutteringSmokeUITest: XCTestCase {
 
         XCTAssertTrue(spy.presentLoadScreenCalled,
                       "Smoke: loadScreen должен вызывать presenter без краша")
-        XCTAssertEqual(spy.cardCount, 7,
-                       "Smoke: должно быть 7 карточек упражнений")
+        XCTAssertEqual(spy.cardCount, StutteringMode.allCases.count,
+                       "Smoke: одна карточка на каждый режим StutteringMode")
     }
 
     // MARK: - Spy
