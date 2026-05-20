@@ -269,7 +269,7 @@ struct WeekGoalCard: View {
         .frame(width: 160)
         .background(ColorTokens.Parent.surface)
         .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card))
-        .shadow(color: ColorTokens.Parent.inkSoft.opacity(0.2), radius: 4, x: 0, y: 2)
+        .depthShadow(ShadowTokens.parentDepth)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(String(format: String(localized: "family_calendar.a11y.goal_card"),
                                    card.childName, card.sessionsAchieved, card.sessionsGoal))
@@ -476,7 +476,7 @@ struct ChildSummaryCard: View {
         .frame(width: cardWidth, height: cardHeight)
         .background(ColorTokens.Parent.surface)
         .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card))
-        .shadow(color: ColorTokens.Parent.inkSoft.opacity(0.3), radius: 4, x: 0, y: 2)
+        .depthShadow(ShadowTokens.parentDepth)
     }
 }
 

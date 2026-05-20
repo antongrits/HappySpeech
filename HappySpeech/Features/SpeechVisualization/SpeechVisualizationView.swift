@@ -163,8 +163,8 @@ struct SpeechVisualizationView: View {
         .background(
             RoundedRectangle(cornerRadius: 22)
                 .fill(ColorTokens.Kid.surface)
-                .shadow(color: .black.opacity(0.05), radius: 12, y: 4)
         )
+        .depthShadow(ShadowTokens.kidDepth)
     }
 
     @ViewBuilder

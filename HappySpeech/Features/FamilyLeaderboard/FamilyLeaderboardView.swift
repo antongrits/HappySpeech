@@ -208,8 +208,8 @@ struct FamilyLeaderboardView: View {
         .background(
             RoundedRectangle(cornerRadius: 16)
                 .fill(ColorTokens.Parent.surface)
-                .shadow(color: .black.opacity(row.isLeader ? 0.10 : 0.04), radius: 8, y: 2)
         )
+        .depthShadow(ShadowTokens.parentDepth)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(row.accessibilityLabel))
     }

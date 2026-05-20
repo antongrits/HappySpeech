@@ -167,8 +167,8 @@ struct FamilyAchievementsView: View {
         .background(
             RoundedRectangle(cornerRadius: RadiusTokens.card)
                 .fill(ColorTokens.Parent.surface)
-                .shadow(color: .black.opacity(0.05), radius: 8, y: 2)
         )
+        .depthShadow(ShadowTokens.parentDepth)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(String(
             format: String(localized: "family.streak.a11y"),

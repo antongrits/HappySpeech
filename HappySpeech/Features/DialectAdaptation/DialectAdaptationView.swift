@@ -157,8 +157,8 @@ struct DialectAdaptationView: View {
         .background(
             RoundedRectangle(cornerRadius: RadiusTokens.card)
                 .fill(ColorTokens.Parent.surface)
-                .shadow(color: .black.opacity(0.05), radius: 12, y: 4)
         )
+        .depthShadow(ShadowTokens.parentDepth)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(String(
             format: String(localized: "dialect.hero.a11y"),
@@ -284,7 +284,6 @@ struct DialectAdaptationView: View {
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card)
                     .fill(ColorTokens.Parent.surface)
-                    .shadow(color: .black.opacity(0.04), radius: 6, y: 2)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: RadiusTokens.card)
@@ -295,6 +294,7 @@ struct DialectAdaptationView: View {
                         lineWidth: row.isSelected ? 2 : 1
                     )
             )
+            .depthShadow(ShadowTokens.parentDepth)
         }
         .buttonStyle(.plain)
         .accessibilityElement(children: .combine)

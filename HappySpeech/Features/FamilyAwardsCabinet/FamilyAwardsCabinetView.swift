@@ -153,7 +153,7 @@ struct FamilyAwardsCabinetView: View {
                     )
                 )
                 .frame(height: 200)
-                .shadow(color: .black.opacity(0.10), radius: 12, y: 6)
+                .depthShadow(ShadowTokens.parentDepth)
 
             // 3D scene — iOS 18+ RealityView; иначе 2D-fallback с layered cards.
             if #available(iOS 18.0, *), !viewModel.cabinetIsEmpty {

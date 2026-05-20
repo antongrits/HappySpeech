@@ -165,8 +165,8 @@ struct CulturalContentView: View {
         .background(
             RoundedRectangle(cornerRadius: RadiusTokens.card)
                 .fill(ColorTokens.Kid.surface)
-                .shadow(color: .black.opacity(0.05), radius: 8, y: 2)
         )
+        .depthShadow(ShadowTokens.kidDepth)
     }
 
     // MARK: - Categories
@@ -374,12 +374,12 @@ struct CulturalContentView: View {
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.md)
                     .fill(ColorTokens.Kid.surface)
-                    .shadow(color: .black.opacity(0.04), radius: 4, y: 2)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: RadiusTokens.md)
                     .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
             )
+            .depthShadow(ShadowTokens.kidDepth)
         }
         .buttonStyle(.plain)
         .accessibilityElement(children: .combine)
