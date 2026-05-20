@@ -80,7 +80,10 @@ struct ChildHomeView: View {
                         guard let event = SeasonalEventsManager.shared.activeEvent else { return }
                         router?.routeToSeasonalLesson(event: event, childId: childId)
                     }
-                    .animation(.easeInOut(duration: 0.3), value: SeasonalEventsManager.shared.activeEvent?.rawValue)
+                    .animation(
+                        reduceMotion ? nil : .easeInOut(duration: 0.3),
+                        value: SeasonalEventsManager.shared.activeEvent?.rawValue
+                    )
 
                     mascotInteractionZone
                         .spotlightAnchor(key: "mascot_header")
