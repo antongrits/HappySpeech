@@ -854,6 +854,7 @@
 		8B2ACFB355AA33D4B8DA32CC /* LLMInferenceActorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BE929ADC7555F8A9AA48CE /* LLMInferenceActorTests.swift */; };
 		8B6F9104AEA4DA0AE789B623 /* CustomizationPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742CC0FD391B2FFC2A9839FC /* CustomizationPresenterTests.swift */; };
 		8B7F5BC428128E5166A6555B /* CloudFunctionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E628F66E4F84FC7B26738C7 /* CloudFunctionsService.swift */; };
+		8B84B719218827BC05A72AFA /* OpenSoundTrafficLightIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142732EAD20431E771087A23 /* OpenSoundTrafficLightIntent.swift */; };
 		8B88CF91CF83198D4C3865A2 /* DailyChallengeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD20778DE53826EFE2AE1A82 /* DailyChallengeView.swift */; };
 		8BA531EA19467F975717F084 /* SpecialistInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC15071E13A1604882560D55 /* SpecialistInteractorTests.swift */; };
 		8BDE22CB0234125CB8CAB599 /* FluencyDiaryInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404035B51720695C525D0092 /* FluencyDiaryInteractor.swift */; };
@@ -1624,6 +1625,7 @@
 		14063FCA97F3531935E7314D /* VIPFlowIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VIPFlowIntegrationTests.swift; sourceTree = "<group>"; };
 		140BE29A60E7F14222582F3D /* MimicLyalyaRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MimicLyalyaRouter.swift; sourceTree = "<group>"; };
 		140BEF92C734EB8954921EAE /* PhonemeAnalysisServiceLiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhonemeAnalysisServiceLiveTests.swift; sourceTree = "<group>"; };
+		142732EAD20431E771087A23 /* OpenSoundTrafficLightIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSoundTrafficLightIntent.swift; sourceTree = "<group>"; };
 		146920B3DE68E6807E480FC0 /* breathing-ar.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "breathing-ar.json"; sourceTree = "<group>"; };
 		147D295FA03BD1DA7919E889 /* heartbeat.ahap */ = {isa = PBXFileReference; path = heartbeat.ahap; sourceTree = "<group>"; };
 		148C33C5B6C5D824053B551D /* pack_lexical.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = pack_lexical.json; sourceTree = "<group>"; };
@@ -3443,6 +3445,7 @@
 				441F7CF4A674E1662DABED71 /* ListAchievementsIntent.swift */,
 				C08B101B98E1F071CAD48381 /* OpenLessonIntent.swift */,
 				50FA3C4303E7C2F9F96980B1 /* OpenRewardAlbumIntent.swift */,
+				142732EAD20431E771087A23 /* OpenSoundTrafficLightIntent.swift */,
 				12718B8D6D5C591E5C4FC94A /* PlayWithLyalyaIntent.swift */,
 				B0BE671FE4566E574C504369 /* SetReminderIntent.swift */,
 				7B1AEBFA96521AD1D746C8F7 /* ShowChildProgressIntent.swift */,
@@ -8075,6 +8078,7 @@
 				EFB8D7821CF29D39BAF92025 /* OnboardingRouter.swift in Sources */,
 				141717E6B917BD7C0FACDD6E /* OpenLessonIntent.swift in Sources */,
 				B8EBAAEADAAE0DFFA199AA30 /* OpenRewardAlbumIntent.swift in Sources */,
+				8B84B719218827BC05A72AFA /* OpenSoundTrafficLightIntent.swift in Sources */,
 				D29A7624485DE5AFC37BE546 /* PacingInteractor.swift in Sources */,
 				CE9E57B2E6C12107E6D647F4 /* PacingModels.swift in Sources */,
 				998CE20E0BD23BA28C64E6E4 /* PacingPhrases.swift in Sources */,

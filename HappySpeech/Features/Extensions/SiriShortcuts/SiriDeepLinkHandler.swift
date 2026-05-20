@@ -40,6 +40,8 @@ extension AppCoordinator: AppCoordinatorBridge {
             handleOpenRewardAlbum()
         case .startCustomSession(let soundId, let rounds, let difficulty):
             handleStartCustomSession(soundId: soundId, rounds: rounds, difficulty: difficulty)
+        case .openSoundTrafficLight:
+            handleOpenSoundTrafficLight()
         }
     }
 
@@ -103,6 +105,11 @@ extension AppCoordinator: AppCoordinatorBridge {
         let childId = currentChildIdForSiri ?? ""
         push(.lessonPlayer(templateType: "custom", childId: childId))
         Self.siriLogger.info("Siri custom session: sound=\(soundId) rounds=\(rounds) diff=\(difficulty)")
+    }
+
+    private func handleOpenSoundTrafficLight() {
+        let childId = currentChildIdForSiri ?? ""
+        navigate(to: .soundTrafficLight(childId: childId))
     }
 
     // MARK: - Helper

@@ -137,5 +137,19 @@ public struct HappySpeechAppShortcuts: AppShortcutsProvider {
             shortTitle: "Своё занятие",
             systemImageName: "slider.horizontal.3"
         )
+
+        // MARK: 10. v31 — Звуковой светофор
+
+        AppShortcut(
+            intent: OpenSoundTrafficLightIntent(),
+            phrases: [
+                "Открой звуковой светофор в \(.applicationName)",
+                "Светофор звуков \(.applicationName)",
+                "\(.applicationName) звуковой светофор",
+                "Покажи звуки в работе \(.applicationName)"
+            ],
+            shortTitle: "Звуковой светофор",
+            systemImageName: "light.beacon.max.fill"
+        )
     }
 }

@@ -16,6 +16,7 @@ public enum DeepLinkAction: Sendable {
     case setReminder(hour: Int, minute: Int)
     case openRewardAlbum
     case startCustomSession(soundId: String, rounds: Int, difficulty: String)
+    case openSoundTrafficLight
 }
 
 // MARK: - AppCoordinatorBridge
@@ -105,6 +106,10 @@ public final class DeepLinkRouter {
 
     public func handleStartCustomSession(soundId: String, rounds: Int, difficulty: String) {
         dispatch(.startCustomSession(soundId: soundId, rounds: rounds, difficulty: difficulty))
+    }
+
+    public func handleOpenSoundTrafficLight() {
+        dispatch(.openSoundTrafficLight)
     }
 
     // MARK: - Dispatch
