@@ -299,9 +299,60 @@ struct ParentVoiceClipData: Sendable, Identifiable, Equatable {
     let isEnabled: Bool
 }
 
+// MARK: - StickerInventoryObject (v10 — v31 Волна C Ф.1 «Магазин наград»)
+//
+// Хранит купленные стикеры ребёнка. Монеты заработаны через RewardRecord
+// (1 завершённая сессия ≈ 1 монета). Полностью offline / on-device.
+
+final class StickerInventoryObject: Object, @unchecked Sendable {
+    @Persisted(primaryKey: true) var id: String = UUID().uuidString
+    @Persisted var childId: String = ""
+    @Persisted var stickerId: String = ""
+    @Persisted var purchasedAt: Date = Date()
+    @Persisted var priceSpent: Int = 0
+}
+
+// MARK: - StickerInventoryData (Sendable DTO)
+
+struct StickerInventoryData: Sendable, Identifiable {
+    let id: String
+    let childId: String
+    let stickerId: String
+    let purchasedAt: Date
+    let priceSpent: Int
+}
+
+// MARK: - CustomWordListObject (v10 — v31 Волна C Ф.4 «Списки слов специалиста»)
+//
+// Логопед-составленный список слов, который ContentEngine превращает
+// в упражнения (repeat-after-model / bingo / memory). Хранится локально,
+// никаких внешних трекеров (CLAUDE.md §11).
+
+final class CustomWordListObject: Object, @unchecked Sendable {
+    @Persisted(primaryKey: true) var id: String = UUID().uuidString
+    @Persisted var specialistId: String = ""
+    @Persisted var name: String = ""                  // «Список Р-1»
+    @Persisted var targetSound: String = ""           // «Р» / «Ш» / …
+    @Persisted var words: List<String>                // плоский список слов
+    @Persisted var createdAt: Date = Date()
+    @Persisted var updatedAt: Date = Date()
+}
+
+// MARK: - CustomWordListData (Sendable DTO)
+
+struct CustomWordListData: Sendable, Identifiable, Equatable {
+    let id: String
+    let specialistId: String
+    let name: String
+    let targetSound: String
+    let words: [String]
+    let createdAt: Date
+    let updatedAt: Date
+}
+
 // MARK: - SchemaVersion
 
 /// Current Realm schema version. Increment with each migration.
 enum RealmSchemaVersion {
-    static let current: UInt64 = 9   // v9: ParentVoiceClipObject (Wave B v31)
+    static let current: UInt64 = 10  // v10: StickerInventoryObject + CustomWordListObject (Wave C v31)
 }

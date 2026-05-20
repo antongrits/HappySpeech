@@ -94,6 +94,9 @@ enum AppRoute: Hashable {
     case bedtimeMode(childId: String)
     // v31 Волна B Ф.4: родительские голосовые записки «Мамин голос».
     case parentVoiceNote(childId: String)
+
+    // MARK: - v31 Волна C
+    case rewardShop(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -632,6 +635,12 @@ struct AppCoordinatorView: View {
         case .parentVoiceNote(let childId):
             ParentVoiceNoteView(childId: childId)
                 .environment(\.circuitContext, .parent)
+
+        // MARK: - v31 Волна C
+
+        case .rewardShop(let childId):
+            RewardShopView(childId: childId)
+                .environment(\.circuitContext, .kid)
         }
     }
 
@@ -979,6 +988,11 @@ extension AppCoordinatorView {
         case "parentVoiceNote",
              "voiceNote":
             return .parentVoiceNote(childId: previewChild)
+
+        // MARK: v31 Волна C Ф.1
+        case "rewardShop",
+             "stickerShop":
+            return .rewardShop(childId: previewChild)
 
         default:
             return .auth

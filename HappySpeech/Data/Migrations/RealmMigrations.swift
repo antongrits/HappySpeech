@@ -45,6 +45,12 @@ enum RealmMigrations {
             // (ParentVoiceNote: «Мамин голос» в LessonPlayer hero-зоне).
             // Realm создаёт схему автоматически, дефолты заданы в модели.
         }
+        if oldSchemaVersion < 10 {
+            // v10: v31 Волна C — added StickerInventoryObject (Ф.1 RewardShop)
+            // + CustomWordListObject (Ф.4 CustomWordList специалиста).
+            // Оба объекта новые — Realm создаёт схему автоматически, дефолты
+            // заданы в моделях.
+        }
     }
 }
 
@@ -379,5 +385,124 @@ public extension RealmActor {
         record.earnedAt = Date()
         record.sessionId = sessionId
         try? realmInstance.write { realmInstance.add(record, update: .modified) }
+    }
+
+    // MARK: - v10 v31 Волна C Ф.1: Sticker inventory
+
+    /// Fetches owned stickers for a child as Sendable DTOs.
+    internal func fetchStickerInventory(childId: String) async -> [StickerInventoryData] {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return [] }
+        return Array(
+            realmInstance.objects(StickerInventoryObject.self)
+                .filter("childId == %@", childId)
+                .sorted(byKeyPath: "purchasedAt", ascending: false)
+        ).map { obj in
+            StickerInventoryData(
+                id: obj.id,
+                childId: obj.childId,
+                stickerId: obj.stickerId,
+                purchasedAt: obj.purchasedAt,
+                priceSpent: obj.priceSpent
+            )
+        }
+    }
+
+    /// Persists a sticker purchase. Idempotent: noop if same (childId, stickerId) уже куплен.
+    @discardableResult
+    internal func persistStickerPurchase(
+        childId: String,
+        stickerId: String,
+        price: Int
+    ) async -> Bool {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return false }
+        let existing = realmInstance.objects(StickerInventoryObject.self)
+            .filter("childId == %@ AND stickerId == %@", childId, stickerId)
+        guard existing.isEmpty else { return false }
+        let obj = StickerInventoryObject()
+        obj.childId = childId
+        obj.stickerId = stickerId
+        obj.purchasedAt = Date()
+        obj.priceSpent = price
+        try? realmInstance.write { realmInstance.add(obj) }
+        return true
+    }
+
+    /// Total coins spent by a child on stickers — sum of `priceSpent`.
+    internal func sumStickerSpending(childId: String) async -> Int {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return 0 }
+        return realmInstance.objects(StickerInventoryObject.self)
+            .filter("childId == %@", childId)
+            .reduce(0) { $0 + $1.priceSpent }
+    }
+
+    /// Count of RewardRecord entries for a child — used to derive earned coins.
+    /// 1 reward record ≈ 1 coin. RewardShop is local-only / no real-money IAP.
+    internal func countRewardRecords(childId: String) async -> Int {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return 0 }
+        return realmInstance.objects(RewardRecord.self)
+            .filter("childId == %@", childId)
+            .count
+    }
+
+    // MARK: - v10 v31 Волна C Ф.4: Custom word lists (специалист)
+
+    /// Fetches custom word lists authored by a specialist, sorted by updatedAt desc.
+    internal func fetchCustomWordLists(specialistId: String) async -> [CustomWordListData] {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return [] }
+        return Array(
+            realmInstance.objects(CustomWordListObject.self)
+                .filter("specialistId == %@", specialistId)
+                .sorted(byKeyPath: "updatedAt", ascending: false)
+        ).map { obj in
+            CustomWordListData(
+                id: obj.id,
+                specialistId: obj.specialistId,
+                name: obj.name,
+                targetSound: obj.targetSound,
+                words: Array(obj.words),
+                createdAt: obj.createdAt,
+                updatedAt: obj.updatedAt
+            )
+        }
+    }
+
+    /// Upserts a custom word list by id (idempotent).
+    internal func persistCustomWordList(_ data: CustomWordListData) async {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return }
+        try? realmInstance.write {
+            let obj = realmInstance.object(
+                ofType: CustomWordListObject.self,
+                forPrimaryKey: data.id
+            ) ?? CustomWordListObject()
+            obj.id = data.id
+            obj.specialistId = data.specialistId
+            obj.name = data.name
+            obj.targetSound = data.targetSound
+            obj.words.removeAll()
+            obj.words.append(objectsIn: data.words)
+            if obj.realm == nil {
+                obj.createdAt = data.createdAt
+                realmInstance.add(obj)
+            }
+            obj.updatedAt = data.updatedAt
+        }
+    }
+
+    /// Deletes a custom word list by id (returns true if existed).
+    @discardableResult
+    internal func deleteCustomWordList(id: String) async -> Bool {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance,
+              let obj = realmInstance.object(ofType: CustomWordListObject.self, forPrimaryKey: id) else {
+            return false
+        }
+        try? realmInstance.write { realmInstance.delete(obj) }
+        return true
     }
 }

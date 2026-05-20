@@ -1138,6 +1138,16 @@ extension ChildHomeView {
         ) {
             router?.routeToBedtimeMode(childId: childId)
         }
+
+        // v31 Волна C Ф.1 — RewardShop «Магазин наград».
+        ChildHomeV25EntryCard(
+            titleKey: "rewardShop.entry.title",
+            hintKey: "rewardShop.entry.hint",
+            iconName: "bag.fill",
+            accent: ColorTokens.Brand.gold
+        ) {
+            router?.routeToRewardShop(childId: childId)
+        }
     }
 }
 

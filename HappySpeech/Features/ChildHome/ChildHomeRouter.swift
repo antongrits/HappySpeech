@@ -29,6 +29,7 @@ protocol ChildHomeRoutingLogic {
     func routeToSyllableConstructor(childId: String)
     func routeToComprehensionDetective(childId: String)
     func routeToBedtimeMode(childId: String)
+    func routeToRewardShop(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -170,5 +171,10 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     /// v31 Волна B Ф.3 — BedtimeMode «Перед сном».
     func routeToBedtimeMode(childId: String) {
         coordinator?.navigate(to: .bedtimeMode(childId: childId))
+    }
+
+    /// v31 Волна C Ф.1 — RewardShop «Магазин наград».
+    func routeToRewardShop(childId: String) {
+        coordinator?.navigate(to: .rewardShop(childId: childId))
     }
 }
