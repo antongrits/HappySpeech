@@ -107,7 +107,7 @@ struct ParentGuideView: View {
                 }
             }
             .navigationTitle(Text("parentGuide.screen.title"))
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
