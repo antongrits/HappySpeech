@@ -328,6 +328,7 @@ struct PlainProgressView: View {
             RoundedRectangle(cornerRadius: RadiusTokens.sm)
                 .strokeBorder(ColorTokens.Parent.line, lineWidth: 1)
         )
+        .depthShadow(ShadowTokens.parentDepth)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(milestone.accessibilityLabel))
     }

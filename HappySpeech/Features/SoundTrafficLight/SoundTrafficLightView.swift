@@ -196,6 +196,7 @@ struct SoundTrafficLightView: View {
                 RoundedRectangle(cornerRadius: RadiusTokens.card)
                     .strokeBorder(ColorTokens.Kid.line, lineWidth: 2)
             )
+            .depthShadow(ShadowTokens.kidDepth)
             .padding(.horizontal, SpacingTokens.screenEdge)
             .accessibilityLabel(Text(verbatim: word))
             .accessibilityAddTraits(.isStaticText)
@@ -225,6 +226,7 @@ struct SoundTrafficLightView: View {
                 RoundedRectangle(cornerRadius: RadiusTokens.card)
                     .fill(tint)
             )
+            .depthShadow(ShadowTokens.kidDepth)
         }
         .buttonStyle(.plain)
         .accessibilityLabel(Text(label))
