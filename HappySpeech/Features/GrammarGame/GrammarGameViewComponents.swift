@@ -172,6 +172,8 @@ struct PartyGuestsGrid: View {
     let confirmedCount: Int
     let totalGuests: Int
 
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
     var body: some View {
         LazyVGrid(
             columns: Array(repeating: GridItem(.flexible(), spacing: SpacingTokens.regular), count: 3),
@@ -188,7 +190,9 @@ struct PartyGuestsGrid: View {
                                 .font(TypographyTokens.title(28))
                                 .foregroundStyle(ColorTokens.Brand.primary)
                         )
-                        .transition(.scale.animation(.spring(response: 0.5).delay(Double(idx) * 0.1)))
+                        .transition(reduceMotion
+                            ? .opacity
+                            : .scale.animation(.spring(response: 0.5).delay(Double(idx) * 0.1)))
                 } else {
                     // Пустое место
                     RoundedRectangle(cornerRadius: RadiusTokens.card)

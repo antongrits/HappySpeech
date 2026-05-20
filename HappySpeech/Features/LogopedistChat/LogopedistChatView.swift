@@ -262,8 +262,8 @@ struct LogopedistChatView: View {
         .background(
             RoundedRectangle(cornerRadius: RadiusTokens.card)
                 .fill(ColorTokens.Parent.surface)
-                .shadow(color: .black.opacity(0.05), radius: 8, y: 2)
         )
+        .parentCardShadow()
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text("\(title). \(hint)"))
     }
@@ -509,7 +509,7 @@ struct LogopedistChatView: View {
             .background(
                 Capsule().fill(ColorTokens.Parent.accent)
             )
-            .shadow(color: .black.opacity(0.18), radius: 8, y: 4)
+            .depthShadow(ShadowTokens.parentDepth)
             .task {
                 try? await Task.sleep(for: .seconds(2.0))
                 holder.showToast = false

@@ -5,6 +5,7 @@ struct BreathingARView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(AppContainer.self) private var container
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var session: LiveARSessionService?
     @State private var mockSession: MockARSessionService?
     @State private var interactor: BreathingARInteractor?
@@ -32,7 +33,7 @@ struct BreathingARView: View {
                     .font(TypographyTokens.kidDisplay(64)) // emoji key graphic — skip TypographyTokens
                     .foregroundStyle(ColorTokens.Brand.sky)
                     .scaleEffect(1 + CGFloat(display.strength) * 0.2)
-                    .animation(.easeOut(duration: 0.15), value: display.strength)
+                    .animation(reduceMotion ? nil : .easeOut(duration: 0.15), value: display.strength)
                 Text(display.hint)
                     .font(TypographyTokens.headline())
                     .foregroundStyle(ColorTokens.Overlay.onAccent)

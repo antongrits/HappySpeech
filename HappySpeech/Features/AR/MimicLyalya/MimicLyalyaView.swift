@@ -5,6 +5,7 @@ import Vision
 struct MimicLyalyaView: View {
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var session: LiveARSessionService?
     @State private var mockSession: MockARSessionService?
     @State private var interactor: MimicLyalyaInteractor?
@@ -84,7 +85,7 @@ struct MimicLyalyaView: View {
                 .padding(.bottom, SpacingTokens.xLarge)
             }
         }
-        .animation(.easeInOut(duration: 0.25), value: display.showHandPoseBanner)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.25), value: display.showHandPoseBanner)
         .task { await bootstrap() }
         .onDisappear { teardown() }
         .navigationBarHidden(true)

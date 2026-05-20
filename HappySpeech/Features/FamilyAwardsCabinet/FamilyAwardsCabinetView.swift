@@ -183,7 +183,7 @@ struct FamilyAwardsCabinetView: View {
                             RoundedRectangle(cornerRadius: RadiusTokens.sm)
                                 .fill(tierColor(for: shelf.tierColorName))
                                 .frame(width: 28, height: 28)
-                                .shadow(color: .black.opacity(0.10), radius: 2, y: 1)
+                                .kidTileShadow()
 
                             Image(systemName: trophy.symbolName)
                                 .font(.system(size: 14, weight: .bold))

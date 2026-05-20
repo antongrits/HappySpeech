@@ -15,6 +15,7 @@ struct ProfileEditorView: View {
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     // MARK: - VIP
 
@@ -107,7 +108,7 @@ struct ProfileEditorView: View {
                         .clipShape(Circle())
                         .accessibilityHidden(true)
                 }
-                .animation(.spring(response: 0.35, dampingFraction: 0.7), value: viewModel.selectedAvatarId)
+                .animation(reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.7), value: viewModel.selectedAvatarId)
 
                 LyalyaMascotView(state: .waving, size: 80)
                     .accessibilityHidden(true)
@@ -169,7 +170,7 @@ struct ProfileEditorView: View {
                 .clipShape(Circle())
                 .accessibilityHidden(true)
         }
-        .animation(.spring(response: 0.25, dampingFraction: 0.8), value: isSelected)
+        .animation(reduceMotion ? nil : .spring(response: 0.25, dampingFraction: 0.8), value: isSelected)
     }
 
     // MARK: - Theme Picker
@@ -208,7 +209,7 @@ struct ProfileEditorView: View {
                     .foregroundStyle(ColorTokens.Overlay.onAccent)
             }
         }
-        .animation(.spring(response: 0.25, dampingFraction: 0.8), value: isSelected)
+        .animation(reduceMotion ? nil : .spring(response: 0.25, dampingFraction: 0.8), value: isSelected)
     }
 
     // MARK: - Name Section
@@ -267,7 +268,7 @@ struct ProfileEditorView: View {
                     ? viewModel.selectedThemeColor
                     : ColorTokens.Parent.surface)
             )
-            .animation(.spring(response: 0.25, dampingFraction: 0.8), value: isSelected)
+            .animation(reduceMotion ? nil : .spring(response: 0.25, dampingFraction: 0.8), value: isSelected)
     }
 
     // MARK: - Save Button

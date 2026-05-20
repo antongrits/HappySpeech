@@ -172,8 +172,8 @@ struct WeeklyChallengeView: View {
         .background(
             RoundedRectangle(cornerRadius: RadiusTokens.card)
                 .fill(ColorTokens.Kid.surface)
-                .shadow(color: .black.opacity(0.05), radius: 12, y: 4)
         )
+        .depthShadow(ShadowTokens.kidDepth)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(String(
             format: String(localized: "weekly.hero.a11y"),
@@ -494,7 +494,7 @@ struct WeeklyChallengeView: View {
             .background(
                 Capsule().fill(ColorTokens.Brand.primary)
             )
-            .shadow(color: .black.opacity(0.18), radius: 8, y: 4)
+            .depthShadow(ShadowTokens.kidDepth)
             .task {
                 try? await Task.sleep(for: .seconds(2.5))
                 holder.showToast = false

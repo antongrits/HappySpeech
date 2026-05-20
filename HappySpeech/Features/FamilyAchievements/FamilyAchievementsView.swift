@@ -473,7 +473,7 @@ struct FamilyAchievementsView: View {
             .background(
                 Capsule().fill(ColorTokens.Parent.accent)
             )
-            .shadow(color: .black.opacity(0.18), radius: 8, y: 4)
+            .depthShadow(ShadowTokens.parentDepth)
             .task {
                 try? await Task.sleep(for: .seconds(2.5))
                 holder.showToast = false

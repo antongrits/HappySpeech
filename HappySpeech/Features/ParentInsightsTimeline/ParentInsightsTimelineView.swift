@@ -430,7 +430,7 @@ struct ParentInsightsTimelineView: View {
             .background(
                 Capsule().fill(ColorTokens.Brand.primary)
             )
-            .shadow(color: .black.opacity(0.18), radius: 8, y: 4)
+            .depthShadow(ShadowTokens.parentDepth)
             .task {
                 try? await Task.sleep(for: .seconds(2.0))
                 holder.showToast = false
