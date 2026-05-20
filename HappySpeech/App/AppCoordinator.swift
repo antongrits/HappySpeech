@@ -83,6 +83,8 @@ enum AppRoute: Hashable {
     case storytelling(childId: String)
     case coPlay(childId: String)
     case assignedHomework(specialistId: String)
+    // v31 Волна A: новые методически-ценные функции
+    case speechNormsEncyclopedia
 }
 
 enum PermissionType: Hashable {
@@ -587,6 +589,12 @@ struct AppCoordinatorView: View {
         case .assignedHomework(let specialistId):
             AssignedHomeworkView(specialistId: specialistId)
                 .environment(\.circuitContext, .specialist)
+
+        // MARK: - v31 Волна A
+
+        case .speechNormsEncyclopedia:
+            SpeechNormsEncyclopediaView()
+                .environment(\.circuitContext, .parent)
         }
     }
 
@@ -904,6 +912,11 @@ extension AppCoordinatorView {
             return .familyVoiceSplit
         case "familyVoiceLibrary":
             return .familyVoiceLibrary
+
+        // MARK: v31 Волна A — методически-ценные функции
+        case "speechNormsEncyclopedia",
+             "speechNorms":
+            return .speechNormsEncyclopedia
 
         default:
             return .auth

@@ -50080,6 +50080,314 @@
           }
         }
       }
+    },
+    "speechNorms.screen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что должно быть в возрасте"
+          }
+        }
+      }
+    },
+    "speechNorms.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что должно быть в возрасте"
+          }
+        }
+      }
+    },
+    "speechNorms.entry.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Возрастные нормы речи 5–8 лет и красные флаги"
+          }
+        }
+      }
+    },
+    "speechNorms.header.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Возрастные нормы речи"
+          }
+        }
+      }
+    },
+    "speechNorms.header.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ориентиры речевого развития детей 5–8 лет и тревожные признаки."
+          }
+        }
+      }
+    },
+    "speechNorms.age.5": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5 лет"
+          }
+        }
+      }
+    },
+    "speechNorms.age.6": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "6 лет"
+          }
+        }
+      }
+    },
+    "speechNorms.age.7": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 лет"
+          }
+        }
+      }
+    },
+    "speechNorms.age.8": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "8 лет"
+          }
+        }
+      }
+    },
+    "speechNorms.age.selected.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выбрано"
+          }
+        }
+      }
+    },
+    "speechNorms.age.unselected.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не выбрано, нажмите чтобы переключиться"
+          }
+        }
+      }
+    },
+    "speechNorms.axis.overview": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Обзор"
+          }
+        }
+      }
+    },
+    "speechNorms.axis.sounds": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звукопроизношение"
+          }
+        }
+      }
+    },
+    "speechNorms.axis.vocabulary": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Словарный запас"
+          }
+        }
+      }
+    },
+    "speechNorms.axis.grammar": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фраза и грамматика"
+          }
+        }
+      }
+    },
+    "speechNorms.axis.connected": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Связная речь"
+          }
+        }
+      }
+    },
+    "speechNorms.axis.motor": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Моторика и понимание"
+          }
+        }
+      }
+    },
+    "speechNorms.axis.redflags": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тревожные признаки"
+          }
+        }
+      }
+    },
+    "speechNorms.card.redflag.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тревожный признак"
+          }
+        }
+      }
+    },
+    "speechNorms.card.note.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Возрастной ориентир"
+          }
+        }
+      }
+    },
+    "speechNorms.card.expand.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите чтобы развернуть"
+          }
+        }
+      }
+    },
+    "speechNorms.card.collapse.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нажмите чтобы свернуть"
+          }
+        }
+      }
+    },
+    "speechNorms.card.sources.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Источники"
+          }
+        }
+      }
+    },
+    "speechNorms.search.prompt": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поиск по карточкам"
+          }
+        }
+      }
+    },
+    "speechNorms.empty.noContent": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Карточки для этого возраста пока не загружены."
+          }
+        }
+      }
+    },
+    "speechNorms.empty.noMatch": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "По вашему запросу ничего не найдено. Попробуйте другое слово."
+          }
+        }
+      }
+    },
+    "speechNorms.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загрузка…"
+          }
+        }
+      }
+    },
+    "speechNorms.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

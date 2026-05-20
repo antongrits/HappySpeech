@@ -348,6 +348,10 @@ private struct ParentDashboardTab: View {
                     parentGuideCard
                         .hsScrollEffect(.scaleFade)
 
+                    // v31 Волна A Ф.10 — «Что должно быть в возрасте»: справочник речевых норм.
+                    speechNormsEncyclopediaCard
+                        .hsScrollEffect(.scaleFade)
+
                     // Family Calendar card
                     familyCalendarCard
                         .hsScrollEffect(.scaleFade)
@@ -1043,6 +1047,43 @@ private struct ParentDashboardTab: View {
     }
 
     // MARK: - v29 Фаза 8: Ф.3 «Логопед для родителей»
+
+    // MARK: - v31 Волна A: Ф.10 «Что должно быть в возрасте»
+
+    private var speechNormsEncyclopediaCard: some View {
+        HSCard(style: .elevated) {
+            HStack(spacing: SpacingTokens.sp3) {
+                parentNavIcon("book.closed.fill", tint: ColorTokens.Brand.sky)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "speechNorms.entry.title"))
+                        .font(TypographyTokens.headline())
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "speechNorms.entry.subtitle"))
+                        .font(TypographyTokens.body())
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: SpacingTokens.sp1)
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp4)
+        }
+        .onTapGesture {
+            coordinator.navigate(to: .speechNormsEncyclopedia)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            String(localized: "speechNorms.entry.title") + ". " +
+            String(localized: "speechNorms.entry.subtitle")
+        )
+        .accessibilityAddTraits(.isButton)
+        .environment(\.circuitContext, .parent)
+    }
 
     private var parentGuideCard: some View {
         HSCard(style: .elevated) {
