@@ -655,7 +655,11 @@ public extension AppContainer {
 
         // Shared singletons for LLM wiring (one inference actor, one log repo, one local LLM)
         let sharedNetworkMonitor = LiveNetworkMonitor()
-        let sharedLocalLLM = LiveLocalLLMService()
+        // MLX-backed Qwen2.5-1.5B-Instruct-4bit (~839 MB) is bundled inside the app —
+        // Tier A on-device is the active production path. Rule-based service is only
+        // engaged as a guarded fallback inside `LiveLLMDecisionService` and is logged
+        // explicitly so silent degradation is observable in QA dashboards.
+        let sharedLocalLLM: any LocalLLMService = LocalLLMServiceLive()
         let sharedInferenceActor = LLMInferenceActor(localLLM: sharedLocalLLM)
         let sharedLLMLogRepo: any LLMDecisionLogRepository = LiveLLMDecisionLogRepository(realmActor: realmActor)
         // COPPA: HFInferenceClient используется ТОЛЬКО в parent/specialist circuit (Tier B).

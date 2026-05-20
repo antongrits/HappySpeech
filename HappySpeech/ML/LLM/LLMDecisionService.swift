@@ -520,7 +520,16 @@ public final class LiveLLMDecisionService: LLMDecisionServiceProtocol, @unchecke
         Task { [logRepository] in
             try? await logRepository.save(record)
         }
-        HSLogger.llm.debug("Decision \(kind) via \(meta.source.rawValue) in \(meta.latencyMs)ms (fallback=\(meta.usedFallback))")
+        // Observable degradation: эскалируем уровень лога, если MLX-маршрут не сработал
+        // и пришлось упасть в rule-based. Это попадёт в OSLog Console и в QA-дашборды,
+        // чтобы регрессии не оставались незамеченными.
+        if meta.usedFallback, meta.source == .ruleBased {
+            HSLogger.llm.warning(
+                "LLM decision \(kind) silently degraded to rule-based in \(meta.latencyMs)ms — MLX (Tier A) unavailable for this call"
+            )
+        } else {
+            HSLogger.llm.debug("Decision \(kind) via \(meta.source.rawValue) in \(meta.latencyMs)ms (fallback=\(meta.usedFallback))")
+        }
     }
 
     private func progressJSON(_ map: [String: Double]) -> String {

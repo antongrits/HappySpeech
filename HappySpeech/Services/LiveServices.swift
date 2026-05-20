@@ -138,25 +138,6 @@ public final class LocalAnalyticsService: AnalyticsService, @unchecked Sendable 
     }
 }
 
-// MARK: - LiveLocalLLMService
-
-public final class LiveLocalLLMService: LocalLLMService, @unchecked Sendable {
-    nonisolated(unsafe) public var isModelDownloaded: Bool = false
-    nonisolated(unsafe) public var isModelLoaded: Bool = false
-
-    public func generateParentSummary(request: ParentSummaryRequest) async throws -> ParentSummaryResponse {
-        throw AppError.llmNotDownloaded
-    }
-
-    public func generateRoute(request: RoutePlannerRequest) async throws -> RoutePlannerResponse {
-        throw AppError.llmNotDownloaded
-    }
-
-    public func generateMicroStory(request: MicroStoryRequest) async throws -> MicroStoryResponse {
-        throw AppError.llmNotDownloaded
-    }
-}
-
 // MARK: - LiveARService
 
 public final class LiveARService: ARService {
