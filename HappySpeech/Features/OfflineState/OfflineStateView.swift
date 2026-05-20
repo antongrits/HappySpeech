@@ -37,22 +37,28 @@ struct OfflineStateView: View {
         ZStack {
             backgroundLayer
 
-            VStack(spacing: 0) {
-                Spacer(minLength: SpacingTokens.sp10)
+            GeometryReader { proxy in
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 0) {
+                        Spacer(minLength: SpacingTokens.sp10)
 
-                illustrationSection
+                        illustrationSection
 
-                infoSection
-                    .padding(.top, SpacingTokens.sp6)
+                        infoSection
+                            .padding(.top, SpacingTokens.sp6)
 
-                Spacer()
+                        Spacer(minLength: SpacingTokens.sp6)
 
-                countdownSection
-                    .padding(.bottom, SpacingTokens.sp4)
+                        countdownSection
+                            .padding(.bottom, SpacingTokens.sp4)
 
-                actionsSection
-                    .padding(.horizontal, SpacingTokens.screenEdge)
-                    .padding(.bottom, SpacingTokens.sp16)
+                        actionsSection
+                            .padding(.horizontal, SpacingTokens.screenEdge)
+                            .padding(.bottom, SpacingTokens.sp16)
+                    }
+                    .frame(minHeight: proxy.size.height)
+                }
+                .scrollBounceBehavior(.basedOnSize)
             }
         }
         .onAppear {
