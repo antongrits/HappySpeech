@@ -8,6 +8,7 @@ import XCTest
 // `LocalLLMServiceLive`, а не заглушка, которая молча уводит всё в rule-based.
 //
 // Если кто-то снова подменит `localLLMServiceFactory` на стаб, этот тест упадёт.
+@MainActor
 final class AppContainerLiveLLMWiringTests: XCTestCase {
 
     func test_liveContainer_wiresMLXBackedLocalLLM_notRuleBasedStub() {

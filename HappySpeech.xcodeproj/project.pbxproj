@@ -988,6 +988,7 @@
 		A63E56E73FC49DB01E54453B /* ComparisonDashboardInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06ED2449926E2BA141B7B229 /* ComparisonDashboardInteractorTests.swift */; };
 		A66553848F685CB063A80A66 /* RussianPhonemeClassifierWrapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A7F8EA541B5037E0EA79C3 /* RussianPhonemeClassifierWrapperTests.swift */; };
 		A666FEDA0DE6A46BD6E0D41D /* AirStreamAnalyzerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F326C1EF07861B9AF817CC6B /* AirStreamAnalyzerTests.swift */; };
+		A66BB4155578ED0B23DC675E /* ImmersiveHeaderModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E6DDA2593B5DA701B697B10 /* ImmersiveHeaderModifier.swift */; };
 		A6ADC28B31D7DF234E9811E2 /* FamilyAwardsCabinetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807900BC0535BD73F0734CBC /* FamilyAwardsCabinetView.swift */; };
 		A6CDD70426B86374CA549DFE /* SessionHistoryPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190B489055BCFC7F7C067BA8 /* SessionHistoryPresenterTests.swift */; };
 		A6F60578B172A8B7116D4ABF /* HoldThePoseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3D64EDE36D05BA9F3E7B14 /* HoldThePoseView.swift */; };
@@ -1387,6 +1388,7 @@
 		F43A589A18EE506B2A0A7F10 /* GuidedTourPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F70C8E630042A16A294D1A /* GuidedTourPresenterTests.swift */; };
 		F46C4CBD0C653E394D98F8CC /* CulturalContentModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F09D87A700C5422EE2FFACB /* CulturalContentModels.swift */; };
 		F475AB47E45FFFEF95D5F222 /* ARZonePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15BF40759460655A70E66E6E /* ARZonePresenterTests.swift */; };
+		F4915973975AC0359A831CEB /* AppContainerLiveLLMWiringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8E4186D5274080E5AE3C22 /* AppContainerLiveLLMWiringTests.swift */; };
 		F4AC823845933874F56F335D /* BreatheAndSpeakModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E4F1A4A020ACDFACA93C8B /* BreatheAndSpeakModels.swift */; };
 		F4B40FBE8497C9D5A5E12DE0 /* ButterflyCatchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6077DD3DB5A47CA163473FBE /* ButterflyCatchInteractor.swift */; };
 		F5018105241F7C9271917E74 /* SoundTrafficLightDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF517ECA7579CAF199A6A3D0 /* SoundTrafficLightDisplayLogic.swift */; };
@@ -1925,6 +1927,7 @@
 		4C539841A96C11337944FC9A /* PuzzleRevealView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleRevealView.swift; sourceTree = "<group>"; };
 		4C5D324F49730CDDBBF582D7 /* RhythmPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RhythmPresenter.swift; sourceTree = "<group>"; };
 		4C7CBD294EBA007294AA727C /* SessionHistoryModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionHistoryModels.swift; sourceTree = "<group>"; };
+		4C8E4186D5274080E5AE3C22 /* AppContainerLiveLLMWiringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainerLiveLLMWiringTests.swift; sourceTree = "<group>"; };
 		4CC4DB7D7068F7B2020DB659 /* ARFaceFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARFaceFilterView.swift; sourceTree = "<group>"; };
 		4CF1196CFAE3006F17E5145B /* HomeTasksWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTasksWorker.swift; sourceTree = "<group>"; };
 		4CFEFE6CD0E0F46CAD33442F /* ARMirrorPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARMirrorPresenterTests.swift; sourceTree = "<group>"; };
@@ -1939,6 +1942,7 @@
 		4E1FCFB327A844D035AE57F8 /* PermissionsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsModels.swift; sourceTree = "<group>"; };
 		4E2113CE29B004366121F3D2 /* SessionCompleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCompleteView.swift; sourceTree = "<group>"; };
 		4E628F66E4F84FC7B26738C7 /* CloudFunctionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudFunctionsService.swift; sourceTree = "<group>"; };
+		4E6DDA2593B5DA701B697B10 /* ImmersiveHeaderModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImmersiveHeaderModifier.swift; sourceTree = "<group>"; };
 		4F31A024D81791E71D7E0A7B /* SessionHistoryInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionHistoryInteractor.swift; sourceTree = "<group>"; };
 		4F780C453DBAED1EA23E135F /* GrammarFeedbackWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarFeedbackWorkerTests.swift; sourceTree = "<group>"; };
 		4F951103581A43BBDCF10B1A /* breathingExhale.ahap */ = {isa = PBXFileReference; path = breathingExhale.ahap; sourceTree = "<group>"; };
@@ -3598,6 +3602,7 @@
 			isa = PBXGroup;
 			children = (
 				0B58CEFB539715F6C092E7E2 /* CardModifier.swift */,
+				4E6DDA2593B5DA701B697B10 /* ImmersiveHeaderModifier.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -6048,6 +6053,7 @@
 				865559639DB1AC00CB54889E /* AdaptivePlannerServiceTests.swift */,
 				E74AD87E91167088238F1EFA /* AmbientSoundServiceTests.swift */,
 				0638A6490D5D421707BF0454 /* AnalyticsServiceTests.swift */,
+				4C8E4186D5274080E5AE3C22 /* AppContainerLiveLLMWiringTests.swift */,
 				43F0FD43E9E9C355E349DB4C /* AppErrorTests.swift */,
 				80033465CDEB883AEDA4CFF1 /* ARSessionServiceTests.swift */,
 				C93CB4AAE00EA7327B0B03A8 /* ASRServiceTests.swift */,
@@ -7069,6 +7075,7 @@
 				A666FEDA0DE6A46BD6E0D41D /* AirStreamAnalyzerTests.swift in Sources */,
 				9C06BEBE96C1BC91D17E0404 /* AmbientSoundServiceTests.swift in Sources */,
 				C27C2386C111C6F3CC6788D9 /* AnalyticsServiceTests.swift in Sources */,
+				F4915973975AC0359A831CEB /* AppContainerLiveLLMWiringTests.swift in Sources */,
 				E3ECC5C2C4571623EC555261 /* AppErrorTests.swift in Sources */,
 				A24E44DE1E71E065F2B67399 /* AppShortcutsTests.swift in Sources */,
 				3B5F87F3016871D386C2F92D /* AppleFaceLandmarksDetectorTests.swift in Sources */,
@@ -7785,6 +7792,7 @@
 				3536AF0CA0172B38CDAA14BA /* HomeTasksView.swift in Sources */,
 				DE998F68CA6FC2EB9E57C83E /* HomeTasksWorker.swift in Sources */,
 				4511A979279915A86A64BC22 /* IPADictionary.swift in Sources */,
+				A66BB4155578ED0B23DC675E /* ImmersiveHeaderModifier.swift in Sources */,
 				4573410C8AA39A139F409E3A /* InsightAggregatorWorker.swift in Sources */,
 				D002DC7435A4A64EF0C8468C /* InstallationsService.swift in Sources */,
 				2D64F1E936D884CBE8F5B5BA /* KaraokeWordView.swift in Sources */,
