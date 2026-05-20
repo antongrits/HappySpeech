@@ -40,6 +40,11 @@ enum RealmMigrations {
             // InsightObject (T.4 NeurolinguistInsights).
             // Realm создаёт схему автоматически, дефолты заданы в модели.
         }
+        if oldSchemaVersion < 9 {
+            // v9: v31 Волна B — added ParentVoiceClipObject
+            // (ParentVoiceNote: «Мамин голос» в LessonPlayer hero-зоне).
+            // Realm создаёт схему автоматически, дефолты заданы в модели.
+        }
     }
 }
 
@@ -261,6 +266,99 @@ public extension RealmActor {
         obj.primarySoundFocus = data.primarySoundFocus
         obj.recommendation = data.recommendation
         try? realmInstance.write { realmInstance.add(obj, update: .modified) }
+    }
+
+    // MARK: - v9 v31 Волна B: ParentVoiceClip helpers
+
+    /// Fetches parent voice clips for a child, sorted by recordedAt desc.
+    internal func fetchParentVoiceClips(childId: String) async -> [ParentVoiceClipData] {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return [] }
+        return Array(
+            realmInstance.objects(ParentVoiceClipObject.self)
+                .filter("childId == %@", childId)
+                .sorted(byKeyPath: "recordedAt", ascending: false)
+        ).map { obj in
+            ParentVoiceClipData(
+                id: obj.id,
+                childId: obj.childId,
+                lessonTemplate: obj.lessonTemplate,
+                fileURL: obj.fileURL,
+                durationSec: obj.durationSec,
+                recordedAt: obj.recordedAt,
+                isEnabled: obj.isEnabled
+            )
+        }
+    }
+
+    /// Fetches the active enabled parent voice clip for a (childId, lessonTemplate),
+    /// если есть. Берёт самую свежую.
+    internal func fetchActiveParentVoiceClip(
+        childId: String,
+        lessonTemplate: String
+    ) async -> ParentVoiceClipData? {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return nil }
+        let result = realmInstance.objects(ParentVoiceClipObject.self)
+            .filter(
+                "childId == %@ AND lessonTemplate == %@ AND isEnabled == true",
+                childId, lessonTemplate
+            )
+            .sorted(byKeyPath: "recordedAt", ascending: false)
+            .first
+        guard let obj = result else { return nil }
+        return ParentVoiceClipData(
+            id: obj.id,
+            childId: obj.childId,
+            lessonTemplate: obj.lessonTemplate,
+            fileURL: obj.fileURL,
+            durationSec: obj.durationSec,
+            recordedAt: obj.recordedAt,
+            isEnabled: obj.isEnabled
+        )
+    }
+
+    /// Upserts a parent voice clip by id.
+    internal func persistParentVoiceClip(_ data: ParentVoiceClipData) async {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return }
+        let obj = ParentVoiceClipObject()
+        obj.id = data.id
+        obj.childId = data.childId
+        obj.lessonTemplate = data.lessonTemplate
+        obj.fileURL = data.fileURL
+        obj.durationSec = data.durationSec
+        obj.recordedAt = data.recordedAt
+        obj.isEnabled = data.isEnabled
+        try? realmInstance.write { realmInstance.add(obj, update: .modified) }
+    }
+
+    /// Deletes a parent voice clip by id (returns true if existed).
+    @discardableResult
+    internal func deleteParentVoiceClip(id: String) async -> Bool {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance,
+              let obj = realmInstance.object(ofType: ParentVoiceClipObject.self, forPrimaryKey: id) else {
+            return false
+        }
+        try? realmInstance.write { realmInstance.delete(obj) }
+        return true
+    }
+
+    /// Toggles isEnabled for all clips of a child (used by Settings opt-in).
+    internal func setParentVoiceClipsEnabled(
+        childId: String,
+        isEnabled: Bool
+    ) async {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return }
+        let clips = realmInstance.objects(ParentVoiceClipObject.self)
+            .filter("childId == %@", childId)
+        try? realmInstance.write {
+            for clip in clips {
+                clip.isEnabled = isEnabled
+            }
+        }
     }
 
     /// Persists a sticker RewardRecord for a session — idempotent by sessionId.

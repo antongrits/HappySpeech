@@ -42349,6 +42349,468 @@
         }
       }
     },
+    "voice.close.a11y" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закрыть Мамин голос"
+          }
+        }
+      }
+    },
+    "voice.duration" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%d с"
+          }
+        }
+      }
+    },
+    "voice.entry.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запиши подбадривание, ребёнок услышит его в уроке"
+          }
+        }
+      }
+    },
+    "voice.entry.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мамин голос"
+          }
+        }
+      }
+    },
+    "voice.error.delete" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось удалить запись."
+          }
+        }
+      }
+    },
+    "voice.error.save" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось сохранить запись. Попробуй ещё раз."
+          }
+        }
+      }
+    },
+    "voice.intro" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запиши короткое подбадривание (до 30 секунд) для любого шаблона урока. Ребёнок услышит твой голос перед игрой."
+          }
+        }
+      }
+    },
+    "voice.loading" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загружаем…"
+          }
+        }
+      }
+    },
+    "voice.optIn.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Когда выключено, в hero-зоне у ребёнка кнопка не показывается"
+          }
+        }
+      }
+    },
+    "voice.optIn.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включать голос в уроках"
+          }
+        }
+      }
+    },
+    "voice.recorder.close.a11y" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закрыть запись"
+          }
+        }
+      }
+    },
+    "voice.recorder.deleteExisting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить старую запись"
+          }
+        }
+      }
+    },
+    "voice.recorder.idle.hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нажми «Записать» и говори в микрофон"
+          }
+        }
+      }
+    },
+    "voice.recorder.playing.hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Слушаем запись…"
+          }
+        }
+      }
+    },
+    "voice.recorder.preview" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Прослушать"
+          }
+        }
+      }
+    },
+    "voice.recorder.recording.hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Идёт запись… (макс. 30 секунд)"
+          }
+        }
+      }
+    },
+    "voice.recorder.redo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заново"
+          }
+        }
+      }
+    },
+    "voice.recorder.save" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранить"
+          }
+        }
+      }
+    },
+    "voice.recorder.start" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Записать"
+          }
+        }
+      }
+    },
+    "voice.recorder.stop" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Остановить"
+          }
+        }
+      }
+    },
+    "voice.recorder.stopped.hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Прослушай и сохрани, если нравится"
+          }
+        }
+      }
+    },
+    "voice.recorder.timer.a11y" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Секунды записи"
+          }
+        }
+      }
+    },
+    "voice.row.empty" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ещё нет записи"
+          }
+        }
+      }
+    },
+    "voice.row.hint.empty" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Записать голос для этого шаблона"
+          }
+        }
+      }
+    },
+    "voice.row.hint.exists" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перезаписать или удалить голос"
+          }
+        }
+      }
+    },
+    "voice.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мамин голос"
+          }
+        }
+      }
+    },
+    "voice.tpl.ar" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AR-активность"
+          }
+        }
+      }
+    },
+    "voice.tpl.articulate" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Артикуляция"
+          }
+        }
+      }
+    },
+    "voice.tpl.bingo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Бинго"
+          }
+        }
+      }
+    },
+    "voice.tpl.breathing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дыхание"
+          }
+        }
+      }
+    },
+    "voice.tpl.dragMatch" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перетащи и соедини"
+          }
+        }
+      }
+    },
+    "voice.tpl.hunter" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Охотник за звуком"
+          }
+        }
+      }
+    },
+    "voice.tpl.listen" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Слушай и выбирай"
+          }
+        }
+      }
+    },
+    "voice.tpl.memory" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Память"
+          }
+        }
+      }
+    },
+    "voice.tpl.minimalPairs" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Минимальные пары"
+          }
+        }
+      }
+    },
+    "voice.tpl.narrative" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сказочный квест"
+          }
+        }
+      }
+    },
+    "voice.tpl.puzzle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Собери пазл"
+          }
+        }
+      }
+    },
+    "voice.tpl.repeat" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Повтори за мной"
+          }
+        }
+      }
+    },
+    "voice.tpl.rhythm" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ритм"
+          }
+        }
+      }
+    },
+    "voice.tpl.sorting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сортировка"
+          }
+        }
+      }
+    },
+    "voice.tpl.story" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закончи историю"
+          }
+        }
+      }
+    },
+    "voice.tpl.visualAcoust" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Визуально-акустическая"
+          }
+        }
+      }
+    },
     "voice_clone_error_not_implemented" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -267,9 +267,41 @@ struct InsightData: Sendable, Identifiable {
     let recommendation: String
 }
 
+// MARK: - ParentVoiceClipObject (v9 — v31 Волна B / ParentVoiceNote)
+//
+// Голосовая записка родителя (до 30 сек), привязанная к шаблону урока.
+// Ребёнок может нажать «Мамин голос» в hero-зоне LessonPlayer и услышать
+// записанное родителем подбадривание. Хранится только локально в
+// Documents/ParentVoiceNotes/ — COPPA-safe, не синхронизируется в Firestore.
+
+final class ParentVoiceClipObject: Object, @unchecked Sendable {
+    @Persisted(primaryKey: true) var id: String = UUID().uuidString
+    @Persisted var childId: String = ""
+    @Persisted var lessonTemplate: String = ""        // GameType.rawValue / templateType
+    @Persisted var fileURL: String = ""               // относительный путь от Documents/
+    @Persisted var durationSec: Double = 0
+    @Persisted var recordedAt: Date = Date()
+    /// Глобальный per-child opt-in flag должен быть включён в Settings,
+    /// чтобы кнопка появлялась в LessonPlayer hero-зоне. Здесь дублируется
+    /// для удобства фильтрации в Realm.
+    @Persisted var isEnabled: Bool = true
+}
+
+// MARK: - ParentVoiceClipData (Sendable DTO)
+
+struct ParentVoiceClipData: Sendable, Identifiable, Equatable {
+    let id: String
+    let childId: String
+    let lessonTemplate: String
+    let fileURL: String
+    let durationSec: Double
+    let recordedAt: Date
+    let isEnabled: Bool
+}
+
 // MARK: - SchemaVersion
 
 /// Current Realm schema version. Increment with each migration.
 enum RealmSchemaVersion {
-    static let current: UInt64 = 8   // v8: VoiceSampleObject + LeaderboardEntryObject + InsightObject (Block T v17)
+    static let current: UInt64 = 9   // v9: ParentVoiceClipObject (Wave B v31)
 }

@@ -357,6 +357,10 @@ private struct ParentDashboardTab: View {
                     dailyRitualsLyalyaCard
                         .hsScrollEffect(.scaleFade)
 
+                    // v31 Волна B Ф.4 — «Мамин голос»: голосовые записки родителя.
+                    parentVoiceNoteCard
+                        .hsScrollEffect(.scaleFade)
+
                     // Family Calendar card
                     familyCalendarCard
                         .hsScrollEffect(.scaleFade)
@@ -1058,6 +1062,14 @@ private struct ParentDashboardTab: View {
     private var dailyRitualsLyalyaCard: some View {
         DailyRitualsLyalyaEntryCard { kind in
             coordinator.navigate(to: .dailyRitualsLyalya(kind: kind))
+        }
+    }
+
+    // MARK: - v31 Волна B: Ф.4 «Мамин голос»
+
+    private var parentVoiceNoteCard: some View {
+        ParentVoiceNoteEntryCard {
+            coordinator.navigate(to: .parentVoiceNote(childId: viewModel.childId))
         }
     }
 
