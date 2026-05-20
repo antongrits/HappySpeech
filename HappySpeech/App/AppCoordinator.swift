@@ -130,6 +130,12 @@ enum AppRoute: Hashable {
     /// Wave F F-05 (parent): дневной лимит времени в HappySpeech.
     /// Per-device cap + UserDefaults accounting; нет ScreenTime entitlement.
     case dailyTimeCap
+
+    // MARK: - v31 Wave F Ф.11 (Bilingual Mode, методология Глухов/Цейтлин)
+    /// Wave F Ф.11 (kid): двуязычный режим — словарик из 30+ слов с
+    /// переводами на белорусский / английский, + tap-практика 10 раундов.
+    /// Persistence выбора языка — UserDefaults("bilingualMode.secondLanguage").
+    case bilingualMode(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -744,6 +750,12 @@ struct AppCoordinatorView: View {
         case .dailyTimeCap:
             DailyTimeCapView()
                 .environment(\.circuitContext, .parent)
+
+        // MARK: - v31 Wave F Ф.11
+
+        case .bilingualMode(let childId):
+            BilingualModeView(childId: childId)
+                .environment(\.circuitContext, .kid)
         }
     }
 
@@ -1156,6 +1168,12 @@ extension AppCoordinatorView {
              "timeCap",
              "screenTime":
             return .dailyTimeCap
+
+        // MARK: v31 Wave F Ф.11
+        case "bilingualMode",
+             "bilingual",
+             "twoLanguages":
+            return .bilingualMode(childId: previewChild)
 
         default:
             return .auth

@@ -221,4 +221,9 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     func routeToLogorhythmics(childId: String) {
         coordinator?.navigate(to: .logorhythmics(childId: childId))
     }
+
+    /// v31 Wave F Ф.11 — «Билингвальный режим» (RU + BE/EN словарь + practice).
+    func routeToBilingualMode(childId: String) {
+        coordinator?.navigate(to: .bilingualMode(childId: childId))
+    }
 }

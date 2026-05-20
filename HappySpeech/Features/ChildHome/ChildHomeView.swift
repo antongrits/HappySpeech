@@ -1221,6 +1221,16 @@ extension ChildHomeView {
         ) {
             router?.routeToLogorhythmics(childId: childId)
         }
+
+        // v31 Wave F Ф.11 — Билингвальный режим (русский + белорусский / английский).
+        ChildHomeV25EntryCard(
+            titleKey: "bilingualMode.entry.title",
+            hintKey: "bilingualMode.entry.hint",
+            iconName: "character.bubble.fill",
+            accent: ColorTokens.Brand.lilac
+        ) {
+            router?.routeToBilingualMode(childId: childId)
+        }
     }
 }
 

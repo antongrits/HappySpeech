@@ -1,0 +1,241 @@
+{
+  "id": "pack_bilingual_vocabulary_v1",
+  "version": 1,
+  "description": "v31 Wave F Ф.11 «Билингвальный режим». 32 базовых слова детского словаря с переводами на белорусский (be-BY) и английский (en-US). Методология: для билингвальных детей рекомендовано не подавлять второй язык, а строить лексическое зеркало понятий (Глухов, Цейтлин). Источник русских слов — топ-32 из pack_lexical_themes.json по темам: семья, дом, еда, животные, природа, цвета, числа, тело. Переводы на белорусский — нормативные (граматыка беларускай мовы; пер. семьи и быта). Английские переводы — стандартные базовые.",
+  "categoriesInOrder": ["семья", "дом", "еда", "животные", "природа", "тело", "числа"],
+  "categoryTitles": {
+    "семья": "Семья",
+    "дом": "Дом",
+    "еда": "Еда",
+    "животные": "Животные",
+    "природа": "Природа",
+    "тело": "Тело",
+    "числа": "Числа"
+  },
+  "words": [
+    {
+      "id": "bil-1",
+      "russian": "мама",
+      "category": "семья",
+      "symbol": "person.fill",
+      "translations": { "be-BY": "мама",  "en-US": "mom" }
+    },
+    {
+      "id": "bil-2",
+      "russian": "папа",
+      "category": "семья",
+      "symbol": "person.fill",
+      "translations": { "be-BY": "тата",  "en-US": "dad" }
+    },
+    {
+      "id": "bil-3",
+      "russian": "бабушка",
+      "category": "семья",
+      "symbol": "figure.stand",
+      "translations": { "be-BY": "бабуля", "en-US": "grandma" }
+    },
+    {
+      "id": "bil-4",
+      "russian": "дедушка",
+      "category": "семья",
+      "symbol": "figure.stand",
+      "translations": { "be-BY": "дзядуля", "en-US": "grandpa" }
+    },
+    {
+      "id": "bil-5",
+      "russian": "брат",
+      "category": "семья",
+      "symbol": "person.2.fill",
+      "translations": { "be-BY": "брат",   "en-US": "brother" }
+    },
+    {
+      "id": "bil-6",
+      "russian": "сестра",
+      "category": "семья",
+      "symbol": "person.2.fill",
+      "translations": { "be-BY": "сястра", "en-US": "sister" }
+    },
+    {
+      "id": "bil-7",
+      "russian": "дом",
+      "category": "дом",
+      "symbol": "house.fill",
+      "translations": { "be-BY": "хата",   "en-US": "house" }
+    },
+    {
+      "id": "bil-8",
+      "russian": "окно",
+      "category": "дом",
+      "symbol": "window.casement",
+      "translations": { "be-BY": "акно",   "en-US": "window" }
+    },
+    {
+      "id": "bil-9",
+      "russian": "дверь",
+      "category": "дом",
+      "symbol": "door.left.hand.open",
+      "translations": { "be-BY": "дзверы", "en-US": "door" }
+    },
+    {
+      "id": "bil-10",
+      "russian": "стол",
+      "category": "дом",
+      "symbol": "table.furniture.fill",
+      "translations": { "be-BY": "стол",   "en-US": "table" }
+    },
+    {
+      "id": "bil-11",
+      "russian": "стул",
+      "category": "дом",
+      "symbol": "chair.fill",
+      "translations": { "be-BY": "крэсла", "en-US": "chair" }
+    },
+    {
+      "id": "bil-12",
+      "russian": "яблоко",
+      "category": "еда",
+      "symbol": "applelogo",
+      "translations": { "be-BY": "яблык",  "en-US": "apple" }
+    },
+    {
+      "id": "bil-13",
+      "russian": "хлеб",
+      "category": "еда",
+      "symbol": "fork.knife",
+      "translations": { "be-BY": "хлеб",   "en-US": "bread" }
+    },
+    {
+      "id": "bil-14",
+      "russian": "молоко",
+      "category": "еда",
+      "symbol": "drop.fill",
+      "translations": { "be-BY": "малако", "en-US": "milk" }
+    },
+    {
+      "id": "bil-15",
+      "russian": "вода",
+      "category": "еда",
+      "symbol": "drop.fill",
+      "translations": { "be-BY": "вада",   "en-US": "water" }
+    },
+    {
+      "id": "bil-16",
+      "russian": "сок",
+      "category": "еда",
+      "symbol": "cup.and.saucer.fill",
+      "translations": { "be-BY": "сок",    "en-US": "juice" }
+    },
+    {
+      "id": "bil-17",
+      "russian": "кот",
+      "category": "животные",
+      "symbol": "cat.fill",
+      "translations": { "be-BY": "кот",    "en-US": "cat" }
+    },
+    {
+      "id": "bil-18",
+      "russian": "собака",
+      "category": "животные",
+      "symbol": "dog.fill",
+      "translations": { "be-BY": "сабака", "en-US": "dog" }
+    },
+    {
+      "id": "bil-19",
+      "russian": "птица",
+      "category": "животные",
+      "symbol": "bird.fill",
+      "translations": { "be-BY": "птушка", "en-US": "bird" }
+    },
+    {
+      "id": "bil-20",
+      "russian": "рыба",
+      "category": "животные",
+      "symbol": "fish.fill",
+      "translations": { "be-BY": "рыба",   "en-US": "fish" }
+    },
+    {
+      "id": "bil-21",
+      "russian": "лошадь",
+      "category": "животные",
+      "symbol": "hare.fill",
+      "translations": { "be-BY": "конь",   "en-US": "horse" }
+    },
+    {
+      "id": "bil-22",
+      "russian": "корова",
+      "category": "животные",
+      "symbol": "hare.fill",
+      "translations": { "be-BY": "карова", "en-US": "cow" }
+    },
+    {
+      "id": "bil-23",
+      "russian": "дерево",
+      "category": "природа",
+      "symbol": "tree.fill",
+      "translations": { "be-BY": "дрэва",  "en-US": "tree" }
+    },
+    {
+      "id": "bil-24",
+      "russian": "цветок",
+      "category": "природа",
+      "symbol": "leaf.fill",
+      "translations": { "be-BY": "кветка", "en-US": "flower" }
+    },
+    {
+      "id": "bil-25",
+      "russian": "солнце",
+      "category": "природа",
+      "symbol": "sun.max.fill",
+      "translations": { "be-BY": "сонца",  "en-US": "sun" }
+    },
+    {
+      "id": "bil-26",
+      "russian": "луна",
+      "category": "природа",
+      "symbol": "moon.fill",
+      "translations": { "be-BY": "месяц",  "en-US": "moon" }
+    },
+    {
+      "id": "bil-27",
+      "russian": "снег",
+      "category": "природа",
+      "symbol": "snowflake",
+      "translations": { "be-BY": "снег",   "en-US": "snow" }
+    },
+    {
+      "id": "bil-28",
+      "russian": "рука",
+      "category": "тело",
+      "symbol": "hand.raised.fill",
+      "translations": { "be-BY": "рука",   "en-US": "hand" }
+    },
+    {
+      "id": "bil-29",
+      "russian": "нога",
+      "category": "тело",
+      "symbol": "figure.walk",
+      "translations": { "be-BY": "нага",   "en-US": "leg" }
+    },
+    {
+      "id": "bil-30",
+      "russian": "глаз",
+      "category": "тело",
+      "symbol": "eye.fill",
+      "translations": { "be-BY": "вока",   "en-US": "eye" }
+    },
+    {
+      "id": "bil-31",
+      "russian": "один",
+      "category": "числа",
+      "symbol": "1.circle.fill",
+      "translations": { "be-BY": "адзін",  "en-US": "one" }
+    },
+    {
+      "id": "bil-32",
+      "russian": "два",
+      "category": "числа",
+      "symbol": "2.circle.fill",
+      "translations": { "be-BY": "два",    "en-US": "two" }
+    }
+  ]
+}
