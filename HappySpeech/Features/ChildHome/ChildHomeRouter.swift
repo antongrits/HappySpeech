@@ -28,6 +28,7 @@ protocol ChildHomeRoutingLogic {
     func routeToCoPlay(childId: String)
     func routeToSyllableConstructor(childId: String)
     func routeToComprehensionDetective(childId: String)
+    func routeToBedtimeMode(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -164,5 +165,10 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     /// v31 Волна B Ф.2 — ComprehensionDetective «Понимание-детектив».
     func routeToComprehensionDetective(childId: String) {
         coordinator?.navigate(to: .comprehensionDetective(childId: childId))
+    }
+
+    /// v31 Волна B Ф.3 — BedtimeMode «Перед сном».
+    func routeToBedtimeMode(childId: String) {
+        coordinator?.navigate(to: .bedtimeMode(childId: childId))
     }
 }

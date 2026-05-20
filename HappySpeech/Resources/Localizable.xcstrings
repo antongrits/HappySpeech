@@ -5586,6 +5586,259 @@
         }
       }
     },
+    "bedtime.breathing.a11y" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Круг дыхания: он расширяется на вдохе и сжимается на выдохе"
+          }
+        }
+      }
+    },
+    "bedtime.breathing.cycle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Цикл %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "bedtime.breathing.exhale" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выдох"
+          }
+        }
+      }
+    },
+    "bedtime.breathing.hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вдох на четыре, задержка четыре, выдох шесть"
+          }
+        }
+      }
+    },
+    "bedtime.breathing.hold" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Задержи"
+          }
+        }
+      }
+    },
+    "bedtime.breathing.holding" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дыши вместе со светлым кругом…"
+          }
+        }
+      }
+    },
+    "bedtime.breathing.inhale" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вдох"
+          }
+        }
+      }
+    },
+    "bedtime.breathing.start" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Начать"
+          }
+        }
+      }
+    },
+    "bedtime.breathing.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дыхание перед сном"
+          }
+        }
+      }
+    },
+    "bedtime.close.a11y" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закрыть режим перед сном"
+          }
+        }
+      }
+    },
+    "bedtime.entry.hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тихая история и дыхание"
+          }
+        }
+      }
+    },
+    "bedtime.entry.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перед сном"
+          }
+        }
+      }
+    },
+    "bedtime.farewell" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Спокойной ночи. Сладких снов."
+          }
+        }
+      }
+    },
+    "bedtime.farewell.close" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закрыть"
+          }
+        }
+      }
+    },
+    "bedtime.intro" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Готов к спокойному вечеру? Сначала вдохнём вместе, потом послушаем сказку."
+          }
+        }
+      }
+    },
+    "bedtime.intro.cta" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Готов"
+          }
+        }
+      }
+    },
+    "bedtime.library.count" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В библиотеке %d сказок"
+          }
+        }
+      }
+    },
+    "bedtime.story.another" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Другая"
+          }
+        }
+      }
+    },
+    "bedtime.story.another.hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать другую сказку"
+          }
+        }
+      }
+    },
+    "bedtime.story.done" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завершить вечер"
+          }
+        }
+      }
+    },
+    "bedtime.story.listen" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Послушать"
+          }
+        }
+      }
+    },
+    "bedtime.story.stop" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Остановить"
+          }
+        }
+      }
+    },
+    "bedtime.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перед сном"
+          }
+        }
+      }
+    },
     "bingo.accessibility.bingo_win" : {
       "extractionState" : "manual",
       "localizations" : {

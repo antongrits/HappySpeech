@@ -1128,6 +1128,16 @@ extension ChildHomeView {
         ) {
             router?.routeToComprehensionDetective(childId: childId)
         }
+
+        // v31 Волна B Ф.3 — BedtimeMode «Перед сном».
+        ChildHomeV25EntryCard(
+            titleKey: "bedtime.entry.title",
+            hintKey: "bedtime.entry.hint",
+            iconName: "moon.stars.fill",
+            accent: ColorTokens.Brand.lilac
+        ) {
+            router?.routeToBedtimeMode(childId: childId)
+        }
     }
 }
 
