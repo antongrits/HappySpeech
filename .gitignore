@@ -1,9 +1,17 @@
-# macOS
+# =============================================================================
+# HappySpeech — .gitignore
+# =============================================================================
+# Repository contains ONLY the iOS app source + Xcode project + Cloud Functions.
+# Local dev tooling, AI-agent configs, design experiments, datasets, screenshots,
+# logs, and secrets stay on the developer's machine, never on GitHub.
+
+# ---------- macOS ----------
 .DS_Store
+**/.DS_Store
 *.swp
 *.swo
 
-# Xcode
+# ---------- Xcode ----------
 build/
 DerivedData/
 *.xcworkspace/xcuserdata/
@@ -16,47 +24,22 @@ xcuserdata/
 *.mode2v3
 *.perspectivev3
 *.xccheckout
+*.xcarchive/
+*.xcresult
+dist/
 
-# Swift Package Manager
+# ---------- Swift Package Manager ----------
 .swiftpm/
 Package.resolved
 .build/
 Packages/
 
-# CocoaPods
+# ---------- CocoaPods (project doesn't use, but defensive) ----------
 Pods/
 
-# Temp ML + datasets (NEVER commit)
-_workshop/
-tmp/
-*.mlpackage/DerivedData/
-
-# Logs
-*.log
-.claude/team/orchestration/
-
-# Claude Code local settings
-.claude/settings.local.json
-.claude/.credentials.json
-.claude/worktrees/
-.claude/scheduled_tasks.lock
-
-# Xcode derived build output
-dist/
-*.xcarchive/
-
-# Screenshots (build artifacts)
-_workshop/screenshots/
-_screenshots/
-docs/screenshots/
-docs/screenshots-v12/
-docs/screenshots-v13/
-
-# QA / build artifacts
-*.xcresult
-sounds/
-
-# Firebase
+# ---------- Firebase ----------
+# GoogleService-Info.plist contains app-specific Firebase keys; the project's
+# Firebase project is owner-bound and not shared. Each developer adds their own.
 GoogleService-Info.plist
 .firebase/
 firebase-debug.log
@@ -64,17 +47,61 @@ firebase-debug.*.log
 ui-debug.log
 functions/node_modules/
 functions/.runtimeconfig.json
+functions/lib/
 
-# Env
-.env
-.env.local
-
-# Python (in _workshop/)
+# ---------- Python (ML pipeline lives in ~/Downloads/HappySpeech/_workshop/) ----------
 *.pyc
 __pycache__/
 venv/
 .venv/
+*.egg-info/
 
-# Content audio — bundled in app (Firebase Storage skipped, Spark plan)
-# HappySpeech/Resources/Audio/Content/ — unbundled for direct app bundle inclusion
-**/.DS_Store
+# ---------- ML training artifacts (NEVER commit) ----------
+# Datasets, raw audio, checkpoints — all in ~/Downloads/HappySpeech/_workshop/.
+# Only final .mlpackage files are committed under HappySpeech/Resources/Models/.
+_workshop/
+*.mlpackage/DerivedData/
+
+# ---------- Local design experiments ----------
+# Local design prototypes / mockups / brand experiments — not project source.
+happyspeech-design/
+
+# ---------- AI-agent configs (developer-local) ----------
+# Claude Code config — local-only orchestration, not part of the iOS app.
+.claude/
+# Also ignore any AI-agent or LLM auxiliary tooling lying around the repo.
+.cursor/
+.aider*
+.codeium/
+
+# ---------- Temp / scratch ----------
+tmp/
+.tmp/
+*.tmp
+scratch/
+
+# ---------- Logs ----------
+*.log
+
+# ---------- Env / secrets ----------
+.env
+.env.local
+.env.*.local
+*.pem
+*.p12
+*.cer
+
+# ---------- Screenshots / QA artifacts (regenerable) ----------
+docs/screenshots/
+docs/screenshots-*/
+_screenshots/
+sounds/
+
+# ---------- Editor / IDE ----------
+.idea/
+.vscode/
+*.iml
+
+# ---------- Misc ----------
+*~
+.envrc
