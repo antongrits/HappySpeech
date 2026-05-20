@@ -12,8 +12,8 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { groupSessionsBySound, emptyStageProgress } = require('../src/progress');
-const { buildDailySeries, buildSoundBreakdown, buildRecommendations } = require('../src/reports');
+const { groupSessionsBySound, emptyStageProgress } = require('../lib/progress');
+const { buildDailySeries, buildSoundBreakdown, buildRecommendations } = require('../lib/reports');
 
 function fakeDoc(data) {
   return { data: () => data };

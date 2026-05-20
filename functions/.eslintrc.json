@@ -3,17 +3,24 @@
     "es2022": true,
     "node": true
   },
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 2022,
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": ["./tsconfig.json"]
   },
-  "extends": ["eslint:recommended", "google"],
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "ignorePatterns": ["/lib/**/*", "/node_modules/**/*"],
   "rules": {
-    "quotes": ["error", "single", { "avoidEscape": true }],
+    "quotes": ["error", "double", { "avoidEscape": true }],
     "indent": ["error", 2],
     "max-len": ["warn", { "code": 120 }],
-    "require-jsdoc": "off",
-    "valid-jsdoc": "off",
-    "object-curly-spacing": ["error", "always"]
+    "object-curly-spacing": ["error", "always"],
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
   }
 }
