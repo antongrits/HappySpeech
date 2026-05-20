@@ -112,11 +112,22 @@ struct SharePlaySessionView: View {
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
         .padding(.vertical, SpacingTokens.sp2)
-        .background(.ultraThinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.md))
+        .background(participantsBarBackground)
         .padding(.horizontal, SpacingTokens.sp3)
         .padding(.top, SpacingTokens.sp2)
         .shadow(color: ColorTokens.Overlay.shadow, radius: 6, y: 2)
+    }
+
+    @ViewBuilder
+    private var participantsBarBackground: some View {
+        let shape = RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+        if #available(iOS 26, *), !reduceMotion {
+            // iOS 26 Liquid Glass — adaptive blur matching system top bars.
+            Color.clear.glassEffect(.regular, in: shape)
+        } else {
+            // iOS 17–25 (and Reduced Motion) fallback — static ultraThinMaterial.
+            shape.fill(.ultraThinMaterial)
+        }
     }
 
     @ViewBuilder

@@ -426,7 +426,18 @@ struct GrammarGameView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.bottom, SpacingTokens.xxLarge)
-        .background(.ultraThinMaterial)
+        .background(ctaTrayBackground)
+    }
+
+    @ViewBuilder
+    private var ctaTrayBackground: some View {
+        if #available(iOS 26, *), !reduceMotion {
+            // iOS 26 Liquid Glass — adaptive blur matching system bottom bars.
+            Color.clear.glassEffect(.regular)
+        } else {
+            // iOS 17–25 (and Reduced Motion) fallback — static ultraThinMaterial.
+            Rectangle().fill(.ultraThinMaterial)
+        }
     }
 
     // MARK: - Hint View
