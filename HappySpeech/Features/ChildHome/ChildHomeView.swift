@@ -1208,6 +1208,16 @@ extension ChildHomeView {
         ) {
             router?.routeToObjectDescriptionMap(childId: childId)
         }
+
+        // v31 Wave F Ф.7 — Логоритмика (Картушина / Волкова, метроном + тапы).
+        ChildHomeV25EntryCard(
+            titleKey: "logorhythmics.entry.title",
+            hintKey: "logorhythmics.entry.hint",
+            iconName: "music.note.list",
+            accent: ColorTokens.Brand.butter
+        ) {
+            router?.routeToLogorhythmics(childId: childId)
+        }
     }
 }
 

@@ -37,6 +37,7 @@ protocol ChildHomeRoutingLogic {
     func routeToOralStoryCreator(childId: String)
     // v31 Wave F
     func routeToObjectDescriptionMap(childId: String)
+    func routeToLogorhythmics(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -214,5 +215,10 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     /// v31 Wave F Ф.2 — «Описательная карта» (план-схема Ткаченко).
     func routeToObjectDescriptionMap(childId: String) {
         coordinator?.navigate(to: .objectDescriptionMap(childId: childId))
+    }
+
+    /// v31 Wave F Ф.7 — «Логоритмика» (Картушина / Волкова).
+    func routeToLogorhythmics(childId: String) {
+        coordinator?.navigate(to: .logorhythmics(childId: childId))
     }
 }

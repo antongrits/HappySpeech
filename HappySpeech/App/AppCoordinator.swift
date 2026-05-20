@@ -121,6 +121,10 @@ enum AppRoute: Hashable {
     /// ребёнок описывает объект по 6–8 пиктограммам, ASR + анализ
     /// покрытия пунктов плана → 0…3 ★.
     case objectDescriptionMap(childId: String)
+    /// Wave F Ф.7 (kid): Логоритмика (Картушина / Волкова) —
+    /// chant-метроном, CMMotionManager детектит тапы по вертикальному
+    /// ускорению, BeatScorer считает F1 совпадения с expected beats.
+    case logorhythmics(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -707,6 +711,12 @@ struct AppCoordinatorView: View {
         case .objectDescriptionMap(let childId):
             ObjectDescriptionMapView(childId: childId)
                 .environment(\.circuitContext, .kid)
+
+        // MARK: - v31 Wave F Ф.7
+
+        case .logorhythmics(let childId):
+            LogorhythmicsView(childId: childId)
+                .environment(\.circuitContext, .kid)
         }
     }
 
@@ -1103,6 +1113,12 @@ extension AppCoordinatorView {
              "descriptionMap",
              "tkachenkoMap":
             return .objectDescriptionMap(childId: previewChild)
+
+        // MARK: v31 Wave F Ф.7
+        case "logorhythmics",
+             "rhythm",
+             "kartushina":
+            return .logorhythmics(childId: previewChild)
 
         default:
             return .auth

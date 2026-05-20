@@ -45,6 +45,8 @@
 	<string>Чтобы найти друга для совместной игры по локальной сети</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>HappySpeech использует микрофон для распознавания произношения и логопедических упражнений</string>
+	<key>NSMotionUsageDescription</key>
+	<string>HappySpeech использует датчики движения для упражнений по логоритмике — чтобы засчитать ритмичные топот или хлопки</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>HappySpeech использует распознавание речи для оценки произношения</string>
 	<key>NSSupportsLiveActivities</key>

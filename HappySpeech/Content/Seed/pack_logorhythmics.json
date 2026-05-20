@@ -1,0 +1,158 @@
+{
+  "id": "pack_logorhythmics_v1",
+  "version": 1,
+  "description": "v31 Wave F Ф.7 «Логоритмика» — ритм-двигательные упражнения по Картушиной/Волковой. 12 классических chants для детей 5–8 лет. Паттерны битов — приближение по слогам названия (patternSource = approximation_by_syllables); финальная сверка с книгой Картушиной «Логоритмика для малышей» — TODO для методолога. Контур kid.",
+  "patternSourceNote": "Beat patterns are approximated from the natural syllable rhythm of each rhyme. They have not been verified against the original Kartushina notation. Methodologist sign-off pending.",
+  "categoriesInOrder": ["топот", "хлопок", "качание"],
+  "categoryTitles": {
+    "топот": "Шаги и топот",
+    "хлопок": "Ладушки",
+    "качание": "Качание"
+  },
+  "exercises": [
+    {
+      "id": "topotushki",
+      "title": "Топ-топ топотушки",
+      "ageMin": 5,
+      "category": "топот",
+      "bpm": 90,
+      "patternSource": "approximation_by_syllables",
+      "syllables": ["Топ", "топ", "то", "по", "туш", "ки", "пля", "шут", "на", "ши", "нож", "ки"],
+      "pattern": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      "strongBeats": [0, 4, 6, 10],
+      "rhymeText": "Топ-топ топотушки,\nпляшут наши ножки!"
+    },
+    {
+      "id": "khlop_khlop",
+      "title": "Хлоп-хлоп",
+      "ageMin": 5,
+      "category": "хлопок",
+      "bpm": 80,
+      "patternSource": "approximation_by_syllables",
+      "syllables": ["Хлоп", "хлоп", "ла", "до", "шки", "хло", "пай", "ма", "лень", "кий", "Ан", "тош", "ка"],
+      "pattern": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      "strongBeats": [0, 2, 5, 10],
+      "rhymeText": "Хлоп-хлоп, ладошки,\nхлопай, маленький Антошка!"
+    },
+    {
+      "id": "na_zaryadku",
+      "title": "На зарядку становись",
+      "ageMin": 6,
+      "category": "топот",
+      "bpm": 100,
+      "patternSource": "approximation_by_syllables",
+      "syllables": ["На", "за", "ряд", "ку", "ста", "но", "вись", "буд", "то", "сол", "ныш", "ко", "проснись"],
+      "pattern": [1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2],
+      "strongBeats": [0, 4, 7, 10],
+      "rhymeText": "На зарядку становись,\nбудто солнышко, проснись!"
+    },
+    {
+      "id": "po_dorozhke",
+      "title": "По дорожке",
+      "ageMin": 5,
+      "category": "топот",
+      "bpm": 85,
+      "patternSource": "approximation_by_syllables",
+      "syllables": ["По", "до", "рож", "ке", "по", "до", "рож", "ке", "ша", "га", "ют", "наши", "нож", "ки"],
+      "pattern": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      "strongBeats": [0, 4, 8, 12],
+      "rhymeText": "По дорожке, по дорожке\nшагают наши ножки!"
+    },
+    {
+      "id": "my_shagaem",
+      "title": "Мы шагаем",
+      "ageMin": 5,
+      "category": "топот",
+      "bpm": 95,
+      "patternSource": "approximation_by_syllables",
+      "syllables": ["Мы", "ша", "га", "ем", "мы", "ша", "га", "ем", "вы", "ше", "но", "ги", "под", "ни", "ма", "ем"],
+      "pattern": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      "strongBeats": [0, 4, 8, 12],
+      "rhymeText": "Мы шагаем, мы шагаем,\nвыше ноги поднимаем!"
+    },
+    {
+      "id": "raz_dva_tri_chetyre",
+      "title": "Раз-два-три-четыре",
+      "ageMin": 6,
+      "category": "хлопок",
+      "bpm": 110,
+      "patternSource": "approximation_by_syllables",
+      "syllables": ["Раз", "два", "три", "че", "ты", "ре", "пять", "вы", "шел", "за", "йчик", "по", "гу", "лять"],
+      "pattern": [1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 2],
+      "strongBeats": [0, 1, 2, 6, 7, 13],
+      "rhymeText": "Раз, два, три, четыре, пять —\nвышел зайчик погулять!"
+    },
+    {
+      "id": "loshadka",
+      "title": "Я люблю свою лошадку",
+      "ageMin": 6,
+      "category": "качание",
+      "bpm": 75,
+      "patternSource": "approximation_by_syllables",
+      "syllables": ["Я", "люб", "лю", "свою", "ло", "шад", "ку", "при", "че", "шу", "ей", "шёр", "стку", "глад", "ко"],
+      "pattern": [1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2],
+      "strongBeats": [0, 3, 7, 11],
+      "rhymeText": "Я люблю свою лошадку,\nпричешу ей шёрстку гладко!"
+    },
+    {
+      "id": "kury_gusi",
+      "title": "Куры, гуси да индюшки",
+      "ageMin": 6,
+      "category": "хлопок",
+      "bpm": 100,
+      "patternSource": "approximation_by_syllables",
+      "syllables": ["Ку", "ры", "гу", "си", "да", "ин", "дюш", "ки", "на", "пи", "ва", "ли", "сь", "из", "ка", "душ", "ки"],
+      "pattern": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      "strongBeats": [0, 2, 4, 8, 12],
+      "rhymeText": "Куры, гуси да индюшки\nнапивались из кадушки!"
+    },
+    {
+      "id": "zainka_serenkij",
+      "title": "Заинька серенький",
+      "ageMin": 5,
+      "category": "качание",
+      "bpm": 70,
+      "patternSource": "approximation_by_syllables",
+      "syllables": ["За", "инь", "ка", "се", "рень", "кий", "за", "инь", "ка", "ма", "лень", "кий"],
+      "pattern": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      "strongBeats": [0, 3, 6, 9],
+      "rhymeText": "Заинька серенький,\nзаинька маленький!"
+    },
+    {
+      "id": "malenkij_myshonok",
+      "title": "Маленький мышонок",
+      "ageMin": 6,
+      "category": "качание",
+      "bpm": 80,
+      "patternSource": "approximation_by_syllables",
+      "syllables": ["Ма", "лень", "кий", "мы", "шо", "нок", "ти", "хо", "нь", "ко", "идёт"],
+      "pattern": [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+      "strongBeats": [0, 3, 6, 10],
+      "rhymeText": "Маленький мышонок\nтихонько идёт!"
+    },
+    {
+      "id": "tra_ta_ta",
+      "title": "Тра-та-та",
+      "ageMin": 5,
+      "category": "хлопок",
+      "bpm": 105,
+      "patternSource": "approximation_by_syllables",
+      "syllables": ["Тра", "та", "та", "тра", "та", "та", "е", "дет", "ко", "тик", "со", "мной"],
+      "pattern": [1, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 2],
+      "strongBeats": [0, 3, 6, 8],
+      "rhymeText": "Тра-та-та, тра-та-та,\nедет котик со мной!"
+    },
+    {
+      "id": "baraban",
+      "title": "Барабан",
+      "ageMin": 7,
+      "category": "топот",
+      "bpm": 120,
+      "patternSource": "approximation_by_syllables",
+      "syllables": ["Ба", "ра", "бан", "ба", "ра", "бан", "гром", "ко", "бьёт", "ба", "ра", "бан"],
+      "pattern": [1, 1, 2, 1, 1, 2, 1, 1, 2, 1, 1, 2],
+      "strongBeats": [0, 3, 6, 9],
+      "rhymeText": "Барабан, барабан,\nгромко бьёт барабан!"
+    }
+  ]
+}
