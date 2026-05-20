@@ -98,6 +98,7 @@ enum AppRoute: Hashable {
     // MARK: - v31 Волна C
     case rewardShop(childId: String)
     case letterTrace(childId: String)
+    case customWordList(specialistId: String)
 }
 
 enum PermissionType: Hashable {
@@ -646,6 +647,10 @@ struct AppCoordinatorView: View {
         case .letterTrace(let childId):
             LetterTraceView(childId: childId)
                 .environment(\.circuitContext, .kid)
+
+        case .customWordList(let specialistId):
+            CustomWordListView(specialistId: specialistId)
+                .environment(\.circuitContext, .specialist)
         }
     }
 
@@ -1003,6 +1008,11 @@ extension AppCoordinatorView {
         case "letterTrace",
              "trace":
             return .letterTrace(childId: previewChild)
+
+        // MARK: v31 Волна C Ф.4
+        case "customWordList",
+             "wordList":
+            return .customWordList(specialistId: previewParent)
 
         default:
             return .auth

@@ -23,8 +23,10 @@ struct SpecialistReportsView: View {
     @State private var filter: ReportFilter = .all
     @State private var pendingShareItem: ShareItem?
     @State private var selectedSound: SoundBreakdownRow?
+    @State private var showCustomWordList: Bool = false
 
     private static let demoChildId = "preview-child-1"
+    private static let demoSpecialistId = "local-parent"
 
     var body: some View {
         NavigationStack {
@@ -35,6 +37,7 @@ struct SpecialistReportsView: View {
                     VStack(alignment: .leading, spacing: SpacingTokens.sp5) {
                         rangePicker
                         filterChips
+                        customWordListEntryCard
 
                         if viewModel.isLoading {
                             loadingView
@@ -47,6 +50,9 @@ struct SpecialistReportsView: View {
                     .padding(.horizontal, SpacingTokens.screenEdge)
                     .padding(.vertical, SpacingTokens.sp5)
                 }
+            }
+            .sheet(isPresented: $showCustomWordList) {
+                CustomWordListView(specialistId: Self.demoSpecialistId)
             }
             .navigationTitle(String(localized: "Отчёты"))
             .toolbar {
@@ -118,6 +124,51 @@ struct SpecialistReportsView: View {
             }
             .padding(.vertical, SpacingTokens.sp1)
         }
+    }
+
+    // MARK: - Custom word list entry (v31 Wave C Ф.4)
+
+    private var customWordListEntryCard: some View {
+        HSCard(style: .elevated) {
+            HStack(spacing: SpacingTokens.sp3) {
+                ZStack {
+                    Circle()
+                        .fill(ColorTokens.Spec.accent.opacity(0.14))
+                        .frame(width: 44, height: 44)
+                    Image(systemName: "list.bullet.rectangle.fill")
+                        .font(TypographyTokens.subtitle(20))
+                        .foregroundStyle(ColorTokens.Spec.accent)
+                }
+                .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "customWordList.entry.title"))
+                        .font(TypographyTokens.headline())
+                        .foregroundStyle(ColorTokens.Spec.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "customWordList.entry.hint"))
+                        .font(TypographyTokens.body())
+                        .foregroundStyle(ColorTokens.Spec.inkMuted)
+                        .lineLimit(2)
+                }
+                Spacer(minLength: 0)
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(ColorTokens.Spec.inkMuted)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp3)
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            showCustomWordList = true
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            String(localized: "customWordList.entry.title") + ". " +
+            String(localized: "customWordList.entry.hint")
+        )
+        .accessibilityAddTraits(.isButton)
+        .accessibilityIdentifier("customWordList.entryCard")
     }
 
     // MARK: - Loading
