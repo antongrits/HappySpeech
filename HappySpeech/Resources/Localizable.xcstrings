@@ -11677,6 +11677,259 @@
         }
       }
     },
+    "detective.close.a11y" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закрыть Понимание-детектив"
+          }
+        }
+      }
+    },
+    "detective.entry.hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Найди правильную картинку"
+          }
+        }
+      }
+    },
+    "detective.entry.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Понимание-детектив"
+          }
+        }
+      }
+    },
+    "detective.instruction.a11y" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Послушай: %@"
+          }
+        }
+      }
+    },
+    "detective.loading" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подбираем задание…"
+          }
+        }
+      }
+    },
+    "detective.next" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Следующее"
+          }
+        }
+      }
+    },
+    "detective.next.hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перейти к следующему заданию"
+          }
+        }
+      }
+    },
+    "detective.progress" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Задание %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "detective.replay.a11y" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Повторить инструкцию"
+          }
+        }
+      }
+    },
+    "detective.tier.1.hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Слушай и тапни картинку"
+          }
+        }
+      }
+    },
+    "detective.tier.1.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Простое поручение"
+          }
+        }
+      }
+    },
+    "detective.tier.2.hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Найди то, где сразу два предмета"
+          }
+        }
+      }
+    },
+    "detective.tier.2.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Двойное поручение"
+          }
+        }
+      }
+    },
+    "detective.tier.3.hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Слушай где: под, на, в, за"
+          }
+        }
+      }
+    },
+    "detective.tier.3.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "С предлогом"
+          }
+        }
+      }
+    },
+    "detective.tier.4.hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Понять смысл: «то, чем рисуют»"
+          }
+        }
+      }
+    },
+    "detective.tier.4.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сложная конструкция"
+          }
+        }
+      }
+    },
+    "detective.tile.hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тапни, если это правильная картинка"
+          }
+        }
+      }
+    },
+    "detective.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Понимание-детектив"
+          }
+        }
+      }
+    },
+    "detective.toast.correct.detail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ты услышал правильно"
+          }
+        }
+      }
+    },
+    "detective.toast.correct.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Точно!"
+          }
+        }
+      }
+    },
+    "detective.toast.wrong.detail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Инструкция: «%@»"
+          }
+        }
+      }
+    },
+    "detective.toast.wrong.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Послушай ещё раз"
+          }
+        }
+      }
+    },
     "dialect.applied.format" : {
       "extractionState" : "manual",
       "localizations" : {

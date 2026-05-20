@@ -88,6 +88,8 @@ enum AppRoute: Hashable {
     case dailyRitualsLyalya(kind: RitualKind)
     // v31 Волна B Ф.1: новый методически-ценный экран.
     case syllableConstructor(childId: String)
+    // v31 Волна B Ф.2: импрессивная речь, понимание инструкции по Левиной.
+    case comprehensionDetective(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -608,6 +610,12 @@ struct AppCoordinatorView: View {
         case .syllableConstructor(let childId):
             SyllableConstructorView(childId: childId)
                 .environment(\.circuitContext, .kid)
+
+        // MARK: - v31 Волна B Ф.2
+
+        case .comprehensionDetective(let childId):
+            ComprehensionDetectiveView(childId: childId)
+                .environment(\.circuitContext, .kid)
         }
     }
 
@@ -940,6 +948,11 @@ extension AppCoordinatorView {
         case "syllableConstructor",
              "syllable":
             return .syllableConstructor(childId: previewChild)
+
+        // MARK: v31 Волна B Ф.2
+        case "comprehensionDetective",
+             "detective":
+            return .comprehensionDetective(childId: previewChild)
 
         default:
             return .auth

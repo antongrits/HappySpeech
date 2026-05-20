@@ -1118,6 +1118,16 @@ extension ChildHomeView {
         ) {
             router?.routeToSyllableConstructor(childId: childId)
         }
+
+        // v31 Волна B Ф.2 — ComprehensionDetective «Понимание-детектив».
+        ChildHomeV25EntryCard(
+            titleKey: "detective.entry.title",
+            hintKey: "detective.entry.hint",
+            iconName: "magnifyingglass.circle.fill",
+            accent: ColorTokens.Brand.sky
+        ) {
+            router?.routeToComprehensionDetective(childId: childId)
+        }
     }
 }
 

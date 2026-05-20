@@ -27,6 +27,7 @@ protocol ChildHomeRoutingLogic {
     func routeToStorytelling(childId: String)
     func routeToCoPlay(childId: String)
     func routeToSyllableConstructor(childId: String)
+    func routeToComprehensionDetective(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -158,5 +159,10 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     /// v31 Волна B Ф.1 — SyllableConstructor «Слог-конструктор».
     func routeToSyllableConstructor(childId: String) {
         coordinator?.navigate(to: .syllableConstructor(childId: childId))
+    }
+
+    /// v31 Волна B Ф.2 — ComprehensionDetective «Понимание-детектив».
+    func routeToComprehensionDetective(childId: String) {
+        coordinator?.navigate(to: .comprehensionDetective(childId: childId))
     }
 }
