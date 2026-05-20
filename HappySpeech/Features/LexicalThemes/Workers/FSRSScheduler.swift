@@ -13,7 +13,7 @@ import OSLog
 //   • easy  — легко.
 //
 // Источник: open-spaced-repetition/fsrs6 (MIT) — алгоритм портирован
-// в чистый Swift, без внешних SPM (CLAUDE.md §3 — никаких новых
+// в чистый Swift, без внешних SPM (project guide §3 — никаких новых
 // зависимостей без согласования). Параметры w[0..18] — дефолтные из
 // open-spaced-repetition, оптимизированы на ~1M anki-review-датасете.
 

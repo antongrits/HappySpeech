@@ -16,7 +16,7 @@ protocol PlainProgressPresentationLogic: AnyObject {
 //
 // Собирает человекочитаемый нарратив из размеченных шаблонов
 // (`PlainProgressTemplates`), подставляя реальные метрики. Все строки —
-// через `String(localized:)`. Никаких диагнозов и гарантий (CLAUDE.md §11).
+// через `String(localized:)`. Никаких диагнозов и гарантий (project guide §11).
 
 @MainActor
 final class PlainProgressPresenter: PlainProgressPresentationLogic {

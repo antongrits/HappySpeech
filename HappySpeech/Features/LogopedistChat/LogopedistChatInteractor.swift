@@ -34,7 +34,7 @@ protocol LogopedistChatDataStore: AnyObject {
 //
 // COPPA: вся логика только в parent контуре.
 //
-// Этика (CLAUDE.md §11): приложение НЕ заменяет живого логопеда и НЕ
+// Этика (project guide §11): приложение НЕ заменяет живого логопеда и НЕ
 // имитирует его. Пока к семье не подключён реальный специалист, экран
 // показывает честное пустое состояние — без выдуманного собеседника,
 // фейковых сообщений и индикатора «В сети». Никаких авто-ответов:
@@ -96,7 +96,7 @@ final class LogopedistChatInteractor: LogopedistChatBusinessLogic, LogopedistCha
         // Пока интеграция с Firestore не реализована, реального специалиста
         // нет — поэтому возвращаем `nil`. Presenter покажет честное пустое
         // состояние «Подключите логопеда вашего ребёнка», а не фейковую
-        // переписку с выдуманным собеседником (CLAUDE.md §11).
+        // переписку с выдуманным собеседником (project guide §11).
         let specialist = connectedSpecialist()
         specialistInfo = specialist
 
@@ -131,7 +131,7 @@ final class LogopedistChatInteractor: LogopedistChatBusinessLogic, LogopedistCha
         Self.logger.info("Parent message queued for specialist (\(request.text.count) chars)")
 
         // Никаких авто-ответов: ответ появится только когда реальный логопед
-        // ответит через Firestore listener (CLAUDE.md §11 — не имитируем специалиста).
+        // ответит через Firestore listener (project guide §11 — не имитируем специалиста).
         let response = LogopedistChatModels.Send.Response(
             createdMessage: parentMessage,
             appendedMessages: [parentMessage]

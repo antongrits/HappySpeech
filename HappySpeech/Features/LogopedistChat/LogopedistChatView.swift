@@ -226,7 +226,7 @@ struct LogopedistChatView: View {
     // MARK: - Hero (empty state)
     //
     // Честное пустое состояние: пока к ребёнку не подключён реальный логопед,
-    // никакой переписки нет. Не имитируем живого специалиста (CLAUDE.md §11).
+    // никакой переписки нет. Не имитируем живого специалиста (project guide §11).
 
     @ViewBuilder
     private func chatHeroEmptyState(

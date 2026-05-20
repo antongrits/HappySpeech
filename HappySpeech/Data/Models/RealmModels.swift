@@ -326,7 +326,7 @@ struct StickerInventoryData: Sendable, Identifiable {
 //
 // Логопед-составленный список слов, который ContentEngine превращает
 // в упражнения (repeat-after-model / bingo / memory). Хранится локально,
-// никаких внешних трекеров (CLAUDE.md §11).
+// никаких внешних трекеров (project guide §11).
 
 final class CustomWordListObject: Object, @unchecked Sendable {
     @Persisted(primaryKey: true) var id: String = UUID().uuidString
@@ -392,7 +392,7 @@ struct LexicalItemReviewData: Sendable, Identifiable, Equatable {
 // Результаты 10-вопросной первичной оценки специалиста по фреймворку
 // Левиной/Архиповой (артикуляция, фонология, лексика, грамматика,
 // связная речь). Не диагностический инструмент — рекомендация фокуса
-// для AdaptivePlannerService на ближайшие 2 недели (CLAUDE.md §11).
+// для AdaptivePlannerService на ближайшие 2 недели (project guide §11).
 
 final class AssessmentResultObject: Object, @unchecked Sendable {
     @Persisted(primaryKey: true) var id: String = UUID().uuidString

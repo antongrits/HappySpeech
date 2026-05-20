@@ -32,7 +32,7 @@ import XCTest
 //
 // Issue #3: Sub-navigation routes (settings.*, demoStep*, rewards*, specialist*)
 //   резолвят к root AppRoute → identical screenshots. Defer через ADR-V23-TOUR
-//   (см. .claude/team/decisions.md). Sub-routes screenshots = parent root.
+//   (см. team decisions log). Sub-routes screenshots = parent root.
 
 @MainActor
 final class AllScreensTourUITests: XCTestCase {

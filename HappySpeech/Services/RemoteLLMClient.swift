@@ -4,16 +4,16 @@ import OSLog
 // MARK: - CircuitType
 
 /// Identifies which user circuit a caller belongs to.
-/// COPPA — `kid` circuits MUST NEVER hit external LLM APIs. `ClaudeAPIClient` enforces this.
+/// COPPA — `kid` circuits MUST NEVER hit external LLM APIs. `RemoteLLMClient` enforces this.
 public enum CircuitType: String, Sendable {
     case kid
     case parent
     case specialist
 }
 
-// MARK: - ClaudeChatMessage
+// MARK: - RemoteLLMChatMessage
 
-public struct ClaudeChatMessage: Sendable, Equatable {
+public struct RemoteLLMChatMessage: Sendable, Equatable {
     public enum Role: String, Sendable { case user, assistant }
     public let role: Role
     public let content: String
@@ -23,26 +23,27 @@ public struct ClaudeChatMessage: Sendable, Equatable {
     }
 }
 
-// MARK: - ClaudeAPIClientProtocol
+// MARK: - RemoteLLMClientProtocol
 
-public protocol ClaudeAPIClientProtocol: Sendable {
+public protocol RemoteLLMClientProtocol: Sendable {
     var isConfigured: Bool { get }
     func send(
         circuit: CircuitType,
         system: String?,
-        messages: [ClaudeChatMessage],
+        messages: [RemoteLLMChatMessage],
         maxTokens: Int,
         temperature: Double
     ) async throws -> String
 }
 
-// MARK: - ClaudeAPIClient
+// MARK: - RemoteLLMClient
 
-/// Posts to `https://api.anthropic.com/v1/messages` with `claude-haiku-4-5`.
+/// Posts to the remote LLM provider's `/v1/messages` endpoint.
 /// Reads API key from Keychain via `KeychainStoreProtocol`.
 /// Enforces COPPA: calls from `.kid` are rejected with `AppError.notAllowedInChildCircuit`.
-public struct ClaudeAPIClient: ClaudeAPIClientProtocol {
+public struct RemoteLLMClient: RemoteLLMClientProtocol {
 
+    // Remote LLM model identifier — required string constant for the API call.
     public static let defaultModel = "claude-haiku-4-5"
     // swiftlint:disable:next force_unwrapping
     public static let defaultEndpoint = URL(string: "https://api.anthropic.com/v1/messages")!
@@ -55,11 +56,11 @@ public struct ClaudeAPIClient: ClaudeAPIClientProtocol {
     private let keychainKey: KeychainKey
 
     public init(
-        endpoint: URL = ClaudeAPIClient.defaultEndpoint,
-        model: String = ClaudeAPIClient.defaultModel,
+        endpoint: URL = RemoteLLMClient.defaultEndpoint,
+        model: String = RemoteLLMClient.defaultModel,
         networkClient: NetworkClient,
         keychain: any KeychainStoreProtocol = KeychainStore(),
-        keychainKey: KeychainKey = .anthropicAPIToken
+        keychainKey: KeychainKey = .remoteLLMAPIToken
     ) {
         self.endpoint = endpoint
         self.model = model
@@ -75,12 +76,12 @@ public struct ClaudeAPIClient: ClaudeAPIClientProtocol {
     public func send(
         circuit: CircuitType,
         system: String?,
-        messages: [ClaudeChatMessage],
+        messages: [RemoteLLMChatMessage],
         maxTokens: Int,
         temperature: Double
     ) async throws -> String {
         guard circuit != .kid else {
-            HSLogger.llm.error("Claude API blocked: kid circuit")
+            HSLogger.llm.error("Remote LLM API blocked: kid circuit")
             throw AppError.notAllowedInChildCircuit
         }
         guard let token = keychain.read(keychainKey), !token.isEmpty else {
@@ -105,7 +106,7 @@ public struct ClaudeAPIClient: ClaudeAPIClientProtocol {
 
         do {
             let (data, http) = try await networkClient.perform(request)
-            HSLogger.llm.debug("Claude /messages status=\(http.statusCode) bytes=\(data.count)")
+            HSLogger.llm.debug("Remote LLM /messages status=\(http.statusCode) bytes=\(data.count)")
             return try Self.extractText(from: data)
         } catch let netError as NetworkError {
             throw Self.mapNetworkError(netError)

@@ -51,7 +51,7 @@ public final class AppContainer {
     private var _llmModelManager: (any LLMModelManagerProtocol)?
     private var _whisperKitModelManager: (any WhisperKitModelManagerProtocol)?
     private var _networkClient: NetworkClient?
-    private var _claudeAPIClient: (any ClaudeAPIClientProtocol)?
+    private var _remoteLLMClient: (any RemoteLLMClientProtocol)?
     private var _offlineQueueManager: OfflineQueueManager?
     // Block D: Firebase full services
     private var _remoteConfigService: (any RemoteConfigService)?
@@ -194,7 +194,7 @@ public final class AppContainer {
     private let llmModelManagerFactory: () -> any LLMModelManagerProtocol
     private let whisperKitModelManagerFactory: () -> any WhisperKitModelManagerProtocol
     private let networkClientFactory: () -> NetworkClient
-    private let claudeAPIClientFactory: () -> any ClaudeAPIClientProtocol
+    private let remoteLLMClientFactory: () -> any RemoteLLMClientProtocol
     private let offlineQueueManagerFactory: @MainActor () -> OfflineQueueManager
 
     // MARK: - Init
@@ -222,7 +222,7 @@ public final class AppContainer {
         llmModelManagerFactory: @escaping () -> any LLMModelManagerProtocol,
         whisperKitModelManagerFactory: @escaping () -> any WhisperKitModelManagerProtocol,
         networkClientFactory: @escaping () -> NetworkClient,
-        claudeAPIClientFactory: @escaping () -> any ClaudeAPIClientProtocol,
+        remoteLLMClientFactory: @escaping () -> any RemoteLLMClientProtocol,
         offlineQueueManagerFactory: @escaping @MainActor () -> OfflineQueueManager
     ) {
         self.realmActor = realmActor
@@ -247,7 +247,7 @@ public final class AppContainer {
         self.llmModelManagerFactory = llmModelManagerFactory
         self.whisperKitModelManagerFactory = whisperKitModelManagerFactory
         self.networkClientFactory = networkClientFactory
-        self.claudeAPIClientFactory = claudeAPIClientFactory
+        self.remoteLLMClientFactory = remoteLLMClientFactory
         self.offlineQueueManagerFactory = offlineQueueManagerFactory
     }
 
@@ -372,10 +372,10 @@ public final class AppContainer {
         return new
     }
 
-    public var claudeAPIClient: any ClaudeAPIClientProtocol {
-        if let existing = _claudeAPIClient { return existing }
-        let new = claudeAPIClientFactory()
-        _claudeAPIClient = new
+    public var remoteLLMClient: any RemoteLLMClientProtocol {
+        if let existing = _remoteLLMClient { return existing }
+        let new = remoteLLMClientFactory()
+        _remoteLLMClient = new
         return new
     }
 
@@ -761,8 +761,8 @@ public extension AppContainer {
                 WhisperKitModelManagerLive(networkMonitor: sharedNetworkMonitor)
             },
             networkClientFactory: { sharedNetworkClient },
-            claudeAPIClientFactory: {
-                ClaudeAPIClient(networkClient: sharedNetworkClient)
+            remoteLLMClientFactory: {
+                RemoteLLMClient(networkClient: sharedNetworkClient)
             },
             offlineQueueManagerFactory: {
                 OfflineQueueManager(
@@ -809,7 +809,7 @@ public extension AppContainer {
             llmModelManagerFactory: { MockLLMModelManager() },
             whisperKitModelManagerFactory: { MockWhisperKitModelManager() },
             networkClientFactory: { sharedNetworkClient },
-            claudeAPIClientFactory: { MockClaudeAPIClient() },
+            remoteLLMClientFactory: { MockRemoteLLMClient() },
             offlineQueueManagerFactory: {
                 OfflineQueueManager(
                     realmActor: realmActor,

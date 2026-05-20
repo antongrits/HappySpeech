@@ -7,7 +7,7 @@ import Foundation
 // Логопед составляет плоский список слов с целевым звуком, а ContentEngine
 // собирает из него готовые упражнения трёх шаблонов: repeat-after-model,
 // bingo, memory. Списки хранятся локально (CustomWordListObject), без
-// внешней синхронизации, без диагностических меток (CLAUDE.md §11).
+// внешней синхронизации, без диагностических меток (project guide §11).
 
 // MARK: - GeneratedExerciseKind
 

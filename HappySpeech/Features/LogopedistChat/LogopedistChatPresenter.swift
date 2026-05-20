@@ -64,7 +64,7 @@ final class LogopedistChatPresenter: LogopedistChatPresentationLogic {
 
         // Presence-подпись показывается ТОЛЬКО для реально подключённого
         // специалиста. Если специалиста нет — никакого индикатора присутствия
-        // (не имитируем доступность живого логопеда, CLAUDE.md §11).
+        // (не имитируем доступность живого логопеда, project guide §11).
         let onlineLabel: String?
         if let specialist = response.specialist {
             if specialist.isOnline {

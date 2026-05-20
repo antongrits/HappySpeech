@@ -10,7 +10,7 @@ import Foundation
 // без полного DP — для on-device latency). Apple Pencil поддерживается на
 // iPad; на iPhone — палец (PencilKit allowsFingerDrawing).
 //
-// CLAUDE.md §11: педагогическая поддержка, не диагностика моторики.
+// project guide §11: педагогическая поддержка, не диагностика моторики.
 
 // MARK: - TraceItemKind
 

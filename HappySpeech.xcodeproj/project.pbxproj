@@ -214,7 +214,6 @@
 		200BB3FB5A0221C7D29D183C /* GuidedTourRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A73C9111F579ABC43F71FC5 /* GuidedTourRouter.swift */; };
 		20189F159E0E8085698D0B5C /* WorldMapInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76B3ACEA1EEA7E50B30EFDD /* WorldMapInteractor.swift */; };
 		204EF9F6C994D8164DEF86E9 /* SpeechTempoInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14AF8F6A13E986DE01290675 /* SpeechTempoInteractor.swift */; };
-		204FCC9C55F4F36A8B3CAAF0 /* ClaudeAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CDA40383ADC3E09FFA79CF /* ClaudeAPIClient.swift */; };
 		206ACF026556F35F5F50431C /* ReportsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF225BCFCB8AE8862C290FD /* ReportsPresenter.swift */; };
 		20A0441D2AD1A8F7AB0F7BBA /* MinimalPairsViewComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C6E306EF65E97FD92AD43EA /* MinimalPairsViewComponents.swift */; };
 		20AD4F482483FA67D0D2D436 /* AchievementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3092E89A5390DB8A5A6644DF /* AchievementsView.swift */; };
@@ -383,6 +382,7 @@
 		35A5E47E8B6A73AB781B6C3E /* ARActivityRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E0A6A4A6E705DC000D86C70 /* ARActivityRouter.swift */; };
 		35B00FFB1D232F4476A3A191 /* sound_sh_pack.json in Resources */ = {isa = PBXBuildFile; fileRef = D17A6ADD2F8C2FEAABA8336A /* sound_sh_pack.json */; };
 		35B9894397A3A8042BCA5D2D /* LetterTraceCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058C587F2D622A4A3AE32AC5 /* LetterTraceCanvas.swift */; };
+		35C6C190CF110479A1A6511E /* RemoteLLMClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 765E1424DD48CCF1F35DE2B3 /* RemoteLLMClientTests.swift */; };
 		35C8635F3F9D3C2ED5A6EEBD /* ChildSafetyValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5813780C871EC8D966AE56BF /* ChildSafetyValidator.swift */; };
 		35E4A50374049F1C9EDDBCC7 /* FamilyHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FCDC83757C473F551DB970 /* FamilyHomeView.swift */; };
 		35F3826C2D2C6DA1E2DC133E /* SpeechNormsEncyclopediaRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B8A14F0863F2AA8EB58FE0 /* SpeechNormsEncyclopediaRouter.swift */; };
@@ -667,6 +667,7 @@
 		60169ED1018DAD312A7F8044 /* SoundDictionaryModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31662106899F27581E58591 /* SoundDictionaryModels.swift */; };
 		603A02206A451346880458A1 /* MemoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFACBCDA9257938D50A0549 /* MemoryView.swift */; };
 		603CF9F9E13CC309DE67CEF2 /* LexicalThemesModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01B457276CFFB39D1B07970 /* LexicalThemesModels.swift */; };
+		604545E305BCA01778D5A539 /* RemoteLLMClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94845A4DECFB5A4F78EDB150 /* RemoteLLMClient.swift */; };
 		61109635A25CCAA9AC54A16D /* ParentInsightsWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE18B2DD8491798EA26AF10 /* ParentInsightsWorkerTests.swift */; };
 		617308EF85129C59EA93515E /* confetti.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 1B212FD4264A1D09551268BE /* confetti.ahap */; };
 		6176F6FC2527E5AE81541C90 /* HelpCenterModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54DD1DF83EEA25BF53DD0512 /* HelpCenterModels.swift */; };
@@ -1443,7 +1444,6 @@
 		DC641DC12F29179E0A156721 /* CTCDecoderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3A65C5C3CB4633DE01EA00 /* CTCDecoderTests.swift */; };
 		DCACC973904E88085E45825F /* loader_voice_recording.json in Resources */ = {isa = PBXBuildFile; fileRef = 5587D53F50977A8104A45682 /* loader_voice_recording.json */; };
 		DCAE09CE129F366A6F7001B8 /* SpotlightDeepLinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AEAC5FEFC6DB835A46E097 /* SpotlightDeepLinkHandler.swift */; };
-		DD483B9BBC04576C3B63C1D5 /* ClaudeAPIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A72C4604F84B03805A794DF /* ClaudeAPIClientTests.swift */; };
 		DD4BD5BF56020F05E723ECB2 /* SessionCompleteViewComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC8FC8368FC503AAFE2ADDC /* SessionCompleteViewComponents.swift */; };
 		DD7D224B36E4DCE35DF10EDF /* transition_modal_in.json in Resources */ = {isa = PBXBuildFile; fileRef = 6A1589651B01658D03ED9964 /* transition_modal_in.json */; };
 		DDB1BBC9B6AC80237163562D /* CoPlayPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96FBF41186F83A1038CC7C42 /* CoPlayPresenterTests.swift */; };
@@ -2067,7 +2067,6 @@
 		39CF1E5D54308D4957FA4FF0 /* celebrate_birthday.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = celebrate_birthday.json; sourceTree = "<group>"; };
 		3A3A65C5C3CB4633DE01EA00 /* CTCDecoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTCDecoderTests.swift; sourceTree = "<group>"; };
 		3A6241E08B2DB611699EBEEE /* WorldMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldMapView.swift; sourceTree = "<group>"; };
-		3A72C4604F84B03805A794DF /* ClaudeAPIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeAPIClientTests.swift; sourceTree = "<group>"; };
 		3A81DF361465BA0944C4C726 /* LetterTracingPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterTracingPresenterTests.swift; sourceTree = "<group>"; };
 		3AA960D5E74EF2784D04B26A /* BreathingAudioWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingAudioWorkerTests.swift; sourceTree = "<group>"; };
 		3AB03B845D0C88A0FF6029C4 /* SyncMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncMessage.swift; sourceTree = "<group>"; };
@@ -2470,6 +2469,7 @@
 		756930F0982E7B9F855CE66E /* SharePlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePlayView.swift; sourceTree = "<group>"; };
 		75C645C076812E4E4FD47193 /* celebrate_new_island_unlocked.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = celebrate_new_island_unlocked.json; sourceTree = "<group>"; };
 		7635692967FAE116660E8C7A /* SettingsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRouter.swift; sourceTree = "<group>"; };
+		765E1424DD48CCF1F35DE2B3 /* RemoteLLMClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteLLMClientTests.swift; sourceTree = "<group>"; };
 		76899AE04CC3759B1E65DCDF /* BedtimeModeDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BedtimeModeDisplayLogic.swift; sourceTree = "<group>"; };
 		76C26B89D08AE91A69AC7F62 /* ComprehensionDetectiveDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComprehensionDetectiveDisplayLogic.swift; sourceTree = "<group>"; };
 		76E05F9F5CC9C1C2B871B431 /* VoiceCloningInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCloningInteractor.swift; sourceTree = "<group>"; };
@@ -2646,6 +2646,7 @@
 		943FD692850FE2855CC5A34B /* empty_no_achievements.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = empty_no_achievements.json; sourceTree = "<group>"; };
 		945E20395A614A99AFF95CFD /* DiaryStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryStorage.swift; sourceTree = "<group>"; };
 		9473DAAC65A0822A4614D808 /* ARActivityInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARActivityInteractor.swift; sourceTree = "<group>"; };
+		94845A4DECFB5A4F78EDB150 /* RemoteLLMClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteLLMClient.swift; sourceTree = "<group>"; };
 		9492C02FF59BF547FA7F9029 /* SoundHunterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundHunterRouter.swift; sourceTree = "<group>"; };
 		9492FCD818D1499575C6165E /* LetterTracingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LetterTracingView.swift; sourceTree = "<group>"; };
 		950183106EF7F6BD8F8C295F /* RussianPhonemeClassifier.mlpackage */ = {isa = PBXFileReference; path = RussianPhonemeClassifier.mlpackage; sourceTree = "<group>"; };
@@ -3262,7 +3263,6 @@
 		F54C82AF7A82D96F084EE46A /* MelSpectrogramExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelSpectrogramExtractor.swift; sourceTree = "<group>"; };
 		F581B70D264C8CFD22B3A016 /* SpecialistHomeViewSheets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialistHomeViewSheets.swift; sourceTree = "<group>"; };
 		F59FE3D095F5AD3055615115 /* CustomizationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizationDTO.swift; sourceTree = "<group>"; };
-		F5CDA40383ADC3E09FFA79CF /* ClaudeAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeAPIClient.swift; sourceTree = "<group>"; };
 		F6494C85ED9F0EFBE3530A41 /* MinimalPairsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalPairsView.swift; sourceTree = "<group>"; };
 		F6822444E78E0AE0910F65B6 /* AuthPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresenterTests.swift; sourceTree = "<group>"; };
 		F6CA8D4450BBABF28F9E0E34 /* RewardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardsView.swift; sourceTree = "<group>"; };
@@ -4232,7 +4232,6 @@
 				1669AC3C06DA42F0D51F7D2A /* AudioService.swift */,
 				DF006D9CCB45EC4F1E84D1AF /* AuthService.swift */,
 				00EF543077114B3916857A9C /* BiometricGateService.swift */,
-				F5CDA40383ADC3E09FFA79CF /* ClaudeAPIClient.swift */,
 				4E628F66E4F84FC7B26738C7 /* CloudFunctionsService.swift */,
 				028723D537ED28ADEED77DE0 /* DailyUsageTracker.swift */,
 				727E0FFC0DDBBC1AB7CBC2FC /* EmotionDetectionServiceLive.swift */,
@@ -4252,6 +4251,7 @@
 				053D22C174DA28172B35C902 /* PerformanceMonitorService.swift */,
 				C56924D8335C1ECCCFD7D9E2 /* RealtimeDatabaseService.swift */,
 				CD35ED27346CCD5336C7173A /* RemoteConfigService.swift */,
+				94845A4DECFB5A4F78EDB150 /* RemoteLLMClient.swift */,
 				BA71F0121AF83275E12B2A9E /* SoundService.swift */,
 				F04320BF70BB276B26924E21 /* SpacedRepetitionEngine.swift */,
 				B44D779BEC24EC5D85AC035F /* SpeakerVerificationServiceLive.swift */,
@@ -6990,7 +6990,6 @@
 				6B26CFA7082EA8BFC60530ED /* AudioAnalysisServiceTests.swift */,
 				621EF3CD10F9911A758291DD /* AuthServiceContractTests.swift */,
 				B263DE19A6552F56D2158B08 /* BiometricGateServiceTests.swift */,
-				3A72C4604F84B03805A794DF /* ClaudeAPIClientTests.swift */,
 				674FC62754BA1B80389F94B6 /* CloudFunctionsServiceTests.swift */,
 				891787FE84A8DE87DDFC404F /* ContentEngineTests.swift */,
 				B3E87D2CC65AA076A8AFCB87 /* EmotionDetectionServiceTests.swift */,
@@ -7013,6 +7012,7 @@
 				1FDC496477DF8914487EB90D /* PerformanceMonitorServiceTests.swift */,
 				D06639D1A4BA6BCB074C9436 /* RealtimeDatabaseServiceTests.swift */,
 				AD410E5211ABE74802311CD2 /* RemoteConfigServiceTests.swift */,
+				765E1424DD48CCF1F35DE2B3 /* RemoteLLMClientTests.swift */,
 				B7CEB879873995A9CF77F575 /* SoundServiceTests.swift */,
 				66AF0C5720F5324DB99263BE /* SpacedRepetitionEngineTests.swift */,
 				FCE6D79411A1D0B6145209A9 /* SpeakerVerificationServiceTests.swift */,
@@ -8221,7 +8221,6 @@
 				C98E87203EF3F357A9C2B2B9 /* CanvasCoordinatorTests.swift in Sources */,
 				53593C793A82F0D8945834E9 /* ChildHomeInteractorTests.swift in Sources */,
 				B79D586DA683D49A1883FBCC /* ChildSafetyValidatorTests.swift in Sources */,
-				DD483B9BBC04576C3B63C1D5 /* ClaudeAPIClientTests.swift in Sources */,
 				8980FB6EF67CDB65EA509CBB /* CloudFunctionsServiceTests.swift in Sources */,
 				B0E05C3E51998CE66A6E223F /* CoPlayInteractorTests.swift in Sources */,
 				DDB1BBC9B6AC80237163562D /* CoPlayPresenterTests.swift in Sources */,
@@ -8439,6 +8438,7 @@
 				674E70AF6A6C9E0FE458E25E /* RealMFCCExtractorTests.swift in Sources */,
 				45258DC7D3EB47A6C170BC83 /* RealtimeDatabaseServiceTests.swift in Sources */,
 				3AF8F10510E04E4550DA7BB4 /* RemoteConfigServiceTests.swift in Sources */,
+				35C6C190CF110479A1A6511E /* RemoteLLMClientTests.swift in Sources */,
 				84187534A91EE8536D8BDA84 /* RepeatAfterModelInteractorTests.swift in Sources */,
 				0642DD5E0D91DC08AB452BDB /* RepeatAfterModelPresenterTests.swift in Sources */,
 				30D5E89306B011C232BBF243 /* ReportsAggregatorTests.swift in Sources */,
@@ -8721,7 +8721,6 @@
 				C0E773F8DB3B8EE0BD08E703 /* ChildHomeViewModel.swift in Sources */,
 				D15C90D0BE5F4B888FE98D70 /* ChildRepository.swift in Sources */,
 				35C8635F3F9D3C2ED5A6EEBD /* ChildSafetyValidator.swift in Sources */,
-				204FCC9C55F4F36A8B3CAAF0 /* ClaudeAPIClient.swift in Sources */,
 				8B7F5BC428128E5166A6555B /* CloudFunctionsService.swift in Sources */,
 				E0DA41EDC5943BBA9124F83E /* CoPlayCorpus.swift in Sources */,
 				5A9C8F9910413883263AB8DA /* CoPlayDisplayLogic.swift in Sources */,
@@ -9295,6 +9294,7 @@
 				A7F49784A831C0B9DA28338E /* RealmModels.swift in Sources */,
 				3E8A47D318BFD50B70F22138 /* RealtimeDatabaseService.swift in Sources */,
 				5E07DCFF0EE2E2943C8DEED0 /* RemoteConfigService.swift in Sources */,
+				604545E305BCA01778D5A539 /* RemoteLLMClient.swift in Sources */,
 				9767E5EF52A33C558707D98D /* RepeatAfterModelDisplayLogic.swift in Sources */,
 				53BA167D23536A0FE15E56BA /* RepeatAfterModelInteractor.swift in Sources */,
 				9175ACCD2FC3D347F3FF3DF5 /* RepeatAfterModelLiveTranscriptView.swift in Sources */,

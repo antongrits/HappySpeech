@@ -2,13 +2,13 @@ import Foundation
 import XCTest
 @testable import HappySpeech
 
-// MARK: - ClaudeAPIClientTests
+// MARK: - RemoteLLMClientTests
 //
-// Тесты HTTP-клиента Claude API через URLProtocolStub + MockKeychainStore.
+// Тесты HTTP-клиента remote LLM API через URLProtocolStub + MockKeychainStore.
 // Покрывает: COPPA-блокировку kid-контура, отсутствие токена, построение запроса,
 // парсинг ответа, обработку error-объекта, маппинг NetworkError → AppError.
 
-final class ClaudeAPIClientTests: XCTestCase {
+final class RemoteLLMClientTests: XCTestCase {
 
     private let endpoint = URL(string: "https://api.anthropic.com/v1/messages")!
 
@@ -20,22 +20,22 @@ final class ClaudeAPIClientTests: XCTestCase {
     private func makeClient(
         token: String? = "sk-test-token",
         session: URLSession? = nil
-    ) -> ClaudeAPIClient {
+    ) -> RemoteLLMClient {
         var seed: [KeychainKey: String] = [:]
-        if let token { seed[.anthropicAPIToken] = token }
+        if let token { seed[.remoteLLMAPIToken] = token }
         let keychain = MockKeychainStore(seed: seed)
         let networkClient = NetworkClient(
             session: session ?? URLProtocolStub.makeSession(),
             retryPolicy: RetryPolicy(maxAttempts: 2, baseDelaysMs: [1], jitterMs: 0)
         )
-        return ClaudeAPIClient(
+        return RemoteLLMClient(
             endpoint: endpoint,
             networkClient: networkClient,
             keychain: keychain
         )
     }
 
-    private let sampleMessages = [ClaudeChatMessage(role: .user, content: "Привет")]
+    private let sampleMessages = [RemoteLLMChatMessage(role: .user, content: "Привет")]
 
     // MARK: - isConfigured
 
@@ -102,7 +102,7 @@ final class ClaudeAPIClientTests: XCTestCase {
         let request = try XCTUnwrap(URLProtocolStub.capturedRequests.first)
         XCTAssertEqual(request.httpMethod, "POST")
         XCTAssertEqual(request.value(forHTTPHeaderField: "x-api-key"), "sk-header-test")
-        XCTAssertEqual(request.value(forHTTPHeaderField: "anthropic-version"), ClaudeAPIClient.apiVersionHeader)
+        XCTAssertEqual(request.value(forHTTPHeaderField: "anthropic-version"), RemoteLLMClient.apiVersionHeader)
         XCTAssertEqual(request.value(forHTTPHeaderField: "Content-Type"), "application/json")
     }
 
@@ -111,7 +111,7 @@ final class ClaudeAPIClientTests: XCTestCase {
             // URLProtocol даёт httpBodyStream — читаем поток.
             let body = Self.readBody(from: request)
             let json = (try? JSONSerialization.jsonObject(with: body)) as? [String: Any]
-            XCTAssertEqual(json?["model"] as? String, ClaudeAPIClient.defaultModel)
+            XCTAssertEqual(json?["model"] as? String, RemoteLLMClient.defaultModel)
             XCTAssertEqual(json?["max_tokens"] as? Int, 512)
             XCTAssertEqual(json?["system"] as? String, "роль")
             let messages = json?["messages"] as? [[String: Any]]
@@ -279,17 +279,17 @@ final class ClaudeAPIClientTests: XCTestCase {
     // MARK: - Static constants
 
     func testDefaultConstants() {
-        XCTAssertEqual(ClaudeAPIClient.defaultModel, "claude-haiku-4-5")
-        XCTAssertEqual(ClaudeAPIClient.apiVersionHeader, "2023-06-01")
-        XCTAssertEqual(ClaudeAPIClient.defaultEndpoint.absoluteString, "https://api.anthropic.com/v1/messages")
+        XCTAssertEqual(RemoteLLMClient.defaultModel, "claude-haiku-4-5")
+        XCTAssertEqual(RemoteLLMClient.apiVersionHeader, "2023-06-01")
+        XCTAssertEqual(RemoteLLMClient.defaultEndpoint.absoluteString, "https://api.anthropic.com/v1/messages")
     }
 
-    // MARK: - ClaudeChatMessage
+    // MARK: - RemoteLLMChatMessage
 
     func testChatMessageEquatable() {
-        let a = ClaudeChatMessage(role: .user, content: "x")
-        let b = ClaudeChatMessage(role: .user, content: "x")
-        let c = ClaudeChatMessage(role: .assistant, content: "x")
+        let a = RemoteLLMChatMessage(role: .user, content: "x")
+        let b = RemoteLLMChatMessage(role: .user, content: "x")
+        let c = RemoteLLMChatMessage(role: .assistant, content: "x")
         XCTAssertEqual(a, b)
         XCTAssertNotEqual(a, c)
     }

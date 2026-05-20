@@ -71,7 +71,7 @@ public struct KeychainKey: Sendable, Hashable {
         self.account = account
     }
 
-    public static let anthropicAPIToken  = KeychainKey(service: "ru.happyspeech.anthropic", account: "api-token")
+    public static let remoteLLMAPIToken  = KeychainKey(service: "ru.happyspeech.remotellm", account: "api-token")
     public static let huggingFaceToken   = KeychainKey(service: "ru.happyspeech.hf", account: "inference-token")
     public static let parentAuthToken    = KeychainKey(service: "ru.happyspeech.auth", account: "parent-refresh-token")
 }

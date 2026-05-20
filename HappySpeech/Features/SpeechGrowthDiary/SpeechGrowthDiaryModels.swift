@@ -9,7 +9,7 @@ import Foundation
 // Keychain). Никакого облака. Per-clip share-token (локальный) — для
 // специалиста: родитель явно даёт доступ.
 //
-// Этическое требование (CLAUDE.md §11):
+// Этическое требование (project guide §11):
 //   • opt-in (parent gate),
 //   • COPPA-safe,
 //   • no cloud egress,

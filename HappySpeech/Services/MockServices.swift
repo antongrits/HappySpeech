@@ -233,20 +233,20 @@ public final class MockAdaptivePlannerService: AdaptivePlannerService, @unchecke
     }
 }
 
-// MARK: MockClaudeAPIClient
+// MARK: MockRemoteLLMClient
 
-public struct MockClaudeAPIClient: ClaudeAPIClientProtocol {
+public struct MockRemoteLLMClient: RemoteLLMClientProtocol {
     public let isConfigured: Bool = true
     public init() {}
     public func send(
         circuit: CircuitType,
         system: String?,
-        messages: [ClaudeChatMessage],
+        messages: [RemoteLLMChatMessage],
         maxTokens: Int,
         temperature: Double
     ) async throws -> String {
         if circuit == .kid { throw AppError.notAllowedInChildCircuit }
-        return "Mock Claude response for \(messages.count) message(s)."
+        return "Mock remote LLM response for \(messages.count) message(s)."
     }
 }
 
