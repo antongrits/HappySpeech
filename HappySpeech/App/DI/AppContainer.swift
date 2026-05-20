@@ -130,6 +130,32 @@ public final class AppContainer {
     // во время онбординга для быстрого старта первой сессии.
     private var _mlWarmupService: (any MLModelWarmupServiceProtocol)?
 
+    // v31 Волна D Ф.4: SpeechAnalyzerService — iOS 26 SpeechAnalyzer +
+    // WhisperKit fallback для low-latency live transcript.
+    private var _speechAnalyzerService: (any SpeechAnalyzerService)?
+    private var speechAnalyzerServiceFactory: (@MainActor () -> any SpeechAnalyzerService)?
+
+    /// Lazy access. Если фабрика не передана — собираем LiveSpeechAnalyzerService
+    /// над текущим `asrService`. Это позволяет переопределить mock-ом
+    /// в preview/тестах через `overrideSpeechAnalyzerService(...)`.
+    public var speechAnalyzerService: any SpeechAnalyzerService {
+        if let existing = _speechAnalyzerService { return existing }
+        let new: any SpeechAnalyzerService
+        if let speechAnalyzerServiceFactory {
+            new = speechAnalyzerServiceFactory()
+        } else {
+            new = LiveSpeechAnalyzerService(asrService: self.asrService)
+        }
+        _speechAnalyzerService = new
+        return new
+    }
+
+    /// Подмена реализации (для preview / тестов). Должна вызываться до
+    /// первого обращения к `speechAnalyzerService`.
+    public func overrideSpeechAnalyzerService(_ service: any SpeechAnalyzerService) {
+        _speechAnalyzerService = service
+    }
+
     // Factory closures (injected at init)
     private let audioServiceFactory: () -> any AudioService
     private let asrServiceFactory: () -> any ASRService
@@ -806,6 +832,8 @@ public extension AppContainer {
         )
         // Block V (v21): ML warm-up — no-op в preview/tests, чтобы не грузить CoreML.
         container._mlWarmupService = MockMLModelWarmupService()
+        // v31 Волна D Ф.4: SpeechAnalyzerService — mock в preview/tests.
+        container.overrideSpeechAnalyzerService(MockSpeechAnalyzerService())
         return container
     }
 }

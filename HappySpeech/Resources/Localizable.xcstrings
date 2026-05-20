@@ -53210,6 +53210,24 @@
       "localizations" : {
         "ru" : { "stringUnit" : { "state" : "translated", "value" : "Подключить пересказ и описательные рассказы по схемам." } }
       }
+    },
+    "speechAnalyzer.listening" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Слушаю..." } }
+      }
+    },
+    "speechAnalyzer.error.notSupported" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Сервис недоступен на этой версии iOS" } }
+      }
+    },
+    "speechAnalyzer.error.alreadyRunning" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Сессия уже запущена" } }
+      }
     }
   },
   "version" : "1.0"

@@ -363,6 +363,13 @@ struct RepeatAfterModelView: View {
                 .frame(height: 56)
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .accessibilityHidden(true)
+
+            // v31 Волна D Ф.4 — live транскрипт через SpeechAnalyzerService
+            // (iOS 26 SpeechAnalyzer + WhisperKit fallback). Видим только в фазе
+            // .recording, активируется автоматически.
+            RepeatAfterModelLiveTranscriptView(isActive: display.phase == .recording)
+                .padding(.horizontal, SpacingTokens.screenEdge)
+
             attemptDotsView
             Spacer(minLength: 0)
             RecordingButton(
