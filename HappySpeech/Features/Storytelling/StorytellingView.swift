@@ -178,6 +178,7 @@ struct StorytellingView: View {
                 RoundedRectangle(cornerRadius: RadiusTokens.card)
                     .strokeBorder(ColorTokens.Kid.line, lineWidth: 2)
             )
+            .depthShadow(ShadowTokens.kidDepth)
         }
         .buttonStyle(.plain)
         .accessibilityLabel(Text(topic.accessibilityLabel))

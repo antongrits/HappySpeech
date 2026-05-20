@@ -182,6 +182,7 @@ struct BreatheAndSpeakView: View {
             RoundedRectangle(cornerRadius: RadiusTokens.card)
                 .strokeBorder(ColorTokens.Kid.line, lineWidth: 2)
         )
+        .depthShadow(ShadowTokens.kidDepth)
         .padding(.horizontal, SpacingTokens.screenEdge)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(step.accessibilityLabel))

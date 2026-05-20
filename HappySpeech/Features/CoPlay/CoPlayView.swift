@@ -244,6 +244,7 @@ struct CoPlayView: View {
                         lineWidth: 3
                     )
             )
+            .depthShadow(ShadowTokens.kidDepth)
             .padding(.horizontal, SpacingTokens.screenEdge)
             .id(turn.id)
             .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))

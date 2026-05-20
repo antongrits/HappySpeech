@@ -261,6 +261,7 @@ struct RetellingView: View {
                     lineWidth: 2
                 )
         )
+        .depthShadow(ShadowTokens.kidDepth)
 
         return Group {
             if interactive {
