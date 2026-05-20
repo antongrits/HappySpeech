@@ -1,0 +1,113 @@
+{
+  "id": "pack_syllables_v1",
+  "version": "1.0",
+  "title": "Слог-конструктор",
+  "methodology": "Markova_class_complexity",
+  "description": "Корпус для упражнения на сохранение слоговой структуры по классам сложности А.К. Марковой. Каждое слово разбито на слоги методически верно (по правилу открытого слога; стечения остаются цельной единицей у второго слога).",
+  "tiers": [
+    {
+      "tier": 1,
+      "title": "Один-два слога",
+      "words": [
+        { "id": "s1-ma",   "word": "ма",     "syllables": ["ма"],            "symbol": "circle.fill" },
+        { "id": "s1-pa",   "word": "па",     "syllables": ["па"],            "symbol": "circle.fill" },
+        { "id": "s1-mu",   "word": "му",     "syllables": ["му"],            "symbol": "cow" },
+        { "id": "s1-mama", "word": "мама",   "syllables": ["ма", "ма"],      "symbol": "figure.dress" },
+        { "id": "s1-papa", "word": "папа",   "syllables": ["па", "па"],      "symbol": "figure.stand" },
+        { "id": "s1-baba", "word": "баба",   "syllables": ["ба", "ба"],      "symbol": "person.fill" },
+        { "id": "s1-dada", "word": "дядя",   "syllables": ["дя", "дя"],      "symbol": "person.fill" },
+        { "id": "s1-nana", "word": "няня",   "syllables": ["ня", "ня"],      "symbol": "person.fill" },
+        { "id": "s1-tata", "word": "тётя",   "syllables": ["тё", "тя"],      "symbol": "person.fill" },
+        { "id": "s1-lala", "word": "Ляля",   "syllables": ["Ля", "ля"],      "symbol": "face.smiling" },
+        { "id": "s1-juju", "word": "Юра",    "syllables": ["Ю", "ра"],       "symbol": "person.fill" },
+        { "id": "s1-ana",  "word": "Аня",    "syllables": ["А", "ня"],       "symbol": "person.fill" },
+        { "id": "s1-ola",  "word": "Оля",    "syllables": ["О", "ля"],       "symbol": "person.fill" },
+        { "id": "s1-uxa",  "word": "уха",    "syllables": ["у", "ха"],       "symbol": "fork.knife" },
+        { "id": "s1-osa",  "word": "оса",    "syllables": ["о", "са"],       "symbol": "ant.fill" },
+        { "id": "s1-okno", "word": "око",    "syllables": ["о", "ко"],       "symbol": "eye.fill" },
+        { "id": "s1-eda",  "word": "еда",    "syllables": ["е", "да"],       "symbol": "fork.knife" },
+        { "id": "s1-ida",  "word": "иди",    "syllables": ["и", "ди"],       "symbol": "figure.walk" },
+        { "id": "s1-mia",  "word": "Мила",   "syllables": ["Ми", "ла"],      "symbol": "person.fill" },
+        { "id": "s1-vova", "word": "Вова",   "syllables": ["Во", "ва"],      "symbol": "person.fill" }
+      ]
+    },
+    {
+      "tier": 2,
+      "title": "Двусложные открытые",
+      "words": [
+        { "id": "s2-voda",   "word": "вода",   "syllables": ["во", "да"],   "symbol": "drop.fill" },
+        { "id": "s2-nogi",   "word": "ноги",   "syllables": ["но", "ги"],   "symbol": "figure.walk" },
+        { "id": "s2-ruki",   "word": "руки",   "syllables": ["ру", "ки"],   "symbol": "hand.raised.fill" },
+        { "id": "s2-sani",   "word": "сани",   "syllables": ["са", "ни"],   "symbol": "snowflake" },
+        { "id": "s2-pily",   "word": "пилы",   "syllables": ["пи", "лы"],   "symbol": "scissors" },
+        { "id": "s2-busy",   "word": "бусы",   "syllables": ["бу", "сы"],   "symbol": "circle.grid.3x3.fill" },
+        { "id": "s2-koni",   "word": "кони",   "syllables": ["ко", "ни"],   "symbol": "hare.fill" },
+        { "id": "s2-luna",   "word": "луна",   "syllables": ["лу", "на"],   "symbol": "moon.fill" },
+        { "id": "s2-loto",   "word": "лото",   "syllables": ["ло", "то"],   "symbol": "die.face.5" },
+        { "id": "s2-koza",   "word": "коза",   "syllables": ["ко", "за"],   "symbol": "leaf.fill" },
+        { "id": "s2-vata",   "word": "вата",   "syllables": ["ва", "та"],   "symbol": "cloud.fill" },
+        { "id": "s2-nota",   "word": "нота",   "syllables": ["но", "та"],   "symbol": "music.note" },
+        { "id": "s2-pole",   "word": "поле",   "syllables": ["по", "ле"],   "symbol": "leaf" },
+        { "id": "s2-zima",   "word": "зима",   "syllables": ["зи", "ма"],   "symbol": "snowflake" },
+        { "id": "s2-leto",   "word": "лето",   "syllables": ["ле", "то"],   "symbol": "sun.max.fill" },
+        { "id": "s2-roza",   "word": "роза",   "syllables": ["ро", "за"],   "symbol": "leaf.fill" },
+        { "id": "s2-vaza",   "word": "ваза",   "syllables": ["ва", "за"],   "symbol": "drop" },
+        { "id": "s2-pochta", "word": "почта",  "syllables": ["по", "чта"],  "symbol": "envelope.fill" },
+        { "id": "s2-pesnja", "word": "песня",  "syllables": ["пе", "сня"],  "symbol": "music.note" },
+        { "id": "s2-kniga",  "word": "книга",  "syllables": ["кни", "га"],  "symbol": "book.fill" }
+      ]
+    },
+    {
+      "tier": 3,
+      "title": "Три слога / закрытый",
+      "words": [
+        { "id": "s3-mashina",  "word": "машина",   "syllables": ["ма", "ши", "на"],   "symbol": "car.fill" },
+        { "id": "s3-malina",   "word": "малина",   "syllables": ["ма", "ли", "на"],   "symbol": "leaf.fill" },
+        { "id": "s3-korova",   "word": "корова",   "syllables": ["ко", "ро", "ва"],   "symbol": "pawprint.fill" },
+        { "id": "s3-soroka",   "word": "сорока",   "syllables": ["со", "ро", "ка"],   "symbol": "bird.fill" },
+        { "id": "s3-rubaha",   "word": "рубаха",   "syllables": ["ру", "ба", "ха"],   "symbol": "tshirt.fill" },
+        { "id": "s3-sobaka",   "word": "собака",   "syllables": ["со", "ба", "ка"],   "symbol": "pawprint" },
+        { "id": "s3-vorota",   "word": "ворота",   "syllables": ["во", "ро", "та"],   "symbol": "door.left.hand.open" },
+        { "id": "s3-kanava",   "word": "канава",   "syllables": ["ка", "на", "ва"],   "symbol": "drop.triangle.fill" },
+        { "id": "s3-yagoda",   "word": "ягода",    "syllables": ["я", "го", "да"],    "symbol": "leaf.fill" },
+        { "id": "s3-koleso",   "word": "колесо",   "syllables": ["ко", "ле", "со"],   "symbol": "circle.dotted" },
+        { "id": "s3-pomidor",  "word": "помидор",  "syllables": ["по", "ми", "дор"],  "symbol": "leaf" },
+        { "id": "s3-baraban",  "word": "барабан",  "syllables": ["ба", "ра", "бан"],  "symbol": "music.note" },
+        { "id": "s3-petukh",   "word": "петух",    "syllables": ["пе", "тух"],         "symbol": "bird.fill" },
+        { "id": "s3-banan",    "word": "банан",    "syllables": ["ба", "нан"],         "symbol": "leaf.fill" },
+        { "id": "s3-divan",    "word": "диван",    "syllables": ["ди", "ван"],         "symbol": "sofa.fill" },
+        { "id": "s3-kompot",   "word": "компот",   "syllables": ["ком", "пот"],        "symbol": "cup.and.saucer.fill" },
+        { "id": "s3-paket",    "word": "пакет",    "syllables": ["па", "кет"],         "symbol": "bag.fill" },
+        { "id": "s3-bilet",    "word": "билет",    "syllables": ["би", "лет"],         "symbol": "ticket.fill" },
+        { "id": "s3-zonik",    "word": "зонтик",   "syllables": ["зон", "тик"],        "symbol": "umbrella.fill" },
+        { "id": "s3-vagon",    "word": "вагон",    "syllables": ["ва", "гон"],         "symbol": "tram.fill" }
+      ]
+    },
+    {
+      "tier": 4,
+      "title": "Со стечением согласных",
+      "words": [
+        { "id": "s4-stol",     "word": "стол",     "syllables": ["стол"],             "symbol": "table.furniture.fill" },
+        { "id": "s4-stul",     "word": "стул",     "syllables": ["стул"],             "symbol": "chair.fill" },
+        { "id": "s4-slon",     "word": "слон",     "syllables": ["слон"],             "symbol": "tortoise.fill" },
+        { "id": "s4-shkaf",    "word": "шкаф",     "syllables": ["шкаф"],             "symbol": "cabinet.fill" },
+        { "id": "s4-grib",     "word": "гриб",     "syllables": ["гриб"],             "symbol": "mountain.2.fill" },
+        { "id": "s4-flag",     "word": "флаг",     "syllables": ["флаг"],             "symbol": "flag.fill" },
+        { "id": "s4-kran",     "word": "кран",     "syllables": ["кран"],             "symbol": "drop.fill" },
+        { "id": "s4-snek",     "word": "снег",     "syllables": ["снег"],             "symbol": "snowflake" },
+        { "id": "s4-klen",     "word": "клён",     "syllables": ["клён"],             "symbol": "leaf.fill" },
+        { "id": "s4-tigr",     "word": "тигр",     "syllables": ["тигр"],             "symbol": "pawprint.fill" },
+        { "id": "s4-kniga",    "word": "книга",    "syllables": ["кни", "га"],        "symbol": "book.fill" },
+        { "id": "s4-stakan",   "word": "стакан",   "syllables": ["ста", "кан"],       "symbol": "drop.fill" },
+        { "id": "s4-shkola",   "word": "школа",    "syllables": ["шко", "ла"],        "symbol": "graduationcap.fill" },
+        { "id": "s4-slivki",   "word": "сливки",   "syllables": ["слив", "ки"],       "symbol": "drop.fill" },
+        { "id": "s4-tramvai",  "word": "трамвай",  "syllables": ["трам", "вай"],      "symbol": "tram.fill" },
+        { "id": "s4-pchela",   "word": "пчела",    "syllables": ["пче", "ла"],        "symbol": "ant.fill" },
+        { "id": "s4-zvezda",   "word": "звезда",   "syllables": ["звез", "да"],       "symbol": "star.fill" },
+        { "id": "s4-sneg-vik", "word": "снеговик", "syllables": ["сне", "го", "вик"], "symbol": "snowflake" },
+        { "id": "s4-strana",   "word": "страна",   "syllables": ["стра", "на"],       "symbol": "map.fill" },
+        { "id": "s4-vstreha",  "word": "встреча",  "syllables": ["встре", "ча"],      "symbol": "person.2.fill" }
+      ]
+    }
+  ]
+}

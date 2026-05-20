@@ -86,6 +86,8 @@ enum AppRoute: Hashable {
     // v31 Волна A: новые методически-ценные функции
     case speechNormsEncyclopedia
     case dailyRitualsLyalya(kind: RitualKind)
+    // v31 Волна B Ф.1: новый методически-ценный экран.
+    case syllableConstructor(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -600,6 +602,12 @@ struct AppCoordinatorView: View {
         case .dailyRitualsLyalya(let kind):
             DailyRitualsLyalyaView(kind: kind)
                 .environment(\.circuitContext, .parent)
+
+        // MARK: - v31 Волна B Ф.1
+
+        case .syllableConstructor(let childId):
+            SyllableConstructorView(childId: childId)
+                .environment(\.circuitContext, .kid)
         }
     }
 
@@ -927,6 +935,11 @@ extension AppCoordinatorView {
             return .dailyRitualsLyalya(kind: .morning)
         case "dailyRitualsEvening":
             return .dailyRitualsLyalya(kind: .evening)
+
+        // MARK: v31 Волна B Ф.1
+        case "syllableConstructor",
+             "syllable":
+            return .syllableConstructor(childId: previewChild)
 
         default:
             return .auth

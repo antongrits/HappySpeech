@@ -1108,6 +1108,16 @@ extension ChildHomeView {
         ) {
             router?.routeToCoPlay(childId: childId)
         }
+
+        // v31 Волна B Ф.1 — SyllableConstructor «Слог-конструктор».
+        ChildHomeV25EntryCard(
+            titleKey: "syllable.entry.title",
+            hintKey: "syllable.entry.hint",
+            iconName: "square.split.2x1.fill",
+            accent: ColorTokens.Brand.primary
+        ) {
+            router?.routeToSyllableConstructor(childId: childId)
+        }
     }
 }
 
