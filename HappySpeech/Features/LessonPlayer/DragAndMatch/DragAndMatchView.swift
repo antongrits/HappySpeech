@@ -207,8 +207,8 @@ struct DragAndMatchView: View {
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                     .fill(ColorTokens.Kid.surface)
-                    .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 20, y: 6)
             )
+            .depthShadow(ShadowTokens.kidDepth)
             .transition(.scale(scale: 0.85).combined(with: .opacity))
         }
         .animation(

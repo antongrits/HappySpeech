@@ -360,8 +360,8 @@ struct SortingView: View {
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                     .fill(ColorTokens.Kid.surface)
-                    .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 16, y: 4)
             )
+            .depthShadow(ShadowTokens.kidDepth)
             .transition(.scale(scale: 0.85).combined(with: .opacity))
             .accessibilityElement(children: .combine)
             .accessibilityLabel(display.feedbackText)
@@ -388,8 +388,8 @@ struct SortingView: View {
             .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                     .fill(ColorTokens.Kid.surface)
-                    .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 12, y: 3)
             )
+            .depthShadow(ShadowTokens.kidDepth)
             .padding(.horizontal, SpacingTokens.xLarge)
             .transition(.move(edge: .top).combined(with: .opacity))
             .animation(

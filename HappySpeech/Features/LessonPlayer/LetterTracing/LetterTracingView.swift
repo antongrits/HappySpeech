@@ -124,8 +124,8 @@ struct LetterTracingView: View {
                     .background(
                         RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                             .fill(ColorTokens.Kid.surface)
-                            .shadow(color: ColorTokens.Overlay.shadow, radius: 12, y: 4)
                     )
+                    .depthShadow(ShadowTokens.kidDepth)
                     .padding(.horizontal, SpacingTokens.screenEdge)
 
                     // Строковые хинты + phoneme word
