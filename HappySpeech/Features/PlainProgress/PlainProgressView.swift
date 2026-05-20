@@ -1,3 +1,4 @@
+import Charts
 import OSLog
 import SwiftUI
 
@@ -190,29 +191,87 @@ struct PlainProgressView: View {
     }
 
     // MARK: - Comparison
+    //
+    // v31 Волна C Ф.3 — переписано с GeometryReader+Capsule на native Swift
+    // Charts BarMark. Контракт Presenter'а сохранён (ComparisonViewModel),
+    // только View рендерит через `Chart`. Dynamic Type и VoiceOver chart
+    // descriptions подключаются автоматически.
+
+    private struct ComparisonBar: Identifiable {
+        let id: String
+        let label: String
+        let value: Double
+        let displayValue: String
+        let tint: Color
+    }
 
     private func comparisonSection(
         _ comparison: PlainProgressModels.Load.ComparisonViewModel
     ) -> some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+        let bars: [ComparisonBar] = [
+            ComparisonBar(
+                id: "monthAgo",
+                label: comparison.monthAgoLabel,
+                value: comparison.monthAgoFraction,
+                displayValue: comparison.monthAgoValue,
+                tint: ColorTokens.Parent.inkSoft
+            ),
+            ComparisonBar(
+                id: "now",
+                label: comparison.nowLabel,
+                value: comparison.nowFraction,
+                displayValue: comparison.nowValue,
+                tint: ColorTokens.Brand.primary
+            )
+        ]
+        let chartAccessibility =
+            "\(comparison.title). " +
+            "\(comparison.monthAgoLabel) \(comparison.monthAgoValue). " +
+            "\(comparison.nowLabel) \(comparison.nowValue). " +
+            "\(comparison.deltaText)"
+
+        return VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
             Text(comparison.title)
                 .font(TypographyTokens.headline(16))
                 .foregroundStyle(ColorTokens.Parent.ink)
 
-            VStack(spacing: SpacingTokens.sp3) {
-                comparisonRow(
-                    label: comparison.monthAgoLabel,
-                    value: comparison.monthAgoValue,
-                    fraction: comparison.monthAgoFraction,
-                    tint: ColorTokens.Parent.inkSoft
+            Chart(bars) { bar in
+                BarMark(
+                    x: .value("share", bar.value),
+                    y: .value("group", bar.label),
+                    height: .ratio(0.5)
                 )
-                comparisonRow(
-                    label: comparison.nowLabel,
-                    value: comparison.nowValue,
-                    fraction: comparison.nowFraction,
-                    tint: ColorTokens.Brand.primary
-                )
+                .foregroundStyle(bar.tint)
+                .annotation(position: .trailing, alignment: .center) {
+                    Text(bar.displayValue)
+                        .font(TypographyTokens.caption(12).weight(.semibold).monospacedDigit())
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
+                }
+                .cornerRadius(6)
             }
+            .chartXScale(domain: 0...1)
+            .chartXAxis {
+                AxisMarks(values: [0, 0.5, 1]) { value in
+                    AxisGridLine().foregroundStyle(ColorTokens.Parent.line)
+                    AxisValueLabel {
+                        if let raw = value.as(Double.self) {
+                            Text(String(format: "%.0f%%", raw * 100))
+                                .font(TypographyTokens.caption(11))
+                                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        }
+                    }
+                }
+            }
+            .chartYAxis {
+                AxisMarks { _ in
+                    AxisValueLabel()
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                }
+            }
+            .frame(minHeight: 96)
 
             Text(comparison.deltaText)
                 .font(TypographyTokens.body(13).weight(.medium))
@@ -227,40 +286,7 @@ struct PlainProgressView: View {
                 .fill(ColorTokens.Parent.surface)
         )
         .accessibilityElement(children: .combine)
-        .accessibilityLabel(
-            "\(comparison.title). \(comparison.monthAgoLabel) \(comparison.monthAgoValue). " +
-            "\(comparison.nowLabel) \(comparison.nowValue). \(comparison.deltaText)"
-        )
-    }
-
-    private func comparisonRow(
-        label: String,
-        value: String,
-        fraction: Double,
-        tint: Color
-    ) -> some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-            HStack {
-                Text(label)
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                Spacer()
-                Text(value)
-                    .font(TypographyTokens.body(14).weight(.semibold).monospacedDigit())
-                    .foregroundStyle(ColorTokens.Parent.ink)
-            }
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    Capsule()
-                        .fill(ColorTokens.Parent.bg)
-                    Capsule()
-                        .fill(tint)
-                        .frame(width: max(0, geo.size.width * fraction))
-                }
-            }
-            .frame(height: 10)
-        }
-        .accessibilityHidden(true)
+        .accessibilityLabel(chartAccessibility)
     }
 
     // MARK: - Milestones
