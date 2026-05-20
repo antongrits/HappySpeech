@@ -50388,6 +50388,413 @@
           }
         }
       }
+    },
+    "dailyRituals.screen.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Утро и вечер с Лялей"
+          }
+        }
+      }
+    },
+    "dailyRituals.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Утро и вечер с Лялей"
+          }
+        }
+      }
+    },
+    "dailyRituals.entry.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Короткие речевые ритуалы дома: 3–4 минуты утром и вечером."
+          }
+        }
+      }
+    },
+    "dailyRituals.kind.morning": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Утренний ритуал"
+          }
+        }
+      }
+    },
+    "dailyRituals.kind.morning.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Зарядка для языка и дыхания на хорошее начало дня. 3–4 минуты."
+          }
+        }
+      }
+    },
+    "dailyRituals.kind.evening": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вечерний ритуал"
+          }
+        }
+      }
+    },
+    "dailyRituals.kind.evening.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спокойный разговор и короткая сказка перед сном. 4–5 минут."
+          }
+        }
+      }
+    },
+    "dailyRituals.steps.sectionTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шаги ритуала"
+          }
+        }
+      }
+    },
+    "dailyRituals.totalMinutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "~%d мин"
+          }
+        }
+      }
+    },
+    "dailyRituals.step.minutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d мин"
+          }
+        }
+      }
+    },
+    "dailyRituals.morning.step.greet.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Привет Ляле"
+          }
+        }
+      }
+    },
+    "dailyRituals.morning.step.greet.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тёплое приветствие. Ляля задаёт настроение и просит улыбнуться в зеркало."
+          }
+        }
+      }
+    },
+    "dailyRituals.morning.step.articulation.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Артикуляционная разминка"
+          }
+        }
+      }
+    },
+    "dailyRituals.morning.step.articulation.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "5 коротких упражнений для языка и губ — «Часики», «Лопатка», «Качели»."
+          }
+        }
+      }
+    },
+    "dailyRituals.morning.step.breath.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дыхательная разминка"
+          }
+        }
+      }
+    },
+    "dailyRituals.morning.step.breath.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Длинный плавный выдох — «задуй свечку» 3–4 раза."
+          }
+        }
+      }
+    },
+    "dailyRituals.morning.step.chistogovorka.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чистоговорка дня"
+          }
+        }
+      }
+    },
+    "dailyRituals.morning.step.chistogovorka.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Одна короткая чистоговорка с темпом — повторяем за Лялей 3 раза."
+          }
+        }
+      }
+    },
+    "dailyRituals.evening.step.recap.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Расскажи о дне"
+          }
+        }
+      }
+    },
+    "dailyRituals.evening.step.recap.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 вопроса от Ляли: что было самое весёлое, что было сложно, кому помог."
+          }
+        }
+      }
+    },
+    "dailyRituals.evening.step.breath.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Спокойное дыхание"
+          }
+        }
+      }
+    },
+    "dailyRituals.evening.step.breath.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Медленный вдох носом и долгий выдох ртом — 4 раза."
+          }
+        }
+      }
+    },
+    "dailyRituals.evening.step.story.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Короткая сказка"
+          }
+        }
+      }
+    },
+    "dailyRituals.evening.step.story.desc": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ляля рассказывает короткую добрую сказку — 1–2 минуты на засыпание."
+          }
+        }
+      }
+    },
+    "dailyRituals.reminder.sectionTitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Напоминание"
+          }
+        }
+      }
+    },
+    "dailyRituals.reminder.toggle.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Напоминать каждый день"
+          }
+        }
+      }
+    },
+    "dailyRituals.reminder.toggle.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Локальное уведомление, без сторонних сервисов."
+          }
+        }
+      }
+    },
+    "dailyRituals.reminder.timeLabel": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Время напоминания"
+          }
+        }
+      }
+    },
+    "dailyRituals.reminder.timePicker.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выбор времени напоминания"
+          }
+        }
+      }
+    },
+    "dailyRituals.reminder.authorize.note": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Чтобы получать напоминания, разрешите уведомления в настройках устройства."
+          }
+        }
+      }
+    },
+    "dailyRituals.reminder.authorize.cta": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разрешить уведомления"
+          }
+        }
+      }
+    },
+    "dailyRituals.notification.morning.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Утренний ритуал с Лялей"
+          }
+        }
+      }
+    },
+    "dailyRituals.notification.morning.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "3 минуты на зарядку для языка — отличное начало дня!"
+          }
+        }
+      }
+    },
+    "dailyRituals.notification.evening.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вечерний ритуал с Лялей"
+          }
+        }
+      }
+    },
+    "dailyRituals.notification.evening.body": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поговорите о дне и послушайте короткую сказку."
+          }
+        }
+      }
+    },
+    "dailyRituals.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Загрузка…"
+          }
+        }
+      }
+    },
+    "dailyRituals.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

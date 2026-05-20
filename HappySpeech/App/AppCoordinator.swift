@@ -85,6 +85,7 @@ enum AppRoute: Hashable {
     case assignedHomework(specialistId: String)
     // v31 Волна A: новые методически-ценные функции
     case speechNormsEncyclopedia
+    case dailyRitualsLyalya(kind: RitualKind)
 }
 
 enum PermissionType: Hashable {
@@ -595,6 +596,10 @@ struct AppCoordinatorView: View {
         case .speechNormsEncyclopedia:
             SpeechNormsEncyclopediaView()
                 .environment(\.circuitContext, .parent)
+
+        case .dailyRitualsLyalya(let kind):
+            DailyRitualsLyalyaView(kind: kind)
+                .environment(\.circuitContext, .parent)
         }
     }
 
@@ -917,6 +922,11 @@ extension AppCoordinatorView {
         case "speechNormsEncyclopedia",
              "speechNorms":
             return .speechNormsEncyclopedia
+        case "dailyRitualsMorning",
+             "dailyRituals":
+            return .dailyRitualsLyalya(kind: .morning)
+        case "dailyRitualsEvening":
+            return .dailyRitualsLyalya(kind: .evening)
 
         default:
             return .auth

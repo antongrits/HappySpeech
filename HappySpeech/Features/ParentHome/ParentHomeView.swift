@@ -352,6 +352,10 @@ private struct ParentDashboardTab: View {
                     speechNormsEncyclopediaCard
                         .hsScrollEffect(.scaleFade)
 
+                    // v31 Волна A Ф.8 — «Утро и вечер с Лялей»: ежедневные речевые ритуалы.
+                    dailyRitualsLyalyaCard
+                        .hsScrollEffect(.scaleFade)
+
                     // Family Calendar card
                     familyCalendarCard
                         .hsScrollEffect(.scaleFade)
@@ -1047,6 +1051,14 @@ private struct ParentDashboardTab: View {
     }
 
     // MARK: - v29 Фаза 8: Ф.3 «Логопед для родителей»
+
+    // MARK: - v31 Волна A: Ф.8 «Утро и вечер с Лялей»
+
+    private var dailyRitualsLyalyaCard: some View {
+        DailyRitualsLyalyaEntryCard { kind in
+            coordinator.navigate(to: .dailyRitualsLyalya(kind: kind))
+        }
+    }
 
     // MARK: - v31 Волна A: Ф.10 «Что должно быть в возрасте»
 
