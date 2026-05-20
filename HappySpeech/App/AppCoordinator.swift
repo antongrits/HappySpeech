@@ -99,6 +99,10 @@ enum AppRoute: Hashable {
     case rewardShop(childId: String)
     case letterTrace(childId: String)
     case customWordList(specialistId: String)
+
+    // MARK: - v31 Волна D
+    /// Ф.1 (kid): Read-aloud + comprehension quiz («Слушай и понимай»).
+    case readAloudStory(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -651,6 +655,12 @@ struct AppCoordinatorView: View {
         case .customWordList(let specialistId):
             CustomWordListView(specialistId: specialistId)
                 .environment(\.circuitContext, .specialist)
+
+        // MARK: - v31 Волна D
+
+        case .readAloudStory(let childId):
+            ReadAloudStoryView(childId: childId)
+                .environment(\.circuitContext, .kid)
         }
     }
 
@@ -1013,6 +1023,11 @@ extension AppCoordinatorView {
         case "customWordList",
              "wordList":
             return .customWordList(specialistId: previewParent)
+
+        // MARK: v31 Волна D Ф.1
+        case "readAloudStory",
+             "readAloud":
+            return .readAloudStory(childId: previewChild)
 
         default:
             return .auth

@@ -183,4 +183,10 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     func routeToLetterTrace(childId: String) {
         coordinator?.navigate(to: .letterTrace(childId: childId))
     }
+
+    /// v31 Волна D Ф.1 — ReadAloudStory «Слушай и понимай».
+    /// Khan Academy Kids gap (G-03): короткая история с озвучкой + 3-Q квиз.
+    func routeToReadAloudStory(childId: String) {
+        coordinator?.navigate(to: .readAloudStory(childId: childId))
+    }
 }

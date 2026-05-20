@@ -52940,6 +52940,132 @@
           }
         }
       }
+    },
+    "readAloud.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Слушай и понимай" } }
+      }
+    },
+    "readAloud.entry.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Слушай и понимай" } }
+      }
+    },
+    "readAloud.entry.hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Послушай историю и ответь на вопросы" } }
+      }
+    },
+    "readAloud.close.a11y" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Закрыть" } }
+      }
+    },
+    "readAloud.playFromStart" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Послушай историю" } }
+      }
+    },
+    "readAloud.playNext" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Дальше" } }
+      }
+    },
+    "readAloud.play.hint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Воспроизведёт следующее предложение" } }
+      }
+    },
+    "readAloud.skipToQuiz" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "К вопросам" } }
+      }
+    },
+    "readAloud.progress.sentence" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Предложение %1$d из %2$d" } }
+      }
+    },
+    "readAloud.progress.question" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Вопрос %1$d из %2$d" } }
+      }
+    },
+    "readAloud.question.a11y" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Вопрос: %@" } }
+      }
+    },
+    "readAloud.feedback.correct" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Молодец!" } }
+      }
+    },
+    "readAloud.feedback.tryAgain" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Попробуй ещё" } }
+      }
+    },
+    "readAloud.summary.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "История окончена" } }
+      }
+    },
+    "readAloud.summary.score" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Правильно: %1$d из %2$d" } }
+      }
+    },
+    "readAloud.summary.newStory" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Послушать ещё" } }
+      }
+    },
+    "readAloud.summary.done" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Готово" } }
+      }
+    },
+    "readAloud.encourage.great" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Ты внимательно слушал и всё понял!" } }
+      }
+    },
+    "readAloud.encourage.good" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Хорошо! В следующий раз послушай ещё внимательнее." } }
+      }
+    },
+    "readAloud.encourage.keepGoing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Не переживай — слушать истории легко научиться!" } }
+      }
+    },
+    "readAloud.loading" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Готовим историю..." } }
+      }
     }
   },
   "version" : "1.0"

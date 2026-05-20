@@ -1158,6 +1158,16 @@ extension ChildHomeView {
         ) {
             router?.routeToLetterTrace(childId: childId)
         }
+
+        // v31 Волна D Ф.1 — ReadAloudStory «Слушай и понимай».
+        ChildHomeV25EntryCard(
+            titleKey: "readAloud.entry.title",
+            hintKey: "readAloud.entry.hint",
+            iconName: "headphones",
+            accent: ColorTokens.Brand.lilac
+        ) {
+            router?.routeToReadAloudStory(childId: childId)
+        }
     }
 }
 
