@@ -28,6 +28,7 @@ private final class MockHapticService: HapticService, @unchecked Sendable {
     func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) {}
 
     func selection() {}
+    func playLevelUp() async {}
 }
 
 // MARK: - BreathingHapticWorkerTests (live через mock HapticService)

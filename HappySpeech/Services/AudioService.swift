@@ -446,6 +446,11 @@ public protocol HapticService: Sendable {
     func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle)
     func notification(_ type: UINotificationFeedbackGenerator.FeedbackType)
     func selection()
+
+    /// v31 Волна A research F-07. Программно собирает усиленный "level-up"
+    /// паттерн (3-event ramp: micro tap → wide transient → final continuous
+    /// bell). Запасной вариант — fallback на `.levelUp` .ahap или UIKit impact.
+    func playLevelUp() async
 }
 
 // MARK: - NetworkMonitor Protocol

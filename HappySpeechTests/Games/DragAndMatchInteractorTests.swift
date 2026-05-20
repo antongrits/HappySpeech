@@ -15,6 +15,7 @@ private final class DragMockHaptic: HapticService, @unchecked Sendable {
     func selection() { selectionCount += 1 }
     func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) { notificationCount += 1 }
     func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {}
+    func playLevelUp() async {}
 }
 
 // MARK: - Spy

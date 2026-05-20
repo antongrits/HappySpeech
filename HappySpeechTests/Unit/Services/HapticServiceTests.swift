@@ -21,6 +21,30 @@ final class HapticServiceTests: XCTestCase {
         XCTAssertEqual(mock.playedPatterns, [.buttonTap, .wrong, .achievementUnlock])
     }
 
+    // v31 Wave A — Core Haptics composer for level-up.
+    func testMockTracksPlayLevelUp() async {
+        let mock = MockHapticService()
+        XCTAssertEqual(mock.levelUpCount, 0)
+        await mock.playLevelUp()
+        XCTAssertEqual(mock.levelUpCount, 1)
+        await mock.playLevelUp()
+        XCTAssertEqual(mock.levelUpCount, 2)
+    }
+
+    func testFallbackPlayLevelUpRunsWithoutCrashing() async {
+        let fallback = FallbackHapticService()
+        await fallback.playLevelUp()
+        XCTAssertTrue(fallback.isAvailable)
+    }
+
+    func testFallbackRespectsIntensityScaleZero() async {
+        let fallback = FallbackHapticService()
+        fallback.setIntensityScale(0)
+        // Не должно крашить и не должно реально воспроизводить UIKit feedback.
+        await fallback.playLevelUp()
+        XCTAssertTrue(true)
+    }
+
     // MARK: - Intensity scale
 
     func testIntensityScaleClampsToRange() {

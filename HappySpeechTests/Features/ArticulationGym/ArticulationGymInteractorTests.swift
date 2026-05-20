@@ -16,6 +16,7 @@ private final class AGMockHapticService: HapticService, @unchecked Sendable {
     func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle) { impactCount += 1 }
     func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) { notificationCount += 1 }
     func selection() { selectionCount += 1 }
+    func playLevelUp() async {}
 }
 
 private struct AGMockWorker: ArticulationGymWorkerProtocol {

@@ -15,6 +15,7 @@ public final class SpyHapticService: HapticService, @unchecked Sendable {
     public private(set) var notificationCount = 0
     public private(set) var impactCount = 0
     public private(set) var stopCount = 0
+    public private(set) var levelUpCount = 0
     public private(set) var intensityScale: Float = 1.0
 
     public var isAvailable: Bool { true }
@@ -43,5 +44,9 @@ public final class SpyHapticService: HapticService, @unchecked Sendable {
 
     public func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {
         impactCount += 1
+    }
+
+    public func playLevelUp() async {
+        levelUpCount += 1
     }
 }

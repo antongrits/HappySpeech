@@ -35,6 +35,7 @@ private final class MockSoftOnsetHapticService: HapticService, @unchecked Sendab
     func selection() {}
     func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) {}
     func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {}
+    func playLevelUp() async {}
 }
 
 // MARK: - SoftOnsetInteractorTests

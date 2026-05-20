@@ -29,6 +29,7 @@ struct SessionCompleteView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(AppContainer.self) private var container
 
     // MARK: - VIP State
 
@@ -716,6 +717,9 @@ struct SessionCompleteView: View {
             withAnimation(reduceMotion ? nil : .easeIn(duration: 0.25)) {
                 confettiVisible = true
             }
+            // v31 Wave A research F-07 — programmatic Core Haptics composer
+            // даёт 3-event level-up чувство, синхронно с появлением конфетти.
+            await container.hapticService.playLevelUp()
         }
 
         // Achievement popup при наличии новых ачивок

@@ -134,6 +134,73 @@ public final class LiveHapticService: HapticService, @unchecked Sendable {
     public func selection() {
         Task { @MainActor in await self.play(pattern: .cardSelect) }
     }
+
+    // MARK: - v31 Wave A: Core Haptics composer
+
+    /// Программно собирает level-up паттерн как 3-event ramp: первый micro-
+    /// transient → промежуточный widening transient → финальный continuous
+    /// bell с плавно уходящей интенсивностью. Это даёт богаче ощущение, чем
+    /// статичный levelUp.ahap. При любой ошибке откатываемся на .ahap.
+    public func playLevelUp() async {
+        guard let eng = engine, isAvailable, intensityScale > 0 else {
+            return
+        }
+        do {
+            let composed = try makeLevelUpPattern(intensity: intensityScale)
+            try await eng.start()
+            let player = try eng.makePlayer(with: composed)
+            try player.start(atTime: 0)
+        } catch {
+            logger.error(
+                "playLevelUp composer failed (\(error.localizedDescription, privacy: .public)) — fallback to .ahap"
+            )
+            await play(pattern: .levelUp)
+        }
+    }
+
+    private func makeLevelUpPattern(intensity: Float) throws -> CHHapticPattern {
+        // Кламп интенсивности — на случай если выставлено за пределами 0…1.
+        let safeIntensity = max(0.2, min(intensity, 1.0))
+
+        // Event 1 — мягкий transient, как «звякнуло».
+        let tap = CHHapticEvent(
+            eventType: .hapticTransient,
+            parameters: [
+                .init(parameterID: .hapticIntensity, value: 0.6 * safeIntensity),
+                .init(parameterID: .hapticSharpness, value: 0.55)
+            ],
+            relativeTime: 0.0
+        )
+        // Event 2 — расширяющийся transient через ~120 мс — «дзынь».
+        let pop = CHHapticEvent(
+            eventType: .hapticTransient,
+            parameters: [
+                .init(parameterID: .hapticIntensity, value: 0.85 * safeIntensity),
+                .init(parameterID: .hapticSharpness, value: 0.75)
+            ],
+            relativeTime: 0.12
+        )
+        // Event 3 — continuous «bell» 250 мс с уходящей интенсивностью.
+        let bell = CHHapticEvent(
+            eventType: .hapticContinuous,
+            parameters: [
+                .init(parameterID: .hapticIntensity, value: 0.75 * safeIntensity),
+                .init(parameterID: .hapticSharpness, value: 0.35)
+            ],
+            relativeTime: 0.20,
+            duration: 0.30
+        )
+        // Параметрическая огибающая — затухание continuous bell к нулю.
+        let decay = CHHapticParameterCurve(
+            parameterID: .hapticIntensityControl,
+            controlPoints: [
+                .init(relativeTime: 0.0, value: 1.0),
+                .init(relativeTime: 0.30, value: 0.0)
+            ],
+            relativeTime: 0.20
+        )
+        return try CHHapticPattern(events: [tap, pop, bell], parameterCurves: [decay])
+    }
 }
 
 // MARK: - FallbackHapticService
@@ -187,5 +254,18 @@ public final class FallbackHapticService: HapticService, @unchecked Sendable {
     public func selection() {
         guard intensityScale > 0 else { return }
         Task { @MainActor in UISelectionFeedbackGenerator().selectionChanged() }
+    }
+
+    // v31 Wave A: fallback просто играет .heavy impact в 2 такта.
+    public func playLevelUp() async {
+        guard intensityScale > 0 else { return }
+        await MainActor.run {
+            UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+        }
+        try? await Task.sleep(for: .milliseconds(120))
+        guard intensityScale > 0 else { return }
+        await MainActor.run {
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
+        }
     }
 }

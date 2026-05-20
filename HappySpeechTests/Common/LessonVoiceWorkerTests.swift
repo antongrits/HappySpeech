@@ -25,6 +25,7 @@ private final class VWHapticMock: HapticService, @unchecked Sendable {
     func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {}
     func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) {}
     func selection() {}
+    func playLevelUp() async {}
 }
 
 private final class VWContentMock: ContentService, @unchecked Sendable {

@@ -64,6 +64,7 @@ public final class MockAnalyticsService: AnalyticsService, @unchecked Sendable {
 public final class MockHapticService: HapticService, @unchecked Sendable {
     public private(set) var playedPatterns: [HapticPattern] = []
     public private(set) var intensityScale: Float = 1.0
+    public private(set) var levelUpCount: Int = 0
     public var isAvailable: Bool { true }
 
     public func play(pattern: HapticPattern) async {
@@ -80,6 +81,10 @@ public final class MockHapticService: HapticService, @unchecked Sendable {
     public func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {}
     public func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) {}
     public func selection() {}
+
+    public func playLevelUp() async {
+        levelUpCount += 1
+    }
 }
 
 // MARK: MockNotificationService

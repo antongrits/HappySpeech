@@ -18,6 +18,7 @@ private final class MemoryMockHaptic: HapticService, @unchecked Sendable {
         if type == .success { notificationSuccessCount += 1 } else { notificationWarningCount += 1 }
     }
     func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {}
+    func playLevelUp() async {}
 }
 
 // MARK: - Spy

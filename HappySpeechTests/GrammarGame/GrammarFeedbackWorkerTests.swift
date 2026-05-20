@@ -24,6 +24,8 @@ private final class MainActorHapticSpy: HapticService {
     nonisolated func impact(_ style: UIImpactFeedbackGenerator.FeedbackStyle) {}
     nonisolated func notification(_ type: UINotificationFeedbackGenerator.FeedbackType) {}
     nonisolated func selection() {}
+
+    func playLevelUp() async {}
 }
 
 // MARK: - GrammarFeedbackWorkerTests
