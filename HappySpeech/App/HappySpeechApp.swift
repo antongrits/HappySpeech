@@ -224,6 +224,12 @@ struct HappySpeechApp: App {
             // — идемпотентная в рамках одного процесса). Конфигурация подавляется
             // в XCTest, чтобы не создавать persistent state в test-таргете.
             HSTipsBootstrap.configure()
+
+            // v31 Wave F F-05 — DailyUsageTracker: подписаться на UIApplication
+            // lifecycle. Tracker сам обнаружит .active состояние и стартанёт
+            // accumulator. UserDefaults + per-day key — без сети, без Family
+            // Controls entitlement.
+            container.dailyUsageTracker.startObservingLifecycle()
         } catch {
             HSLogger.app.critical("ColdStart error — Realm open failed: \(error)")
         }

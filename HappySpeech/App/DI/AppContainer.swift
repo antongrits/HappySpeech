@@ -130,6 +130,10 @@ public final class AppContainer {
     // во время онбординга для быстрого старта первой сессии.
     private var _mlWarmupService: (any MLModelWarmupServiceProtocol)?
 
+    // v31 Wave F F-05: DailyUsageTracker — in-app daily usage cap (no Family Controls).
+    // Lazy + protocol-injectable. Mock в preview/tests.
+    private var _dailyUsageTracker: (any DailyUsageTracking)?
+
     // v31 Волна D Ф.4: SpeechAnalyzerService — iOS 26 SpeechAnalyzer +
     // WhisperKit fallback для low-latency live transcript.
     private var _speechAnalyzerService: (any SpeechAnalyzerService)?
@@ -154,6 +158,22 @@ public final class AppContainer {
     /// первого обращения к `speechAnalyzerService`.
     public func overrideSpeechAnalyzerService(_ service: any SpeechAnalyzerService) {
         _speechAnalyzerService = service
+    }
+
+    // MARK: - v31 Wave F F-05: DailyUsageTracker
+
+    /// Lazy. Live — `DailyUsageTracker` (UserDefaults + UIApplication lifecycle).
+    /// В preview/tests подменяется на `MockDailyUsageTracker`.
+    public var dailyUsageTracker: any DailyUsageTracking {
+        if let existing = _dailyUsageTracker { return existing }
+        let new: any DailyUsageTracking = DailyUsageTracker()
+        _dailyUsageTracker = new
+        return new
+    }
+
+    /// Подмена для preview/tests. Должна вызываться до первого обращения.
+    public func overrideDailyUsageTracker(_ tracker: any DailyUsageTracking) {
+        _dailyUsageTracker = tracker
     }
 
     // Factory closures (injected at init)
@@ -834,6 +854,8 @@ public extension AppContainer {
         container._mlWarmupService = MockMLModelWarmupService()
         // v31 Волна D Ф.4: SpeechAnalyzerService — mock в preview/tests.
         container.overrideSpeechAnalyzerService(MockSpeechAnalyzerService())
+        // v31 Wave F F-05: DailyUsageTracker — mock в preview/tests (без UIApplication).
+        container.overrideDailyUsageTracker(MockDailyUsageTracker())
         return container
     }
 }

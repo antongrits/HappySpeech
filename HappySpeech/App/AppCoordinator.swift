@@ -125,6 +125,11 @@ enum AppRoute: Hashable {
     /// chant-метроном, CMMotionManager детектит тапы по вертикальному
     /// ускорению, BeatScorer считает F1 совпадения с expected beats.
     case logorhythmics(childId: String)
+
+    // MARK: - v31 Wave F F-05 (Daily Time Cap, NO Family Controls)
+    /// Wave F F-05 (parent): дневной лимит времени в HappySpeech.
+    /// Per-device cap + UserDefaults accounting; нет ScreenTime entitlement.
+    case dailyTimeCap
 }
 
 enum PermissionType: Hashable {
@@ -249,6 +254,19 @@ final class AppCoordinator {
             isShowingOfflineBanner = false
         }
     }
+
+    // MARK: - v31 Wave F F-05 — Daily time cap gate
+
+    /// Helper для child-экранов: проверяет, превышен ли дневной лимит,
+    /// и если да — показывает `.capReached` sheet.
+    /// Tracker — `DailyUsageTracking` из `AppContainer`. Безопасно вызывать
+    /// многократно (sheet будет показан только если не показан ранее).
+    func checkDailyCap(using tracker: any DailyUsageTracking) {
+        guard tracker.isOverCap() else { return }
+        if case .capReached = presentedSheet { return }
+        HSLogger.navigation.info("Daily cap reached → presenting CapReached sheet")
+        present(sheet: .capReached)
+    }
 }
 
 // MARK: - AppSheet
@@ -258,6 +276,8 @@ enum AppSheet: Identifiable, Hashable {
     case childProfile(childId: String)
     case exportReport(childId: String)
     case parentGuide
+    /// v31 Wave F F-05 — превышен дневной лимит, ребёнок видит «время вышло».
+    case capReached
 
     var id: String {
         switch self {
@@ -265,6 +285,7 @@ enum AppSheet: Identifiable, Hashable {
         case .childProfile(let id): return "childProfile_\(id)"
         case .exportReport(let id): return "exportReport_\(id)"
         case .parentGuide:          return "parentGuide"
+        case .capReached:           return "capReached"
         }
     }
 }
@@ -717,6 +738,12 @@ struct AppCoordinatorView: View {
         case .logorhythmics(let childId):
             LogorhythmicsView(childId: childId)
                 .environment(\.circuitContext, .kid)
+
+        // MARK: - v31 Wave F F-05
+
+        case .dailyTimeCap:
+            DailyTimeCapView()
+                .environment(\.circuitContext, .parent)
         }
     }
 
@@ -731,6 +758,9 @@ struct AppCoordinatorView: View {
             Text("Экспорт отчёта \(id)")
         case .parentGuide:
             Text("Руководство для родителей")
+        case .capReached:
+            CapReachedView()
+                .interactiveDismissDisabled(true)
         }
     }
 
@@ -786,7 +816,8 @@ extension AppCoordinatorView {
     ///
     /// This helper is intentionally side-effect-free and pure to keep the
     /// `launchSplash` flow simple and unit-testable.
-    static func resolveStartRoute(_ route: String) -> AppRoute { // swiftlint:disable:this cyclomatic_complexity
+    static func resolveStartRoute(_ route: String) -> AppRoute {
+        // swiftlint:disable:previous cyclomatic_complexity function_body_length
 
         let previewChild = "preview-child-1"
         let previewChild2 = "preview-child-2"
@@ -1119,6 +1150,12 @@ extension AppCoordinatorView {
              "rhythm",
              "kartushina":
             return .logorhythmics(childId: previewChild)
+
+        // MARK: v31 Wave F F-05
+        case "dailyTimeCap",
+             "timeCap",
+             "screenTime":
+            return .dailyTimeCap
 
         default:
             return .auth

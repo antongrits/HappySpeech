@@ -179,6 +179,9 @@ struct ChildHomeView: View {
                             name: "ChildHomeFirstFrame")
             }
             bootstrap()
+            // v31 Wave F F-05 — daily time cap gate: если родитель включил cap
+            // и сегодня превышено, показываем CapReachedView (полноэкранный sheet).
+            coordinator.checkDailyCap(using: container.dailyUsageTracker)
         }
         .task {
             await interactor?.fetchChildData(.init(childId: childId))

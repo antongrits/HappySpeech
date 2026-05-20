@@ -365,6 +365,10 @@ private struct ParentDashboardTab: View {
                     speechGrowthDiaryCard
                         .hsScrollEffect(.scaleFade)
 
+                    // v31 Wave F F-05 — «Лимит времени в день» (no Family Controls).
+                    dailyTimeCapCard
+                        .hsScrollEffect(.scaleFade)
+
                     // Family Calendar card
                     familyCalendarCard
                         .hsScrollEffect(.scaleFade)
@@ -1136,6 +1140,43 @@ private extension ParentDashboardTab {
         }
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isButton)
+    }
+
+    // MARK: v31 Wave F F-05 — «Лимит времени в день»
+
+    var dailyTimeCapCard: some View {
+        HSCard(style: .elevated) {
+            HStack(spacing: SpacingTokens.sp3) {
+                parentNavIcon("clock.badge.checkmark.fill", tint: ColorTokens.Brand.sky)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "dailyTimeCap.entry.title"))
+                        .font(TypographyTokens.headline())
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "dailyTimeCap.entry.subtitle"))
+                        .font(TypographyTokens.body())
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: SpacingTokens.sp1)
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp4)
+        }
+        .onTapGesture {
+            coordinator.navigate(to: .dailyTimeCap)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            String(localized: "dailyTimeCap.entry.title") + ". " +
+            String(localized: "dailyTimeCap.entry.subtitle")
+        )
+        .accessibilityAddTraits(.isButton)
+        .environment(\.circuitContext, .parent)
     }
 
     // MARK: v31 Волна A — Ф.10 «Что должно быть в возрасте»
