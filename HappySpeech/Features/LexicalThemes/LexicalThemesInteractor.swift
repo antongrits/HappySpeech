@@ -107,6 +107,14 @@ final class LexicalThemesInteractor: LexicalThemesBusinessLogic, LexicalThemesDa
             hapticService.notification(.warning)
         }
 
+        // v31 Волна D Ф.2 — FSRS-6 spaced repetition: применяем результат
+        // к расписанию повторений для слова.
+        await worker.recordReview(
+            childId: childId,
+            wordId: round.word.id,
+            wasCorrect: wasCorrect
+        )
+
         currentIndex += 1
         let isFinished = currentIndex >= rounds.count
         let nextRound = isFinished ? nil : rounds[currentIndex]

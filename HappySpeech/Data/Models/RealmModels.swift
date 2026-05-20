@@ -350,9 +350,78 @@ struct CustomWordListData: Sendable, Identifiable, Equatable {
     let updatedAt: Date
 }
 
+// MARK: - LexicalItemReviewObject (v11 — v31 Волна D Ф.2 «FSRS-6 spaced repetition»)
+//
+// Per-word review state по алгоритму FSRS-6 (open-spaced-repetition, MIT).
+// Хранит интервалы для конкретного слова в LexicalThemes — следующее
+// повторение выбирается из числа `due` слов раньше случайных новых.
+// Полностью offline / on-device. Никаких внешних трекеров.
+
+final class LexicalItemReviewObject: Object, @unchecked Sendable {
+    @Persisted(primaryKey: true) var id: String = UUID().uuidString
+    @Persisted var childId: String = ""
+    @Persisted var wordId: String = ""
+    /// FSRS «Stability» — характеризует, как долго слово помнится.
+    @Persisted var stability: Double = 0
+    /// FSRS «Difficulty» — сложность слова 1.0…10.0.
+    @Persisted var difficulty: Double = 5.0
+    @Persisted var lastReview: Date = Date()
+    @Persisted var nextReview: Date = Date()
+    /// Общее количество ревью.
+    @Persisted var reps: Int = 0
+    /// Сколько раз ребёнок «забыл» (Again rating).
+    @Persisted var lapses: Int = 0
+}
+
+// MARK: - LexicalItemReviewData (Sendable DTO)
+
+struct LexicalItemReviewData: Sendable, Identifiable, Equatable {
+    let id: String
+    let childId: String
+    let wordId: String
+    let stability: Double
+    let difficulty: Double
+    let lastReview: Date
+    let nextReview: Date
+    let reps: Int
+    let lapses: Int
+}
+
+// MARK: - AssessmentResultObject (v11 — v31 Волна D Ф.3 «SpecialistAssessment»)
+//
+// Результаты 10-вопросной первичной оценки специалиста по фреймворку
+// Левиной/Архиповой (артикуляция, фонология, лексика, грамматика,
+// связная речь). Не диагностический инструмент — рекомендация фокуса
+// для AdaptivePlannerService на ближайшие 2 недели (CLAUDE.md §11).
+
+final class AssessmentResultObject: Object, @unchecked Sendable {
+    @Persisted(primaryKey: true) var id: String = UUID().uuidString
+    @Persisted var childId: String = ""
+    @Persisted var specialistId: String = ""
+    @Persisted var completedAt: Date = Date()
+    /// Сериализованные ответы (`questionId|answerValue`, по строке на ответ).
+    @Persisted var answers: List<String>
+    /// Рекомендованный фокус, json-array строк (sound groups / axes).
+    @Persisted var recommendedFocus: List<String>
+    /// Целевая дата окончания применения рекомендации (~+14 дней).
+    @Persisted var validUntil: Date = Date().addingTimeInterval(14 * 24 * 3600)
+}
+
+// MARK: - AssessmentResultData (Sendable DTO)
+
+struct AssessmentResultData: Sendable, Identifiable, Equatable {
+    let id: String
+    let childId: String
+    let specialistId: String
+    let completedAt: Date
+    let answers: [String]
+    let recommendedFocus: [String]
+    let validUntil: Date
+}
+
 // MARK: - SchemaVersion
 
 /// Current Realm schema version. Increment with each migration.
 enum RealmSchemaVersion {
-    static let current: UInt64 = 10  // v10: StickerInventoryObject + CustomWordListObject (Wave C v31)
+    static let current: UInt64 = 11  // v11: LexicalItemReviewObject (FSRS-6) + AssessmentResultObject (Wave D v31)
 }

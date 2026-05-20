@@ -11,6 +11,10 @@ protocol LexicalThemesWorkerProtocol: AnyObject {
     func buildThemeSession(themeId: String) -> LexicalThemesModels.StartTheme.Response?
     /// Отмечает тему освоенной (точность сессии ≥ 75%).
     func markThemeMastered(childId: String, themeId: String) async
+    /// v31 Волна D Ф.2 — применяет результат раунда к FSRS-расписанию.
+    func recordReview(childId: String, wordId: String, wasCorrect: Bool) async
+    /// v31 Волна D Ф.2 — количество слов, готовых к повторению сейчас.
+    func dueCount(childId: String, at date: Date) async -> Int
 }
 
 // MARK: - LexicalThemesWorker (Clean Swift: Worker)
@@ -26,6 +30,8 @@ protocol LexicalThemesWorkerProtocol: AnyObject {
 final class LexicalThemesWorker: LexicalThemesWorkerProtocol {
 
     private let childRepository: any ChildRepository
+    private let realmActor: RealmActor?
+    private let scheduler: FSRSScheduler
 
     /// Префикс ключа в `progressSummary`, под которым хранится освоение тем.
     static let masteryKeyPrefix = "lex."
@@ -35,8 +41,14 @@ final class LexicalThemesWorker: LexicalThemesWorkerProtocol {
         category: "LexicalThemes.Worker"
     )
 
-    init(childRepository: any ChildRepository) {
+    init(
+        childRepository: any ChildRepository,
+        realmActor: RealmActor? = nil,
+        scheduler: FSRSScheduler = FSRSScheduler()
+    ) {
         self.childRepository = childRepository
+        self.realmActor = realmActor
+        self.scheduler = scheduler
     }
 
     func loadThemes(childId: String) async -> LexicalThemesModels.LoadThemes.Response {
@@ -101,5 +113,54 @@ final class LexicalThemesWorker: LexicalThemesWorkerProtocol {
             )
         }
         return rounds
+    }
+
+    // MARK: - v31 Волна D Ф.2: FSRS-6 spaced repetition
+
+    /// Применяет результат раунда: правильный ответ → rating `.good`,
+    /// неправильный → `.again`. Если у ребёнка нет записи по этому слову —
+    /// создаётся новая через `FSRSScheduler.newCard()`.
+    func recordReview(childId: String, wordId: String, wasCorrect: Bool) async {
+        guard let realmActor else { return }
+        let existing = await realmActor.fetchLexicalReview(
+            childId: childId,
+            wordId: wordId
+        )
+        let now = Date()
+        let state: FSRSReviewState
+        if let existing {
+            state = FSRSReviewState(
+                stability: existing.stability,
+                difficulty: existing.difficulty,
+                lastReview: existing.lastReview,
+                nextReview: existing.nextReview,
+                reps: existing.reps,
+                lapses: existing.lapses
+            )
+        } else {
+            state = scheduler.newCard(date: now)
+        }
+        let rating: FSRSRating = wasCorrect ? .good : .again
+        let next = scheduler.next(state: state, rating: rating, now: now)
+        let dto = LexicalItemReviewData(
+            id: existing?.id ?? UUID().uuidString,
+            childId: childId,
+            wordId: wordId,
+            stability: next.stability,
+            difficulty: next.difficulty,
+            lastReview: next.lastReview,
+            nextReview: next.nextReview,
+            reps: next.reps,
+            lapses: next.lapses
+        )
+        await realmActor.upsertLexicalReview(dto)
+    }
+
+    /// Количество слов, готовых к повторению на указанный момент.
+    /// Используется PlainProgress, чтобы показать родителю «N слов на сегодня».
+    func dueCount(childId: String, at date: Date) async -> Int {
+        guard let realmActor else { return 0 }
+        let reviews = await realmActor.fetchLexicalReviews(childId: childId)
+        return reviews.filter { $0.nextReview <= date }.count
     }
 }

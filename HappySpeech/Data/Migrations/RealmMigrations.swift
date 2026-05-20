@@ -51,6 +51,15 @@ enum RealmMigrations {
             // Оба объекта новые — Realm создаёт схему автоматически, дефолты
             // заданы в моделях.
         }
+        if oldSchemaVersion < 11 {
+            // v11: v31 Волна D —
+            //  • LexicalItemReviewObject (Ф.2 FSRS-6 spaced repetition для
+            //    LexicalThemes — open-spaced-repetition порт);
+            //  • AssessmentResultObject (Ф.3 SpecialistAssessment —
+            //    10-вопросная первичная оценка по фреймворку Левиной/Архиповой).
+            // Оба объекта новые — Realm создаёт схему автоматически,
+            // дефолты заданы в моделях. Никаких ручных enumerateObjects.
+        }
     }
 }
 
@@ -504,5 +513,115 @@ public extension RealmActor {
         }
         try? realmInstance.write { realmInstance.delete(obj) }
         return true
+    }
+
+    // MARK: - v11 v31 Волна D Ф.2: FSRS-6 review state
+
+    /// Fetches all review records for a child as Sendable DTOs.
+    internal func fetchLexicalReviews(childId: String) async -> [LexicalItemReviewData] {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return [] }
+        return Array(
+            realmInstance.objects(LexicalItemReviewObject.self)
+                .filter("childId == %@", childId)
+        ).map { obj in
+            LexicalItemReviewData(
+                id: obj.id,
+                childId: obj.childId,
+                wordId: obj.wordId,
+                stability: obj.stability,
+                difficulty: obj.difficulty,
+                lastReview: obj.lastReview,
+                nextReview: obj.nextReview,
+                reps: obj.reps,
+                lapses: obj.lapses
+            )
+        }
+    }
+
+    /// Fetches one review record for (childId, wordId).
+    internal func fetchLexicalReview(
+        childId: String,
+        wordId: String
+    ) async -> LexicalItemReviewData? {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return nil }
+        let obj = realmInstance.objects(LexicalItemReviewObject.self)
+            .filter("childId == %@ AND wordId == %@", childId, wordId)
+            .first
+        guard let obj else { return nil }
+        return LexicalItemReviewData(
+            id: obj.id,
+            childId: obj.childId,
+            wordId: obj.wordId,
+            stability: obj.stability,
+            difficulty: obj.difficulty,
+            lastReview: obj.lastReview,
+            nextReview: obj.nextReview,
+            reps: obj.reps,
+            lapses: obj.lapses
+        )
+    }
+
+    /// Upserts a review record by (childId, wordId). Создаёт новый объект,
+    /// если ещё нет.
+    internal func upsertLexicalReview(_ data: LexicalItemReviewData) async {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return }
+        try? realmInstance.write {
+            let existing = realmInstance.objects(LexicalItemReviewObject.self)
+                .filter("childId == %@ AND wordId == %@", data.childId, data.wordId)
+                .first
+            let target = existing ?? LexicalItemReviewObject()
+            target.id = data.id
+            target.childId = data.childId
+            target.wordId = data.wordId
+            target.stability = data.stability
+            target.difficulty = data.difficulty
+            target.lastReview = data.lastReview
+            target.nextReview = data.nextReview
+            target.reps = data.reps
+            target.lapses = data.lapses
+            if existing == nil {
+                realmInstance.add(target)
+            }
+        }
+    }
+
+    // MARK: - v11 v31 Волна D Ф.3: SpecialistAssessment
+
+    /// Fetches the most recent assessment result for a child (or nil).
+    internal func fetchLatestAssessment(childId: String) async -> AssessmentResultData? {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return nil }
+        let obj = realmInstance.objects(AssessmentResultObject.self)
+            .filter("childId == %@", childId)
+            .sorted(byKeyPath: "completedAt", ascending: false)
+            .first
+        guard let obj else { return nil }
+        return AssessmentResultData(
+            id: obj.id,
+            childId: obj.childId,
+            specialistId: obj.specialistId,
+            completedAt: obj.completedAt,
+            answers: Array(obj.answers),
+            recommendedFocus: Array(obj.recommendedFocus),
+            validUntil: obj.validUntil
+        )
+    }
+
+    /// Persists a new assessment result.
+    internal func persistAssessment(_ data: AssessmentResultData) async {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return }
+        let obj = AssessmentResultObject()
+        obj.id = data.id
+        obj.childId = data.childId
+        obj.specialistId = data.specialistId
+        obj.completedAt = data.completedAt
+        obj.answers.append(objectsIn: data.answers)
+        obj.recommendedFocus.append(objectsIn: data.recommendedFocus)
+        obj.validUntil = data.validUntil
+        try? realmInstance.write { realmInstance.add(obj, update: .modified) }
     }
 }

@@ -9,6 +9,8 @@ private final class StubLexicalWorker: LexicalThemesWorkerProtocol {
     var sessionResponse: LexicalThemesModels.StartTheme.Response?
     private(set) var loadCount = 0
     private(set) var masteredThemeIds: [String] = []
+    private(set) var reviews: [(childId: String, wordId: String, wasCorrect: Bool)] = []
+    var stubbedDueCount: Int = 0
 
     init(
         loadResponse: LexicalThemesModels.LoadThemes.Response,
@@ -27,6 +29,12 @@ private final class StubLexicalWorker: LexicalThemesWorkerProtocol {
     }
     func markThemeMastered(childId: String, themeId: String) async {
         masteredThemeIds.append(themeId)
+    }
+    func recordReview(childId: String, wordId: String, wasCorrect: Bool) async {
+        reviews.append((childId, wordId, wasCorrect))
+    }
+    func dueCount(childId: String, at date: Date) async -> Int {
+        stubbedDueCount
     }
 }
 

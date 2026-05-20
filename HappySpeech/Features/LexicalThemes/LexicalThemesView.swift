@@ -416,7 +416,10 @@ struct LexicalThemesView: View {
     private func setup() async {
         if interactor == nil {
             let presenter = LexicalThemesPresenter(displayLogic: holder)
-            let worker = LexicalThemesWorker(childRepository: container.childRepository)
+            let worker = LexicalThemesWorker(
+                childRepository: container.childRepository,
+                realmActor: container.realmActor
+            )
             let interactor = LexicalThemesInteractor(
                 childId: childId,
                 worker: worker,
