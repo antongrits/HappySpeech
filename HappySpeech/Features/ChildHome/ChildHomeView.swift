@@ -1148,6 +1148,16 @@ extension ChildHomeView {
         ) {
             router?.routeToRewardShop(childId: childId)
         }
+
+        // v31 Волна C Ф.2 — LetterTrace «Пиши пальчиком/пером».
+        ChildHomeV25EntryCard(
+            titleKey: "letterTrace.entry.title",
+            hintKey: "letterTrace.entry.hint",
+            iconName: "pencil.tip",
+            accent: ColorTokens.Brand.sky
+        ) {
+            router?.routeToLetterTrace(childId: childId)
+        }
     }
 }
 

@@ -30,6 +30,7 @@ protocol ChildHomeRoutingLogic {
     func routeToComprehensionDetective(childId: String)
     func routeToBedtimeMode(childId: String)
     func routeToRewardShop(childId: String)
+    func routeToLetterTrace(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -176,5 +177,10 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     /// v31 Волна C Ф.1 — RewardShop «Магазин наград».
     func routeToRewardShop(childId: String) {
         coordinator?.navigate(to: .rewardShop(childId: childId))
+    }
+
+    /// v31 Волна C Ф.2 — LetterTrace «Пиши пальчиком/пером».
+    func routeToLetterTrace(childId: String) {
+        coordinator?.navigate(to: .letterTrace(childId: childId))
     }
 }
