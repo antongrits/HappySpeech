@@ -844,6 +844,7 @@
 		890EE74578D6FFBDA818AF6A /* FamilyCalendarDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950F2EBC7E9254D21AF6009D /* FamilyCalendarDisplayLogic.swift */; };
 		89488575C8D60208CB1881A4 /* CustomizationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFA4DFF71CBCE97EDF95165 /* CustomizationPresenter.swift */; };
 		895531C42876C80B81DD1FAD /* ParentHomeSubViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59E3E59E9F0E068EB405027 /* ParentHomeSubViews.swift */; };
+		8960963C1D331B5C22A4A866 /* HSTips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C804CC007E6A216A13F1B7 /* HSTips.swift */; };
 		8980FB6EF67CDB65EA509CBB /* CloudFunctionsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 674FC62754BA1B80389F94B6 /* CloudFunctionsServiceTests.swift */; };
 		89A341E4B76B10EBC9E5F468 /* MLXEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DD71687CC7D6514156148B /* MLXEngine.swift */; };
 		8A13358A360A5625156AA6A9 /* RealmActor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DE9E6D02A5E6A031A4A1E10 /* RealmActor.swift */; };
@@ -1544,6 +1545,7 @@
 		0532CA863ABA869782786DAA /* AuthInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInteractorTests.swift; sourceTree = "<group>"; };
 		053D22C174DA28172B35C902 /* PerformanceMonitorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceMonitorService.swift; sourceTree = "<group>"; };
 		05ABBF37B13E5A812BAF80D6 /* LiveServicesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveServicesTests.swift; sourceTree = "<group>"; };
+		05C804CC007E6A216A13F1B7 /* HSTips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSTips.swift; sourceTree = "<group>"; };
 		05CAE7F1D5A4A526E53DC521 /* TempoAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempoAnalyzer.swift; sourceTree = "<group>"; };
 		0638A6490D5D421707BF0454 /* AnalyticsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsServiceTests.swift; sourceTree = "<group>"; };
 		06461BFEF4BEF8127792F571 /* FamilyStatsWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyStatsWorkerTests.swift; sourceTree = "<group>"; };
@@ -4459,6 +4461,7 @@
 				3F9194EB66A12C462314F248 /* SessionShell */,
 				2D1657A73DC59771CA8446B7 /* Settings */,
 				29FF15A04EB55A9DE23F9CC0 /* SharePlay */,
+				C42DCECC59AE21CB16518D9C /* Shortcuts */,
 				8E31874988856B0C17AF3BCB /* SiblingMultiplayer */,
 				41FF3F511B6C50BF9FCE49DD /* SoundDictionary */,
 				4161FB8609563C62A92712AB /* SoundTrafficLight */,
@@ -4468,6 +4471,7 @@
 				7EEA83A755170226AEC2A8D9 /* SpeechVisualization */,
 				F410EF28CD514FFBAD6D7682 /* Storytelling */,
 				5F8E19AF067D288747018C41 /* StutteringModule */,
+				D57E167BE56BB7184E7978D6 /* Tips */,
 				7C628C7ECA4F051D6E5423FB /* VoiceCloning */,
 				BF171B989944E51E29BEDF20 /* WeeklyChallenge */,
 				71FF747BBC2460273E08BFA7 /* WeeklySoundReport */,
@@ -6102,6 +6106,13 @@
 			path = DI;
 			sourceTree = "<group>";
 		};
+		C42DCECC59AE21CB16518D9C /* Shortcuts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Shortcuts;
+			sourceTree = "<group>";
+		};
 		C4B1EA60FE267463F36AE0C8 /* Security */ = {
 			isa = PBXGroup;
 			children = (
@@ -6379,6 +6390,14 @@
 				807900BC0535BD73F0734CBC /* FamilyAwardsCabinetView.swift */,
 			);
 			path = FamilyAwardsCabinet;
+			sourceTree = "<group>";
+		};
+		D57E167BE56BB7184E7978D6 /* Tips */ = {
+			isa = PBXGroup;
+			children = (
+				05C804CC007E6A216A13F1B7 /* HSTips.swift */,
+			);
+			path = Tips;
 			sourceTree = "<group>";
 		};
 		D646D1AB85C41B72F2793B54 /* SoftOnset */ = {
@@ -7895,6 +7914,7 @@
 				EF3EA783082AE637917B190C /* HSSticker.swift in Sources */,
 				413D33FF0D888BA1798DC112 /* HSSwipeCardStack.swift in Sources */,
 				D981746B8D95DAE433A44E6A /* HSTimelineView.swift in Sources */,
+				8960963C1D331B5C22A4A866 /* HSTips.swift in Sources */,
 				ED3DD5430B6834AF615AFF82 /* HSTypes.swift in Sources */,
 				6723E456B95B2A3AC037F61E /* HandPoseModels.swift in Sources */,
 				085F839C644A8C15F442ED0C /* HandPoseWorker.swift in Sources */,

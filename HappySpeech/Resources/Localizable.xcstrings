@@ -50795,6 +50795,72 @@
           }
         }
       }
+    },
+    "tips.parentDashboard.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Здесь живёт прогресс ребёнка"
+          }
+        }
+      }
+    },
+    "tips.parentDashboard.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Карточки ниже показывают, как идут занятия, какие звуки в работе и что советует Ляля."
+          }
+        }
+      }
+    },
+    "tips.settings.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Настройки приложения"
+          }
+        }
+      }
+    },
+    "tips.settings.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поменяйте тему, голос Ляли и расписание напоминаний."
+          }
+        }
+      }
+    },
+    "tips.specialistAssignments.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Домашние задания подопечных"
+          }
+        }
+      }
+    },
+    "tips.specialistAssignments.message": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Назначайте уроки и отслеживайте, как ребёнок их выполнил дома."
+          }
+        }
+      }
     }
   },
   "version": "1.0"

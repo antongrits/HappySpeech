@@ -294,6 +294,7 @@ private struct ParentDashboardTab: View {
                 VStack(spacing: SpacingTokens.sectionGap) {
                     // Header
                     headerSection
+                        .modifier(ParentDashboardTipModifier())
 
                     // Child selector (if multiple children)
                     childSection

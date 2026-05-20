@@ -89,6 +89,7 @@ struct SettingsView: View {
             }
             .navigationTitle(String(localized: "settings.navTitle"))
             .navigationBarTitleDisplayMode(.large)
+            .modifier(SettingsThemeTipModifier())
             // D-26 v27 — убран дублирующий маленький маскот из toolbar:
             // крупная Ляля уже присутствует в settingsHeaderSection.
             .confirmationDialog(

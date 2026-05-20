@@ -218,6 +218,12 @@ struct HappySpeechApp: App {
                 DeepLinkRouter.shared.register(coordinator: coordinator)
                 HSLogger.app.info("DeepLinkRouter: AppCoordinator зарегистрирован для Siri Shortcuts")
             }
+
+            // v31 Волна A — TipKit feature-discovery configure.
+            // Поднимаем единый datastore Apple после Realm.open() (Tips.configure
+            // — идемпотентная в рамках одного процесса). Конфигурация подавляется
+            // в XCTest, чтобы не создавать persistent state в test-таргете.
+            HSTipsBootstrap.configure()
         } catch {
             HSLogger.app.critical("ColdStart error — Realm open failed: \(error)")
         }

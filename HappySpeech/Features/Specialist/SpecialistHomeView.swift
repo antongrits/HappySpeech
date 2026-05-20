@@ -144,6 +144,7 @@ struct SpecChildDashboardView: View {
                         )
                         // v29 Фаза 8 Ф.4 — «Домашнее задание от логопеда».
                         assignedHomeworkCard
+                            .modifier(SpecialistAssignmentsTipModifier())
                     }
                     .padding(.horizontal, SpacingTokens.regular)
                     .padding(.bottom, SpacingTokens.sp8)
