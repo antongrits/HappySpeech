@@ -1198,6 +1198,16 @@ extension ChildHomeView {
         ) {
             router?.routeToOralStoryCreator(childId: childId)
         }
+
+        // v31 Wave F Ф.2 — Описательная карта объекта (план-схема Ткаченко).
+        ChildHomeV25EntryCard(
+            titleKey: "descriptionMap.entry.title",
+            hintKey: "descriptionMap.entry.hint",
+            iconName: "rectangle.grid.2x2.fill",
+            accent: ColorTokens.Brand.lilac
+        ) {
+            router?.routeToObjectDescriptionMap(childId: childId)
+        }
     }
 }
 

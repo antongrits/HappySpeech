@@ -115,6 +115,12 @@ enum AppRoute: Hashable {
     case oralStoryCreator(childId: String)
     /// Wave E Ф.4 (parent): Speech growth diary — шифрованные видеоклипы.
     case speechGrowthDiary(childId: String)
+
+    // MARK: - v31 Wave F (Object Description Map, методология Ткаченко)
+    /// Wave F Ф.2 (kid): План-схема описания объекта (Ткаченко) —
+    /// ребёнок описывает объект по 6–8 пиктограммам, ASR + анализ
+    /// покрытия пунктов плана → 0…3 ★.
+    case objectDescriptionMap(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -695,6 +701,12 @@ struct AppCoordinatorView: View {
         case .speechGrowthDiary(let childId):
             SpeechGrowthDiaryView(childId: childId)
                 .environment(\.circuitContext, .parent)
+
+        // MARK: - v31 Wave F Ф.2
+
+        case .objectDescriptionMap(let childId):
+            ObjectDescriptionMapView(childId: childId)
+                .environment(\.circuitContext, .kid)
         }
     }
 
@@ -1085,6 +1097,12 @@ extension AppCoordinatorView {
              "growthDiary",
              "diary":
             return .speechGrowthDiary(childId: previewChild)
+
+        // MARK: v31 Wave F Ф.2
+        case "objectDescriptionMap",
+             "descriptionMap",
+             "tkachenkoMap":
+            return .objectDescriptionMap(childId: previewChild)
 
         default:
             return .auth
