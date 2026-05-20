@@ -53066,6 +53066,150 @@
       "localizations" : {
         "ru" : { "stringUnit" : { "state" : "translated", "value" : "Готовим историю..." } }
       }
+    },
+    "specAssessment.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Первичная оценка" } }
+      }
+    },
+    "specAssessment.entry.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Первичная оценка" } }
+      }
+    },
+    "specAssessment.entry.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "10 вопросов — рекомендации для маршрута на 2 недели" } }
+      }
+    },
+    "specAssessment.close.a11y" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Закрыть" } }
+      }
+    },
+    "specAssessment.progress" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Вопрос %1$d из %2$d" } }
+      }
+    },
+    "specAssessment.answer.yes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Да" } }
+      }
+    },
+    "specAssessment.answer.no" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Нет" } }
+      }
+    },
+    "specAssessment.summary.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Рекомендованный фокус" } }
+      }
+    },
+    "specAssessment.summary.noFocus" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Развитие в норме" } }
+      }
+    },
+    "specAssessment.summary.empty" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "По результатам опроса слабых зон не выявлено. Продолжайте текущий маршрут." } }
+      }
+    },
+    "specAssessment.summary.validUntil" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Действительно до %@" } }
+      }
+    },
+    "specAssessment.summary.apply" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Применить к маршруту" } }
+      }
+    },
+    "specAssessment.loading" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Загружаем вопросы..." } }
+      }
+    },
+    "specAssessment.empty" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Анкета недоступна" } }
+      }
+    },
+    "specAssessment.axis.articulation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Звукопроизношение и артикуляция" } }
+      }
+    },
+    "specAssessment.axis.phonology" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Фонематический слух" } }
+      }
+    },
+    "specAssessment.axis.lexical" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Словарный запас" } }
+      }
+    },
+    "specAssessment.axis.grammar" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Грамматика" } }
+      }
+    },
+    "specAssessment.axis.connectedSpeech" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Связная речь" } }
+      }
+    },
+    "specAssessment.rationale.articulation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Включить артикуляционную гимнастику и автоматизацию проблемных звуков." } }
+      }
+    },
+    "specAssessment.rationale.phonology" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Усилить упражнения на различение звуков и минимальных пар." } }
+      }
+    },
+    "specAssessment.rationale.lexical" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Расширить словарь через лексические темы и обобщающие понятия." } }
+      }
+    },
+    "specAssessment.rationale.grammar" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Усилить упражнения на согласование и предложно-падежные конструкции." } }
+      }
+    },
+    "specAssessment.rationale.connectedSpeech" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Подключить пересказ и описательные рассказы по схемам." } }
+      }
     }
   },
   "version" : "1.0"

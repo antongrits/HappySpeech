@@ -145,6 +145,9 @@ struct SpecChildDashboardView: View {
                         // v29 Фаза 8 Ф.4 — «Домашнее задание от логопеда».
                         assignedHomeworkCard
                             .modifier(SpecialistAssignmentsTipModifier())
+
+                        // v31 Волна D Ф.3 — «Первичная оценка».
+                        specialistAssessmentCard
                     }
                     .padding(.horizontal, SpacingTokens.regular)
                     .padding(.bottom, SpacingTokens.sp8)
@@ -294,6 +297,55 @@ struct SpecChildDashboardView: View {
                  String(localized: "assignedHomework.entry.subtitle"))
         )
         .accessibilityAddTraits(.isButton)
+    }
+
+    // MARK: - v31 Волна D Ф.3 «Первичная оценка специалиста»
+
+    /// Карточка-вход в 10-вопросную анкету.
+    private var specialistAssessmentCard: some View {
+        Button {
+            coordinator.navigate(to: .specialistAssessment(
+                childId: childId,
+                specialistId: "current-specialist"
+            ))
+        } label: {
+            HStack(spacing: SpacingTokens.sp3) {
+                Image(systemName: "list.clipboard.fill")
+                    .font(.title2)
+                    .foregroundStyle(ColorTokens.Spec.accent)
+                    .frame(width: 44)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "specAssessment.entry.title"))
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(ColorTokens.Spec.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "specAssessment.entry.subtitle"))
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(ColorTokens.Spec.inkMuted)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: 0)
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(ColorTokens.Spec.inkMuted)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp4)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.card)
+                    .fill(ColorTokens.Spec.panel)
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(
+            Text(String(localized: "specAssessment.entry.title") + ". " +
+                 String(localized: "specAssessment.entry.subtitle"))
+        )
+        .accessibilityAddTraits(.isButton)
+        .accessibilityIdentifier("specAssessment.entryCard")
     }
 }
 

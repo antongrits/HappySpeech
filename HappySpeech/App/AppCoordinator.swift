@@ -103,6 +103,8 @@ enum AppRoute: Hashable {
     // MARK: - v31 Волна D
     /// Ф.1 (kid): Read-aloud + comprehension quiz («Слушай и понимай»).
     case readAloudStory(childId: String)
+    /// Ф.3 (specialist): 10-Q анкета первичной оценки ребёнка.
+    case specialistAssessment(childId: String, specialistId: String)
 }
 
 enum PermissionType: Hashable {
@@ -661,6 +663,10 @@ struct AppCoordinatorView: View {
         case .readAloudStory(let childId):
             ReadAloudStoryView(childId: childId)
                 .environment(\.circuitContext, .kid)
+
+        case .specialistAssessment(let childId, let specialistId):
+            SpecialistAssessmentView(childId: childId, specialistId: specialistId)
+                .environment(\.circuitContext, .specialist)
         }
     }
 
@@ -1028,6 +1034,14 @@ extension AppCoordinatorView {
         case "readAloudStory",
              "readAloud":
             return .readAloudStory(childId: previewChild)
+
+        // MARK: v31 Волна D Ф.3
+        case "specialistAssessment",
+             "assessment":
+            return .specialistAssessment(
+                childId: previewChild,
+                specialistId: previewParent
+            )
 
         default:
             return .auth

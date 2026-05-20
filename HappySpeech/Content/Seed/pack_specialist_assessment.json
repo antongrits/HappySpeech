@@ -1,0 +1,113 @@
+{
+  "id": "pack_specialist_assessment_v1",
+  "version": "1.0",
+  "title": "Первичная оценка специалиста",
+  "description": "10-вопросная анкета для логопеда по фреймворку Левиной/Архиповой (артикуляция / фонология / лексика / грамматика / связная речь). НЕ диагностический инструмент: ответы формируют рекомендованный фокус для AdaptivePlannerService на ближайшие 2 недели (CLAUDE.md §11).",
+  "questions": [
+    {
+      "id": "q-art-1",
+      "axis": "articulation",
+      "text": "Ребёнок чётко произносит все звуки родного языка?",
+      "type": "yesno",
+      "weight": "articulation",
+      "scale": null
+    },
+    {
+      "id": "q-art-2",
+      "axis": "articulation",
+      "text": "Оцените подвижность артикуляционного аппарата (язык, губы, нёбо)",
+      "type": "scale",
+      "weight": "articulation",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "lowLabel": "Скованный",
+        "highLabel": "Подвижный"
+      }
+    },
+    {
+      "id": "q-phon-1",
+      "axis": "phonology",
+      "text": "Ребёнок различает звуки на слух (например, кот / тот)?",
+      "type": "yesno",
+      "weight": "phonology",
+      "scale": null
+    },
+    {
+      "id": "q-phon-2",
+      "axis": "phonology",
+      "text": "Оцените способность повторить слоги (па-ба, са-ша)",
+      "type": "scale",
+      "weight": "phonology",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "lowLabel": "Не повторяет",
+        "highLabel": "Чисто"
+      }
+    },
+    {
+      "id": "q-lex-1",
+      "axis": "lexical",
+      "text": "Активный словарь ребёнка соответствует возрасту?",
+      "type": "yesno",
+      "weight": "lexical",
+      "scale": null
+    },
+    {
+      "id": "q-lex-2",
+      "axis": "lexical",
+      "text": "Оцените богатство обобщающих понятий (одежда, посуда, транспорт)",
+      "type": "scale",
+      "weight": "lexical",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "lowLabel": "Бедное",
+        "highLabel": "Богатое"
+      }
+    },
+    {
+      "id": "q-gram-1",
+      "axis": "grammar",
+      "text": "Ребёнок согласует прилагательные с существительными в роде и числе?",
+      "type": "yesno",
+      "weight": "grammar",
+      "scale": null
+    },
+    {
+      "id": "q-gram-2",
+      "axis": "grammar",
+      "text": "Оцените правильность употребления предлогов (в, на, под, за)",
+      "type": "scale",
+      "weight": "grammar",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "lowLabel": "Ошибки",
+        "highLabel": "Без ошибок"
+      }
+    },
+    {
+      "id": "q-conn-1",
+      "axis": "connectedSpeech",
+      "text": "Ребёнок составляет рассказ по серии картинок?",
+      "type": "yesno",
+      "weight": "connectedSpeech",
+      "scale": null
+    },
+    {
+      "id": "q-conn-2",
+      "axis": "connectedSpeech",
+      "text": "Оцените развёрнутость и последовательность пересказа",
+      "type": "scale",
+      "weight": "connectedSpeech",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "lowLabel": "Краткие фразы",
+        "highLabel": "Развёрнутый рассказ"
+      }
+    }
+  ]
+}
