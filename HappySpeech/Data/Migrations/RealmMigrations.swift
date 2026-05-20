@@ -60,6 +60,16 @@ enum RealmMigrations {
             // Оба объекта новые — Realm создаёт схему автоматически,
             // дефолты заданы в моделях. Никаких ручных enumerateObjects.
         }
+        if oldSchemaVersion < 12 {
+            // v12: v31 Wave E —
+            //  • ChildOralStoryObject (Ф.3 «Сочини историю») — локальные
+            //    транскрипты устных историй ребёнка с TTR-метрикой;
+            //  • EncryptedVideoClipObject (Ф.4 «Дневник речевого роста») —
+            //    шифрованные локальные видео-метаданные (CryptoKit AES-GCM-256,
+            //    ключ в Keychain). Сам клип и thumbnail — отдельные encrypted
+            //    blob'ы в Documents/SpeechGrowthDiary/.
+            // Оба объекта новые — Realm создаёт схему автоматически.
+        }
     }
 }
 
@@ -623,5 +633,133 @@ public extension RealmActor {
         obj.recommendedFocus.append(objectsIn: data.recommendedFocus)
         obj.validUntil = data.validUntil
         try? realmInstance.write { realmInstance.add(obj, update: .modified) }
+    }
+
+    // MARK: - v12 Wave E Ф.3: ChildOralStory helpers
+
+    /// Fetches all oral stories of a child, newest first.
+    internal func fetchOralStories(childId: String) async -> [ChildOralStoryData] {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return [] }
+        return Array(
+            realmInstance.objects(ChildOralStoryObject.self)
+                .filter("childId == %@", childId)
+                .sorted(byKeyPath: "createdAt", ascending: false)
+        ).map { obj in
+            ChildOralStoryData(
+                id: obj.id,
+                childId: obj.childId,
+                createdAt: obj.createdAt,
+                transcript: obj.transcript,
+                durationSeconds: obj.durationSeconds,
+                stimulusIds: Array(obj.stimulusIds),
+                lexicalDiversity: obj.lexicalDiversity,
+                totalWords: obj.totalWords,
+                uniqueWords: obj.uniqueWords
+            )
+        }
+    }
+
+    /// Persists a new oral story.
+    @discardableResult
+    internal func persistOralStory(_ data: ChildOralStoryData) async -> Bool {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return false }
+        let obj = ChildOralStoryObject()
+        obj.id = data.id
+        obj.childId = data.childId
+        obj.createdAt = data.createdAt
+        obj.transcript = data.transcript
+        obj.durationSeconds = data.durationSeconds
+        obj.stimulusIds.append(objectsIn: data.stimulusIds)
+        obj.lexicalDiversity = data.lexicalDiversity
+        obj.totalWords = data.totalWords
+        obj.uniqueWords = data.uniqueWords
+        try? realmInstance.write { realmInstance.add(obj, update: .modified) }
+        return true
+    }
+
+    // MARK: - v12 Wave E Ф.4: EncryptedVideoClip helpers
+
+    /// Fetches all encrypted video clips of a child, newest first.
+    internal func fetchEncryptedVideoClips(childId: String) async -> [EncryptedVideoClipData] {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return [] }
+        return Array(
+            realmInstance.objects(EncryptedVideoClipObject.self)
+                .filter("childId == %@", childId)
+                .sorted(byKeyPath: "recordedAt", ascending: false)
+        ).map { obj in
+            EncryptedVideoClipData(
+                id: obj.id,
+                childId: obj.childId,
+                recordedAt: obj.recordedAt,
+                durationSeconds: obj.durationSeconds,
+                encryptedClipPath: obj.encryptedClipPath,
+                encryptedThumbnailPath: obj.encryptedThumbnailPath,
+                topicTag: obj.topicTag,
+                targetSound: obj.targetSound,
+                note: obj.note,
+                shareToken: obj.shareToken,
+                shareTokenExpiresAt: obj.shareTokenExpiresAt
+            )
+        }
+    }
+
+    /// Persists a new encrypted video clip metadata.
+    @discardableResult
+    internal func persistEncryptedVideoClip(_ data: EncryptedVideoClipData) async -> Bool {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return false }
+        let obj = EncryptedVideoClipObject()
+        obj.id = data.id
+        obj.childId = data.childId
+        obj.recordedAt = data.recordedAt
+        obj.durationSeconds = data.durationSeconds
+        obj.encryptedClipPath = data.encryptedClipPath
+        obj.encryptedThumbnailPath = data.encryptedThumbnailPath
+        obj.topicTag = data.topicTag
+        obj.targetSound = data.targetSound
+        obj.note = data.note
+        obj.shareToken = data.shareToken
+        obj.shareTokenExpiresAt = data.shareTokenExpiresAt
+        try? realmInstance.write { realmInstance.add(obj, update: .modified) }
+        return true
+    }
+
+    /// Updates share-token metadata for a clip. Returns true if existed.
+    @discardableResult
+    internal func updateEncryptedClipShareToken(
+        id: String,
+        token: String?,
+        expiresAt: Date?
+    ) async -> Bool {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance,
+              let obj = realmInstance.object(
+                ofType: EncryptedVideoClipObject.self,
+                forPrimaryKey: id
+              )
+        else { return false }
+        try? realmInstance.write {
+            obj.shareToken = token
+            obj.shareTokenExpiresAt = expiresAt
+        }
+        return true
+    }
+
+    /// Deletes an encrypted clip by id (returns true if existed). Файлы на
+    /// диске должна удалять вызывающая сторона отдельно.
+    @discardableResult
+    internal func deleteEncryptedVideoClip(id: String) async -> Bool {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance,
+              let obj = realmInstance.object(
+                ofType: EncryptedVideoClipObject.self,
+                forPrimaryKey: id
+              )
+        else { return false }
+        try? realmInstance.write { realmInstance.delete(obj) }
+        return true
     }
 }

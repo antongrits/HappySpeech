@@ -419,9 +419,91 @@ struct AssessmentResultData: Sendable, Identifiable, Equatable {
     let validUntil: Date
 }
 
+// MARK: - ChildOralStoryObject (v12 — v31 Wave E Ф.3 «Сочини историю»)
+//
+// Локальная запись устной истории ребёнка: транскрипт WhisperKit + TTR +
+// идентификаторы выбранных стимулов. Без аудио в Realm — аудиофайл лежит
+// в Documents/, ссылка хранится отдельно. Никакой сетевой синхронизации.
+
+final class ChildOralStoryObject: Object, @unchecked Sendable {
+    @Persisted(primaryKey: true) var id: String = UUID().uuidString
+    @Persisted var childId: String = ""
+    @Persisted var createdAt: Date = Date()
+    @Persisted var transcript: String = ""
+    @Persisted var durationSeconds: Double = 0
+    @Persisted var stimulusIds: List<String>
+    /// TTR = unique words / total words, 0…1.
+    @Persisted var lexicalDiversity: Double = 0
+    @Persisted var totalWords: Int = 0
+    @Persisted var uniqueWords: Int = 0
+}
+
+// MARK: - ChildOralStoryData (Sendable DTO)
+
+struct ChildOralStoryData: Sendable, Identifiable, Equatable {
+    let id: String
+    let childId: String
+    let createdAt: Date
+    let transcript: String
+    let durationSeconds: Double
+    let stimulusIds: [String]
+    let lexicalDiversity: Double
+    let totalWords: Int
+    let uniqueWords: Int
+}
+
+// MARK: - EncryptedVideoClipObject (v12 — v31 Wave E Ф.4 «Дневник речевого роста»)
+//
+// Метаданные шифрованного видеоклипа: ссылка на encrypted blob в
+// Documents/SpeechGrowthDiary/, IV (nonce) для AES-GCM-256, имя файла
+// thumbnail (тоже шифрованного), теги, длительность.
+//
+// Сам клип НЕ хранится в Realm. Ключ шифрования НЕ хранится в Realm —
+// он живёт в Keychain (per-child, kSecAttrAccessibleWhenUnlockedThisDeviceOnly).
+//
+// Локально only. Никаких облаков, никакого Firestore, никакого iCloud.
+
+final class EncryptedVideoClipObject: Object, @unchecked Sendable {
+    @Persisted(primaryKey: true) var id: String = UUID().uuidString
+    @Persisted var childId: String = ""
+    @Persisted var recordedAt: Date = Date()
+    @Persisted var durationSeconds: Double = 0
+    /// Относительный путь от Documents/ к зашифрованному .bin файлу клипа.
+    @Persisted var encryptedClipPath: String = ""
+    /// Относительный путь от Documents/ к зашифрованному .bin файлу thumbnail.
+    @Persisted var encryptedThumbnailPath: String = ""
+    /// Тематика: «звук», «слово», «свободная речь».
+    @Persisted var topicTag: String = ""
+    /// Целевой звук (Р, С, Ш, Ж, Ч, Щ, Л, К, Г, Х) — опциональный.
+    @Persisted var targetSound: String = ""
+    /// Заметка родителя (опц.).
+    @Persisted var note: String = ""
+    /// Per-clip share-token (opaque UUID + signature). nil — не shared.
+    @Persisted var shareToken: String?
+    /// Срок действия share-token'а; nil — не shared.
+    @Persisted var shareTokenExpiresAt: Date?
+}
+
+// MARK: - EncryptedVideoClipData (Sendable DTO)
+
+struct EncryptedVideoClipData: Sendable, Identifiable, Equatable {
+    let id: String
+    let childId: String
+    let recordedAt: Date
+    let durationSeconds: Double
+    let encryptedClipPath: String
+    let encryptedThumbnailPath: String
+    let topicTag: String
+    let targetSound: String
+    let note: String
+    let shareToken: String?
+    let shareTokenExpiresAt: Date?
+}
+
 // MARK: - SchemaVersion
 
 /// Current Realm schema version. Increment with each migration.
+/// v12: ChildOralStoryObject (Wave E Ф.3) + EncryptedVideoClipObject (Wave E Ф.4).
 enum RealmSchemaVersion {
-    static let current: UInt64 = 11  // v11: LexicalItemReviewObject (FSRS-6) + AssessmentResultObject (Wave D v31)
+    static let current: UInt64 = 12
 }

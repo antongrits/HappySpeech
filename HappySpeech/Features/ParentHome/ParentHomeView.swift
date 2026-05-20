@@ -361,6 +361,10 @@ private struct ParentDashboardTab: View {
                     parentVoiceNoteCard
                         .hsScrollEffect(.scaleFade)
 
+                    // v31 Wave E Ф.4 — «Дневник речевого роста»: шифрованные видео.
+                    speechGrowthDiaryCard
+                        .hsScrollEffect(.scaleFade)
+
                     // Family Calendar card
                     familyCalendarCard
                         .hsScrollEffect(.scaleFade)
@@ -1073,9 +1077,70 @@ private struct ParentDashboardTab: View {
         }
     }
 
-    // MARK: - v31 Волна A: Ф.10 «Что должно быть в возрасте»
+    private var recommendationsSection: some View {
+        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.sp5) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+                Text(String(localized: "Рекомендации"))
+                    .font(TypographyTokens.headline())
+                    .foregroundStyle(ColorTokens.Parent.ink)
 
-    private var speechNormsEncyclopediaCard: some View {
+                ForEach(viewModel.recommendations, id: \.self) { rec in
+                    HStack(alignment: .top, spacing: SpacingTokens.sp3) {
+                        Image(systemName: "lightbulb.fill")
+                            .font(TypographyTokens.caption(14))
+                            .foregroundStyle(ColorTokens.Brand.butter)
+                            .padding(.top, 2)
+
+                        Text(rec)
+                            .font(TypographyTokens.body(14))
+                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                            .ctaTextStyle()
+                    }
+                }
+            }
+        }
+    }
+}
+
+// MARK: - ParentDashboardTab Entry Cards (extension to keep struct body length manageable)
+
+private extension ParentDashboardTab {
+
+    // MARK: v31 Wave E Ф.4 — Дневник речевого роста
+
+    var speechGrowthDiaryCard: some View {
+        HSCard(style: .elevated) {
+            HStack(spacing: SpacingTokens.sp3) {
+                parentNavIcon("video.fill.badge.checkmark", tint: ColorTokens.Brand.primary)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(String(localized: "speechGrowthDiary.entry.title"))
+                        .font(TypographyTokens.headline())
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Text(String(localized: "speechGrowthDiary.entry.subtitle"))
+                        .font(TypographyTokens.body())
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: SpacingTokens.sp1)
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .accessibilityHidden(true)
+            }
+            .padding(SpacingTokens.sp4)
+        }
+        .onTapGesture {
+            coordinator.navigate(to: .speechGrowthDiary(childId: viewModel.childId))
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isButton)
+    }
+
+    // MARK: v31 Волна A — Ф.10 «Что должно быть в возрасте»
+
+    var speechNormsEncyclopediaCard: some View {
         HSCard(style: .elevated) {
             HStack(spacing: SpacingTokens.sp3) {
                 parentNavIcon("book.closed.fill", tint: ColorTokens.Brand.sky)
@@ -1110,7 +1175,7 @@ private struct ParentDashboardTab: View {
         .environment(\.circuitContext, .parent)
     }
 
-    private var parentGuideCard: some View {
+    var parentGuideCard: some View {
         HSCard(style: .elevated) {
             HStack(spacing: SpacingTokens.sp3) {
                 parentNavIcon("graduationcap.fill", tint: ColorTokens.Brand.lilac)
@@ -1143,30 +1208,6 @@ private struct ParentDashboardTab: View {
         )
         .accessibilityAddTraits(.isButton)
         .environment(\.circuitContext, .parent)
-    }
-
-    private var recommendationsSection: some View {
-        HSLiquidGlassCard(style: .primary, padding: SpacingTokens.sp5) {
-            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-                Text(String(localized: "Рекомендации"))
-                    .font(TypographyTokens.headline())
-                    .foregroundStyle(ColorTokens.Parent.ink)
-
-                ForEach(viewModel.recommendations, id: \.self) { rec in
-                    HStack(alignment: .top, spacing: SpacingTokens.sp3) {
-                        Image(systemName: "lightbulb.fill")
-                            .font(TypographyTokens.caption(14))
-                            .foregroundStyle(ColorTokens.Brand.butter)
-                            .padding(.top, 2)
-
-                        Text(rec)
-                            .font(TypographyTokens.body(14))
-                            .foregroundStyle(ColorTokens.Parent.inkMuted)
-                            .ctaTextStyle()
-                    }
-                }
-            }
-        }
     }
 }
 

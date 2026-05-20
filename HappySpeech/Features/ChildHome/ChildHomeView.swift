@@ -1168,6 +1168,36 @@ extension ChildHomeView {
         ) {
             router?.routeToReadAloudStory(childId: childId)
         }
+
+        // v31 Wave E Ф.1 — Karaoke с pitch-контуром.
+        ChildHomeV25EntryCard(
+            titleKey: "karaoke.entry.title",
+            hintKey: "karaoke.entry.hint",
+            iconName: "waveform.path.ecg.rectangle",
+            accent: ColorTokens.Brand.primary
+        ) {
+            router?.routeToKaraokePitch(childId: childId)
+        }
+
+        // v31 Wave E Ф.2 — Пальчики-говоруны.
+        ChildHomeV25EntryCard(
+            titleKey: "fingerPlay.entry.title",
+            hintKey: "fingerPlay.entry.hint",
+            iconName: "hand.raised.fingers.spread.fill",
+            accent: ColorTokens.Brand.mint
+        ) {
+            router?.routeToFingerPlay(childId: childId)
+        }
+
+        // v31 Wave E Ф.3 — Oral story creator.
+        ChildHomeV25EntryCard(
+            titleKey: "storyCreator.entry.title",
+            hintKey: "storyCreator.entry.hint",
+            iconName: "text.book.closed.fill",
+            accent: ColorTokens.Brand.rose
+        ) {
+            router?.routeToOralStoryCreator(childId: childId)
+        }
     }
 }
 

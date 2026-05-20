@@ -1,0 +1,167 @@
+{
+  "id": "pack_fingerplay_v1",
+  "version": 1,
+  "description": "v31 Wave E Ф.2 «Пальчики-говоруны». Пальчиковая и кинезио-гимнастика по Лопухиной/Архиповой/Сиротюк. Каждое упражнение — 3 стадии: показ → имитация → ритм. Жесты: fist, open_palm, point, pinch, thumbs_up.",
+  "exercises": [
+    {
+      "id": "fp_zaichik",
+      "title": "Зайчик",
+      "rhyme": "Зайчик прыг, зайчик скок — поднял ушки на бочок.",
+      "stages": [
+        { "target": "point",     "symbol": "hand.point.up.left.fill",       "description": "Подними два пальчика — ушки зайчика.",       "reps": 1 },
+        { "target": "point",     "symbol": "hand.point.up.left.fill",       "description": "Повтори ушки зайчика.",                       "reps": 1 },
+        { "target": "point",     "symbol": "hand.point.up.left.fill",       "description": "Скажи стих, держи ушки.",                     "reps": 3 }
+      ]
+    },
+    {
+      "id": "fp_koza",
+      "title": "Коза",
+      "rhyme": "Идёт коза рогатая, идёт коза бодатая.",
+      "stages": [
+        { "target": "point",     "symbol": "hand.point.up.left.fill",       "description": "Покажи рожки козы — указательный и мизинец.", "reps": 1 },
+        { "target": "point",     "symbol": "hand.point.up.left.fill",       "description": "Повтори рожки.",                              "reps": 1 },
+        { "target": "point",     "symbol": "hand.point.up.left.fill",       "description": "Покажи рожки и расскажи стих.",               "reps": 3 }
+      ]
+    },
+    {
+      "id": "fp_kolechko",
+      "title": "Колечко",
+      "rhyme": "На пальчик колечко надеваю — раз, два, три, четыре, пять.",
+      "stages": [
+        { "target": "pinch",     "symbol": "hand.pinch.fill",               "description": "Сложи колечко: большой и указательный.",     "reps": 1 },
+        { "target": "pinch",     "symbol": "hand.pinch.fill",               "description": "Повтори колечко.",                            "reps": 1 },
+        { "target": "pinch",     "symbol": "hand.pinch.fill",               "description": "Сделай колечко на ритм стиха.",               "reps": 4 }
+      ]
+    },
+    {
+      "id": "fp_kulak",
+      "title": "Кулачок",
+      "rhyme": "Этот пальчик хочет спать — кулачок, кулачок.",
+      "stages": [
+        { "target": "fist",      "symbol": "hand.raised.fingers.spread.fill","description": "Сожми кулачок.",                              "reps": 1 },
+        { "target": "fist",      "symbol": "hand.raised.fingers.spread.fill","description": "Снова кулачок.",                              "reps": 1 },
+        { "target": "fist",      "symbol": "hand.raised.fingers.spread.fill","description": "Кулачок на каждый «топ-топ».",                "reps": 4 }
+      ]
+    },
+    {
+      "id": "fp_ladoshka",
+      "title": "Ладошка",
+      "rhyme": "Ладушки-ладушки, где были? У бабушки!",
+      "stages": [
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Открой ладошку.",                             "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Покажи ладошку ещё раз.",                     "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Ладошка-кулачок на ритм.",                    "reps": 4 }
+      ]
+    },
+    {
+      "id": "fp_klass",
+      "title": "Класс!",
+      "rhyme": "Молодец — большой палец вверх!",
+      "stages": [
+        { "target": "thumbs_up", "symbol": "hand.thumbsup.fill",            "description": "Подними большой палец.",                      "reps": 1 },
+        { "target": "thumbs_up", "symbol": "hand.thumbsup.fill",            "description": "Снова класс.",                                "reps": 1 },
+        { "target": "thumbs_up", "symbol": "hand.thumbsup.fill",            "description": "На каждое «молодец».",                        "reps": 3 }
+      ]
+    },
+    {
+      "id": "fp_kulak_rebro",
+      "title": "Кулак-ребро-ладонь",
+      "rhyme": "Кулак, ребро, ладонь — мы умеем всё, смотри!",
+      "stages": [
+        { "target": "fist",      "symbol": "hand.raised.fingers.spread.fill","description": "Кулак.",                                       "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Ладонь — раскрой её.",                        "reps": 1 },
+        { "target": "fist",      "symbol": "hand.raised.fingers.spread.fill","description": "Чередуй кулак и ладонь под стих.",            "reps": 4 }
+      ]
+    },
+    {
+      "id": "fp_ptichka",
+      "title": "Птичка",
+      "rhyme": "Птички-невелички в небе полетели.",
+      "stages": [
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Открытая ладошка — это крылышки.",            "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Маши крылышками.",                            "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Птичка летает на каждое слово.",              "reps": 4 }
+      ]
+    },
+    {
+      "id": "fp_kotik",
+      "title": "Котик",
+      "rhyme": "Котик мягонький, лапки царапки.",
+      "stages": [
+        { "target": "fist",      "symbol": "hand.raised.fingers.spread.fill","description": "Сложи кулачок — лапка спрятала когти.",       "reps": 1 },
+        { "target": "point",     "symbol": "hand.point.up.left.fill",       "description": "А теперь когти-указательные.",                "reps": 1 },
+        { "target": "fist",      "symbol": "hand.raised.fingers.spread.fill","description": "Чередуй лапку и когти.",                      "reps": 4 }
+      ]
+    },
+    {
+      "id": "fp_okno",
+      "title": "Окошко",
+      "rhyme": "Открываем мы окошко — посмотрите-ка немножко.",
+      "stages": [
+        { "target": "pinch",     "symbol": "hand.pinch.fill",               "description": "Сложи окошко — пальцы вместе.",               "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Окошко открылось — ладонь.",                  "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Открываем-закрываем под стих.",               "reps": 3 }
+      ]
+    },
+    {
+      "id": "fp_zamok",
+      "title": "Замок",
+      "rhyme": "На двери висит замок — кто его открыть бы смог?",
+      "stages": [
+        { "target": "fist",      "symbol": "hand.raised.fingers.spread.fill","description": "Сожми кулачок — замок закрыт.",                "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Открыли — ладошка.",                          "reps": 1 },
+        { "target": "fist",      "symbol": "hand.raised.fingers.spread.fill","description": "Чередуй замок-открыто.",                      "reps": 4 }
+      ]
+    },
+    {
+      "id": "fp_solnyshko",
+      "title": "Солнышко",
+      "rhyme": "Солнышко светит — лучики горят.",
+      "stages": [
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Раскрой ладошку — лучики солнца.",            "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Снова солнышко.",                             "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Солнышко-кулачок-солнышко.",                  "reps": 4 }
+      ]
+    },
+    {
+      "id": "fp_pist",
+      "title": "Пистолетик",
+      "rhyme": "Указательный готов — целься в облачко медведя.",
+      "stages": [
+        { "target": "point",     "symbol": "hand.point.up.left.fill",       "description": "Покажи указательный палец.",                  "reps": 1 },
+        { "target": "point",     "symbol": "hand.point.up.left.fill",       "description": "Снова указательный.",                         "reps": 1 },
+        { "target": "point",     "symbol": "hand.point.up.left.fill",       "description": "Цельтесь и стреляйте на ритм.",               "reps": 4 }
+      ]
+    },
+    {
+      "id": "fp_zerno",
+      "title": "Зёрнышко",
+      "rhyme": "Курочка зёрнышко собрала, цыплятам отдала.",
+      "stages": [
+        { "target": "pinch",     "symbol": "hand.pinch.fill",               "description": "Покажи, как куры зёрнышки клюют — щепотка.",  "reps": 1 },
+        { "target": "pinch",     "symbol": "hand.pinch.fill",               "description": "Снова щепотка.",                              "reps": 1 },
+        { "target": "pinch",     "symbol": "hand.pinch.fill",               "description": "Щепотка на каждое «клюнули».",                "reps": 4 }
+      ]
+    },
+    {
+      "id": "fp_orel",
+      "title": "Орёл",
+      "rhyme": "Расправил крылья гордый орёл.",
+      "stages": [
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Раскрой большие крылья — ладонь.",            "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Снова крылья.",                               "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Парим под стих.",                             "reps": 3 }
+      ]
+    },
+    {
+      "id": "fp_braslet",
+      "title": "Браслетик",
+      "rhyme": "На запястье — браслетик, посмотри какой.",
+      "stages": [
+        { "target": "pinch",     "symbol": "hand.pinch.fill",               "description": "Колечко-браслет на запястье.",                "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Покажи браслет — открой ладонь.",             "reps": 1 },
+        { "target": "pinch",     "symbol": "hand.pinch.fill",               "description": "Браслет-ладонь на ритм.",                     "reps": 3 }
+      ]
+    }
+  ]
+}

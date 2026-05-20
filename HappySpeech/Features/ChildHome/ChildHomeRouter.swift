@@ -31,6 +31,10 @@ protocol ChildHomeRoutingLogic {
     func routeToBedtimeMode(childId: String)
     func routeToRewardShop(childId: String)
     func routeToLetterTrace(childId: String)
+    // v31 Wave E
+    func routeToKaraokePitch(childId: String)
+    func routeToFingerPlay(childId: String)
+    func routeToOralStoryCreator(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -188,5 +192,20 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     /// Khan Academy Kids gap (G-03): короткая история с озвучкой + 3-Q квиз.
     func routeToReadAloudStory(childId: String) {
         coordinator?.navigate(to: .readAloudStory(childId: childId))
+    }
+
+    /// v31 Wave E Ф.1 — Karaoke с pitch-контуром.
+    func routeToKaraokePitch(childId: String) {
+        coordinator?.navigate(to: .karaokePitch(childId: childId))
+    }
+
+    /// v31 Wave E Ф.2 — Пальчики-говоруны (Vision Hand Pose).
+    func routeToFingerPlay(childId: String) {
+        coordinator?.navigate(to: .fingerPlay(childId: childId))
+    }
+
+    /// v31 Wave E Ф.3 — Oral story creator.
+    func routeToOralStoryCreator(childId: String) {
+        coordinator?.navigate(to: .oralStoryCreator(childId: childId))
     }
 }

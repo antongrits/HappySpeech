@@ -105,6 +105,16 @@ enum AppRoute: Hashable {
     case readAloudStory(childId: String)
     /// Ф.3 (specialist): 10-Q анкета первичной оценки ребёнка.
     case specialistAssessment(childId: String, specialistId: String)
+
+    // MARK: - v31 Wave E (research F-02 / G-06, methodology Ф6 / Ф9)
+    /// Wave E Ф.1 (kid): Karaoke pitch-контур — real-time pitch vs модель.
+    case karaokePitch(childId: String)
+    /// Wave E Ф.2 (kid): Пальчики-говоруны — Vision Hand Pose.
+    case fingerPlay(childId: String)
+    /// Wave E Ф.3 (kid): Oral story creator — 3 картинки → запись → ASR/TTR.
+    case oralStoryCreator(childId: String)
+    /// Wave E Ф.4 (parent): Speech growth diary — шифрованные видеоклипы.
+    case speechGrowthDiary(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -667,6 +677,24 @@ struct AppCoordinatorView: View {
         case .specialistAssessment(let childId, let specialistId):
             SpecialistAssessmentView(childId: childId, specialistId: specialistId)
                 .environment(\.circuitContext, .specialist)
+
+        // MARK: - v31 Wave E
+
+        case .karaokePitch(let childId):
+            KaraokePitchView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .fingerPlay(let childId):
+            FingerPlayView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .oralStoryCreator(let childId):
+            OralStoryCreatorView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .speechGrowthDiary(let childId):
+            SpeechGrowthDiaryView(childId: childId)
+                .environment(\.circuitContext, .parent)
         }
     }
 
@@ -1042,6 +1070,21 @@ extension AppCoordinatorView {
                 childId: previewChild,
                 specialistId: previewParent
             )
+
+        // MARK: v31 Wave E
+        case "karaokePitch",
+             "karaoke":
+            return .karaokePitch(childId: previewChild)
+        case "fingerPlay",
+             "fingers":
+            return .fingerPlay(childId: previewChild)
+        case "oralStoryCreator",
+             "storyCreator":
+            return .oralStoryCreator(childId: previewChild)
+        case "speechGrowthDiary",
+             "growthDiary",
+             "diary":
+            return .speechGrowthDiary(childId: previewChild)
 
         default:
             return .auth
