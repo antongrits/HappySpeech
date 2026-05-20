@@ -118,15 +118,25 @@ public struct HSGlassNavigationBar<Trailing: View>: View {
     @ViewBuilder
     private var barBackground: some View {
         let shape = RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-        // iOS 26 Liquid Glass и iOS 17/18 ultraThinMaterial — оба используют шейп-fill.
-        // Когда станет доступен публичный glassEffect API, заменить материал на нативный.
-        shape
-            .fill(.ultraThinMaterial)
-            .overlay(
-                shape
-                    .strokeBorder(ColorTokens.Overlay.highlight, lineWidth: 0.5)
-            )
-            .shadow(color: ColorTokens.Overlay.shadow, radius: 14, x: 0, y: 6)
+        if #available(iOS 26, *), !reduceMotion {
+            // iOS 26 Liquid Glass — true system glass with adaptive blur.
+            Color.clear
+                .glassEffect(.regular, in: shape)
+                .overlay(
+                    shape
+                        .strokeBorder(ColorTokens.Overlay.highlight, lineWidth: 0.5)
+                )
+                .shadow(color: ColorTokens.Overlay.shadow, radius: 14, x: 0, y: 6)
+        } else {
+            // iOS 17–25 (and Reduced Motion) fallback — static ultraThinMaterial.
+            shape
+                .fill(.ultraThinMaterial)
+                .overlay(
+                    shape
+                        .strokeBorder(ColorTokens.Overlay.highlight, lineWidth: 0.5)
+                )
+                .shadow(color: ColorTokens.Overlay.shadow, radius: 14, x: 0, y: 6)
+        }
     }
 
     private var inkColor: Color {
