@@ -72,7 +72,7 @@ final class BilingualTTSWorker: NSObject, BilingualTTSWorkerProtocol {
         case .english:
             return await speakEnglish(text: text, wordId: wordId)
         case .belarusian:
-            return await speakBelarusian(text: text)
+            return await speakBelarusian(text)
         case .off:
             return language.bcp47
         }
