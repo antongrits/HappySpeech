@@ -212,3 +212,79 @@ export interface ModerationContext {
 export interface ModerationResult {
   flagged: boolean;
 }
+
+// ────────────────────────────────────────────────────────────────────────────
+// Deep features (C-07): scoreSpeechQuality
+// ────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Server-side speech quality scoring (aggregate analytics).
+ *
+ * NB: Реальная оценка произношения выполняется on-device через
+ * PronunciationScorerService (COPPA — детское аудио не покидает устройство).
+ * Этот server endpoint — лишь stub-агрегатор, который пишет
+ * сжатые метаданные для родительского дашборда. Audio bytes на сервер
+ * НЕ загружаются — функция работает с уже сохранённым в Storage аудио
+ * (audioStoragePath) и метаданными, не выкачивая содержимое наружу.
+ */
+export interface ScoreSpeechQualityRequest {
+  audioStoragePath?: unknown;
+  targetSound?: unknown;
+  childAge?: unknown;
+}
+
+export interface ScoreSpeechQualityResponse {
+  score: number;
+  confidence: number;
+  processedAt: string;
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// Deep features (C-07): generateNeurolinguistSummary
+// ────────────────────────────────────────────────────────────────────────────
+
+export interface NeurolinguistSummaryRequest {
+  childId?: unknown;
+  weekOffset?: unknown;
+}
+
+export interface SoundProgressSnapshot {
+  sessions: number;
+  attempts: number;
+  correct: number;
+  successRate: number;
+}
+
+export interface WeekSummary {
+  weekStart: string;
+  weekEnd: string;
+  totalSessions: number;
+  totalMinutes: number;
+  avgSuccessRate: number;
+  soundProgress: Record<string, SoundProgressSnapshot>;
+  recommendations: string[];
+}
+
+export interface NeurolinguistSummaryResponse {
+  weekSummary: WeekSummary;
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// Deep features (C-07): sendFamilyInvite
+// (Email-based invite, complements existing createFamilyInviteToken)
+// ────────────────────────────────────────────────────────────────────────────
+
+export type FamilyInviteRoleExtended = "parent" | "specialist";
+
+export interface SendFamilyInviteRequest {
+  inviteeEmail?: unknown;
+  role?: unknown;
+  childIds?: unknown;
+}
+
+export interface SendFamilyInviteResponse {
+  inviteId: string;
+  inviteUrl: string;
+  expiresAt: string;
+  emailDispatched: boolean;
+}

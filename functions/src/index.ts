@@ -53,6 +53,11 @@ import { moderateUserDocument } from "./moderation";
 import { setAdminClaimHandler } from "./admin";
 import { runDailyReminder } from "./sendDailyReminder";
 import { runWeeklySummary } from "./sendWeeklySummary";
+
+// Deep features (C-07)
+export { scoreSpeechQuality } from "./speechQuality";
+export { generateNeurolinguistSummary } from "./neurolinguistSummary";
+export { sendFamilyInvite } from "./familyInvite";
 import type {
   CalculateProgressRequest,
   CalculateProgressResult,
