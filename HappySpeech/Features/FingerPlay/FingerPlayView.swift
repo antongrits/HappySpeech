@@ -69,7 +69,7 @@ struct FingerPlayView: View {
                 } else if let vm = holder.startVM {
                     gameSection(vm)
                 } else {
-                    ProgressView()
+                    loadingSection
                 }
             }
             .navigationTitle(Text("fingerPlay.title"))
@@ -79,6 +79,28 @@ struct FingerPlayView: View {
             .onDisappear { cameraSession?.stop() }
         }
         .environment(\.circuitContext, .kid)
+    }
+
+    /// Промежуточное состояние до получения камеры / первого упражнения.
+    /// Без него экран был «серой плиткой» на симуляторе (нет hardware камеры).
+    private var loadingSection: some View {
+        VStack(spacing: SpacingTokens.sp4) {
+            LyalyaMascotView(state: .thinking, size: 120)
+                .accessibilityHidden(true)
+            ProgressView()
+                .scaleEffect(1.2)
+                .tint(ColorTokens.Brand.primary)
+            Text("fingerPlay.camera.starting")
+                .font(TypographyTokens.body(15))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .padding(.horizontal, SpacingTokens.screenEdge)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(Text("fingerPlay.camera.starting"))
     }
 
     // MARK: - Sections

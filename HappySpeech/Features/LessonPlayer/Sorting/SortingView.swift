@@ -122,17 +122,22 @@ struct SortingView: View {
     // MARK: - Classifying
 
     private var classifyingView: some View {
-        VStack(spacing: SpacingTokens.large) {
-            header
-            Spacer(minLength: 0)
-            wordCard
-            Spacer(minLength: 0)
-            categoryButtons
-            hintButton
+        // P1-1 fix (v31 SE 3 audit): на 320pt бины обрезались снизу.
+        // Оборачиваем в ScrollView, чтобы в compact-height категории всегда были
+        // достижимы; spacings ужаты под compact, header + wordCard + бины помещаются.
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: SpacingTokens.medium) {
+                header
+                wordCard
+                categoryButtons
+                hintButton
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.top, SpacingTokens.medium)
+            .padding(.bottom, SpacingTokens.large)
+            .frame(maxWidth: .infinity)
         }
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .padding(.top, SpacingTokens.large)
-        .padding(.bottom, SpacingTokens.large)
+        .scrollBounceBehavior(.basedOnSize)
     }
 
     private var header: some View {
