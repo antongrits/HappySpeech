@@ -47,7 +47,7 @@ struct DailyTimeCapView: View {
                 }
             }
             .navigationTitle(Text(String(localized: "dailyTimeCap.title")))
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .task { await bootstrap() }
         }
@@ -291,8 +291,7 @@ struct DailyTimeCapView: View {
     }
 
     private func localizedMinutes(_ minutes: Int) -> String {
-        String(localized: "dailyTimeCap.minutes.format")
-            .replacingOccurrences(of: "{n}", with: "\(minutes)")
+        String(format: String(localized: "dailyTimeCap.minutes.format"), minutes)
     }
 }
 

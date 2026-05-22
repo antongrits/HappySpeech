@@ -68,7 +68,7 @@ struct SpeechGrowthDiaryView: View {
                 }
             }
             .navigationTitle(Text("diary.title"))
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .task { await bootstrap() }
             .onAppear {
