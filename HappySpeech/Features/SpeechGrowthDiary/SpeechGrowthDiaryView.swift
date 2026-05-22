@@ -41,8 +41,11 @@ struct SpeechGrowthDiaryView: View {
     @State private var pendingSound: String = ""
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
+
+    @State private var contentAppeared = false
 
     private static let logger = Logger(
         subsystem: "ru.happyspeech", category: "Diary.View"
@@ -68,6 +71,11 @@ struct SpeechGrowthDiaryView: View {
             .navigationBarTitleDisplayMode(.large)
             .toolbar { toolbarContent }
             .task { await bootstrap() }
+            .onAppear {
+                withAnimation(reduceMotion ? .none : MotionTokens.settleSpring) {
+                    contentAppeared = true
+                }
+            }
             .sheet(isPresented: $holder.pickerSheetActive) {
                 VideoPickerSheet(onPick: { url in
                     holder.pickerSheetActive = false
@@ -85,18 +93,32 @@ struct SpeechGrowthDiaryView: View {
 
     private var optInSection: some View {
         VStack(spacing: SpacingTokens.sp4) {
-            Image(systemName: "lock.shield.fill")
-                .font(.system(size: 64))
-                .foregroundStyle(ColorTokens.Brand.lilac)
-            Text("diary.optIn.title")
-                .font(TypographyTokens.title(22))
-                .foregroundStyle(ColorTokens.Parent.ink)
-                .multilineTextAlignment(.center)
-            Text("diary.optIn.body")
-                .font(TypographyTokens.body(15))
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
+            LyalyaMascotView(state: .explaining, size: 100)
+                .accessibilityHidden(true)
+            HSCard(style: .elevated) {
+                VStack(spacing: SpacingTokens.sp3) {
+                    HStack(spacing: SpacingTokens.sp2) {
+                        Image(systemName: "lock.shield.fill")
+                            .font(.system(size: 36))
+                            .foregroundStyle(ColorTokens.Brand.lilac)
+                            .symbolRenderingMode(.hierarchical)
+                            .accessibilityHidden(true)
+                        Text("diary.optIn.title")
+                            .font(TypographyTokens.title(20))
+                            .foregroundStyle(ColorTokens.Parent.ink)
+                            .multilineTextAlignment(.leading)
+                            .lineLimit(3)
+                            .minimumScaleFactor(0.85)
+                    }
+                    Text("diary.optIn.body")
+                        .font(TypographyTokens.body(15))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
             Button {
                 holder.optInAccepted = true
             } label: {
@@ -104,7 +126,7 @@ struct SpeechGrowthDiaryView: View {
                     .font(TypographyTokens.headline(17))
                     .frame(maxWidth: .infinity, minHeight: 56)
                     .background(
-                        RoundedRectangle(cornerRadius: RadiusTokens.card)
+                        RoundedRectangle(cornerRadius: RadiusTokens.button)
                             .fill(ColorTokens.Brand.primary)
                     )
                     .foregroundStyle(ColorTokens.Overlay.onAccent)
@@ -112,24 +134,22 @@ struct SpeechGrowthDiaryView: View {
             .buttonStyle(.plain)
         }
         .padding(SpacingTokens.screenEdge)
+        .opacity(contentAppeared ? 1 : 0)
+        .animation(reduceMotion ? .none : MotionTokens.settleSpring, value: contentAppeared)
     }
 
     // MARK: - Empty state
 
     private var emptyStateSection: some View {
         VStack(spacing: SpacingTokens.sp4) {
-            Image(systemName: "film.stack")
-                .font(.system(size: 64))
-                .foregroundStyle(ColorTokens.Parent.inkSoft)
-            Text("diary.empty.title")
-                .font(TypographyTokens.title(20))
-                .foregroundStyle(ColorTokens.Parent.ink)
-            Text("diary.empty.body")
-                .font(TypographyTokens.body(15))
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-            recordButton
+            HSEmptyStateView(
+                icon: "film.stack",
+                title: String(localized: "diary.empty.title"),
+                message: String(localized: "diary.empty.body"),
+                action: { holder.pickerSheetActive = true },
+                actionTitle: String(localized: "diary.button.record")
+            )
+            .padding(.top, SpacingTokens.sp4)
         }
         .padding(SpacingTokens.screenEdge)
     }
@@ -153,68 +173,64 @@ struct SpeechGrowthDiaryView: View {
     }
 
     private func clipRow(_ row: SpeechGrowthDiaryModels.List.ClipRow) -> some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-            HStack(spacing: SpacingTokens.sp2) {
-                Image(systemName: "video.fill")
-                    .foregroundStyle(ColorTokens.Brand.lilac)
-                Text(row.recordedAtLabel)
-                    .font(TypographyTokens.headline(15))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                Spacer()
-                Text(row.durationLabel)
-                    .font(TypographyTokens.caption(12).monospacedDigit())
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-            }
-            HStack(spacing: SpacingTokens.sp2) {
-                if !row.topicTag.isEmpty {
-                    tagPill(row.topicTag)
+        HSCard(style: .elevated) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+                HStack(spacing: SpacingTokens.sp2) {
+                    Image(systemName: "video.fill")
+                        .foregroundStyle(ColorTokens.Brand.lilac)
+                        .symbolRenderingMode(.hierarchical)
+                    Text(row.recordedAtLabel)
+                        .font(TypographyTokens.headline(15))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                    Spacer()
+                    Text(row.durationLabel)
+                        .font(TypographyTokens.caption(12).monospacedDigit())
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
                 }
-                if !row.targetSound.isEmpty {
-                    tagPill("/\(row.targetSound)/")
+                HStack(spacing: SpacingTokens.sp2) {
+                    if !row.topicTag.isEmpty {
+                        tagPill(row.topicTag)
+                    }
+                    if !row.targetSound.isEmpty {
+                        tagPill("/\(row.targetSound)/")
+                    }
+                    if row.isShared {
+                        tagPill(row.isShareExpired ? "Истёк" : "Расшарено",
+                                tint: row.isShareExpired
+                                      ? ColorTokens.Semantic.warning
+                                      : ColorTokens.Semantic.success)
+                    }
+                    Spacer()
                 }
-                if row.isShared {
-                    tagPill(row.isShareExpired ? "Истёк" : "Расшарено",
-                            tint: row.isShareExpired
-                                  ? ColorTokens.Semantic.warning
-                                  : ColorTokens.Semantic.success)
+                if !row.note.isEmpty {
+                    Text(row.note)
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(3)
                 }
-                Spacer()
-            }
-            if !row.note.isEmpty {
-                Text(row.note)
-                    .font(TypographyTokens.body(13))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(3)
-            }
-            HStack(spacing: SpacingTokens.sp2) {
-                Button {
-                    Task { await issueShare(for: row.id) }
-                } label: {
-                    Label("diary.button.share", systemImage: "square.and.arrow.up")
-                        .font(TypographyTokens.caption(13))
-                        .foregroundStyle(ColorTokens.Brand.primary)
+                HStack(spacing: SpacingTokens.sp2) {
+                    Button {
+                        Task { await issueShare(for: row.id) }
+                    } label: {
+                        Label("diary.button.share", systemImage: "square.and.arrow.up")
+                            .font(TypographyTokens.caption(13))
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                            .frame(minHeight: 44)
+                    }
+                    .buttonStyle(.plain)
+                    Button {
+                        Task { await interactor?.deleteClip(id: row.id) }
+                    } label: {
+                        Label("diary.button.delete", systemImage: "trash")
+                            .font(TypographyTokens.caption(13))
+                            .foregroundStyle(ColorTokens.Semantic.error)
+                            .frame(minHeight: 44)
+                    }
+                    .buttonStyle(.plain)
+                    Spacer()
                 }
-                .buttonStyle(.plain)
-                Button {
-                    Task { await interactor?.deleteClip(id: row.id) }
-                } label: {
-                    Label("diary.button.delete", systemImage: "trash")
-                        .font(TypographyTokens.caption(13))
-                        .foregroundStyle(ColorTokens.Semantic.error)
-                }
-                .buttonStyle(.plain)
-                Spacer()
             }
         }
-        .padding(SpacingTokens.sp3)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Parent.surface)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .strokeBorder(ColorTokens.Parent.line, lineWidth: 1)
-        )
         .accessibilityElement(children: .combine)
     }
 

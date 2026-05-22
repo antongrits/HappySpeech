@@ -55,11 +55,14 @@ struct LogorhythmicsView: View {
     @State private var router: LogorhythmicsRouter?
     @State private var didBootstrap = false
     @State private var ringPulse: Bool = false
+    @State private var mascotState: LyalyaState = .thinking
+    @State private var showConfetti: Bool = false
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
+    @Environment(\.hapticService) private var hapticService
 
     private static let logger = Logger(
         subsystem: "ru.happyspeech", category: "Logorhythmics.View"
@@ -75,13 +78,40 @@ struct LogorhythmicsView: View {
                 case .playing:  playingSection
                 case .result:   resultSection
                 }
+
+                HSConfettiView(preset: .streak, isActive: $showConfetti)
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
             }
+            .animation(reduceMotion ? .none : MotionTokens.spring, value: holder.phase)
             .navigationTitle(Text("Логоритмика"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .task { await bootstrap() }
             .onDisappear {
                 interactor?.stopPlayback()
+            }
+            .onChange(of: holder.phase) { _, phase in
+                switch phase {
+                case .ready:
+                    mascotState = .explaining
+                case .playing:
+                    mascotState = .singing
+                case .result:
+                    let stars = holder.finishVM?.stars ?? 0
+                    mascotState = stars > 1 ? .celebrating : .encouraging
+                    if stars > 0 {
+                        hapticService.notification(.success)
+                        showConfetti = true
+                        Task {
+                            try? await Task.sleep(nanoseconds: 2_200_000_000)
+                            showConfetti = false
+                        }
+                    }
+                default:
+                    mascotState = .thinking
+                }
             }
         }
         .environment(\.circuitContext, .kid)
@@ -201,35 +231,41 @@ struct LogorhythmicsView: View {
     }
 
     private func exerciseHeader(_ vm: LogorhythmicsModels.SelectExercise.ViewModel) -> some View {
-        VStack(spacing: SpacingTokens.sp1) {
-            Image(systemName: iconForCategory(vm.exercise.category))
-                .font(.system(size: 56))
-                .foregroundStyle(ColorTokens.Brand.butter)
+        HStack(spacing: SpacingTokens.sp3) {
+            LyalyaMascotView(state: mascotState, size: 80)
+                .animation(reduceMotion ? .none : MotionTokens.spring, value: mascotState)
                 .accessibilityHidden(true)
-            Text(vm.exercise.title)
-                .font(TypographyTokens.title(26))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-            Text("\(vm.exercise.bpm) уд/мин · \(vm.totalBeats) долей")
-                .font(TypographyTokens.caption(12).monospacedDigit())
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
+            VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+                HStack(spacing: SpacingTokens.sp2) {
+                    Image(systemName: iconForCategory(vm.exercise.category))
+                        .font(.system(size: 28))
+                        .foregroundStyle(ColorTokens.Brand.butter)
+                        .symbolRenderingMode(.hierarchical)
+                        .accessibilityHidden(true)
+                    Text(vm.exercise.title)
+                        .font(TypographyTokens.title(22))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.8)
+                }
+                Text("\(vm.exercise.bpm) уд/мин · \(vm.totalBeats) долей")
+                    .font(TypographyTokens.caption(12).monospacedDigit())
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+            }
+            Spacer(minLength: 0)
         }
-        .frame(maxWidth: .infinity)
     }
 
     private func rhymeCard(_ text: String) -> some View {
-        Text(text)
-            .font(TypographyTokens.headline(18))
-            .foregroundStyle(ColorTokens.Kid.ink)
-            .multilineTextAlignment(.center)
-            .lineLimit(nil)
-            .minimumScaleFactor(0.85)
-            .padding(SpacingTokens.sp3)
-            .frame(maxWidth: .infinity)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .fill(ColorTokens.Kid.surface)
-            )
+        HSCard(style: .tinted(ColorTokens.Brand.butter.opacity(0.10))) {
+            Text(text)
+                .font(TypographyTokens.headline(18))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+                .lineLimit(nil)
+                .minimumScaleFactor(0.85)
+                .frame(maxWidth: .infinity)
+        }
     }
 
     private func hintCard(_ hint: String) -> some View {
@@ -273,9 +309,16 @@ struct LogorhythmicsView: View {
     private var playingSection: some View {
         VStack(spacing: SpacingTokens.sp4) {
             if let vm = holder.selectVM {
-                Text(vm.exercise.title)
-                    .font(TypographyTokens.title(22))
-                    .foregroundStyle(ColorTokens.Kid.ink)
+                HStack(spacing: SpacingTokens.sp3) {
+                    LyalyaMascotView(state: .singing, size: 72)
+                        .accessibilityHidden(true)
+                    Text(vm.exercise.title)
+                        .font(TypographyTokens.title(22))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.8)
+                    Spacer(minLength: 0)
+                }
                 rhymeCard(vm.exercise.rhymeText)
                 beatRing(vm: holder.beatVM, totalBeats: vm.totalBeats)
                 Spacer(minLength: 0)
@@ -370,33 +413,70 @@ struct LogorhythmicsView: View {
     }
 
     private func resultHeader(_ vm: LogorhythmicsModels.FinishExercise.ViewModel) -> some View {
-        VStack(spacing: SpacingTokens.sp1) {
-            Image(systemName: iconForCategory(vm.exercise.category))
-                .font(.system(size: 56))
-                .foregroundStyle(ColorTokens.Brand.butter)
-                .accessibilityHidden(true)
-            Text(vm.exercise.title)
-                .font(TypographyTokens.title(22))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-            Text("Темп \(vm.exercise.bpm) уд/мин")
-                .font(TypographyTokens.caption(12).monospacedDigit())
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
+        VStack(spacing: SpacingTokens.sp3) {
+            ZStack {
+                LyalyaMascotView(state: mascotState, size: 110)
+                    .animation(reduceMotion ? .none : MotionTokens.spring, value: mascotState)
+                    .accessibilityHidden(true)
+                HSRewardBurst(isShowing: holder.phase == .result, color: ColorTokens.Brand.butter)
+                    .frame(width: 160, height: 160)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
+            }
+            HSCard(style: .tinted(ColorTokens.Brand.butter.opacity(0.10))) {
+                VStack(spacing: SpacingTokens.sp1) {
+                    HStack(spacing: SpacingTokens.sp2) {
+                        Image(systemName: iconForCategory(vm.exercise.category))
+                            .font(.system(size: 28))
+                            .foregroundStyle(ColorTokens.Brand.butter)
+                            .symbolRenderingMode(.hierarchical)
+                            .accessibilityHidden(true)
+                        Text(vm.exercise.title)
+                            .font(TypographyTokens.title(20))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.8)
+                    }
+                    Text("Темп \(vm.exercise.bpm) уд/мин")
+                        .font(TypographyTokens.caption(12).monospacedDigit())
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                }
+                .frame(maxWidth: .infinity)
+            }
         }
-        .frame(maxWidth: .infinity)
     }
 
+    @State private var logoStarsRevealed: [Bool] = [false, false, false]
+
     private func resultStars(_ vm: LogorhythmicsModels.FinishExercise.ViewModel) -> some View {
-        HStack(spacing: SpacingTokens.sp1) {
+        HStack(spacing: SpacingTokens.sp2) {
             ForEach(0..<3, id: \.self) { index in
                 Image(systemName: index < vm.stars ? "star.fill" : "star")
-                    .font(.system(size: 36))
+                    .font(.system(size: 40))
                     .foregroundStyle(index < vm.stars
                                      ? ColorTokens.Brand.gold
                                      : ColorTokens.Kid.inkSoft)
+                    .scaleEffect(logoStarsRevealed[index] ? 1.0 : 0.3)
+                    .opacity(logoStarsRevealed[index] ? 1.0 : 0.0)
+                    .animation(
+                        reduceMotion ? .none : MotionTokens.rewardPop.delay(Double(index) * 0.14),
+                        value: logoStarsRevealed[index]
+                    )
             }
         }
         .frame(maxWidth: .infinity)
+        .onAppear {
+            if reduceMotion {
+                logoStarsRevealed = [true, true, true]
+            } else {
+                for idx in 0..<3 {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + Double(idx) * 0.16) {
+                        logoStarsRevealed[idx] = true
+                    }
+                }
+            }
+        }
         .accessibilityLabel(Text("\(vm.stars) из 3 звёзд"))
     }
 

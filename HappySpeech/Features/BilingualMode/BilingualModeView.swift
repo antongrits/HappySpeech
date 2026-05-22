@@ -43,8 +43,10 @@ struct BilingualModeView: View {
 
     @State private var didBootstrap = false
     @State private var showPractice = false
+    @State private var contentAppeared = false
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppCoordinator.self) private var coordinator
 
     private static let logger = Logger(
@@ -95,85 +97,72 @@ struct BilingualModeView: View {
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.top, SpacingTokens.sp3)
             .padding(.bottom, SpacingTokens.sp10)
+            .opacity(contentAppeared ? 1 : 0)
+            .offset(y: contentAppeared ? 0 : 16)
+            .animation(reduceMotion ? .none : MotionTokens.settleSpring, value: contentAppeared)
+        }
+        .onAppear {
+            withAnimation(reduceMotion ? .none : MotionTokens.settleSpring) {
+                contentAppeared = true
+            }
         }
     }
 
     // MARK: - Intro
 
     private var introCard: some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
-            HStack(spacing: SpacingTokens.sp2) {
-                Image(systemName: "character.bubble.fill")
-                    .font(.system(size: 32))
-                    .foregroundStyle(ColorTokens.Brand.lilac)
+        HSLiquidGlassCard(style: .tinted(ColorTokens.Brand.lilac)) {
+            HStack(spacing: SpacingTokens.sp3) {
+                LyalyaMascotView(state: .waving, size: 80)
                     .accessibilityHidden(true)
-                Text("Два языка — два богатства")
-                    .font(TypographyTokens.headline(18))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
+                VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+                    Text("Два языка — два богатства")
+                        .font(TypographyTokens.headline(18))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Text("Учимся называть одни и те же предметы и на русском, и на втором языке.")
+                        .font(TypographyTokens.body(14))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: 0)
             }
-            Text("Учимся называть одни и те же предметы и на русском, и на втором языке.")
-                .font(TypographyTokens.body(14))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(SpacingTokens.sp3)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Brand.lilac.opacity(0.12))
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .strokeBorder(ColorTokens.Brand.lilac.opacity(0.3), lineWidth: 1)
-        )
     }
 
     // MARK: - Picker
 
     private var languagePickerCard: some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-            Text("Выбери второй язык")
-                .font(TypographyTokens.headline(16))
-                .foregroundStyle(ColorTokens.Kid.ink)
-            Picker("Второй язык", selection: languageBinding) {
-                ForEach(BilingualSecondLanguage.allCases, id: \.self) { lang in
-                    Text(lang.displayName).tag(lang)
+        HSCard(style: .elevated) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+                Text("Выбери второй язык")
+                    .font(TypographyTokens.headline(16))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                Picker("Второй язык", selection: languageBinding) {
+                    ForEach(BilingualSecondLanguage.allCases, id: \.self) { lang in
+                        Text(lang.displayName).tag(lang)
+                    }
                 }
+                .pickerStyle(.segmented)
+                .accessibilityLabel(Text("Выбор второго языка"))
+                .accessibilityValue(Text(currentLanguage?.displayName ?? ""))
             }
-            .pickerStyle(.segmented)
-            .accessibilityLabel(Text("Выбор второго языка"))
-            .accessibilityValue(Text(currentLanguage?.displayName ?? ""))
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(SpacingTokens.sp3)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Kid.surface)
-        )
     }
 
     // MARK: - Off-state hint
 
     private var offHintCard: some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
-            Text("Режим выключен")
-                .font(TypographyTokens.headline(15))
-                .foregroundStyle(ColorTokens.Kid.ink)
-            Text("Включи второй язык, чтобы увидеть словарик и поиграть в перевод.")
-                .font(TypographyTokens.body(14))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-        }
-        .padding(SpacingTokens.sp3)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Kid.surfaceAlt)
+        HSEmptyStateView(
+            mascot: .thinking,
+            title: "Режим выключен",
+            subtitle: "Включи второй язык выше, чтобы увидеть словарик и поиграть в перевод."
         )
+        .padding(.top, SpacingTokens.sp4)
     }
 
     // MARK: - Practice CTA

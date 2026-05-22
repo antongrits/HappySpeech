@@ -70,10 +70,20 @@ struct CapReachedView: View {
         )
     }
 
+    @State private var mascotAppeared = false
+
     private var mascotSection: some View {
         HSMascotView(mood: .waving, size: 180)
             .accessibilityHidden(true)
             .padding(.top, SpacingTokens.sp4)
+            .scaleEffect(mascotAppeared ? 1.0 : 0.7)
+            .opacity(mascotAppeared ? 1.0 : 0.0)
+            .animation(reduceMotion ? .none : MotionTokens.rewardPop, value: mascotAppeared)
+            .onAppear {
+                withAnimation(reduceMotion ? .none : MotionTokens.rewardPop) {
+                    mascotAppeared = true
+                }
+            }
     }
 
     private var titleSection: some View {

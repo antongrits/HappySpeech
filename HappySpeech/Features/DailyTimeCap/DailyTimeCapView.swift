@@ -25,8 +25,10 @@ struct DailyTimeCapView: View {
     @State private var didBootstrap = false
     @State private var localEnabled: Bool = false
     @State private var localCap: Int = 30
+    @State private var contentAppeared: Bool = false
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
 
@@ -67,6 +69,14 @@ struct DailyTimeCapView: View {
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.top, SpacingTokens.sp3)
             .padding(.bottom, SpacingTokens.sp10)
+            .opacity(contentAppeared ? 1 : 0)
+            .offset(y: contentAppeared ? 0 : 12)
+            .animation(reduceMotion ? .none : MotionTokens.settleSpring, value: contentAppeared)
+        }
+        .onAppear {
+            withAnimation(reduceMotion ? .none : MotionTokens.settleSpring) {
+                contentAppeared = true
+            }
         }
     }
 
