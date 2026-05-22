@@ -12,9 +12,13 @@ public protocol ReadAloudStoryWorkerProtocol: AnyObject {
     /// Выбирает случайную историю, исключая `excludeStoryId`.
     func pickStory(excluding excludeStoryId: String?) -> ReadAloudStory?
 
-    /// Озвучивает одно предложение голосом ru-RU `Milena`.
+    /// Озвучивает одно предложение голосом Ляли (pre-recorded m4a).
+    /// - Parameters:
+    ///   - text: текст предложения (для логов).
+    ///   - storyId: идентификатор истории для поиска аудио-файла.
+    ///   - sentenceIndex: индекс предложения (1-based в имени файла).
     /// Возвращает после того, как чтение завершено или прервано.
-    func speakSentence(_ text: String) async
+    func speakSentence(_ text: String, storyId: String, sentenceIndex: Int) async
 
     /// Прерывает текущее воспроизведение, если оно активно.
     func stopSpeaking()
@@ -22,25 +26,21 @@ public protocol ReadAloudStoryWorkerProtocol: AnyObject {
 
 // MARK: - ReadAloudStoryWorker (Clean Swift: Worker)
 //
-// AVSpeechSynthesizer обёртка с ru-RU голосом. Воспроизводит одно
-// предложение за раз — каллер (Interactor) управляет последовательностью.
-// Скорость чуть ниже стандартной (×0.9) — read-aloud для детей 5–8.
+// ADR-V31-AVSpeechSynthesizer-FALLBACK: Siri TTS удалён.
+// Каждое предложение озвучивается pre-recorded файлом Ляли (edge-tts SvetlanaNeural,
+// rate 90%, хранится в Audio/Lyalya/readaloud/lyalya_ra_{story_slug}_{N}.m4a).
+// При отсутствии файла — silent skip (предложение подсвечено на экране).
 
 @MainActor
-final class ReadAloudStoryWorker: NSObject, ReadAloudStoryWorkerProtocol {
+final class ReadAloudStoryWorker: ReadAloudStoryWorkerProtocol {
 
-    private let synthesizer = AVSpeechSynthesizer()
+    private var player: AVAudioPlayer?
     private var continuation: CheckedContinuation<Void, Never>?
 
     private static let logger = Logger(
         subsystem: "ru.happyspeech",
         category: "ReadAloudStory.Worker"
     )
-
-    override init() {
-        super.init()
-        synthesizer.delegate = self
-    }
 
     // MARK: - Corpus
 
@@ -66,66 +66,72 @@ final class ReadAloudStoryWorker: NSObject, ReadAloudStoryWorkerProtocol {
 
     // MARK: - Speaking
 
-    func speakSentence(_ text: String) async {
+    func speakSentence(_ text: String, storyId: String, sentenceIndex: Int) async {
         guard !text.isEmpty else { return }
         ensureSpokenAudioSession()
 
-        let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = Self.preferredRussianVoice()
-        utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 0.9
-        utterance.pitchMultiplier = 1.05
-        utterance.volume = 1.0
-        utterance.preUtteranceDelay = 0.2
-        utterance.postUtteranceDelay = 0.4
+        let slug = storyId.replacingOccurrences(of: "-", with: "_")
+        let audioName = "lyalya_ra_\(slug)_\(sentenceIndex)"
+
+        guard let url = Bundle.main.url(
+            forResource: audioName,
+            withExtension: "m4a",
+            subdirectory: "Audio/Lyalya/readaloud"
+        ) else {
+            Self.logger.warning(
+                "ReadAloudStoryWorker: no Lyalya audio '\(audioName, privacy: .public)' — silent skip"
+            )
+            #if DEBUG
+            assertionFailure("ReadAloudStoryWorker: missing audio '\(audioName)'")
+            #endif
+            return
+        }
 
         await withCheckedContinuation { (cont: CheckedContinuation<Void, Never>) in
-            continuation = cont
-            synthesizer.speak(utterance)
+            do {
+                player?.stop()
+                continuation?.resume()
+                continuation = cont
+                let newPlayer = try AVAudioPlayer(contentsOf: url)
+                newPlayer.delegate = self
+                newPlayer.prepareToPlay()
+                player = newPlayer
+                newPlayer.play()
+                Self.logger.debug("ReadAloud: playing '\(audioName, privacy: .public)'")
+            } catch {
+                Self.logger.warning(
+                    "ReadAloudStoryWorker: AVAudioPlayer failed: \(error.localizedDescription, privacy: .public)"
+                )
+                continuation = nil
+                cont.resume()
+            }
         }
     }
 
     func stopSpeaking() {
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
-        }
+        player?.stop()
+        player = nil
         continuation?.resume()
         continuation = nil
     }
-
-    // MARK: - Voice selection
-
-    private static func preferredRussianVoice() -> AVSpeechSynthesisVoice? {
-        let voices = AVSpeechSynthesisVoice.speechVoices()
-        let russian = voices.filter { $0.language == "ru-RU" }
-        if let milena = russian.first(where: { $0.name.lowercased().contains("milena") }) {
-            return milena
-        }
-        if let yuri = russian.first(where: { $0.name.lowercased().contains("yuri") }) {
-            return yuri
-        }
-        return russian.first ?? AVSpeechSynthesisVoice(language: "ru-RU")
-    }
 }
 
-// MARK: - AVSpeechSynthesizerDelegate
+// MARK: - AVAudioPlayerDelegate
 
-extension ReadAloudStoryWorker: AVSpeechSynthesizerDelegate {
+extension ReadAloudStoryWorker: AVAudioPlayerDelegate {
 
-    nonisolated func speechSynthesizer(
-        _ synthesizer: AVSpeechSynthesizer,
-        didFinish utterance: AVSpeechUtterance
-    ) {
+    nonisolated func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         Task { @MainActor [weak self] in
             self?.continuation?.resume()
             self?.continuation = nil
         }
     }
 
-    nonisolated func speechSynthesizer(
-        _ synthesizer: AVSpeechSynthesizer,
-        didCancel utterance: AVSpeechUtterance
-    ) {
+    nonisolated func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
         Task { @MainActor [weak self] in
+            Self.logger.error(
+                "ReadAloudStoryWorker: decode error: \(error?.localizedDescription ?? "unknown", privacy: .public)"
+            )
             self?.continuation?.resume()
             self?.continuation = nil
         }

@@ -16,9 +16,9 @@ import Foundation
 //
 // Контент:
 //  • Bundled JSON `pack_readaloud_stories.json` — 20 историй × 3 вопроса.
-//  • TTS: AVSpeechSynthesizer ru-RU «Milena» (см. BedtimeModeWorker, тот же
-//    pattern), с подсветкой текущего предложения через
-//    `speechSynthesizer(_:willSpeakRangeOfSpeechString:utterance:)`.
+//  • Озвучка: голос Ляли (pre-recorded m4a, edge-tts SvetlanaNeural, rate 90%),
+//    хранится в Audio/Lyalya/readaloud/. Подсветка предложения управляется
+//    индексом в ReadAloudStoryInteractor (не через AVSpeech-callback).
 //
 // COPPA: контент полностью offline, никаких сетевых вызовов.
 

@@ -108,8 +108,10 @@ final class ReadAloudStoryInteractor:
             progressLabel: progressLabel(current: indexToHighlight + 1, total: total),
             progressFraction: progress
         ))
+        // sentenceIndex — 1-based, совпадает с именем файла lyalya_ra_{slug}_{N}.m4a
+        let sentenceIndex = currentSentenceIndex + 1
         currentSentenceIndex += 1
-        await worker.speakSentence(sentence)
+        await worker.speakSentence(sentence, storyId: story.id, sentenceIndex: sentenceIndex)
     }
 
     // MARK: - SkipToQuiz
