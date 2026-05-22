@@ -49,8 +49,14 @@ struct OralStoryCreatorView: View {
     @State private var recordCountdown: Int = 60
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
+    @Environment(\.hapticService) private var hapticService
+
+    @State private var mascotState: LyalyaState = .thinking
+    @State private var showConfetti: Bool = false
+    @State private var contentAppeared: Bool = false
 
     private static let logger = Logger(
         subsystem: "ru.happyspeech", category: "OralStoryCreator.View"
@@ -60,16 +66,47 @@ struct OralStoryCreatorView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                switch holder.phase {
-                case .selecting:   selectingSection
-                case .recording:   recordingSection
-                case .result:      resultSection
+                Group {
+                    switch holder.phase {
+                    case .selecting:   selectingSection
+                    case .recording:   recordingSection
+                    case .result:      resultSection
+                    }
                 }
+                .opacity(contentAppeared ? 1 : 0)
+                .animation(reduceMotion ? .none : MotionTokens.settleSpring, value: contentAppeared)
+
+                HSConfettiView(preset: .celebration, isActive: $showConfetti)
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
             }
+            .animation(reduceMotion ? .none : MotionTokens.spring, value: holder.phase)
             .navigationTitle(Text("storyCreator.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .task { await bootstrap() }
+            .onAppear {
+                withAnimation(reduceMotion ? .none : MotionTokens.settleSpring) {
+                    contentAppeared = true
+                }
+            }
+            .onChange(of: holder.phase) { _, phase in
+                switch phase {
+                case .recording:
+                    mascotState = .singing
+                case .result:
+                    mascotState = .celebrating
+                    hapticService.notification(.success)
+                    showConfetti = true
+                    Task {
+                        try? await Task.sleep(nanoseconds: 2_500_000_000)
+                        showConfetti = false
+                    }
+                default:
+                    mascotState = .thinking
+                }
+            }
         }
         .environment(\.circuitContext, .kid)
     }
@@ -78,6 +115,28 @@ struct OralStoryCreatorView: View {
 
     private var selectingSection: some View {
         VStack(spacing: SpacingTokens.sp3) {
+            // Маскот + заголовок
+            HStack(spacing: SpacingTokens.sp3) {
+                LyalyaMascotView(state: mascotState, size: 72)
+                    .animation(reduceMotion ? .none : MotionTokens.spring, value: mascotState)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("storyCreator.pick.heading")
+                        .font(TypographyTokens.title(20))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.8)
+                    Text("storyCreator.pick.sub")
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: 0)
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.top, SpacingTokens.sp2)
+
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: SpacingTokens.sp4) {
                     if let load = holder.loadVM {
@@ -86,7 +145,12 @@ struct OralStoryCreatorView: View {
                                             items: load.grouped[category] ?? [])
                         }
                     } else {
-                        ProgressView().padding()
+                        HSEmptyStateView(
+                            mascot: .thinking,
+                            title: String(localized: "storyCreator.loading"),
+                            subtitle: String(localized: "storyCreator.loading.subtitle")
+                        )
+                        .padding(.top, SpacingTokens.sp8)
                     }
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
@@ -181,23 +245,36 @@ struct OralStoryCreatorView: View {
 
     private var recordingSection: some View {
         VStack(spacing: SpacingTokens.sp4) {
-            Image(systemName: "mic.fill")
-                .font(.system(size: 72))
-                .foregroundStyle(ColorTokens.Semantic.error)
-            Text("storyCreator.recording.title")
-                .font(TypographyTokens.title(22))
-                .foregroundStyle(ColorTokens.Kid.ink)
-            Text("\(recordCountdown)")
-                .font(TypographyTokens.title(36).monospacedDigit())
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
+            LyalyaMascotView(state: .singing, size: 130)
+                .accessibilityHidden(true)
+            HSCard(style: .tinted(ColorTokens.Semantic.error.opacity(0.08))) {
+                VStack(spacing: SpacingTokens.sp3) {
+                    HStack(spacing: SpacingTokens.sp2) {
+                        Image(systemName: "mic.fill")
+                            .font(.system(size: 32))
+                            .foregroundStyle(ColorTokens.Semantic.error)
+                            .symbolEffect(reduceMotion ? .pulse.byLayer : .pulse,
+                                          options: .repeating)
+                        Text("storyCreator.recording.title")
+                            .font(TypographyTokens.title(22))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                    }
+                    Text("\(recordCountdown)")
+                        .font(TypographyTokens.title(44).monospacedDigit())
+                        .foregroundStyle(ColorTokens.Semantic.error)
+                        .contentTransition(.numericText())
+                        .accessibilityLabel(Text("storyCreator.countdown.a11y \(recordCountdown)"))
+                }
+                .frame(maxWidth: .infinity)
+            }
             Button {
                 Task { await stopRecording() }
             } label: {
-                Text("storyCreator.button.stop")
+                Label("storyCreator.button.stop", systemImage: "stop.circle.fill")
                     .font(TypographyTokens.headline(18))
                     .frame(maxWidth: .infinity, minHeight: 64)
                     .background(
-                        RoundedRectangle(cornerRadius: RadiusTokens.card)
+                        RoundedRectangle(cornerRadius: RadiusTokens.button)
                             .fill(ColorTokens.Semantic.error)
                     )
                     .foregroundStyle(ColorTokens.Overlay.onAccent)
@@ -249,18 +326,31 @@ struct OralStoryCreatorView: View {
     }
 
     private func resultHeader(_ vm: OralStoryCreatorModels.RecordResult.ViewModel) -> some View {
-        VStack(spacing: SpacingTokens.sp1) {
-            Image(systemName: "checkmark.seal.fill")
-                .font(.system(size: 56))
-                .foregroundStyle(ColorTokens.Brand.mint)
-            Text("storyCreator.result.title")
-                .font(TypographyTokens.title(22))
-                .foregroundStyle(ColorTokens.Kid.ink)
-            Text(vm.durationLabel)
-                .font(TypographyTokens.caption(13).monospacedDigit())
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
+        ZStack {
+            VStack(spacing: SpacingTokens.sp3) {
+                LyalyaMascotView(state: .celebrating, size: 120)
+                    .accessibilityHidden(true)
+                HSRewardBurst(isShowing: true, color: ColorTokens.Brand.gold, particleCount: 24)
+                    .frame(width: 200, height: 100)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
+                HSCard(style: .tinted(ColorTokens.Brand.mint.opacity(0.1))) {
+                    VStack(spacing: SpacingTokens.sp1) {
+                        Image(systemName: "checkmark.seal.fill")
+                            .font(.system(size: 40))
+                            .foregroundStyle(ColorTokens.Brand.mint)
+                            .symbolRenderingMode(.hierarchical)
+                        Text("storyCreator.result.title")
+                            .font(TypographyTokens.title(22))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                        Text(vm.durationLabel)
+                            .font(TypographyTokens.caption(13).monospacedDigit())
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+            }
         }
-        .frame(maxWidth: .infinity)
     }
 
     private func transcriptCard(_ vm: OralStoryCreatorModels.RecordResult.ViewModel) -> some View {

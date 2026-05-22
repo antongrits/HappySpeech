@@ -58,25 +58,64 @@ struct FingerPlayView: View {
         subsystem: "ru.happyspeech", category: "FingerPlay.View"
     )
 
+    @State private var mascotState: LyalyaState = .thinking
+    @State private var showConfetti: Bool = false
+    @State private var contentAppeared: Bool = false
+    @State private var lastMatchState: Bool = false
+
+    @Environment(\.hapticService) private var hapticService
+
     var body: some View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
                 if permissionDenied {
                     deniedSection
+                        .transition(.opacity)
                 } else if holder.isFinished {
                     summarySection
+                        .transition(.opacity.combined(with: .scale(scale: 0.95)))
                 } else if let vm = holder.startVM {
                     gameSection(vm)
+                        .transition(.opacity)
                 } else {
                     loadingSection
+                        .transition(.opacity)
                 }
+
+                // Конфетти при финале
+                HSConfettiView(preset: .celebration, isActive: $showConfetti)
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
             }
+            .animation(reduceMotion ? .none : MotionTokens.spring, value: holder.isFinished)
+            .animation(reduceMotion ? .none : MotionTokens.spring, value: permissionDenied)
             .navigationTitle(Text("fingerPlay.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .task { await bootstrap() }
             .onDisappear { cameraSession?.stop() }
+            .onChange(of: holder.liveVM?.matchesTarget) { _, matches in
+                guard let matches else { return }
+                if matches && !lastMatchState {
+                    mascotState = .celebrating
+                    hapticService.notification(.success)
+                } else if !matches {
+                    mascotState = .pointing
+                }
+                lastMatchState = matches
+            }
+            .onChange(of: holder.isFinished) { _, finished in
+                if finished {
+                    mascotState = .waving
+                    showConfetti = true
+                    Task {
+                        try? await Task.sleep(nanoseconds: 2_500_000_000)
+                        showConfetti = false
+                    }
+                }
+            }
         }
         .environment(\.circuitContext, .kid)
     }
@@ -109,7 +148,7 @@ struct FingerPlayView: View {
         VStack(spacing: SpacingTokens.sp4) {
             headerBlock(vm)
             cameraPreview
-            targetGestureBlock(vm)
+            targetGestureCard(vm)
             feedbackBlock
             skipButton
         }
@@ -118,18 +157,23 @@ struct FingerPlayView: View {
     }
 
     private func headerBlock(_ vm: FingerPlayModels.Start.ViewModel) -> some View {
-        VStack(spacing: SpacingTokens.sp1) {
-            Text(vm.exerciseTitle)
-                .font(TypographyTokens.title(24))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .lineLimit(2)
-                .minimumScaleFactor(0.7)
-            Text(vm.stageDescription)
-                .font(TypographyTokens.body(15))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(3)
-                .minimumScaleFactor(0.85)
+        HStack(alignment: .center, spacing: SpacingTokens.sp3) {
+            LyalyaMascotView(state: mascotState, size: 72)
+                .animation(reduceMotion ? .none : MotionTokens.spring, value: mascotState)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+                Text(vm.exerciseTitle)
+                    .font(TypographyTokens.title(22))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.7)
+                Text(vm.stageDescription)
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .lineLimit(3)
+                    .minimumScaleFactor(0.85)
+            }
+            Spacer(minLength: 0)
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(vm.accessibilityLabel))
@@ -159,34 +203,45 @@ struct FingerPlayView: View {
         .accessibilityLabel(Text("fingerPlay.camera.a11y"))
     }
 
-    private func targetGestureBlock(_ vm: FingerPlayModels.Start.ViewModel) -> some View {
-        HStack(spacing: SpacingTokens.sp4) {
-            VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
-                Text("fingerPlay.target.label")
-                    .font(TypographyTokens.caption(13))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                Image(systemName: vm.targetGestureSymbol)
-                    .font(.system(size: 44))
-                    .foregroundStyle(ColorTokens.Brand.mint)
-            }
-            Spacer()
-            VStack(alignment: .trailing, spacing: SpacingTokens.sp1) {
-                Text("fingerPlay.you.label")
-                    .font(TypographyTokens.caption(13))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                Image(systemName: holder.liveVM?.detectedPoseSymbol ?? "hand.raised")
-                    .font(.system(size: 44))
+    private func targetGestureCard(_ vm: FingerPlayModels.Start.ViewModel) -> some View {
+        HSCard(style: .elevated) {
+            HStack(spacing: SpacingTokens.sp4) {
+                VStack(spacing: SpacingTokens.sp1) {
+                    Text("fingerPlay.target.label")
+                        .font(TypographyTokens.caption(13))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    Image(systemName: vm.targetGestureSymbol)
+                        .font(.system(size: 52))
+                        .foregroundStyle(ColorTokens.Brand.mint)
+                        .symbolRenderingMode(.hierarchical)
+                }
+                Spacer()
+                Image(systemName: holder.liveVM?.matchesTarget == true
+                      ? "arrow.left.arrow.right.circle.fill"
+                      : "arrow.left.arrow.right")
+                    .font(.title3)
                     .foregroundStyle(holder.liveVM?.matchesTarget == true
                                      ? ColorTokens.Semantic.success
-                                     : ColorTokens.Kid.inkMuted)
+                                     : ColorTokens.Kid.line)
+                    .animation(reduceMotion ? .none : MotionTokens.settleSpring,
+                               value: holder.liveVM?.matchesTarget)
+                Spacer()
+                VStack(spacing: SpacingTokens.sp1) {
+                    Text("fingerPlay.you.label")
+                        .font(TypographyTokens.caption(13))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    Image(systemName: holder.liveVM?.detectedPoseSymbol ?? "hand.raised")
+                        .font(.system(size: 52))
+                        .foregroundStyle(holder.liveVM?.matchesTarget == true
+                                         ? ColorTokens.Semantic.success
+                                         : ColorTokens.Kid.inkMuted)
+                        .animation(reduceMotion ? .none : MotionTokens.settleSpring,
+                                   value: holder.liveVM?.detectedPoseSymbol)
+                }
             }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, SpacingTokens.sp1)
         }
-        .padding(.horizontal, SpacingTokens.sp4)
-        .padding(.vertical, SpacingTokens.sp3)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Kid.surface)
-        )
         .accessibilityElement(children: .combine)
     }
 
@@ -230,13 +285,27 @@ struct FingerPlayView: View {
 
     private var summarySection: some View {
         VStack(spacing: SpacingTokens.sp4) {
-            Image(systemName: "checkmark.seal.fill")
-                .font(.system(size: 72))
-                .foregroundStyle(ColorTokens.Brand.mint)
-            Text(holder.summary ?? "")
-                .font(TypographyTokens.title(20))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
+            LyalyaMascotView(state: .celebrating, size: 140)
+                .accessibilityHidden(true)
+            HSRewardBurst(isShowing: holder.isFinished, color: ColorTokens.Brand.gold)
+                .frame(width: 200, height: 200)
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
+            HSCard(style: .tinted(ColorTokens.Brand.mint.opacity(0.12))) {
+                VStack(spacing: SpacingTokens.sp2) {
+                    Image(systemName: "checkmark.seal.fill")
+                        .font(.system(size: 48))
+                        .foregroundStyle(ColorTokens.Brand.mint)
+                        .symbolRenderingMode(.hierarchical)
+                    Text(holder.summary ?? "")
+                        .font(TypographyTokens.title(20))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                }
+                .frame(maxWidth: .infinity)
+            }
             Button {
                 dismiss()
             } label: {
@@ -244,31 +313,41 @@ struct FingerPlayView: View {
                     .font(TypographyTokens.headline(18))
                     .frame(maxWidth: .infinity, minHeight: 64)
                     .background(
-                        RoundedRectangle(cornerRadius: RadiusTokens.card)
+                        RoundedRectangle(cornerRadius: RadiusTokens.button)
                             .fill(ColorTokens.Brand.primary)
                     )
                     .foregroundStyle(ColorTokens.Overlay.onAccent)
             }
             .buttonStyle(.plain)
             .padding(.horizontal, SpacingTokens.screenEdge)
+            .accessibilityLabel(Text("fingerPlay.button.done"))
         }
         .padding(SpacingTokens.screenEdge)
     }
 
     private var deniedSection: some View {
         VStack(spacing: SpacingTokens.sp4) {
-            Image(systemName: "camera.fill")
-                .font(.system(size: 64))
-                .foregroundStyle(ColorTokens.Kid.inkSoft)
-            Text("fingerPlay.permission.title")
-                .font(TypographyTokens.title(22))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-            Text("fingerPlay.permission.body")
-                .font(TypographyTokens.body(15))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
+            LyalyaMascotView(state: .thinking, size: 100)
+                .accessibilityHidden(true)
+            HSCard(style: .flat) {
+                VStack(spacing: SpacingTokens.sp3) {
+                    Image(systemName: "camera.fill")
+                        .font(.system(size: 52))
+                        .foregroundStyle(ColorTokens.Kid.inkSoft)
+                        .symbolRenderingMode(.hierarchical)
+                    Text("fingerPlay.permission.title")
+                        .font(TypographyTokens.title(22))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .multilineTextAlignment(.center)
+                    Text("fingerPlay.permission.body")
+                        .font(TypographyTokens.body(15))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                }
+                .frame(maxWidth: .infinity)
+            }
             Button {
                 router?.openCameraPermissionFlow()
             } label: {
@@ -276,12 +355,13 @@ struct FingerPlayView: View {
                     .font(TypographyTokens.headline(17))
                     .frame(maxWidth: .infinity, minHeight: 56)
                     .background(
-                        RoundedRectangle(cornerRadius: RadiusTokens.card)
+                        RoundedRectangle(cornerRadius: RadiusTokens.button)
                             .fill(ColorTokens.Brand.primary)
                     )
                     .foregroundStyle(ColorTokens.Overlay.onAccent)
             }
             .buttonStyle(.plain)
+            .padding(.horizontal, SpacingTokens.screenEdge)
         }
         .padding(SpacingTokens.screenEdge)
     }

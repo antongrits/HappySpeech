@@ -60,6 +60,11 @@ struct ObjectDescriptionMapView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
+    @Environment(\.hapticService) private var hapticService
+
+    @State private var mascotState: LyalyaState = .thinking
+    @State private var showConfetti: Bool = false
+    @State private var contentAppeared: Bool = false
 
     private static let logger = Logger(
         subsystem: "ru.happyspeech", category: "ObjectDescriptionMap.View"
@@ -69,17 +74,52 @@ struct ObjectDescriptionMapView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
-                switch holder.phase {
-                case .picking:    pickingSection
-                case .planning:   planningSection
-                case .recording:  recordingSection
-                case .result:     resultSection
+                Group {
+                    switch holder.phase {
+                    case .picking:    pickingSection
+                    case .planning:   planningSection
+                    case .recording:  recordingSection
+                    case .result:     resultSection
+                    }
                 }
+                .opacity(contentAppeared ? 1 : 0)
+                .animation(reduceMotion ? .none : MotionTokens.settleSpring, value: contentAppeared)
+
+                HSConfettiView(preset: .celebration, isActive: $showConfetti)
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
             }
-            .navigationTitle(Text("Описательная карта")) // L10n
+            .animation(reduceMotion ? .none : MotionTokens.spring, value: holder.phase)
+            .navigationTitle(Text("Описательная карта"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .task { await bootstrap() }
+            .onAppear {
+                withAnimation(reduceMotion ? .none : MotionTokens.settleSpring) {
+                    contentAppeared = true
+                }
+            }
+            .onChange(of: holder.phase) { _, phase in
+                switch phase {
+                case .planning:
+                    mascotState = .explaining
+                case .recording:
+                    mascotState = .singing
+                case .result:
+                    mascotState = (holder.resultVM?.stars ?? 0) > 1 ? .celebrating : .encouraging
+                    hapticService.notification(.success)
+                    if (holder.resultVM?.stars ?? 0) > 1 {
+                        showConfetti = true
+                        Task {
+                            try? await Task.sleep(nanoseconds: 2_500_000_000)
+                            showConfetti = false
+                        }
+                    }
+                default:
+                    mascotState = .thinking
+                }
+            }
         }
         .environment(\.circuitContext, .kid)
     }
@@ -88,6 +128,28 @@ struct ObjectDescriptionMapView: View {
 
     private var pickingSection: some View {
         VStack(spacing: SpacingTokens.sp3) {
+            // Маскот + приветствие
+            HStack(spacing: SpacingTokens.sp3) {
+                LyalyaMascotView(state: mascotState, size: 72)
+                    .animation(reduceMotion ? .none : MotionTokens.spring, value: mascotState)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("objectMap.pick.heading")
+                        .font(TypographyTokens.title(20))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.8)
+                    Text("objectMap.pick.sub")
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: 0)
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.top, SpacingTokens.sp2)
+
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: SpacingTokens.sp4) {
                     if let load = holder.loadVM {
@@ -98,7 +160,12 @@ struct ObjectDescriptionMapView: View {
                             )
                         }
                     } else {
-                        ProgressView().padding()
+                        HSEmptyStateView(
+                            mascot: .thinking,
+                            title: String(localized: "objectMap.loading"),
+                            subtitle: String(localized: "objectMap.loading.sub")
+                        )
+                        .padding(.top, SpacingTokens.sp8)
                     }
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
@@ -183,26 +250,32 @@ struct ObjectDescriptionMapView: View {
     }
 
     private func planObjectHeader(_ vm: ObjectDescriptionMapModels.SelectObject.ViewModel) -> some View {
-        VStack(spacing: SpacingTokens.sp1) {
-            Image(systemName: vm.object.symbol)
-                .font(.system(size: 72))
-                .foregroundStyle(ColorTokens.Brand.rose)
-            Text(vm.object.title)
-                .font(TypographyTokens.title(28))
-                .foregroundStyle(ColorTokens.Kid.ink)
-            Text(vm.hintMessage)
-                .font(TypographyTokens.body(14))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
+        HSLiquidGlassCard(style: .tinted(ColorTokens.Brand.rose)) {
+            HStack(spacing: SpacingTokens.sp3) {
+                LyalyaMascotView(state: .explaining, size: 72)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+                    HStack(spacing: SpacingTokens.sp2) {
+                        Image(systemName: vm.object.symbol)
+                            .font(.system(size: 32))
+                            .foregroundStyle(ColorTokens.Brand.rose)
+                            .symbolRenderingMode(.hierarchical)
+                        Text(vm.object.title)
+                            .font(TypographyTokens.title(24))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.8)
+                    }
+                    Text(vm.hintMessage)
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                }
+                Spacer(minLength: 0)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(SpacingTokens.sp3)
-        .frame(maxWidth: .infinity)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Kid.surface)
-        )
     }
 
     private func planList(_ items: [DescriptionPlanItem]) -> some View {
@@ -271,39 +344,56 @@ struct ObjectDescriptionMapView: View {
 
     private var recordingSection: some View {
         VStack(spacing: SpacingTokens.sp4) {
+            LyalyaMascotView(state: .singing, size: 120)
+                .accessibilityHidden(true)
+
             if let vm = holder.selectVM {
-                Image(systemName: vm.object.symbol)
-                    .font(.system(size: 80))
-                    .foregroundStyle(ColorTokens.Brand.rose)
-                Text(vm.object.title)
-                    .font(TypographyTokens.title(24))
-                    .foregroundStyle(ColorTokens.Kid.ink)
+                HSCard(style: .tinted(ColorTokens.Brand.rose.opacity(0.08))) {
+                    HStack(spacing: SpacingTokens.sp3) {
+                        Image(systemName: vm.object.symbol)
+                            .font(.system(size: 40))
+                            .foregroundStyle(ColorTokens.Brand.rose)
+                            .symbolRenderingMode(.hierarchical)
+                        Text(vm.object.title)
+                            .font(TypographyTokens.title(22))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.8)
+                        Spacer(minLength: 0)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                }
             }
-            Image(systemName: "mic.fill")
-                .font(.system(size: 56))
-                .foregroundStyle(ColorTokens.Semantic.error)
-                .scaleEffect(holder.isRecording && !reduceMotion ? 1.08 : 1.0)
-                .animation(
-                    reduceMotion
-                        ? .none
-                        : .easeInOut(duration: 0.85).repeatForever(autoreverses: true),
-                    value: holder.isRecording
-                )
-            Text("Рассказываю…") // L10n
-                .font(TypographyTokens.headline(18))
-                .foregroundStyle(ColorTokens.Kid.ink)
-            Text("\(recordCountdown)")
-                .font(TypographyTokens.title(36).monospacedDigit())
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .accessibilityLabel(Text("Осталось секунд: \(recordCountdown)"))
+
+            HSCard(style: .tinted(ColorTokens.Semantic.error.opacity(0.08))) {
+                VStack(spacing: SpacingTokens.sp2) {
+                    HStack(spacing: SpacingTokens.sp2) {
+                        Image(systemName: "mic.fill")
+                            .font(.system(size: 28))
+                            .foregroundStyle(ColorTokens.Semantic.error)
+                            .symbolEffect(reduceMotion ? .pulse.byLayer : .pulse,
+                                          options: .repeating)
+                        Text("objectMap.recording.label")
+                            .font(TypographyTokens.headline(18))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                    }
+                    Text("\(recordCountdown)")
+                        .font(TypographyTokens.title(44).monospacedDigit())
+                        .foregroundStyle(ColorTokens.Semantic.error)
+                        .contentTransition(.numericText())
+                        .accessibilityLabel(Text("objectMap.countdown.a11y \(recordCountdown)"))
+                }
+                .frame(maxWidth: .infinity)
+            }
+
             Button {
                 Task { await stopRecording() }
             } label: {
-                Text("Готово") // L10n
+                Label("objectMap.button.stop", systemImage: "stop.circle.fill")
                     .font(TypographyTokens.headline(18))
                     .frame(maxWidth: .infinity, minHeight: 64)
                     .background(
-                        RoundedRectangle(cornerRadius: RadiusTokens.card)
+                        RoundedRectangle(cornerRadius: RadiusTokens.button)
                             .fill(ColorTokens.Semantic.error)
                     )
                     .foregroundStyle(ColorTokens.Overlay.onAccent)
@@ -349,32 +439,73 @@ struct ObjectDescriptionMapView: View {
     }
 
     private func resultHeader(_ vm: ObjectDescriptionMapModels.RecordResult.ViewModel) -> some View {
-        VStack(spacing: SpacingTokens.sp1) {
-            Image(systemName: vm.object.symbol)
-                .font(.system(size: 56))
-                .foregroundStyle(ColorTokens.Brand.rose)
-            Text("Ты рассказал о \(vm.object.title.lowercased())")
-                .font(TypographyTokens.title(22))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-            Text(vm.durationLabel)
-                .font(TypographyTokens.caption(13).monospacedDigit())
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
+        VStack(spacing: SpacingTokens.sp3) {
+            ZStack {
+                LyalyaMascotView(state: mascotState, size: 120)
+                    .animation(reduceMotion ? .none : MotionTokens.spring, value: mascotState)
+                    .accessibilityHidden(true)
+                HSRewardBurst(
+                    isShowing: holder.phase == .result,
+                    color: ColorTokens.Brand.gold,
+                    particleCount: 20
+                )
+                .frame(width: 180, height: 180)
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
+            }
+            HSCard(style: .tinted(ColorTokens.Brand.rose.opacity(0.08))) {
+                VStack(spacing: SpacingTokens.sp1) {
+                    HStack(spacing: SpacingTokens.sp2) {
+                        Image(systemName: vm.object.symbol)
+                            .font(.system(size: 32))
+                            .foregroundStyle(ColorTokens.Brand.rose)
+                            .symbolRenderingMode(.hierarchical)
+                        Text("objectMap.result.you_described \(vm.object.title.lowercased())")
+                            .font(TypographyTokens.title(20))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .multilineTextAlignment(.leading)
+                            .lineLimit(3)
+                            .minimumScaleFactor(0.8)
+                    }
+                    Text(vm.durationLabel)
+                        .font(TypographyTokens.caption(13).monospacedDigit())
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
         }
-        .frame(maxWidth: .infinity)
     }
 
+    @State private var starsRevealed: [Bool] = [false, false, false]
+
     private func resultStars(_ vm: ObjectDescriptionMapModels.RecordResult.ViewModel) -> some View {
-        HStack(spacing: SpacingTokens.sp1) {
+        HStack(spacing: SpacingTokens.sp2) {
             ForEach(0..<3, id: \.self) { index in
                 Image(systemName: index < vm.stars ? "star.fill" : "star")
-                    .font(.system(size: 36))
+                    .font(.system(size: 40))
                     .foregroundStyle(index < vm.stars
                                      ? ColorTokens.Brand.gold
                                      : ColorTokens.Kid.inkSoft)
+                    .scaleEffect(starsRevealed[index] ? 1.0 : 0.3)
+                    .opacity(starsRevealed[index] ? 1.0 : 0.0)
+                    .animation(
+                        reduceMotion ? .none : MotionTokens.rewardPop.delay(Double(index) * 0.14),
+                        value: starsRevealed[index]
+                    )
             }
         }
         .frame(maxWidth: .infinity)
+        .onAppear {
+            if reduceMotion {
+                starsRevealed = [true, true, true]
+            } else {
+                for idx in 0..<3 {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + Double(idx) * 0.16) {
+                        starsRevealed[idx] = true
+                    }
+                }
+            }
+        }
         .accessibilityLabel(Text("\(vm.stars) из 3 звёзд"))
     }
 

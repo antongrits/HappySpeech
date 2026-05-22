@@ -73,24 +73,74 @@ struct KaraokePitchView: View {
         subsystem: "ru.happyspeech", category: "Karaoke.View"
     )
 
+    @State private var showConfetti: Bool = false
+    @State private var mascotState: LyalyaState = .thinking
+    @State private var cardAppeared: Bool = false
+
     var body: some View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+
                 VStack(spacing: SpacingTokens.sp4) {
+                    mascotRow
                     headerSection
                     contourSection
                     controlsSection
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.vertical, SpacingTokens.sp4)
+                .opacity(cardAppeared ? 1 : 0)
+                .scaleEffect(cardAppeared ? 1 : 0.94)
+                .animation(reduceMotion ? .none : MotionTokens.settleSpring, value: cardAppeared)
+
+                // Конфетти при победе
+                HSConfettiView(preset: .celebration, isActive: $showConfetti)
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
             }
             .navigationTitle(Text("karaoke.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbarContent }
             .task { await bootstrap() }
+            .onAppear {
+                withAnimation(reduceMotion ? .none : MotionTokens.settleSpring) {
+                    cardAppeared = true
+                }
+            }
+            .onChange(of: holder.phase) { _, phase in
+                switch phase {
+                case .recording:
+                    mascotState = .singing
+                case .scored:
+                    let gotScore = (holder.scoreVM?.starsEarned ?? 0) > 0
+                    mascotState = gotScore ? .celebrating : .encouraging
+                    if gotScore && !showConfetti {
+                        showConfetti = true
+                        Task {
+                            try? await Task.sleep(nanoseconds: 2_500_000_000)
+                            showConfetti = false
+                        }
+                    }
+                default:
+                    mascotState = .thinking
+                }
+            }
         }
         .environment(\.circuitContext, .kid)
+    }
+
+    // MARK: - Mascot
+
+    private var mascotRow: some View {
+        HStack {
+            Spacer()
+            LyalyaMascotView(state: mascotState, size: 100)
+                .animation(reduceMotion ? .none : MotionTokens.spring, value: mascotState)
+                .accessibilityHidden(true)
+            Spacer()
+        }
     }
 
     // MARK: - Header
@@ -124,49 +174,63 @@ struct KaraokePitchView: View {
     // MARK: - Contour Canvas
 
     private var contourSection: some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-            legendRow
-            Canvas(opaque: false) { ctx, size in
-                drawGrid(ctx: ctx, size: size)
-                if let modelContour = holder.startVM?.modelContour {
-                    drawContour(modelContour,
-                                in: ctx,
-                                size: size,
-                                color: ColorTokens.Brand.lilac,
-                                isModel: true)
-                }
-                // Reduce Motion: live-линия только когда есть score.
-                let shouldShowLive: Bool = {
-                    if reduceMotion {
-                        return holder.phase == .scored
-                    }
-                    return holder.phase == .recording || holder.phase == .scored
-                }()
-                if shouldShowLive {
-                    let live: [PitchPoint] = holder.scoreVM?.liveContour
-                        ?? holder.liveVM?.liveContour ?? []
-                    if !live.isEmpty {
-                        drawContour(live,
+        HSCard(style: .elevated) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+                legendRow
+                Canvas(opaque: false) { ctx, size in
+                    drawGrid(ctx: ctx, size: size)
+                    if let modelContour = holder.startVM?.modelContour {
+                        drawContour(modelContour,
                                     in: ctx,
                                     size: size,
-                                    color: ColorTokens.Brand.primary,
-                                    isModel: false)
+                                    color: ColorTokens.Brand.lilac,
+                                    isModel: true)
+                    }
+                    // Reduce Motion: live-линия только когда есть score.
+                    let shouldShowLive: Bool = {
+                        if reduceMotion {
+                            return holder.phase == .scored
+                        }
+                        return holder.phase == .recording || holder.phase == .scored
+                    }()
+                    if shouldShowLive {
+                        let live: [PitchPoint] = holder.scoreVM?.liveContour
+                            ?? holder.liveVM?.liveContour ?? []
+                        if !live.isEmpty {
+                            drawContour(live,
+                                        in: ctx,
+                                        size: size,
+                                        color: ColorTokens.Brand.primary,
+                                        isModel: false)
+                        }
                     }
                 }
-            }
-            .frame(height: 180)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .fill(ColorTokens.Kid.surface)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
-            )
-            .accessibilityElement()
-            .accessibilityLabel(canvasAccessibilityLabel)
-            if let scoreVM = holder.scoreVM {
-                scoreSection(scoreVM)
+                .frame(height: 180)
+                .background(
+                    RoundedRectangle(
+                        cornerRadius: RadiusTokens.concentric(
+                            outer: RadiusTokens.card,
+                            inset: SpacingTokens.cardPad
+                        )
+                    )
+                    .fill(ColorTokens.Kid.surfaceAlt)
+                )
+                .clipShape(
+                    RoundedRectangle(
+                        cornerRadius: RadiusTokens.concentric(
+                            outer: RadiusTokens.card,
+                            inset: SpacingTokens.cardPad
+                        )
+                    )
+                )
+                .accessibilityElement()
+                .accessibilityLabel(canvasAccessibilityLabel)
+
+                if let scoreVM = holder.scoreVM {
+                    scoreSection(scoreVM)
+                        .transition(.opacity.combined(with: .move(edge: .bottom)))
+                        .animation(reduceMotion ? .none : MotionTokens.rewardPop, value: holder.scoreVM != nil)
+                }
             }
         }
     }
@@ -276,15 +340,35 @@ struct KaraokePitchView: View {
 
     // MARK: - Score Section
 
+    @State private var starsAnimated: [Bool] = [false, false, false]
+
     private func scoreSection(_ score: KaraokePitchModels.Score.ViewModel) -> some View {
         HStack(spacing: SpacingTokens.sp3) {
-            ForEach(0..<3, id: \.self) { idx in
-                Image(systemName: idx < score.starsEarned
-                                  ? "star.fill" : "star")
-                    .foregroundStyle(idx < score.starsEarned
-                                     ? ColorTokens.Brand.gold
-                                     : ColorTokens.Kid.inkSoft)
-                    .font(.title2)
+            HStack(spacing: SpacingTokens.sp2) {
+                ForEach(0..<3, id: \.self) { idx in
+                    Image(systemName: idx < score.starsEarned ? "star.fill" : "star")
+                        .foregroundStyle(idx < score.starsEarned
+                                         ? ColorTokens.Brand.gold
+                                         : ColorTokens.Kid.inkSoft)
+                        .font(.title)
+                        .scaleEffect(starsAnimated[safe: idx] == true ? 1.0 : 0.5)
+                        .opacity(starsAnimated[safe: idx] == true ? 1.0 : 0.0)
+                        .animation(
+                            reduceMotion ? .none : MotionTokens.rewardPop.delay(Double(idx) * 0.12),
+                            value: starsAnimated[safe: idx]
+                        )
+                }
+            }
+            .onAppear {
+                guard !reduceMotion else {
+                    starsAnimated = [true, true, true]
+                    return
+                }
+                for idx in 0..<3 {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + Double(idx) * 0.15) {
+                        starsAnimated[safe: idx] = true
+                    }
+                }
             }
             Spacer()
             Text("karaoke.score.percent \(score.similarityPercent)")
@@ -408,6 +492,15 @@ struct KaraokePitchView: View {
     private func dismissTapped() {
         Task { await interactor?.stopRecording() }
         dismiss()
+    }
+}
+
+// MARK: - Array safe subscript (local)
+
+private extension Array where Element == Bool {
+    subscript(safe index: Int) -> Bool {
+        get { indices.contains(index) ? self[index] : false }
+        set { if indices.contains(index) { self[index] = newValue } }
     }
 }
 
