@@ -12,19 +12,24 @@ public protocol BedtimeModeWorkerProtocol: AnyObject {
     var libraryCount: Int { get }
     /// Параметры дыхательного цикла.
     func breathingCycle() -> BedtimeBreathingCycle
-    /// Озвучивает текст истории голосом ru-RU (по умолчанию пытается
-    /// использовать `Milena`, fallback — системный ru-RU голос).
-    func narrate(_ text: String) async
+    /// Озвучивает текст истории голосом Ляли (pre-recorded m4a).
+    /// При отсутствии файла — silent skip с Logger.warning.
+    func narrate(_ text: String, storyId: String) async
     /// Останавливает текущую озвучку.
     func stopNarration()
 }
 
 // MARK: - BedtimeModeWorker (Clean Swift: Worker)
+//
+// ADR-V31-AVSpeechSynthesizer-FALLBACK: Siri TTS удалён.
+// Каждая сказка озвучивается pre-recorded файлом Ляли (edge-tts SvetlanaNeural,
+// rate 85%, хранится в Audio/Lyalya/bedtime/<storyId>.m4a).
+// При отсутствии файла — silent skip (текст виден на экране).
 
 @MainActor
-final class BedtimeModeWorker: NSObject, BedtimeModeWorkerProtocol {
+final class BedtimeModeWorker: BedtimeModeWorkerProtocol {
 
-    private let synthesizer = AVSpeechSynthesizer()
+    private var player: AVAudioPlayer?
     private var narrationContinuation: CheckedContinuation<Void, Never>?
 
     private static let logger = Logger(
@@ -32,10 +37,23 @@ final class BedtimeModeWorker: NSObject, BedtimeModeWorkerProtocol {
         category: "BedtimeMode.Worker"
     )
 
-    override init() {
-        super.init()
-        synthesizer.delegate = self
-    }
+    // MARK: - story_id → audio filename mapping
+
+    /// Маппинг идентификатора истории на имя файла в Audio/Lyalya/bedtime/.
+    private static let storyAudioMap: [String: String] = [
+        "story-cloud":   "lyalya_bedtime_cloud",
+        "story-rabbit":  "lyalya_bedtime_rabbit",
+        "story-river":   "lyalya_bedtime_river",
+        "story-moon":    "lyalya_bedtime_moon",
+        "story-pillow":  "lyalya_bedtime_pillow",
+        "story-bear":    "lyalya_bedtime_bear",
+        "story-leaf":    "lyalya_bedtime_leaf",
+        "story-stars":   "lyalya_bedtime_stars",
+        "story-fish":    "lyalya_bedtime_fish",
+        "story-sun":     "lyalya_bedtime_sun",
+        "story-snowman": "lyalya_bedtime_snowman",
+        "story-mama":    "lyalya_bedtime_mama"
+    ]
 
     // MARK: - Corpus
 
@@ -72,67 +90,72 @@ final class BedtimeModeWorker: NSObject, BedtimeModeWorkerProtocol {
 
     // MARK: - Narration
 
-    func narrate(_ text: String) async {
+    /// Озвучивает сказку через pre-recorded голос Ляли.
+    /// `storyId` используется для поиска файла; `text` — только для логов.
+    func narrate(_ text: String, storyId: String) async {
         guard !text.isEmpty else { return }
         ensureSpokenAudioSession()
 
-        // Подбираем голос: Milena ru-RU (если установлен), иначе любой ru-RU.
-        let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = Self.preferredRussianVoice()
-        utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 0.85
-        utterance.pitchMultiplier = 1.0
-        utterance.volume = 1.0
-        utterance.preUtteranceDelay = 0.5
-        utterance.postUtteranceDelay = 0.6
+        guard let audioName = Self.storyAudioMap[storyId],
+              let url = Bundle.main.url(
+                forResource: audioName,
+                withExtension: "m4a",
+                subdirectory: "Audio/Lyalya/bedtime"
+              ) else {
+            Self.logger.warning(
+                "BedtimeModeWorker: no Lyalya audio for storyId '\(storyId, privacy: .public)' — silent skip"
+            )
+            #if DEBUG
+            assertionFailure("BedtimeModeWorker: missing bedtime audio for '\(storyId)'")
+            #endif
+            return
+        }
 
         await withCheckedContinuation { (cont: CheckedContinuation<Void, Never>) in
-            narrationContinuation = cont
-            synthesizer.speak(utterance)
+            do {
+                player?.stop()
+                narrationContinuation?.resume()
+                narrationContinuation = cont
+                let newPlayer = try AVAudioPlayer(contentsOf: url)
+                newPlayer.delegate = self
+                newPlayer.prepareToPlay()
+                player = newPlayer
+                newPlayer.play()
+                Self.logger.debug("BedtimeMode: playing '\(audioName, privacy: .public)'")
+            } catch {
+                Self.logger.warning(
+                    "BedtimeModeWorker: AVAudioPlayer failed for '\(audioName, privacy: .public)': \(error.localizedDescription, privacy: .public)"
+                )
+                narrationContinuation = nil
+                cont.resume()
+            }
         }
     }
 
     func stopNarration() {
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
-        }
+        player?.stop()
+        player = nil
         narrationContinuation?.resume()
         narrationContinuation = nil
     }
-
-    // MARK: - Voice selection
-
-    private static func preferredRussianVoice() -> AVSpeechSynthesisVoice? {
-        let voices = AVSpeechSynthesisVoice.speechVoices()
-        let russian = voices.filter { $0.language == "ru-RU" }
-        if let milena = russian.first(where: { $0.name.lowercased().contains("milena") }) {
-            return milena
-        }
-        if let katya = russian.first(where: { $0.name.lowercased().contains("katya") }) {
-            return katya
-        }
-        return russian.first ?? AVSpeechSynthesisVoice(language: "ru-RU")
-    }
 }
 
-// MARK: - AVSpeechSynthesizerDelegate
+// MARK: - AVAudioPlayerDelegate
 
-extension BedtimeModeWorker: AVSpeechSynthesizerDelegate {
+extension BedtimeModeWorker: AVAudioPlayerDelegate {
 
-    nonisolated func speechSynthesizer(
-        _ synthesizer: AVSpeechSynthesizer,
-        didFinish utterance: AVSpeechUtterance
-    ) {
+    nonisolated func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         Task { @MainActor [weak self] in
             self?.narrationContinuation?.resume()
             self?.narrationContinuation = nil
         }
     }
 
-    nonisolated func speechSynthesizer(
-        _ synthesizer: AVSpeechSynthesizer,
-        didCancel utterance: AVSpeechUtterance
-    ) {
+    nonisolated func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
         Task { @MainActor [weak self] in
+            Self.logger.error(
+                "BedtimeModeWorker: decode error: \(error?.localizedDescription ?? "unknown", privacy: .public)"
+            )
             self?.narrationContinuation?.resume()
             self?.narrationContinuation = nil
         }

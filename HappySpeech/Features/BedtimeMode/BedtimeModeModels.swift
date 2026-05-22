@@ -6,7 +6,7 @@ import Foundation
 //
 // Спокойный вечерний поток: приглушённая тёплая палитра, дыхательное
 // упражнение (3 цикла, 4-7-8), затем короткая колыбельная история через
-// AVSpeechSynthesizer (ru-RU «Milena»). НЕ диагностический инструмент:
+// голос Ляли (pre-recorded m4a, edge-tts SvetlanaNeural). НЕ диагностический инструмент:
 // project guide §11 — это педагогический ритуал, а не sleep tracker.
 //
 // Reduce Motion принудительно включён (фон без анимаций), AVAudioSession

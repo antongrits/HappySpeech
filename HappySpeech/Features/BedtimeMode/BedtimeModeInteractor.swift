@@ -96,7 +96,7 @@ final class BedtimeModeInteractor: BedtimeModeBusinessLogic, BedtimeModeDataStor
 
     func narrateStory() async {
         guard let story = currentStory else { return }
-        await worker.narrate(story.text)
+        await worker.narrate(story.text, storyId: story.id)
     }
 
     func stopNarration() {
