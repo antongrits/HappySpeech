@@ -15,6 +15,17 @@ import SwiftUI
 //
 // CTA: "Играть ещё" (secondary) + "Продолжить" (primary) + "Поделиться" (ghost).
 // Сигнатура `init(result:onContinue:onReplay:)` сохранена для AppCoordinator.
+//
+// Permissions (P1-2 v31 SE 3 audit):
+//   Экран НЕ запрашивает доступ к микрофону или камере. Урок уже закончен,
+//   запись более не нужна — рендерим только итоги.
+//   Запрос permission делает соответствующий шаблон урока on-demand
+//   (RepeatAfterModel, NarrativeQuest, PuzzleReveal, Breathing) либо
+//   PermissionFlowView в онбординге. SessionComplete намеренно остаётся
+//   permission-free, чтобы итоговый экран никогда не перекрывался системным
+//   alert'ом.
+//   Если будете добавлять новые reward-фичи: НЕ инициализируйте AudioService
+//   и НЕ вызывайте AVAudioSession.setActive(true) в этом экране.
 
 struct SessionCompleteView: View {
 
