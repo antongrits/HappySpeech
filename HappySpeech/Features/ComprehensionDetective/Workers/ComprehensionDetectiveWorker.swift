@@ -52,8 +52,7 @@ final class ComprehensionDetectiveWorker: ComprehensionDetectiveWorkerProtocol {
         await LessonVoiceWorker.shared.speak(
             text,
             lessonType: "comprehension-detective",
-            rate: 0.95,
-            enableSystemTTSFallback: true
+            rate: 0.95
         )
     }
 }

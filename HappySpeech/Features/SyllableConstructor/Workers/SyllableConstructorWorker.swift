@@ -86,8 +86,7 @@ final class SyllableConstructorWorker: SyllableConstructorWorkerProtocol {
         await LessonVoiceWorker.shared.speak(
             word.word,
             lessonType: "syllable-constructor",
-            rate: 1.0,
-            enableSystemTTSFallback: true
+            rate: 1.0
         )
     }
 }
