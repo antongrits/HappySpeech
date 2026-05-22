@@ -32,7 +32,7 @@ public protocol ReadAloudStoryWorkerProtocol: AnyObject {
 // При отсутствии файла — silent skip (предложение подсвечено на экране).
 
 @MainActor
-final class ReadAloudStoryWorker: ReadAloudStoryWorkerProtocol {
+final class ReadAloudStoryWorker: NSObject, ReadAloudStoryWorkerProtocol {
 
     private var player: AVAudioPlayer?
     private var continuation: CheckedContinuation<Void, Never>?

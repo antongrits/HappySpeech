@@ -27,7 +27,7 @@ public protocol BedtimeModeWorkerProtocol: AnyObject {
 // При отсутствии файла — silent skip (текст виден на экране).
 
 @MainActor
-final class BedtimeModeWorker: BedtimeModeWorkerProtocol {
+final class BedtimeModeWorker: NSObject, BedtimeModeWorkerProtocol {
 
     private var player: AVAudioPlayer?
     private var narrationContinuation: CheckedContinuation<Void, Never>?
