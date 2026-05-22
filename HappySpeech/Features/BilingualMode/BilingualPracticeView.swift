@@ -314,9 +314,10 @@ struct BilingualPracticeView: View {
         lastAnswerCorrect = isCorrect
 
         // Озвучиваем правильный перевод (даёт ребёнку модель произношения).
+        // wordId = round.word.id — используется для поиска pre-recorded файла (en-US).
         let correctText = round.options.first { $0.id == round.correctOptionId }?.translation
             ?? round.word.russian
-        await ttsWorker.speak(correctText, language: language)
+        await ttsWorker.speak(correctText, language: language, wordId: round.word.id)
 
         try? await Task.sleep(nanoseconds: 800_000_000)
         await advanceRound()

@@ -284,7 +284,7 @@ struct BilingualModeView: View {
             }
             Spacer()
             Button {
-                Task { await speak(translation, language: language) }
+                Task { await speak(translation, language: language, wordId: word.id) }
             } label: {
                 Image(systemName: "speaker.wave.2.circle.fill")
                     .font(.system(size: 32))
@@ -359,9 +359,9 @@ struct BilingualModeView: View {
         )
     }
 
-    private func speak(_ text: String, language: BilingualSecondLanguage) async {
+    private func speak(_ text: String, language: BilingualSecondLanguage, wordId: String) async {
         guard let worker = ttsWorker else { return }
-        await worker.speak(text, language: language)
+        await worker.speak(text, language: language, wordId: wordId)
     }
 
     private func startPractice() async {
