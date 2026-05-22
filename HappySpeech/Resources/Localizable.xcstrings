@@ -21230,6 +21230,94 @@
         }
       }
     },
+    "objectMap.button.stop": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закончить рассказ"
+          }
+        }
+      }
+    },
+    "objectMap.countdown.a11y %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Осталось %lld секунд записи"
+          }
+        }
+      }
+    },
+    "objectMap.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готовим карточки…"
+          }
+        }
+      }
+    },
+    "objectMap.loading.sub": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ляля приносит план рассказа"
+          }
+        }
+      }
+    },
+    "objectMap.pick.heading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выбери, о чём расскажешь"
+          }
+        }
+      }
+    },
+    "objectMap.pick.sub": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Опиши предмет по плану"
+          }
+        }
+      }
+    },
+    "objectMap.recording.label": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Идёт запись"
+          }
+        }
+      }
+    },
+    "objectMap.result.you_described %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ты рассказал про %@!"
+          }
+        }
+      }
+    },
     "offline.auto_retry.0": {
       "extractionState": "manual",
       "localizations": {
@@ -42165,6 +42253,39 @@
         }
       }
     },
+    "storyCreator.countdown.a11y %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Осталось %lld секунд записи"
+          }
+        }
+      }
+    },
+    "storyCreator.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готовим картинки…"
+          }
+        }
+      }
+    },
+    "storyCreator.loading.subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сейчас Ляля принесёт карточки"
+          }
+        }
+      }
+    },
     "storyCreator.metric.total": {
       "extractionState": "manual",
       "localizations": {
@@ -42194,6 +42315,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Разных слов"
+          }
+        }
+      }
+    },
+    "storyCreator.pick.heading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выбери 3 картинки"
+          }
+        }
+      }
+    },
+    "storyCreator.pick.sub": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Составь по ним свой рассказ"
           }
         }
       }
