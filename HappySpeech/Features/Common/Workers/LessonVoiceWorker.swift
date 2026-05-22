@@ -5,7 +5,13 @@ import OSLog
 // MARK: - LessonVoiceWorker
 //
 // Общий helper для озвучки слов в уроках.
-// Приоритет: реальный голос Ляли (m4a из Audio/Lyalya/lessons/) → fallback Siri TTS (ru-RU).
+// Приоритет: семейная запись родителя → голос Ляли (m4a из Audio/Lyalya/lessons/) → silent fail.
+//
+// ADR-V31-AVSpeechSynthesizer-FALLBACK: Siri TTS полностью удалён.
+// При отсутствии m4a-файла — silent skip + Logger.warning.
+// Покрытие: 1200+ ключевых слов в Lyalya/lessons/; новые слова из v31 G-02 корпуса
+// будут добавлены в будущей звуковой волне. До тех пор — silent fail приемлем,
+// т.к. слово отображается на экране (текстовый label).
 //
 // Использование:
 //   await LessonVoiceWorker.shared.speak("сани")
@@ -14,7 +20,7 @@ import OSLog
 //
 // Thread-safety: @MainActor — вызывать только из main thread.
 //
-// Async semantics: speak() реально ждёт завершения воспроизведения (m4a или TTS).
+// Async semantics: speak() реально ждёт завершения воспроизведения (m4a).
 // Чтобы прервать ожидание — вызови stop() и отмени Task на стороне вызывающего.
 
 @MainActor
@@ -32,13 +38,9 @@ final class LessonVoiceWorker: NSObject {
 
     private let logger = Logger(subsystem: "ru.happyspeech.app", category: "LessonVoiceWorker")
     private var player: AVAudioPlayer?
-    private let synthesizer = AVSpeechSynthesizer()
 
     /// Continuation для m4a-воспроизведения (resume по AVAudioPlayerDelegate).
     private var playbackContinuation: CheckedContinuation<Void, Never>?
-
-    /// Continuation для TTS-воспроизведения (resume по AVSpeechSynthesizerDelegate).
-    private var speechContinuation: CheckedContinuation<Void, Never>?
 
     /// text (нормализованный) → phrase_id
     private let phraseMapping: [String: String]
@@ -49,18 +51,11 @@ final class LessonVoiceWorker: NSObject {
     /// parentId для поиска семейных записей.
     var familyParentId: String = "local-parent"
 
-    // MARK: - TTS defaults
-
-    private static let defaultTTSRate: Float = AVSpeechUtteranceDefaultSpeechRate * 0.9
-    private static let defaultPitch: Float = 1.10
-    private static let defaultVolume: Float = 1.0
-
     // MARK: - Init
 
     override init() {
         phraseMapping = Self.loadPhraseMapping()
         super.init()
-        synthesizer.delegate = self
         let count = phraseMapping.count
         logger.info("LessonVoiceWorker init: \(count, privacy: .public) phrases loaded")
     }
@@ -73,12 +68,10 @@ final class LessonVoiceWorker: NSObject {
     ///   - text: исходный текст (произвольный регистр, с пунктуацией)
     ///   - lessonType: опциональная метка для логов
     ///   - rate: мультипликатор скорости (1.0 = нормально, <1.0 = медленнее)
-    ///   - enableSystemTTSFallback: если true — Siri TTS при отсутствии m4a (только для тестов, default false)
     func speak(
         _ text: String,
         lessonType: String? = nil,
-        rate: Float = 1.0,
-        enableSystemTTSFallback: Bool = false
+        rate: Float = 1.0
     ) async {
         guard !text.isEmpty else { return }
 
@@ -100,29 +93,22 @@ final class LessonVoiceWorker: NSObject {
             return
         }
 
-        // Priority 3 (TTS — только при явно включённом флаге, напр. в тестах)
-        if enableSystemTTSFallback {
-            logger.debug("\(logContext, privacy: .public)No Lyalya file for '\(text, privacy: .private)' — TTS fallback (enabled)")
-            await speakViaSynthesizer(text, rate: rate)
-        } else {
-            logger.warning("\(logContext, privacy: .public)No Lyalya m4a for '\(text, privacy: .private)' — silent skip (record missing phrase)")
-        }
+        // No file found — silent skip (word is visible on screen as text label).
+        logger.warning("\(logContext, privacy: .public)No Lyalya m4a for '\(text, privacy: .private)' — silent skip (record missing phrase)")
+        #if DEBUG
+        // В debug-сборках помогает находить непокрытые слова при тестировании.
+        assertionFailure("LessonVoiceWorker: missing Lyalya audio for '\(text)'")
+        #endif
     }
 
-    /// Останавливает воспроизведение (и m4a, и TTS).
+    /// Останавливает воспроизведение m4a.
     /// Уже ожидающие `await speak(...)` получат resume немедленно.
     func stop() {
         player?.stop()
         player = nil
-        // Resume pending m4a continuation, если есть.
         let pc = playbackContinuation
         playbackContinuation = nil
         pc?.resume()
-
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
-        }
-        // Resume pending TTS continuation resume придёт через delegate (didCancel).
     }
 
     // MARK: - Private: audio session
@@ -228,29 +214,6 @@ final class LessonVoiceWorker: NSObject {
             .joined(separator: " ")
     }
 
-    // MARK: - Private: TTS fallback
-
-    private func speakViaSynthesizer(_ text: String, rate: Float) async {
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
-        }
-        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
-            // Завершаем предыдущий, если висит.
-            speechContinuation?.resume()
-            speechContinuation = continuation
-            let utterance = AVSpeechUtterance(string: text)
-            utterance.voice = AVSpeechSynthesisVoice(language: "ru-RU")
-            utterance.rate = max(
-                AVSpeechUtteranceMinimumSpeechRate,
-                min(AVSpeechUtteranceMaximumSpeechRate, Self.defaultTTSRate * rate)
-            )
-            utterance.pitchMultiplier = Self.defaultPitch
-            utterance.volume = Self.defaultVolume
-            synthesizer.speak(utterance)
-            logger.debug("TTS fallback: '\(text, privacy: .private)'")
-        }
-    }
-
     // MARK: - Private: mapping load
 
     private static func loadPhraseMapping() -> [String: String] {
@@ -296,35 +259,6 @@ extension LessonVoiceWorker: AVAudioPlayerDelegate {
             self.logger.error("AVAudioPlayer decode error: \(error?.localizedDescription ?? "unknown")")
             let cont = self.playbackContinuation
             self.playbackContinuation = nil
-            cont?.resume()
-        }
-    }
-}
-
-// MARK: - AVSpeechSynthesizerDelegate
-
-extension LessonVoiceWorker: AVSpeechSynthesizerDelegate {
-
-    nonisolated func speechSynthesizer(
-        _ synthesizer: AVSpeechSynthesizer,
-        didFinish utterance: AVSpeechUtterance
-    ) {
-        Task { @MainActor [weak self] in
-            guard let self else { return }
-            let cont = self.speechContinuation
-            self.speechContinuation = nil
-            cont?.resume()
-        }
-    }
-
-    nonisolated func speechSynthesizer(
-        _ synthesizer: AVSpeechSynthesizer,
-        didCancel utterance: AVSpeechUtterance
-    ) {
-        Task { @MainActor [weak self] in
-            guard let self else { return }
-            let cont = self.speechContinuation
-            self.speechContinuation = nil
             cont?.resume()
         }
     }
