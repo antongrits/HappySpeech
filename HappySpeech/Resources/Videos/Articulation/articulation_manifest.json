@@ -1,0 +1,167 @@
+[
+  {
+    "slug": "r_tongue_position",
+    "category": "articulation",
+    "soundFamily": "Р",
+    "exerciseId": "r_tongue_position",
+    "duration_seconds": 8,
+    "file_size_bytes": 1073939,
+    "prompt": "Abstract stylized 3D anatomical animation of a cartoon tongue tip pressing against the upper alveolar ridge then vibrating with soft ripple waves, abstract anatomical diagram style, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "fallback_prompt": "Abstract stylized 3D anatomical animation of a soft geometric shape vibrating rhythmically with gentle pulse waves, pastel animation, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "generated_at": "2026-05-23T20:26:08Z"
+  },
+  {
+    "slug": "r_barabanshchik",
+    "category": "articulation",
+    "soundFamily": "Р",
+    "exerciseId": "barabanshchik",
+    "duration_seconds": 8,
+    "file_size_bytes": 1127959,
+    "prompt": "Abstract stylized 3D anatomical animation of a stylized cartoon tongue tip tapping behind upper teeth in a rhythmic drumming pattern, smooth looping motion, anatomical cross-section view, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "fallback_prompt": "Abstract stylized 3D anatomical animation of a soft rounded shape bouncing rhythmically like a drumstick, abstract kawaii animation, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "generated_at": "2026-05-23T20:26:56Z"
+  },
+  {
+    "slug": "r_motorchik",
+    "category": "articulation",
+    "soundFamily": "Р",
+    "exerciseId": "motorchik",
+    "duration_seconds": 8,
+    "file_size_bytes": 863894,
+    "prompt": "Abstract stylized 3D anatomical animation of a stylized cartoon tongue trembling rapidly like a tiny motor, smooth vibration animation with motion blur streaks, anatomical illustration style, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "fallback_prompt": "Abstract stylized 3D anatomical animation of a soft oval shape spinning and vibrating like a motor with radial motion lines, abstract kawaii style, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "generated_at": "2026-05-23T20:27:44Z"
+  },
+  {
+    "slug": "r_dyatel",
+    "category": "articulation",
+    "soundFamily": "Р",
+    "exerciseId": "dyatel",
+    "duration_seconds": 8,
+    "file_size_bytes": 1263152,
+    "prompt": "Abstract stylized 3D anatomical animation of a cartoon stylized woodpecker beak tapping rapidly in rhythm, smooth loop, kawaii illustration, no human elements, pastel colors, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "fallback_prompt": "Abstract stylized 3D anatomical animation of a rounded geometric shape tapping repeatedly against a surface in rapid staccato rhythm, abstract animation, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "generated_at": "2026-05-23T20:28:31Z"
+  },
+  {
+    "slug": "sh_cup_position",
+    "category": "articulation",
+    "soundFamily": "Ш",
+    "exerciseId": "sh_cup_position",
+    "duration_seconds": 8,
+    "file_size_bytes": 1125074,
+    "prompt": "Abstract stylized 3D anatomical animation of a cartoon tongue curling into a cup shape inside an abstract mouth cavity, soft pastel anatomical cross-section, smooth morph animation, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "fallback_prompt": "Abstract stylized 3D anatomical animation of a flat geometric shape slowly curling into a cup form, smooth morphing animation, soft pastel colors, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "generated_at": "2026-05-23T20:29:27Z"
+  },
+  {
+    "slug": "sh_air_flow",
+    "category": "articulation",
+    "soundFamily": "Ш",
+    "exerciseId": "sh_air_flow",
+    "duration_seconds": 8,
+    "file_size_bytes": 820520,
+    "prompt": "Abstract stylized 3D anatomical animation of abstract warm air flow visualized as golden-amber curved streamlines flowing over a stylized tongue surface, kawaii fluid dynamics illustration, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "fallback_prompt": "Abstract stylized 3D anatomical animation of soft warm-colored curved lines flowing smoothly over a rounded surface, abstract fluid animation, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "generated_at": "2026-05-23T20:30:24Z"
+  },
+  {
+    "slug": "sh_lip_round",
+    "category": "articulation",
+    "soundFamily": "Ш",
+    "exerciseId": "sh_lip_round",
+    "duration_seconds": 8,
+    "file_size_bytes": 784731,
+    "prompt": "Abstract stylized 3D anatomical animation of stylized cartoon lips rounding into a soft O shape, smooth looping morph animation, kawaii illustration, cream and coral palette, no face shown, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "fallback_prompt": "Abstract stylized 3D anatomical animation of a soft oval shape slowly rounding and puckering in smooth morph loop, abstract kawaii animation, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "generated_at": "2026-05-23T20:31:59Z"
+  },
+  {
+    "slug": "sh_zhuk_zhuzhit",
+    "category": "articulation",
+    "soundFamily": "Ш",
+    "exerciseId": "zhuk_zhuzhit",
+    "duration_seconds": 8,
+    "file_size_bytes": 1512182,
+    "prompt": "Abstract stylized 3D anatomical animation of a kawaii cartoon bee character hovering and buzzing with vibrating wings, soft yellow and black stripes, round friendly design, pastel background, smooth loop, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "fallback_prompt": "Abstract stylized 3D anatomical animation of a round striped character vibrating with motion waves around it, abstract kawaii animation, yellow tones, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "generated_at": "2026-05-23T20:32:56Z"
+  },
+  {
+    "slug": "s_tongue_low",
+    "category": "articulation",
+    "soundFamily": "С",
+    "exerciseId": "s_tongue_low",
+    "duration_seconds": 8,
+    "file_size_bytes": 1038803,
+    "prompt": "Abstract stylized 3D anatomical animation of a stylized cartoon tongue lying flat and low touching the lower front teeth tips, soft anatomical cross-section view, smooth settling animation, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "fallback_prompt": "Abstract stylized 3D anatomical animation of a flat soft shape resting at the bottom of a curved cavity, smooth settling motion, pastel animation, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "generated_at": "2026-05-23T20:33:53Z"
+  },
+  {
+    "slug": "s_air_cool",
+    "category": "articulation",
+    "soundFamily": "С",
+    "exerciseId": "s_air_cool",
+    "duration_seconds": 8,
+    "file_size_bytes": 1450233,
+    "prompt": "Abstract stylized 3D anatomical animation of abstract cool blue-white air stream whistling through a narrow groove in a stylized tongue, kawaii fluid illustration, ice-mint color palette, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "fallback_prompt": "Abstract stylized 3D anatomical animation of thin cool-colored streamlines passing through a narrow gap, abstract fluid dynamics animation, icy blue tones, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "generated_at": "2026-05-23T20:34:41Z"
+  },
+  {
+    "slug": "s_smile_lips",
+    "category": "articulation",
+    "soundFamily": "С",
+    "exerciseId": "s_smile_lips",
+    "duration_seconds": 8,
+    "file_size_bytes": 896268,
+    "prompt": "Abstract stylized 3D anatomical animation of stylized cartoon lips forming a gentle wide smile position, smooth looping morph animation, kawaii illustration, soft pink coral palette, no face shown, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "fallback_prompt": "Abstract stylized 3D anatomical animation of a soft shape stretching horizontally into a gentle smile form, smooth morphing loop, pastel pink tones, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "generated_at": "2026-05-23T20:35:28Z"
+  },
+  {
+    "slug": "s_zmeya_shipit",
+    "category": "articulation",
+    "soundFamily": "С",
+    "exerciseId": "zmeya_shipit",
+    "duration_seconds": 8,
+    "file_size_bytes": 910910,
+    "prompt": "Abstract stylized 3D anatomical animation of a kawaii cartoon snake character coiling and hissing with a forked tongue flickering, soft green scales, round friendly design, pastel background, smooth loop, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "fallback_prompt": "Abstract stylized 3D anatomical animation of a wavy green shape coiling smoothly with a small forked tip flickering, abstract kawaii animation, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "generated_at": "2026-05-23T20:36:43Z"
+  },
+  {
+    "slug": "l_tongue_tip_alveolar",
+    "category": "articulation",
+    "soundFamily": "Л",
+    "exerciseId": "l_tongue_tip_alveolar",
+    "duration_seconds": 8,
+    "file_size_bytes": 1034863,
+    "prompt": "Abstract stylized 3D anatomical animation of a stylized cartoon tongue tip making contact with the upper alveolar ridge, soft anatomical cross-section diagram, gentle tap animation with soft bounce, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "fallback_prompt": "Abstract stylized 3D anatomical animation of a soft rounded shape touching a curved surface above it with a gentle bounce, abstract kawaii animation, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "generated_at": "2026-05-23T20:37:30Z"
+  },
+  {
+    "slug": "l_side_air",
+    "category": "articulation",
+    "soundFamily": "Л",
+    "exerciseId": "l_side_air",
+    "duration_seconds": 8,
+    "file_size_bytes": 1292048,
+    "prompt": "Abstract stylized 3D anatomical animation of abstract air flow visualization of air streaming along both sides of a stylized tongue pressed at center, kawaii fluid illustration, soft lavender-blue palette, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "fallback_prompt": "Abstract stylized 3D anatomical animation of soft curved streamlines flowing around the sides of a central rounded shape, abstract fluid animation, lavender tones, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "generated_at": "2026-05-23T20:38:17Z"
+  },
+  {
+    "slug": "l_lopata",
+    "category": "articulation",
+    "soundFamily": "Л",
+    "exerciseId": "lopata",
+    "duration_seconds": 8,
+    "file_size_bytes": 759806,
+    "prompt": "Abstract stylized 3D anatomical animation of a stylized cartoon tongue flattening wide like a shovel shape, smooth morph animation, kawaii anatomical illustration style, warm cream palette, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "fallback_prompt": "Abstract stylized 3D anatomical animation of a rounded shape slowly flattening and widening into a broad shovel-like form, smooth morphing animation, warm tones, soft pastel cream-yellow palette, clean white background, smooth motion, kawaii medical illustration style, friendly cartoon rendering, no text labels, no human face, 8 seconds.",
+    "generated_at": "2026-05-23T20:39:04Z"
+  }
+]
