@@ -28,6 +28,10 @@ final class WorldMapInteractor: WorldMapBusinessLogic {
     // MARK: - Collaborators
 
     var presenter: (any WorldMapPresentationLogic)?
+    /// v32 P2 — опциональный репозиторий ребёнка нужен для smart-unlock зон
+    /// на основе `progressSummary[sound] >= 0.5`. nil — fallback на legacy
+    /// логику (всё как раньше), чтобы preview / standalone не падали.
+    var childRepository: (any ChildRepository)?
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "WorldMap")
 
@@ -45,6 +49,8 @@ final class WorldMapInteractor: WorldMapBusinessLogic {
     private var recommendedLevelId: String?
     private var fatigueHistory: [Bool] = []
     private var sessionHistory: [MapSessionRecord] = []
+    /// Кеш progressSummary последнего загруженного ребёнка.
+    private var progressSummary: [String: Double] = [:]
 
     // MARK: - BusinessLogic
 
@@ -58,10 +64,35 @@ final class WorldMapInteractor: WorldMapBusinessLogic {
         dailyStreak = 4
         childAge = request.childAge ?? 6
 
+        // v32 P2 — асинхронно подгружаем progressSummary и применяем умный
+        // unlock к зонам. Если репозитория нет (preview / unit-test) или
+        // загрузка падает — оставляем seed-состояние «как есть».
+        Task { [weak self] in
+            guard let self,
+                  let repo = self.childRepository,
+                  !request.childId.isEmpty else {
+                await self?.finishLoadMap(highlightedSound: request.highlightedSound)
+                return
+            }
+            do {
+                let profile = try await repo.fetch(id: request.childId)
+                await MainActor.run {
+                    self.progressSummary = profile.progressSummary
+                    self.applyProgressSummaryUnlock()
+                }
+            } catch {
+                self.logger.notice("loadMap progressSummary fetch failed: \(error.localizedDescription)")
+            }
+            await self.finishLoadMap(highlightedSound: request.highlightedSound)
+        }
+    }
+
+    /// Финализирует loadMap-ответ после (опциональной) подгрузки прогресса.
+    private func finishLoadMap(highlightedSound: String?) async {
         let currentIsland = islands.first(where: { $0.isCurrentLocation }) ?? islands[0]
         lyalyaPosition = currentIsland.islandId
 
-        let highlightedId = request.highlightedSound.flatMap { sound in
+        let highlightedId = highlightedSound.flatMap { sound in
             zones.first(where: { $0.sounds.contains(sound) })?.id
         }
 
@@ -79,6 +110,49 @@ final class WorldMapInteractor: WorldMapBusinessLogic {
             recommendedLevelId: recommendedLevelId
         )
         presenter?.presentLoadMap(response)
+    }
+
+    /// v32 P2 — smart unlock: если все звуки prerequisite-зоны имеют
+    /// `progressSummary[sound] >= 0.5`, остров и зона разблокируются и
+    /// получают подходящий progress (как минимум 0.05, чтобы не казалось
+    /// «пусто»). Vowels всегда открыты как стартовая зона.
+    private func applyProgressSummaryUnlock() {
+        zones = zones.map { zone in
+            var copy = zone
+            // Корневая зона (без prerequisite) всегда доступна.
+            guard let prereqId = zone.prerequisiteZoneId else {
+                copy.isLocked = false
+                return copy
+            }
+            // Звуки prerequisite-зоны должны быть в среднем освоены ≥ 0.5.
+            guard let prereq = zones.first(where: { $0.id == prereqId }) else {
+                return copy
+            }
+            let prereqSounds = prereq.sounds
+            guard !prereqSounds.isEmpty else {
+                copy.isLocked = false
+                return copy
+            }
+            let masteredCount = prereqSounds.reduce(0) { acc, sound in
+                acc + ((progressSummary[sound] ?? 0) >= 0.5 ? 1 : 0)
+            }
+            // Разблокируем, если ≥ 50% prerequisite-звуков освоены.
+            let shouldUnlock = Double(masteredCount) / Double(prereqSounds.count) >= 0.5
+            if shouldUnlock {
+                copy.isLocked = false
+            }
+            return copy
+        }
+
+        // Зеркалим разблокировку зон в острова — иначе locked-флаг у MapIsland
+        // не совпадёт с зоной и WorldZoneTile покажет «Заблокировано» по старому.
+        islands = islands.map { island in
+            var copy = island
+            if let matchingZone = zones.first(where: { $0.id == island.zoneId }) {
+                copy.isLocked = matchingZone.isLocked
+            }
+            return copy
+        }
     }
 
     func selectZone(_ request: WorldMapModels.SelectZone.Request) {
@@ -476,6 +550,22 @@ private extension WorldMapInteractor {
 
     static func makeIslandsPartTwo() -> [MapIsland] {
         [
+            // v32 P2 — Аффрикаты (Ч, Щ) выделены в отдельный остров.
+            // Методически правильно: Ч/Щ — отдельная категория звуков и часто
+            // ставятся уже после Ш/Ж, требуя своих упражнений.
+            MapIsland(
+                id: "island-affricates",
+                islandId: .affricates,
+                zoneId: "zone-affricates",
+                name: String(localized: "worldMap.island.affricates"),
+                icon: "tortoise.fill",
+                position: CGPoint(x: 0.50, y: 0.52),
+                isLocked: true,
+                isCompleted: false,
+                isCurrentLocation: false,
+                completionFraction: 0.0,
+                levels: makeAffricateLevels()
+            ),
             MapIsland(
                 id: "island-sonorant",
                 islandId: .sonorant,
@@ -515,6 +605,21 @@ private extension WorldMapInteractor {
                 completionFraction: 0.0,
                 levels: makeSpecialLevels()
             )
+        ]
+    }
+
+    static func makeAffricateLevels() -> [MapLevel] {
+        [
+            MapLevel(id: "affr-l1", name: String(localized: "worldMap.level.isolated"),
+                     stage: .isolated, isLocked: true, isCompleted: false, successRate: 0.0, stars: 0),
+            MapLevel(id: "affr-l2", name: String(localized: "worldMap.level.syllable"),
+                     stage: .syllable, isLocked: true, isCompleted: false, successRate: 0.0, stars: 0),
+            MapLevel(id: "affr-l3", name: String(localized: "worldMap.level.wordInit"),
+                     stage: .wordInit, isLocked: true, isCompleted: false, successRate: 0.0, stars: 0),
+            MapLevel(id: "affr-l4", name: String(localized: "worldMap.level.phrase"),
+                     stage: .phrase, isLocked: true, isCompleted: false, successRate: 0.0, stars: 0),
+            MapLevel(id: "affr-l5", name: String(localized: "worldMap.level.story"),
+                     stage: .story, isLocked: true, isCompleted: false, successRate: 0.0, stars: 0)
         ]
     }
 
@@ -669,11 +774,14 @@ private extension WorldMapInteractor {
                 recommendedLessonCount: 20,
                 estimatedMinutesPerSession: 12
             ),
+            // v32 P2 — Шипящие фокусируются на Ш/Ж, аффрикаты Ч/Щ переехали
+            // в собственную зону `zone-affricates` (методически они часто
+            // ставятся уже после шипящих).
             WorldZone(
                 id: "zone-hissing",
                 name: String(localized: "worldMap.zone.hissing"),
                 icon: "ant.fill",
-                sounds: ["Ш", "Ж", "Ч", "Щ"],
+                sounds: ["Ш", "Ж"],
                 progress: 0.30,
                 completedLessons: 6,
                 totalLessons: 20,
@@ -691,6 +799,26 @@ private extension WorldMapInteractor {
 
     private static func makeSeedZonesPartTwo() -> [WorldZone] {
         [
+            // v32 P2 — Аффрикаты (Ч, Щ) как отдельная категория звуков.
+            // По умолчанию заблокированы; разблокировка считается из
+            // `progressSummary[Ш]` и `[Ж]` (см. computeUnlockFromProgressSummary).
+            WorldZone(
+                id: "zone-affricates",
+                name: String(localized: "worldMap.zone.affricates"),
+                icon: "tortoise.fill",
+                sounds: ["Ч", "Щ"],
+                progress: 0.0,
+                completedLessons: 0,
+                totalLessons: 18,
+                colorName: "rose",
+                isLocked: true,
+                position: CGPoint(x: 0.50, y: 0.52),
+                isCurrentLocation: false,
+                description: String(localized: "worldMap.zone.affricates.desc"),
+                prerequisiteZoneId: "zone-hissing",
+                recommendedLessonCount: 18,
+                estimatedMinutesPerSession: 12
+            ),
             WorldZone(
                 id: "zone-sonorant",
                 name: String(localized: "worldMap.zone.sonorant"),
@@ -752,6 +880,7 @@ enum MapIslandID: String, Sendable {
     case vowels
     case whistling
     case hissing
+    case affricates    // v32 P2 — Ч, Щ выделены из шипящих в отдельный остров.
     case sonorant
     case velar
     case special

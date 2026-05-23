@@ -382,30 +382,53 @@ private struct BingoCellView: View {
                     .fill(backgroundFill)
 
                 if cell.isMarked {
-                    VStack(spacing: 2) {
+                    VStack(spacing: 1) {
+                        // v32 P1 #3: тонкая иконка-«галочка» поверх иллюстрации,
+                        // чтобы дети 5–6 лет видели сам отмеченный элемент по
+                        // картинке, а не только по тексту.
+                        HSContentSymbol(
+                            ListenAndChoosePresenter.imageSymbol(for: cell.word),
+                            size: 18,
+                            tint: ColorTokens.Overlay.onAccent
+                        )
+                        .accessibilityHidden(true)
                         Image(systemName: "checkmark")
-                            .font(TypographyTokens.caption(14))
+                            .font(TypographyTokens.caption(12).weight(.bold))
                             .foregroundStyle(ColorTokens.Overlay.onAccent)
                             .accessibilityHidden(true)
                         Text(cell.word)
-                            .font(TypographyTokens.body(11))
+                            .font(TypographyTokens.body(10))
                             .foregroundStyle(ColorTokens.Overlay.onAccent)
                             .lineLimit(1)
                             .minimumScaleFactor(0.55)
                             .strikethrough(!cell.isWinner, color: ColorTokens.Overlay.onAccent.opacity(0.7))
                     }
-                    .padding(.horizontal, 4)
+                    .padding(.horizontal, 3)
+                    .padding(.vertical, 2)
                 } else {
-                    Text(cell.word)
-                        .font(TypographyTokens.body(12))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.55)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 4)
+                    VStack(spacing: 2) {
+                        // v32 P1 #3: каждая клетка получает иллюстрацию слова.
+                        // HSContentSymbol сам решает: Asset (Illustrations/word_*)
+                        // или SF Symbol fallback — благодаря этому методически
+                        // осмысленно для 5-летних, ещё не читающих, детей.
+                        HSContentSymbol(
+                            ListenAndChoosePresenter.imageSymbol(for: cell.word),
+                            size: 22,
+                            tint: ColorTokens.Brand.primary
+                        )
+                        .accessibilityHidden(true)
+                        Text(cell.word)
+                            .font(TypographyTokens.body(11))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.55)
+                            .multilineTextAlignment(.center)
+                    }
+                    .padding(.horizontal, 3)
+                    .padding(.vertical, 2)
                 }
             }
-            .frame(maxWidth: .infinity, minHeight: 60)
+            .frame(maxWidth: .infinity, minHeight: 72)
             .overlay(
                 RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
                     .strokeBorder(borderColor, lineWidth: cell.isWinner ? 3 : 1)

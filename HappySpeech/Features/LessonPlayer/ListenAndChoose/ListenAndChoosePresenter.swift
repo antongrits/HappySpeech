@@ -36,6 +36,11 @@ final class ListenAndChoosePresenter: ListenAndChoosePresentationLogic {
             progressText = nil
         }
 
+        // Q3.6 — локализованный заголовок бейджа сложности.
+        let difficultyTitle = String(
+            localized: String.LocalizationValue(response.difficulty.titleKey)
+        )
+
         let vm = ListenAndChooseModels.LoadRound.ViewModel(
             targetWord: response.targetWord,
             options: options,
@@ -43,7 +48,9 @@ final class ListenAndChoosePresenter: ListenAndChoosePresentationLogic {
             instructionText: instruction,
             hintText: response.hint,
             progressText: progressText,
-            isRetry: response.isRetry
+            isRetry: response.isRetry,
+            difficulty: response.difficulty,
+            difficultyTitle: difficultyTitle
         )
         display?.displayLoadRound(vm)
     }

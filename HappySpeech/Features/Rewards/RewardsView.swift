@@ -21,6 +21,7 @@ struct RewardsView: View {
     // MARK: - Environment
 
     @Environment(AppContainer.self) private var container
+    @Environment(AppCoordinator.self) private var coordinator
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dismiss) private var dismiss
     @Environment(\.colorScheme) private var colorScheme
@@ -73,6 +74,7 @@ struct RewardsView: View {
 
                 VStack(spacing: 0) {
                     headerSection
+                    leaderboardBanner
                     tabFilterSection
                     contentSection
                 }
@@ -187,6 +189,53 @@ struct RewardsView: View {
         case 0.10..<0.50: return .happy
         default:          return .waving
         }
+    }
+
+    // MARK: - Mini leaderboard banner (v32 P2)
+    //
+    // 1-строчный социальный мотиватор над сеткой стикеров. Tap → переход в
+    // полный лидерборд произношения. Сам лидерборд — parent-circuit (COPPA),
+    // переход осознанный и инициирует ребёнок, а не reads child data.
+    // Для preview / standalone использует hardcoded плейсхолдер,
+    // потому что реальный leaderboard worker подключится позже.
+    private var leaderboardBanner: some View {
+        Button {
+            container.hapticService.selection()
+            let parentId = coordinator.authUser?.uid ?? ""
+            coordinator.navigate(to: .pronunciationLeaderboard(parentId: parentId))
+        } label: {
+            HSCard(style: .elevated) {
+                HStack(spacing: SpacingTokens.small) {
+                    Image(systemName: "star.fill")
+                        .font(TypographyTokens.body(16).weight(.bold))
+                        .foregroundStyle(ColorTokens.Brand.gold)
+                        .accessibilityHidden(true)
+                    Text(String(localized: "rewards.leaderboard.banner"))
+                        .font(TypographyTokens.body(14).weight(.semibold))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.80)
+                    Spacer(minLength: 0)
+                    Image(systemName: "chevron.right")
+                        .font(TypographyTokens.caption(12).weight(.semibold))
+                        .foregroundStyle(ColorTokens.Kid.inkSoft)
+                        .accessibilityHidden(true)
+                }
+                .padding(.horizontal, SpacingTokens.regular)
+                .padding(.vertical, SpacingTokens.small)
+            }
+            .overlay(
+                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                    .strokeBorder(ColorTokens.Brand.gold.opacity(0.5), lineWidth: 1.5)
+            )
+        }
+        .buttonStyle(.plain)
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .padding(.bottom, SpacingTokens.small)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(String(localized: "rewards.leaderboard.banner"))
+        .accessibilityHint(String(localized: "rewards.leaderboard.banner.hint"))
+        .accessibilityAddTraits(.isButton)
     }
 
     private var tabFilterSection: some View {

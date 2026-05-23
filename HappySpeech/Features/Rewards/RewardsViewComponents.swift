@@ -411,4 +411,5 @@ struct StickerUnlockOverlay: View {
 #Preview("Rewards") {
     RewardsView(childId: "preview-child")
         .environment(AppContainer.preview())
+        .environment(AppCoordinator())
 }

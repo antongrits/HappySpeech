@@ -221,6 +221,22 @@ enum ARTutorialCatalog {
                 animationSystemSymbol: "book.pages",
                 accentColorIndex: 3
             )
+        case "ar-songs", "ar-fairy-tale", "ar-breathing-exercise":
+            // v32 placeholder тайлы используют общий tutorial AR-зеркала — точка
+            // входа одинаковая, инструкция корректна. Когда появятся реальные
+            // сцены, ARTutorialCatalog получит выделенные шаги.
+            return ARTutorial(
+                id: gameId,
+                titleKey: "ar.tutorial.arMirror.title",
+                bodyKey: "ar.tutorial.arMirror.body",
+                steps: [
+                    ARTutorialStep(id: "s1", icon: "camera.fill", textKey: "ar.tutorial.arMirror.step1"),
+                    ARTutorialStep(id: "s2", icon: "face.smiling.inverse", textKey: "ar.tutorial.arMirror.step2"),
+                    ARTutorialStep(id: "s3", icon: "sparkles", textKey: "ar.tutorial.arMirror.step3")
+                ],
+                animationSystemSymbol: "sparkles",
+                accentColorIndex: 1
+            )
         default:
             return ARTutorial(
                 id: gameId,
@@ -543,6 +559,45 @@ enum ARGameCatalog {
             targetSounds: [],
             requiresFaceTracking: true,
             destination: .arStoryQuest
+        ),
+
+        // v32 P2 — 3 placeholder тайла. Все они пока маршрутизируются на
+        // `arMirror` (общая AR-зона), но методически и визуально дают ребёнку
+        // понять, что в зоне есть разнообразие активностей.
+        // Полноценные сцены откроются в следующих спринтах, когда появятся
+        // отдельные AR-направления.
+        ARGame(
+            id: "ar-songs",
+            nameKey: "ar.game.arSongs.name",
+            descriptionKey: "ar.game.arSongs.desc",
+            iconName: "music.note.list",
+            difficulty: 1,
+            estimatedMinutes: 4,
+            targetSounds: [],
+            requiresFaceTracking: true,
+            destination: .arMirror
+        ),
+        ARGame(
+            id: "ar-fairy-tale",
+            nameKey: "ar.game.arFairyTale.name",
+            descriptionKey: "ar.game.arFairyTale.desc",
+            iconName: "book.closed.fill",
+            difficulty: 2,
+            estimatedMinutes: 5,
+            targetSounds: [],
+            requiresFaceTracking: true,
+            destination: .arMirror
+        ),
+        ARGame(
+            id: "ar-breathing-exercise",
+            nameKey: "ar.game.arBreathingExercise.name",
+            descriptionKey: "ar.game.arBreathingExercise.desc",
+            iconName: "lungs.fill",
+            difficulty: 1,
+            estimatedMinutes: 3,
+            targetSounds: [],
+            requiresFaceTracking: true,
+            destination: .arMirror
         )
     ]
 

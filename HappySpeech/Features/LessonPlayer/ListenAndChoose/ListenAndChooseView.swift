@@ -65,6 +65,7 @@ struct ListenAndChooseView: View {
     var body: some View {
         VStack(spacing: SpacingTokens.large) {
             if let vm {
+                difficultyChip(vm)
                 instructionSection(vm)
                 audioPlayerRow(vm)
                 phaseLabel
@@ -83,6 +84,48 @@ struct ListenAndChooseView: View {
             staggerTask?.cancel()
             staggerTask = nil
         }
+    }
+
+    // MARK: Difficulty chip (Q3.6)
+
+    /// Маленький чип «Уровень N ★…» в шапке карточки вопроса. Цвет — по тиеру:
+    /// easy → mint, medium → butter, hard → primary.
+    private func difficultyChip(
+        _ vm: ListenAndChooseModels.LoadRound.ViewModel
+    ) -> some View {
+        let tint: Color = {
+            switch vm.difficulty {
+            case .easy:   return ColorTokens.Brand.mint
+            case .medium: return ColorTokens.Brand.butter
+            case .hard:   return ColorTokens.Brand.primary
+            }
+        }()
+        return HStack(spacing: SpacingTokens.tiny) {
+            Text(vm.difficultyTitle)
+                .font(TypographyTokens.body(13).weight(.semibold))
+                .foregroundStyle(ColorTokens.Kid.ink)
+            HStack(spacing: 2) {
+                ForEach(0..<3, id: \.self) { idx in
+                    Image(systemName: idx < vm.difficulty.starCount ? "star.fill" : "star")
+                        .font(TypographyTokens.caption(11))
+                        .foregroundStyle(tint)
+                        .accessibilityHidden(true)
+                }
+            }
+        }
+        .padding(.horizontal, SpacingTokens.regular)
+        .padding(.vertical, SpacingTokens.tiny)
+        .background(
+            Capsule().fill(tint.opacity(0.18))
+        )
+        .overlay(
+            Capsule().strokeBorder(tint.opacity(0.45), lineWidth: 1)
+        )
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(
+            "\(vm.difficultyTitle), \(vm.difficulty.starCount) " +
+            String(localized: "listen.difficulty.stars.a11y")
+        )
     }
 
     // MARK: Phase label (под кнопкой проигрывания)

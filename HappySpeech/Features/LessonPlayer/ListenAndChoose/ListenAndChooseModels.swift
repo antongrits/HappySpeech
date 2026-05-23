@@ -2,6 +2,55 @@ import Foundation
 
 // MARK: - ListenAndChoose VIP Models
 
+/// Уровень сложности раунда — задаёт визуальную плотность сетки и
+/// (если seed-данные позволяют) фонетический критерий выбора слов.
+///
+/// Маппинг номера вопроса → уровня (см. `tier(for:)`):
+///   Q1–3 → easy   (2 варианта, в идеале — звук в начале слова)
+///   Q4–6 → medium (3 варианта, в идеале — в середине)
+///   Q7–8 → hard   (4 варианта, в идеале — в конце)
+public enum ListenAndChooseDifficulty: Sendable, Equatable, Hashable {
+    case easy
+    case medium
+    case hard
+
+    /// Тиерное правило сложности на основе 1-based номера вопроса в сессии.
+    public static func tier(for questionNumber: Int) -> ListenAndChooseDifficulty {
+        switch questionNumber {
+        case ..<4:  return .easy
+        case 4...6: return .medium
+        default:    return .hard
+        }
+    }
+
+    /// Сколько вариантов ответа показывать.
+    public var optionCount: Int {
+        switch self {
+        case .easy:   return 2
+        case .medium: return 3
+        case .hard:   return 4
+        }
+    }
+
+    /// Ключ локализованной строки (Q3.6) для бейджа в карточке вопроса.
+    public var titleKey: String {
+        switch self {
+        case .easy:   return "listen.difficulty.tier1"
+        case .medium: return "listen.difficulty.tier2"
+        case .hard:   return "listen.difficulty.tier3"
+        }
+    }
+
+    /// Кол-во заполненных «звёзд» в бейдже.
+    public var starCount: Int {
+        switch self {
+        case .easy:   return 1
+        case .medium: return 2
+        case .hard:   return 3
+        }
+    }
+}
+
 enum ListenAndChooseModels {
 
     // MARK: LoadRound
@@ -23,6 +72,8 @@ enum ListenAndChooseModels {
             let totalQuestions: Int
             /// True if this round is a retry of a previously wrong answer.
             let isRetry: Bool
+            /// Уровень сложности раунда (см. `ListenAndChooseDifficulty.tier(for:)`).
+            let difficulty: ListenAndChooseDifficulty
 
             init(
                 targetWord: String,
@@ -32,7 +83,8 @@ enum ListenAndChooseModels {
                 hint: String? = nil,
                 questionNumber: Int = 1,
                 totalQuestions: Int = 1,
-                isRetry: Bool = false
+                isRetry: Bool = false,
+                difficulty: ListenAndChooseDifficulty = .easy
             ) {
                 self.targetWord = targetWord
                 self.options = options
@@ -42,6 +94,7 @@ enum ListenAndChooseModels {
                 self.questionNumber = questionNumber
                 self.totalQuestions = totalQuestions
                 self.isRetry = isRetry
+                self.difficulty = difficulty
             }
         }
         struct ViewModel {
@@ -52,6 +105,10 @@ enum ListenAndChooseModels {
             let hintText: String?
             let progressText: String?
             let isRetry: Bool
+            /// Сложность раунда — рисуется как чип «Уровень N ★…» над вариантами.
+            let difficulty: ListenAndChooseDifficulty
+            /// Готовая локализованная строка для бейджа (например, «Уровень 2»).
+            let difficultyTitle: String
 
             init(
                 targetWord: String,
@@ -60,7 +117,9 @@ enum ListenAndChooseModels {
                 instructionText: String,
                 hintText: String? = nil,
                 progressText: String? = nil,
-                isRetry: Bool = false
+                isRetry: Bool = false,
+                difficulty: ListenAndChooseDifficulty = .easy,
+                difficultyTitle: String = ""
             ) {
                 self.targetWord = targetWord
                 self.options = options
@@ -69,6 +128,8 @@ enum ListenAndChooseModels {
                 self.hintText = hintText
                 self.progressText = progressText
                 self.isRetry = isRetry
+                self.difficulty = difficulty
+                self.difficultyTitle = difficultyTitle
             }
         }
 

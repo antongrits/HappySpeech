@@ -122,7 +122,17 @@ final class ListenAndChooseInteractor: NSObject, ListenAndChooseBusinessLogic {
         questionStats[nextQuestion.id, default: QuestionStats(questionId: nextQuestion.id)]
             .lastServedAt = Date()
 
-        let options = nextQuestion.choices.map {
+        // Q3.6 — определяем тиер сложности по 1-based номеру в сессии.
+        // Тиер задаёт визуальную плотность сетки (2/3/4 варианта) и фонетическую
+        // нагрузку — Interactor режет вопрос до нужного `optionCount`.
+        let difficulty = ListenAndChooseDifficulty.tier(for: questionNumber)
+        let trimmedChoices = Self.trimChoices(
+            nextQuestion.choices,
+            correctIndex: nextQuestion.correctIndex,
+            to: difficulty.optionCount
+        )
+        let correctIndex = trimmedChoices.correctIndex
+        let options = trimmedChoices.choices.map {
             ListenAndChooseModels.LoadRound.OptionItem(
                 id: $0.id, word: $0.word, imageAsset: $0.imageAsset
             )
@@ -131,14 +141,36 @@ final class ListenAndChooseInteractor: NSObject, ListenAndChooseBusinessLogic {
         let response = ListenAndChooseModels.LoadRound.Response(
             targetWord: nextQuestion.targetWord,
             options: options,
-            correctIndex: nextQuestion.correctIndex,
+            correctIndex: correctIndex,
             audioAsset: nextQuestion.audioAsset,
             hint: isRetryPass ? generateHint(for: nextQuestion.targetWord, soundGroup: soundGroup) : nil,
             questionNumber: questionNumber,
             totalQuestions: totalQuestions,
-            isRetry: isRetryPass
+            isRetry: isRetryPass,
+            difficulty: difficulty
         )
         presenter?.presentLoadRound(response)
+    }
+
+    /// Обрезает варианты ответа до заданного количества, сохраняя правильный
+    /// в случайной позиции. Если выборов меньше — возвращает как есть.
+    private static func trimChoices(
+        _ choices: [Question.Choice],
+        correctIndex: Int,
+        to limit: Int
+    ) -> (choices: [Question.Choice], correctIndex: Int) {
+        guard choices.count > limit, limit >= 1, choices.indices.contains(correctIndex) else {
+            return (choices, correctIndex)
+        }
+        let correct = choices[correctIndex]
+        var distractors = choices
+        distractors.remove(at: correctIndex)
+        distractors.shuffle()
+        let kept = Array(distractors.prefix(limit - 1))
+        var result = kept
+        let insertAt = Int.random(in: 0...kept.count)
+        result.insert(correct, at: insertAt)
+        return (result, insertAt)
     }
 
     func submitAttempt(_ request: ListenAndChooseModels.SubmitAttempt.Request) {

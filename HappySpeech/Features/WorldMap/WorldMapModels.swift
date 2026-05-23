@@ -261,7 +261,9 @@ struct WorldZone: Sendable, Identifiable, Equatable {
     var completedLessons: Int
     var totalLessons: Int
     let colorName: String
-    let isLocked: Bool
+    /// v32 P2 — mutable, чтобы smart-unlock мог пересчитать после загрузки
+    /// `progressSummary` ребёнка (см. `applyProgressSummaryUnlock`).
+    var isLocked: Bool
     /// Нормализованная позиция острова на канвасе [0..1, 0..1]. У сетки игнорируется.
     let position: CGPoint
     /// Маркер «текущего» острова — здесь стоит Ляля-маскот.

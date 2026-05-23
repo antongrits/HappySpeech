@@ -476,6 +476,8 @@ private extension String {
         case "gold":    return ColorTokens.Brand.gold
         case "sky":     return ColorTokens.Brand.sky
         case "primary": return ColorTokens.Brand.primary
+        // v32 P2 — rose добавлен для новой зоны «Аффрикаты».
+        case "rose":    return ColorTokens.Brand.rose
         default:        return ColorTokens.Brand.sky
         }
     }

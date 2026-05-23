@@ -366,6 +366,9 @@ struct WorldMapView: View {
         let presenter = WorldMapPresenter()
         let router = WorldMapRouter()
 
+        // v32 P2 — даём интерактору доступ к childRepository, чтобы
+        // smart-unlock считал прогресс реального ребёнка, а не из seed.
+        interactor.childRepository = container.childRepository
         interactor.presenter = presenter
         presenter.display = display
         router.onDismiss = onDismiss
