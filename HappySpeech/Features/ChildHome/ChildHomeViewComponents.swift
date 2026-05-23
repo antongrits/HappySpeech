@@ -197,6 +197,7 @@ struct ChildHomeStreakBadge: View {
                 Image(systemName: "flame.fill")
                     .font(TypographyTokens.caption(14))
                     .foregroundStyle(ColorTokens.Semantic.warning)
+                    .hsSymbolEffect(.bounce, value: streak)
                     .accessibilityHidden(true)
 
                 // Diploma fix #3a — chip-капсула не должна резать двузначные

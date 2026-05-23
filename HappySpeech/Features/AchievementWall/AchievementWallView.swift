@@ -48,6 +48,7 @@ struct AchievementWallView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(\.hapticService) private var hapticService
@@ -67,6 +68,16 @@ struct AchievementWallView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+
+                // Step 10 Batch A — Pattern 1: mesh .rewards (золотая палитра ≈
+                // celebration) полноценным фоном вместо плоского Kid.bg.
+                // Slight opacity-таплинг для тёмного режима, чтобы gold не выгорал.
+                HSMeshGradientBackground(palette: .rewards, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.40 : 0.75)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
                 content
             }
             .navigationTitle(Text("Моя стена"))
@@ -105,7 +116,9 @@ struct AchievementWallView: View {
     // MARK: - Hero polaroid
 
     private func heroPolaroid(_ vm: AchievementWallModels.LoadWall.ViewModel) -> some View {
-        HSCard(style: .tinted(ColorTokens.Brand.butter.opacity(0.18))) {
+        // Step 10 Batch A — Pattern 2: hero обёрнут в HSLiquidGlassCard.elevated.
+        // Mesh .rewards-палитра просвечивает за стеклом — kavsoft-style hero.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .celebrating, size: 60)
                     .accessibilityHidden(true)
@@ -128,12 +141,22 @@ struct AchievementWallView: View {
     // MARK: - Grid
 
     private func gridSection(_ vm: AchievementWallModels.LoadWall.ViewModel) -> some View {
+        // Step 10 Batch A — Pattern 3+4: stagger entrance via scrollTransition
+        // (fade+scale) и parallax-drift на каждой trophy-карточке. Reduce Motion
+        // отключает обе анимации внутри модификаторов / scrollTransition.
         LazyVGrid(columns: gridColumns, spacing: SpacingTokens.sp2) {
             ForEach(vm.cells) { cell in
                 badgeCell(cell)
                     .onTapGesture { openDetail(cell.id) }
+                    .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                        content
+                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))
+                    }
+                    .hsParallaxTile(factor: 0.25)
             }
         }
+        .animation(reduceMotion ? nil : MotionTokens.settleSpring, value: vm.cells.count)
     }
 
     private func badgeCell(_ cell: AchievementWallCellViewModel) -> some View {
@@ -146,6 +169,7 @@ struct AchievementWallView: View {
                     .font(.system(size: 38, weight: .semibold))
                     .foregroundStyle(badgeIconColor(for: cell))
                     .symbolRenderingMode(.hierarchical)
+                    .hsSymbolEffect(.bounce, value: cell.isUnlocked)
                     .accessibilityHidden(true)
                 if !cell.isUnlocked {
                     Image(systemName: "lock.fill")

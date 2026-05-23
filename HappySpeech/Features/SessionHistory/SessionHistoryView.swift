@@ -61,6 +61,16 @@ struct SessionHistoryView: View {
                     // F.tier1 v21: gradient мягче в dark, чтобы не размывал контент списка.
                     .opacity(colorScheme == .dark ? 0.85 : 1.0)
 
+                // Step 10 Batch A — Pattern 1: mesh .calm палитра (mint/sky/lilac)
+                // на очень низкой opacity — едва заметное «дыхание» цвета, не мешает
+                // читаемости списка сессий. Parent-tier: фон спокойный, аналитичный.
+                HSMeshGradientBackground(palette: .calm, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.12 : 0.18)
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
                 content
                     .refreshable { performRefresh() }
                     // v32 P1 — Ляля «думает» над аналитикой: corner-pin 56pt, topTrailing.
@@ -296,6 +306,7 @@ struct SessionHistoryView: View {
                     Image(systemName: "chart.line.uptrend.xyaxis")
                         .font(TypographyTokens.labelRounded(14))
                         .foregroundStyle(ColorTokens.Parent.accent)
+                        .hsSymbolEffect(.pulse, value: display.filteredCount)
                     Text(String(localized: "sessionHistory.chart.title"))
                         .font(TypographyTokens.caption(12).weight(.semibold))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)

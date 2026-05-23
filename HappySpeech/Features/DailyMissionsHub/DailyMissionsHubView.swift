@@ -9,12 +9,22 @@ struct DailyMissionsHubView: View {
     @State private var interactor: DailyMissionsHubInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppCoordinator.self) private var coordinator
 
     var body: some View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+
+                // Step 10 Batch A — Pattern 1: mesh .kidWarm палитра как фон.
+                HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.30 : 0.55)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
                 content
             }
             .navigationTitle(Text(String(localized: "missions.nav.title")))
@@ -58,7 +68,8 @@ struct DailyMissionsHubView: View {
     }
 
     private func hero(interactor: DailyMissionsHubInteractor) -> some View {
-        HSCard(style: .tinted(ColorTokens.Brand.sky.opacity(0.18))) {
+        // Step 10 Batch A — Pattern 2: hero обёрнут в HSLiquidGlassCard.elevated.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .pointing, size: 72)
                     .accessibilityHidden(true)
@@ -83,11 +94,20 @@ struct DailyMissionsHubView: View {
     }
 
     private func missionsList(interactor: DailyMissionsHubInteractor) -> some View {
+        // Step 10 Batch A — Pattern 3+4: stagger entrance (fade+scale через
+        // scrollTransition) и parallax-drift на каждой mission-карточке.
         VStack(spacing: SpacingTokens.sp2) {
             ForEach(DailyMissionsHubModels.Mission.allCases) { mission in
                 missionRow(mission, interactor: interactor)
+                    .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                        content
+                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))
+                    }
+                    .hsParallaxTile(factor: 0.25)
             }
         }
+        .animation(reduceMotion ? nil : MotionTokens.settleSpring, value: interactor.state.completed)
     }
 
     private func missionRow(
@@ -121,6 +141,7 @@ struct DailyMissionsHubView: View {
                         .foregroundStyle(done
                                          ? ColorTokens.Semantic.success
                                          : ColorTokens.Kid.inkSoft)
+                        .hsSymbolEffect(.bounce, value: done)
                 }
             }
         }

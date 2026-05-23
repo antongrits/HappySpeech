@@ -163,7 +163,9 @@ struct DailyChallengeView: View {
 
     @ViewBuilder
     private func goalCard(viewModel: DailyChallengeModels.Load.ViewModel) -> some View {
-        HSCard(style: .elevated) {
+        // Step 10 Batch A — Pattern 2: goal hero обёрнут в HSLiquidGlassCard.elevated.
+        // Mesh .rewards (gold/butter) просвечивает за стеклом — kavsoft-style.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
                 HStack(spacing: SpacingTokens.sp2) {
                     Image(systemName: viewModel.goalSymbol)
@@ -196,6 +198,7 @@ struct DailyChallengeView: View {
                         Image(systemName: "checkmark.seal.fill")
                             .font(.title2)
                             .foregroundStyle(ColorTokens.Semantic.success)
+                            .hsSymbolEffect(.bounce, value: viewModel.isCompleted)
                             .accessibilityLabel(Text("dailyChallenge.goal.completed.a11y"))
                     }
                 }

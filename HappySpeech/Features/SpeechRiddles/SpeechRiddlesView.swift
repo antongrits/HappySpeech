@@ -9,6 +9,8 @@ struct SpeechRiddlesView: View {
     @State private var interactor: SpeechRiddlesInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: SpacingTokens.sp2), count: 2)
 
@@ -16,6 +18,15 @@ struct SpeechRiddlesView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+
+                // Step 10 Batch A — Pattern 1: mesh .kidCool (sky/lilac/mint) подчёркивает
+                // «думающий» режим разгадывания загадок.
+                HSMeshGradientBackground(palette: .kidCool, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.28 : 0.50)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
                 content
             }
             .navigationTitle(Text(String(localized: "speechRiddles.nav.title")))
@@ -64,7 +75,8 @@ struct SpeechRiddlesView: View {
     }
 
     private func hero(state: SpeechRiddlesModels.ViewState) -> some View {
-        HSCard(style: .tinted(ColorTokens.Brand.lilac.opacity(0.18))) {
+        // Step 10 Batch A — Pattern 2: hero обёрнут в HSLiquidGlassCard.elevated.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .thinking, size: 64)
                     .accessibilityHidden(true)
@@ -106,11 +118,18 @@ struct SpeechRiddlesView: View {
         riddle: SpeechRiddlesModels.Riddle,
         interactor: SpeechRiddlesInteractor
     ) -> some View {
+        // Step 10 Batch A — Pattern 3: stagger fade+scale entrance на вариантах ответов.
         LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
             ForEach(riddle.options) { option in
                 optionTile(option, riddle: riddle, interactor: interactor)
+                    .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                        content
+                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))
+                    }
             }
         }
+        .animation(reduceMotion ? nil : MotionTokens.settleSpring, value: riddle.id)
     }
 
     private func optionTile(

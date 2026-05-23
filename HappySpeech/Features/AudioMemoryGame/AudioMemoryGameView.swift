@@ -9,6 +9,8 @@ struct AudioMemoryGameView: View {
     @State private var interactor: AudioMemoryGameInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: SpacingTokens.sp2), count: 4)
 
@@ -16,6 +18,14 @@ struct AudioMemoryGameView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+
+                // Step 10 Batch A — Pattern 1: mesh .kidWarm палитра — тёплая «игровая» атмосфера.
+                HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.28 : 0.50)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
                 content
             }
             .navigationTitle(Text(String(localized: "audioMemory.nav.title")))
@@ -62,7 +72,8 @@ struct AudioMemoryGameView: View {
     }
 
     private func hero(interactor: AudioMemoryGameInteractor) -> some View {
-        HSCard(style: .tinted(ColorTokens.Brand.sky.opacity(0.18))) {
+        // Step 10 Batch A — Pattern 2: hero обёрнут в HSLiquidGlassCard.elevated.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .pointing, size: 56)
                     .accessibilityHidden(true)
@@ -88,11 +99,18 @@ struct AudioMemoryGameView: View {
     }
 
     private func grid(interactor: AudioMemoryGameInteractor) -> some View {
+        // Step 10 Batch A — Pattern 3: stagger fade+scale entrance.
         LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
             ForEach(Array(interactor.tiles.enumerated()), id: \.element.id) { idx, tile in
                 tileButton(tile, index: idx, interactor: interactor)
+                    .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                        content
+                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.90))
+                    }
             }
         }
+        .animation(reduceMotion ? nil : MotionTokens.settleSpring, value: interactor.tiles.count)
     }
 
     private func tileButton(
@@ -112,9 +130,11 @@ struct AudioMemoryGameView: View {
                         .font(TypographyTokens.titleLarge(30).weight(.bold))
                         .foregroundStyle(ColorTokens.Kid.ink)
                 } else {
+                    // Pattern 5: pulse при изменении состояния карточки.
                     Image(systemName: "speaker.wave.2.fill")
                         .font(.system(size: 22))
                         .foregroundStyle(ColorTokens.Overlay.onAccent)
+                        .hsSymbolEffect(.pulse, value: tile.isFlipped)
                 }
             }
             .frame(maxWidth: .infinity, minHeight: 72)

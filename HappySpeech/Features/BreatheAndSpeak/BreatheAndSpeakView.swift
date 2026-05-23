@@ -59,6 +59,7 @@ struct BreatheAndSpeakView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
 
     private static let logger = Logger(
@@ -70,6 +71,14 @@ struct BreatheAndSpeakView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+
+                // Step 10 Batch A — Pattern 1: mesh .calm палитра (mint/sky/lilac) —
+                // успокаивающий фон для дыхательных упражнений.
+                HSMeshGradientBackground(palette: .calm, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.30 : 0.55)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
 
                 if holder.isFinished, let summary = holder.summary {
                     summarySection(summary)
@@ -150,39 +159,34 @@ struct BreatheAndSpeakView: View {
     }
 
     private func stepCard(_ step: BreatheAndSpeakModels.Start.StepViewModel) -> some View {
-        VStack(spacing: SpacingTokens.sp3) {
-            Image(systemName: step.symbolName)
-                .font(.system(size: 56))
-                .foregroundStyle(step.kind == .breathing
-                    ? ColorTokens.Brand.sky
-                    : ColorTokens.Brand.mint)
-                .accessibilityHidden(true)
+        // Step 10 Batch A — Pattern 2+5: hero обёрнут в HSLiquidGlassCard.elevated;
+        // pulse-эффект на символе step реагирует на смену упражнения.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp5) {
+            VStack(spacing: SpacingTokens.sp3) {
+                Image(systemName: step.symbolName)
+                    .font(.system(size: 56))
+                    .foregroundStyle(step.kind == .breathing
+                        ? ColorTokens.Brand.sky
+                        : ColorTokens.Brand.mint)
+                    .hsSymbolEffect(.pulse, value: step.id)
+                    .accessibilityHidden(true)
 
-            Text(step.name)
-                .font(TypographyTokens.title(26))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.7)
+                Text(step.name)
+                    .font(TypographyTokens.title(26))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.7)
 
-            Text(step.instruction)
-                .font(TypographyTokens.body(16))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .padding(.horizontal, SpacingTokens.sp4)
+                Text(step.instruction)
+                    .font(TypographyTokens.body(16))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .padding(.horizontal, SpacingTokens.sp4)
+            }
+            .frame(maxWidth: .infinity)
         }
-        .padding(.vertical, SpacingTokens.sp5)
-        .frame(maxWidth: .infinity)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Kid.surface)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .strokeBorder(ColorTokens.Kid.line, lineWidth: 2)
-        )
-        .depthShadow(ShadowTokens.kidDepth)
         .padding(.horizontal, SpacingTokens.screenEdge)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(step.accessibilityLabel))
@@ -268,6 +272,7 @@ struct BreatheAndSpeakView: View {
             Image(systemName: "lungs.fill")
                 .font(.system(size: 80))
                 .foregroundStyle(ColorTokens.Brand.mint)
+                .hsSymbolEffect(.bounce, value: summary.title)
                 .accessibilityHidden(true)
 
             Text(summary.title)

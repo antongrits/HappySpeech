@@ -135,46 +135,50 @@ struct RewardsView: View {
     // MARK: - Sections
 
     private var headerSection: some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.small) {
-            // Top row: Lyalya + counts + ring
-            HStack(alignment: .center, spacing: SpacingTokens.medium) {
-                // E v21: 3D Ляля в header Rewards (требование «3D героев на каждом экране»).
-                // size=96 > 80 threshold → 3D через LyalyaHeroView.
-                LyalyaHeroView(state: lyalyaHeaderState, size: 96)
-                    .accessibilityHidden(true)
+        // Step 10 Batch A — hero обёрнут в HSLiquidGlassCard.elevated:
+        // mesh .rewards палитра проходит за стеклом, создавая «золотое сияние»
+        // за полупрозрачным стеклом — kavsoft-style hero на iOS 26+.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
+            VStack(alignment: .leading, spacing: SpacingTokens.small) {
+                // Top row: Lyalya + counts + ring
+                HStack(alignment: .center, spacing: SpacingTokens.medium) {
+                    // E v21: 3D Ляля в header Rewards (требование «3D героев на каждом экране»).
+                    // size=96 > 80 threshold → 3D через LyalyaHeroView.
+                    LyalyaHeroView(state: lyalyaHeaderState, size: 96)
+                        .accessibilityHidden(true)
 
-                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                    Text(display.progressLabel)
-                        .font(TypographyTokens.title(22))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .accessibilityAddTraits(.isHeader)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
-                    Text(String(localized: "rewards.progress"))
-                        .font(TypographyTokens.body(12))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .textCase(.lowercase)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
+                    VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                        Text(display.progressLabel)
+                            .font(TypographyTokens.title(22))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .accessibilityAddTraits(.isHeader)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
+                        Text(String(localized: "rewards.progress"))
+                            .font(TypographyTokens.body(12))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .textCase(.lowercase)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
+                    }
+
+                    Spacer()
+
+                    HSProgressBar(value: display.progress, style: .ring, showLabel: true)
+                        .frame(width: 56, height: 56)
+                        .accessibilityHidden(true)
                 }
 
-                Spacer()
-
-                HSProgressBar(value: display.progress, style: .ring, showLabel: true)
-                    .frame(width: 56, height: 56)
-                    .accessibilityHidden(true)
+                // Subtitle row
+                Text(String(localized: "rewards.header.subtitle"))
+                    .font(TypographyTokens.body(13))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.9)
             }
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .padding(.top, SpacingTokens.tiny)
-
-            // Subtitle row
-            Text(String(localized: "rewards.header.subtitle"))
-                .font(TypographyTokens.body(13))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .lineLimit(2)
-                .minimumScaleFactor(0.9)
         }
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .padding(.top, SpacingTokens.tiny)
         .padding(.bottom, SpacingTokens.small)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
@@ -209,6 +213,7 @@ struct RewardsView: View {
                     Image(systemName: "star.fill")
                         .font(TypographyTokens.body(16).weight(.bold))
                         .foregroundStyle(ColorTokens.Brand.gold)
+                        .hsSymbolEffect(.pulse, value: display.cells.count)
                         .accessibilityHidden(true)
                     Text(String(localized: "rewards.leaderboard.banner"))
                         .font(TypographyTokens.body(14).weight(.semibold))
@@ -351,6 +356,10 @@ struct RewardsView: View {
                             .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
                             .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))
                     }
+                    // Step 10 Batch A — Pattern 4: parallax drift для sticker tiles.
+                    // factor=0.3 — мягкий «магазинный» дрейф; модификатор сам гейтится
+                    // reduce-motion (см. HSParallaxTileModifier).
+                    .hsParallaxTile(factor: 0.3)
                 }
             }
             .padding(.horizontal, SpacingTokens.screenEdge)

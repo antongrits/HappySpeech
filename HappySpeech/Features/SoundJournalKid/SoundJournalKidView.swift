@@ -9,11 +9,22 @@ struct SoundJournalKidView: View {
     @State private var interactor: SoundJournalKidInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+
+                // Step 10 Batch A — Pattern 1: mesh .kidCool палитра (sky/lilac/mint)
+                // подчёркивает «аналитический дневник звуков» — холодный, спокойный фон.
+                HSMeshGradientBackground(palette: .kidCool, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.28 : 0.50)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
                 content
             }
             .navigationTitle(Text(String(localized: "soundJournal.nav.title")))
@@ -57,7 +68,8 @@ struct SoundJournalKidView: View {
     }
 
     private var hero: some View {
-        HSCard(style: .tinted(ColorTokens.Brand.mint.opacity(0.16))) {
+        // Step 10 Batch A — Pattern 2: hero обёрнут в HSLiquidGlassCard.elevated.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(String(localized: "soundJournal.hero.title"))
                     .font(TypographyTokens.title(20))
@@ -70,18 +82,26 @@ struct SoundJournalKidView: View {
                     .lineLimit(3)
                     .minimumScaleFactor(0.85)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 
     private func list(interactor: SoundJournalKidInteractor) -> some View {
+        // Step 10 Batch A — Pattern 3: stagger fade+scale entrance.
         VStack(spacing: SpacingTokens.sp2) {
             ForEach(interactor.state.entries) { entry in
                 row(entry: entry, isSelected: entry.id == interactor.state.selectedEntryId) {
                     hapticService.impact(.light)
                     interactor.select(entry.id)
                 }
+                .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                    content
+                        .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                        .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))
+                }
             }
         }
+        .animation(reduceMotion ? nil : MotionTokens.settleSpring, value: interactor.state.entries.count)
     }
 
     private func row(

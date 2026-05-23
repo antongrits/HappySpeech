@@ -101,7 +101,17 @@ struct DailyStreakView: View {
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.vertical, SpacingTokens.sp4)
             }
-            .background(ColorTokens.Kid.bg.ignoresSafeArea())
+            .background(
+                // Step 10 Batch A — Pattern 1: mesh .kidWarm палитра.
+                ZStack {
+                    ColorTokens.Kid.bg
+                    HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                        .opacity(colorScheme == .dark ? 0.28 : 0.50)
+                        .accessibilityHidden(true)
+                        .allowsHitTesting(false)
+                }
+                .ignoresSafeArea()
+            )
             .navigationTitle(Text("streak.screen.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -135,40 +145,39 @@ struct DailyStreakView: View {
 
     @ViewBuilder
     private func heroSection(viewModel: DailyStreakModels.Load.ViewModel) -> some View {
-        VStack(spacing: SpacingTokens.sp2) {
-            // Block G v18: statusEmoji теперь хранит SF Symbol name.
-            Image(systemName: viewModel.statusEmoji)
-                .font(.system(size: 64))
-                .foregroundStyle(ColorTokens.Brand.primary)
-                .accessibilityHidden(true)
+        // Step 10 Batch A — Pattern 2+5: hero обёрнут в HSLiquidGlassCard.elevated,
+        // pulse-эффект на flame через hsSymbolEffect — реагирует на изменение streak.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp5) {
+            VStack(spacing: SpacingTokens.sp2) {
+                // Block G v18: statusEmoji теперь хранит SF Symbol name.
+                Image(systemName: viewModel.statusEmoji)
+                    .font(.system(size: 64))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .hsSymbolEffect(.bounce, value: viewModel.currentStreak)
+                    .accessibilityHidden(true)
 
-            Text(verbatim: "\(viewModel.currentStreak)")
-                .font(.system(size: 64, weight: .heavy, design: .rounded))
-                .foregroundStyle(ColorTokens.Brand.primary)
-                .contentTransition(.numericText())
-                .animation(reduceMotion ? nil : .spring(duration: 0.45), value: viewModel.currentStreak)
+                Text(verbatim: "\(viewModel.currentStreak)")
+                    .font(.system(size: 64, weight: .heavy, design: .rounded))
+                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .contentTransition(.numericText())
+                    .animation(reduceMotion ? nil : .spring(duration: 0.45), value: viewModel.currentStreak)
 
-            Text(String(format: String(localized: "streak.days.unit"), viewModel.currentStreak))
-                .font(TypographyTokens.body())
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .lineLimit(2)
-                .minimumScaleFactor(0.85)
-                .multilineTextAlignment(.center)
+                Text(String(format: String(localized: "streak.days.unit"), viewModel.currentStreak))
+                    .font(TypographyTokens.body())
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                    .multilineTextAlignment(.center)
 
-            Text(viewModel.statusLabel)
-                .font(TypographyTokens.caption())
-                .foregroundStyle(ColorTokens.Kid.inkSoft)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-                .multilineTextAlignment(.center)
+                Text(viewModel.statusLabel)
+                    .font(TypographyTokens.caption())
+                    .foregroundStyle(ColorTokens.Kid.inkSoft)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+                    .multilineTextAlignment(.center)
+            }
+            .frame(maxWidth: .infinity)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, SpacingTokens.sp5)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Kid.surface)
-                .shadow(color: ColorTokens.Overlay.shadow, radius: 12, y: 4)
-        )
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(String(
             format: String(localized: "streak.hero.a11y"),
@@ -234,8 +243,15 @@ struct DailyStreakView: View {
             LazyVGrid(columns: gridColumns, spacing: SpacingTokens.sp3) {
                 ForEach(viewModel.milestones) { row in
                     milestoneCard(row: row)
+                        // Step 10 Batch A — Pattern 3: entrance fade+scale stagger.
+                        .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                            content
+                                .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                                .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))
+                        }
                 }
             }
+            .animation(reduceMotion ? nil : MotionTokens.settleSpring, value: viewModel.unlockedCount)
         }
     }
 

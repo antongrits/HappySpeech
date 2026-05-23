@@ -57,6 +57,7 @@ struct DailyRitualsLyalyaView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     private static let logger = Logger(
         subsystem: "ru.happyspeech",
@@ -71,6 +72,14 @@ struct DailyRitualsLyalyaView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Parent.bg.ignoresSafeArea()
+
+                // Step 10 Batch A — Pattern 1: mesh .kidWarm палитра как фон.
+                // Тёплая палитра подчёркивает «утро/вечер» ритуал.
+                HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.22 : 0.40)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
 
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: SpacingTokens.sp5) {
@@ -112,35 +121,35 @@ struct DailyRitualsLyalyaView: View {
     private func heroSection(
         _ viewModel: DailyRitualsLyalyaModels.Load.ViewModel
     ) -> some View {
-        HStack(alignment: .top, spacing: SpacingTokens.sp3) {
-            Image(systemName: viewModel.symbolName)
-                .font(.system(size: 38))
-                .foregroundStyle(
-                    viewModel.kind == .morning
-                        ? ColorTokens.Brand.butter
-                        : ColorTokens.Brand.lilac
-                )
-                .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                Text(viewModel.title)
-                    .font(TypographyTokens.title(22))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-                Text(viewModel.subtitle)
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(nil)
-                    .fixedSize(horizontal: false, vertical: true)
+        // Step 10 Batch A — Pattern 2+5: hero обёрнут в HSLiquidGlassCard.elevated,
+        // pulse-эффект на символе sun/moon реагирует на смену ритуала (morning↔evening).
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+            HStack(alignment: .top, spacing: SpacingTokens.sp3) {
+                Image(systemName: viewModel.symbolName)
+                    .font(.system(size: 38))
+                    .foregroundStyle(
+                        viewModel.kind == .morning
+                            ? ColorTokens.Brand.butter
+                            : ColorTokens.Brand.lilac
+                    )
+                    .hsSymbolEffect(.pulse, value: viewModel.kind)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                    Text(viewModel.title)
+                        .font(TypographyTokens.title(22))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Text(viewModel.subtitle)
+                        .font(TypographyTokens.body(14))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer()
             }
-            Spacer()
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(SpacingTokens.sp4)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Parent.surface)
-        )
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isHeader)
     }
@@ -164,8 +173,15 @@ struct DailyRitualsLyalyaView: View {
             VStack(spacing: SpacingTokens.sp2) {
                 ForEach(Array(steps.enumerated()), id: \.element.id) { index, step in
                     stepRow(step, index: index + 1)
+                        // Step 10 Batch A — Pattern 3: stagger fade+scale.
+                        .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                            content
+                                .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                                .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))
+                        }
                 }
             }
+            .animation(reduceMotion ? nil : MotionTokens.settleSpring, value: steps.count)
         }
     }
 
