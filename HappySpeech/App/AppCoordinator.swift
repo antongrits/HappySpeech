@@ -166,6 +166,21 @@ enum AppRoute: Hashable {
     /// AchievementWall (kid): большая mosaic-стена со всеми
     /// достижениями + share стены через UIActivityViewController.
     case achievementWall(childId: String)
+
+    // MARK: - v32 Batch B (12 lightweight modules)
+
+    case morningRoutine(childId: String)
+    case eveningReflection(childId: String)
+    case dailyMissionsHub(childId: String)
+    case soundExplorerMap(childId: String)
+    case wordOfTheDay(childId: String)
+    case speechHomeworkPlanner
+    case parentMoodCheckIn
+    case lyalyaPersonalCoach(childId: String)
+    case weeklyRecap
+    case childAchievementShare
+    case audioMemoryGame(childId: String)
+    case visualVocabularyFlip(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -823,6 +838,56 @@ struct AppCoordinatorView: View {
         case .achievementWall(let childId):
             AchievementWallView(childId: childId)
                 .environment(\.circuitContext, .kid)
+
+        // MARK: - v32 Batch B (12 lightweight modules)
+
+        case .morningRoutine(let childId):
+            MorningRoutineView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .eveningReflection(let childId):
+            EveningReflectionView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .dailyMissionsHub(let childId):
+            DailyMissionsHubView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .soundExplorerMap(let childId):
+            SoundExplorerMapView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .wordOfTheDay(let childId):
+            WordOfTheDayView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .speechHomeworkPlanner:
+            SpeechHomeworkPlannerView()
+                .environment(\.circuitContext, .parent)
+
+        case .parentMoodCheckIn:
+            ParentMoodCheckInView()
+                .environment(\.circuitContext, .parent)
+
+        case .lyalyaPersonalCoach(let childId):
+            LyalyaPersonalCoachView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .weeklyRecap:
+            WeeklyRecapView()
+                .environment(\.circuitContext, .parent)
+
+        case .childAchievementShare:
+            ChildAchievementShareView()
+                .environment(\.circuitContext, .parent)
+
+        case .audioMemoryGame(let childId):
+            AudioMemoryGameView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .visualVocabularyFlip(let childId):
+            VisualVocabularyFlipView(childId: childId)
+                .environment(\.circuitContext, .kid)
         }
     }
 
@@ -1273,6 +1338,32 @@ extension AppCoordinatorView {
              "wall",
              "achievementsWall":
             return .achievementWall(childId: previewChild)
+
+        // MARK: v32 Batch B (12 lightweight modules)
+        case "morningRoutine", "morning":
+            return .morningRoutine(childId: previewChild)
+        case "eveningReflection", "evening":
+            return .eveningReflection(childId: previewChild)
+        case "dailyMissionsHub", "missions":
+            return .dailyMissionsHub(childId: previewChild)
+        case "soundExplorerMap", "soundMap", "soundExplorer":
+            return .soundExplorerMap(childId: previewChild)
+        case "wordOfTheDay", "wotd":
+            return .wordOfTheDay(childId: previewChild)
+        case "speechHomeworkPlanner", "homeworkPlanner":
+            return .speechHomeworkPlanner
+        case "parentMoodCheckIn", "parentMood":
+            return .parentMoodCheckIn
+        case "lyalyaPersonalCoach", "personalCoach", "coach":
+            return .lyalyaPersonalCoach(childId: previewChild)
+        case "weeklyRecap", "recap":
+            return .weeklyRecap
+        case "childAchievementShare", "achievementShare", "shareAchievement":
+            return .childAchievementShare
+        case "audioMemoryGame", "audioMemory", "memoryGame":
+            return .audioMemoryGame(childId: previewChild)
+        case "visualVocabularyFlip", "vocabFlip", "vocabulary":
+            return .visualVocabularyFlip(childId: previewChild)
 
         default:
             return .auth

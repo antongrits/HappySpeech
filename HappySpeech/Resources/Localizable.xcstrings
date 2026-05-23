@@ -55745,6 +55745,153 @@
           }
         }
       }
+    },
+    "morning.nav.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Утро" } } }
+    },
+    "morning.hero.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Доброе утро!" } } }
+    },
+    "morning.hero.subtitle": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Маленький ритуал перед садиком — 3 шага." } } }
+    },
+    "morning.cta.start": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Поехали!" } } }
+    },
+    "morning.cta.finish": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Готово" } } }
+    },
+    "evening.nav.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Вечер" } } }
+    },
+    "evening.hero.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Как прошёл день?" } } }
+    },
+    "evening.hero.subtitle": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Поделись с Лялей — это поможет нам подбирать тебе занятия." } } }
+    },
+    "evening.cta.save": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Сохранить дневник" } } }
+    },
+    "missions.nav.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Миссии дня" } } }
+    },
+    "missions.hero.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "5 коротких миссий" } } }
+    },
+    "missions.hero.subtitle": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Выбирай любую — каждая занимает пару минут." } } }
+    },
+    "missions.cta.start": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Начать первую" } } }
+    },
+    "soundMap.nav.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Карта звуков" } } }
+    },
+    "soundMap.hero.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Все звуки русского языка" } } }
+    },
+    "soundMap.hero.subtitle": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Выбери звук — и потренируемся вместе." } } }
+    },
+    "soundMap.cta.start": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Открыть тренажёр" } } }
+    },
+    "wotd.nav.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Слово дня" } } }
+    },
+    "wotd.hero.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Сегодняшнее слово" } } }
+    },
+    "wotd.hero.subtitle": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Посмотри картинку и попробуй произнести." } } }
+    },
+    "wotd.cta.speak": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Произнести" } } }
+    },
+    "homeworkPlanner.nav.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Домашка" } } }
+    },
+    "homeworkPlanner.hero.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "План на эту неделю" } } }
+    },
+    "homeworkPlanner.hero.subtitle": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Отмечайте сделанное — мы пересчитаем нагрузку." } } }
+    },
+    "homeworkPlanner.cta.confirm": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Готово на сегодня" } } }
+    },
+    "parentMood.nav.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Ваше настроение" } } }
+    },
+    "parentMood.hero.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Как вы сегодня?" } } }
+    },
+    "parentMood.hero.subtitle": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Это помогает нам подбирать темп занятий ребёнка." } } }
+    },
+    "parentMood.cta.save": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Сохранить" } } }
+    },
+    "coach.nav.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Тренер-Ляля" } } }
+    },
+    "coach.hero.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Поговорим?" } } }
+    },
+    "coach.hero.subtitle": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "5 коротких вопросов — выбирай правильный ответ." } } }
+    },
+    "coach.cta.start": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Сыграть ещё раз" } } }
+    },
+    "weeklyRecap.nav.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Итоги недели" } } }
+    },
+    "weeklyRecap.hero.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Как прошла неделя" } } }
+    },
+    "weeklyRecap.hero.subtitle": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Главные показатели и динамика по дням." } } }
+    },
+    "weeklyRecap.cta.share": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Поделиться итогом" } } }
+    },
+    "achievementShare.nav.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Поделиться" } } }
+    },
+    "achievementShare.hero.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Выберите достижение" } } }
+    },
+    "achievementShare.hero.subtitle": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Расскажите близким — это мотивирует ребёнка." } } }
+    },
+    "achievementShare.cta.share": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Поделиться" } } }
+    },
+    "audioMemory.nav.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Звуковая память" } } }
+    },
+    "audioMemory.hero.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Найди пары" } } }
+    },
+    "audioMemory.hero.subtitle": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Открывай по две карточки — ищи одинаковые звуки." } } }
+    },
+    "audioMemory.cta.start": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Сыграть снова" } } }
+    },
+    "vocabFlip.nav.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Карточки слов" } } }
+    },
+    "vocabFlip.hero.title": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Картинка → слово" } } }
+    },
+    "vocabFlip.hero.subtitle": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Переворачивай карточки — учим новые слова со звуком." } } }
+    },
+    "vocabFlip.cta.start": {
+      "localizations": { "ru": { "stringUnit": { "state": "translated", "value": "Готово" } } }
     }
   },
   "version": "1.0"
