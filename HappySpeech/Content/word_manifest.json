@@ -1123,6 +1123,182 @@
       "semanticCategory": "animals",
       "methodologySource": "Filicheva-Tumanova-2010",
       "soundFamily": "Ж"
+    },
+    {
+      "word": "карман",
+      "asset": "word_karman",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "К"
+    },
+    {
+      "word": "капуста",
+      "asset": "word_kapusta",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "food",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "К"
+    },
+    {
+      "word": "кактус",
+      "asset": "word_kaktus",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "nature",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "К"
+    },
+    {
+      "word": "камень",
+      "asset": "word_kamen",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "К"
+    },
+    {
+      "word": "картина",
+      "asset": "word_kartina",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "play_culture",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "К"
+    },
+    {
+      "word": "картошка",
+      "asset": "word_kartoshka",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "food",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "К"
+    },
+    {
+      "word": "кастрюля",
+      "asset": "word_kastryulya",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "К"
+    },
+    {
+      "word": "каток",
+      "asset": "word_katok",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "nature",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "К"
+    },
+    {
+      "word": "качели",
+      "asset": "word_kacheli",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "К"
+    },
+    {
+      "word": "каша",
+      "asset": "word_kasha",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "К"
+    },
+    {
+      "word": "кеды",
+      "asset": "word_kedy",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "К"
+    },
+    {
+      "word": "кепка",
+      "asset": "word_kepka",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "К"
+    },
+    {
+      "word": "кино",
+      "asset": "word_kino",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "play_culture",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "К"
+    },
+    {
+      "word": "кипяток",
+      "asset": "word_kipyatok",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "К"
+    },
+    {
+      "word": "кисель",
+      "asset": "word_kisel",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "food",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "К"
+    },
+    {
+      "word": "клетка",
+      "asset": "word_kletka",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "animals",
+      "methodologySource": "Filicheva-Tumanova-2010",
+      "soundFamily": "К"
     }
   ]
 }
