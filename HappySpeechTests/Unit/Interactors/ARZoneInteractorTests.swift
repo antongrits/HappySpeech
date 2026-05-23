@@ -226,7 +226,9 @@ final class ARZoneInteractorTests: XCTestCase {
         XCTAssertEqual(ARGameCatalog.game(forDestination: .arStoryQuest)?.id, "ar-story-quest")
     }
 
-    func test_arGameCatalog_hasEightGames() {
-        XCTAssertEqual(ARGameCatalog.all.count, 8)
+    func test_arGameCatalog_hasElevenGames() {
+        // v32 wave 2 — added 3 placeholder tiles (AR-Песни / AR-Сказка / AR-Дыхание)
+        // that route to existing .arMirror. Catalog grew 8 → 11.
+        XCTAssertEqual(ARGameCatalog.all.count, 11)
     }
 }

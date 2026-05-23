@@ -133,11 +133,13 @@ final class LessonVoiceWorkerNormalizationTests: XCTestCase {
                        "Маппинг должен быть доступен в host app bundle")
     }
 
-    // MARK: - 01. "сани" присутствует с phraseId "sani"
+    // MARK: - 01. "сани" присутствует с phraseId "diff_sani" (post-v31 prefix)
 
     func test_phraseId_knownWord_sani_existsInMapping() {
-        XCTAssertEqual(mapping["сани"], "sani",
-                       "Ключ 'сани' в маппинге должен быть 'sani'")
+        // v31 prefixed differentiation samples with "diff_" namespace to keep
+        // the recorded m4a sample folder organized.
+        XCTAssertEqual(mapping["сани"], "diff_sani",
+                       "Ключ 'сани' в маппинге должен быть 'diff_sani'")
     }
 
     // MARK: - 02. Все ключи маппинга — нижний регистр (как после normalize())
@@ -152,8 +154,9 @@ final class LessonVoiceWorkerNormalizationTests: XCTestCase {
     // MARK: - 03. "мяч" присутствует в маппинге без пунктуации
 
     func test_phraseId_myach_existsWithoutPunctuation() {
-        XCTAssertEqual(mapping["мяч"], "myach",
-                       "Ключ 'мяч' → phraseId 'myach' должен присутствовать")
+        // v31 — "diff_" prefix for differentiation samples.
+        XCTAssertEqual(mapping["мяч"], "diff_myach",
+                       "Ключ 'мяч' → phraseId 'diff_myach' должен присутствовать")
     }
 
     // MARK: - 04. Несуществующее слово отсутствует в маппинге

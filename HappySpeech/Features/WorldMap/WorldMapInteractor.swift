@@ -64,6 +64,13 @@ final class WorldMapInteractor: WorldMapBusinessLogic {
         dailyStreak = 4
         childAge = request.childAge ?? 6
 
+        // v32 — сначала синхронно отдаём seed-зоны через presenter, чтобы UI
+        // (и unit-тест) увидели данные немедленно. Async-обновление по
+        // progressSummary происходит вторым вызовом presenter ниже.
+        Task { @MainActor in
+            await finishLoadMap(highlightedSound: request.highlightedSound)
+        }
+
         // v32 P2 — асинхронно подгружаем progressSummary и применяем умный
         // unlock к зонам. Если репозитория нет (preview / unit-test) или
         // загрузка падает — оставляем seed-состояние «как есть».
@@ -71,7 +78,6 @@ final class WorldMapInteractor: WorldMapBusinessLogic {
             guard let self,
                   let repo = self.childRepository,
                   !request.childId.isEmpty else {
-                await self?.finishLoadMap(highlightedSound: request.highlightedSound)
                 return
             }
             do {
@@ -80,10 +86,10 @@ final class WorldMapInteractor: WorldMapBusinessLogic {
                     self.progressSummary = profile.progressSummary
                     self.applyProgressSummaryUnlock()
                 }
+                await self.finishLoadMap(highlightedSound: request.highlightedSound)
             } catch {
                 self.logger.notice("loadMap progressSummary fetch failed: \(error.localizedDescription)")
             }
-            await self.finishLoadMap(highlightedSound: request.highlightedSound)
         }
     }
 
