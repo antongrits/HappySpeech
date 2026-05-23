@@ -1,0 +1,492 @@
+[
+  {
+    "phraseId": "happy_ura_ty_molodets",
+    "ru_text": "Ура! Ты молодец!",
+    "emotion": "happy",
+    "slug": "happy_ura_ty_molodets",
+    "path": "Lyalya/Phrases/happy/happy_ura_ty_molodets.m4a"
+  },
+  {
+    "phraseId": "happy_ty_bistro_uchishsya",
+    "ru_text": "Ура! Ты быстро учишься!",
+    "emotion": "happy",
+    "slug": "happy_ty_bistro_uchishsya",
+    "path": "Lyalya/Phrases/happy/happy_ty_bistro_uchishsya.m4a"
+  },
+  {
+    "phraseId": "happy_kakoy_ty_umnitsa",
+    "ru_text": "Какой ты умница!",
+    "emotion": "happy",
+    "slug": "happy_kakoy_ty_umnitsa",
+    "path": "Lyalya/Phrases/happy/happy_kakoy_ty_umnitsa.m4a"
+  },
+  {
+    "phraseId": "happy_segodnya_otlichno",
+    "ru_text": "Сегодня ты справился отлично!",
+    "emotion": "happy",
+    "slug": "happy_segodnya_otlichno",
+    "path": "Lyalya/Phrases/happy/happy_segodnya_otlichno.m4a"
+  },
+  {
+    "phraseId": "happy_ya_gorzhus_toboy",
+    "ru_text": "Я горжусь тобой!",
+    "emotion": "happy",
+    "slug": "happy_ya_gorzhus_toboy",
+    "path": "Lyalya/Phrases/happy/happy_ya_gorzhus_toboy.m4a"
+  },
+  {
+    "phraseId": "happy_prodolzhaem",
+    "ru_text": "Продолжаем! Всё отлично получается!",
+    "emotion": "happy",
+    "slug": "happy_prodolzhaem",
+    "path": "Lyalya/Phrases/happy/happy_prodolzhaem.m4a"
+  },
+  {
+    "phraseId": "happy_ty_nastoyashchiy_chempion",
+    "ru_text": "Ты настоящий чемпион!",
+    "emotion": "happy",
+    "slug": "happy_ty_nastoyashchiy_chempion",
+    "path": "Lyalya/Phrases/happy/happy_ty_nastoyashchiy_chempion.m4a"
+  },
+  {
+    "phraseId": "happy_super_rezultat",
+    "ru_text": "Супер результат! Так держать!",
+    "emotion": "happy",
+    "slug": "happy_super_rezultat",
+    "path": "Lyalya/Phrases/happy/happy_super_rezultat.m4a"
+  },
+  {
+    "phraseId": "happy_vse_zvuki_pravilno",
+    "ru_text": "Все звуки произнёс правильно! Здорово!",
+    "emotion": "happy",
+    "slug": "happy_vse_zvuki_pravilno",
+    "path": "Lyalya/Phrases/happy/happy_vse_zvuki_pravilno.m4a"
+  },
+  {
+    "phraseId": "happy_ty_znaesh_etot_zvuk",
+    "ru_text": "Ты уже хорошо знаешь этот звук!",
+    "emotion": "happy",
+    "slug": "happy_ty_znaesh_etot_zvuk",
+    "path": "Lyalya/Phrases/happy/happy_ty_znaesh_etot_zvuk.m4a"
+  },
+  {
+    "phraseId": "happy_segodnya_luchshe_chem_vchera",
+    "ru_text": "Сегодня получается лучше, чем вчера!",
+    "emotion": "happy",
+    "slug": "happy_segodnya_luchshe_chem_vchera",
+    "path": "Lyalya/Phrases/happy/happy_segodnya_luchshe_chem_vchera.m4a"
+  },
+  {
+    "phraseId": "happy_ty_pryam_kak_logoped",
+    "ru_text": "Ты прям как настоящий логопед!",
+    "emotion": "happy",
+    "slug": "happy_ty_pryam_kak_logoped",
+    "path": "Lyalya/Phrases/happy/happy_ty_pryam_kak_logoped.m4a"
+  },
+  {
+    "phraseId": "sad_nichego_strashnego",
+    "ru_text": "Ничего страшного, попробуем ещё разок.",
+    "emotion": "sad",
+    "slug": "sad_nichego_strashnego",
+    "path": "Lyalya/Phrases/sad/sad_nichego_strashnego.m4a"
+  },
+  {
+    "phraseId": "sad_eto_trudny_zvuk",
+    "ru_text": "Это трудный звук, и это нормально.",
+    "emotion": "sad",
+    "slug": "sad_eto_trudny_zvuk",
+    "path": "Lyalya/Phrases/sad/sad_eto_trudny_zvuk.m4a"
+  },
+  {
+    "phraseId": "sad_ne_rasstraivaysya",
+    "ru_text": "Не расстраивайся, у тебя обязательно получится.",
+    "emotion": "sad",
+    "slug": "sad_ne_rasstraivaysya",
+    "path": "Lyalya/Phrases/sad/sad_ne_rasstraivaysya.m4a"
+  },
+  {
+    "phraseId": "sad_ya_veryu_v_tebya",
+    "ru_text": "Я верю в тебя, просто нужно чуть больше практики.",
+    "emotion": "sad",
+    "slug": "sad_ya_veryu_v_tebya",
+    "path": "Lyalya/Phrases/sad/sad_ya_veryu_v_tebya.m4a"
+  },
+  {
+    "phraseId": "sad_vsem_byvaet_trudno",
+    "ru_text": "Всем бывает трудно — главное не останавливаться.",
+    "emotion": "sad",
+    "slug": "sad_vsem_byvaet_trudno",
+    "path": "Lyalya/Phrases/sad/sad_vsem_byvaet_trudno.m4a"
+  },
+  {
+    "phraseId": "sad_otdohni_i_snova",
+    "ru_text": "Может, чуть отдохнём и попробуем снова?",
+    "emotion": "sad",
+    "slug": "sad_otdohni_i_snova",
+    "path": "Lyalya/Phrases/sad/sad_otdohni_i_snova.m4a"
+  },
+  {
+    "phraseId": "sad_zdes_mnogo_delayu",
+    "ru_text": "Здесь нужно постараться — и у тебя выйдет!",
+    "emotion": "sad",
+    "slug": "sad_zdes_mnogo_delayu",
+    "path": "Lyalya/Phrases/sad/sad_zdes_mnogo_delayu.m4a"
+  },
+  {
+    "phraseId": "sad_ochen_pochti",
+    "ru_text": "Очень-очень близко! Ещё чуть-чуть.",
+    "emotion": "sad",
+    "slug": "sad_ochen_pochti",
+    "path": "Lyalya/Phrases/sad/sad_ochen_pochti.m4a"
+  },
+  {
+    "phraseId": "sad_nichego_ne_byvast_srazu",
+    "ru_text": "Ничего не бывает сразу — ты уже молодец!",
+    "emotion": "sad",
+    "slug": "sad_nichego_ne_byvast_srazu",
+    "path": "Lyalya/Phrases/sad/sad_nichego_ne_byvast_srazu.m4a"
+  },
+  {
+    "phraseId": "sad_ya_tozhe_uchilas",
+    "ru_text": "Я тоже когда-то училась этому звуку!",
+    "emotion": "sad",
+    "slug": "sad_ya_tozhe_uchilas",
+    "path": "Lyalya/Phrases/sad/sad_ya_tozhe_uchilas.m4a"
+  },
+  {
+    "phraseId": "excited_poluchayetsya",
+    "ru_text": "Получается! Получается! Ура!",
+    "emotion": "excited",
+    "slug": "excited_poluchayetsya",
+    "path": "Lyalya/Phrases/excited/excited_poluchayetsya.m4a"
+  },
+  {
+    "phraseId": "excited_wow_otlichno",
+    "ru_text": "Вот это да! Отлично!",
+    "emotion": "excited",
+    "slug": "excited_wow_otlichno",
+    "path": "Lyalya/Phrases/excited/excited_wow_otlichno.m4a"
+  },
+  {
+    "phraseId": "excited_ty_sdelal_eto",
+    "ru_text": "Ты сделал это! Я так рада!",
+    "emotion": "excited",
+    "slug": "excited_ty_sdelal_eto",
+    "path": "Lyalya/Phrases/excited/excited_ty_sdelal_eto.m4a"
+  },
+  {
+    "phraseId": "excited_novy_uroven",
+    "ru_text": "Новый уровень разблокирован! Вперёд!",
+    "emotion": "excited",
+    "slug": "excited_novy_uroven",
+    "path": "Lyalya/Phrases/excited/excited_novy_uroven.m4a"
+  },
+  {
+    "phraseId": "excited_zvezdochka",
+    "ru_text": "Ты заработал звёздочку! Класс!",
+    "emotion": "excited",
+    "slug": "excited_zvezdochka",
+    "path": "Lyalya/Phrases/excited/excited_zvezdochka.m4a"
+  },
+  {
+    "phraseId": "excited_zvuk_poluchen",
+    "ru_text": "Звук освоен! Это победа!",
+    "emotion": "excited",
+    "slug": "excited_zvuk_poluchen",
+    "path": "Lyalya/Phrases/excited/excited_zvuk_poluchen.m4a"
+  },
+  {
+    "phraseId": "excited_segodnya_rekord",
+    "ru_text": "Сегодня рекорд! Ты лучший!",
+    "emotion": "excited",
+    "slug": "excited_segodnya_rekord",
+    "path": "Lyalya/Phrases/excited/excited_segodnya_rekord.m4a"
+  },
+  {
+    "phraseId": "excited_vse_zadaniya_vipolneny",
+    "ru_text": "Все задания выполнены! Великолепно!",
+    "emotion": "excited",
+    "slug": "excited_vse_zadaniya_vipolneny",
+    "path": "Lyalya/Phrases/excited/excited_vse_zadaniya_vipolneny.m4a"
+  },
+  {
+    "phraseId": "excited_superpobeda",
+    "ru_text": "Суперпобеда! Ты просто огонь!",
+    "emotion": "excited",
+    "slug": "excited_superpobeda",
+    "path": "Lyalya/Phrases/excited/excited_superpobeda.m4a"
+  },
+  {
+    "phraseId": "excited_bystrey_chem_kogda_libo",
+    "ru_text": "Быстрее, чем когда-либо! Молодчина!",
+    "emotion": "excited",
+    "slug": "excited_bystrey_chem_kogda_libo",
+    "path": "Lyalya/Phrases/excited/excited_bystrey_chem_kogda_libo.m4a"
+  },
+  {
+    "phraseId": "excited_tri_zvezdy",
+    "ru_text": "Три звезды! Это невероятно!",
+    "emotion": "excited",
+    "slug": "excited_tri_zvezdy",
+    "path": "Lyalya/Phrases/excited/excited_tri_zvezdy.m4a"
+  },
+  {
+    "phraseId": "excited_ty_geroi",
+    "ru_text": "Ты настоящий герой речи!",
+    "emotion": "excited",
+    "slug": "excited_ty_geroi",
+    "path": "Lyalya/Phrases/excited/excited_ty_geroi.m4a"
+  },
+  {
+    "phraseId": "calm_slushayi_vnimatelno",
+    "ru_text": "Слушай внимательно.",
+    "emotion": "calm",
+    "slug": "calm_slushayi_vnimatelno",
+    "path": "Lyalya/Phrases/calm/calm_slushayi_vnimatelno.m4a"
+  },
+  {
+    "phraseId": "calm_smotri_na_ekran",
+    "ru_text": "Смотри на экран.",
+    "emotion": "calm",
+    "slug": "calm_smotri_na_ekran",
+    "path": "Lyalya/Phrases/calm/calm_smotri_na_ekran.m4a"
+  },
+  {
+    "phraseId": "calm_povtori_za_mnoy",
+    "ru_text": "Повтори за мной.",
+    "emotion": "calm",
+    "slug": "calm_povtori_za_mnoy",
+    "path": "Lyalya/Phrases/calm/calm_povtori_za_mnoy.m4a"
+  },
+  {
+    "phraseId": "calm_nazovi_kartinku",
+    "ru_text": "Назови, что нарисовано на картинке.",
+    "emotion": "calm",
+    "slug": "calm_nazovi_kartinku",
+    "path": "Lyalya/Phrases/calm/calm_nazovi_kartinku.m4a"
+  },
+  {
+    "phraseId": "calm_vyberi_pravilnuyu",
+    "ru_text": "Выбери правильную картинку.",
+    "emotion": "calm",
+    "slug": "calm_vyberi_pravilnuyu",
+    "path": "Lyalya/Phrases/calm/calm_vyberi_pravilnuyu.m4a"
+  },
+  {
+    "phraseId": "calm_nazhmi_kogda_uslyshish",
+    "ru_text": "Нажми, когда услышишь нужный звук.",
+    "emotion": "calm",
+    "slug": "calm_nazhmi_kogda_uslyshish",
+    "path": "Lyalya/Phrases/calm/calm_nazhmi_kogda_uslyshish.m4a"
+  },
+  {
+    "phraseId": "calm_potreniruyem_yazyk",
+    "ru_text": "Потренируем язычок.",
+    "emotion": "calm",
+    "slug": "calm_potreniruyem_yazyk",
+    "path": "Lyalya/Phrases/calm/calm_potreniruyem_yazyk.m4a"
+  },
+  {
+    "phraseId": "calm_delai_kak_ya",
+    "ru_text": "Делай, как я, и у тебя всё получится.",
+    "emotion": "calm",
+    "slug": "calm_delai_kak_ya",
+    "path": "Lyalya/Phrases/calm/calm_delai_kak_ya.m4a"
+  },
+  {
+    "phraseId": "calm_gotov_nachnem",
+    "ru_text": "Готов? Тогда начнём.",
+    "emotion": "calm",
+    "slug": "calm_gotov_nachnem",
+    "path": "Lyalya/Phrases/calm/calm_gotov_nachnem.m4a"
+  },
+  {
+    "phraseId": "calm_zdes_vse_prosto",
+    "ru_text": "Здесь всё просто, не переживай.",
+    "emotion": "calm",
+    "slug": "calm_zdes_vse_prosto",
+    "path": "Lyalya/Phrases/calm/calm_zdes_vse_prosto.m4a"
+  },
+  {
+    "phraseId": "calm_po_odnomu",
+    "ru_text": "Выполним задания по одному.",
+    "emotion": "calm",
+    "slug": "calm_po_odnomu",
+    "path": "Lyalya/Phrases/calm/calm_po_odnomu.m4a"
+  },
+  {
+    "phraseId": "calm_ya_ryadom",
+    "ru_text": "Я рядом, если что-то непонятно.",
+    "emotion": "calm",
+    "slug": "calm_ya_ryadom",
+    "path": "Lyalya/Phrases/calm/calm_ya_ryadom.m4a"
+  },
+  {
+    "phraseId": "calm_net_speshki",
+    "ru_text": "Нет никакой спешки, всё успеем.",
+    "emotion": "calm",
+    "slug": "calm_net_speshki",
+    "path": "Lyalya/Phrases/calm/calm_net_speshki.m4a"
+  },
+  {
+    "phraseId": "enc_poprobuy_esho_raz",
+    "ru_text": "Попробуй ещё раз!",
+    "emotion": "encouraging",
+    "slug": "enc_poprobuy_esho_raz",
+    "path": "Lyalya/Phrases/encouraging/enc_poprobuy_esho_raz.m4a"
+  },
+  {
+    "phraseId": "enc_ty_umeyesh",
+    "ru_text": "Ты умеешь, просто попробуй!",
+    "emotion": "encouraging",
+    "slug": "enc_ty_umeyesh",
+    "path": "Lyalya/Phrases/encouraging/enc_ty_umeyesh.m4a"
+  },
+  {
+    "phraseId": "enc_pochti_pravilno",
+    "ru_text": "Почти правильно! Ещё разок!",
+    "emotion": "encouraging",
+    "slug": "enc_pochti_pravilno",
+    "path": "Lyalya/Phrases/encouraging/enc_pochti_pravilno.m4a"
+  },
+  {
+    "phraseId": "enc_ne_toropis",
+    "ru_text": "Не торопись, медленно и чётко.",
+    "emotion": "encouraging",
+    "slug": "enc_ne_toropis",
+    "path": "Lyalya/Phrases/encouraging/enc_ne_toropis.m4a"
+  },
+  {
+    "phraseId": "enc_sdelay_glubok_vdoh",
+    "ru_text": "Сделай глубокий вдох и попробуй снова.",
+    "emotion": "encouraging",
+    "slug": "enc_sdelay_glubok_vdoh",
+    "path": "Lyalya/Phrases/encouraging/enc_sdelay_glubok_vdoh.m4a"
+  },
+  {
+    "phraseId": "enc_u_tebya_poluchitsya",
+    "ru_text": "У тебя получится, я знаю!",
+    "emotion": "encouraging",
+    "slug": "enc_u_tebya_poluchitsya",
+    "path": "Lyalya/Phrases/encouraging/enc_u_tebya_poluchitsya.m4a"
+  },
+  {
+    "phraseId": "enc_poslushayi_esho_raz",
+    "ru_text": "Послушай ещё раз и повтори.",
+    "emotion": "encouraging",
+    "slug": "enc_poslushayi_esho_raz",
+    "path": "Lyalya/Phrases/encouraging/enc_poslushayi_esho_raz.m4a"
+  },
+  {
+    "phraseId": "enc_budem_trenirovatsya",
+    "ru_text": "Будем тренироваться — и всё выйдет!",
+    "emotion": "encouraging",
+    "slug": "enc_budem_trenirovatsya",
+    "path": "Lyalya/Phrases/encouraging/enc_budem_trenirovatsya.m4a"
+  },
+  {
+    "phraseId": "enc_ya_pomogayu_tebe",
+    "ru_text": "Я помогаю тебе, не бойся ошибаться.",
+    "emotion": "encouraging",
+    "slug": "enc_ya_pomogayu_tebe",
+    "path": "Lyalya/Phrases/encouraging/enc_ya_pomogayu_tebe.m4a"
+  },
+  {
+    "phraseId": "enc_korotkiy_privat",
+    "ru_text": "Ещё один шажок — и будет отлично!",
+    "emotion": "encouraging",
+    "slug": "enc_korotkiy_privat",
+    "path": "Lyalya/Phrases/encouraging/enc_korotkiy_privat.m4a"
+  },
+  {
+    "phraseId": "enc_kazhdyy_raz_luchshe",
+    "ru_text": "С каждым разом получается лучше!",
+    "emotion": "encouraging",
+    "slug": "enc_kazhdyy_raz_luchshe",
+    "path": "Lyalya/Phrases/encouraging/enc_kazhdyy_raz_luchshe.m4a"
+  },
+  {
+    "phraseId": "enc_smelo",
+    "ru_text": "Смело! Говори громко и чётко!",
+    "emotion": "encouraging",
+    "slug": "enc_smelo",
+    "path": "Lyalya/Phrases/encouraging/enc_smelo.m4a"
+  },
+  {
+    "phraseId": "q_slyshish_zvuk_r",
+    "ru_text": "Слышишь звук Р?",
+    "emotion": "questioning",
+    "slug": "q_slyshish_zvuk_r",
+    "path": "Lyalya/Phrases/questioning/q_slyshish_zvuk_r.m4a"
+  },
+  {
+    "phraseId": "q_gde_zdes_zvuk_sh",
+    "ru_text": "Где здесь звук Ш?",
+    "emotion": "questioning",
+    "slug": "q_gde_zdes_zvuk_sh",
+    "path": "Lyalya/Phrases/questioning/q_gde_zdes_zvuk_sh.m4a"
+  },
+  {
+    "phraseId": "q_kak_dumaesh",
+    "ru_text": "Как думаешь, какое это слово?",
+    "emotion": "questioning",
+    "slug": "q_kak_dumaesh",
+    "path": "Lyalya/Phrases/questioning/q_kak_dumaesh.m4a"
+  },
+  {
+    "phraseId": "q_eto_pravilno",
+    "ru_text": "Это правильно?",
+    "emotion": "questioning",
+    "slug": "q_eto_pravilno",
+    "path": "Lyalya/Phrases/questioning/q_eto_pravilno.m4a"
+  },
+  {
+    "phraseId": "q_kakoye_slovo_nachinaetsya",
+    "ru_text": "Какое слово начинается на этот звук?",
+    "emotion": "questioning",
+    "slug": "q_kakoye_slovo_nachinaetsya",
+    "path": "Lyalya/Phrases/questioning/q_kakoye_slovo_nachinaetsya.m4a"
+  },
+  {
+    "phraseId": "q_gde_eta_kartinka",
+    "ru_text": "Где эта картинка?",
+    "emotion": "questioning",
+    "slug": "q_gde_eta_kartinka",
+    "path": "Lyalya/Phrases/questioning/q_gde_eta_kartinka.m4a"
+  },
+  {
+    "phraseId": "q_ty_gotov",
+    "ru_text": "Ты готов?",
+    "emotion": "questioning",
+    "slug": "q_ty_gotov",
+    "path": "Lyalya/Phrases/questioning/q_ty_gotov.m4a"
+  },
+  {
+    "phraseId": "q_snova_slushaem",
+    "ru_text": "Слушаем снова?",
+    "emotion": "questioning",
+    "slug": "q_snova_slushaem",
+    "path": "Lyalya/Phrases/questioning/q_snova_slushaem.m4a"
+  },
+  {
+    "phraseId": "q_smozesh_povtorit",
+    "ru_text": "Сможешь повторить?",
+    "emotion": "questioning",
+    "slug": "q_smozesh_povtorit",
+    "path": "Lyalya/Phrases/questioning/q_smozesh_povtorit.m4a"
+  },
+  {
+    "phraseId": "q_kakomu_domiku",
+    "ru_text": "К какому домику относится это слово?",
+    "emotion": "questioning",
+    "slug": "q_kakomu_domiku",
+    "path": "Lyalya/Phrases/questioning/q_kakomu_domiku.m4a"
+  },
+  {
+    "phraseId": "q_v_nachale_ili_v_kontse",
+    "ru_text": "В начале или в конце слова?",
+    "emotion": "questioning",
+    "slug": "q_v_nachale_ili_v_kontse",
+    "path": "Lyalya/Phrases/questioning/q_v_nachale_ili_v_kontse.m4a"
+  }
+]

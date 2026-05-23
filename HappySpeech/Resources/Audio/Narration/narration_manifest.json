@@ -1,0 +1,602 @@
+[
+  {
+    "narrationId": "intro_sound_р",
+    "ru_text": "Сегодня изучаем звук «Р». Готов?",
+    "slug": "intro_sound_р",
+    "path": "Narration/intro_sound_р.m4a"
+  },
+  {
+    "narrationId": "intro_sound_л",
+    "ru_text": "Сегодня изучаем звук «Л». Готов?",
+    "slug": "intro_sound_л",
+    "path": "Narration/intro_sound_л.m4a"
+  },
+  {
+    "narrationId": "intro_sound_ш",
+    "ru_text": "Сегодня изучаем звук «Ш». Готов?",
+    "slug": "intro_sound_ш",
+    "path": "Narration/intro_sound_ш.m4a"
+  },
+  {
+    "narrationId": "intro_sound_с",
+    "ru_text": "Сегодня изучаем звук «С». Готов?",
+    "slug": "intro_sound_с",
+    "path": "Narration/intro_sound_с.m4a"
+  },
+  {
+    "narrationId": "intro_sound_з",
+    "ru_text": "Сегодня изучаем звук «З». Готов?",
+    "slug": "intro_sound_з",
+    "path": "Narration/intro_sound_з.m4a"
+  },
+  {
+    "narrationId": "intro_sound_ж",
+    "ru_text": "Сегодня изучаем звук «Ж». Готов?",
+    "slug": "intro_sound_ж",
+    "path": "Narration/intro_sound_ж.m4a"
+  },
+  {
+    "narrationId": "intro_sound_ч",
+    "ru_text": "Сегодня изучаем звук «Ч». Готов?",
+    "slug": "intro_sound_ч",
+    "path": "Narration/intro_sound_ч.m4a"
+  },
+  {
+    "narrationId": "intro_sound_щ",
+    "ru_text": "Сегодня изучаем звук «Щ». Готов?",
+    "slug": "intro_sound_щ",
+    "path": "Narration/intro_sound_щ.m4a"
+  },
+  {
+    "narrationId": "intro_sound_к",
+    "ru_text": "Сегодня изучаем звук «К». Готов?",
+    "slug": "intro_sound_к",
+    "path": "Narration/intro_sound_к.m4a"
+  },
+  {
+    "narrationId": "intro_sound_г",
+    "ru_text": "Сегодня изучаем звук «Г». Готов?",
+    "slug": "intro_sound_г",
+    "path": "Narration/intro_sound_г.m4a"
+  },
+  {
+    "narrationId": "hint_click_picture_r",
+    "ru_text": "Нажми на картинку со звуком «Р».",
+    "slug": "hint_click_picture_r",
+    "path": "Narration/hint_click_picture_r.m4a"
+  },
+  {
+    "narrationId": "hint_click_picture_l",
+    "ru_text": "Нажми на картинку со звуком «Л».",
+    "slug": "hint_click_picture_l",
+    "path": "Narration/hint_click_picture_l.m4a"
+  },
+  {
+    "narrationId": "hint_click_picture_sh",
+    "ru_text": "Нажми на картинку со звуком «Ш».",
+    "slug": "hint_click_picture_sh",
+    "path": "Narration/hint_click_picture_sh.m4a"
+  },
+  {
+    "narrationId": "hint_click_picture_s",
+    "ru_text": "Нажми на картинку со звуком «С».",
+    "slug": "hint_click_picture_s",
+    "path": "Narration/hint_click_picture_s.m4a"
+  },
+  {
+    "narrationId": "hint_click_picture_z",
+    "ru_text": "Нажми на картинку со звуком «З».",
+    "slug": "hint_click_picture_z",
+    "path": "Narration/hint_click_picture_z.m4a"
+  },
+  {
+    "narrationId": "hint_drag_to_house",
+    "ru_text": "Перетащи картинку в нужный домик.",
+    "slug": "hint_drag_to_house",
+    "path": "Narration/hint_drag_to_house.m4a"
+  },
+  {
+    "narrationId": "hint_find_sound_start",
+    "ru_text": "Найди слово, в котором звук стоит в начале.",
+    "slug": "hint_find_sound_start",
+    "path": "Narration/hint_find_sound_start.m4a"
+  },
+  {
+    "narrationId": "hint_find_sound_end",
+    "ru_text": "Найди слово, в котором звук стоит в конце.",
+    "slug": "hint_find_sound_end",
+    "path": "Narration/hint_find_sound_end.m4a"
+  },
+  {
+    "narrationId": "hint_find_sound_middle",
+    "ru_text": "Найди слово, в котором звук стоит в середине.",
+    "slug": "hint_find_sound_middle",
+    "path": "Narration/hint_find_sound_middle.m4a"
+  },
+  {
+    "narrationId": "hint_repeat_after_me",
+    "ru_text": "Повтори за мной это слово.",
+    "slug": "hint_repeat_after_me",
+    "path": "Narration/hint_repeat_after_me.m4a"
+  },
+  {
+    "narrationId": "hint_say_word_slowly",
+    "ru_text": "Скажи слово медленно и чётко.",
+    "slug": "hint_say_word_slowly",
+    "path": "Narration/hint_say_word_slowly.m4a"
+  },
+  {
+    "narrationId": "hint_listen_carefully",
+    "ru_text": "Слушай внимательно — сейчас я скажу слово.",
+    "slug": "hint_listen_carefully",
+    "path": "Narration/hint_listen_carefully.m4a"
+  },
+  {
+    "narrationId": "hint_tap_when_hear",
+    "ru_text": "Нажми кнопку, когда услышишь нужный звук.",
+    "slug": "hint_tap_when_hear",
+    "path": "Narration/hint_tap_when_hear.m4a"
+  },
+  {
+    "narrationId": "hint_choose_correct_pic",
+    "ru_text": "Выбери картинку, которую я назвала.",
+    "slug": "hint_choose_correct_pic",
+    "path": "Narration/hint_choose_correct_pic.m4a"
+  },
+  {
+    "narrationId": "hint_match_pairs",
+    "ru_text": "Соедини похожие пары.",
+    "slug": "hint_match_pairs",
+    "path": "Narration/hint_match_pairs.m4a"
+  },
+  {
+    "narrationId": "hint_sort_by_sound",
+    "ru_text": "Разложи слова по звукам.",
+    "slug": "hint_sort_by_sound",
+    "path": "Narration/hint_sort_by_sound.m4a"
+  },
+  {
+    "narrationId": "hint_memory_flip",
+    "ru_text": "Переверни карточки и найди пары.",
+    "slug": "hint_memory_flip",
+    "path": "Narration/hint_memory_flip.m4a"
+  },
+  {
+    "narrationId": "hint_bingo_listen",
+    "ru_text": "Слушай слова и отмечай на карточке.",
+    "slug": "hint_bingo_listen",
+    "path": "Narration/hint_bingo_listen.m4a"
+  },
+  {
+    "narrationId": "hint_story_finish",
+    "ru_text": "Закончи предложение нужным словом.",
+    "slug": "hint_story_finish",
+    "path": "Narration/hint_story_finish.m4a"
+  },
+  {
+    "narrationId": "hint_puzzle_piece",
+    "ru_text": "Поставь кусочек пазла на место.",
+    "slug": "hint_puzzle_piece",
+    "path": "Narration/hint_puzzle_piece.m4a"
+  },
+  {
+    "narrationId": "hint_ar_open_mouth",
+    "ru_text": "Открой рот и посмотри на экран.",
+    "slug": "hint_ar_open_mouth",
+    "path": "Narration/hint_ar_open_mouth.m4a"
+  },
+  {
+    "narrationId": "hint_ar_stick_tongue",
+    "ru_text": "Высуни язычок вперёд.",
+    "slug": "hint_ar_stick_tongue",
+    "path": "Narration/hint_ar_stick_tongue.m4a"
+  },
+  {
+    "narrationId": "hint_ar_smile_wide",
+    "ru_text": "Улыбнись как можно шире.",
+    "slug": "hint_ar_smile_wide",
+    "path": "Narration/hint_ar_smile_wide.m4a"
+  },
+  {
+    "narrationId": "hint_ar_round_lips",
+    "ru_text": "Округли губы, как при звуке О.",
+    "slug": "hint_ar_round_lips",
+    "path": "Narration/hint_ar_round_lips.m4a"
+  },
+  {
+    "narrationId": "hint_breathing_blow",
+    "ru_text": "Подуй тихонько, как на горячий чай.",
+    "slug": "hint_breathing_blow",
+    "path": "Narration/hint_breathing_blow.m4a"
+  },
+  {
+    "narrationId": "hint_breathing_deep",
+    "ru_text": "Сделай глубокий вдох и медленно выдыхай.",
+    "slug": "hint_breathing_deep",
+    "path": "Narration/hint_breathing_deep.m4a"
+  },
+  {
+    "narrationId": "hint_rhythm_clap",
+    "ru_text": "Хлопай в ладоши в такт словам.",
+    "slug": "hint_rhythm_clap",
+    "path": "Narration/hint_rhythm_clap.m4a"
+  },
+  {
+    "narrationId": "hint_min_pairs_diff",
+    "ru_text": "Чем отличаются эти два слова?",
+    "slug": "hint_min_pairs_diff",
+    "path": "Narration/hint_min_pairs_diff.m4a"
+  },
+  {
+    "narrationId": "hint_narrative_what_next",
+    "ru_text": "Что произошло дальше в истории?",
+    "slug": "hint_narrative_what_next",
+    "path": "Narration/hint_narrative_what_next.m4a"
+  },
+  {
+    "narrationId": "hint_sound_hunter",
+    "ru_text": "Охотник на звуки! Найди слово с нужным звуком.",
+    "slug": "hint_sound_hunter",
+    "path": "Narration/hint_sound_hunter.m4a"
+  },
+  {
+    "narrationId": "hint_articulation_show",
+    "ru_text": "Покажи, как работает язык при этом звуке.",
+    "slug": "hint_articulation_show",
+    "path": "Narration/hint_articulation_show.m4a"
+  },
+  {
+    "narrationId": "hint_visual_acoustic",
+    "ru_text": "Посмотри на форму рта и угадай звук.",
+    "slug": "hint_visual_acoustic",
+    "path": "Narration/hint_visual_acoustic.m4a"
+  },
+  {
+    "narrationId": "hint_cluster_say",
+    "ru_text": "Скажи слог с двумя согласными.",
+    "slug": "hint_cluster_say",
+    "path": "Narration/hint_cluster_say.m4a"
+  },
+  {
+    "narrationId": "hint_phrase_complete",
+    "ru_text": "Скажи всё предложение целиком.",
+    "slug": "hint_phrase_complete",
+    "path": "Narration/hint_phrase_complete.m4a"
+  },
+  {
+    "narrationId": "hint_whisper_mode",
+    "ru_text": "А теперь скажи шёпотом.",
+    "slug": "hint_whisper_mode",
+    "path": "Narration/hint_whisper_mode.m4a"
+  },
+  {
+    "narrationId": "hint_loud_mode",
+    "ru_text": "Теперь скажи громко и чётко!",
+    "slug": "hint_loud_mode",
+    "path": "Narration/hint_loud_mode.m4a"
+  },
+  {
+    "narrationId": "hint_slow_fast",
+    "ru_text": "Сначала медленно, потом быстрее.",
+    "slug": "hint_slow_fast",
+    "path": "Narration/hint_slow_fast.m4a"
+  },
+  {
+    "narrationId": "hint_echo_game",
+    "ru_text": "Повторяй всё, что я говорю, как эхо.",
+    "slug": "hint_echo_game",
+    "path": "Narration/hint_echo_game.m4a"
+  },
+  {
+    "narrationId": "hint_word_chain",
+    "ru_text": "Придумай слово, которое начинается на последний звук.",
+    "slug": "hint_word_chain",
+    "path": "Narration/hint_word_chain.m4a"
+  },
+  {
+    "narrationId": "hint_category_pick",
+    "ru_text": "Выбери слово из этой категории.",
+    "slug": "hint_category_pick",
+    "path": "Narration/hint_category_pick.m4a"
+  },
+  {
+    "narrationId": "hint_odd_one_out",
+    "ru_text": "Какое слово лишнее в этом ряду?",
+    "slug": "hint_odd_one_out",
+    "path": "Narration/hint_odd_one_out.m4a"
+  },
+  {
+    "narrationId": "hint_count_syllables",
+    "ru_text": "Сколько слогов в этом слове?",
+    "slug": "hint_count_syllables",
+    "path": "Narration/hint_count_syllables.m4a"
+  },
+  {
+    "narrationId": "hint_stress_mark",
+    "ru_text": "Поставь ударение в этом слове.",
+    "slug": "hint_stress_mark",
+    "path": "Narration/hint_stress_mark.m4a"
+  },
+  {
+    "narrationId": "hint_clap_syllables",
+    "ru_text": "Раздели слово на слоги хлопками.",
+    "slug": "hint_clap_syllables",
+    "path": "Narration/hint_clap_syllables.m4a"
+  },
+  {
+    "narrationId": "hint_first_sound",
+    "ru_text": "Назови первый звук в слове.",
+    "slug": "hint_first_sound",
+    "path": "Narration/hint_first_sound.m4a"
+  },
+  {
+    "narrationId": "hint_last_sound",
+    "ru_text": "Назови последний звук в слове.",
+    "slug": "hint_last_sound",
+    "path": "Narration/hint_last_sound.m4a"
+  },
+  {
+    "narrationId": "hint_middle_sound",
+    "ru_text": "Назови средний звук в слове.",
+    "slug": "hint_middle_sound",
+    "path": "Narration/hint_middle_sound.m4a"
+  },
+  {
+    "narrationId": "hint_make_word",
+    "ru_text": "Составь слово из этих звуков.",
+    "slug": "hint_make_word",
+    "path": "Narration/hint_make_word.m4a"
+  },
+  {
+    "narrationId": "hint_guess_word",
+    "ru_text": "Угадай слово по картинке.",
+    "slug": "hint_guess_word",
+    "path": "Narration/hint_guess_word.m4a"
+  },
+  {
+    "narrationId": "hint_rhyme_it",
+    "ru_text": "Придумай слово, которое рифмуется.",
+    "slug": "hint_rhyme_it",
+    "path": "Narration/hint_rhyme_it.m4a"
+  },
+  {
+    "narrationId": "trans_next_question",
+    "ru_text": "Молодец! Следующий вопрос.",
+    "slug": "trans_next_question",
+    "path": "Narration/trans_next_question.m4a"
+  },
+  {
+    "narrationId": "trans_great_next",
+    "ru_text": "Отлично! Идём дальше.",
+    "slug": "trans_great_next",
+    "path": "Narration/trans_great_next.m4a"
+  },
+  {
+    "narrationId": "trans_new_round",
+    "ru_text": "Новый раунд! Ты готов?",
+    "slug": "trans_new_round",
+    "path": "Narration/trans_new_round.m4a"
+  },
+  {
+    "narrationId": "trans_half_way",
+    "ru_text": "Мы на полпути! Продолжаем!",
+    "slug": "trans_half_way",
+    "path": "Narration/trans_half_way.m4a"
+  },
+  {
+    "narrationId": "trans_almost_done",
+    "ru_text": "Почти готово! Ещё немного.",
+    "slug": "trans_almost_done",
+    "path": "Narration/trans_almost_done.m4a"
+  },
+  {
+    "narrationId": "trans_good_job_next",
+    "ru_text": "Хорошая работа! Следующее задание.",
+    "slug": "trans_good_job_next",
+    "path": "Narration/trans_good_job_next.m4a"
+  },
+  {
+    "narrationId": "trans_switching_exercise",
+    "ru_text": "Сменим упражнение!",
+    "slug": "trans_switching_exercise",
+    "path": "Narration/trans_switching_exercise.m4a"
+  },
+  {
+    "narrationId": "trans_level_complete",
+    "ru_text": "Уровень пройден! Переходим выше.",
+    "slug": "trans_level_complete",
+    "path": "Narration/trans_level_complete.m4a"
+  },
+  {
+    "narrationId": "trans_bonus_round",
+    "ru_text": "Бонусный раунд! Это особенное задание.",
+    "slug": "trans_bonus_round",
+    "path": "Narration/trans_bonus_round.m4a"
+  },
+  {
+    "narrationId": "trans_final_round",
+    "ru_text": "Последний раунд! Ты справишься!",
+    "slug": "trans_final_round",
+    "path": "Narration/trans_final_round.m4a"
+  },
+  {
+    "narrationId": "trans_keep_going",
+    "ru_text": "Не останавливайся, продолжаем!",
+    "slug": "trans_keep_going",
+    "path": "Narration/trans_keep_going.m4a"
+  },
+  {
+    "narrationId": "trans_great_streak",
+    "ru_text": "Серия правильных ответов! Вперёд!",
+    "slug": "trans_great_streak",
+    "path": "Narration/trans_great_streak.m4a"
+  },
+  {
+    "narrationId": "trans_now_harder",
+    "ru_text": "Теперь чуть сложнее.",
+    "slug": "trans_now_harder",
+    "path": "Narration/trans_now_harder.m4a"
+  },
+  {
+    "narrationId": "trans_warmed_up",
+    "ru_text": "Разогрелись! Теперь основное задание.",
+    "slug": "trans_warmed_up",
+    "path": "Narration/trans_warmed_up.m4a"
+  },
+  {
+    "narrationId": "trans_try_different",
+    "ru_text": "Попробуем другой тип задания.",
+    "slug": "trans_try_different",
+    "path": "Narration/trans_try_different.m4a"
+  },
+  {
+    "narrationId": "trans_your_turn",
+    "ru_text": "Теперь твоя очередь!",
+    "slug": "trans_your_turn",
+    "path": "Narration/trans_your_turn.m4a"
+  },
+  {
+    "narrationId": "trans_one_more",
+    "ru_text": "Ещё одно задание!",
+    "slug": "trans_one_more",
+    "path": "Narration/trans_one_more.m4a"
+  },
+  {
+    "narrationId": "trans_almost_star",
+    "ru_text": "Ещё шаг — и получишь звезду!",
+    "slug": "trans_almost_star",
+    "path": "Narration/trans_almost_star.m4a"
+  },
+  {
+    "narrationId": "trans_review_time",
+    "ru_text": "Повторим то, что уже выучили.",
+    "slug": "trans_review_time",
+    "path": "Narration/trans_review_time.m4a"
+  },
+  {
+    "narrationId": "trans_challenge_time",
+    "ru_text": "Время челленджа! Готовься!",
+    "slug": "trans_challenge_time",
+    "path": "Narration/trans_challenge_time.m4a"
+  },
+  {
+    "narrationId": "outro_well_done",
+    "ru_text": "Ты молодец! Ещё одну сессию?",
+    "slug": "outro_well_done",
+    "path": "Narration/outro_well_done.m4a"
+  },
+  {
+    "narrationId": "outro_great_session",
+    "ru_text": "Отличная тренировка! Хочешь ещё?",
+    "slug": "outro_great_session",
+    "path": "Narration/outro_great_session.m4a"
+  },
+  {
+    "narrationId": "outro_come_tomorrow",
+    "ru_text": "До завтра! Мы продолжим.",
+    "slug": "outro_come_tomorrow",
+    "path": "Narration/outro_come_tomorrow.m4a"
+  },
+  {
+    "narrationId": "outro_rest_now",
+    "ru_text": "Отдыхай, ты заслужил!",
+    "slug": "outro_rest_now",
+    "path": "Narration/outro_rest_now.m4a"
+  },
+  {
+    "narrationId": "outro_great_progress",
+    "ru_text": "Ты сделал большой прогресс сегодня!",
+    "slug": "outro_great_progress",
+    "path": "Narration/outro_great_progress.m4a"
+  },
+  {
+    "narrationId": "outro_tell_parents",
+    "ru_text": "Расскажи маме или папе, что ты сегодня выучил!",
+    "slug": "outro_tell_parents",
+    "path": "Narration/outro_tell_parents.m4a"
+  },
+  {
+    "narrationId": "outro_stars_earned",
+    "ru_text": "Посмотри, сколько звёздочек ты собрал!",
+    "slug": "outro_stars_earned",
+    "path": "Narration/outro_stars_earned.m4a"
+  },
+  {
+    "narrationId": "outro_new_badge",
+    "ru_text": "Ты получил новый значок! Поздравляю!",
+    "slug": "outro_new_badge",
+    "path": "Narration/outro_new_badge.m4a"
+  },
+  {
+    "narrationId": "outro_streak_saved",
+    "ru_text": "Серия сохранена! Возвращайся завтра!",
+    "slug": "outro_streak_saved",
+    "path": "Narration/outro_streak_saved.m4a"
+  },
+  {
+    "narrationId": "outro_bye_for_now",
+    "ru_text": "Пока-пока! Ляля ждёт тебя завтра!",
+    "slug": "outro_bye_for_now",
+    "path": "Narration/outro_bye_for_now.m4a"
+  },
+  {
+    "narrationId": "outro_amazing_work",
+    "ru_text": "Потрясающая работа сегодня!",
+    "slug": "outro_amazing_work",
+    "path": "Narration/outro_amazing_work.m4a"
+  },
+  {
+    "narrationId": "outro_sound_mastered",
+    "ru_text": "Ты освоил этот звук! Горжусь тобой!",
+    "slug": "outro_sound_mastered",
+    "path": "Narration/outro_sound_mastered.m4a"
+  },
+  {
+    "narrationId": "outro_next_session",
+    "ru_text": "В следующей сессии будет новое приключение!",
+    "slug": "outro_next_session",
+    "path": "Narration/outro_next_session.m4a"
+  },
+  {
+    "narrationId": "outro_practice_makes_perfect",
+    "ru_text": "Практика — путь к совершенству! Ты на верном пути!",
+    "slug": "outro_practice_makes_perfect",
+    "path": "Narration/outro_practice_makes_perfect.m4a"
+  },
+  {
+    "narrationId": "outro_parents_proud",
+    "ru_text": "Родители будут рады твоим успехам!",
+    "slug": "outro_parents_proud",
+    "path": "Narration/outro_parents_proud.m4a"
+  },
+  {
+    "narrationId": "outro_sleep_well",
+    "ru_text": "Сладких снов! Завтра продолжим.",
+    "slug": "outro_sleep_well",
+    "path": "Narration/outro_sleep_well.m4a"
+  },
+  {
+    "narrationId": "outro_saved_progress",
+    "ru_text": "Твой прогресс сохранён!",
+    "slug": "outro_saved_progress",
+    "path": "Narration/outro_saved_progress.m4a"
+  },
+  {
+    "narrationId": "outro_see_you_soon",
+    "ru_text": "До встречи! Я буду скучать!",
+    "slug": "outro_see_you_soon",
+    "path": "Narration/outro_see_you_soon.m4a"
+  },
+  {
+    "narrationId": "outro_champion_today",
+    "ru_text": "Сегодня ты настоящий чемпион!",
+    "slug": "outro_champion_today",
+    "path": "Narration/outro_champion_today.m4a"
+  },
+  {
+    "narrationId": "outro_lyalya_proud",
+    "ru_text": "Ляля очень гордится тобой!",
+    "slug": "outro_lyalya_proud",
+    "path": "Narration/outro_lyalya_proud.m4a"
+  }
+]
