@@ -9,11 +9,21 @@ struct StoryRetellingProView: View {
     @State private var interactor: StoryRetellingProInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         NavigationStack {
             ZStack {
+                // Step 10 Batch E — Pattern 1: mesh .kidCool палитра для
+                // фокус-режима «пересказ» (прохладный воздух, мыслительный).
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.18 : 0.30)
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
                 content
             }
             .navigationTitle(Text(String(localized: "storyRetelling.nav.title")))
@@ -57,7 +67,8 @@ struct StoryRetellingProView: View {
     }
 
     private var hero: some View {
-        HSCard(style: .tinted(ColorTokens.Brand.mint.opacity(0.18))) {
+        // Step 10 Batch E — Pattern 2: hero на HSLiquidGlassCard(.elevated).
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(String(localized: "storyRetelling.hero.title"))
                     .font(TypographyTokens.title(20))
@@ -80,6 +91,15 @@ struct StoryRetellingProView: View {
                     hapticService.impact(.light)
                     interactor.select(story.id)
                 }
+                // Step 10 Batch E — Pattern 3: scrollTransition stagger
+                // fade+scale на story rows.
+                .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                    content
+                        .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                        .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))
+                }
+                // Step 10 Batch E — Pattern 4: parallax drift на story tiles.
+                .hsParallaxTile(factor: 0.25)
             }
         }
     }
@@ -97,6 +117,9 @@ struct StoryRetellingProView: View {
                         .foregroundStyle(
                             story.isCompleted ? ColorTokens.Brand.primary : ColorTokens.Kid.inkSoft
                         )
+                        // Step 10 Batch E — Pattern 5: checkmark bounce при
+                        // переключении completed.
+                        .hsSymbolEffect(.bounce, value: story.isCompleted)
                         .frame(width: 32, height: 32)
                     VStack(alignment: .leading, spacing: 4) {
                         Text(story.title)

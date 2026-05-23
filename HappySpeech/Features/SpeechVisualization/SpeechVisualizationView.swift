@@ -64,6 +64,7 @@ struct SpeechVisualizationView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     private static let logger = Logger(subsystem: "ru.happyspeech", category: "SpeechVisualization.View")
 
@@ -99,7 +100,19 @@ struct SpeechVisualizationView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
-            .background(ColorTokens.Kid.bg.ignoresSafeArea())
+            // Step 10 Batch E — Pattern 1: mesh .kidCool палитра — прохладный
+            // «лабораторный» visualization-режим.
+            .background(
+                ZStack {
+                    ColorTokens.Kid.bg.ignoresSafeArea()
+                    HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
+                        .ignoresSafeArea()
+                        .opacity(colorScheme == .dark ? 0.18 : 0.30)
+                        .blendMode(.softLight)
+                        .accessibilityHidden(true)
+                        .allowsHitTesting(false)
+                }
+            )
             .navigationTitle(Text("karaoke.screen.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -147,24 +160,21 @@ struct SpeechVisualizationView: View {
 
     @ViewBuilder
     private func wordSection(viewModel: SpeechVisualizationModels.Load.ViewModel) -> some View {
-        VStack(spacing: SpacingTokens.sp2) {
-            Text(viewModel.wordDisplay)
-                .font(.system(size: 28, weight: .heavy, design: .rounded))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .accessibilityHidden(true)
+        // Step 10 Batch E — Pattern 2: word hero на HSLiquidGlassCard(.elevated).
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+            VStack(spacing: SpacingTokens.sp2) {
+                Text(viewModel.wordDisplay)
+                    .font(.system(size: 28, weight: .heavy, design: .rounded))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .accessibilityHidden(true)
 
-            KaraokeWordView(
-                syllables: viewModel.syllables,
-                activeSyllableID: holder.activeSyllableID
-            )
+                KaraokeWordView(
+                    syllables: viewModel.syllables,
+                    activeSyllableID: holder.activeSyllableID
+                )
+            }
+            .frame(maxWidth: .infinity)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, SpacingTokens.sp4)
-        .background(
-            RoundedRectangle(cornerRadius: 22)
-                .fill(ColorTokens.Kid.surface)
-        )
-        .depthShadow(ShadowTokens.kidDepth)
     }
 
     @ViewBuilder
@@ -182,6 +192,9 @@ struct SpeechVisualizationView: View {
                 Image(systemName: scoreVM.confettiBurst ? "sparkles" : "speaker.wave.2")
                     .font(.title2)
                     .foregroundStyle(scoreVM.summaryColor)
+                    // Step 10 Batch E — Pattern 5: sparkles variableColor pulse
+                    // / speaker bounce при появлении score.
+                    .hsSymbolEffect(.variableColor, value: scoreVM.summaryText)
                     .accessibilityHidden(true)
                 Text(scoreVM.summaryText)
                     .font(TypographyTokens.headline(16))

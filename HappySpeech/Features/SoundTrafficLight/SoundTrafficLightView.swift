@@ -64,6 +64,7 @@ struct SoundTrafficLightView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
 
     private static let logger = Logger(
@@ -74,7 +75,15 @@ struct SoundTrafficLightView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                // Step 10 Batch E — Pattern 1: mesh .kidWarm палитра «светофор» —
+                // тёплый игровой режим сортировки звуков.
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.18 : 0.30)
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
 
                 if holder.isFinished, let summary = holder.summary {
                     summarySection(summary)
@@ -180,26 +189,19 @@ struct SoundTrafficLightView: View {
     }
 
     private func wordCard(_ word: String) -> some View {
-        Text(word)
-            .font(TypographyTokens.title(40))
-            .foregroundStyle(ColorTokens.Kid.ink)
-            .lineLimit(1)
-            .minimumScaleFactor(0.5)
-            .padding(.horizontal, SpacingTokens.sp6)
-            .padding(.vertical, SpacingTokens.sp8)
-            .frame(maxWidth: .infinity)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .fill(ColorTokens.Kid.surface)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .strokeBorder(ColorTokens.Kid.line, lineWidth: 2)
-            )
-            .depthShadow(ShadowTokens.kidDepth)
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .accessibilityLabel(Text(verbatim: word))
-            .accessibilityAddTraits(.isStaticText)
+        // Step 10 Batch E — Pattern 2: word card на HSLiquidGlassCard(.elevated).
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp8) {
+            Text(word)
+                .font(TypographyTokens.title(40))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
+                .padding(.horizontal, SpacingTokens.sp6)
+                .frame(maxWidth: .infinity)
+        }
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .accessibilityLabel(Text(verbatim: word))
+        .accessibilityAddTraits(.isStaticText)
     }
 
     private func garageButton(
@@ -238,6 +240,8 @@ struct SoundTrafficLightView: View {
         HStack(spacing: SpacingTokens.sp2) {
             Image(systemName: isCorrect ? "checkmark.circle.fill" : "arrow.counterclockwise.circle.fill")
                 .font(.title3)
+                // Step 10 Batch E — Pattern 5: feedback icon bounce.
+                .hsSymbolEffect(.bounce, value: text)
             Text(text)
                 .font(TypographyTokens.body(15).weight(.medium))
                 .lineLimit(2)
@@ -266,6 +270,8 @@ struct SoundTrafficLightView: View {
                 : "hand.thumbsup.circle.fill")
                 .font(.system(size: 80))
                 .foregroundStyle(ColorTokens.Brand.butter)
+                // Step 10 Batch E — Pattern 5: summary star bounce.
+                .hsSymbolEffect(.bounce, value: summary.scoreText)
                 .accessibilityHidden(true)
 
             Text(summary.title)

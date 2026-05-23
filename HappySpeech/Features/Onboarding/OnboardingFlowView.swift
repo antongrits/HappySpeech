@@ -47,11 +47,11 @@ struct OnboardingFlowView: View {
                 backgroundGradient
                     .ignoresSafeArea()
 
-                // Block J v18 B.7 — HSMeshGradientBackground поверх linear backgroundGradient.
-                // HSOnboardingParallax не применён whole-screen (это 3-page intro pattern,
-                // несовместим с 10-шаговым VIP flow из OnboardingFlowView). Берём только
-                // mesh-фон от него для рovuсения parallax visual feel.
-                HSMeshGradientBackground(palette: .kidCool, animated: true)
+                // Step 10 Batch E — Pattern 1: HSMeshGradientBackground палитра .kidWarm
+                // (warm welcoming onboarding feel) поверх linear backgroundGradient.
+                // softLight blendMode + low opacity = mesh-слой проходит за CTA/hero,
+                // создавая «тёплый воздух» kavsoft-style.
+                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
                     .ignoresSafeArea()
                     // F.tier1 v21: mesh мягче в dark поверх насыщенного gradient.
                     .opacity(colorScheme == .dark ? 0.22 : 0.35)
@@ -158,6 +158,9 @@ struct OnboardingFlowView: View {
                         Image(systemName: "chevron.left")
                             .font(TypographyTokens.headline(17))
                             .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            // Step 10 Batch E — Pattern 5: chevron мягко
+                            // bounce при переключении шага.
+                            .hsSymbolEffect(.bounce, value: display.currentStep)
                             .frame(width: 44, height: 44)
                             .contentShape(Rectangle())
                     }

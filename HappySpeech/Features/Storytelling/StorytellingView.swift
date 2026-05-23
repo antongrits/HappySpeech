@@ -74,6 +74,7 @@ struct StorytellingView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
 
     private static let logger = Logger(
@@ -84,7 +85,15 @@ struct StorytellingView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                // Step 10 Batch E — Pattern 1: mesh .calm палитра —
+                // спокойный, повествовательный режим «расскажи историю».
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.18 : 0.30)
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
 
                 switch holder.phase {
                 case .loading:
@@ -143,6 +152,15 @@ struct StorytellingView: View {
                 ) {
                     ForEach(topics.topics) { topic in
                         topicCard(topic)
+                            // Step 10 Batch E — Pattern 3: scrollTransition
+                            // stagger fade+scale на topic tiles.
+                            .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                                content
+                                    .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                                    .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))
+                            }
+                            // Step 10 Batch E — Pattern 4: parallax drift.
+                            .hsParallaxTile(factor: 0.25)
                     }
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
@@ -191,30 +209,34 @@ struct StorytellingView: View {
         _ start: StorytellingModels.StartTopic.ViewModel
     ) -> some View {
         VStack(spacing: SpacingTokens.sp4) {
-            VStack(spacing: SpacingTokens.sp2) {
-                Image(systemName: start.symbolName)
-                    .font(.system(size: 44))
-                    .foregroundStyle(ColorTokens.Brand.lilac)
-                    .accessibilityHidden(true)
-                Text(start.topicTitle)
-                    .font(TypographyTokens.title(22))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.7)
-                Text("storytelling.telling.prompt")
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
-                    .padding(.horizontal, SpacingTokens.sp4)
-                if !holder.progressLabel.isEmpty {
-                    Text(holder.progressLabel)
-                        .font(TypographyTokens.caption(13).monospacedDigit())
-                        .foregroundStyle(ColorTokens.Brand.primary)
+            // Step 10 Batch E — Pattern 2: hero телл-режима на HSLiquidGlassCard.
+            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+                VStack(spacing: SpacingTokens.sp2) {
+                    Image(systemName: start.symbolName)
+                        .font(.system(size: 44))
+                        .foregroundStyle(ColorTokens.Brand.lilac)
+                        .accessibilityHidden(true)
+                    Text(start.topicTitle)
+                        .font(TypographyTokens.title(22))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.7)
+                    Text("storytelling.telling.prompt")
+                        .font(TypographyTokens.body(14))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .padding(.horizontal, SpacingTokens.sp4)
+                    if !holder.progressLabel.isEmpty {
+                        Text(holder.progressLabel)
+                            .font(TypographyTokens.caption(13).monospacedDigit())
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                    }
                 }
             }
-            .padding(.top, SpacingTokens.sp4)
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.top, SpacingTokens.sp2)
 
             ScrollView {
                 VStack(spacing: SpacingTokens.sp3) {
@@ -273,6 +295,8 @@ struct StorytellingView: View {
                 Image(systemName: isDone ? "checkmark.circle.fill" : "circle")
                     .font(.title3)
                     .foregroundStyle(isDone ? ColorTokens.Brand.mint : ColorTokens.Kid.inkSoft)
+                    // Step 10 Batch E — Pattern 5: checkmark bounce при отметке шага.
+                    .hsSymbolEffect(.bounce, value: isDone)
             }
             .padding(SpacingTokens.sp3)
             .frame(maxWidth: .infinity, minHeight: 64, alignment: .leading)
@@ -308,6 +332,8 @@ struct StorytellingView: View {
                 : "hand.thumbsup.circle.fill")
                 .font(.system(size: 80))
                 .foregroundStyle(ColorTokens.Brand.gold)
+                // Step 10 Batch E — Pattern 5: bounce при появлении summary.
+                .hsSymbolEffect(.bounce, value: finish.title)
                 .accessibilityHidden(true)
 
             Text(finish.title)

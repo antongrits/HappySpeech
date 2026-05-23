@@ -9,13 +9,23 @@ struct StoryEndingMakerView: View {
     @State private var interactor: StoryEndingMakerInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: SpacingTokens.sp3), count: 3)
 
     var body: some View {
         NavigationStack {
             ZStack {
+                // Step 10 Batch E — Pattern 1: mesh .kidWarm палитра «придумай
+                // концовку» — тёплый креативный режим.
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.18 : 0.30)
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
                 content
             }
             .navigationTitle(Text(String(localized: "storyEnding.nav.title")))
@@ -62,7 +72,8 @@ struct StoryEndingMakerView: View {
     }
 
     private func hero(state: StoryEndingMakerModels.ViewState) -> some View {
-        HSCard(style: .tinted(ColorTokens.Brand.sky.opacity(0.18))) {
+        // Step 10 Batch E — Pattern 2: hero на HSLiquidGlassCard(.elevated).
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .thinking, size: 64)
                     .accessibilityHidden(true)
@@ -106,6 +117,14 @@ struct StoryEndingMakerView: View {
                     hapticService.impact(.light)
                     interactor.select(card.id)
                 }
+                // Step 10 Batch E — Pattern 3: scrollTransition stagger fade+scale.
+                .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                    content
+                        .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                        .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))
+                }
+                // Step 10 Batch E — Pattern 4: parallax drift на picture tiles.
+                .hsParallaxTile(factor: 0.25)
             }
         }
     }

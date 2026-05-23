@@ -9,11 +9,21 @@ struct SoundDoctorKidView: View {
     @State private var interactor: SoundDoctorKidInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         NavigationStack {
             ZStack {
+                // Step 10 Batch E — Pattern 1: mesh .kidWarm палитра для
+                // тёплого «лечебного» режима sound-doctor.
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.18 : 0.30)
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
                 content
             }
             .navigationTitle(Text(String(localized: "soundDoctor.nav.title")))
@@ -61,7 +71,8 @@ struct SoundDoctorKidView: View {
     }
 
     private func hero(state: SoundDoctorKidModels.ViewState) -> some View {
-        HSCard(style: .tinted(ColorTokens.Brand.mint.opacity(0.18))) {
+        // Step 10 Batch E — Pattern 2: hero на HSLiquidGlassCard(.elevated).
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             HStack(alignment: .top, spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .pointing, size: 72)
                     .accessibilityHidden(true)
@@ -122,6 +133,13 @@ struct SoundDoctorKidView: View {
                                 )
                         }
                         .buttonStyle(.plain)
+                        // Step 10 Batch E — Pattern 3: scrollTransition stagger
+                        // на articulation options.
+                        .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                            content
+                                .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                                .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))
+                        }
                     }
                 }
             }
@@ -134,6 +152,9 @@ struct SoundDoctorKidView: View {
                 Image(systemName: "stethoscope")
                     .font(.system(size: 36))
                     .foregroundStyle(ColorTokens.Brand.primary)
+                    // Step 10 Batch E — Pattern 5: bounce при появлении
+                    // completion screen.
+                    .hsSymbolEffect(.bounce, value: state.cured)
                 Text("Все звуки здоровы!")
                     .font(TypographyTokens.title(18))
                     .foregroundStyle(ColorTokens.Kid.ink)

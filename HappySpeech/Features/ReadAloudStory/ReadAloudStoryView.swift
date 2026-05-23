@@ -90,6 +90,7 @@ struct ReadAloudStoryView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
 
     private static let logger = Logger(
@@ -100,7 +101,15 @@ struct ReadAloudStoryView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                // Step 10 Batch E — Pattern 1: mesh .calm палитра для
+                // спокойного «read mode» (тёплая бумага за глассом).
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.18 : 0.30)
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
                 content
             }
             .navigationTitle(Text("readAloud.title"))
@@ -146,28 +155,31 @@ struct ReadAloudStoryView: View {
             progressBar
 
             ScrollView {
-                VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-                    Text(start.title)
-                        .font(TypographyTokens.title(24))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.8)
-                        .padding(.bottom, SpacingTokens.sp2)
+                // Step 10 Batch E — Pattern 2: hero обёрнут в
+                // HSLiquidGlassCard(.elevated). mesh .calm проходит за
+                // полупрозрачным стеклом — «warm paper» feel для чтения.
+                HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+                    VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+                        Text(start.title)
+                            .font(TypographyTokens.title(24))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.8)
+                            .padding(.bottom, SpacingTokens.sp2)
 
-                    ForEach(Array(start.sentences.enumerated()), id: \.offset) { idx, sentence in
-                        sentenceLine(sentence, index: idx)
+                        ForEach(Array(start.sentences.enumerated()), id: \.offset) { idx, sentence in
+                            sentenceLine(sentence, index: idx)
+                                // Step 10 Batch E — Pattern 3: scrollTransition
+                                // stagger fade+scale на sentence lines.
+                                .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                                    content
+                                        .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                                        .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))
+                                }
+                        }
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .padding(SpacingTokens.sp4)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(
-                    RoundedRectangle(cornerRadius: RadiusTokens.card)
-                        .fill(ColorTokens.Kid.surface)
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: RadiusTokens.card)
-                        .strokeBorder(ColorTokens.Kid.line, lineWidth: 2)
-                )
                 .padding(.horizontal, SpacingTokens.screenEdge)
             }
 
@@ -183,6 +195,9 @@ struct ReadAloudStoryView: View {
                     } icon: {
                         Image(systemName: holder.highlightedSentenceIndex == nil
                               ? "play.circle.fill" : "speaker.wave.2.fill")
+                            // Step 10 Batch E — Pattern 5: speaker pulse
+                            // при подсветке новой фразы.
+                            .hsSymbolEffect(.pulse, value: holder.highlightedSentenceIndex ?? -1)
                     }
                     .foregroundStyle(ColorTokens.Overlay.onAccent)
                     .frame(maxWidth: .infinity, minHeight: 56)
@@ -352,6 +367,8 @@ struct ReadAloudStoryView: View {
                   : "hand.thumbsup.circle.fill")
                 .font(.system(size: 84))
                 .foregroundStyle(ColorTokens.Brand.gold)
+                // Step 10 Batch E — Pattern 5: summary star bounce при появлении.
+                .hsSymbolEffect(.bounce, value: summary.scoreText)
                 .accessibilityHidden(true)
 
             Text(summary.title)

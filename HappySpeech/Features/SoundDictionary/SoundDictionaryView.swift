@@ -60,6 +60,7 @@ struct SoundDictionaryView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
 
     private static let logger = Logger(
@@ -75,7 +76,15 @@ struct SoundDictionaryView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                // Step 10 Batch E — Pattern 1: mesh .kidCool палитра для
+                // словаря фонем (прохладный «энциклопедический» feel).
                 ColorTokens.Parent.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.18 : 0.30)
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: SpacingTokens.sp5) {
@@ -140,39 +149,39 @@ struct SoundDictionaryView: View {
 
     @ViewBuilder
     private func heroSection(viewModel: SoundDictionaryModels.Load.ViewModel) -> some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-            HStack(alignment: .top) {
-                VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
-                    Text("soundDictionary.hero.title")
-                        .font(TypographyTokens.title(22))
-                        .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
+        // Step 10 Batch E — Pattern 2: hero на HSLiquidGlassCard(.elevated).
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+                        Text("soundDictionary.hero.title")
+                            .font(TypographyTokens.title(22))
+                            .foregroundStyle(ColorTokens.Parent.ink)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
 
-                    Text(viewModel.totalCountLabel)
-                        .font(TypographyTokens.body(14))
-                        .foregroundStyle(ColorTokens.Parent.inkMuted)
-                        .lineLimit(nil)
+                        Text(viewModel.totalCountLabel)
+                            .font(TypographyTokens.body(14))
+                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                            .lineLimit(nil)
+                    }
+                    Spacer()
+                    Image(systemName: "book.pages.fill")
+                        .font(.system(size: 36))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                        // Step 10 Batch E — Pattern 5: pulse при первой загрузке.
+                        .hsSymbolEffect(.pulse, value: viewModel.totalCountLabel)
+                        .accessibilityHidden(true)
                 }
-                Spacer()
-                Image(systemName: "book.pages.fill")
-                    .font(.system(size: 36))
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                    .accessibilityHidden(true)
-            }
 
-            Text("soundDictionary.hero.subtitle")
-                .font(TypographyTokens.caption(12))
-                .foregroundStyle(ColorTokens.Parent.inkSoft)
-                .lineLimit(nil)
-                .padding(.top, SpacingTokens.sp1)
+                Text("soundDictionary.hero.subtitle")
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .lineLimit(nil)
+                    .padding(.top, SpacingTokens.sp1)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(SpacingTokens.sp4)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Parent.surface)
-        )
         .accessibilityElement(children: .combine)
     }
 
@@ -217,6 +226,9 @@ struct SoundDictionaryView: View {
             LazyVGrid(columns: gridColumns, spacing: SpacingTokens.sp2) {
                 ForEach(section.cells) { cell in
                     phonemeCell(cell)
+                        // Step 10 Batch E — Pattern 4: parallax drift на
+                        // phoneme dictionary cells.
+                        .hsParallaxTile(factor: 0.25)
                 }
             }
         }

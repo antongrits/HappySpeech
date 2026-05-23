@@ -28,6 +28,7 @@ struct SoundOfTheDayView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
 
@@ -39,7 +40,15 @@ struct SoundOfTheDayView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                // Step 10 Batch E — Pattern 1: mesh .kidWarm палитра «звук дня»
+                // — тёплый утренний ритуал.
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.18 : 0.30)
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
                 if let vm = holder.loadVM {
                     content(vm)
                 } else {
@@ -97,7 +106,8 @@ struct SoundOfTheDayView: View {
     }
 
     private func heroCard(_ vm: SoundOfTheDayModels.LoadToday.ViewModel) -> some View {
-        HSCard(style: .tinted(ColorTokens.Brand.butter.opacity(0.18))) {
+        // Step 10 Batch E — Pattern 2: hero на HSLiquidGlassCard(.elevated).
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
                 HStack(alignment: .center, spacing: SpacingTokens.sp3) {
                     VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
@@ -131,6 +141,15 @@ struct SoundOfTheDayView: View {
             HStack(spacing: SpacingTokens.sp2) {
                 ForEach(vm.activities) { activity in
                     activityChip(activity)
+                        // Step 10 Batch E — Pattern 3: scrollTransition stagger
+                        // fade+scale на activity chips.
+                        .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                            content
+                                .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                                .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))
+                        }
+                        // Step 10 Batch E — Pattern 4: parallax на activity tiles.
+                        .hsParallaxTile(factor: 0.25)
                 }
             }
         }
@@ -185,6 +204,8 @@ struct SoundOfTheDayView: View {
                 Image(systemName: "flame.fill")
                     .font(.system(size: 22, weight: .semibold))
                     .foregroundStyle(ColorTokens.Brand.gold)
+                    // Step 10 Batch E — Pattern 5: flame pulse — streak alive.
+                    .hsSymbolEffect(.pulse, value: vm.streakText)
                     .accessibilityHidden(true)
             }
             VStack(alignment: .leading, spacing: SpacingTokens.sp1) {

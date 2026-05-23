@@ -66,6 +66,7 @@ struct KaraokePitchView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
 
@@ -80,7 +81,15 @@ struct KaraokePitchView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                // Step 10 Batch E — Pattern 1: mesh .kidCool палитра для
+                // музыкально-ритмического pitch-режима (прохладный resonance).
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.18 : 0.30)
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
 
                 VStack(spacing: SpacingTokens.sp4) {
                     mascotRow
@@ -159,6 +168,9 @@ struct KaraokePitchView: View {
                     Image(systemName: phrase.intonationSymbol)
                         .font(.title3)
                         .foregroundStyle(ColorTokens.Brand.lilac)
+                        // Step 10 Batch E — Pattern 5: intonation icon
+                        // pulse при смене фразы.
+                        .hsSymbolEffect(.pulse, value: phrase.currentIndex)
                     Text("karaoke.progress \(phrase.currentIndex + 1) \(phrase.totalPhrases)")
                         .font(TypographyTokens.caption(13).monospacedDigit())
                         .foregroundStyle(ColorTokens.Kid.inkMuted)
@@ -174,7 +186,8 @@ struct KaraokePitchView: View {
     // MARK: - Contour Canvas
 
     private var contourSection: some View {
-        HSCard(style: .elevated) {
+        // Step 10 Batch E — Pattern 2: contour hero на HSLiquidGlassCard(.elevated).
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.cardPad) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
                 legendRow
                 Canvas(opaque: false) { ctx, size in
@@ -278,6 +291,9 @@ struct KaraokePitchView: View {
                 Image(systemName: holder.phase == .recording
                                    ? "stop.circle.fill" : "mic.circle.fill")
                     .font(.title)
+                    // Step 10 Batch E — Pattern 5: mic/stop icon bounce
+                    // при изменении фазы record/stop.
+                    .hsSymbolEffect(.bounce, value: holder.phase)
                 Text(holder.phase == .recording
                      ? "karaoke.button.stop"
                      : "karaoke.button.record")

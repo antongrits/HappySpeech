@@ -50,6 +50,7 @@ struct OralStoryCreatorView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(\.hapticService) private var hapticService
@@ -65,7 +66,15 @@ struct OralStoryCreatorView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                // Step 10 Batch E — Pattern 1: mesh .kidWarm палитра для
+                // тёплого «творческого» режима сочинения истории.
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.18 : 0.30)
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
                 Group {
                     switch holder.phase {
                     case .selecting:   selectingSection
@@ -170,6 +179,15 @@ struct OralStoryCreatorView: View {
                       spacing: SpacingTokens.sp2) {
                 ForEach(items) { stimulus in
                     stimulusButton(stimulus)
+                        // Step 10 Batch E — Pattern 3: scrollTransition stagger
+                        // fade+scale на stimulus grid tiles.
+                        .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                            content
+                                .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                                .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))
+                        }
+                        // Step 10 Batch E — Pattern 4: parallax drift на stimuli.
+                        .hsParallaxTile(factor: 0.25)
                 }
             }
         }
@@ -247,7 +265,8 @@ struct OralStoryCreatorView: View {
         VStack(spacing: SpacingTokens.sp4) {
             LyalyaMascotView(state: .singing, size: 130)
                 .accessibilityHidden(true)
-            HSCard(style: .tinted(ColorTokens.Semantic.error.opacity(0.08))) {
+            // Step 10 Batch E — Pattern 2: recording hero на HSLiquidGlassCard.
+            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
                 VStack(spacing: SpacingTokens.sp3) {
                     HStack(spacing: SpacingTokens.sp2) {
                         Image(systemName: "mic.fill")
@@ -340,6 +359,9 @@ struct OralStoryCreatorView: View {
                             .font(.system(size: 40))
                             .foregroundStyle(ColorTokens.Brand.mint)
                             .symbolRenderingMode(.hierarchical)
+                            // Step 10 Batch E — Pattern 5: success bounce
+                            // when result arrives.
+                            .hsSymbolEffect(.bounce, value: vm.durationLabel)
                         Text("storyCreator.result.title")
                             .font(TypographyTokens.title(22))
                             .foregroundStyle(ColorTokens.Kid.ink)

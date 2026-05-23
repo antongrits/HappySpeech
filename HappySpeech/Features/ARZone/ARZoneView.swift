@@ -12,6 +12,8 @@ struct ARZoneView: View {
     @Environment(AppCoordinator.self) private var coordinator
 
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     @State private var interactor: ARZoneInteractor?
     @State private var presenter: ARZonePresenter?
@@ -54,7 +56,19 @@ struct ARZoneView: View {
             .safeAreaPadding(.top, SpacingTokens.tiny)
             .navigationTitle(Text("ar.zone.title"))
             .navigationBarTitleDisplayMode(.large)
-            .background(ColorTokens.Kid.bg.ignoresSafeArea())
+            // Step 10 Batch E — Pattern 1: mesh .kidWarm softLight overlay поверх
+            // нейтрального Kid.bg создаёт «тёплый» воздушный фон AR-зоны.
+            .background(
+                ZStack {
+                    ColorTokens.Kid.bg.ignoresSafeArea()
+                    HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                        .ignoresSafeArea()
+                        .opacity(colorScheme == .dark ? 0.18 : 0.30)
+                        .blendMode(.softLight)
+                        .accessibilityHidden(true)
+                        .allowsHitTesting(false)
+                }
+            )
             .navigationDestination(for: ARGameDestination.self) { destination in
                 ARZoneView.destinationView(for: destination)
             }
@@ -92,11 +106,16 @@ struct ARZoneView: View {
     // MARK: - Hero banner (sky→lilac gradient + decorative pulse rings + 3D Lyalya)
 
     private var heroBanner: some View {
-        ARHeroBanner(
-            isCompactDevice: isCompactDevice,
-            mascotState: viewModelHolder.mascotState,
-            phase: viewModelHolder.phase
-        )
+        // Step 10 Batch E — Pattern 2: hero обёрнут в HSLiquidGlassCard(.elevated).
+        // mesh .kidWarm палитра проходит за стеклом, создавая «тёплое сияние»
+        // за полупрозрачным стеклом — kavsoft-style hero на iOS 26+.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.tiny) {
+            ARHeroBanner(
+                isCompactDevice: isCompactDevice,
+                mascotState: viewModelHolder.mascotState,
+                phase: viewModelHolder.phase
+            )
+        }
     }
 
     // MARK: - Face filter entry (S.4 v16)
@@ -121,6 +140,9 @@ struct ARZoneView: View {
                 Spacer()
                 Image(systemName: "chevron.right")
                     .foregroundStyle(ColorTokens.Overlay.onAccent)
+                    // Step 10 Batch E — Pattern 5: chevron мягко pulse при
+                    // обновлении кол-ва карточек/режима.
+                    .hsSymbolEffect(.pulse, value: viewModelHolder.cards.count)
                     .accessibilityHidden(true)
             }
             .padding(SpacingTokens.sp4)
@@ -249,6 +271,16 @@ struct ARZoneView: View {
                     )
                     .accessibilityHint(Text(card.subtitle))
                     .accessibilityAddTraits(card.badge == .recommendedByLyalya ? .isSelected : [])
+                    // Step 10 Batch E — Pattern 3: scrollTransition stagger
+                    // fade+scale на game-card grid, gated by reduce-motion.
+                    .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                        content
+                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))
+                    }
+                    // Step 10 Batch E — Pattern 4: мягкий parallax drift на
+                    // AR-game tiles.
+                    .hsParallaxTile(factor: 0.25)
                 }
             }
         }

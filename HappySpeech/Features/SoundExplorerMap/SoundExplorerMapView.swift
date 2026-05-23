@@ -10,13 +10,23 @@ struct SoundExplorerMapView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(AppCoordinator.self) private var coordinator
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: SpacingTokens.sp2), count: 5)
 
     var body: some View {
         NavigationStack {
             ZStack {
+                // Step 10 Batch E — Pattern 1: mesh .kidCool палитра для
+                // «карты звуков» (прохладный exploration feel).
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.18 : 0.30)
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
                 content
             }
             .navigationTitle(Text(String(localized: "soundMap.nav.title")))
@@ -61,7 +71,8 @@ struct SoundExplorerMapView: View {
     }
 
     private var hero: some View {
-        HSCard(style: .tinted(ColorTokens.Brand.mint.opacity(0.16))) {
+        // Step 10 Batch E — Pattern 2: hero на HSLiquidGlassCard(.elevated).
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .explaining, size: 64)
                     .accessibilityHidden(true)
@@ -124,6 +135,15 @@ struct SoundExplorerMapView: View {
         LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
             ForEach(interactor.visible) { cell in
                 soundCell(cell)
+                    // Step 10 Batch E — Pattern 3: scrollTransition stagger
+                    // fade+scale на sound-map cells.
+                    .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                        content
+                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))
+                    }
+                    // Step 10 Batch E — Pattern 4: parallax drift на map cells.
+                    .hsParallaxTile(factor: 0.25)
             }
         }
     }
