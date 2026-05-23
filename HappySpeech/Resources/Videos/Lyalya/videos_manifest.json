@@ -1,0 +1,182 @@
+[
+  {
+    "slug": "wave_hello",
+    "category": "greetings",
+    "duration_seconds": 8,
+    "file_size_bytes": 1922149,
+    "prompt": "A cute cartoon bee character with cream-yellow round plush body, large shiny black eyes with white highlights, tiny yellow antennae, small black and yellow striped belly, semi-transparent iridescent wings, raising both paws in a warm friendly greeting wave, against soft pastel mint green gradient background. Kawaii animation style, soft 3D plush toy aesthetic, smooth gentle looping motion, bright cheerful colors, no text, no watermarks.",
+    "status": "generated",
+    "attempts": 1
+  },
+  {
+    "slug": "excited_jump",
+    "category": "greetings",
+    "duration_seconds": 8,
+    "file_size_bytes": 2267448,
+    "prompt": "A cute cartoon bee character with cream-yellow round plush body, large shiny black eyes with white highlights, tiny yellow antennae, small black and yellow striped belly, semi-transparent iridescent wings, jumping joyfully upward with arms raised high, expression of delight, against warm cream-yellow pastel background. Kawaii animation style, soft 3D plush toy aesthetic, smooth gentle looping motion, bright cheerful colors, no text, no watermarks.",
+    "status": "generated",
+    "attempts": 1
+  },
+  {
+    "slug": "clapping",
+    "category": "greetings",
+    "duration_seconds": 8,
+    "file_size_bytes": 1924235,
+    "prompt": "A cute cartoon bee character with cream-yellow round plush body, large shiny black eyes with white highlights, tiny yellow antennae, small black and yellow striped belly, semi-transparent iridescent wings, enthusiastically clapping both small paws together, smiling broadly, against soft pastel sky-blue background. Kawaii animation style, soft 3D plush toy aesthetic, smooth gentle looping motion, bright cheerful colors, no text, no watermarks.",
+    "status": "generated",
+    "attempts": 1
+  },
+  {
+    "slug": "flying",
+    "category": "greetings",
+    "duration_seconds": 8,
+    "file_size_bytes": 3656651,
+    "prompt": "A cute cartoon bee character with cream-yellow round plush body, large shiny black eyes with white highlights, tiny yellow antennae, small black and yellow striped belly, semi-transparent iridescent wings, flying gracefully through the air with wings buzzing, gentle arc motion, against airy pale lavender gradient background. Kawaii animation style, soft 3D plush toy aesthetic, smooth gentle looping motion, bright cheerful colors, no text, no watermarks.",
+    "status": "generated",
+    "attempts": 1
+  },
+  {
+    "slug": "bouncing",
+    "category": "greetings",
+    "duration_seconds": 8,
+    "file_size_bytes": 2433599,
+    "prompt": "A cute cartoon bee character with cream-yellow round plush body, large shiny black eyes with white highlights, tiny yellow antennae, small black and yellow striped belly, semi-transparent iridescent wings, bouncing playfully on the ground with springy repeated hops, against soft pastel peach background. Kawaii animation style, soft 3D plush toy aesthetic, smooth gentle looping motion, bright cheerful colors, no text, no watermarks.",
+    "status": "generated",
+    "attempts": 1
+  },
+  {
+    "slug": "happy_dance",
+    "category": "emotions",
+    "duration_seconds": 8,
+    "file_size_bytes": 1903557,
+    "prompt": "A cute cartoon bee character with cream-yellow round plush body, large shiny black eyes with white highlights, tiny yellow antennae, small black and yellow striped belly, semi-transparent iridescent wings, dancing happily in a small circle, spinning with joy, arms out wide, against warm golden-yellow soft background. Kawaii animation style, soft 3D plush toy aesthetic, smooth gentle looping motion, bright cheerful colors, no text, no watermarks.",
+    "status": "generated",
+    "attempts": 1
+  },
+  {
+    "slug": "thinking_pose",
+    "category": "emotions",
+    "duration_seconds": 8,
+    "file_size_bytes": 2776771,
+    "prompt": "A cute cartoon bee character with cream-yellow round plush body, large shiny black eyes with white highlights, tiny yellow antennae, small black and yellow striped belly, semi-transparent iridescent wings, placing one paw on chin in a thoughtful pose, eyes looking upward curiously, against soft pastel lilac background. Kawaii animation style, soft 3D plush toy aesthetic, smooth gentle looping motion, bright cheerful colors, no text, no watermarks.",
+    "status": "generated",
+    "attempts": 1
+  },
+  {
+    "slug": "surprised",
+    "category": "emotions",
+    "duration_seconds": 8,
+    "file_size_bytes": 2390945,
+    "prompt": "A cute cartoon bee character with cream-yellow round plush body, large shiny black eyes with white highlights, tiny yellow antennae, small black and yellow striped belly, semi-transparent iridescent wings, eyes wide open in surprise, mouth forming a small O shape, paws raised, against soft pastel mint background. Kawaii animation style, soft 3D plush toy aesthetic, smooth gentle looping motion, bright cheerful colors, no text, no watermarks.",
+    "status": "generated",
+    "attempts": 1
+  },
+  {
+    "slug": "proud_stand",
+    "category": "emotions",
+    "duration_seconds": 8,
+    "file_size_bytes": 1449532,
+    "prompt": "A cute cartoon bee character with cream-yellow round plush body, large shiny black eyes with white highlights, tiny yellow antennae, small black and yellow striped belly, semi-transparent iridescent wings, standing tall with chest out and tiny paws on hips, confident proud expression, against soft pastel coral background. Kawaii animation style, soft 3D plush toy aesthetic, smooth gentle looping motion, bright cheerful colors, no text, no watermarks.",
+    "status": "generated",
+    "attempts": 1
+  },
+  {
+    "slug": "sleepy_yawn",
+    "category": "emotions",
+    "duration_seconds": 8,
+    "file_size_bytes": 1896099,
+    "prompt": "A cute cartoon bee character with cream-yellow round plush body, large shiny black eyes with white highlights, tiny yellow antennae, small black and yellow striped belly, semi-transparent iridescent wings, yawning gently with eyes half-closed, stretching arms out slowly, against soft deep-blue twilight gradient background. Kawaii animation style, soft 3D plush toy aesthetic, smooth gentle looping motion, bright cheerful colors, no text, no watermarks.",
+    "status": "generated",
+    "attempts": 1
+  },
+  {
+    "slug": "pointing_right",
+    "category": "objects",
+    "duration_seconds": 8,
+    "file_size_bytes": 1596833,
+    "prompt": "A cute cartoon bee character with cream-yellow round plush body, large shiny black eyes with white highlights, tiny yellow antennae, small black and yellow striped belly, semi-transparent iridescent wings, extending one paw to point enthusiastically to the right, against soft pastel green background. Kawaii animation style, soft 3D plush toy aesthetic, smooth gentle looping motion, bright cheerful colors, no text, no watermarks.",
+    "status": "generated",
+    "attempts": 1
+  },
+  {
+    "slug": "holding_star",
+    "category": "objects",
+    "duration_seconds": 8,
+    "file_size_bytes": 2302361,
+    "prompt": "A cute cartoon bee character with cream-yellow round plush body, large shiny black eyes with white highlights, tiny yellow antennae, small black and yellow striped belly, semi-transparent iridescent wings, holding a glowing yellow five-pointed star up proudly in both paws, against soft pastel night-blue background with tiny sparkles. Kawaii animation style, soft 3D plush toy aesthetic, smooth gentle looping motion, bright cheerful colors, no text, no watermarks.",
+    "status": "generated",
+    "attempts": 1
+  },
+  {
+    "slug": "playing_drum",
+    "category": "objects",
+    "duration_seconds": 8,
+    "file_size_bytes": 2349667,
+    "prompt": "A cute cartoon bee character with cream-yellow round plush body, large shiny black eyes with white highlights, tiny yellow antennae, small black and yellow striped belly, semi-transparent iridescent wings, tapping a small round toy drum with tiny drumsticks, rhythmic motion, against warm pastel orange background. Kawaii animation style, soft 3D plush toy aesthetic, smooth gentle looping motion, bright cheerful colors, no text, no watermarks.",
+    "status": "generated",
+    "attempts": 1
+  },
+  {
+    "slug": "reading_book",
+    "category": "objects",
+    "duration_seconds": 8,
+    "file_size_bytes": 2036942,
+    "prompt": "A cute cartoon bee character with cream-yellow round plush body, large shiny black eyes with white highlights, tiny yellow antennae, small black and yellow striped belly, semi-transparent iridescent wings, holding a tiny colorful book and carefully turning its pages, against cozy warm cream background. Kawaii animation style, soft 3D plush toy aesthetic, smooth gentle looping motion, bright cheerful colors, no text, no watermarks.",
+    "status": "generated",
+    "attempts": 1
+  },
+  {
+    "slug": "painting",
+    "category": "objects",
+    "duration_seconds": 8,
+    "file_size_bytes": 2510117,
+    "prompt": "A cute cartoon bee character with cream-yellow round plush body, large shiny black eyes with white highlights, tiny yellow antennae, small black and yellow striped belly, semi-transparent iridescent wings, holding a small paintbrush and making gentle brushstrokes in the air, against soft pastel teal background. Kawaii animation style, soft 3D plush toy aesthetic, smooth gentle looping motion, bright cheerful colors, no text, no watermarks.",
+    "status": "generated",
+    "attempts": 1
+  },
+  {
+    "slug": "forest_path",
+    "category": "scenes",
+    "duration_seconds": 8,
+    "file_size_bytes": 3623408,
+    "prompt": "A cute cartoon bee character with cream-yellow round plush body, large shiny black eyes with white highlights, tiny yellow antennae, small black and yellow striped belly, semi-transparent iridescent wings, walking along a bright green grass path surrounded by rounded cartoon trees, against soft sunny forest clearing background. Kawaii animation style, soft 3D plush toy aesthetic, smooth gentle looping motion, bright cheerful colors, no text, no watermarks.",
+    "status": "generated",
+    "attempts": 1
+  },
+  {
+    "slug": "night_stars",
+    "category": "scenes",
+    "duration_seconds": 8,
+    "file_size_bytes": 2181410,
+    "prompt": "A cute cartoon bee character with cream-yellow round plush body, large shiny black eyes with white highlights, tiny yellow antennae, small black and yellow striped belly, semi-transparent iridescent wings, looking upward with wonder at twinkling cartoon stars filling the sky, against deep soft midnight-blue sky background with glowing stars. Kawaii animation style, soft 3D plush toy aesthetic, smooth gentle looping motion, bright cheerful colors, no text, no watermarks.",
+    "status": "generated",
+    "attempts": 1
+  },
+  {
+    "slug": "rainbow_fly",
+    "category": "scenes",
+    "duration_seconds": 8,
+    "file_size_bytes": 2482206,
+    "prompt": "A cute cartoon bee character with cream-yellow round plush body, large shiny black eyes with white highlights, tiny yellow antennae, small black and yellow striped belly, semi-transparent iridescent wings, flying joyfully past a large vibrant rainbow arc, against bright clear sky-blue background with white puffy clouds. Kawaii animation style, soft 3D plush toy aesthetic, smooth gentle looping motion, bright cheerful colors, no text, no watermarks.",
+    "status": "generated",
+    "attempts": 1
+  },
+  {
+    "slug": "flower_garden",
+    "category": "scenes",
+    "duration_seconds": 8,
+    "file_size_bytes": 1770600,
+    "prompt": "A cute cartoon bee character with cream-yellow round plush body, large shiny black eyes with white highlights, tiny yellow antennae, small black and yellow striped belly, semi-transparent iridescent wings, standing among large colorful cartoon flowers, petals swaying gently, against soft green garden background with pastel flowers. Kawaii animation style, soft 3D plush toy aesthetic, smooth gentle looping motion, bright cheerful colors, no text, no watermarks.",
+    "status": "generated",
+    "attempts": 1
+  },
+  {
+    "slug": "sunny_day",
+    "category": "scenes",
+    "duration_seconds": 8,
+    "file_size_bytes": 2200413,
+    "prompt": "A cute cartoon bee character with cream-yellow round plush body, large shiny black eyes with white highlights, tiny yellow antennae, small black and yellow striped belly, semi-transparent iridescent wings, basking happily under a large bright cartoon sun with rays, against bright pastel sky-blue background with fluffy white clouds. Kawaii animation style, soft 3D plush toy aesthetic, smooth gentle looping motion, bright cheerful colors, no text, no watermarks.",
+    "status": "generated",
+    "attempts": 1
+  }
+]
