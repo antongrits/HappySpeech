@@ -199,6 +199,26 @@ enum AppRoute: Hashable {
     case childLanguageMilestones
     case specialistCaseNotes(childId: String, specialistId: String)
     case specialistQuickAssessment(childId: String, specialistId: String)
+
+    // MARK: - v32 Batch D wave 5 (17 lightweight modules)
+
+    case soundJournalKid(childId: String)
+    case practiceReminderKid(childId: String)
+    case storyRetellingPro(childId: String)
+    case imitationLab(childId: String)
+    case whisperGame(childId: String)
+    case colorAndSound(childId: String)
+    case musicalSoundDrums(childId: String)
+    case palindromeHunter(childId: String)
+    case phonemeFamilyMatcher(childId: String)
+    case soundDoctorKid(childId: String)
+    case parentDailyDigest
+    case parentInspirationBoard
+    case achievementCalendar(childId: String)
+    case specialistSchedule(specialistId: String)
+    case specialistResourcesLibrary(specialistId: String)
+    case specialistReportPDFGen(childId: String, specialistId: String)
+    case familyVoiceMessageHub
 }
 
 enum PermissionType: Hashable {
@@ -968,6 +988,76 @@ struct AppCoordinatorView: View {
         case .specialistQuickAssessment(let childId, let specialistId):
             SpecialistQuickAssessmentView(childId: childId, specialistId: specialistId)
                 .environment(\.circuitContext, .specialist)
+
+        // MARK: - v32 Batch D wave 5 (17 lightweight modules)
+
+        case .soundJournalKid(let childId):
+            SoundJournalKidView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .practiceReminderKid(let childId):
+            PracticeReminderKidView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .storyRetellingPro(let childId):
+            StoryRetellingProView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .imitationLab(let childId):
+            ImitationLabView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .whisperGame(let childId):
+            WhisperGameView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .colorAndSound(let childId):
+            ColorAndSoundView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .musicalSoundDrums(let childId):
+            MusicalSoundDrumsView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .palindromeHunter(let childId):
+            PalindromeHunterView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .phonemeFamilyMatcher(let childId):
+            PhonemeFamilyMatcherView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .soundDoctorKid(let childId):
+            SoundDoctorKidView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .parentDailyDigest:
+            ParentDailyDigestView()
+                .environment(\.circuitContext, .parent)
+
+        case .parentInspirationBoard:
+            ParentInspirationBoardView()
+                .environment(\.circuitContext, .parent)
+
+        case .achievementCalendar(let childId):
+            AchievementCalendarView(childId: childId)
+                .environment(\.circuitContext, .parent)
+
+        case .specialistSchedule(let specialistId):
+            SpecialistScheduleView(specialistId: specialistId)
+                .environment(\.circuitContext, .specialist)
+
+        case .specialistResourcesLibrary(let specialistId):
+            SpecialistResourcesLibraryView(specialistId: specialistId)
+                .environment(\.circuitContext, .specialist)
+
+        case .specialistReportPDFGen(let childId, let specialistId):
+            SpecialistReportPDFGenView(childId: childId, specialistId: specialistId)
+                .environment(\.circuitContext, .specialist)
+
+        case .familyVoiceMessageHub:
+            FamilyVoiceMessageHubView()
+                .environment(\.circuitContext, .parent)
         }
     }
 
@@ -1476,6 +1566,42 @@ extension AppCoordinatorView {
             return .specialistCaseNotes(childId: previewChild, specialistId: previewParent)
         case "specialistQuickAssessment", "quickAssessment", "specialistAssess":
             return .specialistQuickAssessment(childId: previewChild, specialistId: previewParent)
+
+        // MARK: v32 Batch D wave 5 (17 lightweight modules)
+        case "soundJournalKid", "soundJournal", "kidJournal":
+            return .soundJournalKid(childId: previewChild)
+        case "practiceReminderKid", "practiceReminder", "kidReminder":
+            return .practiceReminderKid(childId: previewChild)
+        case "storyRetellingPro", "storyRetelling", "retellPro":
+            return .storyRetellingPro(childId: previewChild)
+        case "imitationLab", "imitation", "soundLab":
+            return .imitationLab(childId: previewChild)
+        case "whisperGame", "whisper":
+            return .whisperGame(childId: previewChild)
+        case "colorAndSound", "colorSound":
+            return .colorAndSound(childId: previewChild)
+        case "musicalSoundDrums", "drums", "musicalDrums":
+            return .musicalSoundDrums(childId: previewChild)
+        case "palindromeHunter", "palindrome":
+            return .palindromeHunter(childId: previewChild)
+        case "phonemeFamilyMatcher", "phonemeFamily", "familyMatcher":
+            return .phonemeFamilyMatcher(childId: previewChild)
+        case "soundDoctorKid", "soundDoctor", "doctorKid":
+            return .soundDoctorKid(childId: previewChild)
+        case "parentDailyDigest", "parentDigest", "digest":
+            return .parentDailyDigest
+        case "parentInspirationBoard", "inspirationBoard", "inspiration":
+            return .parentInspirationBoard
+        case "achievementCalendar", "calendarAchievements":
+            return .achievementCalendar(childId: previewChild)
+        case "specialistSchedule", "schedule":
+            return .specialistSchedule(specialistId: previewParent)
+        case "specialistResourcesLibrary", "resourcesLibrary", "library":
+            return .specialistResourcesLibrary(specialistId: previewParent)
+        case "specialistReportPDFGen", "reportPDFGen", "pdfReport":
+            return .specialistReportPDFGen(childId: previewChild, specialistId: previewParent)
+        case "familyVoiceMessageHub", "voiceMessageHub", "voiceHub":
+            return .familyVoiceMessageHub
 
         default:
             return .auth

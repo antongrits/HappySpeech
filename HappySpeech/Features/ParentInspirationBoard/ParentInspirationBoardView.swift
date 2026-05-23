@@ -1,0 +1,171 @@
+import SwiftUI
+
+// MARK: - ParentInspirationBoardView
+
+struct ParentInspirationBoardView: View {
+
+    @State private var interactor = ParentInspirationBoardInteractor()
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.hapticService) private var hapticService
+
+    var body: some View {
+        NavigationStack {
+            ZStack {
+                ColorTokens.Parent.bg.ignoresSafeArea()
+                content
+            }
+            .navigationTitle(Text(String(localized: "inspirationBoard.nav.title")))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    }
+                    .accessibilityLabel(Text(String(localized: "action.close")))
+                }
+            }
+        }
+        .environment(\.circuitContext, .parent)
+    }
+
+    private var content: some View {
+        ScrollView {
+            VStack(spacing: SpacingTokens.sp4) {
+                hero
+                if let quote = interactor.state.current {
+                    quoteCard(quote)
+                }
+                navControls
+                cta
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
+            .padding(.top, SpacingTokens.sp3)
+            .padding(.bottom, SpacingTokens.sp6)
+        }
+    }
+
+    private var hero: some View {
+        HSCard(style: .elevated) {
+            VStack(alignment: .leading, spacing: 6) {
+                Text(String(localized: "inspirationBoard.hero.title"))
+                    .font(TypographyTokens.title(20))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                Text(String(localized: "inspirationBoard.hero.subtitle"))
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .lineLimit(3)
+                    .minimumScaleFactor(0.85)
+            }
+        }
+    }
+
+    private func quoteCard(_ quote: ParentInspirationBoardModels.Quote) -> some View {
+        HSCard(style: .tinted(ColorTokens.Parent.accent.opacity(0.10))) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+                Image(systemName: "quote.opening")
+                    .font(.system(size: 28))
+                    .foregroundStyle(ColorTokens.Parent.accent)
+                Text(quote.text)
+                    .font(TypographyTokens.body(16))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                    .multilineTextAlignment(.leading)
+                    .fixedSize(horizontal: false, vertical: true)
+                HStack {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("— \(quote.author)")
+                            .font(TypographyTokens.caption(12))
+                            .foregroundStyle(ColorTokens.Parent.ink)
+                        Text(quote.role)
+                            .font(TypographyTokens.caption(11))
+                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    }
+                    Spacer()
+                    Button {
+                        hapticService.impact(.light)
+                        interactor.toggleFavorite()
+                    } label: {
+                        Image(systemName: quote.isFavorite ? "heart.fill" : "heart")
+                            .font(.system(size: 22))
+                            .foregroundStyle(
+                                quote.isFavorite ? ColorTokens.Brand.primary : ColorTokens.Parent.inkSoft
+                            )
+                            .frame(width: 36, height: 36)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(Text(quote.isFavorite ? "Убрать из избранного" : "В избранное"))
+                }
+            }
+        }
+    }
+
+    private var navControls: some View {
+        HStack(spacing: SpacingTokens.sp3) {
+            Button {
+                hapticService.impact(.light)
+                interactor.previous()
+            } label: {
+                Image(systemName: "chevron.left")
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundStyle(ColorTokens.Parent.accent)
+                    .frame(width: 56, height: 56)
+                    .background(
+                        Circle().fill(ColorTokens.Parent.surface)
+                    )
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(Text("Предыдущая цитата"))
+
+            Text("\(interactor.state.currentIndex + 1) / \(interactor.state.quotes.count)")
+                .font(TypographyTokens.caption(12))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .frame(maxWidth: .infinity)
+
+            Button {
+                hapticService.impact(.light)
+                interactor.next()
+            } label: {
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundStyle(ColorTokens.Parent.accent)
+                    .frame(width: 56, height: 56)
+                    .background(
+                        Circle().fill(ColorTokens.Parent.surface)
+                    )
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel(Text("Следующая цитата"))
+        }
+    }
+
+    private var cta: some View {
+        HSButton(
+            String(localized: "inspirationBoard.cta.action"),
+            style: .primary,
+            size: .large,
+            icon: "checkmark"
+        ) {
+            hapticService.notification(.success)
+            dismiss()
+        }
+    }
+}
+
+// MARK: - Preview
+
+#Preview("ParentInspirationBoard — Light") {
+    ParentInspirationBoardView()
+        .environment(AppCoordinator())
+        .environment(AppContainer.preview())
+}
+
+#Preview("ParentInspirationBoard — Dark") {
+    ParentInspirationBoardView()
+        .environment(AppCoordinator())
+        .environment(AppContainer.preview())
+        .preferredColorScheme(.dark)
+}
