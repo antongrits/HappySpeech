@@ -26,10 +26,10 @@ final class LessonVoiceWorkerExtendedTests: XCTestCase {
 
     // MARK: - speak missing m4a without TTS fallback → silent skip
 
-    func test_speak_missingM4a_noTTSFallback_silentSkip() async {
+    func test_speak_missingM4a_silentSkip() async {
+        // Siri TTS fallback removed (ADR-VOICE-LYALYA-ONLY) — missing m4a now silently skips.
         await LessonVoiceWorker.shared.speak(
-            "тестовое_слово_отсутствует_в_маппинге",
-            enableSystemTTSFallback: false
+            "тестовое_слово_отсутствует_в_маппинге"
         )
     }
 
@@ -49,8 +49,7 @@ final class LessonVoiceWorkerExtendedTests: XCTestCase {
     func test_speak_withLessonType_doesNotCrash() async {
         await LessonVoiceWorker.shared.speak(
             "тест",
-            lessonType: "bingo",
-            enableSystemTTSFallback: false
+            lessonType: "bingo"
         )
     }
 
@@ -59,8 +58,7 @@ final class LessonVoiceWorkerExtendedTests: XCTestCase {
     func test_speak_withRate_doesNotCrash() async {
         await LessonVoiceWorker.shared.speak(
             "тест",
-            rate: 0.8,
-            enableSystemTTSFallback: false
+            rate: 0.8
         )
     }
 

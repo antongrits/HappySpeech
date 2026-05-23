@@ -25,7 +25,7 @@ private final class StubBedtimeWorker: BedtimeModeWorkerProtocol {
         BedtimeBreathingCycle(inhaleSeconds: 4, holdSeconds: 4, exhaleSeconds: 6, totalCycles: 3)
     }
 
-    func narrate(_ text: String) async {
+    func narrate(_ text: String, storyId: String) async {
         narrateCount += 1
     }
 

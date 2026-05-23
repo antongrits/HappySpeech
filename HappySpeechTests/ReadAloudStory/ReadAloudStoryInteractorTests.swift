@@ -26,7 +26,7 @@ private final class StubReadAloudWorker: ReadAloudStoryWorkerProtocol {
         return story
     }
 
-    func speakSentence(_ text: String) async {
+    func speakSentence(_ text: String, storyId: String, sentenceIndex: Int) async {
         speakCount += 1
     }
 
