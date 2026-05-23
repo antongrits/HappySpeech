@@ -42,7 +42,7 @@ final class SoundOfTheDayPresenter {
         let a11y = String(
             format: String(localized: "sotd.a11y.summary.format"),
             response.targetSound,
-            response.streakDays
+            String(response.streakDays)
         )
         let vm = SoundOfTheDayModels.LoadToday.ViewModel(
             greeting: greeting,
