@@ -11,26 +11,34 @@ extension SettingsView {
 
     var settingsHeaderSection: some View {
         Section {
-            HStack(spacing: SpacingTokens.regular) {
-                // Diploma fix #11 — Ляля в Settings приведена к каноническому
-                // состоянию AR-зоны: `.waving` (приветствует входящего родителя),
-                // размер увеличен 96 → 120 для весомости hero-блока. Все
-                // settings-экраны теперь визуально опознают одного маскота.
-                LyalyaHeroView(state: .waving, size: 120)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                    Text(String(localized: "settings.header.greeting"))
-                        .font(TypographyTokens.headline(17))
-                        .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(2).minimumScaleFactor(0.85)
-                    Text(String(localized: "settings.header.subtitle"))
-                        .font(TypographyTokens.body(13))
-                        .foregroundStyle(ColorTokens.Parent.inkMuted)
-                        .lineLimit(2).minimumScaleFactor(0.85)
-                }.frame(maxWidth: .infinity, alignment: .leading)
+            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
+                HStack(spacing: SpacingTokens.regular) {
+                    // Diploma fix #11 — Ляля в Settings приведена к каноническому
+                    // состоянию AR-зоны: `.waving` (приветствует входящего родителя),
+                    // размер увеличен 96 → 120 для весомости hero-блока. Все
+                    // settings-экраны теперь визуально опознают одного маскота.
+                    LyalyaHeroView(state: .waving, size: 120)
+                        .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                        Text(String(localized: "settings.header.greeting"))
+                            .font(TypographyTokens.headline(17))
+                            .foregroundStyle(ColorTokens.Parent.ink)
+                            .lineLimit(2).minimumScaleFactor(0.85)
+                        Text(String(localized: "settings.header.subtitle"))
+                            .font(TypographyTokens.body(13))
+                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                            .lineLimit(2).minimumScaleFactor(0.85)
+                    }.frame(maxWidth: .infinity, alignment: .leading)
+                }
             }
-            .padding(.vertical, SpacingTokens.tiny)
             .listRowBackground(Color.clear)
+            .listRowInsets(EdgeInsets(
+                top: SpacingTokens.tiny,
+                leading: 0,
+                bottom: SpacingTokens.small,
+                trailing: 0
+            ))
+            .listRowSeparator(.hidden)
         }
         .listSectionSeparator(.hidden, edges: .bottom)
     }

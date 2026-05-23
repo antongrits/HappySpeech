@@ -9,11 +9,13 @@ struct SpecialistResourcesLibraryView: View {
     @State private var interactor: SpecialistResourcesLibraryInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Spec.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
                 content
             }
             .navigationTitle(Text(String(localized: "resourcesLibrary.nav.title")))
@@ -58,7 +60,7 @@ struct SpecialistResourcesLibraryView: View {
     }
 
     private func hero(state: SpecialistResourcesLibraryModels.ViewState) -> some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(String(localized: "resourcesLibrary.hero.title"))
                     .font(TypographyTokens.title(20))
@@ -70,10 +72,16 @@ struct SpecialistResourcesLibraryView: View {
                     .foregroundStyle(ColorTokens.Spec.inkMuted)
                     .lineLimit(3)
                     .minimumScaleFactor(0.85)
-                Text("Всего: \(state.resources.count)")
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Spec.accent)
-                    .padding(.top, 4)
+                HStack(spacing: SpacingTokens.tiny) {
+                    Image(systemName: "books.vertical.fill")
+                        .font(.system(size: 12))
+                        .foregroundStyle(ColorTokens.Spec.accent)
+                        .hsSymbolEffect(.bounce, value: state.resources.count)
+                    Text("Всего: \(state.resources.count)")
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Spec.accent)
+                }
+                .padding(.top, 4)
             }
         }
     }
@@ -118,8 +126,17 @@ struct SpecialistResourcesLibraryView: View {
         VStack(spacing: SpacingTokens.sp2) {
             ForEach(interactor.state.filtered) { resource in
                 row(resource)
+                    .hsParallaxTile(factor: 0.3)
+                    .transition(.asymmetric(
+                        insertion: .scale(scale: 0.92).combined(with: .opacity),
+                        removal: .opacity
+                    ))
             }
         }
+        .animation(
+            reduceMotion ? nil : MotionTokens.settleSpring,
+            value: interactor.state.filtered.count
+        )
     }
 
     private func row(_ resource: SpecialistResourcesLibraryModels.Resource) -> some View {

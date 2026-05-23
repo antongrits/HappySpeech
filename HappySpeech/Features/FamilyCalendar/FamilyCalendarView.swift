@@ -39,7 +39,8 @@ struct FamilyCalendarView: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            ColorTokens.Parent.bg.ignoresSafeArea()
+            HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                .ignoresSafeArea()
 
             if viewModel.isLoading {
                 loadingView
@@ -76,6 +77,7 @@ struct FamilyCalendarView: View {
                 } label: {
                     Image(systemName: "chart.bar.doc.horizontal")
                         .foregroundStyle(ColorTokens.Parent.inkSoft)
+                        .hsSymbolEffect(.bounce, value: viewModel.weekSummary?.weekRangeText)
                 }
                 .accessibilityLabel(String(localized: "family_calendar.toolbar.week_summary"))
             }
@@ -229,20 +231,19 @@ struct FamilyCalendarView: View {
                 weekNavigationButtons
             }
 
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 6) {
-                ForEach(viewModel.weekDays) { day in
-                    WeekDayCell(day: day) {
-                        Task { scene?.interactor.selectDay(request: .init(date: day.date)) }
-                        showDayDetail = true
-                    } onLongPress: {
-                        selectedDayForSchedule = day.date
-                        showScheduleSheet = true
+            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 6) {
+                    ForEach(viewModel.weekDays) { day in
+                        WeekDayCell(day: day) {
+                            Task { scene?.interactor.selectDay(request: .init(date: day.date)) }
+                            showDayDetail = true
+                        } onLongPress: {
+                            selectedDayForSchedule = day.date
+                            showScheduleSheet = true
+                        }
                     }
                 }
             }
-            .padding(SpacingTokens.sp4)
-            .background(ColorTokens.Parent.surface)
-            .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card))
 
             // Подсказка к планированию
             Text(String(localized: "family_calendar.week.schedule_hint"))

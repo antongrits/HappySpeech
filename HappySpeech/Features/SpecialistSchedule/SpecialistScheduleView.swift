@@ -9,11 +9,13 @@ struct SpecialistScheduleView: View {
     @State private var interactor: SpecialistScheduleInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Spec.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
                 content
             }
             .navigationTitle(Text(String(localized: "specialistSchedule.nav.title")))
@@ -58,7 +60,7 @@ struct SpecialistScheduleView: View {
     }
 
     private func hero(state: SpecialistScheduleModels.ViewState) -> some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(String(localized: "specialistSchedule.hero.title"))
                     .font(TypographyTokens.title(20))
@@ -70,10 +72,16 @@ struct SpecialistScheduleView: View {
                     .foregroundStyle(ColorTokens.Spec.inkMuted)
                     .lineLimit(3)
                     .minimumScaleFactor(0.85)
-                Text("Всего сессий: \(state.slots.count)")
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Spec.accent)
-                    .padding(.top, 4)
+                HStack(spacing: SpacingTokens.tiny) {
+                    Image(systemName: "calendar.badge.clock")
+                        .font(.system(size: 12))
+                        .foregroundStyle(ColorTokens.Spec.accent)
+                        .hsSymbolEffect(.bounce, value: state.slots.count)
+                    Text("Всего сессий: \(state.slots.count)")
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Spec.accent)
+                }
+                .padding(.top, 4)
             }
         }
     }
@@ -123,9 +131,17 @@ struct SpecialistScheduleView: View {
             } else {
                 ForEach(slots) { slot in
                     slotRow(slot)
+                        .transition(.asymmetric(
+                            insertion: .scale(scale: 0.92).combined(with: .opacity),
+                            removal: .opacity
+                        ))
                 }
             }
         }
+        .animation(
+            reduceMotion ? nil : MotionTokens.settleSpring,
+            value: slots.count
+        )
     }
 
     private func slotRow(_ slot: SpecialistScheduleModels.Slot) -> some View {

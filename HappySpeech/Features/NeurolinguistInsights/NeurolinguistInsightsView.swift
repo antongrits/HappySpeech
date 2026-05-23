@@ -37,7 +37,8 @@ struct NeurolinguistInsightsView: View {
 
     var body: some View {
         ZStack {
-            ColorTokens.Parent.bg.ignoresSafeArea()
+            HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                .ignoresSafeArea()
 
             ScrollView(showsIndicators: false) {
                 VStack(spacing: SpacingTokens.sectionGap) {
@@ -131,12 +132,13 @@ struct NeurolinguistInsightsView: View {
     // MARK: - Insight card
 
     private func insightCardView(_ card: NeurolinguistInsights.InsightCard) -> some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
                 HStack(spacing: SpacingTokens.sp2) {
                     Image(systemName: "sparkles")
                         .font(TypographyTokens.headline(18))
                         .foregroundStyle(ColorTokens.Brand.primary)
+                        .hsSymbolEffect(.variableColor, value: card.generatedAtText)
                         .accessibilityHidden(true)
 
                     Text(card.title)
@@ -196,9 +198,17 @@ struct NeurolinguistInsightsView: View {
             HStack(spacing: SpacingTokens.sp3) {
                 ForEach(viewModel.metricChips) { chip in
                     metricChipView(chip)
+                        .transition(.asymmetric(
+                            insertion: .scale(scale: 0.92).combined(with: .opacity),
+                            removal: .opacity
+                        ))
                 }
             }
             .padding(.horizontal, 2)
+            .animation(
+                reduceMotion ? nil : MotionTokens.settleSpring,
+                value: viewModel.metricChips.count
+            )
         }
     }
 
@@ -303,6 +313,7 @@ struct NeurolinguistInsightsView: View {
             } label: {
                 Image(systemName: "arrow.clockwise")
                     .foregroundStyle(ColorTokens.Parent.accent)
+                    .hsSymbolEffect(.bounce, value: viewModel.card?.generatedAtText)
             }
             .accessibilityLabel(String(localized: "insights.toolbar.refresh"))
         }

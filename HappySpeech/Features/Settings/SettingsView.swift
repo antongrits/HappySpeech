@@ -52,7 +52,8 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
-                ColorTokens.Parent.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
 
                 List {
                     settingsHeaderSection
@@ -71,7 +72,7 @@ struct SettingsView: View {
                 }
                 .listStyle(.insetGrouped)
                 .scrollContentBackground(.hidden)
-                .background(ColorTokens.Parent.bg)
+                .background(Color.clear)
                 .accessibilityIdentifier("SettingsRoot")
                 // v32 P1 — MotionTokens: settings list entrance fade+scale.
                 .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in

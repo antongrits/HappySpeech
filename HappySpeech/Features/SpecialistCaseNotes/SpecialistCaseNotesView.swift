@@ -10,6 +10,7 @@ struct SpecialistCaseNotesView: View {
     @State private var interactor: SpecialistCaseNotesInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private static let dateFormatter: DateFormatter = {
         let f = DateFormatter()
@@ -21,7 +22,8 @@ struct SpecialistCaseNotesView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Spec.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
                 content
             }
             .navigationTitle(Text(String(localized: "specialistNotes.nav.title")))
@@ -78,7 +80,7 @@ struct SpecialistCaseNotesView: View {
     }
 
     private func hero(state: SpecialistCaseNotesModels.ViewState) -> some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(String(localized: "specialistNotes.hero.title"))
                     .font(TypographyTokens.title(20))
@@ -90,10 +92,16 @@ struct SpecialistCaseNotesView: View {
                     .foregroundStyle(ColorTokens.Spec.inkMuted)
                     .lineLimit(3)
                     .minimumScaleFactor(0.85)
-                Text("Всего заметок: \(state.notes.count)")
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Spec.accent)
-                    .padding(.top, 2)
+                HStack(spacing: SpacingTokens.tiny) {
+                    Image(systemName: "note.text")
+                        .font(.system(size: 12))
+                        .foregroundStyle(ColorTokens.Spec.accent)
+                        .hsSymbolEffect(.bounce, value: state.notes.count)
+                    Text("Всего заметок: \(state.notes.count)")
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Spec.accent)
+                }
+                .padding(.top, 2)
             }
         }
     }
@@ -111,9 +119,17 @@ struct SpecialistCaseNotesView: View {
             } else {
                 ForEach(interactor.state.notes) { note in
                     noteCard(note)
+                        .transition(.asymmetric(
+                            insertion: .scale(scale: 0.92).combined(with: .opacity),
+                            removal: .opacity
+                        ))
                 }
             }
         }
+        .animation(
+            reduceMotion ? nil : MotionTokens.settleSpring,
+            value: interactor.state.notes.count
+        )
     }
 
     private func noteCard(_ note: SpecialistCaseNotesModels.Note) -> some View {
@@ -179,7 +195,10 @@ struct SpecialistCaseNotesView: View {
                 .opacity(interactor.state.draftBody.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? 0.5 : 1)
             }
             .padding(SpacingTokens.sp4)
-            .background(ColorTokens.Spec.bg)
+            .background(
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+            )
             .navigationTitle(Text("Новая заметка"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

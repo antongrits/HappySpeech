@@ -78,7 +78,10 @@ struct FamilyLeaderboardView: View {
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.vertical, SpacingTokens.sp4)
             }
-            .background(ColorTokens.Parent.bg.ignoresSafeArea())
+            .background(
+                HSMeshGradientBackground(palette: .rewards, animated: !reduceMotion)
+                    .ignoresSafeArea()
+            )
             .navigationTitle(Text("leaderboard.screen.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -101,25 +104,29 @@ struct FamilyLeaderboardView: View {
 
     @ViewBuilder
     private func headerSection(viewModel: FamilyLeaderboardModels.Load.ViewModel) -> some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
-            HStack(spacing: SpacingTokens.sp2) {
-                Image(systemName: "trophy.fill")
-                    .font(.title)
-                    .foregroundStyle(ColorTokens.Brand.gold)
-                    .accessibilityHidden(true)
-                Text(viewModel.title)
-                    .font(TypographyTokens.title(24))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+                HStack(spacing: SpacingTokens.sp2) {
+                    Image(systemName: "trophy.fill")
+                        .font(.title)
+                        .foregroundStyle(ColorTokens.Brand.gold)
+                        .hsSymbolEffect(.bounce, value: viewModel.rows.first?.childName)
+                        .accessibilityHidden(true)
+                    Text(viewModel.title)
+                        .font(TypographyTokens.title(24))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                        .accessibilityAddTraits(.isHeader)
+                }
+                Text(viewModel.subtitle)
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Parent.inkSoft)
+                    .lineLimit(nil)
                     .minimumScaleFactor(0.85)
-                    .accessibilityAddTraits(.isHeader)
+                    .fixedSize(horizontal: false, vertical: true)
             }
-            Text(viewModel.subtitle)
-                .font(TypographyTokens.body(14))
-                .foregroundStyle(ColorTokens.Parent.inkSoft)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
-                .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 
@@ -145,8 +152,17 @@ struct FamilyLeaderboardView: View {
         VStack(spacing: SpacingTokens.sp2) {
             ForEach(viewModel.rows) { row in
                 rowCard(row: row)
+                    .hsParallaxTile(factor: 0.3)
+                    .transition(.asymmetric(
+                        insertion: .scale(scale: 0.92).combined(with: .opacity),
+                        removal: .opacity
+                    ))
             }
         }
+        .animation(
+            reduceMotion ? nil : MotionTokens.settleSpring,
+            value: viewModel.rows.count
+        )
     }
 
     @ViewBuilder

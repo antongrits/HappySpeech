@@ -646,6 +646,7 @@ private struct ParentDashboardTab: View {
                     Image(systemName: "ear.and.waveform")
                         .font(TypographyTokens.subtitle(18))
                         .foregroundStyle(accentColor)
+                        .hsSymbolEffect(.pulse, value: card.severityText)
                         .accessibilityHidden(true)
 
                     VStack(alignment: .leading, spacing: 1) {

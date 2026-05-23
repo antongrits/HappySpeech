@@ -59,7 +59,8 @@ struct SpecialistAssessmentView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Spec.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
                 content
             }
             .navigationTitle(Text("specAssessment.title"))
@@ -109,18 +110,20 @@ struct SpecialistAssessmentView: View {
 
             Spacer(minLength: 0)
 
-            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-                Text(question.progressLabel)
-                    .font(TypographyTokens.caption(13).monospacedDigit())
-                    .foregroundStyle(ColorTokens.Spec.inkMuted)
-                Text(question.text)
-                    .font(TypographyTokens.title(22))
-                    .foregroundStyle(ColorTokens.Spec.ink)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.85)
-                    .accessibilityIdentifier("specAssessment.question.text")
+            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+                VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+                    Text(question.progressLabel)
+                        .font(TypographyTokens.caption(13).monospacedDigit())
+                        .foregroundStyle(ColorTokens.Spec.inkMuted)
+                    Text(question.text)
+                        .font(TypographyTokens.title(22))
+                        .foregroundStyle(ColorTokens.Spec.ink)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.85)
+                        .accessibilityIdentifier("specAssessment.question.text")
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, SpacingTokens.screenEdge)
 
             Spacer(minLength: 0)
@@ -261,6 +264,7 @@ struct SpecialistAssessmentView: View {
                     .font(.system(size: 64))
                     .foregroundStyle(ColorTokens.Spec.accent)
                     .padding(.top, SpacingTokens.sp4)
+                    .hsSymbolEffect(.bounce, value: submit.recommendedAxes.count)
 
                 Text(submit.title)
                     .font(TypographyTokens.title(24))
@@ -279,9 +283,17 @@ struct SpecialistAssessmentView: View {
                     VStack(spacing: SpacingTokens.sp3) {
                         ForEach(submit.recommendedAxes) { axis in
                             axisCard(axis)
+                                .transition(.asymmetric(
+                                    insertion: .scale(scale: 0.92).combined(with: .opacity),
+                                    removal: .opacity
+                                ))
                         }
                     }
                     .padding(.horizontal, SpacingTokens.screenEdge)
+                    .animation(
+                        reduceMotion ? nil : MotionTokens.settleSpring,
+                        value: submit.recommendedAxes.count
+                    )
 
                     Text(submit.validUntilLabel)
                         .font(TypographyTokens.caption(13))

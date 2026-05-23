@@ -70,7 +70,8 @@ struct ParentInsightsTimelineView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Parent.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: SpacingTokens.sp5) {
@@ -109,6 +110,7 @@ struct ParentInsightsTimelineView: View {
                         Image(systemName: "arrow.clockwise")
                             .font(.title3)
                             .foregroundStyle(ColorTokens.Brand.primary)
+                            .hsSymbolEffect(.bounce, value: isRefreshing)
                     }
                     .accessibilityLabel(Text("parentInsightsTimeline.refresh.a11y"))
                     .disabled(isRefreshing)
@@ -140,24 +142,26 @@ struct ParentInsightsTimelineView: View {
 
     @ViewBuilder
     private func heroSection(viewModel: ParentInsightsTimelineModels.Load.ViewModel) -> some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
-            Text(viewModel.heroTitle)
-                .font(TypographyTokens.title(22))
-                .foregroundStyle(ColorTokens.Parent.ink)
-                .lineLimit(2)
-                .minimumScaleFactor(0.85)
-                .accessibilityAddTraits(.isHeader)
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+                Text(viewModel.heroTitle)
+                    .font(TypographyTokens.title(22))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                    .accessibilityAddTraits(.isHeader)
 
-            Text(viewModel.heroSubtitle)
-                .font(TypographyTokens.body(14))
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-                .lineLimit(1)
-                .minimumScaleFactor(0.85)
+                Text(viewModel.heroSubtitle)
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
 
-            HSBadge(viewModel.llmSourceLabel, style: .info, icon: "sparkles")
-                .padding(.top, SpacingTokens.sp1)
+                HSBadge(viewModel.llmSourceLabel, style: .info, icon: "sparkles")
+                    .padding(.top, SpacingTokens.sp1)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
         .accessibilityElement(children: .combine)
     }
 
@@ -168,8 +172,16 @@ struct ParentInsightsTimelineView: View {
         LazyVGrid(columns: statColumns, spacing: SpacingTokens.sp3) {
             ForEach(viewModel.summaryStats) { stat in
                 statCard(stat)
+                    .transition(.asymmetric(
+                        insertion: .scale(scale: 0.92).combined(with: .opacity),
+                        removal: .opacity
+                    ))
             }
         }
+        .animation(
+            reduceMotion ? nil : MotionTokens.settleSpring,
+            value: viewModel.summaryStats.count
+        )
     }
 
     @ViewBuilder
@@ -227,8 +239,16 @@ struct ParentInsightsTimelineView: View {
             LazyVStack(spacing: SpacingTokens.sp2) {
                 ForEach(viewModel.cells) { cell in
                     dayCell(cell)
+                        .transition(.asymmetric(
+                            insertion: .scale(scale: 0.92).combined(with: .opacity),
+                            removal: .opacity
+                        ))
                 }
             }
+            .animation(
+                reduceMotion ? nil : MotionTokens.settleSpring,
+                value: viewModel.cells.count
+            )
         }
     }
 

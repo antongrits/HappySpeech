@@ -94,6 +94,7 @@ struct SpecChildDashboardView: View {
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var child: ChildProfileDTO?
     @State private var sessions: [SessionDTO] = []
     @State private var breakdown: [SoundBreakdownRow] = []
@@ -110,7 +111,8 @@ struct SpecChildDashboardView: View {
 
     var body: some View {
         ZStack {
-            ColorTokens.Spec.bg.ignoresSafeArea()
+            HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                .ignoresSafeArea()
             if isLoading {
                 // Block J v18 — skeleton shimmer вместо ProgressView spinner.
                 VStack(spacing: SpacingTokens.regular) {
@@ -128,13 +130,17 @@ struct SpecChildDashboardView: View {
                     VStack(spacing: SpacingTokens.sp4) {
                         // E v21: 3D Ляля на главном экране специалиста
                         // (требование «3D героев на каждом экране»).
-                        LyalyaHeroView(state: .thinking, size: 120)
-                            .frame(maxWidth: .infinity)
-                            .accessibilityHidden(true)
-                            .padding(.top, SpacingTokens.sp2)
-                        if let child {
-                            SpecDashboardHeader(child: child, summary: summary)
+                        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+                            VStack(spacing: SpacingTokens.sp3) {
+                                LyalyaHeroView(state: .thinking, size: 120)
+                                    .frame(maxWidth: .infinity)
+                                    .accessibilityHidden(true)
+                                if let child {
+                                    SpecDashboardHeader(child: child, summary: summary)
+                                }
+                            }
                         }
+                        .padding(.top, SpacingTokens.sp2)
                         SpecSoundBreakdownSection(rows: breakdown)
                         SpecSessionsPreviewSection(sessions: sessions) { _ in
                             // Navigation is handled by parent NavigationStack

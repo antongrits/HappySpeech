@@ -76,7 +76,10 @@ struct FamilyAchievementsView: View {
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.vertical, SpacingTokens.sp4)
             }
-            .background(ColorTokens.Parent.bg.ignoresSafeArea())
+            .background(
+                HSMeshGradientBackground(palette: .rewards, animated: !reduceMotion)
+                    .ignoresSafeArea()
+            )
             .navigationTitle(Text("family.achievements.screen.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -125,50 +128,51 @@ struct FamilyAchievementsView: View {
     private func streakHeroSection(
         hero: FamilyAchievementsModels.Load.StreakHeroViewModel
     ) -> some View {
-        VStack(spacing: SpacingTokens.sp3) {
-            // E v21: 3D Ляля hero на FamilyAchievements streak (требование пользователя).
-            LyalyaHeroView(state: .celebrating, size: 160)
-                .frame(height: 160)
-                .accessibilityHidden(true)
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+            VStack(spacing: SpacingTokens.sp3) {
+                // E v21: 3D Ляля hero на FamilyAchievements streak (требование пользователя).
+                LyalyaHeroView(state: .celebrating, size: 160)
+                    .frame(height: 160)
+                    .accessibilityHidden(true)
 
-            Text(hero.titleLabel)
-                .font(TypographyTokens.title(22))
-                .foregroundStyle(ColorTokens.Parent.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.85)
+                Text(hero.titleLabel)
+                    .font(TypographyTokens.title(22))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
 
-            Text(hero.subtitleLabel)
-                .font(TypographyTokens.body(13))
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .padding(.horizontal, SpacingTokens.sp4)
-
-            VStack(spacing: SpacingTokens.sp1) {
-                ProgressView(value: hero.progressFraction)
-                    .tint(
-                        hero.allActiveToday
-                            ? ColorTokens.Brand.primary
-                            : ColorTokens.Parent.accent
-                    )
-                    .progressViewStyle(.linear)
-
-                Text(hero.activeLabel)
-                    .font(TypographyTokens.caption(12))
+                Text(hero.subtitleLabel)
+                    .font(TypographyTokens.body(13))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .padding(.horizontal, SpacingTokens.sp4)
+
+                VStack(spacing: SpacingTokens.sp1) {
+                    ProgressView(value: hero.progressFraction)
+                        .tint(
+                            hero.allActiveToday
+                                ? ColorTokens.Brand.primary
+                                : ColorTokens.Parent.accent
+                        )
+                        .progressViewStyle(.linear)
+
+                    HStack(spacing: SpacingTokens.tiny) {
+                        Image(systemName: "flame.fill")
+                            .font(.system(size: 12))
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                            .hsSymbolEffect(.pulse, value: hero.allActiveToday)
+                        Text(hero.activeLabel)
+                            .font(TypographyTokens.caption(12))
+                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    }
+                }
+                .padding(.horizontal, SpacingTokens.sp3)
+                .padding(.top, SpacingTokens.sp1)
             }
-            .padding(.horizontal, SpacingTokens.sp3)
-            .padding(.top, SpacingTokens.sp1)
+            .frame(maxWidth: .infinity)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, SpacingTokens.sp5)
-        .padding(.horizontal, SpacingTokens.sp4)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Parent.surface)
-        )
-        .depthShadow(ShadowTokens.parentDepth)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(String(
             format: String(localized: "family.streak.a11y"),
@@ -300,8 +304,17 @@ struct FamilyAchievementsView: View {
             VStack(spacing: SpacingTokens.sp2) {
                 ForEach(achievements) { row in
                     achievementCard(row: row)
+                        .hsParallaxTile(factor: 0.3)
+                        .transition(.asymmetric(
+                            insertion: .scale(scale: 0.92).combined(with: .opacity),
+                            removal: .opacity
+                        ))
                 }
             }
+            .animation(
+                reduceMotion ? nil : MotionTokens.settleSpring,
+                value: achievements.count
+            )
         }
     }
 
@@ -327,6 +340,7 @@ struct FamilyAchievementsView: View {
                                     : ColorTokens.Parent.bgDeep
                             )
                     )
+                    .hsSymbolEffect(.bounce, value: row.isUnlocked)
                     .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: 2) {
