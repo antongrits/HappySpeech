@@ -1,3 +1,8 @@
+// swiftlint:disable file_length
+// AppCoordinator owns the entire AppRoute switch (140+ routes) and route
+// build closures — keeping it as a single file is intentional because the
+// switch must stay exhaustive in one place. Refactor planned post-v33.
+
 import os.signpost
 import OSLog
 import SwiftUI

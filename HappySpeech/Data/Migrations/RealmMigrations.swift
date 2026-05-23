@@ -800,6 +800,7 @@ public extension RealmActor {
     /// Сохраняет новую запись (idempotent по id). `relativePath` — путь
     /// относительно Documents, без префикса.
     @discardableResult
+    // swiftlint:disable:next function_parameter_count
     internal func insertVoiceJournalEntry(
         id: String,
         childId: String,

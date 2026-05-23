@@ -166,13 +166,13 @@ struct SpeechRiddlesView: View {
 
     private func optionBackground(isCorrectFeedback: Bool, isWrongFeedback: Bool) -> Color {
         if isCorrectFeedback { return ColorTokens.Semantic.successBg }
-        if isWrongFeedback   { return ColorTokens.Semantic.errorBg }
+        if isWrongFeedback { return ColorTokens.Semantic.errorBg }
         return ColorTokens.Kid.surface
     }
 
     private func optionBorder(isCorrectFeedback: Bool, isWrongFeedback: Bool) -> Color {
         if isCorrectFeedback { return ColorTokens.Semantic.success }
-        if isWrongFeedback   { return ColorTokens.Semantic.error }
+        if isWrongFeedback { return ColorTokens.Semantic.error }
         return ColorTokens.Kid.line
     }
 

@@ -163,7 +163,7 @@ struct WordRhymeGameView: View {
 
     private func backgroundStyle(isCorrect: Bool, isWrong: Bool) -> HSCardStyle {
         if isCorrect { return .tinted(ColorTokens.Semantic.successBg) }
-        if isWrong   { return .tinted(ColorTokens.Semantic.errorBg) }
+        if isWrong { return .tinted(ColorTokens.Semantic.errorBg) }
         return .elevated
     }
 
