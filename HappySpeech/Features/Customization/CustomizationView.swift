@@ -65,7 +65,10 @@ struct CustomizationView: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            ColorTokens.Kid.bg.ignoresSafeArea()
+            HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                .ignoresSafeArea()
+                .blendMode(.softLight)
+                .accessibilityHidden(true)
 
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 0) {
@@ -120,28 +123,31 @@ struct CustomizationView: View {
 
     private var mascotHeader: some View {
         let (gradFrom, gradTo) = viewModel.selectedColor.gradientColors
-        return ZStack {
-            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                .fill(
-                    LinearGradient(
-                        colors: [gradFrom, gradTo],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
+        return HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.medium) {
+            ZStack {
+                RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
+                    .fill(
+                        LinearGradient(
+                            colors: [gradFrom, gradTo],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
                     )
-                )
-                .frame(width: 240, height: 240)
-                .animation(reduceMotion ? nil : .easeInOut(duration: 0.25),
-                           value: viewModel.selectedColor)
+                    .frame(width: 240, height: 240)
+                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.25),
+                               value: viewModel.selectedColor)
 
-            LyalyaMascotView(state: lyalyaState, size: mascotSize)
-                .id(viewModel.selectedSkin.rawValue)
-                .transition(reduceMotion
-                    ? .opacity
-                    : .scale(scale: 0.85).combined(with: .opacity))
-                .animation(reduceMotion ? .linear(duration: 0.3) : MotionTokens.spring,
-                           value: viewModel.selectedSkin)
+                LyalyaMascotView(state: lyalyaState, size: mascotSize)
+                    .id(viewModel.selectedSkin.rawValue)
+                    .transition(reduceMotion
+                        ? .opacity
+                        : .scale(scale: 0.85).combined(with: .opacity))
+                    .animation(reduceMotion ? .linear(duration: 0.3) : MotionTokens.spring,
+                               value: viewModel.selectedSkin)
+            }
         }
         .frame(maxWidth: .infinity)
+        .padding(.horizontal, SpacingTokens.regular)
         .padding(.top, SpacingTokens.medium)
         .padding(.bottom, SpacingTokens.small)
         .accessibilityElement(children: .ignore)
@@ -378,10 +384,17 @@ struct CustomizationView: View {
         VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
             sectionTitle(String(localized: "customization.section.accessories"))
             HStack(spacing: SpacingTokens.small) {
-                ForEach(viewModel.accessoryItems) { item in
+                ForEach(Array(viewModel.accessoryItems.enumerated()), id: \.element.id) { index, item in
                     AccessoryToggleButton(item: item) {
                         interactor?.toggleAccessory(.init(accessory: item.accessory))
                     }
+                    .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.92)
+                    }
+                    .hsParallaxTile(factor: 0.15)
+                    .zIndex(Double(viewModel.accessoryItems.count - index))
                 }
             }
             .padding(.horizontal, SpacingTokens.regular)

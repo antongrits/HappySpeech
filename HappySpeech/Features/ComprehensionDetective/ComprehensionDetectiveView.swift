@@ -62,7 +62,10 @@ struct ComprehensionDetectiveView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
 
                 if let startVM = holder.startVM {
                     contentSection(startVM)
@@ -151,43 +154,40 @@ struct ComprehensionDetectiveView: View {
     private func instructionCard(
         _ startVM: ComprehensionDetectiveModels.Start.ViewModel
     ) -> some View {
-        HStack(alignment: .top, spacing: SpacingTokens.sp3) {
-            Image(systemName: "ear.fill")
-                .font(.system(size: 32))
-                .foregroundStyle(ColorTokens.Brand.sky)
-                .accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                Text(startVM.instruction)
-                    .font(TypographyTokens.title(22))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(nil)
-                    .minimumScaleFactor(0.7)
-                    .accessibilityLabel(Text(startVM.accessibilityLabel))
-                Text(startVM.tierHint)
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(nil)
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp3) {
+            HStack(alignment: .top, spacing: SpacingTokens.sp3) {
+                Image(systemName: "ear.fill")
+                    .font(.system(size: 32))
+                    .foregroundStyle(ColorTokens.Brand.sky)
+                    .hsSymbolEffect(.pulse, value: startVM.instruction)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                    Text(startVM.instruction)
+                        .font(TypographyTokens.title(22))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(nil)
+                        .minimumScaleFactor(0.7)
+                        .accessibilityLabel(Text(startVM.accessibilityLabel))
+                    Text(startVM.tierHint)
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(nil)
+                }
+                Spacer()
+                Button {
+                    Task { await replayInstruction() }
+                } label: {
+                    Image(systemName: "speaker.wave.2.fill")
+                        .font(.system(size: 24))
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
+                        .frame(width: 56, height: 56)
+                        .background(Circle().fill(ColorTokens.Brand.sky))
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel(Text("detective.replay.a11y"))
             }
-            Spacer()
-            Button {
-                Task { await replayInstruction() }
-            } label: {
-                Image(systemName: "speaker.wave.2.fill")
-                    .font(.system(size: 24))
-                    .foregroundStyle(ColorTokens.Overlay.onAccent)
-                    .frame(width: 56, height: 56)
-                    .background(Circle().fill(ColorTokens.Brand.sky))
-            }
-            .buttonStyle(.plain)
-            .accessibilityLabel(Text("detective.replay.a11y"))
+            .frame(maxWidth: .infinity)
         }
-        .padding(SpacingTokens.sp3)
-        .frame(maxWidth: .infinity)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Kid.surface)
-        )
-        .depthShadow(ShadowTokens.kidDepth)
     }
 
     private func picturesGrid(
@@ -198,8 +198,15 @@ struct ComprehensionDetectiveView: View {
             count: 2
         )
         return LazyVGrid(columns: columns, spacing: SpacingTokens.sp3) {
-            ForEach(startVM.pictures) { picture in
+            ForEach(Array(startVM.pictures.enumerated()), id: \.element.id) { index, picture in
                 pictureTile(picture)
+                    .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.92)
+                    }
+                    .hsParallaxTile(factor: 0.2)
+                    .zIndex(Double(startVM.pictures.count - index))
             }
         }
         .animation(reduceMotion ? nil : .spring(duration: 0.35), value: holder.lastPick?.correctPictureId)

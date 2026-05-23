@@ -36,7 +36,10 @@ struct ScreeningView: View {
 
     var body: some View {
         ZStack {
-            ColorTokens.Kid.bg.ignoresSafeArea()
+            HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                .ignoresSafeArea()
+                .blendMode(.softLight)
+                .accessibilityHidden(true)
 
             VStack(spacing: SpacingTokens.large) {
                 header
@@ -427,6 +430,7 @@ private struct StageCard: View {
                 Image(systemName: isRecording ? "stop.circle.fill" : "mic.circle.fill")
                     .font(TypographyTokens.display(34))
                     .foregroundStyle(isRecording ? ColorTokens.Brand.primary : ColorTokens.Kid.ink)
+                    .hsSymbolEffect(.pulse, value: isRecording)
             }
         }
         .buttonStyle(.plain)
@@ -478,6 +482,7 @@ private struct BlockTransitionView: View {
             Image(systemName: "star.fill")
                 .font(TypographyTokens.kidDisplay(52))
                 .foregroundStyle(ColorTokens.Brand.primary)
+                .hsSymbolEffect(.bounce, value: title)
             Text(String(localized: "screening.block.next"))
                 .font(TypographyTokens.headline())
                 .foregroundStyle(ColorTokens.Kid.inkMuted)

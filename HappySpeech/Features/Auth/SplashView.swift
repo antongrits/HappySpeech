@@ -27,12 +27,19 @@ struct SplashView: View {
         ZStack {
             // Background gradient matching design tokens (Brand coral / dark).
             // v27: диагональный (topLeading → bottomTrailing) — даёт глубину.
+            // Batch F: layered HSMeshGradientBackground (.calm softLight) на
+            // диагональный gradient — даёт живой mesh-эффект под сплэшем.
             LinearGradient(
                 colors: backgroundColors,
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
             .ignoresSafeArea()
+
+            HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                .ignoresSafeArea()
+                .blendMode(.softLight)
+                .accessibilityHidden(true)
 
             // Decorative circles
             decorativeBackground

@@ -9,6 +9,7 @@ struct ColorAndSoundView: View {
     @State private var interactor: ColorAndSoundInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private let columns = [
         GridItem(.flexible(), spacing: SpacingTokens.sp2),
@@ -18,7 +19,10 @@ struct ColorAndSoundView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
                 content
             }
             .navigationTitle(Text(String(localized: "colorAndSound.nav.title")))
@@ -62,7 +66,7 @@ struct ColorAndSoundView: View {
     }
 
     private var hero: some View {
-        HSCard(style: .tinted(ColorTokens.Brand.mint.opacity(0.18))) {
+        HSLiquidGlassCard(style: .elevated) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(String(localized: "colorAndSound.hero.title"))
                     .font(TypographyTokens.title(20))
@@ -80,11 +84,18 @@ struct ColorAndSoundView: View {
 
     private func grid(interactor: ColorAndSoundInteractor) -> some View {
         LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
-            ForEach(interactor.state.pairs) { pair in
+            ForEach(Array(interactor.state.pairs.enumerated()), id: \.element.id) { index, pair in
                 pairCard(pair) {
                     hapticService.impact(.light)
                     interactor.toggle(pair.id)
                 }
+                .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                    content
+                        .opacity(phase.isIdentity ? 1 : 0)
+                        .scaleEffect(phase.isIdentity ? 1 : 0.92)
+                }
+                .hsParallaxTile(factor: 0.2)
+                .zIndex(Double(interactor.state.pairs.count - index))
             }
         }
     }
@@ -114,6 +125,7 @@ struct ColorAndSoundView: View {
                         Image(systemName: "checkmark.circle.fill")
                             .font(.system(size: 14))
                             .foregroundStyle(ColorTokens.Brand.primary)
+                            .hsSymbolEffect(.bounce, value: pair.isMatched)
                     }
                 }
                 .frame(maxWidth: .infinity)

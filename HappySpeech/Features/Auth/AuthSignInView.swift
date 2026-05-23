@@ -7,6 +7,7 @@ struct AuthSignInView: View {
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(AppContainer.self) private var container
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var scene: AuthScene?
     @State private var email: String = ""
@@ -179,38 +180,40 @@ struct AuthSignInView: View {
     }
 
     private var formSection: some View {
-        VStack(spacing: SpacingTokens.sp3) {
-            authTextField(
-                config: AuthFieldConfig(
-                    title: String(localized: "auth.email.label"),
-                    icon: "envelope",
-                    keyboard: .emailAddress,
-                    contentType: .emailAddress,
-                    isSecure: false,
-                    field: .email
-                ),
-                text: $email
-            )
-            .submitLabel(.next)
-            .onSubmit { focusedField = .password }
-            .accessibilityLabel(String(localized: "accessibility.email_field"))
-            .accessibilityHint(String(localized: "accessibility.email_field.hint"))
+        HSLiquidGlassCard(style: .elevated) {
+            VStack(spacing: SpacingTokens.sp3) {
+                authTextField(
+                    config: AuthFieldConfig(
+                        title: String(localized: "auth.email.label"),
+                        icon: "envelope",
+                        keyboard: .emailAddress,
+                        contentType: .emailAddress,
+                        isSecure: false,
+                        field: .email
+                    ),
+                    text: $email
+                )
+                .submitLabel(.next)
+                .onSubmit { focusedField = .password }
+                .accessibilityLabel(String(localized: "accessibility.email_field"))
+                .accessibilityHint(String(localized: "accessibility.email_field.hint"))
 
-            authTextField(
-                config: AuthFieldConfig(
-                    title: String(localized: "auth.password.label"),
-                    icon: "lock",
-                    keyboard: .default,
-                    contentType: .password,
-                    isSecure: true,
-                    field: .password
-                ),
-                text: $password
-            )
-            .submitLabel(.go)
-            .onSubmit(signIn)
-            .accessibilityLabel(String(localized: "accessibility.password_field"))
-            .accessibilityHint(String(localized: "accessibility.password_field.hint"))
+                authTextField(
+                    config: AuthFieldConfig(
+                        title: String(localized: "auth.password.label"),
+                        icon: "lock",
+                        keyboard: .default,
+                        contentType: .password,
+                        isSecure: true,
+                        field: .password
+                    ),
+                    text: $password
+                )
+                .submitLabel(.go)
+                .onSubmit(signIn)
+                .accessibilityLabel(String(localized: "accessibility.password_field"))
+                .accessibilityHint(String(localized: "accessibility.password_field.hint"))
+            }
         }
     }
 
@@ -312,6 +315,7 @@ struct AuthSignInView: View {
                 .font(TypographyTokens.body(16))
                 .foregroundStyle(ColorTokens.Kid.inkSoft)
                 .frame(width: 24)
+                .hsSymbolEffect(.bounce, value: focusedField == field)
 
             Group {
                 if isSecure {

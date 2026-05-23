@@ -50,7 +50,10 @@ struct PermissionFlowView: View {
 
     var body: some View {
         ZStack {
-            ColorTokens.Kid.bg.ignoresSafeArea()
+            HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                .ignoresSafeArea()
+                .blendMode(.softLight)
+                .accessibilityHidden(true)
 
             if display.isFinished && !display.isSingleMode {
                 allDoneContent
@@ -314,6 +317,7 @@ struct PermissionFlowView: View {
             Image(systemName: step.icon)
                 .font(TypographyTokens.kidDisplay(50))
                 .foregroundStyle(step.accentColor)
+                .hsSymbolEffect(.bounce, value: step.state == .granted)
                 .accessibilityHidden(true)
         }
         .frame(maxWidth: .infinity)
@@ -327,6 +331,7 @@ struct PermissionFlowView: View {
             HStack(spacing: SpacingTokens.micro) {
                 Image(systemName: "checkmark.seal.fill")
                     .foregroundStyle(ColorTokens.Semantic.success)
+                    .hsSymbolEffect(.bounce, value: grantedPulse)
                     .accessibilityHidden(true)
                 Text(String(localized: "permissions.granted.badge"))
                     .font(TypographyTokens.headline(14))

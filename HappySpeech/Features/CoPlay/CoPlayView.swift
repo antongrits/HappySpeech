@@ -66,7 +66,10 @@ struct CoPlayView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
 
                 if holder.isFinished, let summary = holder.summary {
                     summarySection(summary)
@@ -114,6 +117,7 @@ struct CoPlayView: View {
             Image(systemName: start.symbolName)
                 .font(.system(size: 76))
                 .foregroundStyle(ColorTokens.Brand.lilac)
+                .hsSymbolEffect(.bounce, value: start.activityTitle)
                 .accessibilityHidden(true)
 
             Text(start.activityTitle)
@@ -123,26 +127,23 @@ struct CoPlayView: View {
                 .lineLimit(2)
                 .minimumScaleFactor(0.7)
 
-            VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-                Label {
-                    Text("coPlay.briefing.title")
-                        .font(TypographyTokens.headline(15))
-                } icon: {
-                    Image(systemName: "person.fill.questionmark")
-                }
-                .foregroundStyle(ColorTokens.Kid.ink)
+            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+                VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+                    Label {
+                        Text("coPlay.briefing.title")
+                            .font(TypographyTokens.headline(15))
+                    } icon: {
+                        Image(systemName: "person.fill.questionmark")
+                    }
+                    .foregroundStyle(ColorTokens.Kid.ink)
 
-                Text(start.adultBriefing)
-                    .font(TypographyTokens.body(15))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(nil)
+                    Text(start.adultBriefing)
+                        .font(TypographyTokens.body(15))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(nil)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .padding(SpacingTokens.sp4)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .fill(ColorTokens.Kid.surface)
-            )
             .padding(.horizontal, SpacingTokens.screenEdge)
             .accessibilityElement(children: .combine)
 
@@ -289,6 +290,7 @@ struct CoPlayView: View {
             Image(systemName: "hands.and.sparkles.fill")
                 .font(.system(size: 80))
                 .foregroundStyle(ColorTokens.Brand.butter)
+                .hsSymbolEffect(.bounce, value: summary.title)
                 .accessibilityHidden(true)
 
             Text(summary.title)

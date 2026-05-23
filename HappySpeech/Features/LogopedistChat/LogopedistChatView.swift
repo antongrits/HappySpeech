@@ -71,7 +71,13 @@ struct LogopedistChatView: View {
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
-                ColorTokens.Parent.bg.ignoresSafeArea()
+                ZStack {
+                    ColorTokens.Parent.bg
+                    HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                        .blendMode(.softLight)
+                        .accessibilityHidden(true)
+                }
+                .ignoresSafeArea()
 
                 VStack(spacing: 0) {
                     if let viewModel = holder.loadVM {
@@ -155,6 +161,7 @@ struct LogopedistChatView: View {
                 Image(systemName: "person.fill")
                     .font(.title3)
                     .foregroundStyle(ColorTokens.Parent.accent)
+                    .hsSymbolEffect(.bounce, value: viewModel.isOnline)
             }
             .overlay(alignment: .bottomTrailing) {
                 if viewModel.isOnline {
@@ -238,32 +245,28 @@ struct LogopedistChatView: View {
         let hint: String = viewModel.emptyStateHint
             ?? String(localized: "chat.empty.connected.hint")
 
-        VStack(spacing: SpacingTokens.sp3) {
-            LyalyaMascotView(state: .waving, size: 140)
-                .frame(height: 140)
-                .accessibilityHidden(true)
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp5) {
+            VStack(spacing: SpacingTokens.sp3) {
+                LyalyaMascotView(state: .waving, size: 140)
+                    .frame(height: 140)
+                    .accessibilityHidden(true)
 
-            Text(title)
-                .font(TypographyTokens.title(20))
-                .foregroundStyle(ColorTokens.Parent.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.85)
+                Text(title)
+                    .font(TypographyTokens.title(20))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
 
-            Text(hint)
-                .font(TypographyTokens.body(13))
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .padding(.horizontal, SpacingTokens.sp4)
+                Text(hint)
+                    .font(TypographyTokens.body(13))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .padding(.horizontal, SpacingTokens.sp4)
+            }
+            .frame(maxWidth: .infinity)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, SpacingTokens.sp5)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Parent.surface)
-        )
-        .parentCardShadow()
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text("\(title). \(hint)"))
     }
@@ -279,9 +282,20 @@ struct LogopedistChatView: View {
                         chatHeroEmptyState(viewModel: viewModel)
                             .padding(.top, SpacingTokens.sp6)
                     }
-                    ForEach(viewModel.messages) { message in
+                    ForEach(Array(viewModel.messages.enumerated()), id: \.element.id) { index, message in
                         messageBubble(message: message)
                             .id(message.id)
+                            .scrollTransition(
+                                .animated(reduceMotion
+                                    ? .linear(duration: 0)
+                                    : .spring(response: 0.5, dampingFraction: 0.85))
+                            ) { content, phase in
+                                content
+                                    .opacity(phase.isIdentity ? 1 : 0)
+                                    .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                            }
+                            .hsParallaxTile(factor: 0.12)
+                            .zIndex(Double(viewModel.messages.count - index))
                     }
                     Color.clear
                         .frame(height: 8)

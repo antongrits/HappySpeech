@@ -7,11 +7,15 @@ struct ChildLanguageMilestonesView: View {
     @State private var interactor = ChildLanguageMilestonesInteractor()
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Parent.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
                 content
             }
             .navigationTitle(Text(String(localized: "languageMilestones.nav.title")))
@@ -45,7 +49,7 @@ struct ChildLanguageMilestonesView: View {
     }
 
     private var hero: some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(interactor.state.ageBand)
                     .font(TypographyTokens.caption(12).weight(.semibold))
@@ -69,8 +73,15 @@ struct ChildLanguageMilestonesView: View {
 
     private var sectionsList: some View {
         VStack(spacing: SpacingTokens.sp3) {
-            ForEach(ChildLanguageMilestonesModels.Section.allCases) { section in
+            ForEach(Array(ChildLanguageMilestonesModels.Section.allCases.enumerated()), id: \.element.id) { index, section in
                 sectionCard(section)
+                    .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                    }
+                    .hsParallaxTile(factor: 0.25)
+                    .zIndex(Double(ChildLanguageMilestonesModels.Section.allCases.count - index))
             }
         }
     }
@@ -110,6 +121,7 @@ struct ChildLanguageMilestonesView: View {
                     .foregroundStyle(
                         item.isAchieved ? ColorTokens.Semantic.success : ColorTokens.Parent.inkSoft
                     )
+                    .hsSymbolEffect(.bounce, value: item.isAchieved)
                 Text(item.title)
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Parent.ink)

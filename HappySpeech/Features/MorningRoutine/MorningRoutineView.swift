@@ -10,11 +10,15 @@ struct MorningRoutineView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(AppCoordinator.self) private var coordinator
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
                 content
             }
             .navigationTitle(Text(String(localized: "morning.nav.title")))
@@ -58,7 +62,7 @@ struct MorningRoutineView: View {
     }
 
     private func hero(state: MorningRoutineModels.ViewState) -> some View {
-        HSCard(style: .tinted(ColorTokens.Brand.butter.opacity(0.18))) {
+        HSLiquidGlassCard(style: .elevated) {
             HStack(alignment: .top, spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .waving, size: 72)
                     .accessibilityHidden(true)
@@ -84,11 +88,18 @@ struct MorningRoutineView: View {
 
     private func stepsList(interactor: MorningRoutineInteractor) -> some View {
         VStack(spacing: SpacingTokens.sp2) {
-            ForEach(interactor.state.steps) { step in
+            ForEach(Array(interactor.state.steps.enumerated()), id: \.element.id) { index, step in
                 stepCard(step) {
                     hapticService.impact(.light)
                     interactor.toggle(step.id)
                 }
+                .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                    content
+                        .opacity(phase.isIdentity ? 1 : 0)
+                        .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                }
+                .hsParallaxTile(factor: 0.22)
+                .zIndex(Double(interactor.state.steps.count - index))
             }
         }
     }
@@ -120,6 +131,7 @@ struct MorningRoutineView: View {
                     Image(systemName: step.isDone ? "checkmark.circle.fill" : "circle")
                         .font(.system(size: 24, weight: .regular))
                         .foregroundStyle(step.isDone ? ColorTokens.Semantic.success : ColorTokens.Kid.inkSoft)
+                        .hsSymbolEffect(.bounce, value: step.isDone)
                 }
             }
         }

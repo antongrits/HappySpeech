@@ -9,11 +9,15 @@ struct EveningReflectionView: View {
     @State private var interactor: EveningReflectionInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
                 content
             }
             .navigationTitle(Text(String(localized: "evening.nav.title")))
@@ -59,7 +63,7 @@ struct EveningReflectionView: View {
     }
 
     private var hero: some View {
-        HSCard(style: .tinted(ColorTokens.Brand.lilac.opacity(0.15))) {
+        HSLiquidGlassCard(style: .elevated) {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .thinking, size: 64)
                     .accessibilityHidden(true)
@@ -127,8 +131,19 @@ struct EveningReflectionView: View {
                     .font(TypographyTokens.headline(15))
                     .foregroundStyle(ColorTokens.Kid.ink)
                 HStack(spacing: SpacingTokens.sp2) {
-                    ForEach(EveningReflectionModels.Mood.allCases) { mood in
+                    ForEach(Array(EveningReflectionModels.Mood.allCases.enumerated()), id: \.element.id) { index, mood in
                         moodButton(mood, interactor: interactor)
+                            .scrollTransition(
+                                .animated(reduceMotion
+                                    ? .linear(duration: 0)
+                                    : .spring(response: 0.5, dampingFraction: 0.85))
+                            ) { content, phase in
+                                content
+                                    .opacity(phase.isIdentity ? 1 : 0)
+                                    .scaleEffect(phase.isIdentity ? 1 : 0.9)
+                            }
+                            .hsParallaxTile(factor: 0.15)
+                            .zIndex(Double(EveningReflectionModels.Mood.allCases.count - index))
                     }
                 }
             }

@@ -61,7 +61,15 @@ struct FamilyHomeView: View {
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.bottom, SpacingTokens.sp8)
             }
-            .background(ColorTokens.Parent.bg.ignoresSafeArea())
+            .background(
+                ZStack {
+                    ColorTokens.Parent.bg
+                    HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                        .blendMode(.softLight)
+                        .accessibilityHidden(true)
+                }
+                .ignoresSafeArea()
+            )
             .navigationTitle(String(localized: "family.home.title"))
             .navigationBarTitleDisplayMode(.large)
             .toolbar { toolbarContent }
@@ -105,7 +113,7 @@ struct FamilyHomeView: View {
 
     private var childrenGrid: some View {
         LazyVGrid(columns: columns, spacing: SpacingTokens.sp4) {
-            ForEach(viewModel.children) { child in
+            ForEach(Array(viewModel.children.enumerated()), id: \.element.id) { index, child in
                 // S12: matchedGeometryEffect на аватар-круг карточки ребёнка.
                 // При tap avatar «летит» к ChildHome hero (если ReduceMotion off).
                 ChildCardView(
@@ -131,6 +139,13 @@ struct FamilyHomeView: View {
                 .accessibilityElement(children: .combine)
                 .accessibilityLabel(childCardA11yLabel(child))
                 .accessibilityHint(String(localized: "family.home.child_card.hint"))
+                .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                    content
+                        .opacity(phase.isIdentity ? 1 : 0)
+                        .scaleEffect(phase.isIdentity ? 1 : 0.94)
+                }
+                .hsParallaxTile(factor: 0.25)
+                .zIndex(Double(viewModel.children.count - index))
             }
 
             AddChildCard {
@@ -358,6 +373,7 @@ private struct ChildCardView: View {
                     Image(systemName: "flame.fill")
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Brand.primary)
+                        .hsSymbolEffect(.pulse, value: child.currentStreak)
                         .accessibilityHidden(true)
                     Text("\(child.currentStreak) \(String(localized: "streak.days.short"))")
                         .font(TypographyTokens.caption(12))

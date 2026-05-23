@@ -88,14 +88,19 @@ struct PermissionsOverviewView: View {
     // MARK: - Background
 
     private var backgroundLayer: some View {
-        LinearGradient(
-            colors: [
-                ColorTokens.Parent.bg,
-                ColorTokens.Brand.mint.opacity(0.08)
-            ],
-            startPoint: .top,
-            endPoint: .bottom
-        )
+        ZStack {
+            LinearGradient(
+                colors: [
+                    ColorTokens.Parent.bg,
+                    ColorTokens.Brand.mint.opacity(0.08)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                .blendMode(.softLight)
+                .accessibilityHidden(true)
+        }
     }
 
     // MARK: - Mascot
@@ -187,13 +192,20 @@ struct PermissionsOverviewView: View {
 
     private var cardsSection: some View {
         VStack(spacing: SpacingTokens.listGap) {
-            ForEach(display.overviewCards) { card in
+            ForEach(Array(display.overviewCards.enumerated()), id: \.element.id) { index, card in
                 PermissionOverviewCardView(
                     card: card,
                     reduceMotion: reduceMotion,
                     onRequest: { handleRequest(card) },
                     onOpenSettings: { handleOpenSettings() }
                 )
+                .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                    content
+                        .opacity(phase.isIdentity ? 1 : 0)
+                        .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                }
+                .hsParallaxTile(factor: 0.18)
+                .zIndex(Double(display.overviewCards.count - index))
                 .transition(.opacity.combined(with: .move(edge: .top)))
             }
         }
@@ -372,6 +384,7 @@ private struct PermissionOverviewCardView: View {
         Image(systemName: statusIconName)
             .font(TypographyTokens.headline(18))
             .foregroundStyle(statusColor)
+            .hsSymbolEffect(.bounce, value: card.state.rawValue)
             .accessibilityHidden(true)
     }
 

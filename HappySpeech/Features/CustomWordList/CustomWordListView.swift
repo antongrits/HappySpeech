@@ -62,6 +62,7 @@ struct CustomWordListView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(AppContainer.self) private var container
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private static let logger = Logger(
         subsystem: "ru.happyspeech",
@@ -71,7 +72,10 @@ struct CustomWordListView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Spec.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
 
                 if holder.isEmpty {
                     emptyState
@@ -143,7 +147,7 @@ struct CustomWordListView: View {
 
     private var listView: some View {
         List {
-            ForEach(holder.rows) { row in
+            ForEach(Array(holder.rows.enumerated()), id: \.element.id) { index, row in
                 Button {
                     editRow(row.id)
                 } label: {
@@ -158,6 +162,13 @@ struct CustomWordListView: View {
                         Label(String(localized: "customWordList.delete"), systemImage: "trash")
                     }
                 }
+                .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                    content
+                        .opacity(phase.isIdentity ? 1 : 0)
+                        .scaleEffect(phase.isIdentity ? 1 : 0.97)
+                }
+                .hsParallaxTile(factor: 0.15)
+                .zIndex(Double(holder.rows.count - index))
             }
         }
         .listStyle(.insetGrouped)
@@ -195,32 +206,35 @@ struct CustomWordListView: View {
     // MARK: - Empty
 
     private var emptyState: some View {
-        VStack(spacing: SpacingTokens.sp3) {
-            Image(systemName: "list.bullet.rectangle.fill")
-                .font(.system(size: 48))
-                .foregroundStyle(ColorTokens.Spec.accent.opacity(0.6))
-                .accessibilityHidden(true)
-            Text("customWordList.empty.title")
-                .font(TypographyTokens.title(20))
-                .foregroundStyle(ColorTokens.Spec.ink)
-            Text("customWordList.empty.message")
-                .font(TypographyTokens.body(14))
-                .foregroundStyle(ColorTokens.Spec.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-            Button {
-                editingDraft = WordListDraft()
-                showEditor = true
-            } label: {
-                Label(String(localized: "customWordList.new"), systemImage: "plus.circle.fill")
-                    .padding(.horizontal, SpacingTokens.sp4)
-                    .padding(.vertical, SpacingTokens.sp2)
-                    .background(
-                        Capsule().fill(ColorTokens.Spec.accent.opacity(0.18))
-                    )
-                    .foregroundStyle(ColorTokens.Spec.accent)
+        HSLiquidGlassCard(style: .elevated) {
+            VStack(spacing: SpacingTokens.sp3) {
+                Image(systemName: "list.bullet.rectangle.fill")
+                    .font(.system(size: 48))
+                    .foregroundStyle(ColorTokens.Spec.accent.opacity(0.6))
+                    .hsSymbolEffect(.bounce, value: holder.isEmpty)
+                    .accessibilityHidden(true)
+                Text("customWordList.empty.title")
+                    .font(TypographyTokens.title(20))
+                    .foregroundStyle(ColorTokens.Spec.ink)
+                Text("customWordList.empty.message")
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Spec.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                Button {
+                    editingDraft = WordListDraft()
+                    showEditor = true
+                } label: {
+                    Label(String(localized: "customWordList.new"), systemImage: "plus.circle.fill")
+                        .padding(.horizontal, SpacingTokens.sp4)
+                        .padding(.vertical, SpacingTokens.sp2)
+                        .background(
+                            Capsule().fill(ColorTokens.Spec.accent.opacity(0.18))
+                        )
+                        .foregroundStyle(ColorTokens.Spec.accent)
+                }
+                .accessibilityIdentifier("customWordList.empty.newButton")
             }
-            .accessibilityIdentifier("customWordList.empty.newButton")
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
     }
