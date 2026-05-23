@@ -597,7 +597,7 @@ struct SessionCompleteView: View {
     // MARK: - Action buttons
 
     private var actionButtons: some View {
-        VStack(spacing: SpacingTokens.small) {
+        VStack(spacing: SpacingTokens.sp3) {
             HSButton(
                 String(localized: "sessionComplete.cta.continue"),
                 style: .primary,

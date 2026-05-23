@@ -269,13 +269,17 @@ struct SyllableConstructorView: View {
             if let submit = holder.lastSubmit {
                 feedbackBanner(submit)
             }
-            HStack(spacing: SpacingTokens.sp2) {
+            // VStack вместо HStack — два full-width CTA не помещаются на
+            // 320pt-wide экранах (SE 3), правая кнопка обрезалась.
+            VStack(spacing: SpacingTokens.sp2) {
                 Button {
                     Task { await speakWord() }
                 } label: {
                     Label {
                         Text("syllable.hear")
                             .font(TypographyTokens.headline(17))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.8)
                     } icon: {
                         Image(systemName: "speaker.wave.2.fill")
                     }
@@ -294,6 +298,8 @@ struct SyllableConstructorView: View {
                 } label: {
                     Text(primaryButtonTitle(startVM))
                         .font(TypographyTokens.headline(17))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
                         .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .frame(maxWidth: .infinity, minHeight: 56)
                         .background(

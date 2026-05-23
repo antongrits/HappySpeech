@@ -261,7 +261,7 @@ struct RewardShopView: View {
                             .font(.title3)
                             .foregroundStyle(ColorTokens.Brand.mint)
                             .padding(4)
-                            .background(Circle().fill(Color.white.opacity(0.9)))
+                            .background(Circle().fill(ColorTokens.Overlay.onAccent.opacity(0.9)))
                             .accessibilityHidden(true)
                     }
                     Spacer()

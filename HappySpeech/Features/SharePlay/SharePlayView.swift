@@ -315,8 +315,20 @@ private struct SharePlayLessonCard: View {
             return String(localized: "game.template.repeatAfterModel")
         case "listenAndChoose":
             return String(localized: "game.template.listenAndChoose")
+        case "dragAndMatch":
+            return String(localized: "game.template.dragAndMatch")
+        case "sorting":
+            return String(localized: "game.template.sorting")
+        case "memory":
+            return String(localized: "game.template.memory")
+        case "bingo":
+            return String(localized: "game.template.bingo")
+        case "minimalPairs":
+            return String(localized: "game.template.minimalPairs")
+        case "rhythm":
+            return String(localized: "game.template.rhythm")
         default:
-            return kind
+            return String(localized: "game.template.generic")
         }
     }
 }

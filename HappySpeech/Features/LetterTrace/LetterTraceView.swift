@@ -144,7 +144,7 @@ struct LetterTraceView: View {
             ZStack {
                 // Подложка
                 RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .fill(Color.white)
+                    .fill(ColorTokens.Overlay.onAccent)
                     .overlay(
                         RoundedRectangle(cornerRadius: RadiusTokens.card)
                             .strokeBorder(ColorTokens.Kid.line, lineWidth: 1)
@@ -287,11 +287,13 @@ struct LetterTraceView: View {
                 Label {
                     Text("letterTrace.button.check")
                         .font(TypographyTokens.headline(16))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
                 } icon: {
                     Image(systemName: "checkmark.circle.fill")
                 }
                 .frame(maxWidth: .infinity, minHeight: 56)
-                .foregroundStyle(Color.white)
+                .foregroundStyle(ColorTokens.Overlay.onAccent)
                 .background(
                     RoundedRectangle(cornerRadius: RadiusTokens.card)
                         .fill(ColorTokens.Brand.primary)
@@ -306,6 +308,8 @@ struct LetterTraceView: View {
                 Label {
                     Text("letterTrace.button.next")
                         .font(TypographyTokens.headline(16))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
                 } icon: {
                     Image(systemName: "arrow.right.circle.fill")
                 }

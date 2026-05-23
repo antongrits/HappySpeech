@@ -84,7 +84,7 @@ struct StutteringView: View {
             scrollContent
         }
         .navigationTitle(String(localized: "stuttering.entry.title"))
-        .navigationBarTitleDisplayMode(.large)
+        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 progressToolbarButton

@@ -203,7 +203,7 @@ struct LogorhythmicsView: View {
     }
 
     private var instructionBar: some View {
-        Text("Выбери chant и двигайся в такт.")
+        Text(String(localized: "logorhythmics.instruction"))
             .font(TypographyTokens.body(14))
             .foregroundStyle(ColorTokens.Kid.inkMuted)
             .multilineTextAlignment(.center)
