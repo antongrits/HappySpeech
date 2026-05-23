@@ -87,9 +87,13 @@ final class ListenAndChoosePresenter: ListenAndChoosePresentationLogic {
 
     // MARK: Private
 
-    /// Mapping таблица русское слово → имя ассета из Assets.xcassets/Illustrations/word_*.
-    /// HSContentSymbol сам выберет рендер: Asset для имён начинающихся с "word_",
-    /// SF Symbol fallback (с точкой или из knownSingleWordSymbols) — для остального.
+    /// Legacy mapping таблица русское слово → имя ассета.
+    ///
+    /// **DEPRECATED:** новый код должен пользоваться `LessonContentMap.asset(for:)`,
+    /// который читает `HappySpeech/Content/word_manifest.json`. Эта таблица
+    /// сохранена как safety-net fallback на случай, если manifest отсутствует
+    /// в bundle (например, в Preview-сборках). При расхождении приоритет —
+    /// у манифеста.
     private static let wordAssetMap: [String: String] = [
         // Existing assets (43)
         "яблоко": "word_apple", "сумка": "word_bag", "мяч": "word_ball",
@@ -136,8 +140,15 @@ final class ListenAndChoosePresenter: ListenAndChoosePresentationLogic {
         let normalized = word.lowercased()
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .trimmingCharacters(in: CharacterSet(charactersIn: ".,!?;:"))
+        // Primary: shared LessonContentMap (manifest-backed, 90+ words).
+        if let asset = LessonContentMap.asset(for: normalized) { return asset }
+        // Try first token (in case word is "одна машина") against the manifest.
+        if let firstToken = normalized.components(separatedBy: .whitespaces).first,
+           let asset = LessonContentMap.asset(for: firstToken) {
+            return asset
+        }
+        // Legacy fallback: local hardcoded dict (kept for Preview / safety).
         if let asset = wordAssetMap[normalized] { return asset }
-        // Try first token (in case word is "одна машина")
         if let firstToken = normalized.components(separatedBy: .whitespaces).first,
            let asset = wordAssetMap[firstToken] {
             return asset

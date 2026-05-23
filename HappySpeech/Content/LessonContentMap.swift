@@ -1,0 +1,115 @@
+import Foundation
+import OSLog
+
+// MARK: - LessonContentMap
+
+/// Centralized russian-word → asset name mapping for all lesson presenters.
+///
+/// Backed by `word_manifest.json` bundled at the app level (see
+/// `HappySpeech/Content/word_manifest.json`). Lazy-loaded once on first
+/// access and cached for the process lifetime.
+///
+/// Use this from any lesson Presenter / Interactor / Models that needs to
+/// resolve a russian word to an asset image name. The asset name is then
+/// passed to `HSContentSymbol(name:)`, which routes between SF Symbol and
+/// `Assets.xcassets/Illustrations/word_*.imageset`.
+///
+/// ## Usage
+/// ```swift
+/// if let asset = LessonContentMap.asset(for: "корова") {
+///     HSContentSymbol(asset, size: 64)
+/// }
+/// ```
+///
+/// ## Thread-safety
+/// All accessors are read-only and call into immutable `let` storage. Safe
+/// to call from any actor. The internal cache is built once via a `let`
+/// initializer; subsequent reads are lock-free.
+public enum LessonContentMap {
+
+    // MARK: - Public Types
+
+    /// One word ↔ asset entry from the manifest.
+    public struct Entry: Sendable, Decodable {
+        public let word: String
+        public let asset: String
+        public let recommendedStages: [String]
+        public let visualComplexity: String
+        public let semanticCategory: String
+        public let methodologySource: String?
+        public let soundFamily: String?
+    }
+
+    // MARK: - Manifest envelope
+
+    private struct Manifest: Decodable {
+        let version: Int
+        let words: [Entry]
+    }
+
+    // MARK: - Storage
+
+    /// All loaded entries (lazy, read once from bundle).
+    /// `nonisolated(unsafe)` is safe because storage is an immutable `let`
+    /// initialized via a synchronous closure run on first access; the value
+    /// is never mutated thereafter.
+    nonisolated(unsafe) private static let entries: [Entry] = loadEntries()
+
+    /// Lowercased word → asset name lookup.
+    nonisolated(unsafe) private static let assetByWord: [String: String] = {
+        Dictionary(
+            entries.map { ($0.word.lowercased(), $0.asset) },
+            uniquingKeysWith: { first, _ in first }
+        )
+    }()
+
+    // MARK: - Loader
+
+    private static func loadEntries() -> [Entry] {
+        guard let url = Bundle.main.url(
+            forResource: "word_manifest",
+            withExtension: "json"
+        ) else {
+            HSLogger.content.error("LessonContentMap: word_manifest.json not in bundle")
+            return []
+        }
+        do {
+            let data = try Data(contentsOf: url)
+            let manifest = try JSONDecoder().decode(Manifest.self, from: data)
+            HSLogger.content.info("LessonContentMap: loaded \(manifest.words.count) entries (v\(manifest.version))")
+            return manifest.words
+        } catch {
+            HSLogger.content.error("LessonContentMap: decode failure — \(error.localizedDescription)")
+            return []
+        }
+    }
+
+    // MARK: - Public API
+
+    /// Returns the asset name (e.g. `"word_cow"`) for the given russian word,
+    /// or `nil` if the word is not in the manifest. Case-insensitive.
+    public static func asset(for word: String) -> String? {
+        assetByWord[word.lowercased()]
+    }
+
+    /// Returns the full manifest entry for the given russian word, or `nil`.
+    public static func entry(for word: String) -> Entry? {
+        let key = word.lowercased()
+        return entries.first { $0.word.lowercased() == key }
+    }
+
+    /// All entries whose `recommendedStages` contains the given stage
+    /// (e.g. `"wordInit"`, `"wordMid"`).
+    public static func words(stage: String) -> [Entry] {
+        entries.filter { $0.recommendedStages.contains(stage) }
+    }
+
+    /// All entries belonging to the given sound family
+    /// (e.g. `"Р"`, `"С"`, `"Ш"`).
+    public static func words(soundFamily: String) -> [Entry] {
+        entries.filter { $0.soundFamily == soundFamily }
+    }
+
+    /// Total number of entries available (useful for diagnostics).
+    public static var count: Int { entries.count }
+}
