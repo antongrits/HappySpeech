@@ -219,9 +219,7 @@ struct ListenAndChooseView: View {
             HSLiquidGlassCard(style: cardGlassStyle(isCorrect: shouldHighlightCorrect, isWrong: isWrongSelection),
                               padding: SpacingTokens.regular) {
                 VStack(spacing: SpacingTokens.small) {
-                    Image(systemName: option.imageSystemName)
-                        .font(TypographyTokens.display(48).weight(.medium))
-                        .foregroundStyle(ColorTokens.Brand.primary)
+                    HSContentSymbol(option.imageSystemName, size: 64, tint: ColorTokens.Brand.primary)
                         .accessibilityHidden(true)
                     Text(option.word)
                         .font(TypographyTokens.body(17))
