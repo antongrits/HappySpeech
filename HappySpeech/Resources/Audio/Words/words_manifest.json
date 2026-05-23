@@ -3,600 +3,700 @@
     "word": "сумка",
     "slug": "bag",
     "asset": "word_bag",
-    "path": "Words/bag.m4a"
+    "path": "Words/bag.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "мяч",
     "slug": "ball",
     "asset": "word_ball",
-    "path": "Words/ball.m4a"
+    "path": "Words/ball.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "медведь",
     "slug": "bear",
     "asset": "word_bear",
-    "path": "Words/bear.m4a"
+    "path": "Words/bear.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "мишка",
     "slug": "bear",
     "asset": "word_bear",
-    "path": "Words/bear.m4a"
+    "path": "Words/bear.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "кровать",
     "slug": "bed",
     "asset": "word_bed",
-    "path": "Words/bed.m4a"
+    "path": "Words/bed.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "птица",
     "slug": "bird",
     "asset": "word_bird",
-    "path": "Words/bird.m4a"
+    "path": "Words/bird.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "лодка",
     "slug": "boat",
     "asset": "word_boat",
-    "path": "Words/boat.m4a"
+    "path": "Words/boat.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "книга",
     "slug": "book",
     "asset": "word_book",
-    "path": "Words/book.m4a"
+    "path": "Words/book.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "бабочка",
     "slug": "butterfly_insect",
     "asset": "word_butterfly_insect",
-    "path": "Words/butterfly_insect.m4a"
+    "path": "Words/butterfly_insect.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "торт",
     "slug": "cake",
     "asset": "word_cake",
-    "path": "Words/cake.m4a"
+    "path": "Words/cake.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "машина",
     "slug": "car",
     "asset": "word_car",
-    "path": "Words/car.m4a"
+    "path": "Words/car.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "кот",
     "slug": "cat",
     "asset": "word_cat",
-    "path": "Words/cat.m4a"
+    "path": "Words/cat.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "кошка",
     "slug": "cat",
     "asset": "word_cat",
-    "path": "Words/cat.m4a"
+    "path": "Words/cat.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "стул",
     "slug": "chair",
     "asset": "word_chair",
-    "path": "Words/chair.m4a"
+    "path": "Words/chair.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "корова",
     "slug": "cow",
     "asset": "word_cow",
-    "path": "Words/cow.m4a"
+    "path": "Words/cow.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "чашка",
     "slug": "cup",
     "asset": "word_cup",
-    "path": "Words/cup.m4a"
+    "path": "Words/cup.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "собака",
     "slug": "dog",
     "asset": "word_dog",
-    "path": "Words/dog.m4a"
+    "path": "Words/dog.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "кукла",
     "slug": "doll",
     "asset": "word_doll",
-    "path": "Words/doll.m4a"
+    "path": "Words/doll.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "дверь",
     "slug": "door",
     "asset": "word_door",
-    "path": "Words/door.m4a"
+    "path": "Words/door.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "слон",
     "slug": "elephant",
     "asset": "word_elephant",
-    "path": "Words/elephant.m4a"
+    "path": "Words/elephant.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "рыба",
     "slug": "fish",
     "asset": "word_fish",
-    "path": "Words/fish.m4a"
+    "path": "Words/fish.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "цветок",
     "slug": "flower",
     "asset": "word_flower",
-    "path": "Words/flower.m4a"
+    "path": "Words/flower.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "лес",
     "slug": "forest",
     "asset": "word_forest",
-    "path": "Words/forest.m4a"
+    "path": "Words/forest.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "вилка",
     "slug": "fork",
     "asset": "word_fork",
-    "path": "Words/fork.m4a"
+    "path": "Words/fork.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "лиса",
     "slug": "fox",
     "asset": "word_fox",
-    "path": "Words/fox.m4a"
+    "path": "Words/fox.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "лягушка",
     "slug": "frog",
     "asset": "word_frog",
-    "path": "Words/frog.m4a"
+    "path": "Words/frog.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "сад",
     "slug": "garden",
     "asset": "word_garden",
-    "path": "Words/garden.m4a"
+    "path": "Words/garden.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "заяц",
     "slug": "hare",
     "asset": "word_hare",
-    "path": "Words/hare.m4a"
+    "path": "Words/hare.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "курица",
     "slug": "hen",
     "asset": "word_hen",
-    "path": "Words/hen.m4a"
+    "path": "Words/hen.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "дом",
     "slug": "house",
     "asset": "word_house",
-    "path": "Words/house.m4a"
+    "path": "Words/house.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "змей",
     "slug": "kite",
     "asset": "word_kite",
-    "path": "Words/kite.m4a"
+    "path": "Words/kite.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "лампа",
     "slug": "lamp",
     "asset": "word_lamp",
-    "path": "Words/lamp.m4a"
+    "path": "Words/lamp.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "молоко",
     "slug": "milk",
     "asset": "word_milk",
-    "path": "Words/milk.m4a"
+    "path": "Words/milk.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "луна",
     "slug": "moon",
     "asset": "word_moon",
-    "path": "Words/moon.m4a"
+    "path": "Words/moon.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "парк",
     "slug": "park",
     "asset": "word_park",
-    "path": "Words/park.m4a"
+    "path": "Words/park.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "ручка",
     "slug": "pen",
     "asset": "word_pen",
-    "path": "Words/pen.m4a"
+    "path": "Words/pen.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "карандаш",
     "slug": "pencil",
     "asset": "word_pencil",
-    "path": "Words/pencil.m4a"
+    "path": "Words/pencil.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "петух",
     "slug": "rooster",
     "asset": "word_rooster",
-    "path": "Words/rooster.m4a"
+    "path": "Words/rooster.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "ложка",
     "slug": "spoon",
     "asset": "word_spoon",
-    "path": "Words/spoon.m4a"
+    "path": "Words/spoon.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "солнце",
     "slug": "sun",
     "asset": "word_sun",
-    "path": "Words/sun.m4a"
+    "path": "Words/sun.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "стол",
     "slug": "table",
     "asset": "word_table",
-    "path": "Words/table.m4a"
+    "path": "Words/table.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "поезд",
     "slug": "train",
     "asset": "word_train",
-    "path": "Words/train.m4a"
+    "path": "Words/train.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "дерево",
     "slug": "tree",
     "asset": "word_tree",
-    "path": "Words/tree.m4a"
+    "path": "Words/tree.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "лошадка",
     "slug": "horse",
     "asset": "word_horse",
-    "path": "Words/horse.m4a"
+    "path": "Words/horse.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "лошадь",
     "slug": "horse",
     "asset": "word_horse",
-    "path": "Words/horse.m4a"
+    "path": "Words/horse.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "сок",
     "slug": "juice",
     "asset": "word_juice",
-    "path": "Words/juice.m4a"
+    "path": "Words/juice.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "лист",
     "slug": "leaf",
     "asset": "word_leaf",
-    "path": "Words/leaf.m4a"
+    "path": "Words/leaf.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "лук",
     "slug": "onion",
     "asset": "word_onion",
-    "path": "Words/onion.m4a"
+    "path": "Words/onion.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "ключ",
     "slug": "key",
     "asset": "word_key",
-    "path": "Words/key.m4a"
+    "path": "Words/key.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "рука",
     "slug": "hand",
     "asset": "word_hand",
-    "path": "Words/hand.m4a"
+    "path": "Words/hand.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "снег",
     "slug": "snow",
     "asset": "word_snow",
-    "path": "Words/snow.m4a"
+    "path": "Words/snow.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "мама",
     "slug": "mom",
     "asset": "word_mom",
-    "path": "Words/mom.m4a"
+    "path": "Words/mom.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "звезда",
     "slug": "star",
     "asset": "word_star",
-    "path": "Words/star.m4a"
+    "path": "Words/star.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "нос",
     "slug": "nose",
     "asset": "word_nose",
-    "path": "Words/nose.m4a"
+    "path": "Words/nose.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "радуга",
     "slug": "rainbow",
     "asset": "word_rainbow",
-    "path": "Words/rainbow.m4a"
+    "path": "Words/rainbow.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "роза",
     "slug": "rose",
     "asset": "word_rose",
-    "path": "Words/rose.m4a"
+    "path": "Words/rose.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "сыр",
     "slug": "cheese",
     "asset": "word_cheese",
-    "path": "Words/cheese.m4a"
+    "path": "Words/cheese.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "жук",
     "slug": "beetle",
     "asset": "word_beetle",
-    "path": "Words/beetle.m4a"
+    "path": "Words/beetle.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "вода",
     "slug": "water",
     "asset": "word_water",
-    "path": "Words/water.m4a"
+    "path": "Words/water.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "гора",
     "slug": "mountain",
     "asset": "word_mountain",
-    "path": "Words/mountain.m4a"
+    "path": "Words/mountain.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "снежинка",
     "slug": "snowflake",
     "asset": "word_snowflake",
-    "path": "Words/snowflake.m4a"
+    "path": "Words/snowflake.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "барабан",
     "slug": "drum",
     "asset": "word_drum",
-    "path": "Words/drum.m4a"
+    "path": "Words/drum.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "лопатка",
     "slug": "shovel",
     "asset": "word_shovel",
-    "path": "Words/shovel.m4a"
+    "path": "Words/shovel.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "часы",
     "slug": "clock",
     "asset": "word_clock",
-    "path": "Words/clock.m4a"
+    "path": "Words/clock.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "часики",
     "slug": "clock",
     "asset": "word_clock",
-    "path": "Words/clock.m4a"
+    "path": "Words/clock.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "коза",
     "slug": "goat",
     "asset": "word_goat",
-    "path": "Words/goat.m4a"
+    "path": "Words/goat.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "рысь",
     "slug": "lynx",
     "asset": "word_lynx",
-    "path": "Words/lynx.m4a"
+    "path": "Words/lynx.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "гусь",
     "slug": "goose",
     "asset": "word_goose",
-    "path": "Words/goose.m4a"
+    "path": "Words/goose.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "горох",
     "slug": "peas",
     "asset": "word_peas",
-    "path": "Words/peas.m4a"
+    "path": "Words/peas.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "шапка",
     "slug": "hat",
     "asset": "word_hat",
-    "path": "Words/hat.m4a"
+    "path": "Words/hat.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "рак",
     "slug": "crab",
     "asset": "word_crab",
-    "path": "Words/crab.m4a"
+    "path": "Words/crab.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "ведро",
     "slug": "bucket",
     "asset": "word_bucket",
-    "path": "Words/bucket.m4a"
+    "path": "Words/bucket.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "пила",
     "slug": "saw",
     "asset": "word_saw",
-    "path": "Words/saw.m4a"
+    "path": "Words/saw.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "ракета",
     "slug": "rocket",
     "asset": "word_rocket",
-    "path": "Words/rocket.m4a"
+    "path": "Words/rocket.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "клоун",
     "slug": "clown",
     "asset": "word_clown",
-    "path": "Words/clown.m4a"
+    "path": "Words/clown.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "топор",
     "slug": "axe",
     "asset": "word_axe",
-    "path": "Words/axe.m4a"
+    "path": "Words/axe.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "журавль",
     "slug": "crane",
     "asset": "word_crane",
-    "path": "Words/crane.m4a"
+    "path": "Words/crane.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "забор",
     "slug": "fence",
     "asset": "word_fence",
-    "path": "Words/fence.m4a"
+    "path": "Words/fence.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "лимон",
     "slug": "lemon",
     "asset": "word_lemon",
-    "path": "Words/lemon.m4a"
+    "path": "Words/lemon.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "перо",
     "slug": "feather",
     "asset": "word_feather",
-    "path": "Words/feather.m4a"
+    "path": "Words/feather.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "руль",
     "slug": "wheel",
     "asset": "word_wheel",
-    "path": "Words/wheel.m4a"
+    "path": "Words/wheel.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "мел",
     "slug": "chalk",
     "asset": "word_chalk",
-    "path": "Words/chalk.m4a"
+    "path": "Words/chalk.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "мухомор",
     "slug": "mushroom",
     "asset": "word_mushroom",
-    "path": "Words/mushroom.m4a"
+    "path": "Words/mushroom.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "гриб",
     "slug": "mushroom",
     "asset": "word_mushroom",
-    "path": "Words/mushroom.m4a"
+    "path": "Words/mushroom.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "зонт",
     "slug": "umbrella",
     "asset": "word_umbrella",
-    "path": "Words/umbrella.m4a"
+    "path": "Words/umbrella.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "зонтик",
     "slug": "umbrella",
     "asset": "word_umbrella",
-    "path": "Words/umbrella.m4a"
+    "path": "Words/umbrella.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "жираф",
     "slug": "giraffe",
     "asset": "word_giraffe",
-    "path": "Words/giraffe.m4a"
+    "path": "Words/giraffe.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "карман",
     "slug": "karman",
     "asset": "word_karman",
-    "path": "Words/karman.m4a"
+    "path": "Words/karman.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "капуста",
     "slug": "kapusta",
     "asset": "word_kapusta",
-    "path": "Words/kapusta.m4a"
+    "path": "Words/kapusta.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "кактус",
     "slug": "kaktus",
     "asset": "word_kaktus",
-    "path": "Words/kaktus.m4a"
+    "path": "Words/kaktus.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "камень",
     "slug": "kamen",
     "asset": "word_kamen",
-    "path": "Words/kamen.m4a"
+    "path": "Words/kamen.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "картина",
     "slug": "kartina",
     "asset": "word_kartina",
-    "path": "Words/kartina.m4a"
+    "path": "Words/kartina.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "картошка",
     "slug": "kartoshka",
     "asset": "word_kartoshka",
-    "path": "Words/kartoshka.m4a"
+    "path": "Words/kartoshka.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "кастрюля",
     "slug": "kastryulya",
     "asset": "word_kastryulya",
-    "path": "Words/kastryulya.m4a"
+    "path": "Words/kastryulya.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "каток",
     "slug": "katok",
     "asset": "word_katok",
-    "path": "Words/katok.m4a"
+    "path": "Words/katok.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "качели",
     "slug": "kacheli",
     "asset": "word_kacheli",
-    "path": "Words/kacheli.m4a"
+    "path": "Words/kacheli.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "каша",
     "slug": "kasha",
     "asset": "word_kasha",
-    "path": "Words/kasha.m4a"
+    "path": "Words/kasha.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "кеды",
     "slug": "kedy",
     "asset": "word_kedy",
-    "path": "Words/kedy.m4a"
+    "path": "Words/kedy.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "кепка",
     "slug": "kepka",
     "asset": "word_kepka",
-    "path": "Words/kepka.m4a"
+    "path": "Words/kepka.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   },
   {
     "word": "кино",
     "slug": "kino",
     "asset": "word_kino",
-    "path": "Words/kino.m4a"
+    "path": "Words/kino.m4a",
+    "voice": "ru-RU-Chirp3-HD-Aoede"
   }
 ]
