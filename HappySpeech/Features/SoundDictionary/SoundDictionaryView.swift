@@ -84,6 +84,12 @@ struct SoundDictionaryView: View {
                             ForEach(viewModel.sections) { section in
                                 sectionView(section)
                                     .hsScrollEffect(.scaleFade)
+                                    // v32 P1 — MotionTokens: section entrance fade+scale.
+                                    .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                                        content
+                                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.95))
+                                    }
                             }
                             footerNote
                         } else {

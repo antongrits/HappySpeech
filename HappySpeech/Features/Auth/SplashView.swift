@@ -64,6 +64,8 @@ struct SplashView: View {
                         .minimumScaleFactor(0.85)
                 }
                 .padding(.horizontal, SpacingTokens.medium)
+                // v32 P1 — ShadowTokens.kidDepth: два слоя глубины под title-блоком.
+                .depthShadow(ShadowTokens.kidDepth)
                 .opacity(titleOpacity)
 
                 Spacer()

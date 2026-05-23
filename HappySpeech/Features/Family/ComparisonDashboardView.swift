@@ -46,6 +46,14 @@ struct ComparisonDashboardView: View {
                     emptyState
                 }
             }
+            // v32 P1 — Ляля празднует прогресс детей: corner-pin 56pt, topTrailing.
+            .overlay(alignment: .topTrailing) {
+                LyalyaMascotView(state: .celebrating, size: 56)
+                    .padding(.top, SpacingTokens.regular)
+                    .padding(.trailing, SpacingTokens.screenEdge)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
+            }
             .navigationTitle(String(localized: "comparison.title"))
             .navigationBarTitleDisplayMode(.large)
         }

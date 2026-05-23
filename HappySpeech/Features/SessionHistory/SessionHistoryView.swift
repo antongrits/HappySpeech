@@ -63,6 +63,14 @@ struct SessionHistoryView: View {
 
                 content
                     .refreshable { performRefresh() }
+                    // v32 P1 — Ляля «думает» над аналитикой: corner-pin 56pt, topTrailing.
+                    .overlay(alignment: .topTrailing) {
+                        LyalyaMascotView(state: .thinking, size: 56)
+                            .padding(.top, SpacingTokens.regular)
+                            .padding(.trailing, SpacingTokens.screenEdge)
+                            .allowsHitTesting(false)
+                            .accessibilityHidden(true)
+                    }
 
                 if let toast = display.toastMessage {
                     HSToast(toast, type: .error)
@@ -401,6 +409,12 @@ struct SessionHistoryView: View {
                                 .buttonStyle(.plain)
                                 // Block J v18 — hero zoom source (iOS 18+).
                                 .heroSource(id: row.id, namespace: heroNamespace)
+                                // v32 P1 — MotionTokens: entrance fade+scale per row.
+                                .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                                    content
+                                        .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                                        .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.95))
+                                }
 
                                 if index < group.rows.count - 1 {
                                     Divider()

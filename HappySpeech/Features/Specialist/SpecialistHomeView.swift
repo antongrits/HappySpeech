@@ -46,6 +46,14 @@ struct SpecialistHomeView: View {
         ZStack(alignment: .bottom) {
             specTabContent(for: selectedTab)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                // v32 P1 — Ляля в спокойном профессиональном состоянии: corner-pin 56pt, topTrailing.
+                .overlay(alignment: .topTrailing) {
+                    LyalyaMascotView(state: .idle, size: 56)
+                        .padding(.top, SpacingTokens.regular)
+                        .padding(.trailing, SpacingTokens.screenEdge)
+                        .allowsHitTesting(false)
+                        .accessibilityHidden(true)
+                }
 
             HSAnimatedTabBar(
                 selection: $selectedTab,

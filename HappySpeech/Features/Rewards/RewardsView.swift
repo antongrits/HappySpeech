@@ -230,6 +230,8 @@ struct RewardsView: View {
             )
         }
         .buttonStyle(.plain)
+        // v32 P1 — ShadowTokens.kidDepth: two-layer depth under leaderboard banner card.
+        .depthShadow(ShadowTokens.kidDepth)
         .padding(.horizontal, SpacingTokens.screenEdge)
         .padding(.bottom, SpacingTokens.small)
         .accessibilityElement(children: .ignore)
@@ -330,6 +332,12 @@ struct RewardsView: View {
                             }
                             interactor?.claimReward(.init(id: cell.id))
                         }
+                    }
+                    // v32 P1 — MotionTokens: sticker entrance fade+scale.
+                    .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                        content
+                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))
                     }
                 }
             }

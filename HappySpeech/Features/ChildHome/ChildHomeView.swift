@@ -104,6 +104,12 @@ struct ChildHomeView: View {
                     }
 
                     homeScreenCardSection
+                        // v32 P1 — MotionTokens: widget card entrance fade+scale.
+                        .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                            content
+                                .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                                .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.95))
+                        }
 
                     dailyMissionSection
                         .spotlightAnchor(key: "daily_mission_card")
@@ -329,6 +335,8 @@ struct ChildHomeView: View {
             }
         }
         .padding(.top, SpacingTokens.pageTop)
+        // v32 P1 — ShadowTokens.kidDepth: two-layer depth under greeting card.
+        .depthShadow(ShadowTokens.kidDepth)
     }
 
     // MARK: - Mascot Interaction Zone (M8.7 v6)

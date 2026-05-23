@@ -73,6 +73,12 @@ struct SettingsView: View {
                 .scrollContentBackground(.hidden)
                 .background(ColorTokens.Parent.bg)
                 .accessibilityIdentifier("SettingsRoot")
+                // v32 P1 — MotionTokens: settings list entrance fade+scale.
+                .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                    content
+                        .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                        .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.95))
+                }
 
                 if let toast = display.toastMessage {
                     HSToast(toast, type: display.toastIsError ? .error : .success)
