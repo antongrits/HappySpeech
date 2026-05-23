@@ -1,0 +1,23 @@
+{
+  "images": [
+    {
+      "idiom": "universal",
+      "filename": "word_komar.png",
+      "scale": "1x"
+    },
+    {
+      "idiom": "universal",
+      "filename": "word_komar@2x.png",
+      "scale": "2x"
+    },
+    {
+      "idiom": "universal",
+      "filename": "word_komar@3x.png",
+      "scale": "3x"
+    }
+  ],
+  "info": {
+    "author": "xcode",
+    "version": 1
+  }
+}
