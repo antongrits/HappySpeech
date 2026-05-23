@@ -144,9 +144,16 @@ struct AuthSignInView: View {
                 .padding(.top, SpacingTokens.sp8)
                 .accessibilityHidden(true)
 
+            // Diploma fix #1 — wordmark must read on cream Kid.bg, not be invisible
+            // on the white onAccent tone. Bright Brand.primary + soft brand-tinted
+            // shadow гарантирует читаемость без зависимости от opacity hero-блока.
             Text("HappySpeech")
                 .font(TypographyTokens.kidDisplay(30))
-                .foregroundStyle(ColorTokens.Overlay.onAccent)
+                .foregroundStyle(ColorTokens.Brand.primary)
+                .shadow(
+                    color: ColorTokens.Brand.primary.opacity(0.18),
+                    radius: 6, x: 0, y: 2
+                )
                 .lineLimit(nil)
                 .minimumScaleFactor(0.85)
                 .accessibilityAddTraits(.isHeader)

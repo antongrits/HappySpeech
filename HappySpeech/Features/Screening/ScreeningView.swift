@@ -388,6 +388,9 @@ private struct StageCard: View {
                         .multilineTextAlignment(.center)
                 }
 
+                // Diploma fix #16 — кнопки скрининга центрируются по карточке:
+                // HSButton прижимается к ширине card по `medium`-gap-у, recordButton
+                // справа, всё это через frame(maxWidth: .infinity, alignment: .center).
                 HStack(spacing: SpacingTokens.medium) {
                     HSButton(
                         String(localized: "screening.prompt.listen"),
@@ -401,7 +404,7 @@ private struct StageCard: View {
                         recordButton
                     }
                 }
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity, alignment: .center)
 
                 if isRecording {
                     Text(recordingLabel)

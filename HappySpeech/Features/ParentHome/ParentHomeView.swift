@@ -291,7 +291,11 @@ private struct ParentDashboardTab: View {
     var body: some View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
-                VStack(spacing: SpacingTokens.sectionGap) {
+                // Diploma fix #8 — sectionGap (32) на parent-dashboard выглядел
+                // воздушно-разреженным: 18 карточек разъезжались на
+                // ~600pt лишнего скролла. Сжато до `large` (24), карточки
+                // ближе друг к другу, дашборд читается сразу как структура.
+                VStack(spacing: SpacingTokens.large) {
                     // Header
                     headerSection
                         .modifier(ParentDashboardTipModifier())

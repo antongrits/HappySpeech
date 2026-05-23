@@ -199,14 +199,20 @@ struct ChildHomeStreakBadge: View {
                     .foregroundStyle(ColorTokens.Semantic.warning)
                     .accessibilityHidden(true)
 
+                // Diploma fix #3a — chip-капсула не должна резать двузначные
+                // streak ("12", "100"): lineLimit(1) + minimumScaleFactor чтобы
+                // цифра подстраивалась, а внутренние горизонтальные отступы +24
+                // расширены — chip перестаёт «жать» цифру визуально.
                 Text("\(streak)")
                     .font(TypographyTokens.caption(14).weight(.bold))
                     .foregroundStyle(ColorTokens.Semantic.warning)
                     .monospacedDigit()
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
                     .contentTransition(.numericText(value: Double(streak)))
                     .animation(reduceMotion ? nil : MotionTokens.snappy, value: streak)
             }
-            .padding(.horizontal, SpacingTokens.sp3)
+            .padding(.horizontal, SpacingTokens.sp5)
             .padding(.vertical, SpacingTokens.sp2)
             .background(Capsule().fill(ColorTokens.Semantic.warning.opacity(0.12)))
         }

@@ -244,6 +244,10 @@ struct SpecChildRow: View {
 
             Spacer(minLength: SpacingTokens.sp1)
 
+            // Diploma fix #9b — «Не отрабатывали» жалось вплотную к chevron
+            // справа: добавлен trailing-padding `regular` (16pt) у внутреннего
+            // VStack, благодаря которому между датой/статусом и иконкой-стрелкой
+            // появляется dедающее «дышать» пространство.
             VStack(alignment: .trailing, spacing: 2) {
                 Text(lastSessionLabel)
                     .font(TypographyTokens.caption(11))
@@ -251,11 +255,13 @@ struct SpecChildRow: View {
                     .lineLimit(2)
                     .minimumScaleFactor(0.85)
                     .multilineTextAlignment(.trailing)
-                Image(systemName: "chevron.right")
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Spec.inkMuted)
-                    .accessibilityHidden(true)
             }
+            .padding(.trailing, SpacingTokens.regular)
+
+            Image(systemName: "chevron.right")
+                .font(TypographyTokens.caption(12))
+                .foregroundStyle(ColorTokens.Spec.inkMuted)
+                .accessibilityHidden(true)
         }
         .padding(.vertical, SpacingTokens.sp2)
         .frame(minHeight: 56)

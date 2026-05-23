@@ -62,9 +62,11 @@ struct WorldMapView: View {
             backgroundLayer
 
             ScrollView {
+                // Diploma fix #4c — streakBadge удалён из верха карты звуков:
+                // тот же flame-чип уже отрисовывается в stickyBottomPanel снизу,
+                // дублирование создавало визуальный шум в шапке.
                 VStack(spacing: SpacingTokens.large) {
                     mascotHeader
-                    streakBadge
                     if useGridFallback {
                         zonesGrid
                     } else {
@@ -173,42 +175,9 @@ struct WorldMapView: View {
         .padding(.horizontal, SpacingTokens.screenEdge)
     }
 
-    // MARK: - Streak badge
-
-    @ViewBuilder
-    private var streakBadge: some View {
-        let streakText = display.hasStreak
-            ? display.streakLabel
-            : String(localized: "worldmap.streak.start")
-        HSLiquidGlassCard(
-            style: .tinted(
-                display.hasStreak
-                    ? ColorTokens.Brand.primary
-                    : ColorTokens.Brand.sky
-            ),
-            padding: SpacingTokens.small
-        ) {
-            HStack(spacing: SpacingTokens.tiny) {
-                Image(systemName: display.hasStreak ? "flame.fill" : "sparkles")
-                    .font(TypographyTokens.body(16).weight(.semibold))
-                    .foregroundStyle(
-                        display.hasStreak
-                            ? ColorTokens.Brand.primary
-                            : ColorTokens.Brand.sky
-                    )
-                    .accessibilityHidden(true)
-                Text(streakText)
-                    .font(TypographyTokens.headline(14).weight(.semibold))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.85)
-            }
-        }
-        .fixedSize(horizontal: true, vertical: false)
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(streakText)
-    }
+    // Diploma fix #4c — `streakBadge` удалён: streak отрисовывается ниже в
+    // `stickyBottomPanel` (flame chip), отдельный шапочный chip создавал
+    // визуальное дублирование на screenshots.
 
     // MARK: - Islands canvas
 

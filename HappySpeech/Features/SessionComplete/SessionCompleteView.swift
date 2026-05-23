@@ -154,6 +154,10 @@ struct SessionCompleteView: View {
                 .accessibilityHidden(true)
         }
         .navigationBarBackButtonHidden()
+        // Diploma fix #15e — на SessionComplete просвечивал системный tab bar
+        // от родительского NavigationStack (kid-контур). Скрываем явно — иначе
+        // оранжевый footer bleed-ил через mesh-фон celebration-экрана.
+        .toolbar(.hidden, for: .tabBar)
         .environment(\.circuitContext, .kid)
         .accessibilityElement(children: .contain)
         .task { await bootstrap() }
@@ -649,11 +653,12 @@ struct SessionCompleteView: View {
     // MARK: - Helpers
 
     private var lyalyaResultState: LyalyaState {
-        switch result.score {
-        case 0.80...:     return .celebrating
-        case 0.50..<0.80: return .waving
-        default:          return .encouraging
-        }
+        // Diploma fix #15a — SessionComplete всегда celebrating: финальный
+        // экран — кульминация урока, маскот празднует, независимо от score.
+        // Поощрение/обучение через score breakdown ниже, а не через мрачную
+        // мордочку Ляли. Канонический asset обновляется параллельно (icon-
+        // generator regen для mascot_lyalya_celebrate).
+        .celebrating
     }
 
     private var scoreColor: Color {

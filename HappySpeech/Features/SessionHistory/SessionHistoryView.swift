@@ -409,11 +409,13 @@ struct SessionHistoryView: View {
                                 .buttonStyle(.plain)
                                 // Block J v18 — hero zoom source (iOS 18+).
                                 .heroSource(id: row.id, namespace: heroNamespace)
-                                // v32 P1 — MotionTokens: entrance fade+scale per row.
+                                // Diploma fix #10a — scrollTransition смягчён:
+                                // убран scaleEffect (зум-эффект на каждой строке
+                                // делал ленту истории «прыгучей» при скролле),
+                                // оставлен только fade до 0.7 — мягкий depth-cue.
                                 .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
                                     content
-                                        .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
-                                        .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.95))
+                                        .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.7))
                                 }
 
                                 if index < group.rows.count - 1 {

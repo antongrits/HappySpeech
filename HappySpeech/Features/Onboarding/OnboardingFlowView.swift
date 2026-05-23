@@ -144,6 +144,11 @@ struct OnboardingFlowView: View {
     // MARK: - Header
 
     private var progressHeader: some View {
+        // Diploma fix #2 — убран маленький Lyalya pointing над прогресс-баром
+        // (на screenshots она выглядела «приклеенной» и зрительно отвлекала).
+        // Освободившийся слот в центре оставлен пустым через Spacer'ы; счётчик
+        // шагов («Шаг N из 10») переехал в левый угол на место back-кнопки на
+        // welcome-шаге, чтобы строка оставалась сбалансированной.
         VStack(spacing: SpacingTokens.tiny) {
             HStack {
                 if display.currentStep != .welcome {
@@ -157,14 +162,19 @@ struct OnboardingFlowView: View {
                             .contentShape(Rectangle())
                     }
                     .accessibilityLabel(String(localized: "onboarding.a11y.back"))
+                } else {
+                    Text(display.progressLabel)
+                        .font(TypographyTokens.mono(12))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .frame(minWidth: 44, minHeight: 44, alignment: .leading)
+                        .accessibilityLabel(display.progressLabel)
                 }
-                Spacer()
-                LyalyaMascotView(state: .pointing, size: 36)
-                    .accessibilityHidden(true)
                 Spacer()
                 Text(display.progressLabel)
                     .font(TypographyTokens.mono(12))
                     .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .opacity(display.currentStep == .welcome ? 0 : 1)
+                    .accessibilityHidden(display.currentStep == .welcome)
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.top, SpacingTokens.tiny)

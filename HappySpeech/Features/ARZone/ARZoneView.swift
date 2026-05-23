@@ -31,6 +31,10 @@ struct ARZoneView: View {
     var body: some View {
         NavigationStack(path: $viewModelHolder.path) {
             ScrollView {
+                // Diploma fix #6 — hero банер ARZone сейчас прижимается слишком
+                // близко к navigation bar; добавлен явный `.safeAreaPadding(.top)`
+                // плюс горизонтальный screenEdge, чтобы шапка не «прилипала» к
+                // верхнему safe-area cutout, и контент дышал на iPhone 17 Pro.
                 VStack(alignment: .leading, spacing: SpacingTokens.large) {
                     heroBanner
                     faceFilterEntryButton
@@ -47,6 +51,7 @@ struct ARZoneView: View {
                 .padding(.top, SpacingTokens.medium)
                 .padding(.bottom, SpacingTokens.xxxLarge)
             }
+            .safeAreaPadding(.top, SpacingTokens.tiny)
             .navigationTitle(Text("ar.zone.title"))
             .navigationBarTitleDisplayMode(.large)
             .background(ColorTokens.Kid.bg.ignoresSafeArea())

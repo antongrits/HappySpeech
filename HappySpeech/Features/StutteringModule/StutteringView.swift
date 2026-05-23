@@ -460,8 +460,10 @@ struct StutteringWelcomeSheet: View {
         VStack(spacing: SpacingTokens.sp6) {
             Spacer(minLength: 0)
 
-            HSMascotView(mood: .idle)
-                .frame(width: 120, height: 120)
+            // Diploma fix #12 — welcome sheet stuttering модуля использует
+            // канонического маскота LyalyaMascotView в waving (как AR-зона),
+            // а не «.idle» HSMascotView — единый бренд во всём приложении.
+            LyalyaMascotView(state: .waving, size: 120)
 
             VStack(spacing: SpacingTokens.sp3) {
                 Text(String(localized: "stuttering.welcome.title"))

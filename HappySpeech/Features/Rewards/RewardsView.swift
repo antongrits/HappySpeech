@@ -248,7 +248,19 @@ struct RewardsView: View {
                         interactor?.filterByCollection(.init(collection: tab.collection))
                     } label: {
                         HStack(spacing: 6) {
-                            HSContentSymbol(tab.emoji, size: 16, tint: ColorTokens.Brand.primary)
+                            // Diploma fix #7c — category icon-chip укрупнён до 18pt
+                            // и переокрашен: при active state читается в onAccent
+                            // (контраст на coral capsule), в idle — Brand.primary.
+                            // HSContentSymbol поддерживает и SF Symbol (gift.fill),
+                            // и Asset (reward_rocket, word_forest, seasonal_…).
+                            HSContentSymbol(
+                                tab.emoji,
+                                size: 18,
+                                tint: tab.isActive
+                                    ? ColorTokens.Overlay.onAccent
+                                    : ColorTokens.Brand.primary
+                            )
+                            .frame(width: 28, height: 28)
                             Text(tab.title)
                                 .font(TypographyTokens.body(14))
                                 .lineLimit(1)

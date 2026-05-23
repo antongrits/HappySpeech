@@ -12,8 +12,11 @@ extension SettingsView {
     var settingsHeaderSection: some View {
         Section {
             HStack(spacing: SpacingTokens.regular) {
-                // E v21: 3D Ляля в header Settings (требование «3D героев на каждом экране»).
-                LyalyaHeroView(state: .idle, size: 96)
+                // Diploma fix #11 — Ляля в Settings приведена к каноническому
+                // состоянию AR-зоны: `.waving` (приветствует входящего родителя),
+                // размер увеличен 96 → 120 для весомости hero-блока. Все
+                // settings-экраны теперь визуально опознают одного маскота.
+                LyalyaHeroView(state: .waving, size: 120)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: SpacingTokens.micro) {
                     Text(String(localized: "settings.header.greeting"))

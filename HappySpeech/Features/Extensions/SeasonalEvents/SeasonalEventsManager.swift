@@ -26,9 +26,20 @@ final class SeasonalEventsManager: ObservableObject {
     // MARK: - Public API
 
     /// Пересчитывает активное событие по дате (по умолчанию — сегодня).
+    ///
+    /// Diploma fix #3b — для `.easter` используется точный gating через
+    /// `OrthodoxEasterCalendar.isWithin(days: 4, of:)` по алгоритму Meeus.
+    /// Раньше «Пасха» включалась на все 3 месяца (март-май), сейчас — только
+    /// в окне ±4 дня вокруг реальной даты православной Пасхи того года.
     func updateActiveEvent(for date: Date = Date()) {
         let month = Calendar.current.component(.month, from: date)
-        let found = SeasonalEvent.allCases.first { $0.activeMonths.contains(month) }
+        let found = SeasonalEvent.allCases.first { event in
+            guard event.activeMonths.contains(month) else { return false }
+            if event == .easter {
+                return OrthodoxEasterCalendar.isWithin(days: 4, of: date)
+            }
+            return true
+        }
         activeEvent = found
         if let found {
             Self.logger.info("Seasonal event active: \(found.rawValue, privacy: .public), month=\(month)")

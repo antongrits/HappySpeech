@@ -37,41 +37,35 @@ struct SplashView: View {
             // Decorative circles
             decorativeBackground
 
-            VStack(spacing: 0) {
-                Spacer()
-
-                // Mascot
+            // Diploma fix #13 — единый центрированный VStack для маскота +
+            // заголовка + прогресс-бара (вместо тройной Spacer-mascot-Spacer-
+            // Spacer-loading структуры, которая ломала вертикальную ось на
+            // iPhone 17 Pro). Mascot всегда виден (через mascotScale), title
+            // и loading появляются вместе через titleOpacity.
+            VStack(alignment: .center, spacing: SpacingTokens.small) {
                 HSMascotView(mood: .waving, size: 160)
                     .scaleEffect(mascotScale)
+                    .padding(.bottom, SpacingTokens.sp6)
+
+                Text("HappySpeech")
+                    .font(TypographyTokens.kidDisplay(40))
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
+                    .tracking(-1)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                    .opacity(titleOpacity)
+
+                Text(String(localized: "Говорим волшебно"))
+                    .font(TypographyTokens.caption(13).weight(.semibold))
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
+                    .tracking(2.5)
+                    .textCase(.uppercase)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
                     .padding(.bottom, SpacingTokens.sp8)
+                    .opacity(titleOpacity)
 
-                // Title
-                VStack(spacing: SpacingTokens.sp2) {
-                    Text("HappySpeech")
-                        .font(TypographyTokens.kidDisplay(40))
-                        .foregroundStyle(ColorTokens.Overlay.onAccent)
-                        .tracking(-1)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.7)
-
-                    Text(String(localized: "Говорим волшебно"))
-                        .font(TypographyTokens.caption(13).weight(.semibold))
-                        .foregroundStyle(ColorTokens.Overlay.onAccent)
-                        .tracking(2.5)
-                        .textCase(.uppercase)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
-                }
-                .padding(.horizontal, SpacingTokens.medium)
-                // v32 P1 — ShadowTokens.kidDepth: два слоя глубины под title-блоком.
-                .depthShadow(ShadowTokens.kidDepth)
-                .opacity(titleOpacity)
-
-                Spacer()
-                Spacer()
-
-                // Loading bar
                 VStack(spacing: SpacingTokens.sp3) {
                     ZStack(alignment: .leading) {
                         Capsule()
@@ -81,15 +75,15 @@ struct SplashView: View {
                             .fill(ColorTokens.Overlay.onAccent)
                             .frame(width: progressWidth * 80, height: 3)
                     }
-
                     Text(String(localized: "Загрузка..."))
                         .font(TypographyTokens.caption(11))
                         .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.5))
                 }
-                // sp16 = 64pt — специфичное расстояние до loading bar. Проверено визуально.
-                .padding(.bottom, SpacingTokens.sp16)
                 .opacity(titleOpacity)
             }
+            .padding(.horizontal, SpacingTokens.medium)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .depthShadow(ShadowTokens.kidDepth)
         }
         .onAppear {
             // Plan v22 Block 0.5 — Splash жизненный цикл (Instruments POI event).
