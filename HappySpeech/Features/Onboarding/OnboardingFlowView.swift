@@ -330,9 +330,13 @@ struct OnboardingFlowView: View {
         guard !bootstrapped else { return }
         bootstrapped = true
 
+        // Plan v18 Block U.5 — A/B Testing tutorial variant.
+        // RemoteConfig.tutorialVariant: "A" (full 10 steps) или "B" (5-step mini-quest).
+        let variant = OnboardingVariant.fromTutorialVariant(container.remoteConfigService.tutorialVariant)
+
         let presenter = OnboardingPresenter()
         presenter.display = display
-        let interactor = OnboardingInteractor()
+        let interactor = OnboardingInteractor(variant: variant)
         interactor.presenter = presenter
         let router = OnboardingRouter()
         router.coordinator = coordinator
@@ -343,7 +347,7 @@ struct OnboardingFlowView: View {
         self.router = router
 
         interactor.loadOnboarding(.init())
-        logger.info("Onboarding bootstrapped (10-step deep flow)")
+        logger.info("Onboarding bootstrapped variant=\(variant.analyticsLabel, privacy: .public)")
     }
 
     private func handleCompletion() {

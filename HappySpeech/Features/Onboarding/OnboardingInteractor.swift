@@ -80,6 +80,11 @@ final class OnboardingInteractor: OnboardingBusinessLogic {
     private var permissionsStatus = OnboardingPermissionsStatus()
     private var modelStatus: ModelDownloadStatus = .idle
 
+    /// A/B вариант, считывается из RemoteConfig при init. Все step-навигации
+    /// учитывают `step.enabledIn(variant:)` — пропускают шаги, выключенные
+    /// в текущем варианте.
+    private let variant: OnboardingVariant
+
     // MARK: - Resume keys
 
     private enum ResumeKeys {
@@ -89,8 +94,13 @@ final class OnboardingInteractor: OnboardingBusinessLogic {
 
     // MARK: - Init
 
-    init(notificationService: any NotificationService = NotificationServiceLive()) {
+    init(
+        notificationService: any NotificationService = NotificationServiceLive(),
+        variant: OnboardingVariant = .a
+    ) {
         self.notificationService = notificationService
+        self.variant = variant
+        logger.info("OnboardingInteractor init variant=\(variant.analyticsLabel, privacy: .public)")
     }
 
     // MARK: - BusinessLogic: Load
@@ -424,10 +434,12 @@ final class OnboardingInteractor: OnboardingBusinessLogic {
         return nil
     }
 
-    /// Фильтрует шаги по текущей роли пользователя.
+    /// Фильтрует шаги по текущей роли пользователя + A/B-варианту.
     /// - ChildName / ChildAge — только для parent (и child, если напрямую)
     /// - Specialist пропускает все детские шаги
+    /// - Шаги, выключенные `enabledIn(variant:)` для текущего варианта, пропускаются
     private func shouldShow(step: OnboardingStep) -> Bool {
+        guard step.enabledIn(variant: variant) else { return false }
         switch step {
         case .childName, .childAge:
             return profile.role == .parent || profile.role == .child

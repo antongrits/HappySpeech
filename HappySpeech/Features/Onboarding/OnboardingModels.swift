@@ -17,6 +17,26 @@ import Foundation
 //   9. ModelDownload     — Whisper модель + опция Skip
 //  10. Completion        — confetti + «Войти в приложение»
 
+// MARK: - OnboardingVariant (A/B test)
+
+/// A/B-вариант онбординга, задаётся через `RemoteConfigService.tutorialVariant`.
+/// - **A** — полный 10-шаговый flow (default, формальный).
+/// - **B** — короткий 5-шаговый "mini-quest" с большей геймификацией: пропускает
+///   role / childAge / goals / schedule / modelDownload (всё переносится в
+///   первый сеанс и на ParentHome). Конверсия гипотезы — A/B Testing event
+///   `onboarding_completed` с параметром `variant`.
+public enum OnboardingVariant: String, Sendable, CaseIterable {
+    case a
+    case b
+
+    public static func fromTutorialVariant(_ raw: String) -> OnboardingVariant {
+        raw.uppercased() == "B" ? .b : .a
+    }
+
+    /// Аналитический ярлык: пишется в Analytics-события для A/B-сравнения.
+    public var analyticsLabel: String { rawValue.uppercased() }
+}
+
 // MARK: - OnboardingStep
 
 public enum OnboardingStep: Int, Sendable, CaseIterable {
@@ -30,6 +50,23 @@ public enum OnboardingStep: Int, Sendable, CaseIterable {
     case permissions
     case modelDownload
     case completion
+
+    /// Включён ли шаг в указанный A/B вариант.
+    /// Вариант **A** — все 10 шагов. Вариант **B** — только welcome /
+    /// childName / sounds / permissions / completion (5 шагов мини-квеста).
+    public func enabledIn(variant: OnboardingVariant) -> Bool {
+        switch variant {
+        case .a:
+            return true
+        case .b:
+            switch self {
+            case .welcome, .childName, .sounds, .permissions, .completion:
+                return true
+            case .role, .childAge, .goals, .schedule, .modelDownload:
+                return false
+            }
+        }
+    }
 
     /// True если шаг можно пропустить кнопкой «Пропустить».
     public var isSkippable: Bool {
