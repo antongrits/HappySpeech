@@ -7,6 +7,7 @@ struct ParentDailyDigestView: View {
     @State private var interactor = ParentDailyDigestInteractor()
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private let columns = [
         GridItem(.flexible(), spacing: SpacingTokens.sp2),
@@ -16,7 +17,8 @@ struct ParentDailyDigestView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Parent.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
                 content
             }
             .navigationTitle(Text(String(localized: "parentDigest.nav.title")))
@@ -52,7 +54,7 @@ struct ParentDailyDigestView: View {
     }
 
     private var hero: some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(String(localized: "parentDigest.hero.title"))
                     .font(TypographyTokens.title(20))
@@ -70,8 +72,15 @@ struct ParentDailyDigestView: View {
 
     private func kpiGrid(state: ParentDailyDigestModels.ViewState) -> some View {
         LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
-            ForEach(state.kpis) { kpi in
+            ForEach(Array(state.kpis.enumerated()), id: \.element.id) { index, kpi in
                 kpiTile(kpi)
+                    .hsParallaxTile(factor: 0.3)
+                    .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.94)
+                    }
+                    .zIndex(Double(state.kpis.count - index))
             }
         }
     }
@@ -82,6 +91,7 @@ struct ParentDailyDigestView: View {
                 Image(systemName: kpi.icon)
                     .font(.system(size: 22, weight: .semibold))
                     .foregroundStyle(ColorTokens.Parent.accent)
+                    .hsSymbolEffect(.pulse, value: kpi.value)
                 Text(kpi.value)
                     .font(TypographyTokens.title(18))
                     .foregroundStyle(ColorTokens.Parent.ink)
@@ -123,6 +133,7 @@ struct ParentDailyDigestView: View {
                     Image(systemName: "lightbulb.fill")
                         .font(.system(size: 14))
                         .foregroundStyle(ColorTokens.Parent.accent)
+                        .hsSymbolEffect(.variableColor, value: state.tip.text)
                     Text("Совет дня")
                         .font(TypographyTokens.caption(11))
                         .foregroundStyle(ColorTokens.Parent.accent)

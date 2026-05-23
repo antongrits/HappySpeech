@@ -10,11 +10,13 @@ struct SpecialistReportPDFGenView: View {
     @State private var interactor: SpecialistReportPDFGenInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Spec.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
                 content
             }
             .navigationTitle(Text(String(localized: "reportPDFGen.nav.title")))
@@ -61,7 +63,7 @@ struct SpecialistReportPDFGenView: View {
     }
 
     private func hero(state: SpecialistReportPDFGenModels.ViewState) -> some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(String(localized: "reportPDFGen.hero.title"))
                     .font(TypographyTokens.title(20))
@@ -90,11 +92,17 @@ struct SpecialistReportPDFGenView: View {
 
     private func sectionsList(interactor: SpecialistReportPDFGenInteractor) -> some View {
         VStack(spacing: SpacingTokens.sp2) {
-            ForEach(SpecialistReportPDFGenModels.Section.allCases) { section in
+            ForEach(Array(SpecialistReportPDFGenModels.Section.allCases.enumerated()), id: \.element) { index, section in
                 row(section, isOn: interactor.state.sections.contains(section)) {
                     hapticService.impact(.light)
                     interactor.toggle(section)
                 }
+                .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                    content
+                        .opacity(phase.isIdentity ? 1 : 0)
+                        .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                }
+                .zIndex(Double(SpecialistReportPDFGenModels.Section.allCases.count - index))
             }
         }
     }
@@ -118,6 +126,7 @@ struct SpecialistReportPDFGenView: View {
                     Image(systemName: isOn ? "checkmark.square.fill" : "square")
                         .font(.system(size: 22))
                         .foregroundStyle(isOn ? ColorTokens.Brand.primary : ColorTokens.Spec.inkMuted)
+                        .hsSymbolEffect(.bounce, value: isOn)
                 }
             }
         }

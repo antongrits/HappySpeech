@@ -7,11 +7,13 @@ struct ConversationStartersParentView: View {
     @State private var interactor = ConversationStartersParentInteractor()
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Parent.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
                 content
             }
             .navigationTitle(Text(String(localized: "conversationStarters.nav.title")))
@@ -45,7 +47,7 @@ struct ConversationStartersParentView: View {
     }
 
     private var hero: some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(String(localized: "conversationStarters.hero.title"))
                     .font(TypographyTokens.title(20))
@@ -63,8 +65,14 @@ struct ConversationStartersParentView: View {
 
     private var list: some View {
         VStack(spacing: SpacingTokens.sp2) {
-            ForEach(interactor.state.questions) { question in
+            ForEach(Array(interactor.state.questions.enumerated()), id: \.element.id) { index, question in
                 row(question)
+                    .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                    }
+                    .zIndex(Double(interactor.state.questions.count - index))
             }
         }
     }
@@ -98,6 +106,7 @@ struct ConversationStartersParentView: View {
                         .foregroundStyle(
                             question.isFavorite ? ColorTokens.Brand.primary : ColorTokens.Parent.inkSoft
                         )
+                        .hsSymbolEffect(.bounce, value: question.isFavorite)
                         .frame(width: 36, height: 36)
                 }
                 .buttonStyle(.plain)

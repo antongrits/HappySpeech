@@ -7,11 +7,13 @@ struct ParentInspirationBoardView: View {
     @State private var interactor = ParentInspirationBoardInteractor()
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Parent.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
                 content
             }
             .navigationTitle(Text(String(localized: "inspirationBoard.nav.title")))
@@ -48,7 +50,7 @@ struct ParentInspirationBoardView: View {
     }
 
     private var hero: some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(String(localized: "inspirationBoard.hero.title"))
                     .font(TypographyTokens.title(20))
@@ -70,6 +72,7 @@ struct ParentInspirationBoardView: View {
                 Image(systemName: "quote.opening")
                     .font(.system(size: 28))
                     .foregroundStyle(ColorTokens.Parent.accent)
+                    .hsSymbolEffect(.pulse, value: quote.id)
                 Text(quote.text)
                     .font(TypographyTokens.body(16))
                     .foregroundStyle(ColorTokens.Parent.ink)
@@ -94,6 +97,7 @@ struct ParentInspirationBoardView: View {
                             .foregroundStyle(
                                 quote.isFavorite ? ColorTokens.Brand.primary : ColorTokens.Parent.inkSoft
                             )
+                            .hsSymbolEffect(.bounce, value: quote.isFavorite)
                             .frame(width: 36, height: 36)
                     }
                     .buttonStyle(.plain)

@@ -7,11 +7,13 @@ struct FamilyVoiceMessageHubView: View {
     @State private var interactor = FamilyVoiceMessageHubInteractor()
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Parent.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
                 content
             }
             .navigationTitle(Text(String(localized: "voiceMessageHub.nav.title")))
@@ -45,7 +47,7 @@ struct FamilyVoiceMessageHubView: View {
     }
 
     private var hero: some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(String(localized: "voiceMessageHub.hero.title"))
                     .font(TypographyTokens.title(20))
@@ -69,11 +71,17 @@ struct FamilyVoiceMessageHubView: View {
 
     private var list: some View {
         VStack(spacing: SpacingTokens.sp2) {
-            ForEach(interactor.state.messages) { message in
+            ForEach(Array(interactor.state.messages.enumerated()), id: \.element.id) { index, message in
                 row(message) {
                     hapticService.impact(.light)
                     interactor.markRead(message.id)
                 }
+                .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                    content
+                        .opacity(phase.isIdentity ? 1 : 0)
+                        .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                }
+                .zIndex(Double(interactor.state.messages.count - index))
             }
         }
     }
@@ -114,6 +122,7 @@ struct FamilyVoiceMessageHubView: View {
                         Image(systemName: "play.circle.fill")
                             .font(.system(size: 26))
                             .foregroundStyle(ColorTokens.Parent.accent)
+                            .hsSymbolEffect(.pulse, value: message.isUnread)
                         Text("\(message.durationSeconds)с")
                             .font(TypographyTokens.caption(10))
                             .foregroundStyle(ColorTokens.Parent.inkMuted)

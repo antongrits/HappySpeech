@@ -8,13 +8,15 @@ struct WeeklyRecapView: View {
     @State private var shareItem: WeeklyRecapShareItem?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: SpacingTokens.sp2), count: 2)
 
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Parent.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
                 content
             }
             .navigationTitle(Text(String(localized: "weeklyRecap.nav.title")))
@@ -52,7 +54,7 @@ struct WeeklyRecapView: View {
     }
 
     private var hero: some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(String(localized: "weeklyRecap.hero.title"))
                     .font(TypographyTokens.title(20))
@@ -68,8 +70,15 @@ struct WeeklyRecapView: View {
 
     private var kpiGrid: some View {
         LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
-            ForEach(interactor.state.kpis) { kpi in
+            ForEach(Array(interactor.state.kpis.enumerated()), id: \.element.id) { index, kpi in
                 kpiTile(kpi)
+                    .hsParallaxTile(factor: 0.3)
+                    .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.94)
+                    }
+                    .zIndex(Double(interactor.state.kpis.count - index))
             }
         }
     }
@@ -80,6 +89,7 @@ struct WeeklyRecapView: View {
                 HStack {
                     Image(systemName: kpi.icon)
                         .foregroundStyle(ColorTokens.Parent.accent)
+                        .hsSymbolEffect(.pulse, value: kpi.value)
                     Text(kpi.title)
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Parent.inkMuted)

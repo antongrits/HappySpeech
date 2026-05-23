@@ -7,13 +7,15 @@ struct ParentMoodCheckInView: View {
     @State private var interactor = ParentMoodCheckInInteractor()
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: SpacingTokens.sp2), count: 2)
 
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Parent.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
                 content
             }
             .navigationTitle(Text(String(localized: "parentMood.nav.title")))
@@ -48,7 +50,7 @@ struct ParentMoodCheckInView: View {
     }
 
     private var hero: some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(String(localized: "parentMood.hero.title"))
                     .font(TypographyTokens.title(20))
@@ -64,8 +66,15 @@ struct ParentMoodCheckInView: View {
 
     private var grid: some View {
         LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
-            ForEach(ParentMoodCheckInModels.Mood.allCases) { mood in
+            ForEach(Array(ParentMoodCheckInModels.Mood.allCases.enumerated()), id: \.element) { index, mood in
                 moodTile(mood)
+                    .hsParallaxTile(factor: 0.3)
+                    .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.94)
+                    }
+                    .zIndex(Double(ParentMoodCheckInModels.Mood.allCases.count - index))
             }
         }
     }

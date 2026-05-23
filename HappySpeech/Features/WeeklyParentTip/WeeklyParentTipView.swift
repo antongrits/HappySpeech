@@ -8,11 +8,13 @@ struct WeeklyParentTipView: View {
     @State private var isShareSheetPresented: Bool = false
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Parent.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
                 content
             }
             .navigationTitle(Text(String(localized: "weeklyTip.nav.title")))
@@ -48,7 +50,7 @@ struct WeeklyParentTipView: View {
     }
 
     private var hero: some View {
-        HSCard(style: .tinted(ColorTokens.Parent.accent.opacity(0.10))) {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(interactor.state.tip.weekLabel)
                     .font(TypographyTokens.caption(12).weight(.semibold))
@@ -103,6 +105,11 @@ struct WeeklyParentTipView: View {
                             .foregroundStyle(ColorTokens.Parent.ink)
                             .fixedSize(horizontal: false, vertical: true)
                     }
+                    .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                    }
                 }
             }
         }
@@ -114,6 +121,7 @@ struct WeeklyParentTipView: View {
                 Image(systemName: "person.crop.circle.fill")
                     .font(.system(size: 36))
                     .foregroundStyle(ColorTokens.Parent.accent)
+                    .hsSymbolEffect(.pulse, value: interactor.state.tip.authorName)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(interactor.state.tip.authorName)
                         .font(TypographyTokens.headline(14))

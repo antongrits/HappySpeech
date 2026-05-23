@@ -10,11 +10,13 @@ struct SpecialistQuickAssessmentView: View {
     @State private var interactor: SpecialistQuickAssessmentInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Spec.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
                 content
             }
             .navigationTitle(Text(String(localized: "quickAssessment.nav.title")))
@@ -64,7 +66,7 @@ struct SpecialistQuickAssessmentView: View {
     }
 
     private func hero(state: SpecialistQuickAssessmentModels.ViewState) -> some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(String(localized: "quickAssessment.hero.title"))
                     .font(TypographyTokens.title(20))
@@ -86,8 +88,14 @@ struct SpecialistQuickAssessmentView: View {
 
     private func categoriesList(interactor: SpecialistQuickAssessmentInteractor) -> some View {
         VStack(spacing: SpacingTokens.sp2) {
-            ForEach(interactor.state.ratings) { rating in
+            ForEach(Array(interactor.state.ratings.enumerated()), id: \.element.id) { index, rating in
                 categoryRow(rating, interactor: interactor)
+                    .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                    }
+                    .zIndex(Double(interactor.state.ratings.count - index))
             }
         }
     }
@@ -123,6 +131,7 @@ struct SpecialistQuickAssessmentView: View {
                                 .foregroundStyle(
                                     star <= rating.stars ? ColorTokens.Brand.gold : ColorTokens.Spec.inkMuted
                                 )
+                                .hsSymbolEffect(.bounce, value: rating.stars)
                         }
                         .buttonStyle(.plain)
                         .accessibilityLabel(Text("Оценка \(star) из 5"))
@@ -139,6 +148,7 @@ struct SpecialistQuickAssessmentView: View {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 28))
                     .foregroundStyle(ColorTokens.Semantic.success)
+                    .hsSymbolEffect(.bounce, value: true)
                 Text("Оценка сохранена")
                     .font(TypographyTokens.headline(15))
                     .foregroundStyle(ColorTokens.Spec.ink)

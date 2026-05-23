@@ -71,6 +71,7 @@ struct ParentVoiceNoteView: View {
     @State private var pendingDuration: Double = 0
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
 
     private static let logger = Logger(
@@ -81,7 +82,8 @@ struct ParentVoiceNoteView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Parent.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
                 Group {
                     if let loadVM = holder.loadVM {
                         listSection(loadVM)
@@ -127,24 +129,42 @@ struct ParentVoiceNoteView: View {
                     .foregroundStyle(ColorTokens.Parent.ink)
                     .lineLimit(nil)
 
-                optInToggle(loadVM)
+                HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp3) {
+                    optInRow(loadVM)
+                }
 
                 if let error = holder.lastError {
                     errorBanner(error)
                 }
 
-                LazyVStack(spacing: SpacingTokens.sp2) {
-                    ForEach(loadVM.templates) { template in
-                        templateRow(template)
-                    }
-                }
+                templatesList(loadVM.templates)
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.vertical, SpacingTokens.sp3)
         }
     }
 
-    private func optInToggle(
+    @ViewBuilder
+    private func templatesList(
+        _ templates: [ParentVoiceNoteModels.Load.TemplateViewModel]
+    ) -> some View {
+        let total = templates.count
+        let spring = Animation.spring(response: 0.5, dampingFraction: 0.85)
+        let animation: Animation = reduceMotion ? .linear(duration: 0) : spring
+        LazyVStack(spacing: SpacingTokens.sp2) {
+            ForEach(Array(templates.enumerated()), id: \.element.id) { index, template in
+                templateRow(template)
+                    .scrollTransition(.animated(animation)) { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                    }
+                    .zIndex(Double(total - index))
+            }
+        }
+    }
+
+    private func optInRow(
         _ loadVM: ParentVoiceNoteModels.Load.ViewModel
     ) -> some View {
         HStack(spacing: SpacingTokens.sp3) {
@@ -153,6 +173,7 @@ struct ParentVoiceNoteView: View {
                 .foregroundStyle(ColorTokens.Parent.accent)
                 .frame(width: 44, height: 44)
                 .background(Circle().fill(ColorTokens.Parent.accent.opacity(0.12)))
+                .hsSymbolEffect(.variableColor, value: loadVM.isEnabledGlobally)
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: SpacingTokens.micro) {
                 Text(loadVM.optInLabel)
@@ -173,11 +194,6 @@ struct ParentVoiceNoteView: View {
             .labelsHidden()
             .accessibilityLabel(Text(loadVM.optInLabel))
         }
-        .padding(SpacingTokens.sp3)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Parent.surface)
-        )
     }
 
     private func templateRow(
@@ -221,6 +237,7 @@ struct ParentVoiceNoteView: View {
                     Image(systemName: "checkmark.circle.fill")
                         .font(.system(size: 22))
                         .foregroundStyle(ColorTokens.Semantic.success)
+                        .hsSymbolEffect(.bounce, value: template.hasClip)
                 } else {
                     Image(systemName: "plus.circle")
                         .font(.system(size: 22))

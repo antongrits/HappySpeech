@@ -62,7 +62,8 @@ struct FamilyChallengeView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Parent.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                    .ignoresSafeArea()
                 content
             }
             .navigationTitle(Text("Челлендж недели"))
@@ -117,12 +118,13 @@ struct FamilyChallengeView: View {
     // MARK: - Hero card
 
     private func heroCard(_ vm: FamilyChallengeModels.LoadChallenge.ViewModel) -> some View {
-        HSLiquidGlassCard(style: .tinted(ColorTokens.Brand.butter.opacity(0.18))) {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             HStack(spacing: SpacingTokens.sp3) {
                 Image(systemName: vm.iconSystemName)
                     .font(.system(size: 36, weight: .semibold))
                     .foregroundStyle(ColorTokens.Brand.primary)
                     .symbolRenderingMode(.hierarchical)
+                    .hsSymbolEffect(.bounce, value: vm.subtitle)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
                     Text("\(vm.emojiTag) \(vm.subtitle)")
@@ -187,8 +189,15 @@ struct FamilyChallengeView: View {
             Text("Вклад каждого")
                 .font(TypographyTokens.headline(16))
                 .foregroundStyle(ColorTokens.Parent.ink)
-            ForEach(vm.contributions) { row in
+            ForEach(Array(vm.contributions.enumerated()), id: \.element.id) { index, row in
                 contributionRow(row)
+                    .hsParallaxTile(factor: 0.3)
+                    .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                    }
+                    .zIndex(Double(vm.contributions.count - index))
             }
         }
     }
@@ -236,6 +245,7 @@ struct FamilyChallengeView: View {
                 Image(systemName: "flame.fill")
                     .font(.system(size: 20))
                     .foregroundStyle(ColorTokens.Brand.primary)
+                    .hsSymbolEffect(.variableColor, value: vm.streakLabel)
                     .accessibilityHidden(true)
                 Text(vm.streakLabel)
                     .font(TypographyTokens.headline(15))

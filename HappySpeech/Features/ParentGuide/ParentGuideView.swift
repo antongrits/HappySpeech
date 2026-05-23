@@ -87,7 +87,8 @@ struct ParentGuideView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Parent.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
 
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: SpacingTokens.sp5) {
@@ -224,8 +225,14 @@ struct ParentGuideView: View {
                 .font(TypographyTokens.headline(16))
                 .foregroundStyle(ColorTokens.Parent.ink)
 
-            ForEach(topics) { topic in
+            ForEach(Array(topics.enumerated()), id: \.element.id) { index, topic in
                 topicCard(topic)
+                    .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                    }
+                    .zIndex(Double(topics.count - index))
             }
         }
     }
@@ -309,6 +316,7 @@ struct ParentGuideView: View {
                     .foregroundStyle(
                         isRead ? ColorTokens.Brand.mint : ColorTokens.Parent.inkSoft
                     )
+                    .hsSymbolEffect(.bounce, value: isRead)
                     .accessibilityHidden(true)
 
                 VStack(alignment: .leading, spacing: 2) {
@@ -340,6 +348,7 @@ struct ParentGuideView: View {
                     Image(systemName: "star.fill")
                         .font(.caption)
                         .foregroundStyle(ColorTokens.Brand.butter)
+                        .hsSymbolEffect(.bounce, value: holder.favoriteIds.contains(lesson.id))
                         .accessibilityHidden(true)
                 }
                 Image(systemName: "chevron.right")

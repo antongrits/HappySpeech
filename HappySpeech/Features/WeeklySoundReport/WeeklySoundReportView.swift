@@ -70,7 +70,8 @@ struct WeeklySoundReportView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Parent.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: SpacingTokens.sp5) {
@@ -80,9 +81,7 @@ struct WeeklySoundReportView: View {
                             if viewModel.sounds.isEmpty {
                                 emptyState
                             } else {
-                                ForEach(viewModel.sounds) { card in
-                                    soundCard(card)
-                                }
+                                soundsList(viewModel.sounds)
                             }
                             shareSection(viewModel: viewModel)
                         } else if holder.loadFailed {
@@ -175,7 +174,7 @@ struct WeeklySoundReportView: View {
 
     @ViewBuilder
     private func summaryCard(viewModel: WeeklySoundReportModels.Load.ViewModel) -> some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
                 HStack(alignment: .top, spacing: SpacingTokens.sp3) {
                     HSMascotView(mood: .happy, size: 64)
@@ -207,6 +206,24 @@ struct WeeklySoundReportView: View {
             }
         }
         .accessibilityElement(children: .combine)
+    }
+
+    // MARK: - Sounds list
+
+    @ViewBuilder
+    private func soundsList(_ sounds: [SoundCardViewModel]) -> some View {
+        let total = sounds.count
+        let spring = Animation.spring(response: 0.5, dampingFraction: 0.85)
+        let animation: Animation = reduceMotion ? .linear(duration: 0) : spring
+        ForEach(Array(sounds.enumerated()), id: \.element.id) { index, card in
+            soundCard(card)
+                .scrollTransition(.animated(animation)) { content, phase in
+                    content
+                        .opacity(phase.isIdentity ? 1 : 0)
+                        .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                }
+                .zIndex(Double(total - index))
+        }
     }
 
     // MARK: - Sound card
@@ -258,6 +275,7 @@ struct WeeklySoundReportView: View {
                         Image(systemName: card.trendArrow.symbolName)
                             .font(TypographyTokens.headline(16).weight(.bold))
                             .foregroundStyle(trendColor(card.trendArrow))
+                            .hsSymbolEffect(.bounce, value: card.successRate)
                             .accessibilityLabel(Text(trendA11y(card.trendArrow)))
                     }
                 }
@@ -304,6 +322,7 @@ struct WeeklySoundReportView: View {
                 Image(systemName: "lightbulb.fill")
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Brand.gold)
+                    .hsSymbolEffect(.variableColor, value: detail.tipText)
                     .accessibilityHidden(true)
 
                 Text(detail.tipText)

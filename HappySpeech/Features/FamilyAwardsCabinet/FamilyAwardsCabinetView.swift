@@ -65,7 +65,8 @@ struct FamilyAwardsCabinetView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                ColorTokens.Parent.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .rewards, animated: !reduceMotion)
+                    .ignoresSafeArea()
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: SpacingTokens.sp5) {
@@ -118,21 +119,23 @@ struct FamilyAwardsCabinetView: View {
 
     @ViewBuilder
     private func heroSection(viewModel: FamilyAwardsCabinetModels.Load.ViewModel) -> some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
-            Text(viewModel.heroTitle)
-                .font(TypographyTokens.title(22))
-                .foregroundStyle(ColorTokens.Parent.ink)
-                .lineLimit(2)
-                .minimumScaleFactor(0.85)
-                .accessibilityAddTraits(.isHeader)
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+                Text(viewModel.heroTitle)
+                    .font(TypographyTokens.title(22))
+                    .foregroundStyle(ColorTokens.Parent.ink)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                    .accessibilityAddTraits(.isHeader)
 
-            Text(viewModel.heroSubtitle)
-                .font(TypographyTokens.body(14))
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-                .lineLimit(nil)
-                .fixedSize(horizontal: false, vertical: true)
+                Text(viewModel.heroSubtitle)
+                    .font(TypographyTokens.body(14))
+                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
         .accessibilityElement(children: .combine)
     }
 
@@ -228,6 +231,7 @@ struct FamilyAwardsCabinetView: View {
                         Circle()
                             .fill(tierColor(for: shelf.tierColorName).opacity(0.15))
                     )
+                    .hsSymbolEffect(.bounce, value: shelf.trophyCountLabel)
                     .accessibilityHidden(true)
 
                 Text(shelf.tierTitle)
@@ -251,8 +255,15 @@ struct FamilyAwardsCabinetView: View {
             .accessibilityLabel(Text("\(shelf.tierTitle), \(shelf.trophyCountLabel)"))
 
             LazyVGrid(columns: trophyColumns, spacing: SpacingTokens.sp2) {
-                ForEach(shelf.trophies) { trophy in
+                ForEach(Array(shelf.trophies.enumerated()), id: \.element.id) { index, trophy in
                     trophyTile(trophy, tierColor: tierColor(for: shelf.tierColorName))
+                        .hsParallaxTile(factor: 0.3)
+                        .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                            content
+                                .opacity(phase.isIdentity ? 1 : 0)
+                                .scaleEffect(phase.isIdentity ? 1 : 0.94)
+                        }
+                        .zIndex(Double(shelf.trophies.count - index))
                 }
             }
         }
