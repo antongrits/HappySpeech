@@ -203,6 +203,11 @@ public actor MockSpeechAnalyzerService: SpeechAnalyzerService {
     }
 
     public func startLiveTranscript() async throws -> AsyncStream<SpeechAnalyzerEvent> {
+        // Зеркалит LiveSpeechAnalyzerService — двойной старт без stop
+        // считается ошибкой (одна сессия = один stream).
+        guard continuation == nil else {
+            throw SpeechAnalyzerError.alreadyRunning
+        }
         startCount += 1
         return AsyncStream<SpeechAnalyzerEvent> { continuation in
             self.continuation = continuation

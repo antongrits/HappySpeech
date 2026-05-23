@@ -49,7 +49,19 @@ struct YINPitchTracker: Sendable {
             // Локальный минимум: уточнить параболической интерполяцией.
             let refinedTau = parabolicInterpolation(cmndf, tau: tau)
             let freq = config.sampleRate / refinedTau
+            // v32 QA P1 — octave-error guard. Если detected freq <= maxFreq,
+            // но 2*freq > maxFreq И CMNDF[τ/2] также под threshold * 1.5,
+            // значит мы поймали sub-октаву реального сигнала с фундаментом
+            // выше нашего диапазона (типичный YIN artifact для 700+ Hz входа).
             if freq >= config.minFrequencyHz, freq <= config.maxFrequencyHz {
+                if freq * 2 > config.maxFrequencyHz {
+                    let halfTau = Int(refinedTau / 2)
+                    if halfTau >= 1, halfTau < cmndf.count,
+                       cmndf[halfTau] < config.yinThreshold * 1.5 {
+                        // Octave error detected → реальный фундамент вне диапазона.
+                        return nil
+                    }
+                }
                 return freq
             }
         }
