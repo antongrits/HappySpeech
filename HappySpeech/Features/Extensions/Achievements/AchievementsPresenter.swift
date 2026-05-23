@@ -70,7 +70,9 @@ final class AchievementsPresenter: AchievementsPresentationLogic {
 
     func presentNextAchievementProgress(_ response: AchievementsModels.NextAchievementProgress.Response) {
         let p = response.progress
-        let title = String(localized: "achievement.title.\(p.achievementKey)")
+        // String interpolation внутри String(localized:) не делает lookup
+        // по сборному ключу — нужно завернуть в String.LocalizationValue.
+        let title = String(localized: String.LocalizationValue("achievement.title.\(p.achievementKey)"))
         let label = String(
             format: String(localized: "achievements.progress.next.format"),
             p.currentValue,
@@ -118,11 +120,12 @@ final class AchievementsPresenter: AchievementsPresentationLogic {
                     } else {
                         formatted = nil
                     }
+                    // Показываем фактический title даже для locked — позволяет
+                    // ребёнку видеть цели и мотивирует. Кружок иконки и opacity
+                    // уже визуально различают unlocked vs locked.
                     return AchievementCellViewModel(
                         id: dto.id,
-                        title: dto.isUnlocked
-                            ? dto.achievement.localizedTitle
-                            : String(localized: "achievements.locked.title"),
+                        title: dto.achievement.localizedTitle,
                         description: dto.isUnlocked
                             ? dto.achievement.localizedDescription
                             : "",

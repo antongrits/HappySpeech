@@ -79,11 +79,17 @@ enum Achievement: String, CaseIterable, Sendable {
     case nightOwl
 
     var localizedTitle: String {
-        String(localized: "achievement.title.\(rawValue)")
+        // String interpolation внутри `String(localized:)` создаёт format-string
+        // "achievement.title.%@" и пытается lookup'нуть его как ключ. Чтобы взять
+        // финальную интерполированную строку как ключ — собрать её отдельно
+        // и обернуть в String.LocalizationValue (stringLiteral init).
+        let key = "achievement.title.\(rawValue)"
+        return String(localized: String.LocalizationValue(key))
     }
 
     var localizedDescription: String {
-        String(localized: "achievement.description.\(rawValue)")
+        let key = "achievement.description.\(rawValue)"
+        return String(localized: String.LocalizationValue(key))
     }
 
     var iconName: String {
