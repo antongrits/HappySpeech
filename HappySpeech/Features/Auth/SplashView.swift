@@ -41,7 +41,7 @@ struct SplashView: View {
                 Spacer()
 
                 // Mascot
-                HSMascotView(mood: .celebrating, size: 160)
+                HSMascotView(mood: .waving, size: 160)
                     .scaleEffect(mascotScale)
                     .padding(.bottom, SpacingTokens.sp8)
 

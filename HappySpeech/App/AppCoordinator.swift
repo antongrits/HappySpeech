@@ -781,6 +781,9 @@ struct AppCoordinatorView: View {
         let args = ProcessInfo.processInfo.arguments
         if let idx = args.firstIndex(of: "-HSStartRoute"), idx + 1 < args.count {
             let route = args[idx + 1]
+            // Для скриншот-тура самого splash не навигируем — иначе содержимое
+            // splash не успевает отрисоваться, screenshot ловит пустой экран.
+            if route == "splash" { return }
             let target = Self.resolveStartRoute(route)
             coordinator.navigate(to: target)
             return

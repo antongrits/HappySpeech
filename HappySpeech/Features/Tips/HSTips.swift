@@ -116,9 +116,29 @@ public enum HSTipsBootstrap {
             logger.info("Skipping TipKit configure under XCTest")
             return
         }
+        // Screenshot-tour / UI-test mode: подавляем все TipKit-подсказки
+        // ТОЛЬКО при явном `-HSSuppressCoachmarks` — при обычных HSStartRoute
+        // подсказки показываются нормально (пользователь dismiss'ит вручную).
+        let args = ProcessInfo.processInfo.arguments
+        let suppressed = args.contains("-HSSuppressCoachmarks")
         do {
+            if suppressed {
+                try Tips.configure([
+                    .displayFrequency(.daily),  // фактически не покажет подряд
+                    .datastoreLocation(.applicationDefault)
+                ])
+                // Invalidate известных tip-инстансов, чтобы они не появились в этой сессии.
+                ParentDashboardTip().invalidate(reason: .actionPerformed)
+                SettingsThemeTip().invalidate(reason: .actionPerformed)
+                SpecialistAssignmentsTip().invalidate(reason: .actionPerformed)
+                logger.info("TipKit suppressed (screenshot/UI-test mode)")
+                return
+            }
+            // .daily вместо .immediate — иначе TipKit показывает tip каждый раз
+            // при появлении триггера, игнорируя пользовательский dismiss.
+            // С .daily после закрытия tip не появится повторно в этот день.
             try Tips.configure([
-                .displayFrequency(.immediate),
+                .displayFrequency(.daily),
                 .datastoreLocation(.applicationDefault)
             ])
             logger.info("TipKit configured")

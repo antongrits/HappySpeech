@@ -114,6 +114,16 @@ struct HappySpeechApp: App {
         if args.contains("-UITestResetState") {
             OnboardingState.reset()
         }
+        // Screenshot/UI-test mode: подавить GuidedTour coachmarks по явному
+        // флагу `-HSSuppressCoachmarks`. При обычном `-HSStartRoute` подсказки
+        // показываются нормально — пользователь сам закрывает их при demo.
+        if args.contains("-HSSuppressCoachmarks") {
+            UserDefaults.standard.set(
+                ["onboarding", "settings", "lesson"],
+                forKey: "happyspeech.guidedTour.completedFlavors.v1"
+            )
+            UserDefaults.standard.set(true, forKey: "ar.tutorial.shown")
+        }
         if useMock {
             let container = AppContainer.preview()
             // При -UITestOffline принудительно отключаем сеть в MockNetworkMonitor
