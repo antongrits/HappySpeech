@@ -186,7 +186,7 @@ public extension ChildProfileDTO {
         name: "Миша",
         age: 6,
         targetSounds: ["Р", "Ш"],
-        parentId: "preview-parent-1",
+        parentId: "local-parent",
         progressSummary: ["Р": 0.45, "Ш": 0.70],
         currentStreak: 5
     )
@@ -194,7 +194,7 @@ public extension ChildProfileDTO {
     static let previewList: [ChildProfileDTO] = [
         preview,
         ChildProfileDTO(id: "preview-child-2", name: "Соня", age: 5, targetSounds: ["С", "З"],
-                        parentId: "preview-parent-1", progressSummary: ["С": 0.80, "З": 0.30],
+                        parentId: "local-parent", progressSummary: ["С": 0.80, "З": 0.30],
                         currentStreak: 3)
     ]
 }

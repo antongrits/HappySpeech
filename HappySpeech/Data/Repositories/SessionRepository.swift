@@ -194,4 +194,70 @@ public extension SessionDTO {
         isSynced: false,
         attempts: []
     )
+
+    /// Богатый seed для screenshot-tour и preview-демо: 14 сессий за 2 недели
+    /// по обоим preview-детям (Миша и Соня) с разными звуками, шаблонами и точностью.
+    /// Закрывает empty-states на: SessionHistory, PronunciationLeaderboard,
+    /// FamilyLeaderboard, ComparisonDashboard, ProgressDashboard, FamilyAchievements.
+    static let previewHistory: [SessionDTO] = {
+        let now = Date()
+        let day: TimeInterval = 86400
+        let templates: [TemplateType] = [
+            .listenAndChoose, .repeatAfterModel, .bingo, .memory, .sorting,
+            .dragAndMatch, .minimalPairs, .rhythm
+        ]
+        let mishaPairs: [(String, CorrectionStage)] = [
+            ("Р", .wordInit), ("Р", .wordMed), ("Р", .phrase),
+            ("Ш", .wordInit), ("Ш", .wordMed), ("Ш", .syllable), ("Ш", .wordFinal)
+        ]
+        let sonyaPairs: [(String, CorrectionStage)] = [
+            ("С", .wordInit), ("С", .wordMed), ("С", .phrase),
+            ("З", .syllable), ("З", .wordInit), ("З", .wordMed), ("З", .phrase)
+        ]
+        var sessions: [SessionDTO] = []
+        for (i, pair) in mishaPairs.enumerated() {
+            let total = 10 + (i % 4) * 2
+            let correct = max(4, total - (i % 5))
+            sessions.append(SessionDTO(
+                id: "preview-misha-\(i)",
+                childId: "preview-child-1",
+                date: now.addingTimeInterval(-(Double(i) * day + 3600)),
+                templateType: templates[i % templates.count].rawValue,
+                targetSound: pair.0,
+                stage: pair.1.rawValue,
+                durationSeconds: 300 + i * 60,
+                totalAttempts: total,
+                correctAttempts: correct,
+                fatigueDetected: i == 5,
+                isSynced: i < 5,
+                attempts: []
+            ))
+        }
+        for (i, pair) in sonyaPairs.enumerated() {
+            let total = 8 + (i % 3) * 2
+            let correct = max(3, total - (i % 4))
+            sessions.append(SessionDTO(
+                id: "preview-sonya-\(i)",
+                childId: "preview-child-2",
+                date: now.addingTimeInterval(-(Double(i) * day + 7200)),
+                templateType: templates[(i + 3) % templates.count].rawValue,
+                targetSound: pair.0,
+                stage: pair.1.rawValue,
+                durationSeconds: 240 + i * 45,
+                totalAttempts: total,
+                correctAttempts: correct,
+                fatigueDetected: false,
+                isSynced: i < 3,
+                attempts: []
+            ))
+        }
+        return sessions
+    }()
+}
+
+public extension MockSessionRepository {
+    /// Готовый репо с историей сессий обоих preview-детей.
+    static func seeded() -> MockSessionRepository {
+        MockSessionRepository(sessions: SessionDTO.previewHistory)
+    }
 }
