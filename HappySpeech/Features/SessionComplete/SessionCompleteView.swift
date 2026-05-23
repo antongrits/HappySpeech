@@ -374,6 +374,9 @@ struct SessionCompleteView: View {
                 Image(systemName: "checkmark.seal.fill")
                     .font(TypographyTokens.body(18))
                     .foregroundStyle(ColorTokens.Brand.gold)
+                    // Step 10 Batch C — Pattern 5: bounce when achievement
+                    // unlocks (state-reactive).
+                    .hsSymbolEffect(.bounce, value: info.title)
                     .accessibilityHidden(true)
             }
         }
@@ -425,6 +428,9 @@ struct SessionCompleteView: View {
                 Image(systemName: "sparkles")
                     .font(TypographyTokens.body(18))
                     .foregroundStyle(ColorTokens.Brand.lilac)
+                    // Step 10 Batch C — Pattern 5: variableColor sparkles
+                    // (kavsoft-style «magic shine» on sticker reveal).
+                    .hsSymbolEffect(.variableColor, value: sticker.name)
                     .accessibilityHidden(true)
             }
         }
@@ -461,6 +467,9 @@ struct SessionCompleteView: View {
                                 .opacity(0.15),
                             in: Circle()
                         )
+                        // Step 10 Batch C — Pattern 5: pulse on streak icon
+                        // when streak count advances (kid milestone feedback).
+                        .hsSymbolEffect(.pulse, value: streak.currentStreak)
                         .accessibilityHidden(true)
 
                     VStack(alignment: .leading, spacing: SpacingTokens.micro) {
@@ -569,6 +578,14 @@ struct SessionCompleteView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
+        // Step 10 Batch C — Pattern 3 + 4: scrollTransition stagger + parallax
+        // на stat-карточках summary. Гейтятся reduce-motion в HSParallaxTileModifier.
+        .scrollTransition(.animated.threshold(.visible(0.25))) { content, phase in
+            content
+                .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))
+        }
+        .hsParallaxTile(factor: 0.25)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(caption): \(title)")
     }

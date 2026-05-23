@@ -55,6 +55,7 @@ struct SyllableConstructorView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
 
     init(childId: String, preferredTier: SyllableTier? = nil) {
@@ -71,6 +72,14 @@ struct SyllableConstructorView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                // Step 10 Batch C — Pattern 1: kidWarm mesh палитра (тёплый
+                // конструктивный вайб). softLight overlay для глубины фона.
+                HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
+                    .blendMode(.softLight)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
 
                 if let startVM = holder.startVM {
                     contentSection(startVM: startVM)
@@ -163,29 +172,33 @@ struct SyllableConstructorView: View {
     private func wordHeader(
         _ startVM: SyllableConstructorModels.Start.ViewModel
     ) -> some View {
-        VStack(spacing: SpacingTokens.sp2) {
-            if let symbol = startVM.symbolName {
-                // HSContentSymbol auto-routes: word_* → Asset Catalog illustration,
-                // SF Symbol name → системная иконка fallback. Закрывает P0-3 v32
-                // design audit — раньше отображался "person.fill" заглушкой вместо
-                // иллюстрации произносимого слова.
-                HSContentSymbol(symbol, size: 64, tint: ColorTokens.Brand.primary)
-                    .accessibilityHidden(true)
+        // Step 10 Batch C — Pattern 2: HSLiquidGlassCard(.elevated) — kavsoft
+        // hero для слова + иллюстрации, ultraThick стекло над kidWarm mesh.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp3) {
+            VStack(spacing: SpacingTokens.sp2) {
+                if let symbol = startVM.symbolName {
+                    // HSContentSymbol auto-routes: word_* → Asset Catalog illustration,
+                    // SF Symbol name → системная иконка fallback. Закрывает P0-3 v32
+                    // design audit — раньше отображался "person.fill" заглушкой вместо
+                    // иллюстрации произносимого слова.
+                    HSContentSymbol(symbol, size: 64, tint: ColorTokens.Brand.primary)
+                        .accessibilityHidden(true)
+                }
+                Text(startVM.wordLabel)
+                    .font(TypographyTokens.title(30))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
+                    .accessibilityLabel(Text(startVM.accessibilityLabel))
+                Text(startVM.tierHint)
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
             }
-            Text(startVM.wordLabel)
-                .font(TypographyTokens.title(30))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
-                .accessibilityLabel(Text(startVM.accessibilityLabel))
-            Text(startVM.tierHint)
-                .font(TypographyTokens.caption(12))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
+            .frame(maxWidth: .infinity)
         }
-        .padding(.vertical, SpacingTokens.sp2)
     }
 
     private func slotsRow(
@@ -258,6 +271,14 @@ struct SyllableConstructorView: View {
                 .buttonStyle(.plain)
                 .accessibilityLabel(Text(tile.accessibilityLabel))
                 .accessibilityHint(Text("syllable.tile.place.hint"))
+                // Step 10 Batch C — Pattern 3 + 4: scrollTransition stagger
+                // fade+scale + parallax drift на syllable bank tiles.
+                .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                    content
+                        .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                        .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.9))
+                }
+                .hsParallaxTile(factor: 0.3)
             }
         }
         .padding(.top, SpacingTokens.sp2)
@@ -284,6 +305,10 @@ struct SyllableConstructorView: View {
                             .minimumScaleFactor(0.8)
                     } icon: {
                         Image(systemName: "speaker.wave.2.fill")
+                            // Step 10 Batch C — Pattern 5: variableColor on
+                            // speaker when target word changes (kid feedback
+                            // that audio playback is reactive).
+                            .hsSymbolEffect(.variableColor, value: startVM.wordLabel)
                     }
                     .foregroundStyle(ColorTokens.Brand.primary)
                     .frame(maxWidth: .infinity, minHeight: 56)

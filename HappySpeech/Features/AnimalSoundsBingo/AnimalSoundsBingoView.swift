@@ -9,6 +9,8 @@ struct AnimalSoundsBingoView: View {
     @State private var interactor: AnimalSoundsBingoInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: SpacingTokens.sp2), count: 4)
 
@@ -16,6 +18,14 @@ struct AnimalSoundsBingoView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                // Step 10 Batch C — Pattern 1: kidWarm mesh палитра поверх
+                // плоского cream baseline создаёт «дышащий» kid-фон.
+                HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.20 : 0.32)
+                    .blendMode(.softLight)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
                 content
             }
             .navigationTitle(Text(String(localized: "animalBingo.nav.title")))
@@ -63,7 +73,9 @@ struct AnimalSoundsBingoView: View {
     }
 
     private func hero(state: AnimalSoundsBingoModels.ViewState) -> some View {
-        HSCard(style: .tinted(ColorTokens.Brand.butter.opacity(0.18))) {
+        // Step 10 Batch C — Pattern 2: HSLiquidGlassCard(.elevated) для hero.
+        // ultraThickMaterial + butter tint поверх mesh — kavsoft-style.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp3) {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .pointing, size: 56)
                     .accessibilityHidden(true)
@@ -113,6 +125,15 @@ struct AnimalSoundsBingoView: View {
         LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
             ForEach(interactor.state.cells) { cell in
                 cellTile(cell, interactor: interactor)
+                    // Step 10 Batch C — Pattern 3: scrollTransition stagger
+                    // fade+scale на bingo cells, gated by reduceMotion.
+                    .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                        content
+                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.9))
+                    }
+                    // Step 10 Batch C — Pattern 4: parallax drift на bingo tiles.
+                    .hsParallaxTile(factor: 0.25)
             }
         }
     }
@@ -136,6 +157,9 @@ struct AnimalSoundsBingoView: View {
                     Image(systemName: "checkmark.circle.fill")
                         .font(.system(size: 18))
                         .foregroundStyle(ColorTokens.Semantic.success)
+                        // Step 10 Batch C — Pattern 5: bounce on checkmark
+                        // when cell flips to marked (state-reactive).
+                        .hsSymbolEffect(.bounce, value: cell.isMarked)
                         .padding(4)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                 }

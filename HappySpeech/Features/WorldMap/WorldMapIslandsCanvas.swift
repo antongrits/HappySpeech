@@ -82,6 +82,11 @@ struct WorldMapIslandsCanvas: View {
             reduceMotion: reduceMotion,
             onTap: { onTapZone(card.id) }
         )
+        // Step 10 Batch C — Pattern 4: gentle parallax drift на island bubble.
+        // Применяется ДО .position(), чтобы перенос точки якоря оставался
+        // абсолютным, а сам пузырь дышал относительно своего центра. Под
+        // Reduce Motion модификатор сам гейтится (см. HSParallaxTileModifier).
+        .hsParallaxTile(factor: 0.25)
         .position(center)
         .opacity(appeared ? 1 : 0)
         .scaleEffect(appeared ? 1 : 0.6)
@@ -314,6 +319,9 @@ private struct IslandBubble: View {
             Image(systemName: "checkmark")
                 .font(TypographyTokens.caption(11).weight(.bold))
                 .foregroundStyle(ColorTokens.Overlay.onAccent)
+                // Step 10 Batch C — Pattern 5: bounce when island flips
+                // to completed (visual reward for kid).
+                .hsSymbolEffect(.bounce, value: card.isCompleted)
         }
         .accessibilityHidden(true)
     }

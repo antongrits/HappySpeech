@@ -9,11 +9,21 @@ struct WordRhymeGameView: View {
     @State private var interactor: WordRhymeGameInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                // Step 10 Batch C — Pattern 1: kidWarm mesh палитра (тёплый
+                // poetic вайб рифм). softLight overlay для глубины.
+                HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.20 : 0.32)
+                    .blendMode(.softLight)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
                 content
             }
             .navigationTitle(Text(String(localized: "wordRhyme.nav.title")))
@@ -62,7 +72,9 @@ struct WordRhymeGameView: View {
     }
 
     private func hero(state: WordRhymeGameModels.ViewState) -> some View {
-        HSCard(style: .tinted(ColorTokens.Brand.sky.opacity(0.18))) {
+        // Step 10 Batch C — Pattern 2: HSLiquidGlassCard(.elevated) — kavsoft
+        // hero card поверх kidWarm mesh.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp3) {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .singing, size: 64)
                     .accessibilityHidden(true)
@@ -107,6 +119,14 @@ struct WordRhymeGameView: View {
         VStack(spacing: SpacingTokens.sp2) {
             ForEach(round.options) { option in
                 optionRow(option, round: round, interactor: interactor)
+                    // Step 10 Batch C — Pattern 3 + 4: scrollTransition stagger
+                    // + parallax drift на rhyme option rows.
+                    .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                        content
+                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))
+                    }
+                    .hsParallaxTile(factor: 0.25)
             }
         }
     }
@@ -147,10 +167,16 @@ struct WordRhymeGameView: View {
                         Image(systemName: "checkmark.circle.fill")
                             .font(.system(size: 22))
                             .foregroundStyle(ColorTokens.Semantic.success)
+                            // Step 10 Batch C — Pattern 5: bounce on correct
+                            // (state-reactive feedback).
+                            .hsSymbolEffect(.bounce, value: isCorrect)
                     } else if isWrong {
                         Image(systemName: "xmark.circle.fill")
                             .font(.system(size: 22))
                             .foregroundStyle(ColorTokens.Semantic.error)
+                            // Step 10 Batch C — Pattern 5: bounce on wrong
+                            // (state-reactive feedback).
+                            .hsSymbolEffect(.bounce, value: isWrong)
                     }
                 }
             }

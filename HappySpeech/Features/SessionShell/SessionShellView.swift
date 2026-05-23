@@ -206,6 +206,17 @@ struct SessionShellBinder: View {
                 // F.tier1 v21: gradient чуть мягче в dark, чтобы не «зашумлял» game content.
                 .opacity(colorScheme == .dark ? 0.92 : 1.0)
 
+            // Step 10 Batch C — Pattern 1: «calm» mesh-палитра поверх плоского
+            // gradient'a по типу игры. softLight + низкий opacity не перетягивает
+            // внимание с game content area, но добавляет глубины и «дыхания» фону
+            // фокусной practice-сессии (palette .calm — спокойный mint/sky).
+            HSMeshGradientBackground(palette: .calm, animated: true)
+                .ignoresSafeArea()
+                .opacity(colorScheme == .dark ? 0.18 : 0.28)
+                .blendMode(.softLight)
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
+
             VStack(spacing: SpacingTokens.regular) {
                 SessionHUDView(
                     state: state,
@@ -477,30 +488,32 @@ struct SessionShellBinder: View {
     // MARK: - Reward overlay
 
     private func rewardOverlay(_ vm: RewardViewModel) -> some View {
-        VStack(spacing: SpacingTokens.small) {
-            Image(systemName: vm.iconName)
-                .font(.system(size: 64, weight: .bold))
-                .foregroundStyle(ColorTokens.Brand.gold)
-                .accessibilityHidden(true)
-            Text(vm.title)
-                .font(TypographyTokens.title())
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.8)
-            Text(vm.subtitle)
-                .font(TypographyTokens.body())
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.85)
+        // Step 10 Batch C — Pattern 2: HSLiquidGlassCard(.elevated) для reward
+        // overlay. ultraThickMaterial над .calm mesh фоном создаёт чёткий focal
+        // point поверх практики, kavsoft-style.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.large) {
+            VStack(spacing: SpacingTokens.small) {
+                Image(systemName: vm.iconName)
+                    .font(.system(size: 64, weight: .bold))
+                    .foregroundStyle(ColorTokens.Brand.gold)
+                    // Step 10 Batch C — Pattern 5: bounce on reward icon
+                    // when activity completes (state-reactive).
+                    .hsSymbolEffect(.bounce, value: vm.iconName)
+                    .accessibilityHidden(true)
+                Text(vm.title)
+                    .font(TypographyTokens.title())
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.8)
+                Text(vm.subtitle)
+                    .font(TypographyTokens.body())
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.85)
+            }
         }
-        .padding(SpacingTokens.large)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
-                .fill(ColorTokens.Kid.surface)
-                .shadow(color: ColorTokens.Overlay.shadow, radius: 20, y: 8)
-        )
         .padding(.top, SpacingTokens.xxLarge)
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(vm.title). \(vm.subtitle)")

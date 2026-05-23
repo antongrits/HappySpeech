@@ -68,6 +68,7 @@ struct ArticulationGymView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
 
@@ -81,6 +82,14 @@ struct ArticulationGymView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                // Step 10 Batch C — Pattern 1: kidWarm mesh палитра (тёплый
+                // warm-up вайб «зарядки для язычка»). softLight overlay.
+                HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
+                    .blendMode(.softLight)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
 
                 if let viewModel = holder.loadVM {
                     if holder.isCompleted {
@@ -167,12 +176,18 @@ struct ArticulationGymView: View {
 
     @ViewBuilder
     private func exerciseCard(_ exercise: ExerciseViewModel) -> some View {
-        HSCard(style: .elevated) {
+        // Step 10 Batch C — Pattern 2: HSLiquidGlassCard(.elevated) — kavsoft
+        // hero card для одного exercise. ultraThick стекло над kidWarm mesh
+        // делает упражнение визуальным focal point.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp3) {
             VStack(spacing: SpacingTokens.sp3) {
                 Image(systemName: exercise.illustrationSymbol)
                     .font(.system(size: 88, weight: .regular))
                     .foregroundStyle(ColorTokens.Brand.lilac)
                     .frame(maxWidth: .infinity, minHeight: 140)
+                    // Step 10 Batch C — Pattern 5: variableColor на illustration
+                    // symbol упражнения когда оно меняется (фолклорный «огонёк»).
+                    .hsSymbolEffect(.variableColor, value: exercise.id)
                     .accessibilityHidden(true)
 
                 Text(exercise.title)

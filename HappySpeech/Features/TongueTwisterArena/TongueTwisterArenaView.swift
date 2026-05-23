@@ -9,11 +9,21 @@ struct TongueTwisterArenaView: View {
     @State private var interactor: TongueTwisterArenaInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                // Step 10 Batch C — Pattern 1: kidWarm mesh палитра (тёплый
+                // performance-вайб скороговорки).
+                HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.20 : 0.32)
+                    .blendMode(.softLight)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
                 content
             }
             .navigationTitle(Text(String(localized: "tongueTwister.nav.title")))
@@ -69,7 +79,9 @@ struct TongueTwisterArenaView: View {
     }
 
     private var hero: some View {
-        HSCard(style: .tinted(ColorTokens.Brand.rose.opacity(0.18))) {
+        // Step 10 Batch C — Pattern 2: HSLiquidGlassCard(.elevated) — kavsoft
+        // hero card поверх kidWarm mesh.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp3) {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .singing, size: 64)
                     .accessibilityHidden(true)
@@ -120,6 +132,14 @@ struct TongueTwisterArenaView: View {
                 .accessibilityElement(children: .ignore)
                 .accessibilityLabel(Text("Скороговорка, \(twister.targetSound). \(twister.text)"))
                 .accessibilityAddTraits(.isButton)
+                // Step 10 Batch C — Pattern 3 + 4: scrollTransition stagger
+                // + parallax drift на twister list rows.
+                .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                    content
+                        .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                        .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))
+                }
+                .hsParallaxTile(factor: 0.25)
             }
         }
     }

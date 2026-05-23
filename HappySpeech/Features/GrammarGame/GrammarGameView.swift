@@ -164,13 +164,27 @@ struct GrammarGameView: View {
 
     // MARK: - Background
 
+    @Environment(\.colorScheme) private var colorScheme
+
     private var backgroundLayer: some View {
-        LinearGradient(
-            colors: [ColorTokens.Kid.bg, ColorTokens.Kid.bgDeep],
-            startPoint: .top,
-            endPoint: .bottom
-        )
-        .ignoresSafeArea()
+        ZStack {
+            LinearGradient(
+                colors: [ColorTokens.Kid.bg, ColorTokens.Kid.bgDeep],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+
+            // Step 10 Batch C — Pattern 1: kidCool mesh палитра для grammar game
+            // (прохладный analytical вайб). softLight overlay не перебивает
+            // content, но добавляет dimensionality фону.
+            HSMeshGradientBackground(palette: .kidCool, animated: true)
+                .ignoresSafeArea()
+                .opacity(colorScheme == .dark ? 0.18 : 0.28)
+                .blendMode(.softLight)
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
+        }
     }
 
     // MARK: - Main content (TopBar + ContentArea + ActionArea)
@@ -270,28 +284,45 @@ struct GrammarGameView: View {
 
     private var pluralContentView: some View {
         VStack(spacing: SpacingTokens.xLarge) {
-            HSSpeechBubble(questionText, direction: .right, style: .question)
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .frame(maxWidth: .infinity)
-                .accessibilityLabel(questionText)
+            // Step 10 Batch C — Pattern 2: HSLiquidGlassCard(.elevated) wraps
+            // hero pair (question bubble + 1→many transformation). ultraThick
+            // material поверх kidCool mesh — kavsoft-style hero focal point.
+            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
+                VStack(spacing: SpacingTokens.large) {
+                    HSSpeechBubble(questionText, direction: .right, style: .question)
+                        .frame(maxWidth: .infinity)
+                        .accessibilityLabel(questionText)
 
-            // Трансформация: 1 предмет → много
-            HStack(spacing: SpacingTokens.large) {
-                singularImageTile
+                    // Трансформация: 1 предмет → много
+                    HStack(spacing: SpacingTokens.large) {
+                        singularImageTile
 
-                Image(systemName: "arrow.right.circle.fill")
-                    .font(TypographyTokens.title(28))
-                    .foregroundStyle(ColorTokens.Brand.primary)
+                        Image(systemName: "arrow.right.circle.fill")
+                            .font(TypographyTokens.title(28))
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                            // Step 10 Batch C — Pattern 5: pulse on arrow when
+                            // user selects a choice (state-reactive feedback).
+                            .hsSymbolEffect(.pulse, value: selectedChoiceId ?? "")
 
-                pluralResultArea
+                        pluralResultArea
+                    }
+                    .frame(maxWidth: .infinity)
+                }
             }
-            .frame(maxWidth: .infinity)
             .padding(.horizontal, SpacingTokens.screenEdge)
 
             // Варианты ответов
             VStack(spacing: SpacingTokens.regular) {
                 ForEach(choices) { choice in
                     pluralChoiceButton(choice)
+                        // Step 10 Batch C — Pattern 3 + 4: scrollTransition stagger
+                        // + parallax drift на choice buttons. Гейтятся reduceMotion.
+                        .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                            content
+                                .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                                .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))
+                        }
+                        .hsParallaxTile(factor: 0.25)
                 }
             }
             .padding(.horizontal, SpacingTokens.screenEdge)

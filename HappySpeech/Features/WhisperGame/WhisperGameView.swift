@@ -9,11 +9,21 @@ struct WhisperGameView: View {
     @State private var interactor: WhisperGameInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                // Step 10 Batch C — Pattern 1: kidCool mesh палитра (тихий
+                // прохладный шёпотный вайб). softLight overlay.
+                HSMeshGradientBackground(palette: .kidCool, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.18 : 0.28)
+                    .blendMode(.softLight)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
                 content
             }
             .navigationTitle(Text(String(localized: "whisperGame.nav.title")))
@@ -58,7 +68,9 @@ struct WhisperGameView: View {
     }
 
     private var hero: some View {
-        HSCard(style: .tinted(ColorTokens.Brand.mint.opacity(0.18))) {
+        // Step 10 Batch C — Pattern 2: HSLiquidGlassCard(.elevated) — kavsoft
+        // hero card поверх kidCool mesh.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp3) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(String(localized: "whisperGame.hero.title"))
                     .font(TypographyTokens.title(20))
@@ -81,6 +93,14 @@ struct WhisperGameView: View {
                     hapticService.impact(.light)
                     interactor.setMode(mode)
                 }
+                // Step 10 Batch C — Pattern 3 + 4: scrollTransition stagger
+                // + parallax drift на mode-chip tiles (даже в HStack scroll-aware).
+                .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                    content
+                        .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                        .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))
+                }
+                .hsParallaxTile(factor: 0.25)
             }
         }
     }
@@ -95,6 +115,9 @@ struct WhisperGameView: View {
                 Image(systemName: mode.icon)
                     .font(.system(size: 22, weight: .semibold))
                     .foregroundStyle(isActive ? .white : ColorTokens.Brand.primary)
+                    // Step 10 Batch C — Pattern 5: bounce on mode icon when
+                    // selection changes (state-reactive feedback).
+                    .hsSymbolEffect(.bounce, value: isActive)
                 Text(mode.title)
                     .font(TypographyTokens.caption(12))
                     .foregroundStyle(isActive ? .white : ColorTokens.Kid.ink)

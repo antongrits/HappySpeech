@@ -150,27 +150,32 @@ struct WorldMapView: View {
     // MARK: - Mascot header
 
     private var mascotHeader: some View {
-        HStack(spacing: SpacingTokens.regular) {
-            // F.tier1 v21: mascot мягче в dark.
-            // E v21: 3D Ляля в header WorldMap (требование пользователя).
-            LyalyaHeroView(state: .pointing, size: 96)
-                .opacity(colorScheme == .dark ? 0.92 : 1.0)
-                .accessibilityHidden(true)
+        // Step 10 Batch C — hero wrapped в HSLiquidGlassCard(.elevated):
+        // mesh .kidCool палитра проходит за стеклом, создавая «прохладный»
+        // воздух за полупрозрачным стеклом — kavsoft-style hero на iOS 26+.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
+            HStack(spacing: SpacingTokens.regular) {
+                // F.tier1 v21: mascot мягче в dark.
+                // E v21: 3D Ляля в header WorldMap (требование пользователя).
+                LyalyaHeroView(state: .pointing, size: 96)
+                    .opacity(colorScheme == .dark ? 0.92 : 1.0)
+                    .accessibilityHidden(true)
 
-            VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
-                Text(String(localized: "worldmap.title"))
-                    .font(TypographyTokens.title(22).weight(.bold))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
+                VStack(alignment: .leading, spacing: SpacingTokens.tiny) {
+                    Text(String(localized: "worldmap.title"))
+                        .font(TypographyTokens.title(22).weight(.bold))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
 
-                Text(String(localized: "worldMap.mascot.greeting"))
-                    .font(TypographyTokens.body(15))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
+                    Text(String(localized: "worldMap.mascot.greeting"))
+                        .font(TypographyTokens.body(15))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
     }
@@ -223,6 +228,15 @@ struct WorldMapView: View {
                     }
                     // Block J v18 — kavsoft-style tilt carousel scroll transition.
                     .hsScrollEffect(.tiltCarousel)
+                    // Step 10 Batch C — Pattern 3: scrollTransition stagger fade+scale,
+                    // gated by reduce-motion.
+                    .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                        content
+                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))
+                    }
+                    // Step 10 Batch C — Pattern 4: мягкий parallax drift на island tiles.
+                    .hsParallaxTile(factor: 0.25)
                 }
             }
 
@@ -240,6 +254,13 @@ struct WorldMapView: View {
                 }
                 // Block J v18 — kavsoft-style tilt carousel scroll transition.
                 .hsScrollEffect(.tiltCarousel)
+                // Step 10 Batch C — Pattern 3 + 4: stagger fade+scale + parallax drift.
+                .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                    content
+                        .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                        .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))
+                }
+                .hsParallaxTile(factor: 0.25)
             }
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
@@ -254,6 +275,9 @@ struct WorldMapView: View {
                     Image(systemName: "star.fill")
                         .foregroundStyle(ColorTokens.Brand.butter)
                         .font(TypographyTokens.caption(14).weight(.semibold))
+                        // Step 10 Batch C — Pattern 5: state-reactive pulse on star
+                        // when total stars accumulate (changes with progress fraction).
+                        .hsSymbolEffect(.pulse, value: display.totalStarsLabel)
                         .accessibilityHidden(true)
                     Text(display.totalStarsLabel)
                         .font(TypographyTokens.mono(13))
@@ -276,6 +300,9 @@ struct WorldMapView: View {
                     Image(systemName: "flame.fill")
                         .foregroundStyle(ColorTokens.Brand.primary)
                         .font(TypographyTokens.caption(14).weight(.semibold))
+                        // Step 10 Batch C — Pattern 5: bounce on streak symbol when
+                        // streak label changes (kid milestone feedback).
+                        .hsSymbolEffect(.bounce, value: display.streakLabel)
                         .accessibilityHidden(true)
                     Text(display.streakLabel)
                         .font(TypographyTokens.mono(13).weight(.semibold))

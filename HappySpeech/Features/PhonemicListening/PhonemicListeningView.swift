@@ -69,6 +69,7 @@ struct PhonemicListeningView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
 
     private static let logger = Logger(
@@ -80,6 +81,15 @@ struct PhonemicListeningView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                // Step 10 Batch C — Pattern 1: kidCool mesh палитра (прохладный,
+                // listening-focused). softLight + низкий opacity не отвлекает от
+                // word-карточки в центре экрана.
+                HSMeshGradientBackground(palette: .kidCool, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.18 : 0.28)
+                    .blendMode(.softLight)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
 
                 if holder.isFinished, let summary = holder.summary {
                     summarySection(summary)
@@ -164,6 +174,14 @@ struct PhonemicListeningView: View {
                     optionButton(option) {
                         Task { await answer(optionIndex: option.id) }
                     }
+                    // Step 10 Batch C — Pattern 3 + 4: scrollTransition stagger
+                    // + parallax drift на option buttons.
+                    .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                        content
+                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))
+                    }
+                    .hsParallaxTile(factor: 0.25)
                 }
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
@@ -173,26 +191,20 @@ struct PhonemicListeningView: View {
     }
 
     private func wordCard(_ word: String) -> some View {
-        Text(word)
-            .font(TypographyTokens.title(40))
-            .foregroundStyle(ColorTokens.Kid.ink)
-            .lineLimit(1)
-            .minimumScaleFactor(0.5)
-            .padding(.horizontal, SpacingTokens.sp6)
-            .padding(.vertical, SpacingTokens.sp6)
-            .frame(maxWidth: .infinity)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .fill(ColorTokens.Kid.surface)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .strokeBorder(ColorTokens.Kid.line, lineWidth: 2)
-            )
-            .depthShadow(ShadowTokens.kidDepth)
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .accessibilityLabel(Text(verbatim: word))
-            .accessibilityAddTraits(.isStaticText)
+        // Step 10 Batch C — Pattern 2: HSLiquidGlassCard(.elevated) для word
+        // hero — ultraThick стекло над kidCool mesh создаёт focal point для
+        // целевого слова, kavsoft-style.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp6) {
+            Text(word)
+                .font(TypographyTokens.title(40))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
+                .frame(maxWidth: .infinity)
+                .accessibilityLabel(Text(verbatim: word))
+                .accessibilityAddTraits(.isStaticText)
+        }
+        .padding(.horizontal, SpacingTokens.screenEdge)
     }
 
     private func optionButton(
@@ -226,6 +238,9 @@ struct PhonemicListeningView: View {
                 ? "checkmark.circle.fill"
                 : "arrow.counterclockwise.circle.fill")
                 .font(.title3)
+                // Step 10 Batch C — Pattern 5: bounce on feedback symbol
+                // when correctness toggles (state-reactive).
+                .hsSymbolEffect(.bounce, value: isCorrect)
             Text(text)
                 .font(TypographyTokens.body(15).weight(.medium))
                 .lineLimit(2)
@@ -254,6 +269,9 @@ struct PhonemicListeningView: View {
                 : "hand.thumbsup.circle.fill")
                 .font(.system(size: 80))
                 .foregroundStyle(ColorTokens.Brand.butter)
+                // Step 10 Batch C — Pattern 5: bounce on summary reveal
+                // (kid celebration feedback).
+                .hsSymbolEffect(.bounce, value: summary.scoreText)
                 .accessibilityHidden(true)
 
             Text(summary.title)

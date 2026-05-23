@@ -9,12 +9,22 @@ struct PhonemeJourneyMapView: View {
     @State private var interactor: PhonemeJourneyMapInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppCoordinator.self) private var coordinator
 
     var body: some View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                // Step 10 Batch C — Pattern 1: kidCool mesh палитра (прохладный
+                // roadmap-вайб). softLight overlay для глубины фона.
+                HSMeshGradientBackground(palette: .kidCool, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.18 : 0.28)
+                    .blendMode(.softLight)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
                 content
             }
             .navigationTitle(Text(String(localized: "phonemeJourney.nav.title")))
@@ -58,7 +68,9 @@ struct PhonemeJourneyMapView: View {
     }
 
     private func hero(state: PhonemeJourneyMapModels.ViewState) -> some View {
-        HSCard(style: .tinted(ColorTokens.Brand.lilac.opacity(0.18))) {
+        // Step 10 Batch C — Pattern 2: HSLiquidGlassCard(.elevated) — kavsoft
+        // hero card поверх kidCool mesh.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp3) {
             HStack(alignment: .top, spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .explaining, size: 72)
                     .accessibilityHidden(true)
@@ -101,6 +113,14 @@ struct PhonemeJourneyMapView: View {
                     hapticService.impact(.light)
                     interactor.toggle(item.id)
                 }
+                // Step 10 Batch C — Pattern 3 + 4: scrollTransition stagger
+                // fade+scale + parallax drift на roadmap stages.
+                .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                    content
+                        .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                        .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))
+                }
+                .hsParallaxTile(factor: 0.25)
             }
         }
     }
@@ -120,6 +140,9 @@ struct PhonemeJourneyMapView: View {
                     Image(systemName: item.isComplete ? "checkmark" : item.id.iconSystemName)
                         .font(.system(size: 16, weight: .bold))
                         .foregroundStyle(item.isComplete ? Color.white : ColorTokens.Brand.primary)
+                        // Step 10 Batch C — Pattern 5: bounce on stage symbol
+                        // when item flips to complete (state-reactive feedback).
+                        .hsSymbolEffect(.bounce, value: item.isComplete)
                 }
                 if !isLast {
                     Rectangle()
