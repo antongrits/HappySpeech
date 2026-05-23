@@ -181,6 +181,24 @@ enum AppRoute: Hashable {
     case childAchievementShare
     case audioMemoryGame(childId: String)
     case visualVocabularyFlip(childId: String)
+
+    // MARK: - v32 Batch C wave 4 (15 lightweight modules)
+
+    case goalTrackerKid(childId: String)
+    case habitStreakDashboard(childId: String)
+    case phonemeJourneyMap(childId: String)
+    case tongueTwisterArena(childId: String)
+    case storyEndingMaker(childId: String)
+    case speechRiddles(childId: String)
+    case animalSoundsBingo(childId: String)
+    case letterPaintingFun(childId: String)
+    case wordRhymeGame(childId: String)
+    case sentenceBuilderKid(childId: String)
+    case conversationStartersParent
+    case weeklyParentTip
+    case childLanguageMilestones
+    case specialistCaseNotes(childId: String, specialistId: String)
+    case specialistQuickAssessment(childId: String, specialistId: String)
 }
 
 enum PermissionType: Hashable {
@@ -888,6 +906,68 @@ struct AppCoordinatorView: View {
         case .visualVocabularyFlip(let childId):
             VisualVocabularyFlipView(childId: childId)
                 .environment(\.circuitContext, .kid)
+
+        // MARK: - v32 Batch C wave 4 (15 lightweight modules)
+
+        case .goalTrackerKid(let childId):
+            GoalTrackerKidView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .habitStreakDashboard(let childId):
+            HabitStreakDashboardView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .phonemeJourneyMap(let childId):
+            PhonemeJourneyMapView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .tongueTwisterArena(let childId):
+            TongueTwisterArenaView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .storyEndingMaker(let childId):
+            StoryEndingMakerView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .speechRiddles(let childId):
+            SpeechRiddlesView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .animalSoundsBingo(let childId):
+            AnimalSoundsBingoView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .letterPaintingFun(let childId):
+            LetterPaintingFunView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .wordRhymeGame(let childId):
+            WordRhymeGameView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .sentenceBuilderKid(let childId):
+            SentenceBuilderKidView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .conversationStartersParent:
+            ConversationStartersParentView()
+                .environment(\.circuitContext, .parent)
+
+        case .weeklyParentTip:
+            WeeklyParentTipView()
+                .environment(\.circuitContext, .parent)
+
+        case .childLanguageMilestones:
+            ChildLanguageMilestonesView()
+                .environment(\.circuitContext, .parent)
+
+        case .specialistCaseNotes(let childId, let specialistId):
+            SpecialistCaseNotesView(childId: childId, specialistId: specialistId)
+                .environment(\.circuitContext, .specialist)
+
+        case .specialistQuickAssessment(let childId, let specialistId):
+            SpecialistQuickAssessmentView(childId: childId, specialistId: specialistId)
+                .environment(\.circuitContext, .specialist)
         }
     }
 
@@ -1364,6 +1444,38 @@ extension AppCoordinatorView {
             return .audioMemoryGame(childId: previewChild)
         case "visualVocabularyFlip", "vocabFlip", "vocabulary":
             return .visualVocabularyFlip(childId: previewChild)
+
+        // MARK: v32 Batch C wave 4 (15 lightweight modules)
+        case "goalTrackerKid", "goalTracker", "kidGoals":
+            return .goalTrackerKid(childId: previewChild)
+        case "habitStreakDashboard", "habitStreak", "streakHeatmap":
+            return .habitStreakDashboard(childId: previewChild)
+        case "phonemeJourneyMap", "phonemeJourney", "journeyMap":
+            return .phonemeJourneyMap(childId: previewChild)
+        case "tongueTwisterArena", "tongueTwister", "twister":
+            return .tongueTwisterArena(childId: previewChild)
+        case "storyEndingMaker", "storyEnding", "endingMaker":
+            return .storyEndingMaker(childId: previewChild)
+        case "speechRiddles", "riddles":
+            return .speechRiddles(childId: previewChild)
+        case "animalSoundsBingo", "animalBingo", "soundBingo":
+            return .animalSoundsBingo(childId: previewChild)
+        case "letterPaintingFun", "letterPainting", "paintLetter":
+            return .letterPaintingFun(childId: previewChild)
+        case "wordRhymeGame", "wordRhyme", "rhymeGame":
+            return .wordRhymeGame(childId: previewChild)
+        case "sentenceBuilderKid", "sentenceBuilder":
+            return .sentenceBuilderKid(childId: previewChild)
+        case "conversationStartersParent", "conversationStarters", "starters":
+            return .conversationStartersParent
+        case "weeklyParentTip", "weeklyTip", "parentTip":
+            return .weeklyParentTip
+        case "childLanguageMilestones", "languageMilestones", "milestones":
+            return .childLanguageMilestones
+        case "specialistCaseNotes", "caseNotes", "specialistNotes":
+            return .specialistCaseNotes(childId: previewChild, specialistId: previewParent)
+        case "specialistQuickAssessment", "quickAssessment", "specialistAssess":
+            return .specialistQuickAssessment(childId: previewChild, specialistId: previewParent)
 
         default:
             return .auth
