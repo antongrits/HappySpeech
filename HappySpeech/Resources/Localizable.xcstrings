@@ -11261,7 +11261,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Осталось сегодня: %@"
+            "value": "Осталось {remaining} мин на сегодня"
           }
         }
       }
@@ -11470,7 +11470,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%@ из %@"
+            "value": "{used} из {cap} мин"
           }
         }
       }

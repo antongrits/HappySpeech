@@ -165,9 +165,11 @@ struct SyllableConstructorView: View {
     ) -> some View {
         VStack(spacing: SpacingTokens.sp2) {
             if let symbol = startVM.symbolName {
-                Image(systemName: symbol)
-                    .font(.system(size: 44))
-                    .foregroundStyle(ColorTokens.Brand.primary)
+                // HSContentSymbol auto-routes: word_* → Asset Catalog illustration,
+                // SF Symbol name → системная иконка fallback. Закрывает P0-3 v32
+                // design audit — раньше отображался "person.fill" заглушкой вместо
+                // иллюстрации произносимого слова.
+                HSContentSymbol(symbol, size: 64, tint: ColorTokens.Brand.primary)
                     .accessibilityHidden(true)
             }
             Text(startVM.wordLabel)

@@ -17,6 +17,7 @@ enum AppRoute: Hashable {
     case forgotPassword
     case verifyEmail
     case settings
+    case customization
     case offlineState
     case permissionFlow(PermissionType)
     case demoMode
@@ -288,6 +289,7 @@ enum AppSheet: Identifiable, Hashable {
     var id: String {
         switch self {
         case .settings:             return "settings"
+        case .customization:        return "customization"
         case .childProfile(let id): return "childProfile_\(id)"
         case .exportReport(let id): return "exportReport_\(id)"
         case .parentGuide:          return "parentGuide"
@@ -371,6 +373,12 @@ struct AppCoordinatorView: View {
 
         case .settings:
             SettingsView()
+
+        case .customization:
+            // P0-2 fix: customization route registered for HSStartRoute support
+            // (Plan v32 design audit). Раньше CustomizationView был достижим
+            // только из Settings → "Наряд Ляли", без deep-link для скриншот-тура.
+            NavigationStack { CustomizationView() }
 
         case .offlineState:
             OfflineStateView()
@@ -845,6 +853,7 @@ extension AppCoordinatorView {
         case "roleSelect":          return .roleSelect
         case "onboarding":          return .onboarding
         case "settings":            return .settings
+        case "customization":       return .customization
         case "offlineState":        return .offlineState
         case "childHome":           return .childHome(childId: previewChild)
         case "progressDashboard":   return .progressDashboard(childId: previewChild)
