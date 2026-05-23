@@ -137,6 +137,35 @@ enum AppRoute: Hashable {
     /// переводами на белорусский / английский, + tap-практика 10 раундов.
     /// Persistence выбора языка — UserDefaults("bilingualMode.secondLanguage").
     case bilingualMode(childId: String)
+
+    // MARK: - v32 Sprint 12 (3 новых фичи end-to-end)
+
+    /// B-028 (kid): «Грамота-старт» — мост от логопедии к чтению.
+    /// Показывает кириллическую букву, 3 стартовых слова и переход
+    /// к прописям (`letterTrace`).
+    case literacyStart(targetSound: String)
+
+    /// SoundOfTheDay (kid): сфокусированный звук дня + 3 быстрых
+    /// активности. Снижает выбор-перегрузку перед сессией.
+    case soundOfTheDay(childId: String)
+
+    /// VoiceJournal (parent): дневник голоса ребёнка с локальными
+    /// .m4a записями. Полностью offline / on-device.
+    case voiceJournal(childId: String)
+
+    // MARK: - v32 Family-engagement screens (FamilyChallenge / LyalyaMail / AchievementWall)
+
+    /// FamilyChallenge (parent): еженедельный челлендж всей семьи —
+    /// общая цель + вклад каждого + streak-индикатор.
+    case familyChallenge(parentId: String)
+
+    /// LyalyaMail (kid): «Письма от Ляли» — почтовый ящик с
+    /// ежедневными мотивационными сообщениями.
+    case lyalyaMail(childId: String)
+
+    /// AchievementWall (kid): большая mosaic-стена со всеми
+    /// достижениями + share стены через UIActivityViewController.
+    case achievementWall(childId: String)
 }
 
 enum PermissionType: Hashable {
@@ -289,7 +318,6 @@ enum AppSheet: Identifiable, Hashable {
     var id: String {
         switch self {
         case .settings:             return "settings"
-        case .customization:        return "customization"
         case .childProfile(let id): return "childProfile_\(id)"
         case .exportReport(let id): return "exportReport_\(id)"
         case .parentGuide:          return "parentGuide"
@@ -764,6 +792,37 @@ struct AppCoordinatorView: View {
         case .bilingualMode(let childId):
             BilingualModeView(childId: childId)
                 .environment(\.circuitContext, .kid)
+
+        // MARK: - v32 Sprint 12
+
+        case .literacyStart(let targetSound):
+            LiteracyStartView(
+                targetSound: targetSound,
+                childId: container.currentChildId
+            )
+            .environment(\.circuitContext, .kid)
+
+        case .soundOfTheDay(let childId):
+            SoundOfTheDayView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .voiceJournal(let childId):
+            VoiceJournalView(childId: childId)
+                .environment(\.circuitContext, .parent)
+
+        // MARK: - v32 Family-engagement screens
+
+        case .familyChallenge(let parentId):
+            FamilyChallengeView(parentId: parentId)
+                .environment(\.circuitContext, .parent)
+
+        case .lyalyaMail(let childId):
+            LyalyaMailView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
+        case .achievementWall(let childId):
+            AchievementWallView(childId: childId)
+                .environment(\.circuitContext, .kid)
         }
     }
 
@@ -1186,6 +1245,34 @@ extension AppCoordinatorView {
              "bilingual",
              "twoLanguages":
             return .bilingualMode(childId: previewChild)
+
+        // MARK: v32 Sprint 12 (3 новые фичи)
+        case "literacyStart",
+             "literacy",
+             "gramotaStart":
+            return .literacyStart(targetSound: "Р")
+        case "soundOfTheDay",
+             "sotd",
+             "dailySound":
+            return .soundOfTheDay(childId: previewChild)
+        case "voiceJournal",
+             "voicelog",
+             "voiceDiary":
+            return .voiceJournal(childId: previewChild)
+
+        // MARK: v32 Family-engagement screens
+        case "familyChallenge",
+             "weeklyFamily",
+             "weekly":
+            return .familyChallenge(parentId: previewParent)
+        case "lyalyaMail",
+             "mail",
+             "lyalyaLetters":
+            return .lyalyaMail(childId: previewChild)
+        case "achievementWall",
+             "wall",
+             "achievementsWall":
+            return .achievementWall(childId: previewChild)
 
         default:
             return .auth

@@ -500,10 +500,43 @@ struct EncryptedVideoClipData: Sendable, Identifiable, Equatable {
     let shareTokenExpiresAt: Date?
 }
 
+// MARK: - VoiceJournalEntryRealm (v13 — VoiceJournal feature)
+//
+// Дневник голоса ребёнка — список аудио-моментов с подписью.
+// Хранится только локально (Documents/VoiceJournal/), не синхронизируется
+// в Firestore — COPPA-safe, аналогично ParentVoiceClipObject.
+
+final class VoiceJournalEntryRealm: Object, @unchecked Sendable {
+    @Persisted(primaryKey: true) var id: String = UUID().uuidString
+    @Persisted var childId: String = ""
+    @Persisted var date: Date = Date()
+    /// Относительный путь к .m4a от Documents/ (не абсолютный — переживает
+    /// переустановку приложения).
+    @Persisted var fileURLString: String = ""
+    @Persisted var title: String = ""
+    @Persisted var durationSeconds: Int = 0
+    /// Опциональный транскрипт WhisperKit, заполняется отдельным сервисом.
+    @Persisted var transcript: String?
+}
+
+// MARK: - VoiceJournalEntry (Sendable DTO)
+
+struct VoiceJournalEntry: Sendable, Identifiable, Equatable {
+    let id: String
+    let childId: String
+    let date: Date
+    /// Абсолютный URL для проигрывания. Конвертируется из относительного
+    /// пути в Worker'е при загрузке.
+    let fileURL: URL
+    let title: String
+    let durationSeconds: Int
+    let transcript: String?
+}
+
 // MARK: - SchemaVersion
 
 /// Current Realm schema version. Increment with each migration.
-/// v12: ChildOralStoryObject (Wave E Ф.3) + EncryptedVideoClipObject (Wave E Ф.4).
+/// v13: VoiceJournalEntryRealm (VoiceJournal — дневник голоса ребёнка).
 enum RealmSchemaVersion {
-    static let current: UInt64 = 12
+    static let current: UInt64 = 13
 }

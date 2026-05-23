@@ -70,6 +70,12 @@ enum RealmMigrations {
             //    blob'ы в Documents/SpeechGrowthDiary/.
             // Оба объекта новые — Realm создаёт схему автоматически.
         }
+        if oldSchemaVersion < 13 {
+            // v13: VoiceJournal — added VoiceJournalEntryRealm
+            // (childId/date/fileURLString/title/durationSeconds/transcript?).
+            // Хранит метаданные локальных .m4a записей дневника голоса.
+            // Realm создаёт схему автоматически, дефолты заданы в модели.
+        }
     }
 }
 
@@ -756,6 +762,74 @@ public extension RealmActor {
         guard let realmInstance,
               let obj = realmInstance.object(
                 ofType: EncryptedVideoClipObject.self,
+                forPrimaryKey: id
+              )
+        else { return false }
+        try? realmInstance.write { realmInstance.delete(obj) }
+        return true
+    }
+
+    // MARK: - v13 VoiceJournal helpers
+
+    /// Возвращает все записи дневника голоса конкретного ребёнка,
+    /// отсортированные по дате (newest first). Принимает базовый URL
+    /// Documents, чтобы корректно собрать абсолютный путь к файлам.
+    internal func fetchVoiceJournalEntries(
+        childId: String,
+        documentsBaseURL: URL
+    ) async -> [VoiceJournalEntry] {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return [] }
+        return Array(
+            realmInstance.objects(VoiceJournalEntryRealm.self)
+                .filter("childId == %@", childId)
+                .sorted(byKeyPath: "date", ascending: false)
+        ).map { obj in
+            VoiceJournalEntry(
+                id: obj.id,
+                childId: obj.childId,
+                date: obj.date,
+                fileURL: documentsBaseURL.appendingPathComponent(obj.fileURLString),
+                title: obj.title,
+                durationSeconds: obj.durationSeconds,
+                transcript: obj.transcript
+            )
+        }
+    }
+
+    /// Сохраняет новую запись (idempotent по id). `relativePath` — путь
+    /// относительно Documents, без префикса.
+    @discardableResult
+    internal func insertVoiceJournalEntry(
+        id: String,
+        childId: String,
+        date: Date,
+        relativePath: String,
+        title: String,
+        durationSeconds: Int,
+        transcript: String?
+    ) async -> Bool {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance else { return false }
+        let obj = VoiceJournalEntryRealm()
+        obj.id = id
+        obj.childId = childId
+        obj.date = date
+        obj.fileURLString = relativePath
+        obj.title = title
+        obj.durationSeconds = durationSeconds
+        obj.transcript = transcript
+        try? realmInstance.write { realmInstance.add(obj, update: .modified) }
+        return true
+    }
+
+    /// Удаляет запись по id (возвращает true, если она существовала).
+    @discardableResult
+    internal func deleteVoiceJournalEntry(id: String) async -> Bool {
+        let realmInstance = try? await Realm(actor: self)
+        guard let realmInstance,
+              let obj = realmInstance.object(
+                ofType: VoiceJournalEntryRealm.self,
                 forPrimaryKey: id
               )
         else { return false }
