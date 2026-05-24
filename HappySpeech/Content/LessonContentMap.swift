@@ -25,6 +25,21 @@ import OSLog
 /// All accessors are read-only and call into immutable `let` storage. Safe
 /// to call from any actor. The internal cache is built once via a `let`
 /// initializer; subsequent reads are lock-free.
+///
+/// ## Manifest lifecycle (snapshot semantics)
+/// The manifest JSON is bundled into the .app at archive time and read **once**
+/// on first access from any thread; the resulting `entries` slice is frozen for
+/// the entire process lifetime. This is intentional:
+///
+/// - The asset pipeline (Imagen / FLUX background processes) may keep extending
+///   `word_manifest.json` on the developer's filesystem AFTER an app build is
+///   archived; those additions become visible only in the NEXT build.
+/// - There is no runtime "reload" path because the manifest entries reference
+///   imagesets that are baked into `Assets.xcassets` at compile time — a new
+///   manifest entry without its matching imageset would yield broken assets at
+///   runtime anyway.
+///
+/// To pick up new words: rebuild the app. There is no hot-reload trigger.
 public enum LessonContentMap {
 
     // MARK: - Public Types

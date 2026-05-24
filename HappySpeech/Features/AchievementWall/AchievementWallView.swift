@@ -165,6 +165,19 @@ struct AchievementWallView: View {
                 RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous)
                     .fill(badgeBackground(for: cell))
                     .frame(width: 92, height: 92)
+                // Task #67: decorative trophy_bg_* background (Hero/trophy_bg_*).
+                // 9 hero illustrations: bronze / silver / gold / streak_7/30/100 /
+                // lessons_10/50/100. Слой только для unlocked-карточек.
+                if cell.isUnlocked, let bgSlug = Self.trophyBgSlug(for: cell) {
+                    Image(bgSlug)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 92, height: 92)
+                        .clipShape(RoundedRectangle(cornerRadius: RadiusTokens.card, style: .continuous))
+                        .opacity(0.55)
+                        .accessibilityHidden(true)
+                        .allowsHitTesting(false)
+                }
                 Image(systemName: cell.iconName)
                     .font(.system(size: 38, weight: .semibold))
                     .foregroundStyle(badgeIconColor(for: cell))
@@ -214,6 +227,30 @@ struct AchievementWallView: View {
         case .legendary: return ColorTokens.Brand.gold
         case .rare:      return ColorTokens.Brand.lilac
         case .common:    return ColorTokens.Brand.sky
+        }
+    }
+
+    /// Task #67 — выбор trophy-bg slug по cell.id / rarity.
+    /// Сначала пытаемся подобрать конкретный trophy_bg_streak_*  или
+    /// trophy_bg_lessons_* по id; fallback — bronze/silver/gold по rarity.
+    /// Возвращает `nil` если slug не подходит (NOTE: не блокирует UI — есть
+    /// fallback к цветному badgeBackground).
+    private static func trophyBgSlug(for cell: AchievementWallCellViewModel) -> String? {
+        let id = cell.id.lowercased()
+        if id.contains("streak") {
+            if id.contains("100") { return "trophy_bg_streak_100" }
+            if id.contains("30") { return "trophy_bg_streak_30" }
+            if id.contains("7") { return "trophy_bg_streak_7" }
+        }
+        if id.contains("lesson") {
+            if id.contains("100") { return "trophy_bg_lessons_100" }
+            if id.contains("50") { return "trophy_bg_lessons_50" }
+            if id.contains("10") { return "trophy_bg_lessons_10" }
+        }
+        switch cell.rarity {
+        case .legendary: return "trophy_bg_gold"
+        case .rare:      return "trophy_bg_silver"
+        case .common:    return "trophy_bg_bronze"
         }
     }
 

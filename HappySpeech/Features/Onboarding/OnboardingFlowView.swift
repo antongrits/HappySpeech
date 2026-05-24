@@ -59,6 +59,12 @@ struct OnboardingFlowView: View {
                     .accessibilityHidden(true)
                     .allowsHitTesting(false)
 
+                // Task #67: per-step decorative hero banner from Hero/onboarding_*
+                // (35 illustration generated via Imagen). Используется как мягкий
+                // фон-баннер за gradient/mesh — НЕ перекрывает UI, низкая
+                // непрозрачность + screen blendMode для гармонии с палитрой.
+                heroBackground
+
                 VStack(spacing: 0) {
                     progressHeader
 
@@ -103,6 +109,42 @@ struct OnboardingFlowView: View {
             display.consumeCompleted()
             handleCompletion()
         }
+    }
+
+    // MARK: - Hero background (Task #67 — 10 Imagen onboarding illustrations)
+
+    /// Имя hero-imageset из `Assets.xcassets/Hero/` для текущего шага.
+    /// Источник — `hero_manifest.json` (10 onboarding scenes, 16:9).
+    private static func heroSlug(for step: OnboardingStep) -> String {
+        switch step {
+        case .welcome:       return "onboarding_welcome"
+        case .role:          return "onboarding_meet_lyalya"
+        case .childName:     return "onboarding_family"
+        case .childAge:      return "onboarding_first_lesson"
+        case .goals:         return "onboarding_practice"
+        case .sounds:        return "onboarding_choose_sound"
+        case .schedule:      return "onboarding_streak"
+        case .permissions:   return "onboarding_ready"
+        case .modelDownload: return "onboarding_progress"
+        case .completion:    return "onboarding_celebration"
+        }
+    }
+
+    @ViewBuilder
+    private var heroBackground: some View {
+        let slug = Self.heroSlug(for: display.currentStep)
+        Image(slug)
+            .resizable()
+            .scaledToFill()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .clipped()
+            .opacity(colorScheme == .dark ? 0.10 : 0.14)
+            .blendMode(.screen)
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
+            .animation(reduceMotion ? nil : .easeInOut(duration: 0.4), value: display.currentStep)
+            .id(slug)
+            .ignoresSafeArea()
     }
 
     // MARK: - Background gradient (меняется по шагу)

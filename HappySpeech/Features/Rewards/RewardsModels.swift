@@ -84,10 +84,12 @@ public enum StickerCollection: String, Sendable, CaseIterable, Identifiable {
     }
 
     public var emoji: String {
+        // Task #67 — wired Hero/reward_animal_bee + Hero/reward_space_moon assets
+        // through HSContentSymbol (routes между SF Symbol и Assets.xcassets imageset).
         switch self {
         case .all:       return "gift.fill"
-        case .animals:   return "pawprint.fill"
-        case .space:     return "reward_rocket"
+        case .animals:   return "reward_animal_bee"
+        case .space:     return "reward_space_moon"
         case .forest:    return "word_forest"
         case .ocean:     return "water.waves"
         case .halloween: return "seasonal_halloween_full_moon"

@@ -45,6 +45,11 @@ final class LessonVoiceWorker: NSObject {
     /// text (нормализованный) → phrase_id
     private let phraseMapping: [String: String]
 
+    /// Lazy-cached curriculum manifest: key "bucketId|slug" → relative path
+    /// (под `Audio/Narration/`). Загружается один раз при первом обращении и
+    /// замораживается. Источник — `Resources/Audio/Narration/curriculum_manifest.json`.
+    private lazy var curriculumIndex: [String: String] = Self.loadCurriculumIndex()
+
     /// RealmActor для поиска семейных записей (Priority 1). Устанавливается из AppContainer.
     var realmActor: RealmActor?
 
@@ -99,6 +104,50 @@ final class LessonVoiceWorker: NSObject {
         // В debug-сборках помогает находить непокрытые слова при тестировании.
         assertionFailure("LessonVoiceWorker: missing Lyalya audio for '\(text)'")
         #endif
+    }
+
+    /// Воспроизводит готовый curriculum-narration по `bucketId` + `slug`.
+    /// Источник — `Resources/Audio/Narration/curriculum/.../{slug}.m4a`
+    /// (Google Chirp3-HD-Aoede voice, голос Ляли).
+    ///
+    /// Если запись не найдена в curriculum-манифесте — graceful fallback:
+    /// если задан `fallbackText`, воспроизводим его через стандартный
+    /// `speak(_:)` (семейная запись / Lyalya phrase mapping). Иначе — silent
+    /// skip + log warning.
+    ///
+    /// - Parameters:
+    ///   - bucketId: идентификатор бакета (например
+    ///     `"dyslalia_С_Изолированный звук_RAM"`).
+    ///   - slug: slug записи внутри бакета (например `"skazhi_s_sa"`).
+    ///   - fallbackText: текст для озвучивания через `speak(_:)` если
+    ///     curriculum-запись отсутствует. `nil` → silent skip.
+    ///   - lessonType: опциональная метка для логов.
+    func speakCurriculum(
+        bucketId: String,
+        slug: String,
+        fallbackText: String? = nil,
+        lessonType: String? = nil
+    ) async {
+        ensurePlaybackSession()
+
+        let logContext = lessonType.map { "[\($0)] " } ?? ""
+        let key = Self.curriculumKey(bucketId: bucketId, slug: slug)
+
+        if let relativePath = curriculumIndex[key],
+           let url = Self.curriculumURL(forRelativePath: relativePath) {
+            logger.debug("\(logContext, privacy: .public)curriculum: \(key, privacy: .public)")
+            await playFileURL(url, rate: 1.0, logContext: logContext + "[curriculum] ")
+            return
+        }
+
+        if let fallbackText, !fallbackText.isEmpty {
+            await speak(fallbackText, lessonType: lessonType)
+            return
+        }
+
+        logger.warning(
+            "\(logContext, privacy: .public)curriculum miss: bucketId=\(bucketId, privacy: .public) slug=\(slug, privacy: .public) — silent skip"
+        )
     }
 
     /// Останавливает воспроизведение m4a.
@@ -215,6 +264,54 @@ final class LessonVoiceWorker: NSObject {
     }
 
     // MARK: - Private: mapping load
+
+    private static func curriculumKey(bucketId: String, slug: String) -> String {
+        bucketId + "|" + slug
+    }
+
+    private static func curriculumURL(forRelativePath relativePath: String) -> URL? {
+        // Audio/ — folder reference в project.yml, поэтому подпапки
+        // (`Audio/Narration/curriculum/…`) сохраняются в .app bundle.
+        let withoutExt = (relativePath as NSString).deletingPathExtension
+        let subdirectory = "Audio/Narration/" + (withoutExt as NSString).deletingLastPathComponent
+        let name = (withoutExt as NSString).lastPathComponent
+        return Bundle.main.url(
+            forResource: name,
+            withExtension: "m4a",
+            subdirectory: subdirectory
+        )
+    }
+
+    private static func loadCurriculumIndex() -> [String: String] {
+        // Manifest: Resources/Audio/Narration/curriculum_manifest.json
+        // Структура: { version, voice, entries: [{ bucketId, slug, fileName, ... }] }
+        guard let url = Bundle.main.url(
+            forResource: "curriculum_manifest",
+            withExtension: "json",
+            subdirectory: "Audio/Narration"
+        ),
+            let data = try? Data(contentsOf: url),
+            let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+            let entries = json["entries"] as? [[String: Any]]
+        else {
+            Logger(subsystem: "ru.happyspeech.app", category: "LessonVoiceWorker")
+                .warning("curriculum_manifest.json missing or malformed — curriculum playback disabled")
+            return [:]
+        }
+
+        var result: [String: String] = [:]
+        for entry in entries {
+            guard let bucketId = entry["bucketId"] as? String,
+                  let slug = entry["slug"] as? String,
+                  let fileName = entry["fileName"] as? String
+            else { continue }
+            result[curriculumKey(bucketId: bucketId, slug: slug)] = fileName
+        }
+
+        Logger(subsystem: "ru.happyspeech.app", category: "LessonVoiceWorker")
+            .info("LessonVoiceWorker curriculum: \(result.count, privacy: .public) entries indexed")
+        return result
+    }
 
     private static func loadPhraseMapping() -> [String: String] {
         // 3.G v23: lyalya-phrase-mapping.json содержит гетерогенные значения —

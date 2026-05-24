@@ -6,252 +6,287 @@
   "totalCost": 0.7,
   "skipped": 0,
   "failed": 159,
-  "note": "Partial run — GCP project quota exhausted. Re-run script to complete remaining images idempotently.",
+  "note": "Partial run — GCP project quota exhausted. Re-run script to complete remaining images idempotently. | Task #67: consumer wiring added 2026-05-24",
   "entries": [
     {
       "slug": "celebration_balloons",
       "tier": "H3",
       "aspectRatio": "1:1",
       "filePath": "Hero/celebration_balloons.imageset/celebration_balloons@3x.png",
-      "sizeKB": 775
+      "sizeKB": 775,
+      "consumer": "Features/SessionComplete/SessionCompleteView.swift::celebrationHeroSlug"
     },
     {
       "slug": "celebration_fireworks",
       "tier": "H3",
       "aspectRatio": "1:1",
       "filePath": "Hero/celebration_fireworks.imageset/celebration_fireworks@3x.png",
-      "sizeKB": 833
+      "sizeKB": 833,
+      "consumer": "Features/SessionComplete/SessionCompleteView.swift::celebrationHeroSlug"
     },
     {
       "slug": "celebration_rainbow",
       "tier": "H3",
       "aspectRatio": "1:1",
       "filePath": "Hero/celebration_rainbow.imageset/celebration_rainbow@3x.png",
-      "sizeKB": 758
+      "sizeKB": 758,
+      "consumer": "Features/SessionComplete/SessionCompleteView.swift::celebrationHeroSlug"
     },
     {
       "slug": "celebration_stars",
       "tier": "H3",
       "aspectRatio": "1:1",
       "filePath": "Hero/celebration_stars.imageset/celebration_stars@3x.png",
-      "sizeKB": 683
+      "sizeKB": 683,
+      "consumer": "Features/SessionComplete/SessionCompleteView.swift::celebrationHeroSlug"
     },
     {
       "slug": "celebration_trophy_glow",
       "tier": "H3",
       "aspectRatio": "1:1",
       "filePath": "Hero/celebration_trophy_glow.imageset/celebration_trophy_glow@3x.png",
-      "sizeKB": 614
+      "sizeKB": 614,
+      "consumer": "Features/SessionComplete/SessionCompleteView.swift::celebrationHeroSlug"
     },
     {
       "slug": "island_backlingual",
       "tier": "H2",
       "aspectRatio": "1:1",
       "filePath": "Hero/island_backlingual.imageset/island_backlingual@3x.png",
-      "sizeKB": 888
+      "sizeKB": 888,
+      "consumer": null
     },
     {
       "slug": "island_breathing",
       "tier": "H2",
       "aspectRatio": "1:1",
       "filePath": "Hero/island_breathing.imageset/island_breathing@3x.png",
-      "sizeKB": 906
+      "sizeKB": 906,
+      "consumer": null
     },
     {
       "slug": "island_hissing",
       "tier": "H2",
       "aspectRatio": "1:1",
       "filePath": "Hero/island_hissing.imageset/island_hissing@3x.png",
-      "sizeKB": 852
+      "sizeKB": 852,
+      "consumer": null
     },
     {
       "slug": "island_iotic",
       "tier": "H2",
       "aspectRatio": "1:1",
       "filePath": "Hero/island_iotic.imageset/island_iotic@3x.png",
-      "sizeKB": 755
+      "sizeKB": 755,
+      "consumer": null
     },
     {
       "slug": "island_rhythm",
       "tier": "H2",
       "aspectRatio": "1:1",
       "filePath": "Hero/island_rhythm.imageset/island_rhythm@3x.png",
-      "sizeKB": 971
+      "sizeKB": 971,
+      "consumer": null
     },
     {
       "slug": "island_sonor",
       "tier": "H2",
       "aspectRatio": "1:1",
       "filePath": "Hero/island_sonor.imageset/island_sonor@3x.png",
-      "sizeKB": 759
+      "sizeKB": 759,
+      "consumer": null
     },
     {
       "slug": "island_storytelling",
       "tier": "H2",
       "aspectRatio": "1:1",
       "filePath": "Hero/island_storytelling.imageset/island_storytelling@3x.png",
-      "sizeKB": 742
+      "sizeKB": 742,
+      "consumer": null
     },
     {
       "slug": "island_whistling",
       "tier": "H2",
       "aspectRatio": "1:1",
       "filePath": "Hero/island_whistling.imageset/island_whistling@3x.png",
-      "sizeKB": 867
+      "sizeKB": 867,
+      "consumer": null
     },
     {
       "slug": "onboarding_celebration",
       "tier": "H1",
       "aspectRatio": "16:9",
       "filePath": "Hero/onboarding_celebration.imageset/onboarding_celebration@3x.png",
-      "sizeKB": 775
+      "sizeKB": 775,
+      "consumer": "Features/Onboarding/OnboardingFlowView.swift::heroSlug → .completion"
     },
     {
       "slug": "onboarding_choose_sound",
       "tier": "H1",
       "aspectRatio": "16:9",
       "filePath": "Hero/onboarding_choose_sound.imageset/onboarding_choose_sound@3x.png",
-      "sizeKB": 710
+      "sizeKB": 710,
+      "consumer": "Features/Onboarding/OnboardingFlowView.swift::heroSlug → .sounds"
     },
     {
       "slug": "onboarding_family",
       "tier": "H1",
       "aspectRatio": "16:9",
       "filePath": "Hero/onboarding_family.imageset/onboarding_family@3x.png",
-      "sizeKB": 543
+      "sizeKB": 543,
+      "consumer": "Features/Onboarding/OnboardingFlowView.swift::heroSlug → .childName"
     },
     {
       "slug": "onboarding_first_lesson",
       "tier": "H1",
       "aspectRatio": "16:9",
       "filePath": "Hero/onboarding_first_lesson.imageset/onboarding_first_lesson@3x.png",
-      "sizeKB": 830
+      "sizeKB": 830,
+      "consumer": "Features/Onboarding/OnboardingFlowView.swift::heroSlug → .childAge"
     },
     {
       "slug": "onboarding_meet_lyalya",
       "tier": "H1",
       "aspectRatio": "16:9",
       "filePath": "Hero/onboarding_meet_lyalya.imageset/onboarding_meet_lyalya@3x.png",
-      "sizeKB": 644
+      "sizeKB": 644,
+      "consumer": "Features/Onboarding/OnboardingFlowView.swift::heroSlug → .role"
     },
     {
       "slug": "onboarding_practice",
       "tier": "H1",
       "aspectRatio": "16:9",
       "filePath": "Hero/onboarding_practice.imageset/onboarding_practice@3x.png",
-      "sizeKB": 491
+      "sizeKB": 491,
+      "consumer": "Features/Onboarding/OnboardingFlowView.swift::heroSlug → .goals"
     },
     {
       "slug": "onboarding_progress",
       "tier": "H1",
       "aspectRatio": "16:9",
       "filePath": "Hero/onboarding_progress.imageset/onboarding_progress@3x.png",
-      "sizeKB": 767
+      "sizeKB": 767,
+      "consumer": "Features/Onboarding/OnboardingFlowView.swift::heroSlug → .modelDownload"
     },
     {
       "slug": "onboarding_ready",
       "tier": "H1",
       "aspectRatio": "16:9",
       "filePath": "Hero/onboarding_ready.imageset/onboarding_ready@3x.png",
-      "sizeKB": 796
+      "sizeKB": 796,
+      "consumer": "Features/Onboarding/OnboardingFlowView.swift::heroSlug → .permissions"
     },
     {
       "slug": "onboarding_streak",
       "tier": "H1",
       "aspectRatio": "16:9",
       "filePath": "Hero/onboarding_streak.imageset/onboarding_streak@3x.png",
-      "sizeKB": 985
+      "sizeKB": 985,
+      "consumer": "Features/Onboarding/OnboardingFlowView.swift::heroSlug → .schedule"
     },
     {
       "slug": "onboarding_welcome",
       "tier": "H1",
       "aspectRatio": "16:9",
       "filePath": "Hero/onboarding_welcome.imageset/onboarding_welcome@3x.png",
-      "sizeKB": 545
+      "sizeKB": 545,
+      "consumer": "Features/Onboarding/OnboardingFlowView.swift::heroSlug → .welcome"
     },
     {
       "slug": "reward_animal_bee",
       "tier": "H8",
       "aspectRatio": "1:1",
       "filePath": "Hero/reward_animal_bee.imageset/reward_animal_bee@3x.png",
-      "sizeKB": 806
+      "sizeKB": 806,
+      "consumer": "Features/Rewards/RewardsModels.swift::StickerCollection.animals.emoji"
     },
     {
       "slug": "reward_animal_duck",
       "tier": "H8",
       "aspectRatio": "1:1",
       "filePath": "Hero/reward_animal_duck.imageset/reward_animal_duck@3x.png",
-      "sizeKB": 682
+      "sizeKB": 682,
+      "consumer": null
     },
     {
       "slug": "reward_space_moon",
       "tier": "H8",
       "aspectRatio": "1:1",
       "filePath": "Hero/reward_space_moon.imageset/reward_space_moon@3x.png",
-      "sizeKB": 617
+      "sizeKB": 617,
+      "consumer": "Features/Rewards/RewardsModels.swift::StickerCollection.space.emoji"
     },
     {
       "slug": "trophy_bg_bronze",
       "tier": "H4",
       "aspectRatio": "1:1",
       "filePath": "Hero/trophy_bg_bronze.imageset/trophy_bg_bronze@3x.png",
-      "sizeKB": 482
+      "sizeKB": 482,
+      "consumer": "Features/AchievementWall/AchievementWallView.swift::trophyBgSlug"
     },
     {
       "slug": "trophy_bg_gold",
       "tier": "H4",
       "aspectRatio": "1:1",
       "filePath": "Hero/trophy_bg_gold.imageset/trophy_bg_gold@3x.png",
-      "sizeKB": 861
+      "sizeKB": 861,
+      "consumer": "Features/AchievementWall/AchievementWallView.swift::trophyBgSlug"
     },
     {
       "slug": "trophy_bg_lessons_10",
       "tier": "H4",
       "aspectRatio": "1:1",
       "filePath": "Hero/trophy_bg_lessons_10.imageset/trophy_bg_lessons_10@3x.png",
-      "sizeKB": 795
+      "sizeKB": 795,
+      "consumer": "Features/AchievementWall/AchievementWallView.swift::trophyBgSlug"
     },
     {
       "slug": "trophy_bg_lessons_100",
       "tier": "H4",
       "aspectRatio": "1:1",
       "filePath": "Hero/trophy_bg_lessons_100.imageset/trophy_bg_lessons_100@3x.png",
-      "sizeKB": 748
+      "sizeKB": 748,
+      "consumer": "Features/AchievementWall/AchievementWallView.swift::trophyBgSlug"
     },
     {
       "slug": "trophy_bg_lessons_50",
       "tier": "H4",
       "aspectRatio": "1:1",
       "filePath": "Hero/trophy_bg_lessons_50.imageset/trophy_bg_lessons_50@3x.png",
-      "sizeKB": 580
+      "sizeKB": 580,
+      "consumer": "Features/AchievementWall/AchievementWallView.swift::trophyBgSlug"
     },
     {
       "slug": "trophy_bg_silver",
       "tier": "H4",
       "aspectRatio": "1:1",
       "filePath": "Hero/trophy_bg_silver.imageset/trophy_bg_silver@3x.png",
-      "sizeKB": 930
+      "sizeKB": 930,
+      "consumer": "Features/AchievementWall/AchievementWallView.swift::trophyBgSlug"
     },
     {
       "slug": "trophy_bg_streak_100",
       "tier": "H4",
       "aspectRatio": "1:1",
       "filePath": "Hero/trophy_bg_streak_100.imageset/trophy_bg_streak_100@3x.png",
-      "sizeKB": 810
+      "sizeKB": 810,
+      "consumer": "Features/AchievementWall/AchievementWallView.swift::trophyBgSlug"
     },
     {
       "slug": "trophy_bg_streak_30",
       "tier": "H4",
       "aspectRatio": "1:1",
       "filePath": "Hero/trophy_bg_streak_30.imageset/trophy_bg_streak_30@3x.png",
-      "sizeKB": 890
+      "sizeKB": 890,
+      "consumer": "Features/AchievementWall/AchievementWallView.swift::trophyBgSlug"
     },
     {
       "slug": "trophy_bg_streak_7",
       "tier": "H4",
       "aspectRatio": "1:1",
       "filePath": "Hero/trophy_bg_streak_7.imageset/trophy_bg_streak_7@3x.png",
-      "sizeKB": 350
+      "sizeKB": 350,
+      "consumer": "Features/AchievementWall/AchievementWallView.swift::trophyBgSlug"
     }
   ]
 }

@@ -663,8 +663,34 @@ struct SessionCompleteView: View {
             ColorTokens.Kid.bg
             HSMeshGradientBackground(palette: .rewards)
                 .opacity(colorScheme == .dark ? 0.40 : 0.78)
+
+            // Task #67: decorative celebration banner (Hero/celebration_*).
+            // 5 illustrations: balloons / fireworks / rainbow / stars / trophy_glow.
+            // Slug-выбор детерминирован от sessionId, чтобы один и тот же урок
+            // всегда давал тот же celebration-фон (без миганий на refresh).
+            Image(Self.celebrationHeroSlug(for: result))
+                .resizable()
+                .scaledToFill()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .clipped()
+                .opacity(colorScheme == .dark ? 0.08 : 0.12)
+                .blendMode(.screen)
         }
         .accessibilityHidden(true)
+    }
+
+    /// Детерминированный выбор celebration-баннера для session.
+    /// Один и тот же урок всегда даёт ту же иллюстрацию.
+    private static func celebrationHeroSlug(for result: SessionResult) -> String {
+        let slugs = [
+            "celebration_balloons",
+            "celebration_fireworks",
+            "celebration_rainbow",
+            "celebration_stars",
+            "celebration_trophy_glow"
+        ]
+        let hash = abs(result.sessionId.hashValue)
+        return slugs[hash % slugs.count]
     }
 
     // MARK: - Helpers
