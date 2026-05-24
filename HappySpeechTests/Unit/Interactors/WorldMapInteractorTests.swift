@@ -80,27 +80,32 @@ final class WorldMapInteractorTests: XCTestCase {
 
     // MARK: - 1. loadMap вызывает presentLoadMap с зонами
 
-    func test_loadMap_callsPresenterWithZones() {
+    func test_loadMap_callsPresenterWithZones() async {
         let (sut, spy) = makeSUT()
         sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
+        // finishLoadMap is dispatched via Task { @MainActor } — yield to let it run.
+        await Task.yield()
         XCTAssertTrue(spy.loadMapCalled)
         XCTAssertFalse(spy.lastLoadMap?.zones.isEmpty ?? true)
     }
 
     // MARK: - 2. loadMap инициализирует зоны из seed (не пустые)
 
-    func test_loadMap_seedHasZones() {
+    func test_loadMap_seedHasZones() async {
         let (sut, spy) = makeSUT()
         sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
+        await Task.yield()
         XCTAssertGreaterThanOrEqual(spy.lastLoadMap?.zones.count ?? 0, 5)
     }
 
     // MARK: - 3. loadMap с highlightedSound маппит highlightedZoneId
 
-    func test_loadMap_withHighlightedSound_setsHighlightedZoneId() {
+    func test_loadMap_withHighlightedSound_setsHighlightedZoneId() async {
         let (sut, spy) = makeSUT()
         // "С" входит в свистящие → зона должна быть найдена
         sut.loadMap(.init(childId: "child-1", highlightedSound: "С", childAge: nil))
+        // finishLoadMap dispatched via Task — yield to let it execute.
+        await Task.yield()
         // Если звук есть в каком-то zone.sounds, highlightedZoneId != nil
         // Если нет — nil (всё равно не ошибка)
         XCTAssertTrue(spy.loadMapCalled)
@@ -108,9 +113,10 @@ final class WorldMapInteractorTests: XCTestCase {
 
     // MARK: - 4. selectZone с существующим id → presentSelectZone
 
-    func test_selectZone_existing_callsPresenter() {
+    func test_selectZone_existing_callsPresenter() async {
         let (sut, spy) = makeSUT()
         sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
+        await Task.yield()
         guard let firstZoneId = spy.lastLoadMap?.zones.first?.id else {
             return XCTFail("Нет зон для теста")
         }
@@ -119,6 +125,7 @@ final class WorldMapInteractorTests: XCTestCase {
     }
 
     // MARK: - 5. selectZone с несуществующим id → presentFailure
+    // zones is set synchronously in loadMap() so selectZone works without yield.
 
     func test_selectZone_notFound_callsFailure() {
         let (sut, spy) = makeSUT()
@@ -130,9 +137,10 @@ final class WorldMapInteractorTests: XCTestCase {
 
     // MARK: - 6. selectZone заблокированной зоны → canOpen = false
 
-    func test_selectZone_locked_canOpenFalse() {
+    func test_selectZone_locked_canOpenFalse() async {
         let (sut, spy) = makeSUT()
         sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
+        await Task.yield()
         // Seed должен содержать заблокированные зоны — если нет, это регрессия
         guard let locked = spy.lastLoadMap?.zones.first(where: { $0.isLocked }) else {
             XCTFail("Seed должен содержать хотя бы одну заблокированную зону; отсутствие locked зон — регрессия WorldMapInteractor.makeSeedZones()")
@@ -143,6 +151,7 @@ final class WorldMapInteractorTests: XCTestCase {
     }
 
     // MARK: - 7. refreshProgress вызывает presentRefreshProgress
+    // refreshProgress does not depend on lastLoadMap — no yield needed.
 
     func test_refreshProgress_callsPresenter() {
         let (sut, spy) = makeSUT()
@@ -153,9 +162,10 @@ final class WorldMapInteractorTests: XCTestCase {
 
     // MARK: - 8. loadZoneDetail с существующей зоной
 
-    func test_loadZoneDetail_existing_callsPresenter() {
+    func test_loadZoneDetail_existing_callsPresenter() async {
         let (sut, spy) = makeSUT()
         sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
+        await Task.yield()
         guard let zoneId = spy.lastLoadMap?.zones.first?.id else {
             return XCTFail("Нет зон")
         }
@@ -174,9 +184,10 @@ final class WorldMapInteractorTests: XCTestCase {
 
     // MARK: - 9. loadZoneDetail заблокированной зоны → unlocksNeeded
 
-    func test_loadZoneDetail_lockedZone_hasUnlocksNeeded() {
+    func test_loadZoneDetail_lockedZone_hasUnlocksNeeded() async {
         let (sut, spy) = makeSUT()
         sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
+        await Task.yield()
         guard let locked = spy.lastLoadMap?.zones.first(where: { $0.isLocked }) else {
             return XCTFail("Нет заблокированных зон")
         }
@@ -185,6 +196,7 @@ final class WorldMapInteractorTests: XCTestCase {
     }
 
     // MARK: - 10. tapLyalya возвращает приветствие
+    // tapLyalya is synchronous — no yield needed.
 
     func test_tapLyalya_returnsLyalyaPrompt() {
         let (sut, spy) = makeSUT()
@@ -197,9 +209,10 @@ final class WorldMapInteractorTests: XCTestCase {
 
     // MARK: - 11. collectTreasure собирает сокровище
 
-    func test_collectTreasure_collectsAndIncreasesStars() {
+    func test_collectTreasure_collectsAndIncreasesStars() async {
         let (sut, spy) = makeSUT()
         sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
+        await Task.yield()
         guard let collectible = spy.lastLoadMap?.collectibles.first else {
             return XCTFail("Нет collectibles")
         }
@@ -209,9 +222,10 @@ final class WorldMapInteractorTests: XCTestCase {
         XCTAssertGreaterThan(spy.lastCollectTreasure?.totalStars ?? 0, starsBefore)
     }
 
-    func test_collectTreasure_twice_secondIgnored() {
+    func test_collectTreasure_twice_secondIgnored() async {
         let (sut, spy) = makeSUT()
         sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: nil))
+        await Task.yield()
         guard let collectible = spy.lastLoadMap?.collectibles.first else {
             return XCTFail("Нет collectibles")
         }
@@ -327,10 +341,11 @@ final class WorldMapInteractorTests: XCTestCase {
 
     // MARK: - 16. loadMap с разным возрастом ребёнка
 
-    func test_loadMap_withChildAge_doesNotCrash() {
+    func test_loadMap_withChildAge_doesNotCrash() async {
         let (sut, spy) = makeSUT()
         for age in [5, 6, 7, 8] {
             sut.loadMap(.init(childId: "child-1", highlightedSound: nil, childAge: age))
+            await Task.yield()
             XCTAssertTrue(spy.loadMapCalled)
         }
     }

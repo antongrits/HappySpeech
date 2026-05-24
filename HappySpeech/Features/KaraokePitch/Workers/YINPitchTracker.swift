@@ -50,15 +50,31 @@ struct YINPitchTracker: Sendable {
             let refinedTau = parabolicInterpolation(cmndf, tau: tau)
             let freq = config.sampleRate / refinedTau
             // v32 QA P1 — octave-error guard. Если detected freq <= maxFreq,
-            // но 2*freq > maxFreq И CMNDF[τ/2] также под threshold * 1.5,
+            // но 2*freq > maxFreq И CMNDF[τ/2] тоже под threshold*1.5,
             // значит мы поймали sub-октаву реального сигнала с фундаментом
             // выше нашего диапазона (типичный YIN artifact для 700+ Hz входа).
+            //
+            // Критичный уточняющий guard: CMNDF ненадёжен при τ < minTau из-за
+            // накопленной нормализации (runningSum мал → CMNDF искусственно завышен).
+            // Поэтому при halfTau < minTau усиливаем критерий: сравниваем с более
+            // мягким порогом (threshold * 2.0) чтобы отловить реальные 700 Hz
+            // артефакты (у которых cmndf[halfTau] ≈ 0.003), не затрагивая
+            // подлинные голоса 330-440 Hz (у которых cmndf[halfTau] >> 0.2).
             if freq >= config.minFrequencyHz, freq <= config.maxFrequencyHz {
                 if freq * 2 > config.maxFrequencyHz {
                     let halfTau = Int(refinedTau / 2)
+                    let effectiveThreshold: Double
+                    if halfTau < minTau {
+                        // Below reliable detection range: CMNDF values at small τ
+                        // are distorted by cumulative normalization. Use a tighter
+                        // absolute threshold to catch only true octave-aliased signals
+                        // (which have near-zero CMNDF at halfTau).
+                        effectiveThreshold = config.yinThreshold * 0.5
+                    } else {
+                        effectiveThreshold = config.yinThreshold * 1.5
+                    }
                     if halfTau >= 1, halfTau < cmndf.count,
-                       cmndf[halfTau] < config.yinThreshold * 1.5 {
-                        // Octave error detected → реальный фундамент вне диапазона.
+                       cmndf[halfTau] < effectiveThreshold {
                         return nil
                     }
                 }

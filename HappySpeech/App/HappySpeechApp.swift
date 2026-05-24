@@ -108,7 +108,10 @@ struct HappySpeechApp: App {
     private static func makeContainer() -> AppContainer {
         let args = ProcessInfo.processInfo.arguments
         let hasStartRoute = args.contains("-HSStartRoute")
-        let useMock = args.contains("-UITestMockServices") || args.contains("-UITestOffline") || hasStartRoute
+        // Use preview (mock) container when running unit tests to avoid real
+        // Firebase / Realm / CoreML initialisation in the XCTest host process.
+        let isUnitTesting = ProcessInfo.processInfo.isRunningUnitTests
+        let useMock = isUnitTesting || args.contains("-UITestMockServices") || args.contains("-UITestOffline") || hasStartRoute
         // UI-тест: при -UITestResetState сбрасываем флаг онбординга,
         // чтобы при следующем запуске splash гарантированно роутил в .onboarding.
         if args.contains("-UITestResetState") {
