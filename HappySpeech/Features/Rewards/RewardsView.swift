@@ -47,6 +47,13 @@ struct RewardsView: View {
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "RewardsView")
 
+    /// Diploma fix #5a — screenshot-tour mode (true when launched with
+    /// `-HSStartRoute`). Заморозить анимированный mesh-фон, чтобы захват
+    /// получил стабильный кадр.
+    fileprivate static var isScreenshotMode: Bool {
+        ProcessInfo.processInfo.arguments.contains("-HSStartRoute")
+    }
+
     // MARK: - Init
 
     init(childId: String) {
@@ -64,11 +71,18 @@ struct RewardsView: View {
                 // кульминация: mesh-палитра .rewards (gold/butter/primaryLo)
                 // становится полноценным фоновым слоем, а не лёгким softLight-
                 // оверлеем. iOS 18+ — MeshGradient, fallback iOS 17 — radial.
-                HSMeshGradientBackground(palette: .rewards, animated: true)
+                //
+                // Diploma fix #5a — анимация mesh-фазы отключается под
+                // -HSStartRoute (скриншот-тур), иначе на захвате ловится
+                // волнистый артефакт переходного кадра.
+                HSMeshGradientBackground(palette: .rewards, animated: !Self.isScreenshotMode)
                     .ignoresSafeArea()
                     // В dark mesh приглушён, чтобы gold/butter не «выгорал»,
                     // в light — почти полный для тёплого золотого сияния.
                     .opacity(colorScheme == .dark ? 0.45 : 0.85)
+                    .transaction { tx in
+                        if Self.isScreenshotMode { tx.disablesAnimations = true }
+                    }
                     .accessibilityHidden(true)
                     .allowsHitTesting(false)
 

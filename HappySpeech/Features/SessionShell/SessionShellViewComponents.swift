@@ -20,8 +20,11 @@ struct SessionHUDView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
+        // Diploma fix #10a — единый sp3 (medium) gap между progress/timer/
+        // hearts/pause, чтобы header HUD выглядел ровно на всех устройствах
+        // (раньше использовался regular=16 — слишком воздушно на SE 3).
         HSLiquidGlassCard(style: .primary, padding: SpacingTokens.small) {
-            HStack(spacing: SpacingTokens.regular) {
+            HStack(spacing: SpacingTokens.sp3) {
                 progressBlock
                     .frame(maxWidth: .infinity, alignment: .leading)
                 timerBlock
@@ -172,7 +175,9 @@ struct FeedbackOverlayView: View {
 
     private var feedbackBubble: some View {
         HStack(spacing: SpacingTokens.small) {
-            HSMascotView(mood: mascotMood(for: mascotState), size: 56)
+            // Diploma fix #10/9 — единый канонический маскот LyalyaMascotView
+            // вместо legacy HSMascotView (как в AR-зоне и StutteringView).
+            LyalyaMascotView(state: lyalyaState(for: mascotState), size: 56)
                 .accessibilityHidden(true)
             Text(bubbleText)
                 .font(TypographyTokens.headline(18))
@@ -246,6 +251,20 @@ struct FeedbackOverlayView: View {
     }
 
     private func mascotMood(for state: SessionShellModels.MascotState) -> MascotMood {
+        switch state {
+        case .idle:        return .idle
+        case .encouraging: return .encouraging
+        case .celebrating: return .celebrating
+        case .thinking:    return .thinking
+        case .explaining:  return .explaining
+        case .waving:      return .waving
+        }
+    }
+
+    /// Diploma fix #9 — маппинг session mascot state → LyalyaState для
+    /// канонического LyalyaMascotView. Заменяет legacy HSMascotView/MascotMood
+    /// pipeline в feedback overlay.
+    private func lyalyaState(for state: SessionShellModels.MascotState) -> LyalyaState {
         switch state {
         case .idle:        return .idle
         case .encouraging: return .encouraging

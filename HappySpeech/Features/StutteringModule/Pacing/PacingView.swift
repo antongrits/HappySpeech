@@ -49,11 +49,13 @@ struct PacingView: View {
     // MARK: - Mascot Header
 
     private var mascotHeader: some View {
-        let mood: MascotMood = interactor.display.showRoundReward
+        // Diploma fix #9 — единый канонический маскот LyalyaMascotView вместо
+        // legacy HSMascotView (как в AR-зоне). showRoundReward → celebrating,
+        // isRunning → happy, иначе idle.
+        let state: LyalyaState = interactor.display.showRoundReward
             ? .celebrating
             : (interactor.display.isRunning ? .happy : .idle)
-        return HSMascotView(mood: mood)
-            .frame(width: 96, height: 96)
+        return LyalyaMascotView(state: state, size: 96)
             .frame(maxWidth: .infinity)
             .accessibilityHidden(true)
     }
@@ -204,8 +206,8 @@ struct PacingView: View {
 
     private var sessionCompleteOverlay: some View {
         VStack(spacing: SpacingTokens.sp4) {
-            HSMascotView(mood: .celebrating)
-                .frame(width: 110, height: 110)
+            // Diploma fix #9 — единый канонический маскот LyalyaMascotView.
+            LyalyaMascotView(state: .celebrating, size: 110)
             Text(String(localized: "stuttering.pacing.session_done.title"))
                 .font(TypographyTokens.title(24))
                 .foregroundStyle(ColorTokens.Kid.ink)

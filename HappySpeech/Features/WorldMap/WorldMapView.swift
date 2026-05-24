@@ -208,9 +208,11 @@ struct WorldMapView: View {
 
     private var zonesGrid: some View {
         let isCompact = hSizeClass == .compact
+        // Diploma fix #2b — adaptive grid (min 120) уменьшает пустые поля при
+        // 2 столбцах на iPhone SE 3 / при крупных Dynamic Type, и плотно
+        // упаковывает плитки на iPad regular size class.
         let columns: [GridItem] = [
-            GridItem(.flexible(), spacing: SpacingTokens.regular),
-            GridItem(.flexible(), spacing: SpacingTokens.regular)
+            GridItem(.adaptive(minimum: 120), spacing: SpacingTokens.large)
         ]
 
         return VStack(spacing: SpacingTokens.regular) {

@@ -47,10 +47,14 @@ struct SpecialistHomeView: View {
             specTabContent(for: selectedTab)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 // v32 P1 — Ляля в спокойном профессиональном состоянии: corner-pin 56pt, topTrailing.
+                // Diploma fix #6b — даём дополнительный trailing-инсет (sp10 ≈ 40pt),
+                // чтобы маскот не «накладывался» на toolbar-кнопку «+» (square.and.pencil)
+                // в SpecChildDashboardView. Реальные системные toolbar items занимают
+                // правый край nav bar, и mascot должен заметно отстоять.
                 .overlay(alignment: .topTrailing) {
                     LyalyaMascotView(state: .idle, size: 56)
                         .padding(.top, SpacingTokens.regular)
-                        .padding(.trailing, SpacingTokens.screenEdge)
+                        .padding(.trailing, SpacingTokens.screenEdge + SpacingTokens.sp10)
                         .allowsHitTesting(false)
                         .accessibilityHidden(true)
                 }

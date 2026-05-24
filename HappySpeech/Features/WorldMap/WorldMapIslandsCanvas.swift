@@ -168,8 +168,36 @@ private struct IslandBubble: View {
                     .onEnded { _ in isPressed = false }
             )
 
-            // Подпись и Ляля сверху.
-            overlayLabels
+            // Diploma fix #2a — плашка-подпись теперь живёт в .overlay(.bottom)
+            // и явно опускается под кружок острова (y = +60), а не пересекает
+            // его центр. Ляля над текущим островом — отдельный overlay сверху.
+            if card.isCurrentLocation && !card.isLocked {
+                LyalyaMascotView(state: .waving, size: 56)
+                    .offset(y: -(ringDiameter / 2 + 24))
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
+            }
+        }
+        .overlay(alignment: .bottom) {
+            // Плашка с названием острова сидит СТРОГО под кружком (offset 60pt
+            // от центра bubble'a), не перекрывая ни диск, ни progress-ring.
+            VStack(spacing: 2) {
+                Text(card.name)
+                    .font(TypographyTokens.caption(12).weight(.semibold))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+                statusChip
+            }
+            .frame(maxWidth: 140)
+            .padding(.horizontal, SpacingTokens.tiny)
+            .padding(.vertical, 4)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
+                    .fill(.ultraThinMaterial)
+            )
+            .offset(y: 60)
+            .allowsHitTesting(false)
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(card.accessibilityLabel)
@@ -250,42 +278,7 @@ private struct IslandBubble: View {
         }
     }
 
-    // MARK: - Overlay labels
-
-    private var overlayLabels: some View {
-        VStack(spacing: SpacingTokens.tiny) {
-            // Ляля над текущим островом.
-            if card.isCurrentLocation && !card.isLocked {
-                LyalyaMascotView(state: .waving, size: 56)
-                    .offset(y: 4)
-                    .accessibilityHidden(true)
-            } else {
-                Color.clear.frame(height: 1)
-            }
-
-            Spacer(minLength: 0)
-
-            // Название и подпись «Ты здесь / Заблокировано / Пройдено».
-            VStack(spacing: 2) {
-                Text(card.name)
-                    .font(TypographyTokens.caption(12).weight(.semibold))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
-                statusChip
-            }
-            .frame(maxWidth: 140)
-            .padding(.horizontal, SpacingTokens.tiny)
-            .padding(.vertical, 4)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
-                    .fill(.ultraThinMaterial)
-            )
-            .offset(y: ringDiameter / 2 + 16)
-        }
-        .frame(width: 160, height: ringDiameter + 80)
-        .allowsHitTesting(false)
-    }
+    // MARK: - Status chip
 
     @ViewBuilder
     private var statusChip: some View {

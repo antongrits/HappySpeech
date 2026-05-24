@@ -62,6 +62,13 @@ struct SessionCompleteView: View {
 
     private let logger = Logger(subsystem: "ru.happyspeech", category: "SessionCompleteView")
 
+    /// Diploma fix #11f — screenshot-tour mode (true when launched with
+    /// `-HSStartRoute`). Заморозить анимированный mesh-фон + конфетти, чтобы
+    /// захват получил стабильный кадр.
+    fileprivate static var isScreenshotMode: Bool {
+        ProcessInfo.processInfo.arguments.contains("-HSStartRoute")
+    }
+
     // MARK: - Init
 
     init(
@@ -200,7 +207,10 @@ struct SessionCompleteView: View {
             // Block I v19: scaleEffect убран с 2D Ляли — только opacity fade-in.
             // F.tier1 v21: hero — мягче в dark.
             // E v21: 3D hero на SessionComplete (celebration phase).
+            // Diploma fix #11a — фон под маскотом явно прозрачен, чтобы PNG
+            // mascot_lyalya_celebrate с альфой не оставлял белый прямоугольник.
             LyalyaHeroView(state: lyalyaResultState, size: 160)
+                .background(Color.clear)
                 .opacity(visible ? (colorScheme == .dark ? 0.92 : 1.0) : 0)
                 .animation(
                     reduceMotion ? nil : MotionTokens.spring,
@@ -228,8 +238,14 @@ struct SessionCompleteView: View {
         let visible = display.isPhaseVisible(.scoreReveal)
         VStack(spacing: SpacingTokens.medium) {
             ZStack {
+                // Diploma fix #11b — track использует Kid.line (заметно темнее
+                // чем surfaceAlt) поверх золотого mesh-фона celebration screen,
+                // иначе кольцо «white-on-white» и невидимо на скриншотах.
                 Circle()
-                    .stroke(ColorTokens.Kid.surfaceAlt, style: StrokeStyle(lineWidth: 14, lineCap: .round))
+                    .stroke(
+                        ColorTokens.Kid.line.opacity(0.4),
+                        style: StrokeStyle(lineWidth: 14, lineCap: .round)
+                    )
 
                 Circle()
                     .trim(from: 0, to: ringFraction)
@@ -241,9 +257,11 @@ struct SessionCompleteView: View {
                     .shadow(color: scoreColor.opacity(0.35), radius: 8, x: 0, y: 0)
 
                 VStack(spacing: SpacingTokens.micro) {
+                    // Diploma fix #11c — score-number поверх mesh-фона должен
+                    // иметь высокий контраст: используем Kid.ink + kidDisplay(48).
                     Text("\(animatedScore)")
                         .font(TypographyTokens.kidDisplay(48))
-                        .foregroundStyle(scoreColor)
+                        .foregroundStyle(ColorTokens.Kid.ink)
                         .monospacedDigit()
                         .accessibilityHidden(true)
 
@@ -275,6 +293,9 @@ struct SessionCompleteView: View {
 
     @ViewBuilder
     private var scoreBreakdownRow: some View {
+        // Diploma fix #11d — chip-ряд (баллы / бонус / штраф) центрируется по
+        // экрану. Раньше «Бонус» прижимался к правому краю на узких устройствах
+        // из-за natural-content alignment в HStack.
         HStack(spacing: SpacingTokens.small) {
             breakdownChip(label: display.baseScoreLabel, color: ColorTokens.Feedback.correct)
             if !display.streakBonusLabel.isEmpty {
@@ -284,6 +305,7 @@ struct SessionCompleteView: View {
                 breakdownChip(label: display.hintPenaltyLabel, color: ColorTokens.Feedback.incorrect)
             }
         }
+        .frame(maxWidth: .infinity, alignment: .center)
         .animation(reduceMotion ? nil : .easeOut(duration: 0.3), value: display.baseScoreLabel)
     }
 
@@ -302,20 +324,35 @@ struct SessionCompleteView: View {
     @ViewBuilder
     private var starsPhase: some View {
         let visible = display.isPhaseVisible(.stars)
-        HStack(spacing: SpacingTokens.medium) {
-            ForEach(0..<display.starsTotal, id: \.self) { index in
-                let earned = index < display.starsEarned
-                Image(systemName: earned ? "star.fill" : "star")
-                    .font(TypographyTokens.display(44).weight(.semibold))
-                    .foregroundStyle(earned ? ColorTokens.Brand.gold : ColorTokens.Kid.line)
-                    .scaleEffect(visible ? 1 : 0.2)
-                    .opacity(visible ? 1 : 0)
-                    .shadow(color: earned ? ColorTokens.Brand.gold.opacity(0.5) : .clear, radius: 8, x: 0, y: 2)
-                    .animation(
-                        reduceMotion ? nil : MotionTokens.bounce.delay(Double(index) * 0.18),
-                        value: visible
-                    )
-                    .accessibilityHidden(true)
+        // Diploma fix #11g — добавляем явный caption «Звёзд: N из M» под рядом
+        // звёзд: kids в скриншот-туре не видят прогресса «3 заполненные vs
+        // пустые», а родитель/специалист тоже хочет численную оценку.
+        VStack(spacing: SpacingTokens.sp2) {
+            HStack(spacing: SpacingTokens.medium) {
+                ForEach(0..<display.starsTotal, id: \.self) { index in
+                    let earned = index < display.starsEarned
+                    Image(systemName: earned ? "star.fill" : "star")
+                        .font(TypographyTokens.display(44).weight(.semibold))
+                        .foregroundStyle(earned ? ColorTokens.Brand.gold : ColorTokens.Kid.line)
+                        .scaleEffect(visible ? 1 : 0.2)
+                        .opacity(visible ? 1 : 0)
+                        .shadow(color: earned ? ColorTokens.Brand.gold.opacity(0.5) : .clear, radius: 8, x: 0, y: 2)
+                        .animation(
+                            reduceMotion ? nil : MotionTokens.bounce.delay(Double(index) * 0.18),
+                            value: visible
+                        )
+                        .accessibilityHidden(true)
+                }
+            }
+            if visible {
+                Text(String(
+                    format: String(localized: "sessionComplete.stars.caption"),
+                    display.starsEarned,
+                    display.starsTotal
+                ))
+                .font(TypographyTokens.caption(11))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .accessibilityHidden(true)
             }
         }
         .accessibilityElement(children: .ignore)
@@ -661,8 +698,14 @@ struct SessionCompleteView: View {
     private var backgroundLayer: some View {
         ZStack {
             ColorTokens.Kid.bg
-            HSMeshGradientBackground(palette: .rewards)
+            // Diploma fix #11f — анимация mesh-фазы отключается под
+            // -HSStartRoute (скриншот-тур), иначе на захвате ловится
+            // волнистый артефакт переходного кадра.
+            HSMeshGradientBackground(palette: .rewards, animated: !Self.isScreenshotMode)
                 .opacity(colorScheme == .dark ? 0.40 : 0.78)
+                .transaction { tx in
+                    if Self.isScreenshotMode { tx.disablesAnimations = true }
+                }
 
             // Task #67: decorative celebration banner (Hero/celebration_*).
             // 5 illustrations: balloons / fireworks / rainbow / stars / trophy_glow.

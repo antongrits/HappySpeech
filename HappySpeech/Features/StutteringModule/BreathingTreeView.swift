@@ -42,8 +42,11 @@ struct BreathingTreeView: View {
     // MARK: - Subviews
 
     private var mascotHeader: some View {
-        HSMascotView(mood: interactor.display.mascotMood == .celebrating ? .celebrating : .idle)
-            .frame(width: 100, height: 100)
+        // Diploma fix #9 — единый канонический маскот LyalyaMascotView.
+        let state: LyalyaState = interactor.display.mascotMood == .celebrating
+            ? .celebrating
+            : .idle
+        return LyalyaMascotView(state: state, size: 100)
             .frame(maxWidth: .infinity)
     }
 

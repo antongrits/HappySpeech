@@ -116,7 +116,12 @@ public struct HomeScreenCard: View {
     // MARK: - Streak badge
 
     private var streakBadge: some View {
-        HStack(spacing: 2) {
+        // Diploma fix #1a — bird-icon в hero-row HomeScreenCard «съедал» ширину
+        // streak-чипа, поэтому строка «5 дней подряд» обрезалась («5…»).
+        // Раздвигаем chip-капсулу (+24pt по горизонтали через sp3 vs tiny),
+        // фиксируем lineLimit(1) + .minimumScaleFactor(0.7) на тексте, чтобы
+        // chip всегда читался даже на iPhone SE 3 / Dynamic Type XL.
+        HStack(spacing: 3) {
             Image(systemName: "flame.fill")
                 .font(.system(size: isCompact ? 9 : 10, weight: .bold))
                 .foregroundStyle(ColorTokens.Brand.butter)
@@ -125,9 +130,10 @@ public struct HomeScreenCard: View {
                 .font(TypographyTokens.caption(isCompact ? 9 : 10).weight(.bold))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .lineLimit(1)
-                .minimumScaleFactor(0.8)
+                .minimumScaleFactor(0.7)
+                .fixedSize(horizontal: true, vertical: false)
         }
-        .padding(.horizontal, SpacingTokens.tiny)
+        .padding(.horizontal, SpacingTokens.sp3)
         .padding(.vertical, 3)
         .background(
             Capsule()

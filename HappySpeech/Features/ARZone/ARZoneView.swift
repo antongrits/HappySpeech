@@ -121,6 +121,10 @@ struct ARZoneView: View {
     // MARK: - Face filter entry (S.4 v16)
 
     private var faceFilterEntryButton: some View {
+        // Diploma fix #4 — выравнивание шапки AR-маски: HStack(spacing: sp3),
+        // тексты с явным .multilineTextAlignment(.leading) и fixedSize по
+        // вертикали, чтобы строка не «прыгала» на узких устройствах и не
+        // получала фантомный first-line indent (defect #4b).
         Button {
             showFaceFilterSheet = true
         } label: {
@@ -133,9 +137,13 @@ struct ARZoneView: View {
                     Text("ar.zone.faceFilter.title")
                         .font(TypographyTokens.headline(16))
                         .foregroundStyle(ColorTokens.Overlay.onAccent)
+                        .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
                     Text("ar.zone.faceFilter.subtitle")
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
+                        .multilineTextAlignment(.leading)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
                 Spacer()
                 Image(systemName: "chevron.right")
@@ -145,7 +153,8 @@ struct ARZoneView: View {
                     .hsSymbolEffect(.pulse, value: viewModelHolder.cards.count)
                     .accessibilityHidden(true)
             }
-            .padding(SpacingTokens.sp4)
+            .padding(.horizontal, SpacingTokens.sp4)
+            .padding(.vertical, SpacingTokens.sp3)
             .background(
                 RoundedRectangle(cornerRadius: 18)
                     .fill(LinearGradient(

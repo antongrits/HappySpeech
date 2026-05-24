@@ -88,20 +88,28 @@ struct ChildHomeView: View {
                     mascotInteractionZone
                         .spotlightAnchor(key: "mascot_header")
 
-                    if viewModel.hasAchievement, let ach = viewModel.achievement {
-                        ChildHomeAchievementBanner(achievement: ach) {
-                            Task { await interactor?.dismissAchievement(id: ach.id) }
+                    // Diploma fix #1c — «Новое достижение» и streak-баннер должны
+                    // отображаться с одинаковым ритмом отступов: оборачиваем оба
+                    // в общий VStack(spacing: sp3) с единым screenEdge-паддингом,
+                    // чтобы карточки выглядели одной группой, а не двумя случайно
+                    // выровненными секциями (audit defect #1c).
+                    VStack(spacing: SpacingTokens.sp3) {
+                        if viewModel.hasAchievement, let ach = viewModel.achievement {
+                            ChildHomeAchievementBanner(achievement: ach) {
+                                Task { await interactor?.dismissAchievement(id: ach.id) }
+                            }
+                            .transition(.scale.combined(with: .opacity))
                         }
-                        .transition(.scale.combined(with: .opacity))
-                    }
 
-                    if viewModel.currentStreak > 0 {
-                        ChildHomeStreakBanner(
-                            streak: viewModel.currentStreak,
-                            isHot: viewModel.isStreakHot
-                        )
-                        .transition(.scale.combined(with: .opacity))
+                        if viewModel.currentStreak > 0 {
+                            ChildHomeStreakBanner(
+                                streak: viewModel.currentStreak,
+                                isHot: viewModel.isStreakHot
+                            )
+                            .transition(.scale.combined(with: .opacity))
+                        }
                     }
+                    .padding(.horizontal, SpacingTokens.sp3)
 
                     homeScreenCardSection
                         // v32 P1 — MotionTokens: widget card entrance fade+scale.
@@ -334,6 +342,12 @@ struct ChildHomeView: View {
                 }
             }
         }
+        // Diploma fix #1b — top-right hero badges (streak chip / mission ring)
+        // должны уступить место круглой кнопке-FAB «Родительский режим» в
+        // ZStack-оверлее. Без trailing-инсета (64 ≈ диаметр кнопки 56 + 8 gap)
+        // FAB визуально накладывается на streak-чип и выглядит как «фантомный
+        // прямоугольник» под кнопкой.
+        .padding(.trailing, SpacingTokens.sp10)
         .padding(.top, SpacingTokens.pageTop)
         // v32 P1 — ShadowTokens.kidDepth: two-layer depth under greeting card.
         .depthShadow(ShadowTokens.kidDepth)

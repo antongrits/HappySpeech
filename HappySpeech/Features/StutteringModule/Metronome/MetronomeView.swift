@@ -39,11 +39,11 @@ struct MetronomeView: View {
     private var mascotHeader: some View {
         HStack {
             Spacer()
-            let mood: MascotMood = interactor.display.showReward
+            // Diploma fix #9 — единый канонический маскот LyalyaMascotView.
+            let state: LyalyaState = interactor.display.showReward
                 ? .celebrating
                 : (interactor.display.isRunning ? .happy : .idle)
-            HSMascotView(mood: mood)
-                .frame(width: 80, height: 80)
+            LyalyaMascotView(state: state, size: 80)
         }
     }
 

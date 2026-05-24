@@ -35305,6 +35305,23 @@
         }
       }
     },
+    "sessionComplete.stars.caption": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stars: %1$d of %2$d"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звёзд: %1$d из %2$d"
+          }
+        }
+      }
+    },
     "sessionComplete.share.template": {
       "extractionState": "manual",
       "localizations": {

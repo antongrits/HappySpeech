@@ -33,6 +33,9 @@ struct SessionHistoryView: View {
     @State private var isFilterSheetOpen = false
     @State private var isExportSheetOpen = false
     @State private var path: [SessionDetailRoute] = []
+    /// Diploma fix #7c — выбранная дата на trend-чарте (драг по chart-области).
+    /// Под выбранной точкой показывается overlay со значением точности.
+    @State private var selectedChartDate: Date?
 
     // Block J v18 — hero zoom transition (iOS 18+) для row → detail.
     @Namespace private var heroNamespace
@@ -175,17 +178,10 @@ struct SessionHistoryView: View {
         } else {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: SpacingTokens.regular, pinnedViews: []) {
-                    // D-17 v27 — явный заголовок экрана: large-title навбара
-                    // на iOS 26 не отрисовывался поверх ScrollView в ZStack.
-                    Text(String(localized: "sessionHistory.navTitle"))
-                        .font(TypographyTokens.title(28))
-                        .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(nil)
-                        .minimumScaleFactor(0.85)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, SpacingTokens.screenEdge)
-                        .padding(.top, SpacingTokens.regular)
-                        .accessibilityAddTraits(.isHeader)
+                    // Diploma fix #7b — inline-заголовок «История сессий» удалён:
+                    // navigationTitle(...) на NavigationStack уже отображает его
+                    // в navbar (inline mode), и дублирование делало секцию
+                    // визуально «толстой» в скриншот-туре.
 
                     if !display.activeSoundChips.isEmpty
                         || display.activeFilter.fromDate != nil
@@ -316,8 +312,34 @@ struct SessionHistoryView: View {
 
                 trendChart
                     .frame(height: 160)
+                    // Diploma fix #7c — swipe-to-inspect: drag по чарту выбирает
+                    // ближайшую дату, под чартом появляется текстовый overlay.
+                    .chartXSelection(value: $selectedChartDate)
                     .accessibilityLabel(String(localized: "sessionHistory.a11y.chart"))
                     .accessibilityValue(chartAccessibilityValue)
+                if let selected = selectedChartDate,
+                   let point = display.chartPoints()
+                    .min(by: { abs($0.date.timeIntervalSince(selected))
+                              < abs($1.date.timeIntervalSince(selected)) }) {
+                    HStack(spacing: SpacingTokens.tiny) {
+                        Image(systemName: "calendar")
+                            .font(TypographyTokens.caption(11).weight(.semibold))
+                            .foregroundStyle(ColorTokens.Parent.accent)
+                            .accessibilityHidden(true)
+                        Text(formattedChartDate(point.date))
+                            .font(TypographyTokens.caption(11).weight(.semibold))
+                            .foregroundStyle(ColorTokens.Parent.ink)
+                        Text("\(Int(point.accuracyPercent))%")
+                            .font(TypographyTokens.caption(11).monospacedDigit())
+                            .foregroundStyle(ColorTokens.Parent.accent)
+                    }
+                    .padding(.horizontal, SpacingTokens.tiny)
+                    .padding(.vertical, SpacingTokens.micro)
+                    .background(
+                        Capsule().fill(ColorTokens.Parent.accent.opacity(0.10))
+                    )
+                    .transition(.opacity)
+                }
             }
         }
     }
@@ -372,9 +394,12 @@ struct SessionHistoryView: View {
             }
         }
         .chartXAxis {
-            AxisMarks(values: .automatic(desiredCount: 4)) { _ in
+            // Diploma fix #7d — desiredCount уменьшен, dates форматируются как
+            // «d MMM» с caption(11) + lineLimit(1) + minimumScaleFactor(0.7),
+            // чтобы метки не обрезались на узком iPhone SE 3 и при Dynamic Type XL.
+            AxisMarks(values: .automatic(desiredCount: 3)) { _ in
                 AxisValueLabel(format: .dateTime.day().month(.abbreviated), centered: false)
-                    .font(TypographyTokens.caption(10))
+                    .font(TypographyTokens.caption(11))
                     .foregroundStyle(ColorTokens.Parent.inkSoft)
             }
         }
@@ -602,6 +627,14 @@ struct SessionHistoryView: View {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ru_RU")
         formatter.dateFormat = "d MMM yyyy"
+        return formatter.string(from: date)
+    }
+
+    /// Diploma fix #7c — короткий «d MMM» формат для capsule поверх trend-chart.
+    private func formattedChartDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.dateFormat = "d MMM"
         return formatter.string(from: date)
     }
 
