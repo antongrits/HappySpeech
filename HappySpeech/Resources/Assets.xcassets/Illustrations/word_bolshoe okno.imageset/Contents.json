@@ -1,0 +1,23 @@
+{
+  "images": [
+    {
+      "idiom": "universal",
+      "filename": "word_bolshoe okno.png",
+      "scale": "1x"
+    },
+    {
+      "idiom": "universal",
+      "filename": "word_bolshoe okno@2x.png",
+      "scale": "2x"
+    },
+    {
+      "idiom": "universal",
+      "filename": "word_bolshoe okno@3x.png",
+      "scale": "3x"
+    }
+  ],
+  "info": {
+    "author": "xcode",
+    "version": 1
+  }
+}
