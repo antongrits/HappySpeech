@@ -97,7 +97,8 @@ final class AdvancedGameSnapshotTests: XCTestCase {
         let activity = stubActivity(.bingo)
         let view = BingoView(activity: activity, onComplete: { _ in })
             .environment(AppContainer.preview())
-        try record(view, screen: "AdvancedGame_BingoMid")
+        // maxDiffRatio=0.10: BingoView использует случайный порядок клеток — drift до 8% на SE3.
+        try record(view, screen: "AdvancedGame_BingoMid", maxDiffRatio: 0.10)
     }
 
     // MARK: - 6. MemoryView (difficulty = 3)

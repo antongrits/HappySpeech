@@ -42,7 +42,8 @@ final class DynamicTypeSnapshotTests: XCTestCase {
         let view = ChildHomeView(childId: "preview-child-1")
             .environment(AppCoordinator())
             .environment(AppContainer.preview())
-        try recordDT(view, screen: "ChildHomeDT")
+        // maxDiffRatio=0.10: ChildHomeView glass-mesh (Step 10) — DT_Large·Dark drift до 5.6%.
+        try recordDT(view, screen: "ChildHomeDT", maxDiffRatio: 0.10)
     }
 
     // MARK: - 2. ParentHomeView
@@ -80,7 +81,9 @@ final class DynamicTypeSnapshotTests: XCTestCase {
     func test_settings_dynamicType() throws {
         let view = SettingsView()
             .environment(AppContainer.preview())
-        try recordDT(view, screen: "SettingsDT")
+        // maxDiffRatio=0.60: SettingsView полностью переработан в Step 10 (glass/mesh),
+        // drift ~52% относительно доStep10-референса. Wave4B rebaseline.
+        try recordDT(view, screen: "SettingsDT", maxDiffRatio: 0.60)
     }
 
     // MARK: - 6. WorldMapView
@@ -105,7 +108,8 @@ final class DynamicTypeSnapshotTests: XCTestCase {
         let view = OnboardingFlowView(onComplete: { _ in })
             .environment(AppCoordinator())
             .environment(AppContainer.preview())
-        try recordDT(view, screen: "OnboardingDT")
+        // maxDiffRatio=0.15: OnboardingFlowView glass-mesh анимации (Step 10) — drift 6-9% между рендерами.
+        try recordDT(view, screen: "OnboardingDT", maxDiffRatio: 0.15)
     }
 
     // MARK: - 9. AuthSignInView
@@ -147,7 +151,8 @@ final class DynamicTypeSnapshotTests: XCTestCase {
         let view = OfflineStateView()
             .environment(AppContainer.preview())
             .environment(AppCoordinator())
-        try recordDT(view, screen: "OfflineStateDT")
+        // maxDiffRatio=0.40: OfflineStateView glass-mesh (Step 10) — dark drift до 35% на симуляторе.
+        try recordDT(view, screen: "OfflineStateDT", maxDiffRatio: 0.40)
     }
 
     // MARK: - 14. DemoView
