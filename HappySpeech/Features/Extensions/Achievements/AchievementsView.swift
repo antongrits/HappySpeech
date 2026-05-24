@@ -45,6 +45,12 @@ struct AchievementsView: View {
             ColorTokens.Kid.bg
                 .ignoresSafeArea()
 
+            HSMeshGradientBackground(palette: .rewards, animated: !reduceMotion)
+                .ignoresSafeArea()
+                .blendMode(.softLight)
+                .accessibilityHidden(true)
+                .allowsHitTesting(false)
+
             VStack(spacing: 0) {
                 tabPicker
                     .padding(.horizontal, SpacingTokens.screenEdge)
@@ -154,20 +160,23 @@ struct AchievementsView: View {
     }
 
     private func progressHeader(vm: AchievementsModels.Load.ViewModel) -> some View {
-        HStack {
-            VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
-                Text(String(localized: "achievements.tab.list"))
-                    .font(TypographyTokens.headline(20))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                Text(vm.progressText)
-                    .font(TypographyTokens.caption(14))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+            HStack {
+                VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+                    Text(String(localized: "achievements.tab.list"))
+                        .font(TypographyTokens.headline(20))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                    Text(vm.progressText)
+                        .font(TypographyTokens.caption(14))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                }
+                Spacer()
+                Image(systemName: "trophy.fill")
+                    .font(TypographyTokens.headline(28))
+                    .foregroundStyle(ColorTokens.Brand.butter)
+                    .hsSymbolEffect(.bounce, value: vm.progressText)
+                    .accessibilityHidden(true)
             }
-            Spacer()
-            Image(systemName: "trophy.fill")
-                .font(TypographyTokens.headline(28))
-                .foregroundStyle(ColorTokens.Brand.butter)
-                .accessibilityHidden(true)
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(String(localized: "achievements.tab.list")). \(vm.progressText)")
@@ -176,7 +185,7 @@ struct AchievementsView: View {
     private func achievementSection(_ section: AchievementSection) -> some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
             sectionHeader(section.rarity.localizedTitle)
-            ForEach(section.items) { item in
+            ForEach(Array(section.items.enumerated()), id: \.element.id) { index, item in
                 // S12: matchedGeometryEffect — card is source while not expanded.
                 // Tap на unlocked ачивку — hero expand (если ReduceMotion off).
                 AchievementCardView(item: item)
@@ -195,6 +204,15 @@ struct AchievementsView: View {
                             expandedAchievementId = item.id
                         }
                     }
+                    .scrollTransition(
+                        .animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.55, dampingFraction: 0.85))
+                    ) { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.92)
+                    }
+                    .hsParallaxTile(factor: 0.22)
+                    .zIndex(Double(section.items.count - index))
                     .accessibilityAddTraits(.isButton)
                     .accessibilityHint(item.isUnlocked
                                        ? String(localized: "achievements.card.expand.hint")
@@ -361,7 +379,7 @@ struct AchievementsView: View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
             sectionHeader(String(localized: "achievements.family.leaderboard.title"))
 
-            ForEach(entries) { entry in
+            ForEach(Array(entries.enumerated()), id: \.element.id) { index, entry in
                 HStack(spacing: SpacingTokens.sp3) {
                     Text("\(entry.rank)")
                         .font(TypographyTokens.headline(18))
@@ -391,6 +409,15 @@ struct AchievementsView: View {
                     RoundedRectangle(cornerRadius: RadiusTokens.card)
                         .fill(Color(.secondarySystemGroupedBackground))
                 )
+                .scrollTransition(
+                    .animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.55, dampingFraction: 0.85))
+                ) { content, phase in
+                    content
+                        .opacity(phase.isIdentity ? 1 : 0)
+                        .scaleEffect(phase.isIdentity ? 1 : 0.94)
+                }
+                .hsParallaxTile(factor: 0.18)
+                .zIndex(Double(entries.count - index))
                 .accessibilityElement(children: .combine)
                 .accessibilityLabel(
                     "\(entry.rank) место. \(entry.childName). \(entry.totalAchievements) достижений"
@@ -406,6 +433,7 @@ struct AchievementsView: View {
             Image(systemName: toast.iconName)
                 .font(TypographyTokens.headline(20))
                 .foregroundStyle(ColorTokens.Brand.butter)
+                .hsSymbolEffect(.bounce, value: showToast)
                 .accessibilityHidden(true)
             Text(toast.message)
                 .font(TypographyTokens.headline(15))

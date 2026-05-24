@@ -133,16 +133,47 @@ struct DemoOverviewSheet: View {
     let onSelect: (Int) -> Void
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(Array(steps.enumerated()), id: \.offset) { index, step in
+            ZStack {
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
+                listContent
+            }
+            .navigationTitle(String(localized: "demo.overview.label"))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    LyalyaMascotView(state: .explaining, size: 32)
+                        .accessibilityHidden(true)
+                }
+                ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        onSelect(index)
                         dismiss()
                     } label: {
-                        HStack(spacing: SpacingTokens.medium) {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    }
+                    .accessibilityLabel(String(localized: "accessibility.close"))
+                }
+            }
+        }
+    }
+
+    private var listContent: some View {
+        List {
+            ForEach(Array(steps.enumerated()), id: \.offset) { index, step in
+                Button {
+                    onSelect(index)
+                    dismiss()
+                } label: {
+                    HStack(spacing: SpacingTokens.medium) {
                             ZStack {
                                 Circle()
                                     .fill(
@@ -183,28 +214,20 @@ struct DemoOverviewSheet: View {
                     .accessibilityLabel(
                         String(format: String(localized: "demo.thumbnail.hint"), index + 1)
                     )
+                    .scrollTransition(
+                        .animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))
+                    ) { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                    }
+                    .hsParallaxTile(factor: 0.16)
+                    .listRowBackground(Color.clear)
                 }
             }
             .listStyle(.plain)
-            .navigationTitle(String(localized: "demo.overview.label"))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    LyalyaMascotView(state: .explaining, size: 32)
-                        .accessibilityHidden(true)
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    }
-                    .accessibilityLabel(String(localized: "accessibility.close"))
-                }
-            }
+            .scrollContentBackground(.hidden)
         }
-    }
 }
 
 // MARK: - DemoOverviewSymbol
@@ -219,6 +242,7 @@ private struct DemoOverviewSymbol: View {
         Image(systemName: step.screenSymbol)
             .font(TypographyTokens.headline(22))
             .foregroundStyle(ColorTokens.Brand.primary)
+            .hsSymbolEffect(.pulse, value: step.id)
             .accessibilityHidden(true)
     }
 }

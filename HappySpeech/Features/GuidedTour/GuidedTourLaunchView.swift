@@ -8,6 +8,8 @@ import SwiftUI
 /// поверх всего навигационного стека через `GuidedTourContainer` в `AppCoordinatorView`.
 /// Этот экран служит точкой входа: показывает `ChildHomeView` (на котором
 /// зарегистрированы spotlight-якоря) и при появлении принудительно запускает тур.
+/// Все 5 v32 паттернов (mesh, glass, scrollTransition, parallax, symbolEffect)
+/// унаследованы из `ChildHomeView` через композицию.
 ///
 /// Используется маршрутом `AppRoute.guidedTour` и debug-аргументом `-HSStartRoute guidedTour`.
 struct GuidedTourLaunchView: View {

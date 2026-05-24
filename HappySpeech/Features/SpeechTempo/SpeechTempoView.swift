@@ -82,6 +82,12 @@ struct SpeechTempoView: View {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
 
+                HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
                 if holder.isFinished, let summary = holder.summary {
                     summarySection(summary)
                 } else if let startVM = holder.startVM,
@@ -197,27 +203,18 @@ struct SpeechTempoView: View {
     }
 
     private func rhymeCard(_ rhyme: SpeechTempoModels.Start.RhymeViewModel) -> some View {
-        Text(rhyme.text)
-            .font(TypographyTokens.title(28))
-            .foregroundStyle(ColorTokens.Kid.ink)
-            .multilineTextAlignment(.center)
-            .lineLimit(3)
-            .minimumScaleFactor(0.6)
-            .padding(.horizontal, SpacingTokens.sp5)
-            .padding(.vertical, SpacingTokens.sp5)
-            .frame(maxWidth: .infinity)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .fill(ColorTokens.Kid.surface)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: RadiusTokens.card)
-                    .strokeBorder(ColorTokens.Kid.line, lineWidth: 2)
-            )
-            .depthShadow(ShadowTokens.kidDepth)
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .accessibilityLabel(Text(rhyme.accessibilityLabel))
-            .accessibilityAddTraits(.isStaticText)
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp5) {
+            Text(rhyme.text)
+                .font(TypographyTokens.title(28))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .multilineTextAlignment(.center)
+                .lineLimit(3)
+                .minimumScaleFactor(0.6)
+                .frame(maxWidth: .infinity)
+        }
+        .padding(.horizontal, SpacingTokens.screenEdge)
+        .accessibilityLabel(Text(rhyme.accessibilityLabel))
+        .accessibilityAddTraits(.isStaticText)
     }
 
     private func driveButton(rhyme: SpeechTempoModels.Start.RhymeViewModel) -> some View {
@@ -232,6 +229,7 @@ struct SpeechTempoView: View {
             VStack(spacing: SpacingTokens.sp1) {
                 Image(systemName: "hand.tap.fill")
                     .font(.system(size: 32))
+                    .hsSymbolEffect(.bounce, value: holder.tappedSyllables)
                 Text(label)
                     .font(TypographyTokens.title(26))
                     .lineLimit(1)
@@ -256,6 +254,7 @@ struct SpeechTempoView: View {
                 ? "checkmark.circle.fill"
                 : "arrow.triangle.2.circlepath")
                 .font(.title3)
+                .hsSymbolEffect(.bounce, value: rating)
             Text(text)
                 .font(TypographyTokens.body(15).weight(.medium))
                 .lineLimit(2)
@@ -284,6 +283,7 @@ struct SpeechTempoView: View {
             Image(systemName: "flag.checkered.2.crossed")
                 .font(.system(size: 80))
                 .foregroundStyle(ColorTokens.Brand.butter)
+                .hsSymbolEffect(.bounce, value: holder.isFinished)
                 .accessibilityHidden(true)
 
             Text(summary.title)

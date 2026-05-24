@@ -41,6 +41,12 @@ struct VoiceCloningView: View {
         ZStack {
             ColorTokens.Kid.bg.ignoresSafeArea()
 
+            HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                .ignoresSafeArea()
+                .blendMode(.softLight)
+                .accessibilityHidden(true)
+                .allowsHitTesting(false)
+
             ScrollView(showsIndicators: false) {
                 VStack(spacing: SpacingTokens.sectionGap) {
                     heroSection
@@ -116,7 +122,7 @@ struct VoiceCloningView: View {
     // MARK: - Recording card
 
     private var recordingCard: some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
             VStack(spacing: SpacingTokens.sp3) {
                 // Подсказка слова
                 HStack(spacing: SpacingTokens.sp2) {
@@ -178,6 +184,7 @@ struct VoiceCloningView: View {
                 Image(systemName: viewModel.isRecording ? "stop.fill" : "mic.fill")
                     .font(.system(size: 32, weight: .bold))
                     .foregroundStyle(ColorTokens.Overlay.onAccent)
+                    .hsSymbolEffect(.pulse, value: viewModel.isRecording)
             }
         }
         .buttonStyle(.plain)
@@ -224,7 +231,7 @@ struct VoiceCloningView: View {
                 ForEach(viewModel.archiveSections) { section in
                     sectionHeader(section.title)
                     VStack(spacing: SpacingTokens.sp2) {
-                        ForEach(section.rows) { row in
+                        ForEach(Array(section.rows.enumerated()), id: \.element.id) { index, row in
                             ArchiveRowView(
                                 row: row,
                                 isPlaying: viewModel.currentlyPlayingSampleId == row.id,
@@ -234,6 +241,15 @@ struct VoiceCloningView: View {
                                     showDeleteAlert = true
                                 }
                             )
+                            .scrollTransition(
+                                .animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.55, dampingFraction: 0.85))
+                            ) { content, phase in
+                                content
+                                    .opacity(phase.isIdentity ? 1 : 0)
+                                    .scaleEffect(phase.isIdentity ? 1 : 0.94)
+                            }
+                            .hsParallaxTile(factor: 0.18)
+                            .zIndex(Double(section.rows.count - index))
                         }
                     }
                 }
@@ -354,6 +370,7 @@ private struct ArchiveRowView: View {
                         Image(systemName: isPlaying ? "pause.fill" : "play.fill")
                             .font(TypographyTokens.headline(16))
                             .foregroundStyle(isPlaying ? ColorTokens.Overlay.onAccent : ColorTokens.Brand.primary)
+                            .hsSymbolEffect(.bounce, value: isPlaying)
                     }
                 }
                 .buttonStyle(.plain)

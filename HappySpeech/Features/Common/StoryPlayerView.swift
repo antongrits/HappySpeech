@@ -55,6 +55,12 @@ struct StoryPlayerView: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
+            HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                .ignoresSafeArea()
+                .blendMode(.softLight)
+                .accessibilityHidden(true)
+                .allowsHitTesting(false)
+
             playerOrPlaceholder
                 .clipShape(RoundedRectangle(cornerRadius: 20))
 
@@ -111,6 +117,7 @@ struct StoryPlayerView: View {
                 Image(systemName: "play.circle.fill")
                     .font(TypographyTokens.kidDisplay(56))
                     .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.8))
+                    .hsSymbolEffect(.pulse, value: videoID)
                 if let desc = entry?.description {
                     Text(desc)
                         .font(.headline)

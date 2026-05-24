@@ -40,6 +40,13 @@ struct DailyTimeCapView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Parent.bg.ignoresSafeArea()
+
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
                 if let viewModel = holder.viewModel {
                     content(viewModel)
                 } else {
@@ -83,12 +90,13 @@ struct DailyTimeCapView: View {
     // MARK: - Intro
 
     private var introCard: some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
                 HStack(spacing: SpacingTokens.sp2) {
                     Image(systemName: "clock.badge.checkmark.fill")
                         .font(.system(size: 28))
                         .foregroundStyle(ColorTokens.Brand.sky)
+                        .hsSymbolEffect(.pulse, value: localEnabled)
                         .accessibilityHidden(true)
                     Text(String(localized: "dailyTimeCap.intro.title"))
                         .font(TypographyTokens.headline(17))
@@ -102,14 +110,13 @@ struct DailyTimeCapView: View {
                     .lineLimit(nil)
                     .minimumScaleFactor(0.85)
             }
-            .padding(SpacingTokens.sp4)
         }
     }
 
     // MARK: - Toggle
 
     private func toggleCard(_ viewModel: DailyTimeCapModels.Status.ViewModel) -> some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
                 Toggle(isOn: enabledBinding) {
                     VStack(alignment: .leading, spacing: 2) {
@@ -131,14 +138,13 @@ struct DailyTimeCapView: View {
                     .lineLimit(2)
                     .minimumScaleFactor(0.85)
             }
-            .padding(SpacingTokens.sp4)
         }
     }
 
     // MARK: - Slider
 
     private func sliderCard(_ viewModel: DailyTimeCapModels.Status.ViewModel) -> some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
                 HStack {
                     Text(String(localized: "dailyTimeCap.slider.title"))
@@ -163,7 +169,6 @@ struct DailyTimeCapView: View {
                 .accessibilityLabel(String(localized: "dailyTimeCap.slider.a11y_label"))
                 .accessibilityValue(localizedMinutes(localCap))
             }
-            .padding(SpacingTokens.sp4)
         }
     }
 
@@ -171,7 +176,7 @@ struct DailyTimeCapView: View {
 
     private func progressCard(_ viewModel: DailyTimeCapModels.Status.ViewModel) -> some View {
         let tint = color(for: viewModel.progressTint)
-        return HSCard(style: .elevated) {
+        return HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
                 HStack(alignment: .firstTextBaseline) {
                     Text(String(localized: "dailyTimeCap.progress.title"))
@@ -191,6 +196,7 @@ struct DailyTimeCapView: View {
                     HStack(spacing: SpacingTokens.sp1) {
                         Image(systemName: "moon.stars.fill")
                             .foregroundStyle(ColorTokens.Brand.sky)
+                            .hsSymbolEffect(.bounce, value: viewModel.isCapped)
                             .accessibilityHidden(true)
                         Text(String(localized: "dailyTimeCap.progress.capped_hint"))
                             .font(TypographyTokens.caption(13))
@@ -200,7 +206,6 @@ struct DailyTimeCapView: View {
                     }
                 }
             }
-            .padding(SpacingTokens.sp4)
         }
     }
 

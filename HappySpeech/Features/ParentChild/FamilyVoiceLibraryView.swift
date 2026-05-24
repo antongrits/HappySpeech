@@ -79,43 +79,62 @@ struct FamilyVoiceLibraryView: View {
         if interactor.recordings.isEmpty {
             emptyState
         } else {
-            ScrollView(showsIndicators: false) {
-                LazyVStack(spacing: SpacingTokens.sp2) {
-                    // Priority usage banner
-                    priorityBanner
+            ZStack {
+                ColorTokens.Parent.bg.ignoresSafeArea()
 
-                    ForEach(interactor.recordings) { recording in
-                        FamilyRecordingRow(
-                            recording: recording,
-                            isPlaying: interactor.playingId == recording.id,
-                            onPlay: {
-                                Task { await interactor.play(recording) }
-                            },
-                            onDelete: {
-                                pendingDeleteId = recording.id
-                                showDeleteConfirm = true
-                            },
-                            onRerecord: {
-                                coordinator.navigate(to: .familyVoice)
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
+                ScrollView(showsIndicators: false) {
+                    LazyVStack(spacing: SpacingTokens.sp2) {
+                        // Priority usage banner
+                        priorityBanner
+
+                        ForEach(Array(interactor.recordings.enumerated()), id: \.element.id) { index, recording in
+                            FamilyRecordingRow(
+                                recording: recording,
+                                isPlaying: interactor.playingId == recording.id,
+                                onPlay: {
+                                    Task { await interactor.play(recording) }
+                                },
+                                onDelete: {
+                                    pendingDeleteId = recording.id
+                                    showDeleteConfirm = true
+                                },
+                                onRerecord: {
+                                    coordinator.navigate(to: .familyVoice)
+                                }
+                            )
+                            .scrollTransition(
+                                .animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.55, dampingFraction: 0.85))
+                            ) { content, phase in
+                                content
+                                    .opacity(phase.isIdentity ? 1 : 0)
+                                    .scaleEffect(phase.isIdentity ? 1 : 0.94)
                             }
-                        )
+                            .hsParallaxTile(factor: 0.18)
+                            .zIndex(Double(interactor.recordings.count - index))
+                        }
                     }
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.vertical, SpacingTokens.sp4)
                 }
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.vertical, SpacingTokens.sp4)
             }
-            .background(ColorTokens.Parent.bg.ignoresSafeArea())
         }
     }
 
     // MARK: - Priority Banner
 
     private var priorityBanner: some View {
-        HSCard(style: .tinted(ColorTokens.Brand.primary.opacity(0.08))) {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
             HStack(spacing: SpacingTokens.sp3) {
                 Image(systemName: "checkmark.seal.fill")
                     .font(TypographyTokens.headline(20))
                     .foregroundStyle(ColorTokens.Brand.primary)
+                    .hsSymbolEffect(.bounce, value: pendingDeleteId)
                     .accessibilityHidden(true)
 
                 Text(String(localized: "family.voice.priority_used"))
@@ -183,13 +202,14 @@ struct FamilyRecordingRow: View {
     let onRerecord: () -> Void
 
     var body: some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp3) {
             HStack(spacing: SpacingTokens.sp3) {
                 // Play / Stop button
                 Button(action: onPlay) {
                     Image(systemName: isPlaying ? "stop.circle.fill" : "play.circle.fill")
                         .font(TypographyTokens.display(36))
                         .foregroundStyle(ColorTokens.Brand.primary)
+                        .hsSymbolEffect(.bounce, value: isPlaying)
                         .frame(minWidth: 44, minHeight: 44)
                         .animation(.easeInOut(duration: 0.2), value: isPlaying)
                 }
@@ -248,7 +268,6 @@ struct FamilyRecordingRow: View {
                 .buttonStyle(.plain)
                 .accessibilityLabel(String(localized: "parent_child.recorder.cta.delete") + " " + recording.word)
             }
-            .padding(SpacingTokens.sp3)
         }
         .environment(\.circuitContext, .parent)
         .accessibilityElement(children: .contain)

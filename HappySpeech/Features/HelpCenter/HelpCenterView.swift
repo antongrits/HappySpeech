@@ -76,6 +76,12 @@ struct HelpCenterView: View {
             ZStack {
                 ColorTokens.Parent.bg.ignoresSafeArea()
 
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
                 ScrollView {
                     VStack(alignment: .leading, spacing: SpacingTokens.sp5) {
                         if let viewModel = holder.loadVM {
@@ -130,7 +136,7 @@ struct HelpCenterView: View {
     // MARK: - Hero
 
     private var heroSection: some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: SpacingTokens.micro) {
                     Text("helpCenter.hero.title")
@@ -148,15 +154,10 @@ struct HelpCenterView: View {
                 Image(systemName: "questionmark.bubble.fill")
                     .font(.system(size: 36))
                     .foregroundStyle(ColorTokens.Brand.primary)
+                    .hsSymbolEffect(.pulse, value: holder.loadVM?.categories.count ?? 0)
                     .accessibilityHidden(true)
             }
         }
-        .padding(SpacingTokens.sp4)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Parent.surface)
-        )
     }
 
     // MARK: - FAQ
@@ -168,8 +169,17 @@ struct HelpCenterView: View {
                 .font(TypographyTokens.headline(16))
                 .foregroundStyle(ColorTokens.Parent.ink)
 
-            ForEach(viewModel.categories) { category in
+            ForEach(Array(viewModel.categories.enumerated()), id: \.element.id) { index, category in
                 categorySection(category)
+                    .scrollTransition(
+                        .animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))
+                    ) { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                    }
+                    .hsParallaxTile(factor: 0.16)
+                    .zIndex(Double(viewModel.categories.count - index))
             }
         }
     }
@@ -283,8 +293,17 @@ struct HelpCenterView: View {
                     )
             } else {
                 VStack(spacing: SpacingTokens.sp2) {
-                    ForEach(viewModel.videos) { video in
+                    ForEach(Array(viewModel.videos.enumerated()), id: \.element.id) { index, video in
                         videoCell(video)
+                            .scrollTransition(
+                                .animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.55, dampingFraction: 0.85))
+                            ) { content, phase in
+                                content
+                                    .opacity(phase.isIdentity ? 1 : 0)
+                                    .scaleEffect(phase.isIdentity ? 1 : 0.94)
+                            }
+                            .hsParallaxTile(factor: 0.20)
+                            .zIndex(Double(viewModel.videos.count - index))
                     }
                 }
             }
@@ -414,52 +433,50 @@ struct HelpCenterView: View {
 
     @ViewBuilder
     private func contactSection(viewModel: HelpCenterModels.Load.ViewModel) -> some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
-            HStack(alignment: .top, spacing: SpacingTokens.sp3) {
-                Image(systemName: "person.line.dotted.person.fill")
-                    .font(.system(size: 28))
-                    .foregroundStyle(ColorTokens.Brand.primary)
-                    .frame(width: 48, height: 48)
-                    .background(
-                        Circle().fill(ColorTokens.Brand.primary.opacity(0.12))
-                    )
-                    .accessibilityHidden(true)
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp3) {
+                HStack(alignment: .top, spacing: SpacingTokens.sp3) {
+                    Image(systemName: "person.line.dotted.person.fill")
+                        .font(.system(size: 28))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                        .frame(width: 48, height: 48)
+                        .background(
+                            Circle().fill(ColorTokens.Brand.primary.opacity(0.12))
+                        )
+                        .hsSymbolEffect(.bounce, value: holder.showToast)
+                        .accessibilityHidden(true)
 
-                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                    Text("helpCenter.contact.title")
-                        .font(TypographyTokens.body(15).weight(.medium))
-                        .foregroundStyle(ColorTokens.Parent.ink)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
+                    VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                        Text("helpCenter.contact.title")
+                            .font(TypographyTokens.body(15).weight(.medium))
+                            .foregroundStyle(ColorTokens.Parent.ink)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
 
-                    Text(viewModel.contactDescription)
-                        .font(TypographyTokens.caption(12))
-                        .foregroundStyle(ColorTokens.Parent.inkMuted)
-                        .lineLimit(nil)
-                        .fixedSize(horizontal: false, vertical: true)
+                        Text(viewModel.contactDescription)
+                            .font(TypographyTokens.caption(12))
+                            .foregroundStyle(ColorTokens.Parent.inkMuted)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                 }
-            }
 
-            Button {
-                Task { await contactSupport() }
-            } label: {
-                Label {
-                    Text(viewModel.contactCta)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.85)
-                } icon: {
-                    Image(systemName: "bubble.left.and.bubble.right.fill")
+                Button {
+                    Task { await contactSupport() }
+                } label: {
+                    Label {
+                        Text(viewModel.contactCta)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.85)
+                    } icon: {
+                        Image(systemName: "bubble.left.and.bubble.right.fill")
+                    }
+                    .frame(maxWidth: .infinity, minHeight: 48)
                 }
-                .frame(maxWidth: .infinity, minHeight: 48)
+                .buttonStyle(.borderedProminent)
+                .accessibilityHint(Text("helpCenter.contact.hint"))
             }
-            .buttonStyle(.borderedProminent)
-            .accessibilityHint(Text("helpCenter.contact.hint"))
         }
-        .padding(SpacingTokens.sp4)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Parent.surface)
-        )
     }
 
     // MARK: - Loading

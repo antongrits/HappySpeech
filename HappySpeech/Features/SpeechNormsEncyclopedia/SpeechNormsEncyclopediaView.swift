@@ -63,6 +63,12 @@ struct SpeechNormsEncyclopediaView: View {
             ZStack {
                 ColorTokens.Parent.bg.ignoresSafeArea()
 
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: SpacingTokens.sp5) {
                         if let viewModel = holder.loadVM {
@@ -116,31 +122,28 @@ struct SpeechNormsEncyclopediaView: View {
     private func heroSection(
         _ viewModel: SpeechNormsEncyclopediaModels.Load.ViewModel
     ) -> some View {
-        HStack(alignment: .top) {
-            VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-                Text(viewModel.headerTitle)
-                    .font(TypographyTokens.title(22))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-                Text(viewModel.headerSubtitle)
-                    .font(TypographyTokens.body(14))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(nil)
-                    .fixedSize(horizontal: false, vertical: true)
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                    Text(viewModel.headerTitle)
+                        .font(TypographyTokens.title(22))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                    Text(viewModel.headerSubtitle)
+                        .font(TypographyTokens.body(14))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer()
+                Image(systemName: "book.closed.fill")
+                    .font(.system(size: 34))
+                    .foregroundStyle(ColorTokens.Brand.lilac)
+                    .hsSymbolEffect(.pulse, value: viewModel.headerTitle)
+                    .accessibilityHidden(true)
             }
-            Spacer()
-            Image(systemName: "book.closed.fill")
-                .font(.system(size: 34))
-                .foregroundStyle(ColorTokens.Brand.lilac)
-                .accessibilityHidden(true)
         }
-        .padding(SpacingTokens.sp4)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Parent.surface)
-        )
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isHeader)
     }
@@ -229,8 +232,17 @@ struct SpeechNormsEncyclopediaView: View {
         _ sections: [SpeechNormsEncyclopediaModels.Load.SectionViewModel]
     ) -> some View {
         VStack(alignment: .leading, spacing: SpacingTokens.sp4) {
-            ForEach(sections) { section in
+            ForEach(Array(sections.enumerated()), id: \.element.id) { index, section in
                 sectionCard(section)
+                    .scrollTransition(
+                        .animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.55, dampingFraction: 0.85))
+                    ) { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.94)
+                    }
+                    .hsParallaxTile(factor: 0.18)
+                    .zIndex(Double(sections.count - index))
             }
         }
     }
@@ -305,6 +317,7 @@ struct SpeechNormsEncyclopediaView: View {
                         Image(systemName: "exclamationmark.triangle.fill")
                             .font(.caption)
                             .foregroundStyle(ColorTokens.Brand.rose)
+                            .hsSymbolEffect(.pulse, value: card.isRedFlag)
                             .accessibilityHidden(true)
                     }
                     VStack(alignment: .leading, spacing: 2) {

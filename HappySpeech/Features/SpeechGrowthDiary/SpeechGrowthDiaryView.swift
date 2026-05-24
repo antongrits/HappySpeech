@@ -55,6 +55,13 @@ struct SpeechGrowthDiaryView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Parent.bg.ignoresSafeArea()
+
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
                 if !holder.optInAccepted {
                     optInSection
                 } else if let listVM = holder.listVM {
@@ -95,13 +102,14 @@ struct SpeechGrowthDiaryView: View {
         VStack(spacing: SpacingTokens.sp4) {
             LyalyaMascotView(state: .explaining, size: 100)
                 .accessibilityHidden(true)
-            HSCard(style: .elevated) {
+            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
                 VStack(spacing: SpacingTokens.sp3) {
                     HStack(spacing: SpacingTokens.sp2) {
                         Image(systemName: "lock.shield.fill")
                             .font(.system(size: 36))
                             .foregroundStyle(ColorTokens.Brand.lilac)
                             .symbolRenderingMode(.hierarchical)
+                            .hsSymbolEffect(.pulse, value: holder.optInAccepted)
                             .accessibilityHidden(true)
                         Text("diary.optIn.title")
                             .font(TypographyTokens.title(20))
@@ -159,8 +167,17 @@ struct SpeechGrowthDiaryView: View {
     private func clipsListSection(_ listVM: SpeechGrowthDiaryModels.List.ViewModel) -> some View {
         ScrollView {
             LazyVStack(spacing: SpacingTokens.sp3) {
-                ForEach(listVM.clips) { row in
+                ForEach(Array(listVM.clips.enumerated()), id: \.element.id) { index, row in
                     clipRow(row)
+                        .scrollTransition(
+                            .animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.55, dampingFraction: 0.85))
+                        ) { content, phase in
+                            content
+                                .opacity(phase.isIdentity ? 1 : 0)
+                                .scaleEffect(phase.isIdentity ? 1 : 0.94)
+                        }
+                        .hsParallaxTile(factor: 0.18)
+                        .zIndex(Double(listVM.clips.count - index))
                 }
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
@@ -173,12 +190,13 @@ struct SpeechGrowthDiaryView: View {
     }
 
     private func clipRow(_ row: SpeechGrowthDiaryModels.List.ClipRow) -> some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.regular) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
                 HStack(spacing: SpacingTokens.sp2) {
                     Image(systemName: "video.fill")
                         .foregroundStyle(ColorTokens.Brand.lilac)
                         .symbolRenderingMode(.hierarchical)
+                        .hsSymbolEffect(.pulse, value: row.isShared)
                     Text(row.recordedAtLabel)
                         .font(TypographyTokens.headline(15))
                         .foregroundStyle(ColorTokens.Parent.ink)

@@ -37,6 +37,12 @@ struct OfflineStateView: View {
         ZStack {
             backgroundLayer
 
+            HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                .ignoresSafeArea()
+                .blendMode(.softLight)
+                .accessibilityHidden(true)
+                .allowsHitTesting(false)
+
             GeometryReader { proxy in
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 0) {
@@ -118,6 +124,7 @@ struct OfflineStateView: View {
             Image(systemName: "wifi.slash")
                 .font(TypographyTokens.kidDisplay(56))
                 .foregroundStyle(ColorTokens.Semantic.warning.opacity(0.65))
+                .hsSymbolEffect(.pulse, value: viewModel.isRetrying)
                 .offset(y: -8)
 
             // Lyalya mascot — sits beside the icon
@@ -153,22 +160,24 @@ struct OfflineStateView: View {
     // MARK: - Info
 
     private var infoSection: some View {
-        VStack(spacing: SpacingTokens.sp3) {
-            Text(String(localized: "offline.title"))
-                .font(TypographyTokens.title(24))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.85)
-                .fixedSize(horizontal: false, vertical: true)
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+            VStack(spacing: SpacingTokens.sp3) {
+                Text(String(localized: "offline.title"))
+                    .font(TypographyTokens.title(24))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                    .fixedSize(horizontal: false, vertical: true)
 
-            Text(String(localized: "offline.body"))
-                .font(TypographyTokens.body(15))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, SpacingTokens.sp6)
-                .lineLimit(nil)
-                .fixedSize(horizontal: false, vertical: true)
+                Text(String(localized: "offline.body"))
+                    .font(TypographyTokens.body(15))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, SpacingTokens.sp6)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
     }
