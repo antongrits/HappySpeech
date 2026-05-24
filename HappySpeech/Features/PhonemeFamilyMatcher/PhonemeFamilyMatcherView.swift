@@ -10,6 +10,8 @@ struct PhonemeFamilyMatcherView: View {
     @State private var selectedFamily: PhonemeFamilyMatcherModels.Family = .whistling
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     private let columns = [
         GridItem(.flexible(), spacing: SpacingTokens.sp2),
@@ -21,6 +23,13 @@ struct PhonemeFamilyMatcherView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                // Step 10 Batch G — Pattern 1: kidCool mesh палитра (phonemic).
+                HSMeshGradientBackground(palette: .kidCool, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
+                    .blendMode(.softLight)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
                 content
             }
             .navigationTitle(Text(String(localized: "phonemeFamily.nav.title")))
@@ -65,7 +74,8 @@ struct PhonemeFamilyMatcherView: View {
     }
 
     private func hero(state: PhonemeFamilyMatcherModels.ViewState) -> some View {
-        HSCard(style: .tinted(ColorTokens.Brand.mint.opacity(0.18))) {
+        // Step 10 Batch G — Pattern 2: HSLiquidGlassCard(.elevated) для hero.
+        HSLiquidGlassCard(style: .elevated) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(String(localized: "phonemeFamily.hero.title"))
                     .font(TypographyTokens.title(20))
@@ -121,6 +131,14 @@ struct PhonemeFamilyMatcherView: View {
                         hapticService.notification(.success)
                     }
                 }
+                // Step 10 Batch G — Pattern 3: scrollTransition stagger.
+                .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                    content
+                        .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                        .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.9))
+                }
+                // Step 10 Batch G — Pattern 4: parallax drift на word chips.
+                .hsParallaxTile(factor: 0.2)
             }
         }
     }
@@ -132,23 +150,33 @@ struct PhonemeFamilyMatcherView: View {
         let isCorrect = word.assignedFamily == word.family
         let isAssigned = word.assignedFamily != nil
         return Button(action: action) {
-            Text(word.text)
-                .font(TypographyTokens.headline(14))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .lineLimit(1)
-                .minimumScaleFactor(0.85)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, SpacingTokens.sp2)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(
-                            isAssigned
-                                ? (isCorrect
-                                    ? ColorTokens.Semantic.successBg
-                                    : ColorTokens.Kid.surfaceAlt)
-                                : ColorTokens.Kid.surface
-                        )
-                )
+            ZStack(alignment: .topTrailing) {
+                Text(word.text)
+                    .font(TypographyTokens.headline(14))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, SpacingTokens.sp2)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(
+                                isAssigned
+                                    ? (isCorrect
+                                        ? ColorTokens.Semantic.successBg
+                                        : ColorTokens.Kid.surfaceAlt)
+                                    : ColorTokens.Kid.surface
+                            )
+                    )
+                if isAssigned && isCorrect {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.caption2)
+                        .foregroundStyle(ColorTokens.Semantic.success)
+                        // Step 10 Batch G — Pattern 5: bounce on correct assignment.
+                        .hsSymbolEffect(.bounce, value: isCorrect)
+                        .padding(4)
+                }
+            }
         }
         .buttonStyle(.plain)
         .accessibilityLabel(Text("Слово \(word.text)"))

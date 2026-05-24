@@ -9,11 +9,20 @@ struct WordOfTheDayView: View {
     @State private var interactor: WordOfTheDayInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                // Step 10 Batch G — Pattern 1: kidWarm mesh палитра (daily word).
+                HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
+                    .blendMode(.softLight)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
                 content
             }
             .navigationTitle(Text(String(localized: "wotd.nav.title")))
@@ -58,7 +67,8 @@ struct WordOfTheDayView: View {
     }
 
     private func hero(interactor: WordOfTheDayInteractor) -> some View {
-        HSCard(style: .tinted(ColorTokens.Brand.butter.opacity(0.18))) {
+        // Step 10 Batch G — Pattern 2: HSLiquidGlassCard(.elevated) для hero word-of-day.
+        HSLiquidGlassCard(style: .elevated) {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .singing, size: 64)
                     .accessibilityHidden(true)
@@ -87,6 +97,8 @@ struct WordOfTheDayView: View {
                     .scaledToFit()
                     .frame(width: 140, height: 140)
                     .foregroundStyle(ColorTokens.Brand.primary)
+                    // Step 10 Batch G — Pattern 5: pulse on illustration.
+                    .hsSymbolEffect(.pulse, value: interactor.card.word)
                     .accessibilityHidden(true)
                 Text(interactor.card.word.capitalized)
                     .font(TypographyTokens.titleLarge(32))
@@ -121,10 +133,19 @@ struct WordOfTheDayView: View {
             }
         case .scored(let stars):
             HStack(spacing: SpacingTokens.sp1) {
-                ForEach(0..<3) { idx in
+                ForEach(0..<3, id: \.self) { idx in
                     Image(systemName: idx < stars ? "star.fill" : "star")
                         .foregroundStyle(ColorTokens.Brand.gold)
                         .font(.system(size: 28))
+                        // Step 10 Batch G — Pattern 3: scrollTransition stagger
+                        // (also acts as reveal на stars).
+                        .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                            content
+                                .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                                .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.9))
+                        }
+                        // Step 10 Batch G — Pattern 5: bounce on score reveal.
+                        .hsSymbolEffect(.bounce, value: stars)
                 }
             }
             .accessibilityElement(children: .ignore)

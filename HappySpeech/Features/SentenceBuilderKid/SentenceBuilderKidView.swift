@@ -9,11 +9,20 @@ struct SentenceBuilderKidView: View {
     @State private var interactor: SentenceBuilderKidInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                // Step 10 Batch G — Pattern 1: kidCool mesh палитра (sentence-building).
+                HSMeshGradientBackground(palette: .kidCool, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
+                    .blendMode(.softLight)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
                 content
             }
             .navigationTitle(Text(String(localized: "sentenceBuilder.nav.title")))
@@ -61,7 +70,8 @@ struct SentenceBuilderKidView: View {
     }
 
     private var hero: some View {
-        HSCard(style: .tinted(ColorTokens.Brand.mint.opacity(0.18))) {
+        // Step 10 Batch G — Pattern 2: HSLiquidGlassCard(.elevated) для hero.
+        HSLiquidGlassCard(style: .elevated) {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .explaining, size: 56)
                     .accessibilityHidden(true)
@@ -140,6 +150,14 @@ struct SentenceBuilderKidView: View {
                     chipView(chip, isAssembled: isAssembled) {
                         onTap(chip.id)
                     }
+                    // Step 10 Batch G — Pattern 3: scrollTransition stagger.
+                    .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                        content
+                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.9))
+                    }
+                    // Step 10 Batch G — Pattern 4: parallax drift на word chips.
+                    .hsParallaxTile(factor: 0.15)
                 }
             }
             .padding(.horizontal, 2)
@@ -189,6 +207,11 @@ struct SentenceBuilderKidView: View {
                     .font(TypographyTokens.headline(15))
                     .foregroundStyle(ColorTokens.Kid.ink)
                 Spacer()
+                // Step 10 Batch G — Pattern 5: bounce on result state.
+                Image(systemName: state.isCorrect ? "checkmark.circle.fill" : "arrow.counterclockwise.circle.fill")
+                    .font(.title3)
+                    .foregroundStyle(state.isCorrect ? ColorTokens.Brand.mint : ColorTokens.Brand.butter)
+                    .hsSymbolEffect(.bounce, value: state.isCorrect)
             }
         }
     }

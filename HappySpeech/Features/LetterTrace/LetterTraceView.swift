@@ -58,6 +58,7 @@ struct LetterTraceView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
 
     private static let logger = Logger(
@@ -73,6 +74,13 @@ struct LetterTraceView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                // Step 10 Batch G — Pattern 1: kidCool mesh палитра (literacy / thinking).
+                HSMeshGradientBackground(palette: .kidCool, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
+                    .blendMode(.softLight)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
 
                 VStack(spacing: SpacingTokens.sp3) {
                     if let item = holder.currentItem {
@@ -115,22 +123,20 @@ struct LetterTraceView: View {
     private func promptHeader(
         _ item: LetterTraceModels.Load.ItemViewModel
     ) -> some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.micro) {
-            Text(item.progressText)
-                .font(TypographyTokens.caption(12))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-            Text(item.promptText)
-                .font(TypographyTokens.title(22).weight(.semibold))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .lineLimit(2)
-                .minimumScaleFactor(0.85)
+        // Step 10 Batch G — Pattern 2: HSLiquidGlassCard(.elevated) для hero prompt.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp3) {
+            VStack(alignment: .leading, spacing: SpacingTokens.micro) {
+                Text(item.progressText)
+                    .font(TypographyTokens.caption(12))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                Text(item.promptText)
+                    .font(TypographyTokens.title(22).weight(.semibold))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(SpacingTokens.sp3)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Kid.surface)
-        )
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isHeader)
     }
@@ -220,6 +226,8 @@ struct LetterTraceView: View {
                         ? ColorTokens.Brand.mint
                         : ColorTokens.Brand.rose
                     )
+                    // Step 10 Batch G — Pattern 5: bounce on feedback symbol.
+                    .hsSymbolEffect(.bounce, value: feedback.percent)
                     .accessibilityHidden(true)
                 Text(feedback.feedbackText)
                     .font(TypographyTokens.headline(16))

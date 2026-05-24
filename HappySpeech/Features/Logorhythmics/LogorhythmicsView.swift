@@ -60,6 +60,7 @@ struct LogorhythmicsView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(\.hapticService) private var hapticService
@@ -72,6 +73,14 @@ struct LogorhythmicsView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                // Step 10 Batch G — Pattern 1: kidWarm mesh палитра поверх
+                // плоского cream baseline создаёт «дышащий» kid-фон.
+                HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
+                    .blendMode(.softLight)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
                 switch holder.phase {
                 case .picking:  pickingSection
                 case .ready:    readySection
@@ -157,6 +166,14 @@ struct LogorhythmicsView: View {
             ) {
                 ForEach(items) { exercise in
                     exerciseButton(exercise, category: category)
+                        // Step 10 Batch G — Pattern 3: scrollTransition stagger.
+                        .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                            content
+                                .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                                .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.9))
+                        }
+                        // Step 10 Batch G — Pattern 4: parallax drift на exercise tiles.
+                        .hsParallaxTile(factor: 0.2)
                 }
             }
         }
@@ -257,7 +274,9 @@ struct LogorhythmicsView: View {
     }
 
     private func rhymeCard(_ text: String) -> some View {
-        HSCard(style: .tinted(ColorTokens.Brand.butter.opacity(0.10))) {
+        // Step 10 Batch G — Pattern 2: HSLiquidGlassCard(.elevated) для hero
+        // rhyme card (центральный элемент playing/ready секций).
+        HSLiquidGlassCard(style: .elevated) {
             Text(text)
                 .font(TypographyTokens.headline(18))
                 .foregroundStyle(ColorTokens.Kid.ink)
@@ -463,6 +482,8 @@ struct LogorhythmicsView: View {
                         reduceMotion ? .none : MotionTokens.rewardPop.delay(Double(index) * 0.14),
                         value: logoStarsRevealed[index]
                     )
+                    // Step 10 Batch G — Pattern 5: bounce on star reveal.
+                    .hsSymbolEffect(.bounce, value: logoStarsRevealed[index])
             }
         }
         .frame(maxWidth: .infinity)

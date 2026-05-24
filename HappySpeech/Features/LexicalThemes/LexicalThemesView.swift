@@ -76,6 +76,7 @@ struct LexicalThemesView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
 
     private static let logger = Logger(
@@ -87,6 +88,13 @@ struct LexicalThemesView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                // Step 10 Batch G — Pattern 1: kidCool mesh палитра (lexical themes).
+                HSMeshGradientBackground(palette: .kidCool, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
+                    .blendMode(.softLight)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
 
                 if holder.isInGame {
                     if holder.isFinished, let summary = holder.summary {
@@ -145,6 +153,14 @@ struct LexicalThemesView: View {
                 ) {
                     ForEach(hub.themes) { theme in
                         themeCard(theme)
+                            // Step 10 Batch G — Pattern 3: scrollTransition stagger.
+                            .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                                content
+                                    .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                                    .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.9))
+                            }
+                            // Step 10 Batch G — Pattern 4: parallax drift на theme cards.
+                            .hsParallaxTile(factor: 0.25)
                     }
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
@@ -169,6 +185,8 @@ struct LexicalThemesView: View {
                         Image(systemName: "star.fill")
                             .font(.title3)
                             .foregroundStyle(ColorTokens.Brand.gold)
+                            // Step 10 Batch G — Pattern 5: bounce on mastery star.
+                            .hsSymbolEffect(.bounce, value: theme.isMastered)
                             .accessibilityHidden(true)
                     }
                 }
@@ -319,30 +337,38 @@ struct LexicalThemesView: View {
         VStack(spacing: SpacingTokens.sp5) {
             Spacer()
 
-            Image(systemName: summary.isThemeMastered
-                ? "star.circle.fill"
-                : "hand.thumbsup.circle.fill")
-                .font(.system(size: 80))
-                .foregroundStyle(ColorTokens.Brand.gold)
-                .accessibilityHidden(true)
+            // Step 10 Batch G — Pattern 2: HSLiquidGlassCard(.elevated) для hero summary.
+            HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
+                VStack(spacing: SpacingTokens.sp3) {
+                    Image(systemName: summary.isThemeMastered
+                        ? "star.circle.fill"
+                        : "hand.thumbsup.circle.fill")
+                        .font(.system(size: 80))
+                        .foregroundStyle(ColorTokens.Brand.gold)
+                        // Step 10 Batch G — Pattern 5: bounce on summary symbol.
+                        .hsSymbolEffect(.bounce, value: summary.isThemeMastered)
+                        .accessibilityHidden(true)
 
-            Text(summary.title)
-                .font(TypographyTokens.title(26))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.8)
+                    Text(summary.title)
+                        .font(TypographyTokens.title(26))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.8)
 
-            Text(summary.scoreText)
-                .font(TypographyTokens.headline(20).monospacedDigit())
-                .foregroundStyle(ColorTokens.Brand.primary)
+                    Text(summary.scoreText)
+                        .font(TypographyTokens.headline(20).monospacedDigit())
+                        .foregroundStyle(ColorTokens.Brand.primary)
 
-            Text(summary.encouragement)
-                .font(TypographyTokens.body(16))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .padding(.horizontal, SpacingTokens.sp6)
+                    Text(summary.encouragement)
+                        .font(TypographyTokens.body(16))
+                        .foregroundStyle(ColorTokens.Kid.inkMuted)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                        .padding(.horizontal, SpacingTokens.sp6)
+                }
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
 
             Spacer()
 

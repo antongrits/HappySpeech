@@ -57,6 +57,7 @@ struct WordBankView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
 
@@ -71,6 +72,13 @@ struct WordBankView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                // Step 10 Batch G — Pattern 1: calm mesh палитра (word collection / reflection).
+                HSMeshGradientBackground(palette: .calm, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
+                    .blendMode(.softLight)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
 
                 if let viewModel = holder.loadVM {
                     if viewModel.isEmpty {
@@ -132,27 +140,33 @@ struct WordBankView: View {
 
     @ViewBuilder
     private func counterCard(viewModel: WordBankModels.Load.ViewModel) -> some View {
-        VStack(spacing: SpacingTokens.sp1) {
-            Image(systemName: "star.fill")
-                .font(.system(size: 30))
-                .foregroundStyle(ColorTokens.Brand.gold)
-                .accessibilityHidden(true)
+        // Step 10 Batch G — Pattern 2: HSLiquidGlassCard(.elevated) для hero counter.
+        // Внутри сохранён градиентный фон, ultraThickMaterial добавляет glass-layer.
+        HSLiquidGlassCard(style: .elevated, padding: 0) {
+            VStack(spacing: SpacingTokens.sp1) {
+                Image(systemName: "star.fill")
+                    .font(.system(size: 30))
+                    .foregroundStyle(ColorTokens.Brand.gold)
+                    // Step 10 Batch G — Pattern 5: pulse on counter star.
+                    .hsSymbolEffect(.pulse, value: viewModel.totalCount)
+                    .accessibilityHidden(true)
 
-            Text(viewModel.counterText)
-                .font(TypographyTokens.display(48).weight(.bold))
-                .foregroundStyle(ColorTokens.Overlay.onAccent)
-                .contentTransition(.numericText())
+                Text(viewModel.counterText)
+                    .font(TypographyTokens.display(48).weight(.bold))
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
+                    .contentTransition(.numericText())
 
-            Text("wordBank.counter.subtitle")
-                .font(TypographyTokens.caption(13))
-                .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
+                Text("wordBank.counter.subtitle")
+                    .font(TypographyTokens.caption(13))
+                    .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, SpacingTokens.sp6)
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.card)
+                    .fill(GradientTokens.kidDeep)
+            )
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, SpacingTokens.sp6)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(GradientTokens.kidDeep)
-        )
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(
             Text(
@@ -192,6 +206,14 @@ struct WordBankView: View {
         LazyVGrid(columns: columns, spacing: SpacingTokens.sp3) {
             ForEach(holder.visibleTiles) { tile in
                 wordTile(tile)
+                    // Step 10 Batch G — Pattern 3: scrollTransition stagger.
+                    .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                        content
+                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.9))
+                    }
+                    // Step 10 Batch G — Pattern 4: parallax drift на word tiles.
+                    .hsParallaxTile(factor: 0.2)
             }
         }
     }

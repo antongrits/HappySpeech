@@ -10,6 +10,7 @@ struct VisualVocabularyFlipView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     private let columns = Array(repeating: GridItem(.flexible(), spacing: SpacingTokens.sp2), count: 2)
 
@@ -17,6 +18,13 @@ struct VisualVocabularyFlipView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                // Step 10 Batch G — Pattern 1: kidCool mesh палитра (vocabulary).
+                HSMeshGradientBackground(palette: .kidCool, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
+                    .blendMode(.softLight)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
                 content
             }
             .navigationTitle(Text(String(localized: "vocabFlip.nav.title")))
@@ -61,7 +69,8 @@ struct VisualVocabularyFlipView: View {
     }
 
     private var hero: some View {
-        HSCard(style: .tinted(ColorTokens.Brand.mint.opacity(0.18))) {
+        // Step 10 Batch G — Pattern 2: HSLiquidGlassCard(.elevated) для hero.
+        HSLiquidGlassCard(style: .elevated) {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .happy, size: 64)
                     .accessibilityHidden(true)
@@ -123,6 +132,14 @@ struct VisualVocabularyFlipView: View {
         LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
             ForEach(interactor.deck) { card in
                 flipCard(card, interactor: interactor)
+                    // Step 10 Batch G — Pattern 3: scrollTransition stagger.
+                    .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                        content
+                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.9))
+                    }
+                    // Step 10 Batch G — Pattern 4: parallax drift на flip cards.
+                    .hsParallaxTile(factor: 0.25)
             }
         }
     }
@@ -170,6 +187,8 @@ struct VisualVocabularyFlipView: View {
                 .scaledToFit()
                 .frame(height: 60)
                 .foregroundStyle(ColorTokens.Brand.primary)
+                // Step 10 Batch G — Pattern 5: pulse on card symbol.
+                .hsSymbolEffect(.pulse, value: card.id)
                 .accessibilityHidden(true)
             Text("Перевернуть")
                 .font(TypographyTokens.caption(11))

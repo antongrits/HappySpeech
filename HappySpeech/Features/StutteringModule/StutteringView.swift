@@ -81,6 +81,14 @@ struct StutteringView: View {
     var body: some View {
         ZStack {
             ColorTokens.Kid.bg.ignoresSafeArea()
+            // Step 10 Batch G — Pattern 1: calm mesh палитра поверх
+            // плоского cream baseline для модуля заикания (фокус, успокоение).
+            HSMeshGradientBackground(palette: .calm, animated: true)
+                .ignoresSafeArea()
+                .opacity(colorScheme == .dark ? 0.20 : 0.30)
+                .blendMode(.softLight)
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
             scrollContent
         }
         .navigationTitle(String(localized: "stuttering.entry.title"))
@@ -216,6 +224,15 @@ struct StutteringView: View {
                             : MotionTokens.spring.delay(Double(idx) * 0.08),
                         value: scene.display.cards.count
                     )
+                    // Step 10 Batch G — Pattern 3: scrollTransition stagger
+                    // fade+scale на exercise tiles, gated by reduceMotion.
+                    .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                        content
+                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.9))
+                    }
+                    // Step 10 Batch G — Pattern 4: parallax drift на exercise tiles.
+                    .hsParallaxTile(factor: 0.25)
                     .onTapGesture {
                         navigateTo = card.mode
                     }
@@ -393,7 +410,9 @@ private struct ExerciseCard: View {
     @State private var isPressed = false
 
     var body: some View {
-        HSCard(style: .elevated, padding: SpacingTokens.sp4) {
+        // Step 10 Batch G — Pattern 2: HSLiquidGlassCard(.elevated) для exercise.
+        // ultraThickMaterial поверх calm mesh — kavsoft glass.
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
                 HStack {
                     Image(systemName: card.symbol)
@@ -405,6 +424,8 @@ private struct ExerciseCard: View {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundStyle(ColorTokens.Brand.mint)
                             .font(TypographyTokens.body(16))
+                            // Step 10 Batch G — Pattern 5: bounce on completion.
+                            .hsSymbolEffect(.bounce, value: card.completedToday)
                             .accessibilityLabel(String(localized: "stuttering.card.completed.accessibility"))
                     }
                 }

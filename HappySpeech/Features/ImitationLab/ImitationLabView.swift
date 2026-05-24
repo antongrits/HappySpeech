@@ -9,6 +9,8 @@ struct ImitationLabView: View {
     @State private var interactor: ImitationLabInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
 
     private let columns = [
         GridItem(.flexible(), spacing: SpacingTokens.sp2),
@@ -19,6 +21,13 @@ struct ImitationLabView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                // Step 10 Batch G — Pattern 1: kidWarm mesh палитра.
+                HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
+                    .blendMode(.softLight)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
                 content
             }
             .navigationTitle(Text(String(localized: "imitationLab.nav.title")))
@@ -62,7 +71,8 @@ struct ImitationLabView: View {
     }
 
     private var hero: some View {
-        HSCard(style: .tinted(ColorTokens.Brand.mint.opacity(0.16))) {
+        // Step 10 Batch G — Pattern 2: HSLiquidGlassCard(.elevated) для hero.
+        HSLiquidGlassCard(style: .elevated) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(String(localized: "imitationLab.hero.title"))
                     .font(TypographyTokens.title(20))
@@ -85,6 +95,14 @@ struct ImitationLabView: View {
                     hapticService.impact(.light)
                     interactor.playSample(sample.id)
                 }
+                // Step 10 Batch G — Pattern 3: scrollTransition stagger.
+                .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                    content
+                        .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                        .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.9))
+                }
+                // Step 10 Batch G — Pattern 4: parallax drift на sample cards.
+                .hsParallaxTile(factor: 0.25)
             }
         }
     }
@@ -109,6 +127,8 @@ struct ImitationLabView: View {
                         Image(systemName: "checkmark.circle.fill")
                             .font(.system(size: 14))
                             .foregroundStyle(ColorTokens.Brand.primary)
+                            // Step 10 Batch G — Pattern 5: bounce on played check.
+                            .hsSymbolEffect(.bounce, value: sample.isPlayed)
                     }
                 }
                 .frame(maxWidth: .infinity)

@@ -38,6 +38,7 @@ struct LiteracyStartView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
 
@@ -50,6 +51,13 @@ struct LiteracyStartView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                // Step 10 Batch G — Pattern 1: kidCool mesh палитра (literacy).
+                HSMeshGradientBackground(palette: .kidCool, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
+                    .blendMode(.softLight)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
                 if let vm = holder.loadVM {
                     content(vm)
                 } else if holder.isUnsupported {
@@ -123,6 +131,14 @@ struct LiteracyStartView: View {
             ) {
                 ForEach(words) { word in
                     wordTile(word)
+                        // Step 10 Batch G — Pattern 3: scrollTransition stagger.
+                        .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                            content
+                                .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
+                                .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.9))
+                        }
+                        // Step 10 Batch G — Pattern 4: parallax drift на word tiles.
+                        .hsParallaxTile(factor: 0.2)
                 }
             }
         }

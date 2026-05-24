@@ -51,6 +51,7 @@ struct FingerPlayView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(AppContainer.self) private var container
     @Environment(AppCoordinator.self) private var coordinator
 
@@ -69,6 +70,13 @@ struct FingerPlayView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                // Step 10 Batch G — Pattern 1: kidWarm mesh палитра.
+                HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
+                    .blendMode(.softLight)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
                 if permissionDenied {
                     deniedSection
                         .transition(.opacity)
@@ -204,7 +212,8 @@ struct FingerPlayView: View {
     }
 
     private func targetGestureCard(_ vm: FingerPlayModels.Start.ViewModel) -> some View {
-        HSCard(style: .elevated) {
+        // Step 10 Batch G — Pattern 2: HSLiquidGlassCard(.elevated) для hero gesture-card.
+        HSLiquidGlassCard(style: .elevated) {
             HStack(spacing: SpacingTokens.sp4) {
                 VStack(spacing: SpacingTokens.sp1) {
                     Text("fingerPlay.target.label")
@@ -214,6 +223,8 @@ struct FingerPlayView: View {
                         .font(.system(size: 52))
                         .foregroundStyle(ColorTokens.Brand.mint)
                         .symbolRenderingMode(.hierarchical)
+                        // Step 10 Batch G — Pattern 5: pulse on target gesture.
+                        .hsSymbolEffect(.pulse, value: vm.targetGestureSymbol)
                 }
                 Spacer()
                 Image(systemName: holder.liveVM?.matchesTarget == true
@@ -225,6 +236,8 @@ struct FingerPlayView: View {
                                      : ColorTokens.Kid.line)
                     .animation(reduceMotion ? .none : MotionTokens.settleSpring,
                                value: holder.liveVM?.matchesTarget)
+                    // Step 10 Batch G — Pattern 5: bounce on match toggle.
+                    .hsSymbolEffect(.bounce, value: holder.liveVM?.matchesTarget)
                 Spacer()
                 VStack(spacing: SpacingTokens.sp1) {
                     Text("fingerPlay.you.label")
