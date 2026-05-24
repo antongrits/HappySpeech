@@ -281,4 +281,165 @@ final class ParentInsightsTimelinePresenterTests: XCTestCase {
         await sut.presentRefresh(response: .init(success: true, toastKey: "parentInsightsTimeline.refresh.success"))
         XCTAssertFalse(spy.refreshVM?.toastMessage.isEmpty ?? true)
     }
+
+    // MARK: - Additional coverage (Step 11 close-out)
+
+    func test_presentLoad_heroTitle_containsChildName() async {
+        let (sut, spy) = makeSUT()
+        let response = ParentInsightsTimelineModels.Load.Response(
+            insights: [makeDailyInsight()],
+            summary: makeWeeklySummary(),
+            childName: "Иван",
+            usedLLM: false
+        )
+        await sut.presentLoad(response: response)
+        XCTAssertTrue(spy.loadVM?.heroTitle.contains("Иван") ?? false)
+    }
+
+    func test_presentLoad_neutralSeverity_symbolNameNotEmpty() async {
+        let (sut, spy) = makeSUT()
+        let insight = makeDailyInsight(severity: .neutral)
+        let response = ParentInsightsTimelineModels.Load.Response(
+            insights: [insight],
+            summary: makeWeeklySummary(),
+            childName: "Маша",
+            usedLLM: false
+        )
+        await sut.presentLoad(response: response)
+        XCTAssertFalse(spy.loadVM?.cells.first?.severitySymbol.isEmpty ?? true)
+    }
+
+    func test_presentLoad_cellMetricsLine_containsCounts() async {
+        let (sut, spy) = makeSUT()
+        let insight = makeDailyInsight(sessionCount: 5, minutesPracticed: 30, successRate: 0.8)
+        let response = ParentInsightsTimelineModels.Load.Response(
+            insights: [insight],
+            summary: makeWeeklySummary(),
+            childName: "Маша",
+            usedLLM: false
+        )
+        await sut.presentLoad(response: response)
+        let metricsLine = spy.loadVM?.cells.first?.metricsLine ?? ""
+        XCTAssertTrue(metricsLine.contains("5"))
+        XCTAssertTrue(metricsLine.contains("30"))
+        XCTAssertTrue(metricsLine.contains("80"))
+    }
+
+    func test_presentLoad_emptyLlmComment_usesHeuristic() async {
+        let (sut, spy) = makeSUT()
+        // empty (not nil) llm comment should fall back to heuristic
+        let insight = makeDailyInsight(llmComment: "")
+        let response = ParentInsightsTimelineModels.Load.Response(
+            insights: [insight],
+            summary: makeWeeklySummary(),
+            childName: "Маша",
+            usedLLM: false
+        )
+        await sut.presentLoad(response: response)
+        XCTAssertFalse(spy.loadVM?.cells.first?.comment.isEmpty ?? true)
+    }
+
+    func test_presentLoad_summaryStats_idsArePresent() async {
+        let (sut, spy) = makeSUT()
+        let response = ParentInsightsTimelineModels.Load.Response(
+            insights: [makeDailyInsight()],
+            summary: makeWeeklySummary(),
+            childName: "Маша",
+            usedLLM: false
+        )
+        await sut.presentLoad(response: response)
+        let ids = spy.loadVM?.summaryStats.map(\.id) ?? []
+        XCTAssertTrue(ids.contains("sessions"))
+        XCTAssertTrue(ids.contains("minutes"))
+        XCTAssertTrue(ids.contains("successRate"))
+        XCTAssertTrue(ids.contains("activeDays"))
+    }
+
+    func test_presentLoad_summaryStats_sessionsValueMatchesTotalSessions() async {
+        let (sut, spy) = makeSUT()
+        let response = ParentInsightsTimelineModels.Load.Response(
+            insights: [makeDailyInsight()],
+            summary: makeWeeklySummary(totalSessions: 12),
+            childName: "Маша",
+            usedLLM: false
+        )
+        await sut.presentLoad(response: response)
+        let sessionsStat = spy.loadVM?.summaryStats.first { $0.id == "sessions" }
+        XCTAssertEqual(sessionsStat?.value, "12")
+    }
+
+    func test_presentLoad_summaryStats_successRateAsPercent() async {
+        let (sut, spy) = makeSUT()
+        let response = ParentInsightsTimelineModels.Load.Response(
+            insights: [makeDailyInsight()],
+            summary: makeWeeklySummary(averageSuccessRate: 0.85),
+            childName: "Маша",
+            usedLLM: false
+        )
+        await sut.presentLoad(response: response)
+        let stat = spy.loadVM?.summaryStats.first { $0.id == "successRate" }
+        XCTAssertTrue(stat?.value.contains("85") ?? false)
+        XCTAssertTrue(stat?.value.contains("%") ?? false)
+    }
+
+    func test_presentLoad_llmSourceLabel_changes_withUsedLLM() async {
+        let (sut, spy) = makeSUT()
+        let response = ParentInsightsTimelineModels.Load.Response(
+            insights: [makeDailyInsight()],
+            summary: makeWeeklySummary(),
+            childName: "Маша",
+            usedLLM: false
+        )
+        await sut.presentLoad(response: response)
+        let heuristicLabel = spy.loadVM?.llmSourceLabel ?? ""
+        let response2 = ParentInsightsTimelineModels.Load.Response(
+            insights: [makeDailyInsight()],
+            summary: makeWeeklySummary(),
+            childName: "Маша",
+            usedLLM: true
+        )
+        await sut.presentLoad(response: response2)
+        let llmLabel = spy.loadVM?.llmSourceLabel ?? ""
+        XCTAssertNotEqual(heuristicLabel, llmLabel)
+    }
+
+    func test_presentSelectDay_attention_recommendation_notEmpty() async {
+        let (sut, spy) = makeSUT()
+        await sut.presentSelectDay(response: .init(
+            insight: makeDailyInsight(severity: .attention),
+            detail: ""
+        ))
+        XCTAssertFalse(spy.selectDayVM?.recommendationLabel?.isEmpty ?? true)
+    }
+
+    func test_presentSelectDay_positive_recommendation_notEmpty() async {
+        let (sut, spy) = makeSUT()
+        await sut.presentSelectDay(response: .init(
+            insight: makeDailyInsight(severity: .positive),
+            detail: ""
+        ))
+        XCTAssertFalse(spy.selectDayVM?.recommendationLabel?.isEmpty ?? true)
+    }
+
+    func test_presentSelectDay_titleLabel_containsWeekday() async {
+        let (sut, spy) = makeSUT()
+        let insight = makeDailyInsight()
+        await sut.presentSelectDay(response: .init(insight: insight, detail: "."))
+        XCTAssertTrue(spy.selectDayVM?.titleLabel.contains(insight.weekdayShort) ?? false)
+    }
+
+    func test_presentLoad_isToday_passedThrough() async {
+        let (sut, spy) = makeSUT()
+        let today = makeDailyInsight(id: "today", isToday: true)
+        let other = makeDailyInsight(id: "other", isToday: false)
+        let response = ParentInsightsTimelineModels.Load.Response(
+            insights: [today, other],
+            summary: makeWeeklySummary(),
+            childName: "Маша",
+            usedLLM: false
+        )
+        await sut.presentLoad(response: response)
+        XCTAssertTrue(spy.loadVM?.cells.first(where: { $0.id == "today" })?.isToday ?? false)
+        XCTAssertFalse(spy.loadVM?.cells.first(where: { $0.id == "other" })?.isToday ?? true)
+    }
 }
