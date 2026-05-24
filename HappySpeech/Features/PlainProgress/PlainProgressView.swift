@@ -68,6 +68,12 @@ struct PlainProgressView: View {
             ZStack {
                 ColorTokens.Parent.bg.ignoresSafeArea()
 
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: SpacingTokens.sp5) {
                         if let viewModel = holder.loadVM {
@@ -117,7 +123,7 @@ struct PlainProgressView: View {
     // MARK: - Hero
 
     private func heroSection(_ viewModel: PlainProgressModels.Load.ViewModel) -> some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp4) {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: SpacingTokens.micro) {
                     Text(viewModel.headerTitle)
@@ -136,15 +142,10 @@ struct PlainProgressView: View {
                 Image(systemName: "text.book.closed.fill")
                     .font(.system(size: 34))
                     .foregroundStyle(ColorTokens.Brand.primary)
+                    .hsSymbolEffect(.bounce, value: viewModel.headerTitle)
                     .accessibilityHidden(true)
             }
         }
-        .padding(SpacingTokens.sp4)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Parent.surface)
-        )
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(.isHeader)
     }
@@ -300,8 +301,15 @@ struct PlainProgressView: View {
                 .foregroundStyle(ColorTokens.Parent.ink)
 
             VStack(spacing: SpacingTokens.sp2) {
-                ForEach(milestones) { milestone in
+                ForEach(Array(milestones.enumerated()), id: \.element.id) { index, milestone in
                     milestoneRow(milestone)
+                        .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                            content
+                                .opacity(phase.isIdentity ? 1 : 0)
+                                .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                        }
+                        .hsParallaxTile(factor: 0.15)
+                        .zIndex(Double(milestones.count - index))
                 }
             }
         }
@@ -342,6 +350,7 @@ struct PlainProgressView: View {
                         ? ColorTokens.Brand.mint
                         : ColorTokens.Parent.inkSoft
                 )
+                .hsSymbolEffect(.bounce, value: milestone.reached)
                 .accessibilityHidden(true)
         }
         .padding(SpacingTokens.sp3)
@@ -369,6 +378,7 @@ struct PlainProgressView: View {
                 Image(systemName: "lightbulb.fill")
                     .font(.body)
                     .foregroundStyle(ColorTokens.Brand.butter)
+                    .hsSymbolEffect(.pulse, value: viewModel.recommendationTitle)
                     .accessibilityHidden(true)
                 Text(viewModel.recommendationTitle)
                     .font(TypographyTokens.headline(16))

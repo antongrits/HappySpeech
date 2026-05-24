@@ -73,6 +73,12 @@ struct WeeklyChallengeView: View {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
 
+                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
                 ScrollView {
                     VStack(spacing: SpacingTokens.sp5) {
                         if let viewModel = holder.loadVM {
@@ -235,8 +241,15 @@ struct WeeklyChallengeView: View {
                 .padding(.leading, SpacingTokens.sp1)
 
             LazyVGrid(columns: weekColumns, spacing: SpacingTokens.sp2) {
-                ForEach(viewModel.dayCells) { cell in
+                ForEach(Array(viewModel.dayCells.enumerated()), id: \.element.id) { index, cell in
                     dayCell(cell)
+                        .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                            content
+                                .opacity(phase.isIdentity ? 1 : 0)
+                                .scaleEffect(phase.isIdentity ? 1 : 0.9)
+                        }
+                        .hsParallaxTile(factor: 0.20)
+                        .zIndex(Double(viewModel.dayCells.count - index))
                 }
             }
             .padding(SpacingTokens.sp3)
@@ -263,6 +276,7 @@ struct WeeklyChallengeView: View {
                 Image(systemName: cell.symbolName)
                     .font(.title3)
                     .foregroundStyle(daySymbolColor(for: cell.progress))
+                    .hsSymbolEffect(.bounce, value: cell.progress == .completed)
             }
             .frame(maxWidth: .infinity, minHeight: 56)
             .background(
@@ -328,6 +342,7 @@ struct WeeklyChallengeView: View {
                                 : ColorTokens.Kid.bgDeep
                         )
                 )
+                .hsSymbolEffect(.variableColor, value: viewModel.rewardUnlocked)
                 .accessibilityHidden(true)
 
             VStack(alignment: .leading, spacing: 2) {
@@ -383,8 +398,15 @@ struct WeeklyChallengeView: View {
                 .lineLimit(nil)
 
             VStack(spacing: SpacingTokens.sp2) {
-                ForEach(WeeklyChallengeKind.allCases, id: \.self) { kind in
+                ForEach(Array(WeeklyChallengeKind.allCases.enumerated()), id: \.element) { index, kind in
                     kindRow(kind: kind)
+                        .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                            content
+                                .opacity(phase.isIdentity ? 1 : 0)
+                                .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                        }
+                        .hsParallaxTile(factor: 0.15)
+                        .zIndex(Double(WeeklyChallengeKind.allCases.count - index))
                 }
             }
         }
@@ -432,6 +454,7 @@ struct WeeklyChallengeView: View {
                     Image(systemName: "checkmark.circle.fill")
                         .font(.body)
                         .foregroundStyle(ColorTokens.Brand.primary)
+                        .hsSymbolEffect(.bounce, value: isCurrent)
                         .accessibilityHidden(true)
                 }
             }

@@ -10,11 +10,17 @@ struct PracticeReminderKidView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(AppCoordinator.self) private var coordinator
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
                 content
             }
             .navigationTitle(Text(String(localized: "practiceReminder.nav.title")))
@@ -58,7 +64,7 @@ struct PracticeReminderKidView: View {
     }
 
     private func hero(state: PracticeReminderKidModels.ViewState) -> some View {
-        HSCard(style: .tinted(ColorTokens.Brand.mint.opacity(0.18))) {
+        HSLiquidGlassCard(style: .elevated) {
             HStack(alignment: .top, spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .happy, size: 72)
                     .accessibilityHidden(true)
@@ -109,6 +115,7 @@ struct PracticeReminderKidView: View {
             Image(systemName: icon)
                 .font(.system(size: 18, weight: .semibold))
                 .foregroundStyle(ColorTokens.Brand.primary)
+                .hsSymbolEffect(.pulse, value: value)
             Text(value)
                 .font(TypographyTokens.headline(16))
                 .foregroundStyle(ColorTokens.Kid.ink)

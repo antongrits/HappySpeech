@@ -9,6 +9,7 @@ struct HabitStreakDashboardView: View {
     @State private var interactor: HabitStreakDashboardInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private let cellSize: CGFloat = 18
     private let cellSpacing: CGFloat = 4
@@ -17,6 +18,11 @@ struct HabitStreakDashboardView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
                 content
             }
             .navigationTitle(Text(String(localized: "habitStreak.nav.title")))
@@ -64,16 +70,23 @@ struct HabitStreakDashboardView: View {
     }
 
     private func hero(state: HabitStreakDashboardModels.ViewState) -> some View {
-        HSCard(style: .tinted(ColorTokens.Brand.butter.opacity(0.18))) {
+        HSLiquidGlassCard(style: .elevated) {
             HStack(alignment: .top, spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .celebrating, size: 64)
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(String(localized: "habitStreak.hero.title"))
-                        .font(TypographyTokens.title(20))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
+                    HStack(spacing: SpacingTokens.tiny) {
+                        Image(systemName: "flame.fill")
+                            .font(TypographyTokens.title(20))
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                            .hsSymbolEffect(.variableColor, value: state.currentStreak)
+                            .accessibilityHidden(true)
+                        Text(String(localized: "habitStreak.hero.title"))
+                            .font(TypographyTokens.title(20))
+                            .foregroundStyle(ColorTokens.Kid.ink)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
+                    }
                     Text(String(localized: "habitStreak.hero.subtitle"))
                         .font(TypographyTokens.body(14))
                         .foregroundStyle(ColorTokens.Kid.inkMuted)

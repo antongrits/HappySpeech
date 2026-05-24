@@ -10,11 +10,17 @@ struct GoalTrackerKidView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
     @Environment(AppCoordinator.self) private var coordinator
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
                 content
             }
             .navigationTitle(Text(String(localized: "goalTracker.kid.nav.title")))
@@ -58,7 +64,7 @@ struct GoalTrackerKidView: View {
     }
 
     private func hero(state: GoalTrackerKidModels.ViewState) -> some View {
-        HSCard(style: .tinted(ColorTokens.Brand.mint.opacity(0.18))) {
+        HSLiquidGlassCard(style: .elevated) {
             HStack(alignment: .top, spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .pointing, size: 72)
                     .accessibilityHidden(true)
@@ -84,11 +90,18 @@ struct GoalTrackerKidView: View {
 
     private func goalsList(interactor: GoalTrackerKidInteractor) -> some View {
         VStack(spacing: SpacingTokens.sp2) {
-            ForEach(interactor.state.goals) { goal in
+            ForEach(Array(interactor.state.goals.enumerated()), id: \.element.id) { index, goal in
                 goalCard(goal) {
                     hapticService.impact(.light)
                     interactor.bump(goal.id)
                 }
+                .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                    content
+                        .opacity(phase.isIdentity ? 1 : 0)
+                        .scaleEffect(phase.isIdentity ? 1 : 0.94)
+                }
+                .hsParallaxTile(factor: 0.22)
+                .zIndex(Double(interactor.state.goals.count - index))
             }
         }
     }
@@ -105,6 +118,7 @@ struct GoalTrackerKidView: View {
                             .font(.system(size: 20, weight: .semibold))
                             .foregroundStyle(ColorTokens.Brand.primary)
                             .frame(width: 28, height: 28)
+                            .hsSymbolEffect(.bounce, value: goal.isReached)
                         Text(goal.id.title)
                             .font(TypographyTokens.headline(15))
                             .foregroundStyle(ColorTokens.Kid.ink)

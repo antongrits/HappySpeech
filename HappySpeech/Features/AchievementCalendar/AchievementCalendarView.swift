@@ -9,6 +9,7 @@ struct AchievementCalendarView: View {
     @State private var interactor: AchievementCalendarInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private let columns = Array(
         repeating: GridItem(.flexible(), spacing: SpacingTokens.sp1),
@@ -19,6 +20,11 @@ struct AchievementCalendarView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Parent.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
                 content
             }
             .navigationTitle(Text(String(localized: "achievementCalendar.nav.title")))
@@ -65,7 +71,7 @@ struct AchievementCalendarView: View {
     }
 
     private func hero(state: AchievementCalendarModels.ViewState) -> some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated) {
             VStack(alignment: .leading, spacing: 6) {
                 Text(String(localized: "achievementCalendar.hero.title"))
                     .font(TypographyTokens.title(20))
@@ -94,11 +100,18 @@ struct AchievementCalendarView: View {
     private func calendarGrid(interactor: AchievementCalendarInteractor) -> some View {
         HSCard(style: .flat) {
             LazyVGrid(columns: columns, spacing: SpacingTokens.sp1) {
-                ForEach(interactor.state.days) { entry in
+                ForEach(Array(interactor.state.days.enumerated()), id: \.element.id) { index, entry in
                     dayCell(entry, isSelected: entry.day == interactor.state.selectedDay) {
                         hapticService.impact(.light)
                         interactor.selectDay(entry.day)
                     }
+                    .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.9)
+                    }
+                    .hsParallaxTile(factor: 0.18)
+                    .zIndex(Double(interactor.state.days.count - index))
                 }
             }
         }

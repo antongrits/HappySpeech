@@ -54,6 +54,7 @@ struct AssignedHomeworkView: View {
 
     @Environment(\.dismiss) private var dismiss
     @Environment(AppContainer.self) private var container
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private static let logger = Logger(
         subsystem: "ru.happyspeech",
@@ -64,6 +65,12 @@ struct AssignedHomeworkView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Spec.bg.ignoresSafeArea()
+
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
 
                 if holder.isLoading {
                     loadingSection
@@ -114,10 +121,11 @@ struct AssignedHomeworkView: View {
     private func builderSection(
         _ load: AssignedHomeworkModels.Load.ViewModel
     ) -> some View {
-        VStack(alignment: .leading, spacing: SpacingTokens.sp4) {
-            Text("assignedHomework.builder.title")
-                .font(TypographyTokens.headline(18))
-                .foregroundStyle(ColorTokens.Spec.ink)
+        HSLiquidGlassCard(style: .elevated) {
+            VStack(alignment: .leading, spacing: SpacingTokens.sp4) {
+                Text("assignedHomework.builder.title")
+                    .font(TypographyTokens.headline(18))
+                    .foregroundStyle(ColorTokens.Spec.ink)
 
             // Ребёнок
             fieldLabel("assignedHomework.field.child")
@@ -223,6 +231,7 @@ struct AssignedHomeworkView: View {
             .buttonStyle(.plain)
             .disabled(!canCreate)
             .accessibilityHint(Text("assignedHomework.create.hint"))
+            }
         }
     }
 
@@ -281,8 +290,15 @@ struct AssignedHomeworkView: View {
                     .font(TypographyTokens.body(14))
                     .foregroundStyle(ColorTokens.Spec.inkMuted)
             } else {
-                ForEach(load.assignments) { row in
+                ForEach(Array(load.assignments.enumerated()), id: \.element.id) { index, row in
                     assignmentRow(row)
+                        .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                            content
+                                .opacity(phase.isIdentity ? 1 : 0)
+                                .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                        }
+                        .hsParallaxTile(factor: 0.15)
+                        .zIndex(Double(load.assignments.count - index))
                 }
             }
         }
@@ -299,6 +315,7 @@ struct AssignedHomeworkView: View {
                 .foregroundStyle(row.isComplete
                     ? ColorTokens.Semantic.success
                     : ColorTokens.Spec.accent)
+                .hsSymbolEffect(.bounce, value: row.isComplete)
             VStack(alignment: .leading, spacing: 2) {
                 Text(row.childName)
                     .font(TypographyTokens.headline(15))

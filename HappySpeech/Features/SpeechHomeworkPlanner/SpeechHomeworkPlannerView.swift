@@ -7,11 +7,17 @@ struct SpeechHomeworkPlannerView: View {
     @State private var interactor = SpeechHomeworkPlannerInteractor()
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         NavigationStack {
             ZStack {
                 ColorTokens.Parent.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
                 content
             }
             .navigationTitle(Text(String(localized: "homeworkPlanner.nav.title")))
@@ -45,7 +51,7 @@ struct SpeechHomeworkPlannerView: View {
     }
 
     private var hero: some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
                 Text(String(localized: "homeworkPlanner.hero.title"))
                     .font(TypographyTokens.title(20))
@@ -70,8 +76,15 @@ struct SpeechHomeworkPlannerView: View {
 
     private var list: some View {
         VStack(spacing: SpacingTokens.sp2) {
-            ForEach(interactor.items) { item in
+            ForEach(Array(interactor.items.enumerated()), id: \.element.id) { index, item in
                 row(item)
+                    .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                    }
+                    .hsParallaxTile(factor: 0.15)
+                    .zIndex(Double(interactor.items.count - index))
             }
         }
     }
@@ -101,6 +114,7 @@ struct SpeechHomeworkPlannerView: View {
                         .foregroundStyle(item.isDone
                                          ? ColorTokens.Semantic.success
                                          : ColorTokens.Parent.inkSoft)
+                        .hsSymbolEffect(.bounce, value: item.isDone)
                 }
             }
         }

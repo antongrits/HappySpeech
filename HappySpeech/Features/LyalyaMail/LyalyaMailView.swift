@@ -61,6 +61,11 @@ struct LyalyaMailView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
                 content
             }
             .navigationTitle(Text("Письма от Ляли"))
@@ -85,9 +90,22 @@ struct LyalyaMailView: View {
                 ScrollView {
                     VStack(spacing: SpacingTokens.sp2) {
                         header(vm)
-                        ForEach(vm.rows) { row in
+                        ForEach(Array(vm.rows.enumerated()), id: \.element.id) { index, row in
                             letterCard(row)
                                 .onTapGesture { openLetter(row.id) }
+                                .scrollTransition(
+                                    .animated(
+                                        reduceMotion
+                                            ? .linear(duration: 0)
+                                            : .spring(response: 0.5, dampingFraction: 0.85)
+                                    )
+                                ) { content, phase in
+                                    content
+                                        .opacity(phase.isIdentity ? 1 : 0)
+                                        .scaleEffect(phase.isIdentity ? 1 : 0.95)
+                                }
+                                .hsParallaxTile(factor: 0.18)
+                                .zIndex(Double(vm.rows.count - index))
                         }
                     }
                     .padding(.horizontal, SpacingTokens.screenEdge)
@@ -128,7 +146,7 @@ struct LyalyaMailView: View {
     // MARK: - Letter card
 
     private func letterCard(_ row: LyalyaLetterRowViewModel) -> some View {
-        HSCard(style: row.isRead ? .flat : .elevated) {
+        HSLiquidGlassCard(style: row.isRead ? .primary : .elevated) {
             HStack(alignment: .top, spacing: SpacingTokens.sp2) {
                 LyalyaMascotView(state: row.mascotState, size: 40)
                     .accessibilityHidden(true)

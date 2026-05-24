@@ -53,6 +53,13 @@ struct HomeTasksView: View {
                 backgroundGradient
                     .ignoresSafeArea()
 
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .opacity(colorScheme == .dark ? 0.20 : 0.30)
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
                 content
                     .refreshable { performRefresh() }
 
@@ -261,7 +268,7 @@ struct HomeTasksView: View {
             .accessibilityAddTraits(.isHeader)
 
             VStack(spacing: SpacingTokens.listGap) {
-                ForEach(section.rows) { row in
+                ForEach(Array(section.rows.enumerated()), id: \.element.id) { index, row in
                     HomeTaskCard(
                         row: row,
                         reduceMotion: reduceMotion,
@@ -272,6 +279,13 @@ struct HomeTasksView: View {
                     .transition(.opacity.combined(with: .move(edge: .top)))
                     // Block J v18 — kavsoft-style tilt carousel scroll transition.
                     .hsScrollEffect(.tiltCarousel)
+                    .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.94)
+                    }
+                    .hsParallaxTile(factor: 0.22)
+                    .zIndex(Double(section.rows.count - index))
                 }
             }
         }
@@ -503,6 +517,7 @@ private struct HomeTaskCard: View {
                     Image(systemName: "checkmark")
                         .font(TypographyTokens.caption(14))
                         .foregroundStyle(ColorTokens.Overlay.onAccent)
+                        .hsSymbolEffect(.bounce, value: row.isCompleted)
                 }
             }
             .frame(width: 44, height: 44, alignment: .topLeading)
@@ -555,6 +570,7 @@ private struct HomeTaskCard: View {
                     .foregroundStyle(row.isOverdue
                                      ? ColorTokens.Semantic.error
                                      : ColorTokens.Parent.inkSoft)
+                    .hsSymbolEffect(.pulse, value: row.isOverdue)
                 Text(due)
                     .font(TypographyTokens.caption())
                     .foregroundStyle(row.isOverdue

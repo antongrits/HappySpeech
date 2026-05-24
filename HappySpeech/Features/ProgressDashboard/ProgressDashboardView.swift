@@ -202,6 +202,7 @@ struct ProgressDashboardView: View {
                     Image(systemName: iconName)
                         .font(TypographyTokens.labelRounded(14))
                         .foregroundStyle(iconTint)
+                        .hsSymbolEffect(.pulse, value: chips.count)
                         .accessibilityHidden(true)
                     Text(title)
                         .font(TypographyTokens.headline(15))
@@ -288,8 +289,15 @@ struct ProgressDashboardView: View {
     private var summaryCardsRow: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: SpacingTokens.regular) {
-                ForEach(display.summaryCards) { card in
+                ForEach(Array(display.summaryCards.enumerated()), id: \.element.id) { index, card in
                     SummaryCardView(card: card)
+                        .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                            content
+                                .opacity(phase.isIdentity ? 1 : 0)
+                                .scaleEffect(phase.isIdentity ? 1 : 0.94)
+                        }
+                        .hsParallaxTile(factor: 0.18)
+                        .zIndex(Double(display.summaryCards.count - index))
                 }
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
@@ -501,13 +509,20 @@ struct ProgressDashboardView: View {
                 ],
                 spacing: SpacingTokens.regular
             ) {
-                ForEach(display.soundCells) { cell in
+                ForEach(Array(display.soundCells.enumerated()), id: \.element.id) { index, cell in
                     Button {
                         handleOpenSound(cell.sound)
                     } label: {
                         SoundProgressCellView(cell: cell)
                     }
                     .buttonStyle(.plain)
+                    .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.55, dampingFraction: 0.85))) { content, phase in
+                        content
+                            .opacity(phase.isIdentity ? 1 : 0)
+                            .scaleEffect(phase.isIdentity ? 1 : 0.92)
+                    }
+                    .hsParallaxTile(factor: 0.20)
+                    .zIndex(Double(display.soundCells.count - index))
                 }
             }
             .padding(.horizontal, SpacingTokens.screenEdge)

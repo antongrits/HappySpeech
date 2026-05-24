@@ -76,6 +76,12 @@ struct ProsodyView: View {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
 
+                HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+
                 if holder.isFinished, let summary = holder.summary {
                     summarySection(summary)
                 } else if let round = holder.currentRound {
@@ -170,32 +176,24 @@ struct ProsodyView: View {
     private func phraseCard(
         _ round: ProsodyModels.Start.RoundViewModel
     ) -> some View {
-        VStack(spacing: SpacingTokens.sp3) {
-            if round.stage != .discriminate {
-                Image(systemName: round.intonationSymbol)
-                    .font(.system(size: 44))
-                    .foregroundStyle(ColorTokens.Brand.lilac)
-                    .accessibilityHidden(true)
+        HSLiquidGlassCard(style: .elevated, padding: SpacingTokens.sp6) {
+            VStack(spacing: SpacingTokens.sp3) {
+                if round.stage != .discriminate {
+                    Image(systemName: round.intonationSymbol)
+                        .font(.system(size: 44))
+                        .foregroundStyle(ColorTokens.Brand.lilac)
+                        .hsSymbolEffect(.pulse, value: round.intonationSymbol)
+                        .accessibilityHidden(true)
+                }
+                Text(round.phraseText)
+                    .font(TypographyTokens.title(26))
+                    .foregroundStyle(ColorTokens.Kid.ink)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(3)
+                    .minimumScaleFactor(0.6)
             }
-            Text(round.phraseText)
-                .font(TypographyTokens.title(26))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(3)
-                .minimumScaleFactor(0.6)
+            .frame(maxWidth: .infinity)
         }
-        .padding(.horizontal, SpacingTokens.sp6)
-        .padding(.vertical, SpacingTokens.sp6)
-        .frame(maxWidth: .infinity)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Kid.surface)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .strokeBorder(ColorTokens.Kid.line, lineWidth: 2)
-        )
-        .depthShadow(ShadowTokens.kidDepth)
         .padding(.horizontal, SpacingTokens.screenEdge)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(round.accessibilityLabel))
@@ -205,7 +203,7 @@ struct ProsodyView: View {
         _ round: ProsodyModels.Start.RoundViewModel
     ) -> some View {
         VStack(spacing: SpacingTokens.sp3) {
-            ForEach(round.options) { option in
+            ForEach(Array(round.options.enumerated()), id: \.element.id) { index, option in
                 Button {
                     Task { await answer(optionIndex: option.id, voice: false) }
                 } label: {
@@ -229,6 +227,13 @@ struct ProsodyView: View {
                 .buttonStyle(.plain)
                 .accessibilityLabel(Text(option.label))
                 .accessibilityHint(Text("prosody.option.hint"))
+                .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                    content
+                        .opacity(phase.isIdentity ? 1 : 0)
+                        .scaleEffect(phase.isIdentity ? 1 : 0.94)
+                }
+                .hsParallaxTile(factor: 0.22)
+                .zIndex(Double(round.options.count - index))
             }
         }
         .padding(.horizontal, SpacingTokens.screenEdge)
@@ -245,6 +250,7 @@ struct ProsodyView: View {
                 HStack(spacing: SpacingTokens.sp2) {
                     Image(systemName: "mic.fill")
                         .font(.title3)
+                        .hsSymbolEffect(.pulse, value: round.id)
                     Text("prosody.voice.say")
                         .font(TypographyTokens.headline(18))
                         .lineLimit(2)
@@ -270,6 +276,7 @@ struct ProsodyView: View {
                 ? "checkmark.circle.fill"
                 : "arrow.counterclockwise.circle.fill")
                 .font(.title3)
+                .hsSymbolEffect(.bounce, value: isCorrect)
             Text(text)
                 .font(TypographyTokens.body(15).weight(.medium))
                 .lineLimit(2)
@@ -298,6 +305,7 @@ struct ProsodyView: View {
                 : "hand.thumbsup.circle.fill")
                 .font(.system(size: 80))
                 .foregroundStyle(ColorTokens.Brand.butter)
+                .hsSymbolEffect(.bounce, value: summary.scoreText)
                 .accessibilityHidden(true)
 
             Text(summary.title)

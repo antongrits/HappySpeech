@@ -61,6 +61,11 @@ struct VoiceJournalView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Parent.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
                 if let vm = holder.loadVM {
                     if vm.isEmpty {
                         emptyState(vm)
@@ -118,8 +123,15 @@ struct VoiceJournalView: View {
     private func list(_ vm: VoiceJournalModels.LoadEntries.ViewModel) -> some View {
         ScrollView {
             LazyVStack(spacing: SpacingTokens.sp2) {
-                ForEach(vm.rows) { row in
+                ForEach(Array(vm.rows.enumerated()), id: \.element.id) { index, row in
                     rowView(row)
+                        .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                            content
+                                .opacity(phase.isIdentity ? 1 : 0)
+                                .scaleEffect(phase.isIdentity ? 1 : 0.96)
+                        }
+                        .hsParallaxTile(factor: 0.15)
+                        .zIndex(Double(vm.rows.count - index))
                 }
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
@@ -128,7 +140,7 @@ struct VoiceJournalView: View {
     }
 
     private func rowView(_ row: VoiceJournalModels.LoadEntries.Row) -> some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated) {
             HStack(spacing: SpacingTokens.sp3) {
                 ZStack {
                     Circle()
@@ -137,6 +149,7 @@ struct VoiceJournalView: View {
                     Image(systemName: "mic.fill")
                         .font(.system(size: 18, weight: .semibold))
                         .foregroundStyle(ColorTokens.Brand.lilac)
+                        .hsSymbolEffect(.pulse, value: row.id)
                         .accessibilityHidden(true)
                 }
                 VStack(alignment: .leading, spacing: 2) {
@@ -209,6 +222,7 @@ struct VoiceJournalView: View {
                                 ? ColorTokens.Semantic.error
                                 : ColorTokens.Brand.primary
                         )
+                        .hsSymbolEffect(.pulse, value: holder.isRecording)
                         .accessibilityHidden(true)
                 }
                 Text(holder.isRecording

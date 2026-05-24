@@ -9,11 +9,17 @@ struct LyalyaPersonalCoachView: View {
     @State private var interactor: LyalyaPersonalCoachInteractor?
     @Environment(\.dismiss) private var dismiss
     @Environment(\.hapticService) private var hapticService
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
                 content
             }
             .navigationTitle(Text(String(localized: "coach.nav.title")))
@@ -63,7 +69,7 @@ struct LyalyaPersonalCoachView: View {
     }
 
     private func hero(interactor: LyalyaPersonalCoachInteractor) -> some View {
-        HSCard(style: .tinted(ColorTokens.Brand.lilac.opacity(0.18))) {
+        HSLiquidGlassCard(style: .elevated) {
             HStack(spacing: SpacingTokens.sp3) {
                 LyalyaMascotView(state: .explaining, size: 64)
                     .accessibilityHidden(true)
@@ -130,6 +136,13 @@ struct LyalyaPersonalCoachView: View {
                 .buttonStyle(.plain)
                 .disabled(interactor.reaction != .none)
                 .accessibilityLabel(Text(opt))
+                .scrollTransition(.animated(reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85))) { content, phase in
+                    content
+                        .opacity(phase.isIdentity ? 1 : 0)
+                        .scaleEffect(phase.isIdentity ? 1 : 0.92)
+                }
+                .hsParallaxTile(factor: 0.20)
+                .zIndex(Double(round.options.count - idx))
             }
         }
     }
@@ -141,6 +154,7 @@ struct LyalyaPersonalCoachView: View {
             HStack(spacing: SpacingTokens.sp2) {
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundStyle(ColorTokens.Semantic.success)
+                    .hsSymbolEffect(.bounce, value: interactor.correctCount)
                 Text("Точно! Молодец!")
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .font(TypographyTokens.body(15))
@@ -149,6 +163,7 @@ struct LyalyaPersonalCoachView: View {
             HStack(spacing: SpacingTokens.sp2) {
                 Image(systemName: "arrow.counterclockwise.circle.fill")
                     .foregroundStyle(ColorTokens.Semantic.warning)
+                    .hsSymbolEffect(.pulse, value: interactor.currentIndex)
                 Text("Попробуем ещё разок")
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .font(TypographyTokens.body(15))
