@@ -191,6 +191,17 @@ xcodebuild test -project HappySpeech.xcodeproj \
 swiftlint --strict
 ```
 
+### Локализация — регенерация L10n.swift
+
+После редактирования `HappySpeech/Resources/Localizable.xcstrings` запусти:
+
+```bash
+./scripts/regen-l10n.sh
+```
+
+Скрипт вызывает `swiftgen run xcstrings` и перезаписывает `HappySpeech/Generated/L10n.swift`.
+Требует: `brew install swiftgen`.
+
 ### Скриншот-тур
 ```bash
 ./scripts/generate_screenshots.sh
@@ -312,10 +323,47 @@ _workshop/
 
 ---
 
-## 14. Запуск команды агентов
+## 14. Universal Links — хостинг AASA-файла
+
+Firebase Dynamic Links deprecated August 2025. Заменены на Apple Universal Links.
+
+**Шаблон AASA:** `Resources/apple-app-site-association.json`
+**Обработчик URL:** `HappySpeech/Core/UniversalLinks/UniversalLinkHandler.swift`
+
+Когда появится продакшн-домен, нужно разместить файл:
+
+```
+https://happyspeech.app/.well-known/apple-app-site-association
+```
+
+Заменить `TEAMID` в файле на реальный Apple Team ID из Apple Developer Portal.
+Добавить Associated Domains entitlement в основной таргет: `applinks:happyspeech.app`.
+В `HappySpeechApp.swift` добавить `.onOpenURL { UniversalLinkHandler.handle($0) }`.
+
+---
+
+## 15. Widget Extension — регистрация таргета
+
+Файлы Widget Extension расположены в `HappySpeechWidget/`. Они являются скаффолдом
+и ещё не зарегистрированы в xcodeproj.
+
+**Чтобы активировать виджет:**
+1. Добавить в `project.yml` (xcodegen) таргет типа `widget-extension` с источниками из `HappySpeechWidget/`.
+2. Запустить `xcodegen generate`.
+3. Добавить App Group `group.ru.happyspeech.app` к обоим таргетам (основному + виджет).
+4. Из основного приложения писать данные в `UserDefaults(suiteName: "group.ru.happyspeech.app")`:
+   - ключ `widget.currentSound` — текущий звук (String)
+   - ключ `widget.streak` — серия дней (Int)
+5. После записи вызывать `WidgetCenter.shared.reloadAllTimelines()`.
+
+---
+
+## 16. Запуск команды агентов
 
 Команда агентов оркеструется через **Agent tool** (15 локальных агентов из
 `.claude/agents/`). Прежний tmux/mailbox-механизм отменён.
+
+
 
 **Когда пользователь говорит «запусти проект», «старт»:**
 1. Открой Obsidian LLM-Wiki, прочитай `index.md`, `wiki/overview.md`, `wiki/synthesis.md`,

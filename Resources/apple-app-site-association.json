@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "TEAMID.com.mmf.bsu.HappySpeech",
+        "paths": ["/invite/*", "/share/*", "/lesson/*"]
+      }
+    ]
+  }
+}
