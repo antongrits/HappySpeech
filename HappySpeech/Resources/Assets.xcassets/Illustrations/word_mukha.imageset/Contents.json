@@ -1,0 +1,23 @@
+{
+  "images": [
+    {
+      "idiom": "universal",
+      "filename": "word_mukha.png",
+      "scale": "1x"
+    },
+    {
+      "idiom": "universal",
+      "filename": "word_mukha@2x.png",
+      "scale": "2x"
+    },
+    {
+      "idiom": "universal",
+      "filename": "word_mukha@3x.png",
+      "scale": "3x"
+    }
+  ],
+  "info": {
+    "author": "xcode",
+    "version": 1
+  }
+}

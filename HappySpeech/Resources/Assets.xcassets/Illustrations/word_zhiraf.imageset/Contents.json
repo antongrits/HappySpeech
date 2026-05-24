@@ -1,0 +1,23 @@
+{
+  "images": [
+    {
+      "idiom": "universal",
+      "filename": "word_zhiraf.png",
+      "scale": "1x"
+    },
+    {
+      "idiom": "universal",
+      "filename": "word_zhiraf@2x.png",
+      "scale": "2x"
+    },
+    {
+      "idiom": "universal",
+      "filename": "word_zhiraf@3x.png",
+      "scale": "3x"
+    }
+  ],
+  "info": {
+    "author": "xcode",
+    "version": 1
+  }
+}
