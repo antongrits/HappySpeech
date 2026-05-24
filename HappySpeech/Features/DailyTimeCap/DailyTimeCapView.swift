@@ -103,12 +103,14 @@ struct DailyTimeCapView: View {
                         .foregroundStyle(ColorTokens.Parent.ink)
                         .lineLimit(2)
                         .minimumScaleFactor(0.85)
+                        .allowsTightening(true)
                 }
                 Text(String(localized: "dailyTimeCap.intro.body"))
                     .font(TypographyTokens.body(15))
                     .foregroundStyle(ColorTokens.Parent.inkMuted)
                     .lineLimit(nil)
                     .minimumScaleFactor(0.85)
+                    .allowsTightening(true)
             }
         }
     }
@@ -296,7 +298,14 @@ struct DailyTimeCapView: View {
     }
 
     private func localizedMinutes(_ minutes: Int) -> String {
-        String(format: String(localized: "dailyTimeCap.minutes.format"), minutes)
+        // Wave 2A — было `String(format: ..., minutes)` с `Int`, при `%lld` в
+        // ru-каталоге это давало `%!ld мин` в UI (Swift Int промотится не туда).
+        // Явный cast в `Int64` гарантирует совпадение с `%lld`.
+        String(
+            format: String(localized: "dailyTimeCap.minutes.format"),
+            locale: Locale.current,
+            Int64(minutes)
+        )
     }
 }
 

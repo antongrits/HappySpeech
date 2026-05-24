@@ -53,6 +53,10 @@ struct AchievementWallView: View {
     @Environment(AppCoordinator.self) private var coordinator
     @Environment(\.hapticService) private var hapticService
 
+    // Wave 2A — bumped from 16pt to 22pt for HIG/Kids Category visibility;
+    // @ScaledMetric ensures it scales with Dynamic Type.
+    @ScaledMetric(relativeTo: .body) private var lockIconSize: CGFloat = 22
+
     private static let logger = Logger(
         subsystem: "ru.happyspeech",
         category: "AchievementWall.View"
@@ -186,9 +190,9 @@ struct AchievementWallView: View {
                     .accessibilityHidden(true)
                 if !cell.isUnlocked {
                     Image(systemName: "lock.fill")
-                        .font(.system(size: 16, weight: .bold))
+                        .font(.system(size: lockIconSize, weight: .bold))
                         .foregroundStyle(ColorTokens.Overlay.onAccent)
-                        .padding(4)
+                        .padding(6)
                         .background(
                             Circle().fill(ColorTokens.Kid.inkSoft)
                         )

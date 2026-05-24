@@ -177,7 +177,7 @@ struct VoiceJournalView: View {
                 } label: {
                     Image(systemName: "play.circle.fill")
                         .font(.system(size: 36))
-                        .foregroundStyle(ColorTokens.Brand.primary)
+                        .foregroundStyle(ColorTokens.Parent.accent)
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel(Text("voice.journal.row.play"))
@@ -205,7 +205,7 @@ struct VoiceJournalView: View {
                         .fill(
                             holder.isRecording
                                 ? ColorTokens.Semantic.error.opacity(0.18)
-                                : ColorTokens.Brand.primary.opacity(0.18)
+                                : ColorTokens.Parent.accent.opacity(0.18)
                         )
                         .frame(width: 160, height: 160)
                         .scaleEffect(holder.isRecording && !reduceMotion ? 1.05 : 1.0)
@@ -220,7 +220,7 @@ struct VoiceJournalView: View {
                         .foregroundStyle(
                             holder.isRecording
                                 ? ColorTokens.Semantic.error
-                                : ColorTokens.Brand.primary
+                                : ColorTokens.Parent.accent
                         )
                         .hsSymbolEffect(.pulse, value: holder.isRecording)
                         .accessibilityHidden(true)
@@ -296,7 +296,7 @@ struct VoiceJournalView: View {
             } label: {
                 Image(systemName: "plus.circle.fill")
                     .font(.title3)
-                    .foregroundStyle(ColorTokens.Brand.primary)
+                    .foregroundStyle(ColorTokens.Parent.accent)
             }
             .accessibilityLabel(Text("voice.journal.toolbar.add"))
         }

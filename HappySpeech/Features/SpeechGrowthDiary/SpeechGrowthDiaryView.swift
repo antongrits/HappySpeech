@@ -115,8 +115,9 @@ struct SpeechGrowthDiaryView: View {
                             .font(TypographyTokens.title(20))
                             .foregroundStyle(ColorTokens.Parent.ink)
                             .multilineTextAlignment(.leading)
-                            .lineLimit(3)
+                            .lineLimit(2)
                             .minimumScaleFactor(0.85)
+                            .allowsTightening(true)
                     }
                     Text("diary.optIn.body")
                         .font(TypographyTokens.body(15))
@@ -200,10 +201,15 @@ struct SpeechGrowthDiaryView: View {
                     Text(row.recordedAtLabel)
                         .font(TypographyTokens.headline(15))
                         .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                        .allowsTightening(true)
                     Spacer()
                     Text(row.durationLabel)
                         .font(TypographyTokens.caption(12).monospacedDigit())
                         .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                 }
                 HStack(spacing: SpacingTokens.sp2) {
                     if !row.topicTag.isEmpty {
