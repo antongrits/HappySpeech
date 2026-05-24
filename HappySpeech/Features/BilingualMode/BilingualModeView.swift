@@ -60,6 +60,11 @@ struct BilingualModeView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
                 content
             }
             .navigationTitle(Text("Билингвальный режим"))
@@ -136,11 +141,18 @@ struct BilingualModeView: View {
     // MARK: - Picker
 
     private var languagePickerCard: some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated) {
             VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-                Text("Выбери второй язык")
-                    .font(TypographyTokens.headline(16))
-                    .foregroundStyle(ColorTokens.Kid.ink)
+                HStack(spacing: SpacingTokens.tiny) {
+                    Image(systemName: "globe")
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(ColorTokens.Brand.lilac)
+                        .hsSymbolEffect(.variableColor, value: currentLanguage)
+                        .accessibilityHidden(true)
+                    Text("Выбери второй язык")
+                        .font(TypographyTokens.headline(16))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                }
                 Picker("Второй язык", selection: languageBinding) {
                     ForEach(BilingualSecondLanguage.allCases, id: \.self) { lang in
                         Text(lang.displayName).tag(lang)
@@ -243,8 +255,17 @@ struct BilingualModeView: View {
                 .font(TypographyTokens.headline(15))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
             LazyVStack(spacing: SpacingTokens.sp1) {
-                ForEach(words) { word in
+                ForEach(Array(words.enumerated()), id: \.element.id) { index, word in
                     wordCard(word, language: language)
+                        .scrollTransition(.animated(
+                            reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85)
+                        )) { content, phase in
+                            content
+                                .opacity(phase.isIdentity ? 1 : 0)
+                                .scaleEffect(phase.isIdentity ? 1 : 0.95)
+                        }
+                        .hsParallaxTile(factor: 0.18)
+                        .zIndex(Double(words.count - index))
                 }
             }
         }

@@ -91,27 +91,33 @@ struct BedtimeModeView: View {
 
     @ViewBuilder
     private var background: some View {
-        if reduceMotion {
-            LinearGradient(
-                colors: [
-                    ColorTokens.Celebration.backdropIndigo,
-                    ColorTokens.Celebration.backdropNight
-                ],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-        } else {
-            // Низко-насыщенный градиент — холодный фиолетово-синий, без анимации
-            // (детский Reduce Motion-friendly режим по умолчанию).
-            LinearGradient(
-                colors: [
-                    ColorTokens.Celebration.backdropIndigo,
-                    ColorTokens.Celebration.backdropNight,
-                    ColorTokens.Celebration.backdropDeep
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
+        ZStack {
+            if reduceMotion {
+                LinearGradient(
+                    colors: [
+                        ColorTokens.Celebration.backdropIndigo,
+                        ColorTokens.Celebration.backdropNight
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            } else {
+                // Низко-насыщенный градиент — холодный фиолетово-синий, без анимации
+                // (детский Reduce Motion-friendly режим по умолчанию).
+                LinearGradient(
+                    colors: [
+                        ColorTokens.Celebration.backdropIndigo,
+                        ColorTokens.Celebration.backdropNight,
+                        ColorTokens.Celebration.backdropDeep
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            }
+            HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                .blendMode(.softLight)
+                .accessibilityHidden(true)
+                .allowsHitTesting(false)
         }
     }
 
@@ -161,30 +167,28 @@ struct BedtimeModeView: View {
     private func introCard(
         _ startVM: BedtimeModeModels.Start.ViewModel
     ) -> some View {
-        VStack(spacing: SpacingTokens.sp4) {
-            Image(systemName: "moon.stars.fill")
-                .font(.system(size: 64))
-                .foregroundStyle(Color.white.opacity(0.85))
-                .accessibilityHidden(true)
-            Text(startVM.introMessage)
-                .font(TypographyTokens.title(24))
-                .foregroundStyle(Color.white)
-                .multilineTextAlignment(.center)
-                .lineLimit(nil)
-                .minimumScaleFactor(0.8)
-            Text(startVM.storiesCountLabel)
-                .font(TypographyTokens.caption(13))
-                .foregroundStyle(Color.white.opacity(0.7))
-            primaryButton(title: String(localized: "bedtime.intro.cta")) {
-                Task { await advance() }
+        HSLiquidGlassCard(style: .elevated) {
+            VStack(spacing: SpacingTokens.sp4) {
+                Image(systemName: "moon.stars.fill")
+                    .font(.system(size: 64))
+                    .foregroundStyle(Color.white.opacity(0.85))
+                    .hsSymbolEffect(.variableColor, value: holder.currentStage)
+                    .accessibilityHidden(true)
+                Text(startVM.introMessage)
+                    .font(TypographyTokens.title(24))
+                    .foregroundStyle(Color.white)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(nil)
+                    .minimumScaleFactor(0.8)
+                Text(startVM.storiesCountLabel)
+                    .font(TypographyTokens.caption(13))
+                    .foregroundStyle(Color.white.opacity(0.7))
+                primaryButton(title: String(localized: "bedtime.intro.cta")) {
+                    Task { await advance() }
+                }
             }
+            .frame(maxWidth: .infinity)
         }
-        .padding(SpacingTokens.sp4)
-        .frame(maxWidth: .infinity)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(Color.white.opacity(0.08))
-        )
     }
 
     // MARK: - Breathing

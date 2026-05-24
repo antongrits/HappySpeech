@@ -81,7 +81,16 @@ struct DialectAdaptationView: View {
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.vertical, SpacingTokens.sp4)
             }
-            .background(ColorTokens.Parent.bg.ignoresSafeArea())
+            .background(
+                ZStack {
+                    ColorTokens.Parent.bg
+                    HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
+                        .blendMode(.softLight)
+                        .accessibilityHidden(true)
+                        .allowsHitTesting(false)
+                }
+                .ignoresSafeArea()
+            )
             .navigationTitle(Text("dialect.screen.title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -129,36 +138,39 @@ struct DialectAdaptationView: View {
 
     @ViewBuilder
     private func heroSection(viewModel: DialectAdaptationModels.Load.ViewModel) -> some View {
-        VStack(spacing: SpacingTokens.sp3) {
-            // E v21: 3D Ляля hero на DialectAdaptation (требование пользователя).
-            LyalyaHeroView(state: .thinking, size: 160)
-                .frame(height: 160)
-                .accessibilityHidden(true)
+        HSLiquidGlassCard(style: .elevated) {
+            VStack(spacing: SpacingTokens.sp3) {
+                // E v21: 3D Ляля hero на DialectAdaptation (требование пользователя).
+                LyalyaHeroView(state: .thinking, size: 160)
+                    .frame(height: 160)
+                    .accessibilityHidden(true)
 
-            Text("dialect.hero.title")
-                .font(TypographyTokens.title(22))
-                .foregroundStyle(ColorTokens.Parent.ink)
-                .multilineTextAlignment(.center)
+                HStack(spacing: SpacingTokens.tiny) {
+                    Image(systemName: "globe.europe.africa.fill")
+                        .font(TypographyTokens.title(22))
+                        .foregroundStyle(ColorTokens.Parent.accent)
+                        .hsSymbolEffect(.variableColor, value: viewModel.currentDialectId)
+                        .accessibilityHidden(true)
+                    Text("dialect.hero.title")
+                        .font(TypographyTokens.title(22))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .multilineTextAlignment(.center)
+                }
 
-            Text(viewModel.currentDialectTitle)
-                .font(TypographyTokens.headline(18))
-                .foregroundStyle(ColorTokens.Parent.accent)
-                .multilineTextAlignment(.center)
-
-            if let appliedText = viewModel.appliedAtText {
-                Text(appliedText)
-                    .font(TypographyTokens.caption(12))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
+                Text(viewModel.currentDialectTitle)
+                    .font(TypographyTokens.headline(18))
+                    .foregroundStyle(ColorTokens.Parent.accent)
                     .multilineTextAlignment(.center)
+
+                if let appliedText = viewModel.appliedAtText {
+                    Text(appliedText)
+                        .font(TypographyTokens.caption(12))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .multilineTextAlignment(.center)
+                }
             }
+            .frame(maxWidth: .infinity)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, SpacingTokens.sp5)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Parent.surface)
-        )
-        .depthShadow(ShadowTokens.parentDepth)
         .accessibilityElement(children: .combine)
         .accessibilityLabel(Text(String(
             format: String(localized: "dialect.hero.a11y"),
@@ -206,8 +218,17 @@ struct DialectAdaptationView: View {
                 .padding(.leading, SpacingTokens.sp1)
 
             VStack(spacing: SpacingTokens.sp2) {
-                ForEach(viewModel.dialects) { row in
+                ForEach(Array(viewModel.dialects.enumerated()), id: \.element.id) { index, row in
                     dialectCard(row: row)
+                        .scrollTransition(.animated(
+                            reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85)
+                        )) { content, phase in
+                            content
+                                .opacity(phase.isIdentity ? 1 : 0)
+                                .scaleEffect(phase.isIdentity ? 1 : 0.95)
+                        }
+                        .hsParallaxTile(factor: 0.20)
+                        .zIndex(Double(viewModel.dialects.count - index))
                 }
             }
         }

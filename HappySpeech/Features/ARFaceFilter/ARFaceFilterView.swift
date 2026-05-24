@@ -118,11 +118,18 @@ struct ARFaceFilterView: View {
             SimpleARFaceView(isSupported: true)
         } else {
             // Fallback: 2D градиент-фон, fun mode без AR.
-            LinearGradient(
-                colors: [ColorTokens.Brand.primary.opacity(0.4), ColorTokens.Brand.lilac.opacity(0.4)],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
+            ZStack {
+                LinearGradient(
+                    colors: [ColorTokens.Brand.primary.opacity(0.4), ColorTokens.Brand.lilac.opacity(0.4)],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
+            }
             .overlay {
                 ContentUnavailableView(
                     String(localized: "facefilter.fallback.title"),
@@ -174,24 +181,29 @@ struct ARFaceFilterView: View {
 
     @ViewBuilder
     private func promptCard(viewModel: ARFaceFilterModels.SetMask.ViewModel) -> some View {
-        VStack(spacing: SpacingTokens.sp1) {
-            Text(viewModel.promptText)
-                .font(.title2.bold())
-                .foregroundStyle(ColorTokens.Overlay.onAccent)
-                .multilineTextAlignment(.center)
-                .accessibilityLabel(Text(viewModel.promptText))
-            if let triggerVM = holder.triggerVM, triggerVM.isMatched {
-                Text(triggerVM.celebrationText)
-                    .font(.title3)
-                    .foregroundStyle(ColorTokens.Brand.gold)
-                    .transition(.opacity)
+        HSLiquidGlassCard(style: .elevated) {
+            VStack(spacing: SpacingTokens.sp1) {
+                HStack(spacing: SpacingTokens.tiny) {
+                    Image(systemName: "sparkles")
+                        .font(.title3)
+                        .foregroundStyle(ColorTokens.Brand.gold)
+                        .hsSymbolEffect(.variableColor, value: holder.glowState == .glowing)
+                        .accessibilityHidden(true)
+                    Text(viewModel.promptText)
+                        .font(.title2.bold())
+                        .foregroundStyle(ColorTokens.Overlay.onAccent)
+                        .multilineTextAlignment(.center)
+                        .accessibilityLabel(Text(viewModel.promptText))
+                }
+                if let triggerVM = holder.triggerVM, triggerVM.isMatched {
+                    Text(triggerVM.celebrationText)
+                        .font(.title3)
+                        .foregroundStyle(ColorTokens.Brand.gold)
+                        .transition(.opacity)
+                }
             }
+            .frame(maxWidth: .infinity)
         }
-        .padding(SpacingTokens.sp4)
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(ColorTokens.Overlay.dimmerHeavy)
-        )
         .padding(.horizontal, SpacingTokens.sp3)
         .animation(reduceMotion ? nil : .easeInOut, value: holder.triggerVM?.isMatched)
     }
@@ -201,8 +213,16 @@ struct ARFaceFilterView: View {
     private var maskPicker: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: SpacingTokens.sp3) {
-                ForEach(FaceMaskKind.allCases) { mask in
+                ForEach(Array(FaceMaskKind.allCases.enumerated()), id: \.element.id) { _, mask in
                     maskButton(mask: mask)
+                        .scrollTransition(.animated(
+                            reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85)
+                        )) { content, phase in
+                            content
+                                .opacity(phase.isIdentity ? 1 : 0)
+                                .scaleEffect(phase.isIdentity ? 1 : 0.9)
+                        }
+                        .hsParallaxTile(factor: 0.18)
                 }
             }
             .padding(.horizontal, SpacingTokens.sp4)

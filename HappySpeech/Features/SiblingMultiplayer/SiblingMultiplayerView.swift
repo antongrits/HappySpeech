@@ -61,16 +61,33 @@ struct SiblingMultiplayerView: View {
                     }
                 )
             } else {
-                VStack(spacing: SpacingTokens.medium) {
-                    LyalyaMascotView(state: .sad, size: 120)
+                ZStack {
+                    HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                        .ignoresSafeArea()
+                        .blendMode(.softLight)
                         .accessibilityHidden(true)
-                    Text(String(localized: "sibling.error.connection"))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(nil)
-                        .minimumScaleFactor(0.85)
-                        .multilineTextAlignment(.center)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .padding(.horizontal, SpacingTokens.regular)
+                        .allowsHitTesting(false)
+                    HSLiquidGlassCard(style: .elevated) {
+                        VStack(spacing: SpacingTokens.medium) {
+                            LyalyaMascotView(state: .sad, size: 120)
+                                .accessibilityHidden(true)
+                            HStack(spacing: SpacingTokens.tiny) {
+                                Image(systemName: "wifi.exclamationmark")
+                                    .foregroundStyle(ColorTokens.Brand.rose)
+                                    .hsSymbolEffect(.bounce, value: true)
+                                    .accessibilityHidden(true)
+                                Text(String(localized: "sibling.error.connection"))
+                                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                                    .lineLimit(nil)
+                                    .minimumScaleFactor(0.85)
+                                    .multilineTextAlignment(.center)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
+                            .padding(.horizontal, SpacingTokens.regular)
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+                    .padding(.horizontal, SpacingTokens.screenEdge)
                 }
             }
 
@@ -84,16 +101,33 @@ struct SiblingMultiplayerView: View {
                     localDisplayName: localDisplayName
                 )
             } else {
-                VStack(spacing: SpacingTokens.medium) {
-                    LyalyaMascotView(state: .sad, size: 120)
+                ZStack {
+                    HSMeshGradientBackground(palette: .kidWarm, animated: true)
+                        .ignoresSafeArea()
+                        .blendMode(.softLight)
                         .accessibilityHidden(true)
-                    Text(String(localized: "sibling.error.connection"))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(nil)
-                        .minimumScaleFactor(0.85)
-                        .multilineTextAlignment(.center)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .padding(.horizontal, SpacingTokens.regular)
+                        .allowsHitTesting(false)
+                    HSLiquidGlassCard(style: .elevated) {
+                        VStack(spacing: SpacingTokens.medium) {
+                            LyalyaMascotView(state: .sad, size: 120)
+                                .accessibilityHidden(true)
+                            HStack(spacing: SpacingTokens.tiny) {
+                                Image(systemName: "wifi.exclamationmark")
+                                    .foregroundStyle(ColorTokens.Brand.rose)
+                                    .hsSymbolEffect(.bounce, value: true)
+                                    .accessibilityHidden(true)
+                                Text(String(localized: "sibling.error.connection"))
+                                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                                    .lineLimit(nil)
+                                    .minimumScaleFactor(0.85)
+                                    .multilineTextAlignment(.center)
+                                    .fixedSize(horizontal: false, vertical: true)
+                            }
+                            .padding(.horizontal, SpacingTokens.regular)
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+                    .padding(.horizontal, SpacingTokens.screenEdge)
                 }
             }
         }

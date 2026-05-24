@@ -34,6 +34,11 @@ struct PronunciationLeaderboardView: View {
     var body: some View {
         ZStack {
             ColorTokens.Parent.bg.ignoresSafeArea()
+            HSMeshGradientBackground(palette: .rewards, animated: !reduceMotion)
+                .ignoresSafeArea()
+                .blendMode(.softLight)
+                .accessibilityHidden(true)
+                .allowsHitTesting(false)
 
             ScrollView(showsIndicators: false) {
                 VStack(spacing: SpacingTokens.sectionGap) {
@@ -54,30 +59,33 @@ struct PronunciationLeaderboardView: View {
     // MARK: - Header
 
     private var headerSection: some View {
-        HStack(alignment: .center, spacing: SpacingTokens.sp3) {
-            VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
-                Text(String(localized: "leaderboard.header.title"))
-                    .font(TypographyTokens.headline(20))
-                    .foregroundStyle(ColorTokens.Parent.ink)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
-                    .accessibilityAddTraits(.isHeader)
+        HSLiquidGlassCard(style: .elevated) {
+            HStack(alignment: .center, spacing: SpacingTokens.sp3) {
+                VStack(alignment: .leading, spacing: SpacingTokens.sp1) {
+                    Text(String(localized: "leaderboard.header.title"))
+                        .font(TypographyTokens.headline(20))
+                        .foregroundStyle(ColorTokens.Parent.ink)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                        .accessibilityAddTraits(.isHeader)
 
-                Text(viewModel.totalChildrenText.isEmpty
-                     ? String(localized: "leaderboard.header.subtitle")
-                     : viewModel.totalChildrenText)
-                    .font(TypographyTokens.body(13))
-                    .foregroundStyle(ColorTokens.Parent.inkMuted)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.85)
+                    Text(viewModel.totalChildrenText.isEmpty
+                         ? String(localized: "leaderboard.header.subtitle")
+                         : viewModel.totalChildrenText)
+                        .font(TypographyTokens.body(13))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                }
+
+                Spacer(minLength: SpacingTokens.sp2)
+
+                Image(systemName: "trophy.fill")
+                    .font(TypographyTokens.titleLarge(36))
+                    .foregroundStyle(ColorTokens.Brand.gold)
+                    .hsSymbolEffect(.bounce, value: viewModel.rows.count)
+                    .accessibilityHidden(true)
             }
-
-            Spacer(minLength: SpacingTokens.sp2)
-
-            Image(systemName: "trophy.fill")
-                .font(TypographyTokens.titleLarge(36))
-                .foregroundStyle(ColorTokens.Brand.gold)
-                .accessibilityHidden(true)
         }
         .padding(.top, SpacingTokens.sp3)
     }
@@ -207,11 +215,20 @@ struct PronunciationLeaderboardView: View {
 
     private var listSection: some View {
         VStack(spacing: SpacingTokens.sp2) {
-            ForEach(viewModel.rows) { row in
+            ForEach(Array(viewModel.rows.enumerated()), id: \.element.id) { index, row in
                 LeaderboardRowView(
                     row: row,
                     onTap: { router?.routeToChildProgress(childId: row.id) }
                 )
+                .scrollTransition(.animated(
+                    reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85)
+                )) { content, phase in
+                    content
+                        .opacity(phase.isIdentity ? 1 : 0)
+                        .scaleEffect(phase.isIdentity ? 1 : 0.95)
+                }
+                .hsParallaxTile(factor: 0.18)
+                .zIndex(Double(viewModel.rows.count - index))
             }
         }
     }

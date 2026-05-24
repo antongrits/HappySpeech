@@ -55,7 +55,16 @@ struct SharePlayView: View {
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.bottom, SpacingTokens.sp8)
             }
-            .background(ColorTokens.Parent.bg.ignoresSafeArea())
+            .background(
+                ZStack {
+                    ColorTokens.Parent.bg
+                    HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                        .blendMode(.softLight)
+                        .accessibilityHidden(true)
+                        .allowsHitTesting(false)
+                }
+                .ignoresSafeArea()
+            )
             .navigationTitle(String(localized: "shareplay.title"))
             .navigationBarTitleDisplayMode(.large)
             .toolbar { toolbarContent }
@@ -101,26 +110,35 @@ struct SharePlayView: View {
     // MARK: - Sections
 
     private var headerSection: some View {
-        HStack(alignment: .top, spacing: SpacingTokens.sp3) {
-            VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
-                Text(
-                    String(
-                        format: String(localized: "shareplay.subtitle"),
-                        viewModel.childName
-                    )
-                )
-                .font(TypographyTokens.body(17))
-                .foregroundStyle(ColorTokens.Parent.inkMuted)
-                .padding(.top, SpacingTokens.sp2)
+        HSLiquidGlassCard(style: .elevated) {
+            HStack(alignment: .top, spacing: SpacingTokens.sp3) {
+                VStack(alignment: .leading, spacing: SpacingTokens.sp2) {
+                    HStack(spacing: SpacingTokens.tiny) {
+                        Image(systemName: "shareplay")
+                            .font(TypographyTokens.body(17))
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                            .hsSymbolEffect(.pulse, value: viewModel.isSessionActive)
+                            .accessibilityHidden(true)
+                        Text(
+                            String(
+                                format: String(localized: "shareplay.subtitle"),
+                                viewModel.childName
+                            )
+                        )
+                        .font(TypographyTokens.body(17))
+                        .foregroundStyle(ColorTokens.Parent.inkMuted)
+                    }
+                    .padding(.top, SpacingTokens.sp2)
 
-                Text(String(localized: "shareplay.instruction"))
-                    .font(TypographyTokens.caption(14))
-                    .foregroundStyle(ColorTokens.Parent.inkSoft)
-                    .multilineTextAlignment(.leading)
+                    Text(String(localized: "shareplay.instruction"))
+                        .font(TypographyTokens.caption(14))
+                        .foregroundStyle(ColorTokens.Parent.inkSoft)
+                        .multilineTextAlignment(.leading)
+                }
+                Spacer(minLength: 0)
+                LyalyaMascotView(state: .happy, size: 72)
+                    .accessibilityHidden(true)
             }
-            Spacer(minLength: 0)
-            LyalyaMascotView(state: .happy, size: 72)
-                .accessibilityHidden(true)
         }
         .accessibilityElement(children: .combine)
     }
@@ -132,7 +150,7 @@ struct SharePlayView: View {
                 .foregroundStyle(ColorTokens.Parent.ink)
                 .accessibilityAddTraits(.isHeader)
 
-            ForEach(viewModel.availableLessons) { lesson in
+            ForEach(Array(viewModel.availableLessons.enumerated()), id: \.element.id) { index, lesson in
                 SharePlayLessonCard(
                     lesson: lesson,
                     isSelected: selectedLesson?.id == lesson.id,
@@ -141,6 +159,15 @@ struct SharePlayView: View {
                     selectedLesson = lesson
                     Task { await startSession(lesson: lesson) }
                 }
+                .scrollTransition(.animated(
+                    reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85)
+                )) { content, phase in
+                    content
+                        .opacity(phase.isIdentity ? 1 : 0)
+                        .scaleEffect(phase.isIdentity ? 1 : 0.95)
+                }
+                .hsParallaxTile(factor: 0.20)
+                .zIndex(Double(viewModel.availableLessons.count - index))
             }
         }
     }

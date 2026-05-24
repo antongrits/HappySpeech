@@ -70,6 +70,11 @@ struct CulturalContentView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
 
                 ScrollView {
                     VStack(spacing: SpacingTokens.sp4) {
@@ -142,31 +147,34 @@ struct CulturalContentView: View {
     // MARK: - Hero
 
     private var heroSection: some View {
-        VStack(spacing: SpacingTokens.sp3) {
-            LyalyaMascotView(state: .explaining, size: 140)
-                .frame(height: 140)
-                .accessibilityHidden(true)
+        HSLiquidGlassCard(style: .elevated) {
+            VStack(spacing: SpacingTokens.sp3) {
+                LyalyaMascotView(state: .explaining, size: 140)
+                    .frame(height: 140)
+                    .accessibilityHidden(true)
 
-            Text("cultural.hero.title")
-                .font(TypographyTokens.title(22))
-                .foregroundStyle(ColorTokens.Kid.ink)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .minimumScaleFactor(0.85)
+                HStack(spacing: SpacingTokens.tiny) {
+                    Image(systemName: "books.vertical.fill")
+                        .font(TypographyTokens.title(22))
+                        .foregroundStyle(ColorTokens.Brand.primary)
+                        .hsSymbolEffect(.bounce, value: holder.loadVM?.items.count ?? 0)
+                        .accessibilityHidden(true)
+                    Text("cultural.hero.title")
+                        .font(TypographyTokens.title(22))
+                        .foregroundStyle(ColorTokens.Kid.ink)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
+                }
 
-            Text("cultural.hero.subtitle")
-                .font(TypographyTokens.body(13))
-                .foregroundStyle(ColorTokens.Kid.inkMuted)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, SpacingTokens.sp4)
+                Text("cultural.hero.subtitle")
+                    .font(TypographyTokens.body(13))
+                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, SpacingTokens.sp4)
+            }
+            .frame(maxWidth: .infinity)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, SpacingTokens.sp4)
-        .background(
-            RoundedRectangle(cornerRadius: RadiusTokens.card)
-                .fill(ColorTokens.Kid.surface)
-        )
-        .depthShadow(ShadowTokens.kidDepth)
     }
 
     // MARK: - Categories
@@ -300,8 +308,17 @@ struct CulturalContentView: View {
                     .padding(SpacingTokens.sp4)
             } else {
                 VStack(spacing: SpacingTokens.sp2) {
-                    ForEach(viewModel.items) { item in
+                    ForEach(Array(viewModel.items.enumerated()), id: \.element.id) { index, item in
                         itemCard(item: item)
+                            .scrollTransition(.animated(
+                                reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85)
+                            )) { content, phase in
+                                content
+                                    .opacity(phase.isIdentity ? 1 : 0)
+                                    .scaleEffect(phase.isIdentity ? 1 : 0.95)
+                            }
+                            .hsParallaxTile(factor: 0.20)
+                            .zIndex(Double(viewModel.items.count - index))
                     }
                 }
             }

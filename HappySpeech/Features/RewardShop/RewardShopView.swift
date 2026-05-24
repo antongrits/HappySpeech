@@ -72,6 +72,11 @@ struct RewardShopView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .rewards, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
 
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: SpacingTokens.sp4) {
@@ -146,7 +151,7 @@ struct RewardShopView: View {
     private func coinsBalanceCard(
         _ viewModel: RewardShopModels.Load.ViewModel
     ) -> some View {
-        HSCard(style: .elevated) {
+        HSLiquidGlassCard(style: .elevated) {
             HStack(spacing: SpacingTokens.sp3) {
                 ZStack {
                     Circle()
@@ -155,6 +160,7 @@ struct RewardShopView: View {
                     Image(systemName: "bitcoinsign.circle.fill")
                         .font(.system(size: 36))
                         .foregroundStyle(ColorTokens.Brand.gold)
+                        .hsSymbolEffect(.variableColor, value: viewModel.coinsBalanceText)
                 }
                 .accessibilityHidden(true)
 
@@ -176,7 +182,6 @@ struct RewardShopView: View {
 
                 Spacer(minLength: 0)
             }
-            .padding(SpacingTokens.sp4)
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel(
@@ -197,8 +202,17 @@ struct RewardShopView: View {
                 .accessibilityAddTraits(.isHeader)
 
             LazyVGrid(columns: gridColumns, spacing: SpacingTokens.sp3) {
-                ForEach(category.stickers) { sticker in
+                ForEach(Array(category.stickers.enumerated()), id: \.element.id) { index, sticker in
                     stickerTile(sticker)
+                        .scrollTransition(.animated(
+                            reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85)
+                        )) { content, phase in
+                            content
+                                .opacity(phase.isIdentity ? 1 : 0)
+                                .scaleEffect(phase.isIdentity ? 1 : 0.9)
+                        }
+                        .hsParallaxTile(factor: 0.22)
+                        .zIndex(Double(category.stickers.count - index))
                 }
             }
         }

@@ -79,6 +79,11 @@ struct RetellingView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
 
                 switch holder.phase {
                 case .loading:
@@ -167,30 +172,49 @@ struct RetellingView: View {
         _ start: RetellingModels.Start.ViewModel
     ) -> some View {
         VStack(spacing: SpacingTokens.sp4) {
-            VStack(spacing: SpacingTokens.sp2) {
-                Text("retelling.retell.prompt")
-                    .font(TypographyTokens.headline(17))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
-                    .multilineTextAlignment(.center)
-                    .lineLimit(nil)
+            HSLiquidGlassCard(style: .elevated) {
+                VStack(spacing: SpacingTokens.sp2) {
+                    HStack(spacing: SpacingTokens.tiny) {
+                        Image(systemName: "text.bubble.fill")
+                            .font(TypographyTokens.headline(17))
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                            .hsSymbolEffect(.variableColor, value: holder.coveredFrameIds.count)
+                            .accessibilityHidden(true)
+                        Text("retelling.retell.prompt")
+                            .font(TypographyTokens.headline(17))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(nil)
+                    }
                     .padding(.horizontal, SpacingTokens.sp4)
 
-                if !holder.coverageLabel.isEmpty {
-                    Text(holder.coverageLabel)
-                        .font(TypographyTokens.caption(13).monospacedDigit())
-                        .foregroundStyle(ColorTokens.Brand.primary)
+                    if !holder.coverageLabel.isEmpty {
+                        Text(holder.coverageLabel)
+                            .font(TypographyTokens.caption(13).monospacedDigit())
+                            .foregroundStyle(ColorTokens.Brand.primary)
+                    }
                 }
             }
             .padding(.top, SpacingTokens.sp4)
+            .padding(.horizontal, SpacingTokens.screenEdge)
 
             ScrollView {
                 VStack(spacing: SpacingTokens.sp3) {
-                    ForEach(start.frames) { frame in
+                    ForEach(Array(start.frames.enumerated()), id: \.element.id) { index, frame in
                         frameCard(
                             frame,
                             isCovered: holder.coveredFrameIds.contains(frame.id),
                             interactive: true
                         )
+                        .scrollTransition(.animated(
+                            reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85)
+                        )) { content, phase in
+                            content
+                                .opacity(phase.isIdentity ? 1 : 0)
+                                .scaleEffect(phase.isIdentity ? 1 : 0.95)
+                        }
+                        .hsParallaxTile(factor: 0.20)
+                        .zIndex(Double(start.frames.count - index))
                     }
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)

@@ -74,6 +74,11 @@ struct ObjectDescriptionMapView: View {
         NavigationStack {
             ZStack {
                 ColorTokens.Kid.bg.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidCool, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
                 Group {
                     switch holder.phase {
                     case .picking:    pickingSection
@@ -129,23 +134,32 @@ struct ObjectDescriptionMapView: View {
     private var pickingSection: some View {
         VStack(spacing: SpacingTokens.sp3) {
             // Маскот + приветствие
-            HStack(spacing: SpacingTokens.sp3) {
-                LyalyaMascotView(state: mascotState, size: 72)
-                    .animation(reduceMotion ? .none : MotionTokens.spring, value: mascotState)
-                    .accessibilityHidden(true)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("objectMap.pick.heading")
-                        .font(TypographyTokens.title(20))
-                        .foregroundStyle(ColorTokens.Kid.ink)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.8)
-                    Text("objectMap.pick.sub")
-                        .font(TypographyTokens.body(13))
-                        .foregroundStyle(ColorTokens.Kid.inkMuted)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
+            HSLiquidGlassCard(style: .elevated) {
+                HStack(spacing: SpacingTokens.sp3) {
+                    LyalyaMascotView(state: mascotState, size: 72)
+                        .animation(reduceMotion ? .none : MotionTokens.spring, value: mascotState)
+                        .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: 2) {
+                        HStack(spacing: SpacingTokens.tiny) {
+                            Image(systemName: "map.fill")
+                                .font(TypographyTokens.title(20))
+                                .foregroundStyle(ColorTokens.Brand.rose)
+                                .hsSymbolEffect(.bounce, value: holder.loadVM?.categoriesInOrder.count ?? 0)
+                                .accessibilityHidden(true)
+                            Text("objectMap.pick.heading")
+                                .font(TypographyTokens.title(20))
+                                .foregroundStyle(ColorTokens.Kid.ink)
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.8)
+                        }
+                        Text("objectMap.pick.sub")
+                            .font(TypographyTokens.body(13))
+                            .foregroundStyle(ColorTokens.Kid.inkMuted)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
+                    }
+                    Spacer(minLength: 0)
                 }
-                Spacer(minLength: 0)
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
             .padding(.top, SpacingTokens.sp2)
@@ -184,8 +198,17 @@ struct ObjectDescriptionMapView: View {
                 columns: [GridItem(.adaptive(minimum: 110), spacing: SpacingTokens.sp2)],
                 spacing: SpacingTokens.sp2
             ) {
-                ForEach(items) { object in
+                ForEach(Array(items.enumerated()), id: \.element.id) { index, object in
                     objectButton(object)
+                        .scrollTransition(.animated(
+                            reduceMotion ? .linear(duration: 0) : .spring(response: 0.5, dampingFraction: 0.85)
+                        )) { content, phase in
+                            content
+                                .opacity(phase.isIdentity ? 1 : 0)
+                                .scaleEffect(phase.isIdentity ? 1 : 0.9)
+                        }
+                        .hsParallaxTile(factor: 0.22)
+                        .zIndex(Double(items.count - index))
                 }
             }
         }

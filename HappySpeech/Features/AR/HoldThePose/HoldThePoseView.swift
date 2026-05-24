@@ -4,6 +4,7 @@ import SwiftUI
 struct HoldThePoseView: View {
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var session: LiveARSessionService?
     @State private var mockSession: MockARSessionService?
     @State private var interactor: HoldThePoseInteractor?
@@ -17,6 +18,11 @@ struct HoldThePoseView: View {
                     .ignoresSafeArea()
             } else {
                 ColorTokens.Kid.bgDeep.ignoresSafeArea()
+                HSMeshGradientBackground(palette: .kidWarm, animated: !reduceMotion)
+                    .ignoresSafeArea()
+                    .blendMode(.softLight)
+                    .accessibilityHidden(true)
+                    .allowsHitTesting(false)
                 ARUnsupportedView()
             }
 
@@ -28,25 +34,32 @@ struct HoldThePoseView: View {
                     onClose: { dismiss() }
                 )
                 Spacer()
-                VStack(spacing: SpacingTokens.small) {
-                    Text(display.postureName)
-                        .font(TypographyTokens.headline())
-                        .foregroundStyle(ColorTokens.Overlay.onAccent)
-                        .padding(.horizontal, SpacingTokens.medium)
-                        .padding(.vertical, SpacingTokens.small)
-                        .background(ColorTokens.Overlay.dimmerHeavy, in: Capsule())
-                    GeometryReader { proxy in
-                        ZStack(alignment: .leading) {
-                            Capsule().fill(ColorTokens.Overlay.highlight)
-                            Capsule()
-                                .fill(ColorTokens.Brand.mint)
-                                .frame(width: proxy.size.width * CGFloat(display.progress))
+                HSLiquidGlassCard(style: .elevated) {
+                    VStack(spacing: SpacingTokens.small) {
+                        HStack(spacing: SpacingTokens.tiny) {
+                            Image(systemName: "face.smiling.fill")
+                                .font(TypographyTokens.headline())
+                                .foregroundStyle(ColorTokens.Brand.mint)
+                                .hsSymbolEffect(.pulse, value: display.confidencePercent)
+                                .accessibilityHidden(true)
+                            Text(display.postureName)
+                                .font(TypographyTokens.headline())
+                                .foregroundStyle(ColorTokens.Overlay.onAccent)
                         }
+                        GeometryReader { proxy in
+                            ZStack(alignment: .leading) {
+                                Capsule().fill(ColorTokens.Overlay.highlight)
+                                Capsule()
+                                    .fill(ColorTokens.Brand.mint)
+                                    .frame(width: proxy.size.width * CGFloat(display.progress))
+                            }
+                        }
+                        .frame(height: 14)
+                        Text("\(display.confidencePercent)%")
+                            .font(TypographyTokens.body(13))
+                            .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
                     }
-                    .frame(height: 14)
-                    Text("\(display.confidencePercent)%")
-                        .font(TypographyTokens.body(13))
-                        .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
+                    .frame(maxWidth: .infinity)
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.bottom, SpacingTokens.xLarge)
