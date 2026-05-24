@@ -1529,6 +1529,10 @@
 		D058B5E29CE0BC221CF1CB0D /* GrammarGameInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73E53C5E751F39FBB3CDE80E /* GrammarGameInteractor.swift */; };
 		D076676669FC6740EDD690E9 /* GuidedTourLaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB491F2A1D977EFFB2B2932F /* GuidedTourLaunchView.swift */; };
 		D08CCE2473943BEC6B0BD0F9 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA76F518AED852858B59103 /* SyncService.swift */; };
+		AA01BB1100000001CAFECAFE /* KaraokePitchPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01BB1100000002CAFECAFE /* KaraokePitchPresenterTests.swift */; };
+		AA01BB1100000003CAFECAFE /* SpeechGrowthDiaryPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01BB1100000004CAFECAFE /* SpeechGrowthDiaryPresenterTests.swift */; };
+		AA01BB1100000005CAFECAFE /* VoiceJournalInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01BB1100000006CAFECAFE /* VoiceJournalInteractorTests.swift */; };
+		AA01BB1100000007CAFECAFE /* PacingInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA01BB1100000008CAFECAFE /* PacingInteractorTests.swift */; };
 		D0A5DD9702764D6FEB948D47 /* LiteracyStartPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB95837141DC4C6A32509DB8 /* LiteracyStartPresenterTests.swift */; };
 		D12A41C5FB49E9D47274CD15 /* breathingExhale.ahap in Resources */ = {isa = PBXBuildFile; fileRef = 4F951103581A43BBDCF10B1A /* breathingExhale.ahap */; };
 		D1416C1D2DC6A407D1D0D042 /* EmailAuthWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8331B2CEB1E3CCC5E1A44D95 /* EmailAuthWorkerTests.swift */; };
@@ -3096,6 +3100,10 @@
 		AAF65AD72B489EFE36E4562A /* ProgressDashboardPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressDashboardPresenter.swift; sourceTree = "<group>"; };
 		AB140E3EB4B32F2A339699BE /* ParentInspirationBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentInspirationBoardView.swift; sourceTree = "<group>"; };
 		AB87D145C3A48D94492A49FC /* DesignSystemTokensTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemTokensTests.swift; sourceTree = "<group>"; };
+		AA01BB1100000002CAFECAFE /* KaraokePitchPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KaraokePitchPresenterTests.swift; sourceTree = "<group>"; };
+		AA01BB1100000004CAFECAFE /* SpeechGrowthDiaryPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechGrowthDiaryPresenterTests.swift; sourceTree = "<group>"; };
+		AA01BB1100000006CAFECAFE /* VoiceJournalInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceJournalInteractorTests.swift; sourceTree = "<group>"; };
+		AA01BB1100000008CAFECAFE /* PacingInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacingInteractorTests.swift; sourceTree = "<group>"; };
 		AB95837141DC4C6A32509DB8 /* LiteracyStartPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiteracyStartPresenterTests.swift; sourceTree = "<group>"; };
 		AB95CEFCAE87DF80CD8C6EC1 /* AuthSignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSignUpView.swift; sourceTree = "<group>"; };
 		ABA89CD106973F474C8710B3 /* SettingsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsInteractor.swift; sourceTree = "<group>"; };
@@ -7367,6 +7375,8 @@
 				253C3B361070EE3F94053BE0 /* SharePlayInteractorTests.swift */,
 				6B8A003136A3DB7A95393FC4 /* SoundExplorerMapInteractorTests.swift */,
 				1E3EEFE42D7B6879000F5B69 /* SoundOfTheDayInteractorTests.swift */,
+				AA01BB1100000006CAFECAFE /* VoiceJournalInteractorTests.swift */,
+				AA01BB1100000008CAFECAFE /* PacingInteractorTests.swift */,
 				FC15071E13A1604882560D55 /* SpecialistInteractorTests.swift */,
 				11917DDF2BF76245735131AA /* WeeklyRecapInteractorTests.swift */,
 				5408EC5545E30F3A3DC22EC0 /* WorldMapInteractorTests.swift */,
@@ -7540,6 +7550,8 @@
 				D8806D2E6D6AEF8F1A449B9E /* HomeTasksPresenterTests.swift */,
 				3A81DF361465BA0944C4C726 /* LetterTracingPresenterTests.swift */,
 				E298D5D4D5682E624771C1FF /* ListenAndChoosePresenterTests.swift */,
+				AA01BB1100000002CAFECAFE /* KaraokePitchPresenterTests.swift */,
+				AA01BB1100000004CAFECAFE /* SpeechGrowthDiaryPresenterTests.swift */,
 				AB95837141DC4C6A32509DB8 /* LiteracyStartPresenterTests.swift */,
 				649D5B1D292C79781E300DE0 /* LyalyaMailPresenterTests.swift */,
 				223D2EBE131E1C165F3695CA /* MemoryPresenterTests.swift */,
@@ -9372,6 +9384,10 @@
 				660464BD558544D7C24B7FEB /* ListenAndChoosePresenterTests.swift in Sources */,
 				9B96DCDD2585A4A49F4F11D9 /* LiteracyStartInteractorTests.swift in Sources */,
 				D0A5DD9702764D6FEB948D47 /* LiteracyStartPresenterTests.swift in Sources */,
+				AA01BB1100000001CAFECAFE /* KaraokePitchPresenterTests.swift in Sources */,
+				AA01BB1100000003CAFECAFE /* SpeechGrowthDiaryPresenterTests.swift in Sources */,
+				AA01BB1100000005CAFECAFE /* VoiceJournalInteractorTests.swift in Sources */,
+				AA01BB1100000007CAFECAFE /* PacingInteractorTests.swift in Sources */,
 				8E407C0AED755B8A496C07F0 /* LiveAuthServiceTests.swift in Sources */,
 				A421FB2D9462F3B9A6EF0692 /* LiveLLMDecisionServiceRuleBasedTests.swift in Sources */,
 				2713ECAD8BE2285CBA23E49F /* LiveServicesTests.swift in Sources */,
