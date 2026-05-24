@@ -162,6 +162,146 @@
         { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Покажи браслет — открой ладонь.",             "reps": 1 },
         { "target": "pinch",     "symbol": "hand.pinch.fill",               "description": "Браслет-ладонь на ритм.",                     "reps": 3 }
       ]
+    },
+    {
+      "id": "fp_soroka",
+      "title": "Сорока-ворона",
+      "rhyme": "Сорока-ворона кашку варила, деток кормила.",
+      "stages": [
+        { "target": "point",     "symbol": "hand.point.up.left.fill",       "description": "Указательным пальцем рисуй круг по ладошке.", "reps": 1 },
+        { "target": "point",     "symbol": "hand.point.up.left.fill",       "description": "Повтори круг — варим кашу.",                  "reps": 1 },
+        { "target": "point",     "symbol": "hand.point.up.left.fill",       "description": "Кормим каждый пальчик поочерёдно.",           "reps": 5 }
+      ]
+    },
+    {
+      "id": "fp_ladushki",
+      "title": "Ладушки",
+      "rhyme": "Ладушки-ладушки, испекём оладушки!",
+      "stages": [
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Хлопок ладонь в ладонь.",                     "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Снова хлопни.",                               "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Хлопаем в ритм стиха.",                       "reps": 6 }
+      ]
+    },
+    {
+      "id": "fp_palchiki_idut",
+      "title": "Пальчики идут",
+      "rhyme": "Раз-два-три-четыре-пять — вышли пальчики гулять.",
+      "stages": [
+        { "target": "point",     "symbol": "hand.point.up.left.fill",       "description": "Разгибай пальцы по одному от мизинца.",       "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Раскрой ладошку — все пальцы вышли.",         "reps": 1 },
+        { "target": "fist",      "symbol": "hand.raised.fingers.spread.fill","description": "Загибай-разгибай на каждое слово.",            "reps": 5 }
+      ]
+    },
+    {
+      "id": "fp_soldat",
+      "title": "Солдатики",
+      "rhyme": "Наши пальчики стоят, как солдаты на парад.",
+      "stages": [
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Выпрями все пальцы — смирно!",               "reps": 1 },
+        { "target": "fist",      "symbol": "hand.raised.fingers.spread.fill","description": "Кулак — пальцы лежат отдыхают.",              "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Смирно-вольно по ритму.",                     "reps": 4 }
+      ]
+    },
+    {
+      "id": "fp_rybka",
+      "title": "Рыбка",
+      "rhyme": "Рыбка плавает в воде — хвостиком виляет.",
+      "stages": [
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Ладонь горизонтально — рыбка плывёт.",        "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Покачивай ладонь — рыбка виляет.",            "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Плывём на каждое слово стиха.",               "reps": 4 }
+      ]
+    },
+    {
+      "id": "fp_snezhok",
+      "title": "Снежок",
+      "rhyme": "Лепим, лепим мы снежок — получился пирожок.",
+      "stages": [
+        { "target": "fist",      "symbol": "hand.raised.fingers.spread.fill","description": "Сожми ладони — лепим снежок.",                "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Раскрой — готовый снежок.",                   "reps": 1 },
+        { "target": "fist",      "symbol": "hand.raised.fingers.spread.fill","description": "Лепим-раскрываем на ритм.",                   "reps": 4 }
+      ]
+    },
+    {
+      "id": "fp_pauchok",
+      "title": "Паучок",
+      "rhyme": "Паучок-паучок плетёт свой дом — паутинку.",
+      "stages": [
+        { "target": "pinch",     "symbol": "hand.pinch.fill",               "description": "Соедини пальцы обеих рук — паутинка.",        "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Раздвинь — паутинка растянулась.",            "reps": 1 },
+        { "target": "pinch",     "symbol": "hand.pinch.fill",               "description": "Плетём паутинку под стих.",                   "reps": 3 }
+      ]
+    },
+    {
+      "id": "fp_kolobok",
+      "title": "Колобок",
+      "rhyme": "Покатился колобок — по дорожке, по лесок.",
+      "stages": [
+        { "target": "fist",      "symbol": "hand.raised.fingers.spread.fill","description": "Круглый кулачок — это колобок.",               "reps": 1 },
+        { "target": "fist",      "symbol": "hand.raised.fingers.spread.fill","description": "Катим кулачок по столу.",                     "reps": 1 },
+        { "target": "fist",      "symbol": "hand.raised.fingers.spread.fill","description": "Катаем под стих.",                            "reps": 3 }
+      ]
+    },
+    {
+      "id": "fp_rechka",
+      "title": "Речка",
+      "rhyme": "Речка течёт, журчит, поёт — к морю бежит.",
+      "stages": [
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Обе ладони вместе — узкая речка.",             "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Расставь ладони пошире — широкое море.",       "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Речка-море чередуем под стих.",                "reps": 3 }
+      ]
+    },
+    {
+      "id": "fp_grib",
+      "title": "Грибок",
+      "rhyme": "Вырос гриб в лесу — шляпку поднесу.",
+      "stages": [
+        { "target": "fist",      "symbol": "hand.raised.fingers.spread.fill","description": "Кулак — это ножка гриба.",                    "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Другая ладонь сверху — шляпка.",               "reps": 1 },
+        { "target": "fist",      "symbol": "hand.raised.fingers.spread.fill","description": "Гриб вырастает на ритм стиха.",               "reps": 3 }
+      ]
+    },
+    {
+      "id": "fp_bochka",
+      "title": "Бочка",
+      "rhyme": "Бочка с мёдом — большая, круглая, вкусная.",
+      "stages": [
+        { "target": "fist",      "symbol": "hand.raised.fingers.spread.fill","description": "Оба кулака вместе — круглая бочка.",          "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Открыли — мёд вытекает.",                     "reps": 1 },
+        { "target": "fist",      "symbol": "hand.raised.fingers.spread.fill","description": "Бочка-мёд на ритм.",                          "reps": 3 }
+      ]
+    },
+    {
+      "id": "fp_kvochka",
+      "title": "Курочка-кудахтушка",
+      "rhyme": "Курочка-кудахтушка яйца покудахтала.",
+      "stages": [
+        { "target": "pinch",     "symbol": "hand.pinch.fill",               "description": "Клюй-клюй пальцами по столу — курочка клюёт.", "reps": 1 },
+        { "target": "pinch",     "symbol": "hand.pinch.fill",               "description": "Клюём правой, потом левой.",                  "reps": 1 },
+        { "target": "pinch",     "symbol": "hand.pinch.fill",               "description": "Клюём обеими на ритм.",                       "reps": 4 }
+      ]
+    },
+    {
+      "id": "fp_zonta",
+      "title": "Зонтик",
+      "rhyme": "Раскрываем зонтик — дождик не страшен нам.",
+      "stages": [
+        { "target": "fist",      "symbol": "hand.raised.fingers.spread.fill","description": "Кулак — закрытый зонт.",                      "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Раскрываем зонт — пальцы вверх.",              "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Зонт открывается на каждое «дождик».",         "reps": 3 }
+      ]
+    },
+    {
+      "id": "fp_verevochka",
+      "title": "Верёвочка",
+      "rhyme": "Тяни-тяни верёвочку — конец найди.",
+      "stages": [
+        { "target": "pinch",     "symbol": "hand.pinch.fill",               "description": "Зажми кончики пальцев — держим верёвочку.",   "reps": 1 },
+        { "target": "open_palm", "symbol": "hand.raised.fill",              "description": "Тяни пальцы к себе — тянем верёвку.",          "reps": 1 },
+        { "target": "pinch",     "symbol": "hand.pinch.fill",               "description": "Тяни-отпускай под стих.",                     "reps": 4 }
+      ]
     }
   ]
 }

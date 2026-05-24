@@ -108,6 +108,57 @@
         "lowLabel": "Краткие фразы",
         "highLabel": "Развёрнутый рассказ"
       }
+    },
+    {
+      "id": "q-art-3",
+      "axis": "articulation",
+      "text": "Укажите звуки, вызывающие затруднения (выберите все нужные)",
+      "type": "multiselect",
+      "weight": "articulation",
+      "options": ["Р","Рь","Л","Ль","С","Сь","З","Зь","Ш","Ж","Ч","Щ","Ц","К","Г","Х","другие"],
+      "scale": null
+    },
+    {
+      "id": "q-phon-3",
+      "axis": "phonology",
+      "text": "Ребёнок допускает замены звуков при произношении (например, Р→Л)?",
+      "type": "yesno",
+      "weight": "phonology",
+      "scale": null
+    },
+    {
+      "id": "q-lex-3",
+      "axis": "lexical",
+      "text": "Ребёнок может объяснить значение незнакомого слова по контексту?",
+      "type": "yesno",
+      "weight": "lexical",
+      "scale": null
+    },
+    {
+      "id": "q-gram-3",
+      "axis": "grammar",
+      "text": "Оцените сформированность словообразования (суффиксы -ик, -ёнок, -ница)",
+      "type": "scale",
+      "weight": "grammar",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "lowLabel": "Не образует",
+        "highLabel": "Образует свободно"
+      }
+    },
+    {
+      "id": "q-conn-3",
+      "axis": "connectedSpeech",
+      "text": "Оцените использование причинно-следственных связей в рассказе (потому что, поэтому)",
+      "type": "scale",
+      "weight": "connectedSpeech",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "lowLabel": "Не использует",
+        "highLabel": "Использует уверенно"
+      }
     }
   ]
 }
