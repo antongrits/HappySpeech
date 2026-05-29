@@ -287,7 +287,11 @@ final class GameTemplatesSnapshotTests: XCTestCase {
         let view = ARZoneView()
             .environment(AppContainer.preview())
             .environment(AppCoordinator())
-        try record(view, screen: "ARZoneViewSnap")
+        // maxDiffRatio=0.10: ARZoneView (redesign) рисует недетерминированный
+        // camera-placeholder + mesh-градиент, дающий ~6% субпиксельный drift на
+        // SE3 dark даже между двумя последовательными рендерами. Допуск поднят,
+        // как и для других AR/glass-mesh экранов (SpecialistHome=0.35).
+        try record(view, screen: "ARZoneViewSnap", maxDiffRatio: 0.10)
     }
 
     // MARK: - Rendering engine
