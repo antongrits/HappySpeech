@@ -175,6 +175,15 @@ enum SnapshotTestHelper {
             return
         }
 
+        // Opt-in re-record: при выставленной переменной среды SNAPSHOT_RECORD
+        // перезаписываем эталон и проходим тест. Используется только в
+        // dedicated record-проходе для устаревших baseline после редизайна.
+        if let record = ProcessInfo.processInfo.environment["SNAPSHOT_RECORD"],
+           !record.isEmpty {
+            try pngData.write(to: referenceURL)
+            return
+        }
+
         guard FileManager.default.fileExists(atPath: referenceURL.path) else {
             // Первый запуск — записываем референс
             try pngData.write(to: referenceURL)

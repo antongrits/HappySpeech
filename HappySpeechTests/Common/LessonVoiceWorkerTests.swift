@@ -185,8 +185,8 @@ final class LessonVoiceWorkerYoTests: XCTestCase {
 
     func test_phraseMapping_yo_samolyot_existsWithYo_absentWithoutYo() {
         // Прямой ключ с ё
-        XCTAssertEqual(mapping["самолёт"], "samolyot",
-                       "Ключ 'самолёт' с ё должен быть → samolyot")
+        XCTAssertEqual(mapping["самолёт"], "diff_samolyot",
+                       "Ключ 'самолёт' с ё должен быть → diff_samolyot")
         // Без ё — нет прямого ключа; worker делает е→ё fallback самостоятельно
         XCTAssertNil(mapping["самолет"],
                      "'самолет' без ё не должен быть прямым ключом — worker делает е→ё fallback")

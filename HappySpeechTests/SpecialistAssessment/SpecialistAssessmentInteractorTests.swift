@@ -233,15 +233,94 @@ final class SpecialistAssessmentWorkerTests: XCTestCase {
 }
 
 // MARK: - Corpus tests
+//
+// `SpecialistAssessmentCorpus.allQuestions` грузится через `Bundle.main`,
+// который в xctest-контексте указывает на test-runner, а не на host app —
+// поэтому в юнит-тестах коллекция пуста. JSON-ресурс
+// `pack_specialist_assessment.json` физически лежит в host app bundle
+// (project: Content/Seed/** → resources основного таргета).
+// Тесты грузят корпус напрямую из host app bundle (тот же приём, что
+// PhraseMappingLoader в LessonVoiceWorkerTests) и проверяют реально
+// поставляемый JSON. Актуальный корпус — 15 вопросов (commit 3d45405f).
+
+private enum SpecialistAssessmentCorpusLoader {
+    private struct PackFile: Decodable {
+        let questions: [SpecialistAssessmentQuestion]
+    }
+
+    /// Находит URL ресурса `pack_specialist_assessment.json` среди всех
+    /// доступных бандлов. В хост-аппе ресурс лежит в корне HappySpeech.app;
+    /// `Bundle.main` в xctest указывает на test-runner, поэтому перебираем
+    /// `Bundle.allBundles` + бандл хост-аппа, выведенный из URL test-bundle.
+    private static func resourceURL(for testClass: AnyClass) -> URL? {
+        let name = "pack_specialist_assessment"
+        let ext = "json"
+
+        var candidates = Bundle.allBundles
+        candidates.append(.main)
+        for bundle in candidates {
+            if let url = bundle.url(forResource: name, withExtension: ext) {
+                return url
+            }
+        }
+
+        // Fallback: .../HappySpeech.app/PlugIns/<...>.xctest → .../HappySpeech.app/<json>
+        let appRootURL = Bundle(for: testClass).bundleURL
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .appendingPathComponent("\(name).\(ext)")
+        if FileManager.default.fileExists(atPath: appRootURL.path) {
+            return appRootURL
+        }
+        return nil
+    }
+
+    static func loadQuestions(for testClass: AnyClass) -> [SpecialistAssessmentQuestion] {
+        guard let url = resourceURL(for: testClass),
+              let data = try? Data(contentsOf: url),
+              let pack = try? JSONDecoder().decode(PackFile.self, from: data) else {
+            return []
+        }
+        return pack.questions
+    }
+
+    /// Диагностика без мутабельного состояния (Swift 6 strict concurrency).
+    static func diagnostic(for testClass: AnyClass) -> String {
+        let name = "pack_specialist_assessment"
+        var lines: [String] = []
+        for bundle in Bundle.allBundles {
+            let hit = bundle.url(forResource: name, withExtension: "json") != nil
+            lines.append("[ab]\(bundle.bundlePath.split(separator: "/").suffix(2).joined(separator: "/")) hit=\(hit)")
+        }
+        let mainHit = Bundle.main.url(forResource: name, withExtension: "json") != nil
+        lines.append("[main]\(Bundle.main.bundlePath.split(separator: "/").suffix(2).joined(separator: "/")) hit=\(mainHit)")
+        let appRoot = Bundle(for: testClass).bundleURL
+            .deletingLastPathComponent().deletingLastPathComponent()
+            .appendingPathComponent("\(name).json")
+        lines.append("[fb]\(appRoot.path) exists=\(FileManager.default.fileExists(atPath: appRoot.path))")
+        return lines.joined(separator: " | ")
+    }
+}
 
 final class SpecialistAssessmentCorpusTests: XCTestCase {
 
-    func test_corpus_has10Questions() {
-        XCTAssertEqual(SpecialistAssessmentCorpus.allQuestions.count, 10)
+    private func loadCorpus() -> [SpecialistAssessmentQuestion] {
+        SpecialistAssessmentCorpusLoader.loadQuestions(for: Self.self)
+    }
+
+    func test_corpus_has15Questions() {
+        let c = loadCorpus()
+        let attachment = XCTAttachment(
+            string: SpecialistAssessmentCorpusLoader.diagnostic(for: Self.self)
+        )
+        attachment.name = "corpus-diagnostic"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+        XCTAssertEqual(c.count, 15)
     }
 
     func test_corpus_coversAll5Axes() {
-        let axes = Set(SpecialistAssessmentCorpus.allQuestions.map(\.axis))
+        let axes = Set(loadCorpus().map(\.axis))
         XCTAssertEqual(axes.count, 5)
         for axis in SpecialistAssessmentAxis.allCases {
             XCTAssertTrue(axes.contains(axis), "ось \(axis.rawValue) пропущена")
@@ -249,7 +328,8 @@ final class SpecialistAssessmentCorpusTests: XCTestCase {
     }
 
     func test_corpus_questionIdsAreUnique() {
-        let ids = SpecialistAssessmentCorpus.allQuestions.map(\.id)
+        let ids = loadCorpus().map(\.id)
+        XCTAssertFalse(ids.isEmpty, "корпус должен загрузиться из host app bundle")
         XCTAssertEqual(ids.count, Set(ids).count)
     }
 }

@@ -58,7 +58,24 @@ final class StutteringInteractorTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        UserDefaults.standard.removeObject(forKey: "stuttering_welcome_shown")
+        // Изоляция: StutteringInteractor читает ключ напрямую из
+        // UserDefaults.standard, а StutteringView пишет его через @AppStorage.
+        // На симуляторе домен com.mmf.bsu.HappySpeech переживает между прогонами,
+        // поэтому removeObject недостаточно (ранее сохранённое true остаётся
+        // видимым при чтении). Явно выставляем false — детерминированно даёт
+        // bool(forKey:) == false для сценария «первый запуск».
+        let defaults = UserDefaults.standard
+        defaults.set(false, forKey: "stuttering_welcome_shown")
+        defaults.synchronize()
+    }
+
+    override func tearDown() {
+        // Не оставляем флаг включённым после тестов вроде markWelcomeSeen,
+        // которые пишут true в общий UserDefaults.standard.
+        let defaults = UserDefaults.standard
+        defaults.set(false, forKey: "stuttering_welcome_shown")
+        defaults.synchronize()
+        super.tearDown()
     }
 
     // MARK: - 1. loadScreen: presenter получает 4 карточки
