@@ -243,7 +243,7 @@ enum SnapshotTestHelper {
         _ view: V,
         size: CGSize,
         style: UIUserInterfaceStyle,
-        reduceMotion: Bool = false
+        reduceMotion: Bool = true
     ) -> UIImage {
         // `accessibilityReduceMotion` в этом SDK — read-only EnvironmentValues
         // (keypath не приводится к `WritableKeyPath`), поэтому фон-анимации
@@ -251,8 +251,10 @@ enum SnapshotTestHelper {
         // через временный override `UIAccessibility.isReduceMotionEnabled`,
         // из которого SwiftUI и сидит окруженческое значение. Снимок становится
         // детерминированным (mesh = staticPoints). По умолчанию reduceMotion ==
-        // false → override равен системному значению (на CI тоже false) → все
-        // существующие эталоны байт-в-байт неизменны.
+        // true → анимированные mesh-фоны (Settings/Onboarding/Permission/Breathing/
+        // OfflineState и др.) замораживаются в resting-state, что делает ВСЕ
+        // снапшоты детерминированными (устраняет wall-clock-флейки). Все эталоны
+        // перезаписаны под этот static-state.
         let restoreReduceMotion = ReduceMotionOverride.begin(reduceMotion)
         defer { restoreReduceMotion() }
 
