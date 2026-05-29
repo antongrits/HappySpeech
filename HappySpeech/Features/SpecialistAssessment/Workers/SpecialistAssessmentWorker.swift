@@ -27,7 +27,9 @@ protocol SpecialistAssessmentWorkerProtocol: AnyObject {
 //
 // Скоринг (педагогический, не клинический):
 //   • yesno: ответ «нет» добавляет 1 балл к оси (есть проблема);
-//   • scale: значение ≤ 2 добавляет 1 балл, ≤ 3 → 0.5.
+//   • scale: значение ≤ 2 добавляет 1 балл, ≤ 3 → 0.5;
+//   • multiselect: если выбран ≥ 1 вариант — 1 балл (явно указанная
+//     специалистом слабость), иначе 0.
 // В рекомендации попадают оси, у которых балл ≥ 1.0. Если ни одна
 // ось не набрала балла — возвращаются 2 самые слабые (для активации
 // AdaptivePlanner всё равно).
@@ -120,6 +122,11 @@ final class SpecialistAssessmentWorker: SpecialistAssessmentWorkerProtocol {
             if scale <= 2 { return 1.0 }
             if scale <= 3 { return 0.5 }
             return 0
+        }
+        if let selected = answer.selectedOptions {
+            // Явно перечисленные специалистом проблемные варианты — сигнал
+            // о слабости оси. Минимальный, count-агностичный вклад.
+            return selected.isEmpty ? 0 : 1.0
         }
         return 0
     }

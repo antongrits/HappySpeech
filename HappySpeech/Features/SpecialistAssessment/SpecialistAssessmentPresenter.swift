@@ -31,6 +31,7 @@ final class SpecialistAssessmentPresenter: SpecialistAssessmentPresentationLogic
                 axis: question.axis,
                 type: question.type,
                 scale: question.scale,
+                options: question.options,
                 progressLabel: String(
                     format: String(localized: "specAssessment.progress"),
                     idx + 1, total

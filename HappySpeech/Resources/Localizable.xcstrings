@@ -41115,6 +41115,17 @@
         }
       }
     },
+    "specAssessment.multiselect.continue": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжить"
+          }
+        }
+      }
+    },
     "specAssessment.progress": {
       "extractionState": "manual",
       "localizations": {

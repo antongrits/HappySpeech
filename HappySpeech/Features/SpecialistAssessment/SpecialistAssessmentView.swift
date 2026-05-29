@@ -47,6 +47,9 @@ struct SpecialistAssessmentView: View {
     @State private var presenter: SpecialistAssessmentPresenter?
     @State private var router: SpecialistAssessmentRouter?
 
+    /// Локальный выбор для multiselect-вопросов: questionId → выбранные варианты.
+    @State private var multiselectSelection: [String: Set<String>] = [:]
+
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(AppContainer.self) private var container
@@ -134,6 +137,8 @@ struct SpecialistAssessmentView: View {
                     yesNoButtons(for: question)
                 case .scale:
                     scaleButtons(for: question)
+                case .multiselect:
+                    multiselectChips(for: question)
                 }
             }
             .padding(.horizontal, SpacingTokens.screenEdge)
@@ -212,6 +217,78 @@ struct SpecialistAssessmentView: View {
                 }
             }
         }
+    }
+
+    private func multiselectChips(
+        for question: SpecialistAssessmentModels.Load.QuestionViewModel
+    ) -> some View {
+        let options = question.options ?? []
+        let selected = multiselectSelection[question.id] ?? []
+        let columns = [GridItem(
+            .adaptive(minimum: 72, maximum: 140),
+            spacing: SpacingTokens.sp2
+        )]
+        return VStack(spacing: SpacingTokens.sp3) {
+            LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
+                ForEach(options, id: \.self) { option in
+                    multiselectChip(
+                        option: option,
+                        isSelected: selected.contains(option),
+                        questionId: question.id
+                    )
+                }
+            }
+
+            Button {
+                Task { await answerMultiselect(question: question) }
+            } label: {
+                Text("specAssessment.multiselect.continue")
+                    .font(TypographyTokens.headline(17))
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
+                    .frame(maxWidth: .infinity, minHeight: 56)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+                    .background(
+                        RoundedRectangle(cornerRadius: RadiusTokens.card)
+                            .fill(ColorTokens.Spec.accent)
+                    )
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("specAssessment.multiselect.continue")
+        }
+    }
+
+    private func multiselectChip(
+        option: String,
+        isSelected: Bool,
+        questionId: String
+    ) -> some View {
+        Button {
+            var current = multiselectSelection[questionId] ?? []
+            if current.contains(option) {
+                current.remove(option)
+            } else {
+                current.insert(option)
+            }
+            multiselectSelection[questionId] = current
+        } label: {
+            Text(option)
+                .font(TypographyTokens.headline(16))
+                .foregroundStyle(
+                    isSelected ? ColorTokens.Overlay.onAccent : ColorTokens.Spec.ink
+                )
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+                .frame(maxWidth: .infinity, minHeight: 48)
+                .background(
+                    RoundedRectangle(cornerRadius: RadiusTokens.card)
+                        .fill(isSelected ? ColorTokens.Spec.accent : ColorTokens.Spec.panel)
+                )
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("specAssessment.option.\(option)")
+        .accessibilityLabel(Text(option))
+        .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 
     private func answerButton(
@@ -409,6 +486,24 @@ struct SpecialistAssessmentView: View {
             axis: question.axis,
             boolValue: boolValue,
             numericValue: numericValue
+        )
+        await advance()
+    }
+
+    private func answerMultiselect(
+        question: SpecialistAssessmentModels.Load.QuestionViewModel
+    ) async {
+        let selected = Array(multiselectSelection[question.id] ?? []).sorted()
+        let request = SpecialistAssessmentModels.Answer.Request(
+            questionId: question.id,
+            axis: question.axis,
+            selectedOptions: selected
+        )
+        await interactor?.answer(request: request)
+        holder.answersByQuestion[question.id] = SpecialistAssessmentAnswer(
+            questionId: question.id,
+            axis: question.axis,
+            selectedOptions: selected
         )
         await advance()
     }

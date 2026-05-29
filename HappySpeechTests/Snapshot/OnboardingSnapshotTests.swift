@@ -33,7 +33,9 @@ final class OnboardingSnapshotTests: XCTestCase {
         let view = OnboardingFlowView(onComplete: { _ in })
             .environment(AppCoordinator())
             .environment(AppContainer.preview())
-        try record(view, screen: "OnboardingStep1_Welcome")
+        // reduceMotion: true замораживает анимированный HSMeshGradientBackground
+        // (kidWarm) → детерминированный снимок.
+        try record(view, screen: "OnboardingStep1_Welcome", reduceMotion: true)
     }
 
     // MARK: - 2. OnboardingFlowView (step 2 — с пустым состоянием)
@@ -42,7 +44,7 @@ final class OnboardingSnapshotTests: XCTestCase {
         let view = OnboardingFlowView(onComplete: { _ in })
             .environment(AppCoordinator())
             .environment(AppContainer.preview())
-        try record(view, screen: "OnboardingStep2_Reload")
+        try record(view, screen: "OnboardingStep2_Reload", reduceMotion: true)
     }
 
     // MARK: - 3. AuthSignInView (часть онбординг-флоу)
@@ -74,8 +76,13 @@ final class OnboardingSnapshotTests: XCTestCase {
 
     // MARK: - Rendering engine
 
-    private func render<V: View>(_ view: V, size: CGSize, style: UIUserInterfaceStyle) -> UIImage {
-            SnapshotTestHelper.renderView(view, size: size, style: style)
+    private func render<V: View>(
+        _ view: V,
+        size: CGSize,
+        style: UIUserInterfaceStyle,
+        reduceMotion: Bool = false
+    ) -> UIImage {
+        SnapshotTestHelper.renderView(view, size: size, style: style, reduceMotion: reduceMotion)
     }
 
     private func snapshotURL(screen: String, device: String, appearance: String) -> URL {
@@ -88,10 +95,14 @@ final class OnboardingSnapshotTests: XCTestCase {
         )
     }
 
-    private func record<V: View>(_ view: V, screen: String) throws {
+    private func record<V: View>(
+        _ view: V,
+        screen: String,
+        reduceMotion: Bool = false
+    ) throws {
         for device in devices {
             for (appearanceName, style) in appearances {
-                let image = render(view, size: device.size, style: style)
+                let image = render(view, size: device.size, style: style, reduceMotion: reduceMotion)
                 let url = snapshotURL(screen: screen, device: device.name, appearance: appearanceName)
                 let label = "\(screen)·\(device.name)·\(appearanceName)"
                 try SnapshotTestHelper.assertPixelMatch(image, referenceURL: url, label: label)

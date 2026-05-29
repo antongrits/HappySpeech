@@ -1,4 +1,5 @@
 import Foundation
+import ObjectiveC
 import SwiftUI
 import UIKit
 import XCTest
@@ -175,11 +176,14 @@ enum SnapshotTestHelper {
             return
         }
 
-        // Opt-in re-record: при выставленной переменной среды SNAPSHOT_RECORD
-        // перезаписываем эталон и проходим тест. Используется только в
-        // dedicated record-проходе для устаревших baseline после редизайна.
-        if let record = ProcessInfo.processInfo.environment["SNAPSHOT_RECORD"],
-           !record.isEmpty {
+        // Opt-in re-record: перезаписываем эталон и проходим тест. Триггер —
+        // либо переменная среды `SNAPSHOT_RECORD`, либо sentinel-файл
+        // `/tmp/HS_SNAPSHOT_RECORD` (надёжно работает в симуляторе, куда shell
+        // env не всегда пробрасывается через `xcodebuild`). Используется только
+        // в dedicated record-проходе для устаревших baseline после редизайна.
+        let recordEnv = ProcessInfo.processInfo.environment["SNAPSHOT_RECORD"]
+        let recordSentinel = FileManager.default.fileExists(atPath: "/tmp/HS_SNAPSHOT_RECORD")
+        if (recordEnv.map { !$0.isEmpty } ?? false) || recordSentinel {
             try pngData.write(to: referenceURL)
             return
         }
@@ -228,14 +232,32 @@ enum SnapshotTestHelper {
     ///   - view: SwiftUI-view для снимка.
     ///   - size: размер кадра в поинтах.
     ///   - style: light / dark.
+    ///   - reduceMotion: при `true` инжектится `accessibilityReduceMotion`,
+    ///     что замораживает анимированные фоны (`HSMeshGradientBackground` →
+    ///     `TimelineView(.animation)`) на статический кадр и делает снимок
+    ///     детерминированным. По умолчанию `false`, чтобы все существующие
+    ///     эталоны оставались байт-в-байт неизменными.
     /// - Returns: отрендеренный `UIImage` (scale = scale экрана симулятора).
     @MainActor
     static func renderView<V: View>(
         _ view: V,
         size: CGSize,
-        style: UIUserInterfaceStyle
+        style: UIUserInterfaceStyle,
+        reduceMotion: Bool = false
     ) -> UIImage {
-        let sized = view.frame(width: size.width, height: size.height)
+        // `accessibilityReduceMotion` в этом SDK — read-only EnvironmentValues
+        // (keypath не приводится к `WritableKeyPath`), поэтому фон-анимации
+        // (`HSMeshGradientBackground` → `TimelineView(.animation)`) замораживаем
+        // через временный override `UIAccessibility.isReduceMotionEnabled`,
+        // из которого SwiftUI и сидит окруженческое значение. Снимок становится
+        // детерминированным (mesh = staticPoints). По умолчанию reduceMotion ==
+        // false → override равен системному значению (на CI тоже false) → все
+        // существующие эталоны байт-в-байт неизменны.
+        let restoreReduceMotion = ReduceMotionOverride.begin(reduceMotion)
+        defer { restoreReduceMotion() }
+
+        let sized = view
+            .frame(width: size.width, height: size.height)
         let host = UIHostingController(rootView: sized)
         host.overrideUserInterfaceStyle = style
         host.view.frame = CGRect(origin: .zero, size: size)
@@ -271,5 +293,66 @@ enum SnapshotTestHelper {
         window.rootViewController = nil
 
         return image
+    }
+}
+
+// MARK: - ReduceMotionOverride
+//
+// Временно подменяет `UIAccessibility.isReduceMotionEnabled` на заданное
+// значение через method swizzling. SwiftUI сидит окруженческое
+// `accessibilityReduceMotion` из этого глобального флага, поэтому подмена на
+// время рендера делает анимированные фоны статичными и снимок детерминированным.
+//
+// `begin(_:)` возвращает замыкание-restore, которое возвращает оригинальную
+// реализацию. Идемпотентно при вложенных вызовах: счётчик активных оверрайдов
+// не ведётся, т.к. snapshot-рендеры выполняются строго последовательно на
+// главном потоке (`@MainActor`), без переплетения.
+
+enum ReduceMotionOverride {
+
+    // Доступ строго с главного потока в последовательных snapshot-рендерах
+    // (`@MainActor`), поэтому `nonisolated(unsafe)` безопасно. Свизл-блок
+    // читает `overriddenValue` синхронно из UIKit на главном потоке.
+    nonisolated(unsafe) private static var overriddenValue = false
+    nonisolated(unsafe) private static var isSwizzled = false
+    nonisolated(unsafe) private static var originalIMP: IMP?
+
+    /// Устанавливает override и возвращает замыкание для отката.
+    @MainActor
+    static func begin(_ value: Bool) -> () -> Void {
+        // Если значение совпадает с системным и свизл не нужен — no-op,
+        // чтобы дефолтный путь (reduceMotion == false) ничего не менял,
+        // если система и так возвращает false.
+        guard value != UIAccessibility.isReduceMotionEnabled else {
+            return {}
+        }
+        overriddenValue = value
+        installSwizzleIfNeeded()
+        return { restore() }
+    }
+
+    /// ObjC-класс `UIAccessibility` (в Swift это namespace-тип, не `AnyClass`,
+    /// поэтому достаём через рантайм по имени).
+    private static var accessibilityClass: AnyClass? {
+        NSClassFromString("UIAccessibility")
+    }
+
+    private static let reduceMotionSelector = Selector(("isReduceMotionEnabled"))
+
+    private static func installSwizzleIfNeeded() {
+        guard !isSwizzled, let cls = accessibilityClass,
+              let method = class_getClassMethod(cls, reduceMotionSelector) else { return }
+        let block: @convention(block) (AnyObject) -> Bool = { _ in overriddenValue }
+        let newIMP = imp_implementationWithBlock(block)
+        originalIMP = method_setImplementation(method, newIMP)
+        isSwizzled = true
+    }
+
+    private static func restore() {
+        guard isSwizzled, let originalIMP, let cls = accessibilityClass,
+              let method = class_getClassMethod(cls, reduceMotionSelector) else { return }
+        method_setImplementation(method, originalIMP)
+        isSwizzled = false
+        self.originalIMP = nil
     }
 }

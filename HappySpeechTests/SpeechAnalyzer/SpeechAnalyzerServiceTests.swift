@@ -103,7 +103,11 @@ final class SpeechAnalyzerServiceTests: XCTestCase {
     func test_live_doubleStart_throwsAlreadyRunning() async throws {
         let mockASR = MockASRService()
         let live = LiveSpeechAnalyzerService(asrService: mockASR)
-        _ = try await live.startLiveTranscript()
+        // Удерживаем первый stream в переменной. Если отбросить его через `_`,
+        // AsyncStream деаллоцируется и его `onTermination` асинхронно сбрасывает
+        // `activeContinuation` в nil → под нагрузкой всего suite гонка приводит
+        // к тому, что второй start проходит guard (флейки). Retain устраняет гонку.
+        let firstStream = try await live.startLiveTranscript()
         do {
             _ = try await live.startLiveTranscript()
             XCTFail("Ожидалась ошибка alreadyRunning")
@@ -113,6 +117,7 @@ final class SpeechAnalyzerServiceTests: XCTestCase {
             XCTFail("Ожидалась SpeechAnalyzerError.alreadyRunning, получено \(error)")
         }
         await live.stopLiveTranscript()
+        withExtendedLifetime(firstStream) {}
     }
 
     func test_live_stopAfterStart_doesNotThrow() async throws {

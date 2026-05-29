@@ -32,6 +32,9 @@ public enum SpecialistAssessmentAxis: String, Sendable, CaseIterable, Codable {
 public enum SpecialistAssessmentQuestionType: String, Sendable, Codable {
     case yesno
     case scale
+    /// Множественный выбор из набора `options` (например, перечень звуков,
+    /// вызывающих затруднения). v32 — расширение корпуса до 15 вопросов.
+    case multiselect
 }
 
 // MARK: - SpecialistAssessmentScale
@@ -58,19 +61,23 @@ public struct SpecialistAssessmentQuestion: Identifiable, Sendable, Equatable, C
     public let text: String
     public let type: SpecialistAssessmentQuestionType
     public let scale: SpecialistAssessmentScale?
+    /// Варианты для `multiselect` (например, перечень звуков). Иначе `nil`.
+    public let options: [String]?
 
     public init(
         id: String,
         axis: SpecialistAssessmentAxis,
         text: String,
         type: SpecialistAssessmentQuestionType,
-        scale: SpecialistAssessmentScale?
+        scale: SpecialistAssessmentScale?,
+        options: [String]? = nil
     ) {
         self.id = id
         self.axis = axis
         self.text = text
         self.type = type
         self.scale = scale
+        self.options = options
     }
 
     enum CodingKeys: String, CodingKey {
@@ -79,6 +86,7 @@ public struct SpecialistAssessmentQuestion: Identifiable, Sendable, Equatable, C
         case text
         case type
         case scale
+        case options
         case weight  // игнорируется при декоде, в файле дублирует axis
     }
 
@@ -89,6 +97,7 @@ public struct SpecialistAssessmentQuestion: Identifiable, Sendable, Equatable, C
         text = try c.decode(String.self, forKey: .text)
         type = try c.decode(SpecialistAssessmentQuestionType.self, forKey: .type)
         scale = try c.decodeIfPresent(SpecialistAssessmentScale.self, forKey: .scale)
+        options = try c.decodeIfPresent([String].self, forKey: .options)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -98,37 +107,45 @@ public struct SpecialistAssessmentQuestion: Identifiable, Sendable, Equatable, C
         try c.encode(text, forKey: .text)
         try c.encode(type, forKey: .type)
         try c.encodeIfPresent(scale, forKey: .scale)
+        try c.encodeIfPresent(options, forKey: .options)
     }
 }
 
 // MARK: - SpecialistAssessmentAnswer
 
-/// Один ответ. Для yesno — boolValue, для scale — numericValue.
+/// Один ответ. Для yesno — boolValue, для scale — numericValue,
+/// для multiselect — selectedOptions (выбранные варианты).
 public struct SpecialistAssessmentAnswer: Sendable, Equatable {
     public let questionId: String
     public let axis: SpecialistAssessmentAxis
     public let boolValue: Bool?
     public let numericValue: Int?
+    public let selectedOptions: [String]?
 
     public init(
         questionId: String,
         axis: SpecialistAssessmentAxis,
         boolValue: Bool? = nil,
-        numericValue: Int? = nil
+        numericValue: Int? = nil,
+        selectedOptions: [String]? = nil
     ) {
         self.questionId = questionId
         self.axis = axis
         self.boolValue = boolValue
         self.numericValue = numericValue
+        self.selectedOptions = selectedOptions
     }
 
     /// Сериализованный вид для хранения в Realm (List<String>).
     /// Формат: `questionId|axis|kind|value`.
+    /// Для multiselect значения разделяются запятой.
     public var serialized: String {
         if let boolValue {
             return "\(questionId)|\(axis.rawValue)|yesno|\(boolValue ? "yes" : "no")"
         } else if let numericValue {
             return "\(questionId)|\(axis.rawValue)|scale|\(numericValue)"
+        } else if let selectedOptions {
+            return "\(questionId)|\(axis.rawValue)|multiselect|\(selectedOptions.joined(separator: ","))"
         }
         return "\(questionId)|\(axis.rawValue)|none|"
     }
@@ -161,6 +178,7 @@ enum SpecialistAssessmentModels {
             let axis: SpecialistAssessmentAxis
             let type: SpecialistAssessmentQuestionType
             let scale: SpecialistAssessmentScale?
+            let options: [String]?
             let progressLabel: String
         }
     }
@@ -171,6 +189,21 @@ enum SpecialistAssessmentModels {
             let axis: SpecialistAssessmentAxis
             let boolValue: Bool?
             let numericValue: Int?
+            let selectedOptions: [String]?
+
+            init(
+                questionId: String,
+                axis: SpecialistAssessmentAxis,
+                boolValue: Bool? = nil,
+                numericValue: Int? = nil,
+                selectedOptions: [String]? = nil
+            ) {
+                self.questionId = questionId
+                self.axis = axis
+                self.boolValue = boolValue
+                self.numericValue = numericValue
+                self.selectedOptions = selectedOptions
+            }
         }
     }
 

@@ -37,11 +37,14 @@ final class AccessibilityVariantsSnapshotTests: XCTestCase {
         let view = OnboardingFlowView(onComplete: { _ in })
             .environment(AppCoordinator())
             .environment(AppContainer.preview())
+        // reduceMotion: true замораживает анимированный HSMeshGradientBackground
+        // (.kidWarm) → детерминированный снимок.
         try recordAccessibility(
             view,
             screen: "OnboardingStep1_DT_Large",
             dtCategory: .extraExtraLarge,
-            limitAppearances: appearances
+            limitAppearances: appearances,
+            reduceMotion: true
         )
     }
 
@@ -55,7 +58,8 @@ final class AccessibilityVariantsSnapshotTests: XCTestCase {
             view,
             screen: "OnboardingStep1_DT_AccessibilityL",
             dtCategory: .accessibilityExtraLarge,
-            limitAppearances: appearances
+            limitAppearances: appearances,
+            reduceMotion: true
         )
     }
 
@@ -105,11 +109,14 @@ final class AccessibilityVariantsSnapshotTests: XCTestCase {
         _ view: V,
         size: CGSize,
         style: UIUserInterfaceStyle,
-        contentSize: UIContentSizeCategory
+        contentSize: UIContentSizeCategory,
+        reduceMotion: Bool = false
     ) -> UIImage {
         let sized = view
             .environment(\.sizeCategory, ContentSizeCategory(contentSize) ?? .large)
-        return SnapshotTestHelper.renderView(sized, size: size, style: style)
+        return SnapshotTestHelper.renderView(
+            sized, size: size, style: style, reduceMotion: reduceMotion
+        )
     }
 
     // MARK: - Reference storage
@@ -130,10 +137,14 @@ final class AccessibilityVariantsSnapshotTests: XCTestCase {
         _ view: V,
         screen: String,
         dtCategory: UIContentSizeCategory,
-        limitAppearances: [(String, UIUserInterfaceStyle)]
+        limitAppearances: [(String, UIUserInterfaceStyle)],
+        reduceMotion: Bool = false
     ) throws {
         for (appearanceName, style) in limitAppearances {
-            let image = render(view, size: deviceSize, style: style, contentSize: dtCategory)
+            let image = render(
+                view, size: deviceSize, style: style,
+                contentSize: dtCategory, reduceMotion: reduceMotion
+            )
             let url = snapshotURL(screen: screen, device: deviceName, appearance: appearanceName)
             let label = "\(screen)·\(deviceName)·\(appearanceName)"
             try SnapshotTestHelper.assertPixelMatch(image, referenceURL: url, label: label)

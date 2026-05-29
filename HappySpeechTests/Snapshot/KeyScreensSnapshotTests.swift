@@ -127,7 +127,9 @@ final class KeyScreensSnapshotTests: XCTestCase {
     func test_settings_rendersInBothThemes() throws {
         let view = SettingsView()
             .environment(AppContainer.preview())
-        try record(view, screen: "SettingsView")
+        // reduceMotion: true замораживает анимированный HSMeshGradientBackground
+        // (.calm) → детерминированный снимок, тесная толерантность снова валидна.
+        try record(view, screen: "SettingsView", reduceMotion: true)
     }
 
     // MARK: - 8. WorldMapView
@@ -163,8 +165,13 @@ final class KeyScreensSnapshotTests: XCTestCase {
 
     // MARK: - Rendering engine
 
-    private func render<V: View>(_ view: V, size: CGSize, style: UIUserInterfaceStyle) -> UIImage {
-            SnapshotTestHelper.renderView(view, size: size, style: style)
+    private func render<V: View>(
+        _ view: V,
+        size: CGSize,
+        style: UIUserInterfaceStyle,
+        reduceMotion: Bool = false
+    ) -> UIImage {
+        SnapshotTestHelper.renderView(view, size: size, style: style, reduceMotion: reduceMotion)
     }
 
     // MARK: - Reference storage
@@ -181,10 +188,15 @@ final class KeyScreensSnapshotTests: XCTestCase {
 
     // MARK: - Record / compare
 
-    private func record<V: View>(_ view: V, screen: String, maxDiffRatio: Double = SnapshotTestHelper.defaultMaxDiffRatio) throws {
+    private func record<V: View>(
+        _ view: V,
+        screen: String,
+        maxDiffRatio: Double = SnapshotTestHelper.defaultMaxDiffRatio,
+        reduceMotion: Bool = false
+    ) throws {
         for device in devices {
             for (appearanceName, style) in appearances {
-                let image = render(view, size: device.size, style: style)
+                let image = render(view, size: device.size, style: style, reduceMotion: reduceMotion)
                 let url = snapshotURL(screen: screen, device: device.name, appearance: appearanceName)
                 let label = "\(screen)·\(device.name)·\(appearanceName)"
                 try SnapshotTestHelper.assertPixelMatch(image, referenceURL: url, maxDiffRatio: maxDiffRatio, label: label)

@@ -62,9 +62,9 @@ final class ParentFlowSnapshotTests: XCTestCase {
     func test_settings_bothThemes() throws {
         let view = SettingsView()
             .environment(AppContainer.preview())
-        // maxDiffRatio=0.70: SettingsView полностью переработан в Step 10 (glass/mesh),
-        // drift ~64% относительно доStep10-референса. Wave4B rebaseline.
-        try record(view, screen: "SettingsParentFlow", maxDiffRatio: 0.70)
+        // reduceMotion: true замораживает анимированный HSMeshGradientBackground
+        // (.calm) → детерминированный снимок, толерантность снова тесная.
+        try record(view, screen: "SettingsParentFlow", reduceMotion: true)
     }
 
     // MARK: - 6. OfflineStateView
@@ -79,8 +79,13 @@ final class ParentFlowSnapshotTests: XCTestCase {
 
     // MARK: - Rendering engine
 
-    private func render<V: View>(_ view: V, size: CGSize, style: UIUserInterfaceStyle) -> UIImage {
-            SnapshotTestHelper.renderView(view, size: size, style: style)
+    private func render<V: View>(
+        _ view: V,
+        size: CGSize,
+        style: UIUserInterfaceStyle,
+        reduceMotion: Bool = false
+    ) -> UIImage {
+        SnapshotTestHelper.renderView(view, size: size, style: style, reduceMotion: reduceMotion)
     }
 
     private func snapshotURL(screen: String, device: String, appearance: String) -> URL {
@@ -96,11 +101,12 @@ final class ParentFlowSnapshotTests: XCTestCase {
     private func record<V: View>(
         _ view: V,
         screen: String,
-        maxDiffRatio: Double = SnapshotTestHelper.defaultMaxDiffRatio
+        maxDiffRatio: Double = SnapshotTestHelper.defaultMaxDiffRatio,
+        reduceMotion: Bool = false
     ) throws {
         for device in devices {
             for (appearanceName, style) in appearances {
-                let image = render(view, size: device.size, style: style)
+                let image = render(view, size: device.size, style: style, reduceMotion: reduceMotion)
                 let url = snapshotURL(screen: screen, device: device.name, appearance: appearanceName)
                 let label = "\(screen)·\(device.name)·\(appearanceName)"
                 try SnapshotTestHelper.assertPixelMatch(image, referenceURL: url, maxDiffRatio: maxDiffRatio, label: label)

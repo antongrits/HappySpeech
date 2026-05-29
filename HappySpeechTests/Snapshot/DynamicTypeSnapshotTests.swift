@@ -81,9 +81,9 @@ final class DynamicTypeSnapshotTests: XCTestCase {
     func test_settings_dynamicType() throws {
         let view = SettingsView()
             .environment(AppContainer.preview())
-        // maxDiffRatio=0.60: SettingsView полностью переработан в Step 10 (glass/mesh),
-        // drift ~52% относительно доStep10-референса. Wave4B rebaseline.
-        try recordDT(view, screen: "SettingsDT", maxDiffRatio: 0.60)
+        // reduceMotion: true замораживает анимированный HSMeshGradientBackground
+        // (.calm) → детерминированный снимок.
+        try recordDT(view, screen: "SettingsDT", reduceMotion: true)
     }
 
     // MARK: - 6. WorldMapView
@@ -108,8 +108,9 @@ final class DynamicTypeSnapshotTests: XCTestCase {
         let view = OnboardingFlowView(onComplete: { _ in })
             .environment(AppCoordinator())
             .environment(AppContainer.preview())
-        // maxDiffRatio=0.15: OnboardingFlowView glass-mesh анимации (Step 10) — drift 6-9% между рендерами.
-        try recordDT(view, screen: "OnboardingDT", maxDiffRatio: 0.15)
+        // reduceMotion: true замораживает анимированный HSMeshGradientBackground
+        // (.kidWarm) → детерминированный снимок.
+        try recordDT(view, screen: "OnboardingDT", reduceMotion: true)
     }
 
     // MARK: - 9. AuthSignInView
@@ -187,11 +188,14 @@ final class DynamicTypeSnapshotTests: XCTestCase {
         _ view: V,
         size: CGSize,
         style: UIUserInterfaceStyle,
-        contentSize: UIContentSizeCategory
+        contentSize: UIContentSizeCategory,
+        reduceMotion: Bool = false
     ) -> UIImage {
         let sized = view
             .environment(\.sizeCategory, ContentSizeCategory(contentSize) ?? .large)
-        return SnapshotTestHelper.renderView(sized, size: size, style: style)
+        return SnapshotTestHelper.renderView(
+            sized, size: size, style: style, reduceMotion: reduceMotion
+        )
     }
 
     // MARK: - Reference storage
@@ -211,11 +215,15 @@ final class DynamicTypeSnapshotTests: XCTestCase {
     private func recordDT<V: View>(
         _ view: V,
         screen: String,
-        maxDiffRatio: Double = SnapshotTestHelper.defaultMaxDiffRatio
+        maxDiffRatio: Double = SnapshotTestHelper.defaultMaxDiffRatio,
+        reduceMotion: Bool = false
     ) throws {
         for (dtName, dtCategory) in dynamicTypeSizes {
             for (appearanceName, style) in appearances {
-                let image = render(view, size: device.size, style: style, contentSize: dtCategory)
+                let image = render(
+                    view, size: device.size, style: style,
+                    contentSize: dtCategory, reduceMotion: reduceMotion
+                )
                 let url = snapshotURL(screen: screen, dtSize: dtName, appearance: appearanceName)
                 let label = "\(screen)·\(dtName)·\(appearanceName)"
                 try SnapshotTestHelper.assertPixelMatch(

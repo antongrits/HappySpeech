@@ -33,13 +33,20 @@ final class FocusStateSnapshotTests: XCTestCase {
     func test_settingsTextField_focusEdgeCase() throws {
         let view = SettingsView()
             .environment(AppContainer.preview())
-        try recordFocus(view, screen: "SettingsTextField")
+        // reduceMotion: true замораживает анимированный HSMeshGradientBackground
+        // (.calm) → детерминированный снимок.
+        try recordFocus(view, screen: "SettingsTextField", reduceMotion: true)
     }
 
     // MARK: - Rendering engine
 
-    private func render<V: View>(_ view: V, size: CGSize, style: UIUserInterfaceStyle) -> UIImage {
-            SnapshotTestHelper.renderView(view, size: size, style: style)
+    private func render<V: View>(
+        _ view: V,
+        size: CGSize,
+        style: UIUserInterfaceStyle,
+        reduceMotion: Bool = false
+    ) -> UIImage {
+        SnapshotTestHelper.renderView(view, size: size, style: style, reduceMotion: reduceMotion)
     }
 
     // MARK: - Reference storage
@@ -56,9 +63,13 @@ final class FocusStateSnapshotTests: XCTestCase {
 
     // MARK: - Record / compare
 
-    private func recordFocus<V: View>(_ view: V, screen: String) throws {
+    private func recordFocus<V: View>(
+        _ view: V,
+        screen: String,
+        reduceMotion: Bool = false
+    ) throws {
         for (appearanceName, style) in appearances {
-            let image = render(view, size: deviceSize, style: style)
+            let image = render(view, size: deviceSize, style: style, reduceMotion: reduceMotion)
             let url = snapshotURL(screen: screen, device: deviceName, appearance: appearanceName)
             let label = "\(screen)·\(deviceName)·\(appearanceName)"
             try SnapshotTestHelper.assertPixelMatch(image, referenceURL: url, label: label)

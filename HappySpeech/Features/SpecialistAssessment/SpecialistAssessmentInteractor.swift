@@ -79,7 +79,8 @@ final class SpecialistAssessmentInteractor:
             questionId: request.questionId,
             axis: request.axis,
             boolValue: request.boolValue,
-            numericValue: request.numericValue
+            numericValue: request.numericValue,
+            selectedOptions: request.selectedOptions
         )
         answers[request.questionId] = answer
     }
