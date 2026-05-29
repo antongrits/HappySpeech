@@ -69,10 +69,15 @@ happyspeech-design/
 # ---------- AI-agent configs (developer-local) ----------
 # Claude Code config — local-only orchestration, not part of the iOS app.
 .claude/
+CLAUDE.md
+**/CLAUDE.md
+AGENTS.md
+**/AGENTS.md
 # Also ignore any AI-agent or LLM auxiliary tooling lying around the repo.
 .cursor/
 .aider*
 .codeium/
+.windsurf/
 
 # ---------- Temp / scratch ----------
 tmp/
