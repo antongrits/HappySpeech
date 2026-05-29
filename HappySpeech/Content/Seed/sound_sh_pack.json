@@ -571,7 +571,7 @@
         },
         {
           "id": "sh-wi-1",
-          "word": "шаг",
+          "word": "шар",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 1,
@@ -851,7 +851,7 @@
         },
         {
           "id": "sh-wi-36",
-          "word": "шнур",
+          "word": "шнурок",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 2,
@@ -883,7 +883,7 @@
         },
         {
           "id": "sh-wi-40",
-          "word": "шлем",
+          "word": "шляпа",
           "imageAsset": "img_shlem",
           "audioAsset": null,
           "difficulty": 2,
@@ -1205,7 +1205,7 @@
         },
         {
           "id": "sh-wm-1",
-          "word": "уши",
+          "word": "мышка",
           "imageAsset": "img_ushi",
           "audioAsset": null,
           "difficulty": 1,
@@ -1213,7 +1213,7 @@
         },
         {
           "id": "sh-wm-2",
-          "word": "даша",
+          "word": "каша",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 1,
@@ -1221,7 +1221,7 @@
         },
         {
           "id": "sh-wm-3",
-          "word": "Маша",
+          "word": "каша",
           "imageAsset": "img_masha",
           "audioAsset": null,
           "difficulty": 1,
@@ -1229,7 +1229,7 @@
         },
         {
           "id": "sh-wm-4",
-          "word": "наша",
+          "word": "каша",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 1,
@@ -1301,7 +1301,7 @@
         },
         {
           "id": "sh-wm-13",
-          "word": "крышка",
+          "word": "кошка",
           "imageAsset": "img_kryshka",
           "audioAsset": null,
           "difficulty": 2,
@@ -1525,7 +1525,7 @@
         },
         {
           "id": "sh-wm-41",
-          "word": "крошка",
+          "word": "кошка",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 2,
@@ -1557,7 +1557,7 @@
         },
         {
           "id": "sh-wm-45",
-          "word": "галошa",
+          "word": "сапог",
           "imageAsset": "img_galosha",
           "audioAsset": null,
           "difficulty": 3,
@@ -1761,7 +1761,7 @@
         },
         {
           "id": "sh-wf-11",
-          "word": "крепыш",
+          "word": "малыш",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 2,
@@ -1865,7 +1865,7 @@
         },
         {
           "id": "sh-wf-24",
-          "word": "голыш",
+          "word": "малыш",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 2,
@@ -1913,7 +1913,7 @@
         },
         {
           "id": "sh-wf-30",
-          "word": "голыш",
+          "word": "малыш",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 2,

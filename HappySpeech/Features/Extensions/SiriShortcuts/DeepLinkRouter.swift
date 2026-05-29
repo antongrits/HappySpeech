@@ -114,7 +114,7 @@ public final class DeepLinkRouter {
 
     // MARK: - Dispatch
 
-    private func dispatch(_ action: DeepLinkAction) {
+    func dispatch(_ action: DeepLinkAction) {
         if let coordinator = coordinator {
             logger.info("DeepLinkRouter: dispatch \(String(describing: action), privacy: .public)")
             coordinator.handle(action)

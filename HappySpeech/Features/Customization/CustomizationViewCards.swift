@@ -46,7 +46,8 @@ struct OutfitCard: View {
                     .font(TypographyTokens.caption(11))
                     .foregroundStyle(ColorTokens.Kid.ink)
                     .lineLimit(1)
-                    .minimumScaleFactor(0.80)
+                    .minimumScaleFactor(0.65)
+                    .padding(.horizontal, SpacingTokens.tiny)
 
                 if item.starCost > 0 {
                     HStack(spacing: 2) {
@@ -166,7 +167,8 @@ struct SkinCard: View {
                 .font(TypographyTokens.caption(12))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .lineLimit(1)
-                .minimumScaleFactor(0.85)
+                .minimumScaleFactor(0.65)
+                .padding(.horizontal, SpacingTokens.tiny)
         }
         .frame(width: cardWidth, height: cardHeight)
         .background(

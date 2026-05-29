@@ -43,33 +43,48 @@ struct ScreeningView: View {
 
             VStack(spacing: SpacingTokens.large) {
                 header
+                // Diploma fix v33 P1 — экран screening заполнял только верх
+                // (карточка «собака / Звук С» вверху, 60% низа пусто). Добавляем
+                // Spacer сверху И снизу контентной карточки, чтобы она ехала к
+                // вертикальному центру safe area. SummaryView сам ScrollView,
+                // поэтому центрируется не через Spacer, а через frame.
                 if state.isFinished, let outcome = state.outcome {
                     SummaryView(vm: outcome, isSaving: isSaving) {
                         complete(outcome: outcome.outcome)
                     }
                     .transition(reduceMotion ? .opacity : .opacity.combined(with: .move(edge: .bottom)))
-                } else if state.showBlockTransition, let blockTitle = state.blockTitle {
-                    BlockTransitionView(title: blockTitle) {
-                        state.showBlockTransition = false
-                    }
-                } else if state.showMicDenied {
-                    MicDeniedView()
-                } else if let stageVM = state.currentStageVM {
-                    StageCard(
-                        vm: stageVM,
-                        isRecording: state.isRecording,
-                        recordingLabel: state.recordingTimerLabel,
-                        onRecord: { startOrStop() },
-                        onPlay: { replay(vm: stageVM) }
-                    )
-                    .id(stageVM.stageIndex)
-                    .transition(reduceMotion ? .opacity : .opacity.combined(with: .move(edge: .trailing)))
                 } else {
-                    ProgressView().progressViewStyle(.circular)
+                    Spacer(minLength: 0)
+                    Group {
+                        if state.showBlockTransition, let blockTitle = state.blockTitle {
+                            BlockTransitionView(title: blockTitle) {
+                                state.showBlockTransition = false
+                            }
+                        } else if state.showMicDenied {
+                            MicDeniedView()
+                        } else if let stageVM = state.currentStageVM {
+                            StageCard(
+                                vm: stageVM,
+                                isRecording: state.isRecording,
+                                recordingLabel: state.recordingTimerLabel,
+                                onRecord: { startOrStop() },
+                                onPlay: { replay(vm: stageVM) }
+                            )
+                            .id(stageVM.stageIndex)
+                            .transition(
+                                reduceMotion
+                                    ? .opacity
+                                    : .opacity.combined(with: .move(edge: .trailing))
+                            )
+                        } else {
+                            ProgressView().progressViewStyle(.circular)
+                        }
+                    }
+                    Spacer(minLength: 0)
                 }
-                Spacer(minLength: 0)
             }
             .padding(SpacingTokens.screenEdge)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .task { await bootstrap() }
         .environment(\.circuitContext, .parent)

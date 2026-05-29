@@ -84,8 +84,22 @@ struct SessionCompleteView: View {
     // MARK: - Body
 
     var body: some View {
+        // Diploma fix v32-postreaudit — корневая причина 3.18 overflow:
+        // AppCoordinatorView оборачивает экраны в GeometryReader (внутри
+        // GuidedTourContainer). GeometryReader не растягивает content —
+        // ZStack(alignment:.bottom) в SessionCompleteView схлопывался по
+        // intrinsic content size (узкая центральная колонка) и якорился
+        // к .topLeading GeometryReader. Контент уезжал вправо за пределы
+        // screen-bounds. Решение — Color.clear с явным maxWidth/maxHeight
+        // как первый child гарантирует, что ZStack занимает full available
+        // size и центрирует ScrollView в безопасной зоне.
         ZStack(alignment: .bottom) {
-            backgroundLayer.ignoresSafeArea()
+            Color.clear
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .accessibilityHidden(true)
+
+            backgroundLayer
+                .ignoresSafeArea()
 
             ScrollView(showsIndicators: false) {
                 VStack(spacing: SpacingTokens.xLarge) {
@@ -207,10 +221,33 @@ struct SessionCompleteView: View {
             // Block I v19: scaleEffect убран с 2D Ляли — только opacity fade-in.
             // F.tier1 v21: hero — мягче в dark.
             // E v21: 3D hero на SessionComplete (celebration phase).
-            // Diploma fix #11a — фон под маскотом явно прозрачен, чтобы PNG
-            // mascot_lyalya_celebrate с альфой не оставлял белый прямоугольник.
+            // Diploma fix v32-postreaudit — PNG ассета mascot_lyalya_*
+            // содержит непрозрачный белый прямоугольник (не альфа-канал), из-за
+            // чего celebration hero выглядел как «фотография на белом листе»
+            // поверх золотого фона. Клипуем по кругу и оборачиваем в мягкий
+            // gradient-«сияние», который сам прозрачен — белый прямоугольник
+            // больше не виден, маскот вписан в круглую медаль-«виньетку».
             LyalyaHeroView(state: lyalyaResultState, size: 160)
-                .background(Color.clear)
+                .clipShape(Circle())
+                .overlay(
+                    Circle()
+                        .strokeBorder(ColorTokens.Brand.gold.opacity(0.4), lineWidth: 3)
+                )
+                .background(
+                    Circle()
+                        .fill(
+                            RadialGradient(
+                                colors: [
+                                    ColorTokens.Brand.gold.opacity(0.30),
+                                    ColorTokens.Brand.gold.opacity(0.0)
+                                ],
+                                center: .center,
+                                startRadius: 60,
+                                endRadius: 110
+                            )
+                        )
+                        .frame(width: 200, height: 200)
+                )
                 .opacity(visible ? (colorScheme == .dark ? 0.92 : 1.0) : 0)
                 .animation(
                     reduceMotion ? nil : MotionTokens.spring,
@@ -310,12 +347,24 @@ struct SessionCompleteView: View {
     }
 
     private func breakdownChip(label: String, color: Color) -> some View {
+        // Diploma fix v34 — chip-ряд лежит поверх gold mesh-фона. Старый
+        // вариант `color text on color.opacity(0.12) bg` делал «бонус» pill
+        // невидимым (gold-on-gold). Используем непрозрачный Kid.surface как
+        // подложку с цветным border, текст оставляем цветным с увеличенным
+        // contrast (weight .bold). Так chip читается на любом фоне.
         Text(label)
-            .font(TypographyTokens.caption(11).weight(.semibold))
+            .font(TypographyTokens.caption(11).weight(.bold))
             .foregroundStyle(color)
             .padding(.horizontal, SpacingTokens.small)
             .padding(.vertical, SpacingTokens.micro)
-            .background(color.opacity(0.12), in: Capsule())
+            .background(
+                Capsule()
+                    .fill(ColorTokens.Kid.surface)
+            )
+            .overlay(
+                Capsule()
+                    .strokeBorder(color.opacity(0.65), lineWidth: 1.2)
+            )
             .accessibilityLabel(label)
     }
 
@@ -707,17 +756,51 @@ struct SessionCompleteView: View {
                     if Self.isScreenshotMode { tx.disablesAnimations = true }
                 }
 
-            // Task #67: decorative celebration banner (Hero/celebration_*).
-            // 5 illustrations: balloons / fireworks / rainbow / stars / trophy_glow.
-            // Slug-выбор детерминирован от sessionId, чтобы один и тот же урок
-            // всегда давал тот же celebration-фон (без миганий на refresh).
-            Image(Self.celebrationHeroSlug(for: result))
-                .resizable()
-                .scaledToFill()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .clipped()
-                .opacity(colorScheme == .dark ? 0.08 : 0.12)
-                .blendMode(.screen)
+            // Diploma fix v34 — после уплощения mesh-палитры .rewards до
+            // монохромного butter (см. HSMeshGradientBackground) восстанавливаем
+            // gold/primaryLo сияние через radial overlay. Banding больше не
+            // появляется (radial — не интерполяция между точками), а золотой
+            // характер celebration-экрана остаётся.
+            ZStack {
+                RadialGradient(
+                    colors: [
+                        ColorTokens.Brand.gold.opacity(colorScheme == .dark ? 0.18 : 0.32),
+                        Color.clear
+                    ],
+                    center: UnitPoint(x: 0.5, y: 0.35),
+                    startRadius: 30,
+                    endRadius: 380
+                )
+                RadialGradient(
+                    colors: [
+                        ColorTokens.Brand.primaryLo.opacity(colorScheme == .dark ? 0.10 : 0.18),
+                        Color.clear
+                    ],
+                    center: UnitPoint(x: 0.85, y: 0.92),
+                    startRadius: 30,
+                    endRadius: 320
+                )
+            }
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
+
+            // Diploma fix v32-postreaudit — декоративный celebration banner
+            // (Hero/celebration_*) использовал `scaledToFill().frame(maxWidth:
+            // .infinity).clipped()`. PNG с aspect ratio шире screen раздувал
+            // intrinsic-width родительского ZStack body (через ignoresSafeArea
+            // на backgroundLayer), и весь контент SessionComplete уезжал
+            // вправо за пределы safe area. Используем GeometryReader для
+            // bounded ширины + .frame(width:height:) явно — Image не может
+            // больше расширить родителя.
+            GeometryReader { proxy in
+                Image(Self.celebrationHeroSlug(for: result))
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: proxy.size.width, height: proxy.size.height)
+                    .clipped()
+                    .opacity(colorScheme == .dark ? 0.08 : 0.12)
+                    .blendMode(.screen)
+            }
         }
         .accessibilityHidden(true)
     }
@@ -842,7 +925,11 @@ struct SessionCompleteView: View {
             return
         }
         let targetFraction = Double(target) / 100.0
-        if reduceMotion {
+        // Diploma fix v33 P1 — в screenshot-туре (-HSStartRoute) пропускаем
+        // count-up анимацию: ринг сразу заполняется на нужную долю, иначе
+        // на захвате на 12 с кадр ловится с пустым кольцом (0%) и
+        // непропорциональным числом «75» внутри пустого круга.
+        if reduceMotion || Self.isScreenshotMode {
             animatedScore = target
             ringFraction = targetFraction
             return

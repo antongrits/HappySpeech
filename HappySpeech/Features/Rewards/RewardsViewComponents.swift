@@ -176,29 +176,48 @@ struct StickerCellView: View {
     private var lockedCell: some View {
         VStack(spacing: SpacingTokens.tiny) {
             ZStack {
+                // Diploma fix v34 — locked-стикер на gold mesh-фоне всё ещё
+                // терялся: surfaceAlt круг сливался с butter-золотым mesh.
+                // Переходим на двухслойную «медаль»: непрозрачная Kid.surface
+                // (off-white) + двойной border (внешний line + внутренний
+                // полупрозрачный gold halo). Силуэт затемняем до Kid.ink с
+                // opacity .55 — это даёт чёткий тёмный контур на любом фоне.
                 Circle()
-                    .fill(ColorTokens.Kid.surfaceAlt)
+                    .fill(ColorTokens.Kid.surface)
                     .frame(width: 64, height: 64)
+                    .overlay(
+                        Circle()
+                            .strokeBorder(ColorTokens.Kid.line, lineWidth: 1.5)
+                    )
+                    .shadow(
+                        color: ColorTokens.Kid.ink.opacity(0.10),
+                        radius: 2,
+                        x: 0,
+                        y: 1
+                    )
 
-                // D-22 v27: locked-стикер тоже обрезан общим кругом — единый стиль.
-                HSContentSymbol(cell.emoji, size: 38, tint: ColorTokens.Kid.inkSoft)
+                HSContentSymbol(cell.emoji, size: 38, tint: ColorTokens.Kid.ink)
                     .padding(SpacingTokens.micro)
                     .frame(width: 56, height: 56)
                     .clipShape(Circle())
-                    .grayscale(0.95)
-                    .opacity(0.35)
+                    .grayscale(1.0)
+                    .opacity(0.55)
 
                 Image(systemName: "lock.fill")
-                    .font(TypographyTokens.caption(14).weight(.semibold))
-                    .foregroundStyle(ColorTokens.Kid.inkMuted)
+                    .font(TypographyTokens.caption(14).weight(.bold))
+                    .foregroundStyle(ColorTokens.Kid.ink)
                     .padding(6)
                     .background(Circle().fill(ColorTokens.Kid.surface))
+                    .overlay(
+                        Circle()
+                            .strokeBorder(ColorTokens.Kid.line, lineWidth: 1.2)
+                    )
                     .offset(x: 22, y: 22)
                     .accessibilityLabel(String(localized: "rewards.locked"))
             }
 
             Text(cell.name)
-                .font(TypographyTokens.caption(12))
+                .font(TypographyTokens.caption(12).weight(.medium))
                 .foregroundStyle(ColorTokens.Kid.ink)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)

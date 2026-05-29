@@ -565,7 +565,7 @@
         },
         {
           "id": "zh-wi-13",
-          "word": "железо",
+          "word": "жираф",
           "imageAsset": "img_zhelezo",
           "audioAsset": null,
           "difficulty": 2,
@@ -725,7 +725,7 @@
         },
         {
           "id": "zh-wi-33",
-          "word": "животное",
+          "word": "жираф",
           "imageAsset": "img_zhivotnoe",
           "audioAsset": null,
           "difficulty": 3,
@@ -938,7 +938,7 @@
         },
         {
           "id": "zh-wi-61",
-          "word": "железо",
+          "word": "жираф",
           "hint": "ЖЕ+ЛЕ+ЗО — металл.",
           "difficulty": 2,
           "audio_file": "Audio/Content/Zh/zh-wi-61.m4a"
@@ -1047,7 +1047,7 @@
         },
         {
           "id": "zh-wm-5",
-          "word": "ножка",
+          "word": "ножи",
           "imageAsset": "img_nozhka",
           "audioAsset": null,
           "difficulty": 1,
@@ -1111,7 +1111,7 @@
         },
         {
           "id": "zh-wm-13",
-          "word": "ножовка",
+          "word": "ножи",
           "imageAsset": "img_nozhovka",
           "audioAsset": null,
           "difficulty": 3,
@@ -1143,7 +1143,7 @@
         },
         {
           "id": "zh-wm-17",
-          "word": "рожок",
+          "word": "рог",
           "imageAsset": "img_rozhok",
           "audioAsset": null,
           "difficulty": 2,
@@ -1381,7 +1381,7 @@
         },
         {
           "id": "zh-wf-1",
-          "word": "ёж",
+          "word": "нож",
           "imageAsset": "img_yozh",
           "audioAsset": null,
           "difficulty": 1,
@@ -1501,7 +1501,7 @@
         },
         {
           "id": "zh-wf-16",
-          "word": "гуляш",
+          "word": "гараж",
           "imageAsset": "img_gulyash",
           "audioAsset": null,
           "difficulty": 2,

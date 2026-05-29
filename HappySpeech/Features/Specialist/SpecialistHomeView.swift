@@ -44,20 +44,24 @@ struct SpecialistHomeView: View {
         // Block J v18 — заменён системный TabView на HSAnimatedTabBar
         // (kavsoft-style capsule indicator).
         ZStack(alignment: .bottom) {
+            // Diploma fix v32-postreaudit — same root cause как в 3.18 и 3.6:
+            // GeometryReader в GuidedTourContainer не растягивал content;
+            // ZStack-bottom возвращался intrinsic-size HSAnimatedTabBar (узкий
+            // capsule) и якорился к topLeading. Сейчас Color.clear фиксирует
+            // ZStack по screen-bounds, табы и контент рендерятся в правильной
+            // safe area.
+            Color.clear
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .accessibilityHidden(true)
+
             specTabContent(for: selectedTab)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                // v32 P1 — Ляля в спокойном профессиональном состоянии: corner-pin 56pt, topTrailing.
-                // Diploma fix #6b — даём дополнительный trailing-инсет (sp10 ≈ 40pt),
-                // чтобы маскот не «накладывался» на toolbar-кнопку «+» (square.and.pencil)
-                // в SpecChildDashboardView. Реальные системные toolbar items занимают
-                // правый край nav bar, и mascot должен заметно отстоять.
-                .overlay(alignment: .topTrailing) {
-                    LyalyaMascotView(state: .idle, size: 56)
-                        .padding(.top, SpacingTokens.regular)
-                        .padding(.trailing, SpacingTokens.screenEdge + SpacingTokens.sp10)
-                        .allowsHitTesting(false)
-                        .accessibilityHidden(true)
-                }
+                // Diploma fix v32-postreaudit — Ляля-маскот в topTrailing-overlay
+                // (size 56pt) втискивалась вплотную к toolbar-кнопке «+» в SpecChildListView.
+                // Убираем overlay из spec-home: каждый внутренний экран (детский
+                // дашборд) сам встраивает Лялю там, где это уместно (toolbar
+                // leading в SpecChildDashboardView). На главном списке хирург
+                // оставляет правый край свободным для активной кнопки добавления.
 
             HSAnimatedTabBar(
                 selection: $selectedTab,

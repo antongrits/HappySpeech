@@ -125,7 +125,8 @@ enum BilingualSecondLanguage: String, Sendable, Equatable, CaseIterable, Codable
     case belarusian = "be-BY"
     case english    = "en-US"
 
-    /// Идентификатор для AVSpeechSynthesisVoice.
+    /// BCP-47 идентификатор языка (используется для логов и аналитики;
+    /// озвучка идёт через pre-recorded m4a, см. `BilingualTTSWorker`).
     var bcp47: String { rawValue }
 
     /// Человекочитаемый ярлык (используется в UI + accessibility).

@@ -405,7 +405,7 @@
       "items": [
         {
           "id": "kh-wi-0",
-          "word": "хата",
+          "word": "хижина",
           "difficulty": 1,
           "audio_file": "Audio/Content/KH/kh-wi-0.m4a"
         },
@@ -657,13 +657,13 @@
         },
         {
           "id": "kh-wm-1",
-          "word": "уха",
+          "word": "ухо",
           "difficulty": 2,
           "audio_file": "Audio/Content/KH/kh-wm-1.m4a"
         },
         {
           "id": "kh-wm-2",
-          "word": "меха",
+          "word": "петух",
           "difficulty": 2,
           "audio_file": "Audio/Content/KH/kh-wm-2.m4a"
         },
@@ -735,7 +735,7 @@
         },
         {
           "id": "kh-wm-14",
-          "word": "орехи",
+          "word": "орех",
           "difficulty": 3,
           "audio_file": "Audio/Content/KH/kh-wm-14.m4a"
         },
@@ -771,7 +771,7 @@
         },
         {
           "id": "kh-wm-20",
-          "word": "лопухи",
+          "word": "лопух",
           "difficulty": 3,
           "audio_file": "Audio/Content/KH/kh-wm-20.m4a"
         },
@@ -975,7 +975,7 @@
         },
         {
           "id": "kh-wf-13",
-          "word": "черепах",
+          "word": "черепаха",
           "difficulty": 4,
           "audio_file": "Audio/Content/KH/kh-wf-13.m4a"
         },

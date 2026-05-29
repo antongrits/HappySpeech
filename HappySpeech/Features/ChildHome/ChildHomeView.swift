@@ -111,14 +111,6 @@ struct ChildHomeView: View {
                     }
                     .padding(.horizontal, SpacingTokens.sp3)
 
-                    homeScreenCardSection
-                        // v32 P1 — MotionTokens: widget card entrance fade+scale.
-                        .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
-                            content
-                                .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
-                                .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.95))
-                        }
-
                     dailyMissionSection
                         .spotlightAnchor(key: "daily_mission_card")
                         .hsScrollEffect(.scaleFade)
@@ -342,12 +334,12 @@ struct ChildHomeView: View {
                 }
             }
         }
-        // Diploma fix #1b — top-right hero badges (streak chip / mission ring)
-        // должны уступить место круглой кнопке-FAB «Родительский режим» в
-        // ZStack-оверлее. Без trailing-инсета (64 ≈ диаметр кнопки 56 + 8 gap)
-        // FAB визуально накладывается на streak-чип и выглядит как «фантомный
-        // прямоугольник» под кнопкой.
-        .padding(.trailing, SpacingTokens.sp10)
+        // Diploma fix v32-postreaudit — round FAB (56pt + screenEdge 24pt)
+        // занимает справа порядка 80pt. Раньше trailing был sp10=40pt и
+        // FAB накладывался на streakBadge / mission ring («лишняя кнопка»
+        // визуально). Увеличиваем до sp16=64pt + дополнительный sp4=16pt,
+        // итого 80pt — streakBadge гарантированно слева от FAB-кнопки.
+        .padding(.trailing, SpacingTokens.sp16 + SpacingTokens.sp4)
         .padding(.top, SpacingTokens.pageTop)
         // v32 P1 — ShadowTokens.kidDepth: two-layer depth under greeting card.
         .depthShadow(ShadowTokens.kidDepth)
@@ -392,20 +384,6 @@ struct ChildHomeView: View {
     }
 
     // MARK: - HomeScreen Widget card preview (L9)
-
-    private var homeScreenCardSection: some View {
-        HStack(spacing: SpacingTokens.sp3) {
-            HomeScreenCard(
-                dailyMission: viewModel.dailyMissionDetail.title.isEmpty
-                    ? viewModel.dailyMission.targetSound
-                    : viewModel.dailyMissionDetail.title,
-                streakDays: viewModel.currentStreak,
-                lyalyaIcon: "bird.fill"
-            )
-            Spacer(minLength: 0)
-        }
-        .padding(.vertical, SpacingTokens.sp1)
-    }
 
     // MARK: - Daily Mission
 

@@ -139,11 +139,13 @@ struct ARZoneView: View {
                         .foregroundStyle(ColorTokens.Overlay.onAccent)
                         .multilineTextAlignment(.leading)
                         .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     Text("ar.zone.faceFilter.subtitle")
                         .font(TypographyTokens.caption(12))
                         .foregroundStyle(ColorTokens.Overlay.onAccent.opacity(0.85))
                         .multilineTextAlignment(.leading)
                         .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 Spacer()
                 Image(systemName: "chevron.right")

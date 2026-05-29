@@ -89,17 +89,25 @@ struct BingoView: View {
 
     private var playingView: some View {
         VStack(spacing: SpacingTokens.medium) {
-            lyalyaHeader
-            calledWordBanner
-            progressBar
+            VStack(spacing: SpacingTokens.medium) {
+                lyalyaHeader
+                calledWordBanner
+                progressBar
+            }
+            .padding(.horizontal, SpacingTokens.screenEdge)
 
+            // Redesign v34 (3.17): сетка переведена с 5 колонок на 3, ячейка
+            // 108×135pt, иллюстрация 72pt, подпись Bold 15pt. Гориз. отступ
+            // — 20pt по краям, gap между ячейками 11pt (см. спеку §2.5).
+            // Бизнес-логика бинго 5×5 не меняется: индексы линий по-прежнему
+            // считаются по `BingoLineCatalog.side` (5).
             ScrollView(showsIndicators: false) {
                 grid
+                    .padding(.horizontal, BingoGridMetrics.horizontalPadding)
                     .padding(.bottom, SpacingTokens.medium)
             }
             .scrollBounceBehavior(.basedOnSize)
         }
-        .padding(.horizontal, SpacingTokens.screenEdge)
         .padding(.top, SpacingTokens.large)
         .padding(.bottom, SpacingTokens.medium)
         .safeAreaPadding(.bottom, SpacingTokens.tiny)
@@ -194,16 +202,24 @@ struct BingoView: View {
         }
     }
 
-    // MARK: Grid 5×5
+    // MARK: Grid (3-column visual, 5×5 logical)
 
     private var grid: some View {
+        // Redesign v34 (3.17): фиксированная ширина ячейки (108pt) и gap 11pt
+        // обеспечивают: 20 + 3×108 + 2×11 + 20 = 386pt → запас ≥7pt на iPhone 17 Pro
+        // ширине 393pt. Меньше колонок = крупнее иллюстрация (72pt) и читаемая
+        // подпись (15pt Bold) для детей 5–8 лет.
         let columns = Array(
-            repeating: GridItem(.flexible(), spacing: SpacingTokens.tiny),
-            count: BingoLineCatalog.side
+            repeating: GridItem(.fixed(BingoGridMetrics.cellWidth), spacing: BingoGridMetrics.cellGap),
+            count: BingoGridMetrics.visualColumns
         )
-        return LazyVGrid(columns: columns, spacing: SpacingTokens.tiny) {
+        return LazyVGrid(columns: columns, spacing: BingoGridMetrics.cellGap) {
             ForEach(Array(display.cells.enumerated()), id: \.element.id) { index, cell in
-                BingoCellView(cell: cell, reduceMotion: reduceMotion) {
+                BingoCellView(
+                    cell: cell,
+                    index: index,
+                    reduceMotion: reduceMotion
+                ) {
                     handleTap(cell: cell)
                 }
                 .disabled(display.phase != .playing || cell.isMarked)
@@ -366,96 +382,116 @@ struct BingoView: View {
     }
 }
 
+// MARK: - BingoGridMetrics
+//
+// Redesign v34 (3.17): фиксированные размеры визуальной сетки.
+// Расчёт: 20 + 3×108 + 2×11 + 20 = 386pt → 7pt запас на iPhone 17 Pro (393pt).
+// Бизнес-логика бинго 5×5 остаётся в `BingoLineCatalog` (25 ячеек, 12 линий).
+
+private enum BingoGridMetrics {
+    static let visualColumns: Int = 3
+    static let cellWidth: CGFloat = 108
+    static let cellHeight: CGFloat = 135
+    static let cellGap: CGFloat = 11
+    static let horizontalPadding: CGFloat = 20
+    static let illustrationSize: CGFloat = 72
+    static let wordFontSize: CGFloat = 15
+    static let staggerDelay: Double = 0.030  // 30ms между ячейками
+}
+
 // MARK: - BingoCellView
 
-/// Одна клетка 5×5 — стилизуется по состоянию (marked / winner / idle).
+/// Одна клетка 108×135pt — три визуальных состояния:
+/// `normal` (ждёт нажатия), `found` (отмечена правильно, `isMarked`),
+/// `winner` (входит в выигрышную линию 5-в-ряд по 5×5 логической сетке).
+/// Состояний `selected`/`missed`/`locked` бинго не имеет — нажатие =
+/// мгновенная отметка.
 private struct BingoCellView: View {
 
     let cell: BingoCell
+    let index: Int
     let reduceMotion: Bool
     let onTap: () -> Void
 
+    @State private var didAppear: Bool = false
+
     var body: some View {
         Button(action: onTap) {
-            ZStack {
+            VStack(spacing: SpacingTokens.micro) {
+                Spacer(minLength: 8)
+                illustration
+                Text(cell.word)
+                    .font(.system(size: BingoGridMetrics.wordFontSize, weight: .bold, design: .rounded))
+                    .foregroundStyle(textColor)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                    .multilineTextAlignment(.center)
+                Spacer(minLength: 6)
+            }
+            .frame(width: BingoGridMetrics.cellWidth, height: BingoGridMetrics.cellHeight)
+            .background(
                 RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
                     .fill(backgroundFill)
-
-                if cell.isMarked {
-                    VStack(spacing: 1) {
-                        // v32 P1 #3: тонкая иконка-«галочка» поверх иллюстрации,
-                        // чтобы дети 5–6 лет видели сам отмеченный элемент по
-                        // картинке, а не только по тексту.
-                        HSContentSymbol(
-                            ListenAndChoosePresenter.imageSymbol(for: cell.word),
-                            size: 18,
-                            tint: ColorTokens.Overlay.onAccent
-                        )
-                        .accessibilityHidden(true)
-                        Image(systemName: "checkmark")
-                            .font(TypographyTokens.caption(12).weight(.bold))
-                            .foregroundStyle(ColorTokens.Overlay.onAccent)
-                            .accessibilityHidden(true)
-                        Text(cell.word)
-                            .font(TypographyTokens.body(10))
-                            .foregroundStyle(ColorTokens.Overlay.onAccent)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.55)
-                            .strikethrough(!cell.isWinner, color: ColorTokens.Overlay.onAccent.opacity(0.7))
-                    }
-                    .padding(.horizontal, 3)
-                    .padding(.vertical, 2)
-                } else {
-                    VStack(spacing: 2) {
-                        // v32 P1 #3: каждая клетка получает иллюстрацию слова.
-                        // HSContentSymbol сам решает: Asset (Illustrations/word_*)
-                        // или SF Symbol fallback — благодаря этому методически
-                        // осмысленно для 5-летних, ещё не читающих, детей.
-                        HSContentSymbol(
-                            ListenAndChoosePresenter.imageSymbol(for: cell.word),
-                            size: 22,
-                            tint: ColorTokens.Brand.primary
-                        )
-                        .accessibilityHidden(true)
-                        Text(cell.word)
-                            .font(TypographyTokens.body(11))
-                            .foregroundStyle(ColorTokens.Kid.ink)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.55)
-                            .multilineTextAlignment(.center)
-                    }
-                    .padding(.horizontal, 3)
-                    .padding(.vertical, 2)
-                }
-            }
-            .frame(maxWidth: .infinity, minHeight: 72)
+            )
             .overlay(
                 RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
-                    .strokeBorder(borderColor, lineWidth: cell.isWinner ? 3 : 1)
+                    .strokeBorder(borderColor, lineWidth: borderWidth)
             )
-            .scaleEffect(cell.isWinner && !reduceMotion ? 1.04 : 1.0)
+            .overlay(alignment: .topTrailing) {
+                if cell.isMarked {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.system(size: 24, weight: .semibold))
+                        .foregroundStyle(ColorTokens.Semantic.success)
+                        .padding(6)
+                        .accessibilityHidden(true)
+                }
+            }
+            .scaleEffect(scaleEffect)
+            .opacity(didAppear ? 1.0 : 0.0)
             .animation(
-                reduceMotion ? nil : .spring(response: 0.35, dampingFraction: 0.7),
+                reduceMotion ? .easeOut(duration: 0.15) : MotionTokens.rewardPop,
                 value: cell.isMarked
+            )
+            .animation(
+                reduceMotion ? .easeOut(duration: 0.15) : MotionTokens.playful,
+                value: cell.isWinner
             )
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(cell.word)
-        .accessibilityValue(
-            cell.isWinner
-                ? String(localized: "bingo.accessibility.winning_line_cell")
-                : (cell.isMarked
-                    ? String(localized: "bingo.accessibility.marked")
-                    : String(localized: "bingo.accessibility.unmarked"))
-        )
+        .onAppear {
+            // Stagger ~30ms на каждую ячейку — поэтапное появление сетки.
+            let delay = reduceMotion ? 0.0 : Double(index) * BingoGridMetrics.staggerDelay
+            withAnimation(
+                reduceMotion
+                    ? .easeOut(duration: 0.2)
+                    : MotionTokens.playful.delay(delay)
+            ) {
+                didAppear = true
+            }
+        }
+        .accessibilityLabel(accessibilityText)
         .accessibilityAddTraits(cell.isMarked ? [] : .isButton)
     }
 
+    // MARK: Subviews
+
+    private var illustration: some View {
+        HSContentSymbol(
+            ListenAndChoosePresenter.imageSymbol(for: cell.word),
+            size: BingoGridMetrics.illustrationSize,
+            tint: cell.isMarked ? ColorTokens.Semantic.success : ColorTokens.Brand.primary
+        )
+        .frame(width: BingoGridMetrics.illustrationSize, height: BingoGridMetrics.illustrationSize)
+        .accessibilityHidden(true)
+    }
+
+    // MARK: Styling
+
     private var backgroundFill: Color {
         if cell.isWinner {
-            return ColorTokens.Feedback.correct
+            return ColorTokens.Semantic.successBg
         } else if cell.isMarked {
-            return ColorTokens.Brand.sky
+            return ColorTokens.Semantic.successBg
         } else {
             return ColorTokens.Kid.surface
         }
@@ -463,11 +499,40 @@ private struct BingoCellView: View {
 
     private var borderColor: Color {
         if cell.isWinner {
-            return ColorTokens.Feedback.correct
+            return ColorTokens.Semantic.success
         } else if cell.isMarked {
-            return ColorTokens.Brand.sky
+            return ColorTokens.Semantic.success
         } else {
             return ColorTokens.Kid.line
+        }
+    }
+
+    private var borderWidth: CGFloat {
+        cell.isWinner ? 3 : (cell.isMarked ? 2 : 1)
+    }
+
+    private var textColor: Color {
+        if cell.isMarked || cell.isWinner {
+            return ColorTokens.Semantic.success
+        } else {
+            return ColorTokens.Kid.ink
+        }
+    }
+
+    private var scaleEffect: CGFloat {
+        guard !reduceMotion else { return 1.0 }
+        if cell.isWinner { return 1.06 }
+        if cell.isMarked { return 1.02 }
+        return 1.0
+    }
+
+    private var accessibilityText: String {
+        if cell.isWinner {
+            return "\(cell.word), \(String(localized: "bingo.accessibility.winning_line_cell"))"
+        } else if cell.isMarked {
+            return "\(cell.word), \(String(localized: "bingo.accessibility.marked"))"
+        } else {
+            return cell.word
         }
     }
 }

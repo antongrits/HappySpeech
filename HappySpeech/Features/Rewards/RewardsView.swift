@@ -86,6 +86,37 @@ struct RewardsView: View {
                     .accessibilityHidden(true)
                     .allowsHitTesting(false)
 
+                // Diploma fix v34 — мягкий gold radial overlay поверх
+                // монохромного butter mesh заменяет старые gold/primaryLo
+                // mesh-точки. Radial gradient не даёт banding (на отличие от
+                // прямой MeshGradient интерполяции между точками разной
+                // насыщенности), но возвращает «золотое сияние» характера
+                // экрана наград. Центр на 30%/30% — kavsoft hero-spot, едва
+                // заметный второй акцент в правом нижнем углу.
+                ZStack {
+                    RadialGradient(
+                        colors: [
+                            ColorTokens.Brand.gold.opacity(colorScheme == .dark ? 0.18 : 0.32),
+                            Color.clear
+                        ],
+                        center: UnitPoint(x: 0.30, y: 0.25),
+                        startRadius: 20,
+                        endRadius: 360
+                    )
+                    RadialGradient(
+                        colors: [
+                            ColorTokens.Brand.primaryLo.opacity(colorScheme == .dark ? 0.12 : 0.22),
+                            Color.clear
+                        ],
+                        center: UnitPoint(x: 0.80, y: 0.85),
+                        startRadius: 30,
+                        endRadius: 320
+                    )
+                }
+                .ignoresSafeArea()
+                .accessibilityHidden(true)
+                .allowsHitTesting(false)
+
                 VStack(spacing: 0) {
                     headerSection
                     leaderboardBanner
@@ -274,12 +305,12 @@ struct RewardsView: View {
                             // и Asset (reward_rocket, word_forest, seasonal_…).
                             HSContentSymbol(
                                 tab.emoji,
-                                size: 18,
+                                size: 16,
                                 tint: tab.isActive
                                     ? ColorTokens.Overlay.onAccent
                                     : ColorTokens.Brand.primary
                             )
-                            .frame(width: 28, height: 28)
+                            .frame(width: 22, height: 22)
                             Text(tab.title)
                                 .font(TypographyTokens.body(14))
                                 .lineLimit(1)
@@ -296,15 +327,33 @@ struct RewardsView: View {
                                 )
                         }
                         .foregroundStyle(tab.isActive ? ColorTokens.Overlay.onAccent : ColorTokens.Kid.ink)
-                        .padding(.horizontal, SpacingTokens.medium)
+                        // Diploma fix v34 — chip-padding с SpacingTokens.medium
+                        // сжат до SpacingTokens.small: на iPhone 17 Pro
+                        // (390pt safe area) три chip'а «Все 72», «Животные 12»,
+                        // «Лес 6» теперь полностью помещаются без клиппинга.
+                        .padding(.horizontal, SpacingTokens.small)
                         .padding(.vertical, SpacingTokens.tiny)
                         .frame(minHeight: 56)
+                        // Diploma fix v33 P1 — на золотом mesh-фоне inactive
+                        // capsule на ColorTokens.Kid.surface (off-white) сливался
+                        // с butter mesh, третий чип «терялся». Двухслойная заливка:
+                        // непрозрачная Kid.surface + чёткий border ColorTokens.Kid.line
+                        // даёт читаемый контур в обоих режимах и на любом тоне фона.
                         .background(
                             Capsule().fill(
                                 tab.isActive
                                     ? ColorTokens.Brand.primary
                                     : ColorTokens.Kid.surface
                             )
+                        )
+                        .overlay(
+                            Capsule()
+                                .strokeBorder(
+                                    tab.isActive
+                                        ? Color.clear
+                                        : ColorTokens.Kid.line.opacity(0.6),
+                                    lineWidth: 1.5
+                                )
                         )
                     }
                     .buttonStyle(.plain)
@@ -364,16 +413,14 @@ struct RewardsView: View {
                             interactor?.claimReward(.init(id: cell.id))
                         }
                     }
-                    // v32 P1 — MotionTokens: sticker entrance fade+scale.
-                    .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
-                        content
-                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
-                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))
-                    }
-                    // Step 10 Batch A — Pattern 4: parallax drift для sticker tiles.
-                    // factor=0.3 — мягкий «магазинный» дрейф; модификатор сам гейтится
-                    // reduce-motion (см. HSParallaxTileModifier).
-                    .hsParallaxTile(factor: 0.3)
+                    // Diploma fix v34 — `scrollTransition` + `hsParallaxTile`
+                    // убраны. Они давали «лестницу призрачных стикеров» на 3.10:
+                    // каждый стикер получал собственный y-offset через
+                    // GeometryReader в parallax-модификаторе, ломая сетку
+                    // LazyVGrid, а scrollTransition фейдил карточки ниже фолда
+                    // в 0 opacity, и они стопкой накладывались друг на друга.
+                    // Аппarent-анимация (scale+opacity) сохраняется через
+                    // .onAppear в StickerCellView.
                 }
             }
             .padding(.horizontal, SpacingTokens.screenEdge)

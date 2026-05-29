@@ -1,15 +1,16 @@
 import SwiftUI
 
-// MARK: - WorldMapIslandsCanvas
+// MARK: - WorldMapIslandsCanvas (redesign — vertical quest path)
 //
-// «Остров звуков» — визуальный канвас с координатами зон, соединительной
-// dash-линией маршрута и Ляля-маскотом на текущем острове.
+// «Карта островов звуков» — вертикальный путь-квест снизу вверх (redesign-spec
+// §1). Раньше острова позиционировались абсолютно в GeometryReader/ZStack и
+// сбивались в левый верхний угол с перекрытием. Теперь они выкладываются в
+// VStack внутри ScrollView с зигзагом ±32pt, а соединительный bezier-путь
+// рисуется позади карточек.
 //
-// Используется в WorldMapView как альтернатива grid-сетке (по флагу).
-// Сетка остаётся как fallback для accessibility size class и iPad.
-//
-// Чистый SwiftUI: GeometryReader + ZStack + Path. Никакой бизнес-логики —
-// получает уже готовые `WorldZoneCard` из Presenter и пробрасывает tap наверх.
+// Чистый SwiftUI: ScrollView + ZStack(ConnectingPathView, VStack of IslandCard).
+// Никакой бизнес-логики — получает готовые `WorldZoneCard` из Presenter и
+// пробрасывает tap наверх.
 
 struct WorldMapIslandsCanvas: View {
 
@@ -20,123 +21,115 @@ struct WorldMapIslandsCanvas: View {
     let reduceMotion: Bool
     let onTapZone: (String) -> Void
 
+    // MARK: - Layout constants (redesign-spec §1.14)
+
+    /// Карточка одного острова.
+    private let cardWidth: CGFloat = 280
+    private let cardHeight: CGFloat = 200
+    /// Горизонтальный зигзаг-сдвиг чётных/нечётных островов.
+    private let zigzag: CGFloat = SpacingTokens.xLarge   // 32pt
+    /// Вертикальный зазор между карточками.
+    private let cardGap: CGFloat = SpacingTokens.xLarge   // 32pt
+
     // MARK: - Body
+    //
+    // Острова выводятся снизу вверх (онтогенетический порядок: ранние звуки
+    // внизу, поздние — вверху), поэтому исходный массив разворачивается.
+
+    /// Id острова, к которому нужно прокрутить при появлении (текущий → первый
+    /// открытый). Используется как `task(id:)`, чтобы scroll сработал и когда
+    /// карточки приходят асинхронно после bootstrap.
+    private var focusIslandId: String? {
+        cards.first(where: { $0.isCurrentLocation && !$0.isLocked })?.id
+            ?? cards.first(where: { !$0.isLocked })?.id
+    }
 
     var body: some View {
-        GeometryReader { proxy in
-            let canvasSize = proxy.size
-            ZStack {
-                routePath(in: canvasSize)
-                ForEach(Array(cards.enumerated()), id: \.element.id) { index, card in
-                    islandNode(card: card, index: index, in: canvasSize)
+        let ordered = Array(cards.reversed())
+
+        return ScrollViewReader { proxy in
+            ScrollView(.vertical, showsIndicators: false) {
+                ZStack(alignment: .top) {
+                    ConnectingPathView(
+                        count: ordered.count,
+                        cardWidth: cardWidth,
+                        cardHeight: cardHeight,
+                        cardGap: cardGap,
+                        zigzag: zigzag,
+                        appeared: appeared,
+                        reduceMotion: reduceMotion
+                    )
+
+                    VStack(spacing: cardGap) {
+                        ForEach(Array(ordered.enumerated()), id: \.element.id) { index, card in
+                            IslandCard(
+                                card: card,
+                                reduceMotion: reduceMotion,
+                                onTap: { onTapZone(card.id) }
+                            )
+                            .frame(width: cardWidth, height: cardHeight)
+                            // Зигзаг: нечётные смещаются влево, чётные вправо.
+                            .offset(x: index.isMultiple(of: 2) ? zigzag : -zigzag)
+                            .frame(maxWidth: .infinity)
+                            .id(card.id)
+                            // Stagger entrance: scale 0.88→1, opacity 0→1.
+                            .scaleEffect(appeared ? 1.0 : 0.88)
+                            .opacity(appeared ? 1 : 0)
+                            .animation(
+                                reduceMotion
+                                    ? .easeOut(duration: 0.2)
+                                    : MotionTokens.playful.delay(Double(index) * 0.08),
+                                value: appeared
+                            )
+                        }
+                    }
+                    .padding(.vertical, SpacingTokens.large)
+                }
+                .frame(maxWidth: .infinity)
+            }
+            .task(id: focusIslandId) {
+                guard let target = focusIslandId else { return }
+                // Скроллим к текущему острову. task(id:) перезапускается, когда
+                // карточки приходят асинхронно после bootstrap. Небольшая задержка —
+                // чтобы VStack успел разложиться и scrollTo попал в верный offset.
+                try? await Task.sleep(for: .milliseconds(180))
+                withAnimation(reduceMotion ? nil : .easeOut(duration: 0.4)) {
+                    proxy.scrollTo(target, anchor: .center)
                 }
             }
         }
-        .frame(height: canvasHeight)
-    }
-
-    // MARK: - Layout constants
-
-    /// Высота канваса. На стандартный iPhone 17 Pro даёт читаемое расположение.
-    private var canvasHeight: CGFloat { 520 }
-    private var nodeDiameter: CGFloat { 96 }
-    private var ringDiameter: CGFloat { 116 }
-
-    // MARK: - Route path (dash line between islands)
-
-    @ViewBuilder
-    private func routePath(in size: CGSize) -> some View {
-        Path { path in
-            let points = cards.map { absolutePoint(for: $0.position, in: size) }
-            guard let first = points.first else { return }
-            path.move(to: first)
-            for next in points.dropFirst() {
-                path.addLine(to: next)
-            }
-        }
-        .stroke(
-            ColorTokens.Brand.lilac.opacity(0.55),
-            style: StrokeStyle(
-                lineWidth: 3,
-                lineCap: .round,
-                lineJoin: .round,
-                dash: [6, 10]
-            )
-        )
-        .opacity(appeared ? 1 : 0)
-        .animation(
-            reduceMotion ? nil : .easeOut(duration: 0.6).delay(0.15),
-            value: appeared
-        )
-    }
-
-    // MARK: - Island node
-
-    @ViewBuilder
-    private func islandNode(card: WorldZoneCard, index: Int, in size: CGSize) -> some View {
-        let center = absolutePoint(for: card.position, in: size)
-        IslandBubble(
-            card: card,
-            diameter: nodeDiameter,
-            ringDiameter: ringDiameter,
-            reduceMotion: reduceMotion,
-            onTap: { onTapZone(card.id) }
-        )
-        // Step 10 Batch C — Pattern 4: gentle parallax drift на island bubble.
-        // Применяется ДО .position(), чтобы перенос точки якоря оставался
-        // абсолютным, а сам пузырь дышал относительно своего центра. Под
-        // Reduce Motion модификатор сам гейтится (см. HSParallaxTileModifier).
-        .hsParallaxTile(factor: 0.25)
-        .position(center)
-        .opacity(appeared ? 1 : 0)
-        .scaleEffect(appeared ? 1 : 0.6)
-        .animation(
-            reduceMotion
-                ? nil
-                : .spring(response: 0.55, dampingFraction: 0.74)
-                    .delay(0.18 + Double(index) * 0.08),
-            value: appeared
-        )
-    }
-
-    // MARK: - Helpers
-
-    /// Перевод нормализованной координаты [0..1] в пиксели канваса с inset.
-    private func absolutePoint(for normalized: CGPoint, in size: CGSize) -> CGPoint {
-        let inset: CGFloat = nodeDiameter / 2 + 8
-        let usableWidth = max(size.width - inset * 2, 1)
-        let usableHeight = max(size.height - inset * 2, 1)
-        let absX = inset + normalized.x * usableWidth
-        let absY = inset + normalized.y * usableHeight
-        return CGPoint(x: absX, y: absY)
     }
 }
 
-// MARK: - IslandBubble
+// MARK: - IslandCard
 //
-// Один остров-кружок: цветной круг с emoji внутри, progress-ring вокруг,
-// плашка с названием снизу и Ляля-маскот сверху для текущего острова.
+// Одна карточка острова: цветной круг с тематической иллюстрацией в верхней
+// половине, 270° дуга прогресса, флаг «Ты здесь» и плашка-лейбл СНИЗУ круга
+// (не перекрывает иллюстрацию). redesign-spec §1.3.
 
-private struct IslandBubble: View {
+private struct IslandCard: View {
 
     let card: WorldZoneCard
-    let diameter: CGFloat
-    let ringDiameter: CGFloat
     let reduceMotion: Bool
     let onTap: () -> Void
 
     @State private var isPressed = false
     @State private var pulse = false
+    @State private var shake: CGFloat = 0
+
+    private let circleDiameter: CGFloat = 160
+    private let arcDiameter: CGFloat = 168
+    private let illustrationSize: CGFloat = 96
 
     var body: some View {
-        ZStack {
-            // Pulsing ring под текущим островом — «здесь стоит ребёнок».
+        ZStack(alignment: .center) {
+            // Pulsing border под текущим островом — «здесь стоит ребёнок».
             if card.isCurrentLocation && !card.isLocked {
                 Circle()
-                    .stroke(ColorTokens.Brand.primary, lineWidth: 3)
-                    .frame(width: ringDiameter + 14, height: ringDiameter + 14)
-                    .opacity(pulse ? 0.0 : 0.55)
-                    .scaleEffect(pulse ? 1.18 : 1.0)
+                    .stroke(ColorTokens.Brand.primary, lineWidth: 2)
+                    .frame(width: arcDiameter + 12, height: arcDiameter + 12)
+                    .opacity(pulse ? 0.0 : 0.6)
+                    .scaleEffect(pulse ? 1.12 : 1.0)
                     .animation(
                         reduceMotion
                             ? nil
@@ -147,208 +140,358 @@ private struct IslandBubble: View {
                     .accessibilityHidden(true)
             }
 
-            // Progress ring вокруг острова.
-            ringLayer
-                .frame(width: ringDiameter, height: ringDiameter)
+            // Цветной круг острова.
+            Circle()
+                .fill(gradient)
+                .frame(width: circleDiameter, height: circleDiameter)
+                .shadow(color: ColorTokens.Overlay.shadow, radius: 8, y: 4)
 
-            // Цветной диск-остров.
-            Button(action: onTap) {
-                discContent
-            }
-            .buttonStyle(.plain)
-            .frame(width: diameter, height: diameter)
-            .scaleEffect(isPressed && !reduceMotion ? 0.94 : 1.0)
-            .animation(
-                reduceMotion ? nil : .spring(response: 0.3, dampingFraction: 0.7),
-                value: isPressed
-            )
-            .simultaneousGesture(
-                DragGesture(minimumDistance: 0)
-                    .onChanged { _ in isPressed = true }
-                    .onEnded { _ in isPressed = false }
-            )
+            // Тематическая иллюстрация в верхней половине круга.
+            Image(illustrationAsset)
+                .resizable()
+                .scaledToFit()
+                .frame(width: illustrationSize, height: illustrationSize)
+                .grayscale(card.isLocked ? 1.0 : 0.0)
+                .opacity(card.isLocked ? 0.4 : 1.0)
+                .offset(y: -32)
+                .accessibilityHidden(true)
 
-            // Diploma fix #2a — плашка-подпись теперь живёт в .overlay(.bottom)
-            // и явно опускается под кружок острова (y = +60), а не пересекает
-            // его центр. Ляля над текущим островом — отдельный overlay сверху.
-            if card.isCurrentLocation && !card.isLocked {
-                LyalyaMascotView(state: .waving, size: 56)
-                    .offset(y: -(ringDiameter / 2 + 24))
-                    .allowsHitTesting(false)
+            // Замок поверх locked-острова.
+            if card.isLocked {
+                Image(systemName: "lock.fill")
+                    .font(.system(size: 32, weight: .semibold))
+                    .foregroundStyle(ColorTokens.Overlay.onAccent)
+                    .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 2, y: 1)
                     .accessibilityHidden(true)
             }
-        }
-        .overlay(alignment: .bottom) {
-            // Плашка с названием острова сидит СТРОГО под кружком (offset 60pt
-            // от центра bubble'a), не перекрывая ни диск, ни progress-ring.
-            VStack(spacing: 2) {
-                Text(card.name)
-                    .font(TypographyTokens.caption(12).weight(.semibold))
-                    .foregroundStyle(ColorTokens.Kid.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
-                statusChip
+
+            // 270° дуга прогресса поверх круга (только у открытых островов).
+            if !card.isLocked {
+                ProgressArc(progress: card.progress)
+                    .stroke(arcTint, style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                    .frame(width: arcDiameter, height: arcDiameter)
+                    .animation(reduceMotion ? nil : MotionTokens.smooth, value: card.progress)
             }
-            .frame(maxWidth: 140)
-            .padding(.horizontal, SpacingTokens.tiny)
-            .padding(.vertical, 4)
-            .background(
-                RoundedRectangle(cornerRadius: RadiusTokens.sm, style: .continuous)
-                    .fill(.ultraThinMaterial)
-            )
-            .offset(y: 60)
-            .allowsHitTesting(false)
+
+            // Золотая звезда у пройденного острова.
+            if card.isCompleted && !card.isLocked {
+                completedStar
+                    .offset(x: circleDiameter / 2 - 12, y: -circleDiameter / 2 + 12)
+            }
+
+            // Флаг «Ты здесь» — правый верхний угол, не перекрывает иллюстрацию.
+            if card.isCurrentLocation && !card.isLocked {
+                youAreHereFlag
+                    .offset(x: 48, y: -80)
+                    .accessibilityHidden(true)
+            }
+
+            // Плашка-лейбл СНИЗУ круга (выступает ниже, y +16 от центра круга).
+            labelPlate
+                .offset(y: circleDiameter / 2 + 16)
         }
+        .frame(width: 280, height: 200)
+        .contentShape(Rectangle())
+        .offset(x: shake)
+        .scaleEffect(isPressed && !reduceMotion ? 0.94 : 1.0)
+        .animation(reduceMotion ? nil : MotionTokens.pressSpring, value: isPressed)
+        .onTapGesture { handleTap() }
+        .simultaneousGesture(
+            DragGesture(minimumDistance: 0)
+                .onChanged { _ in isPressed = true }
+                .onEnded { _ in isPressed = false }
+        )
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(card.accessibilityLabel)
         .accessibilityHint(card.accessibilityHint)
         .accessibilityAddTraits(.isButton)
     }
 
-    // MARK: - Disc
+    // MARK: - Tap
 
-    private var discContent: some View {
-        ZStack {
-            Circle()
-                .fill(
-                    LinearGradient(
-                        colors: card.isLocked
-                            ? [
-                                ColorTokens.Kid.inkSoft.opacity(0.55),
-                                ColorTokens.Kid.inkSoft.opacity(0.35)
-                            ]
-                            : [
-                                card.backgroundColor,
-                                card.backgroundColor.opacity(0.78)
-                            ],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-                .shadow(
-                    color: card.backgroundColor.opacity(card.isLocked ? 0 : 0.32),
-                    radius: 10, x: 0, y: 5
-                )
-
-            if card.isLocked {
-                Image(systemName: "lock.fill")
-                    .font(TypographyTokens.title(28).weight(.semibold))
-                    .foregroundStyle(ColorTokens.Overlay.onAccent)
-                    .accessibilityHidden(true)
-            } else {
-                Image(systemName: card.icon)
-                    .font(.system(size: 38, weight: .regular))
-                    .foregroundStyle(ColorTokens.Overlay.onAccent)
-                    .accessibilityHidden(true)
-            }
-
-            if card.isCompleted && !card.isLocked {
-                completedBadge
-                    .offset(x: diameter / 2 - 10, y: -diameter / 2 + 10)
+    private func handleTap() {
+        if card.isLocked && !reduceMotion {
+            // Лёгкий shake для locked-острова (0→−4→4→0, ~150ms).
+            Task { @MainActor in
+                withAnimation(MotionTokens.snappy) { shake = -4 }
+                try? await Task.sleep(for: .milliseconds(70))
+                withAnimation(MotionTokens.snappy) { shake = 4 }
+                try? await Task.sleep(for: .milliseconds(70))
+                withAnimation(MotionTokens.snappy) { shake = 0 }
             }
         }
+        onTap()
     }
 
-    // MARK: - Progress ring
+    // MARK: - Label plate (below circle)
 
-    @ViewBuilder
-    private var ringLayer: some View {
-        if !card.isLocked {
-            ZStack {
-                Circle()
-                    .stroke(ColorTokens.Overlay.highlight, lineWidth: 5)
-                Circle()
-                    .trim(from: 0, to: max(0.001, min(1, card.progress)))
-                    .stroke(
-                        ColorTokens.Overlay.onAccent,
-                        style: StrokeStyle(lineWidth: 5, lineCap: .round)
-                    )
-                    .rotationEffect(.degrees(-90))
-                    .animation(
-                        reduceMotion ? nil : .easeOut(duration: 0.7),
-                        value: card.progress
-                    )
-            }
-        } else {
-            Circle()
-                .stroke(
-                    ColorTokens.Kid.line.opacity(0.5),
-                    style: StrokeStyle(lineWidth: 5, dash: [4, 6])
-                )
+    private var labelPlate: some View {
+        VStack(spacing: 2) {
+            Text(card.name)
+                .font(TypographyTokens.headline(17).weight(.bold))
+                .foregroundStyle(ColorTokens.Kid.ink)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+
+            statusLine
         }
+        .padding(.horizontal, SpacingTokens.regular)
+        .padding(.vertical, SpacingTokens.tiny)
+        .background(
+            Capsule(style: .continuous)
+                .fill(ColorTokens.Kid.surface)
+                .shadow(color: ColorTokens.Overlay.shadow, radius: 6, y: 3)
+        )
+        .frame(maxWidth: 240)
     }
 
-    // MARK: - Status chip
-
     @ViewBuilder
-    private var statusChip: some View {
+    private var statusLine: some View {
         if card.isLocked {
             Text(String(localized: "worldmap.island.locked"))
-                .font(TypographyTokens.caption(10).weight(.medium))
+                .font(TypographyTokens.caption(13))
                 .foregroundStyle(ColorTokens.Kid.inkMuted)
-        } else if card.isCurrentLocation {
-            Text(String(localized: "worldmap.island.current"))
-                .font(TypographyTokens.caption(10).weight(.semibold))
-                .foregroundStyle(ColorTokens.Brand.primary)
-        } else if card.isCompleted {
-            Text(String(localized: "worldmap.island.completed"))
-                .font(TypographyTokens.caption(10).weight(.semibold))
-                .foregroundStyle(ColorTokens.Brand.mint)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+        } else if !card.soundsLabel.isEmpty {
+            Text(card.soundsLabel)
+                .font(TypographyTokens.caption(13))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
         } else {
             Text(card.progressLabel)
-                .font(TypographyTokens.mono(10).weight(.semibold))
-                .foregroundStyle(card.backgroundColor)
+                .font(TypographyTokens.caption(13).weight(.semibold))
+                .foregroundStyle(ColorTokens.Kid.inkMuted)
+                .lineLimit(1)
         }
     }
 
-    // MARK: - Completed badge (gold star)
+    // MARK: - «Ты здесь» flag
 
-    private var completedBadge: some View {
+    private var youAreHereFlag: some View {
+        Text(String(localized: "worldmap.island.current"))
+            .font(TypographyTokens.caption(13).weight(.bold))
+            .foregroundStyle(ColorTokens.Overlay.onAccent)
+            .lineLimit(1)
+            .minimumScaleFactor(0.7)
+            .padding(.horizontal, SpacingTokens.small)
+            .padding(.vertical, 6)
+            .background(
+                Capsule(style: .continuous)
+                    .fill(ColorTokens.Brand.primary)
+                    .shadow(color: ColorTokens.Brand.primary.opacity(0.4), radius: 4, y: 2)
+            )
+    }
+
+    // MARK: - Completed star
+
+    private var completedStar: some View {
         ZStack {
             Circle()
-                .fill(ColorTokens.Brand.gold)
-                .frame(width: 22, height: 22)
+                .fill(ColorTokens.Kid.surface)
+                .frame(width: 30, height: 30)
                 .shadow(color: ColorTokens.Overlay.shadowMedium, radius: 2, y: 1)
-            Image(systemName: "checkmark")
-                .font(TypographyTokens.caption(11).weight(.bold))
-                .foregroundStyle(ColorTokens.Overlay.onAccent)
-                // Step 10 Batch C — Pattern 5: bounce when island flips
-                // to completed (visual reward for kid).
+            Image(systemName: "star.fill")
+                .font(.system(size: 16, weight: .bold))
+                .foregroundStyle(ColorTokens.Brand.gold)
                 .hsSymbolEffect(.bounce, value: card.isCompleted)
         }
         .accessibilityHidden(true)
     }
+
+    // MARK: - Visual mapping (zone id → illustration + gradient)
+
+    private var illustrationAsset: String {
+        WorldMapIslandVisuals.illustration(for: card.id)
+    }
+
+    private var gradient: LinearGradient {
+        if card.isLocked {
+            return LinearGradient(
+                colors: [
+                    ColorTokens.Kid.bgSoft,
+                    ColorTokens.Kid.inkSoft.opacity(0.45)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        }
+        let pair = WorldMapIslandVisuals.gradientColors(for: card.id)
+        return LinearGradient(
+            colors: [pair.from, pair.to],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+
+    private var arcTint: Color {
+        WorldMapIslandVisuals.arcTint(for: card.id)
+    }
 }
 
-// MARK: - Color helpers (View layer only)
+// MARK: - ProgressArc
+//
+// 270° дуга прогресса: трек от −135° до +135° (старт снизу-слева), заполнение
+// пропорционально progress. redesign-spec §1.4.
 
-private extension WorldZoneCard {
-    var backgroundColor: Color { colorName.zoneBackgroundColor }
+private struct ProgressArc: Shape {
+
+    var progress: Double
+
+    var animatableData: Double {
+        get { progress }
+        set { progress = newValue }
+    }
+
+    func path(in rect: CGRect) -> Path {
+        let center = CGPoint(x: rect.midX, y: rect.midY)
+        let radius = min(rect.width, rect.height) / 2
+        let startAngle = Angle.degrees(135)            // снизу-слева
+        let sweep = 270.0 * max(0, min(1, progress))
+        let endAngle = Angle.degrees(135 + sweep)
+
+        var path = Path()
+        path.addArc(
+            center: center,
+            radius: radius,
+            startAngle: startAngle,
+            endAngle: endAngle,
+            clockwise: false
+        )
+        return path
+    }
 }
 
-private extension String {
-    var zoneBackgroundColor: Color {
-        switch self {
-        case "mint":    return ColorTokens.Brand.mint
-        case "butter":  return ColorTokens.Brand.butter
-        case "lilac":   return ColorTokens.Brand.lilac
-        case "coral":   return ColorTokens.Brand.primary
-        case "gold":    return ColorTokens.Brand.gold
-        case "sky":     return ColorTokens.Brand.sky
-        case "primary": return ColorTokens.Brand.primary
-        // v32 P2 — rose добавлен для новой зоны «Аффрикаты».
-        case "rose":    return ColorTokens.Brand.rose
-        default:        return ColorTokens.Brand.sky
+// MARK: - ConnectingPathView
+//
+// Пунктирный bezier-зигзаг между центрами кругов островов (позади карточек).
+// redesign-spec §1.5. Центры рассчитываются из тех же констант лейаута, что и
+// в `IslandsStackView`, чтобы линия совпадала с расположением кругов.
+
+private struct ConnectingPathView: View {
+
+    let count: Int
+    let cardWidth: CGFloat
+    let cardHeight: CGFloat
+    let cardGap: CGFloat
+    let zigzag: CGFloat
+    let appeared: Bool
+    let reduceMotion: Bool
+
+    private let circleCenterFromCardTop: CGFloat = 84   // ≈ круг по центру верх. зоны карточки
+
+    var body: some View {
+        GeometryReader { proxy in
+            let width = proxy.size.width
+            Path { path in
+                let centers = islandCenters(in: width)
+                guard let first = centers.first else { return }
+                path.move(to: first)
+                for idx in 1..<centers.count {
+                    let prev = centers[idx - 1]
+                    let curr = centers[idx]
+                    let midY = (prev.y + curr.y) / 2
+                    path.addCurve(
+                        to: curr,
+                        control1: CGPoint(x: prev.x, y: midY),
+                        control2: CGPoint(x: curr.x, y: midY)
+                    )
+                }
+            }
+            .stroke(
+                ColorTokens.Brand.lilac.opacity(0.5),
+                style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round, dash: [6, 10])
+            )
+        }
+        .opacity(appeared ? 1 : 0)
+        .animation(reduceMotion ? nil : .easeOut(duration: 0.6).delay(0.15), value: appeared)
+        .accessibilityHidden(true)
+        .allowsHitTesting(false)
+    }
+
+    private func islandCenters(in width: CGFloat) -> [CGPoint] {
+        guard count >= 1 else { return [] }
+        let axisX = width / 2
+        var result: [CGPoint] = []
+        // VStack начинается с верхнего padding (SpacingTokens.large) внутри ZStack.
+        let topPadding = SpacingTokens.large
+        for index in 0..<count {
+            let cardTop = topPadding + CGFloat(index) * (cardHeight + cardGap)
+            let y = cardTop + circleCenterFromCardTop
+            let x = axisX + (index.isMultiple(of: 2) ? zigzag : -zigzag)
+            result.append(CGPoint(x: x, y: y))
+        }
+        return result
+    }
+}
+
+// MARK: - WorldMapIslandVisuals (View-layer mapping helper)
+//
+// Маппинг id зоны → ключ иллюстрации острова и градиент группы звуков.
+// redesign-spec §1.10 / §1.11. Все цвета — токены DesignSystem.
+
+enum WorldMapIslandVisuals {
+
+    static func illustration(for zoneId: String) -> String {
+        switch zoneId {
+        case "zone-whistling":  return "island_whistling"
+        case "zone-hissing":    return "island_hissing"
+        case "zone-affricates": return "island_affricate"
+        case "zone-sonorant":   return "island_sonorant"
+        case "zone-velar":      return "island_velar"
+        case "zone-grammar":    return "island_grammar"
+        case "zone-vowels":     return "island_grammar"   // гласные → облачный мотив
+        default:                return "island_grammar"
+        }
+    }
+
+    static func gradientColors(for zoneId: String) -> (from: Color, to: Color) {
+        switch zoneId {
+        case "zone-whistling":
+            return (ColorTokens.SoundFamilyColors.Whistling.bg,
+                    ColorTokens.SoundFamilyColors.Whistling.hue)
+        case "zone-hissing":
+            return (ColorTokens.SoundFamilyColors.Hissing.bg,
+                    ColorTokens.SoundFamilyColors.Hissing.hue)
+        case "zone-sonorant":
+            return (ColorTokens.SoundFamilyColors.Sonorant.bg,
+                    ColorTokens.SoundFamilyColors.Sonorant.hue)
+        case "zone-velar":
+            return (ColorTokens.SoundFamilyColors.Velar.bg,
+                    ColorTokens.SoundFamilyColors.Velar.hue)
+        case "zone-vowels":
+            return (ColorTokens.SoundFamilyColors.Vowels.bg,
+                    ColorTokens.SoundFamilyColors.Vowels.hue)
+        case "zone-affricates":
+            return (ColorTokens.Brand.butter.opacity(0.45), ColorTokens.Brand.gold)
+        case "zone-grammar":
+            return (ColorTokens.Brand.lilac.opacity(0.45), ColorTokens.Brand.sky)
+        default:
+            return (ColorTokens.Brand.lilac.opacity(0.45), ColorTokens.Brand.sky)
+        }
+    }
+
+    static func arcTint(for zoneId: String) -> Color {
+        switch zoneId {
+        case "zone-whistling":  return ColorTokens.SoundFamilyColors.Whistling.hue
+        case "zone-hissing":    return ColorTokens.SoundFamilyColors.Hissing.hue
+        case "zone-sonorant":   return ColorTokens.SoundFamilyColors.Sonorant.hue
+        case "zone-velar":      return ColorTokens.SoundFamilyColors.Velar.hue
+        case "zone-vowels":     return ColorTokens.SoundFamilyColors.Vowels.hue
+        case "zone-affricates": return ColorTokens.Brand.gold
+        case "zone-grammar":    return ColorTokens.Brand.sky
+        default:                return ColorTokens.Overlay.onAccent
         }
     }
 }
 
 // MARK: - Preview
 
-#Preview("WorldMapIslandsCanvas — populated") {
+#Preview("WorldMapIslandsCanvas — vertical path") {
     let mockCards: [WorldZoneCard] = [
         .init(
-            id: "z1",
+            id: "zone-vowels",
             name: String(localized: "worldmap.island.vowels"),
             icon: "music.note",
             soundsLabel: "А · О · У · И",
@@ -358,14 +501,14 @@ private extension String {
             colorName: "sky",
             isLocked: false,
             isHighlighted: false,
-            position: CGPoint(x: 0.18, y: 0.86),
+            position: .zero,
             isCurrentLocation: false,
             isCompleted: true,
             accessibilityLabel: String(localized: "worldmap.preview.vowels.a11y"),
             accessibilityHint: ""
         ),
         .init(
-            id: "z2",
+            id: "zone-whistling",
             name: String(localized: "worldmap.island.sibilants"),
             icon: "leaf.fill",
             soundsLabel: "С · З · Ц",
@@ -375,14 +518,14 @@ private extension String {
             colorName: "mint",
             isLocked: false,
             isHighlighted: false,
-            position: CGPoint(x: 0.74, y: 0.74),
+            position: .zero,
             isCurrentLocation: false,
             isCompleted: false,
             accessibilityLabel: String(localized: "worldmap.preview.sibilants.a11y"),
             accessibilityHint: ""
         ),
         .init(
-            id: "z3",
+            id: "zone-hissing",
             name: String(localized: "worldmap.island.hissing"),
             icon: "ant.fill",
             soundsLabel: "Ш · Ж",
@@ -392,31 +535,31 @@ private extension String {
             colorName: "butter",
             isLocked: false,
             isHighlighted: false,
-            position: CGPoint(x: 0.30, y: 0.56),
+            position: .zero,
             isCurrentLocation: true,
             isCompleted: false,
             accessibilityLabel: String(localized: "worldmap.preview.hissing.a11y"),
             accessibilityHint: ""
         ),
         .init(
-            id: "z4",
+            id: "zone-sonorant",
             name: String(localized: "worldmap.island.sonorant.r"),
             icon: "flame.fill",
-            soundsLabel: "Р · Рь",
+            soundsLabel: "Р · Рь · Л",
             progress: 0.10,
             progressLabel: "10%",
             lessonsLabel: "2 / 20",
             colorName: "lilac",
             isLocked: false,
             isHighlighted: false,
-            position: CGPoint(x: 0.78, y: 0.40),
+            position: .zero,
             isCurrentLocation: false,
             isCompleted: false,
             accessibilityLabel: String(localized: "worldmap.preview.sonorant.a11y"),
             accessibilityHint: ""
         ),
         .init(
-            id: "z5",
+            id: "zone-velar",
             name: String(localized: "worldmap.island.velar"),
             icon: "bird.fill",
             soundsLabel: "К · Г · Х",
@@ -426,14 +569,14 @@ private extension String {
             colorName: "primary",
             isLocked: true,
             isHighlighted: false,
-            position: CGPoint(x: 0.32, y: 0.24),
+            position: .zero,
             isCurrentLocation: false,
             isCompleted: false,
             accessibilityLabel: String(localized: "worldmap.preview.velar.a11y"),
             accessibilityHint: ""
         ),
         .init(
-            id: "z6",
+            id: "zone-grammar",
             name: String(localized: "worldmap.preview.grammar"),
             icon: "books.vertical.fill",
             soundsLabel: String(localized: "worldmap.preview.cases"),
@@ -443,7 +586,7 @@ private extension String {
             colorName: "gold",
             isLocked: true,
             isHighlighted: false,
-            position: CGPoint(x: 0.78, y: 0.10),
+            position: .zero,
             isCurrentLocation: false,
             isCompleted: false,
             accessibilityLabel: String(localized: "worldmap.preview.grammar.a11y"),
@@ -456,6 +599,5 @@ private extension String {
         reduceMotion: false,
         onTapZone: { _ in }
     )
-    .padding(.horizontal, SpacingTokens.screenEdge)
     .background(ColorTokens.Kid.bg)
 }

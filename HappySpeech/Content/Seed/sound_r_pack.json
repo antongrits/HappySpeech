@@ -742,7 +742,7 @@
         },
         {
           "id": "r-wi-2",
-          "word": "ров",
+          "word": "рот",
           "difficulty": 1,
           "audio_file": "Audio/Content/R/r-wi-2.m4a"
         },
@@ -766,7 +766,7 @@
         },
         {
           "id": "r-wi-6",
-          "word": "рис",
+          "word": "рыба",
           "difficulty": 1,
           "audio_file": "Audio/Content/R/r-wi-6.m4a"
         },
@@ -886,7 +886,7 @@
         },
         {
           "id": "r-wi-26",
-          "word": "рост",
+          "word": "рот",
           "difficulty": 2,
           "audio_file": "Audio/Content/R/r-wi-26.m4a"
         },
@@ -1028,7 +1028,7 @@
         },
         {
           "id": "r-wi-48",
-          "word": "рыболов",
+          "word": "рыбак",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-wi-48.m4a"
         },
@@ -1070,7 +1070,7 @@
         },
         {
           "id": "r-wi-55",
-          "word": "роговой",
+          "word": "рог",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-wi-55.m4a"
         },
@@ -1433,7 +1433,7 @@
         },
         {
           "id": "r-wi-109",
-          "word": "рыболов",
+          "word": "рыбак",
           "hint": "РЫ+БО+ЛОВ — тот, кто ловит рыбу.",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-wi-109.m4a"
@@ -1464,7 +1464,7 @@
         },
         {
           "id": "r-wm-3",
-          "word": "норка",
+          "word": "ворона",
           "difficulty": 1,
           "audio_file": "Audio/Content/R/r-wm-3.m4a"
         },
@@ -1597,7 +1597,7 @@
         },
         {
           "id": "r-wm-25",
-          "word": "ягоды",
+          "word": "ягода",
           "difficulty": 2,
           "audio_file": "Audio/Content/R/r-wm-25.m4a"
         },
@@ -1645,7 +1645,7 @@
         },
         {
           "id": "r-wm-32",
-          "word": "деревья",
+          "word": "дерево",
           "hint": "Мягкий [Р'].",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-wm-32.m4a"
@@ -1805,7 +1805,7 @@
         },
         {
           "id": "r-wm-56",
-          "word": "сорока",
+          "word": "ворона",
           "difficulty": 2,
           "audio_file": "Audio/Content/R/r-wm-56.m4a"
         },
@@ -2008,7 +2008,7 @@
         },
         {
           "id": "r-wm-87",
-          "word": "береза",
+          "word": "берёза",
           "hint": "БЕ+РЁ+ЗА — Р в середине.",
           "difficulty": 2,
           "audio_file": "Audio/Content/R/r-wm-87.m4a"
@@ -2140,13 +2140,13 @@
       "items": [
         {
           "id": "r-wf-0",
-          "word": "бор",
+          "word": "забор",
           "difficulty": 1,
           "audio_file": "Audio/Content/R/r-wf-0.m4a"
         },
         {
           "id": "r-wf-1",
-          "word": "пар",
+          "word": "самовар",
           "difficulty": 1,
           "audio_file": "Audio/Content/R/r-wf-1.m4a"
         },
@@ -2182,7 +2182,7 @@
         },
         {
           "id": "r-wf-7",
-          "word": "хор",
+          "word": "топор",
           "difficulty": 1,
           "audio_file": "Audio/Content/R/r-wf-7.m4a"
         },
@@ -2194,7 +2194,7 @@
         },
         {
           "id": "r-wf-9",
-          "word": "вор",
+          "word": "забор",
           "difficulty": 1,
           "audio_file": "Audio/Content/R/r-wf-9.m4a"
         },
@@ -2298,7 +2298,7 @@
         },
         {
           "id": "r-wf-26",
-          "word": "прибор",
+          "word": "топор",
           "hint": "Стечение ПР.",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-wf-26.m4a"
@@ -2559,7 +2559,7 @@
         },
         {
           "id": "r-wf-66",
-          "word": "базар",
+          "word": "самовар",
           "difficulty": 2,
           "audio_file": "Audio/Content/R/r-wf-66.m4a"
         },
@@ -2584,14 +2584,14 @@
         },
         {
           "id": "r-wf-70",
-          "word": "прибор",
+          "word": "топор",
           "hint": "Стечение ПР.",
           "difficulty": 3,
           "audio_file": "Audio/Content/R/r-wf-70.m4a"
         },
         {
           "id": "r-wf-71",
-          "word": "гитар",
+          "word": "гитара",
           "hint": "Форма: гитара — Р в конце.",
           "difficulty": 2,
           "audio_file": "Audio/Content/R/r-wf-71.m4a"

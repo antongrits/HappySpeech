@@ -432,7 +432,7 @@
         },
         {
           "id": "c-wi-1",
-          "word": "цвет",
+          "word": "цветок",
           "difficulty": 2,
           "audio_file": "Audio/Content/C/c-wi-1.m4a"
         },
@@ -516,13 +516,13 @@
         },
         {
           "id": "c-wi-15",
-          "word": "цветущий",
+          "word": "цветок",
           "difficulty": 3,
           "audio_file": "Audio/Content/C/c-wi-15.m4a"
         },
         {
           "id": "c-wi-16",
-          "word": "цветник",
+          "word": "цветок",
           "difficulty": 3,
           "audio_file": "Audio/Content/C/c-wi-16.m4a"
         },
@@ -564,7 +564,7 @@
         },
         {
           "id": "c-wi-23",
-          "word": "цветение",
+          "word": "цветок",
           "difficulty": 4,
           "audio_file": "Audio/Content/C/c-wi-23.m4a"
         },
@@ -690,7 +690,7 @@
         },
         {
           "id": "c-wi-44",
-          "word": "цветочный",
+          "word": "цветок",
           "difficulty": 3,
           "audio_file": "Audio/Content/C/c-wi-44.m4a"
         },

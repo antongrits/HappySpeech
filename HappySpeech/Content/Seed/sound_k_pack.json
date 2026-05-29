@@ -499,7 +499,7 @@
         },
         {
           "id": "k-wi-5",
-          "word": "кош",
+          "word": "кот",
           "difficulty": 1,
           "audio_file": "Audio/Content/K/k-wi-5.m4a"
         },
@@ -944,7 +944,7 @@
         },
         {
           "id": "k-wm-20",
-          "word": "уток",
+          "word": "курица",
           "difficulty": 2,
           "audio_file": "Audio/Content/K/k-wm-20.m4a"
         },
@@ -992,19 +992,19 @@
         },
         {
           "id": "k-wm-28",
-          "word": "окорок",
+          "word": "каток",
           "difficulty": 3,
           "audio_file": "Audio/Content/K/k-wm-28.m4a"
         },
         {
           "id": "k-wm-29",
-          "word": "пироги",
+          "word": "пирог",
           "difficulty": 2,
           "audio_file": "Audio/Content/K/k-wm-29.m4a"
         },
         {
           "id": "k-wm-30",
-          "word": "пирожок",
+          "word": "пирог",
           "difficulty": 3,
           "audio_file": "Audio/Content/K/k-wm-30.m4a"
         },
@@ -1028,13 +1028,13 @@
         },
         {
           "id": "k-wm-34",
-          "word": "ёлочка",
+          "word": "ёлка",
           "difficulty": 3,
           "audio_file": "Audio/Content/K/k-wm-34.m4a"
         },
         {
           "id": "k-wm-35",
-          "word": "белочка",
+          "word": "белка",
           "difficulty": 3,
           "audio_file": "Audio/Content/K/k-wm-35.m4a"
         }
@@ -1064,7 +1064,7 @@
         },
         {
           "id": "k-wf-3",
-          "word": "бок",
+          "word": "бак",
           "difficulty": 1,
           "audio_file": "Audio/Content/K/k-wf-3.m4a"
         },
@@ -1112,7 +1112,7 @@
         },
         {
           "id": "k-wf-11",
-          "word": "моток",
+          "word": "каток",
           "difficulty": 2,
           "audio_file": "Audio/Content/K/k-wf-11.m4a"
         },
@@ -1130,7 +1130,7 @@
         },
         {
           "id": "k-wf-14",
-          "word": "лесок",
+          "word": "листок",
           "difficulty": 2,
           "audio_file": "Audio/Content/K/k-wf-14.m4a"
         },
@@ -1196,7 +1196,7 @@
         },
         {
           "id": "k-wf-25",
-          "word": "знак",
+          "word": "мак",
           "difficulty": 2,
           "audio_file": "Audio/Content/K/k-wf-25.m4a"
         }

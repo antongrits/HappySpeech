@@ -485,7 +485,7 @@
         },
         {
           "id": "shch-wi-3",
-          "word": "щёлка",
+          "word": "щель",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 1,
@@ -613,7 +613,7 @@
         },
         {
           "id": "shch-wi-19",
-          "word": "щепотка",
+          "word": "щепка",
           "imageAsset": "img_shchepotka",
           "audioAsset": null,
           "difficulty": 3,
@@ -891,7 +891,7 @@
         },
         {
           "id": "shch-wm-3",
-          "word": "чаща",
+          "word": "чаша",
           "imageAsset": "img_chashcha2",
           "audioAsset": null,
           "difficulty": 1,
@@ -947,7 +947,7 @@
         },
         {
           "id": "shch-wm-10",
-          "word": "ищет",
+          "word": "ящик",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 2,
@@ -1409,7 +1409,7 @@
         },
         {
           "id": "shch-wf-17",
-          "word": "овощ",
+          "word": "овощи",
           "imageAsset": "img_ovoshch",
           "audioAsset": null,
           "difficulty": 2,
@@ -1489,7 +1489,7 @@
         },
         {
           "id": "shch-wf-27",
-          "word": "вещь",
+          "word": "плащ",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 1,

@@ -338,7 +338,7 @@
         },
         {
           "id": "g-wi-4",
-          "word": "газета",
+          "word": "газон",
           "difficulty": 2,
           "audio_file": "Audio/Content/G/g-wi-4.m4a"
         },
@@ -392,7 +392,7 @@
         },
         {
           "id": "g-wi-13",
-          "word": "гром",
+          "word": "гриб",
           "difficulty": 2,
           "audio_file": "Audio/Content/G/g-wi-13.m4a"
         },
@@ -464,7 +464,7 @@
         },
         {
           "id": "g-wi-25",
-          "word": "грива",
+          "word": "гриб",
           "difficulty": 2,
           "audio_file": "Audio/Content/G/g-wi-25.m4a"
         },
@@ -494,7 +494,7 @@
         },
         {
           "id": "g-wi-30",
-          "word": "голос",
+          "word": "голубь",
           "difficulty": 2,
           "audio_file": "Audio/Content/G/g-wi-30.m4a"
         },
@@ -686,7 +686,7 @@
         },
         {
           "id": "g-wm-3",
-          "word": "рога",
+          "word": "нога",
           "difficulty": 2,
           "audio_file": "Audio/Content/G/g-wm-3.m4a"
         },
@@ -710,7 +710,7 @@
         },
         {
           "id": "g-wm-7",
-          "word": "серьга",
+          "word": "нога",
           "difficulty": 3,
           "audio_file": "Audio/Content/G/g-wm-7.m4a"
         },
@@ -818,7 +818,7 @@
         },
         {
           "id": "g-wm-25",
-          "word": "стога",
+          "word": "стог",
           "difficulty": 3,
           "audio_file": "Audio/Content/G/g-wm-25.m4a"
         },
@@ -830,7 +830,7 @@
         },
         {
           "id": "g-wm-27",
-          "word": "сапоги",
+          "word": "сапог",
           "difficulty": 3,
           "audio_file": "Audio/Content/G/g-wm-27.m4a"
         },
@@ -842,13 +842,13 @@
         },
         {
           "id": "g-wm-29",
-          "word": "угол",
+          "word": "иголка",
           "difficulty": 2,
           "audio_file": "Audio/Content/G/g-wm-29.m4a"
         },
         {
           "id": "g-wm-30",
-          "word": "игра",
+          "word": "иголка",
           "difficulty": 2,
           "audio_file": "Audio/Content/G/g-wm-30.m4a"
         },
@@ -896,7 +896,7 @@
         },
         {
           "id": "g-wm-38",
-          "word": "пирога",
+          "word": "пирог",
           "difficulty": 3,
           "audio_file": "Audio/Content/G/g-wm-38.m4a"
         },

@@ -224,15 +224,21 @@ struct StutteringView: View {
                             : MotionTokens.spring.delay(Double(idx) * 0.08),
                         value: scene.display.cards.count
                     )
-                    // Step 10 Batch G — Pattern 3: scrollTransition stagger
-                    // fade+scale на exercise tiles, gated by reduceMotion.
-                    .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
-                        content
-                            .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
-                            .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.9))
-                    }
-                    // Step 10 Batch G — Pattern 4: parallax drift на exercise tiles.
-                    .hsParallaxTile(factor: 0.25)
+                    // Diploma fix v34 — Step 10 Batch G scrollTransition полностью
+                    // убран: при .visible(0.3) карточки ниже фолда рендерились
+                    // как стопка полупрозрачных призраков, а promotedный
+                    // .visible(0) с opacity 0.85 всё равно давал «стеклянный»
+                    // эффект на peach mesh-фоне. Без scrollTransition карточки
+                    // всегда читаемы; staggered появление сохранено через
+                    // .animation выше с delay по индексу.
+                    //
+                    // Diploma fix v34 — `hsParallaxTile(factor: 0.25)` тоже убран.
+                    // Модификатор оборачивает каждую карточку в GeometryReader
+                    // и применяет y-offset пропорционально расстоянию до центра
+                    // экрана. В LazyVGrid это давало визуально «стопку призраков»
+                    // под видимым фолдом: соседние карточки получали разные
+                    // offset и перекрывали друг друга. На статичных скриншот-
+                    // снимках эффект особенно заметен.
                     .onTapGesture {
                         navigateTo = card.mode
                     }
@@ -374,10 +380,14 @@ private struct InfoTile: View {
     var body: some View {
         Button(action: onTap) {
             HStack(spacing: SpacingTokens.sp3) {
+                // Diploma fix v33 P1 — иконка укрупнена и обведена tinted-кругом,
+                // чтобы стопка из 3 InfoTile считывалась как «3 разных карточки»,
+                // а не как «бледная мутная стопка» поверх mesh-фона .calm.
                 Image(systemName: symbol)
                     .foregroundStyle(color)
-                    .font(TypographyTokens.headline(18))
-                    .frame(width: 32, height: 32)
+                    .font(TypographyTokens.headline(20))
+                    .frame(width: 40, height: 40)
+                    .background(color.opacity(0.14), in: Circle())
                 Text(String(localized: String.LocalizationValue(titleKey)))
                     .font(TypographyTokens.body(15))
                     .foregroundStyle(ColorTokens.Kid.ink)
@@ -389,12 +399,19 @@ private struct InfoTile: View {
                     .font(TypographyTokens.caption(13))
             }
             .padding(SpacingTokens.sp3)
-            .background(ColorTokens.Kid.surface, in: RoundedRectangle(cornerRadius: RadiusTokens.md))
+            .background(
+                RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                    .fill(ColorTokens.Kid.surface)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: RadiusTokens.md, style: .continuous)
+                    .strokeBorder(color.opacity(0.22), lineWidth: 1)
+            )
         }
         .buttonStyle(.plain)
         .accessibilityLabel(String(localized: String.LocalizationValue(titleKey)))
         .accessibilityAddTraits(.isButton)
-        .frame(minHeight: 56)
+        .frame(minHeight: 60)
     }
 }
 

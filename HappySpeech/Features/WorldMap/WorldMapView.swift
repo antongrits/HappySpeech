@@ -61,21 +61,27 @@ struct WorldMapView: View {
         ZStack(alignment: .bottom) {
             backgroundLayer
 
-            ScrollView {
-                // Diploma fix #4c — streakBadge удалён из верха карты звуков:
-                // тот же flame-чип уже отрисовывается в stickyBottomPanel снизу,
-                // дублирование создавало визуальный шум в шапке.
-                VStack(spacing: SpacingTokens.large) {
-                    mascotHeader
-                    if useGridFallback {
+            if useGridFallback {
+                // iPad / accessibility size: классическая сетка плиток в общем ScrollView.
+                ScrollView {
+                    VStack(spacing: SpacingTokens.large) {
+                        mascotHeader
                         zonesGrid
-                    } else {
-                        islandsCanvas
+                        Spacer(minLength: 96)
                     }
-                    Spacer(minLength: 96)
+                    .padding(.top, SpacingTokens.medium)
+                    .padding(.bottom, SpacingTokens.xxLarge)
                 }
-                .padding(.top, SpacingTokens.medium)
-                .padding(.bottom, SpacingTokens.xxLarge)
+            } else {
+                // Redesign §1 — вертикальный путь-квест: компактная шапка-маскот
+                // сверху + сам канвас островов скроллится отдельно (он сам
+                // ScrollView), заполняя вертикаль и не сбивая острова в угол.
+                VStack(spacing: SpacingTokens.medium) {
+                    mascotHeader
+                        .padding(.top, SpacingTokens.medium)
+                    islandsCanvas
+                        .padding(.bottom, 84)
+                }
             }
 
             stickyBottomPanel
@@ -187,13 +193,13 @@ struct WorldMapView: View {
     // MARK: - Islands canvas
 
     private var islandsCanvas: some View {
+        // Канвас сам центрирует карточки по горизонтали и скроллится вертикально.
         WorldMapIslandsCanvas(
             cards: display.zones,
             appeared: appeared,
             reduceMotion: reduceMotion,
             onTapZone: { handleZoneTap($0) }
         )
-        .padding(.horizontal, SpacingTokens.screenEdge)
     }
 
     /// Использовать сеточный fallback вместо канваса:

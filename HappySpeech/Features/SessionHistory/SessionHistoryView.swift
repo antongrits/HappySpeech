@@ -56,6 +56,12 @@ struct SessionHistoryView: View {
     var body: some View {
         NavigationStack(path: $path) {
             ZStack(alignment: .bottom) {
+                // Diploma fix v32-postreaudit — Color.clear для full-extent
+                // ZStack (профилактика overflow-проблем как в 3.18 / 3.6).
+                Color.clear
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .accessibilityHidden(true)
+
                 // P0.5 fix v19: explicit parent bg behind gradient prevents warm KidBg
                 // from bleeding through when navigating from kid circuit screens.
                 ColorTokens.Parent.bg.ignoresSafeArea()
@@ -76,11 +82,15 @@ struct SessionHistoryView: View {
 
                 content
                     .refreshable { performRefresh() }
-                    // v32 P1 — Ляля «думает» над аналитикой: corner-pin 56pt, topTrailing.
-                    .overlay(alignment: .topTrailing) {
-                        LyalyaMascotView(state: .thinking, size: 56)
-                            .padding(.top, SpacingTokens.regular)
+                    // Diploma fix v32-postreaudit — маскот раньше налезал на toolbar
+                    // ("+" / фильтр / экспорт) и на цифру «144 минут» в summary-cards.
+                    // Перепозиционируем в bottomTrailing с уменьшением до 36pt: Ляля
+                    // остаётся видимой как декоративный hint, но не конфликтует с
+                    // активными контролами и счётчиками.
+                    .overlay(alignment: .bottomTrailing) {
+                        LyalyaMascotView(state: .thinking, size: 36)
                             .padding(.trailing, SpacingTokens.screenEdge)
+                            .padding(.bottom, SpacingTokens.xLarge)
                             .allowsHitTesting(false)
                             .accessibilityHidden(true)
                     }
@@ -344,8 +354,18 @@ struct SessionHistoryView: View {
         }
     }
 
+    /// Diploma fix 3.13 — ближайшая к пальцу точка при drag по чарту.
+    /// Используется для подвижной индикаторной линии (RuleMark) и подсветки точки.
+    private var selectedChartPoint: SessionHistoryChartPoint? {
+        guard let selected = selectedChartDate else { return nil }
+        return display.chartPoints().min(by: {
+            abs($0.date.timeIntervalSince(selected)) < abs($1.date.timeIntervalSince(selected))
+        })
+    }
+
     private var trendChart: some View {
         let points = display.chartPoints()
+        let highlighted = selectedChartPoint
         return Chart(points) { point in
             AreaMark(
                 x: .value("date", point.date),
@@ -378,6 +398,22 @@ struct SessionHistoryView: View {
             )
             .foregroundStyle(ColorTokens.Parent.surface)
             .symbolSize(28)
+
+            // Diploma fix 3.13 — подвижная индикаторная линия + подсветка точки
+            // под пальцем при drag (chartXSelection). RuleMark «следует» за
+            // выбранной датой, делая static-чарт интерактивным.
+            if let highlighted, highlighted.id == point.id {
+                RuleMark(x: .value("date", highlighted.date))
+                    .foregroundStyle(ColorTokens.Parent.accent.opacity(0.35))
+                    .lineStyle(StrokeStyle(lineWidth: 1.5, dash: [4, 3]))
+
+                PointMark(
+                    x: .value("date", highlighted.date),
+                    y: .value("accuracy", highlighted.accuracyPercent)
+                )
+                .foregroundStyle(ColorTokens.Parent.accent)
+                .symbolSize(90)
+            }
         }
         .chartYScale(domain: 0...100)
         .chartYAxis {
@@ -445,14 +481,11 @@ struct SessionHistoryView: View {
                                 .buttonStyle(.plain)
                                 // Block J v18 — hero zoom source (iOS 18+).
                                 .heroSource(id: row.id, namespace: heroNamespace)
-                                // Diploma fix #10a — scrollTransition смягчён:
-                                // убран scaleEffect (зум-эффект на каждой строке
-                                // делал ленту истории «прыгучей» при скролле),
-                                // оставлен только fade до 0.7 — мягкий depth-cue.
-                                .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
-                                    content
-                                        .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.7))
-                                }
+                                // Diploma fix v32-postreaudit — scrollTransition с
+                                // opacity 0.7 + tiltCarousel создавали серый scrim
+                                // поверх списка («выглядит как недорендеренный»).
+                                // Полностью убрано: список рендерится прозрачно,
+                                // без дополнительного fade или tilt.
 
                                 if index < group.rows.count - 1 {
                                     Divider()
@@ -462,8 +495,6 @@ struct SessionHistoryView: View {
                             }
                         }
                     }
-                    // Block J v18 — kavsoft-style tilt carousel scroll transition.
-                    .hsScrollEffect(.tiltCarousel)
                 }
             }
         }

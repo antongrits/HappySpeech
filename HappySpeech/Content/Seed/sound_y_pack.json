@@ -529,7 +529,7 @@
         },
         {
           "id": "y-wi-20",
-          "word": "яблоня",
+          "word": "яблоко",
           "difficulty": 3,
           "audio_file": "Audio/Content/Y/y-wi-20.m4a"
         },
@@ -583,7 +583,7 @@
         },
         {
           "id": "y-wi-29",
-          "word": "ягнята",
+          "word": "ягнёнок",
           "difficulty": 3,
           "audio_file": "Audio/Content/Y/y-wi-29.m4a"
         },
@@ -595,13 +595,13 @@
         },
         {
           "id": "y-wi-31",
-          "word": "ёлочка",
+          "word": "ёлка",
           "difficulty": 2,
           "audio_file": "Audio/Content/Y/y-wi-31.m4a"
         },
         {
           "id": "y-wi-32",
-          "word": "яблоня",
+          "word": "яблоко",
           "difficulty": 2,
           "audio_file": "Audio/Content/Y/y-wi-32.m4a"
         },
@@ -751,7 +751,7 @@
         },
         {
           "id": "y-wm-16",
-          "word": "шейка",
+          "word": "майка",
           "difficulty": 2,
           "audio_file": "Audio/Content/Y/y-wm-16.m4a"
         },

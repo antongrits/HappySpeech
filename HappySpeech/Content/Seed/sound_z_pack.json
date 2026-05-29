@@ -509,7 +509,7 @@
         },
         {
           "id": "z-wi-3",
-          "word": "зубы",
+          "word": "зуб",
           "difficulty": 1,
           "audio_file": "Audio/Content/Z/z-wi-3.m4a"
         },
@@ -659,7 +659,7 @@
         },
         {
           "id": "z-wi-28",
-          "word": "зёрнышко",
+          "word": "зерно",
           "difficulty": 3,
           "audio_file": "Audio/Content/Z/z-wi-28.m4a"
         },
@@ -683,7 +683,7 @@
         },
         {
           "id": "z-wi-32",
-          "word": "зубная щётка",
+          "word": "зуб",
           "difficulty": 4,
           "audio_file": "Audio/Content/Z/z-wi-32.m4a"
         },
@@ -1051,7 +1051,7 @@
         },
         {
           "id": "z-wm-14",
-          "word": "базар",
+          "word": "ваза",
           "difficulty": 3,
           "audio_file": "Audio/Content/Z/z-wm-14.m4a"
         },
@@ -1111,7 +1111,7 @@
         },
         {
           "id": "z-wm-24",
-          "word": "козёл",
+          "word": "коза",
           "difficulty": 2,
           "audio_file": "Audio/Content/Z/z-wm-24.m4a"
         },
@@ -1123,7 +1123,7 @@
         },
         {
           "id": "z-wm-26",
-          "word": "кузов",
+          "word": "ваза",
           "difficulty": 3,
           "audio_file": "Audio/Content/Z/z-wm-26.m4a"
         },

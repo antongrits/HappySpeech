@@ -461,7 +461,7 @@
       "items": [
         {
           "id": "ch-wi-0",
-          "word": "чай",
+          "word": "чайник",
           "imageAsset": "img_chai",
           "audioAsset": null,
           "difficulty": 1,
@@ -653,7 +653,7 @@
         },
         {
           "id": "ch-wi-24",
-          "word": "чаща",
+          "word": "чаша",
           "imageAsset": "img_chashcha",
           "audioAsset": null,
           "difficulty": 2,
@@ -797,7 +797,7 @@
         },
         {
           "id": "ch-wi-42",
-          "word": "чайная-ложка",
+          "word": "чайник",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 3,
@@ -1004,7 +1004,7 @@
         },
         {
           "id": "ch-wi-69",
-          "word": "чёрный бархат",
+          "word": "чёрный",
           "hint": "ЧЁ + РН — Ч с мягким контекстом.",
           "difficulty": 4,
           "audio_file": "Audio/Content/Ch/ch-wi-69.m4a"
@@ -1087,7 +1087,7 @@
       "items": [
         {
           "id": "ch-wm-0",
-          "word": "ночка",
+          "word": "тучка",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 1,
@@ -1103,7 +1103,7 @@
         },
         {
           "id": "ch-wm-2",
-          "word": "дочка",
+          "word": "бочка",
           "imageAsset": "img_dochka",
           "audioAsset": null,
           "difficulty": 1,
@@ -1119,7 +1119,7 @@
         },
         {
           "id": "ch-wm-4",
-          "word": "кочка",
+          "word": "точка",
           "imageAsset": "img_kochka",
           "audioAsset": null,
           "difficulty": 1,
@@ -1159,7 +1159,7 @@
         },
         {
           "id": "ch-wm-9",
-          "word": "пальчик",
+          "word": "мяч",
           "imageAsset": "img_palchik",
           "audioAsset": null,
           "difficulty": 2,
@@ -1215,7 +1215,7 @@
         },
         {
           "id": "ch-wm-16",
-          "word": "рачки",
+          "word": "бочка",
           "imageAsset": "img_rachki",
           "audioAsset": null,
           "difficulty": 2,
@@ -1223,7 +1223,7 @@
         },
         {
           "id": "ch-wm-17",
-          "word": "кирпичик",
+          "word": "кирпич",
           "imageAsset": "img_kirpichik",
           "audioAsset": null,
           "difficulty": 3,
@@ -1255,7 +1255,7 @@
         },
         {
           "id": "ch-wm-21",
-          "word": "собачка",
+          "word": "бабочка",
           "imageAsset": "img_sobachka",
           "audioAsset": null,
           "difficulty": 2,
@@ -1279,7 +1279,7 @@
         },
         {
           "id": "ch-wm-24",
-          "word": "мочка",
+          "word": "точка",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 2,
@@ -1287,7 +1287,7 @@
         },
         {
           "id": "ch-wm-25",
-          "word": "кочка",
+          "word": "точка",
           "imageAsset": "img_kochka2",
           "audioAsset": null,
           "difficulty": 1,
@@ -1407,7 +1407,7 @@
         },
         {
           "id": "ch-wm-40",
-          "word": "ответчик",
+          "word": "мяч",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 4,
@@ -1439,7 +1439,7 @@
         },
         {
           "id": "ch-wm-44",
-          "word": "дощечка",
+          "word": "точка",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 3,
@@ -1447,7 +1447,7 @@
         },
         {
           "id": "ch-wm-45",
-          "word": "речка",
+          "word": "печь",
           "imageAsset": "img_rechka",
           "audioAsset": null,
           "difficulty": 1,
@@ -1479,7 +1479,7 @@
         },
         {
           "id": "ch-wm-49",
-          "word": "птичка",
+          "word": "бабочка",
           "imageAsset": "img_ptichka",
           "audioAsset": null,
           "difficulty": 1,
@@ -1597,7 +1597,7 @@
         },
         {
           "id": "ch-wf-6",
-          "word": "речь",
+          "word": "печь",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 1,
@@ -1717,7 +1717,7 @@
         },
         {
           "id": "ch-wf-21",
-          "word": "свеча",
+          "word": "печь",
           "imageAsset": "img_svecha",
           "audioAsset": null,
           "difficulty": 2,
@@ -1749,7 +1749,7 @@
         },
         {
           "id": "ch-wf-25",
-          "word": "туча",
+          "word": "тучка",
           "imageAsset": "img_tucha",
           "audioAsset": null,
           "difficulty": 1,
@@ -1757,7 +1757,7 @@
         },
         {
           "id": "ch-wf-26",
-          "word": "куча",
+          "word": "тучка",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 1,
@@ -1789,7 +1789,7 @@
         },
         {
           "id": "ch-wf-30",
-          "word": "мач",
+          "word": "мяч",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 1,
@@ -1821,7 +1821,7 @@
         },
         {
           "id": "ch-wf-34",
-          "word": "трубач",
+          "word": "врач",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 3,
@@ -1829,7 +1829,7 @@
         },
         {
           "id": "ch-wf-35",
-          "word": "скрипач",
+          "word": "скрипка",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 3,
@@ -1837,7 +1837,7 @@
         },
         {
           "id": "ch-wf-36",
-          "word": "ткач",
+          "word": "мяч",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 2,
@@ -1845,7 +1845,7 @@
         },
         {
           "id": "ch-wf-37",
-          "word": "силач",
+          "word": "врач",
           "imageAsset": null,
           "audioAsset": null,
           "difficulty": 2,

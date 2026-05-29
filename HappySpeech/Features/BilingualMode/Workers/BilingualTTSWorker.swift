@@ -7,45 +7,39 @@ import OSLog
 @MainActor
 protocol BilingualTTSWorkerProtocol: AnyObject {
     /// Озвучивает слово для выбранного второго языка.
-    /// Для en-US использует pre-recorded голос Ляли (AnaNeural, детский).
-    /// Для be-BY использует Siri TTS (be-BY недоступен в edge-tts —
-    /// см. ADR-V31-BILINGUAL-BELARUSIAN-TTS).
+    /// Оба языка (en-US и be-BY) используют pre-recorded m4a голоса Ляли.
     /// - Returns: фактически использованный bcp47.
     @discardableResult
     func speak(_ text: String, language: BilingualSecondLanguage, wordId: String) async -> String
     /// Останавливает текущее воспроизведение.
     func stop()
-    /// Существует ли установленный голос для языка (на текущем устройстве).
+    /// Существует ли pre-recorded голос для языка (на текущем устройстве).
     func voiceAvailable(for language: BilingualSecondLanguage) -> Bool
 }
 
 // MARK: - BilingualTTSWorker
 //
-// ADR-V31-BILINGUAL-BELARUSIAN-TTS:
-//   be-BY голос недоступен в edge-tts (поддерживает только fr-BE и nl-BE).
-//   Для белорусского языка сохраняется Siri TTS — это единственное место
-//   в приложении с AVSpeechSynthesizer. Обоснование:
-//   (a) be-BY — не «голос Ляли» по дизайну (это нативный голос второго языка);
-//   (b) обе платформенные ru-RU озвучки (Milena/Katya) акустически близки;
-//   (c) альтернатива — open-source VITS/TTS-моделей — выходит за рамки Sprint 12.
-//   Тикет для будущей волны: «Заменить be-BY Siri на VITS-модель белорусского».
+// ADR-V32-CHIRP3-AOEDE: Siri TTS полностью удалён.
+//   Оба языка используют pre-recorded m4a (Google Chirp3-HD-Aoede):
+//     en-US: Audio/Bilingual/en-US/lyalya_bil_en_{wordId}.m4a
+//     be-BY: Audio/Bilingual/be-BY/lyalya_bil_be_{wordId}.m4a
+//   Корпус (`pack_bilingual_vocabulary.json`) — закрытый, 32 слова на язык,
+//   поэтому покрытие 100%. При отсутствии файла (mis-config) — silent skip.
 //
-// en-US: pre-recorded через edge-tts AnaNeural (детский голос).
-//   Файлы: Audio/Bilingual/en-US/lyalya_bil_en_{wordId}.m4a
+// ADR-V31-BILINGUAL-BELARUSIAN-TTS (исторический контекст):
+//   be-BY голос недоступен в Google TTS / edge-tts. ru-RU-Chirp3-HD-Aoede
+//   используется как акустически близкий fallback для be-BY (то же решение,
+//   что было принято для Siri ru-RU); качество детского голоса заметно выше
+//   Siri Milena/Katya. Текст белорусский — модель читает кириллицу как ru-RU
+//   с белорусской орфографией (мама / тата / хата / акно / дзверы и т.д.).
 
 @MainActor
 final class BilingualTTSWorker: NSObject, BilingualTTSWorkerProtocol {
 
-    // MARK: - AVAudioPlayer (для en-US pre-recorded)
+    // MARK: - AVAudioPlayer (для pre-recorded m4a)
 
     private var player: AVAudioPlayer?
     private var playbackContinuation: CheckedContinuation<Void, Never>?
-
-    // MARK: - AVSpeechSynthesizer (только для be-BY — см. ADR выше)
-
-    // swiftlint:disable:next weak_delegate
-    private let synthesizer = AVSpeechSynthesizer()
-    private var speechContinuation: CheckedContinuation<Void, Never>?
 
     private static let logger = Logger(
         subsystem: "ru.happyspeech",
@@ -54,7 +48,6 @@ final class BilingualTTSWorker: NSObject, BilingualTTSWorkerProtocol {
 
     override init() {
         super.init()
-        synthesizer.delegate = self
     }
 
     // MARK: - Public
@@ -72,7 +65,7 @@ final class BilingualTTSWorker: NSObject, BilingualTTSWorkerProtocol {
         case .english:
             return await speakEnglish(text: text, wordId: wordId)
         case .belarusian:
-            return await speakBelarusian(text)
+            return await speakBelarusian(text: text, wordId: wordId)
         case .off:
             return language.bcp47
         }
@@ -85,26 +78,18 @@ final class BilingualTTSWorker: NSObject, BilingualTTSWorkerProtocol {
         let pc = playbackContinuation
         playbackContinuation = nil
         pc?.resume()
-
-        // Stop Siri TTS (be-BY).
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
-        }
-        // speechContinuation будет resume через delegate didCancel.
     }
 
     func voiceAvailable(for language: BilingualSecondLanguage) -> Bool {
+        // Оба языка теперь pre-recorded → всегда доступны
+        // (при условии, что bundle содержит ассеты, что валидируется в CI).
         switch language {
         case .off: return false
-        case .english: return true   // pre-recorded — всегда доступно
-        case .belarusian:
-            // Siri be-BY — зависит от установленных голосов на устройстве.
-            let voices = AVSpeechSynthesisVoice.speechVoices()
-            return voices.contains { $0.language == language.bcp47 }
+        case .english, .belarusian: return true
         }
     }
 
-    // MARK: - Private: English (pre-recorded AnaNeural)
+    // MARK: - Private: English (pre-recorded Chirp3-HD-Aoede)
 
     private func speakEnglish(text: String, wordId: String) async -> String {
         let audioName = "lyalya_bil_en_\(wordId)"
@@ -118,72 +103,52 @@ final class BilingualTTSWorker: NSObject, BilingualTTSWorkerProtocol {
             )
             return "en-US"
         }
+        await playFileURL(url, logContext: "[bil/en] ")
+        return "en-US"
+    }
 
-        await withCheckedContinuation { (cont: CheckedContinuation<Void, Never>) in
+    // MARK: - Private: Belarusian (pre-recorded Chirp3-HD-Aoede, ru-RU model + be-BY text)
+
+    private func speakBelarusian(text: String, wordId: String) async -> String {
+        let audioName = "lyalya_bil_be_\(wordId)"
+        guard let url = Bundle.main.url(
+            forResource: audioName,
+            withExtension: "m4a",
+            subdirectory: "Audio/Bilingual/be-BY"
+        ) else {
+            Self.logger.warning(
+                "BilingualTTSWorker: no be-BY audio '\(audioName, privacy: .public)' — silent skip"
+            )
+            return "be-BY"
+        }
+        await playFileURL(url, logContext: "[bil/be] ")
+        return "be-BY"
+    }
+
+    // MARK: - Private: shared file playback
+
+    private func playFileURL(_ url: URL, logContext: String) async {
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
             do {
                 player?.stop()
                 playbackContinuation?.resume()
-                playbackContinuation = cont
+                playbackContinuation = continuation
                 let newPlayer = try AVAudioPlayer(contentsOf: url)
                 newPlayer.delegate = self
                 newPlayer.prepareToPlay()
                 player = newPlayer
                 newPlayer.play()
-                Self.logger.debug("Bilingual EN: '\(audioName, privacy: .public)'")
+                Self.logger.debug(
+                    "\(logContext, privacy: .public)playing: \(url.lastPathComponent, privacy: .public)"
+                )
             } catch {
                 Self.logger.warning(
-                    "BilingualTTSWorker: AVAudioPlayer failed: \(error.localizedDescription, privacy: .public)"
+                    "\(logContext, privacy: .public)AVAudioPlayer failed: \(error.localizedDescription, privacy: .public)"
                 )
                 playbackContinuation = nil
-                cont.resume()
+                continuation.resume()
             }
         }
-        return "en-US"
-    }
-
-    // MARK: - Private: Belarusian (Siri TTS — ADR-V31-BILINGUAL-BELARUSIAN-TTS)
-
-    private func speakBelarusian(_ text: String) async -> String {
-        if synthesizer.isSpeaking {
-            synthesizer.stopSpeaking(at: .immediate)
-        }
-
-        let (voice, usedBcp47) = Self.pickBelarusianVoice()
-        if voice == nil {
-            Self.logger.warning(
-                "BilingualTTSWorker: no installed be-BY voice; fallback to ru-RU"
-            )
-        }
-
-        let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = voice
-        utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 0.9
-        utterance.pitchMultiplier = 1.0
-        utterance.volume = 1.0
-        utterance.preUtteranceDelay = 0.1
-        utterance.postUtteranceDelay = 0.2
-
-        await withCheckedContinuation { (cont: CheckedContinuation<Void, Never>) in
-            speechContinuation?.resume()
-            speechContinuation = cont
-            synthesizer.speak(utterance)
-        }
-        return usedBcp47
-    }
-
-    // MARK: - Private: Voice picking
-
-    private static func pickBelarusianVoice() -> (AVSpeechSynthesisVoice?, String) {
-        let voices = AVSpeechSynthesisVoice.speechVoices()
-        // be-BY
-        if let bel = voices.first(where: { $0.language == "be-BY" }) {
-            return (bel, "be-BY")
-        }
-        // Акустически близкий ru-RU как вынужденный fallback.
-        if let ru = voices.first(where: { $0.language == "ru-RU" }) {
-            return (ru, "ru-RU")
-        }
-        return (AVSpeechSynthesisVoice(language: "ru-RU"), "ru-RU")
     }
 
     // MARK: - Audio session
@@ -205,7 +170,7 @@ final class BilingualTTSWorker: NSObject, BilingualTTSWorkerProtocol {
     }
 }
 
-// MARK: - AVAudioPlayerDelegate (en-US pre-recorded)
+// MARK: - AVAudioPlayerDelegate
 
 extension BilingualTTSWorker: AVAudioPlayerDelegate {
 
@@ -225,31 +190,6 @@ extension BilingualTTSWorker: AVAudioPlayerDelegate {
             let cont = self?.playbackContinuation
             self?.playbackContinuation = nil
             cont?.resume()
-        }
-    }
-}
-
-// MARK: - AVSpeechSynthesizerDelegate (be-BY — ADR-V31-BILINGUAL-BELARUSIAN-TTS)
-
-extension BilingualTTSWorker: AVSpeechSynthesizerDelegate {
-
-    nonisolated func speechSynthesizer(
-        _ synthesizer: AVSpeechSynthesizer,
-        didFinish utterance: AVSpeechUtterance
-    ) {
-        Task { @MainActor [weak self] in
-            self?.speechContinuation?.resume()
-            self?.speechContinuation = nil
-        }
-    }
-
-    nonisolated func speechSynthesizer(
-        _ synthesizer: AVSpeechSynthesizer,
-        didCancel utterance: AVSpeechUtterance
-    ) {
-        Task { @MainActor [weak self] in
-            self?.speechContinuation?.resume()
-            self?.speechContinuation = nil
         }
     }
 }

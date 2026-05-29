@@ -170,15 +170,21 @@ public enum ColorTokens {
     // MARK: - Feedback Colors
 
     /// Used in game feedback overlays, tile borders, and result screens.
+    ///
+    /// Diploma fix v34 — раньше `Feedback.*` ссылались на несуществующие
+    /// asset-катологи (`FeedbackCorrect`, `FeedbackIncorrect`, ...), из-за чего
+    /// `Color(named:)` молча возвращал прозрачный fallback. На SessionComplete
+    /// это давало невидимое кольцо счёта (track виден, fill — нет). Замапили
+    /// на существующие Sem* / Brand assets с light/dark вариантами.
     public enum Feedback {
-        /// Correct answer — green
-        public static let correct   = Color("FeedbackCorrect")
-        /// Incorrect answer — soft coral (never harsh red — child-friendly)
-        public static let incorrect = Color("FeedbackIncorrect")
+        /// Correct answer — green (mapped to existing SemSuccess asset)
+        public static let correct   = Color("SemSuccess")
+        /// Incorrect answer — soft coral (mapped to existing SemError asset)
+        public static let incorrect = Color("SemError")
         /// Neutral / no answer yet — light grey-blue
-        public static let neutral   = Color("FeedbackNeutral")
+        public static let neutral   = Color("KidLine")
         /// Excellent score (>90%) — gold
-        public static let excellent = Color("FeedbackExcellent")
+        public static let excellent = Color("BrandGold")
     }
 
     // MARK: - Skin Tint Colors

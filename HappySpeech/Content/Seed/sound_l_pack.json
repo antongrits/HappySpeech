@@ -705,7 +705,7 @@
         },
         {
           "id": "l-wi-25",
-          "word": "лётчик",
+          "word": "летчик",
           "hint": "Мягкий [Л'].",
           "difficulty": 2,
           "audio_file": "Audio/Content/L/l-wi-25.m4a"
@@ -1193,7 +1193,7 @@
         },
         {
           "id": "l-wm-12",
-          "word": "тело",
+          "word": "белка",
           "hint": "Мягкий [Л'].",
           "difficulty": 2,
           "audio_file": "Audio/Content/L/l-wm-12.m4a"
@@ -1206,7 +1206,7 @@
         },
         {
           "id": "l-wm-14",
-          "word": "колос",
+          "word": "колобок",
           "difficulty": 2,
           "audio_file": "Audio/Content/L/l-wm-14.m4a"
         },
@@ -1237,7 +1237,7 @@
         },
         {
           "id": "l-wm-19",
-          "word": "солома",
+          "word": "малина",
           "difficulty": 3,
           "audio_file": "Audio/Content/L/l-wm-19.m4a"
         },
@@ -1362,7 +1362,7 @@
         },
         {
           "id": "l-wm-38",
-          "word": "полоска",
+          "word": "полка",
           "difficulty": 3,
           "audio_file": "Audio/Content/L/l-wm-38.m4a"
         },
@@ -1468,14 +1468,14 @@
         },
         {
           "id": "l-wm-54",
-          "word": "платок",
+          "word": "платье",
           "hint": "ПЛА+ТОК — ПЛ стечение.",
           "difficulty": 2,
           "audio_file": "Audio/Content/L/l-wm-54.m4a"
         },
         {
           "id": "l-wm-55",
-          "word": "белочка",
+          "word": "белка",
           "hint": "БЕ+ЛОЧ+КА — Л мягкий в середине.",
           "difficulty": 2,
           "audio_file": "Audio/Content/L/l-wm-55.m4a"
@@ -1651,7 +1651,7 @@
         },
         {
           "id": "l-wf-16",
-          "word": "соль",
+          "word": "фасоль",
           "hint": "Мягкий [Л'].",
           "difficulty": 1,
           "audio_file": "Audio/Content/L/l-wf-16.m4a"
@@ -1726,13 +1726,13 @@
         },
         {
           "id": "l-wf-27",
-          "word": "гол",
+          "word": "стол",
           "difficulty": 1,
           "audio_file": "Audio/Content/L/l-wf-27.m4a"
         },
         {
           "id": "l-wf-28",
-          "word": "вол",
+          "word": "козёл",
           "difficulty": 1,
           "audio_file": "Audio/Content/L/l-wf-28.m4a"
         },

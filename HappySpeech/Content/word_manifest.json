@@ -148,7 +148,7 @@
     },
     {
       "word": "кот",
-      "asset": "word_cat",
+      "asset": "word_kot",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -172,7 +172,7 @@
     },
     {
       "word": "стул",
-      "asset": "word_chair",
+      "asset": "word_stul",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -196,7 +196,7 @@
     },
     {
       "word": "чашка",
-      "asset": "word_cup",
+      "asset": "word_chashka",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -208,7 +208,7 @@
     },
     {
       "word": "собака",
-      "asset": "word_dog",
+      "asset": "word_sobaka",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -244,7 +244,7 @@
     },
     {
       "word": "слон",
-      "asset": "word_elephant",
+      "asset": "word_slon",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -256,7 +256,7 @@
     },
     {
       "word": "рыба",
-      "asset": "word_fish",
+      "asset": "word_ryba",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -268,7 +268,7 @@
     },
     {
       "word": "цветок",
-      "asset": "word_flower",
+      "asset": "word_tsvetok",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -280,7 +280,7 @@
     },
     {
       "word": "лес",
-      "asset": "word_forest",
+      "asset": "word_les",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -484,7 +484,7 @@
     },
     {
       "word": "солнце",
-      "asset": "word_sun",
+      "asset": "word_solntse",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -496,7 +496,7 @@
     },
     {
       "word": "стол",
-      "asset": "word_table",
+      "asset": "word_stol",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -578,7 +578,7 @@
     },
     {
       "word": "сок",
-      "asset": "word_juice",
+      "asset": "word_sok",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -638,7 +638,7 @@
     },
     {
       "word": "снег",
-      "asset": "word_snow",
+      "asset": "word_sneg",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -685,7 +685,7 @@
     },
     {
       "word": "нос",
-      "asset": "word_nose",
+      "asset": "word_nos",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -697,7 +697,7 @@
     },
     {
       "word": "радуга",
-      "asset": "word_rainbow",
+      "asset": "word_raduga",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -721,7 +721,7 @@
     },
     {
       "word": "сыр",
-      "asset": "word_cheese",
+      "asset": "word_syr",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -805,7 +805,7 @@
     },
     {
       "word": "часы",
-      "asset": "word_clock",
+      "asset": "word_chasy",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -841,7 +841,7 @@
     },
     {
       "word": "рысь",
-      "asset": "word_lynx",
+      "asset": "word_rys",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -900,7 +900,7 @@
     },
     {
       "word": "рак",
-      "asset": "word_crab",
+      "asset": "word_rak",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -924,7 +924,7 @@
     },
     {
       "word": "пила",
-      "asset": "word_saw",
+      "asset": "word_pila",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -936,7 +936,7 @@
     },
     {
       "word": "ракета",
-      "asset": "word_rocket",
+      "asset": "word_raketa",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -960,7 +960,7 @@
     },
     {
       "word": "топор",
-      "asset": "word_axe",
+      "asset": "word_topor",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -984,7 +984,7 @@
     },
     {
       "word": "забор",
-      "asset": "word_fence",
+      "asset": "word_zabor",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -1054,7 +1054,7 @@
     },
     {
       "word": "мел",
-      "asset": "word_chalk",
+      "asset": "word_mel",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -1078,7 +1078,7 @@
     },
     {
       "word": "гриб",
-      "asset": "word_mushroom",
+      "asset": "word_grib",
       "recommendedStages": [
         "wordInit",
         "wordMid"
@@ -11618,9 +11618,3441 @@
       "semanticCategory": "thematic",
       "methodologySource": "imagen3-generated",
       "soundFamily": "З"
+    },
+    {
+      "word": "багаж",
+      "asset": "word_bagazh",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "бак",
+      "asset": "word_bak",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "К"
+    },
+    {
+      "word": "башмак",
+      "asset": "word_bashmak",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "К"
+    },
+    {
+      "word": "берег",
+      "asset": "word_bereg",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Г"
+    },
+    {
+      "word": "блохи",
+      "asset": "word_blokha",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "борщ",
+      "asset": "word_borshch",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "боец",
+      "asset": "word_boyets",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "буква",
+      "asset": "word_bukvar",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "К"
+    },
+    {
+      "word": "бумага",
+      "asset": "word_bumaga",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Г"
+    },
+    {
+      "word": "черепаха",
+      "asset": "word_cherepakha",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "чеснок",
+      "asset": "word_chesnok",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "чиж",
+      "asset": "word_chizh",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "доктор",
+      "asset": "word_doktor",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "дорога",
+      "asset": "word_doroga",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Г"
+    },
+    {
+      "word": "дорожка",
+      "asset": "word_dorozhka",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "дуга",
+      "asset": "word_duga",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Г"
+    },
+    {
+      "word": "этаж",
+      "asset": "word_etazh",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "ежи",
+      "asset": "word_ezhi",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "флаг",
+      "asset": "word_flag",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Г"
+    },
+    {
+      "word": "фонарь",
+      "asset": "word_fonar",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "газон",
+      "asset": "word_gazon",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "З"
+    },
+    {
+      "word": "хлеб",
+      "asset": "word_hleb",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "хомяк",
+      "asset": "word_homyak",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "изюм",
+      "asset": "word_izyum",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "З"
+    },
+    {
+      "word": "калач",
+      "asset": "word_kalach",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "календарь",
+      "asset": "word_kalendar",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "камыш",
+      "asset": "word_kamysh",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "канал",
+      "asset": "word_kanal",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "коляска",
+      "asset": "word_karusel",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "хищник",
+      "asset": "word_khishchnik",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "хижина",
+      "asset": "word_khizhina",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "хобот",
+      "asset": "word_khobot",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "художник",
+      "asset": "word_khudozhnik",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "хвощ",
+      "asset": "word_khvoshch",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "хвост",
+      "asset": "word_khvost",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "класс",
+      "asset": "word_klass",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "С"
+    },
+    {
+      "word": "клещ",
+      "asset": "word_kleshch",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "клещи",
+      "asset": "word_kleshchi",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "клён",
+      "asset": "word_klon",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "К"
+    },
+    {
+      "word": "кокос",
+      "asset": "word_kokos",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "С"
+    },
+    {
+      "word": "колодец",
+      "asset": "word_kolodets",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "кора",
+      "asset": "word_kora",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "коса",
+      "asset": "word_kosa",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "С"
+    },
+    {
+      "word": "ковш",
+      "asset": "word_kovsh",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "кожа",
+      "asset": "word_kozha",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "кран",
+      "asset": "word_kran",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "К"
+    },
+    {
+      "word": "крыса",
+      "asset": "word_krysa",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "С"
+    },
+    {
+      "word": "кукушка",
+      "asset": "word_kukushka",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "лак",
+      "asset": "word_lak",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "ландыш",
+      "asset": "word_landysh",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "лещ",
+      "asset": "word_leshch",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "летчик",
+      "asset": "word_letchik",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "листок",
+      "asset": "word_listok",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "К"
+    },
+    {
+      "word": "луч",
+      "asset": "word_luch",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "луг",
+      "asset": "word_lug",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Г"
+    },
+    {
+      "word": "масло",
+      "asset": "word_maslo",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "С"
+    },
+    {
+      "word": "маяк",
+      "asset": "word_mayak",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "К"
+    },
+    {
+      "word": "мельница",
+      "asset": "word_melnitsa",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "мешок",
+      "asset": "word_meshok",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "монах",
+      "asset": "word_monakh",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "мороз",
+      "asset": "word_moroz",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "З"
+    },
+    {
+      "word": "морж",
+      "asset": "word_morzh",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "мозаика",
+      "asset": "word_mozaika",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "З"
+    },
+    {
+      "word": "мышь",
+      "asset": "word_mysh",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "мышка",
+      "asset": "word_myshka",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "насос",
+      "asset": "word_nasos",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "С"
+    },
+    {
+      "word": "нога",
+      "asset": "word_noga",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Г"
+    },
+    {
+      "word": "ножи",
+      "asset": "word_nozhi",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "обруч",
+      "asset": "word_obruch",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "одежда",
+      "asset": "word_odezhda",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "осина",
+      "asset": "word_osina",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "С"
+    },
+    {
+      "word": "овощи",
+      "asset": "word_ovoshchi",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "пахарь",
+      "asset": "word_pakhar",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "палка",
+      "asset": "word_palka",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "пчела",
+      "asset": "word_pchela",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "печь",
+      "asset": "word_pech",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "пёс",
+      "asset": "word_pes",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "С"
+    },
+    {
+      "word": "пещера",
+      "asset": "word_peshchera",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "письмо",
+      "asset": "word_pismo",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "С"
+    },
+    {
+      "word": "пижама",
+      "asset": "word_pizhama",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "площадь",
+      "asset": "word_ploshchad",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "пол",
+      "asset": "word_pol",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "полка",
+      "asset": "word_polka",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "помидор",
+      "asset": "word_pomidor",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "порог",
+      "asset": "word_porog",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Г"
+    },
+    {
+      "word": "посуда",
+      "asset": "word_posuda",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "С"
+    },
+    {
+      "word": "пугало",
+      "asset": "word_pugalo",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Г"
+    },
+    {
+      "word": "пух",
+      "asset": "word_pukh",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "пушка",
+      "asset": "word_pushka",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "рог",
+      "asset": "word_rog",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "роща",
+      "asset": "word_roshcha",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "рот",
+      "asset": "word_rot",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "рубашка",
+      "asset": "word_rubashka",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "рыбак",
+      "asset": "word_rybak",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "самовар",
+      "asset": "word_samovar",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "санки",
+      "asset": "word_sanki",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "С"
+    },
+    {
+      "word": "серп",
+      "asset": "word_serp",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Сь"
+    },
+    {
+      "word": "сетка",
+      "asset": "word_setka",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Сь"
+    },
+    {
+      "word": "шаль",
+      "asset": "word_shal",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "шар",
+      "asset": "word_shar",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "шарф",
+      "asset": "word_sharf",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "щека",
+      "asset": "word_shcheka",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "щенок",
+      "asset": "word_shchenok",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "щи",
+      "asset": "word_shchi",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "щипцы",
+      "asset": "word_shchiptsy",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "щит",
+      "asset": "word_shchit",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "щётка",
+      "asset": "word_shchotka",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "щука",
+      "asset": "word_shchuka",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "шея",
+      "asset": "word_sheya",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "шкаф",
+      "asset": "word_shkaf",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "шмель",
+      "asset": "word_shmel",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "шофёр",
+      "asset": "word_shofer",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "сковорода",
+      "asset": "word_skovoroda",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "С"
+    },
+    {
+      "word": "словарь",
+      "asset": "word_slovar",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "смех",
+      "asset": "word_smekh",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "сом",
+      "asset": "word_som",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "С"
+    },
+    {
+      "word": "стог",
+      "asset": "word_stog",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Г"
+    },
+    {
+      "word": "стриж",
+      "asset": "word_strizh",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "суп",
+      "asset": "word_sup",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "С"
+    },
+    {
+      "word": "сушка",
+      "asset": "word_sushka",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "светофор",
+      "asset": "word_svetofor",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "таз",
+      "asset": "word_taz",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "З"
+    },
+    {
+      "word": "тетрадь",
+      "asset": "word_tetrad",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Рь"
+    },
+    {
+      "word": "точка",
+      "asset": "word_tochka",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "трактор",
+      "asset": "word_traktor",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "центр",
+      "asset": "word_tsentr",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "тучка",
+      "asset": "word_tuchka",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "удача",
+      "asset": "word_udacha",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "ухо",
+      "asset": "word_ukho",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "уколочка",
+      "asset": "word_ukol",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "К"
+    },
+    {
+      "word": "умница",
+      "asset": "word_umnitsa",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "урок",
+      "asset": "word_urok",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "К"
+    },
+    {
+      "word": "ушко",
+      "asset": "word_ushko",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "утюг",
+      "asset": "word_utyug",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Г"
+    },
+    {
+      "word": "уж",
+      "asset": "word_uzh",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "ужин",
+      "asset": "word_uzhin",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "ватрушка",
+      "asset": "word_vatrushka",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "водица",
+      "asset": "word_voditsya",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "ворох",
+      "asset": "word_vorokh",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "воз",
+      "asset": "word_voz",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "З"
+    },
+    {
+      "word": "ягода",
+      "asset": "word_yagoda",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Г"
+    },
+    {
+      "word": "якорь",
+      "asset": "word_yakor",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "ящерица",
+      "asset": "word_yashcheritsa",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "ёлка",
+      "asset": "word_yolka",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "К"
+    },
+    {
+      "word": "ёрш",
+      "asset": "word_yorsh",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "юбка",
+      "asset": "word_yubka",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "К"
+    },
+    {
+      "word": "задача",
+      "asset": "word_zadacha",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "зал",
+      "asset": "word_zal",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "зефир",
+      "asset": "word_zephir",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "З"
+    },
+    {
+      "word": "зерно",
+      "asset": "word_zerno",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "З"
+    },
+    {
+      "word": "жасмин",
+      "asset": "word_zhasmin",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "жемчуг",
+      "asset": "word_zhemchug",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "журнал",
+      "asset": "word_zhurnal",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "curriculum-manifest-v1",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "пирог",
+      "asset": "word_pirog",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "паровоз",
+      "asset": "word_parovoz",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "морковь",
+      "asset": "word_morkov",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "огород",
+      "asset": "word_ogorod",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "мороженое",
+      "asset": "word_morozhenoe",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "крот",
+      "asset": "word_krot",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "коробка",
+      "asset": "word_korobka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "город",
+      "asset": "word_gorod",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "матрёшка",
+      "asset": "word_matryoshka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "ковёр",
+      "asset": "word_kovyor",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "зуб",
+      "asset": "word_zub",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "З"
+    },
+    {
+      "word": "завод",
+      "asset": "word_zavod",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "З"
+    },
+    {
+      "word": "зоопарк",
+      "asset": "word_zoopark",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "З"
+    },
+    {
+      "word": "гроза",
+      "asset": "word_groza",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "З"
+    },
+    {
+      "word": "обезьяна",
+      "asset": "word_obezyana",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "З"
+    },
+    {
+      "word": "плащ",
+      "asset": "word_plashch",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "площадка",
+      "asset": "word_ploshchadka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "ножницы",
+      "asset": "word_nozhnitsy",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "кружка",
+      "asset": "word_kruzhka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "нож",
+      "asset": "word_nozh",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "линейка",
+      "asset": "word_lineyka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "мох",
+      "asset": "word_mokh",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "орех",
+      "asset": "word_orekh",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "ластик",
+      "asset": "word_lastik",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "С"
+    },
+    {
+      "word": "носок",
+      "asset": "word_nosok",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "С"
+    },
+    {
+      "word": "мост",
+      "asset": "word_most",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "С"
+    },
+    {
+      "word": "лось",
+      "asset": "word_los",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "С"
+    },
+    {
+      "word": "ночь",
+      "asset": "word_noch",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "дочь",
+      "asset": "word_doch",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "меч",
+      "asset": "word_mech",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "подушка",
+      "asset": "word_podushka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "петрушка",
+      "asset": "word_petrushka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "кошелёк",
+      "asset": "word_koshelyok",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "малыш",
+      "asset": "word_malysh",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "лоб",
+      "asset": "word_lob",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "лев",
+      "asset": "word_lev",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "лёд",
+      "asset": "word_lyod",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "голова",
+      "asset": "word_golova",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "малина",
+      "asset": "word_malina",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "платье",
+      "asset": "word_plate",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "плита",
+      "asset": "word_plita",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "колокол",
+      "asset": "word_kolokol",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "молоток",
+      "asset": "word_molotok",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "блинчик",
+      "asset": "word_blinchik",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "медаль",
+      "asset": "word_medal",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "миндаль",
+      "asset": "word_mindal",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "гвоздь",
+      "asset": "word_gvozd",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Г"
+    },
+    {
+      "word": "иголка",
+      "asset": "word_igolka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Г"
+    },
+    {
+      "word": "кит",
+      "asset": "word_kit",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "К"
+    },
+    {
+      "word": "мак",
+      "asset": "word_mak",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "К"
+    },
+    {
+      "word": "аэропорт",
+      "asset": "word_aeroport",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "беседка",
+      "asset": "word_besedka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "С"
+    },
+    {
+      "word": "болото",
+      "asset": "word_boloto",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "борода",
+      "asset": "word_boroda",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "бородач",
+      "asset": "word_borodach",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "бурундук",
+      "asset": "word_burunduk",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "бузина",
+      "asset": "word_buzina",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "З"
+    },
+    {
+      "word": "дача",
+      "asset": "word_dacha",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "дачка",
+      "asset": "word_dachka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "дождик",
+      "asset": "word_dozhdik",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "фасоль",
+      "asset": "word_fasol",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "гайка",
+      "asset": "word_gayka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "искра",
+      "asset": "word_iskra",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "С"
+    },
+    {
+      "word": "каблук",
+      "asset": "word_kabluk",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Г"
+    },
+    {
+      "word": "карусель",
+      "asset": "word_karusel_n",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р/Л"
+    },
+    {
+      "word": "халат",
+      "asset": "word_khalat",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "хмель",
+      "asset": "word_khmel",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "хохлатка",
+      "asset": "word_khokhlatka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "храм",
+      "asset": "word_khram",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "хризантема",
+      "asset": "word_khrizantema",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "хрящ",
+      "asset": "word_khryashch",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "хворост",
+      "asset": "word_khvorost",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "хвоя",
+      "asset": "word_khvoya",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "кисть",
+      "asset": "word_kist",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "К"
+    },
+    {
+      "word": "кормушка",
+      "asset": "word_kormushka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "кость",
+      "asset": "word_kost",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "С"
+    },
+    {
+      "word": "костёр",
+      "asset": "word_kostyor",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "кожура",
+      "asset": "word_kozhura",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "козёл",
+      "asset": "word_kozyol",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "козырёк",
+      "asset": "word_kozyryok",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "З"
+    },
+    {
+      "word": "куб",
+      "asset": "word_kub",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "К"
+    },
+    {
+      "word": "курятник",
+      "asset": "word_kuryatnik",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "кусок",
+      "asset": "word_kusok",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "С"
+    },
+    {
+      "word": "куст",
+      "asset": "word_kust",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "С"
+    },
+    {
+      "word": "лайка",
+      "asset": "word_layka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "лотос",
+      "asset": "word_lotos",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "С"
+    },
+    {
+      "word": "марабу",
+      "asset": "word_marabu",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "майка",
+      "asset": "word_mayka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "мешочек",
+      "asset": "word_meshochek",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "мимоза",
+      "asset": "word_mimoza",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "З"
+    },
+    {
+      "word": "мышонок",
+      "asset": "word_myshonok",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "нарциссы",
+      "asset": "word_nartsissy",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "С"
+    },
+    {
+      "word": "ночник",
+      "asset": "word_nochnik",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "паспорт",
+      "asset": "word_pasport",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "С"
+    },
+    {
+      "word": "пастух",
+      "asset": "word_pastukh",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "перекрёсток",
+      "asset": "word_perekrestok",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "перстень",
+      "asset": "word_persten",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "С"
+    },
+    {
+      "word": "пилотка",
+      "asset": "word_pilotka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "плакат",
+      "asset": "word_plakat",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "плющ",
+      "asset": "word_plyushch",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "попугай",
+      "asset": "word_popugay",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "портрет",
+      "asset": "word_portret",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "приз",
+      "asset": "word_priz",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "З"
+    },
+    {
+      "word": "пружина",
+      "asset": "word_pruzhina",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "прыжок",
+      "asset": "word_pryzhok",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "пушинка",
+      "asset": "word_pushinka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "пузырь",
+      "asset": "word_puzyr",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "рожь",
+      "asset": "word_rozh",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "ручей",
+      "asset": "word_ruchey",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "ружьё",
+      "asset": "word_ruzhyo",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "сапожник",
+      "asset": "word_sapozhnik",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "С"
+    },
+    {
+      "word": "сарай",
+      "asset": "word_saray",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "сажа",
+      "asset": "word_sazha",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "сельдь",
+      "asset": "word_seld",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "С"
+    },
+    {
+      "word": "щавель",
+      "asset": "word_shchavel",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "щебёнка",
+      "asset": "word_shchebyonka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "щель",
+      "asset": "word_shchel",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "щепка",
+      "asset": "word_shchepka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "шлюпка",
+      "asset": "word_shlyupka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "шнур",
+      "asset": "word_shnur",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "шпиль",
+      "asset": "word_shpil",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "скамейка",
+      "asset": "word_skameyka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "соловей",
+      "asset": "word_solovey",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "стройка",
+      "asset": "word_stroyka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "сюрприз",
+      "asset": "word_syurpriz",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "З"
+    },
+    {
+      "word": "тарелка",
+      "asset": "word_tarelka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р/Л"
+    },
+    {
+      "word": "термос",
+      "asset": "word_termos",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "трамвай",
+      "asset": "word_tramvay_y",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "тройка",
+      "asset": "word_troyka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "трюфель",
+      "asset": "word_tryufel",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "творог",
+      "asset": "word_tvorog",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Г"
+    },
+    {
+      "word": "тюль",
+      "asset": "word_tyul",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "укол",
+      "asset": "word_ukol_n",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "улей",
+      "asset": "word_uley",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "урожай",
+      "asset": "word_urozhay",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "усы",
+      "asset": "word_usy",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "С"
+    },
+    {
+      "word": "воздух",
+      "asset": "word_vozdukh",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "ягнёнок",
+      "asset": "word_yagnyonok",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "ягуар",
+      "asset": "word_yaguar",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "яхта",
+      "asset": "word_yakhta",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "яма",
+      "asset": "word_yama",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "январь",
+      "asset": "word_yanvar",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "ящик",
+      "asset": "word_yashchik_y",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Щ"
+    },
+    {
+      "word": "ястреб",
+      "asset": "word_yastreb",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "ёршик",
+      "asset": "word_yorshik",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "ёж",
+      "asset": "word_yozh_y",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "юла",
+      "asset": "word_yula",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "юрта",
+      "asset": "word_yurta",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "застёжка",
+      "asset": "word_zastyozhka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "З"
+    },
+    {
+      "word": "завтрак",
+      "asset": "word_zavtrak",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "З"
+    },
+    {
+      "word": "здание",
+      "asset": "word_zdanie",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "З"
+    },
+    {
+      "word": "жар",
+      "asset": "word_zhar",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "жаровня",
+      "asset": "word_zharovnya",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "жаворонок",
+      "asset": "word_zhavoronok",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "желток",
+      "asset": "word_zheltok",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "жеребец",
+      "asset": "word_zherebets",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "жокей",
+      "asset": "word_zhokey",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "Ж"
+    },
+    {
+      "word": "знамя",
+      "asset": "word_znamya",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "З"
+    },
+    {
+      "word": "звездопад",
+      "asset": "word_zvezdopad",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "pack-align-r2",
+      "soundFamily": "З"
     }
   ],
-  "totalWords": 259,
+  "totalWords": 1333,
   "generatedAt": "2026-05-24",
   "entries": [
     {

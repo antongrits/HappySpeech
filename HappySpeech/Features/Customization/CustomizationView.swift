@@ -51,7 +51,10 @@ struct CustomizationView: View {
 
     // MARK: - Local UI state
 
-    @State private var lyalyaState: LyalyaState = .idle
+    // Diploma fix 3.20 — стартовое состояние превью Ляли — бодрый канонический
+    // вид (.happy → mascot_lyalya_happy), а не .idle (mascot_lyalya_sleep с
+    // полуприкрытыми глазами), чтобы ребёнок видел весёлую Лялю.
+    @State private var lyalyaState: LyalyaState = .happy
     @State private var selectedTab: CustomizationTab = .outfit
     @State private var showResetConfirm = false
 
@@ -65,6 +68,14 @@ struct CustomizationView: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
+            // Diploma fix v32-postreaudit — фиксируем ZStack по screen-bounds,
+            // иначе GeometryReader в GuidedTourContainer (AppCoordinatorView)
+            // оставляет ZStack схлопнутым по intrinsic size и контент
+            // (live-preview Ляли, tab picker) уезжает к topLeading.
+            Color.clear
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .accessibilityHidden(true)
+
             HSMeshGradientBackground(palette: .calm, animated: !reduceMotion)
                 .ignoresSafeArea()
                 .blendMode(.softLight)
@@ -481,7 +492,7 @@ struct CustomizationView: View {
         }
         Task {
             try? await Task.sleep(for: .seconds(2))
-            withAnimation { lyalyaState = .idle }
+            withAnimation { lyalyaState = .happy }
         }
     }
 

@@ -638,7 +638,7 @@
         },
         {
           "id": "s-wi-7",
-          "word": "сук",
+          "word": "сом",
           "difficulty": 1,
           "audio_file": "Audio/Content/S/s-wi-7.m4a"
         },
@@ -740,13 +740,13 @@
         },
         {
           "id": "s-wi-24",
-          "word": "спорт",
+          "word": "самокат",
           "difficulty": 2,
           "audio_file": "Audio/Content/S/s-wi-24.m4a"
         },
         {
           "id": "s-wi-25",
-          "word": "свет",
+          "word": "светофор",
           "difficulty": 2,
           "audio_file": "Audio/Content/S/s-wi-25.m4a"
         },
@@ -764,7 +764,7 @@
         },
         {
           "id": "s-wi-28",
-          "word": "сказка",
+          "word": "собака",
           "difficulty": 3,
           "audio_file": "Audio/Content/S/s-wi-28.m4a"
         },
@@ -806,7 +806,7 @@
         },
         {
           "id": "s-wi-35",
-          "word": "силач",
+          "word": "сила",
           "difficulty": 2,
           "audio_file": "Audio/Content/S/s-wi-35.m4a"
         },
@@ -830,7 +830,7 @@
         },
         {
           "id": "s-wi-39",
-          "word": "семя",
+          "word": "семья",
           "difficulty": 2,
           "audio_file": "Audio/Content/S/s-wi-39.m4a"
         },
@@ -854,7 +854,7 @@
         },
         {
           "id": "s-wi-43",
-          "word": "сеть",
+          "word": "сетка",
           "difficulty": 2,
           "audio_file": "Audio/Content/S/s-wi-43.m4a"
         },
@@ -950,7 +950,7 @@
         },
         {
           "id": "s-wi-59",
-          "word": "столб",
+          "word": "стол",
           "difficulty": 3,
           "audio_file": "Audio/Content/S/s-wi-59.m4a"
         },
@@ -1001,7 +1001,7 @@
         },
         {
           "id": "s-wi-67",
-          "word": "скрипач",
+          "word": "скрипка",
           "hint": "СКР — три согласных подряд.",
           "difficulty": 5,
           "audio_file": "Audio/Content/S/s-wi-67.m4a"
@@ -1120,7 +1120,7 @@
         },
         {
           "id": "s-wi-84",
-          "word": "студент",
+          "word": "стакан",
           "hint": "СТУ+ДЕН+Т — СТ стечение.",
           "difficulty": 3,
           "audio_file": "Audio/Content/S/s-wi-84.m4a"
@@ -1267,7 +1267,7 @@
         },
         {
           "id": "s-wm-20",
-          "word": "пояс",
+          "word": "бусы",
           "difficulty": 2,
           "audio_file": "Audio/Content/S/s-wm-20.m4a"
         },
@@ -1279,7 +1279,7 @@
         },
         {
           "id": "s-wm-22",
-          "word": "лесок",
+          "word": "лес",
           "difficulty": 2,
           "audio_file": "Audio/Content/S/s-wm-22.m4a"
         },
@@ -1315,7 +1315,7 @@
         },
         {
           "id": "s-wm-28",
-          "word": "каска",
+          "word": "маска",
           "difficulty": 2,
           "audio_file": "Audio/Content/S/s-wm-28.m4a"
         },
@@ -1605,7 +1605,7 @@
         },
         {
           "id": "s-wf-2",
-          "word": "лис",
+          "word": "лиса",
           "difficulty": 1,
           "audio_file": "Audio/Content/S/s-wf-2.m4a"
         },
@@ -1689,7 +1689,7 @@
         },
         {
           "id": "s-wf-16",
-          "word": "пояс",
+          "word": "бусы",
           "difficulty": 2,
           "audio_file": "Audio/Content/S/s-wf-16.m4a"
         },

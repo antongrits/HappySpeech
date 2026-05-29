@@ -59,11 +59,14 @@ public struct HSMeshGradientBackground: View {
                     ColorTokens.Brand.mint, ColorTokens.Kid.bg, ColorTokens.Brand.sky
                 ]
             case .rewards:
-                return [
-                    ColorTokens.Brand.gold, ColorTokens.Brand.butter, ColorTokens.Brand.primaryLo,
-                    ColorTokens.Brand.butter, ColorTokens.Kid.bgSofter, ColorTokens.Brand.gold.opacity(0.6),
-                    ColorTokens.Brand.primaryLo, ColorTokens.Brand.butter, ColorTokens.Brand.gold
-                ]
+                // Diploma fix v34 — диагональный «wave» banding в правом
+                // верхнем углу 3.10 / 3.18 устраняется минимизацией дельты
+                // между соседними mesh-точками: все 9 точек = butter без
+                // opacity-вариаций, чтобы MeshGradient не показывал перепадов
+                // saturation. Дополнительные акценты gold/primaryLo даются
+                // через radial overlay сверху (см. RewardsView / SessionComplete
+                // backgroundLayer), а не через mesh-палитру.
+                return Array(repeating: ColorTokens.Brand.butter, count: 9)
             case .calm:
                 return [
                     ColorTokens.Brand.mint, ColorTokens.Brand.sky.opacity(0.5), ColorTokens.Brand.mint.opacity(0.6),
