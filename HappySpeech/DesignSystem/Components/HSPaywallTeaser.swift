@@ -2,12 +2,17 @@ import SwiftUI
 
 // MARK: - HSPaywallTeaser
 
-/// Premium-feature teaser — заглушка для будущей монетизации (post-v1.0).
+/// Premium-feature teaser — точка входа в монетизацию (StoreKit 2).
 ///
 /// `HSPaywallTeaser` — карточка с замочком, заголовком, описанием премиум-функции
-/// и неактивной CTA-кнопкой «Узнать больше». В v1.0 кнопка disabled — это просто
-/// визуальный hint, что фича на пути. Когда появится in-app purchase flow,
-/// `actionDisabled` переключится в `false` и кнопка станет активной.
+/// и CTA-кнопкой «Узнать больше». `actionDisabled` управляется снаружи и отражает
+/// **реальное** право доступа: вызывающий контур (parent / specialist) вычисляет его
+/// из `EntitlementGate(entitlement: storeService.premiumEntitlement)` —
+/// если фича уже доступна (premium куплен), кнопку можно скрыть/выключить; если
+/// заблокирована, кнопка активна и открывает `PaywallView` за `ParentalGate`.
+///
+/// По умолчанию `actionDisabled == false` — карточка ведёт в paywall. Захардкоженного
+/// `true` больше нет: состояние всегда задаётся источником истины (Interactor).
 ///
 /// Карточка использует `HSLiquidGlassCard` (style `.tinted(gold.opacity(0.18))`),
 /// что визуально отделяет премиум-блок от остального контента. Light/Dark адаптация —
@@ -15,10 +20,12 @@ import SwiftUI
 ///
 /// ## Пример
 /// ```swift
+/// let gate = EntitlementGate(entitlement: container.storeService.premiumEntitlement)
 /// HSPaywallTeaser(
 ///     title: "Расширенная аналитика",
 ///     subtitle: "Подробные графики прогресса по каждому звуку и экспорт PDF.",
-///     onTap: { interactor.openPaywallInfo() }
+///     actionDisabled: gate.canAccess(.extendedAnalytics),
+///     onTap: { showPaywall = true }
 /// )
 /// ```
 ///
@@ -43,14 +50,15 @@ public struct HSPaywallTeaser: View {
     ///   - subtitle: Описание функции, рус.
     ///   - icon: SF Symbol для иконки. По умолчанию «lock.fill».
     ///   - buttonTitle: Текст CTA. По умолчанию «Узнать больше».
-    ///   - actionDisabled: В v1.0 — `true`. После запуска монетизации — `false`.
-    ///   - onTap: Опциональный обработчик tap по карточке (если кнопка активна).
+    ///   - actionDisabled: Отражает реальное право доступа (вычисляется снаружи через
+    ///     ``EntitlementGate``). По умолчанию `false` — карточка активна и ведёт в paywall.
+    ///   - onTap: Обработчик tap (открывает `PaywallView` за `ParentalGate`).
     public init(
         title: String = String(localized: "paywall.teaser.defaultTitle", defaultValue: "Премиум функция"),
         subtitle: String,
         icon: String = "lock.fill",
         buttonTitle: String = String(localized: "paywall.teaser.cta", defaultValue: "Узнать больше"),
-        actionDisabled: Bool = true,
+        actionDisabled: Bool = false,
         onTap: (() -> Void)? = nil
     ) {
         self.title = title

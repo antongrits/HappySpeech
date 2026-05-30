@@ -43,6 +43,58 @@ extension SettingsView {
         .listSectionSeparator(.hidden, edges: .bottom)
     }
 
+    // MARK: Premium (StoreKit 2 monetisation)
+
+    /// Premium-точка входа. `actionDisabled` отражает реальное право доступа из
+    /// `EntitlementGate(entitlement: storeService.premiumEntitlement)`. Tap →
+    /// `ParentalGate` → `PaywallView` (Kids Category — ребёнок не достигает paywall).
+    /// Терапевтика бесплатна: premium открывает только аналитику/экспорт/мульти-профиль.
+    @ViewBuilder
+    var premiumSection: some View {
+        let entitlement = container.storeService.premiumEntitlement
+        let gate = EntitlementGate(entitlement: entitlement)
+        let alreadyPremium = entitlement.isPremium
+
+        Section {
+            HSPaywallTeaser(
+                title: alreadyPremium
+                    ? String(localized: "settings.premium.active.title")
+                    : String(localized: "settings.premium.teaser.title"),
+                subtitle: alreadyPremium
+                    ? String(localized: "settings.premium.active.subtitle")
+                    : String(localized: "settings.premium.teaser.subtitle"),
+                icon: alreadyPremium ? "crown.fill" : "lock.fill",
+                buttonTitle: alreadyPremium
+                    ? String(localized: "settings.premium.manage.cta")
+                    : String(localized: "paywall.teaser.cta"),
+                // Если фича доступна — кнопка остаётся активной для управления подпиской
+                // (open paywall показывает статус). Не блокируем — это не заглушка.
+                actionDisabled: false
+            ) {
+                showPremiumGate = true
+            }
+            .listRowBackground(Color.clear)
+            .listRowInsets(EdgeInsets(
+                top: SpacingTokens.tiny,
+                leading: 0,
+                bottom: SpacingTokens.small,
+                trailing: 0
+            ))
+            .listRowSeparator(.hidden)
+            .accessibilityHint(String(localized: "settings.premium.a11y.hint"))
+            // Используем gate, чтобы статически зафиксировать связь Settings ↔ EntitlementGate.
+            .accessibilityValue(gate.canAccess(.extendedAnalytics)
+                ? String(localized: "settings.premium.a11y.unlocked")
+                : String(localized: "settings.premium.a11y.locked"))
+        } header: {
+            Text(String(localized: "settings.section.premium"))
+                .font(TypographyTokens.caption(12).weight(.semibold))
+                .foregroundStyle(ColorTokens.Parent.inkMuted)
+                .textCase(.uppercase)
+        }
+        .listSectionSeparator(.hidden, edges: .bottom)
+    }
+
     // MARK: Appearance
 
     var appearanceSection: some View {
