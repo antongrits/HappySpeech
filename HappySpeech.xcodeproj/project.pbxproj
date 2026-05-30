@@ -801,6 +801,7 @@
 		654811AC6689A67D0A4A126E /* RuleBasedDecisionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF40E205003217C40C2672A1 /* RuleBasedDecisionServiceTests.swift */; };
 		654D7C6964A53A4DC8143789 /* HappySpeechWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5838EA7C1962F7377F415A2C /* HappySpeechWidgetBundle.swift */; };
 		65551F391BCF5177F8CB6B35 /* PaywallInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECD22E0A24C8F9B15039644 /* PaywallInteractor.swift */; };
+		65678B2149867C84AB754779 /* Wave2SnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C45EC67298E20CACE36AFA8 /* Wave2SnapshotTests.swift */; };
 		65AD9113EDA5A53523466449 /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114D4D1471ED5F8BF0BEADF2 /* LiveActivityManager.swift */; };
 		65C42C2C5277F422B29F878B /* BingoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 287C768661C0780603407C6A /* BingoView.swift */; };
 		65D07629A5DA60D056DA5C46 /* content-pack.schema.json in Resources */ = {isa = PBXBuildFile; fileRef = D4BB5DE27015870CA7F74006 /* content-pack.schema.json */; };
@@ -2824,6 +2825,7 @@
 		6C2AD7713907592E74FCE4DA /* SpecialistAssessmentCorpus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialistAssessmentCorpus.swift; sourceTree = "<group>"; };
 		6C3243217EA25C92B303F7D1 /* ARFaceFilterModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARFaceFilterModels.swift; sourceTree = "<group>"; };
 		6C35A1FB122A0AE20FD4BAF5 /* LessonGroupActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonGroupActivity.swift; sourceTree = "<group>"; };
+		6C45EC67298E20CACE36AFA8 /* Wave2SnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wave2SnapshotTests.swift; sourceTree = "<group>"; };
 		6C6FADADAF1978D04EA52A1E /* PuzzleRevealInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleRevealInteractorTests.swift; sourceTree = "<group>"; };
 		6CACDE75906EDC524EEE383C /* LLM */ = {isa = PBXFileReference; lastKnownFileType = folder; name = LLM; path = HappySpeech/Resources/Models/LLM; sourceTree = SOURCE_ROOT; };
 		6CC5C3E23AA1813235CFAF1F /* GuidedTourInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuidedTourInteractorTests.swift; sourceTree = "<group>"; };
@@ -6158,6 +6160,7 @@
 				BB5820EF1522C09484BECA82 /* SnapshotTestHelper.swift */,
 				7A307CA9A7B53F748861C645 /* SpecialistSnapshotTests.swift */,
 				D26642C734A20E9C4F2D3289 /* Wave1SnapshotTests.swift */,
+				6C45EC67298E20CACE36AFA8 /* Wave2SnapshotTests.swift */,
 			);
 			path = Snapshot;
 			sourceTree = "<group>";
@@ -9960,6 +9963,7 @@
 				24FA8F7172B40D379E66D587 /* Wav2Vec2ServiceLiveTests.swift in Sources */,
 				09674510DD46121AECD34F85 /* Wav2Vec2ServiceTests.swift in Sources */,
 				79914B2199359CA2B1D5B5E0 /* Wave1SnapshotTests.swift in Sources */,
+				65678B2149867C84AB754779 /* Wave2SnapshotTests.swift in Sources */,
 				ECF41C0048419DB61601BF98 /* WeeklyChallengeInteractorTests.swift in Sources */,
 				9FF4FC1A14CA1B2839E5D983 /* WeeklyChallengePresenterTests.swift in Sources */,
 				4B78F5113AE0FB920CB13834 /* WeeklyChallengeWorkerTests.swift in Sources */,
