@@ -185,6 +185,7 @@ targets:
       properties:
         com.apple.security.application-groups:
           - group.com.mmf.bsu.shared
+        com.apple.developer.personal-voice: true
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.mmf.bsu.HappySpeech
