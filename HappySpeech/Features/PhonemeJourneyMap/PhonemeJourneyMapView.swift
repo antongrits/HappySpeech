@@ -115,7 +115,7 @@ struct PhonemeJourneyMapView: View {
                 }
                 // Step 10 Batch C — Pattern 3 + 4: scrollTransition stagger
                 // fade+scale + parallax drift на roadmap stages.
-                .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
                     content
                         .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
                         .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))

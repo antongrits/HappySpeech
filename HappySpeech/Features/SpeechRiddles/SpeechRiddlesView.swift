@@ -122,7 +122,7 @@ struct SpeechRiddlesView: View {
         LazyVGrid(columns: columns, spacing: SpacingTokens.sp2) {
             ForEach(riddle.options) { option in
                 optionTile(option, riddle: riddle, interactor: interactor)
-                    .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                    .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
                         content
                             .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
                             .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))

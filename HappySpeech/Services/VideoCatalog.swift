@@ -132,7 +132,7 @@ enum VideoCatalog {
 
     // MARK: - Lazy-loaded indices
 
-    nonisolated(unsafe) private static let lyalyaIndex: [String: Metadata] = {
+    private static let lyalyaIndex: [String: Metadata] = {
         loadIndex(
             manifestName: "videos_manifest",
             subdirectory: "Videos/Lyalya",
@@ -142,7 +142,7 @@ enum VideoCatalog {
         )
     }()
 
-    nonisolated(unsafe) private static let articulationIndex: [String: Metadata] = {
+    private static let articulationIndex: [String: Metadata] = {
         loadIndex(
             manifestName: "articulation_manifest",
             subdirectory: "Videos/Articulation",
@@ -152,7 +152,7 @@ enum VideoCatalog {
         )
     }()
 
-    nonisolated(unsafe) private static let articulationFamilyMap: [String: [ArticulationDemo]] = {
+    private static let articulationFamilyMap: [String: [ArticulationDemo]] = {
         var result: [String: [ArticulationDemo]] = [:]
         guard let url = Bundle.main.url(
             forResource: "articulation_manifest",

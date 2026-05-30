@@ -154,7 +154,7 @@ struct StorytellingView: View {
                         topicCard(topic)
                             // Step 10 Batch E — Pattern 3: scrollTransition
                             // stagger fade+scale на topic tiles.
-                            .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                            .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
                                 content
                                     .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
                                     .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))

@@ -135,7 +135,7 @@ struct SoundDoctorKidView: View {
                         .buttonStyle(.plain)
                         // Step 10 Batch E — Pattern 3: scrollTransition stagger
                         // на articulation options.
-                        .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                        .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
                             content
                                 .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
                                 .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))

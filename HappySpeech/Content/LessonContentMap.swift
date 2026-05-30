@@ -65,13 +65,12 @@ public enum LessonContentMap {
     // MARK: - Storage
 
     /// All loaded entries (lazy, read once from bundle).
-    /// `nonisolated(unsafe)` is safe because storage is an immutable `let`
-    /// initialized via a synchronous closure run on first access; the value
-    /// is never mutated thereafter.
-    nonisolated(unsafe) private static let entries: [Entry] = loadEntries()
+    /// Immutable `let` initialized via a synchronous closure run on first
+    /// access; the value is never mutated thereafter.
+    private static let entries: [Entry] = loadEntries()
 
     /// Lowercased word → asset name lookup.
-    nonisolated(unsafe) private static let assetByWord: [String: String] = {
+    private static let assetByWord: [String: String] = {
         Dictionary(
             entries.map { ($0.word.lowercased(), $0.asset) },
             uniquingKeysWith: { first, _ in first }

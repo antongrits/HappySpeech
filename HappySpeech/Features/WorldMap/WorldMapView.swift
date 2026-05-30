@@ -238,7 +238,7 @@ struct WorldMapView: View {
                     .hsScrollEffect(.tiltCarousel)
                     // Step 10 Batch C — Pattern 3: scrollTransition stagger fade+scale,
                     // gated by reduce-motion.
-                    .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                    .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
                         content
                             .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
                             .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))
@@ -263,7 +263,7 @@ struct WorldMapView: View {
                 // Block J v18 — kavsoft-style tilt carousel scroll transition.
                 .hsScrollEffect(.tiltCarousel)
                 // Step 10 Batch C — Pattern 3 + 4: stagger fade+scale + parallax drift.
-                .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
                     content
                         .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
                         .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))

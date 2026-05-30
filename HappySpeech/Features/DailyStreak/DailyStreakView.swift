@@ -244,7 +244,7 @@ struct DailyStreakView: View {
                 ForEach(viewModel.milestones) { row in
                     milestoneCard(row: row)
                         // Step 10 Batch A — Pattern 3: entrance fade+scale stagger.
-                        .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                        .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
                             content
                                 .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
                                 .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.92))

@@ -333,7 +333,7 @@ struct SpeechGrowthDiaryView: View {
         _ = await interactor?.saveClip(
             sourceFileURL: url,
             thumbnailFileURL: nil,
-            durationSeconds: clipDuration(url: url),
+            durationSeconds: await clipDuration(url: url),
             topicTag: pendingTag,
             targetSound: pendingSound,
             note: pendingNote
@@ -342,9 +342,10 @@ struct SpeechGrowthDiaryView: View {
         pendingSound = ""
     }
 
-    private func clipDuration(url: URL) -> Double {
+    private func clipDuration(url: URL) async -> Double {
         let asset = AVURLAsset(url: url)
-        return CMTimeGetSeconds(asset.duration)
+        guard let duration = try? await asset.load(.duration) else { return 0 }
+        return CMTimeGetSeconds(duration)
     }
 
     // MARK: - Toolbar

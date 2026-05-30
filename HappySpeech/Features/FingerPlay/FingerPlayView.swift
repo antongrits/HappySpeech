@@ -431,7 +431,8 @@ struct FingerPlayView: View {
     private func setupCamera() async {
         let session = HandPoseCameraSession()
         let worker = container.handPoseWorker
-        session.onPixelBuffer = { pixelBuffer in
+        let interactor = interactor
+        session.onPixelBuffer = { [weak interactor] pixelBuffer in
             // Эта closure вызывается на background-очереди.
             // CVPixelBuffer — CF-тип, не Sendable; перевозим через @unchecked-обёртку.
             nonisolated(unsafe) let buffer = pixelBuffer

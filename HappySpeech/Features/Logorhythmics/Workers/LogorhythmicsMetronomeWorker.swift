@@ -112,13 +112,13 @@ final class LogorhythmicsMetronomeWorker {
             for (i, dur) in exercise.pattern.enumerated() {
                 if Task.isCancelled { return }
                 let isStrong = strongSet.contains(i)
-                let timeFromStart = await self.elapsed()
+                let timeFromStart = self.elapsed()
                 let event = BeatEvent(
                     beatIndex: i,
                     isStrong: isStrong,
                     timeSeconds: timeFromStart
                 )
-                await self.emit(event: event, strong: isStrong)
+                self.emit(event: event, strong: isStrong)
                 let sleepDuration = Double(dur) * beatDuration
                 do {
                     try await self.clock.sleep(seconds: sleepDuration)
@@ -126,7 +126,7 @@ final class LogorhythmicsMetronomeWorker {
                     return
                 }
             }
-            await self.streamContinuation?.finish()
+            self.streamContinuation?.finish()
         }
     }
 

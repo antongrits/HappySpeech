@@ -174,7 +174,7 @@ struct DailyRitualsLyalyaView: View {
                 ForEach(Array(steps.enumerated()), id: \.element.id) { index, step in
                     stepRow(step, index: index + 1)
                         // Step 10 Batch A — Pattern 3: stagger fade+scale.
-                        .scrollTransition(.animated.threshold(.visible(0.3))) { content, phase in
+                        .scrollTransition(.animated.threshold(.visible(0.3))) { [reduceMotion] content, phase in
                             content
                                 .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
                                 .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))

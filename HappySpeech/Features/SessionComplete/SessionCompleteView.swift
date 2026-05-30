@@ -666,7 +666,7 @@ struct SessionCompleteView: View {
         }
         // Step 10 Batch C — Pattern 3 + 4: scrollTransition stagger + parallax
         // на stat-карточках summary. Гейтятся reduce-motion в HSParallaxTileModifier.
-        .scrollTransition(.animated.threshold(.visible(0.25))) { content, phase in
+        .scrollTransition(.animated.threshold(.visible(0.25))) { [reduceMotion] content, phase in
             content
                 .opacity(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0))
                 .scaleEffect(reduceMotion ? 1 : (phase.isIdentity ? 1 : 0.94))
