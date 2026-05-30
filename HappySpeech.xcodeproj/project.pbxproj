@@ -829,6 +829,7 @@
 		6939E933F1E45BB55230FB9A /* FluencyDiaryInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AD051FD3E5162033F116FE8 /* FluencyDiaryInteractorTests.swift */; };
 		695E065B7E07B7CACB392EDF /* AudioMemoryGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BED9A98AA8595E8C72E98B7 /* AudioMemoryGameView.swift */; };
 		69A148AE93B97A15A92526D5 /* SpeechTempoWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1DB0B5EEE8D433583BBB69C /* SpeechTempoWorker.swift */; };
+		69EC1E29BAB1D7827FEEE029 /* FallbackVoiceSynthesisChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CBDDCAE5C97C4B149D65ED /* FallbackVoiceSynthesisChain.swift */; };
 		6A607D7482F588667E65771D /* ObjectDescriptionMapCorpus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110BA08F49A9A7B9FE57A224 /* ObjectDescriptionMapCorpus.swift */; };
 		6A7C8FAB6A778EF698C289B3 /* BedtimeModePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9358A6DBEE41D184CAF8C76 /* BedtimeModePresenter.swift */; };
 		6A97C46979CBBE94452D07D9 /* SyllableConstructorInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260825BD9D92F483E4C4797C /* SyllableConstructorInteractor.swift */; };
@@ -921,6 +922,7 @@
 		73A261D5E8C0CC596E39CA15 /* CoPlayWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA415BEBA182B56BFC2FCF61 /* CoPlayWorker.swift */; };
 		73A83F72F8D052EF0DA4DAB0 /* PhonemeAnalysisServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CE74B883A6EB82C982789E /* PhonemeAnalysisServiceProtocol.swift */; };
 		73CF2C5E78E0DFD7DBC04363 /* ARAssets in Resources */ = {isa = PBXBuildFile; fileRef = 810D1C4F2ACB7B77B448DBAE /* ARAssets */; };
+		73EA1FA9491CE68A414812BB /* LiveVoiceCloneService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB4EB4EE64CB923B96E5874 /* LiveVoiceCloneService.swift */; };
 		7441FF80984E1FBF54AE282C /* FamilyShareplayControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B39479F68D036B1E4931DC /* FamilyShareplayControllerTests.swift */; };
 		744785353F1E2FC776253332 /* WorldMapDisplayLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A64640382EC55001E14E90A /* WorldMapDisplayLogic.swift */; };
 		74AA71918FFF5FF5455C9F22 /* WeeklyChallengeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D890421EA2405BD81F804BA1 /* WeeklyChallengeInteractor.swift */; };
@@ -1025,6 +1027,7 @@
 		7F835AE70684DD673E14A22C /* AuthFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050EFC2665C25AC19DC5EFCB /* AuthFlowUITests.swift */; };
 		7F8E9CFB14F6DA0043E279C4 /* LLMInferenceActorExtendedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6FE8D36EA100BBC1552C0F4 /* LLMInferenceActorExtendedTests.swift */; };
 		7F8F3244D6B65F9F85180AA2 /* BedtimeModeInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423D0E69A67D415EE4CA7214 /* BedtimeModeInteractorTests.swift */; };
+		7FA483895F12652AE372A510 /* MockVoiceCloneService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544D37B6107ECDF496772A0F /* MockVoiceCloneService.swift */; };
 		7FA73E21B13389F204F951F1 /* pack_readaloud_stories.json in Resources */ = {isa = PBXBuildFile; fileRef = 20EB00774AD449B0BC25448D /* pack_readaloud_stories.json */; };
 		7FBFFAB7E3821278849ADFDA /* SpotlightOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1B4037D2DDCFCFFA487CEDD /* SpotlightOverlay.swift */; };
 		7FFFE775E1589804DFA33383 /* PalindromeHunterModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8903DCB5873CC6A47554205 /* PalindromeHunterModels.swift */; };
@@ -2016,6 +2019,7 @@
 		036E4126CDE6D7A3440CBB5D /* FamilyChallengeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyChallengeInteractor.swift; sourceTree = "<group>"; };
 		036F8C2825A92D0926B64864 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		03AE151420B81BA6FB5605AF /* CustomWordListEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomWordListEditorView.swift; sourceTree = "<group>"; };
+		03CBDDCAE5C97C4B149D65ED /* FallbackVoiceSynthesisChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FallbackVoiceSynthesisChain.swift; sourceTree = "<group>"; };
 		03EB74ADD6CE29F6775FAACA /* HandPoseCameraSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandPoseCameraSession.swift; sourceTree = "<group>"; };
 		04651A6C56DF88ECC1CCE20A /* PoseSequenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoseSequenceView.swift; sourceTree = "<group>"; };
 		04662746A25FDC382B5C6D7E /* FamilyHomeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyHomeModels.swift; sourceTree = "<group>"; };
@@ -2625,6 +2629,7 @@
 		53C1A0E9E5D109870D38D73B /* GrammarScoringWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarScoringWorkerTests.swift; sourceTree = "<group>"; };
 		5405A7F99CE334D9651DA08B /* HomeTasksInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTasksInteractorTests.swift; sourceTree = "<group>"; };
 		5408EC5545E30F3A3DC22EC0 /* WorldMapInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldMapInteractorTests.swift; sourceTree = "<group>"; };
+		544D37B6107ECDF496772A0F /* MockVoiceCloneService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockVoiceCloneService.swift; sourceTree = "<group>"; };
 		545489E5EBEBB4A9DC4D1608 /* NarrativeQuestInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NarrativeQuestInteractorTests.swift; sourceTree = "<group>"; };
 		545D23311E878EAEC2E724F9 /* ProgramEditorPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramEditorPresenterTests.swift; sourceTree = "<group>"; };
 		5469D3E86B7305C588374487 /* SiblingMultiplayerSmokeUITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiblingMultiplayerSmokeUITest.swift; sourceTree = "<group>"; };
@@ -3047,6 +3052,7 @@
 		8D2A61620B214AE18B9BBAD7 /* sound_l_pack.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = sound_l_pack.json; sourceTree = "<group>"; };
 		8D2D2BF6611E27336DD878F9 /* SyllableConstructorPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyllableConstructorPresenterTests.swift; sourceTree = "<group>"; };
 		8D52543D886FC7C0C9AE75A7 /* SpeechHomeworkPlannerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechHomeworkPlannerModels.swift; sourceTree = "<group>"; };
+		8DB4EB4EE64CB923B96E5874 /* LiveVoiceCloneService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveVoiceCloneService.swift; sourceTree = "<group>"; };
 		8DE9E6D02A5E6A031A4A1E10 /* RealmActor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmActor.swift; sourceTree = "<group>"; };
 		8DEA8DD31DBAD27770B1B714 /* StoryPlayerSmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryPlayerSmokeTests.swift; sourceTree = "<group>"; };
 		8E2516C38811F3AF4A2CCD2B /* SpecialistCaseNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialistCaseNotesView.swift; sourceTree = "<group>"; };
@@ -4921,6 +4927,7 @@
 				727E0FFC0DDBBC1AB7CBC2FC /* EmotionDetectionServiceLive.swift */,
 				AABCC8071609B566C2D8CA40 /* EnsembleASRService.swift */,
 				75215535F2D8BB7B4F566CC7 /* FaceAnalysisService.swift */,
+				03CBDDCAE5C97C4B149D65ED /* FallbackVoiceSynthesisChain.swift */,
 				DDDAE0340336A3AE2680B1FA /* FamilyInviteService.swift */,
 				6A7AD06E36F98576154F4BA3 /* FCMService.swift */,
 				DF5AA006CB357938F3D6526B /* HapticService.swift */,
@@ -4928,9 +4935,11 @@
 				1B5A31B335F2D5B7CF93A251 /* LiveAuthService.swift */,
 				F7E39E6D462EC13DD391D2A8 /* LiveServices.swift */,
 				01F8A392491212CD89BEFC4D /* LiveStoreService.swift */,
+				8DB4EB4EE64CB923B96E5874 /* LiveVoiceCloneService.swift */,
 				8ACE4C94F58853CF8FCCA1FB /* MLModelWarmupService.swift */,
 				AA9B989B699B2B41B5EEE405 /* MockServices.swift */,
 				68DC9DF0D0F598E7E283DC1C /* MockStoreService.swift */,
+				544D37B6107ECDF496772A0F /* MockVoiceCloneService.swift */,
 				C681CA9E5BE1E1AFD30D038F /* NetworkClient.swift */,
 				48236027D9CCCF6F9D287C1A /* NotificationServiceLive.swift */,
 				3E49C2B0D1E0918201C00853 /* ParentRole.swift */,
@@ -10289,6 +10298,7 @@
 				E3E10B81158445743E35D6D6 /* FSRSScheduler.swift in Sources */,
 				4661DE1F23421547D127142C /* FaceAnalysisService.swift in Sources */,
 				3B07346B9349807F52AF9D89 /* FaceMaskRenderer.swift in Sources */,
+				69EC1E29BAB1D7827FEEE029 /* FallbackVoiceSynthesisChain.swift in Sources */,
 				EDC28B8D6C407FD1D33F3055 /* FamilyAchievementsDisplayLogic.swift in Sources */,
 				94D624FF9A5ED0ACC49CFB3A /* FamilyAchievementsInteractor.swift in Sources */,
 				8179CD2D1FDC53481AC42CC8 /* FamilyAchievementsModels.swift in Sources */,
@@ -10535,6 +10545,7 @@
 				070FE8E55FABA421CC3ED543 /* LiveAuthService.swift in Sources */,
 				18CDB90C06F4A85BD83D6FF4 /* LiveServices.swift in Sources */,
 				717799ADD782441DCED016AE /* LiveStoreService.swift in Sources */,
+				73EA1FA9491CE68A414812BB /* LiveVoiceCloneService.swift in Sources */,
 				AD0BA773540F50CBE89532D9 /* LocalLLMService.swift in Sources */,
 				D4DF8E008F1168B4820B5A4A /* LogopedistChatDisplayLogic.swift in Sources */,
 				5AA0F3B2B4A850CBA260825F /* LogopedistChatInteractor.swift in Sources */,
@@ -10594,6 +10605,7 @@
 				B5B5C7191EE7880DBE139478 /* MockLLMModelManager.swift in Sources */,
 				2F725C4098A8DB8315DEEACB /* MockServices.swift in Sources */,
 				254F924E88C2929262442A5A /* MockStoreService.swift in Sources */,
+				7FA483895F12652AE372A510 /* MockVoiceCloneService.swift in Sources */,
 				7CB5674C75BBC72285EEDE57 /* MockWhisperKitModelManager.swift in Sources */,
 				A7977DA79AB9956F85069035 /* MorningRoutineInteractor.swift in Sources */,
 				8D4FD94EEFB7BDA205EE1581 /* MorningRoutineModels.swift in Sources */,

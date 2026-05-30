@@ -2,51 +2,88 @@ import AVFoundation
 import Foundation
 import OSLog
 
+// MARK: - VoiceSynthesisMode
+
+/// Режим синтеза речи для ``VoiceCloneService``.
+///
+/// Честный контекст продукта: настоящее «клонирование голоса на лету» (zero-shot TTS
+/// вроде XTTS-v2) не входит в объём диплома и не выполняется on-device. Вместо этого
+/// сервис предоставляет реально работающий синтез/воспроизведение речи с трёхуровневым
+/// fallback. Apple Personal Voice поддерживает только en-US / zh-CN / es-MX и создаётся
+/// пользователем вручную в системных настройках, поэтому русский Personal Voice
+/// технически невозможен — режим ``personalVoice(voiceIdentifier:)`` доступен лишь
+/// для английских локалей и только после авторизации пользователя.
+public enum VoiceSynthesisMode: Sendable, Equatable {
+    /// Воспроизведение заранее записанного семейного голоса родителя.
+    /// `audioFilePath` — относительный путь внутри `Documents/family_recordings/`
+    /// (или абсолютный путь к существующему `.m4a`).
+    case familyVoice(audioFilePath: String)
+
+    /// Системный синтез речи `AVSpeechSynthesizer` с голосом указанной локали
+    /// (по умолчанию `ru-RU`). Результат рендерится в `.m4a` через `AVAudioConverter`.
+    case systemTTS(locale: String)
+
+    /// Воспроизведение pre-rendered аудио из бандла приложения
+    /// (например, Chirp3-HD-Aoede озвучка голосом Ляли). `resourceName` — имя файла
+    /// без расширения; ищется как `.m4a` в бандле.
+    case bundledAudio(resourceName: String)
+
+    /// Синтез голосом Personal Voice. Доступно только на en-локалях и только
+    /// после авторизации пользователя. `voiceIdentifier` — `AVSpeechSynthesisVoice.identifier`
+    /// конкретного personal voice; `nil` означает «первый доступный personal voice».
+    case personalVoice(voiceIdentifier: String?)
+}
+
 // MARK: - VoiceCloneService Protocol
 
-/// Сервис клонирования голоса маскота Ляли — placeholder для post-v1.0.
+/// Сервис синтеза/воспроизведения речи для озвучивания контента приложения.
 ///
-/// `VoiceCloneService` определяет API для синтеза речи с кастомным голосом.
-/// В v1.0 реализовано только `loadReference(speakerIndex:)` — загрузка
-/// эталонного аудио-файла. Клонирование голоса (`cloneVoice`) не реализовано.
+/// Несмотря на историческое имя «VoiceClone», в v1.0 это полнофункциональный TTS-сервис
+/// с трёхуровневым fallback (семейный голос → системный TTS → bundled-аудио), плюс
+/// опциональный Apple Personal Voice (только en-локали). Подлинное ML-клонирование голоса
+/// (zero-shot voice cloning) — за рамками диплома и сознательно не реализуется; метод
+/// ``cloneVoice(text:speakerIndex:)`` маршрутизируется в системный TTS как разумный путь.
 ///
-/// Reference data: `Resources/Models/voice_clone_reference.wav`
-/// (47.4 MB, 25.9 минут синтетической русской речи, 10 голосов через edge-tts).
-///
-/// ### v1.0 ограничения
-/// - `isCloneSupported` возвращает `false`
-/// - `cloneVoice` бросает `VoiceCloneError.unsupportedInVersion10`
-/// - `loadReference` работает корректно
-///
-/// ### Roadmap
-/// - v1.1: XTTS-v2 / TortoiseTTS Core ML интеграция
-/// - v1.2: Реальные голоса ребёнка с parent consent UI
-/// - v1.3: Per-child custom mascot voice в настройках
+/// ### Контуры использования
+/// - Синтез произвольного текста — только parent / specialist контур за ParentalGate.
+/// - Озвучка контент-паков (детский контур) использует bundled-аудио или семейный голос.
+/// - Personal Voice авторизация запрашивается только в родительских настройках.
 ///
 /// ## Пример
 /// ```swift
-/// let service: VoiceCloneService = LiveVoiceCloneService()
-///
-/// // Всегда работает в v1.0
-/// let url = try await service.loadReference(speakerIndex: 0)
-///
-/// // Выбрасывает unsupportedInVersion10 в v1.0
-/// let data = try await service.cloneVoice(text: "Привет!", speakerIndex: 0)
+/// let service: any VoiceCloneService = LiveVoiceCloneService()
+/// let data = try await service.synthesize(text: "Привет!", mode: .systemTTS(locale: "ru-RU"))
 /// ```
 ///
 /// ## See Also
-/// - ``AmbientSoundService``
-/// - ``NotificationServiceLive``
+/// - ``LiveVoiceCloneService``
+/// - ``FallbackVoiceSynthesisChain``
+/// - ``MockVoiceCloneService``
 public protocol VoiceCloneService: Sendable {
+    /// Синтезирует/загружает речь для текста в указанном режиме и возвращает
+    /// аудио-данные (контейнер `.m4a`/AAC). Бросает ``VoiceCloneError`` при сбое.
+    func synthesize(text: String, mode: VoiceSynthesisMode) async throws -> Data
+
+    /// Возвращает список режимов, реально доступных для указанной локали в порядке
+    /// предпочтения (от наиболее «персонального» к наиболее надёжному fallback).
+    func availableModes(for locale: String) async -> [VoiceSynthesisMode]
+
+    /// Запрашивает у пользователя авторизацию на использование Personal Voice.
+    /// Возвращает текущий статус авторизации.
+    func requestPersonalVoiceAuthorization() async -> AVSpeechSynthesizer.PersonalVoiceAuthorizationStatus
+
+    /// Текущий статус авторизации Personal Voice (без запроса диалога).
+    var personalVoiceAuthorizationStatus: AVSpeechSynthesizer.PersonalVoiceAuthorizationStatus { get }
+
     /// Возвращает URL embedded reference audio файла для указанного диктора.
-    /// В v1.0 file существует но клонирование не поддерживается.
     func loadReference(speakerIndex: Int) async throws -> URL
 
-    /// Клонирует голос на основе reference data. НЕ РЕАЛИЗОВАН в v1.0.
-    /// Бросает `VoiceCloneError.unsupportedInVersion10`.
+    /// «Клонирование» голоса по тексту. Подлинное zero-shot ML-клонирование не
+    /// реализуется on-device (вне объёма диплома); вместо немедленного отказа метод
+    /// маршрутизирует синтез в системный TTS (`.systemTTS`) как разумный рабочий путь.
     func cloneVoice(text: String, speakerIndex: Int) async throws -> Data
 
-    /// `true` если полная реализация клонирования доступна. Всегда `false` в v1.0.
+    /// `true` — синтез речи реально работает (TTS + fallback-цепочка функциональны).
     var isCloneSupported: Bool { get }
 }
 
@@ -57,6 +94,12 @@ public enum VoiceCloneError: LocalizedError, Sendable {
     case referenceNotFound
     case unsupportedSpeaker(Int)
     case unsupportedInVersion10
+    case emptyText
+    case voiceUnavailable(locale: String)
+    case synthesisFailed
+    case audioConversionFailed
+    case fileNotFound(String)
+    case personalVoiceNotAuthorized
 
     public var errorDescription: String? {
         switch self {
@@ -75,6 +118,30 @@ public enum VoiceCloneError: LocalizedError, Sendable {
         case .unsupportedInVersion10:
             return String(localized: "voice_clone_error_v10",
                           defaultValue: "Клонирование голоса недоступно в версии 1.0",
+                          bundle: .main)
+        case .emptyText:
+            return String(localized: "voice_clone_error_empty_text",
+                          defaultValue: "Текст для синтеза пуст",
+                          bundle: .main)
+        case .voiceUnavailable(let locale):
+            return String(localized: "voice_clone_error_voice_unavailable",
+                          defaultValue: "Голос для локали \(locale) недоступен на устройстве",
+                          bundle: .main)
+        case .synthesisFailed:
+            return String(localized: "voice_clone_error_synthesis_failed",
+                          defaultValue: "Не удалось синтезировать речь",
+                          bundle: .main)
+        case .audioConversionFailed:
+            return String(localized: "voice_clone_error_conversion_failed",
+                          defaultValue: "Не удалось преобразовать аудио",
+                          bundle: .main)
+        case .fileNotFound(let path):
+            return String(localized: "voice_clone_error_file_not_found",
+                          defaultValue: "Аудио-файл не найден: \(path)",
+                          bundle: .main)
+        case .personalVoiceNotAuthorized:
+            return String(localized: "voice_clone_error_personal_voice_unauthorized",
+                          defaultValue: "Доступ к Personal Voice не предоставлен",
                           bundle: .main)
         }
     }
@@ -123,42 +190,5 @@ public enum VoiceCloneSpeaker: Int, CaseIterable, Sendable {
         case .svetlanaLow:      return String(localized: "speaker_svetlana_low",
                                               defaultValue: "Светлана (низкая)", bundle: .main)
         }
-    }
-}
-
-// MARK: - VoiceCloneServicePlaceholder
-
-/// Placeholder-реализация для v1.0.
-/// - `loadReference` корректно возвращает URL embedded WAV-файла.
-/// - `cloneVoice` немедленно бросает `VoiceCloneError.unsupportedInVersion10`.
-/// - `isCloneSupported` = `false`.
-public struct VoiceCloneServicePlaceholder: VoiceCloneService {
-
-    private static let logger = Logger(subsystem: "com.happyspeech", category: "VoiceCloneService")
-
-    public init() {}
-
-    public var isCloneSupported: Bool { false }
-
-    public func loadReference(speakerIndex: Int) async throws -> URL {
-        guard speakerIndex >= 0 && speakerIndex < VoiceCloneSpeaker.allCases.count else {
-            Self.logger.warning("loadReference: unsupported speakerIndex=\(speakerIndex)")
-            throw VoiceCloneError.unsupportedSpeaker(speakerIndex)
-        }
-        guard let url = Bundle.main.url(
-            forResource: "voice_clone_reference",
-            withExtension: "wav",
-            subdirectory: "Models"
-        ) else {
-            Self.logger.error("loadReference: voice_clone_reference.wav not found in bundle")
-            throw VoiceCloneError.referenceNotFound
-        }
-        Self.logger.debug("loadReference: speakerIndex=\(speakerIndex) → \(url.lastPathComponent)")
-        return url
-    }
-
-    public func cloneVoice(text: String, speakerIndex: Int) async throws -> Data {
-        Self.logger.info("cloneVoice called (placeholder) — throwing unsupportedInVersion10")
-        throw VoiceCloneError.unsupportedInVersion10
     }
 }

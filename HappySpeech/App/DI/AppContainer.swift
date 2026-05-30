@@ -116,14 +116,21 @@ public final class AppContainer {
     // Block C v15: EmotionDetectionService — Conv1d-LSTM 4 emotions.
     private var _emotionDetectionService: (any EmotionDetectionServiceProtocol)?
 
-    // Block M (v12): VoiceCloneService — placeholder, полная реализация post-v1.0.
-    // Не требует factory — VoiceCloneServicePlaceholder легковесный struct без зависимостей.
+    // Block M (v12): VoiceCloneService — реальный TTS-синтез с трёхуровневым fallback.
+    // Live: LiveVoiceCloneService (AVSpeechSynthesizer → m4a, familyVoice, bundledAudio,
+    // опц. Personal Voice на en-локалях). Preview/Test: MockVoiceCloneService.
     private var _voiceCloneService: (any VoiceCloneService)?
     public var voiceCloneService: any VoiceCloneService {
         if let existing = _voiceCloneService { return existing }
-        let new = VoiceCloneServicePlaceholder()
+        let new: any VoiceCloneService = LiveVoiceCloneService()
         _voiceCloneService = new
         return new
+    }
+
+    /// Подмена ``voiceCloneService`` для preview / тестов. Должна вызываться до
+    /// первого обращения к `voiceCloneService`.
+    public func overrideVoiceCloneService(_ service: any VoiceCloneService) {
+        _voiceCloneService = service
     }
 
     // StoreKit 2 монетизация — lazy. Live: LiveStoreService (реальный StoreKit 2,
@@ -878,6 +885,8 @@ public extension AppContainer {
         container.overrideDailyUsageTracker(MockDailyUsageTracker())
         // StoreKit 2: MockStoreService — без реального магазина в preview/tests.
         container.overrideStoreService(MockStoreService())
+        // Block M (v12): VoiceClone — mock без AVSpeechSynthesizer/файлов в preview/tests.
+        container.overrideVoiceCloneService(MockVoiceCloneService())
         return container
     }
 }

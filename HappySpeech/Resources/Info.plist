@@ -47,6 +47,8 @@
 	<string>HappySpeech использует микрофон для распознавания произношения и логопедических упражнений</string>
 	<key>NSMotionUsageDescription</key>
 	<string>HappySpeech использует датчики движения для упражнений по логоритмике — чтобы засчитать ритмичные топот или хлопки</string>
+	<key>NSPersonalVoiceUsageDescription</key>
+	<string>HappySpeech может использовать ваш Personal Voice, чтобы озвучивать упражнения знакомым голосом (только для родительского контура)</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>HappySpeech использует распознавание речи для оценки произношения</string>
 	<key>NSSupportsLiveActivities</key>
