@@ -18586,6 +18586,28 @@
         }
       }
     },
+    "karaoke.progress %lld %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фраза %lld из %lld"
+          }
+        }
+      }
+    },
+    "karaoke.score.percent %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Совпадение: %lld%%"
+          }
+        }
+      }
+    },
     "karaoke.button.next.a11y": {
       "extractionState": "manual",
       "localizations": {
