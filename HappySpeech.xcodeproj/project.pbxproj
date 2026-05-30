@@ -867,6 +867,7 @@
 		6E95107FB5D84C78DE7F359A /* HSScrollDrivenShapeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F786600D904FAB3293C235 /* HSScrollDrivenShapeTests.swift */; };
 		6EBD8AC54E46550003C4D1C4 /* TempoAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CAE7F1D5A4A526E53DC521 /* TempoAnalyzer.swift */; };
 		6EE2C8772BA6CEDABCBA4B92 /* BreathingHapticWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9126A0AFBABBFB6B2D8AA21B /* BreathingHapticWorker.swift */; };
+		6EFD1B8FBD04D16A1BE88662 /* Wave3SnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427DF32EA75C2E7FFACB4EC2 /* Wave3SnapshotTests.swift */; };
 		6F08D0D498077F8366F039B0 /* NotificationServiceLiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0304D9F3236A0CB5383BD22 /* NotificationServiceLiveTests.swift */; };
 		6F0C3586AEAB0750F269DC9C /* WhisperGameModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8121CD195DB24C23DAE943D6 /* WhisperGameModels.swift */; };
 		6F0F59A1041EB9A64CD3E85A /* LessonVoiceWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB3FED0E5B53E9842AFCDAC /* LessonVoiceWorkerTests.swift */; };
@@ -2489,6 +2490,7 @@
 		4269D9F775177D1AC7B9B366 /* SortingDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingDisplayLogic.swift; sourceTree = "<group>"; };
 		427A4142340CA2895B65A7CD /* ArticulationGymView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticulationGymView.swift; sourceTree = "<group>"; };
 		427A9F49A1561DDC1CA53B50 /* GrammarGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrammarGameScene.swift; sourceTree = "<group>"; };
+		427DF32EA75C2E7FFACB4EC2 /* Wave3SnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wave3SnapshotTests.swift; sourceTree = "<group>"; };
 		4289309A8D17FBC7F55F47D9 /* RewardsDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardsDisplayLogic.swift; sourceTree = "<group>"; };
 		429D1E4A82ECDBDF7133308E /* ChildHomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildHomeRouter.swift; sourceTree = "<group>"; };
 		42BA2D0574E1569FC16175D4 /* lyalyaTap.ahap */ = {isa = PBXFileReference; path = lyalyaTap.ahap; sourceTree = "<group>"; };
@@ -6161,6 +6163,7 @@
 				7A307CA9A7B53F748861C645 /* SpecialistSnapshotTests.swift */,
 				D26642C734A20E9C4F2D3289 /* Wave1SnapshotTests.swift */,
 				6C45EC67298E20CACE36AFA8 /* Wave2SnapshotTests.swift */,
+				427DF32EA75C2E7FFACB4EC2 /* Wave3SnapshotTests.swift */,
 			);
 			path = Snapshot;
 			sourceTree = "<group>";
@@ -9964,6 +9967,7 @@
 				09674510DD46121AECD34F85 /* Wav2Vec2ServiceTests.swift in Sources */,
 				79914B2199359CA2B1D5B5E0 /* Wave1SnapshotTests.swift in Sources */,
 				65678B2149867C84AB754779 /* Wave2SnapshotTests.swift in Sources */,
+				6EFD1B8FBD04D16A1BE88662 /* Wave3SnapshotTests.swift in Sources */,
 				ECF41C0048419DB61601BF98 /* WeeklyChallengeInteractorTests.swift in Sources */,
 				9FF4FC1A14CA1B2839E5D983 /* WeeklyChallengePresenterTests.swift in Sources */,
 				4B78F5113AE0FB920CB13834 /* WeeklyChallengeWorkerTests.swift in Sources */,
