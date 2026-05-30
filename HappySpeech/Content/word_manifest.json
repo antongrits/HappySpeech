@@ -4845,14 +4845,14 @@
     },
     {
       "word": "аквариумная рыбка",
-      "asset": "word_akvariumnaya rybka",
+      "asset": "word_rybka_akv",
       "recommendedStages": [
         "word"
       ],
       "visualComplexity": "simple",
       "semanticCategory": "thematic",
       "methodologySource": "imagen3-generated",
-      "soundFamily": null
+      "soundFamily": "Р"
     },
     {
       "word": "альбом",
@@ -4955,14 +4955,14 @@
     },
     {
       "word": "анютины глазки",
-      "asset": "word_anyutiny glazki",
+      "asset": "word_anyutiny_glazki",
       "recommendedStages": [
         "word"
       ],
       "visualComplexity": "simple",
       "semanticCategory": "thematic",
       "methodologySource": "imagen3-generated",
-      "soundFamily": null
+      "soundFamily": "Й"
     },
     {
       "word": "апельсин",
@@ -5384,14 +5384,14 @@
     },
     {
       "word": "барный стул",
-      "asset": "word_barnyy stul",
+      "asset": "word_stul_barnyy",
       "recommendedStages": [
         "word"
       ],
       "visualComplexity": "simple",
       "semanticCategory": "thematic",
       "methodologySource": "imagen3-generated",
-      "soundFamily": null
+      "soundFamily": "С"
     },
     {
       "word": "барракуда",
@@ -5493,17 +5493,6 @@
       "soundFamily": null
     },
     {
-      "word": "белая смородина",
-      "asset": "word_belaya smorodina",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
       "word": "бельчонок",
       "asset": "word_belchonok",
       "recommendedStages": [
@@ -5528,17 +5517,6 @@
     {
       "word": "белуга",
       "asset": "word_beluga",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "беречь природу",
-      "asset": "word_berech prirodu",
       "recommendedStages": [
         "word"
       ],
@@ -5812,96 +5790,8 @@
       "soundFamily": null
     },
     {
-      "word": "боковое дыхание",
-      "asset": "word_bokovoe dykhanie",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "боковые наклоны",
-      "asset": "word_bokovye naklony",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
       "word": "боль",
       "asset": "word_bol",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "большая машина",
-      "asset": "word_bolshaya mashina",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "большие медведи",
-      "asset": "word_bolshie medvedi",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "большое окно",
-      "asset": "word_bolshoe okno",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "большой маятник",
-      "asset": "word_bolshoy mayatnik",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "большой медведь",
-      "asset": "word_bolshoy medved",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "большой палец",
-      "asset": "word_bolshoy palets",
       "recommendedStages": [
         "word"
       ],
@@ -5967,14 +5857,14 @@
     },
     {
       "word": "божья коровка",
-      "asset": "word_bozhya korovka",
+      "asset": "word_bozhya_korovka",
       "recommendedStages": [
         "word"
       ],
       "visualComplexity": "simple",
       "semanticCategory": "thematic",
       "methodologySource": "imagen3-generated",
-      "soundFamily": null
+      "soundFamily": "К"
     },
     {
       "word": "бриллиант",
@@ -6230,17 +6120,6 @@
       "soundFamily": null
     },
     {
-      "word": "быстрые часики",
-      "asset": "word_bystrye chasiki",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
       "word": "чревовещатель",
       "asset": "word_chrevoveshchatel",
       "recommendedStages": [
@@ -6395,17 +6274,6 @@
       "soundFamily": "Ч"
     },
     {
-      "word": "дальний лес",
-      "asset": "word_dalniy les",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
       "word": "дальнобойщик",
       "asset": "word_dalnoboyshchik",
       "recommendedStages": [
@@ -6440,14 +6308,14 @@
     },
     {
       "word": "дед мороз",
-      "asset": "word_ded moroz",
+      "asset": "word_ded_moroz",
       "recommendedStages": [
         "word"
       ],
       "visualComplexity": "simple",
       "semanticCategory": "thematic",
       "methodologySource": "imagen3-generated",
-      "soundFamily": null
+      "soundFamily": "Р"
     },
     {
       "word": "дедуля",
@@ -6472,28 +6340,6 @@
       "soundFamily": null
     },
     {
-      "word": "декоративный кролик",
-      "asset": "word_dekorativnyy krolik",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "дельфин свистит",
-      "asset": "word_delfin svistit",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
       "word": "дельфин",
       "asset": "word_delfin",
       "recommendedStages": [
@@ -6507,28 +6353,6 @@
     {
       "word": "дельфиниум",
       "asset": "word_delfinium",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "делись игрушками",
-      "asset": "word_delis igrushkami",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "день рождения",
-      "asset": "word_den rozhdeniya",
       "recommendedStages": [
         "word"
       ],
@@ -6571,17 +6395,6 @@
       "soundFamily": null
     },
     {
-      "word": "деревянный кубик",
-      "asset": "word_derevyannyy kubik",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
       "word": "дерзость",
       "asset": "word_derzost",
       "recommendedStages": [
@@ -6595,17 +6408,6 @@
     {
       "word": "десять",
       "asset": "word_desyat",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "детский праздник",
-      "asset": "word_detskiy prazdnik",
       "recommendedStages": [
         "word"
       ],
@@ -6725,61 +6527,6 @@
       "soundFamily": null
     },
     {
-      "word": "дивная мечта",
-      "asset": "word_divnaya mechta",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "дивное удивление",
-      "asset": "word_divnoe udivlenie",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "дивный покой",
-      "asset": "word_divnyy pokoy",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "диво дивное",
-      "asset": "word_divo divnoe",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "длинный язычок",
-      "asset": "word_dlinnyy yazychok",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
       "word": "длинный",
       "asset": "word_dlinnyy",
       "recommendedStages": [
@@ -6793,17 +6540,6 @@
     {
       "word": "дневник",
       "asset": "word_dnevnik",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "добавь антоним",
-      "asset": "word_dobav antonim",
       "recommendedStages": [
         "word"
       ],
@@ -6835,41 +6571,8 @@
       "soundFamily": null
     },
     {
-      "word": "добрые слова",
-      "asset": "word_dobrye slova",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "долгий выдох",
-      "asset": "word_dolgiy vydokh",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
       "word": "долька",
       "asset": "word_dolka",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "домашнее задание",
-      "asset": "word_domashnee zadanie",
       "recommendedStages": [
         "word"
       ],
@@ -6912,17 +6615,6 @@
       "soundFamily": null
     },
     {
-      "word": "дорожка ледяная",
-      "asset": "word_dorozhka ledyanaya",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
       "word": "досада",
       "asset": "word_dosada",
       "recommendedStages": [
@@ -6947,17 +6639,6 @@
     {
       "word": "дождь",
       "asset": "word_dozhd",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "дождик капает",
-      "asset": "word_dozhdik kapaet",
       "recommendedStages": [
         "word"
       ],
@@ -7123,17 +6804,6 @@
     {
       "word": "дятел",
       "asset": "word_dyatel",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "дыхательная пятёрка",
-      "asset": "word_dykhatelnaya pyatyorka",
       "recommendedStages": [
         "word"
       ],
@@ -7341,17 +7011,6 @@
       "soundFamily": "Г"
     },
     {
-      "word": "газовая плита",
-      "asset": "word_gazovaya plita",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Г"
-    },
-    {
       "word": "гелевая",
       "asset": "word_gelevaya",
       "recommendedStages": [
@@ -7420,17 +7079,6 @@
     {
       "word": "гиена",
       "asset": "word_giena",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Г"
-    },
-    {
-      "word": "гигиена тела",
-      "asset": "word_gigiena tela",
       "recommendedStages": [
         "word"
       ],
@@ -7517,39 +7165,6 @@
       "soundFamily": "Г"
     },
     {
-      "word": "глаголы движения",
-      "asset": "word_glagoly dvizheniya",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Г"
-    },
-    {
-      "word": "глаголы звука",
-      "asset": "word_glagoly zvuka",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Г"
-    },
-    {
-      "word": "главный праздник",
-      "asset": "word_glavnyy prazdnik",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Г"
-    },
-    {
       "word": "глаз",
       "asset": "word_glaz",
       "recommendedStages": [
@@ -7583,63 +7198,8 @@
       "soundFamily": "Г"
     },
     {
-      "word": "глиссандо вниз",
-      "asset": "word_glissando vniz",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Г"
-    },
-    {
-      "word": "глиссандо вверх",
-      "asset": "word_glissando vverkh",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Г"
-    },
-    {
       "word": "глобус",
       "asset": "word_globus",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Г"
-    },
-    {
-      "word": "глубокая чашечка",
-      "asset": "word_glubokaya chashechka",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Г"
-    },
-    {
-      "word": "глубокий снег",
-      "asset": "word_glubokiy sneg",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Г"
-    },
-    {
-      "word": "глубокий сугроб",
-      "asset": "word_glubokiy sugrob",
       "recommendedStages": [
         "word"
       ],
@@ -7737,17 +7297,6 @@
       "soundFamily": "Г"
     },
     {
-      "word": "гора снега",
-      "asset": "word_gora snega",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Г"
-    },
-    {
       "word": "горбуша",
       "asset": "word_gorbusha",
       "recommendedStages": [
@@ -7783,17 +7332,6 @@
     {
       "word": "горилла",
       "asset": "word_gorilla",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Г"
-    },
-    {
-      "word": "горная вершина",
-      "asset": "word_gornaya vershina",
       "recommendedStages": [
         "word"
       ],
@@ -7990,17 +7528,6 @@
       "soundFamily": "Г"
     },
     {
-      "word": "греем руки",
-      "asset": "word_greem ruki",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Г"
-    },
-    {
       "word": "грейпфрут",
       "asset": "word_greypfrut",
       "recommendedStages": [
@@ -8025,17 +7552,6 @@
     {
       "word": "гриф",
       "asset": "word_grif",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Г"
-    },
-    {
-      "word": "гром гремит",
-      "asset": "word_grom gremit",
       "recommendedStages": [
         "word"
       ],
@@ -8210,28 +7726,6 @@
       "soundFamily": "Г"
     },
     {
-      "word": "гудит поезд",
-      "asset": "word_gudit poezd",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Г"
-    },
-    {
-      "word": "гусь шипит",
-      "asset": "word_gus shipit",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Г"
-    },
-    {
       "word": "гусак",
       "asset": "word_gusak",
       "recommendedStages": [
@@ -8322,17 +7816,6 @@
     {
       "word": "игрушка",
       "asset": "word_igrushka",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "игры дома",
-      "asset": "word_igry doma",
       "recommendedStages": [
         "word"
       ],
@@ -8573,17 +8056,6 @@
       "soundFamily": "К"
     },
     {
-      "word": "кабан фыркает",
-      "asset": "word_kaban fyrkaet",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "К"
-    },
-    {
       "word": "кабинет",
       "asset": "word_kabinet",
       "recommendedStages": [
@@ -8619,39 +8091,6 @@
     {
       "word": "качать",
       "asset": "word_kachat",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "К"
-    },
-    {
-      "word": "качели быстрые",
-      "asset": "word_kacheli bystrye",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "К"
-    },
-    {
-      "word": "качели назад",
-      "asset": "word_kacheli nazad",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "К"
-    },
-    {
-      "word": "качели вперёд",
-      "asset": "word_kacheli vperyod",
       "recommendedStages": [
         "word"
       ],
@@ -8784,17 +8223,6 @@
     {
       "word": "капель",
       "asset": "word_kapel",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "К"
-    },
-    {
-      "word": "капля дождя",
-      "asset": "word_kaplya dozhdya",
       "recommendedStages": [
         "word"
       ],
@@ -9092,17 +8520,6 @@
     {
       "word": "кисточка",
       "asset": "word_kistochka",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "К"
-    },
-    {
-      "word": "кит фыркает",
-      "asset": "word_kit fyrkaet",
       "recommendedStages": [
         "word"
       ],
@@ -9838,17 +9255,6 @@
       "soundFamily": null
     },
     {
-      "word": "варим кашу",
-      "asset": "word_varim kashu",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
       "word": "василёк",
       "asset": "word_vasilyok",
       "recommendedStages": [
@@ -9959,17 +9365,6 @@
       "soundFamily": null
     },
     {
-      "word": "верба расцвела",
-      "asset": "word_verba rastsvela",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
       "word": "верба",
       "asset": "word_verba",
       "recommendedStages": [
@@ -10036,28 +9431,6 @@
       "soundFamily": null
     },
     {
-      "word": "весна поёт",
-      "asset": "word_vesna poyot",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "весна пришла",
-      "asset": "word_vesna prishla",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
       "word": "весна",
       "asset": "word_vesna",
       "recommendedStages": [
@@ -10071,17 +9444,6 @@
     {
       "word": "весы",
       "asset": "word_vesy",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "ветер перемен",
-      "asset": "word_veter peremen",
       "recommendedStages": [
         "word"
       ],
@@ -10147,14 +9509,14 @@
     },
     {
       "word": "ветряная мельница",
-      "asset": "word_vetryanaya melnitsa",
+      "asset": "word_melnitsa_v",
       "recommendedStages": [
         "word"
       ],
       "visualComplexity": "simple",
       "semanticCategory": "thematic",
       "methodologySource": "imagen3-generated",
-      "soundFamily": null
+      "soundFamily": "Л"
     },
     {
       "word": "вездеход",
@@ -10234,17 +9596,6 @@
       "soundFamily": null
     },
     {
-      "word": "вкусное варенье",
-      "asset": "word_vkusnoe varene",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
       "word": "внедорожник",
       "asset": "word_vnedorozhnik",
       "recommendedStages": [
@@ -10258,17 +9609,6 @@
     {
       "word": "водитель",
       "asset": "word_voditel",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "водный транспорт",
-      "asset": "word_vodnyy transport",
       "recommendedStages": [
         "word"
       ],
@@ -10356,14 +9696,14 @@
     },
     {
       "word": "волнистый попугай",
-      "asset": "word_volnistyy popugay",
+      "asset": "word_popugay_v",
       "recommendedStages": [
         "word"
       ],
       "visualComplexity": "simple",
       "semanticCategory": "thematic",
       "methodologySource": "imagen3-generated",
-      "soundFamily": null
+      "soundFamily": "Й"
     },
     {
       "word": "волосики",
@@ -10498,48 +9838,26 @@
       "soundFamily": null
     },
     {
-      "word": "воздушная ракета",
-      "asset": "word_vozdushnaya raketa",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
       "word": "воздушный шар",
-      "asset": "word_vozdushnyy shar",
+      "asset": "word_vozdushnyy_shar",
       "recommendedStages": [
         "word"
       ],
       "visualComplexity": "simple",
       "semanticCategory": "thematic",
       "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "воздушный транспорт",
-      "asset": "word_vozdushnyy transport",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
+      "soundFamily": "Ш"
     },
     {
       "word": "воздушный змей",
-      "asset": "word_vozdushnyy zmey",
+      "asset": "word_vozdushnyy_zmey",
       "recommendedStages": [
         "word"
       ],
       "visualComplexity": "simple",
       "semanticCategory": "thematic",
       "methodologySource": "imagen3-generated",
-      "soundFamily": null
+      "soundFamily": "Й"
     },
     {
       "word": "врач",
@@ -10588,17 +9906,6 @@
     {
       "word": "выдра",
       "asset": "word_vydra",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": null
-    },
-    {
-      "word": "высокий грибок",
-      "asset": "word_vysokiy gribok",
       "recommendedStages": [
         "word"
       ],
@@ -10718,17 +10025,6 @@
       "soundFamily": "З"
     },
     {
-      "word": "затяжной дождь",
-      "asset": "word_zatyazhnoy dozhd",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "З"
-    },
-    {
       "word": "заварник",
       "asset": "word_zavarnik",
       "recommendedStages": [
@@ -10742,17 +10038,6 @@
     {
       "word": "зависть",
       "asset": "word_zavist",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "З"
-    },
-    {
-      "word": "заяц нюхает",
-      "asset": "word_zayats nyukhaet",
       "recommendedStages": [
         "word"
       ],
@@ -10817,28 +10102,6 @@
       "soundFamily": "З"
     },
     {
-      "word": "зелёная красавица",
-      "asset": "word_zelyonaya krasavitsa",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "З"
-    },
-    {
-      "word": "зелёная ёлка",
-      "asset": "word_zelyonaya yolka",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "З"
-    },
-    {
       "word": "зелёный",
       "asset": "word_zelyonyy",
       "recommendedStages": [
@@ -10881,28 +10144,6 @@
       "semanticCategory": "thematic",
       "methodologySource": "imagen3-generated",
       "soundFamily": "З"
-    },
-    {
-      "word": "зеваем широко",
-      "asset": "word_zevaem shiroko",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "З"
-    },
-    {
-      "word": "жаба прыгает",
-      "asset": "word_zhaba prygaet",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Ж"
     },
     {
       "word": "жаба",
@@ -11070,17 +10311,6 @@
       "soundFamily": "Ж"
     },
     {
-      "word": "животное дыхание",
-      "asset": "word_zhivotnoe dykhanie",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Ж"
-    },
-    {
       "word": "жучок",
       "asset": "word_zhuchok",
       "recommendedStages": [
@@ -11094,39 +10324,6 @@
     {
       "word": "жуть",
       "asset": "word_zhut",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Ж"
-    },
-    {
-      "word": "жуткая музыка",
-      "asset": "word_zhutkaya muzyka",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Ж"
-    },
-    {
-      "word": "жуткий лес",
-      "asset": "word_zhutkiy les",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Ж"
-    },
-    {
-      "word": "жуткий шорох",
-      "asset": "word_zhutkiy shorokh",
       "recommendedStages": [
         "word"
       ],
@@ -11191,50 +10388,6 @@
       "soundFamily": "Ж"
     },
     {
-      "word": "жёлтая луна",
-      "asset": "word_zhyoltaya luna",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Ж"
-    },
-    {
-      "word": "жёлтая зебра",
-      "asset": "word_zhyoltaya zebra",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Ж"
-    },
-    {
-      "word": "жёлтые глаза",
-      "asset": "word_zhyoltye glaza",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Ж"
-    },
-    {
-      "word": "жёлтые листья",
-      "asset": "word_zhyoltye listya",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "Ж"
-    },
-    {
       "word": "жёлтый",
       "asset": "word_zhyoltyy",
       "recommendedStages": [
@@ -11257,74 +10410,8 @@
       "soundFamily": "Ж"
     },
     {
-      "word": "зима белая",
-      "asset": "word_zima belaya",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "З"
-    },
-    {
-      "word": "зима холодная",
-      "asset": "word_zima kholodnaya",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "З"
-    },
-    {
       "word": "зима",
       "asset": "word_zima",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "З"
-    },
-    {
-      "word": "зимний шарф",
-      "asset": "word_zimniy sharf",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "З"
-    },
-    {
-      "word": "зимний узор",
-      "asset": "word_zimniy uzor",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "З"
-    },
-    {
-      "word": "зимняя ночь",
-      "asset": "word_zimnyaya noch",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "З"
-    },
-    {
-      "word": "зимующие птицы",
-      "asset": "word_zimuyushchie ptitsy",
       "recommendedStages": [
         "word"
       ],
@@ -11345,30 +10432,8 @@
       "soundFamily": "З"
     },
     {
-      "word": "змея шипит",
-      "asset": "word_zmeya shipit",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "З"
-    },
-    {
       "word": "змея",
       "asset": "word_zmeya",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "З"
-    },
-    {
-      "word": "змейка быстро",
-      "asset": "word_zmeyka bystro",
       "recommendedStages": [
         "word"
       ],
@@ -11412,18 +10477,18 @@
     },
     {
       "word": "золотая рыбка",
-      "asset": "word_zolotaya rybka",
+      "asset": "word_zolotaya_rybka",
       "recommendedStages": [
         "word"
       ],
       "visualComplexity": "simple",
       "semanticCategory": "thematic",
       "methodologySource": "imagen3-generated",
-      "soundFamily": "З"
+      "soundFamily": "Р"
     },
     {
       "word": "золотая звезда",
-      "asset": "word_zolotaya zvezda",
+      "asset": "word_zvezda_zol",
       "recommendedStages": [
         "word"
       ],
@@ -11501,83 +10566,6 @@
     {
       "word": "звонок",
       "asset": "word_zvonok",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "З"
-    },
-    {
-      "word": "звук б",
-      "asset": "word_zvuk b",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "З"
-    },
-    {
-      "word": "звук дь",
-      "asset": "word_zvuk d",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "З"
-    },
-    {
-      "word": "звук н",
-      "asset": "word_zvuk n",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "З"
-    },
-    {
-      "word": "звук п",
-      "asset": "word_zvuk p",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "З"
-    },
-    {
-      "word": "звук ш",
-      "asset": "word_zvuk sh",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "З"
-    },
-    {
-      "word": "звук з",
-      "asset": "word_zvuk z",
-      "recommendedStages": [
-        "word"
-      ],
-      "visualComplexity": "simple",
-      "semanticCategory": "thematic",
-      "methodologySource": "imagen3-generated",
-      "soundFamily": "З"
-    },
-    {
-      "word": "звуки транспорта",
-      "asset": "word_zvuki transporta",
       "recommendedStages": [
         "word"
       ],
@@ -15446,6 +14434,16 @@
       "semanticCategory": "objects",
       "methodologySource": "register-v2",
       "soundFamily": "Й"
+    },
+    {
+      "word": "зубная щётка",
+      "asset": "word_zubnaya_shchyotka",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "soundFamily": "Щ"
     }
   ],
   "totalWords": 1369,
