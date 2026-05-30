@@ -16,9 +16,9 @@ final class ProfileEditorInteractorTests: XCTestCase {
     // Presenter.viewModel объявлены weak, иначе деаллоцируются между await.
     private var retainedPresenters: [ProfileEditorPresenter] = []
 
-    override func tearDown() {
+    override func tearDown() async throws {
         retainedPresenters.removeAll()
-        super.tearDown()
+        try await super.tearDown()
     }
 
     // MARK: - Helpers

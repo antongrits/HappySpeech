@@ -42,14 +42,14 @@ final class VoiceJournalInteractorTests: XCTestCase {
 
     private var display: DisplaySpy!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         display = DisplaySpy()
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         display = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     private func makeSUT(childId: String = "child-1") -> VoiceJournalInteractor {

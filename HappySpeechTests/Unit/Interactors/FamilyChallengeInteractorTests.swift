@@ -37,8 +37,8 @@ final class FamilyChallengeInteractorTests: XCTestCase {
     private var spy: SpyFamilyChallengePresenter!
     private var childRepo: SpyChildRepository!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         spy = SpyFamilyChallengePresenter()
         childRepo = SpyChildRepository(children: [
             TestDataBuilder.childProfile(id: "child-1", name: "Миша", parentId: "parent-1"),
@@ -46,10 +46,10 @@ final class FamilyChallengeInteractorTests: XCTestCase {
         ])
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         spy = nil
         childRepo = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     private func makeSUT(isKidContext: Bool = false) -> FamilyChallengeInteractor {

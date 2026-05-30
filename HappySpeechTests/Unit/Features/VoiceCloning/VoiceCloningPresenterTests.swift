@@ -13,17 +13,17 @@ final class VoiceCloningPresenterTests: XCTestCase {
     private var sut: VoiceCloningPresenter!
     private var viewModel: VoiceCloningViewModel!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         viewModel = VoiceCloningViewModel()
         sut = VoiceCloningPresenter()
         sut.viewModel = viewModel
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         sut = nil
         viewModel = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     // MARK: - Tests

@@ -21,18 +21,18 @@ final class SoundOfTheDayInteractorTests: XCTestCase {
     private var childRepo: SpyChildRepository!
     private var planner: SpyAdaptivePlannerService!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         display = DisplaySpy()
         childRepo = SpyChildRepository(children: [TestDataBuilder.childProfile(id: "child-1", name: "Миша", currentStreak: 4)])
         planner = SpyAdaptivePlannerService()
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         display = nil
         childRepo = nil
         planner = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     private func makeSUT(childId: String = "child-1") -> SoundOfTheDayInteractor {

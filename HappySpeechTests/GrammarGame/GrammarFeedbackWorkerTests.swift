@@ -36,17 +36,17 @@ final class GrammarFeedbackWorkerTests: XCTestCase {
     private var mockHaptic: MainActorHapticSpy!
     private var sut: GrammarFeedbackWorker!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         mockHaptic = MainActorHapticSpy()
         sut = GrammarFeedbackWorker(hapticService: mockHaptic)
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         sut.stopSpeaking()
         sut = nil
         mockHaptic = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     // MARK: - Haptic: selection

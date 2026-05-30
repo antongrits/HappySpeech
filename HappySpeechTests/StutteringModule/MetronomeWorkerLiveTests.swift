@@ -12,15 +12,15 @@ final class MetronomeWorkerLiveTests: XCTestCase {
 
     private var sut: MetronomeWorker!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         sut = MetronomeWorker()
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         sut.stop()
         sut = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     // MARK: - start / stop

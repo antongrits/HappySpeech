@@ -13,17 +13,17 @@ final class PronunciationLeaderboardPresenterTests: XCTestCase {
     private var sut: PronunciationLeaderboardPresenter!
     private var viewModel: PronunciationLeaderboardViewModel!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         viewModel = PronunciationLeaderboardViewModel()
         sut = PronunciationLeaderboardPresenter()
         sut.viewModel = viewModel
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         sut = nil
         viewModel = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     // MARK: - Tests

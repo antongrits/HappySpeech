@@ -10,6 +10,7 @@ import XCTest
 //
 // penWidth логика (phone vs iPad) — не тестируется без реального device.
 
+@MainActor
 final class CanvasCoordinatorTests: XCTestCase {
 
     // MARK: - Coordinator: double-tap удаляет последний штрих

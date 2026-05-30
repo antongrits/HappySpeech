@@ -16,8 +16,8 @@ final class PronunciationLeaderboardInteractorTests: XCTestCase {
     private var mockChildRepository: MockChildRepositoryPL!
     private var mockSessionRepository: MockSessionRepositoryPL!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         mockChildRepository = MockChildRepositoryPL()
         mockSessionRepository = MockSessionRepositoryPL()
         viewModel = PronunciationLeaderboardViewModel()
@@ -32,13 +32,13 @@ final class PronunciationLeaderboardInteractorTests: XCTestCase {
         sut.presenter = presenter
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         sut = nil
         presenter = nil
         viewModel = nil
         mockChildRepository = nil
         mockSessionRepository = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     // MARK: - Tests

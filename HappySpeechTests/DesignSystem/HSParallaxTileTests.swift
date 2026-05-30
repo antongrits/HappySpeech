@@ -9,6 +9,7 @@ import XCTest
 // tests; the calculation is encapsulated in `HSParallaxGeometry.offset`
 // for testability.
 
+@MainActor
 final class HSParallaxTileTests: XCTestCase {
 
     // MARK: - Centre cases

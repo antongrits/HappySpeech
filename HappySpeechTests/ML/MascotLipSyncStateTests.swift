@@ -14,14 +14,14 @@ final class MascotLipSyncStateTests: XCTestCase {
 
     private var sut: MascotLipSyncState!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         sut = MascotLipSyncState()
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         sut = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     // MARK: - Test 1: начальное состояние

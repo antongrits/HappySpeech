@@ -147,8 +147,8 @@ final class OnboardingInteractorTests: XCTestCase {
 
     private var notification: SpyOnboardingNotificationService!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         OnboardingState.reset()
         UserDefaults.standard.removeObject(forKey: "onboarding.resume.step")
         UserDefaults.standard.removeObject(forKey: "onboarding.resume.profile")
@@ -156,13 +156,13 @@ final class OnboardingInteractorTests: XCTestCase {
         notification = SpyOnboardingNotificationService()
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         OnboardingState.reset()
         UserDefaults.standard.removeObject(forKey: "onboarding.resume.step")
         UserDefaults.standard.removeObject(forKey: "onboarding.resume.profile")
         UserDefaults.standard.removeObject(forKey: "adaptivePlanner.seed")
         notification = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     private func makeSUT() -> (OnboardingInteractor, SpyOnboardingPresenter) {

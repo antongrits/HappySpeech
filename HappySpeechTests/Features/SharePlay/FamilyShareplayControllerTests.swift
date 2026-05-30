@@ -16,6 +16,7 @@ import XCTest
 
 // MARK: - SyncMessage Codable round-trip
 
+@MainActor
 final class SyncMessageCodableTests: XCTestCase {
 
     func test_roundStart_encodeDecode() throws {
@@ -121,14 +122,14 @@ final class FamilyShareplayControllerTests: XCTestCase {
 
     private var sut: FamilyShareplayController!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         sut = FamilyShareplayController()
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         sut = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     // MARK: - Initial state

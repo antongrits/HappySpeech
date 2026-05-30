@@ -36,14 +36,14 @@ final class LyalyaMailInteractorTests: XCTestCase {
 
     private var spy: SpyLyalyaMailPresenter!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         spy = SpyLyalyaMailPresenter()
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         spy = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     private func makeSUT(childId: String = "unit-test-child") -> LyalyaMailInteractor {

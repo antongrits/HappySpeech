@@ -14,8 +14,8 @@ final class LogopedistChatInteractorTests: XCTestCase {
     private var sut: LogopedistChatInteractor!
     private var spyPresenter: SpyLogopedistChatPresenter!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         spyPresenter = SpyLogopedistChatPresenter()
         sut = LogopedistChatInteractor(
             parentId: "parent-test-1",
@@ -26,10 +26,10 @@ final class LogopedistChatInteractorTests: XCTestCase {
         sut.presenter = spyPresenter
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         sut = nil
         spyPresenter = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     // MARK: - Tests

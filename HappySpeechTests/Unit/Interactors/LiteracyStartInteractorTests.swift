@@ -51,19 +51,19 @@ final class LiteracyStartInteractorTests: XCTestCase {
     private var audio: SpyAudioService!
     private var router: LiteracyStartRouter!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         display = SpyLiteracyDisplay()
         audio = SpyAudioService()
         router = LiteracyStartRouter()
         // coordinator stays nil — routing calls are noops in unit tests
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         display = nil
         audio = nil
         router = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     private func makeSUT(childId: String = "child-1") -> (LiteracyStartInteractor, LiteracyStartPresenter) {

@@ -11,8 +11,8 @@ final class FAQRepositoryWorkerTests: XCTestCase {
 
     private var sut: FAQRepositoryWorker!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         sut = FAQRepositoryWorker()
     }
 

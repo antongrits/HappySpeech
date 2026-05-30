@@ -37,18 +37,18 @@ final class AchievementWallInteractorTests: XCTestCase {
     private var spy: SpyAchievementWallPresenter!
     private var childRepo: SpyChildRepository!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         spy = SpyAchievementWallPresenter()
         childRepo = SpyChildRepository(children: [
             TestDataBuilder.childProfile(id: "child-1", name: "Маша", age: 7)
         ])
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         spy = nil
         childRepo = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     private func makeSUT() -> AchievementWallInteractor {

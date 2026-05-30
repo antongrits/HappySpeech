@@ -14,16 +14,16 @@ final class GoogleSignInWorkerTests: XCTestCase {
     private var authService: SpyAuthService!
     private var sut: GoogleSignInWorker!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         authService = SpyAuthService()
         sut = GoogleSignInWorker(authService: authService)
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         sut = nil
         authService = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     // MARK: - Успех

@@ -12,16 +12,16 @@ final class WeeklyChallengePresenterTests: XCTestCase {
     private var sut: WeeklyChallengePresenter!
     private var spyDisplay: SpyWeeklyChallengeDisplay!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         spyDisplay = SpyWeeklyChallengeDisplay()
         sut = WeeklyChallengePresenter(displayLogic: spyDisplay)
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         sut = nil
         spyDisplay = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     // MARK: - Tests

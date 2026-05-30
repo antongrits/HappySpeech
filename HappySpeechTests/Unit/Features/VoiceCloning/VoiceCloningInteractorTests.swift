@@ -16,8 +16,8 @@ final class VoiceCloningInteractorTests: XCTestCase {
     private var viewModel: VoiceCloningViewModel!
     private var mockAudioService: MockAudioService!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         mockAudioService = MockAudioService()
         viewModel = VoiceCloningViewModel()
         presenter = VoiceCloningPresenter()
@@ -30,12 +30,12 @@ final class VoiceCloningInteractorTests: XCTestCase {
         sut.presenter = presenter
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         sut = nil
         presenter = nil
         viewModel = nil
         mockAudioService = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     // MARK: - Tests

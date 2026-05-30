@@ -12,16 +12,16 @@ final class DialectAdaptationPresenterTests: XCTestCase {
     private var sut: DialectAdaptationPresenter!
     private var spyDisplay: SpyDialectAdaptationDisplay!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         spyDisplay = SpyDialectAdaptationDisplay()
         sut = DialectAdaptationPresenter(displayLogic: spyDisplay)
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         sut = nil
         spyDisplay = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     // MARK: - Tests

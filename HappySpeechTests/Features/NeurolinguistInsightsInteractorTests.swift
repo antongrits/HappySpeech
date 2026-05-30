@@ -16,9 +16,9 @@ final class NeurolinguistInsightsInteractorTests: XCTestCase {
     // объявлены weak; без удержания деаллоцируются между await-точками.
     private var retainedPresenters: [NeurolinguistInsightsPresenter] = []
 
-    override func tearDown() {
+    override func tearDown() async throws {
         retainedPresenters.removeAll()
-        super.tearDown()
+        try await super.tearDown()
     }
 
     // MARK: - In-memory RealmActor

@@ -17,14 +17,14 @@ final class HomeTasksWorkerTests: XCTestCase {
 
     private var sut: HomeTasksWorker!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         sut = HomeTasksWorker()
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         sut = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     // MARK: - scheduleTaskReminder: no dueDate → returns false

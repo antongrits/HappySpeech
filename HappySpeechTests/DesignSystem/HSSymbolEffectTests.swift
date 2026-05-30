@@ -9,6 +9,7 @@ import XCTest
 // `.hsSymbolEffect` extension returns a non-nil view, and that the style
 // enum exposes the expected cases.
 
+@MainActor
 final class HSSymbolEffectTests: XCTestCase {
 
     func test_style_enumCases_present() {

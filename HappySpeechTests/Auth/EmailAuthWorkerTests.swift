@@ -17,16 +17,16 @@ final class EmailAuthWorkerTests: XCTestCase {
     private var authService: SpyAuthService!
     private var sut: EmailAuthWorker!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         authService = SpyAuthService()
         sut = EmailAuthWorker(authService: authService)
     }
 
-    override func tearDown() {
+    override func tearDown() async throws {
         sut = nil
         authService = nil
-        super.tearDown()
+        try await super.tearDown()
     }
 
     // MARK: - signIn: успех

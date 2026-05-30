@@ -16,8 +16,8 @@ final class CustomizationVoicePreviewWorkerTests: XCTestCase {
 
     private var sut: CustomizationVoicePreviewWorker!
 
-    override func setUp() {
-        super.setUp()
+    override func setUp() async throws {
+        try await super.setUp()
         sut = CustomizationVoicePreviewWorker()
     }
 
