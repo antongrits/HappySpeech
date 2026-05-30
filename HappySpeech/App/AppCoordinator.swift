@@ -212,6 +212,11 @@ enum AppRoute: Hashable {
     /// конец / нет). Уровни binary → ternary → withAbsent.
     case soundDetective(childId: String)
 
+    /// F2-003 (kid): «Слоговая улитка» — слоговая структура слова по Марковой.
+    /// Три режима: прохлопай (анализ) / выложи (синтез) / почини (коррекция
+    /// перестановок и пропусков слогов). Уровни tier 1 → 4.
+    case syllableSnail(childId: String)
+
     // MARK: - v32 Batch D wave 5 (17 lightweight modules)
 
     case soundJournalKid(childId: String)
@@ -1007,6 +1012,10 @@ struct AppCoordinatorView: View {
             SoundDetectiveView(childId: childId)
                 .environment(\.circuitContext, .kid)
 
+        case .syllableSnail(let childId):
+            SyllableSnailView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
         // MARK: - v32 Batch D wave 5 (17 lightweight modules)
 
         case .soundJournalKid(let childId):
@@ -1588,6 +1597,8 @@ extension AppCoordinatorView {
         // MARK: Wave 2 mechanics — F2-009 Звуковой детектив
         case "soundDetective", "detectiveSound", "phonemeDetective":
             return .soundDetective(childId: previewChild)
+        case "syllableSnail", "snail", "syllableStructure":
+            return .syllableSnail(childId: previewChild)
 
         // MARK: v32 Batch D wave 5 (17 lightweight modules)
         case "soundJournalKid", "soundJournal", "kidJournal":

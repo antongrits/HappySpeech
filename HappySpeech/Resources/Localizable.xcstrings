@@ -58555,6 +58555,567 @@
           }
         }
       }
+    },
+    "syllableSnail.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слоговая улитка"
+          }
+        }
+      }
+    },
+    "syllableSnail.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прохлопай, выложи и почини слоги"
+          }
+        }
+      }
+    },
+    "syllableSnail.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слоговая улитка"
+          }
+        }
+      }
+    },
+    "syllableSnail.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть игру"
+          }
+        }
+      }
+    },
+    "syllableSnail.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готовим тропинку…"
+          }
+        }
+      }
+    },
+    "syllableSnail.replay": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ещё разок"
+          }
+        }
+      }
+    },
+    "syllableSnail.replay.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Послушать слово по слогам ещё раз"
+          }
+        }
+      }
+    },
+    "syllableSnail.mode.clap": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прохлопай"
+          }
+        }
+      }
+    },
+    "syllableSnail.mode.build": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выложи"
+          }
+        }
+      }
+    },
+    "syllableSnail.mode.fix": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почини"
+          }
+        }
+      }
+    },
+    "syllableSnail.tier.1": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Один-два слога"
+          }
+        }
+      }
+    },
+    "syllableSnail.tier.2": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Двусложные с закрытым"
+          }
+        }
+      }
+    },
+    "syllableSnail.tier.3": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Три слога"
+          }
+        }
+      }
+    },
+    "syllableSnail.tier.4": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Со стечением согласных"
+          }
+        }
+      }
+    },
+    "syllableSnail.progress": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Слово %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "syllableSnail.round.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Картинка и слово: %@"
+          }
+        }
+      }
+    },
+    "syllableSnail.tile.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "слог %@"
+          }
+        }
+      }
+    },
+    "syllableSnail.tile.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поставь слог в домик на тропинке"
+          }
+        }
+      }
+    },
+    "syllableSnail.prompt.clap": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Послушай слово и прохлопай каждый слог. Сколько шагов сделает улитка?"
+          }
+        }
+      }
+    },
+    "syllableSnail.prompt.build": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Помоги улитке: выложи слоги по порядку, чтобы получилось слово."
+          }
+        }
+      }
+    },
+    "syllableSnail.prompt.fix": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Улитка перепутала слоги. Давай поможем расставить домики по порядку!"
+          }
+        }
+      }
+    },
+    "syllableSnail.clap.count": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хлопков: %d"
+          }
+        }
+      }
+    },
+    "syllableSnail.clap.count.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сделано хлопков: %d"
+          }
+        }
+      }
+    },
+    "syllableSnail.clap.button": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хлоп!"
+          }
+        }
+      }
+    },
+    "syllableSnail.clap.button.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хлопни по слогу"
+          }
+        }
+      }
+    },
+    "syllableSnail.clap.button.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тапай по числу слогов в слове"
+          }
+        }
+      }
+    },
+    "syllableSnail.clap.undo": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Назад"
+          }
+        }
+      }
+    },
+    "syllableSnail.clap.undo.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Убрать один хлопок"
+          }
+        }
+      }
+    },
+    "syllableSnail.clap.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        }
+      }
+    },
+    "syllableSnail.clap.done.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проверить число хлопков"
+          }
+        }
+      }
+    },
+    "syllableSnail.assemble.check": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проверить"
+          }
+        }
+      }
+    },
+    "syllableSnail.assemble.check.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проверить собранное слово"
+          }
+        }
+      }
+    },
+    "syllableSnail.slot.empty.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "домик %d, пустой"
+          }
+        }
+      }
+    },
+    "syllableSnail.slot.filled.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "домик %1$d, слог %2$@"
+          }
+        }
+      }
+    },
+    "syllableSnail.tap.hit": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Улитка дошла до домика! Ты прохлопал верно."
+          }
+        }
+      }
+    },
+    "syllableSnail.tap.almost": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почти! Послушай ещё разок и посчитай шаги."
+          }
+        }
+      }
+    },
+    "syllableSnail.tap.retry": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Давай вместе: в слове %d слога. Слушай: по слогам."
+          }
+        }
+      }
+    },
+    "syllableSnail.build.hit": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Здорово! Улитка собрала слово и доползла до домика."
+          }
+        }
+      }
+    },
+    "syllableSnail.build.almost": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почти-почти! Послушай слово по слогам ещё раз."
+          }
+        }
+      }
+    },
+    "syllableSnail.build.retry": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Давай помогу: правильно так — %@. Послушай по слогам."
+          }
+        }
+      }
+    },
+    "syllableSnail.fix.hit": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ура! Ты починил слово — домики стоят по порядку."
+          }
+        }
+      }
+    },
+    "syllableSnail.fix.almost": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почти! Один домик встал не туда. Послушай слово."
+          }
+        }
+      }
+    },
+    "syllableSnail.fix.retry": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Давай вместе: правильный порядок — %@."
+          }
+        }
+      }
+    },
+    "syllableSnail.summary.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тропинка пройдена!"
+          }
+        }
+      }
+    },
+    "syllableSnail.summary.score": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Верно %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "syllableSnail.summary.again": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Играть ещё"
+          }
+        }
+      }
+    },
+    "syllableSnail.summary.again.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать новую тропинку слогов"
+          }
+        }
+      }
+    },
+    "syllableSnail.summary.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        }
+      }
+    },
+    "syllableSnail.encourage.great": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Улитка очень рада — ты молодец со слогами!"
+          }
+        }
+      }
+    },
+    "syllableSnail.encourage.good": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хорошо ползём! С каждым разом всё лучше."
+          }
+        }
+      }
+    },
+    "syllableSnail.encourage.keepGoing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Улитка не спешит — и у нас всё получится!"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

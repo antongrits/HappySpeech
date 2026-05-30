@@ -1,0 +1,1723 @@
+{
+  "id": "pack_syllable_snail_v1",
+  "version": "1.0",
+  "title": "Слоговая улитка",
+  "methodology": "Markova_class_complexity",
+  "description": "Корпус механики «Слоговая улитка» (F2-003): режимы прохлопай(A)/выложи(B)/почини(C). Слоги разбиты методически верно (правило открытого слога; стечение согласных остаётся цельной единицей второго слога). markovaClass — класс слоговой структуры по А.К. Марковой (1–13). imageAsset — из word_manifest.json. audioSyllables — по-слоговая романизация для TTS режима A. scrambledHints — преднабор перестановки для режима C (коррекция НСС).",
+  "roundsPerSession": 10,
+  "tiers": [
+    {
+      "tier": 1,
+      "title": "Один-два слога",
+      "markovaRange": [
+        1,
+        2
+      ],
+      "words": [
+        {
+          "id": "sn-t1-00-ruka",
+          "word": "рука",
+          "syllables": [
+            "ру",
+            "ка"
+          ],
+          "tier": 1,
+          "imageAsset": "word_hand",
+          "markovaClass": 1,
+          "audioSyllables": [
+            "ru",
+            "ka"
+          ],
+          "scrambledHints": [
+            "ка",
+            "ру"
+          ]
+        },
+        {
+          "id": "sn-t1-01-noga",
+          "word": "нога",
+          "syllables": [
+            "но",
+            "га"
+          ],
+          "tier": 1,
+          "imageAsset": "word_noga",
+          "markovaClass": 1,
+          "audioSyllables": [
+            "no",
+            "ga"
+          ],
+          "scrambledHints": [
+            "га",
+            "но"
+          ]
+        },
+        {
+          "id": "sn-t1-02-koza",
+          "word": "коза",
+          "syllables": [
+            "ко",
+            "за"
+          ],
+          "tier": 1,
+          "imageAsset": "word_goat",
+          "markovaClass": 1,
+          "audioSyllables": [
+            "ko",
+            "za"
+          ],
+          "scrambledHints": [
+            "за",
+            "ко"
+          ]
+        },
+        {
+          "id": "sn-t1-03-lisa",
+          "word": "лиса",
+          "syllables": [
+            "ли",
+            "са"
+          ],
+          "tier": 1,
+          "imageAsset": "word_fox",
+          "markovaClass": 1,
+          "audioSyllables": [
+            "li",
+            "sa"
+          ],
+          "scrambledHints": [
+            "са",
+            "ли"
+          ]
+        },
+        {
+          "id": "sn-t1-04-osa",
+          "word": "оса",
+          "syllables": [
+            "о",
+            "са"
+          ],
+          "tier": 1,
+          "imageAsset": "word_wasp",
+          "markovaClass": 1,
+          "audioSyllables": [
+            "o",
+            "sa"
+          ],
+          "scrambledHints": [
+            "са",
+            "о"
+          ]
+        },
+        {
+          "id": "sn-t1-05-voda",
+          "word": "вода",
+          "syllables": [
+            "во",
+            "да"
+          ],
+          "tier": 1,
+          "imageAsset": "word_water",
+          "markovaClass": 1,
+          "audioSyllables": [
+            "vo",
+            "da"
+          ],
+          "scrambledHints": [
+            "да",
+            "во"
+          ]
+        },
+        {
+          "id": "sn-t1-06-luna",
+          "word": "луна",
+          "syllables": [
+            "лу",
+            "на"
+          ],
+          "tier": 1,
+          "imageAsset": "word_moon",
+          "markovaClass": 1,
+          "audioSyllables": [
+            "lu",
+            "na"
+          ],
+          "scrambledHints": [
+            "на",
+            "лу"
+          ]
+        },
+        {
+          "id": "sn-t1-07-roza",
+          "word": "роза",
+          "syllables": [
+            "ро",
+            "за"
+          ],
+          "tier": 1,
+          "imageAsset": "word_rose",
+          "markovaClass": 2,
+          "audioSyllables": [
+            "ro",
+            "za"
+          ],
+          "scrambledHints": [
+            "за",
+            "ро"
+          ]
+        },
+        {
+          "id": "sn-t1-08-vaza",
+          "word": "ваза",
+          "syllables": [
+            "ва",
+            "за"
+          ],
+          "tier": 1,
+          "imageAsset": "word_vaza",
+          "markovaClass": 2,
+          "audioSyllables": [
+            "va",
+            "za"
+          ],
+          "scrambledHints": [
+            "за",
+            "ва"
+          ]
+        },
+        {
+          "id": "sn-t1-09-dynya",
+          "word": "дыня",
+          "syllables": [
+            "ды",
+            "ня"
+          ],
+          "tier": 1,
+          "imageAsset": "word_dynya",
+          "markovaClass": 1,
+          "audioSyllables": [
+            "dy",
+            "nya"
+          ],
+          "scrambledHints": [
+            "ня",
+            "ды"
+          ]
+        },
+        {
+          "id": "sn-t1-10-pila",
+          "word": "пила",
+          "syllables": [
+            "пи",
+            "ла"
+          ],
+          "tier": 1,
+          "imageAsset": "word_pila",
+          "markovaClass": 1,
+          "audioSyllables": [
+            "pi",
+            "la"
+          ],
+          "scrambledHints": [
+            "ла",
+            "пи"
+          ]
+        },
+        {
+          "id": "sn-t1-11-kosa",
+          "word": "коса",
+          "syllables": [
+            "ко",
+            "са"
+          ],
+          "tier": 1,
+          "imageAsset": "word_kosa",
+          "markovaClass": 1,
+          "audioSyllables": [
+            "ko",
+            "sa"
+          ],
+          "scrambledHints": [
+            "са",
+            "ко"
+          ]
+        },
+        {
+          "id": "sn-t1-12-sova",
+          "word": "сова",
+          "syllables": [
+            "со",
+            "ва"
+          ],
+          "tier": 1,
+          "imageAsset": "word_sova",
+          "markovaClass": 1,
+          "audioSyllables": [
+            "so",
+            "va"
+          ],
+          "scrambledHints": [
+            "ва",
+            "со"
+          ]
+        },
+        {
+          "id": "sn-t1-13-kasha",
+          "word": "каша",
+          "syllables": [
+            "ка",
+            "ша"
+          ],
+          "tier": 1,
+          "imageAsset": "word_kasha",
+          "markovaClass": 2,
+          "audioSyllables": [
+            "ka",
+            "sha"
+          ],
+          "scrambledHints": [
+            "ша",
+            "ка"
+          ]
+        },
+        {
+          "id": "sn-t1-14-yula",
+          "word": "юла",
+          "syllables": [
+            "ю",
+            "ла"
+          ],
+          "tier": 1,
+          "imageAsset": "word_yula",
+          "markovaClass": 1,
+          "audioSyllables": [
+            "yu",
+            "la"
+          ],
+          "scrambledHints": [
+            "ла",
+            "ю"
+          ]
+        },
+        {
+          "id": "sn-t1-15-sani",
+          "word": "сани",
+          "syllables": [
+            "са",
+            "ни"
+          ],
+          "tier": 1,
+          "imageAsset": "word_sani",
+          "markovaClass": 1,
+          "audioSyllables": [
+            "sa",
+            "ni"
+          ],
+          "scrambledHints": [
+            "ни",
+            "са"
+          ]
+        },
+        {
+          "id": "sn-t1-16-dukhi",
+          "word": "духи",
+          "syllables": [
+            "ду",
+            "хи"
+          ],
+          "tier": 1,
+          "imageAsset": "word_dukhi",
+          "markovaClass": 1,
+          "audioSyllables": [
+            "du",
+            "khi"
+          ],
+          "scrambledHints": [
+            "хи",
+            "ду"
+          ]
+        },
+        {
+          "id": "sn-t1-17-guby",
+          "word": "губы",
+          "syllables": [
+            "гу",
+            "бы"
+          ],
+          "tier": 1,
+          "imageAsset": "word_guby",
+          "markovaClass": 2,
+          "audioSyllables": [
+            "gu",
+            "by"
+          ],
+          "scrambledHints": [
+            "бы",
+            "гу"
+          ]
+        },
+        {
+          "id": "sn-t1-18-usy",
+          "word": "усы",
+          "syllables": [
+            "у",
+            "сы"
+          ],
+          "tier": 1,
+          "imageAsset": "word_usy",
+          "markovaClass": 1,
+          "audioSyllables": [
+            "u",
+            "sy"
+          ],
+          "scrambledHints": [
+            "сы",
+            "у"
+          ]
+        },
+        {
+          "id": "sn-t1-19-ryba",
+          "word": "рыба",
+          "syllables": [
+            "ры",
+            "ба"
+          ],
+          "tier": 1,
+          "imageAsset": "word_ryba",
+          "markovaClass": 2,
+          "audioSyllables": [
+            "ry",
+            "ba"
+          ],
+          "scrambledHints": [
+            "ба",
+            "ры"
+          ]
+        },
+        {
+          "id": "sn-t1-20-luzha",
+          "word": "лужа",
+          "syllables": [
+            "лу",
+            "жа"
+          ],
+          "tier": 1,
+          "imageAsset": "word_luzha",
+          "markovaClass": 1,
+          "audioSyllables": [
+            "lu",
+            "zha"
+          ],
+          "scrambledHints": [
+            "жа",
+            "лу"
+          ]
+        },
+        {
+          "id": "sn-t1-21-ryeka",
+          "word": "река",
+          "syllables": [
+            "ре",
+            "ка"
+          ],
+          "tier": 1,
+          "imageAsset": "word_reka",
+          "markovaClass": 1,
+          "audioSyllables": [
+            "rye",
+            "ka"
+          ],
+          "scrambledHints": [
+            "ка",
+            "ре"
+          ]
+        },
+        {
+          "id": "sn-t1-22-rosa",
+          "word": "роса",
+          "syllables": [
+            "ро",
+            "са"
+          ],
+          "tier": 1,
+          "imageAsset": "word_rosa",
+          "markovaClass": 1,
+          "audioSyllables": [
+            "ro",
+            "sa"
+          ],
+          "scrambledHints": [
+            "са",
+            "ро"
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 2,
+      "title": "Двусложные с закрытым",
+      "markovaRange": [
+        3,
+        7
+      ],
+      "words": [
+        {
+          "id": "sn-t2-00-banan",
+          "word": "банан",
+          "syllables": [
+            "ба",
+            "нан"
+          ],
+          "tier": 2,
+          "imageAsset": "word_banan",
+          "markovaClass": 3,
+          "audioSyllables": [
+            "ba",
+            "nan"
+          ],
+          "scrambledHints": [
+            "нан",
+            "ба"
+          ]
+        },
+        {
+          "id": "sn-t2-01-divan",
+          "word": "диван",
+          "syllables": [
+            "ди",
+            "ван"
+          ],
+          "tier": 2,
+          "imageAsset": "word_divan",
+          "markovaClass": 3,
+          "audioSyllables": [
+            "di",
+            "van"
+          ],
+          "scrambledHints": [
+            "ван",
+            "ди"
+          ]
+        },
+        {
+          "id": "sn-t2-02-pyetukh",
+          "word": "петух",
+          "syllables": [
+            "пе",
+            "тух"
+          ],
+          "tier": 2,
+          "imageAsset": "word_rooster",
+          "markovaClass": 4,
+          "audioSyllables": [
+            "pye",
+            "tukh"
+          ],
+          "scrambledHints": [
+            "тух",
+            "пе"
+          ]
+        },
+        {
+          "id": "sn-t2-03-limon",
+          "word": "лимон",
+          "syllables": [
+            "ли",
+            "мон"
+          ],
+          "tier": 2,
+          "imageAsset": "word_lemon",
+          "markovaClass": 3,
+          "audioSyllables": [
+            "li",
+            "mon"
+          ],
+          "scrambledHints": [
+            "мон",
+            "ли"
+          ]
+        },
+        {
+          "id": "sn-t2-04-vagon",
+          "word": "вагон",
+          "syllables": [
+            "ва",
+            "гон"
+          ],
+          "tier": 2,
+          "imageAsset": "word_vagon",
+          "markovaClass": 3,
+          "audioSyllables": [
+            "va",
+            "gon"
+          ],
+          "scrambledHints": [
+            "гон",
+            "ва"
+          ]
+        },
+        {
+          "id": "sn-t2-05-topor",
+          "word": "топор",
+          "syllables": [
+            "то",
+            "пор"
+          ],
+          "tier": 2,
+          "imageAsset": "word_topor",
+          "markovaClass": 5,
+          "audioSyllables": [
+            "to",
+            "por"
+          ],
+          "scrambledHints": [
+            "пор",
+            "то"
+          ]
+        },
+        {
+          "id": "sn-t2-06-zabor",
+          "word": "забор",
+          "syllables": [
+            "за",
+            "бор"
+          ],
+          "tier": 2,
+          "imageAsset": "word_zabor",
+          "markovaClass": 5,
+          "audioSyllables": [
+            "za",
+            "bor"
+          ],
+          "scrambledHints": [
+            "бор",
+            "за"
+          ]
+        },
+        {
+          "id": "sn-t2-07-vyenok",
+          "word": "венок",
+          "syllables": [
+            "ве",
+            "нок"
+          ],
+          "tier": 2,
+          "imageAsset": "word_venok",
+          "markovaClass": 4,
+          "audioSyllables": [
+            "vye",
+            "nok"
+          ],
+          "scrambledHints": [
+            "нок",
+            "ве"
+          ]
+        },
+        {
+          "id": "sn-t2-08-khalat",
+          "word": "халат",
+          "syllables": [
+            "ха",
+            "лат"
+          ],
+          "tier": 2,
+          "imageAsset": "word_khalat",
+          "markovaClass": 4,
+          "audioSyllables": [
+            "kha",
+            "lat"
+          ],
+          "scrambledHints": [
+            "лат",
+            "ха"
+          ]
+        },
+        {
+          "id": "sn-t2-09-katok",
+          "word": "каток",
+          "syllables": [
+            "ка",
+            "ток"
+          ],
+          "tier": 2,
+          "imageAsset": "word_katok",
+          "markovaClass": 4,
+          "audioSyllables": [
+            "ka",
+            "tok"
+          ],
+          "scrambledHints": [
+            "ток",
+            "ка"
+          ]
+        },
+        {
+          "id": "sn-t2-10-zontik",
+          "word": "зонтик",
+          "syllables": [
+            "зон",
+            "тик"
+          ],
+          "tier": 2,
+          "imageAsset": "word_umbrella",
+          "markovaClass": 7,
+          "audioSyllables": [
+            "zon",
+            "tik"
+          ],
+          "scrambledHints": [
+            "тик",
+            "зон"
+          ]
+        },
+        {
+          "id": "sn-t2-11-bilyet",
+          "word": "билет",
+          "syllables": [
+            "би",
+            "лет"
+          ],
+          "tier": 2,
+          "imageAsset": "word_bilet",
+          "markovaClass": 4,
+          "audioSyllables": [
+            "bi",
+            "lyet"
+          ],
+          "scrambledHints": [
+            "лет",
+            "би"
+          ]
+        },
+        {
+          "id": "sn-t2-12-pakyet",
+          "word": "пакет",
+          "syllables": [
+            "па",
+            "кет"
+          ],
+          "tier": 2,
+          "imageAsset": "word_paket",
+          "markovaClass": 4,
+          "audioSyllables": [
+            "pa",
+            "kyet"
+          ],
+          "scrambledHints": [
+            "кет",
+            "па"
+          ]
+        },
+        {
+          "id": "sn-t2-13-indyuk",
+          "word": "индюк",
+          "syllables": [
+            "ин",
+            "дюк"
+          ],
+          "tier": 2,
+          "imageAsset": "word_indyuk",
+          "markovaClass": 7,
+          "audioSyllables": [
+            "in",
+            "dyuk"
+          ],
+          "scrambledHints": [
+            "дюк",
+            "ин"
+          ]
+        },
+        {
+          "id": "sn-t2-14-utyug",
+          "word": "утюг",
+          "syllables": [
+            "у",
+            "тюг"
+          ],
+          "tier": 2,
+          "imageAsset": "word_utyug",
+          "markovaClass": 4,
+          "audioSyllables": [
+            "u",
+            "tyug"
+          ],
+          "scrambledHints": [
+            "тюг",
+            "у"
+          ]
+        },
+        {
+          "id": "sn-t2-15-khomyak",
+          "word": "хомяк",
+          "syllables": [
+            "хо",
+            "мяк"
+          ],
+          "tier": 2,
+          "imageAsset": "word_homyak",
+          "markovaClass": 4,
+          "audioSyllables": [
+            "kho",
+            "myak"
+          ],
+          "scrambledHints": [
+            "мяк",
+            "хо"
+          ]
+        },
+        {
+          "id": "sn-t2-16-sapog",
+          "word": "сапог",
+          "syllables": [
+            "са",
+            "пог"
+          ],
+          "tier": 2,
+          "imageAsset": "word_sapog",
+          "markovaClass": 4,
+          "audioSyllables": [
+            "sa",
+            "pog"
+          ],
+          "scrambledHints": [
+            "пог",
+            "са"
+          ]
+        },
+        {
+          "id": "sn-t2-17-buton",
+          "word": "бутон",
+          "syllables": [
+            "бу",
+            "тон"
+          ],
+          "tier": 2,
+          "imageAsset": "word_buton",
+          "markovaClass": 3,
+          "audioSyllables": [
+            "bu",
+            "ton"
+          ],
+          "scrambledHints": [
+            "тон",
+            "бу"
+          ]
+        },
+        {
+          "id": "sn-t2-18-bukyet",
+          "word": "букет",
+          "syllables": [
+            "бу",
+            "кет"
+          ],
+          "tier": 2,
+          "imageAsset": "word_buket",
+          "markovaClass": 4,
+          "audioSyllables": [
+            "bu",
+            "kyet"
+          ],
+          "scrambledHints": [
+            "кет",
+            "бу"
+          ]
+        },
+        {
+          "id": "sn-t2-19-bagazh",
+          "word": "багаж",
+          "syllables": [
+            "ба",
+            "гаж"
+          ],
+          "tier": 2,
+          "imageAsset": "word_bagazh",
+          "markovaClass": 4,
+          "audioSyllables": [
+            "ba",
+            "gazh"
+          ],
+          "scrambledHints": [
+            "гаж",
+            "ба"
+          ]
+        },
+        {
+          "id": "sn-t2-20-bufyet",
+          "word": "буфет",
+          "syllables": [
+            "бу",
+            "фет"
+          ],
+          "tier": 2,
+          "imageAsset": "word_bufet",
+          "markovaClass": 4,
+          "audioSyllables": [
+            "bu",
+            "fyet"
+          ],
+          "scrambledHints": [
+            "фет",
+            "бу"
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "title": "Три слога",
+      "markovaRange": [
+        6,
+        8
+      ],
+      "words": [
+        {
+          "id": "sn-t3-00-mashina",
+          "word": "машина",
+          "syllables": [
+            "ма",
+            "ши",
+            "на"
+          ],
+          "tier": 3,
+          "imageAsset": "word_car",
+          "markovaClass": 6,
+          "audioSyllables": [
+            "ma",
+            "shi",
+            "na"
+          ],
+          "scrambledHints": [
+            "ши",
+            "на",
+            "ма"
+          ]
+        },
+        {
+          "id": "sn-t3-01-malina",
+          "word": "малина",
+          "syllables": [
+            "ма",
+            "ли",
+            "на"
+          ],
+          "tier": 3,
+          "imageAsset": "word_malina",
+          "markovaClass": 6,
+          "audioSyllables": [
+            "ma",
+            "li",
+            "na"
+          ],
+          "scrambledHints": [
+            "ли",
+            "на",
+            "ма"
+          ]
+        },
+        {
+          "id": "sn-t3-02-korova",
+          "word": "корова",
+          "syllables": [
+            "ко",
+            "ро",
+            "ва"
+          ],
+          "tier": 3,
+          "imageAsset": "word_cow",
+          "markovaClass": 6,
+          "audioSyllables": [
+            "ko",
+            "ro",
+            "va"
+          ],
+          "scrambledHints": [
+            "ро",
+            "ва",
+            "ко"
+          ]
+        },
+        {
+          "id": "sn-t3-03-sobaka",
+          "word": "собака",
+          "syllables": [
+            "со",
+            "ба",
+            "ка"
+          ],
+          "tier": 3,
+          "imageAsset": "word_sobaka",
+          "markovaClass": 6,
+          "audioSyllables": [
+            "so",
+            "ba",
+            "ka"
+          ],
+          "scrambledHints": [
+            "ба",
+            "ка",
+            "со"
+          ]
+        },
+        {
+          "id": "sn-t3-04-rakyeta",
+          "word": "ракета",
+          "syllables": [
+            "ра",
+            "ке",
+            "та"
+          ],
+          "tier": 3,
+          "imageAsset": "word_raketa",
+          "markovaClass": 6,
+          "audioSyllables": [
+            "ra",
+            "kye",
+            "ta"
+          ],
+          "scrambledHints": [
+            "ке",
+            "та",
+            "ра"
+          ]
+        },
+        {
+          "id": "sn-t3-05-vorona",
+          "word": "ворона",
+          "syllables": [
+            "во",
+            "ро",
+            "на"
+          ],
+          "tier": 3,
+          "imageAsset": "word_vorona",
+          "markovaClass": 6,
+          "audioSyllables": [
+            "vo",
+            "ro",
+            "na"
+          ],
+          "scrambledHints": [
+            "ро",
+            "на",
+            "во"
+          ]
+        },
+        {
+          "id": "sn-t3-06-lopata",
+          "word": "лопата",
+          "syllables": [
+            "ло",
+            "па",
+            "та"
+          ],
+          "tier": 3,
+          "imageAsset": "word_lopata",
+          "markovaClass": 6,
+          "audioSyllables": [
+            "lo",
+            "pa",
+            "ta"
+          ],
+          "scrambledHints": [
+            "па",
+            "та",
+            "ло"
+          ]
+        },
+        {
+          "id": "sn-t3-07-yagoda",
+          "word": "ягода",
+          "syllables": [
+            "я",
+            "го",
+            "да"
+          ],
+          "tier": 3,
+          "imageAsset": "word_yagoda",
+          "markovaClass": 6,
+          "audioSyllables": [
+            "ya",
+            "go",
+            "da"
+          ],
+          "scrambledHints": [
+            "го",
+            "да",
+            "я"
+          ]
+        },
+        {
+          "id": "sn-t3-08-kolyeso",
+          "word": "колесо",
+          "syllables": [
+            "ко",
+            "ле",
+            "со"
+          ],
+          "tier": 3,
+          "imageAsset": "word_koleso",
+          "markovaClass": 6,
+          "audioSyllables": [
+            "ko",
+            "lye",
+            "so"
+          ],
+          "scrambledHints": [
+            "ле",
+            "со",
+            "ко"
+          ]
+        },
+        {
+          "id": "sn-t3-09-pomidor",
+          "word": "помидор",
+          "syllables": [
+            "по",
+            "ми",
+            "дор"
+          ],
+          "tier": 3,
+          "imageAsset": "word_pomidor",
+          "markovaClass": 8,
+          "audioSyllables": [
+            "po",
+            "mi",
+            "dor"
+          ],
+          "scrambledHints": [
+            "ми",
+            "дор",
+            "по"
+          ]
+        },
+        {
+          "id": "sn-t3-10-baraban",
+          "word": "барабан",
+          "syllables": [
+            "ба",
+            "ра",
+            "бан"
+          ],
+          "tier": 3,
+          "imageAsset": "word_drum",
+          "markovaClass": 8,
+          "audioSyllables": [
+            "ba",
+            "ra",
+            "ban"
+          ],
+          "scrambledHints": [
+            "ра",
+            "бан",
+            "ба"
+          ]
+        },
+        {
+          "id": "sn-t3-11-chyemodan",
+          "word": "чемодан",
+          "syllables": [
+            "че",
+            "мо",
+            "дан"
+          ],
+          "tier": 3,
+          "imageAsset": "word_chemodan",
+          "markovaClass": 8,
+          "audioSyllables": [
+            "chye",
+            "mo",
+            "dan"
+          ],
+          "scrambledHints": [
+            "мо",
+            "дан",
+            "че"
+          ]
+        },
+        {
+          "id": "sn-t3-12-byegyemot",
+          "word": "бегемот",
+          "syllables": [
+            "бе",
+            "ге",
+            "мот"
+          ],
+          "tier": 3,
+          "imageAsset": "word_begemot",
+          "markovaClass": 8,
+          "audioSyllables": [
+            "bye",
+            "gye",
+            "mot"
+          ],
+          "scrambledHints": [
+            "ге",
+            "мот",
+            "бе"
+          ]
+        },
+        {
+          "id": "sn-t3-13-samolyot",
+          "word": "самолёт",
+          "syllables": [
+            "са",
+            "мо",
+            "лёт"
+          ],
+          "tier": 3,
+          "imageAsset": "word_samolyot",
+          "markovaClass": 8,
+          "audioSyllables": [
+            "sa",
+            "mo",
+            "lyot"
+          ],
+          "scrambledHints": [
+            "мо",
+            "лёт",
+            "са"
+          ]
+        },
+        {
+          "id": "sn-t3-14-molotok",
+          "word": "молоток",
+          "syllables": [
+            "мо",
+            "ло",
+            "ток"
+          ],
+          "tier": 3,
+          "imageAsset": "word_molotok",
+          "markovaClass": 8,
+          "audioSyllables": [
+            "mo",
+            "lo",
+            "tok"
+          ],
+          "scrambledHints": [
+            "ло",
+            "ток",
+            "мо"
+          ]
+        },
+        {
+          "id": "sn-t3-15-parovoz",
+          "word": "паровоз",
+          "syllables": [
+            "па",
+            "ро",
+            "воз"
+          ],
+          "tier": 3,
+          "imageAsset": "word_parovoz",
+          "markovaClass": 8,
+          "audioSyllables": [
+            "pa",
+            "ro",
+            "voz"
+          ],
+          "scrambledHints": [
+            "ро",
+            "воз",
+            "па"
+          ]
+        },
+        {
+          "id": "sn-t3-16-kanava",
+          "word": "канава",
+          "syllables": [
+            "ка",
+            "на",
+            "ва"
+          ],
+          "tier": 3,
+          "imageAsset": "word_kanava",
+          "markovaClass": 6,
+          "audioSyllables": [
+            "ka",
+            "na",
+            "va"
+          ],
+          "scrambledHints": [
+            "на",
+            "ва",
+            "ка"
+          ]
+        },
+        {
+          "id": "sn-t3-17-vorota",
+          "word": "ворота",
+          "syllables": [
+            "во",
+            "ро",
+            "та"
+          ],
+          "tier": 3,
+          "imageAsset": "word_vorota",
+          "markovaClass": 6,
+          "audioSyllables": [
+            "vo",
+            "ro",
+            "ta"
+          ],
+          "scrambledHints": [
+            "ро",
+            "та",
+            "во"
+          ]
+        },
+        {
+          "id": "sn-t3-18-rubakha",
+          "word": "рубаха",
+          "syllables": [
+            "ру",
+            "ба",
+            "ха"
+          ],
+          "tier": 3,
+          "imageAsset": "word_rubakha",
+          "markovaClass": 6,
+          "audioSyllables": [
+            "ru",
+            "ba",
+            "kha"
+          ],
+          "scrambledHints": [
+            "ба",
+            "ха",
+            "ру"
+          ]
+        },
+        {
+          "id": "sn-t3-19-byeryoza",
+          "word": "берёза",
+          "syllables": [
+            "бе",
+            "рё",
+            "за"
+          ],
+          "tier": 3,
+          "imageAsset": "word_beryoza",
+          "markovaClass": 6,
+          "audioSyllables": [
+            "bye",
+            "ryo",
+            "za"
+          ],
+          "scrambledHints": [
+            "рё",
+            "за",
+            "бе"
+          ]
+        },
+        {
+          "id": "sn-t3-20-posuda",
+          "word": "посуда",
+          "syllables": [
+            "по",
+            "су",
+            "да"
+          ],
+          "tier": 3,
+          "imageAsset": "word_posuda",
+          "markovaClass": 6,
+          "audioSyllables": [
+            "po",
+            "su",
+            "da"
+          ],
+          "scrambledHints": [
+            "су",
+            "да",
+            "по"
+          ]
+        },
+        {
+          "id": "sn-t3-21-botinki",
+          "word": "ботинки",
+          "syllables": [
+            "бо",
+            "тин",
+            "ки"
+          ],
+          "tier": 3,
+          "imageAsset": "word_botinki",
+          "markovaClass": 8,
+          "audioSyllables": [
+            "bo",
+            "tin",
+            "ki"
+          ],
+          "scrambledHints": [
+            "тин",
+            "ки",
+            "бо"
+          ]
+        }
+      ]
+    },
+    {
+      "tier": 4,
+      "title": "Со стечением согласных",
+      "markovaRange": [
+        9,
+        13
+      ],
+      "words": [
+        {
+          "id": "sn-t4-00-stol",
+          "word": "стол",
+          "syllables": [
+            "стол"
+          ],
+          "tier": 4,
+          "imageAsset": "word_stol",
+          "markovaClass": 9,
+          "audioSyllables": [
+            "stol"
+          ],
+          "scrambledHints": []
+        },
+        {
+          "id": "sn-t4-01-stul",
+          "word": "стул",
+          "syllables": [
+            "стул"
+          ],
+          "tier": 4,
+          "imageAsset": "word_stul",
+          "markovaClass": 9,
+          "audioSyllables": [
+            "stul"
+          ],
+          "scrambledHints": []
+        },
+        {
+          "id": "sn-t4-02-slon",
+          "word": "слон",
+          "syllables": [
+            "слон"
+          ],
+          "tier": 4,
+          "imageAsset": "word_slon",
+          "markovaClass": 9,
+          "audioSyllables": [
+            "slon"
+          ],
+          "scrambledHints": []
+        },
+        {
+          "id": "sn-t4-03-shkaf",
+          "word": "шкаф",
+          "syllables": [
+            "шкаф"
+          ],
+          "tier": 4,
+          "imageAsset": "word_shkaf",
+          "markovaClass": 9,
+          "audioSyllables": [
+            "shkaf"
+          ],
+          "scrambledHints": []
+        },
+        {
+          "id": "sn-t4-04-grib",
+          "word": "гриб",
+          "syllables": [
+            "гриб"
+          ],
+          "tier": 4,
+          "imageAsset": "word_grib",
+          "markovaClass": 9,
+          "audioSyllables": [
+            "grib"
+          ],
+          "scrambledHints": []
+        },
+        {
+          "id": "sn-t4-05-flag",
+          "word": "флаг",
+          "syllables": [
+            "флаг"
+          ],
+          "tier": 4,
+          "imageAsset": "word_flag",
+          "markovaClass": 9,
+          "audioSyllables": [
+            "flag"
+          ],
+          "scrambledHints": []
+        },
+        {
+          "id": "sn-t4-06-kran",
+          "word": "кран",
+          "syllables": [
+            "кран"
+          ],
+          "tier": 4,
+          "imageAsset": "word_kran",
+          "markovaClass": 9,
+          "audioSyllables": [
+            "kran"
+          ],
+          "scrambledHints": []
+        },
+        {
+          "id": "sn-t4-07-tigr",
+          "word": "тигр",
+          "syllables": [
+            "тигр"
+          ],
+          "tier": 4,
+          "imageAsset": "word_tigr",
+          "markovaClass": 13,
+          "audioSyllables": [
+            "tigr"
+          ],
+          "scrambledHints": []
+        },
+        {
+          "id": "sn-t4-08-most",
+          "word": "мост",
+          "syllables": [
+            "мост"
+          ],
+          "tier": 4,
+          "imageAsset": "word_most",
+          "markovaClass": 10,
+          "audioSyllables": [
+            "most"
+          ],
+          "scrambledHints": []
+        },
+        {
+          "id": "sn-t4-09-volk",
+          "word": "волк",
+          "syllables": [
+            "волк"
+          ],
+          "tier": 4,
+          "imageAsset": "word_volk",
+          "markovaClass": 10,
+          "audioSyllables": [
+            "volk"
+          ],
+          "scrambledHints": []
+        },
+        {
+          "id": "sn-t4-10-list",
+          "word": "лист",
+          "syllables": [
+            "лист"
+          ],
+          "tier": 4,
+          "imageAsset": "word_leaf",
+          "markovaClass": 10,
+          "audioSyllables": [
+            "list"
+          ],
+          "scrambledHints": []
+        },
+        {
+          "id": "sn-t4-11-zont",
+          "word": "зонт",
+          "syllables": [
+            "зонт"
+          ],
+          "tier": 4,
+          "imageAsset": "word_umbrella",
+          "markovaClass": 10,
+          "audioSyllables": [
+            "zont"
+          ],
+          "scrambledHints": []
+        },
+        {
+          "id": "sn-t4-12-kniga",
+          "word": "книга",
+          "syllables": [
+            "кни",
+            "га"
+          ],
+          "tier": 4,
+          "imageAsset": "word_book",
+          "markovaClass": 11,
+          "audioSyllables": [
+            "kni",
+            "ga"
+          ],
+          "scrambledHints": [
+            "га",
+            "кни"
+          ]
+        },
+        {
+          "id": "sn-t4-13-shkola",
+          "word": "школа",
+          "syllables": [
+            "шко",
+            "ла"
+          ],
+          "tier": 4,
+          "imageAsset": "word_shkola",
+          "markovaClass": 11,
+          "audioSyllables": [
+            "shko",
+            "la"
+          ],
+          "scrambledHints": [
+            "ла",
+            "шко"
+          ]
+        },
+        {
+          "id": "sn-t4-14-stakan",
+          "word": "стакан",
+          "syllables": [
+            "ста",
+            "кан"
+          ],
+          "tier": 4,
+          "imageAsset": "word_stakan",
+          "markovaClass": 11,
+          "audioSyllables": [
+            "sta",
+            "kan"
+          ],
+          "scrambledHints": [
+            "кан",
+            "ста"
+          ]
+        },
+        {
+          "id": "sn-t4-15-pchyela",
+          "word": "пчела",
+          "syllables": [
+            "пче",
+            "ла"
+          ],
+          "tier": 4,
+          "imageAsset": "word_pchela",
+          "markovaClass": 11,
+          "audioSyllables": [
+            "pchye",
+            "la"
+          ],
+          "scrambledHints": [
+            "ла",
+            "пче"
+          ]
+        },
+        {
+          "id": "sn-t4-16-zvyezda",
+          "word": "звезда",
+          "syllables": [
+            "звез",
+            "да"
+          ],
+          "tier": 4,
+          "imageAsset": "word_star",
+          "markovaClass": 12,
+          "audioSyllables": [
+            "zvyez",
+            "da"
+          ],
+          "scrambledHints": [
+            "да",
+            "звез"
+          ]
+        },
+        {
+          "id": "sn-t4-17-zyebra",
+          "word": "зебра",
+          "syllables": [
+            "зеб",
+            "ра"
+          ],
+          "tier": 4,
+          "imageAsset": "word_zebra",
+          "markovaClass": 11,
+          "audioSyllables": [
+            "zyeb",
+            "ra"
+          ],
+          "scrambledHints": [
+            "ра",
+            "зеб"
+          ]
+        },
+        {
+          "id": "sn-t4-18-tramvay",
+          "word": "трамвай",
+          "syllables": [
+            "трам",
+            "вай"
+          ],
+          "tier": 4,
+          "imageAsset": "word_tramvay_y",
+          "markovaClass": 12,
+          "audioSyllables": [
+            "tram",
+            "vay"
+          ],
+          "scrambledHints": [
+            "вай",
+            "трам"
+          ]
+        },
+        {
+          "id": "sn-t4-19-gribok",
+          "word": "грибок",
+          "syllables": [
+            "гри",
+            "бок"
+          ],
+          "tier": 4,
+          "imageAsset": "word_gribok",
+          "markovaClass": 11,
+          "audioSyllables": [
+            "gri",
+            "bok"
+          ],
+          "scrambledHints": [
+            "бок",
+            "гри"
+          ]
+        },
+        {
+          "id": "sn-t4-20-glaza",
+          "word": "глаза",
+          "syllables": [
+            "гла",
+            "за"
+          ],
+          "tier": 4,
+          "imageAsset": "word_glaza",
+          "markovaClass": 11,
+          "audioSyllables": [
+            "gla",
+            "za"
+          ],
+          "scrambledHints": [
+            "за",
+            "гла"
+          ]
+        },
+        {
+          "id": "sn-t4-21-khlyeb",
+          "word": "хлеб",
+          "syllables": [
+            "хлеб"
+          ],
+          "tier": 4,
+          "imageAsset": "word_hleb",
+          "markovaClass": 9,
+          "audioSyllables": [
+            "khlyeb"
+          ],
+          "scrambledHints": []
+        }
+      ]
+    }
+  ]
+}

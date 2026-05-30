@@ -40,6 +40,7 @@ protocol ChildHomeRoutingLogic {
     func routeToLogorhythmics(childId: String)
     // Wave 2 mechanics
     func routeToSoundDetective(childId: String)
+    func routeToSyllableSnail(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -232,5 +233,10 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     /// F2-009 — «Звуковой детектив» (позиционный фонематический анализ).
     func routeToSoundDetective(childId: String) {
         coordinator?.navigate(to: .soundDetective(childId: childId))
+    }
+
+    /// F2-003 — «Слоговая улитка» (слоговая структура слова по Марковой).
+    func routeToSyllableSnail(childId: String) {
+        coordinator?.navigate(to: .syllableSnail(childId: childId))
     }
 }

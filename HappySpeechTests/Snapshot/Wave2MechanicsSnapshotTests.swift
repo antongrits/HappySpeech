@@ -48,6 +48,18 @@ final class Wave2MechanicsSnapshotTests: XCTestCase {
         try record(view, screen: "SoundDetectiveView", maxDiffRatio: 0.10)
     }
 
+    // MARK: - F2-003 SyllableSnailView (kid, childId)
+
+    func test_syllableSnail_rendersInBothThemes() throws {
+        let view = SyllableSnailView(childId: "preview-child-1")
+            .environment(AppCoordinator())
+            .environment(AppContainer.preview())
+        // Допуск 10%: word-карточка использует translucent HSLiquidGlassCard
+        // поверх asset-картинки — material-blur даёт суб-пиксельный GPU-jitter
+        // между процессами, как у SoundDetectiveView выше.
+        try record(view, screen: "SyllableSnailView", maxDiffRatio: 0.10)
+    }
+
     // MARK: - Rendering engine
 
     private func render<V: View>(

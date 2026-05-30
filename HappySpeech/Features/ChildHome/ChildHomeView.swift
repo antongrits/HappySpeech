@@ -1053,6 +1053,17 @@ extension ChildHomeView {
             router?.routeToSoundDetective(childId: childId)
         }
 
+        // F2-003 (Wave 2) — Syllable Snail «Слоговая улитка»
+        // (слоговая структура слова по Марковой: прохлопай / выложи / почини).
+        ChildHomeV25EntryCard(
+            titleKey: "syllableSnail.entry.title",
+            hintKey: "syllableSnail.entry.hint",
+            iconName: "tortoise.fill",
+            accent: ColorTokens.Brand.mint
+        ) {
+            router?.routeToSyllableSnail(childId: childId)
+        }
+
         // v29 Фаза 8 Ф.6 — Speech Tempo «Темп-дорожка».
         ChildHomeV25EntryCard(
             titleKey: "speechTempo.entry.title",
