@@ -1,0 +1,491 @@
+{
+  "id": "sound_rclusters_v1",
+  "soundTarget": "Р",
+  "group": "соноры",
+  "version": 1,
+  "description": "F1-007. Слоги и слова со стечением для [Р] (тр/др/гр/пр/кр/бр/стр/здр) — критичный этап 5 автоматизации Р (трактор/гриб/кран/ведро).",
+  "stages": {
+    "prep": {
+      "stageId": "prep",
+      "note": "Подготовка [Р] в стечениях — сначала чёткий Р, потом добавляем согласный. Кончик дрожит.",
+      "items": [
+        {
+          "id": "rc-prep-0",
+          "word": "р рокот",
+          "audioAsset": null,
+          "hint": "Заведи мотор: р-р-р, кончик дрожит.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-prep-0.m4a"
+        },
+        {
+          "id": "rc-prep-1",
+          "word": "т+р вместе",
+          "audioAsset": null,
+          "hint": "Скажи Т, сразу заведи Р: т-р-р.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-prep-1.m4a"
+        },
+        {
+          "id": "rc-prep-2",
+          "word": "грибок язык",
+          "audioAsset": null,
+          "hint": "Язык присосался к нёбу грибком — для Р.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-prep-2.m4a"
+        },
+        {
+          "id": "rc-prep-3",
+          "word": "барабанщик",
+          "audioAsset": null,
+          "hint": "Кончик стучит за зубами: д-д-д-р.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-prep-3.m4a"
+        }
+      ]
+    },
+    "isolated": {
+      "stageId": "isolated",
+      "note": "Изолированный [Р] перед стечениями.",
+      "items": [
+        {
+          "id": "rc-iso-0",
+          "word": "р-р-р мотор",
+          "audioAsset": null,
+          "hint": "Длинный рокочущий Р.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-iso-0.m4a"
+        },
+        {
+          "id": "rc-iso-1",
+          "word": "р-р-р трактор",
+          "audioAsset": null,
+          "hint": "Трактор едет: тр-р-р.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-iso-1.m4a"
+        },
+        {
+          "id": "rc-iso-2",
+          "word": "р-р-р громко",
+          "audioAsset": null,
+          "hint": "Погромче заведи мотор.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-iso-2.m4a"
+        },
+        {
+          "id": "rc-iso-3",
+          "word": "р в стечении",
+          "audioAsset": null,
+          "hint": "После согласного Р такой же звонкий рокот.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-iso-3.m4a"
+        }
+      ]
+    },
+    "syllable": {
+      "stageId": "syllable",
+      "note": "Слоги со стечением для [Р] (тр/др/гр/пр/кр/бр) — критичный этап 5.",
+      "items": [
+        {
+          "id": "rc-syl-0",
+          "word": "тра",
+          "audioAsset": null,
+          "hint": "Т + Р + А слитно.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-syl-0.m4a"
+        },
+        {
+          "id": "rc-syl-1",
+          "word": "тро",
+          "audioAsset": null,
+          "hint": "Тро.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-syl-1.m4a"
+        },
+        {
+          "id": "rc-syl-2",
+          "word": "тру",
+          "audioAsset": null,
+          "hint": "Тру.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-syl-2.m4a"
+        },
+        {
+          "id": "rc-syl-3",
+          "word": "дра",
+          "audioAsset": null,
+          "hint": "Д + Р + А.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-syl-3.m4a"
+        },
+        {
+          "id": "rc-syl-4",
+          "word": "дро",
+          "audioAsset": null,
+          "hint": "Дро.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-syl-4.m4a"
+        },
+        {
+          "id": "rc-syl-5",
+          "word": "дру",
+          "audioAsset": null,
+          "hint": "Дру.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-syl-5.m4a"
+        },
+        {
+          "id": "rc-syl-6",
+          "word": "гра",
+          "audioAsset": null,
+          "hint": "Г + Р + А.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-syl-6.m4a"
+        },
+        {
+          "id": "rc-syl-7",
+          "word": "гро",
+          "audioAsset": null,
+          "hint": "Гро.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-syl-7.m4a"
+        },
+        {
+          "id": "rc-syl-8",
+          "word": "гру",
+          "audioAsset": null,
+          "hint": "Гру.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-syl-8.m4a"
+        },
+        {
+          "id": "rc-syl-9",
+          "word": "пра",
+          "audioAsset": null,
+          "hint": "П + Р + А.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-syl-9.m4a"
+        },
+        {
+          "id": "rc-syl-10",
+          "word": "про",
+          "audioAsset": null,
+          "hint": "Про.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-syl-10.m4a"
+        },
+        {
+          "id": "rc-syl-11",
+          "word": "пру",
+          "audioAsset": null,
+          "hint": "Пру.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-syl-11.m4a"
+        },
+        {
+          "id": "rc-syl-12",
+          "word": "кра",
+          "audioAsset": null,
+          "hint": "К + Р + А.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-syl-12.m4a"
+        },
+        {
+          "id": "rc-syl-13",
+          "word": "кро",
+          "audioAsset": null,
+          "hint": "Кро.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-syl-13.m4a"
+        },
+        {
+          "id": "rc-syl-14",
+          "word": "кру",
+          "audioAsset": null,
+          "hint": "Кру.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-syl-14.m4a"
+        },
+        {
+          "id": "rc-syl-15",
+          "word": "бра",
+          "audioAsset": null,
+          "hint": "Б + Р + А.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-syl-15.m4a"
+        },
+        {
+          "id": "rc-syl-16",
+          "word": "бро",
+          "audioAsset": null,
+          "hint": "Бро.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-syl-16.m4a"
+        },
+        {
+          "id": "rc-syl-17",
+          "word": "бру",
+          "audioAsset": null,
+          "hint": "Бру.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-syl-17.m4a"
+        },
+        {
+          "id": "rc-syl-18",
+          "word": "стра",
+          "audioAsset": null,
+          "hint": "Тройное стечение: с-т-р-а.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-syl-18.m4a"
+        },
+        {
+          "id": "rc-syl-19",
+          "word": "здра",
+          "audioAsset": null,
+          "hint": "Здра — как «здравствуй».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-syl-19.m4a"
+        }
+      ]
+    },
+    "wordInit": {
+      "stageId": "wordInit",
+      "note": "Слова со стечением + Р в начале.",
+      "items": [
+        {
+          "id": "rc-wi-0",
+          "word": "трактор",
+          "imageAsset": "word_traktor",
+          "audioAsset": null,
+          "hint": "Трак-тор. Стечение ТР.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-wi-0.m4a"
+        },
+        {
+          "id": "rc-wi-1",
+          "word": "дракон",
+          "imageAsset": "word_drakon",
+          "audioAsset": null,
+          "hint": "Дра-кон. Стечение ДР.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-wi-1.m4a"
+        },
+        {
+          "id": "rc-wi-2",
+          "word": "гриб",
+          "imageAsset": "word_grib",
+          "audioAsset": null,
+          "hint": "Гриб. Стечение ГР.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-wi-2.m4a"
+        },
+        {
+          "id": "rc-wi-3",
+          "word": "груша",
+          "imageAsset": "word_grusha",
+          "audioAsset": null,
+          "hint": "Гру-ша. Стечение ГР.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-wi-3.m4a"
+        },
+        {
+          "id": "rc-wi-4",
+          "word": "крокодил",
+          "imageAsset": "word_krokodil",
+          "audioAsset": null,
+          "hint": "Кро-ко-дил. Стечение КР.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-wi-4.m4a"
+        },
+        {
+          "id": "rc-wi-5",
+          "word": "крот",
+          "imageAsset": "word_krot",
+          "audioAsset": null,
+          "hint": "Крот. Стечение КР.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-wi-5.m4a"
+        },
+        {
+          "id": "rc-wi-6",
+          "word": "брокколи",
+          "imageAsset": "word_brokkoli",
+          "audioAsset": null,
+          "hint": "Брок-ко-ли. Стечение БР.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/RClusters/rc-wi-6.m4a"
+        },
+        {
+          "id": "rc-wi-7",
+          "word": "гранат",
+          "imageAsset": "word_granat",
+          "audioAsset": null,
+          "hint": "Гра-нат. Стечение ГР.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-wi-7.m4a"
+        },
+        {
+          "id": "rc-wi-8",
+          "word": "грузовик",
+          "imageAsset": "word_gruzovik",
+          "audioAsset": null,
+          "hint": "Гру-зо-вик. Стечение ГР.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-wi-8.m4a"
+        },
+        {
+          "id": "rc-wi-9",
+          "word": "кран",
+          "imageAsset": "word_kran",
+          "audioAsset": null,
+          "hint": "Кран. Стечение КР.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-wi-9.m4a"
+        }
+      ]
+    },
+    "wordMed": {
+      "stageId": "wordMed",
+      "note": "Слова со стечением + Р в середине.",
+      "items": [
+        {
+          "id": "rc-wm-0",
+          "word": "ведро",
+          "imageAsset": "word_bucket",
+          "audioAsset": null,
+          "hint": "Вед-ро. Стечение ДР.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-wm-0.m4a"
+        },
+        {
+          "id": "rc-wm-1",
+          "word": "выдра",
+          "imageAsset": "word_vydra",
+          "audioAsset": null,
+          "hint": "Вы-дра. Зверёк у реки. Стечение ДР.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-wm-1.m4a"
+        },
+        {
+          "id": "rc-wm-2",
+          "word": "завтрак",
+          "imageAsset": "word_zavtrak",
+          "audioAsset": null,
+          "hint": "Зав-трак. Стечение ТР.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-wm-2.m4a"
+        },
+        {
+          "id": "rc-wm-3",
+          "word": "ватрушка",
+          "imageAsset": "word_vatrushka",
+          "audioAsset": null,
+          "hint": "Ва-труш-ка. Стечение ТР.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-wm-3.m4a"
+        },
+        {
+          "id": "rc-wm-4",
+          "word": "игрушка",
+          "imageAsset": "word_igrushka",
+          "audioAsset": null,
+          "hint": "Иг-руш-ка. Стечение ГР.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-wm-4.m4a"
+        },
+        {
+          "id": "rc-wm-5",
+          "word": "зебра",
+          "imageAsset": "word_zebra",
+          "audioAsset": null,
+          "hint": "Зеб-ра. Стечение БР.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RClusters/rc-wm-5.m4a"
+        }
+      ]
+    },
+    "phrase": {
+      "stageId": "phrase",
+      "note": "Словосочетания со стечением + Р.",
+      "items": [
+        {
+          "id": "rc-ph-0",
+          "word": "красный трактор",
+          "audioAsset": null,
+          "hint": "Крас-ный трак-тор.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-ph-0.m4a"
+        },
+        {
+          "id": "rc-ph-1",
+          "word": "большой гриб",
+          "audioAsset": null,
+          "hint": "Боль-шой гриб.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-ph-1.m4a"
+        },
+        {
+          "id": "rc-ph-2",
+          "word": "полное ведро",
+          "audioAsset": null,
+          "hint": "Пол-но-е вед-ро.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-ph-2.m4a"
+        },
+        {
+          "id": "rc-ph-3",
+          "word": "новая игрушка",
+          "audioAsset": null,
+          "hint": "Но-ва-я иг-руш-ка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-ph-3.m4a"
+        },
+        {
+          "id": "rc-ph-4",
+          "word": "вкусная груша",
+          "audioAsset": null,
+          "hint": "Вкус-на-я гру-ша.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-ph-4.m4a"
+        }
+      ]
+    },
+    "sentence": {
+      "stageId": "sentence",
+      "note": "Предложения со стечением + Р.",
+      "items": [
+        {
+          "id": "rc-sen-0",
+          "word": "Трактор едет по дороге.",
+          "audioAsset": null,
+          "hint": "Трак-тор, до-рога.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-sen-0.m4a"
+        },
+        {
+          "id": "rc-sen-1",
+          "word": "В лесу растут грибы.",
+          "audioAsset": null,
+          "hint": "Гри-бы — стечение ГР.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RClusters/rc-sen-1.m4a"
+        },
+        {
+          "id": "rc-sen-2",
+          "word": "Брат принёс ведро воды.",
+          "audioAsset": null,
+          "hint": "Брат, при-нёс, вед-ро.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/RClusters/rc-sen-2.m4a"
+        },
+        {
+          "id": "rc-sen-3",
+          "word": "Гриша играет с грузовиком.",
+          "audioAsset": null,
+          "hint": "Гри-ша, иг-рает, гру-зо-вик.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/RClusters/rc-sen-3.m4a"
+        }
+      ]
+    }
+  }
+}

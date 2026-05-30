@@ -1,0 +1,280 @@
+{
+  "id": "pack_diff_paronyms_v1",
+  "soundTarget": "З–Ж/Ш–Ж/С–З/Ч–Щ",
+  "group": "дифференциация",
+  "version": 1,
+  "description": "F1-010. Наборы минимальных пар по приоритетным акустически близким парам: З–Ж (коза/кожа), Ш–Ж (шар/жар), С–З (суп/зуб, коса/коза), Ч–Щ (чашка/чаща, плач/плащ).",
+  "stages": {
+    "prep": {
+      "stageId": "prep",
+      "note": "Слуховой этап: услышь близкие пары. З — звонкий свист, Ж — звонкое шипение; С — глухой свист; Ч — короткий, Щ — длинный мягкий.",
+      "items": [
+        {
+          "id": "par-listen-0",
+          "word": "з-з-з звонкий свист",
+          "audioAsset": null,
+          "hint": "Комар звенит: з-з-з (горло дрожит).",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffParo/par-listen-0.m4a"
+        },
+        {
+          "id": "par-listen-1",
+          "word": "ж-ж-ж жужжит",
+          "audioAsset": null,
+          "hint": "Жук жужжит: ж-ж-ж (горло дрожит, язык вверху).",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffParo/par-listen-1.m4a"
+        },
+        {
+          "id": "par-listen-2",
+          "word": "с глухой / з звонкий",
+          "audioAsset": null,
+          "hint": "С — без голоса, З — с голосом. Рука на горле.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffParo/par-listen-2.m4a"
+        },
+        {
+          "id": "par-listen-3",
+          "word": "ч короткий / щ длинный",
+          "audioAsset": null,
+          "hint": "Ч — короткое (чик!), Щ — длинное мягкое (щщщ).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffParo/par-listen-3.m4a"
+        }
+      ]
+    },
+    "diff": {
+      "stageId": "diff",
+      "note": "Минимальные пары З–Ж и сортировка.",
+      "items": [
+        {
+          "id": "par-zzh-0",
+          "word": "коза — кожа",
+          "imageAsset": "word_goat|word_kozha",
+          "audioAsset": null,
+          "hint": "Ко-За (зверь) — ко-Жа (на руке). З или Ж.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffParo/par-zzh-0.m4a"
+        },
+        {
+          "id": "par-zzh-1",
+          "word": "зайка — чайка",
+          "imageAsset": "word_zayka|word_chayka",
+          "audioAsset": null,
+          "hint": "За-йка — ча-йка (птица над морем).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffParo/par-zzh-1.m4a"
+        },
+        {
+          "id": "par-zzh-2",
+          "word": "зал — жал",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Зал — жал.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffParo/par-zzh-2.m4a"
+        },
+        {
+          "id": "par-zzh-3",
+          "word": "розы — рожи",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Ро-Зы (цветы) — ро-Жи.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffParo/par-zzh-3.m4a"
+        },
+        {
+          "id": "par-zzh-4",
+          "word": "лужи — лузы",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Лу-Жи (после дождя) — лу-Зы.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffParo/par-zzh-4.m4a"
+        }
+      ]
+    },
+    "phrase": {
+      "stageId": "diff",
+      "note": "Минимальные пары Ш–Ж (глухой/звонкий шипящий) и сортировка.",
+      "items": [
+        {
+          "id": "par-shzh-0",
+          "word": "шар — жар",
+          "imageAsset": "word_shar|word_zhar",
+          "audioAsset": null,
+          "hint": "Шар (круглый) — жар (горячо). Ш или Ж.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffParo/par-shzh-0.m4a"
+        },
+        {
+          "id": "par-shzh-1",
+          "word": "шить — жить",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Шить — жить.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffParo/par-shzh-1.m4a"
+        },
+        {
+          "id": "par-shzh-2",
+          "word": "шесть — жесть",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Шесть (6) — жесть.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffParo/par-shzh-2.m4a"
+        },
+        {
+          "id": "par-shzh-3",
+          "word": "уши — ужи",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "У-Ши — у-Жи (змейки).",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffParo/par-shzh-3.m4a"
+        },
+        {
+          "id": "par-shzh-4",
+          "word": "Луша — лужа",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Лу-Ша (имя) — лу-Жа.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffParo/par-shzh-4.m4a"
+        }
+      ]
+    },
+    "sentence": {
+      "stageId": "sentence",
+      "note": "Предложения с близкими парами — удержи оба звука.",
+      "items": [
+        {
+          "id": "par-sen-0",
+          "word": "У Зои жёлтый зонт.",
+          "audioAsset": null,
+          "hint": "Зо-и (З), Жёл-тый (Ж), Зонт (З).",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffParo/par-sen-0.m4a"
+        },
+        {
+          "id": "par-sen-1",
+          "word": "Жук залез на розу.",
+          "audioAsset": null,
+          "hint": "Жук (Ж), За-лез (З), Ро-Зу (З).",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffParo/par-sen-1.m4a"
+        },
+        {
+          "id": "par-sen-2",
+          "word": "Соня держит зонт.",
+          "audioAsset": null,
+          "hint": "Со-ня (С), Зонт (З).",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffParo/par-sen-2.m4a"
+        },
+        {
+          "id": "par-sen-3",
+          "word": "Щенок пьёт чай из чашки.",
+          "audioAsset": null,
+          "hint": "Ще-нок (Щ), Чай (Ч), Ча-Шки.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffParo/par-sen-3.m4a"
+        }
+      ]
+    },
+    "wordInit": {
+      "stageId": "diff",
+      "note": "Минимальные пары С–З (глухой/звонкий свист) и сортировка.",
+      "items": [
+        {
+          "id": "par-sz-0",
+          "word": "суп — зуб",
+          "imageAsset": "word_sup|word_zub",
+          "audioAsset": null,
+          "hint": "Суп (едят) — зуб (во рту). С или З.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffParo/par-sz-0.m4a"
+        },
+        {
+          "id": "par-sz-1",
+          "word": "коса — коза",
+          "imageAsset": "word_kosa|word_goat",
+          "audioAsset": null,
+          "hint": "Ко-Са — ко-За (зверь).",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffParo/par-sz-1.m4a"
+        },
+        {
+          "id": "par-sz-2",
+          "word": "роса — роза",
+          "imageAsset": "word_rosa|word_rose",
+          "audioAsset": null,
+          "hint": "Ро-Са (утром на траве) — ро-За (цветок).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffParo/par-sz-2.m4a"
+        },
+        {
+          "id": "par-sz-3",
+          "word": "собор — забор",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Со-бор — за-бор.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffParo/par-sz-3.m4a"
+        },
+        {
+          "id": "par-sz-4",
+          "word": "сайка — зайка",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Сай-ка — зай-ка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffParo/par-sz-4.m4a"
+        }
+      ]
+    },
+    "wordMed": {
+      "stageId": "diff",
+      "note": "Минимальные пары Ч–Щ (короткий/длинный мягкий) и сортировка.",
+      "items": [
+        {
+          "id": "par-chsch-0",
+          "word": "чашка — чаща",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Ча-Шка (пьют чай) — ча-Ща (густой лес). Ч или Щ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffParo/par-chsch-0.m4a"
+        },
+        {
+          "id": "par-chsch-1",
+          "word": "плач — плащ",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Плач — плащ (одежда от дождя).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffParo/par-chsch-1.m4a"
+        },
+        {
+          "id": "par-chsch-2",
+          "word": "чёткий — щётка",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Чёт-кий — щёт-ка.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffParo/par-chsch-2.m4a"
+        },
+        {
+          "id": "par-chsch-3",
+          "word": "чай — щи",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Чай — щи (суп).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffParo/par-chsch-3.m4a"
+        }
+      ]
+    }
+  }
+}

@@ -167,9 +167,13 @@ public final class LiveContentService: ContentService, @unchecked Sendable {
 
     public func loadPack(id: String) async throws -> ContentPack {
         // Pack id format: "sound-<letter>-<stage>-<template>-v1" or "sound_<letter>_v1" for bundled file name.
-        // Strategy: map to bundled file "sound_<letter>_pack" and filter by stage+template inside ContentEngine.
-        let soundLetter = Self.extractSoundLetter(from: id)
-        let fileName = "sound_\(soundLetter)_pack"
+        // Strategy: map to bundled file and filter by stage+template inside ContentEngine.
+        //
+        // Resolution order:
+        //   1. Explicit registry (multi-letter / differentiation packs whose id
+        //      does not encode a single sound letter — e.g. "pack_diff_s_sh_v1").
+        //   2. Legacy romanize path ("sound_<letter>_pack") for single-letter packs.
+        let fileName = Self.fileName(for: id)
         guard let url = Self.resolveResourceURL(fileName: fileName, ext: "json") else {
             HSLogger.content.error("Pack resource missing: \(fileName).json")
             throw AppError.contentPackNotFound(id)
@@ -191,24 +195,92 @@ public final class LiveContentService: ContentService, @unchecked Sendable {
     }
 
     public func bundledPacks() -> [ContentPackMeta] {
-        ["s", "sh", "r", "l", "k"].compactMap { letter -> ContentPackMeta? in
-            guard let url = Self.resolveResourceURL(fileName: "sound_\(letter)_pack", ext: "json") else { return nil }
-            let size = (try? FileManager.default.attributesOfItem(atPath: url.path)[.size] as? Int) ?? 0
-            return ContentPackMeta(
+        // Legacy single-letter packs (id encodes the sound letter directly).
+        let legacy = ["s", "sh", "r", "l", "k"].compactMap { letter -> ContentPackMeta? in
+            metaFromBundle(
                 id: "sound_\(letter)_v1",
                 soundTarget: letter.uppercased(),
-                stage: CorrectionStage.wordInit.rawValue,
-                templateType: TemplateType.listenAndChoose.rawValue,
-                version: "1",
-                isDownloaded: true,
-                isBundled: true,
-                storageUrl: url.absoluteString,
-                sizeBytes: size
+                templateType: .listenAndChoose
             )
         }
+        // New focus / differentiation packs registered via the explicit registry.
+        let registered = Self.packRegistry.compactMap { descriptor -> ContentPackMeta? in
+            metaFromBundle(
+                id: descriptor.id,
+                soundTarget: descriptor.soundTarget,
+                templateType: descriptor.templateType
+            )
+        }
+        return legacy + registered
     }
 
+    /// Builds a `ContentPackMeta` for a pack id by resolving its bundled file.
+    /// Returns `nil` if the JSON resource is not present in the bundle.
+    private func metaFromBundle(
+        id: String,
+        soundTarget: String,
+        templateType: TemplateType
+    ) -> ContentPackMeta? {
+        let fileName = Self.fileName(for: id)
+        guard let url = Self.resolveResourceURL(fileName: fileName, ext: "json") else { return nil }
+        let size = (try? FileManager.default.attributesOfItem(atPath: url.path)[.size] as? Int) ?? 0
+        return ContentPackMeta(
+            id: id,
+            soundTarget: soundTarget,
+            stage: CorrectionStage.wordInit.rawValue,
+            templateType: templateType.rawValue,
+            version: "1",
+            isDownloaded: true,
+            isBundled: true,
+            storageUrl: url.absoluteString,
+            sizeBytes: size
+        )
+    }
+
+    // MARK: - Pack registry
+
+    /// Descriptor for packs whose id does not encode a single sound letter
+    /// (multi-letter focus packs and differentiation packs).
+    struct PackDescriptor: Sendable {
+        let id: String
+        let fileName: String
+        let soundTarget: String
+        let templateType: TemplateType
+    }
+
+    /// Explicit registry: pack id → bundled file + metadata. Covers the 11
+    /// content packs added in Sprint 12 (489 exercises). Single-letter legacy
+    /// packs keep using the `sound_<letter>_pack` romanize path.
+    static let packRegistry: [PackDescriptor] = [
+        // Focus packs — concentrated drills per sound.
+        PackDescriptor(id: "sound_cfocus_v1",  fileName: "sound_cfocus_pack",  soundTarget: "Ц",     templateType: .listenAndChoose),
+        PackDescriptor(id: "sound_shchfocus_v1", fileName: "sound_shchfocus_pack", soundTarget: "Щ", templateType: .listenAndChoose),
+        PackDescriptor(id: "sound_rsoft_v1",   fileName: "sound_rsoft_pack",   soundTarget: "Рь",    templateType: .listenAndChoose),
+        PackDescriptor(id: "sound_lsoft_v1",   fileName: "sound_lsoft_pack",   soundTarget: "Ль",    templateType: .listenAndChoose),
+        PackDescriptor(id: "sound_velars_v1",  fileName: "sound_velars_pack",  soundTarget: "К/Г/Х", templateType: .listenAndChoose),
+        PackDescriptor(id: "sound_yfocus_v1",  fileName: "sound_yfocus_pack",  soundTarget: "Й",     templateType: .listenAndChoose),
+        PackDescriptor(id: "sound_rclusters_v1", fileName: "sound_rclusters_pack", soundTarget: "Р", templateType: .listenAndChoose),
+        // Differentiation packs — minimal pairs / paronyms / voicing.
+        PackDescriptor(id: "pack_diff_s_sh_v1",     fileName: "pack_diff_s_sh_pack",     soundTarget: "С–Ш",                 templateType: .minimalPairs),
+        PackDescriptor(id: "pack_diff_r_l_v1",      fileName: "pack_diff_r_l_pack",      soundTarget: "Р–Л",                 templateType: .minimalPairs),
+        PackDescriptor(id: "pack_diff_paronyms_v1", fileName: "pack_diff_paronyms_pack", soundTarget: "З–Ж/Ш–Ж/С–З/Ч–Щ",     templateType: .minimalPairs),
+        PackDescriptor(id: "pack_diff_voicing_v1",  fileName: "pack_diff_voicing_pack",  soundTarget: "Б-П/Д-Т/Г-К/В-Ф/З-С/Ж-Ш", templateType: .minimalPairs)
+    ]
+
+    /// Quick lookup id → fileName for the registry.
+    private static let registryFileNameByID: [String: String] = Dictionary(
+        uniqueKeysWithValues: packRegistry.map { ($0.id, $0.fileName) }
+    )
+
     // MARK: - Private
+
+    /// Resolves a pack id to its bundled JSON file name (without extension).
+    static func fileName(for id: String) -> String {
+        // 1. Explicit registry wins (multi-letter / differentiation packs).
+        if let registered = registryFileNameByID[id] { return registered }
+        // 2. Legacy single-letter path.
+        return "sound_\(extractSoundLetter(from: id))_pack"
+    }
 
     private static func extractSoundLetter(from id: String) -> String {
         // Accepts "С-wordInit-listen-and-choose-v1" or "sound_s_v1".

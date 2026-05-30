@@ -1,0 +1,641 @@
+{
+  "id": "sound_cfocus_v1",
+  "soundTarget": "Ц",
+  "group": "свистящие",
+  "version": 1,
+  "description": "F1-001. Фокус-пак [Ц]: стечения в слогах (ЦВ/ЦП) и все позиции, особенно интервокальная и финальная. Дополняет sound_c_pack концентрированным набором под этапы 5 и 8.",
+  "stages": {
+    "prep": {
+      "stageId": "prep",
+      "note": "Специфическая подготовка аффрикаты [Ц] = быстрый переход [Т]→[С]. Кончик языка у нижних зубов.",
+      "items": [
+        {
+          "id": "cf-prep-0",
+          "word": "т-т-т быстро",
+          "audioAsset": null,
+          "hint": "Постучи кончиком языка за нижними зубами: т-т-т.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-prep-0.m4a"
+        },
+        {
+          "id": "cf-prep-1",
+          "word": "с-с-с свист",
+          "audioAsset": null,
+          "hint": "Длинный тонкий свист: ссс. Язык внизу.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-prep-1.m4a"
+        },
+        {
+          "id": "cf-prep-2",
+          "word": "тс слитно",
+          "audioAsset": null,
+          "hint": "Скажи Т и сразу С — получится короткое Ц!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-prep-2.m4a"
+        },
+        {
+          "id": "cf-prep-3",
+          "word": "ц-ц-ц отрывисто",
+          "audioAsset": null,
+          "hint": "Каждое Ц — короткое, как капелька.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-prep-3.m4a"
+        },
+        {
+          "id": "cf-prep-4",
+          "word": "улыбка-заборчик",
+          "audioAsset": null,
+          "hint": "Покажи все зубки, язык спрятан внизу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-prep-4.m4a"
+        }
+      ]
+    },
+    "isolated": {
+      "stageId": "isolated",
+      "note": "Изолированный [Ц] — короткий, отрывистый. Сравни с длинным [С].",
+      "items": [
+        {
+          "id": "cf-iso-0",
+          "word": "ц! (кузнечик)",
+          "audioAsset": null,
+          "hint": "Кузнечик стрекочет: ц-ц-ц!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-iso-0.m4a"
+        },
+        {
+          "id": "cf-iso-1",
+          "word": "ц! (тихо)",
+          "audioAsset": null,
+          "hint": "Скажи Ц совсем тихо, как капелька.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-iso-1.m4a"
+        },
+        {
+          "id": "cf-iso-2",
+          "word": "ц-ц-ц быстро",
+          "audioAsset": null,
+          "hint": "Три коротких Ц подряд.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-iso-2.m4a"
+        },
+        {
+          "id": "cf-iso-3",
+          "word": "с-ц-с-ц",
+          "audioAsset": null,
+          "hint": "Длинный свист — короткое Ц. Слышишь разницу?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-iso-3.m4a"
+        },
+        {
+          "id": "cf-iso-4",
+          "word": "ц! (громко)",
+          "audioAsset": null,
+          "hint": "А теперь Ц погромче — как цыкнул.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-iso-4.m4a"
+        }
+      ]
+    },
+    "syllable": {
+      "stageId": "syllable",
+      "note": "Слоги с [Ц] — прямые, обратные и со стечением (этап 5 для Ц).",
+      "items": [
+        {
+          "id": "cf-syl-0",
+          "word": "ца",
+          "audioAsset": null,
+          "hint": "Ц + А: открой рот на А после короткого Ц.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-syl-0.m4a"
+        },
+        {
+          "id": "cf-syl-1",
+          "word": "цо",
+          "audioAsset": null,
+          "hint": "Ц + О: губы колечком.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-syl-1.m4a"
+        },
+        {
+          "id": "cf-syl-2",
+          "word": "цу",
+          "audioAsset": null,
+          "hint": "Ц + У: губы трубочкой.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-syl-2.m4a"
+        },
+        {
+          "id": "cf-syl-3",
+          "word": "цы",
+          "audioAsset": null,
+          "hint": "Ц + Ы: улыбнись.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-syl-3.m4a"
+        },
+        {
+          "id": "cf-syl-4",
+          "word": "це",
+          "audioAsset": null,
+          "hint": "Ц + Е.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-syl-4.m4a"
+        },
+        {
+          "id": "cf-syl-5",
+          "word": "ац",
+          "audioAsset": null,
+          "hint": "Сначала А, потом короткое Ц на конце.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-syl-5.m4a"
+        },
+        {
+          "id": "cf-syl-6",
+          "word": "оц",
+          "audioAsset": null,
+          "hint": "О и Ц на конце.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-syl-6.m4a"
+        },
+        {
+          "id": "cf-syl-7",
+          "word": "уц",
+          "audioAsset": null,
+          "hint": "У и Ц на конце.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-syl-7.m4a"
+        },
+        {
+          "id": "cf-syl-8",
+          "word": "ыц",
+          "audioAsset": null,
+          "hint": "Ы и Ц на конце.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-syl-8.m4a"
+        },
+        {
+          "id": "cf-syl-9",
+          "word": "иц",
+          "audioAsset": null,
+          "hint": "И и короткое Ц.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-syl-9.m4a"
+        },
+        {
+          "id": "cf-syl-10",
+          "word": "цва",
+          "audioAsset": null,
+          "hint": "Стечение: Ц-В-А слитно.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-syl-10.m4a"
+        },
+        {
+          "id": "cf-syl-11",
+          "word": "цве",
+          "audioAsset": null,
+          "hint": "Стечение ЦВ — как в слове «цветок».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-syl-11.m4a"
+        },
+        {
+          "id": "cf-syl-12",
+          "word": "цпа",
+          "audioAsset": null,
+          "hint": "Стечение ЦП.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-syl-12.m4a"
+        },
+        {
+          "id": "cf-syl-13",
+          "word": "аца",
+          "audioAsset": null,
+          "hint": "Ц между гласными: а-ца.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-syl-13.m4a"
+        },
+        {
+          "id": "cf-syl-14",
+          "word": "оцо",
+          "audioAsset": null,
+          "hint": "Ц между гласными: о-цо.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-syl-14.m4a"
+        },
+        {
+          "id": "cf-syl-15",
+          "word": "ица",
+          "audioAsset": null,
+          "hint": "И-ца — как хвостик слова «птица».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-syl-15.m4a"
+        }
+      ]
+    },
+    "wordInit": {
+      "stageId": "wordInit",
+      "note": "Слова с [Ц] в начале. Ц короткий, не тяни.",
+      "items": [
+        {
+          "id": "cf-wi-0",
+          "word": "цапля",
+          "imageAsset": "word_tsaplya",
+          "audioAsset": null,
+          "hint": "Цапля стоит на одной ноге. Короткий Ц в начале.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-wi-0.m4a"
+        },
+        {
+          "id": "cf-wi-1",
+          "word": "цветок",
+          "imageAsset": "word_tsvetok",
+          "audioAsset": null,
+          "hint": "Це-веток. Стечение ЦВ.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-wi-1.m4a"
+        },
+        {
+          "id": "cf-wi-2",
+          "word": "цепь",
+          "imageAsset": "word_tsep",
+          "audioAsset": null,
+          "hint": "Це-пь. Звенья цепи.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-wi-2.m4a"
+        },
+        {
+          "id": "cf-wi-3",
+          "word": "цирк",
+          "imageAsset": "word_tsirk",
+          "audioAsset": null,
+          "hint": "Ци-рк. В цирке клоуны.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-wi-3.m4a"
+        },
+        {
+          "id": "cf-wi-4",
+          "word": "цифра",
+          "imageAsset": "word_tsifra",
+          "audioAsset": null,
+          "hint": "Ци-фра. Цифры от 1 до 10.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-wi-4.m4a"
+        },
+        {
+          "id": "cf-wi-5",
+          "word": "цыплёнок",
+          "imageAsset": "word_tsyplyonok",
+          "audioAsset": null,
+          "hint": "Цы-плёнок. Жёлтый малыш курицы.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-wi-5.m4a"
+        },
+        {
+          "id": "cf-wi-6",
+          "word": "цыган",
+          "imageAsset": "word_tsygan",
+          "audioAsset": null,
+          "hint": "Цы-ган.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-wi-6.m4a"
+        },
+        {
+          "id": "cf-wi-7",
+          "word": "цепочка",
+          "imageAsset": "word_tsepochka",
+          "audioAsset": null,
+          "hint": "Це-почка — маленькая цепь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-wi-7.m4a"
+        }
+      ]
+    },
+    "wordMed": {
+      "stageId": "wordMed",
+      "note": "Слова с [Ц] в середине (интервокальная позиция — самая лёгкая для Ц).",
+      "items": [
+        {
+          "id": "cf-wm-0",
+          "word": "птица",
+          "imageAsset": "word_bird",
+          "audioAsset": null,
+          "hint": "Пти-ца. Ц между гласными.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-wm-0.m4a"
+        },
+        {
+          "id": "cf-wm-1",
+          "word": "курица",
+          "imageAsset": "word_hen",
+          "audioAsset": null,
+          "hint": "Ку-ри-ца. Квохчет: ко-ко.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-wm-1.m4a"
+        },
+        {
+          "id": "cf-wm-2",
+          "word": "улица",
+          "imageAsset": "word_ulitsa",
+          "audioAsset": null,
+          "hint": "У-ли-ца. По улице едут машины.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-wm-2.m4a"
+        },
+        {
+          "id": "cf-wm-3",
+          "word": "кольцо",
+          "imageAsset": "word_koltso",
+          "audioAsset": null,
+          "hint": "Коль-цо. Круглое, на пальце.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-wm-3.m4a"
+        },
+        {
+          "id": "cf-wm-4",
+          "word": "блюдце",
+          "imageAsset": "word_blyudtse",
+          "audioAsset": null,
+          "hint": "Блюд-це. Под чашкой.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-wm-4.m4a"
+        },
+        {
+          "id": "cf-wm-5",
+          "word": "солнце",
+          "imageAsset": "word_solntse",
+          "audioAsset": null,
+          "hint": "Сол-нце. Светит и греет.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-wm-5.m4a"
+        },
+        {
+          "id": "cf-wm-6",
+          "word": "пуговица",
+          "imageAsset": "word_pugovitsa",
+          "audioAsset": null,
+          "hint": "Пу-го-ви-ца. Застёгивает рубашку.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-wm-6.m4a"
+        },
+        {
+          "id": "cf-wm-7",
+          "word": "синица",
+          "imageAsset": "word_sinitsa",
+          "audioAsset": null,
+          "hint": "Си-ни-ца. Птичка с жёлтой грудкой.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-wm-7.m4a"
+        },
+        {
+          "id": "cf-wm-8",
+          "word": "лисица",
+          "imageAsset": "word_lisitsa",
+          "audioAsset": null,
+          "hint": "Ли-си-ца. Рыжая, хитрая.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-wm-8.m4a"
+        },
+        {
+          "id": "cf-wm-9",
+          "word": "граница",
+          "imageAsset": "word_granitsa",
+          "audioAsset": null,
+          "hint": "Гра-ни-ца.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-wm-9.m4a"
+        },
+        {
+          "id": "cf-wm-10",
+          "word": "больница",
+          "imageAsset": "word_bolnitsa",
+          "audioAsset": null,
+          "hint": "Боль-ни-ца. Там лечат врачи.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-wm-10.m4a"
+        },
+        {
+          "id": "cf-wm-11",
+          "word": "страница",
+          "imageAsset": "word_stranitsa",
+          "audioAsset": null,
+          "hint": "Стра-ни-ца книги.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-wm-11.m4a"
+        },
+        {
+          "id": "cf-wm-12",
+          "word": "столица",
+          "imageAsset": "word_stolitsa",
+          "audioAsset": null,
+          "hint": "Сто-ли-ца — главный город.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/CFocus/cf-wm-12.m4a"
+        },
+        {
+          "id": "cf-wm-13",
+          "word": "рукавица",
+          "imageAsset": "word_rukavitsa",
+          "audioAsset": null,
+          "hint": "Ру-ка-ви-ца. Тёплая, на руку.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/CFocus/cf-wm-13.m4a"
+        },
+        {
+          "id": "cf-wm-14",
+          "word": "пшеница",
+          "imageAsset": "word_pshenitsa",
+          "audioAsset": null,
+          "hint": "Пше-ни-ца. Из неё хлеб.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/CFocus/cf-wm-14.m4a"
+        },
+        {
+          "id": "cf-wm-15",
+          "word": "крыльцо",
+          "imageAsset": "word_kryltso",
+          "audioAsset": null,
+          "hint": "Крыль-цо у дома.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-wm-15.m4a"
+        },
+        {
+          "id": "cf-wm-16",
+          "word": "сердце",
+          "imageAsset": "word_serdtse",
+          "audioAsset": null,
+          "hint": "Сер-дце. Стучит: тук-тук.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-wm-16.m4a"
+        },
+        {
+          "id": "cf-wm-17",
+          "word": "танец",
+          "imageAsset": "word_tanets",
+          "audioAsset": null,
+          "hint": "Та-нец. Танцуем!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-wm-17.m4a"
+        }
+      ]
+    },
+    "wordFinal": {
+      "stageId": "wordFinal",
+      "note": "Слова с [Ц] в конце (финальная позиция — дыра в покрытии Ц).",
+      "items": [
+        {
+          "id": "cf-wf-0",
+          "word": "заяц",
+          "imageAsset": "word_hare",
+          "audioAsset": null,
+          "hint": "За-яц. Прыгает в лесу. Ц на конце.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-wf-0.m4a"
+        },
+        {
+          "id": "cf-wf-1",
+          "word": "огурец",
+          "imageAsset": "word_ogurets",
+          "audioAsset": null,
+          "hint": "О-гу-рец. Зелёный, длинный.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-wf-1.m4a"
+        },
+        {
+          "id": "cf-wf-2",
+          "word": "отец",
+          "imageAsset": "word_otets",
+          "audioAsset": null,
+          "hint": "О-тец. Папа.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-wf-2.m4a"
+        },
+        {
+          "id": "cf-wf-3",
+          "word": "овца",
+          "imageAsset": "word_ovtsa",
+          "audioAsset": null,
+          "hint": "Ов-ца. Говорит: бе-е.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-wf-3.m4a"
+        },
+        {
+          "id": "cf-wf-4",
+          "word": "скворец",
+          "imageAsset": "word_skvorets",
+          "audioAsset": null,
+          "hint": "Скво-рец. Птица, живёт в скворечнике.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-wf-4.m4a"
+        },
+        {
+          "id": "cf-wf-5",
+          "word": "лицо",
+          "imageAsset": "word_litso",
+          "audioAsset": null,
+          "hint": "Ли-цо. На нём глаза, нос, рот.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/CFocus/cf-wf-5.m4a"
+        }
+      ]
+    },
+    "phrase": {
+      "stageId": "phrase",
+      "note": "Словосочетания с [Ц]. Удержи короткий Ц во фразе.",
+      "items": [
+        {
+          "id": "cf-ph-0",
+          "word": "белая цапля",
+          "audioAsset": null,
+          "hint": "Бе-ла-я ца-пля.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-ph-0.m4a"
+        },
+        {
+          "id": "cf-ph-1",
+          "word": "красивый цветок",
+          "audioAsset": null,
+          "hint": "Кра-си-вый цве-ток.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-ph-1.m4a"
+        },
+        {
+          "id": "cf-ph-2",
+          "word": "жёлтый цыплёнок",
+          "audioAsset": null,
+          "hint": "Жёл-тый цы-плё-нок.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-ph-2.m4a"
+        },
+        {
+          "id": "cf-ph-3",
+          "word": "золотое кольцо",
+          "audioAsset": null,
+          "hint": "Зо-ло-то-е коль-цо.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-ph-3.m4a"
+        },
+        {
+          "id": "cf-ph-4",
+          "word": "звонкая синица",
+          "audioAsset": null,
+          "hint": "Звон-ка-я си-ни-ца.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/CFocus/cf-ph-4.m4a"
+        },
+        {
+          "id": "cf-ph-5",
+          "word": "маленькая пуговица",
+          "audioAsset": null,
+          "hint": "Ма-лень-ка-я пу-го-ви-ца.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/CFocus/cf-ph-5.m4a"
+        }
+      ]
+    },
+    "sentence": {
+      "stageId": "sentence",
+      "note": "Предложения с [Ц]. Говори спокойно, Ц короткий.",
+      "items": [
+        {
+          "id": "cf-sen-0",
+          "word": "Цапля поймала рыбу.",
+          "audioAsset": null,
+          "hint": "Це-ля фразу слушай.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/CFocus/cf-sen-0.m4a"
+        },
+        {
+          "id": "cf-sen-1",
+          "word": "На крыльце сидит курица.",
+          "audioAsset": null,
+          "hint": "Найди все Ц: крыльце, курица.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/CFocus/cf-sen-1.m4a"
+        },
+        {
+          "id": "cf-sen-2",
+          "word": "Синица села на цветок.",
+          "audioAsset": null,
+          "hint": "Си-ни-ца, цве-ток — два Ц.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/CFocus/cf-sen-2.m4a"
+        },
+        {
+          "id": "cf-sen-3",
+          "word": "Заяц грызёт огурец.",
+          "audioAsset": null,
+          "hint": "За-яц, о-гу-рец — Ц в конце.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/CFocus/cf-sen-3.m4a"
+        },
+        {
+          "id": "cf-sen-4",
+          "word": "В цирке танцует медведь.",
+          "audioAsset": null,
+          "hint": "Цирк, танцует.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/CFocus/cf-sen-4.m4a"
+        }
+      ]
+    }
+  }
+}

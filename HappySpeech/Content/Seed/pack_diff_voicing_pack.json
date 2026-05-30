@@ -1,0 +1,299 @@
+{
+  "id": "pack_diff_voicing_v1",
+  "soundTarget": "Б-П/Д-Т/Г-К/В-Ф/З-С/Ж-Ш",
+  "group": "дифференциация",
+  "version": 1,
+  "description": "F1-011. Дифференциация по звонкости/глухости (ФФН-трек): Б–П, Д–Т, Г–К, В–Ф, З–С, Ж–Ш. Слух→слог→минимальные пары→текст. Профилактика дисграфии (оглушение/озвончение).",
+  "stages": {
+    "prep": {
+      "stageId": "prep",
+      "note": "Звонкий или глухой? Положи руку на горлышко: при звонком оно дрожит, при глухом — молчит.",
+      "items": [
+        {
+          "id": "voi-listen-0",
+          "word": "б звонкий / п глухой",
+          "audioAsset": null,
+          "hint": "Б — горло дрожит. П — молчит. Потрогай!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffVoice/voi-listen-0.m4a"
+        },
+        {
+          "id": "voi-listen-1",
+          "word": "д звонкий / т глухой",
+          "audioAsset": null,
+          "hint": "Д — дрожит. Т — молчит.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffVoice/voi-listen-1.m4a"
+        },
+        {
+          "id": "voi-listen-2",
+          "word": "г звонкий / к глухой",
+          "audioAsset": null,
+          "hint": "Г — дрожит. К — молчит.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffVoice/voi-listen-2.m4a"
+        },
+        {
+          "id": "voi-listen-3",
+          "word": "в звонкий / ф глухой",
+          "audioAsset": null,
+          "hint": "В — дрожит. Ф — молчит.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffVoice/voi-listen-3.m4a"
+        },
+        {
+          "id": "voi-listen-4",
+          "word": "з звонкий / с глухой",
+          "audioAsset": null,
+          "hint": "З — дрожит (комар). С — молчит (свист).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffVoice/voi-listen-4.m4a"
+        },
+        {
+          "id": "voi-listen-5",
+          "word": "ж звонкий / ш глухой",
+          "audioAsset": null,
+          "hint": "Ж — дрожит (жук). Ш — молчит (шип).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffVoice/voi-listen-5.m4a"
+        }
+      ]
+    },
+    "syllable": {
+      "stageId": "syllable",
+      "note": "Слоги: звонкий — глухой. Слушай горлышко.",
+      "items": [
+        {
+          "id": "voi-syl-0",
+          "word": "ба-па",
+          "audioAsset": null,
+          "hint": "Ба (дрожит) — па (молчит).",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffVoice/voi-syl-0.m4a"
+        },
+        {
+          "id": "voi-syl-1",
+          "word": "да-та",
+          "audioAsset": null,
+          "hint": "Да — та.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffVoice/voi-syl-1.m4a"
+        },
+        {
+          "id": "voi-syl-2",
+          "word": "га-ка",
+          "audioAsset": null,
+          "hint": "Га — ка.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffVoice/voi-syl-2.m4a"
+        },
+        {
+          "id": "voi-syl-3",
+          "word": "ва-фа",
+          "audioAsset": null,
+          "hint": "Ва — фа.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffVoice/voi-syl-3.m4a"
+        },
+        {
+          "id": "voi-syl-4",
+          "word": "за-са",
+          "audioAsset": null,
+          "hint": "За — са.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffVoice/voi-syl-4.m4a"
+        },
+        {
+          "id": "voi-syl-5",
+          "word": "жа-ша",
+          "audioAsset": null,
+          "hint": "Жа — ша.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffVoice/voi-syl-5.m4a"
+        }
+      ]
+    },
+    "diff": {
+      "stageId": "diff",
+      "note": "Минимальные пары по звонкости: Б–П, Д–Т.",
+      "items": [
+        {
+          "id": "voi-bpdt-0",
+          "word": "бочка — почка",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Боч-ка (звонкий Б) — поч-ка (глухой П).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffVoice/voi-bpdt-0.m4a"
+        },
+        {
+          "id": "voi-bpdt-1",
+          "word": "балка — палка",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Бал-ка — пал-ка (глухой П).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffVoice/voi-bpdt-1.m4a"
+        },
+        {
+          "id": "voi-bpdt-2",
+          "word": "дочка — точка",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Доч-ка (звонкий Д) — точ-ка (глухой Т).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffVoice/voi-bpdt-2.m4a"
+        },
+        {
+          "id": "voi-bpdt-3",
+          "word": "дом — том",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Дом (звонкий Д) — том (глухой Т).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffVoice/voi-bpdt-3.m4a"
+        },
+        {
+          "id": "voi-bpdt-4",
+          "word": "забор — запор",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "За-Бор — за-Пор.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffVoice/voi-bpdt-4.m4a"
+        }
+      ]
+    },
+    "wordInit": {
+      "stageId": "diff",
+      "note": "Минимальные пары по звонкости: Г–К, В–Ф.",
+      "items": [
+        {
+          "id": "voi-gkvf-0",
+          "word": "гора — кора",
+          "imageAsset": "word_mountain|word_kora",
+          "audioAsset": null,
+          "hint": "Го-ра (звонкий Г) — ко-ра (глухой К).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffVoice/voi-gkvf-0.m4a"
+        },
+        {
+          "id": "voi-gkvf-1",
+          "word": "грот — крот",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "ГРот — кРот (зверёк).",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffVoice/voi-gkvf-1.m4a"
+        },
+        {
+          "id": "voi-gkvf-2",
+          "word": "ваза — фаза",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Ва-за (звонкий В) — фа-за (глухой Ф).",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffVoice/voi-gkvf-2.m4a"
+        },
+        {
+          "id": "voi-gkvf-3",
+          "word": "голос — колос",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Го-лос — ко-лос.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffVoice/voi-gkvf-3.m4a"
+        }
+      ]
+    },
+    "wordMed": {
+      "stageId": "diff",
+      "note": "Минимальные пары по звонкости: З–С, Ж–Ш.",
+      "items": [
+        {
+          "id": "voi-zszhsh-0",
+          "word": "зуб — суп",
+          "imageAsset": "word_zub|word_sup",
+          "audioAsset": null,
+          "hint": "Зуб (звонкий З) — суп (глухой С).",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffVoice/voi-zszhsh-0.m4a"
+        },
+        {
+          "id": "voi-zszhsh-1",
+          "word": "коза — коса",
+          "imageAsset": "word_goat|word_kosa",
+          "audioAsset": null,
+          "hint": "Ко-За — ко-Са.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffVoice/voi-zszhsh-1.m4a"
+        },
+        {
+          "id": "voi-zszhsh-2",
+          "word": "роза — роса",
+          "imageAsset": "word_rose|word_rosa",
+          "audioAsset": null,
+          "hint": "Ро-За (цветок) — ро-Са (на траве).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffVoice/voi-zszhsh-2.m4a"
+        },
+        {
+          "id": "voi-zszhsh-3",
+          "word": "жар — шар",
+          "imageAsset": "word_zhar|word_shar",
+          "audioAsset": null,
+          "hint": "Жар (звонкий Ж) — шар (глухой Ш).",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffVoice/voi-zszhsh-3.m4a"
+        },
+        {
+          "id": "voi-zszhsh-4",
+          "word": "зайка — сайка",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Зай-ка — сай-ка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffVoice/voi-zszhsh-4.m4a"
+        }
+      ]
+    },
+    "sentence": {
+      "stageId": "sentence",
+      "note": "Предложения: следи за звонкими и глухими.",
+      "items": [
+        {
+          "id": "voi-sen-0",
+          "word": "Папа починил бочку.",
+          "audioAsset": null,
+          "hint": "Па-Па (П), По-чи-нил (П), Боч-ку (Б).",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffVoice/voi-sen-0.m4a"
+        },
+        {
+          "id": "voi-sen-1",
+          "word": "Дочка нашла точку.",
+          "audioAsset": null,
+          "hint": "Доч-ка (Д), точ-ку (Т).",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffVoice/voi-sen-1.m4a"
+        },
+        {
+          "id": "voi-sen-2",
+          "word": "Гора укрыта корой.",
+          "audioAsset": null,
+          "hint": "Го-Ра (Г), Ко-Рой (К).",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffVoice/voi-sen-2.m4a"
+        },
+        {
+          "id": "voi-sen-3",
+          "word": "У козы коса.",
+          "audioAsset": null,
+          "hint": "Ко-Зы (З), Ко-Са (С).",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffVoice/voi-sen-3.m4a"
+        }
+      ]
+    }
+  }
+}

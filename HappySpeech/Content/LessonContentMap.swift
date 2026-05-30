@@ -102,8 +102,33 @@ public enum LessonContentMap {
 
     /// Returns the asset name (e.g. `"word_cow"`) for the given russian word,
     /// or `nil` if the word is not in the manifest. Case-insensitive.
+    ///
+    /// Tolerant of pipe-encoded `imageAsset` values from differentiation packs
+    /// (e.g. `"word_rak|word_lak"`): the first (target) component is returned.
     public static func asset(for word: String) -> String? {
-        assetByWord[word.lowercased()]
+        if word.contains("|") {
+            return assetPair(from: word)?.target
+        }
+        return assetByWord[word.lowercased()]
+    }
+
+    /// Splits a pipe-encoded `imageAsset` field from a content pack item into
+    /// its two illustration names — the target word and the distractor.
+    ///
+    /// Picture-minimal-pairs items in the differentiation packs encode both
+    /// images directly as asset names separated by `|`, e.g.
+    /// `"word_rak|word_lak"` → (`"word_rak"`, `"word_lak"`). The values are
+    /// already asset names (not russian words), so they are passed straight to
+    /// `HSContentSymbol` without a manifest lookup.
+    ///
+    /// Returns `nil` if the field does not contain a `|` separator (i.e. it is a
+    /// single-image item and the caller should use `asset(for:)` instead).
+    public static func assetPair(from imageAsset: String) -> (target: String, distractor: String)? {
+        let parts = imageAsset
+            .split(separator: "|", maxSplits: 1, omittingEmptySubsequences: true)
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+        guard parts.count == 2, !parts[0].isEmpty, !parts[1].isEmpty else { return nil }
+        return (parts[0], parts[1])
     }
 
     /// Returns the full manifest entry for the given russian word, or `nil`.

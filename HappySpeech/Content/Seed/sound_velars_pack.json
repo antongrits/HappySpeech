@@ -1,0 +1,553 @@
+{
+  "id": "sound_velars_v1",
+  "soundTarget": "К/Г/Х",
+  "group": "заднеязычные",
+  "version": 1,
+  "description": "F1-005. Маршрут заднеязычных К/Г/Х с акцентом на анти-замену переднеязычными Т/Д. Контрастные слоги и пары (кот/тот, гора/Дора). Для дизартрии/ОНР.",
+  "stages": {
+    "prep": {
+      "stageId": "prep",
+      "note": "Подготовка К/Г/Х — спинка языка к НЁБУ (не кончик к зубам). Кончик держи внизу.",
+      "items": [
+        {
+          "id": "vel-prep-0",
+          "word": "горка языком",
+          "audioAsset": null,
+          "hint": "Спинка горкой к нёбу, кончик спрятан внизу.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-prep-0.m4a"
+        },
+        {
+          "id": "vel-prep-1",
+          "word": "покашляй: к-к",
+          "audioAsset": null,
+          "hint": "Лёгкий кашель — это звук К сзади.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-prep-1.m4a"
+        },
+        {
+          "id": "vel-prep-2",
+          "word": "кончик вниз",
+          "audioAsset": null,
+          "hint": "Прижми кончик языка к нижним зубам и держи.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-prep-2.m4a"
+        },
+        {
+          "id": "vel-prep-3",
+          "word": "к-х погрей",
+          "audioAsset": null,
+          "hint": "Подыши на ладошку тёплым: ха-ха (Х).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-prep-3.m4a"
+        },
+        {
+          "id": "vel-prep-4",
+          "word": "г звонко",
+          "audioAsset": null,
+          "hint": "Положи руку на горло — при Г оно дрожит.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-prep-4.m4a"
+        }
+      ]
+    },
+    "isolated": {
+      "stageId": "isolated",
+      "note": "Изолированные К/Г/Х — задний уклад, не путай с Т/Д.",
+      "items": [
+        {
+          "id": "vel-iso-0",
+          "word": "к (молоток)",
+          "audioAsset": null,
+          "hint": "Молоток стучит: к-к-к — звук сзади.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-iso-0.m4a"
+        },
+        {
+          "id": "vel-iso-1",
+          "word": "г (гусь)",
+          "audioAsset": null,
+          "hint": "Гусь гогочет: га-га (звонкий Г).",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-iso-1.m4a"
+        },
+        {
+          "id": "vel-iso-2",
+          "word": "х (греем)",
+          "audioAsset": null,
+          "hint": "Греем руки: ха-х-х.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-iso-2.m4a"
+        },
+        {
+          "id": "vel-iso-3",
+          "word": "к-т сравни",
+          "audioAsset": null,
+          "hint": "К — сзади. Т — кончиком у зубов. Разные!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-iso-3.m4a"
+        },
+        {
+          "id": "vel-iso-4",
+          "word": "г-д сравни",
+          "audioAsset": null,
+          "hint": "Г — сзади. Д — кончиком. Разные!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-iso-4.m4a"
+        }
+      ]
+    },
+    "syllable": {
+      "stageId": "syllable",
+      "note": "Контрастные слоги К/Г/Х против Т/Д (профилактика замены).",
+      "items": [
+        {
+          "id": "vel-syl-0",
+          "word": "ка",
+          "audioAsset": null,
+          "hint": "К сзади + А.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-syl-0.m4a"
+        },
+        {
+          "id": "vel-syl-1",
+          "word": "ко",
+          "audioAsset": null,
+          "hint": "Ко.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-syl-1.m4a"
+        },
+        {
+          "id": "vel-syl-2",
+          "word": "ку",
+          "audioAsset": null,
+          "hint": "Ку.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-syl-2.m4a"
+        },
+        {
+          "id": "vel-syl-3",
+          "word": "ка-та",
+          "audioAsset": null,
+          "hint": "Ка (сзади) — та (спереди). Разница?",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-syl-3.m4a"
+        },
+        {
+          "id": "vel-syl-4",
+          "word": "ко-то",
+          "audioAsset": null,
+          "hint": "Ко — то.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-syl-4.m4a"
+        },
+        {
+          "id": "vel-syl-5",
+          "word": "га",
+          "audioAsset": null,
+          "hint": "Звонкий Г + А.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-syl-5.m4a"
+        },
+        {
+          "id": "vel-syl-6",
+          "word": "го",
+          "audioAsset": null,
+          "hint": "Го.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-syl-6.m4a"
+        },
+        {
+          "id": "vel-syl-7",
+          "word": "гу",
+          "audioAsset": null,
+          "hint": "Гу.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-syl-7.m4a"
+        },
+        {
+          "id": "vel-syl-8",
+          "word": "га-да",
+          "audioAsset": null,
+          "hint": "Га (сзади) — да (спереди).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-syl-8.m4a"
+        },
+        {
+          "id": "vel-syl-9",
+          "word": "го-до",
+          "audioAsset": null,
+          "hint": "Го — до.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-syl-9.m4a"
+        },
+        {
+          "id": "vel-syl-10",
+          "word": "ха",
+          "audioAsset": null,
+          "hint": "Х + А, тёплый выдох.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-syl-10.m4a"
+        },
+        {
+          "id": "vel-syl-11",
+          "word": "хо",
+          "audioAsset": null,
+          "hint": "Хо.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-syl-11.m4a"
+        },
+        {
+          "id": "vel-syl-12",
+          "word": "ху",
+          "audioAsset": null,
+          "hint": "Ху.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-syl-12.m4a"
+        },
+        {
+          "id": "vel-syl-13",
+          "word": "ак",
+          "audioAsset": null,
+          "hint": "А и К на конце — сзади.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-syl-13.m4a"
+        },
+        {
+          "id": "vel-syl-14",
+          "word": "ог",
+          "audioAsset": null,
+          "hint": "О и Г.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-syl-14.m4a"
+        },
+        {
+          "id": "vel-syl-15",
+          "word": "ах",
+          "audioAsset": null,
+          "hint": "А и Х.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-syl-15.m4a"
+        }
+      ]
+    },
+    "wordInit": {
+      "stageId": "wordInit",
+      "note": "Слова с К/Г/Х в начале. Спинка сзади, кончик внизу.",
+      "items": [
+        {
+          "id": "vel-wi-0",
+          "word": "кот",
+          "imageAsset": "word_kot",
+          "audioAsset": null,
+          "hint": "Кот. К сзади, не «тот».",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-wi-0.m4a"
+        },
+        {
+          "id": "vel-wi-1",
+          "word": "кубик",
+          "imageAsset": "word_kubik",
+          "audioAsset": null,
+          "hint": "Ку-бик. К сзади.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-wi-1.m4a"
+        },
+        {
+          "id": "vel-wi-2",
+          "word": "ковёр",
+          "imageAsset": "word_kovyor",
+          "audioAsset": null,
+          "hint": "Ко-вёр. На полу. К сзади.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-wi-2.m4a"
+        },
+        {
+          "id": "vel-wi-3",
+          "word": "гусь",
+          "imageAsset": "word_goose",
+          "audioAsset": null,
+          "hint": "Гусь. Звонкий Г, не «дусь».",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-wi-3.m4a"
+        },
+        {
+          "id": "vel-wi-4",
+          "word": "гора",
+          "imageAsset": "word_mountain",
+          "audioAsset": null,
+          "hint": "Го-ра. Г сзади.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-wi-4.m4a"
+        },
+        {
+          "id": "vel-wi-5",
+          "word": "халат",
+          "imageAsset": "word_khalat",
+          "audioAsset": null,
+          "hint": "Ха-лат. Тёплый Х.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-wi-5.m4a"
+        },
+        {
+          "id": "vel-wi-6",
+          "word": "хлеб",
+          "imageAsset": "word_hleb",
+          "audioAsset": null,
+          "hint": "Хлеб. Х в начале.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-wi-6.m4a"
+        }
+      ]
+    },
+    "wordMed": {
+      "stageId": "wordMed",
+      "note": "Слова с К/Г/Х в середине.",
+      "items": [
+        {
+          "id": "vel-wm-0",
+          "word": "рука",
+          "imageAsset": "word_hand",
+          "audioAsset": null,
+          "hint": "Ру-ка. К в середине.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-wm-0.m4a"
+        },
+        {
+          "id": "vel-wm-1",
+          "word": "окно",
+          "imageAsset": "word_window",
+          "audioAsset": null,
+          "hint": "Ок-но. К сзади.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-wm-1.m4a"
+        },
+        {
+          "id": "vel-wm-2",
+          "word": "нога",
+          "imageAsset": "word_noga",
+          "audioAsset": null,
+          "hint": "Но-га. Звонкий Г.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-wm-2.m4a"
+        },
+        {
+          "id": "vel-wm-3",
+          "word": "бумага",
+          "imageAsset": "word_bumaga",
+          "audioAsset": null,
+          "hint": "Бу-ма-га. Г в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-wm-3.m4a"
+        },
+        {
+          "id": "vel-wm-4",
+          "word": "сахар",
+          "imageAsset": "word_sakhar",
+          "audioAsset": null,
+          "hint": "Са-хар. Х в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-wm-4.m4a"
+        },
+        {
+          "id": "vel-wm-5",
+          "word": "орех",
+          "imageAsset": "word_orekh",
+          "audioAsset": null,
+          "hint": "О-рех. Х в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-wm-5.m4a"
+        }
+      ]
+    },
+    "wordFinal": {
+      "stageId": "wordFinal",
+      "note": "Слова с К/Г/Х в конце.",
+      "items": [
+        {
+          "id": "vel-wf-0",
+          "word": "мак",
+          "imageAsset": "word_mak",
+          "audioAsset": null,
+          "hint": "Мак. К на конце, не «мат».",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-wf-0.m4a"
+        },
+        {
+          "id": "vel-wf-1",
+          "word": "жук",
+          "imageAsset": "word_beetle",
+          "audioAsset": null,
+          "hint": "Жук. К на конце.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-wf-1.m4a"
+        },
+        {
+          "id": "vel-wf-2",
+          "word": "лук",
+          "imageAsset": "word_onion",
+          "audioAsset": null,
+          "hint": "Лук. К на конце.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/Velars/vel-wf-2.m4a"
+        },
+        {
+          "id": "vel-wf-3",
+          "word": "петух",
+          "imageAsset": "word_rooster",
+          "audioAsset": null,
+          "hint": "Пе-тух. Х на конце.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-wf-3.m4a"
+        },
+        {
+          "id": "vel-wf-4",
+          "word": "горох",
+          "imageAsset": "word_peas",
+          "audioAsset": null,
+          "hint": "Го-рох. Х на конце.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-wf-4.m4a"
+        }
+      ]
+    },
+    "phrase": {
+      "stageId": "phrase",
+      "note": "Словосочетания с К/Г/Х.",
+      "items": [
+        {
+          "id": "vel-ph-0",
+          "word": "рыжий кот",
+          "audioAsset": null,
+          "hint": "Ры-жий кот. К сзади.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-ph-0.m4a"
+        },
+        {
+          "id": "vel-ph-1",
+          "word": "высокая гора",
+          "audioAsset": null,
+          "hint": "Вы-со-ка-я го-ра.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-ph-1.m4a"
+        },
+        {
+          "id": "vel-ph-2",
+          "word": "белый гусь",
+          "audioAsset": null,
+          "hint": "Бе-лый гусь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-ph-2.m4a"
+        },
+        {
+          "id": "vel-ph-3",
+          "word": "тёплый халат",
+          "audioAsset": null,
+          "hint": "Тёп-лый ха-лат.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-ph-3.m4a"
+        },
+        {
+          "id": "vel-ph-4",
+          "word": "большой жук",
+          "audioAsset": null,
+          "hint": "Боль-шой жук.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-ph-4.m4a"
+        }
+      ]
+    },
+    "sentence": {
+      "stageId": "sentence",
+      "note": "Предложения с К/Г/Х.",
+      "items": [
+        {
+          "id": "vel-sen-0",
+          "word": "Кот спит на окне.",
+          "audioAsset": null,
+          "hint": "Кот, окне — К сзади.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-sen-0.m4a"
+        },
+        {
+          "id": "vel-sen-1",
+          "word": "Гусь гогочет у горы.",
+          "audioAsset": null,
+          "hint": "Гусь, гогочет, горы — Г.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Velars/vel-sen-1.m4a"
+        },
+        {
+          "id": "vel-sen-2",
+          "word": "Петух громко поёт.",
+          "audioAsset": null,
+          "hint": "Пе-тух, гром-ко.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-sen-2.m4a"
+        },
+        {
+          "id": "vel-sen-3",
+          "word": "Хомяк грызёт горох.",
+          "audioAsset": null,
+          "hint": "Хо-мяк, го-рох — Х и Г.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Velars/vel-sen-3.m4a"
+        }
+      ]
+    },
+    "diff": {
+      "stageId": "diff",
+      "note": "Различение К–Т и Г–Д (анти-замена). Звук сзади или спереди?",
+      "items": [
+        {
+          "id": "vel-diff-0",
+          "word": "кот или тот?",
+          "audioAsset": null,
+          "hint": "Кот — К сзади. Тот — Т спереди.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-diff-0.m4a"
+        },
+        {
+          "id": "vel-diff-1",
+          "word": "Коля или Толя?",
+          "audioAsset": null,
+          "hint": "Ко-ля — К. То-ля — Т.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-diff-1.m4a"
+        },
+        {
+          "id": "vel-diff-2",
+          "word": "гора или Дора?",
+          "audioAsset": null,
+          "hint": "Го-ра — Г. До-ра — Д.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-diff-2.m4a"
+        },
+        {
+          "id": "vel-diff-3",
+          "word": "гол или дол?",
+          "audioAsset": null,
+          "hint": "Гол — Г сзади. Дол — Д спереди.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Velars/vel-diff-3.m4a"
+        },
+        {
+          "id": "vel-diff-4",
+          "word": "Найди К: кот, том, кол, дом",
+          "audioAsset": null,
+          "hint": "Похлопай на каждый К сзади!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/Velars/vel-diff-4.m4a"
+        },
+        {
+          "id": "vel-diff-5",
+          "word": "Найди Г: гном, дом, гол, ток",
+          "audioAsset": null,
+          "hint": "Топни на каждый Г!",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/Velars/vel-diff-5.m4a"
+        }
+      ]
+    }
+  }
+}

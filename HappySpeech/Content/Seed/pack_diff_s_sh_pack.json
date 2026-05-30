@@ -1,0 +1,304 @@
+{
+  "id": "pack_diff_s_sh_v1",
+  "soundTarget": "С–Ш",
+  "group": "дифференциация",
+  "version": 1,
+  "description": "F1-008. Полная цепочка дифференциации С–Ш: слух→слог→минимальные пары (паронимы крыса/крыша, миска/мишка)→фраза→текст. Профилактика дисграфии.",
+  "stages": {
+    "prep": {
+      "stageId": "prep",
+      "note": "Слуховой этап С–Ш: услышь разницу. С — свист (тонкий), Ш — шипение (широкий).",
+      "items": [
+        {
+          "id": "dssh-listen-0",
+          "word": "с-с-с свист",
+          "audioAsset": null,
+          "hint": "Тонкий холодный свист — это С. Язык внизу.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffSSh/dssh-listen-0.m4a"
+        },
+        {
+          "id": "dssh-listen-1",
+          "word": "ш-ш-ш шипение",
+          "audioAsset": null,
+          "hint": "Тёплое широкое шипение — это Ш. Язык вверху.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffSSh/dssh-listen-1.m4a"
+        },
+        {
+          "id": "dssh-listen-2",
+          "word": "с или ш? (с)",
+          "audioAsset": null,
+          "hint": "Слушай: ссс — это С (язык внизу).",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffSSh/dssh-listen-2.m4a"
+        },
+        {
+          "id": "dssh-listen-3",
+          "word": "с или ш? (ш)",
+          "audioAsset": null,
+          "hint": "Слушай: шшш — это Ш (язык вверху).",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffSSh/dssh-listen-3.m4a"
+        },
+        {
+          "id": "dssh-listen-4",
+          "word": "с-ш-с-ш",
+          "audioAsset": null,
+          "hint": "Свист — шип — свист — шип. Чувствуешь язык?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffSSh/dssh-listen-4.m4a"
+        },
+        {
+          "id": "dssh-listen-5",
+          "word": "подними руку на Ш",
+          "audioAsset": null,
+          "hint": "Услышишь шипение — подними руку.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffSSh/dssh-listen-5.m4a"
+        }
+      ]
+    },
+    "syllable": {
+      "stageId": "syllable",
+      "note": "Слоговой этап С–Ш: различай слоги.",
+      "items": [
+        {
+          "id": "dssh-syl-0",
+          "word": "са-ша",
+          "audioAsset": null,
+          "hint": "Са — язык внизу. Ша — язык вверху.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffSSh/dssh-syl-0.m4a"
+        },
+        {
+          "id": "dssh-syl-1",
+          "word": "со-шо",
+          "audioAsset": null,
+          "hint": "Со — шо.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffSSh/dssh-syl-1.m4a"
+        },
+        {
+          "id": "dssh-syl-2",
+          "word": "су-шу",
+          "audioAsset": null,
+          "hint": "Су — шу.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffSSh/dssh-syl-2.m4a"
+        },
+        {
+          "id": "dssh-syl-3",
+          "word": "сы-ши",
+          "audioAsset": null,
+          "hint": "Сы — ши.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffSSh/dssh-syl-3.m4a"
+        },
+        {
+          "id": "dssh-syl-4",
+          "word": "ас-аш",
+          "audioAsset": null,
+          "hint": "Ас — аш.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffSSh/dssh-syl-4.m4a"
+        },
+        {
+          "id": "dssh-syl-5",
+          "word": "ос-ош",
+          "audioAsset": null,
+          "hint": "Ос — ош.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffSSh/dssh-syl-5.m4a"
+        },
+        {
+          "id": "dssh-syl-6",
+          "word": "са-са-ша",
+          "audioAsset": null,
+          "hint": "Два свиста — шип. Где Ш?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffSSh/dssh-syl-6.m4a"
+        },
+        {
+          "id": "dssh-syl-7",
+          "word": "ша-са-ша",
+          "audioAsset": null,
+          "hint": "Шип — свист — шип.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffSSh/dssh-syl-7.m4a"
+        }
+      ]
+    },
+    "diff": {
+      "stageId": "diff",
+      "note": "Минимальные пары С–Ш (паронимы). Где есть обе картинки — показывай нужную; где нет — слушай.",
+      "items": [
+        {
+          "id": "dssh-pair-0",
+          "word": "крыса — крыша",
+          "imageAsset": "word_krysa|word_krysha",
+          "audioAsset": null,
+          "hint": "Кры-Са (зверёк) — кры-Ша (наверху дома).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffSSh/dssh-pair-0.m4a"
+        },
+        {
+          "id": "dssh-pair-1",
+          "word": "нос — нож",
+          "imageAsset": "word_nos|word_nozh",
+          "audioAsset": null,
+          "hint": "Нос (на лице) — нож (режет). С или Ш.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffSSh/dssh-pair-1.m4a"
+        },
+        {
+          "id": "dssh-pair-2",
+          "word": "сила — шило",
+          "imageAsset": "word_sila|word_shilo",
+          "audioAsset": null,
+          "hint": "Сила (мощь) — шило (острое).",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffSSh/dssh-pair-2.m4a"
+        },
+        {
+          "id": "dssh-pair-3",
+          "word": "миска — мишка",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Ми-Ска (посуда) — ми-Шка (медведь).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffSSh/dssh-pair-3.m4a"
+        },
+        {
+          "id": "dssh-pair-4",
+          "word": "маска — Машка",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Ма-Ска — Ма-Шка (имя).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffSSh/dssh-pair-4.m4a"
+        },
+        {
+          "id": "dssh-pair-5",
+          "word": "каска — кашка",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Ка-Ска (на голове) — ка-Шка (еда).",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffSSh/dssh-pair-5.m4a"
+        },
+        {
+          "id": "dssh-pair-6",
+          "word": "усы — уши",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "У-Сы — у-Ши.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffSSh/dssh-pair-6.m4a"
+        },
+        {
+          "id": "dssh-pair-7",
+          "word": "сутки — шутки",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Сут-ки — шут-ки.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffSSh/dssh-pair-7.m4a"
+        },
+        {
+          "id": "dssh-pair-8",
+          "word": "басня — башня",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Бас-ня — баш-ня.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffSSh/dssh-pair-8.m4a"
+        }
+      ]
+    },
+    "phrase": {
+      "stageId": "phrase",
+      "note": "Фразы с С и Ш вместе — удержи оба звука.",
+      "items": [
+        {
+          "id": "dssh-ph-0",
+          "word": "сухая шишка",
+          "audioAsset": null,
+          "hint": "Су-ха-я шиш-ка. Найди С и Ш.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffSSh/dssh-ph-0.m4a"
+        },
+        {
+          "id": "dssh-ph-1",
+          "word": "красивая шапка",
+          "audioAsset": null,
+          "hint": "Кра-Си-ва-я Шап-ка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffSSh/dssh-ph-1.m4a"
+        },
+        {
+          "id": "dssh-ph-2",
+          "word": "сладкая груша",
+          "audioAsset": null,
+          "hint": "Слад-ка-я гру-Ша. С и Ш.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffSSh/dssh-ph-2.m4a"
+        },
+        {
+          "id": "dssh-ph-3",
+          "word": "шумная сорока",
+          "audioAsset": null,
+          "hint": "Шум-на-я Со-ро-ка.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffSSh/dssh-ph-3.m4a"
+        },
+        {
+          "id": "dssh-ph-4",
+          "word": "солнышко светит",
+          "audioAsset": null,
+          "hint": "Сол-ныш-ко Све-тит. С и Ш рядом.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffSSh/dssh-ph-4.m4a"
+        }
+      ]
+    },
+    "sentence": {
+      "stageId": "sentence",
+      "note": "Текстовый этап С–Ш: предложения с обоими звуками.",
+      "items": [
+        {
+          "id": "dssh-sen-0",
+          "word": "Саша сушит шапку.",
+          "audioAsset": null,
+          "hint": "Са-Ша, Су-Шит, Шап-ку — где С, где Ш?",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffSSh/dssh-sen-0.m4a"
+        },
+        {
+          "id": "dssh-sen-1",
+          "word": "Кошка спит на солнышке.",
+          "audioAsset": null,
+          "hint": "Ко-Шка, Со-лны-Шке.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffSSh/dssh-sen-1.m4a"
+        },
+        {
+          "id": "dssh-sen-2",
+          "word": "У Сони красивые сушки.",
+          "audioAsset": null,
+          "hint": "Со-ни, Су-Шки.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffSSh/dssh-sen-2.m4a"
+        },
+        {
+          "id": "dssh-sen-3",
+          "word": "Миша ест суп из миски.",
+          "audioAsset": null,
+          "hint": "Ми-Ша, Суп, ми-Ски.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffSSh/dssh-sen-3.m4a"
+        }
+      ]
+    }
+  }
+}

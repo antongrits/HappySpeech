@@ -1,0 +1,313 @@
+{
+  "id": "pack_diff_r_l_v1",
+  "soundTarget": "Р–Л",
+  "group": "дифференциация",
+  "version": 1,
+  "description": "F1-009. Полная цепочка дифференциации Р–Л: слух→слог→минимальные пары (рак/лак, рожки/ложки, рука/лука)→фраза→текст. Профилактика дисграфии.",
+  "stages": {
+    "prep": {
+      "stageId": "prep",
+      "note": "Слуховой этап Р–Л: Р — рокот (язык дрожит наверху), Л — гудок (язык у зубов).",
+      "items": [
+        {
+          "id": "drl-listen-0",
+          "word": "р-р-р рокот",
+          "audioAsset": null,
+          "hint": "Мотор рычит: р-р-р, кончик дрожит вверху.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffRL2/drl-listen-0.m4a"
+        },
+        {
+          "id": "drl-listen-1",
+          "word": "л-л-л гудок",
+          "audioAsset": null,
+          "hint": "Пароход гудит: л-л-л, язык у зубов.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffRL2/drl-listen-1.m4a"
+        },
+        {
+          "id": "drl-listen-2",
+          "word": "р или л? (р)",
+          "audioAsset": null,
+          "hint": "Слушай: р-р-р — рокот.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffRL2/drl-listen-2.m4a"
+        },
+        {
+          "id": "drl-listen-3",
+          "word": "р или л? (л)",
+          "audioAsset": null,
+          "hint": "Слушай: л-л-л — гудок.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffRL2/drl-listen-3.m4a"
+        },
+        {
+          "id": "drl-listen-4",
+          "word": "р-л-р-л",
+          "audioAsset": null,
+          "hint": "Рокот — гудок — рокот — гудок.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffRL2/drl-listen-4.m4a"
+        },
+        {
+          "id": "drl-listen-5",
+          "word": "хлопни на Р",
+          "audioAsset": null,
+          "hint": "Услышишь рокот — хлопни.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffRL2/drl-listen-5.m4a"
+        }
+      ]
+    },
+    "syllable": {
+      "stageId": "syllable",
+      "note": "Слоговой этап Р–Л: различай слоги.",
+      "items": [
+        {
+          "id": "drl-syl-0",
+          "word": "ра-ла",
+          "audioAsset": null,
+          "hint": "Ра — рокот. Ла — гудок.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffRL2/drl-syl-0.m4a"
+        },
+        {
+          "id": "drl-syl-1",
+          "word": "ро-ло",
+          "audioAsset": null,
+          "hint": "Ро — ло.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffRL2/drl-syl-1.m4a"
+        },
+        {
+          "id": "drl-syl-2",
+          "word": "ру-лу",
+          "audioAsset": null,
+          "hint": "Ру — лу.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffRL2/drl-syl-2.m4a"
+        },
+        {
+          "id": "drl-syl-3",
+          "word": "ры-лы",
+          "audioAsset": null,
+          "hint": "Ры — лы.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffRL2/drl-syl-3.m4a"
+        },
+        {
+          "id": "drl-syl-4",
+          "word": "ар-ал",
+          "audioAsset": null,
+          "hint": "Ар — ал.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffRL2/drl-syl-4.m4a"
+        },
+        {
+          "id": "drl-syl-5",
+          "word": "ор-ол",
+          "audioAsset": null,
+          "hint": "Ор — ол.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffRL2/drl-syl-5.m4a"
+        },
+        {
+          "id": "drl-syl-6",
+          "word": "ра-ра-ла",
+          "audioAsset": null,
+          "hint": "Два рокота — гудок. Где Л?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffRL2/drl-syl-6.m4a"
+        },
+        {
+          "id": "drl-syl-7",
+          "word": "ла-ра-ла",
+          "audioAsset": null,
+          "hint": "Гудок — рокот — гудок.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffRL2/drl-syl-7.m4a"
+        }
+      ]
+    },
+    "diff": {
+      "stageId": "diff",
+      "note": "Минимальные пары Р–Л (паронимы). Где есть обе картинки — показывай; где нет — слушай.",
+      "items": [
+        {
+          "id": "drl-pair-0",
+          "word": "рак — лак",
+          "imageAsset": "word_rak|word_lak",
+          "audioAsset": null,
+          "hint": "Рак (клешни) — лак (красят ногти). Р или Л.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/DiffRL2/drl-pair-0.m4a"
+        },
+        {
+          "id": "drl-pair-1",
+          "word": "рожки — ложки",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Ро-Жки — ло-Жки (едят суп).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffRL2/drl-pair-1.m4a"
+        },
+        {
+          "id": "drl-pair-2",
+          "word": "рука — лука",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Ру-ка — лу-ка (овощ).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffRL2/drl-pair-2.m4a"
+        },
+        {
+          "id": "drl-pair-3",
+          "word": "рама — лама",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Ра-ма (у окна) — ла-ма (зверь).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffRL2/drl-pair-3.m4a"
+        },
+        {
+          "id": "drl-pair-4",
+          "word": "рожь — ложь",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Рожь (растёт в поле) — ложь.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffRL2/drl-pair-4.m4a"
+        },
+        {
+          "id": "drl-pair-5",
+          "word": "игра — игла",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Иг-Ра — иг-Ла (острая).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffRL2/drl-pair-5.m4a"
+        },
+        {
+          "id": "drl-pair-6",
+          "word": "жар — жал",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Жар — жал.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffRL2/drl-pair-6.m4a"
+        },
+        {
+          "id": "drl-pair-7",
+          "word": "рейка — лейка",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Рей-ка — лей-ка (поливать).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffRL2/drl-pair-7.m4a"
+        },
+        {
+          "id": "drl-pair-8",
+          "word": "марина — малина",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Ма-Ри-на (имя) — ма-Ли-на (ягода).",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffRL2/drl-pair-8.m4a"
+        },
+        {
+          "id": "drl-pair-9",
+          "word": "рот — лот",
+          "imageAsset": null,
+          "audioAsset": null,
+          "hint": "Рот — лот.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffRL2/drl-pair-9.m4a"
+        }
+      ]
+    },
+    "phrase": {
+      "stageId": "phrase",
+      "note": "Фразы с Р и Л вместе.",
+      "items": [
+        {
+          "id": "drl-ph-0",
+          "word": "рыжая лиса",
+          "audioAsset": null,
+          "hint": "Ры-жая (Р) ли-Са (Л).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffRL2/drl-ph-0.m4a"
+        },
+        {
+          "id": "drl-ph-1",
+          "word": "красная малина",
+          "audioAsset": null,
+          "hint": "Кра-Сная (Р) ма-Ли-на (Л).",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/DiffRL2/drl-ph-1.m4a"
+        },
+        {
+          "id": "drl-ph-2",
+          "word": "белый трактор",
+          "audioAsset": null,
+          "hint": "Бе-Лый (Л) трак-тоР (Р).",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffRL2/drl-ph-2.m4a"
+        },
+        {
+          "id": "drl-ph-3",
+          "word": "крупная клубника",
+          "audioAsset": null,
+          "hint": "КРуп-ная — кЛуб-ника. Р и Л.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffRL2/drl-ph-3.m4a"
+        },
+        {
+          "id": "drl-ph-4",
+          "word": "Лара играет",
+          "audioAsset": null,
+          "hint": "Ла-Ра, иг-Ра-ет.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffRL2/drl-ph-4.m4a"
+        }
+      ]
+    },
+    "sentence": {
+      "stageId": "sentence",
+      "note": "Текстовый этап Р–Л: предложения с обоими звуками.",
+      "items": [
+        {
+          "id": "drl-sen-0",
+          "word": "Лара собрала малину.",
+          "audioAsset": null,
+          "hint": "Ла-Ра, Со-бРа-ла, ма-Ли-ну.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffRL2/drl-sen-0.m4a"
+        },
+        {
+          "id": "drl-sen-1",
+          "word": "Рыжая лиса бежит по лесу.",
+          "audioAsset": null,
+          "hint": "Ры-жая, Ли-са, Ле-су.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffRL2/drl-sen-1.m4a"
+        },
+        {
+          "id": "drl-sen-2",
+          "word": "Володя купил карандаши.",
+          "audioAsset": null,
+          "hint": "Во-Ло-дя, ка-Ран-да-Ши.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffRL2/drl-sen-2.m4a"
+        },
+        {
+          "id": "drl-sen-3",
+          "word": "Клара играла на рояле.",
+          "audioAsset": null,
+          "hint": "КЛа-Ра, иг-Ра-Ла, Ро-я-Ле.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/DiffRL2/drl-sen-3.m4a"
+        }
+      ]
+    }
+  }
+}

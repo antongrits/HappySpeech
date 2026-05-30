@@ -1,0 +1,443 @@
+{
+  "id": "sound_shchfocus_v1",
+  "soundTarget": "Щ",
+  "group": "шипящие",
+  "version": 1,
+  "description": "F1-002. Фокус-пак [Щ]: интервокальная и финальная позиции (плащ/борщ/лещ; ящик/роща/клещи). Щ всегда мягкий. Дополняет sound_shch_pack.",
+  "stages": {
+    "prep": {
+      "stageId": "prep",
+      "note": "Подготовка [Щ] — длинный мягкий шипящий. Язык «чашечкой», губы вперёд.",
+      "items": [
+        {
+          "id": "scf-prep-0",
+          "word": "чашечка",
+          "audioAsset": null,
+          "hint": "Широкий язык — края вверх, как чашечка.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SchFocus/scf-prep-0.m4a"
+        },
+        {
+          "id": "scf-prep-1",
+          "word": "щ-щ-щ длинно",
+          "audioAsset": null,
+          "hint": "Длинный мягкий шип: щщщ. Язык вверху.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SchFocus/scf-prep-1.m4a"
+        },
+        {
+          "id": "scf-prep-2",
+          "word": "ш-щ сравни",
+          "audioAsset": null,
+          "hint": "Ш — твёрдый, Щ — мягкий и длиннее.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-prep-2.m4a"
+        },
+        {
+          "id": "scf-prep-3",
+          "word": "губы вперёд",
+          "audioAsset": null,
+          "hint": "Вытяни губы трубочкой и шипи мягко.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-prep-3.m4a"
+        }
+      ]
+    },
+    "isolated": {
+      "stageId": "isolated",
+      "note": "Изолированный [Щ] — мягкий, длительный.",
+      "items": [
+        {
+          "id": "scf-iso-0",
+          "word": "щ-щ-щ (щётка)",
+          "audioAsset": null,
+          "hint": "Чистим: щ-щ-щ, как щёткой.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SchFocus/scf-iso-0.m4a"
+        },
+        {
+          "id": "scf-iso-1",
+          "word": "щ длинно",
+          "audioAsset": null,
+          "hint": "Тяни Щ долго-долго.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SchFocus/scf-iso-1.m4a"
+        },
+        {
+          "id": "scf-iso-2",
+          "word": "ш-щ-ш-щ",
+          "audioAsset": null,
+          "hint": "Твёрдый Ш — мягкий Щ. Слышишь?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-iso-2.m4a"
+        },
+        {
+          "id": "scf-iso-3",
+          "word": "щ тихо",
+          "audioAsset": null,
+          "hint": "Совсем тихий мягкий шип.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-iso-3.m4a"
+        }
+      ]
+    },
+    "syllable": {
+      "stageId": "syllable",
+      "note": "Слоги с [Щ] — Щ всегда мягкий (только с А/О/У/Е/И, через мягкость).",
+      "items": [
+        {
+          "id": "scf-syl-0",
+          "word": "ща",
+          "audioAsset": null,
+          "hint": "Щ + А — мягко.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SchFocus/scf-syl-0.m4a"
+        },
+        {
+          "id": "scf-syl-1",
+          "word": "щё",
+          "audioAsset": null,
+          "hint": "Щ + Ё.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SchFocus/scf-syl-1.m4a"
+        },
+        {
+          "id": "scf-syl-2",
+          "word": "щу",
+          "audioAsset": null,
+          "hint": "Щ + У.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SchFocus/scf-syl-2.m4a"
+        },
+        {
+          "id": "scf-syl-3",
+          "word": "щи",
+          "audioAsset": null,
+          "hint": "Щ + И — как «щи» (суп).",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SchFocus/scf-syl-3.m4a"
+        },
+        {
+          "id": "scf-syl-4",
+          "word": "ще",
+          "audioAsset": null,
+          "hint": "Щ + Е.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SchFocus/scf-syl-4.m4a"
+        },
+        {
+          "id": "scf-syl-5",
+          "word": "ащ",
+          "audioAsset": null,
+          "hint": "А и длинное Щ на конце.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SchFocus/scf-syl-5.m4a"
+        },
+        {
+          "id": "scf-syl-6",
+          "word": "ощ",
+          "audioAsset": null,
+          "hint": "О и Щ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-syl-6.m4a"
+        },
+        {
+          "id": "scf-syl-7",
+          "word": "ущ",
+          "audioAsset": null,
+          "hint": "У и Щ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-syl-7.m4a"
+        },
+        {
+          "id": "scf-syl-8",
+          "word": "ищ",
+          "audioAsset": null,
+          "hint": "И и Щ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-syl-8.m4a"
+        },
+        {
+          "id": "scf-syl-9",
+          "word": "ещ",
+          "audioAsset": null,
+          "hint": "Е и Щ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-syl-9.m4a"
+        },
+        {
+          "id": "scf-syl-10",
+          "word": "аща",
+          "audioAsset": null,
+          "hint": "Щ между гласными: а-ща.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-syl-10.m4a"
+        },
+        {
+          "id": "scf-syl-11",
+          "word": "ощо",
+          "audioAsset": null,
+          "hint": "О-щё.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-syl-11.m4a"
+        },
+        {
+          "id": "scf-syl-12",
+          "word": "ищу",
+          "audioAsset": null,
+          "hint": "И-щу — как «ищу».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-syl-12.m4a"
+        }
+      ]
+    },
+    "wordMed": {
+      "stageId": "wordMed",
+      "note": "Слова с [Щ] в середине (интервокальная позиция — недозаполнена).",
+      "items": [
+        {
+          "id": "scf-wm-0",
+          "word": "ящик",
+          "imageAsset": "word_yashchik_y",
+          "audioAsset": null,
+          "hint": "Я-щик. В нём лежат игрушки.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SchFocus/scf-wm-0.m4a"
+        },
+        {
+          "id": "scf-wm-1",
+          "word": "щука",
+          "imageAsset": "word_shchuka",
+          "audioAsset": null,
+          "hint": "Щу-ка. Большая рыба.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SchFocus/scf-wm-1.m4a"
+        },
+        {
+          "id": "scf-wm-2",
+          "word": "роща",
+          "imageAsset": "word_roshcha",
+          "audioAsset": null,
+          "hint": "Ро-ща. Берёзовая роща.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SchFocus/scf-wm-2.m4a"
+        },
+        {
+          "id": "scf-wm-3",
+          "word": "клещи",
+          "imageAsset": "word_kleshchi",
+          "audioAsset": null,
+          "hint": "Кле-щи. Ими тянут гвозди.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-wm-3.m4a"
+        },
+        {
+          "id": "scf-wm-4",
+          "word": "овощи",
+          "imageAsset": "word_ovoshchi",
+          "audioAsset": null,
+          "hint": "О-во-щи. Морковь, лук, капуста.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-wm-4.m4a"
+        },
+        {
+          "id": "scf-wm-5",
+          "word": "вещи",
+          "imageAsset": "word_veshchi",
+          "audioAsset": null,
+          "hint": "Ве-щи. Одежда в шкафу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-wm-5.m4a"
+        },
+        {
+          "id": "scf-wm-6",
+          "word": "ящерица",
+          "imageAsset": "word_yashcheritsa",
+          "audioAsset": null,
+          "hint": "Я-ще-ри-ца. Бегает в траве.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SchFocus/scf-wm-6.m4a"
+        },
+        {
+          "id": "scf-wm-7",
+          "word": "пещера",
+          "imageAsset": "word_peshchera",
+          "audioAsset": null,
+          "hint": "Пе-ще-ра. Тёмная, в горе.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SchFocus/scf-wm-7.m4a"
+        },
+        {
+          "id": "scf-wm-8",
+          "word": "площадь",
+          "imageAsset": "word_ploshchad",
+          "audioAsset": null,
+          "hint": "Пло-щадь. Большое место в городе.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SchFocus/scf-wm-8.m4a"
+        }
+      ]
+    },
+    "wordFinal": {
+      "stageId": "wordFinal",
+      "note": "Слова с [Щ] в конце (финальная позиция — дыра в покрытии Щ).",
+      "items": [
+        {
+          "id": "scf-wf-0",
+          "word": "плащ",
+          "imageAsset": "word_plashch",
+          "audioAsset": null,
+          "hint": "Плащ. Надевают в дождь. Щ на конце.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SchFocus/scf-wf-0.m4a"
+        },
+        {
+          "id": "scf-wf-1",
+          "word": "борщ",
+          "imageAsset": "word_borshch",
+          "audioAsset": null,
+          "hint": "Борщ. Красный суп.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/SchFocus/scf-wf-1.m4a"
+        },
+        {
+          "id": "scf-wf-2",
+          "word": "лещ",
+          "imageAsset": "word_leshch",
+          "audioAsset": null,
+          "hint": "Лещ. Рыба.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-wf-2.m4a"
+        },
+        {
+          "id": "scf-wf-3",
+          "word": "клещ",
+          "imageAsset": "word_kleshch",
+          "audioAsset": null,
+          "hint": "Клещ. Маленький, в лесу.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-wf-3.m4a"
+        },
+        {
+          "id": "scf-wf-4",
+          "word": "плющ",
+          "imageAsset": "word_plyushch",
+          "audioAsset": null,
+          "hint": "Плющ. Вьётся по стене.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SchFocus/scf-wf-4.m4a"
+        },
+        {
+          "id": "scf-wf-5",
+          "word": "хвощ",
+          "imageAsset": "word_khvoshch",
+          "audioAsset": null,
+          "hint": "Хвощ. Трава у воды.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SchFocus/scf-wf-5.m4a"
+        },
+        {
+          "id": "scf-wf-6",
+          "word": "хрящ",
+          "imageAsset": "word_khryashch",
+          "audioAsset": null,
+          "hint": "Хрящ. Твёрдый, в ушке.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SchFocus/scf-wf-6.m4a"
+        }
+      ]
+    },
+    "phrase": {
+      "stageId": "phrase",
+      "note": "Словосочетания с [Щ]. Держи мягкий длинный Щ.",
+      "items": [
+        {
+          "id": "scf-ph-0",
+          "word": "большая щука",
+          "audioAsset": null,
+          "hint": "Боль-ша-я щу-ка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-ph-0.m4a"
+        },
+        {
+          "id": "scf-ph-1",
+          "word": "деревянный ящик",
+          "audioAsset": null,
+          "hint": "Де-ре-вян-ный я-щик.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-ph-1.m4a"
+        },
+        {
+          "id": "scf-ph-2",
+          "word": "вкусный борщ",
+          "audioAsset": null,
+          "hint": "Вкус-ный борщ. Щ на конце.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-ph-2.m4a"
+        },
+        {
+          "id": "scf-ph-3",
+          "word": "новый плащ",
+          "audioAsset": null,
+          "hint": "Но-вый плащ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-ph-3.m4a"
+        },
+        {
+          "id": "scf-ph-4",
+          "word": "свежие овощи",
+          "audioAsset": null,
+          "hint": "Све-жи-е о-во-щи.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SchFocus/scf-ph-4.m4a"
+        }
+      ]
+    },
+    "sentence": {
+      "stageId": "sentence",
+      "note": "Предложения с [Щ].",
+      "items": [
+        {
+          "id": "scf-sen-0",
+          "word": "Щука живёт в реке.",
+          "audioAsset": null,
+          "hint": "Щу-ка — мягкий Щ.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-sen-0.m4a"
+        },
+        {
+          "id": "scf-sen-1",
+          "word": "В ящике лежат овощи.",
+          "audioAsset": null,
+          "hint": "Ящик, овощи — два Щ.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SchFocus/scf-sen-1.m4a"
+        },
+        {
+          "id": "scf-sen-2",
+          "word": "Мама сварила борщ.",
+          "audioAsset": null,
+          "hint": "Борщ — Щ на конце.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/SchFocus/scf-sen-2.m4a"
+        },
+        {
+          "id": "scf-sen-3",
+          "word": "Щенок ищет косточку.",
+          "audioAsset": null,
+          "hint": "Щенок, ищет.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SchFocus/scf-sen-3.m4a"
+        },
+        {
+          "id": "scf-sen-4",
+          "word": "Я надел плащ и пошёл гулять.",
+          "audioAsset": null,
+          "hint": "Плащ — Щ на конце.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/SchFocus/scf-sen-4.m4a"
+        }
+      ]
+    }
+  }
+}

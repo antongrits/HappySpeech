@@ -1,0 +1,467 @@
+{
+  "id": "sound_lsoft_v1",
+  "soundTarget": "Ль",
+  "group": "соноры",
+  "version": 1,
+  "description": "F1-004. Отдельная цепочка мягкого [Ль]: слоги ЛИ/ЛЕ/ЛЯ/ЛЁ/ЛЮ, слова по позициям, финальный мягкий знак (ель/соль/журавль). Онтогенетически после Л.",
+  "stages": {
+    "prep": {
+      "stageId": "prep",
+      "note": "Подготовка [Ль] — мягкий боковой. Кончик за верхними зубами, спинка приподнята.",
+      "items": [
+        {
+          "id": "ls-prep-0",
+          "word": "пароход гудит",
+          "audioAsset": null,
+          "hint": "Язык между зубами: л-л-л (твёрдый Л).",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/LSoft/ls-prep-0.m4a"
+        },
+        {
+          "id": "ls-prep-1",
+          "word": "л твёрдый",
+          "audioAsset": null,
+          "hint": "Вспомни гудок: л-л-л.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/LSoft/ls-prep-1.m4a"
+        },
+        {
+          "id": "ls-prep-2",
+          "word": "ль мягкий",
+          "audioAsset": null,
+          "hint": "А теперь мягко, с улыбкой: ль-ль-ль.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-prep-2.m4a"
+        },
+        {
+          "id": "ls-prep-3",
+          "word": "л-ль чередуй",
+          "audioAsset": null,
+          "hint": "Гудок — мягкий, гудок — мягкий.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-prep-3.m4a"
+        },
+        {
+          "id": "ls-prep-4",
+          "word": "улыбочка",
+          "audioAsset": null,
+          "hint": "Губы в улыбке — звук становится мягким.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-prep-4.m4a"
+        }
+      ]
+    },
+    "isolated": {
+      "stageId": "isolated",
+      "note": "Изолированный [Ль] — мягкий, певучий.",
+      "items": [
+        {
+          "id": "ls-iso-0",
+          "word": "ль-ль-ль мягко",
+          "audioAsset": null,
+          "hint": "Мягкий певучий звук с улыбкой.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/LSoft/ls-iso-0.m4a"
+        },
+        {
+          "id": "ls-iso-1",
+          "word": "ль долго",
+          "audioAsset": null,
+          "hint": "Тяни Ль: льльль.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/LSoft/ls-iso-1.m4a"
+        },
+        {
+          "id": "ls-iso-2",
+          "word": "л-ль-л-ль",
+          "audioAsset": null,
+          "hint": "Твёрдый — мягкий.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-iso-2.m4a"
+        },
+        {
+          "id": "ls-iso-3",
+          "word": "ля-ля песенка",
+          "audioAsset": null,
+          "hint": "Пой мягко: ля-ля-ля.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-iso-3.m4a"
+        }
+      ]
+    },
+    "syllable": {
+      "stageId": "syllable",
+      "note": "Слоги с [Ль] — мягкость через И/Е/Я/Ё/Ю.",
+      "items": [
+        {
+          "id": "ls-syl-0",
+          "word": "ли",
+          "audioAsset": null,
+          "hint": "Ль + И.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/LSoft/ls-syl-0.m4a"
+        },
+        {
+          "id": "ls-syl-1",
+          "word": "ле",
+          "audioAsset": null,
+          "hint": "Ль + Е.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/LSoft/ls-syl-1.m4a"
+        },
+        {
+          "id": "ls-syl-2",
+          "word": "ля",
+          "audioAsset": null,
+          "hint": "Ль + Я.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/LSoft/ls-syl-2.m4a"
+        },
+        {
+          "id": "ls-syl-3",
+          "word": "лё",
+          "audioAsset": null,
+          "hint": "Ль + Ё.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/LSoft/ls-syl-3.m4a"
+        },
+        {
+          "id": "ls-syl-4",
+          "word": "лю",
+          "audioAsset": null,
+          "hint": "Ль + Ю.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/LSoft/ls-syl-4.m4a"
+        },
+        {
+          "id": "ls-syl-5",
+          "word": "иль",
+          "audioAsset": null,
+          "hint": "И и мягкое Ль.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/LSoft/ls-syl-5.m4a"
+        },
+        {
+          "id": "ls-syl-6",
+          "word": "ель",
+          "audioAsset": null,
+          "hint": "Е и Ль — как «ель».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-syl-6.m4a"
+        },
+        {
+          "id": "ls-syl-7",
+          "word": "оль",
+          "audioAsset": null,
+          "hint": "О и Ль — как «соль».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-syl-7.m4a"
+        },
+        {
+          "id": "ls-syl-8",
+          "word": "аль",
+          "audioAsset": null,
+          "hint": "А и Ль.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-syl-8.m4a"
+        },
+        {
+          "id": "ls-syl-9",
+          "word": "уль",
+          "audioAsset": null,
+          "hint": "У и Ль.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-syl-9.m4a"
+        },
+        {
+          "id": "ls-syl-10",
+          "word": "али",
+          "audioAsset": null,
+          "hint": "Ль между гласными: а-ли.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-syl-10.m4a"
+        },
+        {
+          "id": "ls-syl-11",
+          "word": "еле",
+          "audioAsset": null,
+          "hint": "Е-ле — еле-еле.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-syl-11.m4a"
+        },
+        {
+          "id": "ls-syl-12",
+          "word": "или",
+          "audioAsset": null,
+          "hint": "И-ли — как «или».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-syl-12.m4a"
+        }
+      ]
+    },
+    "wordInit": {
+      "stageId": "wordInit",
+      "note": "Слова с [Ль] в начале.",
+      "items": [
+        {
+          "id": "ls-wi-0",
+          "word": "лиса",
+          "imageAsset": "word_fox",
+          "audioAsset": null,
+          "hint": "Ли-са. Рыжая, хитрая. Мягкий Ль.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/LSoft/ls-wi-0.m4a"
+        },
+        {
+          "id": "ls-wi-1",
+          "word": "лист",
+          "imageAsset": "word_leaf",
+          "audioAsset": null,
+          "hint": "Лист. Зелёный, на дереве.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/LSoft/ls-wi-1.m4a"
+        },
+        {
+          "id": "ls-wi-2",
+          "word": "лимон",
+          "imageAsset": "word_lemon",
+          "audioAsset": null,
+          "hint": "Ли-мон. Кислый, жёлтый.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/LSoft/ls-wi-2.m4a"
+        },
+        {
+          "id": "ls-wi-3",
+          "word": "лев",
+          "imageAsset": "word_lev",
+          "audioAsset": null,
+          "hint": "Лев. Царь зверей.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/LSoft/ls-wi-3.m4a"
+        },
+        {
+          "id": "ls-wi-4",
+          "word": "лейка",
+          "imageAsset": "word_leyka",
+          "audioAsset": null,
+          "hint": "Лей-ка. Поливать цветы.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/LSoft/ls-wi-4.m4a"
+        },
+        {
+          "id": "ls-wi-5",
+          "word": "лебедь",
+          "imageAsset": "word_lebed",
+          "audioAsset": null,
+          "hint": "Ле-бедь. Белая птица на воде.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-wi-5.m4a"
+        }
+      ]
+    },
+    "wordMed": {
+      "stageId": "wordMed",
+      "note": "Слова с [Ль] в середине.",
+      "items": [
+        {
+          "id": "ls-wm-0",
+          "word": "малина",
+          "imageAsset": "word_malina",
+          "audioAsset": null,
+          "hint": "Ма-ли-на. Красная ягода.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/LSoft/ls-wm-0.m4a"
+        },
+        {
+          "id": "ls-wm-1",
+          "word": "калина",
+          "imageAsset": "word_kalina",
+          "audioAsset": null,
+          "hint": "Ка-ли-на. Красные ягоды у дома.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-wm-1.m4a"
+        },
+        {
+          "id": "ls-wm-2",
+          "word": "лента",
+          "imageAsset": "word_lenta",
+          "audioAsset": null,
+          "hint": "Лен-та. Красивая, в косичке.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/LSoft/ls-wm-2.m4a"
+        },
+        {
+          "id": "ls-wm-3",
+          "word": "блины",
+          "imageAsset": "word_bliny",
+          "audioAsset": null,
+          "hint": "Бли-ны. Круглые, вкусные.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/LSoft/ls-wm-3.m4a"
+        },
+        {
+          "id": "ls-wm-4",
+          "word": "апельсин",
+          "imageAsset": "word_apelsin",
+          "audioAsset": null,
+          "hint": "А-пель-син. Оранжевый фрукт.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-wm-4.m4a"
+        },
+        {
+          "id": "ls-wm-5",
+          "word": "василёк",
+          "imageAsset": "word_vasilyok",
+          "audioAsset": null,
+          "hint": "Ва-си-лёк. Синий цветок.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/LSoft/ls-wm-5.m4a"
+        }
+      ]
+    },
+    "wordFinal": {
+      "stageId": "wordFinal",
+      "note": "Слова с [Ль] в конце (мягкий знак).",
+      "items": [
+        {
+          "id": "ls-wf-0",
+          "word": "ель",
+          "imageAsset": "word_el",
+          "audioAsset": null,
+          "hint": "Ель. Зелёная, колючая. Ль на конце.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/LSoft/ls-wf-0.m4a"
+        },
+        {
+          "id": "ls-wf-1",
+          "word": "медаль",
+          "imageAsset": "word_medal",
+          "audioAsset": null,
+          "hint": "Ме-даль. За победу. Ль на конце.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-wf-1.m4a"
+        },
+        {
+          "id": "ls-wf-2",
+          "word": "боль",
+          "imageAsset": "word_bol",
+          "audioAsset": null,
+          "hint": "Боль. Когда что-то болит.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-wf-2.m4a"
+        },
+        {
+          "id": "ls-wf-3",
+          "word": "журавль",
+          "imageAsset": "word_crane",
+          "audioAsset": null,
+          "hint": "Жу-равль. Птица с длинными ногами.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/LSoft/ls-wf-3.m4a"
+        },
+        {
+          "id": "ls-wf-4",
+          "word": "автомобиль",
+          "imageAsset": "word_avtomobil",
+          "audioAsset": null,
+          "hint": "Ав-то-мо-биль. Едет по дороге.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/LSoft/ls-wf-4.m4a"
+        },
+        {
+          "id": "ls-wf-5",
+          "word": "апрель",
+          "imageAsset": "word_aprel",
+          "audioAsset": null,
+          "hint": "А-прель. Весенний месяц.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/LSoft/ls-wf-5.m4a"
+        }
+      ]
+    },
+    "phrase": {
+      "stageId": "phrase",
+      "note": "Словосочетания с [Ль].",
+      "items": [
+        {
+          "id": "ls-ph-0",
+          "word": "хитрая лиса",
+          "audioAsset": null,
+          "hint": "Хит-ра-я ли-са.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-ph-0.m4a"
+        },
+        {
+          "id": "ls-ph-1",
+          "word": "кислый лимон",
+          "audioAsset": null,
+          "hint": "Кис-лый ли-мон.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-ph-1.m4a"
+        },
+        {
+          "id": "ls-ph-2",
+          "word": "спелая малина",
+          "audioAsset": null,
+          "hint": "Спе-ла-я ма-ли-на.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-ph-2.m4a"
+        },
+        {
+          "id": "ls-ph-3",
+          "word": "зелёная ель",
+          "audioAsset": null,
+          "hint": "Зе-лё-на-я ель.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-ph-3.m4a"
+        },
+        {
+          "id": "ls-ph-4",
+          "word": "красивая лента",
+          "audioAsset": null,
+          "hint": "Кра-си-ва-я лен-та.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-ph-4.m4a"
+        }
+      ]
+    },
+    "sentence": {
+      "stageId": "sentence",
+      "note": "Предложения с [Ль].",
+      "items": [
+        {
+          "id": "ls-sen-0",
+          "word": "Лиса поймала мышку.",
+          "audioAsset": null,
+          "hint": "Ли-са — мягкий Ль.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-sen-0.m4a"
+        },
+        {
+          "id": "ls-sen-1",
+          "word": "Лена ест малину.",
+          "audioAsset": null,
+          "hint": "Ле-на, ма-ли-ну.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/LSoft/ls-sen-1.m4a"
+        },
+        {
+          "id": "ls-sen-2",
+          "word": "На поляне растёт ель.",
+          "audioAsset": null,
+          "hint": "По-ля-не, ель.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/LSoft/ls-sen-2.m4a"
+        },
+        {
+          "id": "ls-sen-3",
+          "word": "Лёня полил цветы из лейки.",
+          "audioAsset": null,
+          "hint": "Лё-ня, по-лил, лей-ки.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/LSoft/ls-sen-3.m4a"
+        }
+      ]
+    }
+  }
+}

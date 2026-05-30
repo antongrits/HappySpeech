@@ -1,0 +1,467 @@
+{
+  "id": "sound_rsoft_v1",
+  "soundTarget": "Рь",
+  "group": "соноры",
+  "version": 1,
+  "description": "F1-003. Отдельная цепочка мягкого [Рь]: слоги РИ/РЕ/РЯ/РЁ/РЮ, слова по позициям, финальный мягкий знак (дверь/зверь/фонарь). Онтогенетически после Р.",
+  "stages": {
+    "prep": {
+      "stageId": "prep",
+      "note": "Подготовка [Рь] — мягкий вибрант. После твёрдого Р: спинка приподнята, кончик дрожит мягко.",
+      "items": [
+        {
+          "id": "rs-prep-0",
+          "word": "барабанщик",
+          "audioAsset": null,
+          "hint": "Кончик языка стучит за верхними зубами: д-д-д.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RSoft/rs-prep-0.m4a"
+        },
+        {
+          "id": "rs-prep-1",
+          "word": "р твёрдый",
+          "audioAsset": null,
+          "hint": "Сначала вспомни твёрдый рык: р-р-р.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RSoft/rs-prep-1.m4a"
+        },
+        {
+          "id": "rs-prep-2",
+          "word": "рь мягкий",
+          "audioAsset": null,
+          "hint": "А теперь мягко, с улыбкой: рь-рь-рь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-prep-2.m4a"
+        },
+        {
+          "id": "rs-prep-3",
+          "word": "р-рь чередуй",
+          "audioAsset": null,
+          "hint": "Рык — мягкий, рык — мягкий.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-prep-3.m4a"
+        },
+        {
+          "id": "rs-prep-4",
+          "word": "грибок-улыбка",
+          "audioAsset": null,
+          "hint": "Язык вверх грибком, губы в улыбке для мягкости.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-prep-4.m4a"
+        }
+      ]
+    },
+    "isolated": {
+      "stageId": "isolated",
+      "note": "Изолированный [Рь] — мягкий короткий рокот.",
+      "items": [
+        {
+          "id": "rs-iso-0",
+          "word": "рь-рь-рь мягко",
+          "audioAsset": null,
+          "hint": "Мягкий рокот с улыбкой.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RSoft/rs-iso-0.m4a"
+        },
+        {
+          "id": "rs-iso-1",
+          "word": "рь тихо",
+          "audioAsset": null,
+          "hint": "Совсем тихо: рь-рь.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RSoft/rs-iso-1.m4a"
+        },
+        {
+          "id": "rs-iso-2",
+          "word": "р-рь-р-рь",
+          "audioAsset": null,
+          "hint": "Твёрдый — мягкий. Слышишь разницу?",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-iso-2.m4a"
+        },
+        {
+          "id": "rs-iso-3",
+          "word": "рь-рь птичка",
+          "audioAsset": null,
+          "hint": "Птичка трещит мягко: рь-рь-рь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-iso-3.m4a"
+        }
+      ]
+    },
+    "syllable": {
+      "stageId": "syllable",
+      "note": "Слоги с [Рь] — мягкость через И/Е/Я/Ё/Ю (отдельная цепочка).",
+      "items": [
+        {
+          "id": "rs-syl-0",
+          "word": "ри",
+          "audioAsset": null,
+          "hint": "Рь + И — улыбнись.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RSoft/rs-syl-0.m4a"
+        },
+        {
+          "id": "rs-syl-1",
+          "word": "ре",
+          "audioAsset": null,
+          "hint": "Рь + Е.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RSoft/rs-syl-1.m4a"
+        },
+        {
+          "id": "rs-syl-2",
+          "word": "ря",
+          "audioAsset": null,
+          "hint": "Рь + Я.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RSoft/rs-syl-2.m4a"
+        },
+        {
+          "id": "rs-syl-3",
+          "word": "рё",
+          "audioAsset": null,
+          "hint": "Рь + Ё.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RSoft/rs-syl-3.m4a"
+        },
+        {
+          "id": "rs-syl-4",
+          "word": "рю",
+          "audioAsset": null,
+          "hint": "Рь + Ю.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RSoft/rs-syl-4.m4a"
+        },
+        {
+          "id": "rs-syl-5",
+          "word": "ирь",
+          "audioAsset": null,
+          "hint": "И и мягкое Рь.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RSoft/rs-syl-5.m4a"
+        },
+        {
+          "id": "rs-syl-6",
+          "word": "ерь",
+          "audioAsset": null,
+          "hint": "Е и Рь — как «дверь».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-syl-6.m4a"
+        },
+        {
+          "id": "rs-syl-7",
+          "word": "арь",
+          "audioAsset": null,
+          "hint": "А и Рь — как «букварь».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-syl-7.m4a"
+        },
+        {
+          "id": "rs-syl-8",
+          "word": "орь",
+          "audioAsset": null,
+          "hint": "О и Рь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-syl-8.m4a"
+        },
+        {
+          "id": "rs-syl-9",
+          "word": "урь",
+          "audioAsset": null,
+          "hint": "У и Рь — как «пузырь».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-syl-9.m4a"
+        },
+        {
+          "id": "rs-syl-10",
+          "word": "ари",
+          "audioAsset": null,
+          "hint": "Рь между гласными: а-ри.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-syl-10.m4a"
+        },
+        {
+          "id": "rs-syl-11",
+          "word": "ере",
+          "audioAsset": null,
+          "hint": "Е-ре — как в «берёза».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-syl-11.m4a"
+        },
+        {
+          "id": "rs-syl-12",
+          "word": "ири",
+          "audioAsset": null,
+          "hint": "И-ри — как «ирис».",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-syl-12.m4a"
+        }
+      ]
+    },
+    "wordInit": {
+      "stageId": "wordInit",
+      "note": "Слова с [Рь] в начале.",
+      "items": [
+        {
+          "id": "rs-wi-0",
+          "word": "река",
+          "imageAsset": "word_reka",
+          "audioAsset": null,
+          "hint": "Ре-ка. Течёт вода. Мягкий Рь.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RSoft/rs-wi-0.m4a"
+        },
+        {
+          "id": "rs-wi-1",
+          "word": "репа",
+          "imageAsset": "word_repa",
+          "audioAsset": null,
+          "hint": "Ре-па. Жёлтый овощ из сказки.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RSoft/rs-wi-1.m4a"
+        },
+        {
+          "id": "rs-wi-2",
+          "word": "рябина",
+          "imageAsset": "word_ryabina",
+          "audioAsset": null,
+          "hint": "Ря-би-на. Красные ягоды.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-wi-2.m4a"
+        },
+        {
+          "id": "rs-wi-3",
+          "word": "решётка",
+          "imageAsset": "word_reshyotka",
+          "audioAsset": null,
+          "hint": "Ре-шёт-ка. На окне. Мягкий Рь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-wi-3.m4a"
+        },
+        {
+          "id": "rs-wi-4",
+          "word": "ремень",
+          "imageAsset": "word_remen",
+          "audioAsset": null,
+          "hint": "Ре-мень. Держит штаны.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-wi-4.m4a"
+        }
+      ]
+    },
+    "wordMed": {
+      "stageId": "wordMed",
+      "note": "Слова с [Рь] в середине.",
+      "items": [
+        {
+          "id": "rs-wm-0",
+          "word": "варенье",
+          "imageAsset": "word_varene",
+          "audioAsset": null,
+          "hint": "Ва-ре-нье. Сладкое, из ягод.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RSoft/rs-wm-0.m4a"
+        },
+        {
+          "id": "rs-wm-1",
+          "word": "берёза",
+          "imageAsset": "word_beryoza",
+          "audioAsset": null,
+          "hint": "Бе-рё-за. Белый ствол.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RSoft/rs-wm-1.m4a"
+        },
+        {
+          "id": "rs-wm-2",
+          "word": "скрипка",
+          "imageAsset": "word_skripka",
+          "audioAsset": null,
+          "hint": "Скри-пка. Играет музыку.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-wm-2.m4a"
+        },
+        {
+          "id": "rs-wm-3",
+          "word": "снегирь",
+          "imageAsset": "word_snegir",
+          "audioAsset": null,
+          "hint": "Сне-гирь. Птица с красной грудкой.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-wm-3.m4a"
+        },
+        {
+          "id": "rs-wm-4",
+          "word": "грибок",
+          "imageAsset": "word_gribok",
+          "audioAsset": null,
+          "hint": "Гри-бок. Растёт в лесу.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RSoft/rs-wm-4.m4a"
+        },
+        {
+          "id": "rs-wm-5",
+          "word": "орёл",
+          "imageAsset": "word_eagle",
+          "audioAsset": null,
+          "hint": "О-рёл. Большая птица.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-wm-5.m4a"
+        }
+      ]
+    },
+    "wordFinal": {
+      "stageId": "wordFinal",
+      "note": "Слова с [Рь] в конце (мягкий знак).",
+      "items": [
+        {
+          "id": "rs-wf-0",
+          "word": "дверь",
+          "imageAsset": "word_door",
+          "audioAsset": null,
+          "hint": "Дверь. Открой дверь. Мягкий Рь.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RSoft/rs-wf-0.m4a"
+        },
+        {
+          "id": "rs-wf-1",
+          "word": "зверь",
+          "imageAsset": "word_zver",
+          "audioAsset": null,
+          "hint": "Зверь. Живёт в лесу.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/RSoft/rs-wf-1.m4a"
+        },
+        {
+          "id": "rs-wf-2",
+          "word": "фонарь",
+          "imageAsset": "word_fonar",
+          "audioAsset": null,
+          "hint": "Фо-нарь. Светит вечером.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-wf-2.m4a"
+        },
+        {
+          "id": "rs-wf-3",
+          "word": "якорь",
+          "imageAsset": "word_yakor",
+          "audioAsset": null,
+          "hint": "Я-корь. Держит корабль.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-wf-3.m4a"
+        },
+        {
+          "id": "rs-wf-4",
+          "word": "пузырь",
+          "imageAsset": "word_puzyr",
+          "audioAsset": null,
+          "hint": "Пу-зырь. Мыльный, летит.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-wf-4.m4a"
+        },
+        {
+          "id": "rs-wf-5",
+          "word": "букварь",
+          "imageAsset": "word_bukvar",
+          "audioAsset": null,
+          "hint": "Бук-варь. Первая книжка.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/RSoft/rs-wf-5.m4a"
+        },
+        {
+          "id": "rs-wf-6",
+          "word": "календарь",
+          "imageAsset": "word_kalendar",
+          "audioAsset": null,
+          "hint": "Ка-лен-дарь. Считает дни.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/RSoft/rs-wf-6.m4a"
+        }
+      ]
+    },
+    "phrase": {
+      "stageId": "phrase",
+      "note": "Словосочетания с [Рь].",
+      "items": [
+        {
+          "id": "rs-ph-0",
+          "word": "быстрая река",
+          "audioAsset": null,
+          "hint": "Быст-ра-я ре-ка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-ph-0.m4a"
+        },
+        {
+          "id": "rs-ph-1",
+          "word": "сладкое варенье",
+          "audioAsset": null,
+          "hint": "Слад-ко-е ва-ре-нье.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-ph-1.m4a"
+        },
+        {
+          "id": "rs-ph-2",
+          "word": "белая берёза",
+          "audioAsset": null,
+          "hint": "Бе-ла-я бе-рё-за.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-ph-2.m4a"
+        },
+        {
+          "id": "rs-ph-3",
+          "word": "красный снегирь",
+          "audioAsset": null,
+          "hint": "Крас-ный сне-гирь.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/RSoft/rs-ph-3.m4a"
+        },
+        {
+          "id": "rs-ph-4",
+          "word": "открытая дверь",
+          "audioAsset": null,
+          "hint": "От-кры-та-я дверь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-ph-4.m4a"
+        }
+      ]
+    },
+    "sentence": {
+      "stageId": "sentence",
+      "note": "Предложения с [Рь].",
+      "items": [
+        {
+          "id": "rs-sen-0",
+          "word": "Рита варит варенье.",
+          "audioAsset": null,
+          "hint": "Ри-та, ва-рит, ва-ренье — мягкий Рь.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-sen-0.m4a"
+        },
+        {
+          "id": "rs-sen-1",
+          "word": "У реки растёт берёза.",
+          "audioAsset": null,
+          "hint": "Ре-ки, бе-рёза.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/RSoft/rs-sen-1.m4a"
+        },
+        {
+          "id": "rs-sen-2",
+          "word": "Снегирь сел на ветку.",
+          "audioAsset": null,
+          "hint": "Сне-гирь, ветку.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/RSoft/rs-sen-2.m4a"
+        },
+        {
+          "id": "rs-sen-3",
+          "word": "Открой, пожалуйста, дверь.",
+          "audioAsset": null,
+          "hint": "Дверь — Рь на конце.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/RSoft/rs-sen-3.m4a"
+        }
+      ]
+    }
+  }
+}

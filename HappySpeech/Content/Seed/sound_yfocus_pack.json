@@ -1,0 +1,399 @@
+{
+  "id": "sound_yfocus_v1",
+  "soundTarget": "Й",
+  "group": "заднеязычные",
+  "version": 1,
+  "description": "F1-006. Постановка [Й] и анти-пропуск: йотированные Я/Е/Ё/Ю (яма→«ама» — типичный дефект), позиции начало/середина/конец.",
+  "stages": {
+    "prep": {
+      "stageId": "prep",
+      "note": "Подготовка [Й] — короткий, спинка к нёбу, как тихое «и». Не пропускай его!",
+      "items": [
+        {
+          "id": "yf-prep-0",
+          "word": "и-краткое",
+          "audioAsset": null,
+          "hint": "Скажи И коротко-коротко: й.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/YFocus/yf-prep-0.m4a"
+        },
+        {
+          "id": "yf-prep-1",
+          "word": "й как зайчик",
+          "audioAsset": null,
+          "hint": "Зайчик прыгнул: ай-яй!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/YFocus/yf-prep-1.m4a"
+        },
+        {
+          "id": "yf-prep-2",
+          "word": "й не теряй",
+          "audioAsset": null,
+          "hint": "В слове «яма» спереди есть Й: й-ама.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-prep-2.m4a"
+        },
+        {
+          "id": "yf-prep-3",
+          "word": "спинка вверх",
+          "audioAsset": null,
+          "hint": "Спинка языка тянется к нёбу для Й.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-prep-3.m4a"
+        }
+      ]
+    },
+    "isolated": {
+      "stageId": "isolated",
+      "note": "Изолированный [Й] — самый короткий звук.",
+      "items": [
+        {
+          "id": "yf-iso-0",
+          "word": "й! (короткий)",
+          "audioAsset": null,
+          "hint": "Очень короткий: й!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/YFocus/yf-iso-0.m4a"
+        },
+        {
+          "id": "yf-iso-1",
+          "word": "ай-ай",
+          "audioAsset": null,
+          "hint": "Й на конце: ай-ай.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/YFocus/yf-iso-1.m4a"
+        },
+        {
+          "id": "yf-iso-2",
+          "word": "ой-ой",
+          "audioAsset": null,
+          "hint": "Ой-ой!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-iso-2.m4a"
+        },
+        {
+          "id": "yf-iso-3",
+          "word": "эй!",
+          "audioAsset": null,
+          "hint": "Позови: эй!",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-iso-3.m4a"
+        }
+      ]
+    },
+    "syllable": {
+      "stageId": "syllable",
+      "note": "Йотированные гласные (Й + гласный) — анти-пропуск в начале слога.",
+      "items": [
+        {
+          "id": "yf-syl-0",
+          "word": "я (йа)",
+          "audioAsset": null,
+          "hint": "Я = Й + А. Не теряй Й спереди!",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/YFocus/yf-syl-0.m4a"
+        },
+        {
+          "id": "yf-syl-1",
+          "word": "е (йэ)",
+          "audioAsset": null,
+          "hint": "Е = Й + Э.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/YFocus/yf-syl-1.m4a"
+        },
+        {
+          "id": "yf-syl-2",
+          "word": "ё (йо)",
+          "audioAsset": null,
+          "hint": "Ё = Й + О.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/YFocus/yf-syl-2.m4a"
+        },
+        {
+          "id": "yf-syl-3",
+          "word": "ю (йу)",
+          "audioAsset": null,
+          "hint": "Ю = Й + У.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/YFocus/yf-syl-3.m4a"
+        },
+        {
+          "id": "yf-syl-4",
+          "word": "ай",
+          "audioAsset": null,
+          "hint": "А и Й на конце.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/YFocus/yf-syl-4.m4a"
+        },
+        {
+          "id": "yf-syl-5",
+          "word": "ой",
+          "audioAsset": null,
+          "hint": "О и Й.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-syl-5.m4a"
+        },
+        {
+          "id": "yf-syl-6",
+          "word": "уй",
+          "audioAsset": null,
+          "hint": "У и Й.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-syl-6.m4a"
+        },
+        {
+          "id": "yf-syl-7",
+          "word": "эй",
+          "audioAsset": null,
+          "hint": "Э и Й.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-syl-7.m4a"
+        },
+        {
+          "id": "yf-syl-8",
+          "word": "яя",
+          "audioAsset": null,
+          "hint": "Я-я — два йотированных.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-syl-8.m4a"
+        },
+        {
+          "id": "yf-syl-9",
+          "word": "аю",
+          "audioAsset": null,
+          "hint": "А-ю — Й в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-syl-9.m4a"
+        },
+        {
+          "id": "yf-syl-10",
+          "word": "ое",
+          "audioAsset": null,
+          "hint": "О-е — Й в середине.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-syl-10.m4a"
+        }
+      ]
+    },
+    "wordInit": {
+      "stageId": "wordInit",
+      "note": "Слова с Й (йотированный гласный) в начале — не пропускай Й!",
+      "items": [
+        {
+          "id": "yf-wi-0",
+          "word": "яблоко",
+          "imageAsset": "word_apple",
+          "audioAsset": null,
+          "hint": "Й-аблоко. Спереди есть Й, не «аблоко».",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/YFocus/yf-wi-0.m4a"
+        },
+        {
+          "id": "yf-wi-1",
+          "word": "яйцо",
+          "imageAsset": "word_yaytso",
+          "audioAsset": null,
+          "hint": "Й-айцо. Два места с Й.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-wi-1.m4a"
+        },
+        {
+          "id": "yf-wi-2",
+          "word": "ягода",
+          "imageAsset": "word_yagoda",
+          "audioAsset": null,
+          "hint": "Й-агода.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/YFocus/yf-wi-2.m4a"
+        },
+        {
+          "id": "yf-wi-3",
+          "word": "ёлка",
+          "imageAsset": "word_yolka",
+          "audioAsset": null,
+          "hint": "Й-олка. Не «олка».",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/YFocus/yf-wi-3.m4a"
+        },
+        {
+          "id": "yf-wi-4",
+          "word": "юла",
+          "imageAsset": "word_yula",
+          "audioAsset": null,
+          "hint": "Й-ула. Крутится.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-wi-4.m4a"
+        }
+      ]
+    },
+    "wordMed": {
+      "stageId": "wordMed",
+      "note": "Слова с Й в середине/между гласными.",
+      "items": [
+        {
+          "id": "yf-wm-0",
+          "word": "чайник",
+          "imageAsset": "word_chaynik",
+          "audioAsset": null,
+          "hint": "Чай-ник. Й в середине.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/YFocus/yf-wm-0.m4a"
+        },
+        {
+          "id": "yf-wm-1",
+          "word": "майка",
+          "imageAsset": "word_mayka",
+          "audioAsset": null,
+          "hint": "Май-ка. Й перед К.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/YFocus/yf-wm-1.m4a"
+        },
+        {
+          "id": "yf-wm-2",
+          "word": "зайка",
+          "imageAsset": "word_zayka",
+          "audioAsset": null,
+          "hint": "Зай-ка. Й в середине.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/YFocus/yf-wm-2.m4a"
+        },
+        {
+          "id": "yf-wm-3",
+          "word": "трамвай",
+          "imageAsset": "word_tramvay_y",
+          "audioAsset": null,
+          "hint": "Трам-вай. Й на конце.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-wm-3.m4a"
+        },
+        {
+          "id": "yf-wm-4",
+          "word": "лейка",
+          "imageAsset": "word_leyka",
+          "audioAsset": null,
+          "hint": "Лей-ка. Й в середине.",
+          "difficulty": 1,
+          "audio_file": "Audio/Content/YFocus/yf-wm-4.m4a"
+        }
+      ]
+    },
+    "wordFinal": {
+      "stageId": "wordFinal",
+      "note": "Слова с Й в конце.",
+      "items": [
+        {
+          "id": "yf-wf-0",
+          "word": "ручей",
+          "imageAsset": "word_ruchey",
+          "audioAsset": null,
+          "hint": "Ру-чей. Бежит вода. Й на конце.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-wf-0.m4a"
+        },
+        {
+          "id": "yf-wf-1",
+          "word": "воробей",
+          "imageAsset": "word_vorobey",
+          "audioAsset": null,
+          "hint": "Во-ро-бей. Маленькая птичка. Й на конце.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-wf-1.m4a"
+        },
+        {
+          "id": "yf-wf-2",
+          "word": "трамвай",
+          "imageAsset": "word_tramvay_y",
+          "audioAsset": null,
+          "hint": "Трам-вай. Й на конце.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-wf-2.m4a"
+        },
+        {
+          "id": "yf-wf-3",
+          "word": "попугай",
+          "imageAsset": "word_popugay",
+          "audioAsset": null,
+          "hint": "По-пу-гай. Й на конце.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-wf-3.m4a"
+        }
+      ]
+    },
+    "phrase": {
+      "stageId": "phrase",
+      "note": "Словосочетания с Й.",
+      "items": [
+        {
+          "id": "yf-ph-0",
+          "word": "красное яблоко",
+          "audioAsset": null,
+          "hint": "Крас-но-е й-аблоко.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-ph-0.m4a"
+        },
+        {
+          "id": "yf-ph-1",
+          "word": "зелёная ёлка",
+          "audioAsset": null,
+          "hint": "Зе-лё-на-я й-олка.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-ph-1.m4a"
+        },
+        {
+          "id": "yf-ph-2",
+          "word": "горячий чай",
+          "audioAsset": null,
+          "hint": "Го-ря-чий чай — Й на конце.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-ph-2.m4a"
+        },
+        {
+          "id": "yf-ph-3",
+          "word": "быстрый трамвай",
+          "audioAsset": null,
+          "hint": "Быст-рый трам-вай.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-ph-3.m4a"
+        }
+      ]
+    },
+    "sentence": {
+      "stageId": "sentence",
+      "note": "Предложения с Й — не теряй Й!",
+      "items": [
+        {
+          "id": "yf-sen-0",
+          "word": "Яша ест яблоко.",
+          "audioAsset": null,
+          "hint": "Й-аша, й-аблоко.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-sen-0.m4a"
+        },
+        {
+          "id": "yf-sen-1",
+          "word": "Зайка пьёт чай.",
+          "audioAsset": null,
+          "hint": "Зай-ка, чай.",
+          "difficulty": 2,
+          "audio_file": "Audio/Content/YFocus/yf-sen-1.m4a"
+        },
+        {
+          "id": "yf-sen-2",
+          "word": "На ёлке горят огни.",
+          "audioAsset": null,
+          "hint": "Й-олке.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/YFocus/yf-sen-2.m4a"
+        },
+        {
+          "id": "yf-sen-3",
+          "word": "Майя поёт песню.",
+          "audioAsset": null,
+          "hint": "Май-я, по-ёт.",
+          "difficulty": 3,
+          "audio_file": "Audio/Content/YFocus/yf-sen-3.m4a"
+        }
+      ]
+    }
+  }
+}
