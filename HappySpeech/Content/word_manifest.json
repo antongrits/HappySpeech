@@ -15050,9 +15050,405 @@
       "semanticCategory": "objects",
       "methodologySource": "pack-align-r2",
       "soundFamily": "З"
+    },
+    {
+      "word": "носки",
+      "asset": "word_nosok",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "С"
+    },
+    {
+      "word": "цапля",
+      "asset": "word_tsaplya",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "цирк",
+      "asset": "word_tsirk",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "цифра",
+      "asset": "word_tsifra",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "цепь",
+      "asset": "word_tsep",
+      "recommendedStages": [
+        "wordInit"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "яйцо",
+      "asset": "word_yaytso",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "улица",
+      "asset": "word_ulitsa",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "башня",
+      "asset": "word_bashnya",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Ш"
+    },
+    {
+      "word": "мячик",
+      "asset": "word_myach",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Ч"
+    },
+    {
+      "word": "повар",
+      "asset": "word_povar",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "пакет",
+      "asset": "word_paket",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "К"
+    },
+    {
+      "word": "моряк",
+      "asset": "word_moryak",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "К"
+    },
+    {
+      "word": "пиджак",
+      "asset": "word_pidzhak",
+      "recommendedStages": [
+        "wordFinal"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "К"
+    },
+    {
+      "word": "орехи",
+      "asset": "word_orekh",
+      "recommendedStages": [
+        "wordMed"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "цена",
+      "asset": "word_tsena",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "цыплёнок",
+      "asset": "word_tsyplyonok",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "цыпочки",
+      "asset": "word_tsypochki",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "цукат",
+      "asset": "word_tsukat",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "цепочка",
+      "asset": "word_tsepochka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "царапина",
+      "asset": "word_tsarapina",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "цистерна",
+      "asset": "word_tsisterna",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "циферблат",
+      "asset": "word_tsiferblat",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "цыган",
+      "asset": "word_tsygan",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "цирюльник",
+      "asset": "word_tsiryulnik",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "певец",
+      "asset": "word_pevets",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "тигрица",
+      "asset": "word_tigritsa",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Ц"
+    },
+    {
+      "word": "гречка",
+      "asset": "word_grechka",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Г"
+    },
+    {
+      "word": "подруга",
+      "asset": "word_podruga",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Г"
+    },
+    {
+      "word": "охотник",
+      "asset": "word_okhotnik",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Х"
+    },
+    {
+      "word": "мель",
+      "asset": "word_mel",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Л"
+    },
+    {
+      "word": "инженер",
+      "asset": "word_inzhener",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "компьютер",
+      "asset": "word_kompyuter",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Р"
+    },
+    {
+      "word": "осень",
+      "asset": "word_osen",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "С"
+    },
+    {
+      "word": "ель",
+      "asset": "word_el",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "музей",
+      "asset": "word_muzey",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Й"
+    },
+    {
+      "word": "клей",
+      "asset": "word_kley",
+      "recommendedStages": [
+        "word"
+      ],
+      "visualComplexity": "medium",
+      "semanticCategory": "objects",
+      "methodologySource": "register-v2",
+      "soundFamily": "Й"
     }
   ],
-  "totalWords": 1333,
+  "totalWords": 1369,
   "generatedAt": "2026-05-24",
   "entries": [
     {
