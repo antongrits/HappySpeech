@@ -1637,6 +1637,7 @@
 		D77A88E5E1FC83821904D2DC /* sound_l_pack.json in Resources */ = {isa = PBXBuildFile; fileRef = 8D2A61620B214AE18B9BBAD7 /* sound_l_pack.json */; };
 		D7A55F74A59B72E42C330940 /* FamilyHomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018FF8D727E64604BDB5593F /* FamilyHomePresenter.swift */; };
 		D7ABEC4F58EB0ED9EF4CA4A7 /* SoundExplorerMapInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8A003136A3DB7A95393FC4 /* SoundExplorerMapInteractorTests.swift */; };
+		D7ADA50D093C6ECA670832CE /* DiaryShareTokenIssuerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE86C80D41EB06B885E006B5 /* DiaryShareTokenIssuerTests.swift */; };
 		D7B4EAAE42DE191CF6E6CA22 /* ParentalGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F15BAC7C522A453678BDFB /* ParentalGateTests.swift */; };
 		D7C8B95B133A85865155F2B0 /* FamilyVoicePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE842D20CDC4C85B156A76E /* FamilyVoicePresenter.swift */; };
 		D7C9DFA440D057F350B08F6C /* WeeklyParentTipInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F241F4E4C264FBB731FE3E0D /* WeeklyParentTipInteractorTests.swift */; };
@@ -3863,6 +3864,7 @@
 		FDF4ECAC5F9352881B704437 /* SettingsPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenterTests.swift; sourceTree = "<group>"; };
 		FE18FE14E4D236D979AEE21E /* SessionShellInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionShellInteractorTests.swift; sourceTree = "<group>"; };
 		FE70BE6937BCC6D85B93EF66 /* LogopedistChatDisplayLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogopedistChatDisplayLogic.swift; sourceTree = "<group>"; };
+		FE86C80D41EB06B885E006B5 /* DiaryShareTokenIssuerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryShareTokenIssuerTests.swift; sourceTree = "<group>"; };
 		FEC0B60A1F7D0BADCF924E19 /* RewardShopPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardShopPresenter.swift; sourceTree = "<group>"; };
 		FF117C114F90B68B138C42E0 /* WorldMapRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldMapRouter.swift; sourceTree = "<group>"; };
 		FF1BAEEE8A6DD180DEC97917 /* SoundJournalKidView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundJournalKidView.swift; sourceTree = "<group>"; };
@@ -5124,6 +5126,7 @@
 				F2C70236D5CA926FD3ED5785 /* CoPlayWorkerTests.swift */,
 				43820D77F231D6605F64154E /* CustomWordListWorkerTests.swift */,
 				36904FDA7B21D29E8E325070 /* DailyRitualsLyalyaWorkerTests.swift */,
+				FE86C80D41EB06B885E006B5 /* DiaryShareTokenIssuerTests.swift */,
 				5CC4E9AD8C0A55A0310F730F /* LexicalThemesWorkerTests.swift */,
 				0BBFC79FA39F517A8AB43502 /* ParentGuideWorkerTests.swift */,
 				D15704D61761C34F827CB1ED /* ParentVoiceNoteWorkerTests.swift */,
@@ -9532,6 +9535,7 @@
 				D5DB96F87539F7F2F73EF83B /* DialectAdaptationInteractorTests.swift in Sources */,
 				637E5FB0864FD73FA5E2294E /* DialectAdaptationPresenterTests.swift in Sources */,
 				21ECC61FD7142FA7E78C6B6F /* DialectAdaptationWorkerTests.swift in Sources */,
+				D7ADA50D093C6ECA670832CE /* DiaryShareTokenIssuerTests.swift in Sources */,
 				37666AFCFBB76F06650AFA7B /* DiaryStorageWorkerTests.swift in Sources */,
 				2DBBEE4E097DD2AC86D142DA /* DisplayStateTests.swift in Sources */,
 				F18491E91582D5CC39BFD771 /* DomainModelTests.swift in Sources */,

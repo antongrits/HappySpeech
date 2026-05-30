@@ -76,6 +76,15 @@ actor DiaryEncryptionWorker {
         return (try? keychain.getData(label)) != nil
     }
 
+    /// Стабильный (детерминированный) симметричный ключ ребёнка из Keychain.
+    /// Используется как input keying material для побочных выводов (например
+    /// HKDF под HMAC share-token). В отличие от шифрования AES-GCM здесь нет
+    /// случайного nonce — один и тот же child всегда даёт один и тот же ключ,
+    /// что необходимо для повторяемой подписи.
+    func stableKey(for childId: String) async throws -> SymmetricKey {
+        try await ensureKey(for: childId)
+    }
+
     // MARK: - Private
 
     /// Возвращает существующий ключ либо генерирует новый 256-bit.
@@ -159,6 +168,15 @@ actor DiaryShareTokenIssuer {
         case invalid
     }
 
+    #if DEBUG
+    /// Тестовый хук: возвращает валидную подпись для произвольного payload,
+    /// чтобы можно было сконструировать токен с прошедшим сроком, но корректным
+    /// sig (проверка, что expiry форсится независимо от подписи).
+    func makeSignatureForTesting(payload: String, childId: String) async throws -> String {
+        try await signature(of: payload, childId: childId)
+    }
+    #endif
+
     // MARK: - Private
 
     /// HMAC-SHA256(payload, key=child-key). Возвращает hex-string.
@@ -172,13 +190,19 @@ actor DiaryShareTokenIssuer {
     }
 
     /// Производит ключ для HMAC из шифровального ключа ребёнка через
-    /// дополнительный HKDF-шаг — чтобы не использовать тот же raw-ключ.
+    /// детерминированный HKDF-шаг — чтобы не использовать тот же raw-ключ,
+    /// но при этом получать ОДИН И ТОТ ЖЕ ключ при каждом вызове.
+    ///
+    /// Раньше здесь использовалось AES-GCM-шифрование пробы, но оно добавляет
+    /// случайный nonce → шифротекст (а значит и выводимый ключ) был разным при
+    /// каждом вызове, и подпись токена при issue не совпадала с validate.
+    /// HKDF-SHA256 от стабильного child-key детерминирован.
     private func deriveHMACKey(for childId: String) async throws -> SymmetricKey {
-        // Получаем зашифрованный child-key и используем как input keying material.
-        let probe = "share-token-derivation-v1"
-        let encrypted = try await encryption.encrypt(data: Data(probe.utf8), childId: childId)
-        // Хешируем шифротекст — он содержит nonce и тег, неповторяемый.
-        let digest = SHA256.hash(data: encrypted)
-        return SymmetricKey(data: digest)
+        let stableKey = try await encryption.stableKey(for: childId)
+        return HKDF<SHA256>.deriveKey(
+            inputKeyMaterial: stableKey,
+            info: Data("share-token-derivation-v1".utf8),
+            outputByteCount: 32
+        )
     }
 }

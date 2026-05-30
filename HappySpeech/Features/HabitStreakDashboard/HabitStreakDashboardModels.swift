@@ -31,17 +31,27 @@ enum HabitStreakDashboardModels {
         static let weeks: Int = 12
         static let daysPerWeek: Int = 7
 
+        /// Текущая непрерывная серия: подряд идущие активные дни (intensity > 0),
+        /// заканчивающиеся сегодня или вчера. Консистентно с методикой daily-streak
+        /// (см. SessionComplete.updateStreak, StutteringInteractor.incrementStreak):
+        /// сегодня неактивен, но вчера был — серия продолжается до вчера; разрыв
+        /// внутри последовательности сбрасывает серию в 0.
+        ///
+        /// `days` отсортирован по возрастанию dayOffset, последний элемент — сегодня.
         var currentStreak: Int {
+            guard let today = days.last else { return 0 }
+            // Если ни сегодня, ни вчера не было практики — серия прервана.
+            let yesterdayActive = days.count >= 2 && days[days.count - 2].intensity > 0
+            guard today.intensity > 0 || yesterdayActive else { return 0 }
+
+            // Если сегодня неактивен (но вчера был) — стартуем отсчёт со «вчера».
+            let startIndex = today.intensity > 0 ? days.count - 1 : days.count - 2
             var streak = 0
-            for day in days.reversed() where day.intensity > 0 {
+            for index in stride(from: startIndex, through: 0, by: -1) {
+                guard days[index].intensity > 0 else { break }
                 streak += 1
             }
-            // tally consecutive >0 from the end
-            var counted = 0
-            for day in days.reversed() {
-                if day.intensity > 0 { counted += 1 } else { break }
-            }
-            return max(streak, counted)
+            return streak
         }
 
         var totalMinutes: Int {

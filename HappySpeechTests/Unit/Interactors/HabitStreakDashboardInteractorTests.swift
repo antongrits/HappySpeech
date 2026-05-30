@@ -99,31 +99,70 @@ final class HabitStreakDashboardInteractorTests: XCTestCase {
 
     // MARK: - currentStreak
     //
-    // The implementation returns max(totalActiveDays, trailingActiveRun): `streak`
-    // counts every active day, `counted` counts the trailing run until the first
-    // gap, and the larger wins. These tests pin that actual behaviour.
+    // currentStreak — это ТОЛЬКО непрерывная trailing-серия (подряд идущие активные
+    // дни, заканчивающиеся сегодня или вчера). `days` отсортирован по возрастанию,
+    // последний элемент — сегодня. Разрыв в середине обрывает серию; если сегодня
+    // неактивен, но вчера был — серия продолжается до вчера. Это консистентно с
+    // методикой daily-streak (SessionComplete / StutteringInteractor).
 
-    func test_currentStreak_returnsMaxOfTotalAndTrailingRun() {
+    func test_currentStreak_gapInMiddle_countsOnlyTrailingRun() {
         let days = [
             Day(id: 0, intensity: 0, minutes: 0),
             Day(id: 1, intensity: 2, minutes: 6),
-            Day(id: 2, intensity: 0, minutes: 0),
+            Day(id: 2, intensity: 0, minutes: 0),   // разрыв
             Day(id: 3, intensity: 1, minutes: 2),
-            Day(id: 4, intensity: 3, minutes: 11)
+            Day(id: 4, intensity: 3, minutes: 11)    // сегодня
         ]
         let state = ViewState(days: days, selected: nil)
-        // Total active days = 3 (ids 1, 3, 4); trailing run = 2 (ids 4, 3) → max = 3.
-        XCTAssertEqual(state.currentStreak, 3)
+        // Trailing run от сегодня: ids 4, 3 активны, id 2 — разрыв → серия = 2.
+        XCTAssertEqual(state.currentStreak, 2)
     }
 
-    func test_currentStreak_lastDayInactive_fallsBackToTotalActive() {
+    func test_currentStreak_onlyToday_isOne() {
         let days = [
-            Day(id: 0, intensity: 3, minutes: 11),
-            Day(id: 1, intensity: 0, minutes: 0)
+            Day(id: 0, intensity: 0, minutes: 0),
+            Day(id: 1, intensity: 0, minutes: 0),
+            Day(id: 2, intensity: 3, minutes: 11)    // сегодня активен
         ]
         let state = ViewState(days: days, selected: nil)
-        // Trailing run = 0 (last day inactive) but total active = 1 → max = 1.
         XCTAssertEqual(state.currentStreak, 1)
+    }
+
+    func test_currentStreak_yesterdayAndToday_isTwo() {
+        let days = [
+            Day(id: 0, intensity: 0, minutes: 0),
+            Day(id: 1, intensity: 2, minutes: 6),    // вчера
+            Day(id: 2, intensity: 3, minutes: 11)    // сегодня
+        ]
+        let state = ViewState(days: days, selected: nil)
+        XCTAssertEqual(state.currentStreak, 2)
+    }
+
+    func test_currentStreak_todayInactiveYesterdayActive_continuesToYesterday() {
+        let days = [
+            Day(id: 0, intensity: 1, minutes: 2),    // позавчера
+            Day(id: 1, intensity: 2, minutes: 6),    // вчера
+            Day(id: 2, intensity: 0, minutes: 0)     // сегодня неактивен
+        ]
+        let state = ViewState(days: days, selected: nil)
+        // Сегодня неактивен, но вчера был → серия продолжается до вчера = 2.
+        XCTAssertEqual(state.currentStreak, 2)
+    }
+
+    func test_currentStreak_todayAndYesterdayInactive_isZero() {
+        let days = [
+            Day(id: 0, intensity: 3, minutes: 11),   // позавчера активен
+            Day(id: 1, intensity: 0, minutes: 0),    // вчера неактивен
+            Day(id: 2, intensity: 0, minutes: 0)     // сегодня неактивен
+        ]
+        let state = ViewState(days: days, selected: nil)
+        // Ни сегодня, ни вчера — серия прервана.
+        XCTAssertEqual(state.currentStreak, 0)
+    }
+
+    func test_currentStreak_emptyDays_isZero() {
+        let state = ViewState(days: [], selected: nil)
+        XCTAssertEqual(state.currentStreak, 0)
     }
 
     func test_currentStreak_allInactive_isZero() {
