@@ -1,0 +1,1684 @@
+{
+  "id": "pack_sound_detective_v1",
+  "soundTarget": "фонематика",
+  "group": "фонематика",
+  "version": 1,
+  "description": "F2-009 «Звуковой детектив». Позиционный фонематический анализ: где в слове живёт целевой звук — начало / середина / конец / нет вовсе. Своя схема (как pack_phonemic_analysis.json). Разметка sounds — звуковая (оглушение в конце, без ь как отдельного звука). Все imageAsset проверены по word_manifest.json. Уровни: binary (начало/конец, 5+), ternary (3 зоны, 6+), withAbsent (4 зоны, 7+). Методика: Ткаченко, Каше, Филичева-Чевелёва.",
+  "roundsPerSession": 10,
+  "levels": {
+    "binary": {
+      "zones": [
+        "start",
+        "end"
+      ],
+      "minAge": 5
+    },
+    "ternary": {
+      "zones": [
+        "start",
+        "middle",
+        "end"
+      ],
+      "minAge": 6
+    },
+    "withAbsent": {
+      "zones": [
+        "start",
+        "middle",
+        "end",
+        "absent"
+      ],
+      "minAge": 7
+    }
+  },
+  "items": [
+    {
+      "id": "det-s-sok",
+      "word": "сок",
+      "imageAsset": "word_sok",
+      "targetSound": "С",
+      "soundFamily": "свистящие",
+      "position": "start",
+      "sounds": [
+        "с",
+        "о",
+        "к"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-s-sup",
+      "word": "суп",
+      "imageAsset": "word_sup",
+      "targetSound": "С",
+      "soundFamily": "свистящие",
+      "position": "start",
+      "sounds": [
+        "с",
+        "у",
+        "п"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-s-sani",
+      "word": "сани",
+      "imageAsset": "word_sani",
+      "targetSound": "С",
+      "soundFamily": "свистящие",
+      "position": "start",
+      "sounds": [
+        "с",
+        "а",
+        "н",
+        "и"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-s-sova",
+      "word": "сова",
+      "imageAsset": "word_sova",
+      "targetSound": "С",
+      "soundFamily": "свистящие",
+      "position": "start",
+      "sounds": [
+        "с",
+        "а",
+        "в",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-s-som",
+      "word": "сом",
+      "imageAsset": "word_som",
+      "targetSound": "С",
+      "soundFamily": "свистящие",
+      "position": "start",
+      "sounds": [
+        "с",
+        "о",
+        "м"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-s-osa-mid",
+      "word": "лиса",
+      "imageAsset": "word_fox",
+      "targetSound": "С",
+      "soundFamily": "свистящие",
+      "position": "middle",
+      "sounds": [
+        "л",
+        "и",
+        "с",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-s-kosa",
+      "word": "коса",
+      "imageAsset": "word_kosa",
+      "targetSound": "С",
+      "soundFamily": "свистящие",
+      "position": "middle",
+      "sounds": [
+        "к",
+        "о",
+        "с",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-s-vesy",
+      "word": "весы",
+      "imageAsset": "word_vesy",
+      "targetSound": "С",
+      "soundFamily": "свистящие",
+      "position": "middle",
+      "sounds": [
+        "в",
+        "е",
+        "с",
+        "ы"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-s-busy",
+      "word": "бусы",
+      "imageAsset": "word_busy",
+      "targetSound": "С",
+      "soundFamily": "свистящие",
+      "position": "middle",
+      "sounds": [
+        "б",
+        "у",
+        "с",
+        "ы"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-s-nos",
+      "word": "нос",
+      "imageAsset": "word_nos",
+      "targetSound": "С",
+      "soundFamily": "свистящие",
+      "position": "end",
+      "sounds": [
+        "н",
+        "о",
+        "с"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-s-les",
+      "word": "лес",
+      "imageAsset": "word_les",
+      "targetSound": "С",
+      "soundFamily": "свистящие",
+      "position": "end",
+      "sounds": [
+        "л",
+        "е",
+        "с"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-s-kvas",
+      "word": "квас",
+      "imageAsset": "word_kvas",
+      "targetSound": "С",
+      "soundFamily": "свистящие",
+      "position": "end",
+      "sounds": [
+        "к",
+        "в",
+        "а",
+        "с"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-s-ananas",
+      "word": "ананас",
+      "imageAsset": "word_ananas",
+      "targetSound": "С",
+      "soundFamily": "свистящие",
+      "position": "end",
+      "sounds": [
+        "а",
+        "н",
+        "а",
+        "н",
+        "а",
+        "с"
+      ],
+      "difficulty": 3,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-z-zub",
+      "word": "зуб",
+      "imageAsset": "word_zub",
+      "targetSound": "З",
+      "soundFamily": "свистящие",
+      "position": "start",
+      "sounds": [
+        "з",
+        "у",
+        "п"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-z-zamok",
+      "word": "замок",
+      "imageAsset": "word_zamok",
+      "targetSound": "З",
+      "soundFamily": "свистящие",
+      "position": "start",
+      "sounds": [
+        "з",
+        "а",
+        "м",
+        "о",
+        "к"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-z-zont",
+      "word": "зонт",
+      "imageAsset": "word_umbrella",
+      "targetSound": "З",
+      "soundFamily": "свистящие",
+      "position": "start",
+      "sounds": [
+        "з",
+        "о",
+        "н",
+        "т"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-z-koza",
+      "word": "коза",
+      "imageAsset": "word_goat",
+      "targetSound": "З",
+      "soundFamily": "свистящие",
+      "position": "middle",
+      "sounds": [
+        "к",
+        "о",
+        "з",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-z-vaza",
+      "word": "ваза",
+      "imageAsset": "word_vaza",
+      "targetSound": "З",
+      "soundFamily": "свистящие",
+      "position": "middle",
+      "sounds": [
+        "в",
+        "а",
+        "з",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-z-roza",
+      "word": "роза",
+      "imageAsset": "word_rose",
+      "targetSound": "З",
+      "soundFamily": "свистящие",
+      "position": "middle",
+      "sounds": [
+        "р",
+        "о",
+        "з",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-z-glaza",
+      "word": "глаза",
+      "imageAsset": "word_glaza",
+      "targetSound": "З",
+      "soundFamily": "свистящие",
+      "position": "middle",
+      "sounds": [
+        "г",
+        "л",
+        "а",
+        "з",
+        "а"
+      ],
+      "difficulty": 3,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-z-gnezdo",
+      "word": "гнездо",
+      "imageAsset": "word_gnezdo",
+      "targetSound": "З",
+      "soundFamily": "свистящие",
+      "position": "middle",
+      "sounds": [
+        "г",
+        "н",
+        "е",
+        "з",
+        "д",
+        "о"
+      ],
+      "difficulty": 3,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-z-arbuz",
+      "word": "арбуз",
+      "imageAsset": "word_arbuz",
+      "targetSound": "З",
+      "soundFamily": "свистящие",
+      "position": "end",
+      "sounds": [
+        "а",
+        "р",
+        "б",
+        "у",
+        "с"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-z-zal",
+      "word": "зал",
+      "imageAsset": "word_zal",
+      "targetSound": "З",
+      "soundFamily": "свистящие",
+      "position": "start",
+      "sounds": [
+        "з",
+        "а",
+        "л"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-z-zima",
+      "word": "зима",
+      "imageAsset": "word_zima",
+      "targetSound": "З",
+      "soundFamily": "свистящие",
+      "position": "start",
+      "sounds": [
+        "з",
+        "и",
+        "м",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-z-vokzal",
+      "word": "заяц",
+      "imageAsset": "word_hare",
+      "targetSound": "З",
+      "soundFamily": "свистящие",
+      "position": "start",
+      "sounds": [
+        "з",
+        "а",
+        "й",
+        "а",
+        "ц"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-ts-tsaplya",
+      "word": "цапля",
+      "imageAsset": "word_tsaplya",
+      "targetSound": "Ц",
+      "soundFamily": "свистящие",
+      "position": "start",
+      "sounds": [
+        "ц",
+        "а",
+        "п",
+        "л",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-ts-tsvetok",
+      "word": "цветок",
+      "imageAsset": "word_tsvetok",
+      "targetSound": "Ц",
+      "soundFamily": "свистящие",
+      "position": "start",
+      "sounds": [
+        "ц",
+        "в",
+        "е",
+        "т",
+        "о",
+        "к"
+      ],
+      "difficulty": 3,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-ts-ovtsa",
+      "word": "овца",
+      "imageAsset": "word_ovtsa",
+      "targetSound": "Ц",
+      "soundFamily": "свистящие",
+      "position": "middle",
+      "sounds": [
+        "о",
+        "в",
+        "ц",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-ts-koltso",
+      "word": "кольцо",
+      "imageAsset": "word_koltso",
+      "targetSound": "Ц",
+      "soundFamily": "свистящие",
+      "position": "middle",
+      "sounds": [
+        "к",
+        "о",
+        "л",
+        "ц",
+        "о"
+      ],
+      "difficulty": 3,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-ts-solntse",
+      "word": "солнце",
+      "imageAsset": "word_solntse",
+      "targetSound": "Ц",
+      "soundFamily": "свистящие",
+      "position": "middle",
+      "sounds": [
+        "с",
+        "о",
+        "н",
+        "ц",
+        "э"
+      ],
+      "difficulty": 3,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-ts-zayats",
+      "word": "заяц",
+      "imageAsset": "word_hare",
+      "targetSound": "Ц",
+      "soundFamily": "свистящие",
+      "position": "end",
+      "sounds": [
+        "з",
+        "а",
+        "й",
+        "а",
+        "ц"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-ts-ogurets",
+      "word": "огурец",
+      "imageAsset": "word_ogurets",
+      "targetSound": "Ц",
+      "soundFamily": "свистящие",
+      "position": "end",
+      "sounds": [
+        "а",
+        "г",
+        "у",
+        "р",
+        "е",
+        "ц"
+      ],
+      "difficulty": 3,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-sh-shapka",
+      "word": "шапка",
+      "imageAsset": "word_hat",
+      "targetSound": "Ш",
+      "soundFamily": "шипящие",
+      "position": "start",
+      "sounds": [
+        "ш",
+        "а",
+        "п",
+        "к",
+        "а"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-sh-shuba",
+      "word": "шуба",
+      "imageAsset": "word_shuba",
+      "targetSound": "Ш",
+      "soundFamily": "шипящие",
+      "position": "start",
+      "sounds": [
+        "ш",
+        "у",
+        "б",
+        "а"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-sh-shar",
+      "word": "шар",
+      "imageAsset": "word_shar",
+      "targetSound": "Ш",
+      "soundFamily": "шипящие",
+      "position": "start",
+      "sounds": [
+        "ш",
+        "а",
+        "р"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-sh-shkaf",
+      "word": "шкаф",
+      "imageAsset": "word_shkaf",
+      "targetSound": "Ш",
+      "soundFamily": "шипящие",
+      "position": "start",
+      "sounds": [
+        "ш",
+        "к",
+        "а",
+        "ф"
+      ],
+      "difficulty": 2,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-sh-mashina",
+      "word": "машина",
+      "imageAsset": "word_car",
+      "targetSound": "Ш",
+      "soundFamily": "шипящие",
+      "position": "middle",
+      "sounds": [
+        "м",
+        "а",
+        "ш",
+        "ы",
+        "н",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-sh-koshka",
+      "word": "кошка",
+      "imageAsset": "word_cat",
+      "targetSound": "Ш",
+      "soundFamily": "шипящие",
+      "position": "middle",
+      "sounds": [
+        "к",
+        "о",
+        "ш",
+        "к",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-sh-mishka",
+      "word": "мишка",
+      "imageAsset": "word_bear",
+      "targetSound": "Ш",
+      "soundFamily": "шипящие",
+      "position": "middle",
+      "sounds": [
+        "м",
+        "и",
+        "ш",
+        "к",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-sh-landysh",
+      "word": "ландыш",
+      "imageAsset": "word_landysh",
+      "targetSound": "Ш",
+      "soundFamily": "шипящие",
+      "position": "end",
+      "sounds": [
+        "л",
+        "а",
+        "н",
+        "д",
+        "ы",
+        "ш"
+      ],
+      "difficulty": 3,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-sh-kamysh",
+      "word": "камыш",
+      "imageAsset": "word_kamysh",
+      "targetSound": "Ш",
+      "soundFamily": "шипящие",
+      "position": "end",
+      "sounds": [
+        "к",
+        "а",
+        "м",
+        "ы",
+        "ш"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-sh-karandash",
+      "word": "карандаш",
+      "imageAsset": "word_pencil",
+      "targetSound": "Ш",
+      "soundFamily": "шипящие",
+      "position": "end",
+      "sounds": [
+        "к",
+        "а",
+        "р",
+        "а",
+        "н",
+        "д",
+        "а",
+        "ш"
+      ],
+      "difficulty": 3,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-sh-mysh",
+      "word": "мышь",
+      "imageAsset": "word_mysh",
+      "targetSound": "Ш",
+      "soundFamily": "шипящие",
+      "position": "end",
+      "sounds": [
+        "м",
+        "ы",
+        "ш"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-sh-malysh",
+      "word": "малыш",
+      "imageAsset": "word_malysh",
+      "targetSound": "Ш",
+      "soundFamily": "шипящие",
+      "position": "end",
+      "sounds": [
+        "м",
+        "а",
+        "л",
+        "ы",
+        "ш"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-zh-zhuk",
+      "word": "жук",
+      "imageAsset": "word_beetle",
+      "targetSound": "Ж",
+      "soundFamily": "шипящие",
+      "position": "start",
+      "sounds": [
+        "ж",
+        "у",
+        "к"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-zh-zhaba",
+      "word": "жаба",
+      "imageAsset": "word_zhaba",
+      "targetSound": "Ж",
+      "soundFamily": "шипящие",
+      "position": "start",
+      "sounds": [
+        "ж",
+        "а",
+        "б",
+        "а"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-zh-zhiraf",
+      "word": "жираф",
+      "imageAsset": "word_giraffe",
+      "targetSound": "Ж",
+      "soundFamily": "шипящие",
+      "position": "start",
+      "sounds": [
+        "ж",
+        "ы",
+        "р",
+        "а",
+        "ф"
+      ],
+      "difficulty": 2,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-zh-luzha",
+      "word": "лужа",
+      "imageAsset": "word_luzha",
+      "targetSound": "Ж",
+      "soundFamily": "шипящие",
+      "position": "middle",
+      "sounds": [
+        "л",
+        "у",
+        "ж",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-zh-nozhi",
+      "word": "ножи",
+      "imageAsset": "word_nozhi",
+      "targetSound": "Ж",
+      "soundFamily": "шипящие",
+      "position": "middle",
+      "sounds": [
+        "н",
+        "о",
+        "ж",
+        "ы"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-zh-ezhi",
+      "word": "ежи",
+      "imageAsset": "word_ezhi",
+      "targetSound": "Ж",
+      "soundFamily": "шипящие",
+      "position": "middle",
+      "sounds": [
+        "е",
+        "ж",
+        "ы"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-zh-zhaket",
+      "word": "жаба",
+      "imageAsset": "word_zhaba",
+      "targetSound": "Ж",
+      "soundFamily": "шипящие",
+      "position": "start",
+      "sounds": [
+        "ж",
+        "а",
+        "б",
+        "а"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-ch-chashka",
+      "word": "чашка",
+      "imageAsset": "word_chashka",
+      "targetSound": "Ч",
+      "soundFamily": "шипящие",
+      "position": "start",
+      "sounds": [
+        "ч",
+        "а",
+        "ш",
+        "к",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-ch-chasy",
+      "word": "часы",
+      "imageAsset": "word_chasy",
+      "targetSound": "Ч",
+      "soundFamily": "шипящие",
+      "position": "start",
+      "sounds": [
+        "ч",
+        "а",
+        "с",
+        "ы"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-ch-chaynik",
+      "word": "чайник",
+      "imageAsset": "word_chaynik",
+      "targetSound": "Ч",
+      "soundFamily": "шипящие",
+      "position": "start",
+      "sounds": [
+        "ч",
+        "а",
+        "й",
+        "н",
+        "и",
+        "к"
+      ],
+      "difficulty": 2,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-ch-butterfly",
+      "word": "бабочка",
+      "imageAsset": "word_butterfly_insect",
+      "targetSound": "Ч",
+      "soundFamily": "шипящие",
+      "position": "middle",
+      "sounds": [
+        "б",
+        "а",
+        "б",
+        "о",
+        "ч",
+        "к",
+        "а"
+      ],
+      "difficulty": 3,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-ch-ruchka",
+      "word": "ручка",
+      "imageAsset": "word_pen",
+      "targetSound": "Ч",
+      "soundFamily": "шипящие",
+      "position": "middle",
+      "sounds": [
+        "р",
+        "у",
+        "ч",
+        "к",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-ch-kacheli",
+      "word": "качели",
+      "imageAsset": "word_kacheli",
+      "targetSound": "Ч",
+      "soundFamily": "шипящие",
+      "position": "middle",
+      "sounds": [
+        "к",
+        "а",
+        "ч",
+        "е",
+        "л",
+        "и"
+      ],
+      "difficulty": 3,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-ch-myach",
+      "word": "мяч",
+      "imageAsset": "word_ball",
+      "targetSound": "Ч",
+      "soundFamily": "шипящие",
+      "position": "end",
+      "sounds": [
+        "м",
+        "а",
+        "ч"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-ch-klyuch",
+      "word": "ключ",
+      "imageAsset": "word_key",
+      "targetSound": "Ч",
+      "soundFamily": "шипящие",
+      "position": "end",
+      "sounds": [
+        "к",
+        "л",
+        "у",
+        "ч"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-ch-vrach",
+      "word": "врач",
+      "imageAsset": "word_vrach",
+      "targetSound": "Ч",
+      "soundFamily": "шипящие",
+      "position": "end",
+      "sounds": [
+        "в",
+        "р",
+        "а",
+        "ч"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-shch-shchuka",
+      "word": "щука",
+      "imageAsset": "word_shchuka",
+      "targetSound": "Щ",
+      "soundFamily": "шипящие",
+      "position": "start",
+      "sounds": [
+        "щ",
+        "у",
+        "к",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-shch-shchenok",
+      "word": "щенок",
+      "imageAsset": "word_shchenok",
+      "targetSound": "Щ",
+      "soundFamily": "шипящие",
+      "position": "start",
+      "sounds": [
+        "щ",
+        "е",
+        "н",
+        "о",
+        "к"
+      ],
+      "difficulty": 2,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-shch-yashchik",
+      "word": "ящик",
+      "imageAsset": "word_yashchik_y",
+      "targetSound": "Щ",
+      "soundFamily": "шипящие",
+      "position": "middle",
+      "sounds": [
+        "й",
+        "а",
+        "щ",
+        "и",
+        "к"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-shch-kleshchi",
+      "word": "клещи",
+      "imageAsset": "word_kleshchi",
+      "targetSound": "Щ",
+      "soundFamily": "шипящие",
+      "position": "middle",
+      "sounds": [
+        "к",
+        "л",
+        "е",
+        "щ",
+        "и"
+      ],
+      "difficulty": 3,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-shch-ovoshchi",
+      "word": "овощи",
+      "imageAsset": "word_ovoshchi",
+      "targetSound": "Щ",
+      "soundFamily": "шипящие",
+      "position": "middle",
+      "sounds": [
+        "о",
+        "в",
+        "о",
+        "щ",
+        "и"
+      ],
+      "difficulty": 3,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-shch-plashch",
+      "word": "плащ",
+      "imageAsset": "word_plashch",
+      "targetSound": "Щ",
+      "soundFamily": "шипящие",
+      "position": "end",
+      "sounds": [
+        "п",
+        "л",
+        "а",
+        "щ"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-shch-leshch",
+      "word": "лещ",
+      "imageAsset": "word_leshch",
+      "targetSound": "Щ",
+      "soundFamily": "шипящие",
+      "position": "end",
+      "sounds": [
+        "л",
+        "е",
+        "щ"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-r-rak",
+      "word": "рак",
+      "imageAsset": "word_rak",
+      "targetSound": "Р",
+      "soundFamily": "соноры",
+      "position": "start",
+      "sounds": [
+        "р",
+        "а",
+        "к"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-r-ryba",
+      "word": "рыба",
+      "imageAsset": "word_ryba",
+      "targetSound": "Р",
+      "soundFamily": "соноры",
+      "position": "start",
+      "sounds": [
+        "р",
+        "ы",
+        "б",
+        "а"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-r-raketa",
+      "word": "ракета",
+      "imageAsset": "word_raketa",
+      "targetSound": "Р",
+      "soundFamily": "соноры",
+      "position": "start",
+      "sounds": [
+        "р",
+        "а",
+        "к",
+        "е",
+        "т",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-r-ruka",
+      "word": "рука",
+      "imageAsset": "word_hand",
+      "targetSound": "Р",
+      "soundFamily": "соноры",
+      "position": "start",
+      "sounds": [
+        "р",
+        "у",
+        "к",
+        "а"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-r-korova",
+      "word": "корова",
+      "imageAsset": "word_cow",
+      "targetSound": "Р",
+      "soundFamily": "соноры",
+      "position": "middle",
+      "sounds": [
+        "к",
+        "о",
+        "р",
+        "о",
+        "в",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-r-vedro",
+      "word": "ведро",
+      "imageAsset": "word_bucket",
+      "targetSound": "Р",
+      "soundFamily": "соноры",
+      "position": "middle",
+      "sounds": [
+        "в",
+        "е",
+        "д",
+        "р",
+        "о"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-r-komar",
+      "word": "комар",
+      "imageAsset": "word_komar",
+      "targetSound": "Р",
+      "soundFamily": "соноры",
+      "position": "end",
+      "sounds": [
+        "к",
+        "о",
+        "м",
+        "а",
+        "р"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-r-topor",
+      "word": "топор",
+      "imageAsset": "word_topor",
+      "targetSound": "Р",
+      "soundFamily": "соноры",
+      "position": "end",
+      "sounds": [
+        "т",
+        "о",
+        "п",
+        "о",
+        "р"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-r-zabor",
+      "word": "забор",
+      "imageAsset": "word_zabor",
+      "targetSound": "Р",
+      "soundFamily": "соноры",
+      "position": "end",
+      "sounds": [
+        "з",
+        "а",
+        "б",
+        "о",
+        "р"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-r-pomidor",
+      "word": "помидор",
+      "imageAsset": "word_pomidor",
+      "targetSound": "Р",
+      "soundFamily": "соноры",
+      "position": "end",
+      "sounds": [
+        "п",
+        "о",
+        "м",
+        "и",
+        "д",
+        "о",
+        "р"
+      ],
+      "difficulty": 3,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-r-syr",
+      "word": "сыр",
+      "imageAsset": "word_syr",
+      "targetSound": "Р",
+      "soundFamily": "соноры",
+      "position": "end",
+      "sounds": [
+        "с",
+        "ы",
+        "р"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-r-shar",
+      "word": "шар",
+      "imageAsset": "word_shar",
+      "targetSound": "Р",
+      "soundFamily": "соноры",
+      "position": "end",
+      "sounds": [
+        "ш",
+        "а",
+        "р"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-l-luk",
+      "word": "лук",
+      "imageAsset": "word_onion",
+      "targetSound": "Л",
+      "soundFamily": "соноры",
+      "position": "start",
+      "sounds": [
+        "л",
+        "у",
+        "к"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-l-lapa",
+      "word": "лапа",
+      "imageAsset": "word_lapa",
+      "targetSound": "Л",
+      "soundFamily": "соноры",
+      "position": "start",
+      "sounds": [
+        "л",
+        "а",
+        "п",
+        "а"
+      ],
+      "difficulty": 1,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-l-lampa",
+      "word": "лампа",
+      "imageAsset": "word_lamp",
+      "targetSound": "Л",
+      "soundFamily": "соноры",
+      "position": "start",
+      "sounds": [
+        "л",
+        "а",
+        "м",
+        "п",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-l-lodka",
+      "word": "лодка",
+      "imageAsset": "word_boat",
+      "targetSound": "Л",
+      "soundFamily": "соноры",
+      "position": "start",
+      "sounds": [
+        "л",
+        "о",
+        "т",
+        "к",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "binary"
+    },
+    {
+      "id": "det-l-pila",
+      "word": "пила",
+      "imageAsset": "word_pila",
+      "targetSound": "Л",
+      "soundFamily": "соноры",
+      "position": "middle",
+      "sounds": [
+        "п",
+        "и",
+        "л",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-l-yula",
+      "word": "юла",
+      "imageAsset": "word_yula",
+      "targetSound": "Л",
+      "soundFamily": "соноры",
+      "position": "middle",
+      "sounds": [
+        "й",
+        "у",
+        "л",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-l-kukla",
+      "word": "кукла",
+      "imageAsset": "word_doll",
+      "targetSound": "Л",
+      "soundFamily": "соноры",
+      "position": "middle",
+      "sounds": [
+        "к",
+        "у",
+        "к",
+        "л",
+        "а"
+      ],
+      "difficulty": 3,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-l-belka",
+      "word": "белка",
+      "imageAsset": "word_belka",
+      "targetSound": "Л",
+      "soundFamily": "соноры",
+      "position": "middle",
+      "sounds": [
+        "б",
+        "е",
+        "л",
+        "к",
+        "а"
+      ],
+      "difficulty": 3,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-l-stol",
+      "word": "стол",
+      "imageAsset": "word_stol",
+      "targetSound": "Л",
+      "soundFamily": "соноры",
+      "position": "end",
+      "sounds": [
+        "с",
+        "т",
+        "о",
+        "л"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-l-stul",
+      "word": "стул",
+      "imageAsset": "word_stul",
+      "targetSound": "Л",
+      "soundFamily": "соноры",
+      "position": "end",
+      "sounds": [
+        "с",
+        "т",
+        "у",
+        "л"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-l-dyatel",
+      "word": "дятел",
+      "imageAsset": "word_dyatel",
+      "targetSound": "Л",
+      "soundFamily": "соноры",
+      "position": "end",
+      "sounds": [
+        "д",
+        "а",
+        "т",
+        "е",
+        "л"
+      ],
+      "difficulty": 3,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-l-osa-l",
+      "word": "юла",
+      "imageAsset": "word_yula",
+      "targetSound": "Л",
+      "soundFamily": "соноры",
+      "position": "middle",
+      "sounds": [
+        "й",
+        "у",
+        "л",
+        "а"
+      ],
+      "difficulty": 2,
+      "minLevel": "ternary"
+    },
+    {
+      "id": "det-abs-s-myach",
+      "word": "мяч",
+      "imageAsset": "word_ball",
+      "targetSound": "С",
+      "soundFamily": "свистящие",
+      "position": "absent",
+      "sounds": [
+        "м",
+        "а",
+        "ч"
+      ],
+      "difficulty": 3,
+      "minLevel": "withAbsent"
+    },
+    {
+      "id": "det-abs-s-luk",
+      "word": "лук",
+      "imageAsset": "word_onion",
+      "targetSound": "С",
+      "soundFamily": "свистящие",
+      "position": "absent",
+      "sounds": [
+        "л",
+        "у",
+        "к"
+      ],
+      "difficulty": 3,
+      "minLevel": "withAbsent"
+    },
+    {
+      "id": "det-abs-sh-rak",
+      "word": "рак",
+      "imageAsset": "word_rak",
+      "targetSound": "Ш",
+      "soundFamily": "шипящие",
+      "position": "absent",
+      "sounds": [
+        "р",
+        "а",
+        "к"
+      ],
+      "difficulty": 3,
+      "minLevel": "withAbsent"
+    },
+    {
+      "id": "det-abs-sh-mak",
+      "word": "сом",
+      "imageAsset": "word_som",
+      "targetSound": "Ш",
+      "soundFamily": "шипящие",
+      "position": "absent",
+      "sounds": [
+        "с",
+        "о",
+        "м"
+      ],
+      "difficulty": 3,
+      "minLevel": "withAbsent"
+    },
+    {
+      "id": "det-abs-r-luk",
+      "word": "лук",
+      "imageAsset": "word_onion",
+      "targetSound": "Р",
+      "soundFamily": "соноры",
+      "position": "absent",
+      "sounds": [
+        "л",
+        "у",
+        "к"
+      ],
+      "difficulty": 3,
+      "minLevel": "withAbsent"
+    },
+    {
+      "id": "det-abs-r-myach",
+      "word": "мяч",
+      "imageAsset": "word_ball",
+      "targetSound": "Р",
+      "soundFamily": "соноры",
+      "position": "absent",
+      "sounds": [
+        "м",
+        "а",
+        "ч"
+      ],
+      "difficulty": 3,
+      "minLevel": "withAbsent"
+    },
+    {
+      "id": "det-abs-l-rak",
+      "word": "рак",
+      "imageAsset": "word_rak",
+      "targetSound": "Л",
+      "soundFamily": "соноры",
+      "position": "absent",
+      "sounds": [
+        "р",
+        "а",
+        "к"
+      ],
+      "difficulty": 3,
+      "minLevel": "withAbsent"
+    },
+    {
+      "id": "det-abs-l-syr",
+      "word": "сыр",
+      "imageAsset": "word_syr",
+      "targetSound": "Л",
+      "soundFamily": "соноры",
+      "position": "absent",
+      "sounds": [
+        "с",
+        "ы",
+        "р"
+      ],
+      "difficulty": 3,
+      "minLevel": "withAbsent"
+    },
+    {
+      "id": "det-abs-z-myach",
+      "word": "мяч",
+      "imageAsset": "word_ball",
+      "targetSound": "З",
+      "soundFamily": "свистящие",
+      "position": "absent",
+      "sounds": [
+        "м",
+        "а",
+        "ч"
+      ],
+      "difficulty": 3,
+      "minLevel": "withAbsent"
+    },
+    {
+      "id": "det-abs-ch-luk",
+      "word": "лук",
+      "imageAsset": "word_onion",
+      "targetSound": "Ч",
+      "soundFamily": "шипящие",
+      "position": "absent",
+      "sounds": [
+        "л",
+        "у",
+        "к"
+      ],
+      "difficulty": 3,
+      "minLevel": "withAbsent"
+    }
+  ]
+}

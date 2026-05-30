@@ -205,6 +205,13 @@ enum AppRoute: Hashable {
     case specialistCaseNotes(childId: String, specialistId: String)
     case specialistQuickAssessment(childId: String, specialistId: String)
 
+    // MARK: - Wave 2 mechanics (F2-009 Звуковой детектив)
+
+    /// F2-009 (kid): «Звуковой детектив» — позиционный фонематический анализ.
+    /// Ребёнок ищет, где в слове прячется целевой звук (начало / середина /
+    /// конец / нет). Уровни binary → ternary → withAbsent.
+    case soundDetective(childId: String)
+
     // MARK: - v32 Batch D wave 5 (17 lightweight modules)
 
     case soundJournalKid(childId: String)
@@ -994,6 +1001,12 @@ struct AppCoordinatorView: View {
             SpecialistQuickAssessmentView(childId: childId, specialistId: specialistId)
                 .environment(\.circuitContext, .specialist)
 
+        // MARK: - Wave 2 mechanics (F2-009 Звуковой детектив)
+
+        case .soundDetective(let childId):
+            SoundDetectiveView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
         // MARK: - v32 Batch D wave 5 (17 lightweight modules)
 
         case .soundJournalKid(let childId):
@@ -1571,6 +1584,10 @@ extension AppCoordinatorView {
             return .specialistCaseNotes(childId: previewChild, specialistId: previewParent)
         case "specialistQuickAssessment", "quickAssessment", "specialistAssess":
             return .specialistQuickAssessment(childId: previewChild, specialistId: previewParent)
+
+        // MARK: Wave 2 mechanics — F2-009 Звуковой детектив
+        case "soundDetective", "detectiveSound", "phonemeDetective":
+            return .soundDetective(childId: previewChild)
 
         // MARK: v32 Batch D wave 5 (17 lightweight modules)
         case "soundJournalKid", "soundJournal", "kidJournal":

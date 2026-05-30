@@ -1042,6 +1042,17 @@ extension ChildHomeView {
             router?.routeToPhonemicListening(childId: childId)
         }
 
+        // F2-009 (Wave 2) — Sound Detective «Звуковой детектив»
+        // (позиционный фонематический анализ: начало / середина / конец / нет).
+        ChildHomeV25EntryCard(
+            titleKey: "soundDetective.entry.title",
+            hintKey: "soundDetective.entry.hint",
+            iconName: "magnifyingglass",
+            accent: ColorTokens.Brand.sky
+        ) {
+            router?.routeToSoundDetective(childId: childId)
+        }
+
         // v29 Фаза 8 Ф.6 — Speech Tempo «Темп-дорожка».
         ChildHomeV25EntryCard(
             titleKey: "speechTempo.entry.title",

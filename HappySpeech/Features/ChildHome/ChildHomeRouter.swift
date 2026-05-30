@@ -38,6 +38,8 @@ protocol ChildHomeRoutingLogic {
     // v31 Wave F
     func routeToObjectDescriptionMap(childId: String)
     func routeToLogorhythmics(childId: String)
+    // Wave 2 mechanics
+    func routeToSoundDetective(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -225,5 +227,10 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     /// v31 Wave F Ф.11 — «Билингвальный режим» (RU + BE/EN словарь + practice).
     func routeToBilingualMode(childId: String) {
         coordinator?.navigate(to: .bilingualMode(childId: childId))
+    }
+
+    /// F2-009 — «Звуковой детектив» (позиционный фонематический анализ).
+    func routeToSoundDetective(childId: String) {
+        coordinator?.navigate(to: .soundDetective(childId: childId))
     }
 }

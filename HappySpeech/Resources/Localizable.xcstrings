@@ -58192,6 +58192,369 @@
           }
         }
       }
+    },
+    "soundDetective.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуковой детектив"
+          }
+        }
+      }
+    },
+    "soundDetective.entry.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуковой детектив"
+          }
+        }
+      }
+    },
+    "soundDetective.entry.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ищем, где спрятался звук: в начале, серединке или в конце слова"
+          }
+        }
+      }
+    },
+    "soundDetective.close.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Закрыть игру"
+          }
+        }
+      }
+    },
+    "soundDetective.loading": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готовим улики…"
+          }
+        }
+      }
+    },
+    "soundDetective.progress": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Улика %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "soundDetective.prompt": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Где спрятался звук «%@» — в начале, в серединке или в конце?"
+          }
+        }
+      }
+    },
+    "soundDetective.round.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Улика: %1$@. Ищем звук %2$@."
+          }
+        }
+      }
+    },
+    "soundDetective.clue.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Улика: %@"
+          }
+        }
+      }
+    },
+    "soundDetective.replay": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ещё разок"
+          }
+        }
+      }
+    },
+    "soundDetective.replay.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Послушать слово ещё раз"
+          }
+        }
+      }
+    },
+    "soundDetective.magnifier.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поставь лупу в нужное окошко"
+          }
+        }
+      }
+    },
+    "soundDetective.magnifier.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Лупа детектива. Выбери окошко, где спрятался звук."
+          }
+        }
+      }
+    },
+    "soundDetective.zone.start": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "в начале"
+          }
+        }
+      }
+    },
+    "soundDetective.zone.middle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "в серединке"
+          }
+        }
+      }
+    },
+    "soundDetective.zone.end": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "в конце"
+          }
+        }
+      }
+    },
+    "soundDetective.zone.absent": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "звука нет"
+          }
+        }
+      }
+    },
+    "soundDetective.zone.start.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "в начале слова, кнопка"
+          }
+        }
+      }
+    },
+    "soundDetective.zone.middle.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "в серединке слова, кнопка"
+          }
+        }
+      }
+    },
+    "soundDetective.zone.end.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "в конце слова, кнопка"
+          }
+        }
+      }
+    },
+    "soundDetective.zone.absent.a11y": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "этого звука в слове нет, кнопка"
+          }
+        }
+      }
+    },
+    "soundDetective.zone.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поставь сюда лупу, если звук прячется здесь"
+          }
+        }
+      }
+    },
+    "soundDetective.feedback.hit": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Нашли! Звук прячется %@."
+          }
+        }
+      }
+    },
+    "soundDetective.feedback.almost": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Почти-почти! Послушай ещё разок, где звук слышен сильнее."
+          }
+        }
+      }
+    },
+    "soundDetective.feedback.retry": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звук любит прятаться. Смотри: он %@."
+          }
+        }
+      }
+    },
+    "soundDetective.encourage.great": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отличная работа, детектив! Все улики найдены."
+          }
+        }
+      }
+    },
+    "soundDetective.encourage.good": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Хорошо ищешь! В следующий раз поймаем ещё больше звуков."
+          }
+        }
+      }
+    },
+    "soundDetective.encourage.keepGoing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Звуки прячутся хитро — будем тренироваться вместе."
+          }
+        }
+      }
+    },
+    "soundDetective.summary.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дело раскрыто!"
+          }
+        }
+      }
+    },
+    "soundDetective.summary.score": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Найдено улик: %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "soundDetective.summary.again": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сыграть ещё"
+          }
+        }
+      }
+    },
+    "soundDetective.summary.again.hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начать новое расследование"
+          }
+        }
+      }
+    },
+    "soundDetective.summary.done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Готово"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
