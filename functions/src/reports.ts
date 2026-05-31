@@ -1,6 +1,6 @@
 import * as admin from "firebase-admin";
 
-import { STAGE_PASS_THRESHOLD } from "./constants";
+import { STAGE_PASS_THRESHOLD, STAGES } from "./constants";
 import type {
   BuiltReport,
   DailySeriesEntry,
@@ -8,6 +8,8 @@ import type {
   QueryDocumentSnapshot,
   ReportPeriod,
   SoundBreakdownEntry,
+  SoundStageRow,
+  StageCell,
 } from "./types";
 
 interface SessionDataWithDate {
@@ -119,9 +121,71 @@ export function buildSoundBreakdown(
   }));
 }
 
+interface ProgressDocData {
+  soundTarget?: string;
+  overallRate?: number;
+  totalSessions?: number;
+  totalMinutes?: number;
+  stageProgress?: Record<string, { done?: boolean; rate?: number; attempts?: number }>;
+}
+
+type ProgressDocLike = QueryDocumentSnapshot | { id?: string; data: () => ProgressDocData };
+
+/**
+ * Строит таблицу «звук × этапы коррекции» из persisted /progress docs.
+ * Чистая функция (документы передаются снаружи) — тестируется без сети.
+ */
+export function buildStageBreakdown(
+  progressDocs: ReadonlyArray<ProgressDocLike>,
+): SoundStageRow[] {
+  const rows: SoundStageRow[] = [];
+
+  for (const doc of progressDocs) {
+    const data = doc.data() as ProgressDocData;
+    const sound = typeof data.soundTarget === "string" && data.soundTarget.length > 0 ?
+      data.soundTarget :
+      ((doc as { id?: string }).id ?? "—");
+
+    const sp = data.stageProgress ?? {};
+    const stages: StageCell[] = STAGES.map((stage) => {
+      const cell = sp[stage] ?? {};
+      return {
+        stage,
+        done: cell.done === true,
+        rate: typeof cell.rate === "number" ? Number(cell.rate.toFixed(3)) : 0,
+        attempts: typeof cell.attempts === "number" ? cell.attempts : 0,
+      };
+    });
+
+    // Текущий этап — первый незавершённый с попытками, иначе последний с попытками.
+    let currentStage: string | null = null;
+    for (const cell of stages) {
+      if (cell.attempts > 0) {
+        currentStage = cell.stage;
+        if (!cell.done) break;
+      }
+    }
+
+    rows.push({
+      soundTarget: sound,
+      overallRate: typeof data.overallRate === "number" ?
+        Number(data.overallRate.toFixed(3)) :
+        0,
+      totalSessions: typeof data.totalSessions === "number" ? data.totalSessions : 0,
+      totalMinutes: typeof data.totalMinutes === "number" ? data.totalMinutes : 0,
+      currentStage,
+      stages,
+    });
+  }
+
+  rows.sort((a, b) => (a.soundTarget < b.soundTarget ? -1 : 1));
+  return rows;
+}
+
 /** Produce rule-based recommendations (no external LLM). */
 export function buildRecommendations(
   soundBreakdown: ReadonlyArray<SoundBreakdownEntry>,
+  stageBreakdown: ReadonlyArray<SoundStageRow> = [],
 ): string[] {
   const recs: string[] = [];
   if (soundBreakdown.length === 0) {
@@ -129,15 +193,22 @@ export function buildRecommendations(
     return recs;
   }
 
+  const stageBySound = new Map<string, SoundStageRow>();
+  for (const row of stageBreakdown) stageBySound.set(row.soundTarget, row);
+
   const sortedAsc = [...soundBreakdown].sort((a, b) => a.accuracy - b.accuracy);
   const weakest = sortedAsc[0];
   const sortedDesc = [...soundBreakdown].sort((a, b) => b.accuracy - a.accuracy);
   const strongest = sortedDesc[0];
 
   if (weakest && weakest.accuracy < STAGE_PASS_THRESHOLD) {
+    const stage = stageBySound.get(weakest.soundTarget)?.currentStage;
+    const stageHint = stage ?
+      ` Сейчас ребёнок на этапе «${stage}» — задержитесь здесь, не усложняйте материал.` :
+      " Сделайте короткую артикуляционную разминку и повторите слоги перед играми.";
     recs.push(
-      `Звук "${weakest.soundTarget}" пока сложен (точность ${(weakest.accuracy * 100).toFixed(0)}%). ` +
-      "Сделайте короткую артикуляционную разминку и повторите слоги перед играми.",
+      `Звук "${weakest.soundTarget}" пока сложен (точность ${(weakest.accuracy * 100).toFixed(0)}%).` +
+      stageHint,
     );
   }
 
@@ -173,7 +244,12 @@ export async function buildReport(
     sessionsRef.where("date", ">=", cutoff) :
     sessionsRef;
 
-  const snap = await query.get();
+  const progressRef = db
+    .collection("users").doc(userId)
+    .collection("children").doc(childId)
+    .collection("progress");
+
+  const [snap, progressSnap] = await Promise.all([query.get(), progressRef.get()]);
   const sessions = snap.docs;
 
   const totalSessions = sessions.length;
@@ -193,6 +269,7 @@ export async function buildReport(
 
   const dailySeries = buildDailySeries(sessions);
   const soundBreakdown = buildSoundBreakdown(sessions);
+  const stageBreakdown = buildStageBreakdown(progressSnap.docs);
 
   return {
     summary: {
@@ -208,6 +285,7 @@ export async function buildReport(
       daily: dailySeries,
       perSound: soundBreakdown,
     },
-    recommendations: buildRecommendations(soundBreakdown),
+    stageBreakdown,
+    recommendations: buildRecommendations(soundBreakdown, stageBreakdown),
   };
 }

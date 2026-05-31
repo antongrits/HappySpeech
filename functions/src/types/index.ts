@@ -76,6 +76,27 @@ export interface SoundBreakdownEntry {
   accuracy: number;
 }
 
+/** Состояние одного этапа коррекции для специалистской таблицы звук×этап. */
+export interface StageCell {
+  stage: string;
+  done: boolean;
+  rate: number;
+  attempts: number;
+}
+
+/** Строка таблицы «звук × этапы» для отчёта специалисту. */
+export interface SoundStageRow {
+  soundTarget: string;
+  /** Совокупная точность по звуку (из /progress). */
+  overallRate: number;
+  totalSessions: number;
+  totalMinutes: number;
+  /** Самый продвинутый незавершённый этап (или последний пройденный). */
+  currentStage: string | null;
+  /** Все этапы в каноническом порядке. */
+  stages: StageCell[];
+}
+
 export interface ReportSummary {
   period: ReportPeriod;
   totalSessions: number;
@@ -94,6 +115,8 @@ export interface ReportChartsData {
 export interface BuiltReport {
   summary: ReportSummary;
   chartsData: ReportChartsData;
+  /** Таблица «звук × этапы коррекции» из /progress — для специалиста. */
+  stageBreakdown: SoundStageRow[];
   recommendations: string[];
 }
 

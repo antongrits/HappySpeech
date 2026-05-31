@@ -6,6 +6,7 @@ const {
   weekBoundaries,
   aggregateSessions,
   buildRecommendations,
+  currentStageForSound,
 } = require('../lib/neurolinguistSummary');
 
 function fakeDoc(data) {
@@ -84,6 +85,38 @@ test('buildRecommendations: fatigue triggers reduce-duration tip', () => {
   };
   const recs = buildRecommendations(sp, 5, 3); // 60% fatigue
   assert.ok(recs.some((r) => r.includes('усталость')));
+});
+
+test('currentStageForSound: returns first not-done stage with attempts', () => {
+  const sp = {
+    prep: { done: true, rate: 0.9, attempts: 30 },
+    isolated: { done: true, rate: 0.9, attempts: 40 },
+    syllable: { done: false, rate: 0.5, attempts: 20 },
+  };
+  assert.equal(currentStageForSound(sp), 'syllable');
+});
+
+test('currentStageForSound: undefined → null', () => {
+  assert.equal(currentStageForSound(undefined), null);
+});
+
+test('buildRecommendations: stage-aware back step for weak sound', () => {
+  const sp = { 'Р': { sessions: 3, attempts: 10, correct: 4, successRate: 0.4 } };
+  const stagesBySound = {
+    'Р': { syllable: { done: false, rate: 0.4, attempts: 15 } },
+  };
+  const recs = buildRecommendations(sp, 6, 0, { stagesBySound });
+  // back step for 'syllable' is "вернитесь к изолированному произнесению звука"
+  assert.ok(recs.some((r) => r.includes('изолированному')));
+});
+
+test('buildRecommendations: week-over-week improvement noted', () => {
+  const sp = { 'Л': { sessions: 4, attempts: 40, correct: 36, successRate: 0.9 } };
+  const recs = buildRecommendations(sp, 5, 0, {
+    prevWeekSuccessRate: 0.7,
+    weekSuccessRate: 0.9,
+  });
+  assert.ok(recs.some((r) => r.includes('прогресс') || r.includes('выросла')));
 });
 
 test('buildRecommendations: caps at 3 items', () => {

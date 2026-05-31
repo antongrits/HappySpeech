@@ -131,10 +131,72 @@ export function aggregateSessions(
   };
 }
 
+/**
+ * Карта «следующего шага» по этапам коррекции (методология русской
+ * логопедии: подготовка → изолированный → слоги → слова → фразы → …).
+ * Используется, чтобы рекомендация ссылалась на реальный этап ребёнка,
+ * а не на абстрактные «слоги».
+ */
+const STAGE_NEXT_STEP: Readonly<Record<string, string>> = {
+  prep: "переходите к вызыванию изолированного звука",
+  isolated: "закрепляйте звук в слогах (прямых и обратных)",
+  syllable: "вводите слова с целевым звуком в начале",
+  wordInit: "отрабатывайте звук в середине и в конце слов",
+  wordMed: "отрабатывайте звук в конце слов и в стечениях согласных",
+  wordFinal: "переходите к коротким фразам",
+  phrase: "стройте предложения с целевым звуком",
+  sentence: "практикуйте звук в коротких рассказах",
+  story: "переходите к дифференциации со смешиваемым звуком",
+  diff: "закрепляйте автоматизацию в свободной речи",
+};
+
+const STAGE_BACK_STEP: Readonly<Record<string, string>> = {
+  isolated: "вернитесь к артикуляционной разминке",
+  syllable: "вернитесь к изолированному произнесению звука",
+  wordInit: "вернитесь к слогам",
+  wordMed: "повторите слова со звуком в начале",
+  wordFinal: "повторите слова со звуком в середине",
+  phrase: "вернитесь к отдельным словам",
+  sentence: "вернитесь к коротким фразам",
+  story: "вернитесь к предложениям",
+  diff: "повторите рассказы на каждый из звуков отдельно",
+};
+
+/**
+ * Текущий этап ребёнка по звуку — самый продвинутый этап с ненулевыми
+ * попытками среди ещё-не-завершённых. Возвращает null, если данных нет.
+ */
+export function currentStageForSound(
+  stageProgress: Record<string, { done: boolean; rate: number; attempts: number }> | undefined,
+): string | null {
+  if (!stageProgress) return null;
+  const order = [
+    "prep", "isolated", "syllable", "wordInit", "wordMed",
+    "wordFinal", "phrase", "sentence", "story", "diff",
+  ];
+  let current: string | null = null;
+  for (const stage of order) {
+    const s = stageProgress[stage];
+    if (s && s.attempts > 0) {
+      current = stage; // most advanced touched stage
+      if (!s.done) break; // остановиться на первом незакрытом
+    }
+  }
+  return current;
+}
+
 export function buildRecommendations(
   soundProgress: Record<string, SoundProgressSnapshot>,
   totalSessions: number,
   fatigueCount: number,
+  options: {
+    /** stageProgress по звукам из /progress/{sound} (для этап-aware советов). */
+    stagesBySound?: Record<string, Record<string, { done: boolean; rate: number; attempts: number }>>;
+    /** avgSuccessRate прошлой недели — для динамики неделя-к-неделе. */
+    prevWeekSuccessRate?: number | null;
+    /** avgSuccessRate текущей недели — для динамики. */
+    weekSuccessRate?: number | null;
+  } = {},
 ): string[] {
   const recs: string[] = [];
 
@@ -146,30 +208,59 @@ export function buildRecommendations(
     ];
   }
 
-  // Weakest sound (lowest success rate среди звуков с ≥2 сессиями).
+  const stagesBySound = options.stagesBySound ?? {};
+
+  // Weakest sound (lowest success rate среди звуков с ≥2 сессиями) — с привязкой
+  // к реальному этапу коррекции ребёнка.
   const eligible = Object.entries(soundProgress)
     .filter(([, snap]) => snap.sessions >= 2);
   if (eligible.length > 0) {
     eligible.sort((a, b) => a[1].successRate - b[1].successRate);
     const [weakSound, weakSnap] = eligible[0];
     if (weakSnap.successRate < 0.6) {
+      const stage = currentStageForSound(stagesBySound[weakSound]);
+      const backStep = stage ? STAGE_BACK_STEP[stage] : null;
+      const tail = backStep ?
+        ` На следующей неделе ${backStep} — закрепите базу, прежде чем усложнять.` :
+        " Вернитесь на шаг назад по этапам и закрепите базу.";
       recs.push(
-        `Звук «${weakSound}» даётся сложнее всего (${Math.round(weakSnap.successRate * 100)}%). ` +
-        "Вернитесь к этапу слогов на следующей неделе.",
+        `Звук «${weakSound}» даётся сложнее всего (${Math.round(weakSnap.successRate * 100)}%).` +
+        tail,
       );
     }
   }
 
-  // Strong sound (для позитивного фидбека).
+  // Strong sound (для позитивного фидбека) — со ссылкой на следующий этап.
   const strong = Object.entries(soundProgress)
     .filter(([, s]) => s.sessions >= 2 && s.successRate >= 0.8);
   if (strong.length > 0) {
     const [strongSound] = strong.sort(
       (a, b) => b[1].successRate - a[1].successRate,
     )[0];
-    recs.push(
-      `Отлично закреплён звук «${strongSound}» — можно переходить к фразам и предложениям.`,
-    );
+    const stage = currentStageForSound(stagesBySound[strongSound]);
+    const nextStep = stage ? STAGE_NEXT_STEP[stage] : null;
+    const tail = nextStep ?
+      ` — можно ${nextStep}.` :
+      " — можно переходить к фразам и предложениям.";
+    recs.push(`Отлично закреплён звук «${strongSound}»${tail}`);
+  }
+
+  // Динамика неделя-к-неделе.
+  const prev = options.prevWeekSuccessRate;
+  const cur = options.weekSuccessRate;
+  if (typeof prev === "number" && prev > 0 && typeof cur === "number") {
+    const delta = cur - prev;
+    if (delta >= 0.05) {
+      recs.push(
+        `Заметный прогресс: средняя точность выросла с ${Math.round(prev * 100)}% ` +
+        `до ${Math.round(cur * 100)}%. Так держать!`,
+      );
+    } else if (delta <= -0.1) {
+      recs.push(
+        `Точность снизилась с ${Math.round(prev * 100)}% до ${Math.round(cur * 100)}% — ` +
+        "это нормальный спад; не усложняйте материал, дайте звуку «осесть».",
+      );
+    }
   }
 
   // Fatigue rate.
@@ -234,19 +325,57 @@ export const generateNeurolinguistSummary = onCall<
     const startIso = start.toISOString();
     const endIso = end.toISOString();
 
+    // Прошлая неделя — для динамики неделя-к-неделе.
+    const prevBounds = weekBoundaries(new Date(), offset + 1);
+    const prevStartIso = prevBounds.start.toISOString();
+    const prevEndIso = prevBounds.end.toISOString();
+
     try {
-      const snap = await admin.firestore()
+      const db = admin.firestore();
+      const sessionsRef = db
         .collection("users").doc(callerUid)
         .collection("children").doc(childId)
-        .collection("sessions")
-        .where("date", ">=", startIso)
-        .where("date", "<", endIso)
-        .get();
+        .collection("sessions");
+
+      const [snap, prevSnap, progressSnap] = await Promise.all([
+        sessionsRef
+          .where("date", ">=", startIso)
+          .where("date", "<", endIso)
+          .get(),
+        sessionsRef
+          .where("date", ">=", prevStartIso)
+          .where("date", "<", prevEndIso)
+          .get(),
+        db
+          .collection("users").doc(callerUid)
+          .collection("children").doc(childId)
+          .collection("progress")
+          .get(),
+      ]);
 
       const agg = aggregateSessions(snap.docs);
       const avgSuccessRate = agg.totalAttempts > 0 ?
         round3(agg.correctAttempts / agg.totalAttempts) :
         0;
+
+      const prevAgg = aggregateSessions(prevSnap.docs);
+      const prevSuccessRate = prevAgg.totalAttempts > 0 ?
+        round3(prevAgg.correctAttempts / prevAgg.totalAttempts) :
+        null;
+
+      // Этапы коррекции из /progress/{sound} — для этап-aware рекомендаций.
+      const stagesBySound: Record<
+        string,
+        Record<string, { done: boolean; rate: number; attempts: number }>
+      > = {};
+      for (const doc of progressSnap.docs) {
+        const data = doc.data() as {
+          soundTarget?: string;
+          stageProgress?: Record<string, { done: boolean; rate: number; attempts: number }>;
+        };
+        const key = typeof data.soundTarget === "string" ? data.soundTarget : doc.id;
+        if (data.stageProgress) stagesBySound[key] = data.stageProgress;
+      }
 
       const weekSummary: WeekSummary = {
         weekStart: startIso,
@@ -259,6 +388,11 @@ export const generateNeurolinguistSummary = onCall<
           agg.soundProgress,
           agg.totalSessions,
           agg.fatigueCount,
+          {
+            stagesBySound,
+            prevWeekSuccessRate: prevSuccessRate,
+            weekSuccessRate: avgSuccessRate,
+          },
         ),
       };
 
