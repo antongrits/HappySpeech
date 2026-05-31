@@ -43,6 +43,7 @@ protocol ChildHomeRoutingLogic {
     func routeToSyllableSnail(childId: String)
     func routeToFourthExtra(childId: String)
     func routeToWordFormation(childId: String)
+    func routeToWhoseTail(childId: String)
 }
 
 // MARK: - ChildHomeRouter
@@ -251,5 +252,11 @@ final class ChildHomeRouter: ChildHomeRoutingLogic {
     /// словоизменение: уменьш.-ласк. / число / родительный множ.).
     func routeToWordFormation(childId: String) {
         coordinator?.navigate(to: .wordFormation(childId: childId))
+    }
+
+    /// F2-006 — «Чей хвост / чей домик» (словообразование прилагательных:
+    /// притяжательные / притяжательно-локативные / относительные).
+    func routeToWhoseTail(childId: String) {
+        coordinator?.navigate(to: .whoseTail(childId: childId))
     }
 }

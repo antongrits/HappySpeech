@@ -1,0 +1,1654 @@
+{
+  "id": "pack_whose_tail_v1",
+  "soundTarget": "грамматика.притяжат",
+  "group": "грамматика",
+  "version": 1,
+  "roundsPerSession": 10,
+  "items": [
+    {
+      "id": "wt-poss-1",
+      "subtask": "possessiveTail",
+      "cueImage": "pawprint.fill",
+      "question": "Чей это хвост?",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        {
+          "id": "wt-poss-1-c",
+          "word": "лиса",
+          "imageAsset": "word_fox",
+          "isCorrect": true,
+          "form": "лисий хвост"
+        },
+        {
+          "id": "wt-poss-1-d1",
+          "word": "заяц",
+          "imageAsset": "word_hare",
+          "isCorrect": false,
+          "form": "заячий хвост"
+        }
+      ],
+      "spokenForm": "Это лисий хвост."
+    },
+    {
+      "id": "wt-poss-2",
+      "subtask": "possessiveTail",
+      "cueImage": "pawprint.fill",
+      "question": "Чей это хвост?",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        {
+          "id": "wt-poss-2-c",
+          "word": "заяц",
+          "imageAsset": "word_hare",
+          "isCorrect": true,
+          "form": "заячий хвост"
+        },
+        {
+          "id": "wt-poss-2-d1",
+          "word": "кот",
+          "imageAsset": "word_cat",
+          "isCorrect": false,
+          "form": "кошачий хвост"
+        }
+      ],
+      "spokenForm": "Это заячий хвост."
+    },
+    {
+      "id": "wt-poss-3",
+      "subtask": "possessiveTail",
+      "cueImage": "pawprint.fill",
+      "question": "Чей это хвост?",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        {
+          "id": "wt-poss-3-c",
+          "word": "кот",
+          "imageAsset": "word_cat",
+          "isCorrect": true,
+          "form": "кошачий хвост"
+        },
+        {
+          "id": "wt-poss-3-d1",
+          "word": "собака",
+          "imageAsset": "word_sobaka",
+          "isCorrect": false,
+          "form": "собачий хвост"
+        }
+      ],
+      "spokenForm": "Это кошачий хвост."
+    },
+    {
+      "id": "wt-poss-4",
+      "subtask": "possessiveTail",
+      "cueImage": "pawprint.fill",
+      "question": "Чей это хвост?",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        {
+          "id": "wt-poss-4-c",
+          "word": "собака",
+          "imageAsset": "word_sobaka",
+          "isCorrect": true,
+          "form": "собачий хвост"
+        },
+        {
+          "id": "wt-poss-4-d1",
+          "word": "кот",
+          "imageAsset": "word_cat",
+          "isCorrect": false,
+          "form": "кошачий хвост"
+        }
+      ],
+      "spokenForm": "Это собачий хвост."
+    },
+    {
+      "id": "wt-poss-5",
+      "subtask": "possessiveTail",
+      "cueImage": "pawprint.fill",
+      "question": "Чей это хвост?",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        {
+          "id": "wt-poss-5-c",
+          "word": "корова",
+          "imageAsset": "word_korova",
+          "isCorrect": true,
+          "form": "коровий хвост"
+        },
+        {
+          "id": "wt-poss-5-d1",
+          "word": "коза",
+          "imageAsset": "word_koza",
+          "isCorrect": false,
+          "form": "козий хвост"
+        }
+      ],
+      "spokenForm": "Это коровий хвост."
+    },
+    {
+      "id": "wt-poss-6",
+      "subtask": "possessiveTail",
+      "cueImage": "pawprint.fill",
+      "question": "Чей это хвост?",
+      "difficulty": 1,
+      "minAge": 5,
+      "options": [
+        {
+          "id": "wt-poss-6-c",
+          "word": "лошадь",
+          "imageAsset": "word_loshad",
+          "isCorrect": true,
+          "form": "лошадиный хвост"
+        },
+        {
+          "id": "wt-poss-6-d1",
+          "word": "корова",
+          "imageAsset": "word_korova",
+          "isCorrect": false,
+          "form": "коровий хвост"
+        }
+      ],
+      "spokenForm": "Это лошадиный хвост."
+    },
+    {
+      "id": "wt-poss-7",
+      "subtask": "possessiveTail",
+      "cueImage": "pawprint.fill",
+      "question": "Чей это хвост?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-poss-7-c",
+          "word": "лиса",
+          "imageAsset": "word_fox",
+          "isCorrect": true,
+          "form": "лисий хвост"
+        },
+        {
+          "id": "wt-poss-7-d1",
+          "word": "заяц",
+          "imageAsset": "word_hare",
+          "isCorrect": false,
+          "form": "заячий хвост"
+        },
+        {
+          "id": "wt-poss-7-d2",
+          "word": "медведь",
+          "imageAsset": "word_bear",
+          "isCorrect": false,
+          "form": "медвежий хвост"
+        }
+      ],
+      "spokenForm": "Это лисий хвост."
+    },
+    {
+      "id": "wt-poss-8",
+      "subtask": "possessiveTail",
+      "cueImage": "pawprint.fill",
+      "question": "Чей это хвост?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-poss-8-c",
+          "word": "волк",
+          "imageAsset": "word_volk",
+          "isCorrect": true,
+          "form": "волчий хвост"
+        },
+        {
+          "id": "wt-poss-8-d1",
+          "word": "лиса",
+          "imageAsset": "word_fox",
+          "isCorrect": false,
+          "form": "лисий хвост"
+        },
+        {
+          "id": "wt-poss-8-d2",
+          "word": "собака",
+          "imageAsset": "word_sobaka",
+          "isCorrect": false,
+          "form": "собачий хвост"
+        }
+      ],
+      "spokenForm": "Это волчий хвост."
+    },
+    {
+      "id": "wt-poss-9",
+      "subtask": "possessiveTail",
+      "cueImage": "pawprint.fill",
+      "question": "Чья это лапа?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-poss-9-c",
+          "word": "медведь",
+          "imageAsset": "word_bear",
+          "isCorrect": true,
+          "form": "медвежья лапа"
+        },
+        {
+          "id": "wt-poss-9-d1",
+          "word": "волк",
+          "imageAsset": "word_volk",
+          "isCorrect": false,
+          "form": "волчья лапа"
+        },
+        {
+          "id": "wt-poss-9-d2",
+          "word": "кот",
+          "imageAsset": "word_cat",
+          "isCorrect": false,
+          "form": "кошачья лапа"
+        }
+      ],
+      "spokenForm": "Это медвежья лапа."
+    },
+    {
+      "id": "wt-poss-10",
+      "subtask": "possessiveTail",
+      "cueImage": "pawprint.fill",
+      "question": "Чей это хвост?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-poss-10-c",
+          "word": "корова",
+          "imageAsset": "word_korova",
+          "isCorrect": true,
+          "form": "коровий хвост"
+        },
+        {
+          "id": "wt-poss-10-d1",
+          "word": "коза",
+          "imageAsset": "word_koza",
+          "isCorrect": false,
+          "form": "козий хвост"
+        },
+        {
+          "id": "wt-poss-10-d2",
+          "word": "собака",
+          "imageAsset": "word_sobaka",
+          "isCorrect": false,
+          "form": "собачий хвост"
+        }
+      ],
+      "spokenForm": "Это коровий хвост."
+    },
+    {
+      "id": "wt-poss-11",
+      "subtask": "possessiveTail",
+      "cueImage": "pawprint.fill",
+      "question": "Чей это хвост?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-poss-11-c",
+          "word": "белка",
+          "imageAsset": "word_belka",
+          "isCorrect": true,
+          "form": "беличий хвост"
+        },
+        {
+          "id": "wt-poss-11-d1",
+          "word": "лиса",
+          "imageAsset": "word_fox",
+          "isCorrect": false,
+          "form": "лисий хвост"
+        },
+        {
+          "id": "wt-poss-11-d2",
+          "word": "заяц",
+          "imageAsset": "word_hare",
+          "isCorrect": false,
+          "form": "заячий хвост"
+        }
+      ],
+      "spokenForm": "Это беличий хвост."
+    },
+    {
+      "id": "wt-poss-12",
+      "subtask": "possessiveTail",
+      "cueImage": "pawprint.fill",
+      "question": "Чей это хвост?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-poss-12-c",
+          "word": "коза",
+          "imageAsset": "word_koza",
+          "isCorrect": true,
+          "form": "козий хвост"
+        },
+        {
+          "id": "wt-poss-12-d1",
+          "word": "корова",
+          "imageAsset": "word_korova",
+          "isCorrect": false,
+          "form": "коровий хвост"
+        },
+        {
+          "id": "wt-poss-12-d2",
+          "word": "лошадь",
+          "imageAsset": "word_loshad",
+          "isCorrect": false,
+          "form": "лошадиный хвост"
+        }
+      ],
+      "spokenForm": "Это козий хвост."
+    },
+    {
+      "id": "wt-poss-13",
+      "subtask": "possessiveTail",
+      "cueImage": "pawprint.fill",
+      "question": "Чьи это уши?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-poss-13-c",
+          "word": "заяц",
+          "imageAsset": "word_hare",
+          "isCorrect": true,
+          "form": "заячьи уши"
+        },
+        {
+          "id": "wt-poss-13-d1",
+          "word": "лиса",
+          "imageAsset": "word_fox",
+          "isCorrect": false,
+          "form": "лисьи уши"
+        },
+        {
+          "id": "wt-poss-13-d2",
+          "word": "кот",
+          "imageAsset": "word_cat",
+          "isCorrect": false,
+          "form": "кошачьи уши"
+        }
+      ],
+      "spokenForm": "Это заячьи уши."
+    },
+    {
+      "id": "wt-poss-14",
+      "subtask": "possessiveTail",
+      "cueImage": "pawprint.fill",
+      "question": "Чья это лапа?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        {
+          "id": "wt-poss-14-c",
+          "word": "лиса",
+          "imageAsset": "word_fox",
+          "isCorrect": true,
+          "form": "лисья лапа"
+        },
+        {
+          "id": "wt-poss-14-d1",
+          "word": "волк",
+          "imageAsset": "word_volk",
+          "isCorrect": false,
+          "form": "волчья лапа"
+        },
+        {
+          "id": "wt-poss-14-d2",
+          "word": "медведь",
+          "imageAsset": "word_bear",
+          "isCorrect": false,
+          "form": "медвежья лапа"
+        }
+      ],
+      "spokenForm": "Это лисья лапа."
+    },
+    {
+      "id": "wt-poss-15",
+      "subtask": "possessiveTail",
+      "cueImage": "pawprint.fill",
+      "question": "Чей это хвост?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        {
+          "id": "wt-poss-15-c",
+          "word": "волк",
+          "imageAsset": "word_volk",
+          "isCorrect": true,
+          "form": "волчий хвост"
+        },
+        {
+          "id": "wt-poss-15-d1",
+          "word": "лиса",
+          "imageAsset": "word_fox",
+          "isCorrect": false,
+          "form": "лисий хвост"
+        },
+        {
+          "id": "wt-poss-15-d2",
+          "word": "собака",
+          "imageAsset": "word_sobaka",
+          "isCorrect": false,
+          "form": "собачий хвост"
+        },
+        {
+          "id": "wt-poss-15-d3",
+          "word": "кот",
+          "imageAsset": "word_cat",
+          "isCorrect": false,
+          "form": "кошачий хвост"
+        }
+      ],
+      "spokenForm": "Это волчий хвост."
+    },
+    {
+      "id": "wt-poss-16",
+      "subtask": "possessiveTail",
+      "cueImage": "pawprint.fill",
+      "question": "Чья это лапа?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        {
+          "id": "wt-poss-16-c",
+          "word": "белка",
+          "imageAsset": "word_belka",
+          "isCorrect": true,
+          "form": "беличья лапа"
+        },
+        {
+          "id": "wt-poss-16-d1",
+          "word": "кот",
+          "imageAsset": "word_cat",
+          "isCorrect": false,
+          "form": "кошачья лапа"
+        },
+        {
+          "id": "wt-poss-16-d2",
+          "word": "мышь",
+          "imageAsset": "word_mysh",
+          "isCorrect": false,
+          "form": "мышиная лапа"
+        },
+        {
+          "id": "wt-poss-16-d3",
+          "word": "заяц",
+          "imageAsset": "word_hare",
+          "isCorrect": false,
+          "form": "заячья лапа"
+        }
+      ],
+      "spokenForm": "Это беличья лапа."
+    },
+    {
+      "id": "wt-poss-17",
+      "subtask": "possessiveTail",
+      "cueImage": "pawprint.fill",
+      "question": "Чья это лапа?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        {
+          "id": "wt-poss-17-c",
+          "word": "медведь",
+          "imageAsset": "word_bear",
+          "isCorrect": true,
+          "form": "медвежья лапа"
+        },
+        {
+          "id": "wt-poss-17-d1",
+          "word": "волк",
+          "imageAsset": "word_volk",
+          "isCorrect": false,
+          "form": "волчья лапа"
+        },
+        {
+          "id": "wt-poss-17-d2",
+          "word": "лиса",
+          "imageAsset": "word_fox",
+          "isCorrect": false,
+          "form": "лисья лапа"
+        },
+        {
+          "id": "wt-poss-17-d3",
+          "word": "собака",
+          "imageAsset": "word_sobaka",
+          "isCorrect": false,
+          "form": "собачья лапа"
+        }
+      ],
+      "spokenForm": "Это медвежья лапа."
+    },
+    {
+      "id": "wt-poss-18",
+      "subtask": "possessiveTail",
+      "cueImage": "pawprint.fill",
+      "question": "Чей это хвост?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        {
+          "id": "wt-poss-18-c",
+          "word": "лев",
+          "imageAsset": "word_lev",
+          "isCorrect": true,
+          "form": "львиный хвост"
+        },
+        {
+          "id": "wt-poss-18-d1",
+          "word": "тигр",
+          "imageAsset": "word_tigr",
+          "isCorrect": false,
+          "form": "тигриный хвост"
+        },
+        {
+          "id": "wt-poss-18-d2",
+          "word": "кот",
+          "imageAsset": "word_cat",
+          "isCorrect": false,
+          "form": "кошачий хвост"
+        }
+      ],
+      "spokenForm": "Это львиный хвост."
+    },
+    {
+      "id": "wt-poss-19",
+      "subtask": "possessiveTail",
+      "cueImage": "pawprint.fill",
+      "question": "Чей это хвост?",
+      "difficulty": 3,
+      "minAge": 8,
+      "options": [
+        {
+          "id": "wt-poss-19-c",
+          "word": "тигр",
+          "imageAsset": "word_tigr",
+          "isCorrect": true,
+          "form": "тигриный хвост"
+        },
+        {
+          "id": "wt-poss-19-d1",
+          "word": "лев",
+          "imageAsset": "word_lev",
+          "isCorrect": false,
+          "form": "львиный хвост"
+        },
+        {
+          "id": "wt-poss-19-d2",
+          "word": "кот",
+          "imageAsset": "word_cat",
+          "isCorrect": false,
+          "form": "кошачий хвост"
+        },
+        {
+          "id": "wt-poss-19-d3",
+          "word": "собака",
+          "imageAsset": "word_sobaka",
+          "isCorrect": false,
+          "form": "собачий хвост"
+        }
+      ],
+      "spokenForm": "Это тигриный хвост."
+    },
+    {
+      "id": "wt-poss-20",
+      "subtask": "possessiveTail",
+      "cueImage": "pawprint.fill",
+      "question": "Чей это хвост?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-poss-20-c",
+          "word": "мышь",
+          "imageAsset": "word_mysh",
+          "isCorrect": true,
+          "form": "мышиный хвост"
+        },
+        {
+          "id": "wt-poss-20-d1",
+          "word": "кот",
+          "imageAsset": "word_cat",
+          "isCorrect": false,
+          "form": "кошачий хвост"
+        },
+        {
+          "id": "wt-poss-20-d2",
+          "word": "белка",
+          "imageAsset": "word_belka",
+          "isCorrect": false,
+          "form": "беличий хвост"
+        }
+      ],
+      "spokenForm": "Это мышиный хвост."
+    },
+    {
+      "id": "wt-home-1",
+      "subtask": "animalHome",
+      "cueImage": "mountain.2.fill",
+      "question": "Чей это домик? Чья это нора?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-home-1-c",
+          "word": "лиса",
+          "imageAsset": "word_fox",
+          "isCorrect": true,
+          "form": "лисья нора"
+        },
+        {
+          "id": "wt-home-1-d1",
+          "word": "белка",
+          "imageAsset": "word_belka",
+          "isCorrect": false,
+          "form": "беличье дупло"
+        }
+      ],
+      "spokenForm": "Это лисья нора."
+    },
+    {
+      "id": "wt-home-2",
+      "subtask": "animalHome",
+      "cueImage": "tree.fill",
+      "question": "Чьё это дупло?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-home-2-c",
+          "word": "белка",
+          "imageAsset": "word_belka",
+          "isCorrect": true,
+          "form": "беличье дупло"
+        },
+        {
+          "id": "wt-home-2-d1",
+          "word": "лиса",
+          "imageAsset": "word_fox",
+          "isCorrect": false,
+          "form": "лисья нора"
+        }
+      ],
+      "spokenForm": "Это беличье дупло."
+    },
+    {
+      "id": "wt-home-3",
+      "subtask": "animalHome",
+      "cueImage": "mountain.2.fill",
+      "question": "Чей это домик? Чья это берлога?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-home-3-c",
+          "word": "медведь",
+          "imageAsset": "word_bear",
+          "isCorrect": true,
+          "form": "медвежья берлога"
+        },
+        {
+          "id": "wt-home-3-d1",
+          "word": "волк",
+          "imageAsset": "word_volk",
+          "isCorrect": false,
+          "form": "волчье логово"
+        }
+      ],
+      "spokenForm": "Это медвежья берлога."
+    },
+    {
+      "id": "wt-home-4",
+      "subtask": "animalHome",
+      "cueImage": "mountain.2.fill",
+      "question": "Чьё это логово?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-home-4-c",
+          "word": "волк",
+          "imageAsset": "word_volk",
+          "isCorrect": true,
+          "form": "волчье логово"
+        },
+        {
+          "id": "wt-home-4-d1",
+          "word": "медведь",
+          "imageAsset": "word_bear",
+          "isCorrect": false,
+          "form": "медвежья берлога"
+        }
+      ],
+      "spokenForm": "Это волчье логово."
+    },
+    {
+      "id": "wt-home-5",
+      "subtask": "animalHome",
+      "cueImage": "mountain.2.fill",
+      "question": "Чей это домик? Чья это норка?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-home-5-c",
+          "word": "мышь",
+          "imageAsset": "word_mysh",
+          "isCorrect": true,
+          "form": "мышиная норка"
+        },
+        {
+          "id": "wt-home-5-d1",
+          "word": "белка",
+          "imageAsset": "word_belka",
+          "isCorrect": false,
+          "form": "беличье дупло"
+        }
+      ],
+      "spokenForm": "Это мышиная норка."
+    },
+    {
+      "id": "wt-home-6",
+      "subtask": "animalHome",
+      "cueImage": "house.fill",
+      "question": "Чей это домик? Чья это будка?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-home-6-c",
+          "word": "собака",
+          "imageAsset": "word_sobaka",
+          "isCorrect": true,
+          "form": "собачья будка"
+        },
+        {
+          "id": "wt-home-6-d1",
+          "word": "кот",
+          "imageAsset": "word_cat",
+          "isCorrect": false,
+          "form": "кошачий домик"
+        }
+      ],
+      "spokenForm": "Это собачья будка."
+    },
+    {
+      "id": "wt-home-7",
+      "subtask": "animalHome",
+      "cueImage": "mountain.2.fill",
+      "question": "Чей это домик? Чья это нора?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        {
+          "id": "wt-home-7-c",
+          "word": "лиса",
+          "imageAsset": "word_fox",
+          "isCorrect": true,
+          "form": "лисья нора"
+        },
+        {
+          "id": "wt-home-7-d1",
+          "word": "белка",
+          "imageAsset": "word_belka",
+          "isCorrect": false,
+          "form": "беличье дупло"
+        },
+        {
+          "id": "wt-home-7-d2",
+          "word": "медведь",
+          "imageAsset": "word_bear",
+          "isCorrect": false,
+          "form": "медвежья берлога"
+        }
+      ],
+      "spokenForm": "Это лисья нора."
+    },
+    {
+      "id": "wt-home-8",
+      "subtask": "animalHome",
+      "cueImage": "tree.fill",
+      "question": "Чьё это дупло?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        {
+          "id": "wt-home-8-c",
+          "word": "белка",
+          "imageAsset": "word_belka",
+          "isCorrect": true,
+          "form": "беличье дупло"
+        },
+        {
+          "id": "wt-home-8-d1",
+          "word": "лиса",
+          "imageAsset": "word_fox",
+          "isCorrect": false,
+          "form": "лисья нора"
+        },
+        {
+          "id": "wt-home-8-d2",
+          "word": "медведь",
+          "imageAsset": "word_bear",
+          "isCorrect": false,
+          "form": "медвежья берлога"
+        }
+      ],
+      "spokenForm": "Это беличье дупло."
+    },
+    {
+      "id": "wt-home-9",
+      "subtask": "animalHome",
+      "cueImage": "mountain.2.fill",
+      "question": "Чей это домик? Чья это берлога?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        {
+          "id": "wt-home-9-c",
+          "word": "медведь",
+          "imageAsset": "word_bear",
+          "isCorrect": true,
+          "form": "медвежья берлога"
+        },
+        {
+          "id": "wt-home-9-d1",
+          "word": "волк",
+          "imageAsset": "word_volk",
+          "isCorrect": false,
+          "form": "волчье логово"
+        },
+        {
+          "id": "wt-home-9-d2",
+          "word": "лиса",
+          "imageAsset": "word_fox",
+          "isCorrect": false,
+          "form": "лисья нора"
+        }
+      ],
+      "spokenForm": "Это медвежья берлога."
+    },
+    {
+      "id": "wt-home-10",
+      "subtask": "animalHome",
+      "cueImage": "mountain.2.fill",
+      "question": "Чьё это логово?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        {
+          "id": "wt-home-10-c",
+          "word": "волк",
+          "imageAsset": "word_volk",
+          "isCorrect": true,
+          "form": "волчье логово"
+        },
+        {
+          "id": "wt-home-10-d1",
+          "word": "медведь",
+          "imageAsset": "word_bear",
+          "isCorrect": false,
+          "form": "медвежья берлога"
+        },
+        {
+          "id": "wt-home-10-d2",
+          "word": "собака",
+          "imageAsset": "word_sobaka",
+          "isCorrect": false,
+          "form": "собачья будка"
+        }
+      ],
+      "spokenForm": "Это волчье логово."
+    },
+    {
+      "id": "wt-home-11",
+      "subtask": "animalHome",
+      "cueImage": "mountain.2.fill",
+      "question": "Чей это домик? Чья это норка?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        {
+          "id": "wt-home-11-c",
+          "word": "мышь",
+          "imageAsset": "word_mysh",
+          "isCorrect": true,
+          "form": "мышиная норка"
+        },
+        {
+          "id": "wt-home-11-d1",
+          "word": "лиса",
+          "imageAsset": "word_fox",
+          "isCorrect": false,
+          "form": "лисья нора"
+        },
+        {
+          "id": "wt-home-11-d2",
+          "word": "белка",
+          "imageAsset": "word_belka",
+          "isCorrect": false,
+          "form": "беличье дупло"
+        }
+      ],
+      "spokenForm": "Это мышиная норка."
+    },
+    {
+      "id": "wt-home-12",
+      "subtask": "animalHome",
+      "cueImage": "house.fill",
+      "question": "Чей это домик? Чья это будка?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        {
+          "id": "wt-home-12-c",
+          "word": "собака",
+          "imageAsset": "word_sobaka",
+          "isCorrect": true,
+          "form": "собачья будка"
+        },
+        {
+          "id": "wt-home-12-d1",
+          "word": "кот",
+          "imageAsset": "word_cat",
+          "isCorrect": false,
+          "form": "кошачий домик"
+        },
+        {
+          "id": "wt-home-12-d2",
+          "word": "лиса",
+          "imageAsset": "word_fox",
+          "isCorrect": false,
+          "form": "лисья нора"
+        }
+      ],
+      "spokenForm": "Это собачья будка."
+    },
+    {
+      "id": "wt-home-13",
+      "subtask": "animalHome",
+      "cueImage": "mountain.2.fill",
+      "question": "Чей это домик? Чья это нора?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-home-13-c",
+          "word": "лиса",
+          "imageAsset": "word_fox",
+          "isCorrect": true,
+          "form": "лисья нора"
+        },
+        {
+          "id": "wt-home-13-d1",
+          "word": "заяц",
+          "imageAsset": "word_hare",
+          "isCorrect": false,
+          "form": "заячья норка"
+        }
+      ],
+      "spokenForm": "Это лисья нора."
+    },
+    {
+      "id": "wt-home-14",
+      "subtask": "animalHome",
+      "cueImage": "mountain.2.fill",
+      "question": "Чей это домик? Чья это норка?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-home-14-c",
+          "word": "заяц",
+          "imageAsset": "word_hare",
+          "isCorrect": true,
+          "form": "заячья норка"
+        },
+        {
+          "id": "wt-home-14-d1",
+          "word": "лиса",
+          "imageAsset": "word_fox",
+          "isCorrect": false,
+          "form": "лисья нора"
+        }
+      ],
+      "spokenForm": "Это заячья норка."
+    },
+    {
+      "id": "wt-home-15",
+      "subtask": "animalHome",
+      "cueImage": "house.fill",
+      "question": "Чьё это домик?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-home-15-c",
+          "word": "кот",
+          "imageAsset": "word_cat",
+          "isCorrect": true,
+          "form": "кошачий домик"
+        },
+        {
+          "id": "wt-home-15-d1",
+          "word": "собака",
+          "imageAsset": "word_sobaka",
+          "isCorrect": false,
+          "form": "собачья будка"
+        }
+      ],
+      "spokenForm": "Это кошачий домик."
+    },
+    {
+      "id": "wt-home-16",
+      "subtask": "animalHome",
+      "cueImage": "mountain.2.fill",
+      "question": "Чей это домик? Чья это берлога?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        {
+          "id": "wt-home-16-c",
+          "word": "медведь",
+          "imageAsset": "word_bear",
+          "isCorrect": true,
+          "form": "медвежья берлога"
+        },
+        {
+          "id": "wt-home-16-d1",
+          "word": "заяц",
+          "imageAsset": "word_hare",
+          "isCorrect": false,
+          "form": "заячья норка"
+        },
+        {
+          "id": "wt-home-16-d2",
+          "word": "белка",
+          "imageAsset": "word_belka",
+          "isCorrect": false,
+          "form": "беличье дупло"
+        }
+      ],
+      "spokenForm": "Это медвежья берлога."
+    },
+    {
+      "id": "wt-home-17",
+      "subtask": "animalHome",
+      "cueImage": "tree.fill",
+      "question": "Чьё это дупло?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        {
+          "id": "wt-home-17-c",
+          "word": "белка",
+          "imageAsset": "word_belka",
+          "isCorrect": true,
+          "form": "беличье дупло"
+        },
+        {
+          "id": "wt-home-17-d1",
+          "word": "мышь",
+          "imageAsset": "word_mysh",
+          "isCorrect": false,
+          "form": "мышиная норка"
+        },
+        {
+          "id": "wt-home-17-d2",
+          "word": "лиса",
+          "imageAsset": "word_fox",
+          "isCorrect": false,
+          "form": "лисья нора"
+        }
+      ],
+      "spokenForm": "Это беличье дупло."
+    },
+    {
+      "id": "wt-home-18",
+      "subtask": "animalHome",
+      "cueImage": "mountain.2.fill",
+      "question": "Чьё это логово?",
+      "difficulty": 3,
+      "minAge": 8,
+      "options": [
+        {
+          "id": "wt-home-18-c",
+          "word": "волк",
+          "imageAsset": "word_volk",
+          "isCorrect": true,
+          "form": "волчье логово"
+        },
+        {
+          "id": "wt-home-18-d1",
+          "word": "лиса",
+          "imageAsset": "word_fox",
+          "isCorrect": false,
+          "form": "лисья нора"
+        },
+        {
+          "id": "wt-home-18-d2",
+          "word": "медведь",
+          "imageAsset": "word_bear",
+          "isCorrect": false,
+          "form": "медвежья берлога"
+        },
+        {
+          "id": "wt-home-18-d3",
+          "word": "собака",
+          "imageAsset": "word_sobaka",
+          "isCorrect": false,
+          "form": "собачья будка"
+        }
+      ],
+      "spokenForm": "Это волчье логово."
+    },
+    {
+      "id": "wt-rel-1",
+      "subtask": "relativeMaterial",
+      "cueImage": "word_stol",
+      "question": "Из чего сделан стол?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-rel-1-c",
+          "word": "дерево",
+          "imageAsset": "word_derevo",
+          "isCorrect": true,
+          "form": "деревянный стол"
+        },
+        {
+          "id": "wt-rel-1-d1",
+          "word": "бумага",
+          "imageAsset": "word_bumaga",
+          "isCorrect": false,
+          "form": "бумажный стол"
+        }
+      ],
+      "spokenForm": "Стол деревянный."
+    },
+    {
+      "id": "wt-rel-2",
+      "subtask": "relativeMaterial",
+      "cueImage": "word_stakan",
+      "question": "Из чего сделан стакан?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-rel-2-c",
+          "word": "стекло",
+          "imageAsset": "wineglass.fill",
+          "isCorrect": true,
+          "form": "стеклянный стакан"
+        },
+        {
+          "id": "wt-rel-2-d1",
+          "word": "дерево",
+          "imageAsset": "word_derevo",
+          "isCorrect": false,
+          "form": "деревянный стакан"
+        }
+      ],
+      "spokenForm": "Стакан стеклянный."
+    },
+    {
+      "id": "wt-rel-3",
+      "subtask": "relativeMaterial",
+      "cueImage": "word_kniga",
+      "question": "Из чего сделана книга?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-rel-3-c",
+          "word": "бумага",
+          "imageAsset": "word_bumaga",
+          "isCorrect": true,
+          "form": "бумажная книга"
+        },
+        {
+          "id": "wt-rel-3-d1",
+          "word": "дерево",
+          "imageAsset": "word_derevo",
+          "isCorrect": false,
+          "form": "деревянная книга"
+        }
+      ],
+      "spokenForm": "Книга бумажная."
+    },
+    {
+      "id": "wt-rel-4",
+      "subtask": "relativeMaterial",
+      "cueImage": "word_dom",
+      "question": "Из чего сделан дом?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-rel-4-c",
+          "word": "дерево",
+          "imageAsset": "word_derevo",
+          "isCorrect": true,
+          "form": "деревянный дом"
+        },
+        {
+          "id": "wt-rel-4-d1",
+          "word": "бумага",
+          "imageAsset": "word_bumaga",
+          "isCorrect": false,
+          "form": "бумажный дом"
+        }
+      ],
+      "spokenForm": "Дом деревянный."
+    },
+    {
+      "id": "wt-rel-5",
+      "subtask": "relativeMaterial",
+      "cueImage": "word_okno",
+      "question": "Из чего сделано окно?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-rel-5-c",
+          "word": "стекло",
+          "imageAsset": "wineglass.fill",
+          "isCorrect": true,
+          "form": "стеклянное окно"
+        },
+        {
+          "id": "wt-rel-5-d1",
+          "word": "дерево",
+          "imageAsset": "word_derevo",
+          "isCorrect": false,
+          "form": "деревянное окно"
+        }
+      ],
+      "spokenForm": "Окно стеклянное."
+    },
+    {
+      "id": "wt-rel-6",
+      "subtask": "relativeMaterial",
+      "cueImage": "word_stol",
+      "question": "Из чего сделан стол?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        {
+          "id": "wt-rel-6-c",
+          "word": "дерево",
+          "imageAsset": "word_derevo",
+          "isCorrect": true,
+          "form": "деревянный стол"
+        },
+        {
+          "id": "wt-rel-6-d1",
+          "word": "стекло",
+          "imageAsset": "wineglass.fill",
+          "isCorrect": false,
+          "form": "стеклянный стол"
+        },
+        {
+          "id": "wt-rel-6-d2",
+          "word": "бумага",
+          "imageAsset": "word_bumaga",
+          "isCorrect": false,
+          "form": "бумажный стол"
+        }
+      ],
+      "spokenForm": "Стол деревянный."
+    },
+    {
+      "id": "wt-rel-7",
+      "subtask": "relativeMaterial",
+      "cueImage": "word_stakan",
+      "question": "Из чего сделан стакан?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        {
+          "id": "wt-rel-7-c",
+          "word": "стекло",
+          "imageAsset": "wineglass.fill",
+          "isCorrect": true,
+          "form": "стеклянный стакан"
+        },
+        {
+          "id": "wt-rel-7-d1",
+          "word": "дерево",
+          "imageAsset": "word_derevo",
+          "isCorrect": false,
+          "form": "деревянный стакан"
+        },
+        {
+          "id": "wt-rel-7-d2",
+          "word": "бумага",
+          "imageAsset": "word_bumaga",
+          "isCorrect": false,
+          "form": "бумажный стакан"
+        }
+      ],
+      "spokenForm": "Стакан стеклянный."
+    },
+    {
+      "id": "wt-rel-8",
+      "subtask": "relativeMaterial",
+      "cueImage": "comb.fill",
+      "question": "Из чего сделан шарф?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        {
+          "id": "wt-rel-8-c",
+          "word": "шерсть",
+          "imageAsset": "comb.fill",
+          "isCorrect": true,
+          "form": "шерстяной шарф"
+        },
+        {
+          "id": "wt-rel-8-d1",
+          "word": "бумага",
+          "imageAsset": "word_bumaga",
+          "isCorrect": false,
+          "form": "бумажный шарф"
+        }
+      ],
+      "spokenForm": "Шарф шерстяной."
+    },
+    {
+      "id": "wt-rel-9",
+      "subtask": "relativeMaterial",
+      "cueImage": "word_bucket",
+      "question": "Из чего сделано ведро?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        {
+          "id": "wt-rel-9-c",
+          "word": "железо",
+          "imageAsset": "wrench.and.screwdriver.fill",
+          "isCorrect": true,
+          "form": "железное ведро"
+        },
+        {
+          "id": "wt-rel-9-d1",
+          "word": "дерево",
+          "imageAsset": "word_derevo",
+          "isCorrect": false,
+          "form": "деревянное ведро"
+        }
+      ],
+      "spokenForm": "Ведро железное."
+    },
+    {
+      "id": "wt-rel-10",
+      "subtask": "relativeMaterial",
+      "cueImage": "word_leaf",
+      "question": "Из чего сделан лист?",
+      "difficulty": 3,
+      "minAge": 8,
+      "options": [
+        {
+          "id": "wt-rel-10-c",
+          "word": "бумага",
+          "imageAsset": "word_bumaga",
+          "isCorrect": true,
+          "form": "бумажный лист"
+        },
+        {
+          "id": "wt-rel-10-d1",
+          "word": "дерево",
+          "imageAsset": "word_derevo",
+          "isCorrect": false,
+          "form": "деревянный лист"
+        },
+        {
+          "id": "wt-rel-10-d2",
+          "word": "стекло",
+          "imageAsset": "wineglass.fill",
+          "isCorrect": false,
+          "form": "стеклянный лист"
+        }
+      ],
+      "spokenForm": "Лист бумажный."
+    },
+    {
+      "id": "wt-rel-11",
+      "subtask": "relativeMaterial",
+      "cueImage": "word_stul",
+      "question": "Из чего сделан стул?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-rel-11-c",
+          "word": "дерево",
+          "imageAsset": "word_derevo",
+          "isCorrect": true,
+          "form": "деревянный стул"
+        },
+        {
+          "id": "wt-rel-11-d1",
+          "word": "железо",
+          "imageAsset": "wrench.and.screwdriver.fill",
+          "isCorrect": false,
+          "form": "железный стул"
+        }
+      ],
+      "spokenForm": "Стул деревянный."
+    },
+    {
+      "id": "wt-rel-12",
+      "subtask": "relativeMaterial",
+      "cueImage": "word_okno",
+      "question": "Из чего сделано окно?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        {
+          "id": "wt-rel-12-c",
+          "word": "стекло",
+          "imageAsset": "wineglass.fill",
+          "isCorrect": true,
+          "form": "стеклянное окно"
+        },
+        {
+          "id": "wt-rel-12-d1",
+          "word": "дерево",
+          "imageAsset": "word_derevo",
+          "isCorrect": false,
+          "form": "деревянное окно"
+        },
+        {
+          "id": "wt-rel-12-d2",
+          "word": "бумага",
+          "imageAsset": "word_bumaga",
+          "isCorrect": false,
+          "form": "бумажное окно"
+        }
+      ],
+      "spokenForm": "Окно стеклянное."
+    },
+    {
+      "id": "wt-rel-13",
+      "subtask": "relativeMaterial",
+      "cueImage": "word_dom",
+      "question": "Из чего сделан дом?",
+      "difficulty": 3,
+      "minAge": 7,
+      "options": [
+        {
+          "id": "wt-rel-13-c",
+          "word": "дерево",
+          "imageAsset": "word_derevo",
+          "isCorrect": true,
+          "form": "деревянный дом"
+        },
+        {
+          "id": "wt-rel-13-d1",
+          "word": "стекло",
+          "imageAsset": "wineglass.fill",
+          "isCorrect": false,
+          "form": "стеклянный дом"
+        },
+        {
+          "id": "wt-rel-13-d2",
+          "word": "бумага",
+          "imageAsset": "word_bumaga",
+          "isCorrect": false,
+          "form": "бумажный дом"
+        }
+      ],
+      "spokenForm": "Дом деревянный."
+    },
+    {
+      "id": "wt-rel-14",
+      "subtask": "relativeMaterial",
+      "cueImage": "word_bucket",
+      "question": "Из чего сделано ведро?",
+      "difficulty": 3,
+      "minAge": 8,
+      "options": [
+        {
+          "id": "wt-rel-14-c",
+          "word": "железо",
+          "imageAsset": "wrench.and.screwdriver.fill",
+          "isCorrect": true,
+          "form": "железное ведро"
+        },
+        {
+          "id": "wt-rel-14-d1",
+          "word": "дерево",
+          "imageAsset": "word_derevo",
+          "isCorrect": false,
+          "form": "деревянное ведро"
+        },
+        {
+          "id": "wt-rel-14-d2",
+          "word": "бумага",
+          "imageAsset": "word_bumaga",
+          "isCorrect": false,
+          "form": "бумажное ведро"
+        }
+      ],
+      "spokenForm": "Ведро железное."
+    },
+    {
+      "id": "wt-rel-15",
+      "subtask": "relativeMaterial",
+      "cueImage": "word_kniga",
+      "question": "Из чего сделана книга?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-rel-15-c",
+          "word": "бумага",
+          "imageAsset": "word_bumaga",
+          "isCorrect": true,
+          "form": "бумажная книга"
+        },
+        {
+          "id": "wt-rel-15-d1",
+          "word": "стекло",
+          "imageAsset": "wineglass.fill",
+          "isCorrect": false,
+          "form": "стеклянная книга"
+        }
+      ],
+      "spokenForm": "Книга бумажная."
+    },
+    {
+      "id": "wt-rel-16",
+      "subtask": "relativeMaterial",
+      "cueImage": "comb.fill",
+      "question": "Из чего сделан шарф?",
+      "difficulty": 3,
+      "minAge": 8,
+      "options": [
+        {
+          "id": "wt-rel-16-c",
+          "word": "шерсть",
+          "imageAsset": "comb.fill",
+          "isCorrect": true,
+          "form": "шерстяной шарф"
+        },
+        {
+          "id": "wt-rel-16-d1",
+          "word": "бумага",
+          "imageAsset": "word_bumaga",
+          "isCorrect": false,
+          "form": "бумажный шарф"
+        },
+        {
+          "id": "wt-rel-16-d2",
+          "word": "дерево",
+          "imageAsset": "word_derevo",
+          "isCorrect": false,
+          "form": "деревянный шарф"
+        }
+      ],
+      "spokenForm": "Шарф шерстяной."
+    },
+    {
+      "id": "wt-rel-17",
+      "subtask": "relativeMaterial",
+      "cueImage": "word_stakan",
+      "question": "Из чего сделан стакан?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-rel-17-c",
+          "word": "стекло",
+          "imageAsset": "wineglass.fill",
+          "isCorrect": true,
+          "form": "стеклянный стакан"
+        },
+        {
+          "id": "wt-rel-17-d1",
+          "word": "железо",
+          "imageAsset": "wrench.and.screwdriver.fill",
+          "isCorrect": false,
+          "form": "железный стакан"
+        }
+      ],
+      "spokenForm": "Стакан стеклянный."
+    },
+    {
+      "id": "wt-rel-18",
+      "subtask": "relativeMaterial",
+      "cueImage": "word_stol",
+      "question": "Из чего сделан стол?",
+      "difficulty": 2,
+      "minAge": 6,
+      "options": [
+        {
+          "id": "wt-rel-18-c",
+          "word": "дерево",
+          "imageAsset": "word_derevo",
+          "isCorrect": true,
+          "form": "деревянный стол"
+        },
+        {
+          "id": "wt-rel-18-d1",
+          "word": "железо",
+          "imageAsset": "wrench.and.screwdriver.fill",
+          "isCorrect": false,
+          "form": "железный стол"
+        }
+      ],
+      "spokenForm": "Стол деревянный."
+    }
+  ]
+}

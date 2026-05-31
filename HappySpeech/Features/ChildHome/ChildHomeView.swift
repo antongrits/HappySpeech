@@ -1086,6 +1086,18 @@ extension ChildHomeView {
             router?.routeToWordFormation(childId: childId)
         }
 
+        // F2-006 (Wave 2) — Whose Tail «Чей хвост / чей домик»
+        // (словообразование прилагательных: притяжательные / притяжательно-
+        // локативные / относительные «из чего сделан»).
+        ChildHomeV25EntryCard(
+            titleKey: "whoseTail.entry.title",
+            hintKey: "whoseTail.entry.hint",
+            iconName: "pawprint.fill",
+            accent: ColorTokens.Brand.sky
+        ) {
+            router?.routeToWhoseTail(childId: childId)
+        }
+
         // v29 Фаза 8 Ф.6 — Speech Tempo «Темп-дорожка».
         ChildHomeV25EntryCard(
             titleKey: "speechTempo.entry.title",

@@ -228,6 +228,13 @@ enum AppRoute: Hashable {
     /// опций «норма vs ошибка-дистрактор».
     case wordFormation(childId: String)
 
+    /// F2-006 (kid): «Чей хвост / чей домик» — словообразование прилагательных:
+    /// притяжательные (лисий хвост, медвежья лапа), притяжательно-локативные
+    /// (лисья нора) и относительные (деревянный стол). Под-типы: possessiveTail /
+    /// animalHome / relativeMaterial. Сопоставление улики со зверем/материалом +
+    /// озвучка целевой формы на hit (закрепление по слуху).
+    case whoseTail(childId: String)
+
     // MARK: - v32 Batch D wave 5 (17 lightweight modules)
 
     case soundJournalKid(childId: String)
@@ -1035,6 +1042,10 @@ struct AppCoordinatorView: View {
             WordFormationView(childId: childId)
                 .environment(\.circuitContext, .kid)
 
+        case .whoseTail(let childId):
+            WhoseTailView(childId: childId)
+                .environment(\.circuitContext, .kid)
+
         // MARK: - v32 Batch D wave 5 (17 lightweight modules)
 
         case .soundJournalKid(let childId):
@@ -1622,6 +1633,8 @@ extension AppCoordinatorView {
             return .fourthExtra(childId: previewChild)
         case "wordFormation", "word-formation", "nameNicely", "oneManyNone":
             return .wordFormation(childId: previewChild)
+        case "whoseTail", "whose-tail", "whoseHome", "possessiveAdjectives":
+            return .whoseTail(childId: previewChild)
 
         // MARK: v32 Batch D wave 5 (17 lightweight modules)
         case "soundJournalKid", "soundJournal", "kidJournal":
