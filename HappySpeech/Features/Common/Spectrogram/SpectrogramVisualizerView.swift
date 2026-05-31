@@ -175,7 +175,7 @@ public struct SpectrogramVisualizerView: View {
         HStack(spacing: 6) {
             Image(systemName: icon)
                 .font(.caption)
-                .foregroundStyle(isLive ? .green : ColorTokens.Brand.primary)
+                .foregroundStyle(isLive ? ColorTokens.Semantic.success : ColorTokens.Brand.primary)
 
             Text(title)
                 .font(.caption.weight(.semibold))

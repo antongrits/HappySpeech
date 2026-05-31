@@ -654,7 +654,7 @@
         {
           "id": "ch-wi-24",
           "word": "чаша",
-          "imageAsset": "word_chashcha",
+          "imageAsset": "word_chasha",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/CH/ch-wi-24.m4a"
@@ -1104,7 +1104,7 @@
         {
           "id": "ch-wm-2",
           "word": "бочка",
-          "imageAsset": "word_dochka",
+          "imageAsset": "word_bochka",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/CH/ch-wm-2.m4a"
@@ -1120,7 +1120,7 @@
         {
           "id": "ch-wm-4",
           "word": "точка",
-          "imageAsset": "word_kochka",
+          "imageAsset": "word_tochka",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/CH/ch-wm-4.m4a"
@@ -1160,7 +1160,7 @@
         {
           "id": "ch-wm-9",
           "word": "мяч",
-          "imageAsset": "word_palchik",
+          "imageAsset": "word_ball",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/CH/ch-wm-9.m4a"
@@ -1216,7 +1216,7 @@
         {
           "id": "ch-wm-16",
           "word": "бочка",
-          "imageAsset": "word_rachki",
+          "imageAsset": "word_bochka",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/CH/ch-wm-16.m4a"
@@ -1256,7 +1256,7 @@
         {
           "id": "ch-wm-21",
           "word": "бабочка",
-          "imageAsset": "word_sobachka",
+          "imageAsset": "word_butterfly_insect",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/CH/ch-wm-21.m4a"
@@ -1288,7 +1288,7 @@
         {
           "id": "ch-wm-25",
           "word": "точка",
-          "imageAsset": "word_kochka2",
+          "imageAsset": "word_tochka",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/CH/ch-wm-25.m4a"
@@ -1448,7 +1448,7 @@
         {
           "id": "ch-wm-45",
           "word": "печь",
-          "imageAsset": "word_rechka",
+          "imageAsset": "word_pech",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/CH/ch-wm-45.m4a"
@@ -1480,7 +1480,7 @@
         {
           "id": "ch-wm-49",
           "word": "бабочка",
-          "imageAsset": "word_ptichka",
+          "imageAsset": "word_butterfly_insect",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/CH/ch-wm-49.m4a"
@@ -1718,7 +1718,7 @@
         {
           "id": "ch-wf-21",
           "word": "печь",
-          "imageAsset": "word_svecha",
+          "imageAsset": "word_pech",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/CH/ch-wf-21.m4a"

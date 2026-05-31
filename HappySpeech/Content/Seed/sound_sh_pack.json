@@ -884,7 +884,7 @@
         {
           "id": "sh-wi-40",
           "word": "шляпа",
-          "imageAsset": "word_shlem",
+          "imageAsset": "word_shlyapa",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SH/sh-wi-40.m4a"
@@ -1206,7 +1206,7 @@
         {
           "id": "sh-wm-1",
           "word": "мышка",
-          "imageAsset": "word_ushi",
+          "imageAsset": "word_myshka",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SH/sh-wm-1.m4a"
@@ -1222,7 +1222,7 @@
         {
           "id": "sh-wm-3",
           "word": "каша",
-          "imageAsset": "word_masha",
+          "imageAsset": "word_kasha",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SH/sh-wm-3.m4a"
@@ -1302,7 +1302,7 @@
         {
           "id": "sh-wm-13",
           "word": "кошка",
-          "imageAsset": "word_kryshka",
+          "imageAsset": "word_cat",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/SH/sh-wm-13.m4a"
@@ -1558,7 +1558,7 @@
         {
           "id": "sh-wm-45",
           "word": "сапог",
-          "imageAsset": "word_galosha",
+          "imageAsset": "word_sapog",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/SH/sh-wm-45.m4a"

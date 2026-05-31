@@ -120,15 +120,22 @@ struct MemoryView: View {
     // MARK: - Playing
 
     private var playingView: some View {
-        VStack(spacing: SpacingTokens.small) {
-            header
-            grid
-            Spacer(minLength: 0)
-            bottomBar
+        GeometryReader { geo in
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: SpacingTokens.small) {
+                    header
+                    grid
+                    Spacer(minLength: 0)
+                    bottomBar
+                }
+                .frame(minHeight: geo.size.height, alignment: .top)
+                .padding(.horizontal, SpacingTokens.screenEdge)
+                .padding(.top, SpacingTokens.large)
+                .padding(.bottom, SpacingTokens.sp6)
+            }
+            .scrollBounceBehavior(.basedOnSize)
+            .safeAreaPadding(.bottom, SpacingTokens.small)
         }
-        .padding(.horizontal, SpacingTokens.screenEdge)
-        .padding(.top, SpacingTokens.large)
-        .padding(.bottom, SpacingTokens.medium)
     }
 
     private var header: some View {

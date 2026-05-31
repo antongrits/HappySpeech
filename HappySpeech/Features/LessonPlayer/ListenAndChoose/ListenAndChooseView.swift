@@ -63,22 +63,30 @@ struct ListenAndChooseView: View {
     // MARK: Body
 
     var body: some View {
-        VStack(spacing: SpacingTokens.large) {
-            if let vm {
-                difficultyChip(vm)
-                instructionSection(vm)
-                audioPlayerRow(vm)
-                phaseLabel
-                optionsGrid(vm)
-            } else {
-                ProgressView().progressViewStyle(.circular)
+        GeometryReader { geo in
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: SpacingTokens.large) {
+                    if let vm {
+                        difficultyChip(vm)
+                        instructionSection(vm)
+                        audioPlayerRow(vm)
+                        phaseLabel
+                        optionsGrid(vm)
+                    } else {
+                        ProgressView().progressViewStyle(.circular)
+                    }
+                    if let text = feedbackText {
+                        feedbackBanner(text, isCorrect: feedbackIsCorrect ?? false)
+                    }
+                    Spacer(minLength: 0)
+                }
+                .frame(minHeight: geo.size.height, alignment: .top)
+                .padding(SpacingTokens.screenEdge)
+                .padding(.bottom, SpacingTokens.sp6)
             }
-            if let text = feedbackText {
-                feedbackBanner(text, isCorrect: feedbackIsCorrect ?? false)
-            }
-            Spacer()
+            .scrollBounceBehavior(.basedOnSize)
+            .safeAreaPadding(.bottom, SpacingTokens.small)
         }
-        .padding(SpacingTokens.screenEdge)
         .task { await bootstrap() }
         .onDisappear {
             staggerTask?.cancel()

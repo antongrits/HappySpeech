@@ -614,7 +614,7 @@
         {
           "id": "shch-wi-19",
           "word": "щепка",
-          "imageAsset": "word_shchepotka",
+          "imageAsset": "word_shchepka",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/SHCH/shch-wi-19.m4a"
@@ -892,7 +892,7 @@
         {
           "id": "shch-wm-3",
           "word": "чаша",
-          "imageAsset": "word_chashcha2",
+          "imageAsset": "word_chasha",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/SHCH/shch-wm-3.m4a"

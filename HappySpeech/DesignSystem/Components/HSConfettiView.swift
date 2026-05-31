@@ -161,7 +161,11 @@ public struct HSConfettiView: View {
         let colors: [Color] = [
             ColorTokens.Brand.primary,
             ColorTokens.Brand.rose,
-            .yellow, .pink, .green, .orange, .cyan
+            ColorTokens.Confetti.yellow,
+            ColorTokens.Confetti.hotPink,
+            ColorTokens.Confetti.green,
+            ColorTokens.Confetti.orange,
+            ColorTokens.Confetti.blue
         ]
         return (0..<60).map { i in
             ConfettiParticle(

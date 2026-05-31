@@ -174,37 +174,46 @@ struct FourthExtraView: View {
     private func gameSection(
         round: FourthExtraModels.Start.RoundViewModel
     ) -> some View {
-        VStack(spacing: SpacingTokens.sp4) {
-            progressHeader(round)
+        GeometryReader { geo in
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: SpacingTokens.sp4) {
+                    progressHeader(round)
 
-            // Ляля задаёт вопрос.
-            HSSpeechBubble(
-                holder.lastLyalyaLine ?? round.promptLyalya,
-                direction: .left,
-                style: holder.lastFeedback == nil ? .question : bubbleStyle(holder.lastFeedback)
-            )
-            .padding(.horizontal, SpacingTokens.screenEdge)
-            .id("bubble-\(round.id)-\(holder.lastFeedback?.rawValue ?? "q")")
-            .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
-
-            Spacer(minLength: 0)
-
-            // Сетка 2×2 карточек.
-            cardsGrid(round: round)
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .id(round.id)
-                .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
-
-            // Обобщение «своих» при попадании (обруч-категория + текст).
-            if let grouping = holder.groupingLabel, holder.lastFeedback == .hit {
-                groupingBanner(grouping)
+                    // Ляля задаёт вопрос.
+                    HSSpeechBubble(
+                        holder.lastLyalyaLine ?? round.promptLyalya,
+                        direction: .left,
+                        style: holder.lastFeedback == nil ? .question : bubbleStyle(holder.lastFeedback)
+                    )
                     .padding(.horizontal, SpacingTokens.screenEdge)
-                    .transition(reduceMotion ? .opacity : .move(edge: .bottom).combined(with: .opacity))
-            }
+                    .id("bubble-\(round.id)-\(holder.lastFeedback?.rawValue ?? "q")")
+                    .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
 
-            Spacer(minLength: 0)
+                    Spacer(minLength: 0)
+
+                    // Сетка 2×2 карточек.
+                    cardsGrid(round: round)
+                        .padding(.horizontal, SpacingTokens.screenEdge)
+                        .id(round.id)
+                        .transition(reduceMotion ? .opacity : .scale.combined(with: .opacity))
+
+                    // Обобщение «своих» при попадании (обруч-категория + текст).
+                    if let grouping = holder.groupingLabel, holder.lastFeedback == .hit {
+                        groupingBanner(grouping)
+                            .padding(.horizontal, SpacingTokens.screenEdge)
+                            .transition(reduceMotion ? .opacity : .move(edge: .bottom).combined(with: .opacity))
+                    }
+
+                    Spacer(minLength: 0)
+                }
+                .frame(minHeight: geo.size.height, alignment: .top)
+                .padding(.top, SpacingTokens.sp2)
+                .padding(.bottom, SpacingTokens.sp6)
+            }
+            .scrollBounceBehavior(.basedOnSize)
+            .safeAreaPadding(.bottom, SpacingTokens.small)
+            .animation(reduceMotion ? nil : .spring(duration: 0.35), value: round.id)
         }
-        .animation(reduceMotion ? nil : .spring(duration: 0.35), value: round.id)
     }
 
     private func progressHeader(

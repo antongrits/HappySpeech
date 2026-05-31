@@ -566,7 +566,7 @@
         {
           "id": "zh-wi-13",
           "word": "жираф",
-          "imageAsset": "word_zhelezo",
+          "imageAsset": "word_giraffe",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wi-13.m4a"
@@ -726,7 +726,7 @@
         {
           "id": "zh-wi-33",
           "word": "жираф",
-          "imageAsset": "word_zhivotnoe",
+          "imageAsset": "word_giraffe",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-wi-33.m4a"
@@ -1048,7 +1048,7 @@
         {
           "id": "zh-wm-5",
           "word": "ножи",
-          "imageAsset": "word_nozhka",
+          "imageAsset": "word_nozhi",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/ZH/zh-wm-5.m4a"
@@ -1112,7 +1112,7 @@
         {
           "id": "zh-wm-13",
           "word": "ножи",
-          "imageAsset": "word_nozhovka",
+          "imageAsset": "word_nozhi",
           "audioAsset": null,
           "difficulty": 3,
           "audio_file": "Audio/Content/ZH/zh-wm-13.m4a"
@@ -1144,7 +1144,7 @@
         {
           "id": "zh-wm-17",
           "word": "рог",
-          "imageAsset": "word_rozhok",
+          "imageAsset": "word_rog",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wm-17.m4a"
@@ -1382,7 +1382,7 @@
         {
           "id": "zh-wf-1",
           "word": "нож",
-          "imageAsset": "word_yozh",
+          "imageAsset": "word_nozh",
           "audioAsset": null,
           "difficulty": 1,
           "audio_file": "Audio/Content/ZH/zh-wf-1.m4a"
@@ -1502,7 +1502,7 @@
         {
           "id": "zh-wf-16",
           "word": "гараж",
-          "imageAsset": "word_gulyash",
+          "imageAsset": "word_garazh",
           "audioAsset": null,
           "difficulty": 2,
           "audio_file": "Audio/Content/ZH/zh-wf-16.m4a"
