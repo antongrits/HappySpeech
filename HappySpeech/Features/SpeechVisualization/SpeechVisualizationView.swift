@@ -180,8 +180,16 @@ struct SpeechVisualizationView: View {
     @ViewBuilder
     private var spectrogramSection: some View {
         // Reuse существующего компонента (referenceSpectrogram=nil → live-only).
+        // Diploma fix v35 (SE 3 overlap) — прежний `.frame(height: 180)` зажимал
+        // компонент, чья естественная высота ≈ 320pt (две панели по 100pt +
+        // заголовки + divider + padding 16). SwiftUI центрирует контент в
+        // зажатом фрейме БЕЗ клипа, и тёмная панель спектрограммы вылезала
+        // вверх поверх карточки слогов «со ва» и вниз на CTA. Отдаём компоненту
+        // его естественную высоту — тогда VStack(spacing: sp4) корректно
+        // разделяет секции, карточка слогов остаётся полностью видимой, а
+        // спектрограмма лежит строго НИЖЕ, ничего не перекрывая.
         SpectrogramVisualizerView(referenceSpectrogram: nil, style: .ocean)
-            .frame(height: 180)
+            .fixedSize(horizontal: false, vertical: true)
             .accessibilityLabel(Text("karaoke.spectrogram.a11y"))
     }
 

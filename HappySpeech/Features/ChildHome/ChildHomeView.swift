@@ -530,9 +530,16 @@ struct ChildHomeView: View {
                         }
                     }
                 }
-                .padding(.horizontal, SpacingTokens.micro)
                 .padding(.vertical, SpacingTokens.micro)
             }
+            // Diploma fix v35 (SE 3 asymmetric margins) — горизонтальный ряд
+            // делаем full-bleed (counteract родительский screenEdge), затем
+            // через .contentMargins даём симметричный screenEdge-инсет слева
+            // и справа: первая карточка начинается ровно на уровне заголовка,
+            // последняя «выглядывает» на тот же отступ. Прежний внутренний
+            // `.padding(.horizontal, micro)` давал асимметрию (28pt слева /
+            // bleed справа) на узких устройствах.
+            .modifier(EdgeToEdgeScrollRow())
         }
     }
 
@@ -929,9 +936,10 @@ struct ChildHomeView: View {
                         ChildHomeTodayWordCard(word: word)
                     }
                 }
-                .padding(.horizontal, SpacingTokens.micro)
                 .padding(.vertical, SpacingTokens.micro)
             }
+            // Diploma fix v35 — симметричный screenEdge-инсет (см. quickPlaySection).
+            .modifier(EdgeToEdgeScrollRow())
         }
     }
 
@@ -1299,6 +1307,23 @@ extension ChildHomeView {
         ) {
             router?.routeToBilingualMode(childId: childId)
         }
+    }
+}
+
+// MARK: - EdgeToEdgeScrollRow (Diploma fix v35)
+//
+// Делает горизонтальный ScrollView, лежащий внутри VStack с
+// `.padding(.horizontal, screenEdge)`, full-bleed — и возвращает контенту
+// симметричный screenEdge-инсет через `.contentMargins`. В результате первая
+// карточка ряда выровнена с заголовком секции (screenEdge слева), а последняя
+// «выглядывает» из правого края ровно на тот же отступ — левое поле == правое.
+// `scrollClipDisabled` отключён намеренно: контент-маргины сами обрезают
+// видимую область, тени карточек не клипуются жёстко по краю экрана.
+private struct EdgeToEdgeScrollRow: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding(.horizontal, -SpacingTokens.screenEdge)
+            .contentMargins(.horizontal, SpacingTokens.screenEdge, for: .scrollContent)
     }
 }
 

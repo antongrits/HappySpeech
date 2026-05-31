@@ -84,16 +84,18 @@ struct SessionCompleteView: View {
     // MARK: - Body
 
     var body: some View {
-        // Diploma fix v32-postreaudit — корневая причина 3.18 overflow:
-        // AppCoordinatorView оборачивает экраны в GeometryReader (внутри
-        // GuidedTourContainer). GeometryReader не растягивает content —
-        // ZStack(alignment:.bottom) в SessionCompleteView схлопывался по
-        // intrinsic content size (узкая центральная колонка) и якорился
-        // к .topLeading GeometryReader. Контент уезжал вправо за пределы
-        // screen-bounds. Решение — Color.clear с явным maxWidth/maxHeight
-        // как первый child гарантирует, что ZStack занимает full available
-        // size и центрирует ScrollView в безопасной зоне.
-        ZStack(alignment: .bottom) {
+        // Diploma fix v35 (SE 3 footer overlap) — корневая причина:
+        // прежний ZStack(alignment:.bottom) клал actionButtons как absolute
+        // overlay поверх ScrollView, а контент компенсировался ручным
+        // `.padding(.bottom, 240)`. На iPhone SE (3rd gen) высота footer
+        // (primary + ряд из 2 кнопок + gradient) превышала 240pt, поэтому
+        // нижние чипы счёта/карточки перекрывались кнопками.
+        // Решение — footer вынесен в `.safeAreaInset(edge:.bottom)` у ScrollView:
+        // SwiftUI сам резервирует под него высоту, контент раскладывается
+        // НАД footer и физически не может быть перекрыт на любом устройстве.
+        // ZStack оставлен только для overlay-слоёв (toast / popup / confetti),
+        // которые обязаны лежать поверх всего экрана.
+        ZStack {
             Color.clear
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .accessibilityHidden(true)
@@ -113,32 +115,42 @@ struct SessionCompleteView: View {
                 }
                 .padding(.horizontal, SpacingTokens.screenEdge)
                 .padding(.top, SpacingTokens.xLarge)
-                .padding(.bottom, 240)
+                .padding(.bottom, SpacingTokens.large)
                 .frame(maxWidth: .infinity)
             }
-
-            actionButtons
-                .padding(.horizontal, SpacingTokens.screenEdge)
-                .padding(.bottom, SpacingTokens.large)
-                .background(
-                    LinearGradient(
-                        colors: [ColorTokens.Kid.bg.opacity(0), ColorTokens.Kid.bg],
-                        startPoint: .top,
-                        endPoint: .bottom
+            .safeAreaInset(edge: .bottom, spacing: 0) {
+                actionButtons
+                    .padding(.horizontal, SpacingTokens.screenEdge)
+                    .padding(.top, SpacingTokens.medium)
+                    .padding(.bottom, SpacingTokens.small)
+                    .background(
+                        LinearGradient(
+                            colors: [ColorTokens.Kid.bg.opacity(0), ColorTokens.Kid.bg],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                        .ignoresSafeArea(edges: .bottom)
                     )
-                    .ignoresSafeArea(edges: .bottom)
-                )
+            }
 
             if let toast = display.toastMessage {
-                HSToast(toast, type: .error)
-                    .padding(.bottom, 180)
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
-                    .task {
-                        try? await Task.sleep(for: .seconds(2.4))
-                        withAnimation(.easeInOut(duration: 0.25)) {
-                            display.clearToast()
-                        }
+                // Diploma fix v35 — ZStack теперь центрирован (footer уехал в
+                // safeAreaInset). Toast прижимаем к низу через frame-alignment,
+                // чтобы он по-прежнему всплывал над footer-кнопками.
+                VStack {
+                    Spacer()
+                    HSToast(toast, type: .error)
+                        .padding(.bottom, SpacingTokens.xLarge)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                .zIndex(13)
+                .task {
+                    try? await Task.sleep(for: .seconds(2.4))
+                    withAnimation(.easeInOut(duration: 0.25)) {
+                        display.clearToast()
                     }
+                }
             }
 
             if achievementPopVisible, let achievement = display.pendingAchievements.first {
